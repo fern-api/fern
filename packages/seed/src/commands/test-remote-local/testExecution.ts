@@ -131,14 +131,15 @@ export async function runTestCase(testCase: RemoteVsLocalTestCase): Promise<Test
 
         // Check for generation failures
         if (!localResult.success || !remoteResult.success) {
-            // If both failed, they behave identically — that's parity.
-            if (!localResult.success && !remoteResult.success) {
-                logger.warn(`Both local and remote generation failed — treating as parity`);
+            // Both failed with the same Docker image version — same input, same behavior, that's parity.
+            if (!localResult.success && !remoteResult.success && localGeneratorVersion === remoteGeneratorVersion) {
+                logger.warn(
+                    `Both local and remote generation failed on the same version (${localGeneratorVersion}) — treating as parity`
+                );
                 logger.warn(`  Local error: ${localResult.error}`);
                 logger.warn(`  Remote error: ${remoteResult.error}`);
                 return { success: true };
             }
-            // Only one side failed — genuine parity mismatch.
             const errors: string[] = [];
             if (!localResult.success) {
                 errors.push(`Local generation failed: ${localResult.error}`);
