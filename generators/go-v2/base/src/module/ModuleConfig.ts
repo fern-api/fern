@@ -3,7 +3,7 @@ export namespace ModuleConfig {
 
     export const DEFAULT: ModuleConfig = {
         path: "sdk",
-        version: "1.18",
+        version: "1.21",
         imports: {
             "github.com/google/uuid": "v1.4.0",
             "github.com/stretchr/testify": "v1.7.0",
