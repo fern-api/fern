@@ -11,7 +11,17 @@ runs:
   steps:
     - name: Generate fixture pages
       shell: bash
-      run: bash benchmarks/fern/generate-fixture-pages.sh 37
+      run: |
+        PAGE_COUNT=37
+        bash benchmarks/fern/generate-fixture-pages.sh "$PAGE_COUNT"
+
+        # Cross-check: docs.yml must reference exactly PAGE_COUNT pages.
+        YAML_PAGES=$(grep -c 'path: pages/page-' benchmarks/fern/docs.yml)
+        if [ "$YAML_PAGES" -ne "$PAGE_COUNT" ]; then
+          echo "::error::Page count mismatch: generate-fixture-pages.sh produced ${PAGE_COUNT} pages but docs.yml references ${YAML_PAGES}. Update docs.yml to match."
+          exit 1
+        fi
+        echo "Validated: ${PAGE_COUNT} pages generated, ${YAML_PAGES} referenced in docs.yml"
 
     - name: Build Fern CLI
       shell: bash
@@ -60,7 +70,6 @@ runs:
 
         END_TIME=$(date +%s.%N)
         DURATION=$(awk "BEGIN {printf \"%.1f\", ${END_TIME} - ${START_TIME}}")
-        DURATION_INT=$(awk "BEGIN {printf \"%d\", ${END_TIME} - ${START_TIME}}")
 
         if [ "$EXIT_CODE" -ne 0 ]; then
           echo "::warning::Docs benchmark exited with code ${EXIT_CODE} after ${DURATION}s"
@@ -69,7 +78,7 @@ runs:
         echo "Benchmark: docs (${SPECS_FOUND} specs) = ${DURATION}s (exit ${EXIT_CODE})"
 
         # Write result as JSON. duration_seconds is a float for sub-second precision.
-        echo "{\"type\":\"docs\",\"spec\":\"combined\",\"specs_count\":${SPECS_FOUND},\"duration_seconds\":${DURATION},\"duration_seconds_int\":${DURATION_INT},\"exit_code\":${EXIT_CODE}}" \
+        echo "{\"type\":\"docs\",\"spec\":\"combined\",\"specs_count\":${SPECS_FOUND},\"duration_seconds\":${DURATION},\"exit_code\":${EXIT_CODE}}" \
           >> "${RESULTS_DIR}/docs.jsonl"
 
         echo "::endgroup::"
