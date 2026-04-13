@@ -4,14 +4,14 @@ namespace Seed\Dummy;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Dummy\Requests\GenerateStreamRequest;
+use Seed\Dummy\Requests\DummyGenerateStreamRequest;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
 use Seed\Core\Client\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
-use Seed\Dummy\Requests\Generateequest;
-use Seed\Dummy\Types\StreamResponse;
+use Seed\Dummy\Requests\DummyGenerateRequest;
+use Seed\Types\StreamResponse;
 use JsonException;
 
 class DummyClient
@@ -51,7 +51,7 @@ class DummyClient
     }
 
     /**
-     * @param GenerateStreamRequest $request
+     * @param DummyGenerateStreamRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -60,10 +60,11 @@ class DummyClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
+     * @return string
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function generateStream(GenerateStreamRequest $request, ?array $options = null): void
+    public function generateStream(DummyGenerateStreamRequest $request, ?array $options = null): string
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -77,6 +78,9 @@ class DummyClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                return $response->getBody()->getContents();
+            }
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -88,7 +92,7 @@ class DummyClient
     }
 
     /**
-     * @param Generateequest $request
+     * @param DummyGenerateRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -101,7 +105,7 @@ class DummyClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function generate(Generateequest $request, ?array $options = null): ?StreamResponse
+    public function generate(DummyGenerateRequest $request, ?array $options = null): ?StreamResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {

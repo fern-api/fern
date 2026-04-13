@@ -19,12 +19,12 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [untyped]
-      def get_something(request_options: {}, **params)
+      def getsomething(request_options: {}, **params)
         Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/get-something",
+          path: "get-something",
           request_options: request_options
         )
         begin

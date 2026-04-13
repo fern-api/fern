@@ -6,12 +6,12 @@ use crate::api::*;
 use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
 use reqwest::Method;
 
-pub struct PropertyAccessClient {
+pub struct ApiClient {
     pub config: ClientConfig,
     pub http_client: HttpClient,
 }
 
-impl PropertyAccessClient {
+impl ApiClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
@@ -27,7 +27,7 @@ impl PropertyAccessClient {
         self.http_client
             .execute_request(
                 Method::POST,
-                "/users",
+                "users",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,

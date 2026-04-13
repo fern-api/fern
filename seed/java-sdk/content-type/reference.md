@@ -14,10 +14,8 @@
 
 ```java
 client.service().patch(
-    PatchProxyRequest
+    ServicePatchRequest
         .builder()
-        .application("application")
-        .requireAuth(true)
         .build()
 );
 ```
@@ -54,7 +52,7 @@ client.service().patch(
 </dl>
 </details>
 
-<details><summary><code>client.service.patchComplex(id, request)</code></summary>
+<details><summary><code>client.service.patchcomplex(id, request)</code></summary>
 <dl>
 <dd>
 
@@ -84,36 +82,10 @@ This endpoint demonstrates the distinction between:
 <dd>
 
 ```java
-client.service().patchComplex(
+client.service().patchcomplex(
     "id",
-    PatchComplexRequest
+    ServicePatchComplexRequest
         .builder()
-        .name("name")
-        .age(1)
-        .active(true)
-        .metadata(
-            new HashMap<String, Object>() {{
-                put("metadata", new 
-                HashMap<String, Object>() {{put("key", "value");
-                }});
-            }}
-        )
-        .tags(
-            Optional.of(
-                Arrays.asList("tags", "tags")
-            )
-        )
-        .email("email")
-        .nickname("nickname")
-        .bio("bio")
-        .profileImageUrl("profileImageUrl")
-        .settings(
-            new HashMap<String, Object>() {{
-                put("settings", new 
-                HashMap<String, Object>() {{put("key", "value");
-                }});
-            }}
-        )
         .build()
 );
 ```
@@ -222,7 +194,7 @@ client.service().patchComplex(
 </dl>
 </details>
 
-<details><summary><code>client.service.namedPatchWithMixed(id, request)</code></summary>
+<details><summary><code>client.service.namedpatchwithmixed(id, request)</code></summary>
 <dl>
 <dd>
 
@@ -250,13 +222,10 @@ This should trigger the NPE issue when optional fields aren't initialized.
 <dd>
 
 ```java
-client.service().namedPatchWithMixed(
+client.service().namedpatchwithmixed(
     "id",
-    NamedMixedPatchRequest
+    ServiceNamedPatchWithMixedRequest
         .builder()
-        .instructions("instructions")
-        .active(true)
-        .appId("appId")
         .build()
 );
 ```
@@ -309,7 +278,7 @@ client.service().namedPatchWithMixed(
 </dl>
 </details>
 
-<details><summary><code>client.service.optionalMergePatchTest(request)</code></summary>
+<details><summary><code>client.service.optionalmergepatchtest(request)</code></summary>
 <dl>
 <dd>
 
@@ -339,14 +308,10 @@ This endpoint should:
 <dd>
 
 ```java
-client.service().optionalMergePatchTest(
-    OptionalMergePatchRequest
+client.service().optionalmergepatchtest(
+    ServiceOptionalMergePatchTestRequest
         .builder()
         .requiredField("requiredField")
-        .nullableString("nullableString")
-        .optionalString("optionalString")
-        .optionalInteger(1)
-        .optionalBoolean(true)
         .build()
 );
 ```
@@ -407,7 +372,7 @@ client.service().optionalMergePatchTest(
 </dl>
 </details>
 
-<details><summary><code>client.service.regularPatch(id, request)</code></summary>
+<details><summary><code>client.service.regularpatch(id, request)</code></summary>
 <dl>
 <dd>
 
@@ -434,12 +399,10 @@ Regular PATCH endpoint without merge-patch semantics
 <dd>
 
 ```java
-client.service().regularPatch(
+client.service().regularpatch(
     "id",
-    RegularPatchRequest
+    ServiceRegularPatchRequest
         .builder()
-        .field1("field1")
-        .field2(1)
         .build()
 );
 ```

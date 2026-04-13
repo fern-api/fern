@@ -17,15 +17,8 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.ListUsersTopLevelBodyCursorPaginationRequest{
-        Cursor: fern.String(
-            "initial_cursor",
-        ),
-        Filter: fern.String(
-            "active",
-        ),
-    }
-    client.Users.ListWithTopLevelBodyCursorPagination(
+    request := &fern.InlineUsersInlineUsersListWithOffsetPaginationHasNextPageRequest{}
+    client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithOffsetPaginationHasNextPage(
         context.TODO(),
         request,
     )

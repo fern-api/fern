@@ -5,7 +5,7 @@ from json.decoder import JSONDecodeError
 
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ..core.custom_pagination import AsyncCustomPager, SyncCustomPager
+from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
@@ -17,13 +17,13 @@ class RawUsersClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def list_with_custom_pager(
+    def listwithcustompager(
         self,
         *,
         limit: typing.Optional[int] = None,
         starting_after: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncCustomPager[str, UsersListResponse]:
+    ) -> HttpResponse[UsersListResponse]:
         """
         Parameters
         ----------
@@ -38,7 +38,8 @@ class RawUsersClient:
 
         Returns
         -------
-        SyncCustomPager[str, UsersListResponse]
+        HttpResponse[UsersListResponse]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "users",
@@ -51,14 +52,14 @@ class RawUsersClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                _parsed_response = typing.cast(
+                _data = typing.cast(
                     UsersListResponse,
                     parse_obj_as(
                         type_=UsersListResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return SyncCustomPager(initial_response=_parsed_response, client_wrapper=self._client_wrapper)
+                return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -73,13 +74,13 @@ class AsyncRawUsersClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def list_with_custom_pager(
+    async def listwithcustompager(
         self,
         *,
         limit: typing.Optional[int] = None,
         starting_after: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncCustomPager[str, UsersListResponse]:
+    ) -> AsyncHttpResponse[UsersListResponse]:
         """
         Parameters
         ----------
@@ -94,7 +95,8 @@ class AsyncRawUsersClient:
 
         Returns
         -------
-        AsyncCustomPager[str, UsersListResponse]
+        AsyncHttpResponse[UsersListResponse]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "users",
@@ -107,14 +109,14 @@ class AsyncRawUsersClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                _parsed_response = typing.cast(
+                _data = typing.cast(
                     UsersListResponse,
                     parse_obj_as(
                         type_=UsersListResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return AsyncCustomPager(initial_response=_parsed_response, client_wrapper=self._client_wrapper)
+                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)

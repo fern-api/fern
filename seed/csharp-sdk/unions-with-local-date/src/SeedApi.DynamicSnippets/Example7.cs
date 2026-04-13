@@ -1,21 +1,20 @@
-using SeedUnions;
-using System.Globalization;
+using SeedApi;
 
 namespace Usage;
 
 public class Example7
 {
     public async Task Do() {
-        var client = new SeedUnionsClient(
+        var client = new SeedApiClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Types.UpdateAsync(
-            new UnionWithTime(
-                new UnionWithTime.Datetime(DateTime.Parse("datetime", null, DateTimeStyles.AdjustToUniversal))
-            )
+        await client.Types.GetAsync(
+            new TypesGetRequest {
+                Id = "id"
+            }
         );
     }
 

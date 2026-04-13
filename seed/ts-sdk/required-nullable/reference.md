@@ -1,5 +1,6 @@
 # Reference
-<details><summary><code>client.<a href="/src/Client.ts">getFoo</a>({ ...params }) -> SeedApi.Foo</code></summary>
+## 
+<details><summary><code>client..<a href="/src/api/resources/client/Client.ts">getFoo</a>({ ...params }) -> SeedApi.Foo</code></summary>
 <dl>
 <dd>
 
@@ -12,7 +13,7 @@
 <dd>
 
 ```typescript
-await client.getFoo({
+await client..getFoo({
     required_baz: "required_baz",
     required_nullable_baz: "required_nullable_baz"
 });
@@ -39,7 +40,7 @@ await client.getFoo({
 <dl>
 <dd>
 
-**requestOptions:** `SeedApiClient.RequestOptions` 
+**requestOptions:** `Client.RequestOptions` 
     
 </dd>
 </dl>
@@ -51,7 +52,7 @@ await client.getFoo({
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/src/Client.ts">updateFoo</a>(id, { ...params }) -> SeedApi.Foo</code></summary>
+<details><summary><code>client..<a href="/src/api/resources/client/Client.ts">updateFoo</a>({ ...params }) -> SeedApi.Foo</code></summary>
 <dl>
 <dd>
 
@@ -64,11 +65,9 @@ await client.getFoo({
 <dd>
 
 ```typescript
-await client.updateFoo("id", {
+await client..updateFoo({
     "X-Idempotency-Key": "X-Idempotency-Key",
-    nullable_text: "nullable_text",
-    nullable_number: 1.1,
-    non_nullable_text: "non_nullable_text"
+    id: "id"
 });
 
 ```
@@ -85,14 +84,6 @@ await client.updateFoo("id", {
 <dl>
 <dd>
 
-**id:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request:** `SeedApi.UpdateFooRequest` 
     
 </dd>
@@ -101,7 +92,7 @@ await client.updateFoo("id", {
 <dl>
 <dd>
 
-**requestOptions:** `SeedApiClient.RequestOptions` 
+**requestOptions:** `Client.RequestOptions` 
     
 </dd>
 </dl>

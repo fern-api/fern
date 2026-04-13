@@ -1,4 +1,4 @@
-import Webhooks
+import Api
 import Foundation
 
 final class HTTPStub {

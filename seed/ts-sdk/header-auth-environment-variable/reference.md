@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">getWithBearerToken</a>() -> string</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">getwithbearertoken</a>() -> string</code></summary>
 <dl>
 <dd>
 
@@ -27,7 +27,7 @@ GET request with custom api key
 <dd>
 
 ```typescript
-await client.service.getWithBearerToken();
+await client.service.getwithbearertoken();
 
 ```
 </dd>

@@ -11,9 +11,9 @@ public record Foo : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
-    [Optional]
+    [Nullable, Optional]
     [JsonPropertyName("bar")]
-    public string? Bar { get; set; }
+    public Optional<string?> Bar { get; set; }
 
     [Nullable, Optional]
     [JsonPropertyName("nullable_bar")]

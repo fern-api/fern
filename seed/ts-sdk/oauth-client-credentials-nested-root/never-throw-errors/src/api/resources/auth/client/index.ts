@@ -1,2 +1,2 @@
-export * as getToken from "./getToken.js";
+export * as gettoken from "./gettoken.js";
 export * from "./requests/index.js";

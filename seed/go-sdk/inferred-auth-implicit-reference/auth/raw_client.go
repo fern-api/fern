@@ -31,7 +31,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) GetTokenWithClientCredentials(
+func (r *RawClient) Gettokenwithclientcredentials(
 	ctx context.Context,
 	request *fern.GetTokenRequest,
 	opts ...option.RequestOption,
@@ -47,6 +47,7 @@ func (r *RawClient) GetTokenWithClientCredentials(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
+	headers.Add("Content-Type", "application/json")
 	var response *fern.TokenResponse
 	raw, err := r.caller.Call(
 		ctx,
@@ -72,7 +73,7 @@ func (r *RawClient) GetTokenWithClientCredentials(
 	}, nil
 }
 
-func (r *RawClient) RefreshToken(
+func (r *RawClient) Refreshtoken(
 	ctx context.Context,
 	request *fern.RefreshTokenRequest,
 	opts ...option.RequestOption,
@@ -88,6 +89,7 @@ func (r *RawClient) RefreshToken(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
+	headers.Add("Content-Type", "application/json")
 	var response *fern.TokenResponse
 	raw, err := r.caller.Call(
 		ctx,

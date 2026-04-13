@@ -6,6 +6,7 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
+import type * as SeedApi from "../../../index.js";
 
 export declare namespace ServiceClient {
     export type Options = BaseClientOptions;
@@ -21,22 +22,32 @@ export class ServiceClient {
     }
 
     /**
+     * @param {SeedApi.ServicePostRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.service.post()
+     *     await client.service.post({
+     *         endpointParam: "endpointParam"
+     *     })
      */
-    public post(requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__post(requestOptions));
+    public post(
+        request: SeedApi.ServicePostRequest,
+        requestOptions?: ServiceClient.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__post(request, requestOptions));
     }
 
-    private async __post(requestOptions?: ServiceClient.RequestOptions): Promise<core.WithRawResponse<void>> {
+    private async __post(
+        request: SeedApi.ServicePostRequest,
+        requestOptions?: ServiceClient.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
+        const { endpointParam } = request;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/${core.url.encodePathParam(this._options.rootVariable)}`,
+                `${core.url.encodePathParam(endpointParam)}`,
             ),
             method: "POST",
             headers: _headers,
@@ -52,7 +63,7 @@ export class ServiceClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedVariablesError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

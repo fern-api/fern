@@ -33,6 +33,22 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+func (c *Client) List(
+	ctx context.Context,
+	request *fern.UserListRequest,
+	opts ...option.RequestOption,
+) ([]*fern.User, error) {
+	response, err := c.WithRawResponse.List(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
 func (c *Client) Head(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -45,20 +61,4 @@ func (c *Client) Head(
 		return err
 	}
 	return nil
-}
-
-func (c *Client) List(
-	ctx context.Context,
-	request *fern.ListUsersRequest,
-	opts ...option.RequestOption,
-) ([]*fern.User, error) {
-	response, err := c.WithRawResponse.List(
-		ctx,
-		request,
-		opts...,
-	)
-	if err != nil {
-		return nil, err
-	}
-	return response.Body, nil
 }

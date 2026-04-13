@@ -5,8 +5,9 @@ package com.customprefix.resources.imdb;
 
 import com.customprefix.core.ClientOptions;
 import com.customprefix.core.RequestOptions;
-import com.customprefix.resources.imdb.types.CreateMovieRequest;
-import com.customprefix.resources.imdb.types.Movie;
+import com.customprefix.resources.imdb.requests.CreateMovieRequest;
+import com.customprefix.resources.imdb.requests.ImdbGetMovieRequest;
+import com.customprefix.types.Movie;
 
 public class ImdbClient {
     protected final ClientOptions clientOptions;
@@ -28,22 +29,30 @@ public class ImdbClient {
     /**
      * Add a movie to the database
      */
-    public String createMovie(CreateMovieRequest request) {
-        return this.rawClient.createMovie(request).body();
+    public String createmovie(CreateMovieRequest request) {
+        return this.rawClient.createmovie(request).body();
     }
 
     /**
      * Add a movie to the database
      */
-    public String createMovie(CreateMovieRequest request, RequestOptions requestOptions) {
-        return this.rawClient.createMovie(request, requestOptions).body();
+    public String createmovie(CreateMovieRequest request, RequestOptions requestOptions) {
+        return this.rawClient.createmovie(request, requestOptions).body();
     }
 
-    public Movie getMovie(String movieId) {
-        return this.rawClient.getMovie(movieId).body();
+    public Movie getmovie(String movieId) {
+        return this.rawClient.getmovie(movieId).body();
     }
 
-    public Movie getMovie(String movieId, RequestOptions requestOptions) {
-        return this.rawClient.getMovie(movieId, requestOptions).body();
+    public Movie getmovie(String movieId, RequestOptions requestOptions) {
+        return this.rawClient.getmovie(movieId, requestOptions).body();
+    }
+
+    public Movie getmovie(String movieId, ImdbGetMovieRequest request) {
+        return this.rawClient.getmovie(movieId, request).body();
+    }
+
+    public Movie getmovie(String movieId, ImdbGetMovieRequest request, RequestOptions requestOptions) {
+        return this.rawClient.getmovie(movieId, request, requestOptions).body();
     }
 }

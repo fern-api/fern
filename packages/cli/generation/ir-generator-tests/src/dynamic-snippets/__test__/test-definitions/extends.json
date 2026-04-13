@@ -217,7 +217,7 @@
                 }
             ],
             "extends": [
-                "type_:Json"
+                "type_:JSON"
             ],
             "additionalProperties": false
         },
@@ -284,11 +284,11 @@
             "extends": null,
             "additionalProperties": false
         },
-        "type_:Json": {
+        "type_:JSON": {
             "type": "object",
             "declaration": {
                 "name": {
-                    "originalName": "Json",
+                    "originalName": "JSON",
                     "camelCase": {
                         "unsafeName": "json",
                         "safeName": "json"
@@ -405,47 +405,9 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "",
-                            "camelCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "snakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "pascalCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            }
-                        }
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "",
-                        "camelCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        },
-                        "snakeCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        },
-                        "pascalCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        }
-                    }
+                    "file": null
                 }
             },
             "location": {
@@ -456,66 +418,28 @@
                 "type": "inlined",
                 "declaration": {
                     "name": {
-                        "originalName": "ExtendedInlineRequestBodyRequest",
+                        "originalName": "Inlined",
                         "camelCase": {
-                            "unsafeName": "extendedInlineRequestBodyRequest",
-                            "safeName": "extendedInlineRequestBodyRequest"
+                            "unsafeName": "inlined",
+                            "safeName": "inlined"
                         },
                         "snakeCase": {
-                            "unsafeName": "extended_inline_request_body_request",
-                            "safeName": "extended_inline_request_body_request"
+                            "unsafeName": "inlined",
+                            "safeName": "inlined"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "EXTENDED_INLINE_REQUEST_BODY_REQUEST",
-                            "safeName": "EXTENDED_INLINE_REQUEST_BODY_REQUEST"
+                            "unsafeName": "INLINED",
+                            "safeName": "INLINED"
                         },
                         "pascalCase": {
-                            "unsafeName": "ExtendedInlineRequestBodyRequest",
-                            "safeName": "ExtendedInlineRequestBodyRequest"
+                            "unsafeName": "Inlined",
+                            "safeName": "Inlined"
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [
-                            {
-                                "originalName": "",
-                                "camelCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                }
-                            }
-                        ],
+                        "allParts": [],
                         "packagePath": [],
-                        "file": {
-                            "originalName": "",
-                            "camelCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "snakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "pascalCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            }
-                        }
+                        "file": null
                     }
                 },
                 "pathParameters": [],

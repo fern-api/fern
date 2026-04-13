@@ -14,8 +14,10 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.UnionWithTime{}
-    client.Types.Update(
+    request := &fern.TypesGetRequest{
+        ID: "id",
+    }
+    client.Types.Get(
         context.TODO(),
         request,
     )

@@ -1,4 +1,4 @@
-import PropertyAccess
+import Api
 import Foundation
 import Testing
 
@@ -14,7 +14,7 @@ import Testing
             ),
         ])
 
-        let client = PropertyAccessClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -22,13 +22,11 @@ import Testing
         do {
             _ = try await client.createUser(
                 request: User(
-                    id: "id",
-                    email: "email",
                     password: "password",
                     profile: UserProfile(
                         name: "name",
                         verification: UserProfileVerification(
-                            verified: "verified"
+
                         ),
                         ssn: "ssn"
                     )
@@ -52,7 +50,7 @@ import Testing
             ),
         ])
 
-        let client = PropertyAccessClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -60,13 +58,11 @@ import Testing
         do {
             _ = try await client.createUser(
                 request: User(
-                    id: "id",
-                    email: "email",
                     password: "password",
                     profile: UserProfile(
                         name: "name",
                         verification: UserProfileVerification(
-                            verified: "verified"
+
                         ),
                         ssn: "ssn"
                     )
@@ -90,7 +86,7 @@ import Testing
             ),
         ])
 
-        let client = PropertyAccessClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -98,13 +94,11 @@ import Testing
         do {
             _ = try await client.createUser(
                 request: User(
-                    id: "id",
-                    email: "email",
                     password: "password",
                     profile: UserProfile(
                         name: "name",
                         verification: UserProfileVerification(
-                            verified: "verified"
+
                         ),
                         ssn: "ssn"
                     )
@@ -127,7 +121,7 @@ import Testing
             ),
         ])
 
-        let client = PropertyAccessClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -135,13 +129,11 @@ import Testing
         do {
             _ = try await client.createUser(
                 request: User(
-                    id: "id",
-                    email: "email",
                     password: "password",
                     profile: UserProfile(
                         name: "name",
                         verification: UserProfileVerification(
-                            verified: "verified"
+
                         ),
                         ssn: "ssn"
                     )
@@ -163,7 +155,7 @@ import Testing
             )
         ])
 
-        let client = PropertyAccessClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -171,13 +163,11 @@ import Testing
         do {
             _ = try await client.createUser(
                 request: User(
-                    id: "id",
-                    email: "email",
                     password: "password",
                     profile: UserProfile(
                         name: "name",
                         verification: UserProfileVerification(
-                            verified: "verified"
+
                         ),
                         ssn: "ssn"
                     )
@@ -200,7 +190,7 @@ import Testing
             )
         ])
 
-        let client = PropertyAccessClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -208,13 +198,11 @@ import Testing
         do {
             _ = try await client.createUser(
                 request: User(
-                    id: "id",
-                    email: "email",
                     password: "password",
                     profile: UserProfile(
                         name: "name",
                         verification: UserProfileVerification(
-                            verified: "verified"
+
                         ),
                         ssn: "ssn"
                     )
@@ -237,7 +225,7 @@ import Testing
             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
         ])
 
-        let client = PropertyAccessClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -245,13 +233,11 @@ import Testing
         do {
             _ = try await client.createUser(
                 request: User(
-                    id: "id",
-                    email: "email",
                     password: "password",
                     profile: UserProfile(
                         name: "name",
                         verification: UserProfileVerification(
-                            verified: "verified"
+
                         ),
                         ssn: "ssn"
                     )
@@ -278,7 +264,7 @@ import Testing
             ),
         ])
 
-        let client = PropertyAccessClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -287,13 +273,11 @@ import Testing
         do {
             _ = try await client.createUser(
                 request: User(
-                    id: "id",
-                    email: "email",
                     password: "password",
                     profile: UserProfile(
                         name: "name",
                         verification: UserProfileVerification(
-                            verified: "verified"
+
                         ),
                         ssn: "ssn"
                     )
@@ -330,7 +314,7 @@ import Testing
             ),
         ])
 
-        let client = PropertyAccessClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -339,13 +323,11 @@ import Testing
         do {
             _ = try await client.createUser(
                 request: User(
-                    id: "id",
-                    email: "email",
                     password: "password",
                     profile: UserProfile(
                         name: "name",
                         verification: UserProfileVerification(
-                            verified: "verified"
+
                         ),
                         ssn: "ssn"
                     )
@@ -378,7 +360,7 @@ import Testing
             ),
         ])
 
-        let client = PropertyAccessClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -387,13 +369,11 @@ import Testing
         do {
             _ = try await client.createUser(
                 request: User(
-                    id: "id",
-                    email: "email",
                     password: "password",
                     profile: UserProfile(
                         name: "name",
                         verification: UserProfileVerification(
-                            verified: "verified"
+
                         ),
                         ssn: "ssn"
                     )
@@ -438,7 +418,7 @@ import Testing
             ),
         ])
 
-        let client = PropertyAccessClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -446,13 +426,11 @@ import Testing
         do {
             _ = try await client.createUser(
                 request: User(
-                    id: "id",
-                    email: "email",
                     password: "password",
                     profile: UserProfile(
                         name: "name",
                         verification: UserProfileVerification(
-                            verified: "verified"
+
                         ),
                         ssn: "ssn"
                     )
@@ -471,7 +449,7 @@ import Testing
             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data())
         ])
 
-        let client = PropertyAccessClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -479,13 +457,11 @@ import Testing
         do {
             _ = try await client.createUser(
                 request: User(
-                    id: "id",
-                    email: "email",
                     password: "password",
                     profile: UserProfile(
                         name: "name",
                         verification: UserProfileVerification(
-                            verified: "verified"
+
                         ),
                         ssn: "ssn"
                     )
@@ -508,7 +484,7 @@ import Testing
             )
         ])
 
-        let client = PropertyAccessClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -516,13 +492,11 @@ import Testing
         do {
             _ = try await client.createUser(
                 request: User(
-                    id: "id",
-                    email: "email",
                     password: "password",
                     profile: UserProfile(
                         name: "name",
                         verification: UserProfileVerification(
-                            verified: "verified"
+
                         ),
                         ssn: "ssn"
                     )

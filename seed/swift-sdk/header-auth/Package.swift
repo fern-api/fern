@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "HeaderToken",
+    name: "Api",
     platforms: [
         .iOS(.v15),
         .macOS(.v12),
@@ -12,19 +12,19 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "HeaderToken",
-            targets: ["HeaderToken"]
+            name: "Api",
+            targets: ["Api"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "HeaderToken",
+            name: "Api",
             path: "Sources"
         ),
         .testTarget(
-            name: "HeaderTokenTests",
-            dependencies: ["HeaderToken"],
+            name: "ApiTests",
+            dependencies: ["Api"],
             path: "Tests"
         )
     ]

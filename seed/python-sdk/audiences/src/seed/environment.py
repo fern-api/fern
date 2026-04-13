@@ -3,6 +3,5 @@
 import enum
 
 
-class SeedAudiencesEnvironment(enum.Enum):
-    ENVIRONMENT_A = "https://api.example.a.com"
-    ENVIRONMENT_B = "https://api.example.b.com"
+class SeedApiEnvironment(enum.Enum):
+    DEFAULT = "https://api.example.a.com"

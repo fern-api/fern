@@ -1,4 +1,4 @@
-package plaintext
+package api
 
 import (
 	"testing"

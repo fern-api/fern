@@ -4,9 +4,9 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
+from ..types.user import User
+from ..types.user_id import UserId
 from .raw_client import AsyncRawUserClient, RawUserClient
-from .types.user import User
-from .types.user_id import UserId
 
 
 class UserClient:
@@ -24,7 +24,7 @@ class UserClient:
         """
         return self._raw_client
 
-    def get_user(self, user_id: UserId, *, request_options: typing.Optional[RequestOptions] = None) -> User:
+    def getuser(self, user_id: UserId, *, request_options: typing.Optional[RequestOptions] = None) -> User:
         """
         Parameters
         ----------
@@ -37,18 +37,19 @@ class UserClient:
         -------
         User
 
+
         Examples
         --------
-        from seed import SeedVersion
+        from seed import SeedApi
 
-        client = SeedVersion(
+        client = SeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.user.get_user(
+        client.user.getuser(
             user_id="userId",
         )
         """
-        _response = self._raw_client.get_user(user_id, request_options=request_options)
+        _response = self._raw_client.getuser(user_id, request_options=request_options)
         return _response.data
 
 
@@ -67,7 +68,7 @@ class AsyncUserClient:
         """
         return self._raw_client
 
-    async def get_user(self, user_id: UserId, *, request_options: typing.Optional[RequestOptions] = None) -> User:
+    async def getuser(self, user_id: UserId, *, request_options: typing.Optional[RequestOptions] = None) -> User:
         """
         Parameters
         ----------
@@ -80,24 +81,25 @@ class AsyncUserClient:
         -------
         User
 
+
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedVersion
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedVersion(
+        client = AsyncSeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.user.get_user(
+            await client.user.getuser(
                 user_id="userId",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_user(user_id, request_options=request_options)
+        _response = await self._raw_client.getuser(user_id, request_options=request_options)
         return _response.data

@@ -1,4 +1,4 @@
-package oauthclientcredentials
+package api
 
 import (
 	"io"

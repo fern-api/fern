@@ -17,12 +17,8 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.ListUsernamesWithOptionalResponseRequest{
-        StartingAfter: fern.String(
-            "starting_after",
-        ),
-    }
-    client.Users.ListUsernamesWithOptionalResponse(
+    request := &fern.UsersListWithMixedTypeCursorPaginationRequest{}
+    client.Users.Listwithmixedtypecursorpagination(
         context.TODO(),
         request,
     )

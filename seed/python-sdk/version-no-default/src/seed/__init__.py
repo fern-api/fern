@@ -6,18 +6,18 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .types import User, UserId
     from . import user
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
-    from .client import AsyncSeedVersion, SeedVersion
-    from .user import User, UserId
+    from .client import AsyncSeedApi, SeedApi
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedVersion": ".client",
+    "AsyncSeedApi": ".client",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
-    "SeedVersion": ".client",
-    "User": ".user",
-    "UserId": ".user",
+    "SeedApi": ".client",
+    "User": ".types",
+    "UserId": ".types",
     "__version__": ".version",
     "user": ".user",
 }
@@ -45,10 +45,10 @@ def __dir__():
 
 
 __all__ = [
-    "AsyncSeedVersion",
+    "AsyncSeedApi",
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
-    "SeedVersion",
+    "SeedApi",
     "User",
     "UserId",
     "__version__",

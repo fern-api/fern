@@ -4,7 +4,6 @@ package basicauth
 
 import (
 	context "context"
-	os "os"
 
 	core "github.com/basic-auth-environment-variables/fern/core"
 	internal "github.com/basic-auth-environment-variables/fern/internal"
@@ -20,12 +19,6 @@ type Client struct {
 }
 
 func NewClient(options *core.RequestOptions) *Client {
-	if options.Username == "" {
-		options.Username = os.Getenv("USERNAME")
-	}
-	if options.AccessToken == "" {
-		options.AccessToken = os.Getenv("PASSWORD")
-	}
 	return &Client{
 		WithRawResponse: NewRawClient(options),
 		options:         options,
@@ -40,11 +33,11 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // GET request with basic auth scheme
-func (c *Client) GetWithBasicAuth(
+func (c *Client) Getwithbasicauth(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (bool, error) {
-	response, err := c.WithRawResponse.GetWithBasicAuth(
+	response, err := c.WithRawResponse.Getwithbasicauth(
 		ctx,
 		opts...,
 	)
@@ -55,12 +48,12 @@ func (c *Client) GetWithBasicAuth(
 }
 
 // POST request with basic auth scheme
-func (c *Client) PostWithBasicAuth(
+func (c *Client) Postwithbasicauth(
 	ctx context.Context,
 	request any,
 	opts ...option.RequestOption,
 ) (bool, error) {
-	response, err := c.WithRawResponse.PostWithBasicAuth(
+	response, err := c.WithRawResponse.Postwithbasicauth(
 		ctx,
 		request,
 		opts...,

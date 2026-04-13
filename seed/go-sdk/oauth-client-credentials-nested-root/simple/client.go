@@ -32,11 +32,11 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
-func (c *Client) GetSomething(
+func (c *Client) Getsomething(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) error {
-	_, err := c.WithRawResponse.GetSomething(
+	_, err := c.WithRawResponse.Getsomething(
 		ctx,
 		opts...,
 	)

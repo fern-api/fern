@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.User.<a href="/src/SeedExtraProperties/User/UserClient.cs">CreateUserAsync</a>(CreateUserRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedApi/User/UserClient.cs">CreateuserAsync</a>(UserCreateUserRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,17 +13,12 @@
 <dd>
 
 ```csharp
-await client.User.CreateUserAsync(
-    new CreateUserRequest
+await client.User.CreateuserAsync(
+    new UserCreateUserRequest
     {
-        Name = "Alice",
-        Type = "CreateUserRequest",
-        Version = "v1",
-        AdditionalProperties = new AdditionalProperties
-        {
-            ["age"] = 30,
-            ["location"] = "Wonderland",
-        },
+        Type = UserCreateUserRequestType.CreateUserRequest,
+        Version = UserCreateUserRequestVersion.V1,
+        Name = "name",
     }
 );
 ```
@@ -40,7 +35,7 @@ await client.User.CreateUserAsync(
 <dl>
 <dd>
 
-**request:** `CreateUserRequest` 
+**request:** `UserCreateUserRequest` 
     
 </dd>
 </dl>

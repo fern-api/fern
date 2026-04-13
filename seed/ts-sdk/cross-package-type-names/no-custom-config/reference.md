@@ -1,6 +1,6 @@
 # Reference
-## FolderA Service
-<details><summary><code>client.folderA.service.<a href="/src/api/resources/folderA/resources/service/client/Client.ts">getDirectThread</a>() -> SeedCrossPackageTypeNames.Response</code></summary>
+## FolderAService
+<details><summary><code>client.folderAService.<a href="/src/api/resources/folderAService/client/Client.ts">folderAServiceGetDirectThread</a>() -> SeedApi.FolderAResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```typescript
-await client.folderA.service.getDirectThread();
+await client.folderAService.folderAServiceGetDirectThread();
 
 ```
 </dd>
@@ -29,7 +29,7 @@ await client.folderA.service.getDirectThread();
 <dl>
 <dd>
 
-**requestOptions:** `ServiceClient.RequestOptions` 
+**requestOptions:** `FolderAServiceClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -41,8 +41,8 @@ await client.folderA.service.getDirectThread();
 </dl>
 </details>
 
-## FolderD Service
-<details><summary><code>client.folderD.service.<a href="/src/api/resources/folderD/resources/service/client/Client.ts">getDirectThread</a>() -> SeedCrossPackageTypeNames.Response</code></summary>
+## FolderDService
+<details><summary><code>client.folderDService.<a href="/src/api/resources/folderDService/client/Client.ts">folderDServiceGetDirectThread</a>() -> SeedApi.FolderDResponse</code></summary>
 <dl>
 <dd>
 
@@ -55,7 +55,7 @@ await client.folderA.service.getDirectThread();
 <dd>
 
 ```typescript
-await client.folderD.service.getDirectThread();
+await client.folderDService.folderDServiceGetDirectThread();
 
 ```
 </dd>
@@ -71,7 +71,7 @@ await client.folderD.service.getDirectThread();
 <dl>
 <dd>
 
-**requestOptions:** `ServiceClient.RequestOptions` 
+**requestOptions:** `FolderDServiceClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -84,7 +84,7 @@ await client.folderD.service.getDirectThread();
 </details>
 
 ## Foo
-<details><summary><code>client.foo.<a href="/src/api/resources/foo/client/Client.ts">find</a>({ ...params }) -> SeedCrossPackageTypeNames.ImportingType</code></summary>
+<details><summary><code>client.foo.<a href="/src/api/resources/foo/client/Client.ts">find</a>({ ...params }) -> SeedApi.ImportingType</code></summary>
 <dl>
 <dd>
 
@@ -97,11 +97,7 @@ await client.folderD.service.getDirectThread();
 <dd>
 
 ```typescript
-await client.foo.find({
-    optionalString: "optionalString",
-    publicProperty: "publicProperty",
-    privateProperty: 1
-});
+await client.foo.find();
 
 ```
 </dd>
@@ -117,7 +113,7 @@ await client.foo.find({
 <dl>
 <dd>
 
-**request:** `SeedCrossPackageTypeNames.FindRequest` 
+**request:** `SeedApi.FooFindRequest` 
     
 </dd>
 </dl>

@@ -3,7 +3,6 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Types\BasicType;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,6 +10,6 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->createType(
-    BasicType::Primitive->value,
+$client->fileService->fileServiceGetFile(
+    'filename',
 );

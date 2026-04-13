@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-import UnknownAsAny
+import Api
 
 @Suite("UnknownClient Wire Tests") struct UnknownClientWireTests {
     @Test func post1() async throws -> Void {
@@ -19,7 +19,7 @@ import UnknownAsAny
                 """.utf8
             )
         )
-        let client = UnknownAsAnyClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -44,7 +44,7 @@ import UnknownAsAny
         try #require(response == expectedResponse)
     }
 
-    @Test func postObject1() async throws -> Void {
+    @Test func postobject1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -60,7 +60,7 @@ import UnknownAsAny
                 """.utf8
             )
         )
-        let client = UnknownAsAnyClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -76,12 +76,10 @@ import UnknownAsAny
                 ]
             )
         ]
-        let response = try await client.unknown.postObject(
-            request: MyObject(
-                unknown: .object([
-                    "key": .string("value")
-                ])
-            ),
+        let response = try await client.unknown.postobject(
+            request: .init(unknown: .object([
+                "key": .string("value")
+            ])),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)

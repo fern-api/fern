@@ -1,6 +1,6 @@
 # Reference
 ## Ec2
-<details><summary><code>client.Ec2.BootInstance(request) -> error</code></summary>
+<details><summary><code>client.Ec2.Bootinstance(request) -> error</code></summary>
 <dl>
 <dd>
 
@@ -13,10 +13,10 @@
 <dd>
 
 ```go
-request := &fern.BootInstanceRequest{
+request := &fern.Ec2BootInstanceRequest{
         Size: "size",
     }
-client.Ec2.BootInstance(
+client.Ec2.Bootinstance(
         context.TODO(),
         request,
     )
@@ -48,7 +48,7 @@ client.Ec2.BootInstance(
 </details>
 
 ## S3
-<details><summary><code>client.S3.GetPresignedURL(request) -> string</code></summary>
+<details><summary><code>client.S3.Getpresignedurl(request) -> string</code></summary>
 <dl>
 <dd>
 
@@ -61,10 +61,10 @@ client.Ec2.BootInstance(
 <dd>
 
 ```go
-request := &fern.GetPresignedURLRequest{
+request := &fern.S3GetPresignedURLRequest{
         S3Key: "s3Key",
     }
-client.S3.GetPresignedURL(
+client.S3.Getpresignedurl(
         context.TODO(),
         request,
     )

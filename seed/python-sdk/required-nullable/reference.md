@@ -1,5 +1,6 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">get_foo</a>(...) -> Foo</code></summary>
+## _
+<details><summary><code>client._.<a href="src/seed/_/client.py">get_foo</a>(...) -> Foo</code></summary>
 <dl>
 <dd>
 
@@ -18,7 +19,7 @@ client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.get_foo(
+client._.get_foo(
     required_baz="required_baz",
     required_nullable_baz="required_nullable_baz",
 )
@@ -81,7 +82,7 @@ client.get_foo(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">update_foo</a>(...) -> Foo</code></summary>
+<details><summary><code>client._.<a href="src/seed/_/client.py">update_foo</a>(...) -> Foo</code></summary>
 <dl>
 <dd>
 
@@ -100,12 +101,9 @@ client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.update_foo(
+client._.update_foo(
     id="id",
-    x_idempotency_key="X-Idempotency-Key",
-    nullable_text="nullable_text",
-    nullable_number=1.1,
-    non_nullable_text="non_nullable_text",
+    idempotency_key="X-Idempotency-Key",
 )
 
 ```
@@ -130,7 +128,7 @@ client.update_foo(
 <dl>
 <dd>
 
-**x_idempotency_key:** `str` 
+**idempotency_key:** `str` 
     
 </dd>
 </dl>

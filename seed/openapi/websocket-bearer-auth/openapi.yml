@@ -32,8 +32,8 @@ components:
       required:
         - sendText
         - sendParam
-    send_snake_case:
-      title: send_snake_case
+    SendSnakeCase:
+      title: SendSnakeCase
       type: object
       properties:
         send_text:
@@ -54,8 +54,8 @@ components:
       required:
         - alpha
         - beta
-    receive_snake_case:
-      title: receive_snake_case
+    ReceiveSnakeCase:
+      title: ReceiveSnakeCase
       type: object
       properties:
         receive_text:
@@ -99,6 +99,6 @@ components:
       required:
         - receiveText3
   securitySchemes:
-    Bearer:
+    BearerAuth:
       type: http
       scheme: bearer

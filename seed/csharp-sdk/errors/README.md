@@ -39,10 +39,10 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```csharp
-using SeedErrors;
+using SeedApi;
 
-var client = new SeedErrorsClient();
-await client.Simple.FooWithoutEndpointErrorAsync(new FooRequest { Bar = "bar" });
+var client = new SeedApiClient();
+await client.Simple.FoowithoutendpointerrorAsync(new FooRequest { Bar = "bar" });
 ```
 
 ## Exception Handling
@@ -51,11 +51,11 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```csharp
-using SeedErrors;
+using SeedApi;
 
 try {
-    var response = await client.Simple.FooWithoutEndpointErrorAsync(...);
-} catch (SeedErrorsApiException e) {
+    var response = await client.Simple.FoowithoutendpointerrorAsync(...);
+} catch (SeedApiApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
 }
@@ -78,7 +78,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `MaxRetries` request option to configure this behavior.
 
 ```csharp
-var response = await client.Simple.FooWithoutEndpointErrorAsync(
+var response = await client.Simple.FoowithoutendpointerrorAsync(
     ...,
     new RequestOptions {
         MaxRetries: 0 // Override MaxRetries at the request level
@@ -91,7 +91,7 @@ var response = await client.Simple.FooWithoutEndpointErrorAsync(
 The SDK defaults to a 30 second timeout. Use the `Timeout` option to configure this behavior.
 
 ```csharp
-var response = await client.Simple.FooWithoutEndpointErrorAsync(
+var response = await client.Simple.FoowithoutendpointerrorAsync(
     ...,
     new RequestOptions {
         Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s
@@ -104,10 +104,10 @@ var response = await client.Simple.FooWithoutEndpointErrorAsync(
 Access raw HTTP response data (status code, headers, URL) alongside parsed response data using the `.WithRawResponse()` method.
 
 ```csharp
-using SeedErrors;
+using SeedApi;
 
 // Access raw response data (status code, headers, etc.) alongside the parsed response
-var result = await client.Simple.FooWithoutEndpointErrorAsync(...).WithRawResponse();
+var result = await client.Simple.FoowithoutendpointerrorAsync(...).WithRawResponse();
 
 // Access the parsed data
 var data = result.Data;
@@ -124,7 +124,7 @@ if (headers.TryGetValue("X-Request-Id", out var requestId))
 }
 
 // For the default behavior, simply await without .WithRawResponse()
-var data = await client.Simple.FooWithoutEndpointErrorAsync(...);
+var data = await client.Simple.FoowithoutendpointerrorAsync(...);
 ```
 
 ### Additional Headers
@@ -132,7 +132,7 @@ var data = await client.Simple.FooWithoutEndpointErrorAsync(...);
 If you would like to send additional headers as part of the request, use the `AdditionalHeaders` request option.
 
 ```csharp
-var response = await client.Simple.FooWithoutEndpointErrorAsync(
+var response = await client.Simple.FoowithoutendpointerrorAsync(
     ...,
     new RequestOptions {
         AdditionalHeaders = new Dictionary<string, string?>
@@ -148,7 +148,7 @@ var response = await client.Simple.FooWithoutEndpointErrorAsync(
 If you would like to send additional query parameters as part of the request, use the `AdditionalQueryParameters` request option.
 
 ```csharp
-var response = await client.Simple.FooWithoutEndpointErrorAsync(
+var response = await client.Simple.FoowithoutendpointerrorAsync(
     ...,
     new RequestOptions {
         AdditionalQueryParameters = new Dictionary<string, string>

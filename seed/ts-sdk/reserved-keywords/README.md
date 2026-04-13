@@ -40,9 +40,9 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedNurseryApiClient } from "@fern/reserved-keywords";
+import { SeedApiClient } from "@fern/reserved-keywords";
 
-const client = new SeedNurseryApiClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
 await client.package.test({
     "for": "for"
 });
@@ -54,9 +54,9 @@ The SDK exports all request and response types as TypeScript interfaces. Simply 
 following namespace:
 
 ```typescript
-import { SeedNurseryApi } from "@fern/reserved-keywords";
+import { SeedApi } from "@fern/reserved-keywords";
 
-const request: SeedNurseryApi.TestRequest = {
+const request: SeedApi.PackageTestRequest = {
     ...
 };
 ```
@@ -67,12 +67,12 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedNurseryApiError } from "@fern/reserved-keywords";
+import { SeedApiError } from "@fern/reserved-keywords";
 
 try {
     await client.package.test(...);
 } catch (err) {
-    if (err instanceof SeedNurseryApiError) {
+    if (err instanceof SeedApiError) {
         console.log(err.statusCode);
         console.log(err.message);
         console.log(err.body);
@@ -98,9 +98,9 @@ const client = new PackageClient({...});
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
-import { SeedNurseryApiClient } from "@fern/reserved-keywords";
+import { SeedApiClient } from "@fern/reserved-keywords";
 
-const client = new SeedNurseryApiClient({
+const client = new SeedApiClient({
     ...
     headers: {
         'X-Custom-Header': 'custom value'
@@ -185,9 +185,9 @@ console.log(rawResponse.headers['X-My-Header']);
 The SDK supports logging. You can configure the logger by passing in a `logging` object to the client options.
 
 ```typescript
-import { SeedNurseryApiClient, logging } from "@fern/reserved-keywords";
+import { SeedApiClient, logging } from "@fern/reserved-keywords";
 
-const client = new SeedNurseryApiClient({
+const client = new SeedApiClient({
     ...
     logging: {
         level: logging.LogLevel.Debug, // defaults to logging.LogLevel.Info

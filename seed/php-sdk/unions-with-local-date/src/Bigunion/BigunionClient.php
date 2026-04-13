@@ -4,14 +4,43 @@ namespace Seed\Bigunion;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Bigunion\Types\BigUnion;
+use Seed\Types\BigUnionZero;
+use Seed\Types\BigUnionOne;
+use Seed\Types\BigUnionTwo;
+use Seed\Types\BigUnionThree;
+use Seed\Types\BigUnionFour;
+use Seed\Types\BigUnionFive;
+use Seed\Types\BigUnionSix;
+use Seed\Types\BigUnionSeven;
+use Seed\Types\BigUnionEight;
+use Seed\Types\BigUnionNine;
+use Seed\Types\BigUnionTen;
+use Seed\Types\BigUnionEleven;
+use Seed\Types\BigUnionTwelve;
+use Seed\Types\BigUnionThirteen;
+use Seed\Types\BigUnionFourteen;
+use Seed\Types\BigUnionFifteen;
+use Seed\Types\BigUnionSixteen;
+use Seed\Types\BigUnionSeventeen;
+use Seed\Types\BigUnionEighteen;
+use Seed\Types\BigUnionNineteen;
+use Seed\Types\BigUnionTwenty;
+use Seed\Types\BigUnionTwentyOne;
+use Seed\Types\BigUnionTwentyTwo;
+use Seed\Types\BigUnionTwentyThree;
+use Seed\Types\BigUnionTwentyFour;
+use Seed\Types\BigUnionTwentyFive;
+use Seed\Types\BigUnionTwentySix;
+use Seed\Types\BigUnionTwentySeven;
+use Seed\Types\BigUnionTwentyEight;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
 use Seed\Core\Client\HttpMethod;
+use Seed\Core\Json\JsonDecoder;
+use Seed\Core\Types\Union;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
-use Seed\Core\Json\JsonDecoder;
 use Seed\Core\Json\JsonSerializer;
 
 class BigunionClient
@@ -60,18 +89,48 @@ class BigunionClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?BigUnion
+     * @return (
+     *    BigUnionZero
+     *   |BigUnionOne
+     *   |BigUnionTwo
+     *   |BigUnionThree
+     *   |BigUnionFour
+     *   |BigUnionFive
+     *   |BigUnionSix
+     *   |BigUnionSeven
+     *   |BigUnionEight
+     *   |BigUnionNine
+     *   |BigUnionTen
+     *   |BigUnionEleven
+     *   |BigUnionTwelve
+     *   |BigUnionThirteen
+     *   |BigUnionFourteen
+     *   |BigUnionFifteen
+     *   |BigUnionSixteen
+     *   |BigUnionSeventeen
+     *   |BigUnionEighteen
+     *   |BigUnionNineteen
+     *   |BigUnionTwenty
+     *   |BigUnionTwentyOne
+     *   |BigUnionTwentyTwo
+     *   |BigUnionTwentyThree
+     *   |BigUnionTwentyFour
+     *   |BigUnionTwentyFive
+     *   |BigUnionTwentySix
+     *   |BigUnionTwentySeven
+     *   |BigUnionTwentyEight
+     * )|null
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function get(string $id, ?array $options = null): ?BigUnion
+    public function get(string $id, ?array $options = null): BigUnionZero|BigUnionOne|BigUnionTwo|BigUnionThree|BigUnionFour|BigUnionFive|BigUnionSix|BigUnionSeven|BigUnionEight|BigUnionNine|BigUnionTen|BigUnionEleven|BigUnionTwelve|BigUnionThirteen|BigUnionFourteen|BigUnionFifteen|BigUnionSixteen|BigUnionSeventeen|BigUnionEighteen|BigUnionNineteen|BigUnionTwenty|BigUnionTwentyOne|BigUnionTwentyTwo|BigUnionTwentyThree|BigUnionTwentyFour|BigUnionTwentyFive|BigUnionTwentySix|BigUnionTwentySeven|BigUnionTwentyEight|null
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/{$id}",
+                    path: "bigunion/{$id}",
                     method: HttpMethod::GET,
                 ),
                 $options,
@@ -82,7 +141,7 @@ class BigunionClient
                 if (empty($json)) {
                     return null;
                 }
-                return BigUnion::fromJson($json);
+                return JsonDecoder::decodeUnion($json, new Union(BigUnionZero::class, BigUnionOne::class, BigUnionTwo::class, BigUnionThree::class, BigUnionFour::class, BigUnionFive::class, BigUnionSix::class, BigUnionSeven::class, BigUnionEight::class, BigUnionNine::class, BigUnionTen::class, BigUnionEleven::class, BigUnionTwelve::class, BigUnionThirteen::class, BigUnionFourteen::class, BigUnionFifteen::class, BigUnionSixteen::class, BigUnionSeventeen::class, BigUnionEighteen::class, BigUnionNineteen::class, BigUnionTwenty::class, BigUnionTwentyOne::class, BigUnionTwentyTwo::class, BigUnionTwentyThree::class, BigUnionTwentyFour::class, BigUnionTwentyFive::class, BigUnionTwentySix::class, BigUnionTwentySeven::class, BigUnionTwentyEight::class)); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -97,7 +156,37 @@ class BigunionClient
     }
 
     /**
-     * @param BigUnion $request
+     * @param (
+     *    BigUnionZero
+     *   |BigUnionOne
+     *   |BigUnionTwo
+     *   |BigUnionThree
+     *   |BigUnionFour
+     *   |BigUnionFive
+     *   |BigUnionSix
+     *   |BigUnionSeven
+     *   |BigUnionEight
+     *   |BigUnionNine
+     *   |BigUnionTen
+     *   |BigUnionEleven
+     *   |BigUnionTwelve
+     *   |BigUnionThirteen
+     *   |BigUnionFourteen
+     *   |BigUnionFifteen
+     *   |BigUnionSixteen
+     *   |BigUnionSeventeen
+     *   |BigUnionEighteen
+     *   |BigUnionNineteen
+     *   |BigUnionTwenty
+     *   |BigUnionTwentyOne
+     *   |BigUnionTwentyTwo
+     *   |BigUnionTwentyThree
+     *   |BigUnionTwentyFour
+     *   |BigUnionTwentyFive
+     *   |BigUnionTwentySix
+     *   |BigUnionTwentySeven
+     *   |BigUnionTwentyEight
+     * ) $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -110,16 +199,16 @@ class BigunionClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function update(BigUnion $request, ?array $options = null): ?bool
+    public function update(BigUnionZero|BigUnionOne|BigUnionTwo|BigUnionThree|BigUnionFour|BigUnionFive|BigUnionSix|BigUnionSeven|BigUnionEight|BigUnionNine|BigUnionTen|BigUnionEleven|BigUnionTwelve|BigUnionThirteen|BigUnionFourteen|BigUnionFifteen|BigUnionSixteen|BigUnionSeventeen|BigUnionEighteen|BigUnionNineteen|BigUnionTwenty|BigUnionTwentyOne|BigUnionTwentyTwo|BigUnionTwentyThree|BigUnionTwentyFour|BigUnionTwentyFive|BigUnionTwentySix|BigUnionTwentySeven|BigUnionTwentyEight $request, ?array $options = null): ?bool
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "",
+                    path: "bigunion",
                     method: HttpMethod::PATCH,
-                    body: $request,
+                    body: JsonSerializer::serializeUnion($request, new Union(BigUnionZero::class, BigUnionOne::class, BigUnionTwo::class, BigUnionThree::class, BigUnionFour::class, BigUnionFive::class, BigUnionSix::class, BigUnionSeven::class, BigUnionEight::class, BigUnionNine::class, BigUnionTen::class, BigUnionEleven::class, BigUnionTwelve::class, BigUnionThirteen::class, BigUnionFourteen::class, BigUnionFifteen::class, BigUnionSixteen::class, BigUnionSeventeen::class, BigUnionEighteen::class, BigUnionNineteen::class, BigUnionTwenty::class, BigUnionTwentyOne::class, BigUnionTwentyTwo::class, BigUnionTwentyThree::class, BigUnionTwentyFour::class, BigUnionTwentyFive::class, BigUnionTwentySix::class, BigUnionTwentySeven::class, BigUnionTwentyEight::class)),
                 ),
                 $options,
             );
@@ -144,7 +233,37 @@ class BigunionClient
     }
 
     /**
-     * @param array<BigUnion> $request
+     * @param array<(
+     *    BigUnionZero
+     *   |BigUnionOne
+     *   |BigUnionTwo
+     *   |BigUnionThree
+     *   |BigUnionFour
+     *   |BigUnionFive
+     *   |BigUnionSix
+     *   |BigUnionSeven
+     *   |BigUnionEight
+     *   |BigUnionNine
+     *   |BigUnionTen
+     *   |BigUnionEleven
+     *   |BigUnionTwelve
+     *   |BigUnionThirteen
+     *   |BigUnionFourteen
+     *   |BigUnionFifteen
+     *   |BigUnionSixteen
+     *   |BigUnionSeventeen
+     *   |BigUnionEighteen
+     *   |BigUnionNineteen
+     *   |BigUnionTwenty
+     *   |BigUnionTwentyOne
+     *   |BigUnionTwentyTwo
+     *   |BigUnionTwentyThree
+     *   |BigUnionTwentyFour
+     *   |BigUnionTwentyFive
+     *   |BigUnionTwentySix
+     *   |BigUnionTwentySeven
+     *   |BigUnionTwentyEight
+     * )> $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -164,9 +283,9 @@ class BigunionClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/many",
+                    path: "bigunion/many",
                     method: HttpMethod::PATCH,
-                    body: JsonSerializer::serializeArray($request, [BigUnion::class]),
+                    body: JsonSerializer::serializeArray($request, [new Union(BigUnionZero::class, BigUnionOne::class, BigUnionTwo::class, BigUnionThree::class, BigUnionFour::class, BigUnionFive::class, BigUnionSix::class, BigUnionSeven::class, BigUnionEight::class, BigUnionNine::class, BigUnionTen::class, BigUnionEleven::class, BigUnionTwelve::class, BigUnionThirteen::class, BigUnionFourteen::class, BigUnionFifteen::class, BigUnionSixteen::class, BigUnionSeventeen::class, BigUnionEighteen::class, BigUnionNineteen::class, BigUnionTwenty::class, BigUnionTwentyOne::class, BigUnionTwentyTwo::class, BigUnionTwentyThree::class, BigUnionTwentyFour::class, BigUnionTwentyFive::class, BigUnionTwentySix::class, BigUnionTwentySeven::class, BigUnionTwentyEight::class)]),
                 ),
                 $options,
             );

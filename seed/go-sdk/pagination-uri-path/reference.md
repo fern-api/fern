@@ -1,6 +1,6 @@
 # Reference
 ## Users
-<details><summary><code>client.Users.ListWithUriPagination() -> *fern.ListUsersUriPaginationResponse</code></summary>
+<details><summary><code>client.Users.Listwithuripagination() -> *fern.ListUsersURIPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```go
-client.Users.ListWithUriPagination(
+client.Users.Listwithuripagination(
         context.TODO(),
     )
 }
@@ -28,7 +28,7 @@ client.Users.ListWithUriPagination(
 </dl>
 </details>
 
-<details><summary><code>client.Users.ListWithPathPagination() -> *fern.ListUsersPathPaginationResponse</code></summary>
+<details><summary><code>client.Users.Listwithpathpagination() -> *fern.ListUsersPathPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -41,7 +41,7 @@ client.Users.ListWithUriPagination(
 <dd>
 
 ```go
-client.Users.ListWithPathPagination(
+client.Users.Listwithpathpagination(
         context.TODO(),
     )
 }

@@ -14,19 +14,15 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.UpdateUserRequest{
-        Body: &fern.User{
-            Name: "name",
-            Tags: []string{
-                "tags",
-                "tags",
-            },
-        },
+    request := &fern.OrganizationsSearchOrganizationsRequest{
+        Limit: fern.Int(
+            1,
+        ),
     }
-    client.User.UpdateUser(
+    client.Organizations.Searchorganizations(
         context.TODO(),
         "tenant_id",
-        "user_id",
+        "organization_id",
         request,
     )
 }

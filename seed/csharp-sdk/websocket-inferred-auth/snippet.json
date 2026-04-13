@@ -6,11 +6,11 @@
             "id": {
                 "path": "/token",
                 "method": "POST",
-                "identifier_override": "endpoint_auth.getTokenWithClientCredentials"
+                "identifier_override": "endpoint_auth.gettokenwithclientcredentials"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedWebsocketAuth;\n\nvar client = new SeedWebsocketAuthClient(\"X-Api-Key\", \"client_id\", \"client_secret\", \"scope\");\nawait client.Auth.GetTokenWithClientCredentialsAsync(\n    new GetTokenRequest\n    {\n        XApiKey = \"X-Api-Key\",\n        ClientId = \"client_id\",\n        ClientSecret = \"client_secret\",\n        Audience = \"https://api.example.com\",\n        GrantType = \"client_credentials\",\n        Scope = \"scope\",\n    }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"API_KEY\");\nawait client.Auth.GettokenwithclientcredentialsAsync(\n    new AuthGetTokenWithClientCredentialsRequest\n    {\n        ClientId = \"client_id\",\n        ClientSecret = \"client_secret\",\n        Audience = AuthGetTokenWithClientCredentialsRequestAudience.HttpsApiExampleCom,\n        GrantType = AuthGetTokenWithClientCredentialsRequestGrantType.ClientCredentials,\n    }\n);\n"
             }
         },
         {
@@ -18,11 +18,11 @@
             "id": {
                 "path": "/token/refresh",
                 "method": "POST",
-                "identifier_override": "endpoint_auth.refreshToken"
+                "identifier_override": "endpoint_auth.refreshtoken"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedWebsocketAuth;\n\nvar client = new SeedWebsocketAuthClient(\"X-Api-Key\", \"client_id\", \"client_secret\", \"scope\");\nawait client.Auth.RefreshTokenAsync(\n    new RefreshTokenRequest\n    {\n        XApiKey = \"X-Api-Key\",\n        ClientId = \"client_id\",\n        ClientSecret = \"client_secret\",\n        RefreshToken = \"refresh_token\",\n        Audience = \"https://api.example.com\",\n        GrantType = \"refresh_token\",\n        Scope = \"scope\",\n    }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"API_KEY\");\nawait client.Auth.RefreshtokenAsync(\n    new AuthRefreshTokenRequest\n    {\n        ClientId = \"client_id\",\n        ClientSecret = \"client_secret\",\n        RefreshToken = \"refresh_token\",\n        Audience = AuthRefreshTokenRequestAudience.HttpsApiExampleCom,\n        GrantType = AuthRefreshTokenRequestGrantType.RefreshToken,\n    }\n);\n"
             }
         }
     ]

@@ -4,12 +4,12 @@ import os
 
 import pytest
 
-from seed import AsyncSeedExamples, SeedExamples
+from seed import AsyncSeedApi, SeedApi
 
 
 @pytest.fixture
-def client() -> SeedExamples:
-    return SeedExamples(
+def client() -> SeedApi:
+    return SeedApi(
         token=os.getenv("ENV_TOKEN", "token"),
         headers=os.getenv("ENV_HEADERS", "headers"),
         base_url=os.getenv("TESTS_BASE_URL", "base_url"),
@@ -17,8 +17,8 @@ def client() -> SeedExamples:
 
 
 @pytest.fixture
-def async_client() -> AsyncSeedExamples:
-    return AsyncSeedExamples(
+def async_client() -> AsyncSeedApi:
+    return AsyncSeedApi(
         token=os.getenv("ENV_TOKEN", "token"),
         headers=os.getenv("ENV_HEADERS", "headers"),
         base_url=os.getenv("TESTS_BASE_URL", "base_url"),

@@ -4,14 +4,14 @@ namespace Seed\Users;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Users\Types\ListUsersUriPaginationResponse;
+use Seed\Types\ListUsersUriPaginationResponse;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
 use Seed\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
-use Seed\Users\Types\ListUsersPathPaginationResponse;
+use Seed\Types\ListUsersPathPaginationResponse;
 
 class UsersClient
 {
@@ -62,14 +62,14 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listWithUriPagination(?array $options = null): ?ListUsersUriPaginationResponse
+    public function listwithuripagination(?array $options = null): ?ListUsersUriPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/users/uri",
+                    path: "users/uri",
                     method: HttpMethod::GET,
                 ),
                 $options,
@@ -107,14 +107,14 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listWithPathPagination(?array $options = null): ?ListUsersPathPaginationResponse
+    public function listwithpathpagination(?array $options = null): ?ListUsersPathPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/users/path",
+                    path: "users/path",
                     method: HttpMethod::GET,
                 ),
                 $options,

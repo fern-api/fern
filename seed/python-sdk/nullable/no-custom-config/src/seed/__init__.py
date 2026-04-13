@@ -6,13 +6,13 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import nullable
-    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
-    from .client import AsyncSeedNullable, SeedNullable
-    from .nullable import (
+    from .types import (
         Email,
         Metadata,
         Status,
+        StatusActive,
+        StatusArchived,
+        StatusSoftDeleted,
         Status_Active,
         Status_Archived,
         Status_SoftDeleted,
@@ -20,21 +20,27 @@ if typing.TYPE_CHECKING:
         UserId,
         WeirdNumber,
     )
+    from . import nullable
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
+    from .client import AsyncSeedApi, SeedApi
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedNullable": ".client",
+    "AsyncSeedApi": ".client",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
-    "Email": ".nullable",
-    "Metadata": ".nullable",
-    "SeedNullable": ".client",
-    "Status": ".nullable",
-    "Status_Active": ".nullable",
-    "Status_Archived": ".nullable",
-    "Status_SoftDeleted": ".nullable",
-    "User": ".nullable",
-    "UserId": ".nullable",
-    "WeirdNumber": ".nullable",
+    "Email": ".types",
+    "Metadata": ".types",
+    "SeedApi": ".client",
+    "Status": ".types",
+    "StatusActive": ".types",
+    "StatusArchived": ".types",
+    "StatusSoftDeleted": ".types",
+    "Status_Active": ".types",
+    "Status_Archived": ".types",
+    "Status_SoftDeleted": ".types",
+    "User": ".types",
+    "UserId": ".types",
+    "WeirdNumber": ".types",
     "__version__": ".version",
     "nullable": ".nullable",
 }
@@ -62,13 +68,16 @@ def __dir__():
 
 
 __all__ = [
-    "AsyncSeedNullable",
+    "AsyncSeedApi",
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
     "Email",
     "Metadata",
-    "SeedNullable",
+    "SeedApi",
     "Status",
+    "StatusActive",
+    "StatusArchived",
+    "StatusSoftDeleted",
     "Status_Active",
     "Status_Archived",
     "Status_SoftDeleted",

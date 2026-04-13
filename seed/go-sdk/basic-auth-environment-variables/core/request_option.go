@@ -26,7 +26,7 @@ type RequestOptions struct {
 	MaxAttempts     uint
 	MaxBufSize      int
 	Username        string
-	AccessToken     string
+	Password        string
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
@@ -49,8 +49,8 @@ func NewRequestOptions(opts ...RequestOption) *RequestOptions {
 // for the request(s).
 func (r *RequestOptions) ToHeader() http.Header {
 	header := r.cloneHeader()
-	if r.Username != "" || r.AccessToken != "" {
-		header.Set("Authorization", "Basic "+base64.StdEncoding.EncodeToString([]byte(r.Username+":"+r.AccessToken)))
+	if r.Username != "" || r.Password != "" {
+		header.Set("Authorization", "Basic "+base64.StdEncoding.EncodeToString([]byte(r.Username+":"+r.Password)))
 	}
 	return header
 }
@@ -129,11 +129,11 @@ func (m *MaxBufSizeOption) applyRequestOptions(opts *RequestOptions) {
 
 // BasicAuthOption implements the RequestOption interface.
 type BasicAuthOption struct {
-	Username    string
-	AccessToken string
+	Username string
+	Password string
 }
 
 func (b *BasicAuthOption) applyRequestOptions(opts *RequestOptions) {
 	opts.Username = b.Username
-	opts.AccessToken = b.AccessToken
+	opts.Password = b.Password
 }

@@ -1,4 +1,4 @@
-use seed_endpoint_security_auth::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -7,6 +7,6 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = EndpointSecurityAuthClient::new(config).expect("Failed to build client");
-    client.user.get_with_basic(None).await;
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client.user.getwithapikey(None).await;
 }

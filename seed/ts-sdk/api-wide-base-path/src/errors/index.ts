@@ -1,2 +1,2 @@
-export { SeedApiWideBasePathError } from "./SeedApiWideBasePathError.js";
-export { SeedApiWideBasePathTimeoutError } from "./SeedApiWideBasePathTimeoutError.js";
+export { SeedApiError } from "./SeedApiError.js";
+export { SeedApiTimeoutError } from "./SeedApiTimeoutError.js";

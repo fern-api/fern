@@ -1,18 +1,20 @@
-using SeedMultiLineDocs;
+using SeedApi;
 
 namespace Usage;
 
 public class Example0
 {
     public async Task Do() {
-        var client = new SeedMultiLineDocsClient(
+        var client = new SeedApiClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.User.GetUserAsync(
-            "userId"
+        await client.User.GetuserAsync(
+            new UserGetUserRequest {
+                UserId = "userId"
+            }
         );
     }
 

@@ -6,7 +6,7 @@ import { mergeHeaders } from "./core/headers.js";
 import type * as environments from "./environments.js";
 
 export type BaseClientOptions = {
-    environment: core.Supplier<environments.SeedSimpleApiEnvironment | string>;
+    environment?: core.Supplier<environments.SeedApiEnvironment | string>;
     /** Specify a custom URL to connect the client to. */
     baseUrl?: core.Supplier<string>;
     /** Additional headers to include in requests. */

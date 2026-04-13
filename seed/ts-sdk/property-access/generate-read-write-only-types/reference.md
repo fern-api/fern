@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/Client.ts">createUser</a>({ ...params }) -> SeedPropertyAccess.User.Response</code></summary>
+<details><summary><code>client.<a href="/src/Client.ts">createUser</a>({ ...params }) -> SeedApi.User.Response</code></summary>
 <dl>
 <dd>
 
@@ -35,7 +35,7 @@ await client.createUser({
 <dl>
 <dd>
 
-**request:** `SeedPropertyAccess.User.Request` 
+**request:** `SeedApi.User.Request` 
     
 </dd>
 </dl>
@@ -43,7 +43,7 @@ await client.createUser({
 <dl>
 <dd>
 
-**requestOptions:** `SeedPropertyAccessClient.RequestOptions` 
+**requestOptions:** `SeedApiClient.RequestOptions` 
     
 </dd>
 </dl>

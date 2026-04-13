@@ -1,6 +1,6 @@
 # Reference
 ## Imdb
-<details><summary><code>client.imdb.<a href="src/seed/imdb/client.py">create_movie</a>(...) -> MovieId</code></summary>
+<details><summary><code>client.imdb.<a href="src/seed/imdb/client.py">createmovie</a>(...) -> MovieId</code></summary>
 <dl>
 <dd>
 
@@ -34,7 +34,7 @@ client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.imdb.create_movie(
+client.imdb.createmovie(
     title="title",
     rating=1.1,
 )
@@ -53,7 +53,15 @@ client.imdb.create_movie(
 <dl>
 <dd>
 
-**request:** `CreateMovieRequest` 
+**title:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**rating:** `float` 
     
 </dd>
 </dl>
@@ -73,7 +81,7 @@ client.imdb.create_movie(
 </dl>
 </details>
 
-<details><summary><code>client.imdb.<a href="src/seed/imdb/client.py">get_movie</a>(...) -> Movie</code></summary>
+<details><summary><code>client.imdb.<a href="src/seed/imdb/client.py">getmovie</a>(...) -> Movie</code></summary>
 <dl>
 <dd>
 
@@ -93,7 +101,7 @@ client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.imdb.get_movie(
+client.imdb.getmovie(
     movie_id="movieId",
 )
 

@@ -2,11 +2,11 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedAnyAuth from "../../../index.js";
+import type * as SeedApi from "../../../index.js";
 
 export declare namespace UserClient {
     export type Options = BaseClientOptions;
@@ -27,13 +27,19 @@ export class UserClient {
      * @example
      *     await client.user.get()
      */
-    public get(requestOptions?: UserClient.RequestOptions): core.HttpResponsePromise<SeedAnyAuth.User[]> {
+    public get(requestOptions?: UserClient.RequestOptions): core.HttpResponsePromise<SeedApi.User[]> {
         return core.HttpResponsePromise.fromPromise(this.__get(requestOptions));
     }
 
-    private async __get(requestOptions?: UserClient.RequestOptions): Promise<core.WithRawResponse<SeedAnyAuth.User[]>> {
+    private async __get(requestOptions?: UserClient.RequestOptions): Promise<core.WithRawResponse<SeedApi.User[]>> {
         const _metadata: core.EndpointMetadata = {
-            security: [{ Bearer: [] }, { ApiKey: [] }, { OAuth: [] }, { Basic: [] }, { InferredAuth: [] }],
+            security: [
+                { BearerAuth: [] },
+                { APIKeyAuth: [] },
+                { BearerAuth: [] },
+                { BasicAuth: [] },
+                { InferredAuth: [] },
+            ],
         };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest({
             endpointMetadata: _metadata,
@@ -41,6 +47,7 @@ export class UserClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({ "X-API-Key": requestOptions?.apiKey ?? this._options?.apiKey }),
             requestOptions?.headers,
         );
         const _response = await core.fetcher({
@@ -60,11 +67,11 @@ export class UserClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedAnyAuth.User[], rawResponse: _response.rawResponse };
+            return { data: _response.body as SeedApi.User[], rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedAnyAuthError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -78,22 +85,31 @@ export class UserClient {
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.user.getAdmins()
+     *     await client.user.getadmins()
      */
-    public getAdmins(requestOptions?: UserClient.RequestOptions): core.HttpResponsePromise<SeedAnyAuth.User[]> {
-        return core.HttpResponsePromise.fromPromise(this.__getAdmins(requestOptions));
+    public getadmins(requestOptions?: UserClient.RequestOptions): core.HttpResponsePromise<SeedApi.User[]> {
+        return core.HttpResponsePromise.fromPromise(this.__getadmins(requestOptions));
     }
 
-    private async __getAdmins(
+    private async __getadmins(
         requestOptions?: UserClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedAnyAuth.User[]>> {
-        const _metadata: core.EndpointMetadata = { security: [{ OAuth: ["admin"] }] };
+    ): Promise<core.WithRawResponse<SeedApi.User[]>> {
+        const _metadata: core.EndpointMetadata = {
+            security: [
+                { BearerAuth: [] },
+                { APIKeyAuth: [] },
+                { BearerAuth: [] },
+                { BasicAuth: [] },
+                { InferredAuth: [] },
+            ],
+        };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest({
             endpointMetadata: _metadata,
         });
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({ "X-API-Key": requestOptions?.apiKey ?? this._options?.apiKey }),
             requestOptions?.headers,
         );
         const _response = await core.fetcher({
@@ -113,11 +129,11 @@ export class UserClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedAnyAuth.User[], rawResponse: _response.rawResponse };
+            return { data: _response.body as SeedApi.User[], rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedAnyAuthError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

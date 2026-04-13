@@ -12,21 +12,17 @@
 <dd>
 
 ```python
-from seed import SeedPropertyAccess, UserProfile, UserProfileVerification
+from seed import SeedApi, UserProfile, UserProfileVerification
 
-client = SeedPropertyAccess(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
 client.create_user(
-    id="id",
-    email="email",
     password="password",
     profile=UserProfile(
         name="name",
-        verification=UserProfileVerification(
-            verified="verified",
-        ),
+        verification=UserProfileVerification(),
         ssn="ssn",
     ),
 )

@@ -1,4 +1,4 @@
-//! Request and response types for the Nullable
+//! Request and response types for the nullable
 //!
 //! This module contains all data structures used for API communication,
 //! including request bodies, response types, and shared models.
@@ -8,23 +8,23 @@
 //! - **Request/Response Types**: 3 types for API operations
 //! - **Model Types**: 6 types for data representation
 
-pub mod nullable_email;
-pub mod nullable_user_id;
-pub mod nullable_weird_number;
-pub mod nullable_user;
-pub mod nullable_status;
-pub mod nullable_metadata;
-pub mod create_user_request;
-pub mod delete_user_request;
-pub mod get_users_query_request;
+pub mod email;
+pub mod user_id;
+pub mod weird_number;
+pub mod user;
+pub mod status;
+pub mod metadata;
+pub mod nullable_create_user_request;
+pub mod nullable_delete_user_request;
+pub mod getusers_query_request;
 
-pub use nullable_email::Email;
-pub use nullable_user_id::UserId;
-pub use nullable_weird_number::WeirdNumber;
-pub use nullable_user::User;
-pub use nullable_status::Status;
-pub use nullable_metadata::Metadata;
-pub use create_user_request::CreateUserRequest;
-pub use delete_user_request::DeleteUserRequest;
-pub use get_users_query_request::GetUsersQueryRequest;
+pub use email::Email;
+pub use user_id::UserId;
+pub use weird_number::WeirdNumber;
+pub use user::User;
+pub use status::Status;
+pub use metadata::Metadata;
+pub use nullable_create_user_request::NullableCreateUserRequest;
+pub use nullable_delete_user_request::NullableDeleteUserRequest;
+pub use getusers_query_request::GetusersQueryRequest;
 

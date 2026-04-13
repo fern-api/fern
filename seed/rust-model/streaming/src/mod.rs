@@ -1,4 +1,4 @@
-//! Request and response types for the Streaming
+//! Request and response types for the streaming
 //!
 //! This module contains all data structures used for API communication,
 //! including request bodies, response types, and shared models.
@@ -7,11 +7,11 @@
 //!
 //! - **Request/Response Types**: 3 types for API operations
 
-pub mod dummy_stream_response;
-pub mod generate_stream_request;
-pub mod generateequest;
+pub mod stream_response;
+pub mod dummy_generate_stream_request;
+pub mod dummy_generate_request;
 
-pub use dummy_stream_response::StreamResponse;
-pub use generate_stream_request::GenerateStreamRequest;
-pub use generateequest::Generateequest;
+pub use stream_response::StreamResponse;
+pub use dummy_generate_stream_request::DummyGenerateStreamRequest;
+pub use dummy_generate_request::DummyGenerateRequest;
 

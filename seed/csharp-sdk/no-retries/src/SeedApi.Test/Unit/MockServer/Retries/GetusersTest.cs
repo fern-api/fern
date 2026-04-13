@@ -1,0 +1,64 @@
+using NUnit.Framework;
+using SeedApi.Test.Unit.MockServer;
+using SeedApi.Test.Utils;
+
+namespace SeedApi.Test.Unit.MockServer.Retries;
+
+[TestFixture]
+[Parallelizable(ParallelScope.Self)]
+public class GetusersTest : BaseMockServerTest
+{
+    [NUnit.Framework.Test]
+    public async Task MockServerTest_1()
+    {
+        const string mockResponse = """
+            [
+              {
+                "id": "id",
+                "name": "name"
+              },
+              {
+                "id": "id",
+                "name": "name"
+              }
+            ]
+            """;
+
+        Server
+            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/users").UsingGet())
+            .RespondWith(
+                WireMock
+                    .ResponseBuilders.Response.Create()
+                    .WithStatusCode(200)
+                    .WithBody(mockResponse)
+            );
+
+        var response = await Client.Retries.GetusersAsync();
+        JsonAssert.AreEqual(response, mockResponse);
+    }
+
+    [NUnit.Framework.Test]
+    public async Task MockServerTest_2()
+    {
+        const string mockResponse = """
+            [
+              {
+                "id": "id",
+                "name": "name"
+              }
+            ]
+            """;
+
+        Server
+            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/users").UsingGet())
+            .RespondWith(
+                WireMock
+                    .ResponseBuilders.Response.Create()
+                    .WithStatusCode(200)
+                    .WithBody(mockResponse)
+            );
+
+        var response = await Client.Retries.GetusersAsync();
+        JsonAssert.AreEqual(response, mockResponse);
+    }
+}

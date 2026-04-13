@@ -4,8 +4,8 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
+from ..types.user import User
 from .raw_client import AsyncRawUserClient, RawUserClient
-from .types.user import User
 
 
 class UserClient:
@@ -23,7 +23,7 @@ class UserClient:
         """
         return self._raw_client
 
-    def get_with_bearer(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[User]:
+    def getwithbearer(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[User]:
         """
         Parameters
         ----------
@@ -34,21 +34,22 @@ class UserClient:
         -------
         typing.List[User]
 
+
         Examples
         --------
-        from seed import SeedEndpointSecurityAuth
+        from seed import SeedApi
 
-        client = SeedEndpointSecurityAuth(
-            base_url="YOUR_BASE_URL",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
+        client = SeedApi(
+            api_key="YOUR_API_KEY",
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
         )
-        client.user.get_with_bearer()
+        client.user.getwithbearer()
         """
-        _response = self._raw_client.get_with_bearer(request_options=request_options)
+        _response = self._raw_client.getwithbearer(request_options=request_options)
         return _response.data
 
-    def get_with_api_key(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[User]:
+    def getwithapikey(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[User]:
         """
         Parameters
         ----------
@@ -59,21 +60,22 @@ class UserClient:
         -------
         typing.List[User]
 
+
         Examples
         --------
-        from seed import SeedEndpointSecurityAuth
+        from seed import SeedApi
 
-        client = SeedEndpointSecurityAuth(
-            base_url="YOUR_BASE_URL",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
+        client = SeedApi(
+            api_key="YOUR_API_KEY",
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
         )
-        client.user.get_with_api_key()
+        client.user.getwithapikey()
         """
-        _response = self._raw_client.get_with_api_key(request_options=request_options)
+        _response = self._raw_client.getwithapikey(request_options=request_options)
         return _response.data
 
-    def get_with_o_auth(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[User]:
+    def getwithoauth(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[User]:
         """
         Parameters
         ----------
@@ -84,21 +86,22 @@ class UserClient:
         -------
         typing.List[User]
 
+
         Examples
         --------
-        from seed import SeedEndpointSecurityAuth
+        from seed import SeedApi
 
-        client = SeedEndpointSecurityAuth(
-            base_url="YOUR_BASE_URL",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
+        client = SeedApi(
+            api_key="YOUR_API_KEY",
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
         )
-        client.user.get_with_o_auth()
+        client.user.getwithoauth()
         """
-        _response = self._raw_client.get_with_o_auth(request_options=request_options)
+        _response = self._raw_client.getwithoauth(request_options=request_options)
         return _response.data
 
-    def get_with_basic(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[User]:
+    def getwithbasic(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[User]:
         """
         Parameters
         ----------
@@ -109,21 +112,22 @@ class UserClient:
         -------
         typing.List[User]
 
+
         Examples
         --------
-        from seed import SeedEndpointSecurityAuth
+        from seed import SeedApi
 
-        client = SeedEndpointSecurityAuth(
-            base_url="YOUR_BASE_URL",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
+        client = SeedApi(
+            api_key="YOUR_API_KEY",
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
         )
-        client.user.get_with_basic()
+        client.user.getwithbasic()
         """
-        _response = self._raw_client.get_with_basic(request_options=request_options)
+        _response = self._raw_client.getwithbasic(request_options=request_options)
         return _response.data
 
-    def get_with_inferred_auth(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[User]:
+    def getwithinferredauth(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[User]:
         """
         Parameters
         ----------
@@ -134,21 +138,22 @@ class UserClient:
         -------
         typing.List[User]
 
+
         Examples
         --------
-        from seed import SeedEndpointSecurityAuth
+        from seed import SeedApi
 
-        client = SeedEndpointSecurityAuth(
-            base_url="YOUR_BASE_URL",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
+        client = SeedApi(
+            api_key="YOUR_API_KEY",
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
         )
-        client.user.get_with_inferred_auth()
+        client.user.getwithinferredauth()
         """
-        _response = self._raw_client.get_with_inferred_auth(request_options=request_options)
+        _response = self._raw_client.getwithinferredauth(request_options=request_options)
         return _response.data
 
-    def get_with_any_auth(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[User]:
+    def getwithanyauth(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[User]:
         """
         Parameters
         ----------
@@ -159,21 +164,22 @@ class UserClient:
         -------
         typing.List[User]
 
+
         Examples
         --------
-        from seed import SeedEndpointSecurityAuth
+        from seed import SeedApi
 
-        client = SeedEndpointSecurityAuth(
-            base_url="YOUR_BASE_URL",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
+        client = SeedApi(
+            api_key="YOUR_API_KEY",
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
         )
-        client.user.get_with_any_auth()
+        client.user.getwithanyauth()
         """
-        _response = self._raw_client.get_with_any_auth(request_options=request_options)
+        _response = self._raw_client.getwithanyauth(request_options=request_options)
         return _response.data
 
-    def get_with_all_auth(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[User]:
+    def getwithallauth(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[User]:
         """
         Parameters
         ----------
@@ -184,18 +190,19 @@ class UserClient:
         -------
         typing.List[User]
 
+
         Examples
         --------
-        from seed import SeedEndpointSecurityAuth
+        from seed import SeedApi
 
-        client = SeedEndpointSecurityAuth(
-            base_url="YOUR_BASE_URL",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
+        client = SeedApi(
+            api_key="YOUR_API_KEY",
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
         )
-        client.user.get_with_all_auth()
+        client.user.getwithallauth()
         """
-        _response = self._raw_client.get_with_all_auth(request_options=request_options)
+        _response = self._raw_client.getwithallauth(request_options=request_options)
         return _response.data
 
 
@@ -214,7 +221,7 @@ class AsyncUserClient:
         """
         return self._raw_client
 
-    async def get_with_bearer(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[User]:
+    async def getwithbearer(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[User]:
         """
         Parameters
         ----------
@@ -225,29 +232,30 @@ class AsyncUserClient:
         -------
         typing.List[User]
 
+
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedEndpointSecurityAuth
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedEndpointSecurityAuth(
-            base_url="YOUR_BASE_URL",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
+        client = AsyncSeedApi(
+            api_key="YOUR_API_KEY",
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.user.get_with_bearer()
+            await client.user.getwithbearer()
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_with_bearer(request_options=request_options)
+        _response = await self._raw_client.getwithbearer(request_options=request_options)
         return _response.data
 
-    async def get_with_api_key(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[User]:
+    async def getwithapikey(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[User]:
         """
         Parameters
         ----------
@@ -258,29 +266,30 @@ class AsyncUserClient:
         -------
         typing.List[User]
 
+
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedEndpointSecurityAuth
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedEndpointSecurityAuth(
-            base_url="YOUR_BASE_URL",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
+        client = AsyncSeedApi(
+            api_key="YOUR_API_KEY",
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.user.get_with_api_key()
+            await client.user.getwithapikey()
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_with_api_key(request_options=request_options)
+        _response = await self._raw_client.getwithapikey(request_options=request_options)
         return _response.data
 
-    async def get_with_o_auth(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[User]:
+    async def getwithoauth(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[User]:
         """
         Parameters
         ----------
@@ -291,29 +300,30 @@ class AsyncUserClient:
         -------
         typing.List[User]
 
+
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedEndpointSecurityAuth
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedEndpointSecurityAuth(
-            base_url="YOUR_BASE_URL",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
+        client = AsyncSeedApi(
+            api_key="YOUR_API_KEY",
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.user.get_with_o_auth()
+            await client.user.getwithoauth()
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_with_o_auth(request_options=request_options)
+        _response = await self._raw_client.getwithoauth(request_options=request_options)
         return _response.data
 
-    async def get_with_basic(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[User]:
+    async def getwithbasic(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[User]:
         """
         Parameters
         ----------
@@ -324,29 +334,30 @@ class AsyncUserClient:
         -------
         typing.List[User]
 
+
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedEndpointSecurityAuth
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedEndpointSecurityAuth(
-            base_url="YOUR_BASE_URL",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
+        client = AsyncSeedApi(
+            api_key="YOUR_API_KEY",
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.user.get_with_basic()
+            await client.user.getwithbasic()
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_with_basic(request_options=request_options)
+        _response = await self._raw_client.getwithbasic(request_options=request_options)
         return _response.data
 
-    async def get_with_inferred_auth(
+    async def getwithinferredauth(
         self, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[User]:
         """
@@ -359,29 +370,30 @@ class AsyncUserClient:
         -------
         typing.List[User]
 
+
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedEndpointSecurityAuth
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedEndpointSecurityAuth(
-            base_url="YOUR_BASE_URL",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
+        client = AsyncSeedApi(
+            api_key="YOUR_API_KEY",
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.user.get_with_inferred_auth()
+            await client.user.getwithinferredauth()
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_with_inferred_auth(request_options=request_options)
+        _response = await self._raw_client.getwithinferredauth(request_options=request_options)
         return _response.data
 
-    async def get_with_any_auth(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[User]:
+    async def getwithanyauth(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[User]:
         """
         Parameters
         ----------
@@ -392,29 +404,30 @@ class AsyncUserClient:
         -------
         typing.List[User]
 
+
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedEndpointSecurityAuth
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedEndpointSecurityAuth(
-            base_url="YOUR_BASE_URL",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
+        client = AsyncSeedApi(
+            api_key="YOUR_API_KEY",
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.user.get_with_any_auth()
+            await client.user.getwithanyauth()
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_with_any_auth(request_options=request_options)
+        _response = await self._raw_client.getwithanyauth(request_options=request_options)
         return _response.data
 
-    async def get_with_all_auth(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[User]:
+    async def getwithallauth(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[User]:
         """
         Parameters
         ----------
@@ -425,24 +438,25 @@ class AsyncUserClient:
         -------
         typing.List[User]
 
+
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedEndpointSecurityAuth
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedEndpointSecurityAuth(
-            base_url="YOUR_BASE_URL",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
+        client = AsyncSeedApi(
+            api_key="YOUR_API_KEY",
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.user.get_with_all_auth()
+            await client.user.getwithallauth()
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_with_all_auth(request_options=request_options)
+        _response = await self._raw_client.getwithallauth(request_options=request_options)
         return _response.data

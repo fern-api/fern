@@ -1,2 +1,2 @@
-export { SeedMultiLineDocsError } from "./SeedMultiLineDocsError.js";
-export { SeedMultiLineDocsTimeoutError } from "./SeedMultiLineDocsTimeoutError.js";
+export { SeedApiError } from "./SeedApiError.js";
+export { SeedApiTimeoutError } from "./SeedApiTimeoutError.js";

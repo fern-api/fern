@@ -12,24 +12,21 @@
 <dd>
 
 ```rust
-use seed_property_access::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = PropertyAccessClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .create_user(
             &User {
-                id: "id".to_string(),
-                email: "email".to_string(),
                 password: "password".to_string(),
                 profile: UserProfile {
                     name: "name".to_string(),
                     verification: UserProfileVerification {
-                        verified: "verified".to_string(),
                         ..Default::default()
                     },
                     ssn: "ssn".to_string(),

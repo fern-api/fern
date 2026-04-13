@@ -12,7 +12,7 @@ if typing.TYPE_CHECKING:
     from .dummy.client import AsyncDummyClient, DummyClient
 
 
-class SeedNoEnvironment:
+class SeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -39,9 +39,9 @@ class SeedNoEnvironment:
 
     Examples
     --------
-    from seed import SeedNoEnvironment
+    from seed import SeedApi
 
-    client = SeedNoEnvironment(
+    client = SeedApi(
         token="YOUR_TOKEN",
         base_url="https://yourhost.com/path/to/api",
     )
@@ -102,7 +102,7 @@ def _make_default_async_client(
     return httpx.AsyncClient(timeout=timeout)
 
 
-class AsyncSeedNoEnvironment:
+class AsyncSeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -132,9 +132,9 @@ class AsyncSeedNoEnvironment:
 
     Examples
     --------
-    from seed import AsyncSeedNoEnvironment
+    from seed import AsyncSeedApi
 
-    client = AsyncSeedNoEnvironment(
+    client = AsyncSeedApi(
         token="YOUR_TOKEN",
         base_url="https://yourhost.com/path/to/api",
     )

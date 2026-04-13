@@ -3,30 +3,14 @@
 import typing
 
 import pydantic
-from ..commons.metadata.types.metadata import Metadata
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .commons_metadata import CommonsMetadata
 
 
 class Node(UniversalBaseModel):
-    """
-    Examples
-    --------
-    from seed import Node
-    from seed.commons.metadata import Metadata
-
-    Node(
-        id="node-8dvgfja2",
-        label="left",
-        metadata=Metadata(
-            id="metadata-kjasf923",
-            data={"foo": "bar", "baz": "qux"},
-        ),
-    )
-    """
-
     id: str
     label: typing.Optional[str] = None
-    metadata: typing.Optional[Metadata] = None
+    metadata: typing.Optional[CommonsMetadata] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

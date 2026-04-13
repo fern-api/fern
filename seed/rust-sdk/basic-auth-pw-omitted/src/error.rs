@@ -2,13 +2,13 @@ use thiserror::Error;
 
 #[derive(Error, Debug)]
 pub enum ApiError {
-    #[error("UnauthorizedRequest: Authentication failed - {{message}}")]
-    UnauthorizedRequest {
+    #[error("UnauthorizedError: Authentication failed - {{message}}")]
+    UnauthorizedError {
         message: String,
         auth_type: Option<String>,
     },
-    #[error("BadRequest: Bad request - {{message}}")]
-    BadRequest {
+    #[error("BadRequestError: Bad request - {{message}}")]
+    BadRequestError {
         message: String,
         field: Option<String>,
         details: Option<String>,
@@ -37,10 +37,10 @@ impl ApiError {
     pub fn from_response(status_code: u16, body: Option<&str>) -> Self {
         match status_code {
             401 => {
-                // Parse error body for UnauthorizedRequest;
+                // Parse error body for UnauthorizedError;
                 if let Some(body_str) = body {
                     if let Ok(parsed) = serde_json::from_str::<serde_json::Value>(body_str) {
-                        return Self::UnauthorizedRequest {
+                        return Self::UnauthorizedError {
                             message: parsed
                                 .get("message")
                                 .and_then(|v| v.as_str())
@@ -52,16 +52,16 @@ impl ApiError {
                         };
                     }
                 }
-                return Self::UnauthorizedRequest {
+                return Self::UnauthorizedError {
                     message: body.unwrap_or("Unknown error").to_string(),
                     auth_type: None,
                 };
             }
             400 => {
-                // Parse error body for BadRequest;
+                // Parse error body for BadRequestError;
                 if let Some(body_str) = body {
                     if let Ok(parsed) = serde_json::from_str::<serde_json::Value>(body_str) {
-                        return Self::BadRequest {
+                        return Self::BadRequestError {
                             message: parsed
                                 .get("message")
                                 .and_then(|v| v.as_str())
@@ -76,7 +76,7 @@ impl ApiError {
                         };
                     }
                 }
-                return Self::BadRequest {
+                return Self::BadRequestError {
                     message: body.unwrap_or("Unknown error").to_string(),
                     field: None,
                     details: None,

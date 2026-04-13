@@ -16,9 +16,8 @@ func do() {
             "<token>",
         ),
     )
-    request := "Hello world!\\n\\nwith\\n\\tnewlines"
-    client.Echo(
+    client.FileNotificationService.FileNotificationServiceGetException(
         context.TODO(),
-        request,
+        "notificationId",
     )
 }

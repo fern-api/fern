@@ -1,11 +1,11 @@
-//! # AnyAuth SDK
+//! # any-auth SDK
 //!
-//! The official Rust SDK for the AnyAuth.
+//! The official Rust SDK for the any-auth.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_any_auth::prelude::*;
+//! use seed_api::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
@@ -13,15 +13,15 @@
 //!         token: Some("<token>".to_string()),
 //!         ..Default::default()
 //!     };
-//!     let client = AnyAuthClient::new(config).expect("Failed to build client");
+//!     let client = ApiClient::new(config).expect("Failed to build client");
 //!     client
 //!         .auth
-//!         .get_token(
-//!             &GetTokenRequest {
+//!         .gettoken(
+//!             &AuthGetTokenRequest {
 //!                 client_id: "client_id".to_string(),
 //!                 client_secret: "client_secret".to_string(),
-//!                 audience: "https://api.example.com".to_string(),
-//!                 grant_type: "client_credentials".to_string(),
+//!                 audience: AuthGetTokenRequestAudience::HttpsApiExampleCom,
+//!                 grant_type: AuthGetTokenRequestGrantType::ClientCredentials,
 //!             },
 //!             None,
 //!         )

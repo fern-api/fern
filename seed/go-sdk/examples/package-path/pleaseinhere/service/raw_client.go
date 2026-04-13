@@ -31,20 +31,20 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) GetMovie(
+func (r *RawClient) Getmovie(
 	ctx context.Context,
-	movieID pleaseinhere.MovieID,
+	request *pleaseinhere.ServiceGetMovieRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*pleaseinhere.Movie], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
 		r.baseURL,
-		"",
+		"https://production.com/api",
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/movie/%v",
-		movieID,
+		request.MovieID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
@@ -74,7 +74,7 @@ func (r *RawClient) GetMovie(
 	}, nil
 }
 
-func (r *RawClient) CreateMovie(
+func (r *RawClient) Createmovie(
 	ctx context.Context,
 	request *pleaseinhere.Movie,
 	opts ...option.RequestOption,
@@ -83,7 +83,7 @@ func (r *RawClient) CreateMovie(
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
 		r.baseURL,
-		"",
+		"https://production.com/api",
 	)
 	endpointURL := baseURL + "/movie"
 	headers := internal.MergeHeaders(
@@ -115,16 +115,16 @@ func (r *RawClient) CreateMovie(
 	}, nil
 }
 
-func (r *RawClient) GetMetadata(
+func (r *RawClient) Getmetadata(
 	ctx context.Context,
-	request *pleaseinhere.GetMetadataRequest,
+	request *pleaseinhere.ServiceGetMetadataRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*pleaseinhere.Metadata], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
 		r.baseURL,
-		"",
+		"https://production.com/api",
 	)
 	endpointURL := baseURL + "/metadata"
 	queryParams, err := internal.QueryValues(request)
@@ -138,7 +138,7 @@ func (r *RawClient) GetMetadata(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	headers.Add("X-API-Version", request.XAPIVersion)
+	headers.Add("X-API-Version", request.APIVersion)
 	var response *pleaseinhere.Metadata
 	raw, err := r.caller.Call(
 		ctx,
@@ -163,7 +163,7 @@ func (r *RawClient) GetMetadata(
 	}, nil
 }
 
-func (r *RawClient) CreateBigEntity(
+func (r *RawClient) Createbigentity(
 	ctx context.Context,
 	request *pleaseinhere.BigEntity,
 	opts ...option.RequestOption,
@@ -172,13 +172,14 @@ func (r *RawClient) CreateBigEntity(
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
 		r.baseURL,
-		"",
+		"https://production.com/api",
 	)
 	endpointURL := baseURL + "/big-entity"
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
+	headers.Add("Content-Type", "application/json")
 	var response *pleaseinhere.Response
 	raw, err := r.caller.Call(
 		ctx,
@@ -204,7 +205,7 @@ func (r *RawClient) CreateBigEntity(
 	}, nil
 }
 
-func (r *RawClient) RefreshToken(
+func (r *RawClient) Refreshtoken(
 	ctx context.Context,
 	request *pleaseinhere.RefreshTokenRequest,
 	opts ...option.RequestOption,
@@ -213,13 +214,14 @@ func (r *RawClient) RefreshToken(
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
 		r.baseURL,
-		"",
+		"https://production.com/api",
 	)
 	endpointURL := baseURL + "/refresh-token"
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
+	headers.Add("Content-Type", "application/json")
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{

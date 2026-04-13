@@ -55,9 +55,7 @@ import (
 
     fern "github.com/examples/fern"
     client "github.com/examples/fern/client"
-    commons "github.com/examples/fern/commons"
     option "github.com/examples/fern/option"
-    uuid "github.com/google/uuid"
 )
 
 func do() {
@@ -66,226 +64,8 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.BigEntity{
-        CastMember: &fern.CastMember{
-            Actor: &fern.Actor{
-                Name: "name",
-                ID: "id",
-            },
-        },
-        ExtendedMovie: &fern.ExtendedMovie{
-            Cast: []string{
-                "cast",
-                "cast",
-            },
-            ID: "id",
-            Prequel: fern.String(
-                "prequel",
-            ),
-            Title: "title",
-            From: "from",
-            Rating: 1.1,
-            Tag: "tag",
-            Book: fern.String(
-                "book",
-            ),
-            Metadata: map[string]any{
-                "metadata": map[string]any{
-                    "key": "value",
-                },
-            },
-            Revenue: int64(1000000),
-        },
-        Entity: &fern.Entity{
-            Type: &fern.Type{
-                BasicType: fern.BasicTypePrimitive,
-            },
-            Name: "name",
-        },
-        Metadata: &fern.Metadata{
-            Extra: map[string]string{
-                "extra": "extra",
-            },
-            Tags: []string{
-                "tags",
-            },
-        },
-        CommonMetadata: &commons.Metadata{
-            ID: "id",
-            Data: map[string]string{
-                "data": "data",
-            },
-            JSONString: fern.String(
-                "jsonString",
-            ),
-        },
-        EventInfo: &commons.EventInfo{
-            Metadata: &commons.Metadata{
-                ID: "id",
-                Data: map[string]string{
-                    "data": "data",
-                },
-                JSONString: fern.String(
-                    "jsonString",
-                ),
-            },
-        },
-        Data: &commons.Data{},
-        Migration: &fern.Migration{
-            Name: "name",
-            Status: fern.MigrationStatusRunning,
-        },
-        Exception: &fern.Exception{
-            Generic: &fern.ExceptionInfo{
-                ExceptionType: "exceptionType",
-                ExceptionMessage: "exceptionMessage",
-                ExceptionStacktrace: "exceptionStacktrace",
-            },
-        },
-        Test: &fern.Test{},
-        Node: &fern.Node{
-            Name: "name",
-            Nodes: []*fern.Node{
-                &fern.Node{
-                    Name: "name",
-                    Nodes: []*fern.Node{
-                        &fern.Node{
-                            Name: "name",
-                        },
-                        &fern.Node{
-                            Name: "name",
-                        },
-                    },
-                    Trees: []*fern.Tree{
-                        &fern.Tree{
-                            Nodes: []*fern.Node{},
-                        },
-                        &fern.Tree{
-                            Nodes: []*fern.Node{},
-                        },
-                    },
-                },
-                &fern.Node{
-                    Name: "name",
-                    Nodes: []*fern.Node{
-                        &fern.Node{
-                            Name: "name",
-                        },
-                        &fern.Node{
-                            Name: "name",
-                        },
-                    },
-                    Trees: []*fern.Tree{
-                        &fern.Tree{
-                            Nodes: []*fern.Node{},
-                        },
-                        &fern.Tree{
-                            Nodes: []*fern.Node{},
-                        },
-                    },
-                },
-            },
-            Trees: []*fern.Tree{
-                &fern.Tree{
-                    Nodes: []*fern.Node{
-                        &fern.Node{
-                            Name: "name",
-                            Nodes: []*fern.Node{},
-                            Trees: []*fern.Tree{},
-                        },
-                        &fern.Node{
-                            Name: "name",
-                            Nodes: []*fern.Node{},
-                            Trees: []*fern.Tree{},
-                        },
-                    },
-                },
-                &fern.Tree{
-                    Nodes: []*fern.Node{
-                        &fern.Node{
-                            Name: "name",
-                            Nodes: []*fern.Node{},
-                            Trees: []*fern.Tree{},
-                        },
-                        &fern.Node{
-                            Name: "name",
-                            Nodes: []*fern.Node{},
-                            Trees: []*fern.Tree{},
-                        },
-                    },
-                },
-            },
-        },
-        Directory: &fern.Directory{
-            Name: "name",
-            Files: []*fern.File{
-                &fern.File{
-                    Name: "name",
-                    Contents: "contents",
-                },
-                &fern.File{
-                    Name: "name",
-                    Contents: "contents",
-                },
-            },
-            Directories: []*fern.Directory{
-                &fern.Directory{
-                    Name: "name",
-                    Files: []*fern.File{
-                        &fern.File{
-                            Name: "name",
-                            Contents: "contents",
-                        },
-                        &fern.File{
-                            Name: "name",
-                            Contents: "contents",
-                        },
-                    },
-                    Directories: []*fern.Directory{
-                        &fern.Directory{
-                            Name: "name",
-                        },
-                        &fern.Directory{
-                            Name: "name",
-                        },
-                    },
-                },
-                &fern.Directory{
-                    Name: "name",
-                    Files: []*fern.File{
-                        &fern.File{
-                            Name: "name",
-                            Contents: "contents",
-                        },
-                        &fern.File{
-                            Name: "name",
-                            Contents: "contents",
-                        },
-                    },
-                    Directories: []*fern.Directory{
-                        &fern.Directory{
-                            Name: "name",
-                        },
-                        &fern.Directory{
-                            Name: "name",
-                        },
-                    },
-                },
-            },
-        },
-        Moment: &fern.Moment{
-            ID: uuid.MustParse(
-                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            ),
-            Date: fern.MustParseDate(
-                "2023-01-15",
-            ),
-            Datetime: fern.MustParseDateTime(
-                "2024-01-15T09:30:00Z",
-            ),
-        },
-    }
-    client.Service.CreateBigEntity(
+    request := &fern.BigEntity{}
+    client.Service.Createbigentity(
         context.TODO(),
         request,
     )
@@ -299,7 +79,7 @@ URL, which is particularly useful in test environments.
 
 ```go
 client := client.NewClient(
-    option.WithBaseURL(examples.Environments.Production),
+    option.WithBaseURL(api.Environments.Production),
 )
 ```
 
@@ -309,7 +89,7 @@ Structured error types are returned from API calls that return non-success statu
 with the `errors.Is` and `errors.As` APIs, so you can access the error like so:
 
 ```go
-response, err := client.Service.CreateBigEntity(...)
+response, err := client.Service.Createbigentity(...)
 if err != nil {
     var apiError *core.APIError
     if errors.As(err, apiError) {
@@ -343,7 +123,7 @@ client := client.NewClient(
 )
 
 // Specify options for an individual request.
-response, err := client.Service.CreateBigEntity(
+response, err := client.Service.Createbigentity(
     ...,
     option.WithToken("<YOUR_API_KEY>"),
 )
@@ -358,7 +138,7 @@ when you need to examine the response headers received from the API call. (When 
 the raw HTTP response data will be included automatically in the Page response object.)
 
 ```go
-response, err := client.Service.WithRawResponse.CreateBigEntity(...)
+response, err := client.Service.WithRawResponse.Createbigentity(...)
 if err != nil {
     return err
 }
@@ -388,7 +168,7 @@ client := client.NewClient(
     option.WithMaxAttempts(1),
 )
 
-response, err := client.Service.CreateBigEntity(
+response, err := client.Service.Createbigentity(
     ...,
     option.WithMaxAttempts(1),
 )
@@ -402,14 +182,14 @@ Setting a timeout for each individual request is as simple as using the standard
 ctx, cancel := context.WithTimeout(ctx, time.Second)
 defer cancel()
 
-response, err := client.Service.GetMovie(ctx, ...)
+response, err := client.Service.Getmovie(ctx, ...)
 ```
 
 ```go
 ctx, cancel := context.WithTimeout(ctx, time.Second)
 defer cancel()
 
-response, err := client.Service.CreateMovie(ctx, ...)
+response, err := client.Service.Createmovie(ctx, ...)
 ```
 
 ### Explicit Null
@@ -431,6 +211,6 @@ type ExampleRequest struct {
 request := &ExampleRequest{}
 request.SetName(nil)
 
-response, err := client.Service.CreateBigEntity(ctx, request, ...)
+response, err := client.Service.Createbigentity(ctx, request, ...)
 ```
 

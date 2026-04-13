@@ -1,17 +1,24 @@
-using SeedCsharpNamespaceCollision;
+using SeedApi;
 
 namespace Usage;
 
 public class Example2
 {
     public async System.Threading.Tasks.Task Do() {
-        var client = new SeedCsharpNamespaceCollisionClient(
+        var client = new SeedApiClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.ScimConfiguration.GetConfigurationAsync();
+        await client._.CreateTaskAsync(
+            new SeedApi.Task {
+                Id = "id",
+                Name = "name",
+                Email = "email",
+                Password = "password"
+            }
+        );
     }
 
 }

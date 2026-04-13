@@ -1,0 +1,4 @@
+channel:
+  auth: false
+  path: /empty/realtime/
+  messages: {}

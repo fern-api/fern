@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.createUser(request) -> User</code></summary>
+<details><summary><code>client.user.createuser(request) -> User</code></summary>
 <dl>
 <dd>
 
@@ -13,10 +13,12 @@
 <dd>
 
 ```java
-client.user().createUser(
-    CreateUserRequest
+client.user().createuser(
+    UserCreateUserRequest
         .builder()
-        .name("Alice")
+        .type(UserCreateUserRequestType.CREATE_USER_REQUEST)
+        .version(UserCreateUserRequestVersion.V1)
+        .name("name")
         .build()
 );
 ```
@@ -33,7 +35,7 @@ client.user().createUser(
 <dl>
 <dd>
 
-**type:** `String` 
+**type:** `UserCreateUserRequestType` 
     
 </dd>
 </dl>
@@ -41,7 +43,7 @@ client.user().createUser(
 <dl>
 <dd>
 
-**version:** `String` 
+**version:** `UserCreateUserRequestVersion` 
     
 </dd>
 </dl>

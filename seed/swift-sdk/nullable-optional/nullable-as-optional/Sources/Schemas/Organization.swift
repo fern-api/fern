@@ -4,7 +4,7 @@ public struct Organization: Codable, Hashable, Sendable {
     public let id: String
     public let name: String
     public let domain: Nullable<String>
-    public let employeeCount: Int?
+    public let employeeCount: Nullable<Int>?
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
@@ -12,7 +12,7 @@ public struct Organization: Codable, Hashable, Sendable {
         id: String,
         name: String,
         domain: Nullable<String>,
-        employeeCount: Int? = nil,
+        employeeCount: Nullable<Int>? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.id = id
@@ -27,7 +27,7 @@ public struct Organization: Codable, Hashable, Sendable {
         self.id = try container.decode(String.self, forKey: .id)
         self.name = try container.decode(String.self, forKey: .name)
         self.domain = try container.decode(Nullable<String>.self, forKey: .domain)
-        self.employeeCount = try container.decodeIfPresent(Int.self, forKey: .employeeCount)
+        self.employeeCount = try container.decodeNullableIfPresent(Int.self, forKey: .employeeCount)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
@@ -37,7 +37,7 @@ public struct Organization: Codable, Hashable, Sendable {
         try container.encode(self.id, forKey: .id)
         try container.encode(self.name, forKey: .name)
         try container.encode(self.domain, forKey: .domain)
-        try container.encodeIfPresent(self.employeeCount, forKey: .employeeCount)
+        try container.encodeNullableIfPresent(self.employeeCount, forKey: .employeeCount)
     }
 
     /// Keys for encoding/decoding struct properties.

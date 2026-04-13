@@ -1,14 +1,14 @@
 import Foundation
-import BasicAuthEnvironmentVariables
+import Api
 
 private func main() async throws {
-    let client = BasicAuthEnvironmentVariablesClient(
+    let client = ApiClient(
         baseURL: "https://api.fern.com",
         username: "<username>",
-        accessToken: "<password>"
+        password: "<password>"
     )
 
-    _ = try await client.basicAuth.getWithBasicAuth()
+    _ = try await client.basicauth.getwithbasicauth()
 }
 
 try await main()

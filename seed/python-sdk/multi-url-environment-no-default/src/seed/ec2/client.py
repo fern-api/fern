@@ -25,7 +25,7 @@ class Ec2Client:
         """
         return self._raw_client
 
-    def boot_instance(self, *, size: str, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def bootinstance(self, *, size: str, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
         ----------
@@ -40,18 +40,17 @@ class Ec2Client:
 
         Examples
         --------
-        from seed import SeedMultiUrlEnvironmentNoDefault
-        from seed.environment import SeedMultiUrlEnvironmentNoDefaultEnvironment
+        from seed import SeedApi
 
-        client = SeedMultiUrlEnvironmentNoDefault(
+        client = SeedApi(
             token="YOUR_TOKEN",
-            environment=SeedMultiUrlEnvironmentNoDefaultEnvironment.PRODUCTION,
+            base_url="https://yourhost.com/path/to/api",
         )
-        client.ec2.boot_instance(
+        client.ec2.bootinstance(
             size="size",
         )
         """
-        _response = self._raw_client.boot_instance(size=size, request_options=request_options)
+        _response = self._raw_client.bootinstance(size=size, request_options=request_options)
         return _response.data
 
 
@@ -70,7 +69,7 @@ class AsyncEc2Client:
         """
         return self._raw_client
 
-    async def boot_instance(self, *, size: str, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def bootinstance(self, *, size: str, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
         ----------
@@ -87,22 +86,21 @@ class AsyncEc2Client:
         --------
         import asyncio
 
-        from seed import AsyncSeedMultiUrlEnvironmentNoDefault
-        from seed.environment import SeedMultiUrlEnvironmentNoDefaultEnvironment
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedMultiUrlEnvironmentNoDefault(
+        client = AsyncSeedApi(
             token="YOUR_TOKEN",
-            environment=SeedMultiUrlEnvironmentNoDefaultEnvironment.PRODUCTION,
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.ec2.boot_instance(
+            await client.ec2.bootinstance(
                 size="size",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.boot_instance(size=size, request_options=request_options)
+        _response = await self._raw_client.bootinstance(size=size, request_options=request_options)
         return _response.data

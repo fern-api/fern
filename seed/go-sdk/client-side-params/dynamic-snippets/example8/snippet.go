@@ -17,18 +17,11 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.ListConnectionsRequest{
-        Strategy: fern.String(
-            "strategy",
-        ),
-        Name: fern.String(
-            "name",
-        ),
-        Fields: fern.String(
-            "fields",
-        ),
+    request := &fern.CreateUserRequest{
+        Email: "email",
+        Connection: "connection",
     }
-    client.Service.ListConnections(
+    client.Service.Createuser(
         context.TODO(),
         request,
     )

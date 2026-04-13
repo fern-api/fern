@@ -1,9 +1,37 @@
 import Foundation
 import Testing
-import NoRetries
+import Api
 
 @Suite("RetriesClient Wire Tests") struct RetriesClientWireTests {
-    @Test func getUsers1() async throws -> Void {
+    @Test func getusers1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                [
+                  {
+                    "id": "id",
+                    "name": "name"
+                  }
+                ]
+                """.utf8
+            )
+        )
+        let client = ApiClient(
+            baseURL: "https://api.fern.com",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = [
+            User(
+                id: "id",
+                name: "name"
+            )
+        ]
+        let response = try await client.retries.getusers(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        try #require(response == expectedResponse)
+    }
+
+    @Test func getusers2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -21,7 +49,7 @@ import NoRetries
                 """.utf8
             )
         )
-        let client = NoRetriesClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -35,7 +63,7 @@ import NoRetries
                 name: "name"
             )
         ]
-        let response = try await client.retries.getUsers(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.retries.getusers(requestOptions: RequestOptions(additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 }

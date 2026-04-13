@@ -7,7 +7,7 @@ import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import * as serializers from "../../../../serialization/index.js";
-import type * as SeedStreaming from "../../../index.js";
+import type * as SeedApi from "../../../index.js";
 
 export declare namespace DummyClient {
     export type Options = BaseClientOptions;
@@ -23,18 +23,18 @@ export class DummyClient {
     }
 
     public generateStream(
-        request: SeedStreaming.GenerateStreamRequest,
+        request: SeedApi.DummyGenerateStreamRequest,
         requestOptions?: DummyClient.RequestOptions,
-    ): core.HttpResponsePromise<core.Stream<SeedStreaming.StreamResponse>> {
+    ): core.HttpResponsePromise<core.BinaryResponse> {
         return core.HttpResponsePromise.fromPromise(this.__generateStream(request, requestOptions));
     }
 
     private async __generateStream(
-        request: SeedStreaming.GenerateStreamRequest,
+        request: SeedApi.DummyGenerateStreamRequest,
         requestOptions?: DummyClient.RequestOptions,
-    ): Promise<core.WithRawResponse<core.Stream<SeedStreaming.StreamResponse>>> {
+    ): Promise<core.WithRawResponse<core.BinaryResponse>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher<ReadableStream>({
+        const _response = await core.fetcher<core.BinaryResponse>({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
@@ -45,14 +45,11 @@ export class DummyClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: {
-                ...serializers.GenerateStreamRequest.jsonOrThrow(request, {
-                    unrecognizedObjectKeys: "strip",
-                    omitUndefined: true,
-                }),
-                stream: true,
-            },
-            responseType: "streaming",
+            body: serializers.DummyGenerateStreamRequest.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
+            responseType: "binary-response",
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -60,30 +57,11 @@ export class DummyClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return {
-                data: new core.Stream({
-                    stream: _response.body,
-                    parse: async (data) => {
-                        return serializers.StreamResponse.parseOrThrow(data, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: ["response"],
-                        });
-                    },
-                    signal: requestOptions?.abortSignal,
-                    eventShape: {
-                        type: "json",
-                        messageTerminator: "\n",
-                    },
-                }),
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedStreamingError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -94,25 +72,26 @@ export class DummyClient {
     }
 
     /**
-     * @param {SeedStreaming.Generateequest} request
+     * @param {SeedApi.DummyGenerateRequest} request
      * @param {DummyClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.dummy.generate({
-     *         numEvents: 5
+     *         stream: true,
+     *         numEvents: 1
      *     })
      */
     public generate(
-        request: SeedStreaming.Generateequest,
+        request: SeedApi.DummyGenerateRequest,
         requestOptions?: DummyClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedStreaming.StreamResponse> {
+    ): core.HttpResponsePromise<SeedApi.StreamResponse> {
         return core.HttpResponsePromise.fromPromise(this.__generate(request, requestOptions));
     }
 
     private async __generate(
-        request: SeedStreaming.Generateequest,
+        request: SeedApi.DummyGenerateRequest,
         requestOptions?: DummyClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedStreaming.StreamResponse>> {
+    ): Promise<core.WithRawResponse<SeedApi.StreamResponse>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -125,13 +104,10 @@ export class DummyClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: {
-                ...serializers.Generateequest.jsonOrThrow(request, {
-                    unrecognizedObjectKeys: "strip",
-                    omitUndefined: true,
-                }),
-                stream: false,
-            },
+            body: serializers.DummyGenerateRequest.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -152,7 +128,7 @@ export class DummyClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedStreamingError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

@@ -4,19 +4,20 @@ namespace Seed\Service;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Types\Types\Movie;
+use Seed\Types\Movie;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
+use Seed\Environments;
 use Seed\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
 use Seed\Core\Json\JsonDecoder;
-use Seed\Service\Requests\GetMetadataRequest;
-use Seed\Types\Types\Metadata;
-use Seed\Types\Types\BigEntity;
-use Seed\Types\Types\Response;
-use Seed\Types\Types\RefreshTokenRequest;
+use Seed\Service\Requests\ServiceGetMetadataRequest;
+use Seed\Types\Metadata;
+use Seed\Service\Requests\BigEntity;
+use Seed\Types\Response;
+use Seed\Service\Requests\RefreshTokenRequest;
 
 class ServiceClient
 {
@@ -68,14 +69,14 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getMovie(string $movieId, ?array $options = null): ?Movie
+    public function getmovie(string $movieId, ?array $options = null): ?Movie
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/movie/{$movieId}",
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Production->value,
+                    path: "movie/{$movieId}",
                     method: HttpMethod::GET,
                 ),
                 $options,
@@ -114,14 +115,14 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function createMovie(Movie $request, ?array $options = null): ?string
+    public function createmovie(Movie $request, ?array $options = null): ?string
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/movie",
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Production->value,
+                    path: "movie",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -148,7 +149,7 @@ class ServiceClient
     }
 
     /**
-     * @param GetMetadataRequest $request
+     * @param ServiceGetMetadataRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -161,7 +162,7 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getMetadata(GetMetadataRequest $request, ?array $options = null): ?Metadata
+    public function getmetadata(ServiceGetMetadataRequest $request, ?array $options = null): ?Metadata
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -172,12 +173,12 @@ class ServiceClient
             $query['tag'] = $request->tag;
         }
         $headers = [];
-        $headers['X-API-Version'] = $request->xApiVersion;
+        $headers['X-API-Version'] = $request->apiVersion;
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/metadata",
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Production->value,
+                    path: "metadata",
                     method: HttpMethod::GET,
                     headers: $headers,
                     query: $query,
@@ -218,14 +219,14 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function createBigEntity(BigEntity $request, ?array $options = null): ?Response
+    public function createbigentity(BigEntity $request = new BigEntity(), ?array $options = null): ?Response
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/big-entity",
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Production->value,
+                    path: "big-entity",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -252,7 +253,7 @@ class ServiceClient
     }
 
     /**
-     * @param ?RefreshTokenRequest $request
+     * @param RefreshTokenRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -264,14 +265,14 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function refreshToken(?RefreshTokenRequest $request = null, ?array $options = null): void
+    public function refreshtoken(RefreshTokenRequest $request, ?array $options = null): void
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/refresh-token",
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Production->value,
+                    path: "refresh-token",
                     method: HttpMethod::POST,
                     body: $request,
                 ),

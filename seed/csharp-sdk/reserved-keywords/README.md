@@ -39,10 +39,10 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```csharp
-using SeedNurseryApi;
+using SeedApi;
 
-var client = new SeedNurseryApiClient();
-await client.Package.TestAsync(new TestRequest { For = "for" });
+var client = new SeedApiClient();
+await client.Package.TestAsync(new PackageTestRequest { For = "for" });
 ```
 
 ## Exception Handling
@@ -51,11 +51,11 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```csharp
-using SeedNurseryApi;
+using SeedApi;
 
 try {
     var response = await client.Package.TestAsync(...);
-} catch (SeedNurseryApiApiException e) {
+} catch (SeedApiApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
 }
@@ -104,7 +104,7 @@ var response = await client.Package.TestAsync(
 Access raw HTTP response data (status code, headers, URL) alongside parsed response data using the `.WithRawResponse()` method.
 
 ```csharp
-using SeedNurseryApi;
+using SeedApi;
 
 // Access raw response data (status code, headers, etc.) alongside the parsed response
 var result = await client.Package.TestAsync(...).WithRawResponse();

@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  title: accept
+  title: accept-header
   version: ''
 paths:
   /container/:
@@ -18,10 +18,10 @@ paths:
             application/json:
               schema: {}
       security:
-        - Bearer: []
+        - BearerAuth: []
 components:
   schemas: {}
   securitySchemes:
-    Bearer:
+    BearerAuth:
       type: http
       scheme: bearer

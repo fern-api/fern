@@ -11,7 +11,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Seed::Completions::Types::StreamCompletionRequest]
+      # @param params [Seed::Completions::Types::CompletionsStreamRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -25,7 +25,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "stream",
-          body: Seed::Completions::Types::StreamCompletionRequest.new(params).to_h,
+          body: Seed::Completions::Types::CompletionsStreamRequest.new(params).to_h,
           request_options: request_options
         )
         begin
@@ -41,7 +41,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Seed::Completions::Types::StreamCompletionRequestWithoutTerminator]
+      # @param params [Seed::Completions::Types::CompletionsStreamWithoutTerminatorRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -49,13 +49,13 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [untyped]
-      def stream_without_terminator(request_options: {}, **params)
+      def streamwithoutterminator(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "stream-no-terminator",
-          body: Seed::Completions::Types::StreamCompletionRequestWithoutTerminator.new(params).to_h,
+          body: Seed::Completions::Types::CompletionsStreamWithoutTerminatorRequest.new(params).to_h,
           request_options: request_options
         )
         begin

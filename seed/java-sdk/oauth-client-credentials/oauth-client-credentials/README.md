@@ -12,7 +12,6 @@ The Seed Java library provides convenient access to the Seed APIs from Java.
 - [Usage](#usage)
 - [Base Url](#base-url)
 - [Exception Handling](#exception-handling)
-- [Authentication](#authentication)
 - [Advanced](#advanced)
   - [Custom Client](#custom-client)
   - [Retries](#retries)
@@ -56,21 +55,26 @@ Instantiate and use the client with the following:
 ```java
 package com.example.usage;
 
-import com.seed.oauthClientCredentials.SeedOauthClientCredentialsClient;
-import com.seed.oauthClientCredentials.resources.auth.requests.GetTokenRequest;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.auth.requests.AuthGetTokenWithClientCredentialsRequest;
+import com.seed.api.resources.auth.types.AuthGetTokenWithClientCredentialsRequestAudience;
+import com.seed.api.resources.auth.types.AuthGetTokenWithClientCredentialsRequestGrantType;
 
 public class Example {
     public static void main(String[] args) {
-        SeedOauthClientCredentialsClient client = SeedOauthClientCredentialsClient.withCredentials("<clientId>", "<clientSecret>")
-            .build()
-        ;
+        SeedApiClient client = SeedApiClient
+            .builder()
+            .token("<token>")
+            .build();
 
-        client.auth().getTokenWithClientCredentials(
-            GetTokenRequest
+        client.auth().gettokenwithclientcredentials(
+            AuthGetTokenWithClientCredentialsRequest
                 .builder()
-                .clientId("my_oauth_app_123")
-                .clientSecret("sk_live_abcdef123456789")
-                .scope("read:users")
+                .clientId("client_id")
+                .clientSecret("client_secret")
+                .audience(AuthGetTokenWithClientCredentialsRequestAudience.HTTPS_API_EXAMPLE_COM)
+                .grantType(AuthGetTokenWithClientCredentialsRequestGrantType.CLIENT_CREDENTIALS)
+                .scope("scope")
                 .build()
         );
     }
@@ -82,9 +86,9 @@ public class Example {
 You can set a custom base URL when constructing the client.
 
 ```java
-import com.seed.oauthClientCredentials.SeedOauthClientCredentialsClient;
+import com.seed.api.SeedApiClient;
 
-SeedOauthClientCredentialsClient client = SeedOauthClientCredentialsClient
+SeedApiClient client = SeedApiClient
     .builder()
     .url("https://example.com")
     .build();
@@ -95,39 +99,13 @@ SeedOauthClientCredentialsClient client = SeedOauthClientCredentialsClient
 When the API returns a non-success status code (4xx or 5xx response), an API exception will be thrown.
 
 ```java
-import com.seed.oauthClientCredentials.core.SeedOauthClientCredentialsApiException;
+import com.seed.api.core.SeedApiApiException;
 
 try{
-    client.auth().getTokenWithClientCredentials(...);
-} catch (SeedOauthClientCredentialsApiException e){
+    client.auth().gettokenwithclientcredentials(...);
+} catch (SeedApiApiException e){
     // Do something with the API exception...
 }
-```
-
-## Authentication
-
-This SDK supports two authentication methods:
-
-### Option 1: Direct Bearer Token
-
-If you already have a valid access token, you can use it directly:
-
-```java
-SeedOauthClientCredentialsClient client = SeedOauthClientCredentialsClient.builder()
-    .token("your-access-token")
-    .url("https://api.example.com")
-    .build();
-```
-
-### Option 2: OAuth Client Credentials
-
-The SDK can automatically handle token acquisition and refresh:
-
-```java
-SeedOauthClientCredentialsClient client = SeedOauthClientCredentialsClient.builder()
-    .credentials("client-id", "client-secret")
-    .url("https://api.example.com")
-    .build();
 ```
 
 ## Advanced
@@ -138,12 +116,12 @@ This SDK is built to work with any instance of `OkHttpClient`. By default, if no
 However, you can pass your own client like so:
 
 ```java
-import com.seed.oauthClientCredentials.SeedOauthClientCredentialsClient;
+import com.seed.api.SeedApiClient;
 import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedOauthClientCredentialsClient client = SeedOauthClientCredentialsClient
+SeedApiClient client = SeedApiClient
     .builder()
     .httpClient(customClient)
     .build();
@@ -166,9 +144,9 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` client option to configure this behavior.
 
 ```java
-import com.seed.oauthClientCredentials.SeedOauthClientCredentialsClient;
+import com.seed.api.SeedApiClient;
 
-SeedOauthClientCredentialsClient client = SeedOauthClientCredentialsClient
+SeedApiClient client = SeedApiClient
     .builder()
     .maxRetries(1)
     .build();
@@ -178,17 +156,17 @@ SeedOauthClientCredentialsClient client = SeedOauthClientCredentialsClient
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 ```java
-import com.seed.oauthClientCredentials.SeedOauthClientCredentialsClient;
-import com.seed.oauthClientCredentials.core.RequestOptions;
+import com.seed.api.SeedApiClient;
+import com.seed.api.core.RequestOptions;
 
 // Client level
-SeedOauthClientCredentialsClient client = SeedOauthClientCredentialsClient
+SeedApiClient client = SeedApiClient
     .builder()
     .timeout(60)
     .build();
 
 // Request level
-client.auth().getTokenWithClientCredentials(
+client.auth().gettokenwithclientcredentials(
     ...,
     RequestOptions
         .builder()
@@ -202,11 +180,11 @@ client.auth().getTokenWithClientCredentials(
 The SDK allows you to add custom headers to requests. You can configure headers at the client level or at the request level.
 
 ```java
-import com.seed.oauthClientCredentials.SeedOauthClientCredentialsClient;
-import com.seed.oauthClientCredentials.core.RequestOptions;
+import com.seed.api.SeedApiClient;
+import com.seed.api.core.RequestOptions;
 
 // Client level
-SeedOauthClientCredentialsClient client = SeedOauthClientCredentialsClient
+SeedApiClient client = SeedApiClient
     .builder()
     .addHeader("X-Custom-Header", "custom-value")
     .addHeader("X-Request-Id", "abc-123")
@@ -214,7 +192,7 @@ SeedOauthClientCredentialsClient client = SeedOauthClientCredentialsClient
 ;
 
 // Request level
-client.auth().getTokenWithClientCredentials(
+client.auth().gettokenwithclientcredentials(
     ...,
     RequestOptions
         .builder()
@@ -230,7 +208,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-SeedOauthClientCredentialsHttpResponse response = client.auth().withRawResponse().getTokenWithClientCredentials(...);
+SeedApiHttpResponse response = client.auth().withRawResponse().gettokenwithclientcredentials(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));

@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.Service.ListResources() -> []*fern.Resource</code></summary>
+<details><summary><code>client.Service.Listresources() -> []*fern.Resource</code></summary>
 <dl>
 <dd>
 
@@ -27,20 +27,14 @@ List resources with pagination
 <dd>
 
 ```go
-request := &fern.ListResourcesRequest{
+request := &fern.ServiceListResourcesRequest{
         Page: 1,
         PerPage: 1,
-        Sort: "created_at",
-        Order: "desc",
+        Sort: "sort",
+        Order: "order",
         IncludeTotals: true,
-        Fields: fern.String(
-            "fields",
-        ),
-        Search: fern.String(
-            "search",
-        ),
     }
-client.Service.ListResources(
+client.Service.Listresources(
         context.TODO(),
         request,
     )
@@ -119,7 +113,7 @@ client.Service.ListResources(
 </dl>
 </details>
 
-<details><summary><code>client.Service.GetResource(ResourceID) -> *fern.Resource</code></summary>
+<details><summary><code>client.Service.Getresource(ResourceID) -> *fern.Resource</code></summary>
 <dl>
 <dd>
 
@@ -146,13 +140,13 @@ Get a single resource
 <dd>
 
 ```go
-request := &fern.GetResourceRequest{
+request := &fern.ServiceGetResourceRequest{
+        ResourceID: "resourceId",
         IncludeMetadata: true,
-        Format: "json",
+        Format: "format",
     }
-client.Service.GetResource(
+client.Service.Getresource(
         context.TODO(),
-        "resourceId",
         request,
     )
 }
@@ -198,7 +192,7 @@ client.Service.GetResource(
 </dl>
 </details>
 
-<details><summary><code>client.Service.SearchResources(request) -> *fern.SearchResponse</code></summary>
+<details><summary><code>client.Service.Searchresources(request) -> *fern.SearchResponse</code></summary>
 <dl>
 <dd>
 
@@ -225,19 +219,11 @@ Search resources with complex parameters
 <dd>
 
 ```go
-request := &fern.SearchResourcesRequest{
+request := &fern.ServiceSearchResourcesRequest{
         Limit: 1,
         Offset: 1,
-        Query: fern.String(
-            "query",
-        ),
-        Filters: map[string]any{
-            "filters": map[string]any{
-                "key": "value",
-            },
-        },
     }
-client.Service.SearchResources(
+client.Service.Searchresources(
         context.TODO(),
         request,
     )
@@ -292,7 +278,7 @@ client.Service.SearchResources(
 </dl>
 </details>
 
-<details><summary><code>client.Service.ListUsers() -> *fern.PaginatedUserResponse</code></summary>
+<details><summary><code>client.Service.Listusers() -> *fern.PaginatedUserResponse</code></summary>
 <dl>
 <dd>
 
@@ -319,33 +305,8 @@ List or search for users
 <dd>
 
 ```go
-request := &fern.ListUsersRequest{
-        Page: fern.Int(
-            1,
-        ),
-        PerPage: fern.Int(
-            1,
-        ),
-        IncludeTotals: fern.Bool(
-            true,
-        ),
-        Sort: fern.String(
-            "sort",
-        ),
-        Connection: fern.String(
-            "connection",
-        ),
-        Q: fern.String(
-            "q",
-        ),
-        SearchEngine: fern.String(
-            "search_engine",
-        ),
-        Fields: fern.String(
-            "fields",
-        ),
-    }
-client.Service.ListUsers(
+request := &fern.ServiceListUsersRequest{}
+client.Service.Listusers(
         context.TODO(),
         request,
     )
@@ -432,7 +393,133 @@ client.Service.ListUsers(
 </dl>
 </details>
 
-<details><summary><code>client.Service.GetUserByID(UserID) -> *fern.User</code></summary>
+<details><summary><code>client.Service.Createuser(request) -> *fern.User</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new user
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &fern.CreateUserRequest{
+        Email: "email",
+        Connection: "connection",
+    }
+client.Service.Createuser(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**email:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**emailVerified:** `*bool` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**username:** `*string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**password:** `*string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**phoneNumber:** `*string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**phoneVerified:** `*bool` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**userMetadata:** `map[string]any` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**appMetadata:** `map[string]any` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**connection:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Service.Getuserbyid(UserID) -> *fern.User</code></summary>
 <dl>
 <dd>
 
@@ -459,17 +546,11 @@ Get a user by ID
 <dd>
 
 ```go
-request := &fern.GetUserRequest{
-        Fields: fern.String(
-            "fields",
-        ),
-        IncludeFields: fern.Bool(
-            true,
-        ),
+request := &fern.ServiceGetUserByIDRequest{
+        UserID: "userId",
     }
-client.Service.GetUserByID(
+client.Service.Getuserbyid(
         context.TODO(),
-        "userId",
         request,
     )
 }
@@ -515,7 +596,7 @@ client.Service.GetUserByID(
 </dl>
 </details>
 
-<details><summary><code>client.Service.CreateUser(request) -> *fern.User</code></summary>
+<details><summary><code>client.Service.Deleteuser(UserID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -527,7 +608,7 @@ client.Service.GetUserByID(
 <dl>
 <dd>
 
-Create a new user
+Delete a user
 </dd>
 </dl>
 </dd>
@@ -542,36 +623,10 @@ Create a new user
 <dd>
 
 ```go
-request := &fern.CreateUserRequest{
-        Email: "email",
-        EmailVerified: fern.Bool(
-            true,
-        ),
-        Username: fern.String(
-            "username",
-        ),
-        Password: fern.String(
-            "password",
-        ),
-        PhoneNumber: fern.String(
-            "phone_number",
-        ),
-        PhoneVerified: fern.Bool(
-            true,
-        ),
-        UserMetadata: map[string]any{
-            "user_metadata": map[string]any{
-                "key": "value",
-            },
-        },
-        AppMetadata: map[string]any{
-            "app_metadata": map[string]any{
-                "key": "value",
-            },
-        },
-        Connection: "connection",
+request := &fern.ServiceDeleteUserRequest{
+        UserID: "userId",
     }
-client.Service.CreateUser(
+client.Service.Deleteuser(
         context.TODO(),
         request,
     )
@@ -590,7 +645,7 @@ client.Service.CreateUser(
 <dl>
 <dd>
 
-**request:** `*fern.CreateUserRequest` 
+**userID:** `string` 
     
 </dd>
 </dl>
@@ -602,7 +657,7 @@ client.Service.CreateUser(
 </dl>
 </details>
 
-<details><summary><code>client.Service.UpdateUser(UserID, request) -> *fern.User</code></summary>
+<details><summary><code>client.Service.Updateuser(UserID, request) -> *fern.User</code></summary>
 <dl>
 <dd>
 
@@ -630,41 +685,10 @@ Update a user
 
 ```go
 request := &fern.UpdateUserRequest{
-        Email: fern.String(
-            "email",
-        ),
-        EmailVerified: fern.Bool(
-            true,
-        ),
-        Username: fern.String(
-            "username",
-        ),
-        PhoneNumber: fern.String(
-            "phone_number",
-        ),
-        PhoneVerified: fern.Bool(
-            true,
-        ),
-        UserMetadata: map[string]any{
-            "user_metadata": map[string]any{
-                "key": "value",
-            },
-        },
-        AppMetadata: map[string]any{
-            "app_metadata": map[string]any{
-                "key": "value",
-            },
-        },
-        Password: fern.String(
-            "password",
-        ),
-        Blocked: fern.Bool(
-            true,
-        ),
+        UserID: "userId",
     }
-client.Service.UpdateUser(
+client.Service.Updateuser(
         context.TODO(),
-        "userId",
         request,
     )
 }
@@ -690,7 +714,71 @@ client.Service.UpdateUser(
 <dl>
 <dd>
 
-**request:** `*fern.UpdateUserRequest` 
+**email:** `*string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**emailVerified:** `*bool` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**username:** `*string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**phoneNumber:** `*string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**phoneVerified:** `*bool` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**userMetadata:** `map[string]any` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**appMetadata:** `map[string]any` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**password:** `*string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**blocked:** `*bool` 
     
 </dd>
 </dl>
@@ -702,65 +790,7 @@ client.Service.UpdateUser(
 </dl>
 </details>
 
-<details><summary><code>client.Service.DeleteUser(UserID) -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Delete a user
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.Service.DeleteUser(
-        context.TODO(),
-        "userId",
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**userID:** `string` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Service.ListConnections() -> []*fern.Connection</code></summary>
+<details><summary><code>client.Service.Listconnections() -> []*fern.Connection</code></summary>
 <dl>
 <dd>
 
@@ -787,18 +817,8 @@ List all connections
 <dd>
 
 ```go
-request := &fern.ListConnectionsRequest{
-        Strategy: fern.String(
-            "strategy",
-        ),
-        Name: fern.String(
-            "name",
-        ),
-        Fields: fern.String(
-            "fields",
-        ),
-    }
-client.Service.ListConnections(
+request := &fern.ServiceListConnectionsRequest{}
+client.Service.Listconnections(
         context.TODO(),
         request,
     )
@@ -845,7 +865,7 @@ client.Service.ListConnections(
 </dl>
 </details>
 
-<details><summary><code>client.Service.GetConnection(ConnectionID) -> *fern.Connection</code></summary>
+<details><summary><code>client.Service.Getconnection(ConnectionID) -> *fern.Connection</code></summary>
 <dl>
 <dd>
 
@@ -872,14 +892,11 @@ Get a connection by ID
 <dd>
 
 ```go
-request := &fern.GetConnectionRequest{
-        Fields: fern.String(
-            "fields",
-        ),
+request := &fern.ServiceGetConnectionRequest{
+        ConnectionID: "connectionId",
     }
-client.Service.GetConnection(
+client.Service.Getconnection(
         context.TODO(),
-        "connectionId",
         request,
     )
 }
@@ -917,7 +934,7 @@ client.Service.GetConnection(
 </dl>
 </details>
 
-<details><summary><code>client.Service.ListClients() -> *fern.PaginatedClientResponse</code></summary>
+<details><summary><code>client.Service.Listclients() -> *fern.PaginatedClientResponse</code></summary>
 <dl>
 <dd>
 
@@ -944,34 +961,8 @@ List all clients/applications
 <dd>
 
 ```go
-request := &fern.ListClientsRequest{
-        Fields: fern.String(
-            "fields",
-        ),
-        IncludeFields: fern.Bool(
-            true,
-        ),
-        Page: fern.Int(
-            1,
-        ),
-        PerPage: fern.Int(
-            1,
-        ),
-        IncludeTotals: fern.Bool(
-            true,
-        ),
-        IsGlobal: fern.Bool(
-            true,
-        ),
-        IsFirstParty: fern.Bool(
-            true,
-        ),
-        AppType: []string{
-            "app_type",
-            "app_type",
-        },
-    }
-client.Service.ListClients(
+request := &fern.ServiceListClientsRequest{}
+client.Service.Listclients(
         context.TODO(),
         request,
     )
@@ -1058,7 +1049,7 @@ client.Service.ListClients(
 </dl>
 </details>
 
-<details><summary><code>client.Service.GetClient(ClientID) -> *fern.Client</code></summary>
+<details><summary><code>client.Service.Getclient(ClientID) -> *fern.Client</code></summary>
 <dl>
 <dd>
 
@@ -1085,17 +1076,11 @@ Get a client by ID
 <dd>
 
 ```go
-request := &fern.GetClientRequest{
-        Fields: fern.String(
-            "fields",
-        ),
-        IncludeFields: fern.Bool(
-            true,
-        ),
+request := &fern.ServiceGetClientRequest{
+        ClientID: "clientId",
     }
-client.Service.GetClient(
+client.Service.Getclient(
         context.TODO(),
-        "clientId",
         request,
     )
 }

@@ -1,0 +1,15 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/generate",
+                "method": "POST",
+                "identifier_override": "endpoint_dummy.generate"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/streaming-parameter/fern\"\n\tfernclient \"github.com/streaming-parameter/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Dummy.Generate(\n\tcontext.TODO(),\n\t\u0026fern.DummyGenerateRequest{\n\t\tStream:    true,\n\t\tNumEvents: 1,\n\t},\n)\n"
+            }
+        }
+    ]
+}

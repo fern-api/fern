@@ -10,7 +10,7 @@ import (
 )
 
 type Client struct {
-	PropertyBasedError *propertybasederror.Client
+	Propertybasederror *propertybasederror.Client
 
 	options *core.RequestOptions
 	baseURL string
@@ -20,7 +20,7 @@ type Client struct {
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
-		PropertyBasedError: propertybasederror.NewClient(options),
+		Propertybasederror: propertybasederror.NewClient(options),
 		options:            options,
 		baseURL:            options.BaseURL,
 		caller: internal.NewCaller(

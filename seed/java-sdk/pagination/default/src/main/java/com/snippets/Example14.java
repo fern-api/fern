@@ -1,18 +1,18 @@
 package com.snippets;
 
-import com.seed.pagination.SeedPaginationClient;
-import com.seed.pagination.resources.users.requests.ListUsersMixedTypeCursorPaginationRequest;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListWithOffsetStepPaginationRequest;
 
 public class Example14 {
     public static void main(String[] args) {
-        SeedPaginationClient client = SeedPaginationClient.builder()
+        SeedApiClient client = SeedApiClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
-        client.users()
-                .listWithMixedTypeCursorPagination(ListUsersMixedTypeCursorPaginationRequest.builder()
-                        .cursor("cursor")
-                        .build());
+        client.inlineUsersInlineUsers()
+                .inlineUsersInlineUsersListWithOffsetStepPagination(
+                        InlineUsersInlineUsersListWithOffsetStepPaginationRequest.builder()
+                                .build());
     }
 }

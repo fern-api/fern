@@ -1,10 +1,10 @@
 import Foundation
-import PlainText
+import Api
 
 private func main() async throws {
-    let client = PlainTextClient(baseURL: "https://api.fern.com")
+    let client = ApiClient(baseURL: "https://api.fern.com")
 
-    _ = try await client.service.getText()
+    _ = try await client.service.gettext()
 }
 
 try await main()

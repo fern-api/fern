@@ -10,6 +10,6 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->file->notification->service->getException(
-    'notification-hsy129x',
+$client->fileService->fileServiceGetFile(
+    'filename',
 );

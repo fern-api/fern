@@ -1,20 +1,18 @@
 import Foundation
-import ClientSideParams
+import Api
 
 private func main() async throws {
-    let client = ClientSideParamsClient(
+    let client = ApiClient(
         baseURL: "https://api.fern.com",
         token: "<token>"
     )
 
-    _ = try await client.service.listResources(
+    _ = try await client.service.listresources(
         page: 1,
         perPage: 1,
-        sort: "created_at",
-        order: "desc",
-        includeTotals: true,
-        fields: "fields",
-        search: "search"
+        sort: "sort",
+        order: "order",
+        includeTotals: true
     )
 }
 

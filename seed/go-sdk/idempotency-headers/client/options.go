@@ -33,13 +33,3 @@ func WithMaxAttempts(attempts uint) *core.MaxAttemptsOption {
 func WithToken(token string) *core.TokenOption {
 	return option.WithToken(token)
 }
-
-// WithIdempotencyKey sets the idempotencyKey request header.
-func WithIdempotencyKey(idempotencyKey string) *core.IdempotencyKeyOption {
-	return option.WithIdempotencyKey(idempotencyKey)
-}
-
-// WithIdempotencyExpiration sets the idempotencyExpiration request header.
-func WithIdempotencyExpiration(idempotencyExpiration int) *core.IdempotencyExpirationOption {
-	return option.WithIdempotencyExpiration(idempotencyExpiration)
-}

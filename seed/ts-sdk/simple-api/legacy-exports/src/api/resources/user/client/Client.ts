@@ -4,9 +4,10 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../BaseClient";
 import * as core from "../../../../core";
 import { mergeHeaders } from "../../../../core/headers";
+import * as environments from "../../../../environments";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError";
 import * as errors from "../../../../errors/index";
-import type * as SeedSimpleApi from "../../../index";
+import type * as SeedApi from "../../../index";
 
 export declare namespace UserClient {
     export type Options = BaseClientOptions;
@@ -22,20 +23,26 @@ export class UserClient {
     }
 
     /**
-     * @param {string} id
+     * @param {SeedApi.UserGetRequest} request
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.user.get("id")
+     *     await client.user.get({
+     *         id: "id"
+     *     })
      */
-    public get(id: string, requestOptions?: UserClient.RequestOptions): core.HttpResponsePromise<SeedSimpleApi.User> {
-        return core.HttpResponsePromise.fromPromise(this.__get(id, requestOptions));
+    public get(
+        request: SeedApi.UserGetRequest,
+        requestOptions?: UserClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedApi.User> {
+        return core.HttpResponsePromise.fromPromise(this.__get(request, requestOptions));
     }
 
     private async __get(
-        id: string,
+        request: SeedApi.UserGetRequest,
         requestOptions?: UserClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedSimpleApi.User>> {
+    ): Promise<core.WithRawResponse<SeedApi.User>> {
+        const { id } = request;
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -45,8 +52,9 @@ export class UserClient {
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/users/${core.url.encodePathParam(id)}`,
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedApiEnvironment.Production,
+                `users/${core.url.encodePathParam(id)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -58,11 +66,11 @@ export class UserClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedSimpleApi.User, rawResponse: _response.rawResponse };
+            return { data: _response.body as SeedApi.User, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedSimpleApiError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

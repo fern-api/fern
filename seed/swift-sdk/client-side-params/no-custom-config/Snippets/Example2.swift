@@ -1,23 +1,16 @@
 import Foundation
-import ClientSideParams
+import Api
 
 private func main() async throws {
-    let client = ClientSideParamsClient(
+    let client = ApiClient(
         baseURL: "https://api.fern.com",
         token: "<token>"
     )
 
-    _ = try await client.service.searchResources(
-        limit: 1,
-        offset: 1,
-        request: .init(
-            query: "query",
-            filters: [
-                "filters": .object([
-                    "key": .string("value")
-                ])
-            ]
-        )
+    _ = try await client.service.getresource(
+        resourceId: "resourceId",
+        includeMetadata: true,
+        format: "format"
     )
 }
 

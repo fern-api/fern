@@ -1,12 +1,10 @@
 import Foundation
-import MixedFileDirectory
+import Api
 
 private func main() async throws {
-    let client = MixedFileDirectoryClient(baseURL: "https://api.fern.com")
+    let client = ApiClient(baseURL: "https://api.fern.com")
 
-    _ = try await client.organization.create(request: CreateOrganizationRequest(
-        name: "name"
-    ))
+    _ = try await client.organization.create(request: .init(name: "name"))
 }
 
 try await main()

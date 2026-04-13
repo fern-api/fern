@@ -6,7 +6,7 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedMultiLineDocs from "../../../index.js";
+import type * as SeedApi from "../../../index.js";
 
 export declare namespace UserClient {
     export type Options = BaseClientOptions;
@@ -25,21 +25,26 @@ export class UserClient {
      * Retrieve a user.
      * This endpoint is used to retrieve a user.
      *
-     * @param {string} userId - The ID of the user to retrieve.
-     *                          This ID is unique to each user.
+     * @param {SeedApi.UserGetUserRequest} request
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.user.getUser("userId")
+     *     await client.user.getuser({
+     *         userId: "userId"
+     *     })
      */
-    public getUser(userId: string, requestOptions?: UserClient.RequestOptions): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__getUser(userId, requestOptions));
+    public getuser(
+        request: SeedApi.UserGetUserRequest,
+        requestOptions?: UserClient.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__getuser(request, requestOptions));
     }
 
-    private async __getUser(
-        userId: string,
+    private async __getuser(
+        request: SeedApi.UserGetUserRequest,
         requestOptions?: UserClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
+        const { userId } = request;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -61,7 +66,7 @@ export class UserClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedMultiLineDocsError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -75,26 +80,25 @@ export class UserClient {
      * Create a new user.
      * This endpoint is used to create a new user.
      *
-     * @param {SeedMultiLineDocs.CreateUserRequest} request
+     * @param {SeedApi.UserCreateUserRequest} request
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.user.createUser({
-     *         name: "name",
-     *         age: 1
+     *     await client.user.createuser({
+     *         name: "name"
      *     })
      */
-    public createUser(
-        request: SeedMultiLineDocs.CreateUserRequest,
+    public createuser(
+        request: SeedApi.UserCreateUserRequest,
         requestOptions?: UserClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedMultiLineDocs.User> {
-        return core.HttpResponsePromise.fromPromise(this.__createUser(request, requestOptions));
+    ): core.HttpResponsePromise<SeedApi.User> {
+        return core.HttpResponsePromise.fromPromise(this.__createuser(request, requestOptions));
     }
 
-    private async __createUser(
-        request: SeedMultiLineDocs.CreateUserRequest,
+    private async __createuser(
+        request: SeedApi.UserCreateUserRequest,
         requestOptions?: UserClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedMultiLineDocs.User>> {
+    ): Promise<core.WithRawResponse<SeedApi.User>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -115,11 +119,11 @@ export class UserClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedMultiLineDocs.User, rawResponse: _response.rawResponse };
+            return { data: _response.body as SeedApi.User, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedMultiLineDocsError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

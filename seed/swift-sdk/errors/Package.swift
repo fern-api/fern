@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "Errors",
+    name: "Api",
     platforms: [
         .iOS(.v15),
         .macOS(.v12),
@@ -12,19 +12,19 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "Errors",
-            targets: ["Errors"]
+            name: "Api",
+            targets: ["Api"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "Errors",
+            name: "Api",
             path: "Sources"
         ),
         .testTarget(
-            name: "ErrorsTests",
-            dependencies: ["Errors"],
+            name: "ApiTests",
+            dependencies: ["Api"],
             path: "Tests"
         )
     ]

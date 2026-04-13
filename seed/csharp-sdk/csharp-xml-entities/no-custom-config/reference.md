@@ -1,5 +1,6 @@
 # Reference
-<details><summary><code>client.<a href="/src/SeedCsharpXmlEntities/SeedCsharpXmlEntitiesClient.cs">GetTimeZoneAsync</a>() -> WithRawResponseTask&lt;TimeZoneModel&gt;</code></summary>
+## _
+<details><summary><code>client._.<a href="/src/SeedApi/_/Client.cs">GetTimeZoneAsync</a>() -> WithRawResponseTask&lt;TimeZoneModel&gt;</code></summary>
 <dl>
 <dd>
 
@@ -26,7 +27,7 @@ Get timezone information with &plus; offset
 <dd>
 
 ```csharp
-await client.GetTimeZoneAsync();
+await client._.GetTimeZoneAsync();
 ```
 </dd>
 </dl>

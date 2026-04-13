@@ -10,12 +10,13 @@ if typing.TYPE_CHECKING:
     from .foo import Foo
     from .user import User
     from .user_or_admin import UserOrAdmin
-    from .user_or_admin_discriminated import (
-        UserOrAdminDiscriminated,
-        UserOrAdminDiscriminated_Admin,
-        UserOrAdminDiscriminated_Empty,
-        UserOrAdminDiscriminated_User,
-    )
+    from .user_or_admin_discriminated import UserOrAdminDiscriminated
+    from .user_or_admin_discriminated_admin import UserOrAdminDiscriminatedAdmin
+    from .user_or_admin_discriminated_admin_type import UserOrAdminDiscriminatedAdminType
+    from .user_or_admin_discriminated_two import UserOrAdminDiscriminatedTwo
+    from .user_or_admin_discriminated_two_type import UserOrAdminDiscriminatedTwoType
+    from .user_or_admin_discriminated_zero import UserOrAdminDiscriminatedZero
+    from .user_or_admin_discriminated_zero_type import UserOrAdminDiscriminatedZeroType
     from .user_profile import UserProfile
     from .user_profile_verification import UserProfileVerification
 _dynamic_imports: typing.Dict[str, str] = {
@@ -24,9 +25,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "User": ".user",
     "UserOrAdmin": ".user_or_admin",
     "UserOrAdminDiscriminated": ".user_or_admin_discriminated",
-    "UserOrAdminDiscriminated_Admin": ".user_or_admin_discriminated",
-    "UserOrAdminDiscriminated_Empty": ".user_or_admin_discriminated",
-    "UserOrAdminDiscriminated_User": ".user_or_admin_discriminated",
+    "UserOrAdminDiscriminatedAdmin": ".user_or_admin_discriminated_admin",
+    "UserOrAdminDiscriminatedAdminType": ".user_or_admin_discriminated_admin_type",
+    "UserOrAdminDiscriminatedTwo": ".user_or_admin_discriminated_two",
+    "UserOrAdminDiscriminatedTwoType": ".user_or_admin_discriminated_two_type",
+    "UserOrAdminDiscriminatedZero": ".user_or_admin_discriminated_zero",
+    "UserOrAdminDiscriminatedZeroType": ".user_or_admin_discriminated_zero_type",
     "UserProfile": ".user_profile",
     "UserProfileVerification": ".user_profile_verification",
 }
@@ -59,9 +63,12 @@ __all__ = [
     "User",
     "UserOrAdmin",
     "UserOrAdminDiscriminated",
-    "UserOrAdminDiscriminated_Admin",
-    "UserOrAdminDiscriminated_Empty",
-    "UserOrAdminDiscriminated_User",
+    "UserOrAdminDiscriminatedAdmin",
+    "UserOrAdminDiscriminatedAdminType",
+    "UserOrAdminDiscriminatedTwo",
+    "UserOrAdminDiscriminatedTwoType",
+    "UserOrAdminDiscriminatedZero",
+    "UserOrAdminDiscriminatedZeroType",
     "UserProfile",
     "UserProfileVerification",
 ]

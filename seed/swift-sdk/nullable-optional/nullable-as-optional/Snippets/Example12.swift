@@ -1,19 +1,10 @@
 import Foundation
-import NullableOptional
+import Api
 
 private func main() async throws {
-    let client = NullableOptionalClient(baseURL: "https://api.fern.com")
+    let client = ApiClient(baseURL: "https://api.fern.com")
 
-    _ = try await client.nullableOptional.getSearchResults(request: .init(
-        query: "query",
-        filters: [
-            "filters": .value("filters")
-        ],
-        includeTypes: .value([
-            "includeTypes",
-            "includeTypes"
-        ])
-    ))
+    _ = try await client.nullableoptional.getcomplexprofile(profileId: "profileId")
 }
 
 try await main()

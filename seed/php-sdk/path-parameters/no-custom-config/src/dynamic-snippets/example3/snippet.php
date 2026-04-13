@@ -9,7 +9,8 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->user->getUser(
+$client->organizations->getorganizationuser(
     'tenant_id',
+    'organization_id',
     'user_id',
 );

@@ -1,4 +1,4 @@
-//! API client and types for the MixedFileDirectory
+//! API client and types for the mixed-file-directory
 //!
 //! This module contains all the API definitions including request/response types
 //! and client implementations for interacting with the API.
@@ -11,5 +11,7 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::{MixedFileDirectoryClient, OrganizationClient, UserClient};
+pub use resources::{
+    ApiClient, OrganizationClient, UserClient, UserEventsClient, UserEventsMetadataClient,
+};
 pub use types::*;

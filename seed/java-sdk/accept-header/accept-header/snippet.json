@@ -1,6 +1,19 @@
 {
     "endpoints": [
         {
+            "example_identifier": "5465b825",
+            "id": {
+                "method": "DELETE",
+                "path": "/container/",
+                "identifier_override": "endpoint_service.endpoint"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.service().endpoint();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.service().endpoint();\n    }\n}\n"
+            }
+        },
+        {
             "example_identifier": "82444d62",
             "id": {
                 "method": "DELETE",
@@ -9,12 +22,12 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.accept.SeedAcceptClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedAcceptClient client = SeedAcceptClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.service().endpoint();\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.accept.SeedAcceptClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedAcceptClient client = SeedAcceptClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.service().endpoint();\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.service().endpoint();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.service().endpoint();\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "c18d9d6a",
+            "example_identifier": "c96a14bd",
             "id": {
                 "method": "DELETE",
                 "path": "/container/",
@@ -22,8 +35,8 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.accept.SeedAcceptClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedAcceptClient client = SeedAcceptClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.service().endpoint();\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.accept.SeedAcceptClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedAcceptClient client = SeedAcceptClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.service().endpoint();\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.service().endpoint();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.service().endpoint();\n    }\n}\n"
             }
         }
     ],

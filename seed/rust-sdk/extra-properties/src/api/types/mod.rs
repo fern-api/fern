@@ -1,7 +1,13 @@
-pub mod create_user_request;
 pub mod failure;
-pub mod user_user;
+pub mod failure_status;
+pub mod user;
+pub mod user_create_user_request;
+pub mod user_user_create_user_request_type;
+pub mod user_user_create_user_request_version;
 
-pub use create_user_request::CreateUserRequest;
 pub use failure::Failure;
-pub use user_user::User;
+pub use failure_status::FailureStatus;
+pub use user::User;
+pub use user_create_user_request::UserCreateUserRequest;
+pub use user_user_create_user_request_type::UserCreateUserRequestType;
+pub use user_user_create_user_request_version::UserCreateUserRequestVersion;

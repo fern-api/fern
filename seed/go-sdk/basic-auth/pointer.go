@@ -1,4 +1,4 @@
-package basicauth
+package api
 
 import (
 	"time"

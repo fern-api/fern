@@ -17,36 +17,19 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.CreateUserRequest{
-        Email: "email",
-        EmailVerified: fern.Bool(
-            true,
+    request := &fern.ServiceSearchResourcesRequest{
+        Limit: 1,
+        Offset: 1,
+        Query: fern.String(
+            "query",
         ),
-        Username: fern.String(
-            "username",
-        ),
-        Password: fern.String(
-            "password",
-        ),
-        PhoneNumber: fern.String(
-            "phone_number",
-        ),
-        PhoneVerified: fern.Bool(
-            true,
-        ),
-        UserMetadata: map[string]any{
-            "user_metadata": map[string]any{
+        Filters: map[string]any{
+            "filters": map[string]any{
                 "key": "value",
             },
         },
-        AppMetadata: map[string]any{
-            "app_metadata": map[string]any{
-                "key": "value",
-            },
-        },
-        Connection: "connection",
     }
-    client.Service.CreateUser(
+    client.Service.Searchresources(
         context.TODO(),
         request,
     )

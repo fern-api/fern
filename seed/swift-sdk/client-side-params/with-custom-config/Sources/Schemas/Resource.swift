@@ -3,20 +3,20 @@ import Foundation
 public struct Resource: Codable, Hashable, Sendable {
     public let id: String
     public let name: String
-    public let description: String?
+    public let description: Nullable<String>?
     public let createdAt: Date
     public let updatedAt: Date
-    public let metadata: [String: JSONValue]?
+    public let metadata: Nullable<[String: JSONValue]>?
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
         id: String,
         name: String,
-        description: String? = nil,
+        description: Nullable<String>? = nil,
         createdAt: Date,
         updatedAt: Date,
-        metadata: [String: JSONValue]? = nil,
+        metadata: Nullable<[String: JSONValue]>? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.id = id
@@ -32,10 +32,10 @@ public struct Resource: Codable, Hashable, Sendable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(String.self, forKey: .id)
         self.name = try container.decode(String.self, forKey: .name)
-        self.description = try container.decodeIfPresent(String.self, forKey: .description)
+        self.description = try container.decodeNullableIfPresent(String.self, forKey: .description)
         self.createdAt = try container.decode(Date.self, forKey: .createdAt)
         self.updatedAt = try container.decode(Date.self, forKey: .updatedAt)
-        self.metadata = try container.decodeIfPresent([String: JSONValue].self, forKey: .metadata)
+        self.metadata = try container.decodeNullableIfPresent([String: JSONValue].self, forKey: .metadata)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
@@ -44,10 +44,10 @@ public struct Resource: Codable, Hashable, Sendable {
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.id, forKey: .id)
         try container.encode(self.name, forKey: .name)
-        try container.encodeIfPresent(self.description, forKey: .description)
+        try container.encodeNullableIfPresent(self.description, forKey: .description)
         try container.encode(self.createdAt, forKey: .createdAt)
         try container.encode(self.updatedAt, forKey: .updatedAt)
-        try container.encodeIfPresent(self.metadata, forKey: .metadata)
+        try container.encodeNullableIfPresent(self.metadata, forKey: .metadata)
     }
 
     /// Keys for encoding/decoding struct properties.

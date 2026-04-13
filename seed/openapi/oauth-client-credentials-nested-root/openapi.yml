@@ -1,11 +1,11 @@
 openapi: 3.0.1
 info:
-  title: oauth-client-credentials
+  title: oauth-client-credentials-nested-root
   version: ''
 paths:
   /token:
     post:
-      operationId: auth_getToken
+      operationId: auth_gettoken
       tags:
         - Auth
       parameters: []
@@ -15,7 +15,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/authTokenResponse'
+                $ref: '#/components/schemas/AuthTokenResponse'
+              examples:
+                Example1:
+                  value:
+                    access_token: access_token
+                    expires_in: 1
+                    refresh_token: refresh_token
       requestBody:
         required: true
         content:
@@ -25,14 +31,14 @@ paths:
               properties:
                 client_id:
                   type: string
+                  example: client_id
                 client_secret:
                   type: string
+                  example: client_secret
                 audience:
-                  type: string
-                  const: https://api.example.com
+                  $ref: '#/components/schemas/AuthGetTokenRequestAudience'
                 grant_type:
-                  type: string
-                  const: client_credentials
+                  $ref: '#/components/schemas/AuthGetTokenRequestGrantType'
                 scope:
                   type: string
                   nullable: true
@@ -41,9 +47,16 @@ paths:
                 - client_secret
                 - audience
                 - grant_type
+            examples:
+              Example1:
+                value:
+                  client_id: client_id
+                  client_secret: client_secret
+                  audience: https://api.example.com
+                  grant_type: client_credentials
   /nested-no-auth/get-something:
     get:
-      operationId: nestedNoAuth_api_getSomething
+      operationId: nestedNoAuthAPI_nestedNoAuth_api_getSomething
       tags:
         - NestedNoAuthAPI
       parameters: []
@@ -52,7 +65,7 @@ paths:
           description: ''
   /nested/get-something:
     get:
-      operationId: nested_api_getSomething
+      operationId: nestedAPI_nested_api_getSomething
       tags:
         - NestedAPI
       parameters: []
@@ -60,10 +73,10 @@ paths:
         '204':
           description: ''
       security:
-        - OAuthScheme: []
+        - BearerAuth: []
   /get-something:
     get:
-      operationId: simple_getSomething
+      operationId: simple_getsomething
       tags:
         - Simple
       parameters: []
@@ -71,18 +84,30 @@ paths:
         '204':
           description: ''
       security:
-        - OAuthScheme: []
+        - BearerAuth: []
 components:
   schemas:
-    authTokenResponse:
-      title: authTokenResponse
+    AuthGetTokenRequestAudience:
+      title: AuthGetTokenRequestAudience
+      type: string
+      enum:
+        - https://api.example.com
+    AuthGetTokenRequestGrantType:
+      title: AuthGetTokenRequestGrantType
+      type: string
+      enum:
+        - client_credentials
+    AuthTokenResponse:
+      title: AuthTokenResponse
       type: object
       description: An OAuth token response.
       properties:
         access_token:
           type: string
+          example: access_token
         expires_in:
           type: integer
+          example: 1
         refresh_token:
           type: string
           nullable: true
@@ -90,6 +115,6 @@ components:
         - access_token
         - expires_in
   securitySchemes:
-    OAuthScheme:
+    BearerAuth:
       type: http
       scheme: bearer

@@ -5,8 +5,12 @@ client = Seed::Client.new(
   base_url: "https://api.fern.com"
 )
 
-client.service.get_resource(
-  resource_id: "resourceId",
-  include_metadata: true,
-  format: "json"
+client.service.listresources(
+  page: 1,
+  per_page: 1,
+  sort: "sort",
+  order: "order",
+  include_totals: true,
+  fields: "fields",
+  search: "search"
 )

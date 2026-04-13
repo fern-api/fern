@@ -1,18 +1,19 @@
-using SeedBasicAuthPwOmitted;
+using SeedApi;
 
 namespace Usage;
 
 public class Example4
 {
     public async Task Do() {
-        var client = new SeedBasicAuthPwOmittedClient(
+        var client = new SeedApiClient(
             username: "<username>",
+            password: "<password>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.BasicAuth.PostWithBasicAuthAsync(
+        await client.Basicauth.PostwithbasicauthAsync(
             new Dictionary<string, object>()
             {
                 ["key"] = "value",

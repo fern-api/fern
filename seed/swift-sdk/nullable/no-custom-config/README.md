@@ -49,26 +49,30 @@ Instantiate and use the client with the following:
 
 ```swift
 import Foundation
-import Nullable
+import Api
 
 private func main() async throws {
-    let client = NullableClient()
+    let client = ApiClient()
 
-    _ = try await client.nullable.createUser(request: .init(
+    _ = try await client.nullable.createuser(request: .init(
         username: "username",
-        tags: [
+        tags: .value([
             "tags",
             "tags"
-        ],
+        ]),
         metadata: Metadata(
             createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
             updatedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
             avatar: .value("avatar"),
             activated: .value(true),
-            status: Status.active,
-            values: [
+            status: Status.active(
+                StatusActive(
+
+                )
+            ),
+            values: .value([
                 "values": .value("values")
-            ]
+            ])
         ),
         avatar: .value("avatar")
     ))
@@ -82,14 +86,14 @@ try await main()
 The SDK throws a single error enum for all failures. Client-side issues encoding/decoding failures and network errors use dedicated cases, while non-success HTTP responses are wrapped in an `HTTPError` that exposes the status code, a simple classification and an optional decoded message.
 
 ```swift
-import Nullable
+import Api
 
-let client = NullableClient(...)
+let client = ApiClient(...)
 
 do {
-    let response = try await client.nullable.createUser(...)
+    let response = try await client.nullable.createuser(...)
     // Handle successful response
-} catch let error as NullableError {
+} catch let error as ApiError {
     switch error {
     case .httpError(let httpError):
         print("Status code:", httpError.statusCode)
@@ -112,9 +116,9 @@ do {
 The SDK exports all request types as Swift structs. Simply import the SDK module to access them:
 
 ```swift
-import Nullable
+import Api
 
-let request = Requests.CreateUserRequest(
+let request = Requests.NullableCreateUserRequest(
     ...
 )
 ```
@@ -126,7 +130,7 @@ let request = Requests.CreateUserRequest(
 If you would like to send additional headers as part of the request, use the `additionalHeaders` request option.
 
 ```swift
-try await client.nullable.createUser(..., requestOptions: .init(
+try await client.nullable.createuser(..., requestOptions: .init(
     additionalHeaders: [
         "X-Custom-Header": "custom value"
     ]
@@ -138,7 +142,7 @@ try await client.nullable.createUser(..., requestOptions: .init(
 If you would like to send additional query string parameters as part of the request, use the `additionalQueryParameters` request option.
 
 ```swift
-try await client.nullable.createUser(..., requestOptions: .init(
+try await client.nullable.createuser(..., requestOptions: .init(
     additionalQueryParameters: [
         "custom_query_param_key": "custom_query_param_value"
     ]
@@ -150,7 +154,7 @@ try await client.nullable.createUser(..., requestOptions: .init(
 The SDK defaults to a 60-second timeout. Use the `timeout` option to configure this behavior.
 
 ```swift
-try await client.nullable.createUser(..., requestOptions: .init(
+try await client.nullable.createuser(..., requestOptions: .init(
     timeout: 30
 ))
 ```
@@ -161,9 +165,9 @@ The SDK allows you to customize the underlying `URLSession` used for HTTP reques
 
 ```swift
 import Foundation
-import Nullable
+import Api
 
-let client = NullableClient(
+let client = ApiClient(
     ...,
     urlSession: // Provide your implementation here
 )

@@ -14,7 +14,7 @@ paths:
           description: ''
   /:
     post:
-      operationId: service_downloadFile
+      operationId: service_downloadfile
       tags:
         - Service
       parameters: []

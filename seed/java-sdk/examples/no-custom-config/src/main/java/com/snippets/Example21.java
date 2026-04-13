@@ -1,17 +1,16 @@
 package com.snippets;
 
-import com.seed.examples.SeedExamplesClient;
-import com.seed.examples.resources.types.types.RefreshTokenRequest;
-import java.util.Optional;
+import com.seed.api.SeedApiClient;
+import com.seed.api.types.BasicType;
+import com.seed.api.types.Type;
 
 public class Example21 {
     public static void main(String[] args) {
-        SeedExamplesClient client = SeedExamplesClient.builder()
+        SeedApiClient client = SeedApiClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
-        client.service()
-                .refreshToken(Optional.of(RefreshTokenRequest.builder().ttl(420).build()));
+        client.createType(Type.of(BasicType.PRIMITIVE));
     }
 }

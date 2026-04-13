@@ -5,15 +5,4 @@ client = Seed::Client.new(
   base_url: "https://api.fern.com"
 )
 
-client.service.update_user(
-  user_id: "userId",
-  email: "email",
-  email_verified: true,
-  username: "username",
-  phone_number: "phone_number",
-  phone_verified: true,
-  user_metadata: {},
-  app_metadata: {},
-  password: "password",
-  blocked: true
-)
+client.service.listusers

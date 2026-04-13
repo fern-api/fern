@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">getUser</a>(userId) -> void</code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">getuser</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -28,7 +28,9 @@ This endpoint is used to retrieve a user.
 <dd>
 
 ```typescript
-await client.user.getUser("userId");
+await client.user.getuser({
+    userId: "userId"
+});
 
 ```
 </dd>
@@ -44,10 +46,7 @@ await client.user.getUser("userId");
 <dl>
 <dd>
 
-**userId:** `string` 
-
-The ID of the user to retrieve.
-This ID is unique to each user.
+**request:** `SeedApi.UserGetUserRequest` 
     
 </dd>
 </dl>
@@ -67,7 +66,7 @@ This ID is unique to each user.
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">createUser</a>({ ...params }) -> SeedMultiLineDocs.User</code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">createuser</a>({ ...params }) -> SeedApi.User</code></summary>
 <dl>
 <dd>
 
@@ -95,9 +94,8 @@ This endpoint is used to create a new user.
 <dd>
 
 ```typescript
-await client.user.createUser({
-    name: "name",
-    age: 1
+await client.user.createuser({
+    name: "name"
 });
 
 ```
@@ -114,7 +112,7 @@ await client.user.createUser({
 <dl>
 <dd>
 
-**request:** `SeedMultiLineDocs.CreateUserRequest` 
+**request:** `SeedApi.UserCreateUserRequest` 
     
 </dd>
 </dl>

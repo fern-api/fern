@@ -30,7 +30,7 @@ class SeedClient
     private RawClient $client;
 
     /**
-     * @param string $headerTokenAuth The headerTokenAuth to use for authentication.
+     * @param string $apiKey The apiKey to use for authentication.
      * @param ?array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
@@ -40,11 +40,11 @@ class SeedClient
      * } $options
      */
     public function __construct(
-        string $headerTokenAuth,
+        string $apiKey,
         ?array $options = null,
     ) {
         $defaultHeaders = [
-            'x-api-key' => "test_prefix $headerTokenAuth",
+            'x-api-key' => $apiKey,
             'X-Fern-Language' => 'PHP',
             'X-Fern-SDK-Name' => 'Seed',
             'X-Fern-SDK-Version' => '0.0.1',

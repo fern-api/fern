@@ -1,6 +1,6 @@
 # Reference
-## NullableOptional
-<details><summary><code>client.NullableOptional.GetUser(UserID) -> *fern.UserResponse</code></summary>
+## Nullableoptional
+<details><summary><code>client.Nullableoptional.Getuser(UserID) -> *fern.UserResponse</code></summary>
 <dl>
 <dd>
 
@@ -27,9 +27,12 @@ Get a user by ID
 <dd>
 
 ```go
-client.NullableOptional.GetUser(
+request := &fern.NullableOptionalGetUserRequest{
+        UserID: "userId",
+    }
+client.Nullableoptional.Getuser(
         context.TODO(),
-        "userId",
+        request,
     )
 }
 ```
@@ -58,93 +61,7 @@ client.NullableOptional.GetUser(
 </dl>
 </details>
 
-<details><summary><code>client.NullableOptional.CreateUser(request) -> *fern.UserResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create a new user
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &fern.CreateUserRequest{
-        Username: "username",
-        Email: fern.String(
-            "email",
-        ),
-        Phone: fern.String(
-            "phone",
-        ),
-        Address: &fern.Address{
-            Street: "street",
-            City: fern.String(
-                "city",
-            ),
-            State: fern.String(
-                "state",
-            ),
-            ZipCode: "zipCode",
-            Country: fern.String(
-                "country",
-            ),
-            BuildingID: fern.String(
-                "buildingId",
-            ),
-            TenantID: fern.String(
-                "tenantId",
-            ),
-        },
-    }
-client.NullableOptional.CreateUser(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `*fern.CreateUserRequest` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.NullableOptional.UpdateUser(UserID, request) -> *fern.UserResponse</code></summary>
+<details><summary><code>client.Nullableoptional.Updateuser(UserID, request) -> *fern.UserResponse</code></summary>
 <dl>
 <dd>
 
@@ -172,38 +89,10 @@ Update a user (partial update)
 
 ```go
 request := &fern.UpdateUserRequest{
-        Username: fern.String(
-            "username",
-        ),
-        Email: fern.String(
-            "email",
-        ),
-        Phone: fern.String(
-            "phone",
-        ),
-        Address: &fern.Address{
-            Street: "street",
-            City: fern.String(
-                "city",
-            ),
-            State: fern.String(
-                "state",
-            ),
-            ZipCode: "zipCode",
-            Country: fern.String(
-                "country",
-            ),
-            BuildingID: fern.String(
-                "buildingId",
-            ),
-            TenantID: fern.String(
-                "tenantId",
-            ),
-        },
+        UserID: "userId",
     }
-client.NullableOptional.UpdateUser(
+client.Nullableoptional.Updateuser(
         context.TODO(),
-        "userId",
         request,
     )
 }
@@ -229,7 +118,31 @@ client.NullableOptional.UpdateUser(
 <dl>
 <dd>
 
-**request:** `*fern.UpdateUserRequest` 
+**username:** `*string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**email:** `*string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**phone:** `*string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**address:** `*fern.Address` 
     
 </dd>
 </dl>
@@ -241,7 +154,7 @@ client.NullableOptional.UpdateUser(
 </dl>
 </details>
 
-<details><summary><code>client.NullableOptional.ListUsers() -> []*fern.UserResponse</code></summary>
+<details><summary><code>client.Nullableoptional.Listusers() -> []*fern.UserResponse</code></summary>
 <dl>
 <dd>
 
@@ -268,21 +181,8 @@ List all users
 <dd>
 
 ```go
-request := &fern.ListUsersRequest{
-        Limit: fern.Int(
-            1,
-        ),
-        Offset: fern.Int(
-            1,
-        ),
-        IncludeDeleted: fern.Bool(
-            true,
-        ),
-        SortBy: fern.String(
-            "sortBy",
-        ),
-    }
-client.NullableOptional.ListUsers(
+request := &fern.NullableOptionalListUsersRequest{}
+client.Nullableoptional.Listusers(
         context.TODO(),
         request,
     )
@@ -337,7 +237,92 @@ client.NullableOptional.ListUsers(
 </dl>
 </details>
 
-<details><summary><code>client.NullableOptional.SearchUsers() -> []*fern.UserResponse</code></summary>
+<details><summary><code>client.Nullableoptional.Createuser(request) -> *fern.UserResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new user
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &fern.CreateUserRequest{
+        Username: "username",
+    }
+client.Nullableoptional.Createuser(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**username:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**email:** `*string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**phone:** `*string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**address:** `*fern.Address` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Nullableoptional.Searchusers() -> []*fern.UserResponse</code></summary>
 <dl>
 <dd>
 
@@ -364,19 +349,13 @@ Search users
 <dd>
 
 ```go
-request := &fern.SearchUsersRequest{
+request := &fern.NullableOptionalSearchUsersRequest{
         Query: "query",
         Department: fern.String(
             "department",
         ),
-        Role: fern.String(
-            "role",
-        ),
-        IsActive: fern.Bool(
-            true,
-        ),
     }
-client.NullableOptional.SearchUsers(
+client.Nullableoptional.Searchusers(
         context.TODO(),
         request,
     )
@@ -431,7 +410,7 @@ client.NullableOptional.SearchUsers(
 </dl>
 </details>
 
-<details><summary><code>client.NullableOptional.CreateComplexProfile(request) -> *fern.ComplexProfile</code></summary>
+<details><summary><code>client.Nullableoptional.Createcomplexprofile(request) -> *fern.ComplexProfile</code></summary>
 <dl>
 <dd>
 
@@ -460,183 +439,27 @@ Create a complex profile to test nullable enums and unions
 ```go
 request := &fern.ComplexProfile{
         ID: "id",
-        NullableRole: fern.UserRoleAdmin.Ptr(),
-        OptionalRole: fern.UserRoleAdmin.Ptr(),
-        OptionalNullableRole: fern.UserRoleAdmin.Ptr(),
-        NullableStatus: fern.UserStatusActive.Ptr(),
-        OptionalStatus: fern.UserStatusActive.Ptr(),
-        OptionalNullableStatus: fern.UserStatusActive.Ptr(),
+        NullableRole: fern.UserRoleAdmin,
+        NullableStatus: fern.UserStatusActive,
         NullableNotification: &fern.NotificationMethod{
-            Email: &fern.EmailNotification{
+            NotificationMethodZero: &fern.NotificationMethodZero{
                 EmailAddress: "emailAddress",
                 Subject: "subject",
-                HTMLContent: fern.String(
-                    "htmlContent",
-                ),
-            },
-        },
-        OptionalNotification: &fern.NotificationMethod{
-            Email: &fern.EmailNotification{
-                EmailAddress: "emailAddress",
-                Subject: "subject",
-                HTMLContent: fern.String(
-                    "htmlContent",
-                ),
-            },
-        },
-        OptionalNullableNotification: &fern.NotificationMethod{
-            Email: &fern.EmailNotification{
-                EmailAddress: "emailAddress",
-                Subject: "subject",
-                HTMLContent: fern.String(
-                    "htmlContent",
-                ),
+                Type: fern.NotificationMethodZeroTypeEmail,
             },
         },
         NullableSearchResult: &fern.SearchResult{
-            User: &fern.UserResponse{
+            SearchResultZero: &fern.SearchResultZero{
                 ID: "id",
                 Username: "username",
-                Email: fern.String(
-                    "email",
-                ),
-                Phone: fern.String(
-                    "phone",
-                ),
                 CreatedAt: fern.MustParseDateTime(
                     "2024-01-15T09:30:00Z",
                 ),
-                UpdatedAt: fern.Time(
-                    fern.MustParseDateTime(
-                        "2024-01-15T09:30:00Z",
-                    ),
-                ),
-                Address: &fern.Address{
-                    Street: "street",
-                    City: fern.String(
-                        "city",
-                    ),
-                    State: fern.String(
-                        "state",
-                    ),
-                    ZipCode: "zipCode",
-                    Country: fern.String(
-                        "country",
-                    ),
-                    BuildingID: fern.String(
-                        "buildingId",
-                    ),
-                    TenantID: fern.String(
-                        "tenantId",
-                    ),
-                },
+                Type: fern.SearchResultZeroTypeUser,
             },
-        },
-        OptionalSearchResult: &fern.SearchResult{
-            User: &fern.UserResponse{
-                ID: "id",
-                Username: "username",
-                Email: fern.String(
-                    "email",
-                ),
-                Phone: fern.String(
-                    "phone",
-                ),
-                CreatedAt: fern.MustParseDateTime(
-                    "2024-01-15T09:30:00Z",
-                ),
-                UpdatedAt: fern.Time(
-                    fern.MustParseDateTime(
-                        "2024-01-15T09:30:00Z",
-                    ),
-                ),
-                Address: &fern.Address{
-                    Street: "street",
-                    City: fern.String(
-                        "city",
-                    ),
-                    State: fern.String(
-                        "state",
-                    ),
-                    ZipCode: "zipCode",
-                    Country: fern.String(
-                        "country",
-                    ),
-                    BuildingID: fern.String(
-                        "buildingId",
-                    ),
-                    TenantID: fern.String(
-                        "tenantId",
-                    ),
-                },
-            },
-        },
-        NullableArray: []string{
-            "nullableArray",
-            "nullableArray",
-        },
-        OptionalArray: []string{
-            "optionalArray",
-            "optionalArray",
-        },
-        OptionalNullableArray: []string{
-            "optionalNullableArray",
-            "optionalNullableArray",
-        },
-        NullableListOfNullables: []*string{
-            fern.String(
-                "nullableListOfNullables",
-            ),
-            fern.String(
-                "nullableListOfNullables",
-            ),
-        },
-        NullableMapOfNullables: map[string]*fern.Address{
-            "nullableMapOfNullables": &fern.Address{
-                Street: "street",
-                City: fern.String(
-                    "city",
-                ),
-                State: fern.String(
-                    "state",
-                ),
-                ZipCode: "zipCode",
-                Country: fern.String(
-                    "country",
-                ),
-                BuildingID: fern.String(
-                    "buildingId",
-                ),
-                TenantID: fern.String(
-                    "tenantId",
-                ),
-            },
-        },
-        NullableListOfUnions: []*fern.NotificationMethod{
-            &fern.NotificationMethod{
-                Email: &fern.EmailNotification{
-                    EmailAddress: "emailAddress",
-                    Subject: "subject",
-                    HTMLContent: fern.String(
-                        "htmlContent",
-                    ),
-                },
-            },
-            &fern.NotificationMethod{
-                Email: &fern.EmailNotification{
-                    EmailAddress: "emailAddress",
-                    Subject: "subject",
-                    HTMLContent: fern.String(
-                        "htmlContent",
-                    ),
-                },
-            },
-        },
-        OptionalMapOfEnums: map[string]fern.UserRole{
-            "optionalMapOfEnums": fern.UserRoleAdmin,
         },
     }
-client.NullableOptional.CreateComplexProfile(
+client.Nullableoptional.Createcomplexprofile(
         context.TODO(),
         request,
     )
@@ -667,7 +490,7 @@ client.NullableOptional.CreateComplexProfile(
 </dl>
 </details>
 
-<details><summary><code>client.NullableOptional.GetComplexProfile(ProfileID) -> *fern.ComplexProfile</code></summary>
+<details><summary><code>client.Nullableoptional.Getcomplexprofile(ProfileID) -> *fern.ComplexProfile</code></summary>
 <dl>
 <dd>
 
@@ -694,9 +517,12 @@ Get a complex profile by ID
 <dd>
 
 ```go
-client.NullableOptional.GetComplexProfile(
+request := &fern.NullableOptionalGetComplexProfileRequest{
+        ProfileID: "profileId",
+    }
+client.Nullableoptional.Getcomplexprofile(
         context.TODO(),
-        "profileId",
+        request,
     )
 }
 ```
@@ -725,7 +551,7 @@ client.NullableOptional.GetComplexProfile(
 </dl>
 </details>
 
-<details><summary><code>client.NullableOptional.UpdateComplexProfile(ProfileID, request) -> *fern.ComplexProfile</code></summary>
+<details><summary><code>client.Nullableoptional.Updatecomplexprofile(ProfileID, request) -> *fern.ComplexProfile</code></summary>
 <dl>
 <dd>
 
@@ -752,65 +578,11 @@ Update complex profile to test nullable field updates
 <dd>
 
 ```go
-request := &fern.UpdateComplexProfileRequest{
-        NullableRole: fern.UserRoleAdmin.Ptr(),
-        NullableStatus: fern.UserStatusActive.Ptr(),
-        NullableNotification: &fern.NotificationMethod{
-            Email: &fern.EmailNotification{
-                EmailAddress: "emailAddress",
-                Subject: "subject",
-                HTMLContent: fern.String(
-                    "htmlContent",
-                ),
-            },
-        },
-        NullableSearchResult: &fern.SearchResult{
-            User: &fern.UserResponse{
-                ID: "id",
-                Username: "username",
-                Email: fern.String(
-                    "email",
-                ),
-                Phone: fern.String(
-                    "phone",
-                ),
-                CreatedAt: fern.MustParseDateTime(
-                    "2024-01-15T09:30:00Z",
-                ),
-                UpdatedAt: fern.Time(
-                    fern.MustParseDateTime(
-                        "2024-01-15T09:30:00Z",
-                    ),
-                ),
-                Address: &fern.Address{
-                    Street: "street",
-                    City: fern.String(
-                        "city",
-                    ),
-                    State: fern.String(
-                        "state",
-                    ),
-                    ZipCode: "zipCode",
-                    Country: fern.String(
-                        "country",
-                    ),
-                    BuildingID: fern.String(
-                        "buildingId",
-                    ),
-                    TenantID: fern.String(
-                        "tenantId",
-                    ),
-                },
-            },
-        },
-        NullableArray: []string{
-            "nullableArray",
-            "nullableArray",
-        },
+request := &fern.NullableOptionalUpdateComplexProfileRequest{
+        ProfileID: "profileId",
     }
-client.NullableOptional.UpdateComplexProfile(
+client.Nullableoptional.Updatecomplexprofile(
         context.TODO(),
-        "profileId",
         request,
     )
 }
@@ -880,7 +652,7 @@ client.NullableOptional.UpdateComplexProfile(
 </dl>
 </details>
 
-<details><summary><code>client.NullableOptional.TestDeserialization(request) -> *fern.DeserializationTestResponse</code></summary>
+<details><summary><code>client.Nullableoptional.Testdeserialization(request) -> *fern.DeserializationTestResponse</code></summary>
 <dl>
 <dd>
 
@@ -909,103 +681,20 @@ Test endpoint for validating null deserialization
 ```go
 request := &fern.DeserializationTestRequest{
         RequiredString: "requiredString",
-        NullableString: fern.String(
-            "nullableString",
-        ),
-        OptionalString: fern.String(
-            "optionalString",
-        ),
-        OptionalNullableString: fern.String(
-            "optionalNullableString",
-        ),
-        NullableEnum: fern.UserRoleAdmin.Ptr(),
-        OptionalEnum: fern.UserStatusActive.Ptr(),
+        NullableEnum: fern.UserRoleAdmin,
         NullableUnion: &fern.NotificationMethod{
-            Email: &fern.EmailNotification{
+            NotificationMethodZero: &fern.NotificationMethodZero{
                 EmailAddress: "emailAddress",
                 Subject: "subject",
-                HTMLContent: fern.String(
-                    "htmlContent",
-                ),
+                Type: fern.NotificationMethodZeroTypeEmail,
             },
-        },
-        OptionalUnion: &fern.SearchResult{
-            User: &fern.UserResponse{
-                ID: "id",
-                Username: "username",
-                Email: fern.String(
-                    "email",
-                ),
-                Phone: fern.String(
-                    "phone",
-                ),
-                CreatedAt: fern.MustParseDateTime(
-                    "2024-01-15T09:30:00Z",
-                ),
-                UpdatedAt: fern.Time(
-                    fern.MustParseDateTime(
-                        "2024-01-15T09:30:00Z",
-                    ),
-                ),
-                Address: &fern.Address{
-                    Street: "street",
-                    City: fern.String(
-                        "city",
-                    ),
-                    State: fern.String(
-                        "state",
-                    ),
-                    ZipCode: "zipCode",
-                    Country: fern.String(
-                        "country",
-                    ),
-                    BuildingID: fern.String(
-                        "buildingId",
-                    ),
-                    TenantID: fern.String(
-                        "tenantId",
-                    ),
-                },
-            },
-        },
-        NullableList: []string{
-            "nullableList",
-            "nullableList",
-        },
-        NullableMap: map[string]int{
-            "nullableMap": 1,
         },
         NullableObject: &fern.Address{
             Street: "street",
-            City: fern.String(
-                "city",
-            ),
-            State: fern.String(
-                "state",
-            ),
             ZipCode: "zipCode",
-            Country: fern.String(
-                "country",
-            ),
-            BuildingID: fern.String(
-                "buildingId",
-            ),
-            TenantID: fern.String(
-                "tenantId",
-            ),
-        },
-        OptionalObject: &fern.Organization{
-            ID: "id",
-            Name: "name",
-            Domain: fern.String(
-                "domain",
-            ),
-            EmployeeCount: fern.Int(
-                1,
-            ),
         },
     }
-client.NullableOptional.TestDeserialization(
+client.Nullableoptional.Testdeserialization(
         context.TODO(),
         request,
     )
@@ -1036,7 +725,7 @@ client.NullableOptional.TestDeserialization(
 </dl>
 </details>
 
-<details><summary><code>client.NullableOptional.FilterByRole() -> []*fern.UserResponse</code></summary>
+<details><summary><code>client.Nullableoptional.Filterbyrole() -> []*fern.UserResponse</code></summary>
 <dl>
 <dd>
 
@@ -1063,12 +752,10 @@ Filter users by role with nullable enum
 <dd>
 
 ```go
-request := &fern.FilterByRoleRequest{
-        Role: fern.UserRoleAdmin.Ptr(),
-        Status: fern.UserStatusActive.Ptr(),
-        SecondaryRole: fern.UserRoleAdmin.Ptr(),
+request := &fern.NullableOptionalFilterByRoleRequest{
+        Role: fern.UserRoleAdmin,
     }
-client.NullableOptional.FilterByRole(
+client.Nullableoptional.Filterbyrole(
         context.TODO(),
         request,
     )
@@ -1115,7 +802,7 @@ client.NullableOptional.FilterByRole(
 </dl>
 </details>
 
-<details><summary><code>client.NullableOptional.GetNotificationSettings(UserID) -> *fern.NotificationMethod</code></summary>
+<details><summary><code>client.Nullableoptional.Getnotificationsettings(UserID) -> *fern.NotificationMethod</code></summary>
 <dl>
 <dd>
 
@@ -1142,9 +829,12 @@ Get notification settings which may be null
 <dd>
 
 ```go
-client.NullableOptional.GetNotificationSettings(
+request := &fern.NullableOptionalGetNotificationSettingsRequest{
+        UserID: "userId",
+    }
+client.Nullableoptional.Getnotificationsettings(
         context.TODO(),
-        "userId",
+        request,
     )
 }
 ```
@@ -1173,7 +863,7 @@ client.NullableOptional.GetNotificationSettings(
 </dl>
 </details>
 
-<details><summary><code>client.NullableOptional.UpdateTags(UserID, request) -> []string</code></summary>
+<details><summary><code>client.Nullableoptional.Updatetags(UserID, request) -> []string</code></summary>
 <dl>
 <dd>
 
@@ -1200,23 +890,11 @@ Update tags to test array handling
 <dd>
 
 ```go
-request := &fern.UpdateTagsRequest{
-        Tags: []string{
-            "tags",
-            "tags",
-        },
-        Categories: []string{
-            "categories",
-            "categories",
-        },
-        Labels: []string{
-            "labels",
-            "labels",
-        },
+request := &fern.NullableOptionalUpdateTagsRequest{
+        UserID: "userId",
     }
-client.NullableOptional.UpdateTags(
+client.Nullableoptional.Updatetags(
         context.TODO(),
-        "userId",
         request,
     )
 }
@@ -1270,7 +948,7 @@ client.NullableOptional.UpdateTags(
 </dl>
 </details>
 
-<details><summary><code>client.NullableOptional.GetSearchResults(request) -> []*fern.SearchResult</code></summary>
+<details><summary><code>client.Nullableoptional.Getsearchresults(request) -> []*fern.SearchResult</code></summary>
 <dl>
 <dd>
 
@@ -1297,19 +975,10 @@ Get search results with nullable unions
 <dd>
 
 ```go
-request := &fern.SearchRequest{
+request := &fern.NullableOptionalGetSearchResultsRequest{
         Query: "query",
-        Filters: map[string]*string{
-            "filters": fern.String(
-                "filters",
-            ),
-        },
-        IncludeTypes: []string{
-            "includeTypes",
-            "includeTypes",
-        },
     }
-client.NullableOptional.GetSearchResults(
+client.Nullableoptional.Getsearchresults(
         context.TODO(),
         request,
     )

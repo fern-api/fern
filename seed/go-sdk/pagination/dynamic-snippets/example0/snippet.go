@@ -18,27 +18,13 @@ func do() {
         ),
     )
     request := &fern.SearchRequest{
-        Pagination: &fern.StartingAfterPaging{
-            PerPage: 1,
-            StartingAfter: fern.String(
-                "starting_after",
-            ),
-        },
+        Index: "index",
         Query: &fern.SearchRequestQuery{
-            SingleFilterSearchRequest: &fern.SingleFilterSearchRequest{
-                Field: fern.String(
-                    "field",
-                ),
-                Operator: fern.SingleFilterSearchRequestOperatorEquals.Ptr(),
-                Value: fern.String(
-                    "value",
-                ),
-            },
+            SingleFilterSearchRequest: &fern.SingleFilterSearchRequest{},
         },
     }
     client.Complex.Search(
         context.TODO(),
-        "index",
         request,
     )
 }

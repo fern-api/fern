@@ -1,6 +1,6 @@
 # Reference
 ## Organization
-<details><summary><code>client.organization.<a href="/Sources/Resources/Organization/OrganizationClient.swift">create</a>(request: CreateOrganizationRequest, requestOptions: RequestOptions?) -> Organization</code></summary>
+<details><summary><code>client.organization.<a href="/Sources/Resources/Organization/OrganizationClient.swift">create</a>(request: Requests.CreateOrganizationRequest, requestOptions: RequestOptions?) -> Organization</code></summary>
 <dl>
 <dd>
 
@@ -28,14 +28,12 @@ Create a new organization.
 
 ```swift
 import Foundation
-import MixedFileDirectory
+import Api
 
 private func main() async throws {
-    let client = MixedFileDirectoryClient()
+    let client = ApiClient()
 
-    _ = try await client.organization.create(request: CreateOrganizationRequest(
-        name: "name"
-    ))
+    _ = try await client.organization.create(request: .init(name: "name"))
 }
 
 try await main()
@@ -53,7 +51,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `CreateOrganizationRequest` 
+**request:** `Requests.CreateOrganizationRequest` 
     
 </dd>
 </dl>
@@ -74,7 +72,7 @@ try await main()
 </details>
 
 ## User
-<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">list</a>(limit: Int?, requestOptions: RequestOptions?) -> [User]</code></summary>
+<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">list</a>(limit: Nullable&lt;Int&gt;?, requestOptions: RequestOptions?) -> [User]</code></summary>
 <dl>
 <dd>
 
@@ -102,12 +100,12 @@ List all users.
 
 ```swift
 import Foundation
-import MixedFileDirectory
+import Api
 
 private func main() async throws {
-    let client = MixedFileDirectoryClient()
+    let client = ApiClient()
 
-    _ = try await client.user.list(limit: 1)
+    _ = try await client.user.list()
 }
 
 try await main()
@@ -125,7 +123,7 @@ try await main()
 <dl>
 <dd>
 
-**limit:** `Int?` — The maximum number of results to return.
+**limit:** `Nullable<Int>?` — The maximum number of results to return.
     
 </dd>
 </dl>
@@ -145,8 +143,8 @@ try await main()
 </dl>
 </details>
 
-## User Events
-<details><summary><code>client.user.events.<a href="/Sources/Resources/User/Events/EventsClient.swift">listEvents</a>(limit: Int?, requestOptions: RequestOptions?) -> [Event]</code></summary>
+## UserEvents
+<details><summary><code>client.userEvents.<a href="/Sources/Resources/UserEvents/UserEventsClient.swift">userEventsListEvents</a>(limit: Nullable&lt;Int&gt;?, requestOptions: RequestOptions?) -> [UserEvent]</code></summary>
 <dl>
 <dd>
 
@@ -174,12 +172,12 @@ List all user events.
 
 ```swift
 import Foundation
-import MixedFileDirectory
+import Api
 
 private func main() async throws {
-    let client = MixedFileDirectoryClient()
+    let client = ApiClient()
 
-    _ = try await client.user.events.listEvents(limit: 1)
+    _ = try await client.userEvents.userEventsListEvents()
 }
 
 try await main()
@@ -197,7 +195,7 @@ try await main()
 <dl>
 <dd>
 
-**limit:** `Int?` — The maximum number of results to return.
+**limit:** `Nullable<Int>?` — The maximum number of results to return.
     
 </dd>
 </dl>
@@ -217,8 +215,8 @@ try await main()
 </dl>
 </details>
 
-## User Events Metadata
-<details><summary><code>client.user.events.metadata.<a href="/Sources/Resources/User/Events/Metadata/MetadataClient.swift">getMetadata</a>(id: Id, requestOptions: RequestOptions?) -> Metadata</code></summary>
+## UserEventsMetadata
+<details><summary><code>client.userEventsMetadata.<a href="/Sources/Resources/UserEventsMetadata/UserEventsMetadataClient.swift">userEventsMetadataGetMetadata</a>(id: Id, requestOptions: RequestOptions?) -> UsereventsMetadata</code></summary>
 <dl>
 <dd>
 
@@ -246,12 +244,12 @@ Get event metadata.
 
 ```swift
 import Foundation
-import MixedFileDirectory
+import Api
 
 private func main() async throws {
-    let client = MixedFileDirectoryClient()
+    let client = ApiClient()
 
-    _ = try await client.user.events.metadata.getMetadata(id: "id")
+    _ = try await client.userEventsMetadata.userEventsMetadataGetMetadata(id: "id")
 }
 
 try await main()

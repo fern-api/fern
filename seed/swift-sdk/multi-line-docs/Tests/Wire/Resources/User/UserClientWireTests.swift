@@ -1,9 +1,9 @@
 import Foundation
 import Testing
-import MultiLineDocs
+import Api
 
 @Suite("UserClient Wire Tests") struct UserClientWireTests {
-    @Test func createUser1() async throws -> Void {
+    @Test func createuser1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -16,19 +16,48 @@ import MultiLineDocs
                 """.utf8
             )
         )
-        let client = MultiLineDocsClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
         let expectedResponse = User(
             id: "id",
             name: "name",
-            age: Optional(1)
+            age: Optional(Nullable<Int>.value(1))
         )
-        let response = try await client.user.createUser(
+        let response = try await client.user.createuser(
+            request: .init(name: "name"),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
+    @Test func createuser2() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                {
+                  "id": "id",
+                  "name": "name",
+                  "age": 1
+                }
+                """.utf8
+            )
+        )
+        let client = ApiClient(
+            baseURL: "https://api.fern.com",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = User(
+            id: "id",
+            name: "name",
+            age: Optional(Nullable<Int>.value(1))
+        )
+        let response = try await client.user.createuser(
             request: .init(
                 name: "name",
-                age: 1
+                age: .value(1)
             ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )

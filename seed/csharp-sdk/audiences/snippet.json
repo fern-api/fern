@@ -6,23 +6,11 @@
             "id": {
                 "path": "/",
                 "method": "GET",
-                "identifier_override": "endpoint_folder-a/service.getDirectThread"
+                "identifier_override": "endpoint_folderAService.folderA_service_getDirectThread"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedAudiences.FolderA;\nusing SeedAudiences;\n\nvar client = new SeedAudiencesClient();\nawait client.FolderA.Service.GetDirectThreadAsync(\n    new GetDirectThreadRequest { Ids = [\"ids\"], Tags = [\"tags\"] }\n);\n"
-            }
-        },
-        {
-            "example_identifier": null,
-            "id": {
-                "path": "/partner-path",
-                "method": "GET",
-                "identifier_override": "endpoint_folder-d/service.getDirectThread"
-            },
-            "snippet": {
-                "type": "csharp",
-                "client": "using SeedAudiences;\n\nvar client = new SeedAudiencesClient();\nawait client.FolderD.Service.GetDirectThreadAsync();\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.FolderAService.FolderAServiceGetDirectThreadAsync(\n    new FolderAServiceGetDirectThreadRequest { Ids = [\"ids\"], Tags = [\"tags\"] }\n);\n"
             }
         },
         {
@@ -34,7 +22,19 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedAudiences;\n\nvar client = new SeedAudiencesClient();\nawait client.Foo.FindAsync(\n    new FindRequest\n    {\n        OptionalString = \"optionalString\",\n        PublicProperty = \"publicProperty\",\n        PrivateProperty = 1,\n    }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Foo.FindAsync(new FooFindRequest());\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/partner-path",
+                "method": "GET",
+                "identifier_override": "endpoint_folderDService.folderD_service_getDirectThread"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.FolderDService.FolderDServiceGetDirectThreadAsync();\n"
             }
         }
     ]

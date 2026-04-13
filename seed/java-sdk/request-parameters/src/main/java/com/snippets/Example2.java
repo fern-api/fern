@@ -1,14 +1,15 @@
 package com.snippets;
 
-import com.seed.requestParameters.SeedRequestParametersClient;
-import java.util.Optional;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.user.requests.CreateUsernameBodyOptionalProperties;
 
 public class Example2 {
     public static void main(String[] args) {
-        SeedRequestParametersClient client = SeedRequestParametersClient.builder()
-                .url("https://api.fern.com")
-                .build();
+        SeedApiClient client =
+                SeedApiClient.builder().url("https://api.fern.com").build();
 
-        client.user().createUsernameOptional(Optional.empty());
+        client.user()
+                .createusernameoptional(
+                        CreateUsernameBodyOptionalProperties.builder().build());
     }
 }

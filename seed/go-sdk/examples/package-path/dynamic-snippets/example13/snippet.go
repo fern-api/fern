@@ -3,6 +3,7 @@ package example
 import (
     context "context"
 
+    pleaseinhere "github.com/examples/fern/pleaseinhere"
     client "github.com/examples/fern/pleaseinhere/client"
     option "github.com/examples/fern/pleaseinhere/option"
 )
@@ -16,8 +17,11 @@ func do() {
             "<token>",
         ),
     )
-    client.Service.GetMovie(
+    request := &pleaseinhere.ServiceGetMetadataRequest{
+        APIVersion: "X-API-Version",
+    }
+    client.Service.Getmetadata(
         context.TODO(),
-        "movie-c06a4ad7",
+        request,
     )
 }

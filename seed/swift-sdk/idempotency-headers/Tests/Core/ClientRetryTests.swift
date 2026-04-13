@@ -1,4 +1,4 @@
-import IdempotencyHeaders
+import Api
 import Foundation
 import Testing
 
@@ -14,7 +14,7 @@ import Testing
             ),
         ])
 
-        let client = IdempotencyHeadersClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -45,7 +45,7 @@ import Testing
             ),
         ])
 
-        let client = IdempotencyHeadersClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -76,7 +76,7 @@ import Testing
             ),
         ])
 
-        let client = IdempotencyHeadersClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -106,7 +106,7 @@ import Testing
             ),
         ])
 
-        let client = IdempotencyHeadersClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -135,7 +135,7 @@ import Testing
             )
         ])
 
-        let client = IdempotencyHeadersClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -165,7 +165,7 @@ import Testing
             )
         ])
 
-        let client = IdempotencyHeadersClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -195,7 +195,7 @@ import Testing
             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
         ])
 
-        let client = IdempotencyHeadersClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -229,7 +229,7 @@ import Testing
             ),
         ])
 
-        let client = IdempotencyHeadersClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -274,7 +274,7 @@ import Testing
             ),
         ])
 
-        let client = IdempotencyHeadersClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -315,7 +315,7 @@ import Testing
             ),
         ])
 
-        let client = IdempotencyHeadersClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -368,7 +368,7 @@ import Testing
             ),
         ])
 
-        let client = IdempotencyHeadersClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -394,7 +394,7 @@ import Testing
             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data())
         ])
 
-        let client = IdempotencyHeadersClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -424,7 +424,7 @@ import Testing
             )
         ])
 
-        let client = IdempotencyHeadersClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession

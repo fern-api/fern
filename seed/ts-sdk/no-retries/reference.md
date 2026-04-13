@@ -1,6 +1,6 @@
 # Reference
 ## Retries
-<details><summary><code>client.retries.<a href="/src/api/resources/retries/client/Client.ts">getUsers</a>() -> SeedNoRetries.User[]</code></summary>
+<details><summary><code>client.retries.<a href="/src/api/resources/retries/client/Client.ts">getusers</a>() -> SeedApi.User[]</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```typescript
-await client.retries.getUsers();
+await client.retries.getusers();
 
 ```
 </dd>

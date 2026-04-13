@@ -1,19 +1,19 @@
-//! # MultiLineDocs SDK
+//! # multi-line-docs SDK
 //!
-//! The official Rust SDK for the MultiLineDocs.
+//! The official Rust SDK for the multi-line-docs.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_multi_line_docs::prelude::*;
+//! use seed_api::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
 //!     let config = ClientConfig {
 //!         ..Default::default()
 //!     };
-//!     let client = MultiLineDocsClient::new(config).expect("Failed to build client");
-//!     client.user.get_user(&"userId".to_string(), None).await;
+//!     let client = ApiClient::new(config).expect("Failed to build client");
+//!     client.user.getuser(&"userId".to_string(), None).await;
 //! }
 //! ```
 //!

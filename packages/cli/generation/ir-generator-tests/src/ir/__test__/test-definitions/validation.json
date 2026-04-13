@@ -2,8 +2,8 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": "api",
-    "apiDisplayName": "validation",
+    "apiName": "validation",
+    "apiDisplayName": null,
     "apiDocs": null,
     "auth": {
         "requirement": "ALL",
@@ -34,7 +34,13 @@
                         "v2": {
                             "type": "integer",
                             "default": null,
-                            "validation": null
+                            "validation": {
+                                "min": 0,
+                                "max": 10,
+                                "exclusiveMin": true,
+                                "exclusiveMax": true,
+                                "multipleOf": 1
+                            }
                         }
                     }
                 },
@@ -83,7 +89,13 @@
                         "v2": {
                             "type": "integer",
                             "default": null,
-                            "validation": null
+                            "validation": {
+                                "min": 10000,
+                                "max": 100000,
+                                "exclusiveMin": null,
+                                "exclusiveMax": null,
+                                "multipleOf": null
+                            }
                         }
                     }
                 },
@@ -132,7 +144,13 @@
                         "v2": {
                             "type": "double",
                             "default": null,
-                            "validation": null
+                            "validation": {
+                                "min": 256.42,
+                                "max": 512.84,
+                                "exclusiveMin": null,
+                                "exclusiveMax": null,
+                                "multipleOf": null
+                            }
                         }
                     }
                 },
@@ -181,7 +199,12 @@
                         "v2": {
                             "type": "string",
                             "default": null,
-                            "validation": null
+                            "validation": {
+                                "format": null,
+                                "pattern": null,
+                                "minLength": 2,
+                                "maxLength": 26
+                            }
                         }
                     }
                 },
@@ -230,7 +253,12 @@
                         "v2": {
                             "type": "string",
                             "default": null,
-                            "validation": null
+                            "validation": {
+                                "format": null,
+                                "pattern": null,
+                                "minLength": 4,
+                                "maxLength": 256
+                            }
                         }
                     }
                 },
@@ -272,7 +300,11 @@
             },
             "shape": {
                 "_type": "enum",
-                "default": null,
+                "default": {
+                    "name": "CIRCLE",
+                    "availability": null,
+                    "docs": null
+                },
                 "values": [
                     {
                         "name": "SQUARE",
@@ -328,8 +360,14 @@
                                 "v1": "DOUBLE",
                                 "v2": {
                                     "type": "double",
-                                    "default": null,
-                                    "validation": null
+                                    "default": 1.1,
+                                    "validation": {
+                                        "min": 1.1,
+                                        "max": 2.2,
+                                        "exclusiveMin": true,
+                                        "exclusiveMax": false,
+                                        "multipleOf": 1.1
+                                    }
                                 }
                             }
                         },
@@ -349,8 +387,14 @@
                                 "v1": "INTEGER",
                                 "v2": {
                                     "type": "integer",
-                                    "default": null,
-                                    "validation": null
+                                    "default": 42,
+                                    "validation": {
+                                        "min": 0,
+                                        "max": 100,
+                                        "exclusiveMin": false,
+                                        "exclusiveMax": true,
+                                        "multipleOf": 2
+                                    }
                                 }
                             }
                         },
@@ -370,12 +414,12 @@
                                 "v1": "STRING",
                                 "v2": {
                                     "type": "string",
-                                    "default": null,
+                                    "default": "fern",
                                     "validation": {
-                                        "format": null,
+                                        "format": "custom",
                                         "pattern": "^[a-z]+$",
-                                        "minLength": null,
-                                        "maxLength": null
+                                        "minLength": 3,
+                                        "maxLength": 10
                                     }
                                 }
                             }
@@ -423,7 +467,132 @@
                 "proto": null
             },
             "source": null,
-            "userProvidedExamples": [],
+            "userProvidedExamples": [
+                {
+                    "name": "First",
+                    "shape": {
+                        "type": "object",
+                        "properties": [
+                            {
+                                "name": "decimal",
+                                "value": {
+                                    "shape": {
+                                        "type": "primitive",
+                                        "primitive": {
+                                            "type": "double",
+                                            "double": 1.1
+                                        }
+                                    },
+                                    "jsonExample": 1.1
+                                },
+                                "originalTypeDeclaration": {
+                                    "name": "Type",
+                                    "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": [],
+                                        "file": null
+                                    },
+                                    "displayName": null,
+                                    "typeId": "type_:Type"
+                                },
+                                "propertyAccess": null
+                            },
+                            {
+                                "name": "even",
+                                "value": {
+                                    "shape": {
+                                        "type": "primitive",
+                                        "primitive": {
+                                            "type": "integer",
+                                            "integer": 2
+                                        }
+                                    },
+                                    "jsonExample": 2
+                                },
+                                "originalTypeDeclaration": {
+                                    "name": "Type",
+                                    "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": [],
+                                        "file": null
+                                    },
+                                    "displayName": null,
+                                    "typeId": "type_:Type"
+                                },
+                                "propertyAccess": null
+                            },
+                            {
+                                "name": "name",
+                                "value": {
+                                    "shape": {
+                                        "type": "primitive",
+                                        "primitive": {
+                                            "type": "string",
+                                            "string": {
+                                                "original": "rules"
+                                            }
+                                        }
+                                    },
+                                    "jsonExample": "rules"
+                                },
+                                "originalTypeDeclaration": {
+                                    "name": "Type",
+                                    "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": [],
+                                        "file": null
+                                    },
+                                    "displayName": null,
+                                    "typeId": "type_:Type"
+                                },
+                                "propertyAccess": null
+                            },
+                            {
+                                "name": "shape",
+                                "value": {
+                                    "shape": {
+                                        "type": "named",
+                                        "typeName": {
+                                            "typeId": "type_:Shape",
+                                            "fernFilepath": {
+                                                "allParts": [],
+                                                "packagePath": [],
+                                                "file": null
+                                            },
+                                            "name": "Shape",
+                                            "displayName": null
+                                        },
+                                        "shape": {
+                                            "type": "enum",
+                                            "value": "SQUARE"
+                                        }
+                                    },
+                                    "jsonExample": "SQUARE"
+                                },
+                                "originalTypeDeclaration": {
+                                    "name": "Type",
+                                    "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": [],
+                                        "file": null
+                                    },
+                                    "displayName": null,
+                                    "typeId": "type_:Type"
+                                },
+                                "propertyAccess": null
+                            }
+                        ],
+                        "extraProperties": null
+                    },
+                    "jsonExample": {
+                        "decimal": 1.1,
+                        "even": 2,
+                        "name": "rules",
+                        "shape": "SQUARE"
+                    },
+                    "docs": null
+                }
+            ],
             "autogeneratedExamples": [],
             "v2Examples": null,
             "availability": null,
@@ -436,16 +605,14 @@
             "availability": null,
             "name": {
                 "fernFilepath": {
-                    "allParts": [
-                        ""
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": ""
+                    "file": null
                 }
             },
             "displayName": null,
             "basePath": {
-                "head": "",
+                "head": "/",
                 "parts": []
             },
             "headers": [],
@@ -474,7 +641,7 @@
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "create",
+                        "head": "/create",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -494,8 +661,14 @@
                                         "v1": "DOUBLE",
                                         "v2": {
                                             "type": "double",
-                                            "default": null,
-                                            "validation": null
+                                            "default": 1.1,
+                                            "validation": {
+                                                "min": 1.1,
+                                                "max": 2.2,
+                                                "exclusiveMin": true,
+                                                "exclusiveMax": false,
+                                                "multipleOf": 1.1
+                                            }
                                         }
                                     }
                                 },
@@ -515,8 +688,14 @@
                                         "v1": "INTEGER",
                                         "v2": {
                                             "type": "integer",
-                                            "default": null,
-                                            "validation": null
+                                            "default": 42,
+                                            "validation": {
+                                                "min": 0,
+                                                "max": 100,
+                                                "exclusiveMin": false,
+                                                "exclusiveMax": true,
+                                                "multipleOf": 2
+                                            }
                                         }
                                     }
                                 },
@@ -536,12 +715,12 @@
                                         "v1": "STRING",
                                         "v2": {
                                             "type": "string",
-                                            "default": null,
+                                            "default": "fern",
                                             "validation": {
-                                                "format": null,
+                                                "format": "custom",
                                                 "pattern": "^[a-z]+$",
-                                                "minLength": null,
-                                                "maxLength": null
+                                                "minLength": 3,
+                                                "maxLength": 10
                                             }
                                         }
                                     }
@@ -582,7 +761,7 @@
                         "extendedProperties": [],
                         "docs": null,
                         "v2Examples": null,
-                        "contentType": "application/json"
+                        "contentType": null
                     },
                     "v2RequestBodies": null,
                     "sdkRequest": {
@@ -614,258 +793,21 @@
                                     "default": null,
                                     "inline": null
                                 },
-                                "docs": "",
+                                "docs": null,
                                 "v2Examples": null
                             }
                         },
-                        "status-code": 200,
+                        "status-code": null,
                         "isWildcardStatusCode": null,
-                        "docs": ""
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [],
-                    "userSpecifiedExamples": [
-                        {
-                            "example": {
-                                "id": "61780faf",
-                                "name": null,
-                                "url": "/create",
-                                "rootPathParameters": [],
-                                "endpointPathParameters": [],
-                                "servicePathParameters": [],
-                                "endpointHeaders": [],
-                                "serviceHeaders": [],
-                                "queryParameters": [],
-                                "request": {
-                                    "type": "inlinedRequestBody",
-                                    "properties": [
-                                        {
-                                            "name": "decimal",
-                                            "value": {
-                                                "shape": {
-                                                    "type": "primitive",
-                                                    "primitive": {
-                                                        "type": "double",
-                                                        "double": 1.1
-                                                    }
-                                                },
-                                                "jsonExample": 1.1
-                                            },
-                                            "originalTypeDeclaration": null
-                                        },
-                                        {
-                                            "name": "even",
-                                            "value": {
-                                                "shape": {
-                                                    "type": "primitive",
-                                                    "primitive": {
-                                                        "type": "integer",
-                                                        "integer": 1
-                                                    }
-                                                },
-                                                "jsonExample": 1
-                                            },
-                                            "originalTypeDeclaration": null
-                                        },
-                                        {
-                                            "name": "name",
-                                            "value": {
-                                                "shape": {
-                                                    "type": "primitive",
-                                                    "primitive": {
-                                                        "type": "string",
-                                                        "string": {
-                                                            "original": "name"
-                                                        }
-                                                    }
-                                                },
-                                                "jsonExample": "name"
-                                            },
-                                            "originalTypeDeclaration": null
-                                        },
-                                        {
-                                            "name": "shape",
-                                            "value": {
-                                                "shape": {
-                                                    "type": "named",
-                                                    "typeName": {
-                                                        "typeId": "type_:Shape",
-                                                        "fernFilepath": {
-                                                            "allParts": [],
-                                                            "packagePath": [],
-                                                            "file": null
-                                                        },
-                                                        "name": "Shape",
-                                                        "displayName": null
-                                                    },
-                                                    "shape": {
-                                                        "type": "enum",
-                                                        "value": "SQUARE"
-                                                    }
-                                                },
-                                                "jsonExample": "SQUARE"
-                                            },
-                                            "originalTypeDeclaration": null
-                                        }
-                                    ],
-                                    "extraProperties": null,
-                                    "jsonExample": {
-                                        "decimal": 1.1,
-                                        "even": 1,
-                                        "name": "name",
-                                        "shape": "SQUARE"
-                                    }
-                                },
-                                "response": {
-                                    "type": "ok",
-                                    "value": {
-                                        "type": "body",
-                                        "value": {
-                                            "shape": {
-                                                "type": "named",
-                                                "typeName": {
-                                                    "typeId": "type_:Type",
-                                                    "fernFilepath": {
-                                                        "allParts": [],
-                                                        "packagePath": [],
-                                                        "file": null
-                                                    },
-                                                    "name": "Type",
-                                                    "displayName": null
-                                                },
-                                                "shape": {
-                                                    "type": "object",
-                                                    "properties": [
-                                                        {
-                                                            "name": "decimal",
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "primitive",
-                                                                    "primitive": {
-                                                                        "type": "double",
-                                                                        "double": 1.1
-                                                                    }
-                                                                },
-                                                                "jsonExample": 1.1
-                                                            },
-                                                            "originalTypeDeclaration": {
-                                                                "typeId": "type_:Type",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "name": "Type",
-                                                                "displayName": null
-                                                            },
-                                                            "propertyAccess": null
-                                                        },
-                                                        {
-                                                            "name": "even",
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "primitive",
-                                                                    "primitive": {
-                                                                        "type": "integer",
-                                                                        "integer": 1
-                                                                    }
-                                                                },
-                                                                "jsonExample": 1
-                                                            },
-                                                            "originalTypeDeclaration": {
-                                                                "typeId": "type_:Type",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "name": "Type",
-                                                                "displayName": null
-                                                            },
-                                                            "propertyAccess": null
-                                                        },
-                                                        {
-                                                            "name": "name",
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "primitive",
-                                                                    "primitive": {
-                                                                        "type": "string",
-                                                                        "string": {
-                                                                            "original": "name"
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "jsonExample": "name"
-                                                            },
-                                                            "originalTypeDeclaration": {
-                                                                "typeId": "type_:Type",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "name": "Type",
-                                                                "displayName": null
-                                                            },
-                                                            "propertyAccess": null
-                                                        },
-                                                        {
-                                                            "name": "shape",
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "named",
-                                                                    "typeName": {
-                                                                        "typeId": "type_:Shape",
-                                                                        "fernFilepath": {
-                                                                            "allParts": [],
-                                                                            "packagePath": [],
-                                                                            "file": null
-                                                                        },
-                                                                        "name": "Shape",
-                                                                        "displayName": null
-                                                                    },
-                                                                    "shape": {
-                                                                        "type": "enum",
-                                                                        "value": "SQUARE"
-                                                                    }
-                                                                },
-                                                                "jsonExample": "SQUARE"
-                                                            },
-                                                            "originalTypeDeclaration": {
-                                                                "typeId": "type_:Type",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "name": "Type",
-                                                                "displayName": null
-                                                            },
-                                                            "propertyAccess": null
-                                                        }
-                                                    ],
-                                                    "extraProperties": null
-                                                }
-                                            },
-                                            "jsonExample": {
-                                                "decimal": 1.1,
-                                                "even": 1,
-                                                "name": "name",
-                                                "shape": "SQUARE"
-                                            }
-                                        }
-                                    }
-                                },
-                                "docs": null
-                            },
-                            "codeSamples": null
-                        }
-                    ],
+                    "userSpecifiedExamples": [],
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "f1b786c",
+                                "id": "8eb8698",
                                 "url": "/create",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -885,10 +827,10 @@
                                                     "type": "primitive",
                                                     "primitive": {
                                                         "type": "double",
-                                                        "double": 1.1
+                                                        "double": 2.2
                                                     }
                                                 },
-                                                "jsonExample": 1.1
+                                                "jsonExample": 2.2
                                             }
                                         },
                                         {
@@ -899,10 +841,10 @@
                                                     "type": "primitive",
                                                     "primitive": {
                                                         "type": "integer",
-                                                        "integer": 1
+                                                        "integer": 100
                                                     }
                                                 },
-                                                "jsonExample": 1
+                                                "jsonExample": 100
                                             }
                                         },
                                         {
@@ -914,11 +856,11 @@
                                                     "primitive": {
                                                         "type": "string",
                                                         "string": {
-                                                            "original": "name"
+                                                            "original": "fern"
                                                         }
                                                     }
                                                 },
-                                                "jsonExample": "name"
+                                                "jsonExample": "fern"
                                             }
                                         },
                                         {
@@ -948,9 +890,9 @@
                                     ],
                                     "extraProperties": null,
                                     "jsonExample": {
-                                        "decimal": 1.1,
-                                        "even": 1,
-                                        "name": "name",
+                                        "decimal": 2.2,
+                                        "even": 100,
+                                        "name": "fern",
                                         "shape": "SQUARE"
                                     }
                                 },
@@ -981,10 +923,10 @@
                                                                     "type": "primitive",
                                                                     "primitive": {
                                                                         "type": "double",
-                                                                        "double": 1.1
+                                                                        "double": 2.2
                                                                     }
                                                                 },
-                                                                "jsonExample": 1.1
+                                                                "jsonExample": 2.2
                                                             },
                                                             "propertyAccess": null
                                                         },
@@ -1005,10 +947,10 @@
                                                                     "type": "primitive",
                                                                     "primitive": {
                                                                         "type": "integer",
-                                                                        "integer": 1
+                                                                        "integer": 100
                                                                     }
                                                                 },
-                                                                "jsonExample": 1
+                                                                "jsonExample": 100
                                                             },
                                                             "propertyAccess": null
                                                         },
@@ -1030,11 +972,11 @@
                                                                     "primitive": {
                                                                         "type": "string",
                                                                         "string": {
-                                                                            "original": "name"
+                                                                            "original": "fern"
                                                                         }
                                                                     }
                                                                 },
-                                                                "jsonExample": "name"
+                                                                "jsonExample": "fern"
                                                             },
                                                             "propertyAccess": null
                                                         },
@@ -1087,9 +1029,9 @@
                                                 }
                                             },
                                             "jsonExample": {
-                                                "decimal": 1.1,
-                                                "even": 1,
-                                                "name": "name",
+                                                "decimal": 2.2,
+                                                "even": 100,
+                                                "name": "fern",
                                                 "shape": "SQUARE"
                                             }
                                         }
@@ -1122,7 +1064,7 @@
                     "method": "GET",
                     "basePath": null,
                     "path": {
-                        "head": "/",
+                        "head": "",
                         "parts": []
                     },
                     "fullPath": {
@@ -1140,8 +1082,14 @@
                                     "v1": "DOUBLE",
                                     "v2": {
                                         "type": "double",
-                                        "default": null,
-                                        "validation": null
+                                        "default": 1.1,
+                                        "validation": {
+                                            "min": 1.1,
+                                            "max": 2.2,
+                                            "exclusiveMin": true,
+                                            "exclusiveMax": false,
+                                            "multipleOf": 1.1
+                                        }
                                     }
                                 }
                             },
@@ -1163,8 +1111,14 @@
                                     "v1": "INTEGER",
                                     "v2": {
                                         "type": "integer",
-                                        "default": null,
-                                        "validation": null
+                                        "default": 42,
+                                        "validation": {
+                                            "min": 0,
+                                            "max": 100,
+                                            "exclusiveMin": false,
+                                            "exclusiveMax": true,
+                                            "multipleOf": 2
+                                        }
                                     }
                                 }
                             },
@@ -1186,18 +1140,21 @@
                                     "v1": "STRING",
                                     "v2": {
                                         "type": "string",
-                                        "default": null,
+                                        "default": "fern",
                                         "validation": {
-                                            "format": null,
+                                            "format": "custom",
                                             "pattern": "^[a-z]+$",
-                                            "minLength": null,
-                                            "maxLength": null
+                                            "minLength": 3,
+                                            "maxLength": 10
                                         }
                                     }
                                 }
                             },
                             "allowMultiple": false,
-                            "clientDefault": null,
+                            "clientDefault": {
+                                "type": "string",
+                                "string": "fern"
+                            },
                             "v2Examples": {
                                 "userSpecifiedExamples": {},
                                 "autogeneratedExamples": {}
@@ -1239,230 +1196,21 @@
                                     "default": null,
                                     "inline": null
                                 },
-                                "docs": "",
+                                "docs": null,
                                 "v2Examples": null
                             }
                         },
-                        "status-code": 200,
+                        "status-code": null,
                         "isWildcardStatusCode": null,
-                        "docs": ""
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [],
-                    "userSpecifiedExamples": [
-                        {
-                            "example": {
-                                "id": "85b815ef",
-                                "name": null,
-                                "url": "/",
-                                "rootPathParameters": [],
-                                "endpointPathParameters": [],
-                                "servicePathParameters": [],
-                                "endpointHeaders": [],
-                                "serviceHeaders": [],
-                                "queryParameters": [
-                                    {
-                                        "name": "decimal",
-                                        "value": {
-                                            "shape": {
-                                                "type": "primitive",
-                                                "primitive": {
-                                                    "type": "double",
-                                                    "double": 1.1
-                                                }
-                                            },
-                                            "jsonExample": 1.1
-                                        },
-                                        "shape": {
-                                            "type": "single"
-                                        }
-                                    },
-                                    {
-                                        "name": "even",
-                                        "value": {
-                                            "shape": {
-                                                "type": "primitive",
-                                                "primitive": {
-                                                    "type": "integer",
-                                                    "integer": 1
-                                                }
-                                            },
-                                            "jsonExample": 1
-                                        },
-                                        "shape": {
-                                            "type": "single"
-                                        }
-                                    },
-                                    {
-                                        "name": "name",
-                                        "value": {
-                                            "shape": {
-                                                "type": "primitive",
-                                                "primitive": {
-                                                    "type": "string",
-                                                    "string": {
-                                                        "original": "name"
-                                                    }
-                                                }
-                                            },
-                                            "jsonExample": "name"
-                                        },
-                                        "shape": {
-                                            "type": "single"
-                                        }
-                                    }
-                                ],
-                                "request": null,
-                                "response": {
-                                    "type": "ok",
-                                    "value": {
-                                        "type": "body",
-                                        "value": {
-                                            "shape": {
-                                                "type": "named",
-                                                "typeName": {
-                                                    "typeId": "type_:Type",
-                                                    "fernFilepath": {
-                                                        "allParts": [],
-                                                        "packagePath": [],
-                                                        "file": null
-                                                    },
-                                                    "name": "Type",
-                                                    "displayName": null
-                                                },
-                                                "shape": {
-                                                    "type": "object",
-                                                    "properties": [
-                                                        {
-                                                            "name": "decimal",
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "primitive",
-                                                                    "primitive": {
-                                                                        "type": "double",
-                                                                        "double": 1.1
-                                                                    }
-                                                                },
-                                                                "jsonExample": 1.1
-                                                            },
-                                                            "originalTypeDeclaration": {
-                                                                "typeId": "type_:Type",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "name": "Type",
-                                                                "displayName": null
-                                                            },
-                                                            "propertyAccess": null
-                                                        },
-                                                        {
-                                                            "name": "even",
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "primitive",
-                                                                    "primitive": {
-                                                                        "type": "integer",
-                                                                        "integer": 1
-                                                                    }
-                                                                },
-                                                                "jsonExample": 1
-                                                            },
-                                                            "originalTypeDeclaration": {
-                                                                "typeId": "type_:Type",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "name": "Type",
-                                                                "displayName": null
-                                                            },
-                                                            "propertyAccess": null
-                                                        },
-                                                        {
-                                                            "name": "name",
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "primitive",
-                                                                    "primitive": {
-                                                                        "type": "string",
-                                                                        "string": {
-                                                                            "original": "name"
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "jsonExample": "name"
-                                                            },
-                                                            "originalTypeDeclaration": {
-                                                                "typeId": "type_:Type",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "name": "Type",
-                                                                "displayName": null
-                                                            },
-                                                            "propertyAccess": null
-                                                        },
-                                                        {
-                                                            "name": "shape",
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "named",
-                                                                    "typeName": {
-                                                                        "typeId": "type_:Shape",
-                                                                        "fernFilepath": {
-                                                                            "allParts": [],
-                                                                            "packagePath": [],
-                                                                            "file": null
-                                                                        },
-                                                                        "name": "Shape",
-                                                                        "displayName": null
-                                                                    },
-                                                                    "shape": {
-                                                                        "type": "enum",
-                                                                        "value": "SQUARE"
-                                                                    }
-                                                                },
-                                                                "jsonExample": "SQUARE"
-                                                            },
-                                                            "originalTypeDeclaration": {
-                                                                "typeId": "type_:Type",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "name": "Type",
-                                                                "displayName": null
-                                                            },
-                                                            "propertyAccess": null
-                                                        }
-                                                    ],
-                                                    "extraProperties": null
-                                                }
-                                            },
-                                            "jsonExample": {
-                                                "decimal": 1.1,
-                                                "even": 1,
-                                                "name": "name",
-                                                "shape": "SQUARE"
-                                            }
-                                        }
-                                    }
-                                },
-                                "docs": null
-                            },
-                            "codeSamples": null
-                        }
-                    ],
+                    "userSpecifiedExamples": [],
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "8ac668fe",
+                                "id": "191a7af0",
                                 "url": "",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -1478,10 +1226,10 @@
                                                 "type": "primitive",
                                                 "primitive": {
                                                     "type": "double",
-                                                    "double": 1.1
+                                                    "double": 2.2
                                                 }
                                             },
-                                            "jsonExample": 1.1
+                                            "jsonExample": 2.2
                                         }
                                     },
                                     {
@@ -1494,10 +1242,10 @@
                                                 "type": "primitive",
                                                 "primitive": {
                                                     "type": "integer",
-                                                    "integer": 1
+                                                    "integer": 100
                                                 }
                                             },
-                                            "jsonExample": 1
+                                            "jsonExample": 100
                                         }
                                     },
                                     {
@@ -1511,11 +1259,11 @@
                                                 "primitive": {
                                                     "type": "string",
                                                     "string": {
-                                                        "original": "name"
+                                                        "original": "fern"
                                                     }
                                                 }
                                             },
-                                            "jsonExample": "name"
+                                            "jsonExample": "fern"
                                         }
                                     }
                                 ],
@@ -1550,10 +1298,10 @@
                                                                     "type": "primitive",
                                                                     "primitive": {
                                                                         "type": "double",
-                                                                        "double": 1.1
+                                                                        "double": 2.2
                                                                     }
                                                                 },
-                                                                "jsonExample": 1.1
+                                                                "jsonExample": 2.2
                                                             },
                                                             "propertyAccess": null
                                                         },
@@ -1574,10 +1322,10 @@
                                                                     "type": "primitive",
                                                                     "primitive": {
                                                                         "type": "integer",
-                                                                        "integer": 1
+                                                                        "integer": 100
                                                                     }
                                                                 },
-                                                                "jsonExample": 1
+                                                                "jsonExample": 100
                                                             },
                                                             "propertyAccess": null
                                                         },
@@ -1599,11 +1347,11 @@
                                                                     "primitive": {
                                                                         "type": "string",
                                                                         "string": {
-                                                                            "original": "name"
+                                                                            "original": "fern"
                                                                         }
                                                                     }
                                                                 },
-                                                                "jsonExample": "name"
+                                                                "jsonExample": "fern"
                                                             },
                                                             "propertyAccess": null
                                                         },
@@ -1656,9 +1404,9 @@
                                                 }
                                             },
                                             "jsonExample": {
-                                                "decimal": 1.1,
-                                                "even": 1,
-                                                "name": "name",
+                                                "decimal": 2.2,
+                                                "even": 100,
+                                                "name": "fern",
                                                 "shape": "SQUARE"
                                             }
                                         }
@@ -2157,47 +1905,9 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [
-                            {
-                                "originalName": "",
-                                "camelCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                }
-                            }
-                        ],
+                        "allParts": [],
                         "packagePath": [],
-                        "file": {
-                            "originalName": "",
-                            "camelCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "snakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "pascalCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            }
-                        }
+                        "file": null
                     }
                 },
                 "location": {
@@ -2227,47 +1937,9 @@
                             }
                         },
                         "fernFilepath": {
-                            "allParts": [
-                                {
-                                    "originalName": "",
-                                    "camelCase": {
-                                        "unsafeName": "",
-                                        "safeName": ""
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "",
-                                        "safeName": ""
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "",
-                                        "safeName": ""
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "",
-                                        "safeName": ""
-                                    }
-                                }
-                            ],
+                            "allParts": [],
                             "packagePath": [],
-                            "file": {
-                                "originalName": "",
-                                "camelCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                }
-                            }
+                            "file": null
                         }
                     },
                     "pathParameters": [],
@@ -2431,47 +2103,9 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [
-                            {
-                                "originalName": "",
-                                "camelCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                }
-                            }
-                        ],
+                        "allParts": [],
                         "packagePath": [],
-                        "file": {
-                            "originalName": "",
-                            "camelCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "snakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "pascalCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            }
-                        }
+                        "file": null
                     }
                 },
                 "location": {
@@ -2501,47 +2135,9 @@
                             }
                         },
                         "fernFilepath": {
-                            "allParts": [
-                                {
-                                    "originalName": "",
-                                    "camelCase": {
-                                        "unsafeName": "",
-                                        "safeName": ""
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "",
-                                        "safeName": ""
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "",
-                                        "safeName": ""
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "",
-                                        "safeName": ""
-                                    }
-                                }
-                            ],
+                            "allParts": [],
                             "packagePath": [],
-                            "file": {
-                                "originalName": "",
-                                "camelCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                }
-                            }
+                            "file": null
                         }
                     },
                     "pathParameters": [],
@@ -2663,28 +2259,7 @@
         "keywords": null,
         "smartCasing": true
     },
-    "subpackages": {
-        "subpackage_": {
-            "name": "",
-            "displayName": null,
-            "fernFilepath": {
-                "allParts": [
-                    ""
-                ],
-                "packagePath": [],
-                "file": ""
-            },
-            "service": "service_",
-            "types": [],
-            "errors": [],
-            "subpackages": [],
-            "navigationConfig": null,
-            "webhooks": null,
-            "websocket": null,
-            "hasEndpointsInTree": true,
-            "docs": null
-        }
-    },
+    "subpackages": {},
     "rootPackage": {
         "fernFilepath": {
             "allParts": [],
@@ -2692,7 +2267,7 @@
             "file": null
         },
         "websocket": null,
-        "service": null,
+        "service": "service_",
         "types": [
             "type_:SmallInteger",
             "type_:LargeInteger",
@@ -2703,9 +2278,7 @@
             "type_:Type"
         ],
         "errors": [],
-        "subpackages": [
-            "subpackage_"
-        ],
+        "subpackages": [],
         "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": true,

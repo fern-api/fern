@@ -8,7 +8,6 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .api_error import ApiError
     from .client_wrapper import AsyncClientWrapper, BaseClientWrapper, SyncClientWrapper
-    from .custom_pagination import AsyncCustomPager, SyncCustomPager
     from .datetime_utils import Rfc2822DateTime, parse_rfc2822_datetime, serialize_datetime
     from .file import File, convert_file_dict_to_httpx_tuples, with_content_type
     from .http_client import AsyncHttpClient, HttpClient
@@ -32,7 +31,6 @@ if typing.TYPE_CHECKING:
 _dynamic_imports: typing.Dict[str, str] = {
     "ApiError": ".api_error",
     "AsyncClientWrapper": ".client_wrapper",
-    "AsyncCustomPager": ".custom_pagination",
     "AsyncHttpClient": ".http_client",
     "AsyncHttpResponse": ".http_response",
     "BaseClientWrapper": ".client_wrapper",
@@ -50,7 +48,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "RequestOptions": ".request_options",
     "Rfc2822DateTime": ".datetime_utils",
     "SyncClientWrapper": ".client_wrapper",
-    "SyncCustomPager": ".custom_pagination",
     "UniversalBaseModel": ".pydantic_utilities",
     "UniversalRootModel": ".pydantic_utilities",
     "convert_and_respect_annotation_metadata": ".serialization",
@@ -94,7 +91,6 @@ def __dir__():
 __all__ = [
     "ApiError",
     "AsyncClientWrapper",
-    "AsyncCustomPager",
     "AsyncHttpClient",
     "AsyncHttpResponse",
     "BaseClientWrapper",
@@ -112,7 +108,6 @@ __all__ = [
     "RequestOptions",
     "Rfc2822DateTime",
     "SyncClientWrapper",
-    "SyncCustomPager",
     "UniversalBaseModel",
     "UniversalRootModel",
     "convert_and_respect_annotation_metadata",

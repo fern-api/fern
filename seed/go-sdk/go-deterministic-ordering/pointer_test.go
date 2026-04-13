@@ -1,4 +1,4 @@
-package exhaustive
+package api
 
 import (
 	"testing"

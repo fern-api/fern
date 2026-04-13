@@ -1,9 +1,9 @@
 import Foundation
 import Testing
-import PathParameters
+import Api
 
 @Suite("UserClient Wire Tests") struct UserClientWireTests {
-    @Test func getUser1() async throws -> Void {
+    @Test func getuser1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -11,32 +11,31 @@ import PathParameters
                 {
                   "name": "name",
                   "tags": [
-                    "tags",
                     "tags"
                   ]
                 }
                 """.utf8
             )
         )
-        let client = PathParametersClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
         let expectedResponse = User(
             name: "name",
             tags: [
-                "tags",
                 "tags"
             ]
         )
-        let response = try await client.user.getUser(
+        let response = try await client.user.getuser(
+            tenantId: "tenant_id",
             userId: "user_id",
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
-    @Test func createUser1() async throws -> Void {
+    @Test func getuser2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -51,7 +50,7 @@ import PathParameters
                 """.utf8
             )
         )
-        let client = PathParametersClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -62,21 +61,53 @@ import PathParameters
                 "tags"
             ]
         )
-        let response = try await client.user.createUser(
+        let response = try await client.user.getuser(
             tenantId: "tenant_id",
-            request: User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            ),
+            userId: "user_id",
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
-    @Test func updateUser1() async throws -> Void {
+    @Test func updateuser1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                {
+                  "name": "name",
+                  "tags": [
+                    "tags"
+                  ]
+                }
+                """.utf8
+            )
+        )
+        let client = ApiClient(
+            baseURL: "https://api.fern.com",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = User(
+            name: "name",
+            tags: [
+                "tags"
+            ]
+        )
+        let response = try await client.user.updateuser(
+            tenantId: "tenant_id",
+            userId: "user_id",
+            request: .init(body: User(
+                name: "name",
+                tags: [
+                    "tags"
+                ]
+            )),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
+    @Test func updateuser2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -91,7 +122,7 @@ import PathParameters
                 """.utf8
             )
         )
-        let client = PathParametersClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -102,7 +133,8 @@ import PathParameters
                 "tags"
             ]
         )
-        let response = try await client.user.updateUser(
+        let response = try await client.user.updateuser(
+            tenantId: "tenant_id",
             userId: "user_id",
             request: .init(body: User(
                 name: "name",
@@ -116,7 +148,120 @@ import PathParameters
         try #require(response == expectedResponse)
     }
 
-    @Test func searchUsers1() async throws -> Void {
+    @Test func createuser1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                {
+                  "name": "name",
+                  "tags": [
+                    "tags"
+                  ]
+                }
+                """.utf8
+            )
+        )
+        let client = ApiClient(
+            baseURL: "https://api.fern.com",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = User(
+            name: "name",
+            tags: [
+                "tags"
+            ]
+        )
+        let response = try await client.user.createuser(
+            tenantId: "tenant_id",
+            request: .init(body: User(
+                name: "name",
+                tags: [
+                    "tags"
+                ]
+            )),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
+    @Test func createuser2() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                {
+                  "name": "name",
+                  "tags": [
+                    "tags",
+                    "tags"
+                  ]
+                }
+                """.utf8
+            )
+        )
+        let client = ApiClient(
+            baseURL: "https://api.fern.com",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = User(
+            name: "name",
+            tags: [
+                "tags",
+                "tags"
+            ]
+        )
+        let response = try await client.user.createuser(
+            tenantId: "tenant_id",
+            request: .init(body: User(
+                name: "name",
+                tags: [
+                    "tags",
+                    "tags"
+                ]
+            )),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
+    @Test func searchusers1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                [
+                  {
+                    "name": "name",
+                    "tags": [
+                      "tags"
+                    ]
+                  }
+                ]
+                """.utf8
+            )
+        )
+        let client = ApiClient(
+            baseURL: "https://api.fern.com",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = [
+            User(
+                name: "name",
+                tags: [
+                    "tags"
+                ]
+            )
+        ]
+        let response = try await client.user.searchusers(
+            tenantId: "tenant_id",
+            userId: "user_id",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
+    @Test func searchusers2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -140,7 +285,7 @@ import PathParameters
                 """.utf8
             )
         )
-        let client = PathParametersClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -160,15 +305,16 @@ import PathParameters
                 ]
             )
         ]
-        let response = try await client.user.searchUsers(
+        let response = try await client.user.searchusers(
+            tenantId: "tenant_id",
             userId: "user_id",
-            limit: 1,
+            limit: .value(1),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
-    @Test func getUserMetadata1() async throws -> Void {
+    @Test func getusermetadata1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -176,25 +322,24 @@ import PathParameters
                 {
                   "name": "name",
                   "tags": [
-                    "tags",
                     "tags"
                   ]
                 }
                 """.utf8
             )
         )
-        let client = PathParametersClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
         let expectedResponse = User(
             name: "name",
             tags: [
-                "tags",
                 "tags"
             ]
         )
-        let response = try await client.user.getUserMetadata(
+        let response = try await client.user.getusermetadata(
+            tenantId: "tenant_id",
             userId: "user_id",
             version: 1,
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
@@ -202,7 +347,7 @@ import PathParameters
         try #require(response == expectedResponse)
     }
 
-    @Test func getUserSpecifics1() async throws -> Void {
+    @Test func getusermetadata2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -217,7 +362,7 @@ import PathParameters
                 """.utf8
             )
         )
-        let client = PathParametersClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -228,7 +373,77 @@ import PathParameters
                 "tags"
             ]
         )
-        let response = try await client.user.getUserSpecifics(
+        let response = try await client.user.getusermetadata(
+            tenantId: "tenant_id",
+            userId: "user_id",
+            version: 1,
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
+    @Test func getuserspecifics1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                {
+                  "name": "name",
+                  "tags": [
+                    "tags"
+                  ]
+                }
+                """.utf8
+            )
+        )
+        let client = ApiClient(
+            baseURL: "https://api.fern.com",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = User(
+            name: "name",
+            tags: [
+                "tags"
+            ]
+        )
+        let response = try await client.user.getuserspecifics(
+            tenantId: "tenant_id",
+            userId: "user_id",
+            version: 1,
+            thought: "thought",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
+    @Test func getuserspecifics2() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                {
+                  "name": "name",
+                  "tags": [
+                    "tags",
+                    "tags"
+                  ]
+                }
+                """.utf8
+            )
+        )
+        let client = ApiClient(
+            baseURL: "https://api.fern.com",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = User(
+            name: "name",
+            tags: [
+                "tags",
+                "tags"
+            ]
+        )
+        let response = try await client.user.getuserspecifics(
+            tenantId: "tenant_id",
             userId: "user_id",
             version: 1,
             thought: "thought",

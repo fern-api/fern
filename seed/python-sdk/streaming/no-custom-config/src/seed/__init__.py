@@ -6,17 +6,17 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .types import StreamResponse
     from . import dummy
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
-    from .client import AsyncSeedStreaming, SeedStreaming
-    from .dummy import StreamResponse
+    from .client import AsyncSeedApi, SeedApi
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedStreaming": ".client",
+    "AsyncSeedApi": ".client",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
-    "SeedStreaming": ".client",
-    "StreamResponse": ".dummy",
+    "SeedApi": ".client",
+    "StreamResponse": ".types",
     "__version__": ".version",
     "dummy": ".dummy",
 }
@@ -44,10 +44,10 @@ def __dir__():
 
 
 __all__ = [
-    "AsyncSeedStreaming",
+    "AsyncSeedApi",
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
-    "SeedStreaming",
+    "SeedApi",
     "StreamResponse",
     "__version__",
     "dummy",

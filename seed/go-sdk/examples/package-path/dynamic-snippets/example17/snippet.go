@@ -17,18 +17,10 @@ func do() {
             "<token>",
         ),
     )
-    request := &pleaseinhere.GetMetadataRequest{
-        Shallow: pleaseinhere.Bool(
-            false,
-        ),
-        Tag: []*string{
-            pleaseinhere.String(
-                "development",
-            ),
-        },
-        XAPIVersion: "0.0.1",
+    request := &pleaseinhere.RefreshTokenRequest{
+        TTL: 1,
     }
-    client.Service.GetMetadata(
+    client.Service.Refreshtoken(
         context.TODO(),
         request,
     )

@@ -47,6 +47,7 @@ func (r *RawClient) Create(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
+	headers.Add("Content-Type", "application/json")
 	var response *fern.Organization
 	raw, err := r.caller.Call(
 		ctx,

@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>$client-&gt;user-&gt;getUser($userId)</code></summary>
+<details><summary><code>$client-&gt;user-&gt;getuser($userId)</code></summary>
 <dl>
 <dd>
 
@@ -28,7 +28,7 @@ This endpoint is used to retrieve a user.
 <dd>
 
 ```php
-$client->user->getUser(
+$client->user->getuser(
     'userId',
 );
 ```
@@ -60,7 +60,7 @@ This ID is unique to each user.
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;user-&gt;createUser($request) -> ?User</code></summary>
+<details><summary><code>$client-&gt;user-&gt;createuser($request) -> ?User</code></summary>
 <dl>
 <dd>
 
@@ -88,10 +88,9 @@ This endpoint is used to create a new user.
 <dd>
 
 ```php
-$client->user->createUser(
-    new CreateUserRequest([
+$client->user->createuser(
+    new UserCreateUserRequest([
         'name' => 'name',
-        'age' => 1,
     ]),
 );
 ```

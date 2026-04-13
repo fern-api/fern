@@ -3,12 +3,19 @@
 namespace Example;
 
 use Seed\SeedClient;
+use Seed\Types\BigUnionZero;
+use Seed\Types\BigUnionZeroType;
 
 $client = new SeedClient(
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->types->get(
-    'datetime-example',
+$client->bigunion->updateMany(
+    [
+        new BigUnionZero([
+            'value' => 'value',
+            'type' => BigUnionZeroType::NormalSweet->value,
+        ]),
+    ],
 );

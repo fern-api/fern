@@ -1,19 +1,22 @@
 package com.snippets;
 
-import com.seed.pagination.SeedPaginationClient;
-import com.seed.pagination.resources.users.requests.ListUsersTopLevelBodyCursorPaginationRequest;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListWithOffsetPaginationHasNextPageRequest;
+import com.seed.api.types.InlineUsersOrder;
 
 public class Example17 {
     public static void main(String[] args) {
-        SeedPaginationClient client = SeedPaginationClient.builder()
+        SeedApiClient client = SeedApiClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
-        client.users()
-                .listWithTopLevelBodyCursorPagination(ListUsersTopLevelBodyCursorPaginationRequest.builder()
-                        .cursor("cursor")
-                        .filter("filter")
-                        .build());
+        client.inlineUsersInlineUsers()
+                .inlineUsersInlineUsersListWithOffsetPaginationHasNextPage(
+                        InlineUsersInlineUsersListWithOffsetPaginationHasNextPageRequest.builder()
+                                .page(1)
+                                .limit(1)
+                                .order(InlineUsersOrder.ASC)
+                                .build());
     }
 }

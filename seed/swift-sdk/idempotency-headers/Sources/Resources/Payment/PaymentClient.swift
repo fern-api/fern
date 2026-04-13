@@ -7,13 +7,13 @@ public final class PaymentClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func create(request: Requests.CreatePaymentRequest, requestOptions: RequestOptions? = nil) async throws -> UUID {
+    public func create(request: Requests.PaymentCreateRequest, requestOptions: RequestOptions? = nil) async throws -> String {
         return try await httpClient.performRequest(
             method: .post,
             path: "/payment",
             body: request,
             requestOptions: requestOptions,
-            responseType: UUID.self
+            responseType: String.self
         )
     }
 

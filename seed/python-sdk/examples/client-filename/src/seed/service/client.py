@@ -2,26 +2,26 @@
 
 import typing
 
-from ..commons.types.types.data import Data
-from ..commons.types.types.event_info import EventInfo
-from ..commons.types.types.metadata import Metadata as commons_types_types_metadata_Metadata
-from ..commons.types.types.tag import Tag
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
-from ..types.types.cast_member import CastMember
-from ..types.types.directory import Directory
-from ..types.types.entity import Entity
-from ..types.types.exception import Exception
-from ..types.types.extended_movie import ExtendedMovie
-from ..types.types.metadata import Metadata as types_types_metadata_Metadata
-from ..types.types.migration import Migration
-from ..types.types.moment import Moment
-from ..types.types.movie import Movie
-from ..types.types.movie_id import MovieId
-from ..types.types.node import Node
-from ..types.types.refresh_token_request import RefreshTokenRequest
-from ..types.types.response import Response
-from ..types.types.test import Test
+from ..types.cast_member import CastMember
+from ..types.commons_data import CommonsData
+from ..types.commons_event_info import CommonsEventInfo
+from ..types.commons_metadata import CommonsMetadata
+from ..types.commons_tag import CommonsTag
+from ..types.directory import Directory
+from ..types.entity import Entity
+from ..types.exception import Exception
+from ..types.extended_movie import ExtendedMovie
+from ..types.metadata import Metadata
+from ..types.migration import Migration
+from ..types.moment import Moment
+from ..types.movie import Movie
+from ..types.movie_id import MovieId
+from ..types.movie_type import MovieType
+from ..types.node import Node
+from ..types.response import Response
+from ..types.test import Test
 from .raw_client import AsyncRawServiceClient, RawServiceClient
 
 # this is used as the default value for optional parameters
@@ -43,7 +43,7 @@ class ServiceClient:
         """
         return self._raw_client
 
-    def get_movie(self, movie_id: MovieId, *, request_options: typing.Optional[RequestOptions] = None) -> Movie:
+    def getmovie(self, movie_id: MovieId, *, request_options: typing.Optional[RequestOptions] = None) -> Movie:
         """
         Parameters
         ----------
@@ -56,30 +56,30 @@ class ServiceClient:
         -------
         Movie
 
+
         Examples
         --------
         from seed import SeedExhaustive
-        from seed.environment import SeedExhaustiveEnvironment
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
-            environment=SeedExhaustiveEnvironment.PRODUCTION,
         )
-        client.service.get_movie(
-            movie_id="movie-c06a4ad7",
+        client.service.getmovie(
+            movie_id="movieId",
         )
         """
-        _response = self._raw_client.get_movie(movie_id, request_options=request_options)
+        _response = self._raw_client.getmovie(movie_id, request_options=request_options)
         return _response.data
 
-    def create_movie(
+    def createmovie(
         self,
         *,
         id: MovieId,
         title: str,
         from_: str,
         rating: float,
-        tag: Tag,
+        type: MovieType,
+        tag: CommonsTag,
         metadata: typing.Dict[str, typing.Any],
         revenue: int,
         prequel: typing.Optional[MovieId] = OMIT,
@@ -98,7 +98,9 @@ class ServiceClient:
         rating : float
             The rating scale is one to five stars
 
-        tag : Tag
+        type : MovieType
+
+        tag : CommonsTag
 
         metadata : typing.Dict[str, typing.Any]
 
@@ -115,35 +117,31 @@ class ServiceClient:
         -------
         MovieId
 
+
         Examples
         --------
         from seed import SeedExhaustive
-        from seed.environment import SeedExhaustiveEnvironment
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
-            environment=SeedExhaustiveEnvironment.PRODUCTION,
         )
-        client.service.create_movie(
-            id="movie-c06a4ad7",
-            prequel="movie-cv9b914f",
-            title="The Boy and the Heron",
-            from_="Hayao Miyazaki",
-            rating=8.0,
-            tag="tag-wf9as23d",
-            metadata={
-                "actors": ["Christian Bale", "Florence Pugh", "Willem Dafoe"],
-                "releaseDate": "2023-12-08",
-                "ratings": {"rottenTomatoes": 97, "imdb": 7.6},
-            },
+        client.service.createmovie(
+            id="id",
+            title="title",
+            from_="from",
+            rating=1.1,
+            type="movie",
+            tag="tag",
+            metadata={"key": "value"},
             revenue=1000000,
         )
         """
-        _response = self._raw_client.create_movie(
+        _response = self._raw_client.createmovie(
             id=id,
             title=title,
             from_=from_,
             rating=rating,
+            type=type,
             tag=tag,
             metadata=metadata,
             revenue=revenue,
@@ -153,18 +151,18 @@ class ServiceClient:
         )
         return _response.data
 
-    def get_metadata(
+    def getmetadata(
         self,
         *,
-        x_api_version: str,
+        api_version: str,
         shallow: typing.Optional[bool] = None,
         tag: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> types_types_metadata_Metadata:
+    ) -> Metadata:
         """
         Parameters
         ----------
-        x_api_version : str
+        api_version : str
 
         shallow : typing.Optional[bool]
 
@@ -175,38 +173,35 @@ class ServiceClient:
 
         Returns
         -------
-        types_types_metadata_Metadata
+        Metadata
+
 
         Examples
         --------
         from seed import SeedExhaustive
-        from seed.environment import SeedExhaustiveEnvironment
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
-            environment=SeedExhaustiveEnvironment.PRODUCTION,
         )
-        client.service.get_metadata(
-            x_api_version="0.0.1",
-            shallow=False,
-            tag="development",
+        client.service.getmetadata(
+            api_version="X-API-Version",
         )
         """
-        _response = self._raw_client.get_metadata(
-            x_api_version=x_api_version, shallow=shallow, tag=tag, request_options=request_options
+        _response = self._raw_client.getmetadata(
+            api_version=api_version, shallow=shallow, tag=tag, request_options=request_options
         )
         return _response.data
 
-    def create_big_entity(
+    def createbigentity(
         self,
         *,
         cast_member: typing.Optional[CastMember] = OMIT,
         extended_movie: typing.Optional[ExtendedMovie] = OMIT,
         entity: typing.Optional[Entity] = OMIT,
-        metadata: typing.Optional[types_types_metadata_Metadata] = OMIT,
-        common_metadata: typing.Optional[commons_types_types_metadata_Metadata] = OMIT,
-        event_info: typing.Optional[EventInfo] = OMIT,
-        data: typing.Optional[Data] = OMIT,
+        metadata: typing.Optional[Metadata] = OMIT,
+        common_metadata: typing.Optional[CommonsMetadata] = OMIT,
+        event_info: typing.Optional[CommonsEventInfo] = OMIT,
+        data: typing.Optional[CommonsData] = OMIT,
         migration: typing.Optional[Migration] = OMIT,
         exception: typing.Optional[Exception] = OMIT,
         test: typing.Optional[Test] = OMIT,
@@ -224,13 +219,13 @@ class ServiceClient:
 
         entity : typing.Optional[Entity]
 
-        metadata : typing.Optional[types_types_metadata_Metadata]
+        metadata : typing.Optional[Metadata]
 
-        common_metadata : typing.Optional[commons_types_types_metadata_Metadata]
+        common_metadata : typing.Optional[CommonsMetadata]
 
-        event_info : typing.Optional[EventInfo]
+        event_info : typing.Optional[CommonsEventInfo]
 
-        data : typing.Optional[Data]
+        data : typing.Optional[CommonsData]
 
         migration : typing.Optional[Migration]
 
@@ -251,220 +246,17 @@ class ServiceClient:
         -------
         Response
 
+
         Examples
         --------
-        import datetime
-        import uuid
-
         from seed import SeedExhaustive
-        from seed.commons.types import Data_String, EventInfo_Metadata, Metadata
-        from seed.environment import SeedExhaustiveEnvironment
-        from seed.types import (
-            Actor,
-            Directory,
-            Entity,
-            Exception_Generic,
-            ExtendedMovie,
-            File,
-            Metadata_Html,
-            Migration,
-            Moment,
-            Node,
-            Test_And,
-            Tree,
-        )
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
-            environment=SeedExhaustiveEnvironment.PRODUCTION,
         )
-        client.service.create_big_entity(
-            cast_member=Actor(
-                name="name",
-                id="id",
-            ),
-            extended_movie=ExtendedMovie(
-                cast=["cast", "cast"],
-                id="id",
-                prequel="prequel",
-                title="title",
-                from_="from",
-                rating=1.1,
-                tag="tag",
-                book="book",
-                metadata={"metadata": {"key": "value"}},
-                revenue=1000000,
-            ),
-            entity=Entity(
-                type="primitive",
-                name="name",
-            ),
-            metadata=Metadata_Html(value="metadata"),
-            common_metadata=Metadata(
-                id="id",
-                data={"data": "data"},
-                json_string="jsonString",
-            ),
-            event_info=EventInfo_Metadata(
-                id="id",
-                data={"data": "data"},
-                json_string="jsonString",
-            ),
-            data=Data_String(value="data"),
-            migration=Migration(
-                name="name",
-                status="RUNNING",
-            ),
-            exception=Exception_Generic(
-                exception_type="exceptionType",
-                exception_message="exceptionMessage",
-                exception_stacktrace="exceptionStacktrace",
-            ),
-            test=Test_And(value=True),
-            node=Node(
-                name="name",
-                nodes=[
-                    Node(
-                        name="name",
-                        nodes=[
-                            Node(
-                                name="name",
-                            ),
-                            Node(
-                                name="name",
-                            ),
-                        ],
-                        trees=[
-                            Tree(
-                                nodes=[],
-                            ),
-                            Tree(
-                                nodes=[],
-                            ),
-                        ],
-                    ),
-                    Node(
-                        name="name",
-                        nodes=[
-                            Node(
-                                name="name",
-                            ),
-                            Node(
-                                name="name",
-                            ),
-                        ],
-                        trees=[
-                            Tree(
-                                nodes=[],
-                            ),
-                            Tree(
-                                nodes=[],
-                            ),
-                        ],
-                    ),
-                ],
-                trees=[
-                    Tree(
-                        nodes=[
-                            Node(
-                                name="name",
-                                nodes=[],
-                                trees=[],
-                            ),
-                            Node(
-                                name="name",
-                                nodes=[],
-                                trees=[],
-                            ),
-                        ],
-                    ),
-                    Tree(
-                        nodes=[
-                            Node(
-                                name="name",
-                                nodes=[],
-                                trees=[],
-                            ),
-                            Node(
-                                name="name",
-                                nodes=[],
-                                trees=[],
-                            ),
-                        ],
-                    ),
-                ],
-            ),
-            directory=Directory(
-                name="name",
-                files=[
-                    File(
-                        name="name",
-                        contents="contents",
-                    ),
-                    File(
-                        name="name",
-                        contents="contents",
-                    ),
-                ],
-                directories=[
-                    Directory(
-                        name="name",
-                        files=[
-                            File(
-                                name="name",
-                                contents="contents",
-                            ),
-                            File(
-                                name="name",
-                                contents="contents",
-                            ),
-                        ],
-                        directories=[
-                            Directory(
-                                name="name",
-                            ),
-                            Directory(
-                                name="name",
-                            ),
-                        ],
-                    ),
-                    Directory(
-                        name="name",
-                        files=[
-                            File(
-                                name="name",
-                                contents="contents",
-                            ),
-                            File(
-                                name="name",
-                                contents="contents",
-                            ),
-                        ],
-                        directories=[
-                            Directory(
-                                name="name",
-                            ),
-                            Directory(
-                                name="name",
-                            ),
-                        ],
-                    ),
-                ],
-            ),
-            moment=Moment(
-                id=uuid.UUID(
-                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                ),
-                date=datetime.date.fromisoformat(
-                    "2023-01-15",
-                ),
-                datetime=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-            ),
-        )
+        client.service.createbigentity()
         """
-        _response = self._raw_client.create_big_entity(
+        _response = self._raw_client.createbigentity(
             cast_member=cast_member,
             extended_movie=extended_movie,
             entity=entity,
@@ -482,16 +274,11 @@ class ServiceClient:
         )
         return _response.data
 
-    def refresh_token(
-        self,
-        *,
-        request: typing.Optional[RefreshTokenRequest] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    def refreshtoken(self, *, ttl: int, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
         ----------
-        request : typing.Optional[RefreshTokenRequest]
+        ttl : int
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -503,15 +290,15 @@ class ServiceClient:
         Examples
         --------
         from seed import SeedExhaustive
-        from seed.environment import SeedExhaustiveEnvironment
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
-            environment=SeedExhaustiveEnvironment.PRODUCTION,
         )
-        client.service.refresh_token()
+        client.service.refreshtoken(
+            ttl=1,
+        )
         """
-        _response = self._raw_client.refresh_token(request=request, request_options=request_options)
+        _response = self._raw_client.refreshtoken(ttl=ttl, request_options=request_options)
         return _response.data
 
 
@@ -530,7 +317,7 @@ class AsyncServiceClient:
         """
         return self._raw_client
 
-    async def get_movie(self, movie_id: MovieId, *, request_options: typing.Optional[RequestOptions] = None) -> Movie:
+    async def getmovie(self, movie_id: MovieId, *, request_options: typing.Optional[RequestOptions] = None) -> Movie:
         """
         Parameters
         ----------
@@ -543,38 +330,38 @@ class AsyncServiceClient:
         -------
         Movie
 
+
         Examples
         --------
         import asyncio
 
         from seed import AsyncSeedExhaustive
-        from seed.environment import SeedExhaustiveEnvironment
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
-            environment=SeedExhaustiveEnvironment.PRODUCTION,
         )
 
 
         async def main() -> None:
-            await client.service.get_movie(
-                movie_id="movie-c06a4ad7",
+            await client.service.getmovie(
+                movie_id="movieId",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_movie(movie_id, request_options=request_options)
+        _response = await self._raw_client.getmovie(movie_id, request_options=request_options)
         return _response.data
 
-    async def create_movie(
+    async def createmovie(
         self,
         *,
         id: MovieId,
         title: str,
         from_: str,
         rating: float,
-        tag: Tag,
+        type: MovieType,
+        tag: CommonsTag,
         metadata: typing.Dict[str, typing.Any],
         revenue: int,
         prequel: typing.Optional[MovieId] = OMIT,
@@ -593,7 +380,9 @@ class AsyncServiceClient:
         rating : float
             The rating scale is one to five stars
 
-        tag : Tag
+        type : MovieType
+
+        tag : CommonsTag
 
         metadata : typing.Dict[str, typing.Any]
 
@@ -610,43 +399,39 @@ class AsyncServiceClient:
         -------
         MovieId
 
+
         Examples
         --------
         import asyncio
 
         from seed import AsyncSeedExhaustive
-        from seed.environment import SeedExhaustiveEnvironment
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
-            environment=SeedExhaustiveEnvironment.PRODUCTION,
         )
 
 
         async def main() -> None:
-            await client.service.create_movie(
-                id="movie-c06a4ad7",
-                prequel="movie-cv9b914f",
-                title="The Boy and the Heron",
-                from_="Hayao Miyazaki",
-                rating=8.0,
-                tag="tag-wf9as23d",
-                metadata={
-                    "actors": ["Christian Bale", "Florence Pugh", "Willem Dafoe"],
-                    "releaseDate": "2023-12-08",
-                    "ratings": {"rottenTomatoes": 97, "imdb": 7.6},
-                },
+            await client.service.createmovie(
+                id="id",
+                title="title",
+                from_="from",
+                rating=1.1,
+                type="movie",
+                tag="tag",
+                metadata={"key": "value"},
                 revenue=1000000,
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.create_movie(
+        _response = await self._raw_client.createmovie(
             id=id,
             title=title,
             from_=from_,
             rating=rating,
+            type=type,
             tag=tag,
             metadata=metadata,
             revenue=revenue,
@@ -656,18 +441,18 @@ class AsyncServiceClient:
         )
         return _response.data
 
-    async def get_metadata(
+    async def getmetadata(
         self,
         *,
-        x_api_version: str,
+        api_version: str,
         shallow: typing.Optional[bool] = None,
         tag: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> types_types_metadata_Metadata:
+    ) -> Metadata:
         """
         Parameters
         ----------
-        x_api_version : str
+        api_version : str
 
         shallow : typing.Optional[bool]
 
@@ -678,46 +463,43 @@ class AsyncServiceClient:
 
         Returns
         -------
-        types_types_metadata_Metadata
+        Metadata
+
 
         Examples
         --------
         import asyncio
 
         from seed import AsyncSeedExhaustive
-        from seed.environment import SeedExhaustiveEnvironment
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
-            environment=SeedExhaustiveEnvironment.PRODUCTION,
         )
 
 
         async def main() -> None:
-            await client.service.get_metadata(
-                x_api_version="0.0.1",
-                shallow=False,
-                tag="development",
+            await client.service.getmetadata(
+                api_version="X-API-Version",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_metadata(
-            x_api_version=x_api_version, shallow=shallow, tag=tag, request_options=request_options
+        _response = await self._raw_client.getmetadata(
+            api_version=api_version, shallow=shallow, tag=tag, request_options=request_options
         )
         return _response.data
 
-    async def create_big_entity(
+    async def createbigentity(
         self,
         *,
         cast_member: typing.Optional[CastMember] = OMIT,
         extended_movie: typing.Optional[ExtendedMovie] = OMIT,
         entity: typing.Optional[Entity] = OMIT,
-        metadata: typing.Optional[types_types_metadata_Metadata] = OMIT,
-        common_metadata: typing.Optional[commons_types_types_metadata_Metadata] = OMIT,
-        event_info: typing.Optional[EventInfo] = OMIT,
-        data: typing.Optional[Data] = OMIT,
+        metadata: typing.Optional[Metadata] = OMIT,
+        common_metadata: typing.Optional[CommonsMetadata] = OMIT,
+        event_info: typing.Optional[CommonsEventInfo] = OMIT,
+        data: typing.Optional[CommonsData] = OMIT,
         migration: typing.Optional[Migration] = OMIT,
         exception: typing.Optional[Exception] = OMIT,
         test: typing.Optional[Test] = OMIT,
@@ -735,13 +517,13 @@ class AsyncServiceClient:
 
         entity : typing.Optional[Entity]
 
-        metadata : typing.Optional[types_types_metadata_Metadata]
+        metadata : typing.Optional[Metadata]
 
-        common_metadata : typing.Optional[commons_types_types_metadata_Metadata]
+        common_metadata : typing.Optional[CommonsMetadata]
 
-        event_info : typing.Optional[EventInfo]
+        event_info : typing.Optional[CommonsEventInfo]
 
-        data : typing.Optional[Data]
+        data : typing.Optional[CommonsData]
 
         migration : typing.Optional[Migration]
 
@@ -762,227 +544,25 @@ class AsyncServiceClient:
         -------
         Response
 
+
         Examples
         --------
         import asyncio
-        import datetime
-        import uuid
 
         from seed import AsyncSeedExhaustive
-        from seed.commons.types import Data_String, EventInfo_Metadata, Metadata
-        from seed.environment import SeedExhaustiveEnvironment
-        from seed.types import (
-            Actor,
-            Directory,
-            Entity,
-            Exception_Generic,
-            ExtendedMovie,
-            File,
-            Metadata_Html,
-            Migration,
-            Moment,
-            Node,
-            Test_And,
-            Tree,
-        )
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
-            environment=SeedExhaustiveEnvironment.PRODUCTION,
         )
 
 
         async def main() -> None:
-            await client.service.create_big_entity(
-                cast_member=Actor(
-                    name="name",
-                    id="id",
-                ),
-                extended_movie=ExtendedMovie(
-                    cast=["cast", "cast"],
-                    id="id",
-                    prequel="prequel",
-                    title="title",
-                    from_="from",
-                    rating=1.1,
-                    tag="tag",
-                    book="book",
-                    metadata={"metadata": {"key": "value"}},
-                    revenue=1000000,
-                ),
-                entity=Entity(
-                    type="primitive",
-                    name="name",
-                ),
-                metadata=Metadata_Html(value="metadata"),
-                common_metadata=Metadata(
-                    id="id",
-                    data={"data": "data"},
-                    json_string="jsonString",
-                ),
-                event_info=EventInfo_Metadata(
-                    id="id",
-                    data={"data": "data"},
-                    json_string="jsonString",
-                ),
-                data=Data_String(value="data"),
-                migration=Migration(
-                    name="name",
-                    status="RUNNING",
-                ),
-                exception=Exception_Generic(
-                    exception_type="exceptionType",
-                    exception_message="exceptionMessage",
-                    exception_stacktrace="exceptionStacktrace",
-                ),
-                test=Test_And(value=True),
-                node=Node(
-                    name="name",
-                    nodes=[
-                        Node(
-                            name="name",
-                            nodes=[
-                                Node(
-                                    name="name",
-                                ),
-                                Node(
-                                    name="name",
-                                ),
-                            ],
-                            trees=[
-                                Tree(
-                                    nodes=[],
-                                ),
-                                Tree(
-                                    nodes=[],
-                                ),
-                            ],
-                        ),
-                        Node(
-                            name="name",
-                            nodes=[
-                                Node(
-                                    name="name",
-                                ),
-                                Node(
-                                    name="name",
-                                ),
-                            ],
-                            trees=[
-                                Tree(
-                                    nodes=[],
-                                ),
-                                Tree(
-                                    nodes=[],
-                                ),
-                            ],
-                        ),
-                    ],
-                    trees=[
-                        Tree(
-                            nodes=[
-                                Node(
-                                    name="name",
-                                    nodes=[],
-                                    trees=[],
-                                ),
-                                Node(
-                                    name="name",
-                                    nodes=[],
-                                    trees=[],
-                                ),
-                            ],
-                        ),
-                        Tree(
-                            nodes=[
-                                Node(
-                                    name="name",
-                                    nodes=[],
-                                    trees=[],
-                                ),
-                                Node(
-                                    name="name",
-                                    nodes=[],
-                                    trees=[],
-                                ),
-                            ],
-                        ),
-                    ],
-                ),
-                directory=Directory(
-                    name="name",
-                    files=[
-                        File(
-                            name="name",
-                            contents="contents",
-                        ),
-                        File(
-                            name="name",
-                            contents="contents",
-                        ),
-                    ],
-                    directories=[
-                        Directory(
-                            name="name",
-                            files=[
-                                File(
-                                    name="name",
-                                    contents="contents",
-                                ),
-                                File(
-                                    name="name",
-                                    contents="contents",
-                                ),
-                            ],
-                            directories=[
-                                Directory(
-                                    name="name",
-                                ),
-                                Directory(
-                                    name="name",
-                                ),
-                            ],
-                        ),
-                        Directory(
-                            name="name",
-                            files=[
-                                File(
-                                    name="name",
-                                    contents="contents",
-                                ),
-                                File(
-                                    name="name",
-                                    contents="contents",
-                                ),
-                            ],
-                            directories=[
-                                Directory(
-                                    name="name",
-                                ),
-                                Directory(
-                                    name="name",
-                                ),
-                            ],
-                        ),
-                    ],
-                ),
-                moment=Moment(
-                    id=uuid.UUID(
-                        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    ),
-                    date=datetime.date.fromisoformat(
-                        "2023-01-15",
-                    ),
-                    datetime=datetime.datetime.fromisoformat(
-                        "2024-01-15 09:30:00+00:00",
-                    ),
-                ),
-            )
+            await client.service.createbigentity()
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.create_big_entity(
+        _response = await self._raw_client.createbigentity(
             cast_member=cast_member,
             extended_movie=extended_movie,
             entity=entity,
@@ -1000,16 +580,11 @@ class AsyncServiceClient:
         )
         return _response.data
 
-    async def refresh_token(
-        self,
-        *,
-        request: typing.Optional[RefreshTokenRequest] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    async def refreshtoken(self, *, ttl: int, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
         ----------
-        request : typing.Optional[RefreshTokenRequest]
+        ttl : int
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1023,19 +598,19 @@ class AsyncServiceClient:
         import asyncio
 
         from seed import AsyncSeedExhaustive
-        from seed.environment import SeedExhaustiveEnvironment
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
-            environment=SeedExhaustiveEnvironment.PRODUCTION,
         )
 
 
         async def main() -> None:
-            await client.service.refresh_token()
+            await client.service.refreshtoken(
+                ttl=1,
+            )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.refresh_token(request=request, request_options=request_options)
+        _response = await self._raw_client.refreshtoken(ttl=ttl, request_options=request_options)
         return _response.data

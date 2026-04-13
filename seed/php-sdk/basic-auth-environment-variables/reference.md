@@ -1,6 +1,6 @@
 # Reference
-## BasicAuth
-<details><summary><code>$client-&gt;basicAuth-&gt;getWithBasicAuth() -> ?bool</code></summary>
+## Basicauth
+<details><summary><code>$client-&gt;basicauth-&gt;getwithbasicauth() -> ?bool</code></summary>
 <dl>
 <dd>
 
@@ -27,7 +27,7 @@ GET request with basic auth scheme
 <dd>
 
 ```php
-$client->basicAuth->getWithBasicAuth();
+$client->basicauth->getwithbasicauth();
 ```
 </dd>
 </dl>
@@ -39,7 +39,7 @@ $client->basicAuth->getWithBasicAuth();
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;basicAuth-&gt;postWithBasicAuth($request) -> ?bool</code></summary>
+<details><summary><code>$client-&gt;basicauth-&gt;postwithbasicauth($request) -> ?bool</code></summary>
 <dl>
 <dd>
 
@@ -66,7 +66,7 @@ POST request with basic auth scheme
 <dd>
 
 ```php
-$client->basicAuth->postWithBasicAuth(
+$client->basicauth->postwithbasicauth(
     [
         'key' => "value",
     ],

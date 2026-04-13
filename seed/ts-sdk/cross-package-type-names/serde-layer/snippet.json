@@ -2,24 +2,24 @@
     "endpoints": [
         {
             "id": {
-                "path": "/",
+                "path": "/folder-a",
                 "method": "GET",
-                "identifier_override": "endpoint_folder-a/service.getDirectThread"
+                "identifier_override": "endpoint_folderAService.folderA_service_getDirectThread"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedCrossPackageTypeNamesClient } from \"@fern/cross-package-type-names\";\n\nconst client = new SeedCrossPackageTypeNamesClient({ environment: \"YOUR_BASE_URL\" });\nawait client.folderA.service.getDirectThread();\n"
+                "client": "import { SeedApiClient } from \"@fern/cross-package-type-names\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.folderAService.folderAServiceGetDirectThread();\n"
             }
         },
         {
             "id": {
-                "path": "/",
+                "path": "/folder-d",
                 "method": "GET",
-                "identifier_override": "endpoint_folder-d/service.getDirectThread"
+                "identifier_override": "endpoint_folderDService.folderD_service_getDirectThread"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedCrossPackageTypeNamesClient } from \"@fern/cross-package-type-names\";\n\nconst client = new SeedCrossPackageTypeNamesClient({ environment: \"YOUR_BASE_URL\" });\nawait client.folderD.service.getDirectThread();\n"
+                "client": "import { SeedApiClient } from \"@fern/cross-package-type-names\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.folderDService.folderDServiceGetDirectThread();\n"
             }
         },
         {
@@ -30,7 +30,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedCrossPackageTypeNamesClient } from \"@fern/cross-package-type-names\";\n\nconst client = new SeedCrossPackageTypeNamesClient({ environment: \"YOUR_BASE_URL\" });\nawait client.foo.find({\n    optionalString: \"optionalString\",\n    publicProperty: \"publicProperty\",\n    privateProperty: 1\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/cross-package-type-names\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.foo.find();\n"
             }
         }
     ],

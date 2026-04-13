@@ -1,11 +1,11 @@
-//! # Pagination SDK
+//! # pagination SDK
 //!
-//! The official Rust SDK for the Pagination.
+//! The official Rust SDK for the pagination.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_pagination::prelude::*;
+//! use seed_api::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
@@ -13,23 +13,16 @@
 //!         token: Some("<token>".to_string()),
 //!         ..Default::default()
 //!     };
-//!     let client = PaginationClient::new(config).expect("Failed to build client");
+//!     let client = ApiClient::new(config).expect("Failed to build client");
 //!     client
 //!         .complex
 //!         .search(
 //!             &"index".to_string(),
 //!             &SearchRequest {
-//!                 pagination: Some(StartingAfterPaging {
-//!                     per_page: 1,
-//!                     starting_after: Some("starting_after".to_string()),
-//!                     ..Default::default()
-//!                 }),
 //!                 query: SearchRequestQuery::SingleFilterSearchRequest(SingleFilterSearchRequest {
-//!                     field: Some("field".to_string()),
-//!                     operator: Some(SingleFilterSearchRequestOperator::Equals),
-//!                     value: Some("value".to_string()),
 //!                     ..Default::default()
 //!                 }),
+//!                 pagination: None,
 //!             },
 //!             None,
 //!         )

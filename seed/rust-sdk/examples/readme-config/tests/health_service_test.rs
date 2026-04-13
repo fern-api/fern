@@ -1,10 +1,10 @@
-use seed_examples::prelude::*;
+use seed_api::prelude::*;
 
 mod wire_test_utils;
 
 #[tokio::test]
 #[allow(unused_variables, unreachable_code)]
-async fn test_health_service_check_with_wiremock() {
+async fn test_health_service_health_service_check_with_wiremock() {
     wire_test_utils::reset_wiremock_requests().await.unwrap();
     let wiremock_base_url = wire_test_utils::get_wiremock_base_url();
 
@@ -14,24 +14,23 @@ async fn test_health_service_check_with_wiremock() {
     };
     config.base_url = wiremock_base_url.to_string();
     config.environment = None;
-    let client = ExamplesClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
 
     let result = client
-        .health
-        .service
-        .check(&"id-2sdx82h".to_string(), None)
+        .health_service
+        .health_service_check(&"id".to_string(), None)
         .await;
 
     assert!(result.is_ok(), "Client method call should succeed");
 
-    wire_test_utils::verify_request_count("GET", "/check/id-2sdx82h", None, 1)
+    wire_test_utils::verify_request_count("GET", "/check/id", None, 1)
         .await
         .unwrap();
 }
 
 #[tokio::test]
 #[allow(unused_variables, unreachable_code)]
-async fn test_health_service_ping_with_wiremock() {
+async fn test_health_service_health_service_ping_with_wiremock() {
     wire_test_utils::reset_wiremock_requests().await.unwrap();
     let wiremock_base_url = wire_test_utils::get_wiremock_base_url();
 
@@ -41,9 +40,9 @@ async fn test_health_service_ping_with_wiremock() {
     };
     config.base_url = wiremock_base_url.to_string();
     config.environment = None;
-    let client = ExamplesClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
 
-    let result = client.health.service.ping(None).await;
+    let result = client.health_service.health_service_ping(None).await;
 
     assert!(result.is_ok(), "Client method call should succeed");
 

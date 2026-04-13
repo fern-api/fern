@@ -4,18 +4,14 @@ module Seed
   module S3
     class Client
       # @param client [Seed::Internal::Http::RawClient]
-      # @param base_url [String, nil]
-      # @param environment [Hash[Symbol, String], nil]
       #
       # @return [void]
-      def initialize(client:, base_url: nil, environment: nil)
+      def initialize(client:)
         @client = client
-        @base_url = base_url
-        @environment = environment
       end
 
       # @param request_options [Hash]
-      # @param params [Seed::S3::Types::GetPresignedURLRequest]
+      # @param params [Seed::S3::Types::S3GetPresignedURLRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -23,13 +19,13 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [String]
-      def get_presigned_url(request_options: {}, **params)
+      def getpresignedurl(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || @base_url || @environment&.dig(:s3),
+          base_url: request_options[:base_url],
           method: "POST",
-          path: "/s3/presigned-url",
-          body: Seed::S3::Types::GetPresignedURLRequest.new(params).to_h,
+          path: "s3/presigned-url",
+          body: Seed::S3::Types::S3GetPresignedURLRequest.new(params).to_h,
           request_options: request_options
         )
         begin

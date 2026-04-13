@@ -8,51 +8,51 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedContentTypesClient } from \"@fern/content-type\";\n\nconst client = new SeedContentTypesClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.patch({\n    application: \"application\",\n    require_auth: true\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/content-type\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.patch({});\n"
             }
         },
         {
             "id": {
                 "path": "/complex/{id}",
                 "method": "PATCH",
-                "identifier_override": "endpoint_service.patchComplex"
+                "identifier_override": "endpoint_service.patchcomplex"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedContentTypesClient } from \"@fern/content-type\";\n\nconst client = new SeedContentTypesClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.patchComplex(\"id\", {\n    name: \"name\",\n    age: 1,\n    active: true,\n    metadata: {\n        \"metadata\": {\n            \"key\": \"value\"\n        }\n    },\n    tags: [\"tags\", \"tags\"],\n    email: \"email\",\n    nickname: \"nickname\",\n    bio: \"bio\",\n    profileImageUrl: \"profileImageUrl\",\n    settings: {\n        \"settings\": {\n            \"key\": \"value\"\n        }\n    }\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/content-type\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.patchcomplex({\n    id: \"id\"\n});\n"
             }
         },
         {
             "id": {
                 "path": "/named-mixed/{id}",
                 "method": "PATCH",
-                "identifier_override": "endpoint_service.namedPatchWithMixed"
+                "identifier_override": "endpoint_service.namedpatchwithmixed"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedContentTypesClient } from \"@fern/content-type\";\n\nconst client = new SeedContentTypesClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.namedPatchWithMixed(\"id\", {\n    appId: \"appId\",\n    instructions: \"instructions\",\n    active: true\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/content-type\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.namedpatchwithmixed({\n    id: \"id\"\n});\n"
             }
         },
         {
             "id": {
                 "path": "/optional-merge-patch-test",
                 "method": "PATCH",
-                "identifier_override": "endpoint_service.optionalMergePatchTest"
+                "identifier_override": "endpoint_service.optionalmergepatchtest"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedContentTypesClient } from \"@fern/content-type\";\n\nconst client = new SeedContentTypesClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.optionalMergePatchTest({\n    requiredField: \"requiredField\",\n    optionalString: \"optionalString\",\n    optionalInteger: 1,\n    optionalBoolean: true,\n    nullableString: \"nullableString\"\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/content-type\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.optionalmergepatchtest({\n    requiredField: \"requiredField\"\n});\n"
             }
         },
         {
             "id": {
                 "path": "/regular/{id}",
                 "method": "PATCH",
-                "identifier_override": "endpoint_service.regularPatch"
+                "identifier_override": "endpoint_service.regularpatch"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedContentTypesClient } from \"@fern/content-type\";\n\nconst client = new SeedContentTypesClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.regularPatch(\"id\", {\n    field1: \"field1\",\n    field2: 1\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/content-type\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.regularpatch({\n    id: \"id\"\n});\n"
             }
         }
     ],

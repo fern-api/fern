@@ -6,11 +6,11 @@
             "id": {
                 "path": "/token",
                 "method": "POST",
-                "identifier_override": "endpoint_auth.getToken"
+                "identifier_override": "endpoint_auth.gettoken"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedInferredAuthImplicitApiKey;\n\nvar client = new SeedInferredAuthImplicitApiKeyClient(\"X-Api-Key\");\nawait client.Auth.GetTokenAsync(new GetTokenRequest { ApiKey = \"api_key\" });\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Auth.GettokenAsync(new AuthGetTokenRequest { ApiKey = \"X-Api-Key\" });\n"
             }
         },
         {
@@ -18,11 +18,11 @@
             "id": {
                 "path": "/nested-no-auth/get-something",
                 "method": "GET",
-                "identifier_override": "endpoint_nested-no-auth/api.getSomething"
+                "identifier_override": "endpoint_nestedNoAuthApi.nestedNoAuth_api_getSomething"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedInferredAuthImplicitApiKey;\n\nvar client = new SeedInferredAuthImplicitApiKeyClient(\"X-Api-Key\");\nawait client.NestedNoAuth.Api.GetSomethingAsync();\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.NestedNoAuthApi.NestedNoAuthApiGetSomethingAsync();\n"
             }
         },
         {
@@ -30,11 +30,11 @@
             "id": {
                 "path": "/nested/get-something",
                 "method": "GET",
-                "identifier_override": "endpoint_nested/api.getSomething"
+                "identifier_override": "endpoint_nestedApi.nested_api_getSomething"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedInferredAuthImplicitApiKey;\n\nvar client = new SeedInferredAuthImplicitApiKeyClient(\"X-Api-Key\");\nawait client.Nested.Api.GetSomethingAsync();\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.NestedApi.NestedApiGetSomethingAsync();\n"
             }
         },
         {
@@ -42,11 +42,11 @@
             "id": {
                 "path": "/get-something",
                 "method": "GET",
-                "identifier_override": "endpoint_simple.getSomething"
+                "identifier_override": "endpoint_simple.getsomething"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedInferredAuthImplicitApiKey;\n\nvar client = new SeedInferredAuthImplicitApiKeyClient(\"X-Api-Key\");\nawait client.Simple.GetSomethingAsync();\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Simple.GetsomethingAsync();\n"
             }
         }
     ]

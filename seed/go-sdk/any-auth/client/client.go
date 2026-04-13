@@ -3,11 +3,6 @@
 package client
 
 import (
-	context "context"
-	errors "errors"
-	os "os"
-
-	fern "github.com/any-auth/fern"
 	auth "github.com/any-auth/fern/auth"
 	core "github.com/any-auth/fern/core"
 	internal "github.com/any-auth/fern/internal"
@@ -26,52 +21,6 @@ type Client struct {
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
-	if options.Token == "" {
-		options.Token = os.Getenv("MY_TOKEN")
-	}
-	if options.APIKey == "" {
-		options.APIKey = os.Getenv("MY_API_KEY")
-	}
-	if options.ClientID == "" {
-		options.ClientID = os.Getenv("MY_CLIENT_ID")
-	}
-	if options.ClientSecret == "" {
-		options.ClientSecret = os.Getenv("MY_CLIENT_SECRET")
-	}
-	if options.Username == "" {
-		options.Username = os.Getenv("MY_USERNAME")
-	}
-	if options.Password == "" {
-		options.Password = os.Getenv("MY_PASSWORD")
-	}
-	authOptions := *options
-	authClient := auth.NewClient(
-		&authOptions,
-	)
-	inferredAuthProvider := core.NewTokenProvider(
-		core.DefaultExpirySeconds,
-	)
-	options.SetTokenGetter(func() (string, error) {
-		return inferredAuthProvider.GetOrFetch(func() (string, int, error) {
-			response, err := authClient.GetToken(context.Background(), &fern.GetTokenRequest{
-				ClientID:     options.ClientID,
-				ClientSecret: options.ClientSecret,
-			})
-			if err != nil {
-				return "", 0, err
-			}
-			if response.AccessToken == "" {
-				return "", 0, errors.New(
-					"inferred auth response missing access token",
-				)
-			}
-			expiresIn := core.DefaultExpirySeconds
-			if response.ExpiresIn > 0 {
-				expiresIn = response.ExpiresIn
-			}
-			return response.AccessToken, expiresIn, nil
-		})
-	})
 	return &Client{
 		Auth:    auth.NewClient(options),
 		User:    user.NewClient(options),

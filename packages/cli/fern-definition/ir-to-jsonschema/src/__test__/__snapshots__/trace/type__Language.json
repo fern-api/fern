@@ -1,9 +1,0 @@
-{
-  "type": "string",
-  "enum": [
-    "JAVA",
-    "JAVASCRIPT",
-    "PYTHON"
-  ],
-  "definitions": {}
-}

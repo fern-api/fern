@@ -17,7 +17,7 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
-	request := &acme.ServiceGetMetadataRequest{
+	request := &acme.GetMetadataRequest{
 		Shallow: acme.Bool(
 			false,
 		),
@@ -29,9 +29,9 @@ func do() {
 				"public",
 			),
 		},
-		APIVersion: "0.0.1",
+		XAPIVersion: "0.0.1",
 	}
-	client.Service.Getmetadata(
+	client.Service.GetMetadata(
 		context.TODO(),
 		request,
 	)
@@ -56,7 +56,7 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
-	request := &acme.ServiceGetMetadataRequest{
+	request := &acme.GetMetadataRequest{
 		Shallow: acme.Bool(
 			false,
 		),
@@ -65,9 +65,9 @@ func do() {
 				"development",
 			),
 		},
-		APIVersion: "0.0.1",
+		XAPIVersion: "0.0.1",
 	}
-	client.Service.Getmetadata(
+	client.Service.GetMetadata(
 		context.TODO(),
 		request,
 	)
@@ -83,6 +83,7 @@ import (
 
 	acme "github.com/acme/acme-go"
 	client "github.com/acme/acme-go/client"
+	commons "github.com/acme/acme-go/commons"
 	option "github.com/acme/acme-go/option"
 )
 
@@ -110,7 +111,6 @@ func do() {
 			Title:  "Pulp Fiction",
 			From:   "Quentin Tarantino",
 			Rating: 8.5,
-			Type:   acme.MovieTypeMovie,
 			Tag:    "tag-12efs9dv",
 			Metadata: map[string]any{
 				"academyAward": true,
@@ -122,17 +122,12 @@ func do() {
 			},
 			Revenue: int64(1000000),
 		},
-		EventInfo: &acme.CommonsEventInfo{
-			CommonsEventInfoZero: &acme.CommonsEventInfoZero{
-				Type: acme.CommonsEventInfoZeroTypeMetadata,
-				ID:   "event-12345",
-				Data: map[string]*string{
-					"key1": acme.String(
-						"val1",
-					),
-					"key2": acme.String(
-						"val2",
-					),
+		EventInfo: &commons.EventInfo{
+			Metadata: &commons.Metadata{
+				ID: "event-12345",
+				Data: map[string]string{
+					"key1": "val1",
+					"key2": "val2",
 				},
 				JSONString: acme.String(
 					"abc",
@@ -144,7 +139,7 @@ func do() {
 			Status: acme.MigrationStatusRunning,
 		},
 	}
-	client.Service.Createbigentity(
+	client.Service.CreateBigEntity(
 		context.TODO(),
 		request,
 	)
@@ -190,7 +185,6 @@ func do() {
 		Title:  "The Boy and the Heron",
 		From:   "Hayao Miyazaki",
 		Rating: 8,
-		Type:   acme.MovieTypeMovie,
 		Tag:    "development",
 		Metadata: map[string]any{
 			"actors": []any{
@@ -206,7 +200,7 @@ func do() {
 		},
 		Revenue: int64(1000000),
 	}
-	client.Service.Createmovie(
+	client.Service.CreateMovie(
 		context.TODO(),
 		request,
 	)
@@ -215,16 +209,78 @@ func do() {
 `;
 
 exports[`snippets (default) > exhaustive > 'GET /object/get-and-return-with-optio…' 1`] = `
-"[
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody",
-      "bigint"
-    ],
-    "message": "Expected number, got string"
-  }
-]"
+"package example
+
+import (
+	context "context"
+
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+	types "github.com/acme/acme-go/types"
+	uuid "github.com/google/uuid"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+	)
+	request := &types.ObjectWithOptionalField{
+		FieldString: acme.String(
+			"string",
+		),
+		Integer: acme.Int(
+			1,
+		),
+		Long: acme.Int64(
+			int64(1000000),
+		),
+		Double: acme.Float64(
+			1.1,
+		),
+		Bool: acme.Bool(
+			true,
+		),
+		Datetime: acme.Time(
+			acme.MustParseDateTime(
+				"2024-01-15T09:30:00Z",
+			),
+		),
+		Date: acme.Time(
+			acme.MustParseDate(
+				"2023-01-15",
+			),
+		),
+		UUID: acme.UUID(
+			uuid.MustParse(
+				"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+			),
+		),
+		Base64: acme.Bytes(
+			[]byte("SGVsbG8gd29ybGQh"),
+		),
+		List: []string{
+			"list",
+			"list",
+		},
+		Set: []string{
+			"set",
+		},
+		Map: map[int]string{
+			1: "map",
+		},
+		Bigint: acme.String(
+			"1000000",
+		),
+	}
+	client.Endpoints.Object.GetAndReturnWithOptionalField(
+		context.TODO(),
+		request,
+	)
+}
+"
 `;
 
 exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (inva…' 1`] = `
@@ -262,9 +318,9 @@ exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (sim
 import (
 	context "context"
 
-	acme "github.com/acme/acme-go"
 	client "github.com/acme/acme-go/client"
 	option "github.com/acme/acme-go/option"
+	types "github.com/acme/acme-go/types"
 )
 
 func do() {
@@ -273,18 +329,18 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
-	request := []*acme.TypesObjectWithRequiredField{
-		&acme.TypesObjectWithRequiredField{
+	request := []*types.ObjectWithRequiredField{
+		&types.ObjectWithRequiredField{
 			FieldString: "one",
 		},
-		&acme.TypesObjectWithRequiredField{
+		&types.ObjectWithRequiredField{
 			FieldString: "two",
 		},
-		&acme.TypesObjectWithRequiredField{
+		&types.ObjectWithRequiredField{
 			FieldString: "three",
 		},
 	}
-	client.EndpointsContainer.EndpointsContainerGetAndReturnListOfObjects(
+	client.Endpoints.Container.GetAndReturnListOfObjects(
 		context.TODO(),
 		request,
 	)
@@ -313,7 +369,7 @@ func do() {
 		"two",
 		"three",
 	}
-	client.EndpointsContainer.EndpointsContainerGetAndReturnListOfPrimitives(
+	client.Endpoints.Container.GetAndReturnListOfPrimitives(
 		context.TODO(),
 		request,
 	)
@@ -327,9 +383,9 @@ exports[`snippets (default) > exhaustive > 'POST /container/map-prim-to-union (m
 import (
 	context "context"
 
-	acme "github.com/acme/acme-go"
 	client "github.com/acme/acme-go/client"
 	option "github.com/acme/acme-go/option"
+	types "github.com/acme/acme-go/types"
 )
 
 func do() {
@@ -338,17 +394,17 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
-	request := map[string]*acme.TypesMixedType{
-		"test": &acme.TypesMixedType{
+	request := map[string]*types.MixedType{
+		"test": &types.MixedType{
 			Double: 0,
 		},
-		"test2": &acme.TypesMixedType{
+		"test2": &types.MixedType{
 			Boolean: true,
 		},
-		"test3": &acme.TypesMixedType{
+		"test3": &types.MixedType{
 			String: "Test",
 		},
-		"test4": &acme.TypesMixedType{
+		"test4": &types.MixedType{
 			StringList: []string{
 				"1",
 				"1",
@@ -357,7 +413,7 @@ func do() {
 			},
 		},
 	}
-	client.EndpointsContainer.EndpointsContainerGetAndReturnMapOfPrimToUndiscriminatedUnion(
+	client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnion(
 		context.TODO(),
 		request,
 	)
@@ -366,15 +422,41 @@ func do() {
 `;
 
 exports[`snippets (default) > file-upload > 'POST /' 1`] = `
-"[
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody"
-    ],
-    "message": "Expected file value to be a string, got object"
-  }
-]"
+"package example
+
+import (
+	context "context"
+	io "io"
+	strings "strings"
+
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+)
+
+func do() {
+	client := client.NewClient()
+	request := &acme.MyRequest{
+		File: strings.NewReader(
+			"Hello, world!",
+		),
+		FileList: []io.Reader{
+			strings.NewReader(
+				"First",
+			),
+			strings.NewReader(
+				"Second",
+			),
+		},
+		MaybeFile: strings.NewReader(
+			"",
+		),
+	}
+	client.Service.Post(
+		context.TODO(),
+		request,
+	)
+}
+"
 `;
 
 exports[`snippets (default) > file-upload > 'POST /just-file' 1`] = `
@@ -390,12 +472,12 @@ import (
 
 func do() {
 	client := client.NewClient()
-	request := &acme.ServiceJustFileRequest{
+	request := &acme.JustFileRequest{
 		File: strings.NewReader(
 			"Hello, world!",
 		),
 	}
-	client.Service.Justfile(
+	client.Service.JustFile(
 		context.TODO(),
 		request,
 	)
@@ -416,7 +498,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	request := &acme.ServiceJustFileWithQueryParamsRequest{
+	request := &acme.JustFileWithQueryParamsRequest{
 		Integer: 42,
 		MaybeString: acme.String(
 			"exists",
@@ -425,7 +507,7 @@ func do() {
 			"Hello, world!",
 		),
 	}
-	client.Service.Justfilewithqueryparams(
+	client.Service.JustFileWithQueryParams(
 		context.TODO(),
 		request,
 	)
@@ -439,7 +521,6 @@ exports[`snippets (default) > imdb > 'GET /movies/{movieId} (simple)' 1`] = `
 import (
 	context "context"
 
-	acme "github.com/acme/acme-go"
 	client "github.com/acme/acme-go/client"
 	option "github.com/acme/acme-go/option"
 )
@@ -450,12 +531,9 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
-	request := &acme.ImdbGetMovieRequest{
-		MovieID: "movie_xyz",
-	}
-	client.Imdb.Getmovie(
+	client.Imdb.GetMovie(
 		context.TODO(),
-		request,
+		"movie_xyz",
 	)
 }
 "
@@ -482,7 +560,7 @@ func do() {
 		Title:  "The Matrix",
 		Rating: 8.2,
 	}
-	client.Imdb.Createmovie(
+	client.Imdb.CreateMovie(
 		context.TODO(),
 		request,
 	)
@@ -511,23 +589,65 @@ exports[`snippets (default) > multi-url-environment > 'Invalid multi url environ
 `;
 
 exports[`snippets (default) > multi-url-environment > 'Production environment' 1`] = `
-"[
-  {
-    "severity": "WARNING",
-    "path": [],
-    "message": "Environment \\"Production\\" was not found"
-  }
-]"
+"package example
+
+import (
+	context "context"
+
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithBaseURL(
+			acme.Environments.Production,
+		),
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+	)
+	request := &acme.GetPresignedURLRequest{
+		S3Key: "xyz",
+	}
+	client.S3.GetPresignedURL(
+		context.TODO(),
+		request,
+	)
+}
+"
 `;
 
 exports[`snippets (default) > multi-url-environment > 'Staging environment' 1`] = `
-"[
-  {
-    "severity": "WARNING",
-    "path": [],
-    "message": "Environment \\"Staging\\" was not found"
-  }
-]"
+"package example
+
+import (
+	context "context"
+
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithBaseURL(
+			acme.Environments.Staging,
+		),
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+	)
+	request := &acme.GetPresignedURLRequest{
+		S3Key: "xyz",
+	}
+	client.S3.GetPresignedURL(
+		context.TODO(),
+		request,
+	)
+}
+"
 `;
 
 exports[`snippets (default) > multi-url-environment > 'Unrecognized environment' 1`] = `
@@ -557,7 +677,7 @@ func do() {
 			"https://api.example.com",
 		),
 	)
-	request := &acme.NullableCreateUserRequest{
+	request := &acme.CreateUserRequest{
 		Username: "john.doe",
 		Tags: []string{
 			"admin",
@@ -571,7 +691,7 @@ func do() {
 			),
 		},
 	}
-	client.Nullable.Createuser(
+	client.Nullable.CreateUser(
 		context.TODO(),
 		request,
 	)
@@ -608,7 +728,7 @@ func do() {
 			"https://api.example.com",
 		),
 	)
-	request := &acme.NullableGetUsersRequest{
+	request := &acme.GetUsersRequest{
 		Usernames: []*string{
 			acme.String(
 				"john.doe",
@@ -619,7 +739,7 @@ func do() {
 		},
 		Tags: []*string{},
 	}
-	client.Nullable.Getusers(
+	client.Nullable.GetUsers(
 		context.TODO(),
 		request,
 	)
@@ -678,9 +798,7 @@ func do() {
 		),
 	)
 	request := &acme.User{
-		ID: acme.String(
-			"id",
-		),
+		ID:       "id",
 		Password: "password",
 		Profile: &acme.UserProfile{
 			Name:         "name",
@@ -774,7 +892,7 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
-	client.Dummy.Getdummy(
+	client.Dummy.GetDummy(
 		context.TODO(),
 	)
 }
@@ -782,13 +900,30 @@ func do() {
 `;
 
 exports[`snippets (default) > single-url-environment-default > 'Staging environment' 1`] = `
-"[
-  {
-    "severity": "WARNING",
-    "path": [],
-    "message": "Environment \\"Staging\\" was not found"
-  }
-]"
+"package example
+
+import (
+	context "context"
+
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithBaseURL(
+			acme.Environments.Staging,
+		),
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+	)
+	client.Dummy.GetDummy(
+		context.TODO(),
+	)
+}
+"
 `;
 
 exports[`snippets (default) > single-url-environment-default > 'custom baseURL' 1`] = `
@@ -810,7 +945,7 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
-	client.Dummy.Getdummy(
+	client.Dummy.GetDummy(
 		context.TODO(),
 	)
 }
@@ -854,7 +989,7 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
-	request := &acme.ServiceGetMetadataRequest{
+	request := &acme.GetMetadataRequest{
 		Shallow: acme.Bool(
 			false,
 		),
@@ -866,9 +1001,9 @@ func do() {
 				"public",
 			),
 		},
-		APIVersion: "0.0.1",
+		XAPIVersion: "0.0.1",
 	}
-	client.Service.Getmetadata(
+	client.Service.GetMetadata(
 		context.TODO(),
 		request,
 	)
@@ -893,7 +1028,7 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
-	request := &acme.ServiceGetMetadataRequest{
+	request := &acme.GetMetadataRequest{
 		Shallow: acme.Bool(
 			false,
 		),
@@ -902,9 +1037,9 @@ func do() {
 				"development",
 			),
 		},
-		APIVersion: "0.0.1",
+		XAPIVersion: "0.0.1",
 	}
-	client.Service.Getmetadata(
+	client.Service.GetMetadata(
 		context.TODO(),
 		request,
 	)
@@ -920,6 +1055,7 @@ import (
 
 	acme "github.com/acme/acme-go"
 	client "github.com/acme/acme-go/client"
+	commons "github.com/acme/acme-go/commons"
 	option "github.com/acme/acme-go/option"
 )
 
@@ -947,7 +1083,6 @@ func do() {
 			Title:  "Pulp Fiction",
 			From:   "Quentin Tarantino",
 			Rating: 8.5,
-			Type:   acme.MovieTypeMovie,
 			Tag:    "tag-12efs9dv",
 			Metadata: map[string]any{
 				"academyAward": true,
@@ -959,17 +1094,12 @@ func do() {
 			},
 			Revenue: int64(1000000),
 		},
-		EventInfo: &acme.CommonsEventInfo{
-			CommonsEventInfoZero: &acme.CommonsEventInfoZero{
-				Type: acme.CommonsEventInfoZeroTypeMetadata,
-				ID:   "event-12345",
-				Data: map[string]*string{
-					"key1": acme.String(
-						"val1",
-					),
-					"key2": acme.String(
-						"val2",
-					),
+		EventInfo: &commons.EventInfo{
+			Metadata: &commons.Metadata{
+				ID: "event-12345",
+				Data: map[string]string{
+					"key1": "val1",
+					"key2": "val2",
 				},
 				JSONString: acme.String(
 					"abc",
@@ -981,7 +1111,7 @@ func do() {
 			Status: acme.MigrationStatusRunning,
 		},
 	}
-	client.Service.Createbigentity(
+	client.Service.CreateBigEntity(
 		context.TODO(),
 		request,
 	)
@@ -1027,7 +1157,6 @@ func do() {
 		Title:  "The Boy and the Heron",
 		From:   "Hayao Miyazaki",
 		Rating: 8,
-		Type:   acme.MovieTypeMovie,
 		Tag:    "development",
 		Metadata: map[string]any{
 			"actors": []any{
@@ -1043,7 +1172,7 @@ func do() {
 		},
 		Revenue: int64(1000000),
 	}
-	client.Service.Createmovie(
+	client.Service.CreateMovie(
 		context.TODO(),
 		request,
 	)
@@ -1052,16 +1181,78 @@ func do() {
 `;
 
 exports[`snippets (exportAllRequestsAtRoot) > exhaustive > 'GET /object/get-and-return-with-optio…' 1`] = `
-"[
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody",
-      "bigint"
-    ],
-    "message": "Expected number, got string"
-  }
-]"
+"package example
+
+import (
+	context "context"
+
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+	types "github.com/acme/acme-go/types"
+	uuid "github.com/google/uuid"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+	)
+	request := &types.ObjectWithOptionalField{
+		FieldString: acme.String(
+			"string",
+		),
+		Integer: acme.Int(
+			1,
+		),
+		Long: acme.Int64(
+			int64(1000000),
+		),
+		Double: acme.Float64(
+			1.1,
+		),
+		Bool: acme.Bool(
+			true,
+		),
+		Datetime: acme.Time(
+			acme.MustParseDateTime(
+				"2024-01-15T09:30:00Z",
+			),
+		),
+		Date: acme.Time(
+			acme.MustParseDate(
+				"2023-01-15",
+			),
+		),
+		UUID: acme.UUID(
+			uuid.MustParse(
+				"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+			),
+		),
+		Base64: acme.Bytes(
+			[]byte("SGVsbG8gd29ybGQh"),
+		),
+		List: []string{
+			"list",
+			"list",
+		},
+		Set: []string{
+			"set",
+		},
+		Map: map[int]string{
+			1: "map",
+		},
+		Bigint: acme.String(
+			"1000000",
+		),
+	}
+	client.Endpoints.Object.GetAndReturnWithOptionalField(
+		context.TODO(),
+		request,
+	)
+}
+"
 `;
 
 exports[`snippets (exportAllRequestsAtRoot) > exhaustive > 'POST /container/list-of-objects (inva…' 1`] = `
@@ -1099,9 +1290,9 @@ exports[`snippets (exportAllRequestsAtRoot) > exhaustive > 'POST /container/list
 import (
 	context "context"
 
-	acme "github.com/acme/acme-go"
 	client "github.com/acme/acme-go/client"
 	option "github.com/acme/acme-go/option"
+	types "github.com/acme/acme-go/types"
 )
 
 func do() {
@@ -1110,18 +1301,18 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
-	request := []*acme.TypesObjectWithRequiredField{
-		&acme.TypesObjectWithRequiredField{
+	request := []*types.ObjectWithRequiredField{
+		&types.ObjectWithRequiredField{
 			FieldString: "one",
 		},
-		&acme.TypesObjectWithRequiredField{
+		&types.ObjectWithRequiredField{
 			FieldString: "two",
 		},
-		&acme.TypesObjectWithRequiredField{
+		&types.ObjectWithRequiredField{
 			FieldString: "three",
 		},
 	}
-	client.EndpointsContainer.EndpointsContainerGetAndReturnListOfObjects(
+	client.Endpoints.Container.GetAndReturnListOfObjects(
 		context.TODO(),
 		request,
 	)
@@ -1150,7 +1341,7 @@ func do() {
 		"two",
 		"three",
 	}
-	client.EndpointsContainer.EndpointsContainerGetAndReturnListOfPrimitives(
+	client.Endpoints.Container.GetAndReturnListOfPrimitives(
 		context.TODO(),
 		request,
 	)
@@ -1164,9 +1355,9 @@ exports[`snippets (exportAllRequestsAtRoot) > exhaustive > 'POST /container/map-
 import (
 	context "context"
 
-	acme "github.com/acme/acme-go"
 	client "github.com/acme/acme-go/client"
 	option "github.com/acme/acme-go/option"
+	types "github.com/acme/acme-go/types"
 )
 
 func do() {
@@ -1175,17 +1366,17 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
-	request := map[string]*acme.TypesMixedType{
-		"test": &acme.TypesMixedType{
+	request := map[string]*types.MixedType{
+		"test": &types.MixedType{
 			Double: 0,
 		},
-		"test2": &acme.TypesMixedType{
+		"test2": &types.MixedType{
 			Boolean: true,
 		},
-		"test3": &acme.TypesMixedType{
+		"test3": &types.MixedType{
 			String: "Test",
 		},
-		"test4": &acme.TypesMixedType{
+		"test4": &types.MixedType{
 			StringList: []string{
 				"1",
 				"1",
@@ -1194,7 +1385,7 @@ func do() {
 			},
 		},
 	}
-	client.EndpointsContainer.EndpointsContainerGetAndReturnMapOfPrimToUndiscriminatedUnion(
+	client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnion(
 		context.TODO(),
 		request,
 	)
@@ -1203,15 +1394,41 @@ func do() {
 `;
 
 exports[`snippets (exportAllRequestsAtRoot) > file-upload > 'POST /' 1`] = `
-"[
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody"
-    ],
-    "message": "Expected file value to be a string, got object"
-  }
-]"
+"package example
+
+import (
+	context "context"
+	io "io"
+	strings "strings"
+
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+)
+
+func do() {
+	client := client.NewClient()
+	request := &acme.MyRequest{
+		File: strings.NewReader(
+			"Hello, world!",
+		),
+		FileList: []io.Reader{
+			strings.NewReader(
+				"First",
+			),
+			strings.NewReader(
+				"Second",
+			),
+		},
+		MaybeFile: strings.NewReader(
+			"",
+		),
+	}
+	client.Service.Post(
+		context.TODO(),
+		request,
+	)
+}
+"
 `;
 
 exports[`snippets (exportAllRequestsAtRoot) > file-upload > 'POST /just-file' 1`] = `
@@ -1227,12 +1444,12 @@ import (
 
 func do() {
 	client := client.NewClient()
-	request := &acme.ServiceJustFileRequest{
+	request := &acme.JustFileRequest{
 		File: strings.NewReader(
 			"Hello, world!",
 		),
 	}
-	client.Service.Justfile(
+	client.Service.JustFile(
 		context.TODO(),
 		request,
 	)
@@ -1253,7 +1470,7 @@ import (
 
 func do() {
 	client := client.NewClient()
-	request := &acme.ServiceJustFileWithQueryParamsRequest{
+	request := &acme.JustFileWithQueryParamsRequest{
 		Integer: 42,
 		MaybeString: acme.String(
 			"exists",
@@ -1262,7 +1479,7 @@ func do() {
 			"Hello, world!",
 		),
 	}
-	client.Service.Justfilewithqueryparams(
+	client.Service.JustFileWithQueryParams(
 		context.TODO(),
 		request,
 	)
@@ -1276,7 +1493,6 @@ exports[`snippets (exportAllRequestsAtRoot) > imdb > 'GET /movies/{movieId} (sim
 import (
 	context "context"
 
-	acme "github.com/acme/acme-go"
 	client "github.com/acme/acme-go/client"
 	option "github.com/acme/acme-go/option"
 )
@@ -1287,12 +1503,9 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
-	request := &acme.ImdbGetMovieRequest{
-		MovieID: "movie_xyz",
-	}
-	client.Imdb.Getmovie(
+	client.Imdb.GetMovie(
 		context.TODO(),
-		request,
+		"movie_xyz",
 	)
 }
 "
@@ -1319,7 +1532,7 @@ func do() {
 		Title:  "The Matrix",
 		Rating: 8.2,
 	}
-	client.Imdb.Createmovie(
+	client.Imdb.CreateMovie(
 		context.TODO(),
 		request,
 	)
@@ -1348,23 +1561,65 @@ exports[`snippets (exportAllRequestsAtRoot) > multi-url-environment > 'Invalid m
 `;
 
 exports[`snippets (exportAllRequestsAtRoot) > multi-url-environment > 'Production environment' 1`] = `
-"[
-  {
-    "severity": "WARNING",
-    "path": [],
-    "message": "Environment \\"Production\\" was not found"
-  }
-]"
+"package example
+
+import (
+	context "context"
+
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithBaseURL(
+			acme.Environments.Production,
+		),
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+	)
+	request := &acme.GetPresignedURLRequest{
+		S3Key: "xyz",
+	}
+	client.S3.GetPresignedURL(
+		context.TODO(),
+		request,
+	)
+}
+"
 `;
 
 exports[`snippets (exportAllRequestsAtRoot) > multi-url-environment > 'Staging environment' 1`] = `
-"[
-  {
-    "severity": "WARNING",
-    "path": [],
-    "message": "Environment \\"Staging\\" was not found"
-  }
-]"
+"package example
+
+import (
+	context "context"
+
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithBaseURL(
+			acme.Environments.Staging,
+		),
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+	)
+	request := &acme.GetPresignedURLRequest{
+		S3Key: "xyz",
+	}
+	client.S3.GetPresignedURL(
+		context.TODO(),
+		request,
+	)
+}
+"
 `;
 
 exports[`snippets (exportAllRequestsAtRoot) > multi-url-environment > 'Unrecognized environment' 1`] = `
@@ -1394,7 +1649,7 @@ func do() {
 			"https://api.example.com",
 		),
 	)
-	request := &acme.NullableCreateUserRequest{
+	request := &acme.CreateUserRequest{
 		Username: "john.doe",
 		Tags: []string{
 			"admin",
@@ -1408,7 +1663,7 @@ func do() {
 			),
 		},
 	}
-	client.Nullable.Createuser(
+	client.Nullable.CreateUser(
 		context.TODO(),
 		request,
 	)
@@ -1445,7 +1700,7 @@ func do() {
 			"https://api.example.com",
 		),
 	)
-	request := &acme.NullableGetUsersRequest{
+	request := &acme.GetUsersRequest{
 		Usernames: []*string{
 			acme.String(
 				"john.doe",
@@ -1456,7 +1711,7 @@ func do() {
 		},
 		Tags: []*string{},
 	}
-	client.Nullable.Getusers(
+	client.Nullable.GetUsers(
 		context.TODO(),
 		request,
 	)
@@ -1515,9 +1770,7 @@ func do() {
 		),
 	)
 	request := &acme.User{
-		ID: acme.String(
-			"id",
-		),
+		ID:       "id",
 		Password: "password",
 		Profile: &acme.UserProfile{
 			Name:         "name",
@@ -1611,7 +1864,7 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
-	client.Dummy.Getdummy(
+	client.Dummy.GetDummy(
 		context.TODO(),
 	)
 }
@@ -1619,13 +1872,30 @@ func do() {
 `;
 
 exports[`snippets (exportAllRequestsAtRoot) > single-url-environment-default > 'Staging environment' 1`] = `
-"[
-  {
-    "severity": "WARNING",
-    "path": [],
-    "message": "Environment \\"Staging\\" was not found"
-  }
-]"
+"package example
+
+import (
+	context "context"
+
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithBaseURL(
+			acme.Environments.Staging,
+		),
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+	)
+	client.Dummy.GetDummy(
+		context.TODO(),
+	)
+}
+"
 `;
 
 exports[`snippets (exportAllRequestsAtRoot) > single-url-environment-default > 'custom baseURL' 1`] = `
@@ -1647,7 +1917,7 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
-	client.Dummy.Getdummy(
+	client.Dummy.GetDummy(
 		context.TODO(),
 	)
 }
@@ -1691,7 +1961,7 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
-	request := &acme.ServiceGetMetadataRequest{
+	request := &acme.GetMetadataRequest{
 		Shallow: acme.Bool(
 			false,
 		),
@@ -1703,9 +1973,9 @@ func do() {
 				"public",
 			),
 		},
-		APIVersion: "0.0.1",
+		XAPIVersion: "0.0.1",
 	}
-	client.Service.Getmetadata(
+	client.Service.GetMetadata(
 		context.TODO(),
 		request,
 	)
@@ -1730,7 +2000,7 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
-	request := &acme.ServiceGetMetadataRequest{
+	request := &acme.GetMetadataRequest{
 		Shallow: acme.Bool(
 			false,
 		),
@@ -1739,9 +2009,9 @@ func do() {
 				"development",
 			),
 		},
-		APIVersion: "0.0.1",
+		XAPIVersion: "0.0.1",
 	}
-	client.Service.Getmetadata(
+	client.Service.GetMetadata(
 		context.TODO(),
 		request,
 	)
@@ -1757,6 +2027,7 @@ import (
 
 	acme "github.com/acme/acme-go"
 	client "github.com/acme/acme-go/client"
+	commons "github.com/acme/acme-go/commons"
 	option "github.com/acme/acme-go/option"
 )
 
@@ -1784,7 +2055,6 @@ func do() {
 			Title:  "Pulp Fiction",
 			From:   "Quentin Tarantino",
 			Rating: 8.5,
-			Type:   acme.MovieTypeMovie,
 			Tag:    "tag-12efs9dv",
 			Metadata: map[string]any{
 				"academyAward": true,
@@ -1796,17 +2066,12 @@ func do() {
 			},
 			Revenue: int64(1000000),
 		},
-		EventInfo: &acme.CommonsEventInfo{
-			CommonsEventInfoZero: &acme.CommonsEventInfoZero{
-				Type: acme.CommonsEventInfoZeroTypeMetadata,
-				ID:   "event-12345",
-				Data: map[string]*string{
-					"key1": acme.String(
-						"val1",
-					),
-					"key2": acme.String(
-						"val2",
-					),
+		EventInfo: &commons.EventInfo{
+			Metadata: &commons.Metadata{
+				ID: "event-12345",
+				Data: map[string]string{
+					"key1": "val1",
+					"key2": "val2",
 				},
 				JSONString: acme.String(
 					"abc",
@@ -1818,7 +2083,7 @@ func do() {
 			Status: acme.MigrationStatusRunning,
 		},
 	}
-	client.Service.Createbigentity(
+	client.Service.CreateBigEntity(
 		context.TODO(),
 		request,
 	)
@@ -1864,7 +2129,6 @@ func do() {
 		Title:  "The Boy and the Heron",
 		From:   "Hayao Miyazaki",
 		Rating: 8,
-		Type:   acme.MovieTypeMovie,
 		Tag:    "development",
 		Metadata: map[string]any{
 			"actors": []any{
@@ -1880,7 +2144,7 @@ func do() {
 		},
 		Revenue: int64(1000000),
 	}
-	client.Service.Createmovie(
+	client.Service.CreateMovie(
 		context.TODO(),
 		request,
 	)
@@ -1889,16 +2153,78 @@ func do() {
 `;
 
 exports[`snippets (exportedClientName) > exhaustive > 'GET /object/get-and-return-with-optio…' 1`] = `
-"[
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody",
-      "bigint"
-    ],
-    "message": "Expected number, got string"
-  }
-]"
+"package example
+
+import (
+	context "context"
+
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+	types "github.com/acme/acme-go/types"
+	uuid "github.com/google/uuid"
+)
+
+func do() {
+	client := client.NewFernClient(
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+	)
+	request := &types.ObjectWithOptionalField{
+		FieldString: acme.String(
+			"string",
+		),
+		Integer: acme.Int(
+			1,
+		),
+		Long: acme.Int64(
+			int64(1000000),
+		),
+		Double: acme.Float64(
+			1.1,
+		),
+		Bool: acme.Bool(
+			true,
+		),
+		Datetime: acme.Time(
+			acme.MustParseDateTime(
+				"2024-01-15T09:30:00Z",
+			),
+		),
+		Date: acme.Time(
+			acme.MustParseDate(
+				"2023-01-15",
+			),
+		),
+		UUID: acme.UUID(
+			uuid.MustParse(
+				"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+			),
+		),
+		Base64: acme.Bytes(
+			[]byte("SGVsbG8gd29ybGQh"),
+		),
+		List: []string{
+			"list",
+			"list",
+		},
+		Set: []string{
+			"set",
+		},
+		Map: map[int]string{
+			1: "map",
+		},
+		Bigint: acme.String(
+			"1000000",
+		),
+	}
+	client.Endpoints.Object.GetAndReturnWithOptionalField(
+		context.TODO(),
+		request,
+	)
+}
+"
 `;
 
 exports[`snippets (exportedClientName) > exhaustive > 'POST /container/list-of-objects (inva…' 1`] = `
@@ -1936,9 +2262,9 @@ exports[`snippets (exportedClientName) > exhaustive > 'POST /container/list-of-o
 import (
 	context "context"
 
-	acme "github.com/acme/acme-go"
 	client "github.com/acme/acme-go/client"
 	option "github.com/acme/acme-go/option"
+	types "github.com/acme/acme-go/types"
 )
 
 func do() {
@@ -1947,18 +2273,18 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
-	request := []*acme.TypesObjectWithRequiredField{
-		&acme.TypesObjectWithRequiredField{
+	request := []*types.ObjectWithRequiredField{
+		&types.ObjectWithRequiredField{
 			FieldString: "one",
 		},
-		&acme.TypesObjectWithRequiredField{
+		&types.ObjectWithRequiredField{
 			FieldString: "two",
 		},
-		&acme.TypesObjectWithRequiredField{
+		&types.ObjectWithRequiredField{
 			FieldString: "three",
 		},
 	}
-	client.EndpointsContainer.EndpointsContainerGetAndReturnListOfObjects(
+	client.Endpoints.Container.GetAndReturnListOfObjects(
 		context.TODO(),
 		request,
 	)
@@ -1987,7 +2313,7 @@ func do() {
 		"two",
 		"three",
 	}
-	client.EndpointsContainer.EndpointsContainerGetAndReturnListOfPrimitives(
+	client.Endpoints.Container.GetAndReturnListOfPrimitives(
 		context.TODO(),
 		request,
 	)
@@ -2001,9 +2327,9 @@ exports[`snippets (exportedClientName) > exhaustive > 'POST /container/map-prim-
 import (
 	context "context"
 
-	acme "github.com/acme/acme-go"
 	client "github.com/acme/acme-go/client"
 	option "github.com/acme/acme-go/option"
+	types "github.com/acme/acme-go/types"
 )
 
 func do() {
@@ -2012,17 +2338,17 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
-	request := map[string]*acme.TypesMixedType{
-		"test": &acme.TypesMixedType{
+	request := map[string]*types.MixedType{
+		"test": &types.MixedType{
 			Double: 0,
 		},
-		"test2": &acme.TypesMixedType{
+		"test2": &types.MixedType{
 			Boolean: true,
 		},
-		"test3": &acme.TypesMixedType{
+		"test3": &types.MixedType{
 			String: "Test",
 		},
-		"test4": &acme.TypesMixedType{
+		"test4": &types.MixedType{
 			StringList: []string{
 				"1",
 				"1",
@@ -2031,7 +2357,7 @@ func do() {
 			},
 		},
 	}
-	client.EndpointsContainer.EndpointsContainerGetAndReturnMapOfPrimToUndiscriminatedUnion(
+	client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnion(
 		context.TODO(),
 		request,
 	)
@@ -2040,15 +2366,41 @@ func do() {
 `;
 
 exports[`snippets (exportedClientName) > file-upload > 'POST /' 1`] = `
-"[
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody"
-    ],
-    "message": "Expected file value to be a string, got object"
-  }
-]"
+"package example
+
+import (
+	context "context"
+	io "io"
+	strings "strings"
+
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+)
+
+func do() {
+	client := client.NewFernClient()
+	request := &acme.MyRequest{
+		File: strings.NewReader(
+			"Hello, world!",
+		),
+		FileList: []io.Reader{
+			strings.NewReader(
+				"First",
+			),
+			strings.NewReader(
+				"Second",
+			),
+		},
+		MaybeFile: strings.NewReader(
+			"",
+		),
+	}
+	client.Service.Post(
+		context.TODO(),
+		request,
+	)
+}
+"
 `;
 
 exports[`snippets (exportedClientName) > file-upload > 'POST /just-file' 1`] = `
@@ -2064,12 +2416,12 @@ import (
 
 func do() {
 	client := client.NewFernClient()
-	request := &acme.ServiceJustFileRequest{
+	request := &acme.JustFileRequest{
 		File: strings.NewReader(
 			"Hello, world!",
 		),
 	}
-	client.Service.Justfile(
+	client.Service.JustFile(
 		context.TODO(),
 		request,
 	)
@@ -2090,7 +2442,7 @@ import (
 
 func do() {
 	client := client.NewFernClient()
-	request := &acme.ServiceJustFileWithQueryParamsRequest{
+	request := &acme.JustFileWithQueryParamsRequest{
 		Integer: 42,
 		MaybeString: acme.String(
 			"exists",
@@ -2099,7 +2451,7 @@ func do() {
 			"Hello, world!",
 		),
 	}
-	client.Service.Justfilewithqueryparams(
+	client.Service.JustFileWithQueryParams(
 		context.TODO(),
 		request,
 	)
@@ -2113,7 +2465,6 @@ exports[`snippets (exportedClientName) > imdb > 'GET /movies/{movieId} (simple)'
 import (
 	context "context"
 
-	acme "github.com/acme/acme-go"
 	client "github.com/acme/acme-go/client"
 	option "github.com/acme/acme-go/option"
 )
@@ -2124,12 +2475,9 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
-	request := &acme.ImdbGetMovieRequest{
-		MovieID: "movie_xyz",
-	}
-	client.Imdb.Getmovie(
+	client.Imdb.GetMovie(
 		context.TODO(),
-		request,
+		"movie_xyz",
 	)
 }
 "
@@ -2156,7 +2504,7 @@ func do() {
 		Title:  "The Matrix",
 		Rating: 8.2,
 	}
-	client.Imdb.Createmovie(
+	client.Imdb.CreateMovie(
 		context.TODO(),
 		request,
 	)
@@ -2185,23 +2533,65 @@ exports[`snippets (exportedClientName) > multi-url-environment > 'Invalid multi 
 `;
 
 exports[`snippets (exportedClientName) > multi-url-environment > 'Production environment' 1`] = `
-"[
-  {
-    "severity": "WARNING",
-    "path": [],
-    "message": "Environment \\"Production\\" was not found"
-  }
-]"
+"package example
+
+import (
+	context "context"
+
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewFernClient(
+		option.WithBaseURL(
+			acme.Environments.Production,
+		),
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+	)
+	request := &acme.GetPresignedURLRequest{
+		S3Key: "xyz",
+	}
+	client.S3.GetPresignedURL(
+		context.TODO(),
+		request,
+	)
+}
+"
 `;
 
 exports[`snippets (exportedClientName) > multi-url-environment > 'Staging environment' 1`] = `
-"[
-  {
-    "severity": "WARNING",
-    "path": [],
-    "message": "Environment \\"Staging\\" was not found"
-  }
-]"
+"package example
+
+import (
+	context "context"
+
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewFernClient(
+		option.WithBaseURL(
+			acme.Environments.Staging,
+		),
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+	)
+	request := &acme.GetPresignedURLRequest{
+		S3Key: "xyz",
+	}
+	client.S3.GetPresignedURL(
+		context.TODO(),
+		request,
+	)
+}
+"
 `;
 
 exports[`snippets (exportedClientName) > multi-url-environment > 'Unrecognized environment' 1`] = `
@@ -2231,7 +2621,7 @@ func do() {
 			"https://api.example.com",
 		),
 	)
-	request := &acme.NullableCreateUserRequest{
+	request := &acme.CreateUserRequest{
 		Username: "john.doe",
 		Tags: []string{
 			"admin",
@@ -2245,7 +2635,7 @@ func do() {
 			),
 		},
 	}
-	client.Nullable.Createuser(
+	client.Nullable.CreateUser(
 		context.TODO(),
 		request,
 	)
@@ -2282,7 +2672,7 @@ func do() {
 			"https://api.example.com",
 		),
 	)
-	request := &acme.NullableGetUsersRequest{
+	request := &acme.GetUsersRequest{
 		Usernames: []*string{
 			acme.String(
 				"john.doe",
@@ -2293,7 +2683,7 @@ func do() {
 		},
 		Tags: []*string{},
 	}
-	client.Nullable.Getusers(
+	client.Nullable.GetUsers(
 		context.TODO(),
 		request,
 	)
@@ -2352,9 +2742,7 @@ func do() {
 		),
 	)
 	request := &acme.User{
-		ID: acme.String(
-			"id",
-		),
+		ID:       "id",
 		Password: "password",
 		Profile: &acme.UserProfile{
 			Name:         "name",
@@ -2448,7 +2836,7 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
-	client.Dummy.Getdummy(
+	client.Dummy.GetDummy(
 		context.TODO(),
 	)
 }
@@ -2456,13 +2844,30 @@ func do() {
 `;
 
 exports[`snippets (exportedClientName) > single-url-environment-default > 'Staging environment' 1`] = `
-"[
-  {
-    "severity": "WARNING",
-    "path": [],
-    "message": "Environment \\"Staging\\" was not found"
-  }
-]"
+"package example
+
+import (
+	context "context"
+
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewFernClient(
+		option.WithBaseURL(
+			acme.Environments.Staging,
+		),
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+	)
+	client.Dummy.GetDummy(
+		context.TODO(),
+	)
+}
+"
 `;
 
 exports[`snippets (exportedClientName) > single-url-environment-default > 'custom baseURL' 1`] = `
@@ -2484,7 +2889,7 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
-	client.Dummy.Getdummy(
+	client.Dummy.GetDummy(
 		context.TODO(),
 	)
 }

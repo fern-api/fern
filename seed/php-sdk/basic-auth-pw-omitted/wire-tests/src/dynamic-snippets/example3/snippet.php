@@ -6,11 +6,12 @@ use Seed\SeedClient;
 
 $client = new SeedClient(
     username: '<username>',
+    password: '<password>',
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->basicAuth->postWithBasicAuth(
+$client->basicauth->postwithbasicauth(
     [
         'key' => "value",
     ],

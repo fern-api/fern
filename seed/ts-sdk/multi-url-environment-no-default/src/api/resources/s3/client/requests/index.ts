@@ -1,1 +1,1 @@
-export type { GetPresignedUrlRequest } from "./GetPresignedUrlRequest.js";
+export type { S3GetPresignedUrlRequest } from "./S3GetPresignedUrlRequest.js";

@@ -1,11 +1,11 @@
-//! # BasicAuth SDK
+//! # basic-auth SDK
 //!
-//! The official Rust SDK for the BasicAuth.
+//! The official Rust SDK for the basic-auth.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_basic_auth::prelude::*;
+//! use seed_api::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
@@ -14,8 +14,8 @@
 //!         password: Some("<password>".to_string()),
 //!         ..Default::default()
 //!     };
-//!     let client = BasicAuthClient::new(config).expect("Failed to build client");
-//!     client.basic_auth.get_with_basic_auth(None).await;
+//!     let client = ApiClient::new(config).expect("Failed to build client");
+//!     client.basicauth.getwithbasicauth(None).await;
 //! }
 //! ```
 //!

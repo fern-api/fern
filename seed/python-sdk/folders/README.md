@@ -40,7 +40,7 @@ client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.foo()
+client.ab.a_b_foo()
 ```
 
 ## Async Client
@@ -58,7 +58,7 @@ client = AsyncSeedApi(
 
 
 async def main() -> None:
-    await client.foo()
+    await client.ab.a_b_foo()
 
 
 asyncio.run(main())
@@ -73,7 +73,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.foo()
+    client.ab.a_b_foo()
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -90,7 +90,7 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 from seed import SeedApi
 
 client = SeedApi(...)
-response = client.with_raw_response.foo()
+response = client.ab.with_raw_response.a_b_foo()
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
@@ -111,7 +111,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.foo(request_options={
+client.ab.a_b_foo(request_options={
     "max_retries": 1
 })
 ```
@@ -126,7 +126,7 @@ from seed import SeedApi
 client = SeedApi(..., timeout=20.0)
 
 # Override timeout for a specific method
-client.foo(request_options={
+client.ab.a_b_foo(request_options={
     "timeout_in_seconds": 1
 })
 ```

@@ -50,16 +50,16 @@ Instantiate and use the client with the following:
 
 ```swift
 import Foundation
-import Audiences
+import Api
 
 private func main() async throws {
-    let client = AudiencesClient()
+    let client = ApiClient()
 
     _ = try await client.foo.find(
-        optionalString: "optionalString",
+        optionalString: .value(.value("optionalString")),
         request: .init(
-            publicProperty: "publicProperty",
-            privateProperty: 1
+            publicProperty: .value("publicProperty"),
+            privateProperty: .value(1)
         )
     )
 }
@@ -72,11 +72,11 @@ try await main()
 This SDK allows you to configure different environments for API requests.
 
 ```swift
-import Audiences
+import Api
 
-let client = AudiencesClient(
+let client = ApiClient(
     ...,
-    environment: .environmentA
+    environment: .default
 )
 ```
 
@@ -85,14 +85,14 @@ let client = AudiencesClient(
 The SDK throws a single error enum for all failures. Client-side issues encoding/decoding failures and network errors use dedicated cases, while non-success HTTP responses are wrapped in an `HTTPError` that exposes the status code, a simple classification and an optional decoded message.
 
 ```swift
-import Audiences
+import Api
 
-let client = AudiencesClient(...)
+let client = ApiClient(...)
 
 do {
     let response = try await client.foo.find(...)
     // Handle successful response
-} catch let error as AudiencesError {
+} catch let error as ApiError {
     switch error {
     case .httpError(let httpError):
         print("Status code:", httpError.statusCode)
@@ -115,9 +115,9 @@ do {
 The SDK exports all request types as Swift structs. Simply import the SDK module to access them:
 
 ```swift
-import Audiences
+import Api
 
-let request = Requests.FindRequest(
+let request = Requests.FooFindRequest(
     ...
 )
 ```
@@ -164,9 +164,9 @@ The SDK allows you to customize the underlying `URLSession` used for HTTP reques
 
 ```swift
 import Foundation
-import Audiences
+import Api
 
-let client = AudiencesClient(
+let client = ApiClient(
     ...,
     urlSession: // Provide your implementation here
 )

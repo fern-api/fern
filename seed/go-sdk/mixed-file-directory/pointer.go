@@ -1,4 +1,4 @@
-package mixedfiledirectory
+package api
 
 import (
 	"time"

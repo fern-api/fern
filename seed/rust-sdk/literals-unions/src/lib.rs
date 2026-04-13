@@ -1,6 +1,6 @@
-//! # LiteralsUnions SDK
+//! # literals-unions SDK
 //!
-//! The official Rust SDK for the LiteralsUnions.
+//! The official Rust SDK for the literals-unions.
 //!
 //! ## Getting Started
 //!

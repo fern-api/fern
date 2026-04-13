@@ -1,0 +1,48 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/user",
+                "method": "GET",
+                "identifier_override": "endpoint_user.getusername"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/request-parameters/fern\"\n\tfernclient \"github.com/request-parameters/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.User.Getusername(\n\tcontext.TODO(),\n\t\u0026fern.UserGetUsernameRequest{\n\t\tLimit: 1,\n\t\tID:    \"id\",\n\t\tDate: fern.MustParseDate(\n\t\t\t\"2023-01-15\",\n\t\t),\n\t\tDeadline: fern.MustParseDateTime(\n\t\t\t\"2024-01-15T09:30:00Z\",\n\t\t),\n\t\tBytes: \"bytes\",\n\t\tUser: \u0026fern.User{\n\t\t\tName: \"name\",\n\t\t\tTags: []string{\n\t\t\t\t\"tags\",\n\t\t\t\t\"tags\",\n\t\t\t},\n\t\t},\n\t\tUserList: []**fern.User{\n\t\t\t\u0026fern.User{\n\t\t\t\tName: \"name\",\n\t\t\t\tTags: []string{\n\t\t\t\t\t\"tags\",\n\t\t\t\t\t\"tags\",\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tOptionalDeadline: fern.Time(\n\t\t\tfern.MustParseDateTime(\n\t\t\t\t\"2024-01-15T09:30:00Z\",\n\t\t\t),\n\t\t),\n\t\tKeyValue: map[string]string{\n\t\t\t\"keyValue\": \"keyValue\",\n\t\t},\n\t\tOptionalString: fern.String(\n\t\t\t\"optionalString\",\n\t\t),\n\t\tNestedUser: \u0026fern.NestedUser{\n\t\t\tName: \"name\",\n\t\t\tUser: \u0026fern.User{\n\t\t\t\tName: \"name\",\n\t\t\t\tTags: []string{\n\t\t\t\t\t\"tags\",\n\t\t\t\t\t\"tags\",\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tOptionalUser: \u0026fern.User{\n\t\t\tName: \"name\",\n\t\t\tTags: []string{\n\t\t\t\t\"tags\",\n\t\t\t\t\"tags\",\n\t\t\t},\n\t\t},\n\t\tExcludeUser: []**fern.User{\n\t\t\t\u0026fern.User{\n\t\t\t\tName: \"name\",\n\t\t\t\tTags: []string{\n\t\t\t\t\t\"tags\",\n\t\t\t\t\t\"tags\",\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tFilter: []*string{\n\t\t\tfern.String(\n\t\t\t\t\"filter\",\n\t\t\t),\n\t\t},\n\t\tLongParam:   1000000,\n\t\tBigIntParam: 1,\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/user/username-optional",
+                "method": "POST",
+                "identifier_override": "endpoint_user.createusernameoptional"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/request-parameters/fern\"\n\tfernclient \"github.com/request-parameters/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.User.Createusernameoptional(\n\tcontext.TODO(),\n\t\u0026fern.CreateUsernameBodyOptionalProperties{},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/user/username-referenced",
+                "method": "POST",
+                "identifier_override": "endpoint_user.createusernamewithreferencedtype"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/request-parameters/fern\"\n\tfernclient \"github.com/request-parameters/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.User.Createusernamewithreferencedtype(\n\tcontext.TODO(),\n\t\u0026fern.CreateUsernameBody{\n\t\tTags: []*string{\n\t\t\tfern.String(\n\t\t\t\t\"tags\",\n\t\t\t),\n\t\t},\n\t\tUsername: \"username\",\n\t\tPassword: \"password\",\n\t\tName:     \"name\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/user/username",
+                "method": "POST",
+                "identifier_override": "endpoint_user.createusername"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/request-parameters/fern\"\n\tfernclient \"github.com/request-parameters/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.User.Createusername(\n\tcontext.TODO(),\n\t\u0026fern.UserCreateUsernameRequest{\n\t\tTags: []*string{\n\t\t\tfern.String(\n\t\t\t\t\"tags\",\n\t\t\t),\n\t\t},\n\t\tUsername: \"username\",\n\t\tPassword: \"password\",\n\t\tName:     \"name\",\n\t},\n)\n"
+            }
+        }
+    ]
+}

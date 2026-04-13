@@ -31,9 +31,9 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) GetResource(
+func (r *RawClient) Getresource(
 	ctx context.Context,
-	resourceID string,
+	request *fern.ServiceGetResourceRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.Resource], error) {
 	options := core.NewRequestOptions(opts...)
@@ -44,7 +44,7 @@ func (r *RawClient) GetResource(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/resource/%v",
-		resourceID,
+		request.ResourceID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
@@ -74,9 +74,9 @@ func (r *RawClient) GetResource(
 	}, nil
 }
 
-func (r *RawClient) ListResources(
+func (r *RawClient) Listresources(
 	ctx context.Context,
-	request *fern.ListResourcesRequest,
+	request *fern.ServiceListResourcesRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[[]*fern.Resource], error) {
 	options := core.NewRequestOptions(opts...)
@@ -86,12 +86,7 @@ func (r *RawClient) ListResources(
 		"",
 	)
 	endpointURL := baseURL + "/resource"
-	queryParams, err := internal.QueryValuesWithDefaults(
-		request,
-		map[string]any{
-			"page_limit": 25,
-		},
-	)
+	queryParams, err := internal.QueryValues(request)
 	if err != nil {
 		return nil, err
 	}

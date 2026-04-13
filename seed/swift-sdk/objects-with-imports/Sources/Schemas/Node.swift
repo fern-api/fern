@@ -2,15 +2,15 @@ import Foundation
 
 public struct Node: Codable, Hashable, Sendable {
     public let id: String
-    public let label: String?
-    public let metadata: Metadata?
+    public let label: Nullable<String>?
+    public let metadata: CommonsMetadata?
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
         id: String,
-        label: String? = nil,
-        metadata: Metadata? = nil,
+        label: Nullable<String>? = nil,
+        metadata: CommonsMetadata? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.id = id
@@ -22,8 +22,8 @@ public struct Node: Codable, Hashable, Sendable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(String.self, forKey: .id)
-        self.label = try container.decodeIfPresent(String.self, forKey: .label)
-        self.metadata = try container.decodeIfPresent(Metadata.self, forKey: .metadata)
+        self.label = try container.decodeNullableIfPresent(String.self, forKey: .label)
+        self.metadata = try container.decodeIfPresent(CommonsMetadata.self, forKey: .metadata)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
@@ -31,7 +31,7 @@ public struct Node: Codable, Hashable, Sendable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.id, forKey: .id)
-        try container.encodeIfPresent(self.label, forKey: .label)
+        try container.encodeNullableIfPresent(self.label, forKey: .label)
         try container.encodeIfPresent(self.metadata, forKey: .metadata)
     }
 

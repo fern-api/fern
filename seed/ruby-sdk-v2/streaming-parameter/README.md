@@ -31,8 +31,8 @@ require "seed"
 client = Seed::Client.new
 
 client.dummy.generate(
-  stream: false,
-  num_events: 5
+  stream: true,
+  num_events: 1
 )
 ```
 

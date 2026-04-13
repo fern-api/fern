@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="/lib/seed/auth/client.rb">get_token</a>(request) -> Seed::Auth::Types::TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="/lib/seed/auth/client.rb">gettoken</a>(request) -> Seed::Types::TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.auth.get_token(
+client.auth.gettoken(
   client_id: "client_id",
   client_secret: "client_secret",
   audience: "https://api.example.com",
@@ -49,7 +49,7 @@ client.auth.get_token(
 <dl>
 <dd>
 
-**audience:** `String` 
+**audience:** `Seed::Auth::Types::AuthGetTokenRequestAudience` 
     
 </dd>
 </dl>
@@ -57,7 +57,7 @@ client.auth.get_token(
 <dl>
 <dd>
 
-**grant_type:** `String` 
+**grant_type:** `Seed::Auth::Types::AuthGetTokenRequestGrantType` 
     
 </dd>
 </dl>
@@ -78,7 +78,7 @@ client.auth.get_token(
 </details>
 
 ## User
-<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">get</a>() -> Internal::Types::Array[Seed::User::Types::User]</code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">get</a>() -> Internal::Types::Array[Seed::Types::User]</code></summary>
 <dl>
 <dd>
 
@@ -118,7 +118,7 @@ client.user.get
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">get_admins</a>() -> Internal::Types::Array[Seed::User::Types::User]</code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">getadmins</a>() -> Internal::Types::Array[Seed::Types::User]</code></summary>
 <dl>
 <dd>
 
@@ -131,7 +131,7 @@ client.user.get
 <dd>
 
 ```ruby
-client.user.get_admins
+client.user.getadmins
 ```
 </dd>
 </dl>

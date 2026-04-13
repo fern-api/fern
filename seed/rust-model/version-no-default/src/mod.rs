@@ -1,4 +1,4 @@
-//! Request and response types for the Version
+//! Request and response types for the version-no-default
 //!
 //! This module contains all data structures used for API communication,
 //! including request bodies, response types, and shared models.
@@ -7,9 +7,9 @@
 //!
 //! - **Model Types**: 2 types for data representation
 
-pub mod user_user_id;
-pub mod user_user;
+pub mod user_id;
+pub mod user;
 
-pub use user_user_id::UserId;
-pub use user_user::User;
+pub use user_id::UserId;
+pub use user::User;
 

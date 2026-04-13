@@ -17,15 +17,12 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.ListRequestA{
-        Page: fern.Int(
-            1,
-        ),
-        Limit: fern.Int(
-            1,
-        ),
+    request := map[string]*fern.TypesMixedType{
+        "key": &fern.TypesMixedType{
+            Double: 1.1,
+        },
     }
-    client.Endpoints.DuplicateNamesA.List(
+    client.EndpointsContainer.EndpointsContainerGetAndReturnMapOfPrimToUndiscriminatedUnion(
         context.TODO(),
         request,
     )

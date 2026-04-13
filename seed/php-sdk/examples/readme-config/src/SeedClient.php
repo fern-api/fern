@@ -2,8 +2,9 @@
 
 namespace Seed;
 
-use Seed\File\FileClient;
-use Seed\Health\HealthClient;
+use Seed\FileNotificationService\FileNotificationServiceClient;
+use Seed\FileService\FileServiceClient;
+use Seed\HealthService\HealthServiceClient;
 use Seed\Service\ServiceClient;
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
@@ -21,14 +22,19 @@ use Seed\Types\Identifier;
 class SeedClient
 {
     /**
-     * @var FileClient $file
+     * @var FileNotificationServiceClient $fileNotificationService
      */
-    public FileClient $file;
+    public FileNotificationServiceClient $fileNotificationService;
 
     /**
-     * @var HealthClient $health
+     * @var FileServiceClient $fileService
      */
-    public HealthClient $health;
+    public FileServiceClient $fileService;
+
+    /**
+     * @var HealthServiceClient $healthService
+     */
+    public HealthServiceClient $healthService;
 
     /**
      * @var ServiceClient $service
@@ -86,8 +92,9 @@ class SeedClient
             options: $this->options,
         );
 
-        $this->file = new FileClient($this->client, $this->options);
-        $this->health = new HealthClient($this->client, $this->options);
+        $this->fileNotificationService = new FileNotificationServiceClient($this->client, $this->options);
+        $this->fileService = new FileServiceClient($this->client, $this->options);
+        $this->healthService = new HealthServiceClient($this->client, $this->options);
         $this->service = new ServiceClient($this->client, $this->options);
     }
 
@@ -111,8 +118,8 @@ class SeedClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "",
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Production->value,
+                    path: "echo",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -161,8 +168,8 @@ class SeedClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "",
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Production->value,
+                    path: "type",
                     method: HttpMethod::POST,
                     body: $request,
                 ),

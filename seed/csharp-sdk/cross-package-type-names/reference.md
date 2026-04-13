@@ -1,6 +1,6 @@
 # Reference
-## FolderA Service
-<details><summary><code>client.FolderA.Service.<a href="/src/SeedCrossPackageTypeNames/FolderA/Service/ServiceClient.cs">GetDirectThreadAsync</a>() -> WithRawResponseTask&lt;Response&gt;</code></summary>
+## FolderAService
+<details><summary><code>client.FolderAService.<a href="/src/SeedApi/FolderAService/FolderAServiceClient.cs">FolderAServiceGetDirectThreadAsync</a>() -> WithRawResponseTask&lt;FolderAResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```csharp
-await client.FolderA.Service.GetDirectThreadAsync();
+await client.FolderAService.FolderAServiceGetDirectThreadAsync();
 ```
 </dd>
 </dl>
@@ -25,8 +25,8 @@ await client.FolderA.Service.GetDirectThreadAsync();
 </dl>
 </details>
 
-## FolderD Service
-<details><summary><code>client.FolderD.Service.<a href="/src/SeedCrossPackageTypeNames/FolderD/Service/ServiceClient.cs">GetDirectThreadAsync</a>() -> WithRawResponseTask&lt;Response&gt;</code></summary>
+## FolderDService
+<details><summary><code>client.FolderDService.<a href="/src/SeedApi/FolderDService/FolderDServiceClient.cs">FolderDServiceGetDirectThreadAsync</a>() -> WithRawResponseTask&lt;FolderDResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -39,7 +39,7 @@ await client.FolderA.Service.GetDirectThreadAsync();
 <dd>
 
 ```csharp
-await client.FolderD.Service.GetDirectThreadAsync();
+await client.FolderDService.FolderDServiceGetDirectThreadAsync();
 ```
 </dd>
 </dl>
@@ -52,7 +52,7 @@ await client.FolderD.Service.GetDirectThreadAsync();
 </details>
 
 ## Foo
-<details><summary><code>client.Foo.<a href="/src/SeedCrossPackageTypeNames/Foo/FooClient.cs">FindAsync</a>(FindRequest { ... }) -> WithRawResponseTask&lt;ImportingType&gt;</code></summary>
+<details><summary><code>client.Foo.<a href="/src/SeedApi/Foo/FooClient.cs">FindAsync</a>(FooFindRequest { ... }) -> WithRawResponseTask&lt;ImportingType&gt;</code></summary>
 <dl>
 <dd>
 
@@ -65,14 +65,7 @@ await client.FolderD.Service.GetDirectThreadAsync();
 <dd>
 
 ```csharp
-await client.Foo.FindAsync(
-    new FindRequest
-    {
-        OptionalString = "optionalString",
-        PublicProperty = "publicProperty",
-        PrivateProperty = 1,
-    }
-);
+await client.Foo.FindAsync(new FooFindRequest());
 ```
 </dd>
 </dl>
@@ -87,7 +80,7 @@ await client.Foo.FindAsync(
 <dl>
 <dd>
 
-**request:** `FindRequest` 
+**request:** `FooFindRequest` 
     
 </dd>
 </dl>

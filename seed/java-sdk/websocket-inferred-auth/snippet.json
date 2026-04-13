@@ -1,29 +1,55 @@
 {
     "endpoints": [
         {
-            "example_identifier": "d8c92b17",
+            "example_identifier": "5028c39c",
             "id": {
                 "method": "POST",
                 "path": "/token",
-                "identifier_override": "endpoint_auth.getTokenWithClientCredentials"
+                "identifier_override": "endpoint_auth.gettokenwithclientcredentials"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.websocketAuth.SeedWebsocketAuthClient;\nimport com.seed.websocketAuth.resources.auth.requests.GetTokenRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedWebsocketAuthClient client = SeedWebsocketAuthClient\n            .builder()\n            .build();\n\n        client.auth().getTokenWithClientCredentials(\n            GetTokenRequest\n                .builder()\n                .xApiKey(\"X-Api-Key\")\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .scope(\"scope\")\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.websocketAuth.SeedWebsocketAuthClient;\nimport com.seed.websocketAuth.resources.auth.requests.GetTokenRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedWebsocketAuthClient client = SeedWebsocketAuthClient\n            .builder()\n            .build();\n\n        client.auth().getTokenWithClientCredentials(\n            GetTokenRequest\n                .builder()\n                .xApiKey(\"X-Api-Key\")\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .scope(\"scope\")\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.auth.requests.AuthGetTokenWithClientCredentialsRequest;\nimport com.seed.api.resources.auth.types.AuthGetTokenWithClientCredentialsRequestAudience;\nimport com.seed.api.resources.auth.types.AuthGetTokenWithClientCredentialsRequestGrantType;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .apiKey(\"<X-Api-Key>\")\n            .build();\n\n        client.auth().gettokenwithclientcredentials(\n            AuthGetTokenWithClientCredentialsRequest\n                .builder()\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .audience(AuthGetTokenWithClientCredentialsRequestAudience.HTTPS_API_EXAMPLE_COM)\n                .grantType(AuthGetTokenWithClientCredentialsRequestGrantType.CLIENT_CREDENTIALS)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.auth.requests.AuthGetTokenWithClientCredentialsRequest;\nimport com.seed.api.resources.auth.types.AuthGetTokenWithClientCredentialsRequestAudience;\nimport com.seed.api.resources.auth.types.AuthGetTokenWithClientCredentialsRequestGrantType;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .apiKey(\"<X-Api-Key>\")\n            .build();\n\n        client.auth().gettokenwithclientcredentials(\n            AuthGetTokenWithClientCredentialsRequest\n                .builder()\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .audience(AuthGetTokenWithClientCredentialsRequestAudience.HTTPS_API_EXAMPLE_COM)\n                .grantType(AuthGetTokenWithClientCredentialsRequestGrantType.CLIENT_CREDENTIALS)\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "87332aef",
+            "example_identifier": "9566ec91",
             "id": {
                 "method": "POST",
-                "path": "/token/refresh",
-                "identifier_override": "endpoint_auth.refreshToken"
+                "path": "/token",
+                "identifier_override": "endpoint_auth.gettokenwithclientcredentials"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.websocketAuth.SeedWebsocketAuthClient;\nimport com.seed.websocketAuth.resources.auth.requests.RefreshTokenRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedWebsocketAuthClient client = SeedWebsocketAuthClient\n            .builder()\n            .build();\n\n        client.auth().refreshToken(\n            RefreshTokenRequest\n                .builder()\n                .xApiKey(\"X-Api-Key\")\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .refreshToken(\"refresh_token\")\n                .scope(\"scope\")\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.websocketAuth.SeedWebsocketAuthClient;\nimport com.seed.websocketAuth.resources.auth.requests.RefreshTokenRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedWebsocketAuthClient client = SeedWebsocketAuthClient\n            .builder()\n            .build();\n\n        client.auth().refreshToken(\n            RefreshTokenRequest\n                .builder()\n                .xApiKey(\"X-Api-Key\")\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .refreshToken(\"refresh_token\")\n                .scope(\"scope\")\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.auth.requests.AuthGetTokenWithClientCredentialsRequest;\nimport com.seed.api.resources.auth.types.AuthGetTokenWithClientCredentialsRequestAudience;\nimport com.seed.api.resources.auth.types.AuthGetTokenWithClientCredentialsRequestGrantType;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .apiKey(\"<X-Api-Key>\")\n            .build();\n\n        client.auth().gettokenwithclientcredentials(\n            AuthGetTokenWithClientCredentialsRequest\n                .builder()\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .audience(AuthGetTokenWithClientCredentialsRequestAudience.HTTPS_API_EXAMPLE_COM)\n                .grantType(AuthGetTokenWithClientCredentialsRequestGrantType.CLIENT_CREDENTIALS)\n                .scope(\"scope\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.auth.requests.AuthGetTokenWithClientCredentialsRequest;\nimport com.seed.api.resources.auth.types.AuthGetTokenWithClientCredentialsRequestAudience;\nimport com.seed.api.resources.auth.types.AuthGetTokenWithClientCredentialsRequestGrantType;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .apiKey(\"<X-Api-Key>\")\n            .build();\n\n        client.auth().gettokenwithclientcredentials(\n            AuthGetTokenWithClientCredentialsRequest\n                .builder()\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .audience(AuthGetTokenWithClientCredentialsRequestAudience.HTTPS_API_EXAMPLE_COM)\n                .grantType(AuthGetTokenWithClientCredentialsRequestGrantType.CLIENT_CREDENTIALS)\n                .scope(\"scope\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "2fb45ce3",
+            "id": {
+                "method": "POST",
+                "path": "/token/refresh",
+                "identifier_override": "endpoint_auth.refreshtoken"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.auth.requests.AuthRefreshTokenRequest;\nimport com.seed.api.resources.auth.types.AuthRefreshTokenRequestAudience;\nimport com.seed.api.resources.auth.types.AuthRefreshTokenRequestGrantType;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .apiKey(\"<X-Api-Key>\")\n            .build();\n\n        client.auth().refreshtoken(\n            AuthRefreshTokenRequest\n                .builder()\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .refreshToken(\"refresh_token\")\n                .audience(AuthRefreshTokenRequestAudience.HTTPS_API_EXAMPLE_COM)\n                .grantType(AuthRefreshTokenRequestGrantType.REFRESH_TOKEN)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.auth.requests.AuthRefreshTokenRequest;\nimport com.seed.api.resources.auth.types.AuthRefreshTokenRequestAudience;\nimport com.seed.api.resources.auth.types.AuthRefreshTokenRequestGrantType;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .apiKey(\"<X-Api-Key>\")\n            .build();\n\n        client.auth().refreshtoken(\n            AuthRefreshTokenRequest\n                .builder()\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .refreshToken(\"refresh_token\")\n                .audience(AuthRefreshTokenRequestAudience.HTTPS_API_EXAMPLE_COM)\n                .grantType(AuthRefreshTokenRequestGrantType.REFRESH_TOKEN)\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "8337ae33",
+            "id": {
+                "method": "POST",
+                "path": "/token/refresh",
+                "identifier_override": "endpoint_auth.refreshtoken"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.auth.requests.AuthRefreshTokenRequest;\nimport com.seed.api.resources.auth.types.AuthRefreshTokenRequestAudience;\nimport com.seed.api.resources.auth.types.AuthRefreshTokenRequestGrantType;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .apiKey(\"<X-Api-Key>\")\n            .build();\n\n        client.auth().refreshtoken(\n            AuthRefreshTokenRequest\n                .builder()\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .refreshToken(\"refresh_token\")\n                .audience(AuthRefreshTokenRequestAudience.HTTPS_API_EXAMPLE_COM)\n                .grantType(AuthRefreshTokenRequestGrantType.REFRESH_TOKEN)\n                .scope(\"scope\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.auth.requests.AuthRefreshTokenRequest;\nimport com.seed.api.resources.auth.types.AuthRefreshTokenRequestAudience;\nimport com.seed.api.resources.auth.types.AuthRefreshTokenRequestGrantType;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .apiKey(\"<X-Api-Key>\")\n            .build();\n\n        client.auth().refreshtoken(\n            AuthRefreshTokenRequest\n                .builder()\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .refreshToken(\"refresh_token\")\n                .audience(AuthRefreshTokenRequestAudience.HTTPS_API_EXAMPLE_COM)\n                .grantType(AuthRefreshTokenRequestGrantType.REFRESH_TOKEN)\n                .scope(\"scope\")\n                .build()\n        );\n    }\n}\n"
             }
         }
     ],

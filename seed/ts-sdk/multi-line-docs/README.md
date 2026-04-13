@@ -40,12 +40,11 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedMultiLineDocsClient } from "@fern/multi-line-docs";
+import { SeedApiClient } from "@fern/multi-line-docs";
 
-const client = new SeedMultiLineDocsClient({ environment: "YOUR_BASE_URL" });
-await client.user.createUser({
-    name: "name",
-    age: 1
+const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
+await client.user.createuser({
+    name: "name"
 });
 ```
 
@@ -55,9 +54,9 @@ The SDK exports all request and response types as TypeScript interfaces. Simply 
 following namespace:
 
 ```typescript
-import { SeedMultiLineDocs } from "@fern/multi-line-docs";
+import { SeedApi } from "@fern/multi-line-docs";
 
-const request: SeedMultiLineDocs.CreateUserRequest = {
+const request: SeedApi.UserGetUserRequest = {
     ...
 };
 ```
@@ -68,12 +67,12 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedMultiLineDocsError } from "@fern/multi-line-docs";
+import { SeedApiError } from "@fern/multi-line-docs";
 
 try {
-    await client.user.createUser(...);
+    await client.user.createuser(...);
 } catch (err) {
-    if (err instanceof SeedMultiLineDocsError) {
+    if (err instanceof SeedApiError) {
         console.log(err.statusCode);
         console.log(err.message);
         console.log(err.body);
@@ -99,16 +98,16 @@ const client = new UserClient({...});
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
-import { SeedMultiLineDocsClient } from "@fern/multi-line-docs";
+import { SeedApiClient } from "@fern/multi-line-docs";
 
-const client = new SeedMultiLineDocsClient({
+const client = new SeedApiClient({
     ...
     headers: {
         'X-Custom-Header': 'custom value'
     }
 });
 
-const response = await client.user.createUser(..., {
+const response = await client.user.createuser(..., {
     headers: {
         'X-Custom-Header': 'custom value'
     }
@@ -120,7 +119,7 @@ const response = await client.user.createUser(..., {
 If you would like to send additional query string parameters as part of the request, use the `queryParams` request option.
 
 ```typescript
-const response = await client.user.createUser(..., {
+const response = await client.user.createuser(..., {
     queryParams: {
         'customQueryParamKey': 'custom query param value'
     }
@@ -142,7 +141,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.user.createUser(..., {
+const response = await client.user.createuser(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -152,7 +151,7 @@ const response = await client.user.createUser(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.user.createUser(..., {
+const response = await client.user.createuser(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -163,7 +162,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.user.createUser(..., {
+const response = await client.user.createuser(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -175,7 +174,7 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.withRawResponse()` method returns a promise that results to an object with a `data` and a `rawResponse` property.
 
 ```typescript
-const { data, rawResponse } = await client.user.createUser(...).withRawResponse();
+const { data, rawResponse } = await client.user.createuser(...).withRawResponse();
 
 console.log(data);
 console.log(rawResponse.headers['X-My-Header']);
@@ -186,9 +185,9 @@ console.log(rawResponse.headers['X-My-Header']);
 The SDK supports logging. You can configure the logger by passing in a `logging` object to the client options.
 
 ```typescript
-import { SeedMultiLineDocsClient, logging } from "@fern/multi-line-docs";
+import { SeedApiClient, logging } from "@fern/multi-line-docs";
 
-const client = new SeedMultiLineDocsClient({
+const client = new SeedApiClient({
     ...
     logging: {
         level: logging.LogLevel.Debug, // defaults to logging.LogLevel.Info

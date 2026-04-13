@@ -1,14 +1,14 @@
 {
   "mappings": [
     {
-      "id": "ce59c023-78fc-4d8d-8e8c-95f5e1a6204a",
-      "name": "getWithBasicAuth - default",
+      "id": "1dc9e9dc-becb-434e-9012-bba642172736",
+      "name": "getwithbasicauth - default",
       "request": {
         "urlPathTemplate": "/basic-auth",
         "method": "GET",
         "headers": {
           "Authorization": {
-            "equalTo": "Basic dGVzdC11c2VybmFtZTo="
+            "equalTo": "Basic dGVzdC11c2VybmFtZTp0ZXN0LXBhc3N3b3Jk"
           }
         }
       },
@@ -19,7 +19,7 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "ce59c023-78fc-4d8d-8e8c-95f5e1a6204a",
+      "uuid": "1dc9e9dc-becb-434e-9012-bba642172736",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -33,14 +33,14 @@
       "postServeActions": []
     },
     {
-      "id": "9cf6385c-29ea-4710-8792-fd2e00adc7c7",
-      "name": "postWithBasicAuth - default",
+      "id": "4b3aa2ff-bdc0-4320-8cc0-a0002a0e4280",
+      "name": "postwithbasicauth - default",
       "request": {
         "urlPathTemplate": "/basic-auth",
         "method": "POST",
         "headers": {
           "Authorization": {
-            "equalTo": "Basic dGVzdC11c2VybmFtZTo="
+            "equalTo": "Basic dGVzdC11c2VybmFtZTp0ZXN0LXBhc3N3b3Jk"
           }
         }
       },
@@ -51,7 +51,7 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "9cf6385c-29ea-4710-8792-fd2e00adc7c7",
+      "uuid": "4b3aa2ff-bdc0-4320-8cc0-a0002a0e4280",
       "persistent": true,
       "priority": 3,
       "metadata": {

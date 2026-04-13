@@ -55,12 +55,12 @@ Instantiate and use the client with the following:
 ```java
 package com.example.usage;
 
-import com.seed.unknownAsAny.SeedUnknownAsAnyClient;
+import com.seed.api.SeedApiClient;
 import java.util.HashMap;
 
 public class Example {
     public static void main(String[] args) {
-        SeedUnknownAsAnyClient client = SeedUnknownAsAnyClient
+        SeedApiClient client = SeedApiClient
             .builder()
             .build();
 
@@ -76,9 +76,9 @@ public class Example {
 You can set a custom base URL when constructing the client.
 
 ```java
-import com.seed.unknownAsAny.SeedUnknownAsAnyClient;
+import com.seed.api.SeedApiClient;
 
-SeedUnknownAsAnyClient client = SeedUnknownAsAnyClient
+SeedApiClient client = SeedApiClient
     .builder()
     .url("https://example.com")
     .build();
@@ -89,11 +89,11 @@ SeedUnknownAsAnyClient client = SeedUnknownAsAnyClient
 When the API returns a non-success status code (4xx or 5xx response), an API exception will be thrown.
 
 ```java
-import com.seed.unknownAsAny.core.SeedUnknownAsAnyApiException;
+import com.seed.api.core.SeedApiApiException;
 
 try{
     client.unknown().post(...);
-} catch (SeedUnknownAsAnyApiException e){
+} catch (SeedApiApiException e){
     // Do something with the API exception...
 }
 ```
@@ -106,12 +106,12 @@ This SDK is built to work with any instance of `OkHttpClient`. By default, if no
 However, you can pass your own client like so:
 
 ```java
-import com.seed.unknownAsAny.SeedUnknownAsAnyClient;
+import com.seed.api.SeedApiClient;
 import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedUnknownAsAnyClient client = SeedUnknownAsAnyClient
+SeedApiClient client = SeedApiClient
     .builder()
     .httpClient(customClient)
     .build();
@@ -134,9 +134,9 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` client option to configure this behavior.
 
 ```java
-import com.seed.unknownAsAny.SeedUnknownAsAnyClient;
+import com.seed.api.SeedApiClient;
 
-SeedUnknownAsAnyClient client = SeedUnknownAsAnyClient
+SeedApiClient client = SeedApiClient
     .builder()
     .maxRetries(1)
     .build();
@@ -146,11 +146,11 @@ SeedUnknownAsAnyClient client = SeedUnknownAsAnyClient
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 ```java
-import com.seed.unknownAsAny.SeedUnknownAsAnyClient;
-import com.seed.unknownAsAny.core.RequestOptions;
+import com.seed.api.SeedApiClient;
+import com.seed.api.core.RequestOptions;
 
 // Client level
-SeedUnknownAsAnyClient client = SeedUnknownAsAnyClient
+SeedApiClient client = SeedApiClient
     .builder()
     .timeout(60)
     .build();
@@ -170,11 +170,11 @@ client.unknown().post(
 The SDK allows you to add custom headers to requests. You can configure headers at the client level or at the request level.
 
 ```java
-import com.seed.unknownAsAny.SeedUnknownAsAnyClient;
-import com.seed.unknownAsAny.core.RequestOptions;
+import com.seed.api.SeedApiClient;
+import com.seed.api.core.RequestOptions;
 
 // Client level
-SeedUnknownAsAnyClient client = SeedUnknownAsAnyClient
+SeedApiClient client = SeedApiClient
     .builder()
     .addHeader("X-Custom-Header", "custom-value")
     .addHeader("X-Request-Id", "abc-123")
@@ -198,7 +198,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-SeedUnknownAsAnyHttpResponse response = client.unknown().withRawResponse().post(...);
+SeedApiHttpResponse response = client.unknown().withRawResponse().post(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));

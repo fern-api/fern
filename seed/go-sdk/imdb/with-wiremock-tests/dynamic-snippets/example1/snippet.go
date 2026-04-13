@@ -3,6 +3,7 @@ package example
 import (
     context "context"
 
+    testPackageName "github.com/imdb/fern"
     client "github.com/imdb/fern/client"
     option "github.com/imdb/fern/option"
 )
@@ -16,8 +17,12 @@ func do() {
             "<token>",
         ),
     )
-    client.Imdb.GetMovie(
+    request := &testPackageName.CreateMovieRequest{
+        Title: "title",
+        Rating: 1.1,
+    }
+    client.Imdb.Createmovie(
         context.TODO(),
-        "movieId",
+        request,
     )
 }

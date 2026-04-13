@@ -1,6 +1,6 @@
 # Reference
 ## Users
-<details><summary><code>client.users.<a href="/Sources/Resources/Users/UsersClient.swift">listWithUriPagination</a>(requestOptions: RequestOptions?) -> ListUsersUriPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="/Sources/Resources/Users/UsersClient.swift">listwithuripagination</a>(requestOptions: RequestOptions?) -> ListUsersUriPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -14,12 +14,12 @@
 
 ```swift
 import Foundation
-import PaginationUriPath
+import Api
 
 private func main() async throws {
-    let client = PaginationUriPathClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.users.listWithUriPagination()
+    _ = try await client.users.listwithuripagination()
 }
 
 try await main()
@@ -49,7 +49,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/Sources/Resources/Users/UsersClient.swift">listWithPathPagination</a>(requestOptions: RequestOptions?) -> ListUsersPathPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="/Sources/Resources/Users/UsersClient.swift">listwithpathpagination</a>(requestOptions: RequestOptions?) -> ListUsersPathPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -63,12 +63,12 @@ try await main()
 
 ```swift
 import Foundation
-import PaginationUriPath
+import Api
 
 private func main() async throws {
-    let client = PaginationUriPathClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.users.listWithPathPagination()
+    _ = try await client.users.listwithpathpagination()
 }
 
 try await main()

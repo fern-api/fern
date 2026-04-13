@@ -10,6 +10,7 @@ The Seed TypeScript library provides convenient access to the Seed APIs from Typ
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
+- [Request and Response Types](#request-and-response-types)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
   - [Subpackage Exports](#subpackage-exports)
@@ -39,12 +40,25 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedUnknownAsAnyClient } from "@fern/unknown";
+import { SeedApiClient } from "@fern/unknown";
 
-const client = new SeedUnknownAsAnyClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
 await client.unknown.post({
     "key": "value"
 });
+```
+
+## Request and Response Types
+
+The SDK exports all request and response types as TypeScript interfaces. Simply import them with the
+following namespace:
+
+```typescript
+import { SeedApi } from "@fern/unknown";
+
+const request: SeedApi.MyObject = {
+    ...
+};
 ```
 
 ## Exception Handling
@@ -53,12 +67,12 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedUnknownAsAnyError } from "@fern/unknown";
+import { SeedApiError } from "@fern/unknown";
 
 try {
     await client.unknown.post(...);
 } catch (err) {
-    if (err instanceof SeedUnknownAsAnyError) {
+    if (err instanceof SeedApiError) {
         console.log(err.statusCode);
         console.log(err.message);
         console.log(err.body);
@@ -84,9 +98,9 @@ const client = new UnknownClient({...});
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
-import { SeedUnknownAsAnyClient } from "@fern/unknown";
+import { SeedApiClient } from "@fern/unknown";
 
-const client = new SeedUnknownAsAnyClient({
+const client = new SeedApiClient({
     ...
     headers: {
         'X-Custom-Header': 'custom value'
@@ -171,9 +185,9 @@ console.log(rawResponse.headers['X-My-Header']);
 The SDK supports logging. You can configure the logger by passing in a `logging` object to the client options.
 
 ```typescript
-import { SeedUnknownAsAnyClient, logging } from "@fern/unknown";
+import { SeedApiClient, logging } from "@fern/unknown";
 
-const client = new SeedUnknownAsAnyClient({
+const client = new SeedApiClient({
     ...
     logging: {
         level: logging.LogLevel.Debug, // defaults to logging.LogLevel.Info

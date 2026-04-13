@@ -33,12 +33,12 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
-func (c *Client) GetUser(
+func (c *Client) Getuser(
 	ctx context.Context,
-	request *path.GetUsersRequest,
+	request *path.UserGetUserRequest,
 	opts ...option.RequestOption,
 ) (*path.User, error) {
-	response, err := c.WithRawResponse.GetUser(
+	response, err := c.WithRawResponse.Getuser(
 		ctx,
 		request,
 		opts...,
@@ -49,30 +49,12 @@ func (c *Client) GetUser(
 	return response.Body, nil
 }
 
-func (c *Client) CreateUser(
+func (c *Client) Updateuser(
 	ctx context.Context,
-	tenantID string,
-	request *path.User,
+	request *path.UserUpdateUserRequest,
 	opts ...option.RequestOption,
 ) (*path.User, error) {
-	response, err := c.WithRawResponse.CreateUser(
-		ctx,
-		tenantID,
-		request,
-		opts...,
-	)
-	if err != nil {
-		return nil, err
-	}
-	return response.Body, nil
-}
-
-func (c *Client) UpdateUser(
-	ctx context.Context,
-	request *path.UpdateUserRequest,
-	opts ...option.RequestOption,
-) (*path.User, error) {
-	response, err := c.WithRawResponse.UpdateUser(
+	response, err := c.WithRawResponse.Updateuser(
 		ctx,
 		request,
 		opts...,
@@ -83,12 +65,28 @@ func (c *Client) UpdateUser(
 	return response.Body, nil
 }
 
-func (c *Client) SearchUsers(
+func (c *Client) Createuser(
 	ctx context.Context,
-	request *path.SearchUsersRequest,
+	request *path.UserCreateUserRequest,
+	opts ...option.RequestOption,
+) (*path.User, error) {
+	response, err := c.WithRawResponse.Createuser(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
+func (c *Client) Searchusers(
+	ctx context.Context,
+	request *path.UserSearchUsersRequest,
 	opts ...option.RequestOption,
 ) ([]*path.User, error) {
-	response, err := c.WithRawResponse.SearchUsers(
+	response, err := c.WithRawResponse.Searchusers(
 		ctx,
 		request,
 		opts...,
@@ -100,12 +98,12 @@ func (c *Client) SearchUsers(
 }
 
 // Test endpoint with path parameter that has a text prefix (v{version})
-func (c *Client) GetUserMetadata(
+func (c *Client) Getusermetadata(
 	ctx context.Context,
-	request *path.GetUserMetadataRequest,
+	request *path.UserGetUserMetadataRequest,
 	opts ...option.RequestOption,
 ) (*path.User, error) {
-	response, err := c.WithRawResponse.GetUserMetadata(
+	response, err := c.WithRawResponse.Getusermetadata(
 		ctx,
 		request,
 		opts...,
@@ -117,12 +115,12 @@ func (c *Client) GetUserMetadata(
 }
 
 // Test endpoint with path parameters listed in different order than found in path
-func (c *Client) GetUserSpecifics(
+func (c *Client) Getuserspecifics(
 	ctx context.Context,
-	request *path.GetUserSpecificsRequest,
+	request *path.UserGetUserSpecificsRequest,
 	opts ...option.RequestOption,
 ) (*path.User, error) {
-	response, err := c.WithRawResponse.GetUserSpecifics(
+	response, err := c.WithRawResponse.Getuserspecifics(
 		ctx,
 		request,
 		opts...,

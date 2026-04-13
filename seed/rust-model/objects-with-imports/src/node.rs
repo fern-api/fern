@@ -7,7 +7,7 @@ pub struct Node {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub label: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub metadata: Option<Metadata>,
+    pub metadata: Option<CommonsMetadata>,
 }
 
 impl Node {
@@ -21,7 +21,7 @@ impl Node {
 pub struct NodeBuilder {
     id: Option<String>,
     label: Option<String>,
-    metadata: Option<Metadata>,
+    metadata: Option<CommonsMetadata>,
 }
 
 impl NodeBuilder {
@@ -35,7 +35,7 @@ impl NodeBuilder {
         self
     }
 
-    pub fn metadata(mut self, value: Metadata) -> Self {
+    pub fn metadata(mut self, value: CommonsMetadata) -> Self {
         self.metadata = Some(value);
         self
     }

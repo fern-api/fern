@@ -1,9 +1,39 @@
 import Foundation
 import Testing
-import AnyAuth
+import Api
 
 @Suite("UserClient Wire Tests") struct UserClientWireTests {
     @Test func get1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                [
+                  {
+                    "id": "id",
+                    "name": "name"
+                  }
+                ]
+                """.utf8
+            )
+        )
+        let client = ApiClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            apiKey: "<X-API-Key>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = [
+            User(
+                id: "id",
+                name: "name"
+            )
+        ]
+        let response = try await client.user.get(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        try #require(response == expectedResponse)
+    }
+
+    @Test func get2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -21,9 +51,10 @@ import AnyAuth
                 """.utf8
             )
         )
-        let client = AnyAuthClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
+            apiKey: "<X-API-Key>",
             urlSession: stub.urlSession
         )
         let expectedResponse = [
@@ -40,7 +71,37 @@ import AnyAuth
         try #require(response == expectedResponse)
     }
 
-    @Test func getAdmins1() async throws -> Void {
+    @Test func getadmins1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                [
+                  {
+                    "id": "id",
+                    "name": "name"
+                  }
+                ]
+                """.utf8
+            )
+        )
+        let client = ApiClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            apiKey: "<X-API-Key>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = [
+            User(
+                id: "id",
+                name: "name"
+            )
+        ]
+        let response = try await client.user.getadmins(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        try #require(response == expectedResponse)
+    }
+
+    @Test func getadmins2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -58,9 +119,10 @@ import AnyAuth
                 """.utf8
             )
         )
-        let client = AnyAuthClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
+            apiKey: "<X-API-Key>",
             urlSession: stub.urlSession
         )
         let expectedResponse = [
@@ -73,7 +135,7 @@ import AnyAuth
                 name: "name"
             )
         ]
-        let response = try await client.user.getAdmins(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.user.getadmins(requestOptions: RequestOptions(additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 }

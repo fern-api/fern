@@ -2,14 +2,12 @@
 
 import datetime as dt
 import typing
-import uuid
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
+from ..types.nested_user import NestedUser
+from ..types.user import User
 from .raw_client import AsyncRawUserClient, RawUserClient
-from .types.create_username_body_optional_properties import CreateUsernameBodyOptionalProperties
-from .types.nested_user import NestedUser
-from .types.user import User
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -30,26 +28,26 @@ class UserClient:
         """
         return self._raw_client
 
-    def create_username(
+    def createusername(
         self,
         *,
-        tags: typing.Sequence[str],
         username: str,
         password: str,
         name: str,
+        tags: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters
         ----------
-        tags : typing.Sequence[str]
-
         username : str
 
         password : str
 
         name : str
 
+        tags : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -59,43 +57,43 @@ class UserClient:
 
         Examples
         --------
-        from seed import SeedRequestParameters
+        from seed import SeedApi
 
-        client = SeedRequestParameters(
+        client = SeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.user.create_username(
-            tags=["tags", "tags"],
+        client.user.createusername(
+            tags="tags",
             username="username",
             password="password",
-            name="test",
+            name="name",
         )
         """
-        _response = self._raw_client.create_username(
-            tags=tags, username=username, password=password, name=name, request_options=request_options
+        _response = self._raw_client.createusername(
+            username=username, password=password, name=name, tags=tags, request_options=request_options
         )
         return _response.data
 
-    def create_username_with_referenced_type(
+    def createusernamewithreferencedtype(
         self,
         *,
-        tags: typing.Sequence[str],
         username: str,
         password: str,
         name: str,
+        tags: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters
         ----------
-        tags : typing.Sequence[str]
-
         username : str
 
         password : str
 
         name : str
 
+        tags : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -105,33 +103,39 @@ class UserClient:
 
         Examples
         --------
-        from seed import SeedRequestParameters
+        from seed import SeedApi
 
-        client = SeedRequestParameters(
+        client = SeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.user.create_username_with_referenced_type(
-            tags=["tags", "tags"],
+        client.user.createusernamewithreferencedtype(
+            tags="tags",
             username="username",
             password="password",
-            name="test",
+            name="name",
         )
         """
-        _response = self._raw_client.create_username_with_referenced_type(
-            tags=tags, username=username, password=password, name=name, request_options=request_options
+        _response = self._raw_client.createusernamewithreferencedtype(
+            username=username, password=password, name=name, tags=tags, request_options=request_options
         )
         return _response.data
 
-    def create_username_optional(
+    def createusernameoptional(
         self,
         *,
-        request: typing.Optional[CreateUsernameBodyOptionalProperties] = None,
+        username: typing.Optional[str] = OMIT,
+        password: typing.Optional[str] = OMIT,
+        name: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters
         ----------
-        request : typing.Optional[CreateUsernameBodyOptionalProperties]
+        username : typing.Optional[str]
+
+        password : typing.Optional[str]
+
+        name : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -142,38 +146,37 @@ class UserClient:
 
         Examples
         --------
-        from seed import SeedRequestParameters
-        from seed.user import CreateUsernameBodyOptionalProperties
+        from seed import SeedApi
 
-        client = SeedRequestParameters(
+        client = SeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.user.create_username_optional(
-            request=CreateUsernameBodyOptionalProperties(),
-        )
+        client.user.createusernameoptional()
         """
-        _response = self._raw_client.create_username_optional(request=request, request_options=request_options)
+        _response = self._raw_client.createusernameoptional(
+            username=username, password=password, name=name, request_options=request_options
+        )
         return _response.data
 
-    def get_username(
+    def getusername(
         self,
         *,
         limit: int,
-        id: uuid.UUID,
+        id: str,
         date: dt.date,
         deadline: dt.datetime,
         bytes: str,
         user: User,
-        user_list: typing.Sequence[User],
         key_value: typing.Dict[str, str],
         nested_user: NestedUser,
-        exclude_user: typing.Union[User, typing.Sequence[User]],
-        filter: typing.Union[str, typing.Sequence[str]],
         long_param: int,
-        big_int_param: str,
+        big_int_param: int,
+        user_list: typing.Optional[typing.Union[User, typing.Sequence[User]]] = None,
         optional_deadline: typing.Optional[dt.datetime] = None,
         optional_string: typing.Optional[str] = None,
         optional_user: typing.Optional[User] = None,
+        exclude_user: typing.Optional[typing.Union[User, typing.Sequence[User]]] = None,
+        filter: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> User:
         """
@@ -181,7 +184,7 @@ class UserClient:
         ----------
         limit : int
 
-        id : uuid.UUID
+        id : str
 
         date : dt.date
 
@@ -191,25 +194,25 @@ class UserClient:
 
         user : User
 
-        user_list : typing.Sequence[User]
-
         key_value : typing.Dict[str, str]
 
         nested_user : NestedUser
 
-        exclude_user : typing.Union[User, typing.Sequence[User]]
-
-        filter : typing.Union[str, typing.Sequence[str]]
-
         long_param : int
 
-        big_int_param : str
+        big_int_param : int
+
+        user_list : typing.Optional[typing.Union[User, typing.Sequence[User]]]
 
         optional_deadline : typing.Optional[dt.datetime]
 
         optional_string : typing.Optional[str]
 
         optional_user : typing.Optional[User]
+
+        exclude_user : typing.Optional[typing.Union[User, typing.Sequence[User]]]
+
+        filter : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -218,43 +221,34 @@ class UserClient:
         -------
         User
 
+
         Examples
         --------
         import datetime
-        import uuid
 
-        from seed import SeedRequestParameters
-        from seed.user import NestedUser, User
+        from seed import NestedUser, SeedApi, User
 
-        client = SeedRequestParameters(
+        client = SeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.user.get_username(
+        client.user.getusername(
             limit=1,
-            id=uuid.UUID(
-                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            ),
+            id="id",
             date=datetime.date.fromisoformat(
                 "2023-01-15",
             ),
             deadline=datetime.datetime.fromisoformat(
                 "2024-01-15 09:30:00+00:00",
             ),
-            bytes="SGVsbG8gd29ybGQh",
+            bytes="bytes",
             user=User(
                 name="name",
                 tags=["tags", "tags"],
             ),
-            user_list=[
-                User(
-                    name="name",
-                    tags=["tags", "tags"],
-                ),
-                User(
-                    name="name",
-                    tags=["tags", "tags"],
-                ),
-            ],
+            user_list=User(
+                name="name",
+                tags=["tags", "tags"],
+            ),
             optional_deadline=datetime.datetime.fromisoformat(
                 "2024-01-15 09:30:00+00:00",
             ),
@@ -277,26 +271,26 @@ class UserClient:
             ),
             filter="filter",
             long_param=1000000,
-            big_int_param=1000000,
+            big_int_param=1,
         )
         """
-        _response = self._raw_client.get_username(
+        _response = self._raw_client.getusername(
             limit=limit,
             id=id,
             date=date,
             deadline=deadline,
             bytes=bytes,
             user=user,
-            user_list=user_list,
             key_value=key_value,
             nested_user=nested_user,
-            exclude_user=exclude_user,
-            filter=filter,
             long_param=long_param,
             big_int_param=big_int_param,
+            user_list=user_list,
             optional_deadline=optional_deadline,
             optional_string=optional_string,
             optional_user=optional_user,
+            exclude_user=exclude_user,
+            filter=filter,
             request_options=request_options,
         )
         return _response.data
@@ -317,26 +311,26 @@ class AsyncUserClient:
         """
         return self._raw_client
 
-    async def create_username(
+    async def createusername(
         self,
         *,
-        tags: typing.Sequence[str],
         username: str,
         password: str,
         name: str,
+        tags: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters
         ----------
-        tags : typing.Sequence[str]
-
         username : str
 
         password : str
 
         name : str
 
+        tags : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -348,49 +342,49 @@ class AsyncUserClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedRequestParameters
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedRequestParameters(
+        client = AsyncSeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.user.create_username(
-                tags=["tags", "tags"],
+            await client.user.createusername(
+                tags="tags",
                 username="username",
                 password="password",
-                name="test",
+                name="name",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.create_username(
-            tags=tags, username=username, password=password, name=name, request_options=request_options
+        _response = await self._raw_client.createusername(
+            username=username, password=password, name=name, tags=tags, request_options=request_options
         )
         return _response.data
 
-    async def create_username_with_referenced_type(
+    async def createusernamewithreferencedtype(
         self,
         *,
-        tags: typing.Sequence[str],
         username: str,
         password: str,
         name: str,
+        tags: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters
         ----------
-        tags : typing.Sequence[str]
-
         username : str
 
         password : str
 
         name : str
 
+        tags : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -402,39 +396,45 @@ class AsyncUserClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedRequestParameters
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedRequestParameters(
+        client = AsyncSeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.user.create_username_with_referenced_type(
-                tags=["tags", "tags"],
+            await client.user.createusernamewithreferencedtype(
+                tags="tags",
                 username="username",
                 password="password",
-                name="test",
+                name="name",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.create_username_with_referenced_type(
-            tags=tags, username=username, password=password, name=name, request_options=request_options
+        _response = await self._raw_client.createusernamewithreferencedtype(
+            username=username, password=password, name=name, tags=tags, request_options=request_options
         )
         return _response.data
 
-    async def create_username_optional(
+    async def createusernameoptional(
         self,
         *,
-        request: typing.Optional[CreateUsernameBodyOptionalProperties] = None,
+        username: typing.Optional[str] = OMIT,
+        password: typing.Optional[str] = OMIT,
+        name: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters
         ----------
-        request : typing.Optional[CreateUsernameBodyOptionalProperties]
+        username : typing.Optional[str]
+
+        password : typing.Optional[str]
+
+        name : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -447,44 +447,43 @@ class AsyncUserClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedRequestParameters
-        from seed.user import CreateUsernameBodyOptionalProperties
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedRequestParameters(
+        client = AsyncSeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.user.create_username_optional(
-                request=CreateUsernameBodyOptionalProperties(),
-            )
+            await client.user.createusernameoptional()
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.create_username_optional(request=request, request_options=request_options)
+        _response = await self._raw_client.createusernameoptional(
+            username=username, password=password, name=name, request_options=request_options
+        )
         return _response.data
 
-    async def get_username(
+    async def getusername(
         self,
         *,
         limit: int,
-        id: uuid.UUID,
+        id: str,
         date: dt.date,
         deadline: dt.datetime,
         bytes: str,
         user: User,
-        user_list: typing.Sequence[User],
         key_value: typing.Dict[str, str],
         nested_user: NestedUser,
-        exclude_user: typing.Union[User, typing.Sequence[User]],
-        filter: typing.Union[str, typing.Sequence[str]],
         long_param: int,
-        big_int_param: str,
+        big_int_param: int,
+        user_list: typing.Optional[typing.Union[User, typing.Sequence[User]]] = None,
         optional_deadline: typing.Optional[dt.datetime] = None,
         optional_string: typing.Optional[str] = None,
         optional_user: typing.Optional[User] = None,
+        exclude_user: typing.Optional[typing.Union[User, typing.Sequence[User]]] = None,
+        filter: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> User:
         """
@@ -492,7 +491,7 @@ class AsyncUserClient:
         ----------
         limit : int
 
-        id : uuid.UUID
+        id : str
 
         date : dt.date
 
@@ -502,25 +501,25 @@ class AsyncUserClient:
 
         user : User
 
-        user_list : typing.Sequence[User]
-
         key_value : typing.Dict[str, str]
 
         nested_user : NestedUser
 
-        exclude_user : typing.Union[User, typing.Sequence[User]]
-
-        filter : typing.Union[str, typing.Sequence[str]]
-
         long_param : int
 
-        big_int_param : str
+        big_int_param : int
+
+        user_list : typing.Optional[typing.Union[User, typing.Sequence[User]]]
 
         optional_deadline : typing.Optional[dt.datetime]
 
         optional_string : typing.Optional[str]
 
         optional_user : typing.Optional[User]
+
+        exclude_user : typing.Optional[typing.Union[User, typing.Sequence[User]]]
+
+        filter : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -529,47 +528,38 @@ class AsyncUserClient:
         -------
         User
 
+
         Examples
         --------
         import asyncio
         import datetime
-        import uuid
 
-        from seed import AsyncSeedRequestParameters
-        from seed.user import NestedUser, User
+        from seed import AsyncSeedApi, NestedUser, User
 
-        client = AsyncSeedRequestParameters(
+        client = AsyncSeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.user.get_username(
+            await client.user.getusername(
                 limit=1,
-                id=uuid.UUID(
-                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                ),
+                id="id",
                 date=datetime.date.fromisoformat(
                     "2023-01-15",
                 ),
                 deadline=datetime.datetime.fromisoformat(
                     "2024-01-15 09:30:00+00:00",
                 ),
-                bytes="SGVsbG8gd29ybGQh",
+                bytes="bytes",
                 user=User(
                     name="name",
                     tags=["tags", "tags"],
                 ),
-                user_list=[
-                    User(
-                        name="name",
-                        tags=["tags", "tags"],
-                    ),
-                    User(
-                        name="name",
-                        tags=["tags", "tags"],
-                    ),
-                ],
+                user_list=User(
+                    name="name",
+                    tags=["tags", "tags"],
+                ),
                 optional_deadline=datetime.datetime.fromisoformat(
                     "2024-01-15 09:30:00+00:00",
                 ),
@@ -592,29 +582,29 @@ class AsyncUserClient:
                 ),
                 filter="filter",
                 long_param=1000000,
-                big_int_param=1000000,
+                big_int_param=1,
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_username(
+        _response = await self._raw_client.getusername(
             limit=limit,
             id=id,
             date=date,
             deadline=deadline,
             bytes=bytes,
             user=user,
-            user_list=user_list,
             key_value=key_value,
             nested_user=nested_user,
-            exclude_user=exclude_user,
-            filter=filter,
             long_param=long_param,
             big_int_param=big_int_param,
+            user_list=user_list,
             optional_deadline=optional_deadline,
             optional_string=optional_string,
             optional_user=optional_user,
+            exclude_user=exclude_user,
+            filter=filter,
             request_options=request_options,
         )
         return _response.data

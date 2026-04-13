@@ -1,8 +1,8 @@
 {
   "type": "string",
   "enum": [
-    "Known",
-    "Unknown"
+    "known",
+    "unknown"
   ],
   "definitions": {}
 }

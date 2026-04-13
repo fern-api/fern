@@ -1,25 +1,25 @@
-//! # ExtraProperties SDK
+//! # extra-properties SDK
 //!
-//! The official Rust SDK for the ExtraProperties.
+//! The official Rust SDK for the extra-properties.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_extra_properties::prelude::*;
+//! use seed_api::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
 //!     let config = ClientConfig {
 //!         ..Default::default()
 //!     };
-//!     let client = ExtraPropertiesClient::new(config).expect("Failed to build client");
+//!     let client = ApiClient::new(config).expect("Failed to build client");
 //!     client
 //!         .user
-//!         .create_user(
-//!             &CreateUserRequest {
-//!                 r#type: "CreateUserRequest".to_string(),
-//!                 version: "v1".to_string(),
-//!                 name: "Alice".to_string(),
+//!         .createuser(
+//!             &UserCreateUserRequest {
+//!                 r#type: UserCreateUserRequestType::CreateUserRequest,
+//!                 version: UserCreateUserRequestVersion::V1,
+//!                 name: "name".to_string(),
 //!             },
 //!             None,
 //!         )

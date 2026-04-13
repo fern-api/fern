@@ -1,4 +1,4 @@
-package headertoken
+package api
 
 import (
 	"testing"

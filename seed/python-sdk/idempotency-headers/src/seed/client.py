@@ -12,7 +12,7 @@ if typing.TYPE_CHECKING:
     from .payment.client import AsyncPaymentClient, PaymentClient
 
 
-class SeedIdempotencyHeaders:
+class SeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -39,9 +39,9 @@ class SeedIdempotencyHeaders:
 
     Examples
     --------
-    from seed import SeedIdempotencyHeaders
+    from seed import SeedApi
 
-    client = SeedIdempotencyHeaders(
+    client = SeedApi(
         token="YOUR_TOKEN",
         base_url="https://yourhost.com/path/to/api",
     )
@@ -102,7 +102,7 @@ def _make_default_async_client(
     return httpx.AsyncClient(timeout=timeout)
 
 
-class AsyncSeedIdempotencyHeaders:
+class AsyncSeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -132,9 +132,9 @@ class AsyncSeedIdempotencyHeaders:
 
     Examples
     --------
-    from seed import AsyncSeedIdempotencyHeaders
+    from seed import AsyncSeedApi
 
-    client = AsyncSeedIdempotencyHeaders(
+    client = AsyncSeedApi(
         token="YOUR_TOKEN",
         base_url="https://yourhost.com/path/to/api",
     )

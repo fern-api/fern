@@ -17,10 +17,10 @@ func do() {
             "<token>",
         ),
     )
-    request := &pleaseinhere.Type{
-        BasicType: pleaseinhere.BasicTypePrimitive,
+    request := &pleaseinhere.FileServiceGetFileRequest{
+        Filename: "filename",
     }
-    client.CreateType(
+    client.FileService.FileServiceGetFile(
         context.TODO(),
         request,
     )

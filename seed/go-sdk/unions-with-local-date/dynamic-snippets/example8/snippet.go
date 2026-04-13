@@ -15,7 +15,7 @@ func do() {
         ),
     )
     request := &fern.UnionWithTime{
-        Value: 1,
+        Value: &fern.UnionWithTimeValue{},
     }
     client.Types.Update(
         context.TODO(),

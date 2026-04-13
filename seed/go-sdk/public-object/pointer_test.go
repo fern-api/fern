@@ -1,4 +1,4 @@
-package publicobject
+package api
 
 import (
 	"testing"

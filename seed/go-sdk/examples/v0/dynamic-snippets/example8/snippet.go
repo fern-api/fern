@@ -16,8 +16,7 @@ func do() {
             "<token>",
         ),
     )
-    client.Health.Service.Check(
+    client.HealthService.HealthServicePing(
         context.TODO(),
-        "id-2sdx82h",
     )
 }

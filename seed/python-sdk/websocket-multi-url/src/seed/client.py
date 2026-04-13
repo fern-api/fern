@@ -5,23 +5,16 @@ import typing
 import httpx
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.logging import LogConfig, Logger
-from .environment import SeedWebsocketMultiUrlEnvironment
 
 
-class SeedWebsocketMultiUrl:
+class SeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
     Parameters
     ----------
-    environment : SeedWebsocketMultiUrlEnvironment
-        The environment to use for requests from the client. from .environment import SeedWebsocketMultiUrlEnvironment
-
-
-
-        Defaults to SeedWebsocketMultiUrlEnvironment.PRODUCTION
-
-
+    base_url : str
+        The base url to use for requests from the client.
 
     token : typing.Union[str, typing.Callable[[], str]]
     headers : typing.Optional[typing.Dict[str, str]]
@@ -41,17 +34,18 @@ class SeedWebsocketMultiUrl:
 
     Examples
     --------
-    from seed import SeedWebsocketMultiUrl
+    from seed import SeedApi
 
-    client = SeedWebsocketMultiUrl(
+    client = SeedApi(
         token="YOUR_TOKEN",
+        base_url="https://yourhost.com/path/to/api",
     )
     """
 
     def __init__(
         self,
         *,
-        environment: SeedWebsocketMultiUrlEnvironment = SeedWebsocketMultiUrlEnvironment.PRODUCTION,
+        base_url: str,
         token: typing.Union[str, typing.Callable[[], str]],
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
@@ -63,7 +57,7 @@ class SeedWebsocketMultiUrl:
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
         )
         self._client_wrapper = SyncClientWrapper(
-            environment=environment,
+            base_url=base_url,
             token=token,
             headers=headers,
             httpx_client=httpx_client
@@ -94,20 +88,14 @@ def _make_default_async_client(
     return httpx.AsyncClient(timeout=timeout)
 
 
-class AsyncSeedWebsocketMultiUrl:
+class AsyncSeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
     Parameters
     ----------
-    environment : SeedWebsocketMultiUrlEnvironment
-        The environment to use for requests from the client. from .environment import SeedWebsocketMultiUrlEnvironment
-
-
-
-        Defaults to SeedWebsocketMultiUrlEnvironment.PRODUCTION
-
-
+    base_url : str
+        The base url to use for requests from the client.
 
     token : typing.Union[str, typing.Callable[[], str]]
     headers : typing.Optional[typing.Dict[str, str]]
@@ -130,17 +118,18 @@ class AsyncSeedWebsocketMultiUrl:
 
     Examples
     --------
-    from seed import AsyncSeedWebsocketMultiUrl
+    from seed import AsyncSeedApi
 
-    client = AsyncSeedWebsocketMultiUrl(
+    client = AsyncSeedApi(
         token="YOUR_TOKEN",
+        base_url="https://yourhost.com/path/to/api",
     )
     """
 
     def __init__(
         self,
         *,
-        environment: SeedWebsocketMultiUrlEnvironment = SeedWebsocketMultiUrlEnvironment.PRODUCTION,
+        base_url: str,
         token: typing.Union[str, typing.Callable[[], str]],
         headers: typing.Optional[typing.Dict[str, str]] = None,
         async_token: typing.Optional[typing.Callable[[], typing.Awaitable[str]]] = None,
@@ -153,7 +142,7 @@ class AsyncSeedWebsocketMultiUrl:
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
         )
         self._client_wrapper = AsyncClientWrapper(
-            environment=environment,
+            base_url=base_url,
             token=token,
             headers=headers,
             async_token=async_token,

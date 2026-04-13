@@ -7,12 +7,16 @@ import (
 	internal "github.com/mixed-file-directory/fern/internal"
 	option "github.com/mixed-file-directory/fern/option"
 	organization "github.com/mixed-file-directory/fern/organization"
-	client "github.com/mixed-file-directory/fern/user/client"
+	user "github.com/mixed-file-directory/fern/user"
+	userevents "github.com/mixed-file-directory/fern/userevents"
+	usereventsmetadata "github.com/mixed-file-directory/fern/usereventsmetadata"
 )
 
 type Client struct {
-	Organization *organization.Client
-	User         *client.Client
+	Organization       *organization.Client
+	User               *user.Client
+	UserEvents         *userevents.Client
+	UserEventsMetadata *usereventsmetadata.Client
 
 	options *core.RequestOptions
 	baseURL string
@@ -22,10 +26,12 @@ type Client struct {
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
-		Organization: organization.NewClient(options),
-		User:         client.NewClient(options),
-		options:      options,
-		baseURL:      options.BaseURL,
+		Organization:       organization.NewClient(options),
+		User:               user.NewClient(options),
+		UserEvents:         userevents.NewClient(options),
+		UserEventsMetadata: usereventsmetadata.NewClient(options),
+		options:            options,
+		baseURL:            options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
 				Client:      options.HTTPClient,

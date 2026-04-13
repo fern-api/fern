@@ -1,6 +1,6 @@
 # Reference
 ## Completions
-<details><summary><code>$client-&gt;completions-&gt;stream($request)</code></summary>
+<details><summary><code>$client-&gt;completions-&gt;stream($request) -> string</code></summary>
 <dl>
 <dd>
 
@@ -13,11 +13,7 @@
 <dd>
 
 ```php
-$client->completions->stream(
-    new StreamCompletionRequest([
-        'query' => 'foo',
-    ]),
-);
+$client->completions->stream($request): string;
 ```
 </dd>
 </dl>
@@ -44,7 +40,7 @@ $client->completions->stream(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;completions-&gt;streamWithoutTerminator($request)</code></summary>
+<details><summary><code>$client-&gt;completions-&gt;streamwithoutterminator($request) -> string</code></summary>
 <dl>
 <dd>
 
@@ -57,11 +53,7 @@ $client->completions->stream(
 <dd>
 
 ```php
-$client->completions->streamWithoutTerminator(
-    new StreamCompletionRequestWithoutTerminator([
-        'query' => 'query',
-    ]),
-);
+$client->completions->streamwithoutterminator($request): string;
 ```
 </dd>
 </dl>

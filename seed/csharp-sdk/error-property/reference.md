@@ -1,6 +1,6 @@
 # Reference
-## PropertyBasedError
-<details><summary><code>client.PropertyBasedError.<a href="/src/SeedErrorProperty/PropertyBasedError/PropertyBasedErrorClient.cs">ThrowErrorAsync</a>() -> WithRawResponseTask&lt;string&gt;</code></summary>
+## Propertybasederror
+<details><summary><code>client.Propertybasederror.<a href="/src/SeedApi/Propertybasederror/PropertybasederrorClient.cs">ThrowerrorAsync</a>() -> WithRawResponseTask&lt;string&gt;</code></summary>
 <dl>
 <dd>
 
@@ -27,7 +27,7 @@ GET request that always throws an error
 <dd>
 
 ```csharp
-await client.PropertyBasedError.ThrowErrorAsync();
+await client.Propertybasederror.ThrowerrorAsync();
 ```
 </dd>
 </dl>

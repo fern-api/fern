@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_:Id": {
+        "type_service:Id": {
             "type": "alias",
             "declaration": {
                 "name": {
@@ -24,9 +24,47 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
                 }
             },
             "typeReference": {
@@ -34,7 +72,7 @@
                 "value": "STRING"
             }
         },
-        "type_:MyObjectWithOptional": {
+        "type_service:MyObjectWithOptional": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -57,9 +95,47 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
                 }
             },
             "properties": [
@@ -119,11 +195,8 @@
                     "typeReference": {
                         "type": "optional",
                         "value": {
-                            "type": "nullable",
-                            "value": {
-                                "type": "primitive",
-                                "value": "STRING"
-                            }
+                            "type": "primitive",
+                            "value": "STRING"
                         }
                     },
                     "propertyAccess": null,
@@ -133,7 +206,7 @@
             "extends": null,
             "additionalProperties": false
         },
-        "type_:MyAliasObject": {
+        "type_service:MyAliasObject": {
             "type": "alias",
             "declaration": {
                 "name": {
@@ -156,17 +229,55 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
                 }
             },
             "typeReference": {
                 "type": "named",
-                "value": "type_:MyObject"
+                "value": "type_service:MyObject"
             }
         },
-        "type_:MyCollectionAliasObject": {
+        "type_service:MyCollectionAliasObject": {
             "type": "alias",
             "declaration": {
                 "name": {
@@ -189,20 +300,58 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
                 }
             },
             "typeReference": {
                 "type": "list",
                 "value": {
                     "type": "named",
-                    "value": "type_:MyObject"
+                    "value": "type_service:MyObject"
                 }
             }
         },
-        "type_:MyObject": {
+        "type_service:MyObject": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -225,9 +374,47 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
                 }
             },
             "properties": [
@@ -265,7 +452,7 @@
             "extends": null,
             "additionalProperties": false
         },
-        "type_:ObjectType": {
+        "type_service:ObjectType": {
             "type": "enum",
             "declaration": {
                 "name": {
@@ -288,9 +475,47 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
                 }
             },
             "values": [
@@ -340,7 +565,7 @@
                 }
             ]
         },
-        "type_:MyInlineType": {
+        "type_service:MyInlineType": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -363,9 +588,47 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
                 }
             },
             "properties": [
@@ -403,8 +666,8 @@
             "extends": null,
             "additionalProperties": false
         },
-        "type_:ModelType": {
-            "type": "enum",
+        "type_service:ModelType": {
+            "type": "alias",
             "declaration": {
                 "name": {
                     "originalName": "ModelType",
@@ -426,37 +689,58 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    ],
                     "packagePath": [],
-                    "file": null
-                }
-            },
-            "values": [
-                {
-                    "wireValue": "model_v1",
-                    "name": {
-                        "originalName": "model_v1",
+                    "file": {
+                        "originalName": "service",
                         "camelCase": {
-                            "unsafeName": "modelV1",
-                            "safeName": "modelV1"
+                            "unsafeName": "service",
+                            "safeName": "service"
                         },
                         "snakeCase": {
-                            "unsafeName": "model_v1",
-                            "safeName": "model_v1"
+                            "unsafeName": "service",
+                            "safeName": "service"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "MODEL_V1",
-                            "safeName": "MODEL_V1"
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
                         },
                         "pascalCase": {
-                            "unsafeName": "ModelV1",
-                            "safeName": "ModelV1"
+                            "unsafeName": "Service",
+                            "safeName": "Service"
                         }
                     }
                 }
-            ]
+            },
+            "typeReference": {
+                "type": "literal",
+                "value": {
+                    "type": "string",
+                    "value": "model_v1"
+                }
+            }
         },
-        "type_:OpenEnumType": {
+        "type_service:OpenEnumType": {
             "type": "enum",
             "declaration": {
                 "name": {
@@ -479,9 +763,47 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
                 }
             },
             "values": [
@@ -630,22 +952,22 @@
                 "type": "inlined",
                 "declaration": {
                     "name": {
-                        "originalName": "ServicePostRequest",
+                        "originalName": "MyRequest",
                         "camelCase": {
-                            "unsafeName": "servicePostRequest",
-                            "safeName": "servicePostRequest"
+                            "unsafeName": "myRequest",
+                            "safeName": "myRequest"
                         },
                         "snakeCase": {
-                            "unsafeName": "service_post_request",
-                            "safeName": "service_post_request"
+                            "unsafeName": "my_request",
+                            "safeName": "my_request"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "SERVICE_POST_REQUEST",
-                            "safeName": "SERVICE_POST_REQUEST"
+                            "unsafeName": "MY_REQUEST",
+                            "safeName": "MY_REQUEST"
                         },
                         "pascalCase": {
-                            "unsafeName": "ServicePostRequest",
-                            "safeName": "ServicePostRequest"
+                            "unsafeName": "MyRequest",
+                            "safeName": "MyRequest"
                         }
                     },
                     "fernFilepath": {
@@ -725,11 +1047,8 @@
                             "typeReference": {
                                 "type": "optional",
                                 "value": {
-                                    "type": "nullable",
-                                    "value": {
-                                        "type": "primitive",
-                                        "value": "STRING"
-                                    }
+                                    "type": "primitive",
+                                    "value": "STRING"
                                 }
                             },
                             "propertyAccess": null,
@@ -760,11 +1079,8 @@
                                 }
                             },
                             "typeReference": {
-                                "type": "optional",
-                                "value": {
-                                    "type": "primitive",
-                                    "value": "INTEGER"
-                                }
+                                "type": "primitive",
+                                "value": "INTEGER"
                             },
                             "propertyAccess": null,
                             "variable": null
@@ -888,11 +1204,8 @@
                             "typeReference": {
                                 "type": "optional",
                                 "value": {
-                                    "type": "nullable",
-                                    "value": {
-                                        "type": "primitive",
-                                        "value": "INTEGER"
-                                    }
+                                    "type": "primitive",
+                                    "value": "INTEGER"
                                 }
                             },
                             "propertyAccess": null,
@@ -925,13 +1238,10 @@
                             "typeReference": {
                                 "type": "optional",
                                 "value": {
-                                    "type": "nullable",
+                                    "type": "list",
                                     "value": {
-                                        "type": "list",
-                                        "value": {
-                                            "type": "primitive",
-                                            "value": "STRING"
-                                        }
+                                        "type": "primitive",
+                                        "value": "STRING"
                                     }
                                 }
                             },
@@ -963,13 +1273,10 @@
                                 }
                             },
                             "typeReference": {
-                                "type": "optional",
+                                "type": "list",
                                 "value": {
-                                    "type": "list",
-                                    "value": {
-                                        "type": "named",
-                                        "value": "type_:MyObject"
-                                    }
+                                    "type": "named",
+                                    "value": "type_service:MyObject"
                                 }
                             },
                             "propertyAccess": null,
@@ -1002,10 +1309,7 @@
                             "typeReference": {
                                 "type": "optional",
                                 "value": {
-                                    "type": "nullable",
-                                    "value": {
-                                        "type": "unknown"
-                                    }
+                                    "type": "unknown"
                                 }
                             },
                             "propertyAccess": null,
@@ -1039,7 +1343,7 @@
                                 "type": "optional",
                                 "value": {
                                     "type": "named",
-                                    "value": "type_:ObjectType"
+                                    "value": "type_service:ObjectType"
                                 }
                             },
                             "propertyAccess": null,
@@ -1073,7 +1377,7 @@
                                 "type": "optional",
                                 "value": {
                                     "type": "named",
-                                    "value": "type_:Id"
+                                    "value": "type_service:Id"
                                 }
                             },
                             "propertyAccess": null,
@@ -1104,11 +1408,8 @@
                                 }
                             },
                             "typeReference": {
-                                "type": "optional",
-                                "value": {
-                                    "type": "named",
-                                    "value": "type_:MyAliasObject"
-                                }
+                                "type": "named",
+                                "value": "type_service:MyAliasObject"
                             },
                             "propertyAccess": null,
                             "variable": null
@@ -1138,13 +1439,10 @@
                                 }
                             },
                             "typeReference": {
-                                "type": "optional",
+                                "type": "list",
                                 "value": {
-                                    "type": "list",
-                                    "value": {
-                                        "type": "named",
-                                        "value": "type_:MyAliasObject"
-                                    }
+                                    "type": "named",
+                                    "value": "type_service:MyAliasObject"
                                 }
                             },
                             "propertyAccess": null,
@@ -1175,11 +1473,8 @@
                                 }
                             },
                             "typeReference": {
-                                "type": "optional",
-                                "value": {
-                                    "type": "named",
-                                    "value": "type_:MyCollectionAliasObject"
-                                }
+                                "type": "named",
+                                "value": "type_service:MyCollectionAliasObject"
                             },
                             "propertyAccess": null,
                             "variable": null
@@ -1196,26 +1491,26 @@
             },
             "examples": null
         },
-        "endpoint_service.justfile": {
+        "endpoint_service.justFile": {
             "auth": null,
             "declaration": {
                 "name": {
-                    "originalName": "justfile",
+                    "originalName": "justFile",
                     "camelCase": {
-                        "unsafeName": "justfile",
-                        "safeName": "justfile"
+                        "unsafeName": "justFile",
+                        "safeName": "justFile"
                     },
                     "snakeCase": {
-                        "unsafeName": "justfile",
-                        "safeName": "justfile"
+                        "unsafeName": "just_file",
+                        "safeName": "just_file"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "JUSTFILE",
-                        "safeName": "JUSTFILE"
+                        "unsafeName": "JUST_FILE",
+                        "safeName": "JUST_FILE"
                     },
                     "pascalCase": {
-                        "unsafeName": "Justfile",
-                        "safeName": "Justfile"
+                        "unsafeName": "JustFile",
+                        "safeName": "JustFile"
                     }
                 },
                 "fernFilepath": {
@@ -1270,22 +1565,22 @@
                 "type": "inlined",
                 "declaration": {
                     "name": {
-                        "originalName": "ServiceJustFileRequest",
+                        "originalName": "JustFileRequest",
                         "camelCase": {
-                            "unsafeName": "serviceJustFileRequest",
-                            "safeName": "serviceJustFileRequest"
+                            "unsafeName": "justFileRequest",
+                            "safeName": "justFileRequest"
                         },
                         "snakeCase": {
-                            "unsafeName": "service_just_file_request",
-                            "safeName": "service_just_file_request"
+                            "unsafeName": "just_file_request",
+                            "safeName": "just_file_request"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "SERVICE_JUST_FILE_REQUEST",
-                            "safeName": "SERVICE_JUST_FILE_REQUEST"
+                            "unsafeName": "JUST_FILE_REQUEST",
+                            "safeName": "JUST_FILE_REQUEST"
                         },
                         "pascalCase": {
-                            "unsafeName": "ServiceJustFileRequest",
-                            "safeName": "ServiceJustFileRequest"
+                            "unsafeName": "JustFileRequest",
+                            "safeName": "JustFileRequest"
                         }
                     },
                     "fernFilepath": {
@@ -1373,26 +1668,26 @@
             },
             "examples": null
         },
-        "endpoint_service.justfilewithqueryparams": {
+        "endpoint_service.justFileWithQueryParams": {
             "auth": null,
             "declaration": {
                 "name": {
-                    "originalName": "justfilewithqueryparams",
+                    "originalName": "justFileWithQueryParams",
                     "camelCase": {
-                        "unsafeName": "justfilewithqueryparams",
-                        "safeName": "justfilewithqueryparams"
+                        "unsafeName": "justFileWithQueryParams",
+                        "safeName": "justFileWithQueryParams"
                     },
                     "snakeCase": {
-                        "unsafeName": "justfilewithqueryparams",
-                        "safeName": "justfilewithqueryparams"
+                        "unsafeName": "just_file_with_query_params",
+                        "safeName": "just_file_with_query_params"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "JUSTFILEWITHQUERYPARAMS",
-                        "safeName": "JUSTFILEWITHQUERYPARAMS"
+                        "unsafeName": "JUST_FILE_WITH_QUERY_PARAMS",
+                        "safeName": "JUST_FILE_WITH_QUERY_PARAMS"
                     },
                     "pascalCase": {
-                        "unsafeName": "Justfilewithqueryparams",
-                        "safeName": "Justfilewithqueryparams"
+                        "unsafeName": "JustFileWithQueryParams",
+                        "safeName": "JustFileWithQueryParams"
                     }
                 },
                 "fernFilepath": {
@@ -1447,22 +1742,22 @@
                 "type": "inlined",
                 "declaration": {
                     "name": {
-                        "originalName": "ServiceJustFileWithQueryParamsRequest",
+                        "originalName": "JustFileWithQueryParamsRequest",
                         "camelCase": {
-                            "unsafeName": "serviceJustFileWithQueryParamsRequest",
-                            "safeName": "serviceJustFileWithQueryParamsRequest"
+                            "unsafeName": "justFileWithQueryParamsRequest",
+                            "safeName": "justFileWithQueryParamsRequest"
                         },
                         "snakeCase": {
-                            "unsafeName": "service_just_file_with_query_params_request",
-                            "safeName": "service_just_file_with_query_params_request"
+                            "unsafeName": "just_file_with_query_params_request",
+                            "safeName": "just_file_with_query_params_request"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "SERVICE_JUST_FILE_WITH_QUERY_PARAMS_REQUEST",
-                            "safeName": "SERVICE_JUST_FILE_WITH_QUERY_PARAMS_REQUEST"
+                            "unsafeName": "JUST_FILE_WITH_QUERY_PARAMS_REQUEST",
+                            "safeName": "JUST_FILE_WITH_QUERY_PARAMS_REQUEST"
                         },
                         "pascalCase": {
-                            "unsafeName": "ServiceJustFileWithQueryParamsRequest",
-                            "safeName": "ServiceJustFileWithQueryParamsRequest"
+                            "unsafeName": "JustFileWithQueryParamsRequest",
+                            "safeName": "JustFileWithQueryParamsRequest"
                         }
                     },
                     "fernFilepath": {
@@ -1537,11 +1832,8 @@
                         "typeReference": {
                             "type": "optional",
                             "value": {
-                                "type": "nullable",
-                                "value": {
-                                    "type": "primitive",
-                                    "value": "STRING"
-                                }
+                                "type": "primitive",
+                                "value": "STRING"
                             }
                         },
                         "propertyAccess": null,
@@ -1603,11 +1895,8 @@
                         "typeReference": {
                             "type": "optional",
                             "value": {
-                                "type": "nullable",
-                                "value": {
-                                    "type": "primitive",
-                                    "value": "INTEGER"
-                                }
+                                "type": "primitive",
+                                "value": "INTEGER"
                             }
                         },
                         "propertyAccess": null,
@@ -1639,11 +1928,8 @@
                         "typeReference": {
                             "type": "list",
                             "value": {
-                                "type": "optional",
-                                "value": {
-                                    "type": "primitive",
-                                    "value": "STRING"
-                                }
+                                "type": "primitive",
+                                "value": "STRING"
                             }
                         },
                         "propertyAccess": null,
@@ -1677,11 +1963,8 @@
                             "value": {
                                 "type": "optional",
                                 "value": {
-                                    "type": "nullable",
-                                    "value": {
-                                        "type": "primitive",
-                                        "value": "STRING"
-                                    }
+                                    "type": "primitive",
+                                    "value": "STRING"
                                 }
                             }
                         },
@@ -1728,26 +2011,26 @@
             },
             "examples": null
         },
-        "endpoint_service.justfilewithoptionalqueryparams": {
+        "endpoint_service.justFileWithOptionalQueryParams": {
             "auth": null,
             "declaration": {
                 "name": {
-                    "originalName": "justfilewithoptionalqueryparams",
+                    "originalName": "justFileWithOptionalQueryParams",
                     "camelCase": {
-                        "unsafeName": "justfilewithoptionalqueryparams",
-                        "safeName": "justfilewithoptionalqueryparams"
+                        "unsafeName": "justFileWithOptionalQueryParams",
+                        "safeName": "justFileWithOptionalQueryParams"
                     },
                     "snakeCase": {
-                        "unsafeName": "justfilewithoptionalqueryparams",
-                        "safeName": "justfilewithoptionalqueryparams"
+                        "unsafeName": "just_file_with_optional_query_params",
+                        "safeName": "just_file_with_optional_query_params"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "JUSTFILEWITHOPTIONALQUERYPARAMS",
-                        "safeName": "JUSTFILEWITHOPTIONALQUERYPARAMS"
+                        "unsafeName": "JUST_FILE_WITH_OPTIONAL_QUERY_PARAMS",
+                        "safeName": "JUST_FILE_WITH_OPTIONAL_QUERY_PARAMS"
                     },
                     "pascalCase": {
-                        "unsafeName": "Justfilewithoptionalqueryparams",
-                        "safeName": "Justfilewithoptionalqueryparams"
+                        "unsafeName": "JustFileWithOptionalQueryParams",
+                        "safeName": "JustFileWithOptionalQueryParams"
                     }
                 },
                 "fernFilepath": {
@@ -1802,22 +2085,22 @@
                 "type": "inlined",
                 "declaration": {
                     "name": {
-                        "originalName": "ServiceJustFileWithOptionalQueryParamsRequest",
+                        "originalName": "JustFileWithOptionalQueryParamsRequest",
                         "camelCase": {
-                            "unsafeName": "serviceJustFileWithOptionalQueryParamsRequest",
-                            "safeName": "serviceJustFileWithOptionalQueryParamsRequest"
+                            "unsafeName": "justFileWithOptionalQueryParamsRequest",
+                            "safeName": "justFileWithOptionalQueryParamsRequest"
                         },
                         "snakeCase": {
-                            "unsafeName": "service_just_file_with_optional_query_params_request",
-                            "safeName": "service_just_file_with_optional_query_params_request"
+                            "unsafeName": "just_file_with_optional_query_params_request",
+                            "safeName": "just_file_with_optional_query_params_request"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "SERVICE_JUST_FILE_WITH_OPTIONAL_QUERY_PARAMS_REQUEST",
-                            "safeName": "SERVICE_JUST_FILE_WITH_OPTIONAL_QUERY_PARAMS_REQUEST"
+                            "unsafeName": "JUST_FILE_WITH_OPTIONAL_QUERY_PARAMS_REQUEST",
+                            "safeName": "JUST_FILE_WITH_OPTIONAL_QUERY_PARAMS_REQUEST"
                         },
                         "pascalCase": {
-                            "unsafeName": "ServiceJustFileWithOptionalQueryParamsRequest",
-                            "safeName": "ServiceJustFileWithOptionalQueryParamsRequest"
+                            "unsafeName": "JustFileWithOptionalQueryParamsRequest",
+                            "safeName": "JustFileWithOptionalQueryParamsRequest"
                         }
                     },
                     "fernFilepath": {
@@ -1892,11 +2175,8 @@
                         "typeReference": {
                             "type": "optional",
                             "value": {
-                                "type": "nullable",
-                                "value": {
-                                    "type": "primitive",
-                                    "value": "STRING"
-                                }
+                                "type": "primitive",
+                                "value": "STRING"
                             }
                         },
                         "propertyAccess": null,
@@ -1928,11 +2208,8 @@
                         "typeReference": {
                             "type": "optional",
                             "value": {
-                                "type": "nullable",
-                                "value": {
-                                    "type": "primitive",
-                                    "value": "INTEGER"
-                                }
+                                "type": "primitive",
+                                "value": "INTEGER"
                             }
                         },
                         "propertyAccess": null,
@@ -1978,26 +2255,26 @@
             },
             "examples": null
         },
-        "endpoint_service.withcontenttype": {
+        "endpoint_service.withContentType": {
             "auth": null,
             "declaration": {
                 "name": {
-                    "originalName": "withcontenttype",
+                    "originalName": "withContentType",
                     "camelCase": {
-                        "unsafeName": "withcontenttype",
-                        "safeName": "withcontenttype"
+                        "unsafeName": "withContentType",
+                        "safeName": "withContentType"
                     },
                     "snakeCase": {
-                        "unsafeName": "withcontenttype",
-                        "safeName": "withcontenttype"
+                        "unsafeName": "with_content_type",
+                        "safeName": "with_content_type"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "WITHCONTENTTYPE",
-                        "safeName": "WITHCONTENTTYPE"
+                        "unsafeName": "WITH_CONTENT_TYPE",
+                        "safeName": "WITH_CONTENT_TYPE"
                     },
                     "pascalCase": {
-                        "unsafeName": "Withcontenttype",
-                        "safeName": "Withcontenttype"
+                        "unsafeName": "WithContentType",
+                        "safeName": "WithContentType"
                     }
                 },
                 "fernFilepath": {
@@ -2052,22 +2329,22 @@
                 "type": "inlined",
                 "declaration": {
                     "name": {
-                        "originalName": "ServiceWithContentTypeRequest",
+                        "originalName": "WithContentTypeRequest",
                         "camelCase": {
-                            "unsafeName": "serviceWithContentTypeRequest",
-                            "safeName": "serviceWithContentTypeRequest"
+                            "unsafeName": "withContentTypeRequest",
+                            "safeName": "withContentTypeRequest"
                         },
                         "snakeCase": {
-                            "unsafeName": "service_with_content_type_request",
-                            "safeName": "service_with_content_type_request"
+                            "unsafeName": "with_content_type_request",
+                            "safeName": "with_content_type_request"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "SERVICE_WITH_CONTENT_TYPE_REQUEST",
-                            "safeName": "SERVICE_WITH_CONTENT_TYPE_REQUEST"
+                            "unsafeName": "WITH_CONTENT_TYPE_REQUEST",
+                            "safeName": "WITH_CONTENT_TYPE_REQUEST"
                         },
                         "pascalCase": {
-                            "unsafeName": "ServiceWithContentTypeRequest",
-                            "safeName": "ServiceWithContentTypeRequest"
+                            "unsafeName": "WithContentTypeRequest",
+                            "safeName": "WithContentTypeRequest"
                         }
                     },
                     "fernFilepath": {
@@ -2168,11 +2445,8 @@
                                 }
                             },
                             "typeReference": {
-                                "type": "optional",
-                                "value": {
-                                    "type": "primitive",
-                                    "value": "STRING"
-                                }
+                                "type": "primitive",
+                                "value": "STRING"
                             },
                             "propertyAccess": null,
                             "variable": null
@@ -2202,11 +2476,8 @@
                                 }
                             },
                             "typeReference": {
-                                "type": "optional",
-                                "value": {
-                                    "type": "named",
-                                    "value": "type_:MyObject"
-                                }
+                                "type": "named",
+                                "value": "type_service:MyObject"
                             },
                             "propertyAccess": null,
                             "variable": null
@@ -2239,7 +2510,7 @@
                                 "type": "optional",
                                 "value": {
                                     "type": "named",
-                                    "value": "type_:MyObject"
+                                    "value": "type_service:MyObject"
                                 }
                             },
                             "propertyAccess": null,
@@ -2257,26 +2528,26 @@
             },
             "examples": null
         },
-        "endpoint_service.withformencoding": {
+        "endpoint_service.withFormEncoding": {
             "auth": null,
             "declaration": {
                 "name": {
-                    "originalName": "withformencoding",
+                    "originalName": "withFormEncoding",
                     "camelCase": {
-                        "unsafeName": "withformencoding",
-                        "safeName": "withformencoding"
+                        "unsafeName": "withFormEncoding",
+                        "safeName": "withFormEncoding"
                     },
                     "snakeCase": {
-                        "unsafeName": "withformencoding",
-                        "safeName": "withformencoding"
+                        "unsafeName": "with_form_encoding",
+                        "safeName": "with_form_encoding"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "WITHFORMENCODING",
-                        "safeName": "WITHFORMENCODING"
+                        "unsafeName": "WITH_FORM_ENCODING",
+                        "safeName": "WITH_FORM_ENCODING"
                     },
                     "pascalCase": {
-                        "unsafeName": "Withformencoding",
-                        "safeName": "Withformencoding"
+                        "unsafeName": "WithFormEncoding",
+                        "safeName": "WithFormEncoding"
                     }
                 },
                 "fernFilepath": {
@@ -2331,22 +2602,22 @@
                 "type": "inlined",
                 "declaration": {
                     "name": {
-                        "originalName": "ServiceWithFormEncodingRequest",
+                        "originalName": "WithFormEncodingRequest",
                         "camelCase": {
-                            "unsafeName": "serviceWithFormEncodingRequest",
-                            "safeName": "serviceWithFormEncodingRequest"
+                            "unsafeName": "withFormEncodingRequest",
+                            "safeName": "withFormEncodingRequest"
                         },
                         "snakeCase": {
-                            "unsafeName": "service_with_form_encoding_request",
-                            "safeName": "service_with_form_encoding_request"
+                            "unsafeName": "with_form_encoding_request",
+                            "safeName": "with_form_encoding_request"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "SERVICE_WITH_FORM_ENCODING_REQUEST",
-                            "safeName": "SERVICE_WITH_FORM_ENCODING_REQUEST"
+                            "unsafeName": "WITH_FORM_ENCODING_REQUEST",
+                            "safeName": "WITH_FORM_ENCODING_REQUEST"
                         },
                         "pascalCase": {
-                            "unsafeName": "ServiceWithFormEncodingRequest",
-                            "safeName": "ServiceWithFormEncodingRequest"
+                            "unsafeName": "WithFormEncodingRequest",
+                            "safeName": "WithFormEncodingRequest"
                         }
                     },
                     "fernFilepath": {
@@ -2447,11 +2718,8 @@
                                 }
                             },
                             "typeReference": {
-                                "type": "optional",
-                                "value": {
-                                    "type": "primitive",
-                                    "value": "STRING"
-                                }
+                                "type": "primitive",
+                                "value": "STRING"
                             },
                             "propertyAccess": null,
                             "variable": null
@@ -2481,11 +2749,8 @@
                                 }
                             },
                             "typeReference": {
-                                "type": "optional",
-                                "value": {
-                                    "type": "named",
-                                    "value": "type_:MyObject"
-                                }
+                                "type": "named",
+                                "value": "type_service:MyObject"
                             },
                             "propertyAccess": null,
                             "variable": null
@@ -2502,26 +2767,26 @@
             },
             "examples": null
         },
-        "endpoint_service.withformencodedcontainers": {
+        "endpoint_service.withFormEncodedContainers": {
             "auth": null,
             "declaration": {
                 "name": {
-                    "originalName": "withformencodedcontainers",
+                    "originalName": "withFormEncodedContainers",
                     "camelCase": {
-                        "unsafeName": "withformencodedcontainers",
-                        "safeName": "withformencodedcontainers"
+                        "unsafeName": "withFormEncodedContainers",
+                        "safeName": "withFormEncodedContainers"
                     },
                     "snakeCase": {
-                        "unsafeName": "withformencodedcontainers",
-                        "safeName": "withformencodedcontainers"
+                        "unsafeName": "with_form_encoded_containers",
+                        "safeName": "with_form_encoded_containers"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "WITHFORMENCODEDCONTAINERS",
-                        "safeName": "WITHFORMENCODEDCONTAINERS"
+                        "unsafeName": "WITH_FORM_ENCODED_CONTAINERS",
+                        "safeName": "WITH_FORM_ENCODED_CONTAINERS"
                     },
                     "pascalCase": {
-                        "unsafeName": "Withformencodedcontainers",
-                        "safeName": "Withformencodedcontainers"
+                        "unsafeName": "WithFormEncodedContainers",
+                        "safeName": "WithFormEncodedContainers"
                     }
                 },
                 "fernFilepath": {
@@ -2570,28 +2835,28 @@
             },
             "location": {
                 "method": "POST",
-                "path": "/form-encoded"
+                "path": "/"
             },
             "request": {
                 "type": "inlined",
                 "declaration": {
                     "name": {
-                        "originalName": "ServiceWithFormEncodedContainersRequest",
+                        "originalName": "MyOtherRequest",
                         "camelCase": {
-                            "unsafeName": "serviceWithFormEncodedContainersRequest",
-                            "safeName": "serviceWithFormEncodedContainersRequest"
+                            "unsafeName": "myOtherRequest",
+                            "safeName": "myOtherRequest"
                         },
                         "snakeCase": {
-                            "unsafeName": "service_with_form_encoded_containers_request",
-                            "safeName": "service_with_form_encoded_containers_request"
+                            "unsafeName": "my_other_request",
+                            "safeName": "my_other_request"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "SERVICE_WITH_FORM_ENCODED_CONTAINERS_REQUEST",
-                            "safeName": "SERVICE_WITH_FORM_ENCODED_CONTAINERS_REQUEST"
+                            "unsafeName": "MY_OTHER_REQUEST",
+                            "safeName": "MY_OTHER_REQUEST"
                         },
                         "pascalCase": {
-                            "unsafeName": "ServiceWithFormEncodedContainersRequest",
-                            "safeName": "ServiceWithFormEncodedContainersRequest"
+                            "unsafeName": "MyOtherRequest",
+                            "safeName": "MyOtherRequest"
                         }
                     },
                     "fernFilepath": {
@@ -2671,11 +2936,8 @@
                             "typeReference": {
                                 "type": "optional",
                                 "value": {
-                                    "type": "nullable",
-                                    "value": {
-                                        "type": "primitive",
-                                        "value": "STRING"
-                                    }
+                                    "type": "primitive",
+                                    "value": "STRING"
                                 }
                             },
                             "propertyAccess": null,
@@ -2706,11 +2968,8 @@
                                 }
                             },
                             "typeReference": {
-                                "type": "optional",
-                                "value": {
-                                    "type": "primitive",
-                                    "value": "INTEGER"
-                                }
+                                "type": "primitive",
+                                "value": "INTEGER"
                             },
                             "propertyAccess": null,
                             "variable": null
@@ -2834,11 +3093,8 @@
                             "typeReference": {
                                 "type": "optional",
                                 "value": {
-                                    "type": "nullable",
-                                    "value": {
-                                        "type": "primitive",
-                                        "value": "INTEGER"
-                                    }
+                                    "type": "primitive",
+                                    "value": "INTEGER"
                                 }
                             },
                             "propertyAccess": null,
@@ -2871,13 +3127,10 @@
                             "typeReference": {
                                 "type": "optional",
                                 "value": {
-                                    "type": "nullable",
+                                    "type": "list",
                                     "value": {
-                                        "type": "list",
-                                        "value": {
-                                            "type": "primitive",
-                                            "value": "STRING"
-                                        }
+                                        "type": "primitive",
+                                        "value": "STRING"
                                     }
                                 }
                             },
@@ -2909,13 +3162,10 @@
                                 }
                             },
                             "typeReference": {
-                                "type": "optional",
+                                "type": "list",
                                 "value": {
-                                    "type": "list",
-                                    "value": {
-                                        "type": "named",
-                                        "value": "type_:MyObject"
-                                    }
+                                    "type": "named",
+                                    "value": "type_service:MyObject"
                                 }
                             },
                             "propertyAccess": null,
@@ -2948,10 +3198,7 @@
                             "typeReference": {
                                 "type": "optional",
                                 "value": {
-                                    "type": "nullable",
-                                    "value": {
-                                        "type": "unknown"
-                                    }
+                                    "type": "unknown"
                                 }
                             },
                             "propertyAccess": null,
@@ -2985,7 +3232,7 @@
                                 "type": "optional",
                                 "value": {
                                     "type": "named",
-                                    "value": "type_:ObjectType"
+                                    "value": "type_service:ObjectType"
                                 }
                             },
                             "propertyAccess": null,
@@ -3019,7 +3266,7 @@
                                 "type": "optional",
                                 "value": {
                                     "type": "named",
-                                    "value": "type_:Id"
+                                    "value": "type_service:Id"
                                 }
                             },
                             "propertyAccess": null,
@@ -3050,13 +3297,10 @@
                                 }
                             },
                             "typeReference": {
-                                "type": "optional",
+                                "type": "list",
                                 "value": {
-                                    "type": "list",
-                                    "value": {
-                                        "type": "named",
-                                        "value": "type_:MyObjectWithOptional"
-                                    }
+                                    "type": "named",
+                                    "value": "type_service:MyObjectWithOptional"
                                 }
                             },
                             "propertyAccess": null,
@@ -3087,11 +3331,8 @@
                                 }
                             },
                             "typeReference": {
-                                "type": "optional",
-                                "value": {
-                                    "type": "named",
-                                    "value": "type_:MyAliasObject"
-                                }
+                                "type": "named",
+                                "value": "type_service:MyAliasObject"
                             },
                             "propertyAccess": null,
                             "variable": null
@@ -3121,13 +3362,10 @@
                                 }
                             },
                             "typeReference": {
-                                "type": "optional",
+                                "type": "list",
                                 "value": {
-                                    "type": "list",
-                                    "value": {
-                                        "type": "named",
-                                        "value": "type_:MyAliasObject"
-                                    }
+                                    "type": "named",
+                                    "value": "type_service:MyAliasObject"
                                 }
                             },
                             "propertyAccess": null,
@@ -3158,11 +3396,8 @@
                                 }
                             },
                             "typeReference": {
-                                "type": "optional",
-                                "value": {
-                                    "type": "named",
-                                    "value": "type_:MyCollectionAliasObject"
-                                }
+                                "type": "named",
+                                "value": "type_service:MyCollectionAliasObject"
                             },
                             "propertyAccess": null,
                             "variable": null
@@ -3179,26 +3414,26 @@
             },
             "examples": null
         },
-        "endpoint_service.optionalargs": {
+        "endpoint_service.optionalArgs": {
             "auth": null,
             "declaration": {
                 "name": {
-                    "originalName": "optionalargs",
+                    "originalName": "optionalArgs",
                     "camelCase": {
-                        "unsafeName": "optionalargs",
-                        "safeName": "optionalargs"
+                        "unsafeName": "optionalArgs",
+                        "safeName": "optionalArgs"
                     },
                     "snakeCase": {
-                        "unsafeName": "optionalargs",
-                        "safeName": "optionalargs"
+                        "unsafeName": "optional_args",
+                        "safeName": "optional_args"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "OPTIONALARGS",
-                        "safeName": "OPTIONALARGS"
+                        "unsafeName": "OPTIONAL_ARGS",
+                        "safeName": "OPTIONAL_ARGS"
                     },
                     "pascalCase": {
-                        "unsafeName": "Optionalargs",
-                        "safeName": "Optionalargs"
+                        "unsafeName": "OptionalArgs",
+                        "safeName": "OptionalArgs"
                     }
                 },
                 "fernFilepath": {
@@ -3253,22 +3488,22 @@
                 "type": "inlined",
                 "declaration": {
                     "name": {
-                        "originalName": "ServiceOptionalArgsRequest",
+                        "originalName": "OptionalArgsRequest",
                         "camelCase": {
-                            "unsafeName": "serviceOptionalArgsRequest",
-                            "safeName": "serviceOptionalArgsRequest"
+                            "unsafeName": "optionalArgsRequest",
+                            "safeName": "optionalArgsRequest"
                         },
                         "snakeCase": {
-                            "unsafeName": "service_optional_args_request",
-                            "safeName": "service_optional_args_request"
+                            "unsafeName": "optional_args_request",
+                            "safeName": "optional_args_request"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "SERVICE_OPTIONAL_ARGS_REQUEST",
-                            "safeName": "SERVICE_OPTIONAL_ARGS_REQUEST"
+                            "unsafeName": "OPTIONAL_ARGS_REQUEST",
+                            "safeName": "OPTIONAL_ARGS_REQUEST"
                         },
                         "pascalCase": {
-                            "unsafeName": "ServiceOptionalArgsRequest",
-                            "safeName": "ServiceOptionalArgsRequest"
+                            "unsafeName": "OptionalArgsRequest",
+                            "safeName": "OptionalArgsRequest"
                         }
                     },
                     "fernFilepath": {
@@ -3371,10 +3606,7 @@
                             "typeReference": {
                                 "type": "optional",
                                 "value": {
-                                    "type": "nullable",
-                                    "value": {
-                                        "type": "unknown"
-                                    }
+                                    "type": "unknown"
                                 }
                             },
                             "propertyAccess": null,
@@ -3392,26 +3624,26 @@
             },
             "examples": null
         },
-        "endpoint_service.withinlinetype": {
+        "endpoint_service.withInlineType": {
             "auth": null,
             "declaration": {
                 "name": {
-                    "originalName": "withinlinetype",
+                    "originalName": "withInlineType",
                     "camelCase": {
-                        "unsafeName": "withinlinetype",
-                        "safeName": "withinlinetype"
+                        "unsafeName": "withInlineType",
+                        "safeName": "withInlineType"
                     },
                     "snakeCase": {
-                        "unsafeName": "withinlinetype",
-                        "safeName": "withinlinetype"
+                        "unsafeName": "with_inline_type",
+                        "safeName": "with_inline_type"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "WITHINLINETYPE",
-                        "safeName": "WITHINLINETYPE"
+                        "unsafeName": "WITH_INLINE_TYPE",
+                        "safeName": "WITH_INLINE_TYPE"
                     },
                     "pascalCase": {
-                        "unsafeName": "Withinlinetype",
-                        "safeName": "Withinlinetype"
+                        "unsafeName": "WithInlineType",
+                        "safeName": "WithInlineType"
                     }
                 },
                 "fernFilepath": {
@@ -3466,22 +3698,22 @@
                 "type": "inlined",
                 "declaration": {
                     "name": {
-                        "originalName": "ServiceWithInlineTypeRequest",
+                        "originalName": "InlineTypeRequest",
                         "camelCase": {
-                            "unsafeName": "serviceWithInlineTypeRequest",
-                            "safeName": "serviceWithInlineTypeRequest"
+                            "unsafeName": "inlineTypeRequest",
+                            "safeName": "inlineTypeRequest"
                         },
                         "snakeCase": {
-                            "unsafeName": "service_with_inline_type_request",
-                            "safeName": "service_with_inline_type_request"
+                            "unsafeName": "inline_type_request",
+                            "safeName": "inline_type_request"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "SERVICE_WITH_INLINE_TYPE_REQUEST",
-                            "safeName": "SERVICE_WITH_INLINE_TYPE_REQUEST"
+                            "unsafeName": "INLINE_TYPE_REQUEST",
+                            "safeName": "INLINE_TYPE_REQUEST"
                         },
                         "pascalCase": {
-                            "unsafeName": "ServiceWithInlineTypeRequest",
-                            "safeName": "ServiceWithInlineTypeRequest"
+                            "unsafeName": "InlineTypeRequest",
+                            "safeName": "InlineTypeRequest"
                         }
                     },
                     "fernFilepath": {
@@ -3582,11 +3814,8 @@
                                 }
                             },
                             "typeReference": {
-                                "type": "optional",
-                                "value": {
-                                    "type": "named",
-                                    "value": "type_:MyInlineType"
-                                }
+                                "type": "named",
+                                "value": "type_service:MyInlineType"
                             },
                             "propertyAccess": null,
                             "variable": null
@@ -3603,26 +3832,26 @@
             },
             "examples": null
         },
-        "endpoint_service.withjsonproperty": {
+        "endpoint_service.withJsonProperty": {
             "auth": null,
             "declaration": {
                 "name": {
-                    "originalName": "withjsonproperty",
+                    "originalName": "withJsonProperty",
                     "camelCase": {
-                        "unsafeName": "withjsonproperty",
-                        "safeName": "withjsonproperty"
+                        "unsafeName": "withJSONProperty",
+                        "safeName": "withJSONProperty"
                     },
                     "snakeCase": {
-                        "unsafeName": "withjsonproperty",
-                        "safeName": "withjsonproperty"
+                        "unsafeName": "with_json_property",
+                        "safeName": "with_json_property"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "WITHJSONPROPERTY",
-                        "safeName": "WITHJSONPROPERTY"
+                        "unsafeName": "WITH_JSON_PROPERTY",
+                        "safeName": "WITH_JSON_PROPERTY"
                     },
                     "pascalCase": {
-                        "unsafeName": "Withjsonproperty",
-                        "safeName": "Withjsonproperty"
+                        "unsafeName": "WithJSONProperty",
+                        "safeName": "WithJSONProperty"
                     }
                 },
                 "fernFilepath": {
@@ -3677,22 +3906,22 @@
                 "type": "inlined",
                 "declaration": {
                     "name": {
-                        "originalName": "ServiceWithJsonPropertyRequest",
+                        "originalName": "WithJsonPropertyRequest",
                         "camelCase": {
-                            "unsafeName": "serviceWithJSONPropertyRequest",
-                            "safeName": "serviceWithJSONPropertyRequest"
+                            "unsafeName": "withJSONPropertyRequest",
+                            "safeName": "withJSONPropertyRequest"
                         },
                         "snakeCase": {
-                            "unsafeName": "service_with_json_property_request",
-                            "safeName": "service_with_json_property_request"
+                            "unsafeName": "with_json_property_request",
+                            "safeName": "with_json_property_request"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "SERVICE_WITH_JSON_PROPERTY_REQUEST",
-                            "safeName": "SERVICE_WITH_JSON_PROPERTY_REQUEST"
+                            "unsafeName": "WITH_JSON_PROPERTY_REQUEST",
+                            "safeName": "WITH_JSON_PROPERTY_REQUEST"
                         },
                         "pascalCase": {
-                            "unsafeName": "ServiceWithJSONPropertyRequest",
-                            "safeName": "ServiceWithJSONPropertyRequest"
+                            "unsafeName": "WithJSONPropertyRequest",
+                            "safeName": "WithJSONPropertyRequest"
                         }
                     },
                     "fernFilepath": {
@@ -3796,7 +4025,7 @@
                                 "type": "optional",
                                 "value": {
                                     "type": "named",
-                                    "value": "type_:MyObject"
+                                    "value": "type_service:MyObject"
                                 }
                             },
                             "propertyAccess": null,
@@ -3894,26 +4123,26 @@
             },
             "examples": null
         },
-        "endpoint_service.withliteralandenumtypes": {
+        "endpoint_service.withLiteralAndEnumTypes": {
             "auth": null,
             "declaration": {
                 "name": {
-                    "originalName": "withliteralandenumtypes",
+                    "originalName": "withLiteralAndEnumTypes",
                     "camelCase": {
-                        "unsafeName": "withliteralandenumtypes",
-                        "safeName": "withliteralandenumtypes"
+                        "unsafeName": "withLiteralAndEnumTypes",
+                        "safeName": "withLiteralAndEnumTypes"
                     },
                     "snakeCase": {
-                        "unsafeName": "withliteralandenumtypes",
-                        "safeName": "withliteralandenumtypes"
+                        "unsafeName": "with_literal_and_enum_types",
+                        "safeName": "with_literal_and_enum_types"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "WITHLITERALANDENUMTYPES",
-                        "safeName": "WITHLITERALANDENUMTYPES"
+                        "unsafeName": "WITH_LITERAL_AND_ENUM_TYPES",
+                        "safeName": "WITH_LITERAL_AND_ENUM_TYPES"
                     },
                     "pascalCase": {
-                        "unsafeName": "Withliteralandenumtypes",
-                        "safeName": "Withliteralandenumtypes"
+                        "unsafeName": "WithLiteralAndEnumTypes",
+                        "safeName": "WithLiteralAndEnumTypes"
                     }
                 },
                 "fernFilepath": {
@@ -3968,22 +4197,22 @@
                 "type": "inlined",
                 "declaration": {
                     "name": {
-                        "originalName": "ServiceWithLiteralAndEnumTypesRequest",
+                        "originalName": "LiteralEnumRequest",
                         "camelCase": {
-                            "unsafeName": "serviceWithLiteralAndEnumTypesRequest",
-                            "safeName": "serviceWithLiteralAndEnumTypesRequest"
+                            "unsafeName": "literalEnumRequest",
+                            "safeName": "literalEnumRequest"
                         },
                         "snakeCase": {
-                            "unsafeName": "service_with_literal_and_enum_types_request",
-                            "safeName": "service_with_literal_and_enum_types_request"
+                            "unsafeName": "literal_enum_request",
+                            "safeName": "literal_enum_request"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "SERVICE_WITH_LITERAL_AND_ENUM_TYPES_REQUEST",
-                            "safeName": "SERVICE_WITH_LITERAL_AND_ENUM_TYPES_REQUEST"
+                            "unsafeName": "LITERAL_ENUM_REQUEST",
+                            "safeName": "LITERAL_ENUM_REQUEST"
                         },
                         "pascalCase": {
-                            "unsafeName": "ServiceWithLiteralAndEnumTypesRequest",
-                            "safeName": "ServiceWithLiteralAndEnumTypesRequest"
+                            "unsafeName": "LiteralEnumRequest",
+                            "safeName": "LiteralEnumRequest"
                         }
                     },
                     "fernFilepath": {
@@ -4087,7 +4316,7 @@
                                 "type": "optional",
                                 "value": {
                                     "type": "named",
-                                    "value": "type_:ModelType"
+                                    "value": "type_service:ModelType"
                                 }
                             },
                             "propertyAccess": null,
@@ -4121,7 +4350,7 @@
                                 "type": "optional",
                                 "value": {
                                     "type": "named",
-                                    "value": "type_:OpenEnumType"
+                                    "value": "type_service:OpenEnumType"
                                 }
                             },
                             "propertyAccess": null,
@@ -4154,11 +4383,8 @@
                             "typeReference": {
                                 "type": "optional",
                                 "value": {
-                                    "type": "nullable",
-                                    "value": {
-                                        "type": "primitive",
-                                        "value": "STRING"
-                                    }
+                                    "type": "primitive",
+                                    "value": "STRING"
                                 }
                             },
                             "propertyAccess": null,

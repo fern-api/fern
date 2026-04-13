@@ -4,9 +4,9 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
+from ..types.movie import Movie
+from ..types.movie_id import MovieId
 from .raw_client import AsyncRawImdbClient, RawImdbClient
-from .types.movie import Movie
-from .types.movie_id import MovieId
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -27,7 +27,7 @@ class ImdbClient:
         """
         return self._raw_client
 
-    def create_movie(
+    def createmovie(
         self, *, title: str, rating: float, request_options: typing.Optional[RequestOptions] = None
     ) -> MovieId:
         """
@@ -46,6 +46,7 @@ class ImdbClient:
         -------
         MovieId
 
+
         Examples
         --------
         from seed import SeedApi
@@ -54,15 +55,15 @@ class ImdbClient:
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.imdb.create_movie(
+        client.imdb.createmovie(
             title="title",
             rating=1.1,
         )
         """
-        _response = self._raw_client.create_movie(title=title, rating=rating, request_options=request_options)
+        _response = self._raw_client.createmovie(title=title, rating=rating, request_options=request_options)
         return _response.data
 
-    def get_movie(self, movie_id: MovieId, *, request_options: typing.Optional[RequestOptions] = None) -> Movie:
+    def getmovie(self, movie_id: MovieId, *, request_options: typing.Optional[RequestOptions] = None) -> Movie:
         """
         Parameters
         ----------
@@ -75,6 +76,7 @@ class ImdbClient:
         -------
         Movie
 
+
         Examples
         --------
         from seed import SeedApi
@@ -83,11 +85,11 @@ class ImdbClient:
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.imdb.get_movie(
+        client.imdb.getmovie(
             movie_id="movieId",
         )
         """
-        _response = self._raw_client.get_movie(movie_id, request_options=request_options)
+        _response = self._raw_client.getmovie(movie_id, request_options=request_options)
         return _response.data
 
 
@@ -106,7 +108,7 @@ class AsyncImdbClient:
         """
         return self._raw_client
 
-    async def create_movie(
+    async def createmovie(
         self, *, title: str, rating: float, request_options: typing.Optional[RequestOptions] = None
     ) -> MovieId:
         """
@@ -125,6 +127,7 @@ class AsyncImdbClient:
         -------
         MovieId
 
+
         Examples
         --------
         import asyncio
@@ -138,7 +141,7 @@ class AsyncImdbClient:
 
 
         async def main() -> None:
-            await client.imdb.create_movie(
+            await client.imdb.createmovie(
                 title="title",
                 rating=1.1,
             )
@@ -146,10 +149,10 @@ class AsyncImdbClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.create_movie(title=title, rating=rating, request_options=request_options)
+        _response = await self._raw_client.createmovie(title=title, rating=rating, request_options=request_options)
         return _response.data
 
-    async def get_movie(self, movie_id: MovieId, *, request_options: typing.Optional[RequestOptions] = None) -> Movie:
+    async def getmovie(self, movie_id: MovieId, *, request_options: typing.Optional[RequestOptions] = None) -> Movie:
         """
         Parameters
         ----------
@@ -162,6 +165,7 @@ class AsyncImdbClient:
         -------
         Movie
 
+
         Examples
         --------
         import asyncio
@@ -175,12 +179,12 @@ class AsyncImdbClient:
 
 
         async def main() -> None:
-            await client.imdb.get_movie(
+            await client.imdb.getmovie(
                 movie_id="movieId",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_movie(movie_id, request_options=request_options)
+        _response = await self._raw_client.getmovie(movie_id, request_options=request_options)
         return _response.data

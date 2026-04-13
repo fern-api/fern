@@ -39,23 +39,11 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```csharp
-using SeedClientSideParams;
+using SeedApi;
 
-var client = new SeedClientSideParamsClient("TOKEN");
-await client.Service.SearchResourcesAsync(
-    new SearchResourcesRequest
-    {
-        Limit = 1,
-        Offset = 1,
-        Query = "query",
-        Filters = new Dictionary<string, object?>()
-        {
-            {
-                "filters",
-                new Dictionary<object, object?>() { { "key", "value" } }
-            },
-        },
-    }
+var client = new SeedApiClient("TOKEN");
+await client.Service.SearchresourcesAsync(
+    new ServiceSearchResourcesRequest { Limit = 1, Offset = 1 }
 );
 ```
 
@@ -65,11 +53,11 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```csharp
-using SeedClientSideParams;
+using SeedApi;
 
 try {
-    var response = await client.Service.SearchResourcesAsync(...);
-} catch (SeedClientSideParamsApiException e) {
+    var response = await client.Service.SearchresourcesAsync(...);
+} catch (SeedApiApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
 }
@@ -92,7 +80,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `MaxRetries` request option to configure this behavior.
 
 ```csharp
-var response = await client.Service.SearchResourcesAsync(
+var response = await client.Service.SearchresourcesAsync(
     ...,
     new RequestOptions {
         MaxRetries: 0 // Override MaxRetries at the request level
@@ -105,7 +93,7 @@ var response = await client.Service.SearchResourcesAsync(
 The SDK defaults to a 30 second timeout. Use the `Timeout` option to configure this behavior.
 
 ```csharp
-var response = await client.Service.SearchResourcesAsync(
+var response = await client.Service.SearchresourcesAsync(
     ...,
     new RequestOptions {
         Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s
@@ -118,10 +106,10 @@ var response = await client.Service.SearchResourcesAsync(
 Access raw HTTP response data (status code, headers, URL) alongside parsed response data using the `.WithRawResponse()` method.
 
 ```csharp
-using SeedClientSideParams;
+using SeedApi;
 
 // Access raw response data (status code, headers, etc.) alongside the parsed response
-var result = await client.Service.SearchResourcesAsync(...).WithRawResponse();
+var result = await client.Service.SearchresourcesAsync(...).WithRawResponse();
 
 // Access the parsed data
 var data = result.Data;
@@ -138,7 +126,7 @@ if (headers.TryGetValue("X-Request-Id", out var requestId))
 }
 
 // For the default behavior, simply await without .WithRawResponse()
-var data = await client.Service.SearchResourcesAsync(...);
+var data = await client.Service.SearchresourcesAsync(...);
 ```
 
 ### Additional Headers
@@ -146,7 +134,7 @@ var data = await client.Service.SearchResourcesAsync(...);
 If you would like to send additional headers as part of the request, use the `AdditionalHeaders` request option.
 
 ```csharp
-var response = await client.Service.SearchResourcesAsync(
+var response = await client.Service.SearchresourcesAsync(
     ...,
     new RequestOptions {
         AdditionalHeaders = new Dictionary<string, string?>
@@ -162,7 +150,7 @@ var response = await client.Service.SearchResourcesAsync(
 If you would like to send additional query parameters as part of the request, use the `AdditionalQueryParameters` request option.
 
 ```csharp
-var response = await client.Service.SearchResourcesAsync(
+var response = await client.Service.SearchresourcesAsync(
     ...,
     new RequestOptions {
         AdditionalQueryParameters = new Dictionary<string, string>

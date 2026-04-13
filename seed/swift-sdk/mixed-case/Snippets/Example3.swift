@@ -1,10 +1,10 @@
 import Foundation
-import MixedCase
+import Api
 
 private func main() async throws {
-    let client = MixedCaseClient(baseURL: "https://api.fern.com")
+    let client = ApiClient(baseURL: "https://api.fern.com")
 
-    _ = try await client.service.listResources(
+    _ = try await client.service.listresources(
         pageLimit: 1,
         beforeDate: CalendarDate("2023-01-15")!
     )

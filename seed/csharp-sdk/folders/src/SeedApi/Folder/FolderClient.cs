@@ -1,7 +1,6 @@
-using SeedApi;
 using SeedApi.Core;
 
-namespace SeedApi.Folder;
+namespace SeedApi;
 
 public partial class FolderClient : IFolderClient
 {
@@ -10,10 +9,7 @@ public partial class FolderClient : IFolderClient
     internal FolderClient(RawClient client)
     {
         _client = client;
-        Service = new ServiceClient(_client);
     }
-
-    public IServiceClient Service { get; }
 
     /// <example><code>
     /// await client.Folder.FooAsync();
@@ -34,7 +30,7 @@ public partial class FolderClient : IFolderClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Post,
-                    Path = "",
+                    Path = "folder",
                     Headers = _headers,
                     Options = options,
                 },

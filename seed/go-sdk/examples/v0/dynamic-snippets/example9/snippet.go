@@ -16,8 +16,8 @@ func do() {
             "<token>",
         ),
     )
-    client.Health.Service.Check(
+    client.Service.Getmovie(
         context.TODO(),
-        "id-3tey93i",
+        "movieId",
     )
 }

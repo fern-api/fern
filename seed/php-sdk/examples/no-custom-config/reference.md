@@ -13,7 +13,7 @@
 
 ```php
 $client->echo_(
-    'Hello world!\n\nwith\n\tnewlines',
+    'string',
 );
 ```
 </dd>
@@ -54,8 +54,8 @@ $client->echo_(
 <dd>
 
 ```php
-$client->echo_(
-    'primitive',
+$client->createType(
+    BasicType::Primitive->value,
 );
 ```
 </dd>
@@ -83,8 +83,8 @@ $client->echo_(
 </dl>
 </details>
 
-## File Notification Service
-<details><summary><code>$client-&gt;file-&gt;notification-&gt;service-&gt;getException($notificationId) -> ?Exception</code></summary>
+## FileNotificationService
+<details><summary><code>$client-&gt;fileNotificationService-&gt;fileNotificationServiceGetException($notificationId) -> ExceptionZero|ExceptionType|null</code></summary>
 <dl>
 <dd>
 
@@ -97,8 +97,8 @@ $client->echo_(
 <dd>
 
 ```php
-$client->file->notification->service->getException(
-    'notification-hsy129x',
+$client->fileNotificationService->fileNotificationServiceGetException(
+    'notificationId',
 );
 ```
 </dd>
@@ -126,8 +126,8 @@ $client->file->notification->service->getException(
 </dl>
 </details>
 
-## File Service
-<details><summary><code>$client-&gt;file-&gt;service-&gt;getFile($filename, $request) -> ?File</code></summary>
+## FileService
+<details><summary><code>$client-&gt;fileService-&gt;fileServiceGetFile($filename) -> ?File</code></summary>
 <dl>
 <dd>
 
@@ -154,11 +154,8 @@ This endpoint returns a file by its name.
 <dd>
 
 ```php
-$client->file->service->getFile(
-    'file.txt',
-    new GetFileRequest([
-        'xFileApiVersion' => '0.0.2',
-    ]),
+$client->fileService->fileServiceGetFile(
+    'filename',
 );
 ```
 </dd>
@@ -186,8 +183,8 @@ $client->file->service->getFile(
 </dl>
 </details>
 
-## Health Service
-<details><summary><code>$client-&gt;health-&gt;service-&gt;check($id)</code></summary>
+## HealthService
+<details><summary><code>$client-&gt;healthService-&gt;healthServiceCheck($id)</code></summary>
 <dl>
 <dd>
 
@@ -214,8 +211,8 @@ This endpoint checks the health of a resource.
 <dd>
 
 ```php
-$client->health->service->check(
-    'id-2sdx82h',
+$client->healthService->healthServiceCheck(
+    'id',
 );
 ```
 </dd>
@@ -243,7 +240,7 @@ $client->health->service->check(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;health-&gt;service-&gt;ping() -> ?bool</code></summary>
+<details><summary><code>$client-&gt;healthService-&gt;healthServicePing() -> ?bool</code></summary>
 <dl>
 <dd>
 
@@ -270,7 +267,7 @@ This endpoint checks the health of the service.
 <dd>
 
 ```php
-$client->health->service->ping();
+$client->healthService->healthServicePing();
 ```
 </dd>
 </dl>
@@ -283,7 +280,7 @@ $client->health->service->ping();
 </details>
 
 ## Service
-<details><summary><code>$client-&gt;service-&gt;getMovie($movieId) -> ?Movie</code></summary>
+<details><summary><code>$client-&gt;service-&gt;getmovie($movieId) -> ?Movie</code></summary>
 <dl>
 <dd>
 
@@ -296,8 +293,8 @@ $client->health->service->ping();
 <dd>
 
 ```php
-$client->service->getMovie(
-    'movie-c06a4ad7',
+$client->service->getmovie(
+    'movieId',
 );
 ```
 </dd>
@@ -325,7 +322,7 @@ $client->service->getMovie(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;service-&gt;createMovie($request) -> ?string</code></summary>
+<details><summary><code>$client-&gt;service-&gt;createmovie($request) -> ?string</code></summary>
 <dl>
 <dd>
 
@@ -338,26 +335,16 @@ $client->service->getMovie(
 <dd>
 
 ```php
-$client->service->createMovie(
+$client->service->createmovie(
     new Movie([
-        'id' => 'movie-c06a4ad7',
-        'prequel' => 'movie-cv9b914f',
-        'title' => 'The Boy and the Heron',
-        'from' => 'Hayao Miyazaki',
-        'rating' => 8,
-        'type' => 'movie',
-        'tag' => 'tag-wf9as23d',
+        'id' => 'id',
+        'title' => 'title',
+        'from' => 'from',
+        'rating' => 1.1,
+        'type' => MovieType::Movie->value,
+        'tag' => 'tag',
         'metadata' => [
-            'actors' => [
-                "Christian Bale",
-                "Florence Pugh",
-                "Willem Dafoe",
-            ],
-            'releaseDate' => "2023-12-08",
-            'ratings' => [
-                'rottenTomatoes' => 97,
-                'imdb' => 7.6,
-            ],
+            'key' => "value",
         ],
         'revenue' => 1000000,
     ]),
@@ -388,7 +375,7 @@ $client->service->createMovie(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;service-&gt;getMetadata($request) -> ?Metadata</code></summary>
+<details><summary><code>$client-&gt;service-&gt;getmetadata($request) -> ?Metadata</code></summary>
 <dl>
 <dd>
 
@@ -401,13 +388,9 @@ $client->service->createMovie(
 <dd>
 
 ```php
-$client->service->getMetadata(
-    new GetMetadataRequest([
-        'shallow' => false,
-        'tag' => [
-            'development',
-        ],
-        'xApiVersion' => '0.0.1',
+$client->service->getmetadata(
+    new ServiceGetMetadataRequest([
+        'apiVersion' => 'X-API-Version',
     ]),
 );
 ```
@@ -440,7 +423,7 @@ $client->service->getMetadata(
 <dl>
 <dd>
 
-**$xApiVersion:** `string` 
+**$apiVersion:** `string` 
     
 </dd>
 </dl>
@@ -452,7 +435,7 @@ $client->service->getMetadata(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;service-&gt;createBigEntity($request) -> ?Response</code></summary>
+<details><summary><code>$client-&gt;service-&gt;createbigentity($request) -> ?Response</code></summary>
 <dl>
 <dd>
 
@@ -465,201 +448,147 @@ $client->service->getMetadata(
 <dd>
 
 ```php
-$client->service->createBigEntity(
-    new BigEntity([
-        'castMember' => new Actor([
-            'name' => 'name',
-            'id' => 'id',
-        ]),
-        'extendedMovie' => new ExtendedMovie([
-            'cast' => [
-                'cast',
-                'cast',
-            ],
-            'id' => 'id',
-            'prequel' => 'prequel',
-            'title' => 'title',
-            'from' => 'from',
-            'rating' => 1.1,
-            'type' => 'movie',
-            'tag' => 'tag',
-            'book' => 'book',
-            'metadata' => [
-                'metadata' => [
-                    'key' => "value",
-                ],
-            ],
-            'revenue' => 1000000,
-        ]),
-        'entity' => new Entity([
-            'type' => BasicType::Primitive->value,
-            'name' => 'name',
-        ]),
-        'metadata' => Metadata::html([
-            'extra' => 'extra',
-        ], [
-            'tags',
-        ]),
-        'commonMetadata' => new \Seed\Commons\Types\Types\Metadata([
-            'id' => 'id',
-            'data' => [
-                'data' => 'data',
-            ],
-            'jsonString' => 'jsonString',
-        ]),
-        'eventInfo' => EventInfo::metadata(new \Seed\Commons\Types\Types\Metadata([
-            'id' => 'id',
-            'data' => [
-                'data' => 'data',
-            ],
-            'jsonString' => 'jsonString',
-        ])),
-        'data' => Data::string(),
-        'migration' => new Migration([
-            'name' => 'name',
-            'status' => MigrationStatus::Running->value,
-        ]),
-        'exception' => Exception::generic(new ExceptionInfo([
-            'exceptionType' => 'exceptionType',
-            'exceptionMessage' => 'exceptionMessage',
-            'exceptionStacktrace' => 'exceptionStacktrace',
-        ])),
-        'test' => Test::and_(),
-        'node' => new Node([
-            'name' => 'name',
-            'nodes' => [
-                new Node([
-                    'name' => 'name',
-                    'nodes' => [
-                        new Node([
-                            'name' => 'name',
-                        ]),
-                        new Node([
-                            'name' => 'name',
-                        ]),
-                    ],
-                    'trees' => [
-                        new Tree([
-                            'nodes' => [],
-                        ]),
-                        new Tree([
-                            'nodes' => [],
-                        ]),
-                    ],
-                ]),
-                new Node([
-                    'name' => 'name',
-                    'nodes' => [
-                        new Node([
-                            'name' => 'name',
-                        ]),
-                        new Node([
-                            'name' => 'name',
-                        ]),
-                    ],
-                    'trees' => [
-                        new Tree([
-                            'nodes' => [],
-                        ]),
-                        new Tree([
-                            'nodes' => [],
-                        ]),
-                    ],
-                ]),
-            ],
-            'trees' => [
-                new Tree([
-                    'nodes' => [
-                        new Node([
-                            'name' => 'name',
-                            'nodes' => [],
-                            'trees' => [],
-                        ]),
-                        new Node([
-                            'name' => 'name',
-                            'nodes' => [],
-                            'trees' => [],
-                        ]),
-                    ],
-                ]),
-                new Tree([
-                    'nodes' => [
-                        new Node([
-                            'name' => 'name',
-                            'nodes' => [],
-                            'trees' => [],
-                        ]),
-                        new Node([
-                            'name' => 'name',
-                            'nodes' => [],
-                            'trees' => [],
-                        ]),
-                    ],
-                ]),
-            ],
-        ]),
-        'directory' => new Directory([
-            'name' => 'name',
-            'files' => [
-                new File([
-                    'name' => 'name',
-                    'contents' => 'contents',
-                ]),
-                new File([
-                    'name' => 'name',
-                    'contents' => 'contents',
-                ]),
-            ],
-            'directories' => [
-                new Directory([
-                    'name' => 'name',
-                    'files' => [
-                        new File([
-                            'name' => 'name',
-                            'contents' => 'contents',
-                        ]),
-                        new File([
-                            'name' => 'name',
-                            'contents' => 'contents',
-                        ]),
-                    ],
-                    'directories' => [
-                        new Directory([
-                            'name' => 'name',
-                        ]),
-                        new Directory([
-                            'name' => 'name',
-                        ]),
-                    ],
-                ]),
-                new Directory([
-                    'name' => 'name',
-                    'files' => [
-                        new File([
-                            'name' => 'name',
-                            'contents' => 'contents',
-                        ]),
-                        new File([
-                            'name' => 'name',
-                            'contents' => 'contents',
-                        ]),
-                    ],
-                    'directories' => [
-                        new Directory([
-                            'name' => 'name',
-                        ]),
-                        new Directory([
-                            'name' => 'name',
-                        ]),
-                    ],
-                ]),
-            ],
-        ]),
-        'moment' => new Moment([
-            'id' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-            'date' => new DateTime('2023-01-15'),
-            'datetime' => new DateTime('2024-01-15T09:30:00Z'),
-        ]),
+$client->service->createbigentity(
+    new BigEntity([]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$castMember:** `Actor|Actress|StuntDouble|null` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$extendedMovie:** `?ExtendedMovie` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$entity:** `?Entity` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$metadata:** `?Metadata` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$commonMetadata:** `?CommonsMetadata` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$eventInfo:** `CommonsEventInfoZero|CommonsEventInfoType|null` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$data:** `?CommonsData` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$migration:** `?Migration` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$exception:** `ExceptionZero|ExceptionType|null` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$test:** `?Test` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$node:** `?Node` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$directory:** `?Directory` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$moment:** `?Moment` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;service-&gt;refreshtoken($request)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->service->refreshtoken(
+    new RefreshTokenRequest([
+        'ttl' => 1,
     ]),
 );
 ```
@@ -676,49 +605,7 @@ $client->service->createBigEntity(
 <dl>
 <dd>
 
-**$request:** `BigEntity` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>$client-&gt;service-&gt;refreshToken($request)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```php
-$client->service->refreshToken(
-    ,
-);
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `?RefreshTokenRequest` 
+**$ttl:** `int` 
     
 </dd>
 </dl>

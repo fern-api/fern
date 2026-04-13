@@ -6,7 +6,7 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedExtraProperties from "../../../index.js";
+import type * as SeedApi from "../../../index.js";
 
 export declare namespace UserClient {
     export type Options = BaseClientOptions;
@@ -22,40 +22,40 @@ export class UserClient {
     }
 
     /**
-     * @param {SeedExtraProperties.CreateUserRequest} request
+     * @param {SeedApi.UserCreateUserRequest} request
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.user.createUser({
-     *         name: "Alice",
-     *         age: 30,
-     *         location: "Wonderland"
+     *     await client.user.createuser({
+     *         _type: "CreateUserRequest",
+     *         _version: "v1",
+     *         name: "name"
      *     })
      */
-    public createUser(
-        request: SeedExtraProperties.CreateUserRequest,
+    public createuser(
+        request: SeedApi.UserCreateUserRequest,
         requestOptions?: UserClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedExtraProperties.User> {
-        return core.HttpResponsePromise.fromPromise(this.__createUser(request, requestOptions));
+    ): core.HttpResponsePromise<SeedApi.User> {
+        return core.HttpResponsePromise.fromPromise(this.__createuser(request, requestOptions));
     }
 
-    private async __createUser(
-        request: SeedExtraProperties.CreateUserRequest,
+    private async __createuser(
+        request: SeedApi.UserCreateUserRequest,
         requestOptions?: UserClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExtraProperties.User>> {
+    ): Promise<core.WithRawResponse<SeedApi.User>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/user",
+                "user",
             ),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: { ...request, _type: "CreateUserRequest", _version: "v1" },
+            body: request,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -63,11 +63,11 @@ export class UserClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedExtraProperties.User, rawResponse: _response.rawResponse };
+            return { data: _response.body as SeedApi.User, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedExtraPropertiesError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

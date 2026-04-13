@@ -1,0 +1,1805 @@
+openapi: 3.0.1
+info:
+  title: pagination
+  version: ''
+paths:
+  /{index}/conversations/search:
+    post:
+      operationId: complex_search
+      tags:
+        - Complex
+      parameters:
+        - name: index
+          in: path
+          required: true
+          schema:
+            type: string
+          example: index
+          examples:
+            Example1:
+              value: index
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedConversationResponse'
+              examples:
+                Example1:
+                  value:
+                    conversations:
+                      - foo: foo
+                    pages:
+                      next:
+                        per_page: 1
+                        starting_after: starting_after
+                      page: 1
+                      per_page: 1
+                      total_pages: 1
+                      type: pages
+                    total_count: 1
+                    type: conversation.list
+      summary: Search conversations
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pagination:
+                  $ref: '#/components/schemas/StartingAfterPaging'
+                  nullable: true
+                query:
+                  $ref: '#/components/schemas/SearchRequestQuery'
+              required:
+                - query
+            examples:
+              Example1:
+                value:
+                  query: {}
+  /inline-users/cursor:
+    get:
+      operationId: inlineUsersInlineUsers_inlineUsers_inlineUsers_listWithCursorPagination
+      tags:
+        - InlineUsersInlineUsers
+      parameters:
+        - name: page
+          in: query
+          description: Defaults to first page
+          required: false
+          schema:
+            type: integer
+            nullable: true
+        - name: per_page
+          in: query
+          description: Defaults to per page
+          required: false
+          schema:
+            type: integer
+            nullable: true
+        - name: order
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/InlineUsersOrder'
+            nullable: true
+        - name: starting_after
+          in: query
+          description: |-
+            The cursor used for pagination in order to fetch
+            the next page of results.
+          required: false
+          schema:
+            type: string
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InlineUsersListUsersPaginationResponse'
+              examples:
+                Example1:
+                  value:
+                    hasNextPage: true
+                    page:
+                      page: 1
+                      next:
+                        page: 1
+                        starting_after: starting_after
+                      per_page: 1
+                      total_page: 1
+                    total_count: 1
+                    data:
+                      users:
+                        - name: name
+                          id: 1
+  /inline-users/mixed-type-cursor:
+    post:
+      operationId: >-
+        inlineUsersInlineUsers_inlineUsers_inlineUsers_listWithMixedTypeCursorPagination
+      tags:
+        - InlineUsersInlineUsers
+      parameters:
+        - name: cursor
+          in: query
+          required: false
+          schema:
+            type: string
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: >-
+                  #/components/schemas/InlineUsersListUsersMixedTypePaginationResponse
+              examples:
+                Example1:
+                  value:
+                    next: next
+                    data:
+                      users:
+                        - name: name
+                          id: 1
+  /inline-users/body-cursor:
+    post:
+      operationId: >-
+        inlineUsersInlineUsers_inlineUsers_inlineUsers_listWithBodyCursorPagination
+      tags:
+        - InlineUsersInlineUsers
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InlineUsersListUsersPaginationResponse'
+              examples:
+                Example1:
+                  value:
+                    hasNextPage: true
+                    page:
+                      page: 1
+                      next:
+                        page: 1
+                        starting_after: starting_after
+                      per_page: 1
+                      total_page: 1
+                    total_count: 1
+                    data:
+                      users:
+                        - name: name
+                          id: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pagination:
+                  $ref: '#/components/schemas/InlineUsersWithCursor'
+                  nullable: true
+                  description: |-
+                    The object that contains the cursor used for pagination
+                    in order to fetch the next page of results.
+            examples:
+              Example1:
+                value: {}
+  /inline-users/offset:
+    get:
+      operationId: inlineUsersInlineUsers_inlineUsers_inlineUsers_listWithOffsetPagination
+      tags:
+        - InlineUsersInlineUsers
+      parameters:
+        - name: page
+          in: query
+          description: Defaults to first page
+          required: false
+          schema:
+            type: integer
+            nullable: true
+        - name: per_page
+          in: query
+          description: Defaults to per page
+          required: false
+          schema:
+            type: integer
+            nullable: true
+        - name: order
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/InlineUsersOrder'
+            nullable: true
+        - name: starting_after
+          in: query
+          description: |-
+            The cursor used for pagination in order to fetch
+            the next page of results.
+          required: false
+          schema:
+            type: string
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InlineUsersListUsersPaginationResponse'
+              examples:
+                Example1:
+                  value:
+                    hasNextPage: true
+                    page:
+                      page: 1
+                      next:
+                        page: 1
+                        starting_after: starting_after
+                      per_page: 1
+                      total_page: 1
+                    total_count: 1
+                    data:
+                      users:
+                        - name: name
+                          id: 1
+  /inline-users/double-offset:
+    get:
+      operationId: >-
+        inlineUsersInlineUsers_inlineUsers_inlineUsers_listWithDoubleOffsetPagination
+      tags:
+        - InlineUsersInlineUsers
+      parameters:
+        - name: page
+          in: query
+          description: Defaults to first page
+          required: false
+          schema:
+            type: number
+            format: double
+            nullable: true
+        - name: per_page
+          in: query
+          description: Defaults to per page
+          required: false
+          schema:
+            type: number
+            format: double
+            nullable: true
+        - name: order
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/InlineUsersOrder'
+            nullable: true
+        - name: starting_after
+          in: query
+          description: |-
+            The cursor used for pagination in order to fetch
+            the next page of results.
+          required: false
+          schema:
+            type: string
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InlineUsersListUsersPaginationResponse'
+              examples:
+                Example1:
+                  value:
+                    hasNextPage: true
+                    page:
+                      page: 1
+                      next:
+                        page: 1
+                        starting_after: starting_after
+                      per_page: 1
+                      total_page: 1
+                    total_count: 1
+                    data:
+                      users:
+                        - name: name
+                          id: 1
+  /inline-users/body-offset:
+    post:
+      operationId: >-
+        inlineUsersInlineUsers_inlineUsers_inlineUsers_listWithBodyOffsetPagination
+      tags:
+        - InlineUsersInlineUsers
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InlineUsersListUsersPaginationResponse'
+              examples:
+                Example1:
+                  value:
+                    hasNextPage: true
+                    page:
+                      page: 1
+                      next:
+                        page: 1
+                        starting_after: starting_after
+                      per_page: 1
+                      total_page: 1
+                    total_count: 1
+                    data:
+                      users:
+                        - name: name
+                          id: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pagination:
+                  $ref: '#/components/schemas/InlineUsersWithPage'
+                  nullable: true
+                  description: |-
+                    The object that contains the offset used for pagination
+                    in order to fetch the next page of results.
+            examples:
+              Example1:
+                value: {}
+  /inline-users/offset-step:
+    get:
+      operationId: >-
+        inlineUsersInlineUsers_inlineUsers_inlineUsers_listWithOffsetStepPagination
+      tags:
+        - InlineUsersInlineUsers
+      parameters:
+        - name: page
+          in: query
+          description: Defaults to first page
+          required: false
+          schema:
+            type: integer
+            nullable: true
+        - name: limit
+          in: query
+          description: |-
+            The maximum number of elements to return.
+            This is also used as the step size in this
+            paginated endpoint.
+          required: false
+          schema:
+            type: integer
+            nullable: true
+        - name: order
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/InlineUsersOrder'
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InlineUsersListUsersPaginationResponse'
+              examples:
+                Example1:
+                  value:
+                    hasNextPage: true
+                    page:
+                      page: 1
+                      next:
+                        page: 1
+                        starting_after: starting_after
+                      per_page: 1
+                      total_page: 1
+                    total_count: 1
+                    data:
+                      users:
+                        - name: name
+                          id: 1
+  /inline-users/offset-has-next-page:
+    get:
+      operationId: >-
+        inlineUsersInlineUsers_inlineUsers_inlineUsers_listWithOffsetPaginationHasNextPage
+      tags:
+        - InlineUsersInlineUsers
+      parameters:
+        - name: page
+          in: query
+          description: Defaults to first page
+          required: false
+          schema:
+            type: integer
+            nullable: true
+        - name: limit
+          in: query
+          description: |-
+            The maximum number of elements to return.
+            This is also used as the step size in this
+            paginated endpoint.
+          required: false
+          schema:
+            type: integer
+            nullable: true
+        - name: order
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/InlineUsersOrder'
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InlineUsersListUsersPaginationResponse'
+              examples:
+                Example1:
+                  value:
+                    hasNextPage: true
+                    page:
+                      page: 1
+                      next:
+                        page: 1
+                        starting_after: starting_after
+                      per_page: 1
+                      total_page: 1
+                    total_count: 1
+                    data:
+                      users:
+                        - name: name
+                          id: 1
+  /inline-users/extended:
+    get:
+      operationId: inlineUsersInlineUsers_inlineUsers_inlineUsers_listWithExtendedResults
+      tags:
+        - InlineUsersInlineUsers
+      parameters:
+        - name: cursor
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uuid
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InlineUsersListUsersExtendedResponse'
+              examples:
+                Example1:
+                  value:
+                    data:
+                      users:
+                        - name: name
+                          id: 1
+                    next: next
+                    total_count: 1
+  /inline-users/extended-optional:
+    get:
+      operationId: >-
+        inlineUsersInlineUsers_inlineUsers_inlineUsers_listWithExtendedResultsAndOptionalData
+      tags:
+        - InlineUsersInlineUsers
+      parameters:
+        - name: cursor
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uuid
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: >-
+                  #/components/schemas/InlineUsersListUsersExtendedOptionalListResponse
+              examples:
+                Example1:
+                  value:
+                    data:
+                      users:
+                        - name: name
+                          id: 1
+                    next: next
+                    total_count: 1
+  /inline-users/usernames:
+    get:
+      operationId: inlineUsersInlineUsers_inlineUsers_inlineUsers_listUsernames
+      tags:
+        - InlineUsersInlineUsers
+      parameters:
+        - name: starting_after
+          in: query
+          description: |-
+            The cursor used for pagination in order to fetch
+            the next page of results.
+          required: false
+          schema:
+            type: string
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsernameCursor'
+              examples:
+                Example1:
+                  value:
+                    cursor:
+                      after: after
+                      data:
+                        - data
+  /inline-users/global-config:
+    get:
+      operationId: inlineUsersInlineUsers_inlineUsers_inlineUsers_listWithGlobalConfig
+      tags:
+        - InlineUsersInlineUsers
+      parameters:
+        - name: offset
+          in: query
+          required: false
+          schema:
+            type: integer
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InlineUsersUsernameContainer'
+              examples:
+                Example1:
+                  value:
+                    results:
+                      - results
+  /users/cursor:
+    get:
+      operationId: users_listwithcursorpagination
+      tags:
+        - Users
+      parameters:
+        - name: page
+          in: query
+          description: Defaults to first page
+          required: false
+          schema:
+            type: integer
+            nullable: true
+        - name: per_page
+          in: query
+          description: Defaults to per page
+          required: false
+          schema:
+            type: integer
+            nullable: true
+        - name: order
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/Order'
+            nullable: true
+        - name: starting_after
+          in: query
+          description: |-
+            The cursor used for pagination in order to fetch
+            the next page of results.
+          required: false
+          schema:
+            type: string
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListUsersPaginationResponse'
+              examples:
+                Example1:
+                  value:
+                    hasNextPage: true
+                    page:
+                      page: 1
+                      next:
+                        page: 1
+                        starting_after: starting_after
+                      per_page: 1
+                      total_page: 1
+                    total_count: 1
+                    data:
+                      - name: name
+                        id: 1
+  /users/mixed-type-cursor:
+    post:
+      operationId: users_listwithmixedtypecursorpagination
+      tags:
+        - Users
+      parameters:
+        - name: cursor
+          in: query
+          required: false
+          schema:
+            type: string
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListUsersMixedTypePaginationResponse'
+              examples:
+                Example1:
+                  value:
+                    next: next
+                    data:
+                      - name: name
+                        id: 1
+  /users/body-cursor:
+    post:
+      operationId: users_listwithbodycursorpagination
+      tags:
+        - Users
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListUsersPaginationResponse'
+              examples:
+                Example1:
+                  value:
+                    hasNextPage: true
+                    page:
+                      page: 1
+                      next:
+                        page: 1
+                        starting_after: starting_after
+                      per_page: 1
+                      total_page: 1
+                    total_count: 1
+                    data:
+                      - name: name
+                        id: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pagination:
+                  $ref: '#/components/schemas/WithCursor'
+                  nullable: true
+                  description: |-
+                    The object that contains the cursor used for pagination
+                    in order to fetch the next page of results.
+            examples:
+              Example1:
+                value: {}
+  /users/top-level-cursor:
+    post:
+      description: |-
+        Pagination endpoint with a top-level cursor field in the request body.
+        This tests that the mock server correctly ignores cursor mismatches
+        when getNextPage() is called with a different cursor value.
+      operationId: users_listwithtoplevelbodycursorpagination
+      tags:
+        - Users
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListUsersTopLevelCursorPaginationResponse'
+              examples:
+                Example1:
+                  value:
+                    next_cursor: next_cursor
+                    data:
+                      - name: name
+                        id: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cursor:
+                  type: string
+                  nullable: true
+                  description: |-
+                    The cursor used for pagination in order to fetch
+                    the next page of results.
+                filter:
+                  type: string
+                  nullable: true
+                  description: An optional filter to apply to the results.
+            examples:
+              Example1:
+                value: {}
+  /users/offset:
+    get:
+      operationId: users_listwithoffsetpagination
+      tags:
+        - Users
+      parameters:
+        - name: page
+          in: query
+          description: Defaults to first page
+          required: false
+          schema:
+            type: integer
+            nullable: true
+        - name: per_page
+          in: query
+          description: Defaults to per page
+          required: false
+          schema:
+            type: integer
+            nullable: true
+        - name: order
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/Order'
+            nullable: true
+        - name: starting_after
+          in: query
+          description: |-
+            The cursor used for pagination in order to fetch
+            the next page of results.
+          required: false
+          schema:
+            type: string
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListUsersPaginationResponse'
+              examples:
+                Example1:
+                  value:
+                    hasNextPage: true
+                    page:
+                      page: 1
+                      next:
+                        page: 1
+                        starting_after: starting_after
+                      per_page: 1
+                      total_page: 1
+                    total_count: 1
+                    data:
+                      - name: name
+                        id: 1
+  /users/double-offset:
+    get:
+      operationId: users_listwithdoubleoffsetpagination
+      tags:
+        - Users
+      parameters:
+        - name: page
+          in: query
+          description: Defaults to first page
+          required: false
+          schema:
+            type: number
+            format: double
+            nullable: true
+        - name: per_page
+          in: query
+          description: Defaults to per page
+          required: false
+          schema:
+            type: number
+            format: double
+            nullable: true
+        - name: order
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/Order'
+            nullable: true
+        - name: starting_after
+          in: query
+          description: |-
+            The cursor used for pagination in order to fetch
+            the next page of results.
+          required: false
+          schema:
+            type: string
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListUsersPaginationResponse'
+              examples:
+                Example1:
+                  value:
+                    hasNextPage: true
+                    page:
+                      page: 1
+                      next:
+                        page: 1
+                        starting_after: starting_after
+                      per_page: 1
+                      total_page: 1
+                    total_count: 1
+                    data:
+                      - name: name
+                        id: 1
+  /users/body-offset:
+    post:
+      operationId: users_listwithbodyoffsetpagination
+      tags:
+        - Users
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListUsersPaginationResponse'
+              examples:
+                Example1:
+                  value:
+                    hasNextPage: true
+                    page:
+                      page: 1
+                      next:
+                        page: 1
+                        starting_after: starting_after
+                      per_page: 1
+                      total_page: 1
+                    total_count: 1
+                    data:
+                      - name: name
+                        id: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pagination:
+                  $ref: '#/components/schemas/WithPage'
+                  nullable: true
+                  description: |-
+                    The object that contains the offset used for pagination
+                    in order to fetch the next page of results.
+            examples:
+              Example1:
+                value: {}
+  /users/offset-step:
+    get:
+      operationId: users_listwithoffsetsteppagination
+      tags:
+        - Users
+      parameters:
+        - name: page
+          in: query
+          description: Defaults to first page
+          required: false
+          schema:
+            type: integer
+            nullable: true
+        - name: limit
+          in: query
+          description: |-
+            The maximum number of elements to return.
+            This is also used as the step size in this
+            paginated endpoint.
+          required: false
+          schema:
+            type: integer
+            nullable: true
+        - name: order
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/Order'
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListUsersPaginationResponse'
+              examples:
+                Example1:
+                  value:
+                    hasNextPage: true
+                    page:
+                      page: 1
+                      next:
+                        page: 1
+                        starting_after: starting_after
+                      per_page: 1
+                      total_page: 1
+                    total_count: 1
+                    data:
+                      - name: name
+                        id: 1
+  /users/offset-has-next-page:
+    get:
+      operationId: users_listwithoffsetpaginationhasnextpage
+      tags:
+        - Users
+      parameters:
+        - name: page
+          in: query
+          description: Defaults to first page
+          required: false
+          schema:
+            type: integer
+            nullable: true
+        - name: limit
+          in: query
+          description: |-
+            The maximum number of elements to return.
+            This is also used as the step size in this
+            paginated endpoint.
+          required: false
+          schema:
+            type: integer
+            nullable: true
+        - name: order
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/Order'
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListUsersPaginationResponse'
+              examples:
+                Example1:
+                  value:
+                    hasNextPage: true
+                    page:
+                      page: 1
+                      next:
+                        page: 1
+                        starting_after: starting_after
+                      per_page: 1
+                      total_page: 1
+                    total_count: 1
+                    data:
+                      - name: name
+                        id: 1
+  /users/extended:
+    get:
+      operationId: users_listwithextendedresults
+      tags:
+        - Users
+      parameters:
+        - name: cursor
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uuid
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListUsersExtendedResponse'
+              examples:
+                Example1:
+                  value:
+                    data:
+                      users:
+                        - name: name
+                          id: 1
+                    next: next
+                    total_count: 1
+  /users/extended-optional:
+    get:
+      operationId: users_listwithextendedresultsandoptionaldata
+      tags:
+        - Users
+      parameters:
+        - name: cursor
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uuid
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListUsersExtendedOptionalListResponse'
+              examples:
+                Example1:
+                  value:
+                    data:
+                      users:
+                        - name: name
+                          id: 1
+                    next: next
+                    total_count: 1
+  /users/usernames:
+    get:
+      operationId: users_listusernames
+      tags:
+        - Users
+      parameters:
+        - name: starting_after
+          in: query
+          description: |-
+            The cursor used for pagination in order to fetch
+            the next page of results.
+          required: false
+          schema:
+            type: string
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsernameCursor'
+              examples:
+                Example1:
+                  value:
+                    cursor:
+                      after: after
+                      data:
+                        - data
+  /users/usernames-optional:
+    get:
+      operationId: users_listusernameswithoptionalresponse
+      tags:
+        - Users
+      parameters:
+        - name: starting_after
+          in: query
+          description: |-
+            The cursor used for pagination in order to fetch
+            the next page of results.
+          required: false
+          schema:
+            type: string
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsernameCursor'
+              examples:
+                Example1:
+                  value:
+                    cursor:
+                      after: after
+                      data:
+                        - data
+  /users/global-config:
+    get:
+      operationId: users_listwithglobalconfig
+      tags:
+        - Users
+      parameters:
+        - name: offset
+          in: query
+          required: false
+          schema:
+            type: integer
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsernameContainer'
+              examples:
+                Example1:
+                  value:
+                    results:
+                      - results
+  /users/optional-data:
+    get:
+      operationId: users_listwithoptionaldata
+      tags:
+        - Users
+      parameters:
+        - name: page
+          in: query
+          description: Defaults to first page
+          required: false
+          schema:
+            type: integer
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListUsersOptionalDataPaginationResponse'
+              examples:
+                Example1:
+                  value:
+                    hasNextPage: true
+                    page:
+                      page: 1
+                      next:
+                        page: 1
+                        starting_after: starting_after
+                      per_page: 1
+                      total_page: 1
+                    total_count: 1
+                    data:
+                      - name: name
+                        id: 1
+  /users/aliased-data:
+    get:
+      operationId: users_listwithaliaseddata
+      tags:
+        - Users
+      parameters:
+        - name: page
+          in: query
+          description: Defaults to first page
+          required: false
+          schema:
+            type: integer
+            nullable: true
+        - name: per_page
+          in: query
+          description: Defaults to per page
+          required: false
+          schema:
+            type: integer
+            nullable: true
+        - name: starting_after
+          in: query
+          description: |-
+            The cursor used for pagination in order to fetch
+            the next page of results.
+          required: false
+          schema:
+            type: string
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListUsersAliasedDataPaginationResponse'
+              examples:
+                Example1:
+                  value:
+                    hasNextPage: true
+                    page:
+                      page: 1
+                      next:
+                        page: 1
+                        starting_after: starting_after
+                      per_page: 1
+                      total_page: 1
+                    total_count: 1
+                    data:
+                      - name: name
+                        id: 1
+components:
+  schemas:
+    UsernameCursor:
+      title: UsernameCursor
+      type: object
+      properties:
+        cursor:
+          $ref: '#/components/schemas/UsernamePage'
+      required:
+        - cursor
+    UsernamePage:
+      title: UsernamePage
+      type: object
+      properties:
+        after:
+          type: string
+          nullable: true
+        data:
+          type: array
+          items:
+            type: string
+      required:
+        - data
+    SearchRequestQuery:
+      title: SearchRequestQuery
+      oneOf:
+        - $ref: '#/components/schemas/SingleFilterSearchRequest'
+        - $ref: '#/components/schemas/MultipleFilterSearchRequest'
+    MultipleFilterSearchRequest:
+      title: MultipleFilterSearchRequest
+      type: object
+      properties:
+        operator:
+          $ref: '#/components/schemas/MultipleFilterSearchRequestOperator'
+          nullable: true
+        value:
+          $ref: '#/components/schemas/MultipleFilterSearchRequestValue'
+          nullable: true
+    MultipleFilterSearchRequestOperator:
+      title: MultipleFilterSearchRequestOperator
+      type: string
+      enum:
+        - AND
+        - OR
+    MultipleFilterSearchRequestValue:
+      title: MultipleFilterSearchRequestValue
+      oneOf:
+        - type: array
+          items:
+            $ref: '#/components/schemas/MultipleFilterSearchRequest'
+        - type: array
+          items:
+            $ref: '#/components/schemas/SingleFilterSearchRequest'
+    SingleFilterSearchRequest:
+      title: SingleFilterSearchRequest
+      type: object
+      properties:
+        field:
+          type: string
+          nullable: true
+        operator:
+          $ref: '#/components/schemas/SingleFilterSearchRequestOperator'
+          nullable: true
+        value:
+          type: string
+          nullable: true
+    SingleFilterSearchRequestOperator:
+      title: SingleFilterSearchRequestOperator
+      type: string
+      enum:
+        - '='
+        - '!='
+        - IN
+        - NIN
+        - <
+        - '>'
+        - '~'
+        - '!~'
+        - ^
+        - $
+    PaginatedConversationResponseType:
+      title: PaginatedConversationResponseType
+      type: string
+      enum:
+        - conversation.list
+    PaginatedConversationResponse:
+      title: PaginatedConversationResponse
+      type: object
+      properties:
+        conversations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Conversation'
+        pages:
+          $ref: '#/components/schemas/CursorPages'
+          nullable: true
+        total_count:
+          type: integer
+          example: 1
+        type:
+          $ref: '#/components/schemas/PaginatedConversationResponseType'
+      required:
+        - conversations
+        - total_count
+        - type
+    CursorPagesType:
+      title: CursorPagesType
+      type: string
+      enum:
+        - pages
+    CursorPages:
+      title: CursorPages
+      type: object
+      properties:
+        next:
+          $ref: '#/components/schemas/StartingAfterPaging'
+          nullable: true
+        page:
+          type: integer
+          nullable: true
+        per_page:
+          type: integer
+          nullable: true
+        total_pages:
+          type: integer
+          nullable: true
+        type:
+          $ref: '#/components/schemas/CursorPagesType'
+      required:
+        - type
+    StartingAfterPaging:
+      title: StartingAfterPaging
+      type: object
+      properties:
+        per_page:
+          type: integer
+        starting_after:
+          type: string
+          nullable: true
+      required:
+        - per_page
+    Conversation:
+      title: Conversation
+      type: object
+      properties:
+        foo:
+          type: string
+      required:
+        - foo
+    InlineUsersOrder:
+      title: InlineUsersOrder
+      type: string
+      enum:
+        - asc
+        - desc
+    InlineUsersWithPage:
+      title: InlineUsersWithPage
+      type: object
+      properties:
+        page:
+          type: integer
+          nullable: true
+    InlineUsersWithCursor:
+      title: InlineUsersWithCursor
+      type: object
+      properties:
+        cursor:
+          type: string
+          nullable: true
+    InlineUsersUserListContainer:
+      title: InlineUsersUserListContainer
+      type: object
+      properties:
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/InlineUsersUser'
+      required:
+        - users
+    InlineUsersUserPage:
+      title: InlineUsersUserPage
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/InlineUsersUserListContainer'
+        next:
+          type: string
+          format: uuid
+          nullable: true
+      required:
+        - data
+    InlineUsersUserOptionalListContainer:
+      title: InlineUsersUserOptionalListContainer
+      type: object
+      properties:
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/InlineUsersUser'
+          nullable: true
+    InlineUsersUserOptionalListPage:
+      title: InlineUsersUserOptionalListPage
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/InlineUsersUserOptionalListContainer'
+        next:
+          type: string
+          format: uuid
+          nullable: true
+      required:
+        - data
+    InlineUsersUsernameContainer:
+      title: InlineUsersUsernameContainer
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            type: string
+          example:
+            - results
+      required:
+        - results
+    InlineUsersListUsersExtendedResponse:
+      title: InlineUsersListUsersExtendedResponse
+      type: object
+      properties:
+        total_count:
+          type: integer
+          description: The totall number of /users
+          example: 1
+      required:
+        - total_count
+      allOf:
+        - $ref: '#/components/schemas/InlineUsersUserPage'
+    InlineUsersListUsersExtendedOptionalListResponse:
+      title: InlineUsersListUsersExtendedOptionalListResponse
+      type: object
+      properties:
+        total_count:
+          type: integer
+          description: The totall number of /users
+          example: 1
+      required:
+        - total_count
+      allOf:
+        - $ref: '#/components/schemas/InlineUsersUserOptionalListPage'
+    InlineUsersListUsersPaginationResponse:
+      title: InlineUsersListUsersPaginationResponse
+      type: object
+      properties:
+        hasNextPage:
+          type: boolean
+          nullable: true
+        page:
+          $ref: '#/components/schemas/InlineUsersPage'
+          nullable: true
+        total_count:
+          type: integer
+          description: The totall number of /users
+          example: 1
+        data:
+          $ref: '#/components/schemas/InlineUsersUsers'
+      required:
+        - total_count
+        - data
+    InlineUsersListUsersMixedTypePaginationResponse:
+      title: InlineUsersListUsersMixedTypePaginationResponse
+      type: object
+      properties:
+        next:
+          type: string
+          example: next
+        data:
+          $ref: '#/components/schemas/InlineUsersUsers'
+      required:
+        - next
+        - data
+    InlineUsersPage:
+      title: InlineUsersPage
+      type: object
+      properties:
+        page:
+          type: integer
+          description: The current page
+        next:
+          $ref: '#/components/schemas/InlineUsersNextPage'
+          nullable: true
+        per_page:
+          type: integer
+        total_page:
+          type: integer
+      required:
+        - page
+        - per_page
+        - total_page
+    InlineUsersNextPage:
+      title: InlineUsersNextPage
+      type: object
+      properties:
+        page:
+          type: integer
+        starting_after:
+          type: string
+      required:
+        - page
+        - starting_after
+    InlineUsersUsers:
+      title: InlineUsersUsers
+      type: object
+      properties:
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/InlineUsersUser'
+      required:
+        - users
+    InlineUsersUser:
+      title: InlineUsersUser
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: integer
+      required:
+        - name
+        - id
+    Order:
+      title: Order
+      type: string
+      enum:
+        - asc
+        - desc
+    WithPage:
+      title: WithPage
+      type: object
+      properties:
+        page:
+          type: integer
+          nullable: true
+    WithCursor:
+      title: WithCursor
+      type: object
+      properties:
+        cursor:
+          type: string
+          nullable: true
+    UserListContainer:
+      title: UserListContainer
+      type: object
+      properties:
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+      required:
+        - users
+    UserPage:
+      title: UserPage
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/UserListContainer'
+        next:
+          type: string
+          format: uuid
+          nullable: true
+      required:
+        - data
+    UserOptionalListContainer:
+      title: UserOptionalListContainer
+      type: object
+      properties:
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+          nullable: true
+    UserOptionalListPage:
+      title: UserOptionalListPage
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/UserOptionalListContainer'
+        next:
+          type: string
+          format: uuid
+          nullable: true
+      required:
+        - data
+    UsernameContainer:
+      title: UsernameContainer
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            type: string
+          example:
+            - results
+      required:
+        - results
+    ListUsersExtendedResponse:
+      title: ListUsersExtendedResponse
+      type: object
+      properties:
+        total_count:
+          type: integer
+          description: The totall number of /users
+          example: 1
+      required:
+        - total_count
+      allOf:
+        - $ref: '#/components/schemas/UserPage'
+    ListUsersExtendedOptionalListResponse:
+      title: ListUsersExtendedOptionalListResponse
+      type: object
+      properties:
+        total_count:
+          type: integer
+          description: The totall number of /users
+          example: 1
+      required:
+        - total_count
+      allOf:
+        - $ref: '#/components/schemas/UserOptionalListPage'
+    ListUsersPaginationResponse:
+      title: ListUsersPaginationResponse
+      type: object
+      properties:
+        hasNextPage:
+          type: boolean
+          nullable: true
+        page:
+          $ref: '#/components/schemas/Page'
+          nullable: true
+        total_count:
+          type: integer
+          description: The totall number of /users
+          example: 1
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+      required:
+        - total_count
+        - data
+    ListUsersOptionalDataPaginationResponse:
+      title: ListUsersOptionalDataPaginationResponse
+      type: object
+      properties:
+        hasNextPage:
+          type: boolean
+          nullable: true
+        page:
+          $ref: '#/components/schemas/Page'
+          nullable: true
+        total_count:
+          type: integer
+          description: The totall number of /users
+          example: 1
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+          nullable: true
+      required:
+        - total_count
+    ListUsersMixedTypePaginationResponse:
+      title: ListUsersMixedTypePaginationResponse
+      type: object
+      properties:
+        next:
+          type: string
+          example: next
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+      required:
+        - next
+        - data
+    ListUsersTopLevelCursorPaginationResponse:
+      title: ListUsersTopLevelCursorPaginationResponse
+      type: object
+      properties:
+        next_cursor:
+          type: string
+          nullable: true
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+      required:
+        - data
+    UserList:
+      title: UserList
+      type: array
+      items:
+        $ref: '#/components/schemas/User'
+      description: A type alias for a list of users
+    ListUsersAliasedDataPaginationResponse:
+      title: ListUsersAliasedDataPaginationResponse
+      type: object
+      properties:
+        hasNextPage:
+          type: boolean
+          nullable: true
+        page:
+          $ref: '#/components/schemas/Page'
+          nullable: true
+        total_count:
+          type: integer
+          description: The totall number of /users
+          example: 1
+        data:
+          $ref: '#/components/schemas/UserList'
+      required:
+        - total_count
+        - data
+    Page:
+      title: Page
+      type: object
+      properties:
+        page:
+          type: integer
+          description: The current page
+        next:
+          $ref: '#/components/schemas/NextPage'
+          nullable: true
+        per_page:
+          type: integer
+        total_page:
+          type: integer
+      required:
+        - page
+        - per_page
+        - total_page
+    NextPage:
+      title: NextPage
+      type: object
+      properties:
+        page:
+          type: integer
+        starting_after:
+          type: string
+      required:
+        - page
+        - starting_after
+    User:
+      title: User
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: integer
+      required:
+        - name
+        - id
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

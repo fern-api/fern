@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="/Sources/Resources/Auth/AuthClient.swift">getToken</a>(request: GetTokenRequest, requestOptions: RequestOptions?) -> TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="/Sources/Resources/Auth/AuthClient.swift">gettoken</a>(request: Requests.GetTokenRequest, requestOptions: RequestOptions?) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -14,12 +14,12 @@
 
 ```swift
 import Foundation
-import OauthClientCredentialsReference
+import Api
 
 private func main() async throws {
-    let client = OauthClientCredentialsReferenceClient()
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.auth.getToken(request: GetTokenRequest(
+    _ = try await client.auth.gettoken(request: .init(
         clientId: "client_id",
         clientSecret: "client_secret"
     ))
@@ -40,7 +40,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `GetTokenRequest` 
+**request:** `Requests.GetTokenRequest` 
     
 </dd>
 </dl>
@@ -61,7 +61,7 @@ try await main()
 </details>
 
 ## Simple
-<details><summary><code>client.simple.<a href="/Sources/Resources/Simple/SimpleClient.swift">getSomething</a>(requestOptions: RequestOptions?) -> Void</code></summary>
+<details><summary><code>client.simple.<a href="/Sources/Resources/Simple/SimpleClient.swift">getsomething</a>(requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -75,12 +75,12 @@ try await main()
 
 ```swift
 import Foundation
-import OauthClientCredentialsReference
+import Api
 
 private func main() async throws {
-    let client = OauthClientCredentialsReferenceClient()
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.simple.getSomething()
+    _ = try await client.simple.getsomething()
 }
 
 try await main()

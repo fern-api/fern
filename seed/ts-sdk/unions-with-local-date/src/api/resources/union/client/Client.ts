@@ -6,7 +6,7 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedUnions from "../../../index.js";
+import type * as SeedApi from "../../../index.js";
 
 export declare namespace UnionClient {
     export type Options = BaseClientOptions;
@@ -22,26 +22,32 @@ export class UnionClient {
     }
 
     /**
-     * @param {string} id
+     * @param {SeedApi.UnionGetRequest} request
      * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.union.get("id")
+     *     await client.union.get({
+     *         id: "id"
+     *     })
      */
-    public get(id: string, requestOptions?: UnionClient.RequestOptions): core.HttpResponsePromise<SeedUnions.Shape> {
-        return core.HttpResponsePromise.fromPromise(this.__get(id, requestOptions));
+    public get(
+        request: SeedApi.UnionGetRequest,
+        requestOptions?: UnionClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedApi.Shape> {
+        return core.HttpResponsePromise.fromPromise(this.__get(request, requestOptions));
     }
 
     private async __get(
-        id: string,
+        request: SeedApi.UnionGetRequest,
         requestOptions?: UnionClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedUnions.Shape>> {
+    ): Promise<core.WithRawResponse<SeedApi.Shape>> {
+        const { id } = request;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/${core.url.encodePathParam(id)}`,
+                `${core.url.encodePathParam(id)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -53,11 +59,11 @@ export class UnionClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedUnions.Shape, rawResponse: _response.rawResponse };
+            return { data: _response.body as SeedApi.Shape, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedUnionsError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -68,26 +74,24 @@ export class UnionClient {
     }
 
     /**
-     * @param {SeedUnions.Shape} request
+     * @param {SeedApi.Shape} request
      * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.union.update({
-     *         type: "circle",
-     *         id: "id",
-     *         name: "name",
-     *         radius: 1.1
+     *         radius: 1.1,
+     *         type: "circle"
      *     })
      */
     public update(
-        request: SeedUnions.Shape,
+        request: SeedApi.Shape,
         requestOptions?: UnionClient.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
         return core.HttpResponsePromise.fromPromise(this.__update(request, requestOptions));
     }
 
     private async __update(
-        request: SeedUnions.Shape,
+        request: SeedApi.Shape,
         requestOptions?: UnionClient.RequestOptions,
     ): Promise<core.WithRawResponse<boolean>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
@@ -112,7 +116,7 @@ export class UnionClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedUnionsError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

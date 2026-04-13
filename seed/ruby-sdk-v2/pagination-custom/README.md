@@ -9,7 +9,6 @@ The Seed Ruby library provides convenient access to the Seed APIs from Ruby.
 - [Reference](#reference)
 - [Usage](#usage)
 - [Environments](#environments)
-- [Pagination](#pagination)
 - [Errors](#errors)
 - [Advanced](#advanced)
   - [Retries](#retries)
@@ -31,10 +30,7 @@ require "seed"
 
 client = Seed::Client.new(token: "<token>")
 
-client.users.list_with_custom_pager(
-  limit: 1,
-  starting_after: "starting_after"
-)
+client.users.listwithcustompager
 ```
 
 ## Environments
@@ -50,30 +46,6 @@ client = Seed::Client.new(
 )
 ```
 
-## Pagination
-
-List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items. You can also iterate page-by-page.
-
-```ruby
-require "seed"
-
-# For custom pagination, the response is returned directly.
-response = client.users.list_with_custom_pager(
-    ...
-)
-
-pager = Seed::Internal::FooPager.new(
-    response,
-    has_next_proc: ->(page) { page.has_more },
-    get_next_proc: ->(page) { client.users.list_with_custom_pager(cursor: page.next_cursor) }
-)
-
-# Iterate over pages
-pager.each_page do |page|
-    puts "Got page: #{page}"
-end
-```
-
 ## Errors
 
 Failed API calls will raise errors that can be rescued from granularly.
@@ -86,7 +58,7 @@ client = Seed::Client.new(
 )
 
 begin
-    result = client.users.list_with_custom_pager
+    result = client.users.listwithcustompager
 rescue Seed::Errors::TimeoutError
     puts "API didn't respond before our timeout elapsed"
 rescue Seed::Errors::ServiceUnavailableError
@@ -131,7 +103,7 @@ The SDK defaults to a 60 second timeout. Use the `timeout` option to configure t
 ```ruby
 require "seed"
 
-response = client.users.list_with_custom_pager(
+response = client.users.listwithcustompager(
     ...,
     timeout: 30  # 30 second timeout
 )
@@ -144,7 +116,7 @@ If you would like to send additional headers as part of the request, use the `ad
 ```ruby
 require "seed"
 
-response = client.users.list_with_custom_pager(
+response = client.users.listwithcustompager(
     ...,
     request_options: {
         additional_headers: {
@@ -161,7 +133,7 @@ If you would like to send additional query parameters as part of the request, us
 ```ruby
 require "seed"
 
-response = client.users.list_with_custom_pager(
+response = client.users.listwithcustompager(
     ...,
     request_options: {
         additional_query_parameters: {

@@ -55,17 +55,17 @@ Instantiate and use the client with the following:
 ```java
 package com.example.usage;
 
-import com.seed.contentTypes.SeedContentTypesClient;
-import com.seed.contentTypes.resources.service.requests.PatchProxyRequest;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.service.requests.ServicePatchRequest;
 
 public class Example {
     public static void main(String[] args) {
-        SeedContentTypesClient client = SeedContentTypesClient
+        SeedApiClient client = SeedApiClient
             .builder()
             .build();
 
         client.service().patch(
-            PatchProxyRequest
+            ServicePatchRequest
                 .builder()
                 .application("application")
                 .requireAuth(true)
@@ -80,9 +80,9 @@ public class Example {
 You can set a custom base URL when constructing the client.
 
 ```java
-import com.seed.contentTypes.SeedContentTypesClient;
+import com.seed.api.SeedApiClient;
 
-SeedContentTypesClient client = SeedContentTypesClient
+SeedApiClient client = SeedApiClient
     .builder()
     .url("https://example.com")
     .build();
@@ -93,11 +93,11 @@ SeedContentTypesClient client = SeedContentTypesClient
 When the API returns a non-success status code (4xx or 5xx response), an API exception will be thrown.
 
 ```java
-import com.seed.contentTypes.core.SeedContentTypesApiException;
+import com.seed.api.core.SeedApiApiException;
 
 try{
     client.service().patch(...);
-} catch (SeedContentTypesApiException e){
+} catch (SeedApiApiException e){
     // Do something with the API exception...
 }
 ```
@@ -110,12 +110,12 @@ This SDK is built to work with any instance of `OkHttpClient`. By default, if no
 However, you can pass your own client like so:
 
 ```java
-import com.seed.contentTypes.SeedContentTypesClient;
+import com.seed.api.SeedApiClient;
 import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedContentTypesClient client = SeedContentTypesClient
+SeedApiClient client = SeedApiClient
     .builder()
     .httpClient(customClient)
     .build();
@@ -138,9 +138,9 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` client option to configure this behavior.
 
 ```java
-import com.seed.contentTypes.SeedContentTypesClient;
+import com.seed.api.SeedApiClient;
 
-SeedContentTypesClient client = SeedContentTypesClient
+SeedApiClient client = SeedApiClient
     .builder()
     .maxRetries(1)
     .build();
@@ -150,11 +150,11 @@ SeedContentTypesClient client = SeedContentTypesClient
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 ```java
-import com.seed.contentTypes.SeedContentTypesClient;
-import com.seed.contentTypes.core.RequestOptions;
+import com.seed.api.SeedApiClient;
+import com.seed.api.core.RequestOptions;
 
 // Client level
-SeedContentTypesClient client = SeedContentTypesClient
+SeedApiClient client = SeedApiClient
     .builder()
     .timeout(60)
     .build();
@@ -174,11 +174,11 @@ client.service().patch(
 The SDK allows you to add custom headers to requests. You can configure headers at the client level or at the request level.
 
 ```java
-import com.seed.contentTypes.SeedContentTypesClient;
-import com.seed.contentTypes.core.RequestOptions;
+import com.seed.api.SeedApiClient;
+import com.seed.api.core.RequestOptions;
 
 // Client level
-SeedContentTypesClient client = SeedContentTypesClient
+SeedApiClient client = SeedApiClient
     .builder()
     .addHeader("X-Custom-Header", "custom-value")
     .addHeader("X-Request-Id", "abc-123")
@@ -202,7 +202,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-SeedContentTypesHttpResponse response = client.service().withRawResponse().patch(...);
+SeedApiHttpResponse response = client.service().withRawResponse().patch(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));

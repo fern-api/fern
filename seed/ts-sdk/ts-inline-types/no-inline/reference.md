@@ -1,5 +1,6 @@
 # Reference
-<details><summary><code>client.<a href="/src/Client.ts">getRoot</a>({ ...params }) -> SeedObject.RootType1</code></summary>
+## 
+<details><summary><code>client..<a href="/src/api/resources/client/Client.ts">getRoot</a>({ ...params }) -> SeedApi.RootType1</code></summary>
 <dl>
 <dd>
 
@@ -12,7 +13,7 @@
 <dd>
 
 ```typescript
-await client.getRoot({
+await client..getRoot({
     bar: {
         foo: "foo"
     },
@@ -33,7 +34,7 @@ await client.getRoot({
 <dl>
 <dd>
 
-**request:** `SeedObject.PostRootRequest` 
+**request:** `SeedApi.GetRootRequest` 
     
 </dd>
 </dl>
@@ -41,7 +42,7 @@ await client.getRoot({
 <dl>
 <dd>
 
-**requestOptions:** `SeedObjectClient.RequestOptions` 
+**requestOptions:** `Client.RequestOptions` 
     
 </dd>
 </dl>
@@ -53,7 +54,7 @@ await client.getRoot({
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/src/Client.ts">getDiscriminatedUnion</a>({ ...params }) -> void</code></summary>
+<details><summary><code>client..<a href="/src/api/resources/client/Client.ts">getDiscriminatedUnion</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -66,9 +67,8 @@ await client.getRoot({
 <dd>
 
 ```typescript
-await client.getDiscriminatedUnion({
+await client..getDiscriminatedUnion({
     bar: {
-        type: "type1",
         foo: "foo",
         bar: {
             foo: "foo",
@@ -78,7 +78,8 @@ await client.getDiscriminatedUnion({
         },
         ref: {
             foo: "foo"
-        }
+        },
+        type: "type1"
     },
     foo: "foo"
 });
@@ -97,7 +98,7 @@ await client.getDiscriminatedUnion({
 <dl>
 <dd>
 
-**request:** `SeedObject.GetDiscriminatedUnionRequest` 
+**request:** `SeedApi.GetDiscriminatedUnionRequest` 
     
 </dd>
 </dl>
@@ -105,7 +106,7 @@ await client.getDiscriminatedUnion({
 <dl>
 <dd>
 
-**requestOptions:** `SeedObjectClient.RequestOptions` 
+**requestOptions:** `Client.RequestOptions` 
     
 </dd>
 </dl>
@@ -117,7 +118,7 @@ await client.getDiscriminatedUnion({
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/src/Client.ts">getUndiscriminatedUnion</a>({ ...params }) -> void</code></summary>
+<details><summary><code>client..<a href="/src/api/resources/client/Client.ts">getUndiscriminatedUnion</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -130,19 +131,8 @@ await client.getDiscriminatedUnion({
 <dd>
 
 ```typescript
-await client.getUndiscriminatedUnion({
-    bar: {
-        foo: "foo",
-        bar: {
-            foo: "foo",
-            ref: {
-                foo: "foo"
-            }
-        },
-        ref: {
-            foo: "foo"
-        }
-    },
+await client..getUndiscriminatedUnion({
+    bar: "SUNNY",
     foo: "foo"
 });
 
@@ -160,7 +150,7 @@ await client.getUndiscriminatedUnion({
 <dl>
 <dd>
 
-**request:** `SeedObject.GetUndiscriminatedUnionRequest` 
+**request:** `SeedApi.GetUndiscriminatedUnionRequest` 
     
 </dd>
 </dl>
@@ -168,7 +158,7 @@ await client.getUndiscriminatedUnion({
 <dl>
 <dd>
 
-**requestOptions:** `SeedObjectClient.RequestOptions` 
+**requestOptions:** `Client.RequestOptions` 
     
 </dd>
 </dl>

@@ -3,16 +3,12 @@
 import contextlib
 import typing
 from json.decoder import JSONDecodeError
-from logging import error, warning
 
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.http_sse._api import EventSource
 from ..core.parse_error import ParsingError
-from ..core.pydantic_utilities import parse_sse_obj
 from ..core.request_options import RequestOptions
-from .types.streamed_completion import StreamedCompletion
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -26,18 +22,19 @@ class RawCompletionsClient:
     @contextlib.contextmanager
     def stream(
         self, *, query: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Iterator[HttpResponse[typing.Iterator[StreamedCompletion]]]:
+    ) -> typing.Iterator[HttpResponse[typing.Iterator[bytes]]]:
         """
         Parameters
         ----------
         query : str
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
-        Yields
-        ------
-        typing.Iterator[HttpResponse[typing.Iterator[StreamedCompletion]]]
+        Returns
+        -------
+        typing.Iterator[HttpResponse[typing.Iterator[bytes]]]
+
         """
         with self._client_wrapper.httpx_client.stream(
             "stream",
@@ -45,40 +42,20 @@ class RawCompletionsClient:
             json={
                 "query": query,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         ) as _response:
 
-            def _stream() -> HttpResponse[typing.Iterator[StreamedCompletion]]:
+            def _stream() -> HttpResponse[typing.Iterator[bytes]]:
                 try:
                     if 200 <= _response.status_code < 300:
-
-                        def _iter():
-                            _event_source = EventSource(_response)
-                            for _sse in _event_source.iter_sse():
-                                if _sse.data == "[[DONE]]":
-                                    return
-                                try:
-                                    yield typing.cast(
-                                        StreamedCompletion,
-                                        parse_sse_obj(
-                                            sse=_sse,
-                                            type_=StreamedCompletion,  # type: ignore
-                                        ),
-                                    )
-                                except JSONDecodeError as e:
-                                    warning(f"Skipping SSE event with invalid JSON: {e}, sse: {_sse!r}")
-                                except (TypeError, ValueError, KeyError, AttributeError) as e:
-                                    warning(
-                                        f"Skipping SSE event due to model construction error: {type(e).__name__}: {e}, sse: {_sse!r}"
-                                    )
-                                except Exception as e:
-                                    error(
-                                        f"Unexpected error processing SSE event: {type(e).__name__}: {e}, sse: {_sse!r}"
-                                    )
-                            return
-
-                        return HttpResponse(response=_response, data=_iter())
+                        _chunk_size = request_options.get("chunk_size", None) if request_options is not None else None
+                        return HttpResponse(
+                            response=_response, data=(_chunk for _chunk in _response.iter_bytes(chunk_size=_chunk_size))
+                        )
                     _response.read()
                     _response_json = _response.json()
                 except JSONDecodeError:
@@ -97,20 +74,21 @@ class RawCompletionsClient:
             yield _stream()
 
     @contextlib.contextmanager
-    def stream_without_terminator(
+    def streamwithoutterminator(
         self, *, query: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Iterator[HttpResponse[typing.Iterator[StreamedCompletion]]]:
+    ) -> typing.Iterator[HttpResponse[typing.Iterator[bytes]]]:
         """
         Parameters
         ----------
         query : str
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
-        Yields
-        ------
-        typing.Iterator[HttpResponse[typing.Iterator[StreamedCompletion]]]
+        Returns
+        -------
+        typing.Iterator[HttpResponse[typing.Iterator[bytes]]]
+
         """
         with self._client_wrapper.httpx_client.stream(
             "stream-no-terminator",
@@ -118,40 +96,20 @@ class RawCompletionsClient:
             json={
                 "query": query,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         ) as _response:
 
-            def _stream() -> HttpResponse[typing.Iterator[StreamedCompletion]]:
+            def _stream() -> HttpResponse[typing.Iterator[bytes]]:
                 try:
                     if 200 <= _response.status_code < 300:
-
-                        def _iter():
-                            _event_source = EventSource(_response)
-                            for _sse in _event_source.iter_sse():
-                                if _sse.data == None:
-                                    return
-                                try:
-                                    yield typing.cast(
-                                        StreamedCompletion,
-                                        parse_sse_obj(
-                                            sse=_sse,
-                                            type_=StreamedCompletion,  # type: ignore
-                                        ),
-                                    )
-                                except JSONDecodeError as e:
-                                    warning(f"Skipping SSE event with invalid JSON: {e}, sse: {_sse!r}")
-                                except (TypeError, ValueError, KeyError, AttributeError) as e:
-                                    warning(
-                                        f"Skipping SSE event due to model construction error: {type(e).__name__}: {e}, sse: {_sse!r}"
-                                    )
-                                except Exception as e:
-                                    error(
-                                        f"Unexpected error processing SSE event: {type(e).__name__}: {e}, sse: {_sse!r}"
-                                    )
-                            return
-
-                        return HttpResponse(response=_response, data=_iter())
+                        _chunk_size = request_options.get("chunk_size", None) if request_options is not None else None
+                        return HttpResponse(
+                            response=_response, data=(_chunk for _chunk in _response.iter_bytes(chunk_size=_chunk_size))
+                        )
                     _response.read()
                     _response_json = _response.json()
                 except JSONDecodeError:
@@ -177,18 +135,19 @@ class AsyncRawCompletionsClient:
     @contextlib.asynccontextmanager
     async def stream(
         self, *, query: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[StreamedCompletion]]]:
+    ) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]:
         """
         Parameters
         ----------
         query : str
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
-        Yields
-        ------
-        typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[StreamedCompletion]]]
+        Returns
+        -------
+        typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]
+
         """
         async with self._client_wrapper.httpx_client.stream(
             "stream",
@@ -196,40 +155,21 @@ class AsyncRawCompletionsClient:
             json={
                 "query": query,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         ) as _response:
 
-            async def _stream() -> AsyncHttpResponse[typing.AsyncIterator[StreamedCompletion]]:
+            async def _stream() -> AsyncHttpResponse[typing.AsyncIterator[bytes]]:
                 try:
                     if 200 <= _response.status_code < 300:
-
-                        async def _iter():
-                            _event_source = EventSource(_response)
-                            async for _sse in _event_source.aiter_sse():
-                                if _sse.data == "[[DONE]]":
-                                    return
-                                try:
-                                    yield typing.cast(
-                                        StreamedCompletion,
-                                        parse_sse_obj(
-                                            sse=_sse,
-                                            type_=StreamedCompletion,  # type: ignore
-                                        ),
-                                    )
-                                except JSONDecodeError as e:
-                                    warning(f"Skipping SSE event with invalid JSON: {e}, sse: {_sse!r}")
-                                except (TypeError, ValueError, KeyError, AttributeError) as e:
-                                    warning(
-                                        f"Skipping SSE event due to model construction error: {type(e).__name__}: {e}, sse: {_sse!r}"
-                                    )
-                                except Exception as e:
-                                    error(
-                                        f"Unexpected error processing SSE event: {type(e).__name__}: {e}, sse: {_sse!r}"
-                                    )
-                            return
-
-                        return AsyncHttpResponse(response=_response, data=_iter())
+                        _chunk_size = request_options.get("chunk_size", None) if request_options is not None else None
+                        return AsyncHttpResponse(
+                            response=_response,
+                            data=(_chunk async for _chunk in _response.aiter_bytes(chunk_size=_chunk_size)),
+                        )
                     await _response.aread()
                     _response_json = _response.json()
                 except JSONDecodeError:
@@ -248,20 +188,21 @@ class AsyncRawCompletionsClient:
             yield await _stream()
 
     @contextlib.asynccontextmanager
-    async def stream_without_terminator(
+    async def streamwithoutterminator(
         self, *, query: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[StreamedCompletion]]]:
+    ) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]:
         """
         Parameters
         ----------
         query : str
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
-        Yields
-        ------
-        typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[StreamedCompletion]]]
+        Returns
+        -------
+        typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]
+
         """
         async with self._client_wrapper.httpx_client.stream(
             "stream-no-terminator",
@@ -269,40 +210,21 @@ class AsyncRawCompletionsClient:
             json={
                 "query": query,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         ) as _response:
 
-            async def _stream() -> AsyncHttpResponse[typing.AsyncIterator[StreamedCompletion]]:
+            async def _stream() -> AsyncHttpResponse[typing.AsyncIterator[bytes]]:
                 try:
                     if 200 <= _response.status_code < 300:
-
-                        async def _iter():
-                            _event_source = EventSource(_response)
-                            async for _sse in _event_source.aiter_sse():
-                                if _sse.data == None:
-                                    return
-                                try:
-                                    yield typing.cast(
-                                        StreamedCompletion,
-                                        parse_sse_obj(
-                                            sse=_sse,
-                                            type_=StreamedCompletion,  # type: ignore
-                                        ),
-                                    )
-                                except JSONDecodeError as e:
-                                    warning(f"Skipping SSE event with invalid JSON: {e}, sse: {_sse!r}")
-                                except (TypeError, ValueError, KeyError, AttributeError) as e:
-                                    warning(
-                                        f"Skipping SSE event due to model construction error: {type(e).__name__}: {e}, sse: {_sse!r}"
-                                    )
-                                except Exception as e:
-                                    error(
-                                        f"Unexpected error processing SSE event: {type(e).__name__}: {e}, sse: {_sse!r}"
-                                    )
-                            return
-
-                        return AsyncHttpResponse(response=_response, data=_iter())
+                        _chunk_size = request_options.get("chunk_size", None) if request_options is not None else None
+                        return AsyncHttpResponse(
+                            response=_response,
+                            data=(_chunk async for _chunk in _response.aiter_bytes(chunk_size=_chunk_size)),
+                        )
                     await _response.aread()
                     _response_json = _response.json()
                 except JSONDecodeError:

@@ -1,4 +1,4 @@
-package audiences
+package api
 
 import (
 	"time"

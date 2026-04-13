@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Dummy\Requests\GenerateRequest;
+use Seed\Dummy\Requests\DummyGenerateRequest;
 
 $client = new SeedClient(
     options: [
@@ -11,8 +11,8 @@ $client = new SeedClient(
     ],
 );
 $client->dummy->generate(
-    new GenerateRequest([
-        'stream' => false,
-        'numEvents' => 5,
+    new DummyGenerateRequest([
+        'stream' => true,
+        'numEvents' => 1,
     ]),
 );

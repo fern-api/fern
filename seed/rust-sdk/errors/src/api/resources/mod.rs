@@ -2,19 +2,17 @@
 //!
 //! This module contains client implementations for:
 //!
-//! - **Commons**
 //! - **Simple**
 
 use crate::{ApiError, ClientConfig};
 
-pub mod commons;
 pub mod simple;
-pub struct ErrorsClient {
+pub struct ApiClient {
     pub config: ClientConfig,
     pub simple: SimpleClient,
 }
 
-impl ErrorsClient {
+impl ApiClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
@@ -23,5 +21,4 @@ impl ErrorsClient {
     }
 }
 
-pub use commons::CommonsClient;
 pub use simple::SimpleClient;

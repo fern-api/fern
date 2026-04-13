@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>$client-&gt;service-&gt;listResources($request) -> ?array</code></summary>
+<details><summary><code>$client-&gt;service-&gt;listresources($request) -> ?array</code></summary>
 <dl>
 <dd>
 
@@ -27,15 +27,13 @@ List resources with pagination
 <dd>
 
 ```php
-$client->service->listResources(
-    new ListResourcesRequest([
+$client->service->listresources(
+    new ServiceListResourcesRequest([
         'page' => 1,
         'perPage' => 1,
-        'sort' => 'created_at',
-        'order' => 'desc',
+        'sort' => 'sort',
+        'order' => 'order',
         'includeTotals' => true,
-        'fields' => 'fields',
-        'search' => 'search',
     ]),
 );
 ```
@@ -112,7 +110,7 @@ $client->service->listResources(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;service-&gt;getResource($resourceId, $request) -> ?Resource</code></summary>
+<details><summary><code>$client-&gt;service-&gt;getresource($resourceId, $request) -> ?Resource</code></summary>
 <dl>
 <dd>
 
@@ -139,11 +137,11 @@ Get a single resource
 <dd>
 
 ```php
-$client->service->getResource(
+$client->service->getresource(
     'resourceId',
-    new GetResourceRequest([
+    new ServiceGetResourceRequest([
         'includeMetadata' => true,
-        'format' => 'json',
+        'format' => 'format',
     ]),
 );
 ```
@@ -188,7 +186,7 @@ $client->service->getResource(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;service-&gt;searchResources($request) -> ?SearchResponse</code></summary>
+<details><summary><code>$client-&gt;service-&gt;searchresources($request) -> ?SearchResponse</code></summary>
 <dl>
 <dd>
 
@@ -215,16 +213,10 @@ Search resources with complex parameters
 <dd>
 
 ```php
-$client->service->searchResources(
-    new SearchResourcesRequest([
+$client->service->searchresources(
+    new ServiceSearchResourcesRequest([
         'limit' => 1,
         'offset' => 1,
-        'query' => 'query',
-        'filters' => [
-            'filters' => [
-                'key' => "value",
-            ],
-        ],
     ]),
 );
 ```
@@ -277,7 +269,7 @@ $client->service->searchResources(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;service-&gt;listUsers($request) -> ?PaginatedUserResponse</code></summary>
+<details><summary><code>$client-&gt;service-&gt;listusers($request) -> ?PaginatedUserResponse</code></summary>
 <dl>
 <dd>
 
@@ -304,17 +296,8 @@ List or search for users
 <dd>
 
 ```php
-$client->service->listUsers(
-    new ListUsersRequest([
-        'page' => 1,
-        'perPage' => 1,
-        'includeTotals' => true,
-        'sort' => 'sort',
-        'connection' => 'connection',
-        'q' => 'q',
-        'searchEngine' => 'search_engine',
-        'fields' => 'fields',
-    ]),
+$client->service->listusers(
+    new ServiceListUsersRequest([]),
 );
 ```
 </dd>
@@ -398,7 +381,130 @@ $client->service->listUsers(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;service-&gt;getUserById($userId, $request) -> ?User</code></summary>
+<details><summary><code>$client-&gt;service-&gt;createuser($request) -> ?User</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new user
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->service->createuser(
+    new CreateUserRequest([
+        'email' => 'email',
+        'connection' => 'connection',
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$email:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$emailVerified:** `?bool` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$username:** `?string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$password:** `?string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$phoneNumber:** `?string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$phoneVerified:** `?bool` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$userMetadata:** `?array` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$appMetadata:** `?array` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$connection:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;service-&gt;getuserbyid($userId, $request) -> ?User</code></summary>
 <dl>
 <dd>
 
@@ -425,12 +531,9 @@ Get a user by ID
 <dd>
 
 ```php
-$client->service->getUserById(
+$client->service->getuserbyid(
     'userId',
-    new GetUserRequest([
-        'fields' => 'fields',
-        'includeFields' => true,
-    ]),
+    new ServiceGetUserByIdRequest([]),
 );
 ```
 </dd>
@@ -474,164 +577,7 @@ $client->service->getUserById(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;service-&gt;createUser($request) -> ?User</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create a new user
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```php
-$client->service->createUser(
-    new CreateUserRequest([
-        'email' => 'email',
-        'emailVerified' => true,
-        'username' => 'username',
-        'password' => 'password',
-        'phoneNumber' => 'phone_number',
-        'phoneVerified' => true,
-        'userMetadata' => [
-            'user_metadata' => [
-                'key' => "value",
-            ],
-        ],
-        'appMetadata' => [
-            'app_metadata' => [
-                'key' => "value",
-            ],
-        ],
-        'connection' => 'connection',
-    ]),
-);
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$request:** `CreateUserRequest` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>$client-&gt;service-&gt;updateUser($userId, $request) -> ?User</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Update a user
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```php
-$client->service->updateUser(
-    'userId',
-    new UpdateUserRequest([
-        'email' => 'email',
-        'emailVerified' => true,
-        'username' => 'username',
-        'phoneNumber' => 'phone_number',
-        'phoneVerified' => true,
-        'userMetadata' => [
-            'user_metadata' => [
-                'key' => "value",
-            ],
-        ],
-        'appMetadata' => [
-            'app_metadata' => [
-                'key' => "value",
-            ],
-        ],
-        'password' => 'password',
-        'blocked' => true,
-    ]),
-);
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$userId:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$request:** `UpdateUserRequest` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>$client-&gt;service-&gt;deleteUser($userId)</code></summary>
+<details><summary><code>$client-&gt;service-&gt;deleteuser($userId)</code></summary>
 <dl>
 <dd>
 
@@ -658,7 +604,7 @@ Delete a user
 <dd>
 
 ```php
-$client->service->deleteUser(
+$client->service->deleteuser(
     'userId',
 );
 ```
@@ -687,7 +633,136 @@ $client->service->deleteUser(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;service-&gt;listConnections($request) -> ?array</code></summary>
+<details><summary><code>$client-&gt;service-&gt;updateuser($userId, $request) -> ?User</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update a user
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->service->updateuser(
+    'userId',
+    new UpdateUserRequest([]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$userId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$email:** `?string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$emailVerified:** `?bool` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$username:** `?string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$phoneNumber:** `?string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$phoneVerified:** `?bool` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$userMetadata:** `?array` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$appMetadata:** `?array` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$password:** `?string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$blocked:** `?bool` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;service-&gt;listconnections($request) -> ?array</code></summary>
 <dl>
 <dd>
 
@@ -714,12 +789,8 @@ List all connections
 <dd>
 
 ```php
-$client->service->listConnections(
-    new ListConnectionsRequest([
-        'strategy' => 'strategy',
-        'name' => 'name',
-        'fields' => 'fields',
-    ]),
+$client->service->listconnections(
+    new ServiceListConnectionsRequest([]),
 );
 ```
 </dd>
@@ -763,7 +834,7 @@ $client->service->listConnections(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;service-&gt;getConnection($connectionId, $request) -> ?Connection</code></summary>
+<details><summary><code>$client-&gt;service-&gt;getconnection($connectionId, $request) -> ?Connection</code></summary>
 <dl>
 <dd>
 
@@ -790,11 +861,9 @@ Get a connection by ID
 <dd>
 
 ```php
-$client->service->getConnection(
+$client->service->getconnection(
     'connectionId',
-    new GetConnectionRequest([
-        'fields' => 'fields',
-    ]),
+    new ServiceGetConnectionRequest([]),
 );
 ```
 </dd>
@@ -830,7 +899,7 @@ $client->service->getConnection(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;service-&gt;listClients($request) -> ?PaginatedClientResponse</code></summary>
+<details><summary><code>$client-&gt;service-&gt;listclients($request) -> ?PaginatedClientResponse</code></summary>
 <dl>
 <dd>
 
@@ -857,20 +926,8 @@ List all clients/applications
 <dd>
 
 ```php
-$client->service->listClients(
-    new ListClientsRequest([
-        'fields' => 'fields',
-        'includeFields' => true,
-        'page' => 1,
-        'perPage' => 1,
-        'includeTotals' => true,
-        'isGlobal' => true,
-        'isFirstParty' => true,
-        'appType' => [
-            'app_type',
-            'app_type',
-        ],
-    ]),
+$client->service->listclients(
+    new ServiceListClientsRequest([]),
 );
 ```
 </dd>
@@ -954,7 +1011,7 @@ $client->service->listClients(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;service-&gt;getClient($clientId, $request) -> ?Client</code></summary>
+<details><summary><code>$client-&gt;service-&gt;getclient($clientId, $request) -> ?Client</code></summary>
 <dl>
 <dd>
 
@@ -981,12 +1038,9 @@ Get a client by ID
 <dd>
 
 ```php
-$client->service->getClient(
+$client->service->getclient(
     'clientId',
-    new GetClientRequest([
-        'fields' => 'fields',
-        'includeFields' => true,
-    ]),
+    new ServiceGetClientRequest([]),
 );
 ```
 </dd>

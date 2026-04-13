@@ -31,14 +31,10 @@ require "seed"
 client = Seed::Client.new
 
 client.create_user(
-  id: "id",
-  email: "email",
   password: "password",
   profile: {
     name: "name",
-    verification: {
-      verified: "verified"
-    },
+    verification: {},
     ssn: "ssn"
   }
 )

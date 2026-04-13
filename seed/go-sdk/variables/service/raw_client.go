@@ -6,6 +6,7 @@ import (
 	context "context"
 	http "net/http"
 
+	fern "github.com/variables/fern"
 	core "github.com/variables/fern/core"
 	internal "github.com/variables/fern/internal"
 	option "github.com/variables/fern/option"
@@ -32,7 +33,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 
 func (r *RawClient) Post(
 	ctx context.Context,
-	endpointParam string,
+	request *fern.ServicePostRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -43,7 +44,7 @@ func (r *RawClient) Post(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/%v",
-		endpointParam,
+		request.EndpointParam,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),

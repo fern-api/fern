@@ -72,9 +72,9 @@ func WithMaxStreamBufSize(size int) *core.MaxBufSizeOption {
 	}
 }
 
-// WithHeaderTokenAuth sets the headerTokenAuth auth request header.
-func WithHeaderTokenAuth(headerTokenAuth string) *core.HeaderTokenAuthOption {
-	return &core.HeaderTokenAuthOption{
-		HeaderTokenAuth: headerTokenAuth,
+// WithAPIKey sets the apiKey auth request header.
+func WithAPIKey(apiKey string) *core.APIKeyOption {
+	return &core.APIKeyOption{
+		APIKey: apiKey,
 	}
 }

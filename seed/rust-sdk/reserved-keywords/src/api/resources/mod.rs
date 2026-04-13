@@ -7,12 +7,12 @@
 use crate::{ApiError, ClientConfig};
 
 pub mod package;
-pub struct NurseryApiClient {
+pub struct ApiClient {
     pub config: ClientConfig,
     pub package: PackageClient,
 }
 
-impl NurseryApiClient {
+impl ApiClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),

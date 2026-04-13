@@ -1,6 +1,6 @@
 # Reference
 ## Dummy
-<details><summary><code>client.Dummy.GetDummy() -> string</code></summary>
+<details><summary><code>client.Dummy.Getdummy() -> string</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```go
-client.Dummy.GetDummy(
+client.Dummy.Getdummy(
         context.TODO(),
     )
 }

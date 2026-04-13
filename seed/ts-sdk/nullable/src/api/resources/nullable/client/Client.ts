@@ -6,7 +6,7 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedNullable from "../../../index.js";
+import type * as SeedApi from "../../../index.js";
 
 export declare namespace NullableClient {
     export type Options = BaseClientOptions;
@@ -22,29 +22,23 @@ export class NullableClient {
     }
 
     /**
-     * @param {SeedNullable.GetUsersRequest} request
+     * @param {SeedApi.NullableGetUsersRequest} request
      * @param {NullableClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.nullable.getUsers({
-     *         usernames: "usernames",
-     *         avatar: "avatar",
-     *         activated: true,
-     *         tags: "tags",
-     *         extra: true
-     *     })
+     *     await client.nullable.getusers()
      */
-    public getUsers(
-        request: SeedNullable.GetUsersRequest = {},
+    public getusers(
+        request: SeedApi.NullableGetUsersRequest = {},
         requestOptions?: NullableClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedNullable.User[]> {
-        return core.HttpResponsePromise.fromPromise(this.__getUsers(request, requestOptions));
+    ): core.HttpResponsePromise<SeedApi.User[]> {
+        return core.HttpResponsePromise.fromPromise(this.__getusers(request, requestOptions));
     }
 
-    private async __getUsers(
-        request: SeedNullable.GetUsersRequest = {},
+    private async __getusers(
+        request: SeedApi.NullableGetUsersRequest = {},
         requestOptions?: NullableClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedNullable.User[]>> {
+    ): Promise<core.WithRawResponse<SeedApi.User[]>> {
         const { usernames, avatar, activated, tags, extra } = request;
         const _queryParams: Record<string, unknown> = {
             usernames,
@@ -58,7 +52,7 @@ export class NullableClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/users",
+                "users",
             ),
             method: "GET",
             headers: _headers,
@@ -70,11 +64,11 @@ export class NullableClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedNullable.User[], rawResponse: _response.rawResponse };
+            return { data: _response.body as SeedApi.User[], rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedNullableError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -85,45 +79,31 @@ export class NullableClient {
     }
 
     /**
-     * @param {SeedNullable.CreateUserRequest} request
+     * @param {SeedApi.NullableCreateUserRequest} request
      * @param {NullableClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.nullable.createUser({
-     *         username: "username",
-     *         tags: ["tags", "tags"],
-     *         metadata: {
-     *             createdAt: "2024-01-15T09:30:00Z",
-     *             updatedAt: "2024-01-15T09:30:00Z",
-     *             avatar: "avatar",
-     *             activated: true,
-     *             status: {
-     *                 type: "active"
-     *             },
-     *             values: {
-     *                 "values": "values"
-     *             }
-     *         },
-     *         avatar: "avatar"
+     *     await client.nullable.createuser({
+     *         username: "username"
      *     })
      */
-    public createUser(
-        request: SeedNullable.CreateUserRequest,
+    public createuser(
+        request: SeedApi.NullableCreateUserRequest,
         requestOptions?: NullableClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedNullable.User> {
-        return core.HttpResponsePromise.fromPromise(this.__createUser(request, requestOptions));
+    ): core.HttpResponsePromise<SeedApi.User> {
+        return core.HttpResponsePromise.fromPromise(this.__createuser(request, requestOptions));
     }
 
-    private async __createUser(
-        request: SeedNullable.CreateUserRequest,
+    private async __createuser(
+        request: SeedApi.NullableCreateUserRequest,
         requestOptions?: NullableClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedNullable.User>> {
+    ): Promise<core.WithRawResponse<SeedApi.User>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/users",
+                "users",
             ),
             method: "POST",
             headers: _headers,
@@ -138,11 +118,11 @@ export class NullableClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedNullable.User, rawResponse: _response.rawResponse };
+            return { data: _response.body as SeedApi.User, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedNullableError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -153,23 +133,21 @@ export class NullableClient {
     }
 
     /**
-     * @param {SeedNullable.DeleteUserRequest} request
+     * @param {SeedApi.NullableDeleteUserRequest} request
      * @param {NullableClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.nullable.deleteUser({
-     *         username: "xy"
-     *     })
+     *     await client.nullable.deleteuser()
      */
-    public deleteUser(
-        request: SeedNullable.DeleteUserRequest = {},
+    public deleteuser(
+        request: SeedApi.NullableDeleteUserRequest = {},
         requestOptions?: NullableClient.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
-        return core.HttpResponsePromise.fromPromise(this.__deleteUser(request, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__deleteuser(request, requestOptions));
     }
 
-    private async __deleteUser(
-        request: SeedNullable.DeleteUserRequest = {},
+    private async __deleteuser(
+        request: SeedApi.NullableDeleteUserRequest = {},
         requestOptions?: NullableClient.RequestOptions,
     ): Promise<core.WithRawResponse<boolean>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
@@ -177,7 +155,7 @@ export class NullableClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/users",
+                "users",
             ),
             method: "DELETE",
             headers: _headers,
@@ -196,7 +174,7 @@ export class NullableClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedNullableError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

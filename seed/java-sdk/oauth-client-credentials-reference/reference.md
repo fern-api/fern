@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.getToken(request) -> TokenResponse</code></summary>
+<details><summary><code>client.auth.gettoken(request) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```java
-client.auth().getToken(
+client.auth().gettoken(
     GetTokenRequest
         .builder()
         .clientId("client_id")
@@ -34,7 +34,15 @@ client.auth().getToken(
 <dl>
 <dd>
 
-**request:** `GetTokenRequest` 
+**clientId:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**clientSecret:** `String` 
     
 </dd>
 </dl>
@@ -47,7 +55,7 @@ client.auth().getToken(
 </details>
 
 ## Simple
-<details><summary><code>client.simple.getSomething()</code></summary>
+<details><summary><code>client.simple.getsomething()</code></summary>
 <dl>
 <dd>
 
@@ -60,7 +68,7 @@ client.auth().getToken(
 <dd>
 
 ```java
-client.simple().getSomething();
+client.simple().getsomething();
 ```
 </dd>
 </dl>

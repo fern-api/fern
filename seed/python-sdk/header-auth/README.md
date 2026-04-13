@@ -34,14 +34,14 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```python
-from seed import SeedHeaderToken
+from seed import SeedApi
 
-client = SeedHeaderToken(
-    header_token_auth="<value>",
+client = SeedApi(
+    api_key="<value>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.service.get_with_bearer_token()
+client.service.getwithbearertoken()
 ```
 
 ## Async Client
@@ -51,16 +51,16 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from seed import AsyncSeedHeaderToken
+from seed import AsyncSeedApi
 
-client = AsyncSeedHeaderToken(
-    header_token_auth="<value>",
+client = AsyncSeedApi(
+    api_key="<value>",
     base_url="https://yourhost.com/path/to/api",
 )
 
 
 async def main() -> None:
-    await client.service.get_with_bearer_token()
+    await client.service.getwithbearertoken()
 
 
 asyncio.run(main())
@@ -75,7 +75,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.service.get_with_bearer_token()
+    client.service.getwithbearertoken()
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -89,10 +89,10 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.with_raw_response` property returns a "raw" client that can be used to access the `.headers` and `.data` attributes.
 
 ```python
-from seed import SeedHeaderToken
+from seed import SeedApi
 
-client = SeedHeaderToken(...)
-response = client.service.with_raw_response.get_with_bearer_token()
+client = SeedApi(...)
+response = client.service.with_raw_response.getwithbearertoken()
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
@@ -113,7 +113,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.service.get_with_bearer_token(request_options={
+client.service.getwithbearertoken(request_options={
     "max_retries": 1
 })
 ```
@@ -123,12 +123,12 @@ client.service.get_with_bearer_token(request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-from seed import SeedHeaderToken
+from seed import SeedApi
 
-client = SeedHeaderToken(..., timeout=20.0)
+client = SeedApi(..., timeout=20.0)
 
 # Override timeout for a specific method
-client.service.get_with_bearer_token(request_options={
+client.service.getwithbearertoken(request_options={
     "timeout_in_seconds": 1
 })
 ```
@@ -140,9 +140,9 @@ and transports.
 
 ```python
 import httpx
-from seed import SeedHeaderToken
+from seed import SeedApi
 
-client = SeedHeaderToken(
+client = SeedApi(
     ...,
     httpx_client=httpx.Client(
         proxy="http://my.test.proxy.example.com",

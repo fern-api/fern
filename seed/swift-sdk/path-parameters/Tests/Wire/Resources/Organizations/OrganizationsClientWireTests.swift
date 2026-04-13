@@ -1,9 +1,41 @@
 import Foundation
 import Testing
-import PathParameters
+import Api
 
 @Suite("OrganizationsClient Wire Tests") struct OrganizationsClientWireTests {
-    @Test func getOrganization1() async throws -> Void {
+    @Test func getorganization1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                {
+                  "name": "name",
+                  "tags": [
+                    "tags"
+                  ]
+                }
+                """.utf8
+            )
+        )
+        let client = ApiClient(
+            baseURL: "https://api.fern.com",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = Organization(
+            name: "name",
+            tags: [
+                "tags"
+            ]
+        )
+        let response = try await client.organizations.getorganization(
+            tenantId: "tenant_id",
+            organizationId: "organization_id",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
+    @Test func getorganization2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -18,7 +50,7 @@ import PathParameters
                 """.utf8
             )
         )
-        let client = PathParametersClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -29,7 +61,7 @@ import PathParameters
                 "tags"
             ]
         )
-        let response = try await client.organizations.getOrganization(
+        let response = try await client.organizations.getorganization(
             tenantId: "tenant_id",
             organizationId: "organization_id",
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
@@ -37,7 +69,40 @@ import PathParameters
         try #require(response == expectedResponse)
     }
 
-    @Test func getOrganizationUser1() async throws -> Void {
+    @Test func getorganizationuser1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                {
+                  "name": "name",
+                  "tags": [
+                    "tags"
+                  ]
+                }
+                """.utf8
+            )
+        )
+        let client = ApiClient(
+            baseURL: "https://api.fern.com",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = User(
+            name: "name",
+            tags: [
+                "tags"
+            ]
+        )
+        let response = try await client.organizations.getorganizationuser(
+            tenantId: "tenant_id",
+            organizationId: "organization_id",
+            userId: "user_id",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
+    @Test func getorganizationuser2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -52,7 +117,7 @@ import PathParameters
                 """.utf8
             )
         )
-        let client = PathParametersClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -63,7 +128,8 @@ import PathParameters
                 "tags"
             ]
         )
-        let response = try await client.organizations.getOrganizationUser(
+        let response = try await client.organizations.getorganizationuser(
+            tenantId: "tenant_id",
             organizationId: "organization_id",
             userId: "user_id",
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
@@ -71,7 +137,43 @@ import PathParameters
         try #require(response == expectedResponse)
     }
 
-    @Test func searchOrganizations1() async throws -> Void {
+    @Test func searchorganizations1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                [
+                  {
+                    "name": "name",
+                    "tags": [
+                      "tags"
+                    ]
+                  }
+                ]
+                """.utf8
+            )
+        )
+        let client = ApiClient(
+            baseURL: "https://api.fern.com",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = [
+            Organization(
+                name: "name",
+                tags: [
+                    "tags"
+                ]
+            )
+        ]
+        let response = try await client.organizations.searchorganizations(
+            tenantId: "tenant_id",
+            organizationId: "organization_id",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
+    @Test func searchorganizations2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -95,7 +197,7 @@ import PathParameters
                 """.utf8
             )
         )
-        let client = PathParametersClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -115,9 +217,10 @@ import PathParameters
                 ]
             )
         ]
-        let response = try await client.organizations.searchOrganizations(
+        let response = try await client.organizations.searchorganizations(
+            tenantId: "tenant_id",
             organizationId: "organization_id",
-            limit: 1,
+            limit: .value(1),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)

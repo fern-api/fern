@@ -9,7 +9,7 @@ from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
-from .errors.not_found_error import NotFoundError
+from ..errors.not_found_error import NotFoundError
 from pydantic import ValidationError
 
 

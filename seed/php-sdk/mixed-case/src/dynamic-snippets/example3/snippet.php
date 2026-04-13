@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Service\Requests\ListResourcesRequest;
+use Seed\Service\Requests\ServiceListResourcesRequest;
 use DateTime;
 
 $client = new SeedClient(
@@ -11,8 +11,8 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->service->listResources(
-    new ListResourcesRequest([
+$client->service->listresources(
+    new ServiceListResourcesRequest([
         'pageLimit' => 1,
         'beforeDate' => new DateTime('2023-01-15'),
     ]),

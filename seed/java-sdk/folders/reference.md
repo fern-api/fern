@@ -24,8 +24,8 @@ client.foo();
 </dl>
 </details>
 
-## A B
-<details><summary><code>client.a.b.foo()</code></summary>
+## Ab
+<details><summary><code>client.ab.aBFoo()</code></summary>
 <dl>
 <dd>
 
@@ -38,7 +38,7 @@ client.foo();
 <dd>
 
 ```java
-client.foo();
+client.ab().aBFoo();
 ```
 </dd>
 </dl>
@@ -50,8 +50,8 @@ client.foo();
 </dl>
 </details>
 
-## A C
-<details><summary><code>client.a.c.foo()</code></summary>
+## Ac
+<details><summary><code>client.ac.aCFoo()</code></summary>
 <dl>
 <dd>
 
@@ -64,7 +64,7 @@ client.foo();
 <dd>
 
 ```java
-client.foo();
+client.ac().aCFoo();
 ```
 </dd>
 </dl>
@@ -90,7 +90,7 @@ client.foo();
 <dd>
 
 ```java
-client.foo();
+client.folder().foo();
 ```
 </dd>
 </dl>
@@ -102,8 +102,8 @@ client.foo();
 </dl>
 </details>
 
-## Folder Service
-<details><summary><code>client.folder.service.endpoint()</code></summary>
+## FolderService
+<details><summary><code>client.folderService.folderServiceEndpoint()</code></summary>
 <dl>
 <dd>
 
@@ -116,7 +116,7 @@ client.foo();
 <dd>
 
 ```java
-client.folder().service().endpoint();
+client.folderService().folderServiceEndpoint();
 ```
 </dd>
 </dl>
@@ -128,7 +128,7 @@ client.folder().service().endpoint();
 </dl>
 </details>
 
-<details><summary><code>client.folder.service.unknownRequest(request)</code></summary>
+<details><summary><code>client.folderService.folderServiceUnknownRequest(request)</code></summary>
 <dl>
 <dd>
 
@@ -141,7 +141,7 @@ client.folder().service().endpoint();
 <dd>
 
 ```java
-client.folder().service().unknownRequest(new 
+client.folderService().folderServiceUnknownRequest(new 
 HashMap<String, Object>() {{put("key", "value");
 }});
 ```

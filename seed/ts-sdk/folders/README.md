@@ -72,9 +72,9 @@ try {
 This SDK supports direct imports of subpackage clients, which allows JavaScript bundlers to tree-shake and include only the imported subpackage code. This results in much smaller bundle sizes.
 
 ```typescript
-import { AClient } from '@fern/folders/a';
+import { AbClient } from '@fern/folders/ab';
 
-const client = new AClient({...});
+const client = new AbClient({...});
 ```
 
 ### Additional Headers

@@ -1,4 +1,4 @@
-package basicauthpwomitted
+package api
 
 import (
 	"testing"

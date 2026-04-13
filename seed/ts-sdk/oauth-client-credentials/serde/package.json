@@ -44,49 +44,27 @@
             },
             "default": "./dist/cjs/api/resources/auth/exports.js"
         },
-        "./nestedNoAuth": {
+        "./nestedNoAuthApi": {
             "import": {
-                "types": "./dist/esm/api/resources/nestedNoAuth/exports.d.mts",
-                "default": "./dist/esm/api/resources/nestedNoAuth/exports.mjs"
+                "types": "./dist/esm/api/resources/nestedNoAuthApi/exports.d.mts",
+                "default": "./dist/esm/api/resources/nestedNoAuthApi/exports.mjs"
             },
             "require": {
-                "types": "./dist/cjs/api/resources/nestedNoAuth/exports.d.ts",
-                "default": "./dist/cjs/api/resources/nestedNoAuth/exports.js"
+                "types": "./dist/cjs/api/resources/nestedNoAuthApi/exports.d.ts",
+                "default": "./dist/cjs/api/resources/nestedNoAuthApi/exports.js"
             },
-            "default": "./dist/cjs/api/resources/nestedNoAuth/exports.js"
+            "default": "./dist/cjs/api/resources/nestedNoAuthApi/exports.js"
         },
-        "./nestedNoAuth/api": {
+        "./nestedApi": {
             "import": {
-                "types": "./dist/esm/api/resources/nestedNoAuth/resources/api/exports.d.mts",
-                "default": "./dist/esm/api/resources/nestedNoAuth/resources/api/exports.mjs"
+                "types": "./dist/esm/api/resources/nestedApi/exports.d.mts",
+                "default": "./dist/esm/api/resources/nestedApi/exports.mjs"
             },
             "require": {
-                "types": "./dist/cjs/api/resources/nestedNoAuth/resources/api/exports.d.ts",
-                "default": "./dist/cjs/api/resources/nestedNoAuth/resources/api/exports.js"
+                "types": "./dist/cjs/api/resources/nestedApi/exports.d.ts",
+                "default": "./dist/cjs/api/resources/nestedApi/exports.js"
             },
-            "default": "./dist/cjs/api/resources/nestedNoAuth/resources/api/exports.js"
-        },
-        "./nested": {
-            "import": {
-                "types": "./dist/esm/api/resources/nested/exports.d.mts",
-                "default": "./dist/esm/api/resources/nested/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/nested/exports.d.ts",
-                "default": "./dist/cjs/api/resources/nested/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/nested/exports.js"
-        },
-        "./nested/api": {
-            "import": {
-                "types": "./dist/esm/api/resources/nested/resources/api/exports.d.mts",
-                "default": "./dist/esm/api/resources/nested/resources/api/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/nested/resources/api/exports.d.ts",
-                "default": "./dist/cjs/api/resources/nested/resources/api/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/nested/resources/api/exports.js"
+            "default": "./dist/cjs/api/resources/nestedApi/exports.js"
         },
         "./simple": {
             "import": {

@@ -1,18 +1,43 @@
 package com.snippets;
 
-import com.seed.clientSideParams.SeedClientSideParamsClient;
-import com.seed.clientSideParams.resources.service.requests.GetConnectionRequest;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.service.requests.CreateUserRequest;
+import java.util.HashMap;
 
 public class Example9 {
     public static void main(String[] args) {
-        SeedClientSideParamsClient client = SeedClientSideParamsClient.builder()
+        SeedApiClient client = SeedApiClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
         client.service()
-                .getConnection(
-                        "connectionId",
-                        GetConnectionRequest.builder().fields("fields").build());
+                .createuser(CreateUserRequest.builder()
+                        .email("email")
+                        .connection("connection")
+                        .emailVerified(true)
+                        .username("username")
+                        .password("password")
+                        .phoneNumber("phone_number")
+                        .phoneVerified(true)
+                        .userMetadata(new HashMap<String, Object>() {
+                            {
+                                put("user_metadata", new HashMap<String, Object>() {
+                                    {
+                                        put("key", "value");
+                                    }
+                                });
+                            }
+                        })
+                        .appMetadata(new HashMap<String, Object>() {
+                            {
+                                put("app_metadata", new HashMap<String, Object>() {
+                                    {
+                                        put("key", "value");
+                                    }
+                                });
+                            }
+                        })
+                        .build());
     }
 }

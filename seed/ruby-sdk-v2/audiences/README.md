@@ -30,11 +30,7 @@ require "seed"
 
 client = Seed::Client.new
 
-client.foo.find(
-  optional_string: "optionalString",
-  public_property: "publicProperty",
-  private_property: 1
-)
+client.foo.find
 ```
 
 ## Environments
@@ -45,7 +41,7 @@ This SDK allows you to configure different environments or custom URLs for API r
 require "seed"
 
 seed = Seed::Client.new(
-    base_url: Seed::Environment::ENVIRONMENT_A
+    base_url: Seed::Environment::DEFAULT
 )
 ```
 

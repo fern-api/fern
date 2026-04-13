@@ -7,18 +7,20 @@ import (
 
 	fern "github.com/examples/fern"
 	core "github.com/examples/fern/core"
-	client "github.com/examples/fern/file/client"
-	healthclient "github.com/examples/fern/health/client"
+	filenotificationservice "github.com/examples/fern/filenotificationservice"
+	fileservice "github.com/examples/fern/fileservice"
+	healthservice "github.com/examples/fern/healthservice"
 	internal "github.com/examples/fern/internal"
 	option "github.com/examples/fern/option"
 	service "github.com/examples/fern/service"
 )
 
 type Acme struct {
-	WithRawResponse *RawAcme
-	File            *client.Client
-	Health          *healthclient.Client
-	Service         *service.Client
+	WithRawResponse         *RawAcme
+	FileNotificationService *filenotificationservice.Client
+	FileService             *fileservice.Client
+	HealthService           *healthservice.Client
+	Service                 *service.Client
 
 	options *core.RequestOptions
 	baseURL string
@@ -28,12 +30,13 @@ type Acme struct {
 func NewAcme(opts ...option.RequestOption) *Acme {
 	options := core.NewRequestOptions(opts...)
 	return &Acme{
-		File:            client.NewClient(options),
-		Health:          healthclient.NewClient(options),
-		Service:         service.NewClient(options),
-		WithRawResponse: NewRawAcme(options),
-		options:         options,
-		baseURL:         options.BaseURL,
+		FileNotificationService: filenotificationservice.NewClient(options),
+		FileService:             fileservice.NewClient(options),
+		HealthService:           healthservice.NewClient(options),
+		Service:                 service.NewClient(options),
+		WithRawResponse:         NewRawAcme(options),
+		options:                 options,
+		baseURL:                 options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
 				Client:      options.HTTPClient,

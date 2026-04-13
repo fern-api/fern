@@ -40,8 +40,8 @@ await client.foo();
 </dl>
 </details>
 
-## A B
-<details><summary><code>client.a.b.<a href="/src/api/resources/a/resources/b/client/Client.ts">foo</a>() -> void</code></summary>
+## Ab
+<details><summary><code>client.ab.<a href="/src/api/resources/ab/client/Client.ts">aBFoo</a>() -> void</code></summary>
 <dl>
 <dd>
 
@@ -54,7 +54,7 @@ await client.foo();
 <dd>
 
 ```typescript
-await client.a.b.foo();
+await client.ab.aBFoo();
 
 ```
 </dd>
@@ -70,7 +70,7 @@ await client.a.b.foo();
 <dl>
 <dd>
 
-**requestOptions:** `BClient.RequestOptions` 
+**requestOptions:** `AbClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -82,8 +82,8 @@ await client.a.b.foo();
 </dl>
 </details>
 
-## A C
-<details><summary><code>client.a.c.<a href="/src/api/resources/a/resources/c/client/Client.ts">foo</a>() -> void</code></summary>
+## Ac
+<details><summary><code>client.ac.<a href="/src/api/resources/ac/client/Client.ts">aCFoo</a>() -> void</code></summary>
 <dl>
 <dd>
 
@@ -96,7 +96,7 @@ await client.a.b.foo();
 <dd>
 
 ```typescript
-await client.a.c.foo();
+await client.ac.aCFoo();
 
 ```
 </dd>
@@ -112,7 +112,7 @@ await client.a.c.foo();
 <dl>
 <dd>
 
-**requestOptions:** `CClient.RequestOptions` 
+**requestOptions:** `AcClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -166,8 +166,8 @@ await client.folder.foo();
 </dl>
 </details>
 
-## Folder Service
-<details><summary><code>client.folder.service.<a href="/src/api/resources/folder/resources/service/client/Client.ts">endpoint</a>() -> void</code></summary>
+## FolderService
+<details><summary><code>client.folderService.<a href="/src/api/resources/folderService/client/Client.ts">folderServiceEndpoint</a>() -> void</code></summary>
 <dl>
 <dd>
 
@@ -180,7 +180,7 @@ await client.folder.foo();
 <dd>
 
 ```typescript
-await client.folder.service.endpoint();
+await client.folderService.folderServiceEndpoint();
 
 ```
 </dd>
@@ -196,7 +196,7 @@ await client.folder.service.endpoint();
 <dl>
 <dd>
 
-**requestOptions:** `ServiceClient.RequestOptions` 
+**requestOptions:** `FolderServiceClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -208,7 +208,7 @@ await client.folder.service.endpoint();
 </dl>
 </details>
 
-<details><summary><code>client.folder.service.<a href="/src/api/resources/folder/resources/service/client/Client.ts">unknownRequest</a>({ ...params }) -> void</code></summary>
+<details><summary><code>client.folderService.<a href="/src/api/resources/folderService/client/Client.ts">folderServiceUnknownRequest</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -221,7 +221,7 @@ await client.folder.service.endpoint();
 <dd>
 
 ```typescript
-await client.folder.service.unknownRequest({
+await client.folderService.folderServiceUnknownRequest({
     "key": "value"
 });
 
@@ -247,7 +247,7 @@ await client.folder.service.unknownRequest({
 <dl>
 <dd>
 
-**requestOptions:** `ServiceClient.RequestOptions` 
+**requestOptions:** `FolderServiceClient.RequestOptions` 
     
 </dd>
 </dl>

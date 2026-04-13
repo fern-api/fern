@@ -7,9 +7,5 @@ async fn main() {
         ..Default::default()
     };
     let client = ApiClient::new(config).expect("Failed to build client");
-    client
-        .folder
-        .service
-        .unknown_request(&serde_json::json!({"key":"value"}), None)
-        .await;
+    client.folder.foo(None).await;
 }

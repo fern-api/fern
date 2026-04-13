@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-import Streaming
+import Api
 
 @Suite("DummyClient Wire Tests") struct DummyClientWireTests {
     @Test func generate1() async throws -> Void {
@@ -15,18 +15,18 @@ import Streaming
                 """.utf8
             )
         )
-        let client = StreamingClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
         let expectedResponse = StreamResponse(
             id: "id",
-            name: Optional("name")
+            name: Optional(Nullable<String>.value("name"))
         )
         let response = try await client.dummy.generate(
             request: .init(
-                stream: false,
-                numEvents: 5
+                stream: true,
+                numEvents: 1
             ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
@@ -45,17 +45,17 @@ import Streaming
                 """.utf8
             )
         )
-        let client = StreamingClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
         let expectedResponse = StreamResponse(
             id: "id",
-            name: Optional("name")
+            name: Optional(Nullable<String>.value("name"))
         )
         let response = try await client.dummy.generate(
             request: .init(
-                stream: false,
+                stream: true,
                 numEvents: 1
             ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)

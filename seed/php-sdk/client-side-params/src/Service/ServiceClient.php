@@ -4,8 +4,8 @@ namespace Seed\Service;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Service\Requests\ListResourcesRequest;
-use Seed\Types\Types\Resource;
+use Seed\Service\Requests\ServiceListResourcesRequest;
+use Seed\Types\Resource;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
@@ -13,22 +13,22 @@ use Seed\Core\Client\HttpMethod;
 use Seed\Core\Json\JsonDecoder;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
-use Seed\Service\Requests\GetResourceRequest;
-use Seed\Service\Requests\SearchResourcesRequest;
-use Seed\Types\Types\SearchResponse;
-use Seed\Service\Requests\ListUsersRequest;
-use Seed\Types\Types\PaginatedUserResponse;
-use Seed\Service\Requests\GetUserRequest;
-use Seed\Types\Types\User;
-use Seed\Types\Types\CreateUserRequest;
-use Seed\Types\Types\UpdateUserRequest;
-use Seed\Service\Requests\ListConnectionsRequest;
-use Seed\Types\Types\Connection;
-use Seed\Service\Requests\GetConnectionRequest;
-use Seed\Service\Requests\ListClientsRequest;
-use Seed\Types\Types\PaginatedClientResponse;
-use Seed\Service\Requests\GetClientRequest;
-use Seed\Types\Types\Client;
+use Seed\Service\Requests\ServiceGetResourceRequest;
+use Seed\Service\Requests\ServiceSearchResourcesRequest;
+use Seed\Types\SearchResponse;
+use Seed\Service\Requests\ServiceListUsersRequest;
+use Seed\Types\PaginatedUserResponse;
+use Seed\Service\Requests\CreateUserRequest;
+use Seed\Types\User;
+use Seed\Service\Requests\ServiceGetUserByIdRequest;
+use Seed\Service\Requests\UpdateUserRequest;
+use Seed\Service\Requests\ServiceListConnectionsRequest;
+use Seed\Types\Connection;
+use Seed\Service\Requests\ServiceGetConnectionRequest;
+use Seed\Service\Requests\ServiceListClientsRequest;
+use Seed\Types\PaginatedClientResponse;
+use Seed\Service\Requests\ServiceGetClientRequest;
+use Seed\Types\Client;
 
 class ServiceClient
 {
@@ -69,7 +69,7 @@ class ServiceClient
     /**
      * List resources with pagination
      *
-     * @param ListResourcesRequest $request
+     * @param ServiceListResourcesRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -82,7 +82,7 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listResources(ListResourcesRequest $request, ?array $options = null): ?array
+    public function listresources(ServiceListResourcesRequest $request, ?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -101,7 +101,7 @@ class ServiceClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/api/resources",
+                    path: "api/resources",
                     method: HttpMethod::GET,
                     query: $query,
                 ),
@@ -131,7 +131,7 @@ class ServiceClient
      * Get a single resource
      *
      * @param string $resourceId
-     * @param GetResourceRequest $request
+     * @param ServiceGetResourceRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -144,7 +144,7 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getResource(string $resourceId, GetResourceRequest $request, ?array $options = null): ?Resource
+    public function getresource(string $resourceId, ServiceGetResourceRequest $request, ?array $options = null): ?Resource
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -154,7 +154,7 @@ class ServiceClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/api/resources/{$resourceId}",
+                    path: "api/resources/{$resourceId}",
                     method: HttpMethod::GET,
                     query: $query,
                 ),
@@ -183,7 +183,7 @@ class ServiceClient
     /**
      * Search resources with complex parameters
      *
-     * @param SearchResourcesRequest $request
+     * @param ServiceSearchResourcesRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -196,7 +196,7 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function searchResources(SearchResourcesRequest $request, ?array $options = null): ?SearchResponse
+    public function searchresources(ServiceSearchResourcesRequest $request, ?array $options = null): ?SearchResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -206,7 +206,7 @@ class ServiceClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/api/resources/search",
+                    path: "api/resources/search",
                     method: HttpMethod::POST,
                     query: $query,
                     body: $request,
@@ -236,7 +236,7 @@ class ServiceClient
     /**
      * List or search for users
      *
-     * @param ListUsersRequest $request
+     * @param ServiceListUsersRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -249,7 +249,7 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listUsers(ListUsersRequest $request = new ListUsersRequest(), ?array $options = null): ?PaginatedUserResponse
+    public function listusers(ServiceListUsersRequest $request = new ServiceListUsersRequest(), ?array $options = null): ?PaginatedUserResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -281,7 +281,7 @@ class ServiceClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/api/users",
+                    path: "api/users",
                     method: HttpMethod::GET,
                     query: $query,
                 ),
@@ -294,63 +294,6 @@ class ServiceClient
                     return null;
                 }
                 return PaginatedUserResponse::fromJson($json);
-            }
-        } catch (JsonException $e) {
-            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
-        } catch (ClientExceptionInterface $e) {
-            throw new SeedException(message: $e->getMessage(), previous: $e);
-        }
-        throw new SeedApiException(
-            message: 'API request failed',
-            statusCode: $statusCode,
-            body: $response->getBody()->getContents(),
-        );
-    }
-
-    /**
-     * Get a user by ID
-     *
-     * @param string $userId
-     * @param GetUserRequest $request
-     * @param ?array{
-     *   baseUrl?: string,
-     *   maxRetries?: int,
-     *   timeout?: float,
-     *   headers?: array<string, string>,
-     *   queryParameters?: array<string, mixed>,
-     *   bodyProperties?: array<string, mixed>,
-     * } $options
-     * @return ?User
-     * @throws SeedException
-     * @throws SeedApiException
-     */
-    public function getUserById(string $userId, GetUserRequest $request = new GetUserRequest(), ?array $options = null): ?User
-    {
-        $options = array_merge($this->options, $options ?? []);
-        $query = [];
-        if ($request->fields != null) {
-            $query['fields'] = $request->fields;
-        }
-        if ($request->includeFields != null) {
-            $query['include_fields'] = $request->includeFields;
-        }
-        try {
-            $response = $this->client->sendRequest(
-                new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/api/users/{$userId}",
-                    method: HttpMethod::GET,
-                    query: $query,
-                ),
-                $options,
-            );
-            $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
-                $json = $response->getBody()->getContents();
-                if (empty($json)) {
-                    return null;
-                }
-                return User::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -380,14 +323,14 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function createUser(CreateUserRequest $request, ?array $options = null): ?User
+    public function createuser(CreateUserRequest $request, ?array $options = null): ?User
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/api/users",
+                    path: "api/users",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -414,10 +357,10 @@ class ServiceClient
     }
 
     /**
-     * Update a user
+     * Get a user by ID
      *
      * @param string $userId
-     * @param UpdateUserRequest $request
+     * @param ServiceGetUserByIdRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -430,16 +373,23 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function updateUser(string $userId, UpdateUserRequest $request, ?array $options = null): ?User
+    public function getuserbyid(string $userId, ServiceGetUserByIdRequest $request = new ServiceGetUserByIdRequest(), ?array $options = null): ?User
     {
         $options = array_merge($this->options, $options ?? []);
+        $query = [];
+        if ($request->fields != null) {
+            $query['fields'] = $request->fields;
+        }
+        if ($request->includeFields != null) {
+            $query['include_fields'] = $request->includeFields;
+        }
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/api/users/{$userId}",
-                    method: HttpMethod::PATCH,
-                    body: $request,
+                    path: "api/users/{$userId}",
+                    method: HttpMethod::GET,
+                    query: $query,
                 ),
                 $options,
             );
@@ -478,14 +428,14 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function deleteUser(string $userId, ?array $options = null): void
+    public function deleteuser(string $userId, ?array $options = null): void
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/api/users/{$userId}",
+                    path: "api/users/{$userId}",
                     method: HttpMethod::DELETE,
                 ),
                 $options,
@@ -505,9 +455,59 @@ class ServiceClient
     }
 
     /**
+     * Update a user
+     *
+     * @param string $userId
+     * @param UpdateUserRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return ?User
+     * @throws SeedException
+     * @throws SeedApiException
+     */
+    public function updateuser(string $userId, UpdateUserRequest $request = new UpdateUserRequest(), ?array $options = null): ?User
+    {
+        $options = array_merge($this->options, $options ?? []);
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "api/users/{$userId}",
+                    method: HttpMethod::PATCH,
+                    body: $request,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return User::fromJson($json);
+            }
+        } catch (JsonException $e) {
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new SeedException(message: $e->getMessage(), previous: $e);
+        }
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
      * List all connections
      *
-     * @param ListConnectionsRequest $request
+     * @param ServiceListConnectionsRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -520,7 +520,7 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listConnections(ListConnectionsRequest $request = new ListConnectionsRequest(), ?array $options = null): ?array
+    public function listconnections(ServiceListConnectionsRequest $request = new ServiceListConnectionsRequest(), ?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -537,7 +537,7 @@ class ServiceClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/api/connections",
+                    path: "api/connections",
                     method: HttpMethod::GET,
                     query: $query,
                 ),
@@ -567,7 +567,7 @@ class ServiceClient
      * Get a connection by ID
      *
      * @param string $connectionId
-     * @param GetConnectionRequest $request
+     * @param ServiceGetConnectionRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -580,7 +580,7 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getConnection(string $connectionId, GetConnectionRequest $request = new GetConnectionRequest(), ?array $options = null): ?Connection
+    public function getconnection(string $connectionId, ServiceGetConnectionRequest $request = new ServiceGetConnectionRequest(), ?array $options = null): ?Connection
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -591,7 +591,7 @@ class ServiceClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/api/connections/{$connectionId}",
+                    path: "api/connections/{$connectionId}",
                     method: HttpMethod::GET,
                     query: $query,
                 ),
@@ -620,7 +620,7 @@ class ServiceClient
     /**
      * List all clients/applications
      *
-     * @param ListClientsRequest $request
+     * @param ServiceListClientsRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -633,7 +633,7 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listClients(ListClientsRequest $request = new ListClientsRequest(), ?array $options = null): ?PaginatedClientResponse
+    public function listclients(ServiceListClientsRequest $request = new ServiceListClientsRequest(), ?array $options = null): ?PaginatedClientResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -665,7 +665,7 @@ class ServiceClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/api/clients",
+                    path: "api/clients",
                     method: HttpMethod::GET,
                     query: $query,
                 ),
@@ -695,7 +695,7 @@ class ServiceClient
      * Get a client by ID
      *
      * @param string $clientId
-     * @param GetClientRequest $request
+     * @param ServiceGetClientRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -708,7 +708,7 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getClient(string $clientId, GetClientRequest $request = new GetClientRequest(), ?array $options = null): ?Client
+    public function getclient(string $clientId, ServiceGetClientRequest $request = new ServiceGetClientRequest(), ?array $options = null): ?Client
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -722,7 +722,7 @@ class ServiceClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/api/clients/{$clientId}",
+                    path: "api/clients/{$clientId}",
                     method: HttpMethod::GET,
                     query: $query,
                 ),

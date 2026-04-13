@@ -48,12 +48,12 @@ Instantiate and use the client with the following:
 
 ```swift
 import Foundation
-import Errors
+import Api
 
 private func main() async throws {
-    let client = ErrorsClient()
+    let client = ApiClient()
 
-    _ = try await client.simple.fooWithoutEndpointError(request: FooRequest(
+    _ = try await client.simple.foowithoutendpointerror(request: FooRequest(
         bar: "bar"
     ))
 }
@@ -66,14 +66,14 @@ try await main()
 The SDK throws a single error enum for all failures. Client-side issues encoding/decoding failures and network errors use dedicated cases, while non-success HTTP responses are wrapped in an `HTTPError` that exposes the status code, a simple classification and an optional decoded message.
 
 ```swift
-import Errors
+import Api
 
-let client = ErrorsClient(...)
+let client = ApiClient(...)
 
 do {
-    let response = try await client.simple.fooWithoutEndpointError(...)
+    let response = try await client.simple.foowithoutendpointerror(...)
     // Handle successful response
-} catch let error as ErrorsError {
+} catch let error as ApiError {
     switch error {
     case .httpError(let httpError):
         print("Status code:", httpError.statusCode)
@@ -98,7 +98,7 @@ do {
 If you would like to send additional headers as part of the request, use the `additionalHeaders` request option.
 
 ```swift
-try await client.simple.fooWithoutEndpointError(..., requestOptions: .init(
+try await client.simple.foowithoutendpointerror(..., requestOptions: .init(
     additionalHeaders: [
         "X-Custom-Header": "custom value"
     ]
@@ -110,7 +110,7 @@ try await client.simple.fooWithoutEndpointError(..., requestOptions: .init(
 If you would like to send additional query string parameters as part of the request, use the `additionalQueryParameters` request option.
 
 ```swift
-try await client.simple.fooWithoutEndpointError(..., requestOptions: .init(
+try await client.simple.foowithoutendpointerror(..., requestOptions: .init(
     additionalQueryParameters: [
         "custom_query_param_key": "custom_query_param_value"
     ]
@@ -122,7 +122,7 @@ try await client.simple.fooWithoutEndpointError(..., requestOptions: .init(
 The SDK defaults to a 60-second timeout. Use the `timeout` option to configure this behavior.
 
 ```swift
-try await client.simple.fooWithoutEndpointError(..., requestOptions: .init(
+try await client.simple.foowithoutendpointerror(..., requestOptions: .init(
     timeout: 30
 ))
 ```
@@ -133,9 +133,9 @@ The SDK allows you to customize the underlying `URLSession` used for HTTP reques
 
 ```swift
 import Foundation
-import Errors
+import Api
 
-let client = ErrorsClient(
+let client = ApiClient(
     ...,
     urlSession: // Provide your implementation here
 )

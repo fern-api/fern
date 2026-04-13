@@ -1,2 +1,2 @@
-export { SeedOauthClientCredentialsMandatoryAuthError } from "./SeedOauthClientCredentialsMandatoryAuthError.js";
-export { SeedOauthClientCredentialsMandatoryAuthTimeoutError } from "./SeedOauthClientCredentialsMandatoryAuthTimeoutError.js";
+export { SeedApiError } from "./SeedApiError.js";
+export { SeedApiTimeoutError } from "./SeedApiTimeoutError.js";

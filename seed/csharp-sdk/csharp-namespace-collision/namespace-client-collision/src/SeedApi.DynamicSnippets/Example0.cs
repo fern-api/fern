@@ -11,8 +11,8 @@ public class Example0
             }
         );
 
-        await client.CreateUserAsync(
-            new Contoso.Net.User {
+        await client._.CreateUserAsync(
+            new User {
                 Id = "id",
                 Name = "name",
                 Email = "email",

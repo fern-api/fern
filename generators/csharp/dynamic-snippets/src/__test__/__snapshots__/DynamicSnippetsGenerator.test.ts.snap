@@ -9,15 +9,15 @@ var client = new AcmeClient(
     token: "<YOUR_API_KEY>"
 );
 
-await client.Service.GetmetadataAsync(
-    new ServiceGetMetadataRequest {
+await client.Service.GetMetadataAsync(
+    new GetMetadataRequest {
         Shallow = false,
         Tag = new List<string>(){
             "development",
             "public",
         }
         ,
-        APIVersion = "0.0.1"
+        XAPIVersion = "0.0.1"
     }
 );
 "
@@ -32,14 +32,14 @@ var client = new AcmeClient(
     token: "<YOUR_API_KEY>"
 );
 
-await client.Service.GetmetadataAsync(
-    new ServiceGetMetadataRequest {
+await client.Service.GetMetadataAsync(
+    new GetMetadataRequest {
         Shallow = false,
         Tag = new List<string>(){
             "development",
         }
         ,
-        APIVersion = "0.0.1"
+        XAPIVersion = "0.0.1"
     }
 );
 "
@@ -47,14 +47,15 @@ await client.Service.GetmetadataAsync(
 
 exports[`snippets (default) > examples > 'POST /big-entity (simple)' 1`] = `
 "using Acme;
-using Acme.Service;
+using Acme.Types;
 using System.Collections.Generic;
+using Acme.Commons.Types;
 
 var client = new AcmeClient(
     token: "<YOUR_API_KEY>"
 );
 
-await client.Service.CreatebigentityAsync(
+await client.Service.CreateBigEntityAsync(
     new BigEntity {
         CastMember = new Actor {
             ID = "john.doe",
@@ -72,7 +73,7 @@ await client.Service.CreatebigentityAsync(
             Title = "Pulp Fiction",
             From = "Quentin Tarantino",
             Rating = 8.5,
-            Type = MovieType.Movie,
+            Type = "movie",
             Tag = "tag-12efs9dv",
             Metadata = new Dictionary<string, object?>(){
                 ["academyAward"] = true,
@@ -87,16 +88,17 @@ await client.Service.CreatebigentityAsync(
             ,
             Revenue = 1000000L
         },
-        EventInfo = new CommonsEventInfoZero {
-            Type = CommonsEventInfoZeroType.Metadata,
-            ID = "event-12345",
-            Data = new Dictionary<string, string?>(){
-                ["key1"] = "val1",
-                ["key2"] = "val2",
+        EventInfo = new EventInfo(
+            new Metadata {
+                ID = "event-12345",
+                Data = new Dictionary<string, string>(){
+                    ["key1"] = "val1",
+                    ["key2"] = "val2",
+                }
+                ,
+                JSONString = "abc"
             }
-            ,
-            JSONString = "abc"
-        },
+        ),
         Migration = new Migration {
             Name = "Migration 31 Aug",
             Status = MigrationStatus.Running
@@ -121,20 +123,21 @@ exports[`snippets (default) > examples > 'POST /movie (invalid request body)' 1`
 
 exports[`snippets (default) > examples > 'POST /movie (simple)' 1`] = `
 "using Acme;
+using Acme.Types;
 using System.Collections.Generic;
 
 var client = new AcmeClient(
     token: "<YOUR_API_KEY>"
 );
 
-await client.Service.CreatemovieAsync(
+await client.Service.CreateMovieAsync(
     new Movie {
         ID = "movie-c06a4ad7",
         Prequel = "movie-cv9b914f",
         Title = "The Boy and the Heron",
         From = "Hayao Miyazaki",
         Rating = 8,
-        Type = MovieType.Movie,
+        Type = "movie",
         Tag = "development",
         Metadata = new Dictionary<string, object?>(){
             ["actors"] = new List<object>()
@@ -160,16 +163,44 @@ await client.Service.CreatemovieAsync(
 `;
 
 exports[`snippets (default) > exhaustive > 'GET /object/get-and-return-with-optio…' 1`] = `
-"[
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody",
-      "bigint"
-    ],
-    "message": "Expected number, got string"
-  }
-]"
+"using Acme;
+using Acme.Types.Object;
+using System;
+using System.Globalization;
+using System.Collections.Generic;
+
+var client = new AcmeClient(
+    token: "<YOUR_API_KEY>"
+);
+
+await client.Endpoints.Object.GetAndReturnWithOptionalFieldAsync(
+    new ObjectWithOptionalField {
+        String = "string",
+        Integer = 1,
+        Long = 1000000L,
+        Double = 1.1,
+        Bool = true,
+        Datetime = DateTime.Parse("2024-01-15T09:30:00Z", null, DateTimeStyles.AdjustToUniversal),
+        Date = DateOnly.Parse("2023-01-15"),
+        UUID = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+        Base64 = "SGVsbG8gd29ybGQh",
+        List = new List<string>(){
+            "list",
+            "list",
+        }
+        ,
+        Set = new HashSet<string>(){
+            "set",
+        }
+        ,
+        Map = new Dictionary<int, string>(){
+            [1] = "map",
+        }
+        ,
+        Bigint = "1000000"
+    }
+);
+"
 `;
 
 exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (inva…' 1`] = `
@@ -204,20 +235,21 @@ exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (inv
 exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (simp…' 1`] = `
 "using Acme;
 using System.Collections.Generic;
+using Acme.Types.Object;
 
 var client = new AcmeClient(
     token: "<YOUR_API_KEY>"
 );
 
-await client.EndpointsContainer.EndpointsContainerGetAndReturnListOfObjectsAsync(
-    new List<TypesObjectWithRequiredField>(){
-        new TypesObjectWithRequiredField {
+await client.Endpoints.Container.GetAndReturnListOfObjectsAsync(
+    new List<ObjectWithRequiredField>(){
+        new ObjectWithRequiredField {
             String = "one"
         },
-        new TypesObjectWithRequiredField {
+        new ObjectWithRequiredField {
             String = "two"
         },
-        new TypesObjectWithRequiredField {
+        new ObjectWithRequiredField {
             String = "three"
         },
     }
@@ -233,7 +265,7 @@ var client = new AcmeClient(
     token: "<YOUR_API_KEY>"
 );
 
-await client.EndpointsContainer.EndpointsContainerGetAndReturnListOfPrimitivesAsync(
+await client.Endpoints.Container.GetAndReturnListOfPrimitivesAsync(
     new List<string>(){
         "one",
         "two",
@@ -252,7 +284,7 @@ var client = new AcmeClient(
     token: "<YOUR_API_KEY>"
 );
 
-await client.EndpointsContainer.EndpointsContainerGetAndReturnMapOfPrimToUndiscriminatedUnionAsync(
+await client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnionAsync(
     new Dictionary<string, OneOf<double, bool, string, IEnumerable<string>>>(){
         ["test"] = 0,
         ["test2"] = true,
@@ -270,15 +302,41 @@ await client.EndpointsContainer.EndpointsContainerGetAndReturnMapOfPrimToUndiscr
 `;
 
 exports[`snippets (default) > file-upload > 'POST /' 1`] = `
-"[
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody"
-    ],
-    "message": "Expected file value to be a string, got object"
-  }
-]"
+"using Acme;
+using Acme.Service;
+using System.IO;
+using System.Text;
+using System.Collections.Generic;
+
+var client = new AcmeClient();
+
+await client.Service.PostAsync(
+    new MyRequest {
+        File = new FileParameter(){
+            Stream = new MemoryStream(Encoding.UTF8.GetBytes("Hello, world!"))
+        },
+        FileList = new List<FileParameter>(){
+            new FileParameter(){
+                Stream = new MemoryStream(Encoding.UTF8.GetBytes("First"))
+            },
+            new FileParameter(){
+                Stream = new MemoryStream(Encoding.UTF8.GetBytes("Second"))
+            },
+        }
+        ,
+        MaybeFile = new FileParameter(){
+            Stream = new MemoryStream(Encoding.UTF8.GetBytes("[bytes]"))
+        },
+        MaybeFileList = new List<FileParameter>(){
+            new FileParameter(){
+                Stream = new MemoryStream(Encoding.UTF8.GetBytes("[bytes]"))
+            },
+        }
+        ,
+        Integer = 123
+    }
+);
+"
 `;
 
 exports[`snippets (default) > file-upload > 'POST /just-file' 1`] = `
@@ -289,8 +347,8 @@ using System.Text;
 
 var client = new AcmeClient();
 
-await client.Service.JustfileAsync(
-    new ServiceJustFileRequest {
+await client.Service.JustFileAsync(
+    new JustFileRequest {
         File = new FileParameter(){
             Stream = new MemoryStream(Encoding.UTF8.GetBytes("Hello, world!"))
         }
@@ -307,8 +365,8 @@ using System.Text;
 
 var client = new AcmeClient();
 
-await client.Service.JustfilewithqueryparamsAsync(
-    new ServiceJustFileWithQueryParamsRequest {
+await client.Service.JustFileWithQueryParamsAsync(
+    new JustFileWithQueryParamsRequest {
         Integer = 42,
         MaybeString = "exists",
         File = new FileParameter(){
@@ -321,16 +379,13 @@ await client.Service.JustfilewithqueryparamsAsync(
 
 exports[`snippets (default) > imdb > 'GET /movies/{movieId} (simple)' 1`] = `
 "using Acme;
-using Acme.Imdb;
 
 var client = new AcmeClient(
     token: "<YOUR_API_KEY>"
 );
 
-await client.Imdb.GetmovieAsync(
-    new ImdbGetMovieRequest {
-        MovieID = "movie_xyz"
-    }
+await client.Imdb.GetMovieAsync(
+    "movie_xyz"
 );
 "
 `;
@@ -343,7 +398,7 @@ var client = new AcmeClient(
     token: "<YOUR_API_KEY>"
 );
 
-await client.Imdb.CreatemovieAsync(
+await client.Imdb.CreateMovieAsync(
     new CreateMovieRequest {
         Title = "The Matrix",
         Rating = 8.2
@@ -353,13 +408,25 @@ await client.Imdb.CreatemovieAsync(
 `;
 
 exports[`snippets (default) > multi-url-environment > 'Custom environment' 1`] = `
-"[
-  {
-    "severity": "CRITICAL",
-    "path": [],
-    "message": "Multiple environments are not supported for single base URL environments; use the baseUrl option instead"
-  }
-]"
+"using Acme;
+using Acme.S3;
+
+var client = new AcmeClient(
+    token: "<YOUR_API_KEY>",
+    clientOptions: new ClientOptions {
+        Environment = new AcmeEnvironment {
+            Ec2 = "https://custom.ec2.aws.com",
+            S3 = "https://custom.s3.aws.com"
+        }
+    }
+);
+
+await client.S3.GetPresignedURLAsync(
+    new GetPresignedURLRequest {
+        S3Key = "xyz"
+    }
+);
+"
 `;
 
 exports[`snippets (default) > multi-url-environment > 'Invalid multi url environment' 1`] = `
@@ -367,29 +434,47 @@ exports[`snippets (default) > multi-url-environment > 'Invalid multi url environ
   {
     "severity": "CRITICAL",
     "path": [],
-    "message": "Multiple environments are not supported for single base URL environments; use the baseUrl option instead"
+    "message": "The provided environments are invalid; got: [ec2], expected: [ec2, s3]"
   }
 ]"
 `;
 
 exports[`snippets (default) > multi-url-environment > 'Production environment' 1`] = `
-"[
-  {
-    "severity": "WARNING",
-    "path": [],
-    "message": "Environment \\"Production\\" was not found"
-  }
-]"
+"using Acme;
+using Acme.S3;
+
+var client = new AcmeClient(
+    token: "<YOUR_API_KEY>",
+    clientOptions: new ClientOptions {
+        Environment = AcmeEnvironment.Production
+    }
+);
+
+await client.S3.GetPresignedURLAsync(
+    new GetPresignedURLRequest {
+        S3Key = "xyz"
+    }
+);
+"
 `;
 
 exports[`snippets (default) > multi-url-environment > 'Staging environment' 1`] = `
-"[
-  {
-    "severity": "WARNING",
-    "path": [],
-    "message": "Environment \\"Staging\\" was not found"
-  }
-]"
+"using Acme;
+using Acme.S3;
+
+var client = new AcmeClient(
+    token: "<YOUR_API_KEY>",
+    clientOptions: new ClientOptions {
+        Environment = AcmeEnvironment.Staging
+    }
+);
+
+await client.S3.GetPresignedURLAsync(
+    new GetPresignedURLRequest {
+        S3Key = "xyz"
+    }
+);
+"
 `;
 
 exports[`snippets (default) > multi-url-environment > 'Unrecognized environment' 1`] = `
@@ -415,8 +500,8 @@ var client = new AcmeClient(
     }
 );
 
-await client.Nullable.CreateuserAsync(
-    new NullableCreateUserRequest {
+await client.Nullable.CreateUserAsync(
+    new CreateUserRequest {
         Username = "john.doe",
         Tags = new List<string>(){
             "admin",
@@ -457,8 +542,8 @@ var client = new AcmeClient(
     }
 );
 
-await client.Nullable.GetusersAsync(
-    new NullableGetUsersRequest {
+await client.Nullable.GetUsersAsync(
+    new GetUsersRequest {
         Usernames = new List<string>(){
             "john.doe",
             "jane.doe",
@@ -488,9 +573,13 @@ await client.CreateUserAsync(
         Password = "password",
         Profile = new UserProfile {
             Name = "name",
-            Verification = new UserProfileVerification(),
+            Verification = new UserProfileVerification {
+                Verified = ""
+            },
             Ssn = "ssn"
-        }
+        },
+        ID = "",
+        Email = ""
     }
 );
 "
@@ -511,9 +600,12 @@ await client.CreateUserAsync(
         Password = "password",
         Profile = new UserProfile {
             Name = "name",
-            Verification = new UserProfileVerification(),
+            Verification = new UserProfileVerification {
+                Verified = ""
+            },
             Ssn = "ssn"
-        }
+        },
+        Email = ""
     }
 );
 "
@@ -559,18 +651,22 @@ var client = new AcmeClient(
     }
 );
 
-await client.Dummy.GetdummyAsync();
+await client.Dummy.GetDummyAsync();
 "
 `;
 
 exports[`snippets (default) > single-url-environment-default > 'Staging environment' 1`] = `
-"[
-  {
-    "severity": "WARNING",
-    "path": [],
-    "message": "Environment \\"Staging\\" was not found"
-  }
-]"
+"using Acme;
+
+var client = new AcmeClient(
+    token: "<YOUR_API_KEY>",
+    clientOptions: new ClientOptions {
+        BaseUrl = AcmeEnvironment.Staging
+    }
+);
+
+await client.Dummy.GetDummyAsync();
+"
 `;
 
 exports[`snippets (default) > single-url-environment-default > 'custom baseURL' 1`] = `
@@ -583,7 +679,7 @@ var client = new AcmeClient(
     }
 );
 
-await client.Dummy.GetdummyAsync();
+await client.Dummy.GetDummyAsync();
 "
 `;
 
@@ -615,7 +711,7 @@ var client = new AcmeClient(
     token: "<YOUR_API_KEY>"
 );
 
-await client.Imdb.CreatemovieAsync(
+await client.Imdb.CreateMovieAsync(
     new CreateMovieRequest {
         Title = "The Matrix",
         Rating = 8.2
@@ -627,13 +723,14 @@ await client.Imdb.CreatemovieAsync(
 exports[`snippets (use-undiscriminated-unions) > POST /container/map-prim-to-union (mixed values) 1`] = `
 "using Acme;
 using System.Collections.Generic;
+using Acme.Types.Union;
 
 var client = new AcmeClient(
     token: "<YOUR_API_KEY>"
 );
 
-await client.EndpointsContainer.EndpointsContainerGetAndReturnMapOfPrimToUndiscriminatedUnionAsync(
-    new Dictionary<string, TypesMixedType>(){
+await client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnionAsync(
+    new Dictionary<string, MixedType>(){
         ["test"] = 0,
         ["test2"] = true,
         ["test3"] = "Test",
@@ -652,13 +749,14 @@ await client.EndpointsContainer.EndpointsContainerGetAndReturnMapOfPrimToUndiscr
 exports[`snippets (use-undiscriminated-unions) > POST /container/map-prim-to-union (numeric values) 1`] = `
 "using Acme;
 using System.Collections.Generic;
+using Acme.Types.Union;
 
 var client = new AcmeClient(
     token: "<YOUR_API_KEY>"
 );
 
-await client.EndpointsContainer.EndpointsContainerGetAndReturnMapOfPrimToUndiscriminatedUnionAsync(
-    new Dictionary<string, TypesMixedType>(){
+await client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnionAsync(
+    new Dictionary<string, MixedType>(){
         ["test"] = 0,
         ["test2"] = 1.5,
         ["test3"] = 42,

@@ -1,5 +1,6 @@
 # Reference
-<details><summary><code>client.<a href="/src/Contoso.Net/Contoso.cs">CreateUserAsync</a>(User { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
+## _
+<details><summary><code>client._.<a href="/src/Contoso.Net/_/Client.cs">CreateUserAsync</a>(User { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -12,8 +13,8 @@
 <dd>
 
 ```csharp
-await client.CreateUserAsync(
-    new global::Contoso.Net.User
+await client._.CreateUserAsync(
+    new User
     {
         Id = "id",
         Name = "name",
@@ -47,7 +48,7 @@ await client.CreateUserAsync(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/src/Contoso.Net/Contoso.cs">CreateTaskAsync</a>(Task { ... }) -> WithRawResponseTask&lt;Task&gt;</code></summary>
+<details><summary><code>client._.<a href="/src/Contoso.Net/_/Client.cs">CreateTaskAsync</a>(Task { ... }) -> WithRawResponseTask&lt;Task&gt;</code></summary>
 <dl>
 <dd>
 
@@ -60,7 +61,7 @@ await client.CreateUserAsync(
 <dd>
 
 ```csharp
-await client.CreateTaskAsync(
+await client._.CreateTaskAsync(
     new global::Contoso.Net.Task
     {
         Id = "id",
@@ -95,8 +96,8 @@ await client.CreateTaskAsync(
 </dl>
 </details>
 
-## ScimConfiguration
-<details><summary><code>client.ScimConfiguration.<a href="/src/Contoso.Net/ScimConfiguration/ScimConfigurationClient.cs">GetConfigurationAsync</a>() -> WithRawResponseTask&lt;ScimConfiguration&gt;</code></summary>
+## Scimconfiguration
+<details><summary><code>client.Scimconfiguration.<a href="/src/Contoso.Net/Scimconfiguration/ScimconfigurationClient.cs">GetconfigurationAsync</a>() -> WithRawResponseTask&lt;ScimConfigurationScimConfiguration&gt;</code></summary>
 <dl>
 <dd>
 
@@ -109,7 +110,7 @@ await client.CreateTaskAsync(
 <dd>
 
 ```csharp
-await client.ScimConfiguration.GetConfigurationAsync();
+await client.Scimconfiguration.GetconfigurationAsync();
 ```
 </dd>
 </dl>
@@ -121,7 +122,7 @@ await client.ScimConfiguration.GetConfigurationAsync();
 </dl>
 </details>
 
-<details><summary><code>client.ScimConfiguration.<a href="/src/Contoso.Net/ScimConfiguration/ScimConfigurationClient.cs">CreateTokenAsync</a>(ScimToken { ... }) -> WithRawResponseTask&lt;ScimToken&gt;</code></summary>
+<details><summary><code>client.Scimconfiguration.<a href="/src/Contoso.Net/Scimconfiguration/ScimconfigurationClient.cs">CreatetokenAsync</a>(ScimConfigurationScimToken { ... }) -> WithRawResponseTask&lt;ScimConfigurationScimToken&gt;</code></summary>
 <dl>
 <dd>
 
@@ -134,14 +135,8 @@ await client.ScimConfiguration.GetConfigurationAsync();
 <dd>
 
 ```csharp
-await client.ScimConfiguration.CreateTokenAsync(
-    new ScimToken
-    {
-        TokenId = "tokenId",
-        Token = "token",
-        Scopes = new List<string>() { "scopes", "scopes" },
-        CreatedAt = "createdAt",
-    }
+await client.Scimconfiguration.CreatetokenAsync(
+    new ScimConfigurationScimToken { TokenId = "tokenId", CreatedAt = "createdAt" }
 );
 ```
 </dd>
@@ -157,7 +152,7 @@ await client.ScimConfiguration.CreateTokenAsync(
 <dl>
 <dd>
 
-**request:** `ScimToken` 
+**request:** `ScimConfigurationScimToken` 
     
 </dd>
 </dl>
@@ -169,7 +164,7 @@ await client.ScimConfiguration.CreateTokenAsync(
 </dl>
 </details>
 
-<details><summary><code>client.ScimConfiguration.<a href="/src/Contoso.Net/ScimConfiguration/ScimConfigurationClient.cs">ListUsersAsync</a>() -> WithRawResponseTask&lt;IEnumerable&lt;User&gt;&gt;</code></summary>
+<details><summary><code>client.Scimconfiguration.<a href="/src/Contoso.Net/Scimconfiguration/ScimconfigurationClient.cs">ListusersAsync</a>() -> WithRawResponseTask&lt;IEnumerable&lt;User&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -182,7 +177,7 @@ await client.ScimConfiguration.CreateTokenAsync(
 <dd>
 
 ```csharp
-await client.ScimConfiguration.ListUsersAsync();
+await client.Scimconfiguration.ListusersAsync();
 ```
 </dd>
 </dl>
@@ -195,7 +190,7 @@ await client.ScimConfiguration.ListUsersAsync();
 </details>
 
 ## System
-<details><summary><code>client.System.<a href="/src/Contoso.Net/System/SystemClient.cs">CreateUserAsync</a>(User { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
+<details><summary><code>client.System.<a href="/src/Contoso.Net/System/SystemClient.cs">CreateuserAsync</a>(SystemUser { ... }) -> WithRawResponseTask&lt;SystemUser&gt;</code></summary>
 <dl>
 <dd>
 
@@ -208,15 +203,14 @@ await client.ScimConfiguration.ListUsersAsync();
 <dd>
 
 ```csharp
-await client.System.CreateUserAsync(
-    new global::Contoso.Net.System.User
+await client.System.CreateuserAsync(
+    new SystemUser
     {
         Line1 = "line1",
-        Line2 = "line2",
         City = "city",
         State = "state",
         Zip = "zip",
-        Country = "USA",
+        Country = SystemUserCountry.Usa,
     }
 );
 ```
@@ -233,7 +227,7 @@ await client.System.CreateUserAsync(
 <dl>
 <dd>
 
-**request:** `User` 
+**request:** `SystemUser` 
     
 </dd>
 </dl>
@@ -245,7 +239,7 @@ await client.System.CreateUserAsync(
 </dl>
 </details>
 
-<details><summary><code>client.System.<a href="/src/Contoso.Net/System/SystemClient.cs">CreateTaskAsync</a>(Task { ... }) -> WithRawResponseTask&lt;Task&gt;</code></summary>
+<details><summary><code>client.System.<a href="/src/Contoso.Net/System/SystemClient.cs">CreatetaskAsync</a>(SystemTask { ... }) -> WithRawResponseTask&lt;SystemTask&gt;</code></summary>
 <dl>
 <dd>
 
@@ -258,27 +252,25 @@ await client.System.CreateUserAsync(
 <dd>
 
 ```csharp
-await client.System.CreateTaskAsync(
-    new global::Contoso.Net.System.Task
+await client.System.CreatetaskAsync(
+    new SystemTask
     {
         Name = "name",
-        User = new global::Contoso.Net.System.User
+        User = new SystemUser
         {
             Line1 = "line1",
-            Line2 = "line2",
             City = "city",
             State = "state",
             Zip = "zip",
-            Country = "USA",
+            Country = SystemUserCountry.Usa,
         },
-        Owner = new global::Contoso.Net.System.User
+        Owner = new SystemUser
         {
             Line1 = "line1",
-            Line2 = "line2",
             City = "city",
             State = "state",
             Zip = "zip",
-            Country = "USA",
+            Country = SystemUserCountry.Usa,
         },
     }
 );
@@ -296,7 +288,7 @@ await client.System.CreateTaskAsync(
 <dl>
 <dd>
 
-**request:** `Task` 
+**request:** `SystemTask` 
     
 </dd>
 </dl>
@@ -308,7 +300,7 @@ await client.System.CreateTaskAsync(
 </dl>
 </details>
 
-<details><summary><code>client.System.<a href="/src/Contoso.Net/System/SystemClient.cs">GetUserAsync</a>(userId) -> WithRawResponseTask&lt;User&gt;</code></summary>
+<details><summary><code>client.System.<a href="/src/Contoso.Net/System/SystemClient.cs">GetuserAsync</a>(SystemGetUserRequest { ... }) -> WithRawResponseTask&lt;SystemUser&gt;</code></summary>
 <dl>
 <dd>
 
@@ -321,7 +313,7 @@ await client.System.CreateTaskAsync(
 <dd>
 
 ```csharp
-await client.System.GetUserAsync("userId");
+await client.System.GetuserAsync(new SystemGetUserRequest { UserId = "userId" });
 ```
 </dd>
 </dl>
@@ -336,7 +328,7 @@ await client.System.GetUserAsync("userId");
 <dl>
 <dd>
 
-**userId:** `string` 
+**request:** `SystemGetUserRequest` 
     
 </dd>
 </dl>

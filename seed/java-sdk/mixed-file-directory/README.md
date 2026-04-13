@@ -55,12 +55,12 @@ Instantiate and use the client with the following:
 ```java
 package com.example.usage;
 
-import com.seed.mixedFileDirectory.SeedMixedFileDirectoryClient;
-import com.seed.mixedFileDirectory.resources.organization.types.CreateOrganizationRequest;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.organization.requests.CreateOrganizationRequest;
 
 public class Example {
     public static void main(String[] args) {
-        SeedMixedFileDirectoryClient client = SeedMixedFileDirectoryClient
+        SeedApiClient client = SeedApiClient
             .builder()
             .build();
 
@@ -79,9 +79,9 @@ public class Example {
 You can set a custom base URL when constructing the client.
 
 ```java
-import com.seed.mixedFileDirectory.SeedMixedFileDirectoryClient;
+import com.seed.api.SeedApiClient;
 
-SeedMixedFileDirectoryClient client = SeedMixedFileDirectoryClient
+SeedApiClient client = SeedApiClient
     .builder()
     .url("https://example.com")
     .build();
@@ -92,11 +92,11 @@ SeedMixedFileDirectoryClient client = SeedMixedFileDirectoryClient
 When the API returns a non-success status code (4xx or 5xx response), an API exception will be thrown.
 
 ```java
-import com.seed.mixedFileDirectory.core.SeedMixedFileDirectoryApiException;
+import com.seed.api.core.SeedApiApiException;
 
 try{
     client.organization().create(...);
-} catch (SeedMixedFileDirectoryApiException e){
+} catch (SeedApiApiException e){
     // Do something with the API exception...
 }
 ```
@@ -109,12 +109,12 @@ This SDK is built to work with any instance of `OkHttpClient`. By default, if no
 However, you can pass your own client like so:
 
 ```java
-import com.seed.mixedFileDirectory.SeedMixedFileDirectoryClient;
+import com.seed.api.SeedApiClient;
 import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedMixedFileDirectoryClient client = SeedMixedFileDirectoryClient
+SeedApiClient client = SeedApiClient
     .builder()
     .httpClient(customClient)
     .build();
@@ -137,9 +137,9 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` client option to configure this behavior.
 
 ```java
-import com.seed.mixedFileDirectory.SeedMixedFileDirectoryClient;
+import com.seed.api.SeedApiClient;
 
-SeedMixedFileDirectoryClient client = SeedMixedFileDirectoryClient
+SeedApiClient client = SeedApiClient
     .builder()
     .maxRetries(1)
     .build();
@@ -149,11 +149,11 @@ SeedMixedFileDirectoryClient client = SeedMixedFileDirectoryClient
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 ```java
-import com.seed.mixedFileDirectory.SeedMixedFileDirectoryClient;
-import com.seed.mixedFileDirectory.core.RequestOptions;
+import com.seed.api.SeedApiClient;
+import com.seed.api.core.RequestOptions;
 
 // Client level
-SeedMixedFileDirectoryClient client = SeedMixedFileDirectoryClient
+SeedApiClient client = SeedApiClient
     .builder()
     .timeout(60)
     .build();
@@ -173,11 +173,11 @@ client.organization().create(
 The SDK allows you to add custom headers to requests. You can configure headers at the client level or at the request level.
 
 ```java
-import com.seed.mixedFileDirectory.SeedMixedFileDirectoryClient;
-import com.seed.mixedFileDirectory.core.RequestOptions;
+import com.seed.api.SeedApiClient;
+import com.seed.api.core.RequestOptions;
 
 // Client level
-SeedMixedFileDirectoryClient client = SeedMixedFileDirectoryClient
+SeedApiClient client = SeedApiClient
     .builder()
     .addHeader("X-Custom-Header", "custom-value")
     .addHeader("X-Request-Id", "abc-123")
@@ -201,7 +201,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-SeedMixedFileDirectoryHttpResponse response = client.organization().withRawResponse().create(...);
+SeedApiHttpResponse response = client.organization().withRawResponse().create(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));

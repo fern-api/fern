@@ -4,11 +4,11 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
 pub struct User {
     /// The unique identifier for the user.
-    #[serde(default)]
-    pub id: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub id: Option<String>,
     /// The email address of the user.
-    #[serde(default)]
-    pub email: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub email: Option<String>,
     /// The password for the user.
     #[serde(default)]
     pub password: String,
@@ -55,14 +55,12 @@ impl UserBuilder {
 
     /// Consumes the builder and constructs a [`User`].
     /// This method will fail if any of the following fields are not set:
-    /// - [`id`](UserBuilder::id)
-    /// - [`email`](UserBuilder::email)
     /// - [`password`](UserBuilder::password)
     /// - [`profile`](UserBuilder::profile)
     pub fn build(self) -> Result<User, BuildError> {
         Ok(User {
-            id: self.id.ok_or_else(|| BuildError::missing_field("id"))?,
-            email: self.email.ok_or_else(|| BuildError::missing_field("email"))?,
+            id: self.id,
+            email: self.email,
             password: self.password.ok_or_else(|| BuildError::missing_field("password"))?,
             profile: self.profile.ok_or_else(|| BuildError::missing_field("profile"))?,
         })

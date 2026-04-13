@@ -2,8 +2,10 @@ import Foundation
 
 /// Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 public final class ApiClient: Sendable {
-    public let a: AClient
+    public let ab: AbClient
+    public let ac: AcClient
     public let folder: FolderClient
+    public let folderService: FolderServiceClient
     private let httpClient: HTTPClient
 
     /// Initialize the client with the specified configuration.
@@ -52,8 +54,10 @@ public final class ApiClient: Sendable {
             maxRetries: maxRetries,
             urlSession: urlSession
         )
-        self.a = AClient(config: config)
+        self.ab = AbClient(config: config)
+        self.ac = AcClient(config: config)
         self.folder = FolderClient(config: config)
+        self.folderService = FolderServiceClient(config: config)
         self.httpClient = HTTPClient(config: config)
     }
 

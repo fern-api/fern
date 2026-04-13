@@ -13,9 +13,12 @@
 <dd>
 
 ```go
+request := &fern.BigunionGetRequest{
+        ID: "id",
+    }
 client.Bigunion.Get(
         context.TODO(),
-        "id",
+        request,
     )
 }
 ```
@@ -58,18 +61,10 @@ client.Bigunion.Get(
 
 ```go
 request := &fern.BigUnion{
-        NormalSweet: &fern.NormalSweet{
+        BigUnionZero: &fern.BigUnionZero{
             Value: "value",
+            Type: fern.BigUnionZeroTypeNormalSweet,
         },
-        ID: "id",
-        CreatedAt: fern.MustParseDateTime(
-            "2024-01-15T09:30:00Z",
-        ),
-        ArchivedAt: fern.Time(
-            fern.MustParseDateTime(
-                "2024-01-15T09:30:00Z",
-            ),
-        ),
     }
 client.Bigunion.Update(
         context.TODO(),
@@ -117,32 +112,10 @@ client.Bigunion.Update(
 ```go
 request := []*fern.BigUnion{
         &fern.BigUnion{
-            NormalSweet: &fern.NormalSweet{
+            BigUnionZero: &fern.BigUnionZero{
                 Value: "value",
+                Type: fern.BigUnionZeroTypeNormalSweet,
             },
-            ID: "id",
-            CreatedAt: fern.MustParseDateTime(
-                "2024-01-15T09:30:00Z",
-            ),
-            ArchivedAt: fern.Time(
-                fern.MustParseDateTime(
-                    "2024-01-15T09:30:00Z",
-                ),
-            ),
-        },
-        &fern.BigUnion{
-            NormalSweet: &fern.NormalSweet{
-                Value: "value",
-            },
-            ID: "id",
-            CreatedAt: fern.MustParseDateTime(
-                "2024-01-15T09:30:00Z",
-            ),
-            ArchivedAt: fern.Time(
-                fern.MustParseDateTime(
-                    "2024-01-15T09:30:00Z",
-                ),
-            ),
         },
     }
 client.Bigunion.UpdateMany(
@@ -190,9 +163,12 @@ client.Bigunion.UpdateMany(
 <dd>
 
 ```go
+request := &fern.TypesGetRequest{
+        ID: "id",
+    }
 client.Types.Get(
         context.TODO(),
-        "date-example",
+        request,
     )
 }
 ```
@@ -234,7 +210,9 @@ client.Types.Get(
 <dd>
 
 ```go
-request := &fern.UnionWithTime{}
+request := &fern.UnionWithTime{
+        Value: &fern.UnionWithTimeValue{},
+    }
 client.Types.Update(
         context.TODO(),
         request,
@@ -280,9 +258,12 @@ client.Types.Update(
 <dd>
 
 ```go
-client.Bigunion.Get(
+request := &fern.UnionGetRequest{
+        ID: "id",
+    }
+client.Union.Get(
         context.TODO(),
-        "id",
+        request,
     )
 }
 ```
@@ -325,10 +306,10 @@ client.Bigunion.Get(
 
 ```go
 request := &fern.Shape{
-        Circle: &fern.Circle{
+        ShapeZero: &fern.ShapeZero{
             Radius: 1.1,
+            Type: fern.ShapeZeroTypeCircle,
         },
-        ID: "id",
     }
 client.Union.Update(
         context.TODO(),

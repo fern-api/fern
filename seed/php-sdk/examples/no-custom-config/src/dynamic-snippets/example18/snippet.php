@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Service\Requests\GetMetadataRequest;
+use Seed\Service\Requests\RefreshTokenRequest;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,12 +11,8 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->service->getMetadata(
-    new GetMetadataRequest([
-        'shallow' => true,
-        'tag' => [
-            'tag',
-        ],
-        'xApiVersion' => 'X-API-Version',
+$client->service->refreshtoken(
+    new RefreshTokenRequest([
+        'ttl' => 1,
     ]),
 );

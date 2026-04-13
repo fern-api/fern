@@ -9,7 +9,7 @@ from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
-from .types.user import User
+from ..types.user import User
 from pydantic import ValidationError
 
 
@@ -34,6 +34,7 @@ class RawUserClient:
         Returns
         -------
         HttpResponse[typing.List[User]]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "users/",
@@ -84,6 +85,7 @@ class AsyncRawUserClient:
         Returns
         -------
         AsyncHttpResponse[typing.List[User]]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "users/",

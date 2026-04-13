@@ -16,8 +16,9 @@ func do() {
             "<token>",
         ),
     )
-    client.Service.RefreshToken(
+    request := "string"
+    client.Echo(
         context.TODO(),
-        nil,
+        request,
     )
 }

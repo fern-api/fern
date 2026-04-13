@@ -31,10 +31,9 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) GetOrganization(
+func (r *RawClient) Getorganization(
 	ctx context.Context,
-	tenantID string,
-	organizationID string,
+	request *fern.OrganizationsGetOrganizationRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.Organization], error) {
 	options := core.NewRequestOptions(opts...)
@@ -45,8 +44,8 @@ func (r *RawClient) GetOrganization(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/%v/organizations/%v/",
-		tenantID,
-		organizationID,
+		request.TenantID,
+		request.OrganizationID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
@@ -76,9 +75,9 @@ func (r *RawClient) GetOrganization(
 	}, nil
 }
 
-func (r *RawClient) GetOrganizationUser(
+func (r *RawClient) Getorganizationuser(
 	ctx context.Context,
-	request *fern.GetOrganizationUserRequest,
+	request *fern.OrganizationsGetOrganizationUserRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.User], error) {
 	options := core.NewRequestOptions(opts...)
@@ -121,11 +120,9 @@ func (r *RawClient) GetOrganizationUser(
 	}, nil
 }
 
-func (r *RawClient) SearchOrganizations(
+func (r *RawClient) Searchorganizations(
 	ctx context.Context,
-	tenantID string,
-	organizationID string,
-	request *fern.SearchOrganizationsRequest,
+	request *fern.OrganizationsSearchOrganizationsRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[[]*fern.Organization], error) {
 	options := core.NewRequestOptions(opts...)
@@ -136,8 +133,8 @@ func (r *RawClient) SearchOrganizations(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/%v/organizations/%v/search",
-		tenantID,
-		organizationID,
+		request.TenantID,
+		request.OrganizationID,
 	)
 	queryParams, err := internal.QueryValues(request)
 	if err != nil {

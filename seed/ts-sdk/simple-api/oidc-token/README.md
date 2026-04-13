@@ -11,6 +11,7 @@ The Seed TypeScript library provides convenient access to the Seed APIs from Typ
 - [Reference](#reference)
 - [Usage](#usage)
 - [Environments](#environments)
+- [Request and Response Types](#request-and-response-types)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
   - [Subpackage Exports](#subpackage-exports)
@@ -40,10 +41,12 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedSimpleApiClient, SeedSimpleApiEnvironment } from "@fern-api/dummy";
+import { SeedApiClient } from "@fern-api/dummy";
 
-const client = new SeedSimpleApiClient({ environment: SeedSimpleApiEnvironment.Production, token: "YOUR_TOKEN" });
-await client.user.get("id");
+const client = new SeedApiClient({ token: "YOUR_TOKEN" });
+await client.user.get({
+    id: "id"
+});
 ```
 
 ## Environments
@@ -51,11 +54,24 @@ await client.user.get("id");
 This SDK allows you to configure different environments for API requests.
 
 ```typescript
-import { SeedSimpleApiClient, SeedSimpleApiEnvironment } from "@fern-api/dummy";
+import { SeedApiClient, SeedApiEnvironment } from "@fern-api/dummy";
 
-const client = new SeedSimpleApiClient({
-    environment: SeedSimpleApiEnvironment.Production,
+const client = new SeedApiClient({
+    environment: SeedApiEnvironment.Production,
 });
+```
+
+## Request and Response Types
+
+The SDK exports all request and response types as TypeScript interfaces. Simply import them with the
+following namespace:
+
+```typescript
+import { SeedApi } from "@fern-api/dummy";
+
+const request: SeedApi.UserGetRequest = {
+    ...
+};
 ```
 
 ## Exception Handling
@@ -64,12 +80,12 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedSimpleApiError } from "@fern-api/dummy";
+import { SeedApiError } from "@fern-api/dummy";
 
 try {
     await client.user.get(...);
 } catch (err) {
-    if (err instanceof SeedSimpleApiError) {
+    if (err instanceof SeedApiError) {
         console.log(err.statusCode);
         console.log(err.message);
         console.log(err.body);
@@ -95,9 +111,9 @@ const client = new UserClient({...});
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
-import { SeedSimpleApiClient } from "@fern-api/dummy";
+import { SeedApiClient } from "@fern-api/dummy";
 
-const client = new SeedSimpleApiClient({
+const client = new SeedApiClient({
     ...
     headers: {
         'X-Custom-Header': 'custom value'
@@ -182,9 +198,9 @@ console.log(rawResponse.headers['X-My-Header']);
 The SDK supports logging. You can configure the logger by passing in a `logging` object to the client options.
 
 ```typescript
-import { SeedSimpleApiClient, logging } from "@fern-api/dummy";
+import { SeedApiClient, logging } from "@fern-api/dummy";
 
-const client = new SeedSimpleApiClient({
+const client = new SeedApiClient({
     ...
     logging: {
         level: logging.LogLevel.Debug, // defaults to logging.LogLevel.Info

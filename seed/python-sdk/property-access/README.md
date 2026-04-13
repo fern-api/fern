@@ -34,21 +34,17 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```python
-from seed import SeedPropertyAccess, UserProfile, UserProfileVerification
+from seed import SeedApi, UserProfile, UserProfileVerification
 
-client = SeedPropertyAccess(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
 client.create_user(
-    id="id",
-    email="email",
     password="password",
     profile=UserProfile(
         name="name",
-        verification=UserProfileVerification(
-            verified="verified",
-        ),
+        verification=UserProfileVerification(),
         ssn="ssn",
     ),
 )
@@ -61,23 +57,19 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from seed import AsyncSeedPropertyAccess
+from seed import AsyncSeedApi
 
-client = AsyncSeedPropertyAccess(
+client = AsyncSeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
 
 async def main() -> None:
     await client.create_user(
-        id="id",
-        email="email",
         password="password",
         profile=UserProfile(
             name="name",
-            verification=UserProfileVerification(
-                verified="verified",
-            ),
+            verification=UserProfileVerification(),
             ssn="ssn",
         ),
     )
@@ -109,9 +101,9 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.with_raw_response` property returns a "raw" client that can be used to access the `.headers` and `.data` attributes.
 
 ```python
-from seed import SeedPropertyAccess
+from seed import SeedApi
 
-client = SeedPropertyAccess(...)
+client = SeedApi(...)
 response = client.with_raw_response.create_user(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
@@ -143,9 +135,9 @@ client.create_user(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-from seed import SeedPropertyAccess
+from seed import SeedApi
 
-client = SeedPropertyAccess(..., timeout=20.0)
+client = SeedApi(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.create_user(..., request_options={
@@ -160,9 +152,9 @@ and transports.
 
 ```python
 import httpx
-from seed import SeedPropertyAccess
+from seed import SeedApi
 
-client = SeedPropertyAccess(
+client = SeedApi(
     ...,
     httpx_client=httpx.Client(
         proxy="http://my.test.proxy.example.com",

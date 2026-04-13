@@ -2,8 +2,10 @@
 
 namespace Seed;
 
-use Seed\A\AClientInterface;
+use Seed\Ab\AbClientInterface;
+use Seed\Ac\AcClientInterface;
 use Seed\Folder\FolderClientInterface;
+use Seed\FolderService\FolderServiceClientInterface;
 
 interface SeedClientInterface
 {
@@ -20,12 +22,22 @@ interface SeedClientInterface
     public function foo(?array $options = null): void;
 
     /**
-     * @return AClientInterface
+     * @return AbClientInterface
      */
-    public function getA(): AClientInterface;
+    public function getAb(): AbClientInterface;
+
+    /**
+     * @return AcClientInterface
+     */
+    public function getAc(): AcClientInterface;
 
     /**
      * @return FolderClientInterface
      */
     public function getFolder(): FolderClientInterface;
+
+    /**
+     * @return FolderServiceClientInterface
+     */
+    public function getFolderService(): FolderServiceClientInterface;
 }

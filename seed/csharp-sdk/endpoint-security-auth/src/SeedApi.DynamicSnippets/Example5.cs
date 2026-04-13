@@ -1,18 +1,19 @@
-using SeedEndpointSecurityAuth;
+using SeedApi;
 
 namespace Usage;
 
 public class Example5
 {
     public async Task Do() {
-        var client = new SeedEndpointSecurityAuthClient(
+        var client = new SeedApiClient(
             token: "<token>",
+            apiKey: "<X-API-Key>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.User.GetWithInferredAuthAsync();
+        await client.User.GetwithapikeyAsync();
     }
 
 }

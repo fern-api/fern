@@ -1,4 +1,4 @@
-package nurseryapi
+package api
 
 import (
 	"io"

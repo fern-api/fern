@@ -13,7 +13,7 @@ impl UserClient {
         })
     }
 
-    pub async fn get_user(
+    pub async fn getuser(
         &self,
         user_id: &UserId,
         options: Option<RequestOptions>,
@@ -21,7 +21,7 @@ impl UserClient {
         self.http_client
             .execute_request(
                 Method::GET,
-                &format!("/users/{}", user_id.0),
+                &format!("users/{}", user_id.0),
                 None,
                 None,
                 options,

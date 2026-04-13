@@ -13,12 +13,12 @@
 <dd>
 
 ```python
-from seed import SeedSimpleApi
-from seed.environment import SeedSimpleApiEnvironment
+from seed import SeedApi
+from seed.environment import SeedApiEnvironment
 
-client = SeedSimpleApi(
+client = SeedApi(
     token="<token>",
-    environment=SeedSimpleApiEnvironment.PRODUCTION,
+    environment=SeedApiEnvironment.PRODUCTION,
 )
 
 client.user.get(

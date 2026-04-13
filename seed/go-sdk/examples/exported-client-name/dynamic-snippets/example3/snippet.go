@@ -3,6 +3,7 @@ package example
 import (
     context "context"
 
+    fern "github.com/examples/fern"
     client "github.com/examples/fern/client"
     option "github.com/examples/fern/option"
 )
@@ -16,8 +17,11 @@ func do() {
             "<token>",
         ),
     )
-    client.File.Notification.Service.GetException(
+    request := &fern.FileServiceGetFileRequest{
+        Filename: "filename",
+    }
+    client.FileService.FileServiceGetFile(
         context.TODO(),
-        "notification-hsy129x",
+        request,
     )
 }

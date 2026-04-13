@@ -3,6 +3,7 @@ package example
 import (
     context "context"
 
+    fern "github.com/go-deterministic-ordering/fern"
     client "github.com/go-deterministic-ordering/fern/client"
     option "github.com/go-deterministic-ordering/fern/option"
 )
@@ -16,7 +17,15 @@ func do() {
             "<token>",
         ),
     )
-    client.Endpoints.URLs.WithEndingSlash(
+    request := &fern.EndpointsObjectGetAndReturnNestedWithRequiredFieldRequest{
+        String: "string",
+        Body: &fern.TypesNestedObjectWithRequiredField{
+            FieldString: "string",
+            NestedObject: &fern.TypesObjectWithOptionalField{},
+        },
+    }
+    client.EndpointsObject.EndpointsObjectGetAndReturnNestedWithRequiredField(
         context.TODO(),
+        request,
     )
 }

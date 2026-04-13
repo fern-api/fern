@@ -13,7 +13,7 @@ impl AuthClient {
         })
     }
 
-    pub async fn get_token_with_client_credentials(
+    pub async fn gettokenwithclientcredentials(
         &self,
         request: &GetTokenRequest,
         options: Option<RequestOptions>,
@@ -21,7 +21,7 @@ impl AuthClient {
         self.http_client
             .execute_request(
                 Method::POST,
-                "/token",
+                "token",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -29,7 +29,7 @@ impl AuthClient {
             .await
     }
 
-    pub async fn refresh_token(
+    pub async fn refreshtoken(
         &self,
         request: &RefreshTokenRequest,
         options: Option<RequestOptions>,
@@ -37,7 +37,7 @@ impl AuthClient {
         self.http_client
             .execute_request(
                 Method::POST,
-                "/token/refresh",
+                "token/refresh",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,

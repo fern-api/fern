@@ -1,4 +1,4 @@
-package gobytesrequest
+package api
 
 import (
 	"io"

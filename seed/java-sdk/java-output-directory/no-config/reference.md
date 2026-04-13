@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.getUser(userId) -> User</code></summary>
+<details><summary><code>client.service.getuser(userId) -> User</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,12 @@
 <dd>
 
 ```java
-client.service().getUser("userId");
+client.service().getuser(
+    "userId",
+    ServiceGetUserRequest
+        .builder()
+        .build()
+);
 ```
 </dd>
 </dl>

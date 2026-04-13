@@ -38,9 +38,9 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedPropertyAccessClient } from "@fern/property-access";
+import { SeedApiClient } from "@fern/property-access";
 
-const client = new SeedPropertyAccessClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
 await client.createUser({
     password: "password",
     profile: {
@@ -57,12 +57,12 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedPropertyAccessError } from "@fern/property-access";
+import { SeedApiError } from "@fern/property-access";
 
 try {
     await client.createUser(...);
 } catch (err) {
-    if (err instanceof SeedPropertyAccessError) {
+    if (err instanceof SeedApiError) {
         console.log(err.statusCode);
         console.log(err.message);
         console.log(err.body);
@@ -78,9 +78,9 @@ try {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
-import { SeedPropertyAccessClient } from "@fern/property-access";
+import { SeedApiClient } from "@fern/property-access";
 
-const client = new SeedPropertyAccessClient({
+const client = new SeedApiClient({
     ...
     headers: {
         'X-Custom-Header': 'custom value'
@@ -165,9 +165,9 @@ console.log(rawResponse.headers['X-My-Header']);
 The SDK supports logging. You can configure the logger by passing in a `logging` object to the client options.
 
 ```typescript
-import { SeedPropertyAccessClient, logging } from "@fern/property-access";
+import { SeedApiClient, logging } from "@fern/property-access";
 
-const client = new SeedPropertyAccessClient({
+const client = new SeedApiClient({
     ...
     logging: {
         level: logging.LogLevel.Debug, // defaults to logging.LogLevel.Info

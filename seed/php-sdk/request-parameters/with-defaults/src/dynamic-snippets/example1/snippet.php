@@ -3,24 +3,20 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\User\Requests\CreateUsernameReferencedRequest;
-use Seed\User\Types\CreateUsernameBody;
+use Seed\User\Requests\CreateUsernameBody;
 
 $client = new SeedClient(
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->user->createUsernameWithReferencedType(
-    new CreateUsernameReferencedRequest([
+$client->user->createusernamewithreferencedtype(
+    new CreateUsernameBody([
         'tags' => [
             'tags',
-            'tags',
         ],
-        'body' => new CreateUsernameBody([
-            'username' => 'username',
-            'password' => 'password',
-            'name' => 'test',
-        ]),
+        'username' => 'username',
+        'password' => 'password',
+        'name' => 'name',
     ]),
 );

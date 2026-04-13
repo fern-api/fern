@@ -18,9 +18,7 @@ class RawEc2Client:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def boot_instance(
-        self, *, size: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[None]:
+    def bootinstance(self, *, size: str, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[None]:
         """
         Parameters
         ----------
@@ -35,10 +33,12 @@ class RawEc2Client:
         """
         _response = self._client_wrapper.httpx_client.request(
             "ec2/boot",
-            base_url=self._client_wrapper.get_environment().ec2,
             method="POST",
             json={
                 "size": size,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -60,7 +60,7 @@ class AsyncRawEc2Client:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def boot_instance(
+    async def bootinstance(
         self, *, size: str, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[None]:
         """
@@ -77,10 +77,12 @@ class AsyncRawEc2Client:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "ec2/boot",
-            base_url=self._client_wrapper.get_environment().ec2,
             method="POST",
             json={
                 "size": size,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

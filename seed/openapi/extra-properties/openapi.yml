@@ -5,7 +5,7 @@ info:
 paths:
   /user:
     post:
-      operationId: user_createUser
+      operationId: user_createuser
       tags:
         - User
       parameters: []
@@ -19,9 +19,7 @@ paths:
               examples:
                 Example1:
                   value:
-                    name: Alice
-                    age: 30
-                    location: Wonderland
+                    name: name
       requestBody:
         required: true
         content:
@@ -30,14 +28,12 @@ paths:
               type: object
               properties:
                 _type:
-                  type: string
-                  const: CreateUserRequest
+                  $ref: '#/components/schemas/UserCreateUserRequestType'
                 _version:
-                  type: string
-                  const: v1
+                  $ref: '#/components/schemas/UserCreateUserRequestVersion'
                 name:
                   type: string
-                  example: Alice
+                  example: name
               required:
                 - _type
                 - _version
@@ -45,20 +41,32 @@ paths:
             examples:
               Example1:
                 value:
-                  name: Alice
                   _type: CreateUserRequest
                   _version: v1
-                  age: 30
-                  location: Wonderland
+                  name: name
 components:
   schemas:
+    UserCreateUserRequestType:
+      title: UserCreateUserRequestType
+      type: string
+      enum:
+        - CreateUserRequest
+    UserCreateUserRequestVersion:
+      title: UserCreateUserRequestVersion
+      type: string
+      enum:
+        - v1
+    FailureStatus:
+      title: FailureStatus
+      type: string
+      enum:
+        - failure
     Failure:
       title: Failure
       type: object
       properties:
         status:
-          type: string
-          const: failure
+          $ref: '#/components/schemas/FailureStatus'
       required:
         - status
     User:
@@ -67,7 +75,7 @@ components:
       properties:
         name:
           type: string
-          example: Alice
+          example: name
       required:
         - name
   securitySchemes: {}

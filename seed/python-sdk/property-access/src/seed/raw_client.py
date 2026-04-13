@@ -18,33 +18,33 @@ from pydantic import ValidationError
 OMIT = typing.cast(typing.Any, ...)
 
 
-class RawSeedPropertyAccess:
+class RawSeedApi:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
     def create_user(
         self,
         *,
-        id: str,
-        email: str,
         password: str,
         profile: UserProfile,
+        id: typing.Optional[str] = OMIT,
+        email: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[User]:
         """
         Parameters
         ----------
-        id : str
-            The unique identifier for the user.
-
-        email : str
-            The email address of the user.
-
         password : str
             The password for the user.
 
         profile : UserProfile
             User profile object
+
+        id : typing.Optional[str]
+            The unique identifier for the user.
+
+        email : typing.Optional[str]
+            The email address of the user.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -52,6 +52,7 @@ class RawSeedPropertyAccess:
         Returns
         -------
         HttpResponse[User]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "users",
@@ -63,6 +64,9 @@ class RawSeedPropertyAccess:
                 "profile": convert_and_respect_annotation_metadata(
                     object_=profile, annotation=UserProfile, direction="write"
                 ),
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -87,33 +91,33 @@ class RawSeedPropertyAccess:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
-class AsyncRawSeedPropertyAccess:
+class AsyncRawSeedApi:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
     async def create_user(
         self,
         *,
-        id: str,
-        email: str,
         password: str,
         profile: UserProfile,
+        id: typing.Optional[str] = OMIT,
+        email: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[User]:
         """
         Parameters
         ----------
-        id : str
-            The unique identifier for the user.
-
-        email : str
-            The email address of the user.
-
         password : str
             The password for the user.
 
         profile : UserProfile
             User profile object
+
+        id : typing.Optional[str]
+            The unique identifier for the user.
+
+        email : typing.Optional[str]
+            The email address of the user.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -121,6 +125,7 @@ class AsyncRawSeedPropertyAccess:
         Returns
         -------
         AsyncHttpResponse[User]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "users",
@@ -132,6 +137,9 @@ class AsyncRawSeedPropertyAccess:
                 "profile": convert_and_respect_annotation_metadata(
                     object_=profile, annotation=UserProfile, direction="write"
                 ),
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

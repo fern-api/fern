@@ -1,0 +1,13 @@
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    nop:
+      method: GET
+      path: /{nestedId}
+      path-parameters:
+        nestedId: string
+      examples:
+        - path-parameters:
+            id: id-a2ijs82
+            nestedId: id-219xca8

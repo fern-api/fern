@@ -1,28 +1,23 @@
-using SeedWebsocketAuth;
+using SeedApi;
 
 namespace Usage;
 
 public class Example1
 {
     public async Task Do() {
-        var client = new SeedWebsocketAuthClient(
-            xApiKey: "X-Api-Key",
-            clientId: "client_id",
-            clientSecret: "client_secret",
-            scope: "scope",
+        var client = new SeedApiClient(
+            apiKey: "<X-Api-Key>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Auth.RefreshTokenAsync(
-            new RefreshTokenRequest {
-                XApiKey = "X-Api-Key",
+        await client.Auth.GettokenwithclientcredentialsAsync(
+            new AuthGetTokenWithClientCredentialsRequest {
                 ClientId = "client_id",
                 ClientSecret = "client_secret",
-                RefreshToken = "refresh_token",
-                Audience = "https://api.example.com",
-                GrantType = "refresh_token",
+                Audience = AuthGetTokenWithClientCredentialsRequestAudience.HttpsApiExampleCom,
+                GrantType = AuthGetTokenWithClientCredentialsRequestGrantType.ClientCredentials,
                 Scope = "scope"
             }
         );

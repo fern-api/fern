@@ -1,20 +1,23 @@
 package com.snippets;
 
-import com.seed.oauthClientCredentialsMandatoryAuth.SeedOauthClientCredentialsMandatoryAuthClient;
-import com.seed.oauthClientCredentialsMandatoryAuth.resources.auth.requests.GetTokenRequest;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.auth.requests.AuthGetTokenWithClientCredentialsRequest;
+import com.seed.api.resources.auth.types.AuthGetTokenWithClientCredentialsRequestAudience;
+import com.seed.api.resources.auth.types.AuthGetTokenWithClientCredentialsRequestGrantType;
 
 public class Example0 {
     public static void main(String[] args) {
-        SeedOauthClientCredentialsMandatoryAuthClient client =
-                SeedOauthClientCredentialsMandatoryAuthClient.withCredentials("<clientId>", "<clientSecret>")
-                        .url("https://api.fern.com")
-                        .build();
+        SeedApiClient client = SeedApiClient.builder()
+                .token("<token>")
+                .url("https://api.fern.com")
+                .build();
 
         client.auth()
-                .getTokenWithClientCredentials(GetTokenRequest.builder()
-                        .clientId("my_oauth_app_123")
-                        .clientSecret("sk_live_abcdef123456789")
-                        .scope("read:users")
+                .gettokenwithclientcredentials(AuthGetTokenWithClientCredentialsRequest.builder()
+                        .clientId("client_id")
+                        .clientSecret("client_secret")
+                        .audience(AuthGetTokenWithClientCredentialsRequestAudience.HTTPS_API_EXAMPLE_COM)
+                        .grantType(AuthGetTokenWithClientCredentialsRequestGrantType.CLIENT_CREDENTIALS)
                         .build());
     }
 }

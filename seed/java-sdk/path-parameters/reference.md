@@ -1,6 +1,6 @@
 # Reference
 ## Organizations
-<details><summary><code>client.organizations.getOrganization(tenantId, organizationId) -> Organization</code></summary>
+<details><summary><code>client.organizations.getorganization(tenantId, organizationId) -> Organization</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,13 @@
 <dd>
 
 ```java
-client.organizations().getOrganization("organization_id");
+client.organizations().getorganization(
+    "tenant_id",
+    "organization_id",
+    OrganizationsGetOrganizationRequest
+        .builder()
+        .build()
+);
 ```
 </dd>
 </dl>
@@ -48,7 +54,7 @@ client.organizations().getOrganization("organization_id");
 </dl>
 </details>
 
-<details><summary><code>client.organizations.getOrganizationUser(tenantId, organizationId, userId) -> User</code></summary>
+<details><summary><code>client.organizations.getorganizationuser(tenantId, organizationId, userId) -> User</code></summary>
 <dl>
 <dd>
 
@@ -61,10 +67,11 @@ client.organizations().getOrganization("organization_id");
 <dd>
 
 ```java
-client.organizations().getOrganizationUser(
+client.organizations().getorganizationuser(
+    "tenant_id",
     "organization_id",
     "user_id",
-    GetOrganizationUserRequest
+    OrganizationsGetOrganizationUserRequest
         .builder()
         .build()
 );
@@ -110,7 +117,7 @@ client.organizations().getOrganizationUser(
 </dl>
 </details>
 
-<details><summary><code>client.organizations.searchOrganizations(tenantId, organizationId) -> List&amp;lt;Organization&amp;gt;</code></summary>
+<details><summary><code>client.organizations.searchorganizations(tenantId, organizationId) -> List&amp;lt;Organization&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -123,11 +130,11 @@ client.organizations().getOrganizationUser(
 <dd>
 
 ```java
-client.organizations().searchOrganizations(
+client.organizations().searchorganizations(
+    "tenant_id",
     "organization_id",
-    SearchOrganizationsRequest
+    OrganizationsSearchOrganizationsRequest
         .builder()
-        .limit(1)
         .build()
 );
 ```
@@ -173,7 +180,7 @@ client.organizations().searchOrganizations(
 </details>
 
 ## User
-<details><summary><code>client.user.getUser(tenantId, userId) -> User</code></summary>
+<details><summary><code>client.user.getuser(tenantId, userId) -> User</code></summary>
 <dl>
 <dd>
 
@@ -186,9 +193,10 @@ client.organizations().searchOrganizations(
 <dd>
 
 ```java
-client.user().getUser(
+client.user().getuser(
+    "tenant_id",
     "user_id",
-    GetUsersRequest
+    UserGetUserRequest
         .builder()
         .build()
 );
@@ -226,7 +234,7 @@ client.user().getUser(
 </dl>
 </details>
 
-<details><summary><code>client.user.createUser(tenantId, request) -> User</code></summary>
+<details><summary><code>client.user.updateuser(tenantId, userId, request) -> User</code></summary>
 <dl>
 <dd>
 
@@ -239,72 +247,17 @@ client.user().getUser(
 <dd>
 
 ```java
-client.user().createUser(
-    User
-        .builder()
-        .name("name")
-        .tags(
-            Arrays.asList("tags", "tags")
-        )
-        .build()
-);
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**tenantId:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `User` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.user.updateUser(tenantId, userId, request) -> User</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```java
-client.user().updateUser(
+client.user().updateuser(
+    "tenant_id",
     "user_id",
-    UpdateUserRequest
+    UserUpdateUserRequest
         .builder()
         .body(
             User
                 .builder()
                 .name("name")
                 .tags(
-                    Arrays.asList("tags", "tags")
+                    Arrays.asList("tags")
                 )
                 .build()
         )
@@ -352,7 +305,7 @@ client.user().updateUser(
 </dl>
 </details>
 
-<details><summary><code>client.user.searchUsers(tenantId, userId) -> List&amp;lt;User&amp;gt;</code></summary>
+<details><summary><code>client.user.createuser(tenantId, request) -> User</code></summary>
 <dl>
 <dd>
 
@@ -365,11 +318,73 @@ client.user().updateUser(
 <dd>
 
 ```java
-client.user().searchUsers(
-    "user_id",
-    SearchUsersRequest
+client.user().createuser(
+    "tenant_id",
+    UserCreateUserRequest
         .builder()
-        .limit(1)
+        .body(
+            User
+                .builder()
+                .name("name")
+                .tags(
+                    Arrays.asList("tags")
+                )
+                .build()
+        )
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**tenantId:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `User` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.user.searchusers(tenantId, userId) -> List&amp;lt;User&amp;gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.user().searchusers(
+    "tenant_id",
+    "user_id",
+    UserSearchUsersRequest
+        .builder()
         .build()
 );
 ```
@@ -414,7 +429,7 @@ client.user().searchUsers(
 </dl>
 </details>
 
-<details><summary><code>client.user.getUserMetadata(tenantId, userId, version) -> User</code></summary>
+<details><summary><code>client.user.getusermetadata(tenantId, userId, version) -> User</code></summary>
 <dl>
 <dd>
 
@@ -441,10 +456,11 @@ Test endpoint with path parameter that has a text prefix (v{version})
 <dd>
 
 ```java
-client.user().getUserMetadata(
+client.user().getusermetadata(
+    "tenant_id",
     "user_id",
     1,
-    GetUserMetadataRequest
+    UserGetUserMetadataRequest
         .builder()
         .build()
 );
@@ -490,7 +506,7 @@ client.user().getUserMetadata(
 </dl>
 </details>
 
-<details><summary><code>client.user.getUserSpecifics(tenantId, userId, version, thought) -> User</code></summary>
+<details><summary><code>client.user.getuserspecifics(tenantId, userId, version, thought) -> User</code></summary>
 <dl>
 <dd>
 
@@ -517,11 +533,12 @@ Test endpoint with path parameters listed in different order than found in path
 <dd>
 
 ```java
-client.user().getUserSpecifics(
+client.user().getuserspecifics(
+    "tenant_id",
     "user_id",
     1,
     "thought",
-    GetUserSpecificsRequest
+    UserGetUserSpecificsRequest
         .builder()
         .build()
 );

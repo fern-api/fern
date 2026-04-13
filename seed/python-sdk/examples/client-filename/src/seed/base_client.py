@@ -14,8 +14,9 @@ from .types.identifier import Identifier
 from .types.type import Type
 
 if typing.TYPE_CHECKING:
-    from .file.client import AsyncFileClient, FileClient
-    from .health.client import AsyncHealthClient, HealthClient
+    from .file_notification_service.client import AsyncFileNotificationServiceClient, FileNotificationServiceClient
+    from .file_service.client import AsyncFileServiceClient, FileServiceClient
+    from .health_service.client import AsyncHealthServiceClient, HealthServiceClient
     from .service.client import AsyncServiceClient, ServiceClient
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -30,8 +31,14 @@ class BaseSeedExhaustive:
     base_url : typing.Optional[str]
         The base url to use for requests from the client.
 
-    environment : typing.Optional[SeedExhaustiveEnvironment]
-        The environment to use for requests from the client.
+    environment : SeedExhaustiveEnvironment
+        The environment to use for requests from the client. from .environment import SeedExhaustiveEnvironment
+
+
+
+        Defaults to SeedExhaustiveEnvironment.PRODUCTION
+
+
 
     token : typing.Optional[typing.Union[str, typing.Callable[[], str]]]
     headers : typing.Optional[typing.Dict[str, str]]
@@ -52,11 +59,9 @@ class BaseSeedExhaustive:
     Examples
     --------
     from seed import SeedExhaustive
-    from seed.environment import SeedExhaustiveEnvironment
 
     client = SeedExhaustive(
         token="YOUR_TOKEN",
-        environment=SeedExhaustiveEnvironment.PRODUCTION,
     )
     """
 
@@ -64,7 +69,7 @@ class BaseSeedExhaustive:
         self,
         *,
         base_url: typing.Optional[str] = None,
-        environment: typing.Optional[SeedExhaustiveEnvironment] = None,
+        environment: SeedExhaustiveEnvironment = SeedExhaustiveEnvironment.PRODUCTION,
         token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
@@ -88,8 +93,9 @@ class BaseSeedExhaustive:
             logging=logging,
         )
         self._raw_client = RawBaseSeedExhaustive(client_wrapper=self._client_wrapper)
-        self._file: typing.Optional[FileClient] = None
-        self._health: typing.Optional[HealthClient] = None
+        self._file_notification_service: typing.Optional[FileNotificationServiceClient] = None
+        self._file_service: typing.Optional[FileServiceClient] = None
+        self._health_service: typing.Optional[HealthServiceClient] = None
         self._service: typing.Optional[ServiceClient] = None
 
     @property
@@ -116,17 +122,16 @@ class BaseSeedExhaustive:
         -------
         str
 
+
         Examples
         --------
         from seed import SeedExhaustive
-        from seed.environment import SeedExhaustiveEnvironment
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
-            environment=SeedExhaustiveEnvironment.PRODUCTION,
         )
         client.echo(
-            request="Hello world!\\n\\nwith\\n\\tnewlines",
+            request="string",
         )
         """
         _response = self._raw_client.echo(request=request, request_options=request_options)
@@ -145,14 +150,13 @@ class BaseSeedExhaustive:
         -------
         Identifier
 
+
         Examples
         --------
         from seed import SeedExhaustive
-        from seed.environment import SeedExhaustiveEnvironment
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
-            environment=SeedExhaustiveEnvironment.PRODUCTION,
         )
         client.create_type(
             request="primitive",
@@ -162,20 +166,28 @@ class BaseSeedExhaustive:
         return _response.data
 
     @property
-    def file(self):
-        if self._file is None:
-            from .file.client import FileClient  # noqa: E402
+    def file_notification_service(self):
+        if self._file_notification_service is None:
+            from .file_notification_service.client import FileNotificationServiceClient  # noqa: E402
 
-            self._file = FileClient(client_wrapper=self._client_wrapper)
-        return self._file
+            self._file_notification_service = FileNotificationServiceClient(client_wrapper=self._client_wrapper)
+        return self._file_notification_service
 
     @property
-    def health(self):
-        if self._health is None:
-            from .health.client import HealthClient  # noqa: E402
+    def file_service(self):
+        if self._file_service is None:
+            from .file_service.client import FileServiceClient  # noqa: E402
 
-            self._health = HealthClient(client_wrapper=self._client_wrapper)
-        return self._health
+            self._file_service = FileServiceClient(client_wrapper=self._client_wrapper)
+        return self._file_service
+
+    @property
+    def health_service(self):
+        if self._health_service is None:
+            from .health_service.client import HealthServiceClient  # noqa: E402
+
+            self._health_service = HealthServiceClient(client_wrapper=self._client_wrapper)
+        return self._health_service
 
     @property
     def service(self):
@@ -213,8 +225,14 @@ class AsyncBaseSeedExhaustive:
     base_url : typing.Optional[str]
         The base url to use for requests from the client.
 
-    environment : typing.Optional[SeedExhaustiveEnvironment]
-        The environment to use for requests from the client.
+    environment : SeedExhaustiveEnvironment
+        The environment to use for requests from the client. from .environment import SeedExhaustiveEnvironment
+
+
+
+        Defaults to SeedExhaustiveEnvironment.PRODUCTION
+
+
 
     token : typing.Optional[typing.Union[str, typing.Callable[[], str]]]
     headers : typing.Optional[typing.Dict[str, str]]
@@ -238,11 +256,9 @@ class AsyncBaseSeedExhaustive:
     Examples
     --------
     from seed import AsyncSeedExhaustive
-    from seed.environment import SeedExhaustiveEnvironment
 
     client = AsyncSeedExhaustive(
         token="YOUR_TOKEN",
-        environment=SeedExhaustiveEnvironment.PRODUCTION,
     )
     """
 
@@ -250,7 +266,7 @@ class AsyncBaseSeedExhaustive:
         self,
         *,
         base_url: typing.Optional[str] = None,
-        environment: typing.Optional[SeedExhaustiveEnvironment] = None,
+        environment: SeedExhaustiveEnvironment = SeedExhaustiveEnvironment.PRODUCTION,
         token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         async_token: typing.Optional[typing.Callable[[], typing.Awaitable[str]]] = None,
@@ -274,8 +290,9 @@ class AsyncBaseSeedExhaustive:
             logging=logging,
         )
         self._raw_client = AsyncRawBaseSeedExhaustive(client_wrapper=self._client_wrapper)
-        self._file: typing.Optional[AsyncFileClient] = None
-        self._health: typing.Optional[AsyncHealthClient] = None
+        self._file_notification_service: typing.Optional[AsyncFileNotificationServiceClient] = None
+        self._file_service: typing.Optional[AsyncFileServiceClient] = None
+        self._health_service: typing.Optional[AsyncHealthServiceClient] = None
         self._service: typing.Optional[AsyncServiceClient] = None
 
     @property
@@ -302,22 +319,21 @@ class AsyncBaseSeedExhaustive:
         -------
         str
 
+
         Examples
         --------
         import asyncio
 
         from seed import AsyncSeedExhaustive
-        from seed.environment import SeedExhaustiveEnvironment
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
-            environment=SeedExhaustiveEnvironment.PRODUCTION,
         )
 
 
         async def main() -> None:
             await client.echo(
-                request="Hello world!\\n\\nwith\\n\\tnewlines",
+                request="string",
             )
 
 
@@ -341,16 +357,15 @@ class AsyncBaseSeedExhaustive:
         -------
         Identifier
 
+
         Examples
         --------
         import asyncio
 
         from seed import AsyncSeedExhaustive
-        from seed.environment import SeedExhaustiveEnvironment
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
-            environment=SeedExhaustiveEnvironment.PRODUCTION,
         )
 
 
@@ -366,20 +381,28 @@ class AsyncBaseSeedExhaustive:
         return _response.data
 
     @property
-    def file(self):
-        if self._file is None:
-            from .file.client import AsyncFileClient  # noqa: E402
+    def file_notification_service(self):
+        if self._file_notification_service is None:
+            from .file_notification_service.client import AsyncFileNotificationServiceClient  # noqa: E402
 
-            self._file = AsyncFileClient(client_wrapper=self._client_wrapper)
-        return self._file
+            self._file_notification_service = AsyncFileNotificationServiceClient(client_wrapper=self._client_wrapper)
+        return self._file_notification_service
 
     @property
-    def health(self):
-        if self._health is None:
-            from .health.client import AsyncHealthClient  # noqa: E402
+    def file_service(self):
+        if self._file_service is None:
+            from .file_service.client import AsyncFileServiceClient  # noqa: E402
 
-            self._health = AsyncHealthClient(client_wrapper=self._client_wrapper)
-        return self._health
+            self._file_service = AsyncFileServiceClient(client_wrapper=self._client_wrapper)
+        return self._file_service
+
+    @property
+    def health_service(self):
+        if self._health_service is None:
+            from .health_service.client import AsyncHealthServiceClient  # noqa: E402
+
+            self._health_service = AsyncHealthServiceClient(client_wrapper=self._client_wrapper)
+        return self._health_service
 
     @property
     def service(self):
@@ -390,9 +413,7 @@ class AsyncBaseSeedExhaustive:
         return self._service
 
 
-def _get_base_url(
-    *, base_url: typing.Optional[str] = None, environment: typing.Optional[SeedExhaustiveEnvironment] = None
-) -> str:
+def _get_base_url(*, base_url: typing.Optional[str] = None, environment: SeedExhaustiveEnvironment) -> str:
     if base_url is not None:
         return base_url
     elif environment is not None:

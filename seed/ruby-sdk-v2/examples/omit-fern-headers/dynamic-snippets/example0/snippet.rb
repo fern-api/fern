@@ -5,4 +5,4 @@ client = Seed::Client.new(
   base_url: "https://api.fern.com"
 )
 
-client.echo(request: "Hello world!\\n\\nwith\\n\\tnewlines")
+client.file_notification_service.file_notification_service_get_exception(notification_id: "notificationId")

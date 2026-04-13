@@ -17,11 +17,12 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.CreateRequestB{
-        Description: "description",
-        Count: 1,
+    request := map[string]*fern.TypesMixedType{
+        "string": &fern.TypesMixedType{
+            Double: 1.1,
+        },
     }
-    client.Endpoints.DuplicateNamesB.Create(
+    client.EndpointsContainer.EndpointsContainerGetAndReturnMapOfPrimToUndiscriminatedUnion(
         context.TODO(),
         request,
     )

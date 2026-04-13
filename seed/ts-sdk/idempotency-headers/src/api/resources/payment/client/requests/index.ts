@@ -1,1 +1,2 @@
-export type { CreatePaymentRequest } from "./CreatePaymentRequest.js";
+export type { PaymentCreateRequest } from "./PaymentCreateRequest.js";
+export type { PaymentDeleteRequest } from "./PaymentDeleteRequest.js";

@@ -9,8 +9,4 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->folder->service->unknownRequest(
-    [
-        'key' => "value",
-    ],
-);
+$client->folder->foo();

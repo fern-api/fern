@@ -14,14 +14,11 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &path.SearchUsersRequest{
+    request := &path.UserGetUserRequest{
         TenantID: "tenant_id",
         UserID: "user_id",
-        Limit: path.Int(
-            1,
-        ),
     }
-    client.User.SearchUsers(
+    client.User.Getuser(
         context.TODO(),
         request,
     )

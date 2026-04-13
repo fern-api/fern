@@ -1,10 +1,10 @@
 import Foundation
-import Streaming
+import Api
 
 private func main() async throws {
-    let client = StreamingClient(baseURL: "https://api.fern.com")
+    let client = ApiClient(baseURL: "https://api.fern.com")
 
-    _ = try await client.dummy.generateStream(request: .init(
+    _ = try await client.dummy.generate(request: .init(
         stream: true,
         numEvents: 1
     ))

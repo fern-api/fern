@@ -3,18 +3,23 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\User\Requests\GetUserSpecificsRequest;
+use Seed\User\Requests\UserUpdateUserRequest;
+use Seed\Types\User;
 
 $client = new SeedClient(
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->user->getUserSpecifics(
-    new GetUserSpecificsRequest([
+$client->user->updateuser(
+    new UserUpdateUserRequest([
         'tenantId' => 'tenant_id',
         'userId' => 'user_id',
-        'version' => 1,
-        'thought' => 'thought',
+        'body' => new User([
+            'name' => 'name',
+            'tags' => [
+                'tags',
+            ],
+        ]),
     ]),
 );

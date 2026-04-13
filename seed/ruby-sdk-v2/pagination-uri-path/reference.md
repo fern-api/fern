@@ -1,6 +1,6 @@
 # Reference
 ## Users
-<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_uri_pagination</a>() -> Seed::Users::Types::ListUsersURIPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">listwithuripagination</a>() -> Seed::Types::ListUsersURIPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.users.list_with_uri_pagination
+client.users.listwithuripagination
 ```
 </dd>
 </dl>
@@ -40,7 +40,7 @@ client.users.list_with_uri_pagination
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_path_pagination</a>() -> Seed::Users::Types::ListUsersPathPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">listwithpathpagination</a>() -> Seed::Types::ListUsersPathPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -53,7 +53,7 @@ client.users.list_with_uri_pagination
 <dd>
 
 ```ruby
-client.users.list_with_path_pagination
+client.users.listwithpathpagination
 ```
 </dd>
 </dl>

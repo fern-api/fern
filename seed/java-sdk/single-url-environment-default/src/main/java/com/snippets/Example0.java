@@ -1,14 +1,14 @@
 package com.snippets;
 
-import com.seed.singleUrlEnvironmentDefault.SeedSingleUrlEnvironmentDefaultClient;
+import com.seed.api.SeedApiClient;
 
 public class Example0 {
     public static void main(String[] args) {
-        SeedSingleUrlEnvironmentDefaultClient client = SeedSingleUrlEnvironmentDefaultClient.builder()
+        SeedApiClient client = SeedApiClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
-        client.dummy().getDummy();
+        client.dummy().getdummy();
     }
 }

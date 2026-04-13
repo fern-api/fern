@@ -1,4 +1,4 @@
-package objectswithimports
+package api
 
 import (
 	"testing"

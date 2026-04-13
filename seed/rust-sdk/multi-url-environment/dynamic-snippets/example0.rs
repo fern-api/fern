@@ -1,4 +1,4 @@
-use seed_multi_url_environment::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -7,11 +7,11 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = MultiUrlEnvironmentClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .ec2
-        .boot_instance(
-            &BootInstanceRequest {
+        .bootinstance(
+            &Ec2BootInstanceRequest {
                 size: "size".to_string(),
             },
             None,

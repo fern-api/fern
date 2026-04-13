@@ -2,19 +2,17 @@
 
 from __future__ import annotations
 
-import os
 import typing
 
 import httpx
-from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.logging import LogConfig, Logger
 
 if typing.TYPE_CHECKING:
-    from .basic_auth.client import AsyncBasicAuthClient, BasicAuthClient
+    from .basicauth.client import AsyncBasicauthClient, BasicauthClient
 
 
-class SeedBasicAuthEnvironmentVariables:
+class SeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -23,8 +21,8 @@ class SeedBasicAuthEnvironmentVariables:
     base_url : str
         The base url to use for requests from the client.
 
-    username : typing.Optional[typing.Union[str, typing.Callable[[], str]]]
-    access_token : typing.Optional[typing.Union[str, typing.Callable[[], str]]]
+    username : typing.Union[str, typing.Callable[[], str]]
+    password : typing.Union[str, typing.Callable[[], str]]
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
 
@@ -42,11 +40,11 @@ class SeedBasicAuthEnvironmentVariables:
 
     Examples
     --------
-    from seed import SeedBasicAuthEnvironmentVariables
+    from seed import SeedApi
 
-    client = SeedBasicAuthEnvironmentVariables(
+    client = SeedApi(
         username="YOUR_USERNAME",
-        access_token="YOUR_ACCESS_TOKEN",
+        password="YOUR_PASSWORD",
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -55,8 +53,8 @@ class SeedBasicAuthEnvironmentVariables:
         self,
         *,
         base_url: str,
-        username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("USERNAME"),
-        access_token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("PASSWORD"),
+        username: typing.Union[str, typing.Callable[[], str]],
+        password: typing.Union[str, typing.Callable[[], str]],
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -66,14 +64,10 @@ class SeedBasicAuthEnvironmentVariables:
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
         )
-        if username is None:
-            raise ApiError(body="The client must be instantiated be either passing in username or setting USERNAME")
-        if access_token is None:
-            raise ApiError(body="The client must be instantiated be either passing in access_token or setting PASSWORD")
         self._client_wrapper = SyncClientWrapper(
             base_url=base_url,
             username=username,
-            access_token=access_token,
+            password=password,
             headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None
@@ -83,15 +77,15 @@ class SeedBasicAuthEnvironmentVariables:
             timeout=_defaulted_timeout,
             logging=logging,
         )
-        self._basic_auth: typing.Optional[BasicAuthClient] = None
+        self._basicauth: typing.Optional[BasicauthClient] = None
 
     @property
-    def basic_auth(self):
-        if self._basic_auth is None:
-            from .basic_auth.client import BasicAuthClient  # noqa: E402
+    def basicauth(self):
+        if self._basicauth is None:
+            from .basicauth.client import BasicauthClient  # noqa: E402
 
-            self._basic_auth = BasicAuthClient(client_wrapper=self._client_wrapper)
-        return self._basic_auth
+            self._basicauth = BasicauthClient(client_wrapper=self._client_wrapper)
+        return self._basicauth
 
 
 def _make_default_async_client(
@@ -112,7 +106,7 @@ def _make_default_async_client(
     return httpx.AsyncClient(timeout=timeout)
 
 
-class AsyncSeedBasicAuthEnvironmentVariables:
+class AsyncSeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -121,8 +115,8 @@ class AsyncSeedBasicAuthEnvironmentVariables:
     base_url : str
         The base url to use for requests from the client.
 
-    username : typing.Optional[typing.Union[str, typing.Callable[[], str]]]
-    access_token : typing.Optional[typing.Union[str, typing.Callable[[], str]]]
+    username : typing.Union[str, typing.Callable[[], str]]
+    password : typing.Union[str, typing.Callable[[], str]]
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
 
@@ -140,11 +134,11 @@ class AsyncSeedBasicAuthEnvironmentVariables:
 
     Examples
     --------
-    from seed import AsyncSeedBasicAuthEnvironmentVariables
+    from seed import AsyncSeedApi
 
-    client = AsyncSeedBasicAuthEnvironmentVariables(
+    client = AsyncSeedApi(
         username="YOUR_USERNAME",
-        access_token="YOUR_ACCESS_TOKEN",
+        password="YOUR_PASSWORD",
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -153,8 +147,8 @@ class AsyncSeedBasicAuthEnvironmentVariables:
         self,
         *,
         base_url: str,
-        username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("USERNAME"),
-        access_token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("PASSWORD"),
+        username: typing.Union[str, typing.Callable[[], str]],
+        password: typing.Union[str, typing.Callable[[], str]],
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -164,14 +158,10 @@ class AsyncSeedBasicAuthEnvironmentVariables:
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
         )
-        if username is None:
-            raise ApiError(body="The client must be instantiated be either passing in username or setting USERNAME")
-        if access_token is None:
-            raise ApiError(body="The client must be instantiated be either passing in access_token or setting PASSWORD")
         self._client_wrapper = AsyncClientWrapper(
             base_url=base_url,
             username=username,
-            access_token=access_token,
+            password=password,
             headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None
@@ -179,12 +169,12 @@ class AsyncSeedBasicAuthEnvironmentVariables:
             timeout=_defaulted_timeout,
             logging=logging,
         )
-        self._basic_auth: typing.Optional[AsyncBasicAuthClient] = None
+        self._basicauth: typing.Optional[AsyncBasicauthClient] = None
 
     @property
-    def basic_auth(self):
-        if self._basic_auth is None:
-            from .basic_auth.client import AsyncBasicAuthClient  # noqa: E402
+    def basicauth(self):
+        if self._basicauth is None:
+            from .basicauth.client import AsyncBasicauthClient  # noqa: E402
 
-            self._basic_auth = AsyncBasicAuthClient(client_wrapper=self._client_wrapper)
-        return self._basic_auth
+            self._basicauth = AsyncBasicauthClient(client_wrapper=self._client_wrapper)
+        return self._basicauth

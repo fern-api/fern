@@ -11,18 +11,18 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Seed::Foo::Types::FindRequest]
+      # @param params [Seed::Foo::Types::FooFindRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
-      # @option params [Seed::Foo::Types::OptionalString] :optional_string
+      # @option params [String, nil] :optional_string
       #
-      # @return [Seed::Foo::Types::ImportingType]
+      # @return [Seed::Types::ImportingType]
       def find(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        request_data = Seed::Foo::Types::FindRequest.new(params).to_h
+        request_data = Seed::Foo::Types::FooFindRequest.new(params).to_h
         non_body_param_names = ["optionalString"]
         body = request_data.except(*non_body_param_names)
 
@@ -46,7 +46,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Foo::Types::ImportingType.load(response.body)
+          Seed::Types::ImportingType.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)

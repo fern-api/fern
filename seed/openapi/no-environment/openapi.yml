@@ -5,7 +5,7 @@ info:
 paths:
   /dummy:
     get:
-      operationId: dummy_getDummy
+      operationId: dummy_getdummy
       tags:
         - Dummy
       parameters: []
@@ -16,11 +16,14 @@ paths:
             application/json:
               schema:
                 type: string
+              examples:
+                Example1:
+                  value: string
       security:
-        - Bearer: []
+        - BearerAuth: []
 components:
   schemas: {}
   securitySchemes:
-    Bearer:
+    BearerAuth:
       type: http
       scheme: bearer

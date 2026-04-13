@@ -1,10 +1,14 @@
 import Foundation
-import Unions
+import Api
 
 private func main() async throws {
-    let client = UnionsClient(baseURL: "https://api.fern.com")
+    let client = ApiClient(baseURL: "https://api.fern.com")
 
-    _ = try await client.union.get(id: "id")
+    _ = try await client.types.update(request: UnionWithTime.value(
+        UnionWithTimeValue(
+            value: 1
+        )
+    ))
 }
 
 try await main()

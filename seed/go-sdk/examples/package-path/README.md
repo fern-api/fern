@@ -32,6 +32,7 @@ package example
 import (
     context "context"
 
+    pleaseinhere "github.com/examples/fern/pleaseinhere"
     client "github.com/examples/fern/pleaseinhere/client"
     option "github.com/examples/fern/pleaseinhere/option"
 )
@@ -42,8 +43,19 @@ func do() {
             "<token>",
         ),
     )
-    request := "Hello world!\\n\\nwith\\n\\tnewlines"
-    client.Echo(
+    request := &pleaseinhere.Movie{
+        ID: "id",
+        Title: "title",
+        From: "from",
+        Rating: 1.1,
+        Type: pleaseinhere.MovieTypeMovie,
+        Tag: "tag",
+        Metadata: map[string]any{
+            "key": "value",
+        },
+        Revenue: int64(1000000),
+    }
+    client.Service.Createmovie(
         context.TODO(),
         request,
     )
@@ -57,7 +69,7 @@ URL, which is particularly useful in test environments.
 
 ```go
 client := client.NewClient(
-    option.WithBaseURL(examples.Environments.Production),
+    option.WithBaseURL(api.Environments.Production),
 )
 ```
 
@@ -67,7 +79,7 @@ Structured error types are returned from API calls that return non-success statu
 with the `errors.Is` and `errors.As` APIs, so you can access the error like so:
 
 ```go
-response, err := client.Echo(...)
+response, err := client.Service.Createmovie(...)
 if err != nil {
     var apiError *core.APIError
     if errors.As(err, apiError) {
@@ -101,7 +113,7 @@ client := client.NewClient(
 )
 
 // Specify options for an individual request.
-response, err := client.Echo(
+response, err := client.Service.Createmovie(
     ...,
     option.WithToken("<YOUR_API_KEY>"),
 )
@@ -116,7 +128,7 @@ when you need to examine the response headers received from the API call. (When 
 the raw HTTP response data will be included automatically in the Page response object.)
 
 ```go
-response, err := client.WithRawResponse.Echo(...)
+response, err := client.Service.WithRawResponse.Createmovie(...)
 if err != nil {
     return err
 }
@@ -146,7 +158,7 @@ client := client.NewClient(
     option.WithMaxAttempts(1),
 )
 
-response, err := client.Echo(
+response, err := client.Service.Createmovie(
     ...,
     option.WithMaxAttempts(1),
 )
@@ -160,7 +172,7 @@ Setting a timeout for each individual request is as simple as using the standard
 ctx, cancel := context.WithTimeout(ctx, time.Second)
 defer cancel()
 
-response, err := client.Echo(ctx, ...)
+response, err := client.Service.Createmovie(ctx, ...)
 ```
 
 ### Explicit Null
@@ -182,7 +194,7 @@ type ExampleRequest struct {
 request := &ExampleRequest{}
 request.SetName(nil)
 
-response, err := client.Echo(ctx, request, ...)
+response, err := client.Service.Createmovie(ctx, request, ...)
 ```
 
 ## Contributing

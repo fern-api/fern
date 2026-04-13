@@ -30,7 +30,7 @@ require "seed"
 
 client = Seed::Client.new
 
-client.service.post
+client.service.post(endpoint_param: "endpointParam")
 ```
 
 ## Environments

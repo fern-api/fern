@@ -8,18 +8,18 @@ public struct UserProfile: Codable, Hashable, Sendable {
     public let nullableInteger: Nullable<Int>
     public let nullableBoolean: Nullable<Bool>
     public let nullableDate: Nullable<Date>
-    public let nullableObject: Nullable<Address>
+    public let nullableObject: Address
     public let nullableList: Nullable<[String]>
-    public let nullableMap: Nullable<[String: String]>
-    public let optionalString: String?
-    public let optionalInteger: Int?
-    public let optionalBoolean: Bool?
-    public let optionalDate: Date?
+    public let nullableMap: Nullable<[String: Nullable<String>]>
+    public let optionalString: Nullable<String>?
+    public let optionalInteger: Nullable<Int>?
+    public let optionalBoolean: Nullable<Bool>?
+    public let optionalDate: Nullable<Date>?
     public let optionalObject: Address?
-    public let optionalList: [String]?
-    public let optionalMap: [String: String]?
+    public let optionalList: Nullable<[String]>?
+    public let optionalMap: Nullable<[String: Nullable<String>]>?
     public let optionalNullableString: Nullable<String>?
-    public let optionalNullableObject: Nullable<Address>?
+    public let optionalNullableObject: Address?
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
@@ -30,18 +30,18 @@ public struct UserProfile: Codable, Hashable, Sendable {
         nullableInteger: Nullable<Int>,
         nullableBoolean: Nullable<Bool>,
         nullableDate: Nullable<Date>,
-        nullableObject: Nullable<Address>,
+        nullableObject: Address,
         nullableList: Nullable<[String]>,
-        nullableMap: Nullable<[String: String]>,
-        optionalString: String? = nil,
-        optionalInteger: Int? = nil,
-        optionalBoolean: Bool? = nil,
-        optionalDate: Date? = nil,
+        nullableMap: Nullable<[String: Nullable<String>]>,
+        optionalString: Nullable<String>? = nil,
+        optionalInteger: Nullable<Int>? = nil,
+        optionalBoolean: Nullable<Bool>? = nil,
+        optionalDate: Nullable<Date>? = nil,
         optionalObject: Address? = nil,
-        optionalList: [String]? = nil,
-        optionalMap: [String: String]? = nil,
+        optionalList: Nullable<[String]>? = nil,
+        optionalMap: Nullable<[String: Nullable<String>]>? = nil,
         optionalNullableString: Nullable<String>? = nil,
-        optionalNullableObject: Nullable<Address>? = nil,
+        optionalNullableObject: Address? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.id = id
@@ -73,18 +73,18 @@ public struct UserProfile: Codable, Hashable, Sendable {
         self.nullableInteger = try container.decode(Nullable<Int>.self, forKey: .nullableInteger)
         self.nullableBoolean = try container.decode(Nullable<Bool>.self, forKey: .nullableBoolean)
         self.nullableDate = try container.decode(Nullable<Date>.self, forKey: .nullableDate)
-        self.nullableObject = try container.decode(Nullable<Address>.self, forKey: .nullableObject)
+        self.nullableObject = try container.decode(Address.self, forKey: .nullableObject)
         self.nullableList = try container.decode(Nullable<[String]>.self, forKey: .nullableList)
-        self.nullableMap = try container.decode(Nullable<[String: String]>.self, forKey: .nullableMap)
-        self.optionalString = try container.decodeIfPresent(String.self, forKey: .optionalString)
-        self.optionalInteger = try container.decodeIfPresent(Int.self, forKey: .optionalInteger)
-        self.optionalBoolean = try container.decodeIfPresent(Bool.self, forKey: .optionalBoolean)
-        self.optionalDate = try container.decodeIfPresent(Date.self, forKey: .optionalDate)
+        self.nullableMap = try container.decode(Nullable<[String: Nullable<String>]>.self, forKey: .nullableMap)
+        self.optionalString = try container.decodeNullableIfPresent(String.self, forKey: .optionalString)
+        self.optionalInteger = try container.decodeNullableIfPresent(Int.self, forKey: .optionalInteger)
+        self.optionalBoolean = try container.decodeNullableIfPresent(Bool.self, forKey: .optionalBoolean)
+        self.optionalDate = try container.decodeNullableIfPresent(Date.self, forKey: .optionalDate)
         self.optionalObject = try container.decodeIfPresent(Address.self, forKey: .optionalObject)
-        self.optionalList = try container.decodeIfPresent([String].self, forKey: .optionalList)
-        self.optionalMap = try container.decodeIfPresent([String: String].self, forKey: .optionalMap)
+        self.optionalList = try container.decodeNullableIfPresent([String].self, forKey: .optionalList)
+        self.optionalMap = try container.decodeNullableIfPresent([String: Nullable<String>].self, forKey: .optionalMap)
         self.optionalNullableString = try container.decodeNullableIfPresent(String.self, forKey: .optionalNullableString)
-        self.optionalNullableObject = try container.decodeNullableIfPresent(Address.self, forKey: .optionalNullableObject)
+        self.optionalNullableObject = try container.decodeIfPresent(Address.self, forKey: .optionalNullableObject)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
@@ -100,15 +100,15 @@ public struct UserProfile: Codable, Hashable, Sendable {
         try container.encode(self.nullableObject, forKey: .nullableObject)
         try container.encode(self.nullableList, forKey: .nullableList)
         try container.encode(self.nullableMap, forKey: .nullableMap)
-        try container.encodeIfPresent(self.optionalString, forKey: .optionalString)
-        try container.encodeIfPresent(self.optionalInteger, forKey: .optionalInteger)
-        try container.encodeIfPresent(self.optionalBoolean, forKey: .optionalBoolean)
-        try container.encodeIfPresent(self.optionalDate, forKey: .optionalDate)
+        try container.encodeNullableIfPresent(self.optionalString, forKey: .optionalString)
+        try container.encodeNullableIfPresent(self.optionalInteger, forKey: .optionalInteger)
+        try container.encodeNullableIfPresent(self.optionalBoolean, forKey: .optionalBoolean)
+        try container.encodeNullableIfPresent(self.optionalDate, forKey: .optionalDate)
         try container.encodeIfPresent(self.optionalObject, forKey: .optionalObject)
-        try container.encodeIfPresent(self.optionalList, forKey: .optionalList)
-        try container.encodeIfPresent(self.optionalMap, forKey: .optionalMap)
+        try container.encodeNullableIfPresent(self.optionalList, forKey: .optionalList)
+        try container.encodeNullableIfPresent(self.optionalMap, forKey: .optionalMap)
         try container.encodeNullableIfPresent(self.optionalNullableString, forKey: .optionalNullableString)
-        try container.encodeNullableIfPresent(self.optionalNullableObject, forKey: .optionalNullableObject)
+        try container.encodeIfPresent(self.optionalNullableObject, forKey: .optionalNullableObject)
     }
 
     /// Keys for encoding/decoding struct properties.

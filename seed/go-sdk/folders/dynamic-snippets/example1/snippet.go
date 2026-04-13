@@ -13,7 +13,7 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    client.A.B.Foo(
+    client.Ab.ABFoo(
         context.TODO(),
     )
 }

@@ -1,7 +1,7 @@
 # Seed Rust Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FRust)
-[![crates.io shield](https://img.shields.io/crates/v/seed_single_url_environment_no_default)](https://crates.io/crates/seed_single_url_environment_no_default)
+[![crates.io shield](https://img.shields.io/crates/v/seed_api)](https://crates.io/crates/seed_api)
 
 The Seed Rust library provides convenient access to the Seed APIs from Rust.
 
@@ -25,13 +25,13 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-seed_single_url_environment_no_default = "0.0.1"
+seed_api = "0.0.1"
 ```
 
 Or install via cargo:
 
 ```sh
-cargo add seed_single_url_environment_no_default
+cargo add seed_api
 ```
 
 ## Reference
@@ -43,7 +43,7 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```rust
-use seed_single_url_environment_no_default::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -51,8 +51,8 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = SingleUrlEnvironmentNoDefaultClient::new(config).expect("Failed to build client");
-    client.dummy.get_dummy(None).await;
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client.dummy.getdummy(None).await;
 }
 ```
 
@@ -61,7 +61,7 @@ async fn main() {
 This SDK allows you to configure different environments for API requests.
 
 ```rust
-use seed_single_url_environment_no_default::prelude::{*};
+use seed_api::prelude::{*};
 
 let config = ClientConfig {
     base_url: Environment::Production.url().to_string(),
@@ -75,7 +75,7 @@ let client = Client::new(config).expect("Failed to build client");
 When the API returns a non-success status code (4xx or 5xx response), an error will be returned.
 
 ```rust
-match client.dummy.get_dummy(None)?.await {
+match client.dummy.getdummy(None)?.await {
     Ok(response) => {
         println!("Success: {:?}", response);
     },
@@ -105,7 +105,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` method to configure this behavior.
 
 ```rust
-let response = client.dummy.get_dummy(
+let response = client.dummy.getdummy(
     Some(RequestOptions::new().max_retries(3))
 )?.await;
 ```
@@ -115,7 +115,7 @@ let response = client.dummy.get_dummy(
 The SDK defaults to a 30 second timeout. Use the `timeout` method to configure this behavior.
 
 ```rust
-let response = client.dummy.get_dummy(
+let response = client.dummy.getdummy(
     Some(RequestOptions::new().timeout_seconds(30))
 )?.await;
 ```
@@ -125,7 +125,7 @@ let response = client.dummy.get_dummy(
 You can add custom headers to requests using `RequestOptions`.
 
 ```rust
-let response = client.dummy.get_dummy(
+let response = client.dummy.getdummy(
     Some(
         RequestOptions::new()
             .additional_header("X-Custom-Header", "custom-value")
@@ -140,7 +140,7 @@ let response = client.dummy.get_dummy(
 You can add custom query parameters to requests using `RequestOptions`.
 
 ```rust
-let response = client.dummy.get_dummy(
+let response = client.dummy.getdummy(
     Some(
         RequestOptions::new()
             .additional_query_param("filter", "active")

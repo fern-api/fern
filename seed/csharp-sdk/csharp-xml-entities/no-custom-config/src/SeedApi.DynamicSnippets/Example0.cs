@@ -1,17 +1,17 @@
-using SeedCsharpXmlEntities;
+using SeedApi;
 
 namespace Usage;
 
 public class Example0
 {
     public async Task Do() {
-        var client = new SeedCsharpXmlEntitiesClient(
+        var client = new SeedApiClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.GetTimeZoneAsync();
+        await client._.GetTimeZoneAsync();
     }
 
 }

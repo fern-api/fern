@@ -69,7 +69,6 @@ $client = new SeedClient(
 
 Available environments:
 - `Environments::Production`
-- `Environments::Staging`
 ```
 
 ## Exception Handling

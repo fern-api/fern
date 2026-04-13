@@ -13,7 +13,7 @@ public final class UserClient: Sendable {
     /// - Parameter userId: The ID of the user to retrieve.
     /// This ID is unique to each user.
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
-    public func getUser(userId: String, requestOptions: RequestOptions? = nil) async throws -> Void {
+    public func getuser(userId: String, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .get,
             path: "/users/\(userId)",
@@ -25,7 +25,7 @@ public final class UserClient: Sendable {
     /// This endpoint is used to create a new user.
     ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
-    public func createUser(request: Requests.CreateUserRequest, requestOptions: RequestOptions? = nil) async throws -> User {
+    public func createuser(request: Requests.UserCreateUserRequest, requestOptions: RequestOptions? = nil) async throws -> User {
         return try await httpClient.performRequest(
             method: .post,
             path: "/users",

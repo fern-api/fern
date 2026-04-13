@@ -14,7 +14,7 @@
 
 ```php
 $client->package->test(
-    new TestRequest([
+    new PackageTestRequest([
         'for' => 'for',
     ]),
 );

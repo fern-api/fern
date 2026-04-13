@@ -1,6 +1,6 @@
 # Reference
 ## Nullable
-<details><summary><code>client.nullable.<a href="src/seed/nullable/client.py">get_users</a>(...) -> typing.List[User]</code></summary>
+<details><summary><code>client.nullable.<a href="src/seed/nullable/client.py">getusers</a>(...) -> typing.List[User]</code></summary>
 <dl>
 <dd>
 
@@ -13,25 +13,13 @@
 <dd>
 
 ```python
-from seed import SeedNullable
+from seed import SeedApi
 
-client = SeedNullable(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.nullable.get_users(
-    usernames=[
-        "usernames"
-    ],
-    avatar="avatar",
-    activated=[
-        True
-    ],
-    tags=[
-        "tags"
-    ],
-    extra=True,
-)
+client.nullable.getusers()
 
 ```
 </dd>
@@ -47,7 +35,7 @@ client.nullable.get_users(
 <dl>
 <dd>
 
-**usernames:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` 
+**usernames:** `typing.Optional[typing.Union[typing.Optional[str], typing.Sequence[typing.Optional[str]]]]` 
     
 </dd>
 </dl>
@@ -63,7 +51,7 @@ client.nullable.get_users(
 <dl>
 <dd>
 
-**activated:** `typing.Optional[typing.Union[bool, typing.Sequence[bool]]]` 
+**activated:** `typing.Optional[typing.Union[typing.Optional[bool], typing.Sequence[typing.Optional[bool]]]]` 
     
 </dd>
 </dl>
@@ -99,7 +87,7 @@ client.nullable.get_users(
 </dl>
 </details>
 
-<details><summary><code>client.nullable.<a href="src/seed/nullable/client.py">create_user</a>(...) -> User</code></summary>
+<details><summary><code>client.nullable.<a href="src/seed/nullable/client.py">createuser</a>(...) -> User</code></summary>
 <dl>
 <dd>
 
@@ -112,31 +100,14 @@ client.nullable.get_users(
 <dd>
 
 ```python
-from seed import SeedNullable
-from seed.nullable import Metadata, Status_Active
-import datetime
+from seed import SeedApi
 
-client = SeedNullable(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.nullable.create_user(
+client.nullable.createuser(
     username="username",
-    tags=[
-        "tags",
-        "tags"
-    ],
-    metadata=Metadata(
-        created_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-        updated_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-        avatar="avatar",
-        activated=True,
-        status=Status_Active(),
-        values={
-            "values": "values"
-        },
-    ),
-    avatar="avatar",
 )
 
 ```
@@ -197,7 +168,7 @@ client.nullable.create_user(
 </dl>
 </details>
 
-<details><summary><code>client.nullable.<a href="src/seed/nullable/client.py">delete_user</a>(...) -> bool</code></summary>
+<details><summary><code>client.nullable.<a href="src/seed/nullable/client.py">deleteuser</a>(...) -> bool</code></summary>
 <dl>
 <dd>
 
@@ -210,15 +181,13 @@ client.nullable.create_user(
 <dd>
 
 ```python
-from seed import SeedNullable
+from seed import SeedApi
 
-client = SeedNullable(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.nullable.delete_user(
-    username="xy",
-)
+client.nullable.deleteuser()
 
 ```
 </dd>

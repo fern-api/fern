@@ -11,7 +11,6 @@ The Seed Swift library provides convenient access to the Seed APIs from Swift.
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
-- [Environments](#environments)
 - [Errors](#errors)
 - [Request Types](#request-types)
 - [Advanced](#advanced)
@@ -50,28 +49,15 @@ Instantiate and use the client with the following:
 
 ```swift
 import Foundation
-import MultiUrlEnvironmentNoDefault
+import Api
 
 private func main() async throws {
-    let client = MultiUrlEnvironmentNoDefaultClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.ec2.bootInstance(request: .init(size: "size"))
+    _ = try await client.ec2.bootinstance(request: .init(size: "size"))
 }
 
 try await main()
-```
-
-## Environments
-
-This SDK allows you to configure different environments for API requests.
-
-```swift
-import MultiUrlEnvironmentNoDefault
-
-let client = MultiUrlEnvironmentNoDefaultClient(
-    ...,
-    environment: .production
-)
 ```
 
 ## Errors
@@ -79,14 +65,14 @@ let client = MultiUrlEnvironmentNoDefaultClient(
 The SDK throws a single error enum for all failures. Client-side issues encoding/decoding failures and network errors use dedicated cases, while non-success HTTP responses are wrapped in an `HTTPError` that exposes the status code, a simple classification and an optional decoded message.
 
 ```swift
-import MultiUrlEnvironmentNoDefault
+import Api
 
-let client = MultiUrlEnvironmentNoDefaultClient(...)
+let client = ApiClient(...)
 
 do {
-    let response = try await client.ec2.bootInstance(...)
+    let response = try await client.ec2.bootinstance(...)
     // Handle successful response
-} catch let error as MultiUrlEnvironmentNoDefaultError {
+} catch let error as ApiError {
     switch error {
     case .httpError(let httpError):
         print("Status code:", httpError.statusCode)
@@ -109,9 +95,9 @@ do {
 The SDK exports all request types as Swift structs. Simply import the SDK module to access them:
 
 ```swift
-import MultiUrlEnvironmentNoDefault
+import Api
 
-let request = Requests.BootInstanceRequest(
+let request = Requests.Ec2BootInstanceRequest(
     ...
 )
 ```
@@ -123,7 +109,7 @@ let request = Requests.BootInstanceRequest(
 If you would like to send additional headers as part of the request, use the `additionalHeaders` request option.
 
 ```swift
-try await client.ec2.bootInstance(..., requestOptions: .init(
+try await client.ec2.bootinstance(..., requestOptions: .init(
     additionalHeaders: [
         "X-Custom-Header": "custom value"
     ]
@@ -135,7 +121,7 @@ try await client.ec2.bootInstance(..., requestOptions: .init(
 If you would like to send additional query string parameters as part of the request, use the `additionalQueryParameters` request option.
 
 ```swift
-try await client.ec2.bootInstance(..., requestOptions: .init(
+try await client.ec2.bootinstance(..., requestOptions: .init(
     additionalQueryParameters: [
         "custom_query_param_key": "custom_query_param_value"
     ]
@@ -147,7 +133,7 @@ try await client.ec2.bootInstance(..., requestOptions: .init(
 The SDK defaults to a 60-second timeout. Use the `timeout` option to configure this behavior.
 
 ```swift
-try await client.ec2.bootInstance(..., requestOptions: .init(
+try await client.ec2.bootinstance(..., requestOptions: .init(
     timeout: 30
 ))
 ```
@@ -158,9 +144,9 @@ The SDK allows you to customize the underlying `URLSession` used for HTTP reques
 
 ```swift
 import Foundation
-import MultiUrlEnvironmentNoDefault
+import Api
 
-let client = MultiUrlEnvironmentNoDefaultClient(
+let client = ApiClient(
     ...,
     urlSession: // Provide your implementation here
 )

@@ -1,4 +1,4 @@
-//! Request and response types for the Accept
+//! Request and response types for the accept-header
 //!
 //! This module contains all data structures used for API communication,
 //! including request bodies, response types, and shared models.

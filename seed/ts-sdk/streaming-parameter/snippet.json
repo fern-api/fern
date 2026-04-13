@@ -8,9 +8,8 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedStreamingClient } from \"@fern/streaming-parameter\";\n\nconst client = new SeedStreamingClient({ environment: \"YOUR_BASE_URL\" });\nconst response = await client.dummy.generate({\n    stream: false,\n    num_events: 5\n});\nfor await (const item of response) {\n    console.log(item);\n}\n"
-            },
-            "example_identifier": "Default"
+                "client": "import { SeedApiClient } from \"@fern/streaming-parameter\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.dummy.generate({\n    stream: true,\n    num_events: 1\n});\n"
+            }
         }
     ],
     "types": {}

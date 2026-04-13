@@ -13,7 +13,7 @@ impl OrganizationsClient {
         })
     }
 
-    pub async fn get_organization(
+    pub async fn getorganization(
         &self,
         tenant_id: &str,
         organization_id: &str,
@@ -22,7 +22,7 @@ impl OrganizationsClient {
         self.http_client
             .execute_request(
                 Method::GET,
-                &format!("/{}/organizations/{}/", tenant_id, organization_id),
+                &format!("{}/organizations/{}/", tenant_id, organization_id),
                 None,
                 None,
                 options,
@@ -30,7 +30,7 @@ impl OrganizationsClient {
             .await
     }
 
-    pub async fn get_organization_user(
+    pub async fn getorganizationuser(
         &self,
         tenant_id: &str,
         organization_id: &str,
@@ -41,7 +41,7 @@ impl OrganizationsClient {
             .execute_request(
                 Method::GET,
                 &format!(
-                    "/{}/organizations/{}/users/{}",
+                    "{}/organizations/{}/users/{}",
                     tenant_id, organization_id, user_id
                 ),
                 None,
@@ -51,20 +51,20 @@ impl OrganizationsClient {
             .await
     }
 
-    pub async fn search_organizations(
+    pub async fn searchorganizations(
         &self,
         tenant_id: &str,
         organization_id: &str,
-        request: &SearchOrganizationsQueryRequest,
+        request: &SearchorganizationsQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<Vec<Organization>, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
-                &format!("/{}/organizations/{}/search", tenant_id, organization_id),
+                &format!("{}/organizations/{}/search", tenant_id, organization_id),
                 None,
                 QueryBuilder::new()
-                    .int("limit", request.limit.clone())
+                    .serialize("limit", request.limit.clone())
                     .build(),
                 options,
             )

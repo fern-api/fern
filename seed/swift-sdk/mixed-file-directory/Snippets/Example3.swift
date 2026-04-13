@@ -1,10 +1,10 @@
 import Foundation
-import MixedFileDirectory
+import Api
 
 private func main() async throws {
-    let client = MixedFileDirectoryClient(baseURL: "https://api.fern.com")
+    let client = ApiClient(baseURL: "https://api.fern.com")
 
-    _ = try await client.user.events.metadata.getMetadata(id: "id")
+    _ = try await client.user.list(limit: .value(1))
 }
 
 try await main()

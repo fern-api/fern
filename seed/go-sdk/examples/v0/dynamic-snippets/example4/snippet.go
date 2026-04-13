@@ -16,8 +16,8 @@ func do() {
             "<token>",
         ),
     )
-    client.File.Notification.Service.GetException(
+    client.FileService.FileServiceGetFile(
         context.TODO(),
-        "notificationId",
+        "filename",
     )
 }

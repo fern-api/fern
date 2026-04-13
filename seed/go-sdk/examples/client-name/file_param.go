@@ -1,4 +1,4 @@
-package examples
+package api
 
 import (
 	"io"

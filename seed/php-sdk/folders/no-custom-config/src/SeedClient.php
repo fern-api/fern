@@ -2,8 +2,10 @@
 
 namespace Seed;
 
-use Seed\A\AClient;
+use Seed\Ab\AbClient;
+use Seed\Ac\AcClient;
 use Seed\Folder\FolderClient;
+use Seed\FolderService\FolderServiceClient;
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\Exceptions\SeedException;
@@ -15,14 +17,24 @@ use Psr\Http\Client\ClientExceptionInterface;
 class SeedClient
 {
     /**
-     * @var AClient $a
+     * @var AbClient $ab
      */
-    public AClient $a;
+    public AbClient $ab;
+
+    /**
+     * @var AcClient $ac
+     */
+    public AcClient $ac;
 
     /**
      * @var FolderClient $folder
      */
     public FolderClient $folder;
+
+    /**
+     * @var FolderServiceClient $folderService
+     */
+    public FolderServiceClient $folderService;
 
     /**
      * @var array{
@@ -70,8 +82,10 @@ class SeedClient
             options: $this->options,
         );
 
-        $this->a = new AClient($this->client, $this->options);
+        $this->ab = new AbClient($this->client, $this->options);
+        $this->ac = new AcClient($this->client, $this->options);
         $this->folder = new FolderClient($this->client, $this->options);
+        $this->folderService = new FolderServiceClient($this->client, $this->options);
     }
 
     /**

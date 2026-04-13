@@ -33,7 +33,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 
 func (r *RawClient) Get(
 	ctx context.Context,
-	id string,
+	request *fern.TypesGetRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.UnionWithTime], error) {
 	options := core.NewRequestOptions(opts...)
@@ -44,7 +44,7 @@ func (r *RawClient) Get(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/time/%v",
-		id,
+		request.ID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),

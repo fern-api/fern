@@ -4,693 +4,682 @@
             "id": {
                 "path": "/container/list-of-objects",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/container.getAndReturnListOfObjects"
+                "identifier_override": "endpoint_endpointsContainer.endpoints_container_getAndReturnListOfObjects"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n\ttypes \"github.com/go-deterministic-ordering/fern/types\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Container.GetAndReturnListOfObjects(\n\tcontext.TODO(),\n\t[]*types.ObjectWithRequiredField{\n\t\t\u0026types.ObjectWithRequiredField{\n\t\t\tFieldString: \"string\",\n\t\t},\n\t\t\u0026types.ObjectWithRequiredField{\n\t\t\tFieldString: \"string\",\n\t\t},\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EndpointsContainer.EndpointsContainerGetAndReturnListOfObjects(\n\tcontext.TODO(),\n\t[]*fern.TypesObjectWithRequiredField{\n\t\t\u0026fern.TypesObjectWithRequiredField{\n\t\t\tFieldString: \"string\",\n\t\t},\n\t},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/container/list-of-primitives",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/container.getAndReturnListOfPrimitives"
+                "identifier_override": "endpoint_endpointsContainer.endpoints_container_getAndReturnListOfPrimitives"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Container.GetAndReturnListOfPrimitives(\n\tcontext.TODO(),\n\t[]string{\n\t\t\"string\",\n\t\t\"string\",\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EndpointsContainer.EndpointsContainerGetAndReturnListOfPrimitives(\n\tcontext.TODO(),\n\t[]string{\n\t\t\"string\",\n\t},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/container/map-prim-to-object",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/container.getAndReturnMapOfPrimToObject"
+                "identifier_override": "endpoint_endpointsContainer.endpoints_container_getAndReturnMapOfPrimToObject"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n\ttypes \"github.com/go-deterministic-ordering/fern/types\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Container.GetAndReturnMapOfPrimToObject(\n\tcontext.TODO(),\n\tmap[string]*types.ObjectWithRequiredField{\n\t\t\"string\": \u0026types.ObjectWithRequiredField{\n\t\t\tFieldString: \"string\",\n\t\t},\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EndpointsContainer.EndpointsContainerGetAndReturnMapOfPrimToObject(\n\tcontext.TODO(),\n\tmap[string]*fern.TypesObjectWithRequiredField{\n\t\t\"key\": \u0026fern.TypesObjectWithRequiredField{\n\t\t\tFieldString: \"string\",\n\t\t},\n\t},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/container/map-prim-to-prim",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/container.getAndReturnMapPrimToPrim"
+                "identifier_override": "endpoint_endpointsContainer.endpoints_container_getAndReturnMapPrimToPrim"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Container.GetAndReturnMapPrimToPrim(\n\tcontext.TODO(),\n\tmap[string]string{\n\t\t\"string\": \"string\",\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EndpointsContainer.EndpointsContainerGetAndReturnMapPrimToPrim(\n\tcontext.TODO(),\n\tmap[string]string{\n\t\t\"key\": \"value\",\n\t},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/container/map-prim-to-union",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/container.getAndReturnMapOfPrimToUndiscriminatedUnion"
+                "identifier_override": "endpoint_endpointsContainer.endpoints_container_getAndReturnMapOfPrimToUndiscriminatedUnion"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n\ttypes \"github.com/go-deterministic-ordering/fern/types\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnion(\n\tcontext.TODO(),\n\tmap[string]*types.MixedType{\n\t\t\"string\": \u0026types.MixedType{\n\t\t\tDouble: 1.1,\n\t\t},\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EndpointsContainer.EndpointsContainerGetAndReturnMapOfPrimToUndiscriminatedUnion(\n\tcontext.TODO(),\n\tmap[string]*fern.TypesMixedType{\n\t\t\"key\": \u0026fern.TypesMixedType{\n\t\t\tDouble: 1.1,\n\t\t},\n\t},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/container/opt-objects",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/container.getAndReturnOptional"
+                "identifier_override": "endpoint_endpointsContainer.endpoints_container_getAndReturnOptional"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n\ttypes \"github.com/go-deterministic-ordering/fern/types\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Container.GetAndReturnOptional(\n\tcontext.TODO(),\n\t\u0026types.ObjectWithRequiredField{\n\t\tFieldString: \"string\",\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EndpointsContainer.EndpointsContainerGetAndReturnOptional(\n\tcontext.TODO(),\n\t\u0026fern.TypesObjectWithRequiredField{\n\t\tFieldString: \"string\",\n\t},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/container/set-of-objects",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/container.getAndReturnSetOfObjects"
+                "identifier_override": "endpoint_endpointsContainer.endpoints_container_getAndReturnSetOfObjects"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n\ttypes \"github.com/go-deterministic-ordering/fern/types\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Container.GetAndReturnSetOfObjects(\n\tcontext.TODO(),\n\t[]*types.ObjectWithRequiredField{\n\t\t\u0026types.ObjectWithRequiredField{\n\t\t\tFieldString: \"string\",\n\t\t},\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EndpointsContainer.EndpointsContainerGetAndReturnSetOfObjects(\n\tcontext.TODO(),\n\t[]*fern.TypesObjectWithRequiredField{\n\t\t\u0026fern.TypesObjectWithRequiredField{\n\t\t\tFieldString: \"string\",\n\t\t},\n\t},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/container/set-of-primitives",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/container.getAndReturnSetOfPrimitives"
+                "identifier_override": "endpoint_endpointsContainer.endpoints_container_getAndReturnSetOfPrimitives"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Container.GetAndReturnSetOfPrimitives(\n\tcontext.TODO(),\n\t[]string{\n\t\t\"string\",\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EndpointsContainer.EndpointsContainerGetAndReturnSetOfPrimitives(\n\tcontext.TODO(),\n\t[]string{\n\t\t\"string\",\n\t},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/duplicate-names-a",
                 "method": "GET",
-                "identifier_override": "endpoint_endpoints/duplicate-names-a.list"
+                "identifier_override": "endpoint_endpointsDuplicateNamesA.endpoints_duplicateNamesA_list"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tendpoints \"github.com/go-deterministic-ordering/fern/endpoints\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.Endpoints.DuplicateNamesA.List(\n\tcontext.TODO(),\n\t\u0026endpoints.ListRequestA{\n\t\tPage: fern.Int(\n\t\t\t1,\n\t\t),\n\t\tLimit: fern.Int(\n\t\t\t1,\n\t\t),\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.EndpointsDuplicateNamesA.EndpointsDuplicateNamesAList(\n\tcontext.TODO(),\n\t\u0026fern.EndpointsDuplicateNamesAlistRequest{},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/duplicate-names-a",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/duplicate-names-a.create"
+                "identifier_override": "endpoint_endpointsDuplicateNamesA.endpoints_duplicateNamesA_create"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tendpoints \"github.com/go-deterministic-ordering/fern/endpoints\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.DuplicateNamesA.Create(\n\tcontext.TODO(),\n\t\u0026endpoints.CreateRequestA{\n\t\tName:  \"name\",\n\t\tValue: 1,\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EndpointsDuplicateNamesA.EndpointsDuplicateNamesACreate(\n\tcontext.TODO(),\n\t\u0026fern.EndpointsDuplicateNamesAcreateRequest{\n\t\tName:  \"name\",\n\t\tValue: 1,\n\t},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/duplicate-names-a/{id}",
                 "method": "GET",
-                "identifier_override": "endpoint_endpoints/duplicate-names-a.get"
+                "identifier_override": "endpoint_endpointsDuplicateNamesA.endpoints_duplicateNamesA_get"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tendpoints \"github.com/go-deterministic-ordering/fern/endpoints\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.Endpoints.DuplicateNamesA.Get(\n\tcontext.TODO(),\n\t\u0026endpoints.GetRequestA{\n\t\tID: \"id\",\n\t\tFilter: fern.String(\n\t\t\t\"filter\",\n\t\t),\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.EndpointsDuplicateNamesA.EndpointsDuplicateNamesAGet(\n\tcontext.TODO(),\n\t\u0026fern.EndpointsDuplicateNamesAgetRequest{\n\t\tID: \"id\",\n\t},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/duplicate-names-b",
                 "method": "GET",
-                "identifier_override": "endpoint_endpoints/duplicate-names-b.list"
+                "identifier_override": "endpoint_endpointsDuplicateNamesB.endpoints_duplicateNamesB_list"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tendpoints \"github.com/go-deterministic-ordering/fern/endpoints\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.Endpoints.DuplicateNamesB.List(\n\tcontext.TODO(),\n\t\u0026endpoints.ListRequestB{\n\t\tCursor: fern.String(\n\t\t\t\"cursor\",\n\t\t),\n\t\tSize: fern.Int(\n\t\t\t1,\n\t\t),\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.EndpointsDuplicateNamesB.EndpointsDuplicateNamesBList(\n\tcontext.TODO(),\n\t\u0026fern.EndpointsDuplicateNamesBlistRequest{},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/duplicate-names-b",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/duplicate-names-b.create"
+                "identifier_override": "endpoint_endpointsDuplicateNamesB.endpoints_duplicateNamesB_create"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tendpoints \"github.com/go-deterministic-ordering/fern/endpoints\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.DuplicateNamesB.Create(\n\tcontext.TODO(),\n\t\u0026endpoints.CreateRequestB{\n\t\tDescription: \"description\",\n\t\tCount:       1,\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EndpointsDuplicateNamesB.EndpointsDuplicateNamesBCreate(\n\tcontext.TODO(),\n\t\u0026fern.EndpointsDuplicateNamesBcreateRequest{\n\t\tDescription: \"description\",\n\t\tCount:       1,\n\t},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/duplicate-names-b/{id}",
                 "method": "GET",
-                "identifier_override": "endpoint_endpoints/duplicate-names-b.get"
+                "identifier_override": "endpoint_endpointsDuplicateNamesB.endpoints_duplicateNamesB_get"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tendpoints \"github.com/go-deterministic-ordering/fern/endpoints\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.Endpoints.DuplicateNamesB.Get(\n\tcontext.TODO(),\n\t\u0026endpoints.GetRequestB{\n\t\tID: \"id\",\n\t\tExpand: fern.Bool(\n\t\t\ttrue,\n\t\t),\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.EndpointsDuplicateNamesB.EndpointsDuplicateNamesBGet(\n\tcontext.TODO(),\n\t\u0026fern.EndpointsDuplicateNamesBgetRequest{\n\t\tID: \"id\",\n\t},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/duplicate-names-c",
                 "method": "GET",
-                "identifier_override": "endpoint_endpoints/duplicate-names-c.list"
+                "identifier_override": "endpoint_endpointsDuplicateNamesC.endpoints_duplicateNamesC_list"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tendpoints \"github.com/go-deterministic-ordering/fern/endpoints\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.Endpoints.DuplicateNamesC.List(\n\tcontext.TODO(),\n\t\u0026endpoints.ListRequestC{\n\t\tOffset: fern.Int(\n\t\t\t1,\n\t\t),\n\t\tCount: fern.Int(\n\t\t\t1,\n\t\t),\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.EndpointsDuplicateNamesC.EndpointsDuplicateNamesCList(\n\tcontext.TODO(),\n\t\u0026fern.EndpointsDuplicateNamesClistRequest{},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/duplicate-names-c",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/duplicate-names-c.create"
+                "identifier_override": "endpoint_endpointsDuplicateNamesC.endpoints_duplicateNamesC_create"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tendpoints \"github.com/go-deterministic-ordering/fern/endpoints\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.DuplicateNamesC.Create(\n\tcontext.TODO(),\n\t\u0026endpoints.CreateRequestC{\n\t\tLabel:    \"label\",\n\t\tPriority: 1,\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EndpointsDuplicateNamesC.EndpointsDuplicateNamesCCreate(\n\tcontext.TODO(),\n\t\u0026fern.EndpointsDuplicateNamesCcreateRequest{\n\t\tLabel:    \"label\",\n\t\tPriority: 1,\n\t},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/duplicate-names-c/{id}",
                 "method": "GET",
-                "identifier_override": "endpoint_endpoints/duplicate-names-c.get"
+                "identifier_override": "endpoint_endpointsDuplicateNamesC.endpoints_duplicateNamesC_get"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tendpoints \"github.com/go-deterministic-ordering/fern/endpoints\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.Endpoints.DuplicateNamesC.Get(\n\tcontext.TODO(),\n\t\u0026endpoints.GetRequestC{\n\t\tID: \"id\",\n\t\tVerbose: fern.Bool(\n\t\t\ttrue,\n\t\t),\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.EndpointsDuplicateNamesC.EndpointsDuplicateNamesCGet(\n\tcontext.TODO(),\n\t\u0026fern.EndpointsDuplicateNamesCgetRequest{\n\t\tID: \"id\",\n\t},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/enum",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/enum.getAndReturnEnum"
+                "identifier_override": "endpoint_endpointsEnum.endpoints_enum_getAndReturnEnum"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n\ttypes \"github.com/go-deterministic-ordering/fern/types\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Enum.GetAndReturnEnum(\n\tcontext.TODO(),\n\ttypes.WeatherReportSunny,\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EndpointsEnum.EndpointsEnumGetAndReturnEnum(\n\tcontext.TODO(),\n\tfern.TypesWeatherReportSunny,\n)\n"
             }
         },
         {
             "id": {
                 "path": "/foo/bar",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/content-type.postJsonPatchContentType"
+                "identifier_override": "endpoint_endpointsContentType.endpoints_contentType_postJsonPatchContentType"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n\ttypes \"github.com/go-deterministic-ordering/fern/types\"\n\tuuid \"github.com/google/uuid\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.Endpoints.ContentType.PostJSONPatchContentType(\n\tcontext.TODO(),\n\t\u0026types.ObjectWithOptionalField{\n\t\tFieldString: fern.String(\n\t\t\t\"string\",\n\t\t),\n\t\tInteger: fern.Int(\n\t\t\t1,\n\t\t),\n\t\tLong: fern.Int64(\n\t\t\t1000000,\n\t\t),\n\t\tDouble: fern.Float64(\n\t\t\t1.1,\n\t\t),\n\t\tBool: fern.Bool(\n\t\t\ttrue,\n\t\t),\n\t\tDatetime: fern.Time(\n\t\t\tfern.MustParseDateTime(\n\t\t\t\t\"2024-01-15T09:30:00Z\",\n\t\t\t),\n\t\t),\n\t\tDate: fern.Time(\n\t\t\tfern.MustParseDate(\n\t\t\t\t\"2023-01-15\",\n\t\t\t),\n\t\t),\n\t\tUUID: fern.UUID(\n\t\t\tuuid.MustParse(\n\t\t\t\t\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n\t\t\t),\n\t\t),\n\t\tBase64: []byte(\"Hello world!\"),\n\t\tList: []string{\n\t\t\t\"list\",\n\t\t\t\"list\",\n\t\t},\n\t\tSet: []string{\n\t\t\t\"set\",\n\t\t},\n\t\tMap: map[int]string{\n\t\t\t1: \"map\",\n\t\t},\n\t\tBigint: fern.String(\n\t\t\t\"1000000\",\n\t\t),\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.EndpointsContentType.EndpointsContentTypePostJSONPatchContentType(\n\tcontext.TODO(),\n\t\u0026fern.TypesObjectWithOptionalField{},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/foo/baz",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/content-type.postJsonPatchContentWithCharsetType"
+                "identifier_override": "endpoint_endpointsContentType.endpoints_contentType_postJsonPatchContentWithCharsetType"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n\ttypes \"github.com/go-deterministic-ordering/fern/types\"\n\tuuid \"github.com/google/uuid\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.Endpoints.ContentType.PostJSONPatchContentWithCharsetType(\n\tcontext.TODO(),\n\t\u0026types.ObjectWithOptionalField{\n\t\tFieldString: fern.String(\n\t\t\t\"string\",\n\t\t),\n\t\tInteger: fern.Int(\n\t\t\t1,\n\t\t),\n\t\tLong: fern.Int64(\n\t\t\t1000000,\n\t\t),\n\t\tDouble: fern.Float64(\n\t\t\t1.1,\n\t\t),\n\t\tBool: fern.Bool(\n\t\t\ttrue,\n\t\t),\n\t\tDatetime: fern.Time(\n\t\t\tfern.MustParseDateTime(\n\t\t\t\t\"2024-01-15T09:30:00Z\",\n\t\t\t),\n\t\t),\n\t\tDate: fern.Time(\n\t\t\tfern.MustParseDate(\n\t\t\t\t\"2023-01-15\",\n\t\t\t),\n\t\t),\n\t\tUUID: fern.UUID(\n\t\t\tuuid.MustParse(\n\t\t\t\t\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n\t\t\t),\n\t\t),\n\t\tBase64: []byte(\"Hello world!\"),\n\t\tList: []string{\n\t\t\t\"list\",\n\t\t\t\"list\",\n\t\t},\n\t\tSet: []string{\n\t\t\t\"set\",\n\t\t},\n\t\tMap: map[int]string{\n\t\t\t1: \"map\",\n\t\t},\n\t\tBigint: fern.String(\n\t\t\t\"1000000\",\n\t\t),\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.EndpointsContentType.EndpointsContentTypePostJSONPatchContentWithCharsetType(\n\tcontext.TODO(),\n\t\u0026fern.TypesObjectWithOptionalField{},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/http-methods",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/http-methods.testPost"
+                "identifier_override": "endpoint_endpointsHttpMethods.endpoints_httpMethods_testPost"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n\ttypes \"github.com/go-deterministic-ordering/fern/types\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.HTTPMethods.TestPost(\n\tcontext.TODO(),\n\t\u0026types.ObjectWithRequiredField{\n\t\tFieldString: \"string\",\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EndpointsHTTPMethods.EndpointsHTTPMethodsTestPost(\n\tcontext.TODO(),\n\t\u0026fern.TypesObjectWithRequiredField{\n\t\tFieldString: \"string\",\n\t},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/http-methods/{id}",
                 "method": "DELETE",
-                "identifier_override": "endpoint_endpoints/http-methods.testDelete"
+                "identifier_override": "endpoint_endpointsHttpMethods.endpoints_httpMethods_testDelete"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.HTTPMethods.TestDelete(\n\tcontext.TODO(),\n\t\"id\",\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EndpointsHTTPMethods.EndpointsHTTPMethodsTestDelete(\n\tcontext.TODO(),\n\t\u0026fern.EndpointsHTTPMethodsTestDeleteRequest{\n\t\tID: \"id\",\n\t},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/http-methods/{id}",
                 "method": "GET",
-                "identifier_override": "endpoint_endpoints/http-methods.testGet"
+                "identifier_override": "endpoint_endpointsHttpMethods.endpoints_httpMethods_testGet"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.HTTPMethods.TestGet(\n\tcontext.TODO(),\n\t\"id\",\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EndpointsHTTPMethods.EndpointsHTTPMethodsTestGet(\n\tcontext.TODO(),\n\t\u0026fern.EndpointsHTTPMethodsTestGetRequest{\n\t\tID: \"id\",\n\t},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/http-methods/{id}",
                 "method": "PATCH",
-                "identifier_override": "endpoint_endpoints/http-methods.testPatch"
+                "identifier_override": "endpoint_endpointsHttpMethods.endpoints_httpMethods_testPatch"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n\ttypes \"github.com/go-deterministic-ordering/fern/types\"\n\tuuid \"github.com/google/uuid\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.HTTPMethods.TestPatch(\n\tcontext.TODO(),\n\t\"id\",\n\t\u0026types.ObjectWithOptionalField{\n\t\tFieldString: fern.String(\n\t\t\t\"string\",\n\t\t),\n\t\tInteger: fern.Int(\n\t\t\t1,\n\t\t),\n\t\tLong: fern.Int64(\n\t\t\t1000000,\n\t\t),\n\t\tDouble: fern.Float64(\n\t\t\t1.1,\n\t\t),\n\t\tBool: fern.Bool(\n\t\t\ttrue,\n\t\t),\n\t\tDatetime: fern.Time(\n\t\t\tfern.MustParseDateTime(\n\t\t\t\t\"2024-01-15T09:30:00Z\",\n\t\t\t),\n\t\t),\n\t\tDate: fern.Time(\n\t\t\tfern.MustParseDate(\n\t\t\t\t\"2023-01-15\",\n\t\t\t),\n\t\t),\n\t\tUUID: fern.UUID(\n\t\t\tuuid.MustParse(\n\t\t\t\t\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n\t\t\t),\n\t\t),\n\t\tBase64: []byte(\"Hello world!\"),\n\t\tList: []string{\n\t\t\t\"list\",\n\t\t\t\"list\",\n\t\t},\n\t\tSet: []string{\n\t\t\t\"set\",\n\t\t},\n\t\tMap: map[int]string{\n\t\t\t1: \"map\",\n\t\t},\n\t\tBigint: fern.String(\n\t\t\t\"1000000\",\n\t\t),\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EndpointsHTTPMethods.EndpointsHTTPMethodsTestPatch(\n\tcontext.TODO(),\n\t\u0026fern.EndpointsHTTPMethodsTestPatchRequest{\n\t\tID:   \"id\",\n\t\tBody: \u0026fern.TypesObjectWithOptionalField{},\n\t},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/http-methods/{id}",
                 "method": "PUT",
-                "identifier_override": "endpoint_endpoints/http-methods.testPut"
+                "identifier_override": "endpoint_endpointsHttpMethods.endpoints_httpMethods_testPut"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n\ttypes \"github.com/go-deterministic-ordering/fern/types\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.HTTPMethods.TestPut(\n\tcontext.TODO(),\n\t\"id\",\n\t\u0026types.ObjectWithRequiredField{\n\t\tFieldString: \"string\",\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EndpointsHTTPMethods.EndpointsHTTPMethodsTestPut(\n\tcontext.TODO(),\n\t\u0026fern.EndpointsHTTPMethodsTestPutRequest{\n\t\tID: \"id\",\n\t\tBody: \u0026fern.TypesObjectWithRequiredField{\n\t\t\tFieldString: \"string\",\n\t\t},\n\t},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/no-auth",
                 "method": "POST",
-                "identifier_override": "endpoint_no-auth.postWithNoAuth"
+                "identifier_override": "endpoint_noauth.postwithnoauth"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.NoAuth.PostWithNoAuth(\n\tcontext.TODO(),\n\tmap[string]interface{}{\n\t\t\"key\": \"value\",\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Noauth.Postwithnoauth(\n\tcontext.TODO(),\n\tmap[string]interface{}{\n\t\t\"key\": \"value\",\n\t},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/no-req-body",
                 "method": "GET",
-                "identifier_override": "endpoint_no-req-body.getWithNoRequestBody"
+                "identifier_override": "endpoint_noreqbody.getwithnorequestbody"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.NoReqBody.GetWithNoRequestBody(\n\tcontext.TODO(),\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Noreqbody.Getwithnorequestbody(\n\tcontext.TODO(),\n)\n"
             }
         },
         {
             "id": {
                 "path": "/no-req-body",
                 "method": "POST",
-                "identifier_override": "endpoint_no-req-body.postWithNoRequestBody"
+                "identifier_override": "endpoint_noreqbody.postwithnorequestbody"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.NoReqBody.PostWithNoRequestBody(\n\tcontext.TODO(),\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Noreqbody.Postwithnorequestbody(\n\tcontext.TODO(),\n)\n"
             }
         },
         {
             "id": {
                 "path": "/object/get-and-return-nested-with-optional-field",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/object.getAndReturnNestedWithOptionalField"
+                "identifier_override": "endpoint_endpointsObject.endpoints_object_getAndReturnNestedWithOptionalField"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n\ttypes \"github.com/go-deterministic-ordering/fern/types\"\n\tuuid \"github.com/google/uuid\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Object.GetAndReturnNestedWithOptionalField(\n\tcontext.TODO(),\n\t\u0026types.NestedObjectWithOptionalField{\n\t\tFieldString: fern.String(\n\t\t\t\"string\",\n\t\t),\n\t\tNestedObject: \u0026types.ObjectWithOptionalField{\n\t\t\tFieldString: fern.String(\n\t\t\t\t\"string\",\n\t\t\t),\n\t\t\tInteger: fern.Int(\n\t\t\t\t1,\n\t\t\t),\n\t\t\tLong: fern.Int64(\n\t\t\t\t1000000,\n\t\t\t),\n\t\t\tDouble: fern.Float64(\n\t\t\t\t1.1,\n\t\t\t),\n\t\t\tBool: fern.Bool(\n\t\t\t\ttrue,\n\t\t\t),\n\t\t\tDatetime: fern.Time(\n\t\t\t\tfern.MustParseDateTime(\n\t\t\t\t\t\"2024-01-15T09:30:00Z\",\n\t\t\t\t),\n\t\t\t),\n\t\t\tDate: fern.Time(\n\t\t\t\tfern.MustParseDate(\n\t\t\t\t\t\"2023-01-15\",\n\t\t\t\t),\n\t\t\t),\n\t\t\tUUID: fern.UUID(\n\t\t\t\tuuid.MustParse(\n\t\t\t\t\t\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n\t\t\t\t),\n\t\t\t),\n\t\t\tBase64: []byte(\"Hello world!\"),\n\t\t\tList: []string{\n\t\t\t\t\"list\",\n\t\t\t\t\"list\",\n\t\t\t},\n\t\t\tSet: []string{\n\t\t\t\t\"set\",\n\t\t\t},\n\t\t\tMap: map[int]string{\n\t\t\t\t1: \"map\",\n\t\t\t},\n\t\t\tBigint: fern.String(\n\t\t\t\t\"1000000\",\n\t\t\t),\n\t\t},\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EndpointsObject.EndpointsObjectGetAndReturnNestedWithOptionalField(\n\tcontext.TODO(),\n\t\u0026fern.TypesNestedObjectWithOptionalField{},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/object/get-and-return-nested-with-required-field-list",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/object.getAndReturnNestedWithRequiredFieldAsList"
+                "identifier_override": "endpoint_endpointsObject.endpoints_object_getAndReturnNestedWithRequiredFieldAsList"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n\ttypes \"github.com/go-deterministic-ordering/fern/types\"\n\tuuid \"github.com/google/uuid\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsList(\n\tcontext.TODO(),\n\t[]*types.NestedObjectWithRequiredField{\n\t\t\u0026types.NestedObjectWithRequiredField{\n\t\t\tFieldString: \"string\",\n\t\t\tNestedObject: \u0026types.ObjectWithOptionalField{\n\t\t\t\tFieldString: fern.String(\n\t\t\t\t\t\"string\",\n\t\t\t\t),\n\t\t\t\tInteger: fern.Int(\n\t\t\t\t\t1,\n\t\t\t\t),\n\t\t\t\tLong: fern.Int64(\n\t\t\t\t\t1000000,\n\t\t\t\t),\n\t\t\t\tDouble: fern.Float64(\n\t\t\t\t\t1.1,\n\t\t\t\t),\n\t\t\t\tBool: fern.Bool(\n\t\t\t\t\ttrue,\n\t\t\t\t),\n\t\t\t\tDatetime: fern.Time(\n\t\t\t\t\tfern.MustParseDateTime(\n\t\t\t\t\t\t\"2024-01-15T09:30:00Z\",\n\t\t\t\t\t),\n\t\t\t\t),\n\t\t\t\tDate: fern.Time(\n\t\t\t\t\tfern.MustParseDate(\n\t\t\t\t\t\t\"2023-01-15\",\n\t\t\t\t\t),\n\t\t\t\t),\n\t\t\t\tUUID: fern.UUID(\n\t\t\t\t\tuuid.MustParse(\n\t\t\t\t\t\t\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n\t\t\t\t\t),\n\t\t\t\t),\n\t\t\t\tBase64: []byte(\"Hello world!\"),\n\t\t\t\tList: []string{\n\t\t\t\t\t\"list\",\n\t\t\t\t\t\"list\",\n\t\t\t\t},\n\t\t\t\tSet: []string{\n\t\t\t\t\t\"set\",\n\t\t\t\t},\n\t\t\t\tMap: map[int]string{\n\t\t\t\t\t1: \"map\",\n\t\t\t\t},\n\t\t\t\tBigint: fern.String(\n\t\t\t\t\t\"1000000\",\n\t\t\t\t),\n\t\t\t},\n\t\t},\n\t\t\u0026types.NestedObjectWithRequiredField{\n\t\t\tFieldString: \"string\",\n\t\t\tNestedObject: \u0026types.ObjectWithOptionalField{\n\t\t\t\tFieldString: fern.String(\n\t\t\t\t\t\"string\",\n\t\t\t\t),\n\t\t\t\tInteger: fern.Int(\n\t\t\t\t\t1,\n\t\t\t\t),\n\t\t\t\tLong: fern.Int64(\n\t\t\t\t\t1000000,\n\t\t\t\t),\n\t\t\t\tDouble: fern.Float64(\n\t\t\t\t\t1.1,\n\t\t\t\t),\n\t\t\t\tBool: fern.Bool(\n\t\t\t\t\ttrue,\n\t\t\t\t),\n\t\t\t\tDatetime: fern.Time(\n\t\t\t\t\tfern.MustParseDateTime(\n\t\t\t\t\t\t\"2024-01-15T09:30:00Z\",\n\t\t\t\t\t),\n\t\t\t\t),\n\t\t\t\tDate: fern.Time(\n\t\t\t\t\tfern.MustParseDate(\n\t\t\t\t\t\t\"2023-01-15\",\n\t\t\t\t\t),\n\t\t\t\t),\n\t\t\t\tUUID: fern.UUID(\n\t\t\t\t\tuuid.MustParse(\n\t\t\t\t\t\t\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n\t\t\t\t\t),\n\t\t\t\t),\n\t\t\t\tBase64: []byte(\"Hello world!\"),\n\t\t\t\tList: []string{\n\t\t\t\t\t\"list\",\n\t\t\t\t\t\"list\",\n\t\t\t\t},\n\t\t\t\tSet: []string{\n\t\t\t\t\t\"set\",\n\t\t\t\t},\n\t\t\t\tMap: map[int]string{\n\t\t\t\t\t1: \"map\",\n\t\t\t\t},\n\t\t\t\tBigint: fern.String(\n\t\t\t\t\t\"1000000\",\n\t\t\t\t),\n\t\t\t},\n\t\t},\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EndpointsObject.EndpointsObjectGetAndReturnNestedWithRequiredFieldAsList(\n\tcontext.TODO(),\n\t[]*fern.TypesNestedObjectWithRequiredField{\n\t\t\u0026fern.TypesNestedObjectWithRequiredField{\n\t\t\tFieldString:  \"string\",\n\t\t\tNestedObject: \u0026fern.TypesObjectWithOptionalField{},\n\t\t},\n\t},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/object/get-and-return-nested-with-required-field/{string}",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/object.getAndReturnNestedWithRequiredField"
+                "identifier_override": "endpoint_endpointsObject.endpoints_object_getAndReturnNestedWithRequiredField"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n\ttypes \"github.com/go-deterministic-ordering/fern/types\"\n\tuuid \"github.com/google/uuid\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Object.GetAndReturnNestedWithRequiredField(\n\tcontext.TODO(),\n\t\"string\",\n\t\u0026types.NestedObjectWithRequiredField{\n\t\tFieldString: \"string\",\n\t\tNestedObject: \u0026types.ObjectWithOptionalField{\n\t\t\tFieldString: fern.String(\n\t\t\t\t\"string\",\n\t\t\t),\n\t\t\tInteger: fern.Int(\n\t\t\t\t1,\n\t\t\t),\n\t\t\tLong: fern.Int64(\n\t\t\t\t1000000,\n\t\t\t),\n\t\t\tDouble: fern.Float64(\n\t\t\t\t1.1,\n\t\t\t),\n\t\t\tBool: fern.Bool(\n\t\t\t\ttrue,\n\t\t\t),\n\t\t\tDatetime: fern.Time(\n\t\t\t\tfern.MustParseDateTime(\n\t\t\t\t\t\"2024-01-15T09:30:00Z\",\n\t\t\t\t),\n\t\t\t),\n\t\t\tDate: fern.Time(\n\t\t\t\tfern.MustParseDate(\n\t\t\t\t\t\"2023-01-15\",\n\t\t\t\t),\n\t\t\t),\n\t\t\tUUID: fern.UUID(\n\t\t\t\tuuid.MustParse(\n\t\t\t\t\t\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n\t\t\t\t),\n\t\t\t),\n\t\t\tBase64: []byte(\"Hello world!\"),\n\t\t\tList: []string{\n\t\t\t\t\"list\",\n\t\t\t\t\"list\",\n\t\t\t},\n\t\t\tSet: []string{\n\t\t\t\t\"set\",\n\t\t\t},\n\t\t\tMap: map[int]string{\n\t\t\t\t1: \"map\",\n\t\t\t},\n\t\t\tBigint: fern.String(\n\t\t\t\t\"1000000\",\n\t\t\t),\n\t\t},\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EndpointsObject.EndpointsObjectGetAndReturnNestedWithRequiredField(\n\tcontext.TODO(),\n\t\u0026fern.EndpointsObjectGetAndReturnNestedWithRequiredFieldRequest{\n\t\tFieldString: \"string\",\n\t\tBody: \u0026fern.TypesNestedObjectWithRequiredField{\n\t\t\tFieldString:  \"string\",\n\t\t\tNestedObject: \u0026fern.TypesObjectWithOptionalField{},\n\t\t},\n\t},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/object/get-and-return-with-datetime-like-string",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/object.getAndReturnWithDatetimeLikeString"
+                "identifier_override": "endpoint_endpointsObject.endpoints_object_getAndReturnWithDatetimeLikeString"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n\ttypes \"github.com/go-deterministic-ordering/fern/types\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Object.GetAndReturnWithDatetimeLikeString(\n\tcontext.TODO(),\n\t\u0026types.ObjectWithDatetimeLikeString{\n\t\tDatetimeLikeString: \"2023-08-31T14:15:22Z\",\n\t\tActualDatetime: fern.MustParseDateTime(\n\t\t\t\"2023-08-31T14:15:22Z\",\n\t\t),\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EndpointsObject.EndpointsObjectGetAndReturnWithDatetimeLikeString(\n\tcontext.TODO(),\n\t\u0026fern.TypesObjectWithDatetimeLikeString{\n\t\tDatetimeLikeString: \"datetimeLikeString\",\n\t\tActualDatetime: fern.MustParseDateTime(\n\t\t\t\"2024-01-15T09:30:00Z\",\n\t\t),\n\t},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/object/get-and-return-with-map-of-map",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/object.getAndReturnWithMapOfMap"
+                "identifier_override": "endpoint_endpointsObject.endpoints_object_getAndReturnWithMapOfMap"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n\ttypes \"github.com/go-deterministic-ordering/fern/types\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Object.GetAndReturnWithMapOfMap(\n\tcontext.TODO(),\n\t\u0026types.ObjectWithMapOfMap{\n\t\tMap: map[string]map[string]string{\n\t\t\t\"map\": map[string]string{\n\t\t\t\t\"map\": \"map\",\n\t\t\t},\n\t\t},\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EndpointsObject.EndpointsObjectGetAndReturnWithMapOfMap(\n\tcontext.TODO(),\n\t\u0026fern.TypesObjectWithMapOfMap{\n\t\tMap: map[string]map[string]string{\n\t\t\t\"key\": map[string]string{\n\t\t\t\t\"key\": \"value\",\n\t\t\t},\n\t\t},\n\t},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/object/get-and-return-with-optional-field",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/object.getAndReturnWithOptionalField"
+                "identifier_override": "endpoint_endpointsObject.endpoints_object_getAndReturnWithOptionalField"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n\ttypes \"github.com/go-deterministic-ordering/fern/types\"\n\tuuid \"github.com/google/uuid\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Object.GetAndReturnWithOptionalField(\n\tcontext.TODO(),\n\t\u0026types.ObjectWithOptionalField{\n\t\tFieldString: fern.String(\n\t\t\t\"string\",\n\t\t),\n\t\tInteger: fern.Int(\n\t\t\t1,\n\t\t),\n\t\tLong: fern.Int64(\n\t\t\t1000000,\n\t\t),\n\t\tDouble: fern.Float64(\n\t\t\t1.1,\n\t\t),\n\t\tBool: fern.Bool(\n\t\t\ttrue,\n\t\t),\n\t\tDatetime: fern.Time(\n\t\t\tfern.MustParseDateTime(\n\t\t\t\t\"2024-01-15T09:30:00Z\",\n\t\t\t),\n\t\t),\n\t\tDate: fern.Time(\n\t\t\tfern.MustParseDate(\n\t\t\t\t\"2023-01-15\",\n\t\t\t),\n\t\t),\n\t\tUUID: fern.UUID(\n\t\t\tuuid.MustParse(\n\t\t\t\t\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n\t\t\t),\n\t\t),\n\t\tBase64: []byte(\"Hello world!\"),\n\t\tList: []string{\n\t\t\t\"list\",\n\t\t\t\"list\",\n\t\t},\n\t\tSet: []string{\n\t\t\t\"set\",\n\t\t},\n\t\tMap: map[int]string{\n\t\t\t1: \"map\",\n\t\t},\n\t\tBigint: fern.String(\n\t\t\t\"1000000\",\n\t\t),\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EndpointsObject.EndpointsObjectGetAndReturnWithOptionalField(\n\tcontext.TODO(),\n\t\u0026fern.TypesObjectWithOptionalField{},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/object/get-and-return-with-required-field",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/object.getAndReturnWithRequiredField"
+                "identifier_override": "endpoint_endpointsObject.endpoints_object_getAndReturnWithRequiredField"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n\ttypes \"github.com/go-deterministic-ordering/fern/types\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Object.GetAndReturnWithRequiredField(\n\tcontext.TODO(),\n\t\u0026types.ObjectWithRequiredField{\n\t\tFieldString: \"string\",\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EndpointsObject.EndpointsObjectGetAndReturnWithRequiredField(\n\tcontext.TODO(),\n\t\u0026fern.TypesObjectWithRequiredField{\n\t\tFieldString: \"string\",\n\t},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/object/get-and-return-with-unknown-field",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/object.getAndReturnWithUnknownField"
+                "identifier_override": "endpoint_endpointsObject.endpoints_object_getAndReturnWithUnknownField"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n\ttypes \"github.com/go-deterministic-ordering/fern/types\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Object.GetAndReturnWithUnknownField(\n\tcontext.TODO(),\n\t\u0026types.ObjectWithUnknownField{\n\t\tUnknown: map[string]interface{}{\n\t\t\t\"$ref\": \"https://example.com/schema\",\n\t\t},\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EndpointsObject.EndpointsObjectGetAndReturnWithUnknownField(\n\tcontext.TODO(),\n\t\u0026fern.TypesObjectWithUnknownField{\n\t\tUnknown: map[string]interface{}{\n\t\t\t\"key\": \"value\",\n\t\t},\n\t},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/pagination",
                 "method": "GET",
-                "identifier_override": "endpoint_endpoints/pagination.listItems"
+                "identifier_override": "endpoint_endpointsPagination.endpoints_pagination_listItems"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tendpoints \"github.com/go-deterministic-ordering/fern/endpoints\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Pagination.ListItems(\n\tcontext.TODO(),\n\t\u0026endpoints.ListItemsRequest{\n\t\tCursor: fern.String(\n\t\t\t\"cursor\",\n\t\t),\n\t\tLimit: fern.Int(\n\t\t\t1,\n\t\t),\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EndpointsPagination.EndpointsPaginationListItems(\n\tcontext.TODO(),\n\t\u0026fern.EndpointsPaginationListItemsRequest{},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/params",
                 "method": "GET",
-                "identifier_override": "endpoint_endpoints/params.getWithAllowMultipleQuery"
+                "identifier_override": "endpoint_endpointsParams.endpoints_params_getWithQuery"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tendpoints \"github.com/go-deterministic-ordering/fern/endpoints\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.Endpoints.Params.GetWithAllowMultipleQuery(\n\tcontext.TODO(),\n\t\u0026endpoints.GetWithMultipleQuery{\n\t\tQuery: []string{\n\t\t\t\"query\",\n\t\t},\n\t\tNumber: []int{\n\t\t\t1,\n\t\t},\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.EndpointsParams.EndpointsParamsGetWithQuery(\n\tcontext.TODO(),\n\t\u0026fern.EndpointsParamsGetWithQueryRequest{\n\t\tQuery:  \"query\",\n\t\tNumber: 1,\n\t},\n)\n"
             }
         },
         {
             "id": {
-                "path": "/params",
+                "path": "/params/allow-multiple",
                 "method": "GET",
-                "identifier_override": "endpoint_endpoints/params.getWithQuery"
+                "identifier_override": "endpoint_endpointsParams.endpoints_params_getWithAllowMultipleQuery"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tendpoints \"github.com/go-deterministic-ordering/fern/endpoints\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.Endpoints.Params.GetWithQuery(\n\tcontext.TODO(),\n\t\u0026endpoints.GetWithQuery{\n\t\tQuery:  \"query\",\n\t\tNumber: 1,\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.EndpointsParams.EndpointsParamsGetWithAllowMultipleQuery(\n\tcontext.TODO(),\n\t\u0026fern.EndpointsParamsGetWithAllowMultipleQueryRequest{\n\t\tQuery: []*string{\n\t\t\tfern.String(\n\t\t\t\t\"query\",\n\t\t\t),\n\t\t},\n\t\tNumber: []*int{\n\t\t\tfern.Int(\n\t\t\t\t1,\n\t\t\t),\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/params/inline-path-query/{param}",
+                "method": "GET",
+                "identifier_override": "endpoint_endpointsParams.endpoints_params_getWithInlinePathAndQuery"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.EndpointsParams.EndpointsParamsGetWithInlinePathAndQuery(\n\tcontext.TODO(),\n\t\u0026fern.EndpointsParamsGetWithInlinePathAndQueryRequest{\n\t\tParam: \"param\",\n\t\tQuery: \"query\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/params/inline-path/{param}",
+                "method": "GET",
+                "identifier_override": "endpoint_endpointsParams.endpoints_params_getWithInlinePath"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EndpointsParams.EndpointsParamsGetWithInlinePath(\n\tcontext.TODO(),\n\t\u0026fern.EndpointsParamsGetWithInlinePathRequest{\n\t\tParam: \"param\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/params/inline-path/{param}",
+                "method": "PUT",
+                "identifier_override": "endpoint_endpointsParams.endpoints_params_modifyWithInlinePath"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EndpointsParams.EndpointsParamsModifyWithInlinePath(\n\tcontext.TODO(),\n\t\u0026fern.EndpointsParamsModifyWithInlinePathRequest{\n\t\tParam: \"param\",\n\t\tBody:  \"string\",\n\t},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/params/path-query/{param}",
                 "method": "GET",
-                "identifier_override": "endpoint_endpoints/params.getWithInlinePathAndQuery"
+                "identifier_override": "endpoint_endpointsParams.endpoints_params_getWithPathAndQuery"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tendpoints \"github.com/go-deterministic-ordering/fern/endpoints\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.Endpoints.Params.GetWithInlinePathAndQuery(\n\tcontext.TODO(),\n\t\u0026endpoints.GetWithInlinePathAndQuery{\n\t\tParam: \"param\",\n\t\tQuery: \"query\",\n\t},\n)\n"
-            }
-        },
-        {
-            "id": {
-                "path": "/params/path-query/{param}",
-                "method": "GET",
-                "identifier_override": "endpoint_endpoints/params.getWithPathAndQuery"
-            },
-            "snippet": {
-                "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tendpoints \"github.com/go-deterministic-ordering/fern/endpoints\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.Endpoints.Params.GetWithPathAndQuery(\n\tcontext.TODO(),\n\t\"param\",\n\t\u0026endpoints.GetWithPathAndQuery{\n\t\tQuery: \"query\",\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.EndpointsParams.EndpointsParamsGetWithPathAndQuery(\n\tcontext.TODO(),\n\t\u0026fern.EndpointsParamsGetWithPathAndQueryRequest{\n\t\tParam: \"param\",\n\t\tQuery: \"query\",\n\t},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/params/path/{param}",
                 "method": "GET",
-                "identifier_override": "endpoint_endpoints/params.getWithInlinePath"
+                "identifier_override": "endpoint_endpointsParams.endpoints_params_getWithPath"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tendpoints \"github.com/go-deterministic-ordering/fern/endpoints\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Params.GetWithInlinePath(\n\tcontext.TODO(),\n\t\u0026endpoints.GetWithInlinePath{\n\t\tParam: \"param\",\n\t},\n)\n"
-            }
-        },
-        {
-            "id": {
-                "path": "/params/path/{param}",
-                "method": "GET",
-                "identifier_override": "endpoint_endpoints/params.getWithPath"
-            },
-            "snippet": {
-                "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Params.GetWithPath(\n\tcontext.TODO(),\n\t\"param\",\n)\n"
-            }
-        },
-        {
-            "id": {
-                "path": "/params/path/{param}",
-                "method": "POST",
-                "identifier_override": "endpoint_endpoints/params.uploadWithPath"
-            },
-            "snippet": {
-                "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Params.UploadWithPath(\n\tcontext.TODO(),\n\t\"upload-path\",\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EndpointsParams.EndpointsParamsGetWithPath(\n\tcontext.TODO(),\n\t\u0026fern.EndpointsParamsGetWithPathRequest{\n\t\tParam: \"param\",\n\t},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/params/path/{param}",
                 "method": "PUT",
-                "identifier_override": "endpoint_endpoints/params.modifyWithInlinePath"
+                "identifier_override": "endpoint_endpointsParams.endpoints_params_modifyWithPath"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tendpoints \"github.com/go-deterministic-ordering/fern/endpoints\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Params.ModifyWithInlinePath(\n\tcontext.TODO(),\n\t\u0026endpoints.ModifyResourceAtInlinedPath{\n\t\tParam: \"param\",\n\t\tBody:  \"string\",\n\t},\n)\n"
-            }
-        },
-        {
-            "id": {
-                "path": "/params/path/{param}",
-                "method": "PUT",
-                "identifier_override": "endpoint_endpoints/params.modifyWithPath"
-            },
-            "snippet": {
-                "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Params.ModifyWithPath(\n\tcontext.TODO(),\n\t\"param\",\n\t\"string\",\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EndpointsParams.EndpointsParamsModifyWithPath(\n\tcontext.TODO(),\n\t\u0026fern.EndpointsParamsModifyWithPathRequest{\n\t\tParam: \"param\",\n\t\tBody:  \"string\",\n\t},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/primitive/base64",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/primitive.getAndReturnBase64"
+                "identifier_override": "endpoint_endpointsPrimitive.endpoints_primitive_getAndReturnBase64"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Primitive.GetAndReturnBase64(\n\tcontext.TODO(),\n\t[]byte(\"Hello world!\"),\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EndpointsPrimitive.EndpointsPrimitiveGetAndReturnBase64(\n\tcontext.TODO(),\n\t\"string\",\n)\n"
             }
         },
         {
             "id": {
                 "path": "/primitive/boolean",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/primitive.getAndReturnBool"
+                "identifier_override": "endpoint_endpointsPrimitive.endpoints_primitive_getAndReturnBool"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Primitive.GetAndReturnBool(\n\tcontext.TODO(),\n\ttrue,\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EndpointsPrimitive.EndpointsPrimitiveGetAndReturnBool(\n\tcontext.TODO(),\n\ttrue,\n)\n"
             }
         },
         {
             "id": {
                 "path": "/primitive/date",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/primitive.getAndReturnDate"
+                "identifier_override": "endpoint_endpointsPrimitive.endpoints_primitive_getAndReturnDate"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Primitive.GetAndReturnDate(\n\tcontext.TODO(),\n\tfern.MustParseDate(\n\t\t\"2023-01-15\",\n\t),\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EndpointsPrimitive.EndpointsPrimitiveGetAndReturnDate(\n\tcontext.TODO(),\n\tfern.MustParseDate(\n\t\t\"2023-01-15\",\n\t),\n)\n"
             }
         },
         {
             "id": {
                 "path": "/primitive/datetime",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/primitive.getAndReturnDatetime"
+                "identifier_override": "endpoint_endpointsPrimitive.endpoints_primitive_getAndReturnDatetime"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Primitive.GetAndReturnDatetime(\n\tcontext.TODO(),\n\tfern.MustParseDateTime(\n\t\t\"2024-01-15T09:30:00Z\",\n\t),\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EndpointsPrimitive.EndpointsPrimitiveGetAndReturnDatetime(\n\tcontext.TODO(),\n\tfern.MustParseDateTime(\n\t\t\"2024-01-15T09:30:00Z\",\n\t),\n)\n"
             }
         },
         {
             "id": {
                 "path": "/primitive/double",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/primitive.getAndReturnDouble"
+                "identifier_override": "endpoint_endpointsPrimitive.endpoints_primitive_getAndReturnDouble"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Primitive.GetAndReturnDouble(\n\tcontext.TODO(),\n\t1.1,\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EndpointsPrimitive.EndpointsPrimitiveGetAndReturnDouble(\n\tcontext.TODO(),\n\t1.1,\n)\n"
             }
         },
         {
             "id": {
                 "path": "/primitive/integer",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/primitive.getAndReturnInt"
+                "identifier_override": "endpoint_endpointsPrimitive.endpoints_primitive_getAndReturnInt"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Primitive.GetAndReturnInt(\n\tcontext.TODO(),\n\t1,\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EndpointsPrimitive.EndpointsPrimitiveGetAndReturnInt(\n\tcontext.TODO(),\n\t1,\n)\n"
             }
         },
         {
             "id": {
                 "path": "/primitive/long",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/primitive.getAndReturnLong"
+                "identifier_override": "endpoint_endpointsPrimitive.endpoints_primitive_getAndReturnLong"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Primitive.GetAndReturnLong(\n\tcontext.TODO(),\n\t1000000,\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EndpointsPrimitive.EndpointsPrimitiveGetAndReturnLong(\n\tcontext.TODO(),\n\t1000000,\n)\n"
             }
         },
         {
             "id": {
                 "path": "/primitive/string",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/primitive.getAndReturnString"
+                "identifier_override": "endpoint_endpointsPrimitive.endpoints_primitive_getAndReturnString"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Primitive.GetAndReturnString(\n\tcontext.TODO(),\n\t\"string\",\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EndpointsPrimitive.EndpointsPrimitiveGetAndReturnString(\n\tcontext.TODO(),\n\t\"string\",\n)\n"
             }
         },
         {
             "id": {
                 "path": "/primitive/uuid",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/primitive.getAndReturnUUID"
+                "identifier_override": "endpoint_endpointsPrimitive.endpoints_primitive_getAndReturnUUID"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n\tuuid \"github.com/google/uuid\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Primitive.GetAndReturnUUID(\n\tcontext.TODO(),\n\tuuid.MustParse(\n\t\t\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n\t),\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EndpointsPrimitive.EndpointsPrimitiveGetAndReturnUUID(\n\tcontext.TODO(),\n\t\"string\",\n)\n"
             }
         },
         {
             "id": {
                 "path": "/req-bodies/object",
                 "method": "POST",
-                "identifier_override": "endpoint_inlined-requests.postWithObjectBodyandResponse"
+                "identifier_override": "endpoint_inlinedrequests.postwithobjectbodyandresponse"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n\ttypes \"github.com/go-deterministic-ordering/fern/types\"\n\tuuid \"github.com/google/uuid\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.InlinedRequests.PostWithObjectBodyandResponse(\n\tcontext.TODO(),\n\t\u0026fern.PostWithObjectBody{\n\t\tFieldString: \"string\",\n\t\tInteger:     1,\n\t\tNestedObject: \u0026types.ObjectWithOptionalField{\n\t\t\tFieldString: fern.String(\n\t\t\t\t\"string\",\n\t\t\t),\n\t\t\tInteger: fern.Int(\n\t\t\t\t1,\n\t\t\t),\n\t\t\tLong: fern.Int64(\n\t\t\t\t1000000,\n\t\t\t),\n\t\t\tDouble: fern.Float64(\n\t\t\t\t1.1,\n\t\t\t),\n\t\t\tBool: fern.Bool(\n\t\t\t\ttrue,\n\t\t\t),\n\t\t\tDatetime: fern.Time(\n\t\t\t\tfern.MustParseDateTime(\n\t\t\t\t\t\"2024-01-15T09:30:00Z\",\n\t\t\t\t),\n\t\t\t),\n\t\t\tDate: fern.Time(\n\t\t\t\tfern.MustParseDate(\n\t\t\t\t\t\"2023-01-15\",\n\t\t\t\t),\n\t\t\t),\n\t\t\tUUID: fern.UUID(\n\t\t\t\tuuid.MustParse(\n\t\t\t\t\t\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n\t\t\t\t),\n\t\t\t),\n\t\t\tBase64: []byte(\"Hello world!\"),\n\t\t\tList: []string{\n\t\t\t\t\"list\",\n\t\t\t\t\"list\",\n\t\t\t},\n\t\t\tSet: []string{\n\t\t\t\t\"set\",\n\t\t\t},\n\t\t\tMap: map[int]string{\n\t\t\t\t1: \"map\",\n\t\t\t},\n\t\t\tBigint: fern.String(\n\t\t\t\t\"1000000\",\n\t\t\t),\n\t\t},\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Inlinedrequests.Postwithobjectbodyandresponse(\n\tcontext.TODO(),\n\t\u0026fern.InlinedRequestsPostWithObjectBodyandResponseRequest{\n\t\tFieldString:  \"string\",\n\t\tInteger:      1,\n\t\tNestedObject: \u0026fern.TypesObjectWithOptionalField{},\n\t},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/test-headers/custom-header",
                 "method": "POST",
-                "identifier_override": "endpoint_req-with-headers.getWithCustomHeader"
+                "identifier_override": "endpoint_reqwithheaders.getwithcustomheader"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.ReqWithHeaders.GetWithCustomHeader(\n\tcontext.TODO(),\n\t\u0026fern.ReqWithHeaders{\n\t\tXTestServiceHeader:  \"X-TEST-SERVICE-HEADER\",\n\t\tXTestEndpointHeader: \"X-TEST-ENDPOINT-HEADER\",\n\t\tBody:                \"string\",\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.Reqwithheaders.Getwithcustomheader(\n\tcontext.TODO(),\n\t\u0026fern.ReqWithHeadersGetWithCustomHeaderRequest{\n\t\tTestEndpointHeader: \"X-TEST-ENDPOINT-HEADER\",\n\t\tBody:               \"string\",\n\t},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/union",
                 "method": "POST",
-                "identifier_override": "endpoint_endpoints/union.getAndReturnUnion"
+                "identifier_override": "endpoint_endpointsUnion.endpoints_union_getAndReturnUnion"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n\ttypes \"github.com/go-deterministic-ordering/fern/types\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Union.GetAndReturnUnion(\n\tcontext.TODO(),\n\t\u0026types.Animal{\n\t\tDog: \u0026types.Dog{\n\t\t\tName:        \"name\",\n\t\t\tLikesToWoof: true,\n\t\t},\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EndpointsUnion.EndpointsUnionGetAndReturnUnion(\n\tcontext.TODO(),\n\t\u0026fern.TypesAnimal{\n\t\tTypesAnimalZero: \u0026fern.TypesAnimalZero{\n\t\t\tName:        \"name\",\n\t\t\tLikesToWoof: true,\n\t\t\tAnimal:      fern.TypesAnimalZeroAnimalDog,\n\t\t},\n\t},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/urls/MixedCase",
                 "method": "GET",
-                "identifier_override": "endpoint_endpoints/urls.withMixedCase"
+                "identifier_override": "endpoint_endpointsUrLs.endpoints_urls_withMixedCase"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.URLs.WithMixedCase(\n\tcontext.TODO(),\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EndpointsUrLs.EndpointsURLsWithMixedCase(\n\tcontext.TODO(),\n)\n"
             }
         },
         {
             "id": {
                 "path": "/urls/no-ending-slash",
                 "method": "GET",
-                "identifier_override": "endpoint_endpoints/urls.noEndingSlash"
+                "identifier_override": "endpoint_endpointsUrLs.endpoints_urls_noEndingSlash"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.URLs.NoEndingSlash(\n\tcontext.TODO(),\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EndpointsUrLs.EndpointsURLsNoEndingSlash(\n\tcontext.TODO(),\n)\n"
             }
         },
         {
             "id": {
                 "path": "/urls/with-ending-slash",
                 "method": "GET",
-                "identifier_override": "endpoint_endpoints/urls.withEndingSlash"
+                "identifier_override": "endpoint_endpointsUrLs.endpoints_urls_withEndingSlash"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.URLs.WithEndingSlash(\n\tcontext.TODO(),\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EndpointsUrLs.EndpointsURLsWithEndingSlash(\n\tcontext.TODO(),\n)\n"
             }
         },
         {
             "id": {
                 "path": "/urls/with_underscores",
                 "method": "GET",
-                "identifier_override": "endpoint_endpoints/urls.withUnderscores"
+                "identifier_override": "endpoint_endpointsUrLs.endpoints_urls_withUnderscores"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.URLs.WithUnderscores(\n\tcontext.TODO(),\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EndpointsUrLs.EndpointsURLsWithUnderscores(\n\tcontext.TODO(),\n)\n"
             }
         },
         {
             "id": {
                 "path": "/{id}",
                 "method": "PUT",
-                "identifier_override": "endpoint_endpoints/put.add"
+                "identifier_override": "endpoint_endpointsPut.endpoints_put_add"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tendpoints \"github.com/go-deterministic-ordering/fern/endpoints\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Endpoints.Put.Add(\n\tcontext.TODO(),\n\t\u0026endpoints.PutRequest{\n\t\tID: \"id\",\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-deterministic-ordering/fern\"\n\tfernclient \"github.com/go-deterministic-ordering/fern/client\"\n\toption \"github.com/go-deterministic-ordering/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.EndpointsPut.EndpointsPutAdd(\n\tcontext.TODO(),\n\t\u0026fern.EndpointsPutAddRequest{\n\t\tID: \"id\",\n\t},\n)\n"
             }
         }
     ]

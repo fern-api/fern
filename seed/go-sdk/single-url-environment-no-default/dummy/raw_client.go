@@ -30,7 +30,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) GetDummy(
+func (r *RawClient) Getdummy(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (*core.Response[string], error) {
@@ -38,7 +38,7 @@ func (r *RawClient) GetDummy(
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
 		r.baseURL,
-		"",
+		"https://production.com/api",
 	)
 	endpointURL := baseURL + "/dummy"
 	headers := internal.MergeHeaders(

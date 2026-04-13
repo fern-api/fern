@@ -35,16 +35,14 @@ func NewClient(options *core.RequestOptions) *Client {
 
 // Retrieve a user.
 // This endpoint is used to retrieve a user.
-func (c *Client) GetUser(
+func (c *Client) Getuser(
 	ctx context.Context,
-	// The ID of the user to retrieve.
-	// This ID is unique to each user.
-	userID string,
+	request *fern.UserGetUserRequest,
 	opts ...option.RequestOption,
 ) error {
-	_, err := c.WithRawResponse.GetUser(
+	_, err := c.WithRawResponse.Getuser(
 		ctx,
-		userID,
+		request,
 		opts...,
 	)
 	if err != nil {
@@ -55,12 +53,12 @@ func (c *Client) GetUser(
 
 // Create a new user.
 // This endpoint is used to create a new user.
-func (c *Client) CreateUser(
+func (c *Client) Createuser(
 	ctx context.Context,
-	request *fern.CreateUserRequest,
+	request *fern.UserCreateUserRequest,
 	opts ...option.RequestOption,
 ) (*fern.User, error) {
-	response, err := c.WithRawResponse.CreateUser(
+	response, err := c.WithRawResponse.Createuser(
 		ctx,
 		request,
 		opts...,

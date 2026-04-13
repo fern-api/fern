@@ -1,4 +1,4 @@
-package multiurlenvironmentnodefault
+package api
 
 import (
 	"testing"

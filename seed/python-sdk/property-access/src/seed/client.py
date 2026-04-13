@@ -6,7 +6,7 @@ import httpx
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.logging import LogConfig, Logger
 from .core.request_options import RequestOptions
-from .raw_client import AsyncRawSeedPropertyAccess, RawSeedPropertyAccess
+from .raw_client import AsyncRawSeedApi, RawSeedApi
 from .types.user import User
 from .types.user_profile import UserProfile
 
@@ -14,7 +14,7 @@ from .types.user_profile import UserProfile
 OMIT = typing.cast(typing.Any, ...)
 
 
-class SeedPropertyAccess:
+class SeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -40,9 +40,9 @@ class SeedPropertyAccess:
 
     Examples
     --------
-    from seed import SeedPropertyAccess
+    from seed import SeedApi
 
-    client = SeedPropertyAccess(
+    client = SeedApi(
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -71,42 +71,42 @@ class SeedPropertyAccess:
             timeout=_defaulted_timeout,
             logging=logging,
         )
-        self._raw_client = RawSeedPropertyAccess(client_wrapper=self._client_wrapper)
+        self._raw_client = RawSeedApi(client_wrapper=self._client_wrapper)
 
     @property
-    def with_raw_response(self) -> RawSeedPropertyAccess:
+    def with_raw_response(self) -> RawSeedApi:
         """
         Retrieves a raw implementation of this client that returns raw responses.
 
         Returns
         -------
-        RawSeedPropertyAccess
+        RawSeedApi
         """
         return self._raw_client
 
     def create_user(
         self,
         *,
-        id: str,
-        email: str,
         password: str,
         profile: UserProfile,
+        id: typing.Optional[str] = OMIT,
+        email: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> User:
         """
         Parameters
         ----------
-        id : str
-            The unique identifier for the user.
-
-        email : str
-            The email address of the user.
-
         password : str
             The password for the user.
 
         profile : UserProfile
             User profile object
+
+        id : typing.Optional[str]
+            The unique identifier for the user.
+
+        email : typing.Optional[str]
+            The email address of the user.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -115,28 +115,25 @@ class SeedPropertyAccess:
         -------
         User
 
+
         Examples
         --------
-        from seed import SeedPropertyAccess, UserProfile, UserProfileVerification
+        from seed import SeedApi, UserProfile, UserProfileVerification
 
-        client = SeedPropertyAccess(
+        client = SeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
         client.create_user(
-            id="id",
-            email="email",
             password="password",
             profile=UserProfile(
                 name="name",
-                verification=UserProfileVerification(
-                    verified="verified",
-                ),
+                verification=UserProfileVerification(),
                 ssn="ssn",
             ),
         )
         """
         _response = self._raw_client.create_user(
-            id=id, email=email, password=password, profile=profile, request_options=request_options
+            password=password, profile=profile, id=id, email=email, request_options=request_options
         )
         return _response.data
 
@@ -159,7 +156,7 @@ def _make_default_async_client(
     return httpx.AsyncClient(timeout=timeout)
 
 
-class AsyncSeedPropertyAccess:
+class AsyncSeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -185,9 +182,9 @@ class AsyncSeedPropertyAccess:
 
     Examples
     --------
-    from seed import AsyncSeedPropertyAccess
+    from seed import AsyncSeedApi
 
-    client = AsyncSeedPropertyAccess(
+    client = AsyncSeedApi(
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -214,42 +211,42 @@ class AsyncSeedPropertyAccess:
             timeout=_defaulted_timeout,
             logging=logging,
         )
-        self._raw_client = AsyncRawSeedPropertyAccess(client_wrapper=self._client_wrapper)
+        self._raw_client = AsyncRawSeedApi(client_wrapper=self._client_wrapper)
 
     @property
-    def with_raw_response(self) -> AsyncRawSeedPropertyAccess:
+    def with_raw_response(self) -> AsyncRawSeedApi:
         """
         Retrieves a raw implementation of this client that returns raw responses.
 
         Returns
         -------
-        AsyncRawSeedPropertyAccess
+        AsyncRawSeedApi
         """
         return self._raw_client
 
     async def create_user(
         self,
         *,
-        id: str,
-        email: str,
         password: str,
         profile: UserProfile,
+        id: typing.Optional[str] = OMIT,
+        email: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> User:
         """
         Parameters
         ----------
-        id : str
-            The unique identifier for the user.
-
-        email : str
-            The email address of the user.
-
         password : str
             The password for the user.
 
         profile : UserProfile
             User profile object
+
+        id : typing.Optional[str]
+            The unique identifier for the user.
+
+        email : typing.Optional[str]
+            The email address of the user.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -258,27 +255,24 @@ class AsyncSeedPropertyAccess:
         -------
         User
 
+
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedPropertyAccess, UserProfile, UserProfileVerification
+        from seed import AsyncSeedApi, UserProfile, UserProfileVerification
 
-        client = AsyncSeedPropertyAccess(
+        client = AsyncSeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
             await client.create_user(
-                id="id",
-                email="email",
                 password="password",
                 profile=UserProfile(
                     name="name",
-                    verification=UserProfileVerification(
-                        verified="verified",
-                    ),
+                    verification=UserProfileVerification(),
                     ssn="ssn",
                 ),
             )
@@ -287,6 +281,6 @@ class AsyncSeedPropertyAccess:
         asyncio.run(main())
         """
         _response = await self._raw_client.create_user(
-            id=id, email=email, password=password, profile=profile, request_options=request_options
+            password=password, profile=profile, id=id, email=email, request_options=request_options
         )
         return _response.data

@@ -17,11 +17,10 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.GetWithInlinePathAndQuery{
-        Param: "param",
-        Query: "query",
+    request := &fern.EndpointsHTTPMethodsTestGetRequest{
+        ID: "id",
     }
-    client.Endpoints.Params.GetWithInlinePathAndQuery(
+    client.EndpointsHTTPMethods.EndpointsHTTPMethodsTestGet(
         context.TODO(),
         request,
     )

@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "ServerSentEvents",
+    name: "Api",
     platforms: [
         .iOS(.v15),
         .macOS(.v12),
@@ -12,19 +12,19 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "ServerSentEvents",
-            targets: ["ServerSentEvents"]
+            name: "Api",
+            targets: ["Api"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "ServerSentEvents",
+            name: "Api",
             path: "Sources"
         ),
         .testTarget(
-            name: "ServerSentEventsTests",
-            dependencies: ["ServerSentEvents"],
+            name: "ApiTests",
+            dependencies: ["Api"],
             path: "Tests"
         )
     ]

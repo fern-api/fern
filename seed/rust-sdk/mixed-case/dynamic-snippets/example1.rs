@@ -1,4 +1,4 @@
-use seed_mixed_case::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -6,9 +6,9 @@ async fn main() {
         base_url: "https://api.fern.com".to_string(),
         ..Default::default()
     };
-    let client = MixedCaseClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .service
-        .get_resource(&"ResourceID".to_string(), None)
+        .getresource(&"ResourceID".to_string(), None)
         .await;
 }

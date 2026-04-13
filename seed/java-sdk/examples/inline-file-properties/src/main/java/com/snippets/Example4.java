@@ -1,14 +1,17 @@
 package com.snippets;
 
-import com.seed.examples.SeedExamplesClient;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.fileservice.requests.FileServiceGetFileRequest;
 
 public class Example4 {
     public static void main(String[] args) {
-        SeedExamplesClient client = SeedExamplesClient.builder()
+        SeedApiClient client = SeedApiClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
-        client.file().notification().service().getException("notificationId");
+        client.fileService()
+                .fileServiceGetFile(
+                        FileServiceGetFileRequest.builder().filename("filename").build());
     }
 }

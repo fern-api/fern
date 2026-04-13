@@ -1,6 +1,6 @@
 # Reference
 ## Dummy
-<details><summary><code>$client-&gt;dummy-&gt;generateStream($request)</code></summary>
+<details><summary><code>$client-&gt;dummy-&gt;generateStream($request) -> string</code></summary>
 <dl>
 <dd>
 
@@ -13,12 +13,7 @@
 <dd>
 
 ```php
-$client->dummy->generateStream(
-    new GenerateStreamRequest([
-        'stream' => true,
-        'numEvents' => 1,
-    ]),
-);
+$client->dummy->generateStream($request): string;
 ```
 </dd>
 </dl>
@@ -67,9 +62,9 @@ $client->dummy->generateStream(
 
 ```php
 $client->dummy->generate(
-    new Generateequest([
-        'stream' => false,
-        'numEvents' => 5,
+    new DummyGenerateRequest([
+        'stream' => true,
+        'numEvents' => 1,
     ]),
 );
 ```

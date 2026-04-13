@@ -1,16 +1,12 @@
 import Foundation
-import ContentTypes
+import Api
 
 private func main() async throws {
-    let client = ContentTypesClient(baseURL: "https://api.fern.com")
+    let client = ApiClient(baseURL: "https://api.fern.com")
 
-    _ = try await client.service.namedPatchWithMixed(
+    _ = try await client.service.patchcomplex(
         id: "id",
-        request: .init(
-            appId: "appId",
-            instructions: .value("instructions"),
-            active: .value(true)
-        )
+        request: .init()
     )
 }
 

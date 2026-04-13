@@ -1,14 +1,14 @@
 package com.snippets;
 
-import com.seed.basicAuthPwOmitted.SeedBasicAuthPwOmittedClient;
+import com.seed.api.SeedApiClient;
 
 public class Example1 {
     public static void main(String[] args) {
-        SeedBasicAuthPwOmittedClient client = SeedBasicAuthPwOmittedClient.builder()
+        SeedApiClient client = SeedApiClient.builder()
                 .credentials("<username>", "<password>")
                 .url("https://api.fern.com")
                 .build();
 
-        client.basicAuth().getWithBasicAuth();
+        client.basicauth().getwithbasicauth();
     }
 }

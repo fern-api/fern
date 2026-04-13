@@ -6,8 +6,10 @@ package com.seed.api;
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
 import com.seed.api.core.Suppliers;
-import com.seed.api.resources.a.AClient;
+import com.seed.api.resources.ab.AbClient;
+import com.seed.api.resources.ac.AcClient;
 import com.seed.api.resources.folder.FolderClient;
+import com.seed.api.resources.folderservice.FolderServiceClient;
 import java.util.function.Supplier;
 
 public class SeedApiClient {
@@ -15,15 +17,21 @@ public class SeedApiClient {
 
     private final RawSeedApiClient rawClient;
 
-    protected final Supplier<AClient> aClient;
+    protected final Supplier<AbClient> abClient;
+
+    protected final Supplier<AcClient> acClient;
 
     protected final Supplier<FolderClient> folderClient;
+
+    protected final Supplier<FolderServiceClient> folderServiceClient;
 
     public SeedApiClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
         this.rawClient = new RawSeedApiClient(clientOptions);
-        this.aClient = Suppliers.memoize(() -> new AClient(clientOptions));
+        this.abClient = Suppliers.memoize(() -> new AbClient(clientOptions));
+        this.acClient = Suppliers.memoize(() -> new AcClient(clientOptions));
         this.folderClient = Suppliers.memoize(() -> new FolderClient(clientOptions));
+        this.folderServiceClient = Suppliers.memoize(() -> new FolderServiceClient(clientOptions));
     }
 
     /**
@@ -41,12 +49,20 @@ public class SeedApiClient {
         this.rawClient.foo(requestOptions).body();
     }
 
-    public AClient a() {
-        return this.aClient.get();
+    public AbClient ab() {
+        return this.abClient.get();
+    }
+
+    public AcClient ac() {
+        return this.acClient.get();
     }
 
     public FolderClient folder() {
         return this.folderClient.get();
+    }
+
+    public FolderServiceClient folderService() {
+        return this.folderServiceClient.get();
     }
 
     public static SeedApiClientBuilder builder() {

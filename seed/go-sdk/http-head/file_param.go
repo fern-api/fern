@@ -1,4 +1,4 @@
-package httphead
+package api
 
 import (
 	"io"

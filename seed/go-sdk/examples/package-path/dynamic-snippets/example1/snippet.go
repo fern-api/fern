@@ -3,6 +3,7 @@ package example
 import (
     context "context"
 
+    pleaseinhere "github.com/examples/fern/pleaseinhere"
     client "github.com/examples/fern/pleaseinhere/client"
     option "github.com/examples/fern/pleaseinhere/option"
 )
@@ -16,8 +17,10 @@ func do() {
             "<token>",
         ),
     )
-    request := "string"
-    client.Echo(
+    request := &pleaseinhere.FileNotificationServiceGetExceptionRequest{
+        NotificationID: "notificationId",
+    }
+    client.FileNotificationService.FileNotificationServiceGetException(
         context.TODO(),
         request,
     )

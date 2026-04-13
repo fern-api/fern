@@ -9,7 +9,7 @@ from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
-from .types.user import User
+from ..types.user import User
 from pydantic import ValidationError
 
 
@@ -17,7 +17,7 @@ class RawRetriesClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get_users(self, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[typing.List[User]]:
+    def getusers(self, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[typing.List[User]]:
         """
         Parameters
         ----------
@@ -27,14 +27,12 @@ class RawRetriesClient:
         Returns
         -------
         HttpResponse[typing.List[User]]
+
         """
-        _request_options_with_retries_disabled: typing.Optional[RequestOptions] = (
-            {**request_options, "max_retries": 0} if request_options is not None else {"max_retries": 0}
-        )
         _response = self._client_wrapper.httpx_client.request(
             "users",
             method="GET",
-            request_options=_request_options_with_retries_disabled,
+            request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -60,7 +58,7 @@ class AsyncRawRetriesClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get_users(
+    async def getusers(
         self, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[typing.List[User]]:
         """
@@ -72,14 +70,12 @@ class AsyncRawRetriesClient:
         Returns
         -------
         AsyncHttpResponse[typing.List[User]]
+
         """
-        _request_options_with_retries_disabled: typing.Optional[RequestOptions] = (
-            {**request_options, "max_retries": 0} if request_options is not None else {"max_retries": 0}
-        )
         _response = await self._client_wrapper.httpx_client.request(
             "users",
             method="GET",
-            request_options=_request_options_with_retries_disabled,
+            request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:

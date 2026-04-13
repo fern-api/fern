@@ -12,7 +12,7 @@ if typing.TYPE_CHECKING:
     from .service.client import AsyncServiceClient, ServiceClient
 
 
-class SeedVariables:
+class SeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -21,7 +21,6 @@ class SeedVariables:
     base_url : str
         The base url to use for requests from the client.
 
-    root_variable : str
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
 
@@ -39,10 +38,9 @@ class SeedVariables:
 
     Examples
     --------
-    from seed import SeedVariables
+    from seed import SeedApi
 
-    client = SeedVariables(
-        root_variable="YOUR_ROOT_VARIABLE",
+    client = SeedApi(
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -51,7 +49,6 @@ class SeedVariables:
         self,
         *,
         base_url: str,
-        root_variable: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -63,7 +60,6 @@ class SeedVariables:
         )
         self._client_wrapper = SyncClientWrapper(
             base_url=base_url,
-            root_variable=root_variable,
             headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None
@@ -102,7 +98,7 @@ def _make_default_async_client(
     return httpx.AsyncClient(timeout=timeout)
 
 
-class AsyncSeedVariables:
+class AsyncSeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -111,7 +107,6 @@ class AsyncSeedVariables:
     base_url : str
         The base url to use for requests from the client.
 
-    root_variable : str
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
 
@@ -129,10 +124,9 @@ class AsyncSeedVariables:
 
     Examples
     --------
-    from seed import AsyncSeedVariables
+    from seed import AsyncSeedApi
 
-    client = AsyncSeedVariables(
-        root_variable="YOUR_ROOT_VARIABLE",
+    client = AsyncSeedApi(
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -141,7 +135,6 @@ class AsyncSeedVariables:
         self,
         *,
         base_url: str,
-        root_variable: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -153,7 +146,6 @@ class AsyncSeedVariables:
         )
         self._client_wrapper = AsyncClientWrapper(
             base_url=base_url,
-            root_variable=root_variable,
             headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None

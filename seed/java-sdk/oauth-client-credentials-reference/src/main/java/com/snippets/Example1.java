@@ -1,17 +1,17 @@
 package com.snippets;
 
-import com.seed.oauthClientCredentialsReference.SeedOauthClientCredentialsReferenceClient;
-import com.seed.oauthClientCredentialsReference.resources.auth.types.GetTokenRequest;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.auth.requests.GetTokenRequest;
 
 public class Example1 {
     public static void main(String[] args) {
-        SeedOauthClientCredentialsReferenceClient client = SeedOauthClientCredentialsReferenceClient.withCredentials(
-                        "<clientId>", "<clientSecret>")
+        SeedApiClient client = SeedApiClient.builder()
+                .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
         client.auth()
-                .getToken(GetTokenRequest.builder()
+                .gettoken(GetTokenRequest.builder()
                         .clientId("client_id")
                         .clientSecret("client_secret")
                         .build());

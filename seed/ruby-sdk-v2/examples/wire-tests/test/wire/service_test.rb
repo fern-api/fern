@@ -12,14 +12,14 @@ class ServiceWireTest < WireMockTestCase
     )
   end
 
-  def test_service_get_movie_with_wiremock
-    test_id = "service.get_movie.0"
+  def test_service_getmovie_with_wiremock
+    test_id = "service.getmovie.0"
 
-    @client.service.get_movie(
-      movie_id: "movie-c06a4ad7",
+    @client.service.getmovie(
+      movie_id: "movieId",
       request_options: {
         additional_headers: {
-          "X-Test-Id" => "service.get_movie.0"
+          "X-Test-Id" => "service.getmovie.0"
         }
       }
     )
@@ -27,28 +27,27 @@ class ServiceWireTest < WireMockTestCase
     verify_request_count(
       test_id: test_id,
       method: "GET",
-      url_path: "/movie/movie-c06a4ad7",
+      url_path: "/movie/movieId",
       query_params: nil,
       expected: 1
     )
   end
 
-  def test_service_create_movie_with_wiremock
-    test_id = "service.create_movie.0"
+  def test_service_createmovie_with_wiremock
+    test_id = "service.createmovie.0"
 
-    @client.service.create_movie(
-      id: "movie-c06a4ad7",
-      prequel: "movie-cv9b914f",
-      title: "The Boy and the Heron",
-      from: "Hayao Miyazaki",
-      rating: 8,
+    @client.service.createmovie(
+      id: "id",
+      title: "title",
+      from: "from",
+      rating: 1.1,
       type: "movie",
-      tag: "tag-wf9as23d",
+      tag: "tag",
       metadata: {},
       revenue: 1_000_000,
       request_options: {
         additional_headers: {
-          "X-Test-Id" => "service.create_movie.0"
+          "X-Test-Id" => "service.createmovie.0"
         }
       }
     )
@@ -62,15 +61,14 @@ class ServiceWireTest < WireMockTestCase
     )
   end
 
-  def test_service_get_metadata_with_wiremock
-    test_id = "service.get_metadata.0"
+  def test_service_getmetadata_with_wiremock
+    test_id = "service.getmetadata.0"
 
-    @client.service.get_metadata(
-      shallow: false,
-      x_api_version: "0.0.1",
+    @client.service.getmetadata(
+      api_version: "X-API-Version",
       request_options: {
         additional_headers: {
-          "X-Test-Id" => "service.get_metadata.0"
+          "X-Test-Id" => "service.getmetadata.0"
         }
       }
     )
@@ -84,144 +82,14 @@ class ServiceWireTest < WireMockTestCase
     )
   end
 
-  def test_service_create_big_entity_with_wiremock
-    test_id = "service.create_big_entity.0"
+  def test_service_createbigentity_with_wiremock
+    test_id = "service.createbigentity.0"
 
-    @client.service.create_big_entity(
-      cast_member: {
-        name: "name",
-        id: "id"
-      },
-      extended_movie: {
-        cast: %w[cast cast],
-        id: "id",
-        prequel: "prequel",
-        title: "title",
-        from: "from",
-        rating: 1.1,
-        type: "movie",
-        tag: "tag",
-        book: "book",
-        metadata: {},
-        revenue: 1_000_000
-      },
-      entity: {
-        type: "primitive",
-        name: "name"
-      },
-      metadata: {},
-      common_metadata: {
-        id: "id",
-        data: {
-          data: "data"
-        },
-        json_string: "jsonString"
-      },
-      data: {},
-      migration: {
-        name: "name",
-        status: "RUNNING"
-      },
-      test: {},
-      node: {
-        name: "name",
-        nodes: [{
-          name: "name",
-          nodes: [{
-            name: "name"
-          }, {
-            name: "name"
-          }],
-          trees: [{
-            nodes: []
-          }, {
-            nodes: []
-          }]
-        }, {
-          name: "name",
-          nodes: [{
-            name: "name"
-          }, {
-            name: "name"
-          }],
-          trees: [{
-            nodes: []
-          }, {
-            nodes: []
-          }]
-        }],
-        trees: [{
-          nodes: [{
-            name: "name",
-            nodes: [],
-            trees: []
-          }, {
-            name: "name",
-            nodes: [],
-            trees: []
-          }]
-        }, {
-          nodes: [{
-            name: "name",
-            nodes: [],
-            trees: []
-          }, {
-            name: "name",
-            nodes: [],
-            trees: []
-          }]
-        }]
-      },
-      directory: {
-        name: "name",
-        files: [{
-          name: "name",
-          contents: "contents"
-        }, {
-          name: "name",
-          contents: "contents"
-        }],
-        directories: [{
-          name: "name",
-          files: [{
-            name: "name",
-            contents: "contents"
-          }, {
-            name: "name",
-            contents: "contents"
-          }],
-          directories: [{
-            name: "name"
-          }, {
-            name: "name"
-          }]
-        }, {
-          name: "name",
-          files: [{
-            name: "name",
-            contents: "contents"
-          }, {
-            name: "name",
-            contents: "contents"
-          }],
-          directories: [{
-            name: "name"
-          }, {
-            name: "name"
-          }]
-        }]
-      },
-      moment: {
-        id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-        date: "2023-01-15",
-        datetime: "2024-01-15T09:30:00Z"
-      },
-      request_options: {
-        additional_headers: {
-          "X-Test-Id" => "service.create_big_entity.0"
-        }
-      }
-    )
+    @client.service.createbigentity(request_options: {
+                                      additional_headers: {
+                                        "X-Test-Id" => "service.createbigentity.0"
+                                      }
+                                    })
 
     verify_request_count(
       test_id: test_id,
@@ -232,14 +100,17 @@ class ServiceWireTest < WireMockTestCase
     )
   end
 
-  def test_service_refresh_token_with_wiremock
-    test_id = "service.refresh_token.0"
+  def test_service_refreshtoken_with_wiremock
+    test_id = "service.refreshtoken.0"
 
-    @client.service.refresh_token(request_options: {
-                                    additional_headers: {
-                                      "X-Test-Id" => "service.refresh_token.0"
-                                    }
-                                  })
+    @client.service.refreshtoken(
+      ttl: 1,
+      request_options: {
+        additional_headers: {
+          "X-Test-Id" => "service.refreshtoken.0"
+        }
+      }
+    )
 
     verify_request_count(
       test_id: test_id,

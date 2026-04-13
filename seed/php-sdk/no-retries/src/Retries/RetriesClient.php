@@ -4,7 +4,7 @@ namespace Seed\Retries;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Retries\Types\User;
+use Seed\Types\User;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
@@ -62,14 +62,14 @@ class RetriesClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getUsers(?array $options = null): ?array
+    public function getusers(?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/users",
+                    path: "users",
                     method: HttpMethod::GET,
                 ),
                 $options,

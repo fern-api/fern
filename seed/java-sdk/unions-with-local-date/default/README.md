@@ -55,15 +55,21 @@ Instantiate and use the client with the following:
 ```java
 package com.example.usage;
 
-import com.seed.unions.SeedUnionsClient;
+import com.seed.unions.SeedApiClient;
+import com.seed.unions.resources.bigunion.requests.BigunionGetRequest;
 
 public class Example {
     public static void main(String[] args) {
-        SeedUnionsClient client = SeedUnionsClient
+        SeedApiClient client = SeedApiClient
             .builder()
             .build();
 
-        client.bigunion().get("id");
+        client.bigunion().get(
+            "id",
+            BigunionGetRequest
+                .builder()
+                .build()
+        );
     }
 }
 ```
@@ -73,9 +79,9 @@ public class Example {
 You can set a custom base URL when constructing the client.
 
 ```java
-import com.seed.unions.SeedUnionsClient;
+import com.seed.unions.SeedApiClient;
 
-SeedUnionsClient client = SeedUnionsClient
+SeedApiClient client = SeedApiClient
     .builder()
     .url("https://example.com")
     .build();
@@ -86,11 +92,11 @@ SeedUnionsClient client = SeedUnionsClient
 When the API returns a non-success status code (4xx or 5xx response), an API exception will be thrown.
 
 ```java
-import com.seed.unions.core.SeedUnionsApiException;
+import com.seed.unions.core.SeedApiApiException;
 
 try{
     client.bigunion().get(...);
-} catch (SeedUnionsApiException e){
+} catch (SeedApiApiException e){
     // Do something with the API exception...
 }
 ```
@@ -103,12 +109,12 @@ This SDK is built to work with any instance of `OkHttpClient`. By default, if no
 However, you can pass your own client like so:
 
 ```java
-import com.seed.unions.SeedUnionsClient;
+import com.seed.unions.SeedApiClient;
 import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedUnionsClient client = SeedUnionsClient
+SeedApiClient client = SeedApiClient
     .builder()
     .httpClient(customClient)
     .build();
@@ -131,9 +137,9 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` client option to configure this behavior.
 
 ```java
-import com.seed.unions.SeedUnionsClient;
+import com.seed.unions.SeedApiClient;
 
-SeedUnionsClient client = SeedUnionsClient
+SeedApiClient client = SeedApiClient
     .builder()
     .maxRetries(1)
     .build();
@@ -143,11 +149,11 @@ SeedUnionsClient client = SeedUnionsClient
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 ```java
-import com.seed.unions.SeedUnionsClient;
+import com.seed.unions.SeedApiClient;
 import com.seed.unions.core.RequestOptions;
 
 // Client level
-SeedUnionsClient client = SeedUnionsClient
+SeedApiClient client = SeedApiClient
     .builder()
     .timeout(60)
     .build();
@@ -167,11 +173,11 @@ client.bigunion().get(
 The SDK allows you to add custom headers to requests. You can configure headers at the client level or at the request level.
 
 ```java
-import com.seed.unions.SeedUnionsClient;
+import com.seed.unions.SeedApiClient;
 import com.seed.unions.core.RequestOptions;
 
 // Client level
-SeedUnionsClient client = SeedUnionsClient
+SeedApiClient client = SeedApiClient
     .builder()
     .addHeader("X-Custom-Header", "custom-value")
     .addHeader("X-Request-Id", "abc-123")
@@ -195,7 +201,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-SeedUnionsHttpResponse response = client.bigunion().withRawResponse().get(...);
+SeedApiHttpResponse response = client.bigunion().withRawResponse().get(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));

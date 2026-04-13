@@ -72,16 +72,9 @@ func WithMaxStreamBufSize(size int) *core.MaxBufSizeOption {
 	}
 }
 
-// WithClientID sets the clientID auth request parameter.
-func WithClientID(clientID string) *core.ClientIDOption {
-	return &core.ClientIDOption{
-		ClientID: clientID,
-	}
-}
-
-// WithClientSecret sets the clientSecret auth request parameter.
-func WithClientSecret(clientSecret string) *core.ClientSecretOption {
-	return &core.ClientSecretOption{
-		ClientSecret: clientSecret,
+// WithToken sets the 'Authorization: Bearer <token>' request header.
+func WithToken(token string) *core.TokenOption {
+	return &core.TokenOption{
+		Token: token,
 	}
 }

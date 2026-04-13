@@ -13,12 +13,12 @@ impl AuthClient {
         })
     }
 
-    pub async fn get_token(
+    pub async fn gettoken(
         &self,
         options: Option<RequestOptions>,
     ) -> Result<TokenResponse, ApiError> {
         self.http_client
-            .execute_request(Method::POST, "/token", None, None, options)
+            .execute_request(Method::POST, "token", None, None, options)
             .await
     }
 }

@@ -13,7 +13,7 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    client.PropertyBasedError.ThrowError(
+    client.Propertybasederror.Throwerror(
         context.TODO(),
     )
 }

@@ -56,7 +56,10 @@ client.Echo(
 <dd>
 
 ```go
-client.Echo(
+request := &pleaseinhere.Type{
+        BasicType: pleaseinhere.BasicTypePrimitive,
+    }
+client.CreateType(
         context.TODO(),
         request,
     )
@@ -87,8 +90,8 @@ client.Echo(
 </dl>
 </details>
 
-## File Notification Service
-<details><summary><code>client.File.Notification.Service.GetException(NotificationID) -> *pleaseinhere.Exception</code></summary>
+## FileNotificationService
+<details><summary><code>client.FileNotificationService.FileNotificationServiceGetException(NotificationID) -> *pleaseinhere.Exception</code></summary>
 <dl>
 <dd>
 
@@ -101,9 +104,12 @@ client.Echo(
 <dd>
 
 ```go
-client.File.Notification.Service.GetException(
+request := &pleaseinhere.FileNotificationServiceGetExceptionRequest{
+        NotificationID: "notificationId",
+    }
+client.FileNotificationService.FileNotificationServiceGetException(
         context.TODO(),
-        "notification-hsy129x",
+        request,
     )
 }
 ```
@@ -132,8 +138,8 @@ client.File.Notification.Service.GetException(
 </dl>
 </details>
 
-## File Service
-<details><summary><code>client.File.Service.GetFile(Filename) -> *pleaseinhere.File</code></summary>
+## FileService
+<details><summary><code>client.FileService.FileServiceGetFile(Filename) -> *pleaseinhere.File</code></summary>
 <dl>
 <dd>
 
@@ -160,12 +166,11 @@ This endpoint returns a file by its name.
 <dd>
 
 ```go
-request := &file.GetFileRequest{
-        XFileAPIVersion: "0.0.2",
+request := &pleaseinhere.FileServiceGetFileRequest{
+        Filename: "filename",
     }
-client.File.Service.GetFile(
+client.FileService.FileServiceGetFile(
         context.TODO(),
-        "file.txt",
         request,
     )
 }
@@ -195,8 +200,8 @@ client.File.Service.GetFile(
 </dl>
 </details>
 
-## Health Service
-<details><summary><code>client.Health.Service.Check(ID) -> error</code></summary>
+## HealthService
+<details><summary><code>client.HealthService.HealthServiceCheck(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -223,9 +228,12 @@ This endpoint checks the health of a resource.
 <dd>
 
 ```go
-client.Health.Service.Check(
+request := &pleaseinhere.HealthServiceCheckRequest{
+        ID: "id",
+    }
+client.HealthService.HealthServiceCheck(
         context.TODO(),
-        "id-2sdx82h",
+        request,
     )
 }
 ```
@@ -254,7 +262,7 @@ client.Health.Service.Check(
 </dl>
 </details>
 
-<details><summary><code>client.Health.Service.Ping() -> bool</code></summary>
+<details><summary><code>client.HealthService.HealthServicePing() -> bool</code></summary>
 <dl>
 <dd>
 
@@ -281,7 +289,7 @@ This endpoint checks the health of the service.
 <dd>
 
 ```go
-client.Health.Service.Ping(
+client.HealthService.HealthServicePing(
         context.TODO(),
     )
 }
@@ -297,7 +305,7 @@ client.Health.Service.Ping(
 </details>
 
 ## Service
-<details><summary><code>client.Service.GetMovie(MovieID) -> *pleaseinhere.Movie</code></summary>
+<details><summary><code>client.Service.Getmovie(MovieID) -> *pleaseinhere.Movie</code></summary>
 <dl>
 <dd>
 
@@ -310,9 +318,12 @@ client.Health.Service.Ping(
 <dd>
 
 ```go
-client.Service.GetMovie(
+request := &pleaseinhere.ServiceGetMovieRequest{
+        MovieID: "movieId",
+    }
+client.Service.Getmovie(
         context.TODO(),
-        "movie-c06a4ad7",
+        request,
     )
 }
 ```
@@ -341,7 +352,7 @@ client.Service.GetMovie(
 </dl>
 </details>
 
-<details><summary><code>client.Service.CreateMovie(request) -> pleaseinhere.MovieID</code></summary>
+<details><summary><code>client.Service.Createmovie(request) -> pleaseinhere.MovieID</code></summary>
 <dl>
 <dd>
 
@@ -355,29 +366,18 @@ client.Service.GetMovie(
 
 ```go
 request := &pleaseinhere.Movie{
-        ID: "movie-c06a4ad7",
-        Prequel: pleaseinhere.String(
-            "movie-cv9b914f",
-        ),
-        Title: "The Boy and the Heron",
-        From: "Hayao Miyazaki",
-        Rating: 8,
-        Tag: "tag-wf9as23d",
+        ID: "id",
+        Title: "title",
+        From: "from",
+        Rating: 1.1,
+        Type: pleaseinhere.MovieTypeMovie,
+        Tag: "tag",
         Metadata: map[string]any{
-            "actors": []any{
-                "Christian Bale",
-                "Florence Pugh",
-                "Willem Dafoe",
-            },
-            "ratings": map[string]any{
-                "imdb": 7.6,
-                "rottenTomatoes": 97,
-            },
-            "releaseDate": "2023-12-08",
+            "key": "value",
         },
         Revenue: int64(1000000),
     }
-client.Service.CreateMovie(
+client.Service.Createmovie(
         context.TODO(),
         request,
     )
@@ -408,7 +408,7 @@ client.Service.CreateMovie(
 </dl>
 </details>
 
-<details><summary><code>client.Service.GetMetadata() -> *pleaseinhere.Metadata</code></summary>
+<details><summary><code>client.Service.Getmetadata() -> *pleaseinhere.Metadata</code></summary>
 <dl>
 <dd>
 
@@ -421,18 +421,10 @@ client.Service.CreateMovie(
 <dd>
 
 ```go
-request := &pleaseinhere.GetMetadataRequest{
-        Shallow: pleaseinhere.Bool(
-            false,
-        ),
-        Tag: []*string{
-            pleaseinhere.String(
-                "development",
-            ),
-        },
-        XAPIVersion: "0.0.1",
+request := &pleaseinhere.ServiceGetMetadataRequest{
+        APIVersion: "X-API-Version",
     }
-client.Service.GetMetadata(
+client.Service.Getmetadata(
         context.TODO(),
         request,
     )
@@ -467,7 +459,7 @@ client.Service.GetMetadata(
 <dl>
 <dd>
 
-**xAPIVersion:** `string` 
+**apiVersion:** `string` 
     
 </dd>
 </dl>
@@ -479,7 +471,7 @@ client.Service.GetMetadata(
 </dl>
 </details>
 
-<details><summary><code>client.Service.CreateBigEntity(request) -> *pleaseinhere.Response</code></summary>
+<details><summary><code>client.Service.Createbigentity(request) -> *pleaseinhere.Response</code></summary>
 <dl>
 <dd>
 
@@ -492,226 +484,8 @@ client.Service.GetMetadata(
 <dd>
 
 ```go
-request := &pleaseinhere.BigEntity{
-        CastMember: &pleaseinhere.CastMember{
-            Actor: &pleaseinhere.Actor{
-                Name: "name",
-                ID: "id",
-            },
-        },
-        ExtendedMovie: &pleaseinhere.ExtendedMovie{
-            Cast: []string{
-                "cast",
-                "cast",
-            },
-            ID: "id",
-            Prequel: pleaseinhere.String(
-                "prequel",
-            ),
-            Title: "title",
-            From: "from",
-            Rating: 1.1,
-            Tag: "tag",
-            Book: pleaseinhere.String(
-                "book",
-            ),
-            Metadata: map[string]any{
-                "metadata": map[string]any{
-                    "key": "value",
-                },
-            },
-            Revenue: int64(1000000),
-        },
-        Entity: &pleaseinhere.Entity{
-            Type: &pleaseinhere.Type{
-                BasicType: pleaseinhere.BasicTypePrimitive,
-            },
-            Name: "name",
-        },
-        Metadata: &pleaseinhere.Metadata{
-            Extra: map[string]string{
-                "extra": "extra",
-            },
-            Tags: []string{
-                "tags",
-            },
-        },
-        CommonMetadata: &commons.Metadata{
-            ID: "id",
-            Data: map[string]string{
-                "data": "data",
-            },
-            JSONString: pleaseinhere.String(
-                "jsonString",
-            ),
-        },
-        EventInfo: &commons.EventInfo{
-            Metadata: &commons.Metadata{
-                ID: "id",
-                Data: map[string]string{
-                    "data": "data",
-                },
-                JSONString: pleaseinhere.String(
-                    "jsonString",
-                ),
-            },
-        },
-        Data: &commons.Data{},
-        Migration: &pleaseinhere.Migration{
-            Name: "name",
-            Status: pleaseinhere.MigrationStatusRunning,
-        },
-        Exception: &pleaseinhere.Exception{
-            Generic: &pleaseinhere.ExceptionInfo{
-                ExceptionType: "exceptionType",
-                ExceptionMessage: "exceptionMessage",
-                ExceptionStacktrace: "exceptionStacktrace",
-            },
-        },
-        Test: &pleaseinhere.Test{},
-        Node: &pleaseinhere.Node{
-            Name: "name",
-            Nodes: []*pleaseinhere.Node{
-                &pleaseinhere.Node{
-                    Name: "name",
-                    Nodes: []*pleaseinhere.Node{
-                        &pleaseinhere.Node{
-                            Name: "name",
-                        },
-                        &pleaseinhere.Node{
-                            Name: "name",
-                        },
-                    },
-                    Trees: []*pleaseinhere.Tree{
-                        &pleaseinhere.Tree{
-                            Nodes: []*pleaseinhere.Node{},
-                        },
-                        &pleaseinhere.Tree{
-                            Nodes: []*pleaseinhere.Node{},
-                        },
-                    },
-                },
-                &pleaseinhere.Node{
-                    Name: "name",
-                    Nodes: []*pleaseinhere.Node{
-                        &pleaseinhere.Node{
-                            Name: "name",
-                        },
-                        &pleaseinhere.Node{
-                            Name: "name",
-                        },
-                    },
-                    Trees: []*pleaseinhere.Tree{
-                        &pleaseinhere.Tree{
-                            Nodes: []*pleaseinhere.Node{},
-                        },
-                        &pleaseinhere.Tree{
-                            Nodes: []*pleaseinhere.Node{},
-                        },
-                    },
-                },
-            },
-            Trees: []*pleaseinhere.Tree{
-                &pleaseinhere.Tree{
-                    Nodes: []*pleaseinhere.Node{
-                        &pleaseinhere.Node{
-                            Name: "name",
-                            Nodes: []*pleaseinhere.Node{},
-                            Trees: []*pleaseinhere.Tree{},
-                        },
-                        &pleaseinhere.Node{
-                            Name: "name",
-                            Nodes: []*pleaseinhere.Node{},
-                            Trees: []*pleaseinhere.Tree{},
-                        },
-                    },
-                },
-                &pleaseinhere.Tree{
-                    Nodes: []*pleaseinhere.Node{
-                        &pleaseinhere.Node{
-                            Name: "name",
-                            Nodes: []*pleaseinhere.Node{},
-                            Trees: []*pleaseinhere.Tree{},
-                        },
-                        &pleaseinhere.Node{
-                            Name: "name",
-                            Nodes: []*pleaseinhere.Node{},
-                            Trees: []*pleaseinhere.Tree{},
-                        },
-                    },
-                },
-            },
-        },
-        Directory: &pleaseinhere.Directory{
-            Name: "name",
-            Files: []*pleaseinhere.File{
-                &pleaseinhere.File{
-                    Name: "name",
-                    Contents: "contents",
-                },
-                &pleaseinhere.File{
-                    Name: "name",
-                    Contents: "contents",
-                },
-            },
-            Directories: []*pleaseinhere.Directory{
-                &pleaseinhere.Directory{
-                    Name: "name",
-                    Files: []*pleaseinhere.File{
-                        &pleaseinhere.File{
-                            Name: "name",
-                            Contents: "contents",
-                        },
-                        &pleaseinhere.File{
-                            Name: "name",
-                            Contents: "contents",
-                        },
-                    },
-                    Directories: []*pleaseinhere.Directory{
-                        &pleaseinhere.Directory{
-                            Name: "name",
-                        },
-                        &pleaseinhere.Directory{
-                            Name: "name",
-                        },
-                    },
-                },
-                &pleaseinhere.Directory{
-                    Name: "name",
-                    Files: []*pleaseinhere.File{
-                        &pleaseinhere.File{
-                            Name: "name",
-                            Contents: "contents",
-                        },
-                        &pleaseinhere.File{
-                            Name: "name",
-                            Contents: "contents",
-                        },
-                    },
-                    Directories: []*pleaseinhere.Directory{
-                        &pleaseinhere.Directory{
-                            Name: "name",
-                        },
-                        &pleaseinhere.Directory{
-                            Name: "name",
-                        },
-                    },
-                },
-            },
-        },
-        Moment: &pleaseinhere.Moment{
-            ID: uuid.MustParse(
-                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            ),
-            Date: pleaseinhere.MustParseDate(
-                "2023-01-15",
-            ),
-            Datetime: pleaseinhere.MustParseDateTime(
-                "2024-01-15T09:30:00Z",
-            ),
-        },
-    }
-client.Service.CreateBigEntity(
+request := &pleaseinhere.BigEntity{}
+client.Service.Createbigentity(
         context.TODO(),
         request,
     )
@@ -730,7 +504,103 @@ client.Service.CreateBigEntity(
 <dl>
 <dd>
 
-**request:** `*pleaseinhere.BigEntity` 
+**castMember:** `*pleaseinhere.CastMember` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**extendedMovie:** `*pleaseinhere.ExtendedMovie` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**entity:** `*pleaseinhere.Entity` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**metadata:** `*pleaseinhere.Metadata` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**commonMetadata:** `*pleaseinhere.CommonsMetadata` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**eventInfo:** `*pleaseinhere.CommonsEventInfo` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**data:** `*pleaseinhere.CommonsData` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**migration:** `*pleaseinhere.Migration` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**exception:** `*pleaseinhere.Exception` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**test:** `*pleaseinhere.Test` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**node:** `*pleaseinhere.Node` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**directory:** `*pleaseinhere.Directory` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**moment:** `*pleaseinhere.Moment` 
     
 </dd>
 </dl>
@@ -742,7 +612,7 @@ client.Service.CreateBigEntity(
 </dl>
 </details>
 
-<details><summary><code>client.Service.RefreshToken(request) -> error</code></summary>
+<details><summary><code>client.Service.Refreshtoken(request) -> error</code></summary>
 <dl>
 <dd>
 
@@ -755,9 +625,12 @@ client.Service.CreateBigEntity(
 <dd>
 
 ```go
-client.Service.RefreshToken(
+request := &pleaseinhere.RefreshTokenRequest{
+        TTL: 1,
+    }
+client.Service.Refreshtoken(
         context.TODO(),
-        nil,
+        request,
     )
 }
 ```
@@ -774,7 +647,7 @@ client.Service.RefreshToken(
 <dl>
 <dd>
 
-**request:** `*pleaseinhere.RefreshTokenRequest` 
+**ttl:** `int` 
     
 </dd>
 </dl>

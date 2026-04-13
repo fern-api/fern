@@ -1,4 +1,4 @@
-package errors
+package api
 
 import (
 	"io"

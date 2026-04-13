@@ -1,9 +1,9 @@
 import Foundation
 import Testing
-import PlainText
+import Api
 
 @Suite("ServiceClient Wire Tests") struct ServiceClientWireTests {
-    @Test func getText1() async throws -> Void {
+    @Test func gettext1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -12,12 +12,12 @@ import PlainText
                 """.utf8
             )
         )
-        let client = PlainTextClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
         let expectedResponse = "string"
-        let response = try await client.service.getText(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.service.gettext(requestOptions: RequestOptions(additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 }

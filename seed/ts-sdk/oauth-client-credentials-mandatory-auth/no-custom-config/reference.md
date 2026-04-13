@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="/src/api/resources/auth/client/Client.ts">getTokenWithClientCredentials</a>({ ...params }) -> SeedOauthClientCredentialsMandatoryAuth.TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="/src/api/resources/auth/client/Client.ts">gettokenwithclientcredentials</a>({ ...params }) -> SeedApi.TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,10 +13,11 @@
 <dd>
 
 ```typescript
-await client.auth.getTokenWithClientCredentials({
-    client_id: "my_oauth_app_123",
-    client_secret: "sk_live_abcdef123456789",
-    scope: "read:users"
+await client.auth.gettokenwithclientcredentials({
+    client_id: "client_id",
+    client_secret: "client_secret",
+    audience: "https://api.example.com",
+    grant_type: "client_credentials"
 });
 
 ```
@@ -33,7 +34,7 @@ await client.auth.getTokenWithClientCredentials({
 <dl>
 <dd>
 
-**request:** `SeedOauthClientCredentialsMandatoryAuth.GetTokenRequest` 
+**request:** `SeedApi.AuthGetTokenWithClientCredentialsRequest` 
     
 </dd>
 </dl>
@@ -53,7 +54,7 @@ await client.auth.getTokenWithClientCredentials({
 </dl>
 </details>
 
-<details><summary><code>client.auth.<a href="/src/api/resources/auth/client/Client.ts">refreshToken</a>({ ...params }) -> SeedOauthClientCredentialsMandatoryAuth.TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="/src/api/resources/auth/client/Client.ts">refreshtoken</a>({ ...params }) -> SeedApi.TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -66,11 +67,12 @@ await client.auth.getTokenWithClientCredentials({
 <dd>
 
 ```typescript
-await client.auth.refreshToken({
-    client_id: "my_oauth_app_123",
-    client_secret: "sk_live_abcdef123456789",
+await client.auth.refreshtoken({
+    client_id: "client_id",
+    client_secret: "client_secret",
     refresh_token: "refresh_token",
-    scope: "read:users"
+    audience: "https://api.example.com",
+    grant_type: "refresh_token"
 });
 
 ```
@@ -87,7 +89,7 @@ await client.auth.refreshToken({
 <dl>
 <dd>
 
-**request:** `SeedOauthClientCredentialsMandatoryAuth.RefreshTokenRequest` 
+**request:** `SeedApi.AuthRefreshTokenRequest` 
     
 </dd>
 </dl>
@@ -107,8 +109,8 @@ await client.auth.refreshToken({
 </dl>
 </details>
 
-## Nested Api
-<details><summary><code>client.nested.api.<a href="/src/api/resources/nested/resources/api/client/Client.ts">getSomething</a>() -> void</code></summary>
+## NestedApi
+<details><summary><code>client.nestedApi.<a href="/src/api/resources/nestedApi/client/Client.ts">nestedApiGetSomething</a>() -> void</code></summary>
 <dl>
 <dd>
 
@@ -121,7 +123,7 @@ await client.auth.refreshToken({
 <dd>
 
 ```typescript
-await client.nested.api.getSomething();
+await client.nestedApi.nestedApiGetSomething();
 
 ```
 </dd>
@@ -137,7 +139,7 @@ await client.nested.api.getSomething();
 <dl>
 <dd>
 
-**requestOptions:** `ApiClient.RequestOptions` 
+**requestOptions:** `NestedApiClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -150,7 +152,7 @@ await client.nested.api.getSomething();
 </details>
 
 ## Simple
-<details><summary><code>client.simple.<a href="/src/api/resources/simple/client/Client.ts">getSomething</a>() -> void</code></summary>
+<details><summary><code>client.simple.<a href="/src/api/resources/simple/client/Client.ts">getsomething</a>() -> void</code></summary>
 <dl>
 <dd>
 
@@ -163,7 +165,7 @@ await client.nested.api.getSomething();
 <dd>
 
 ```typescript
-await client.simple.getSomething();
+await client.simple.getsomething();
 
 ```
 </dd>

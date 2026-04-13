@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.Auth.GetToken(request) -> *fern.TokenResponse</code></summary>
+<details><summary><code>client.Auth.Gettoken(request) -> *fern.TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -17,7 +17,7 @@ request := &fern.GetTokenRequest{
         ClientID: "client_id",
         ClientSecret: "client_secret",
     }
-client.Auth.GetToken(
+client.Auth.Gettoken(
         context.TODO(),
         request,
     )
@@ -36,7 +36,15 @@ client.Auth.GetToken(
 <dl>
 <dd>
 
-**request:** `*fern.GetTokenRequest` 
+**clientID:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**clientSecret:** `string` 
     
 </dd>
 </dl>
@@ -49,7 +57,7 @@ client.Auth.GetToken(
 </details>
 
 ## Simple
-<details><summary><code>client.Simple.GetSomething() -> error</code></summary>
+<details><summary><code>client.Simple.Getsomething() -> error</code></summary>
 <dl>
 <dd>
 
@@ -62,7 +70,7 @@ client.Auth.GetToken(
 <dd>
 
 ```go
-client.Simple.GetSomething(
+client.Simple.Getsomething(
         context.TODO(),
     )
 }

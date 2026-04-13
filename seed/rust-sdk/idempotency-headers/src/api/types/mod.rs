@@ -1,5 +1,5 @@
-pub mod create_payment_request;
-pub mod payment_currency;
+pub mod currency;
+pub mod payment_create_request;
 
-pub use create_payment_request::CreatePaymentRequest;
-pub use payment_currency::Currency;
+pub use currency::Currency;
+pub use payment_create_request::PaymentCreateRequest;

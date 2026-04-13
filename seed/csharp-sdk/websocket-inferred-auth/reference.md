@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.Auth.<a href="/src/SeedWebsocketAuth/Auth/AuthClient.cs">GetTokenWithClientCredentialsAsync</a>(GetTokenRequest { ... }) -> WithRawResponseTask&lt;TokenResponse&gt;</code></summary>
+<details><summary><code>client.Auth.<a href="/src/SeedApi/Auth/AuthClient.cs">GettokenwithclientcredentialsAsync</a>(AuthGetTokenWithClientCredentialsRequest { ... }) -> WithRawResponseTask&lt;TokenResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,15 +13,13 @@
 <dd>
 
 ```csharp
-await client.Auth.GetTokenWithClientCredentialsAsync(
-    new GetTokenRequest
+await client.Auth.GettokenwithclientcredentialsAsync(
+    new AuthGetTokenWithClientCredentialsRequest
     {
-        XApiKey = "X-Api-Key",
         ClientId = "client_id",
         ClientSecret = "client_secret",
-        Audience = "https://api.example.com",
-        GrantType = "client_credentials",
-        Scope = "scope",
+        Audience = AuthGetTokenWithClientCredentialsRequestAudience.HttpsApiExampleCom,
+        GrantType = AuthGetTokenWithClientCredentialsRequestGrantType.ClientCredentials,
     }
 );
 ```
@@ -38,7 +36,7 @@ await client.Auth.GetTokenWithClientCredentialsAsync(
 <dl>
 <dd>
 
-**request:** `GetTokenRequest` 
+**request:** `AuthGetTokenWithClientCredentialsRequest` 
     
 </dd>
 </dl>
@@ -50,7 +48,7 @@ await client.Auth.GetTokenWithClientCredentialsAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Auth.<a href="/src/SeedWebsocketAuth/Auth/AuthClient.cs">RefreshTokenAsync</a>(RefreshTokenRequest { ... }) -> WithRawResponseTask&lt;TokenResponse&gt;</code></summary>
+<details><summary><code>client.Auth.<a href="/src/SeedApi/Auth/AuthClient.cs">RefreshtokenAsync</a>(AuthRefreshTokenRequest { ... }) -> WithRawResponseTask&lt;TokenResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -63,16 +61,14 @@ await client.Auth.GetTokenWithClientCredentialsAsync(
 <dd>
 
 ```csharp
-await client.Auth.RefreshTokenAsync(
-    new RefreshTokenRequest
+await client.Auth.RefreshtokenAsync(
+    new AuthRefreshTokenRequest
     {
-        XApiKey = "X-Api-Key",
         ClientId = "client_id",
         ClientSecret = "client_secret",
         RefreshToken = "refresh_token",
-        Audience = "https://api.example.com",
-        GrantType = "refresh_token",
-        Scope = "scope",
+        Audience = AuthRefreshTokenRequestAudience.HttpsApiExampleCom,
+        GrantType = AuthRefreshTokenRequestGrantType.RefreshToken,
     }
 );
 ```
@@ -89,7 +85,7 @@ await client.Auth.RefreshTokenAsync(
 <dl>
 <dd>
 
-**request:** `RefreshTokenRequest` 
+**request:** `AuthRefreshTokenRequest` 
     
 </dd>
 </dl>

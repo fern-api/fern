@@ -19,8 +19,8 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :api_key
       #
-      # @return [Seed::Auth::Types::TokenResponse]
-      def get_token(request_options: {}, **params)
+      # @return [Seed::Types::TokenResponse]
+      def gettoken(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         headers = {}
         headers["X-Api-Key"] = params[:api_key] if params[:api_key]
@@ -28,7 +28,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "/token",
+          path: "token",
           headers: headers,
           request_options: request_options
         )
@@ -39,7 +39,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Auth::Types::TokenResponse.load(response.body)
+          Seed::Types::TokenResponse.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)

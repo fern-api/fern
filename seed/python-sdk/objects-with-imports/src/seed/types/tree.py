@@ -8,34 +8,6 @@ from .node import Node
 
 
 class Tree(UniversalBaseModel):
-    """
-    Examples
-    --------
-    from seed import Node, Tree
-    from seed.commons.metadata import Metadata
-
-    Tree(
-        nodes=[
-            Node(
-                id="node-8dvgfja2",
-                label="left",
-                metadata=Metadata(
-                    id="metadata-kjasf923",
-                    data={"foo": "bar", "baz": "qux"},
-                ),
-            ),
-            Node(
-                id="node-cwda9fi2x",
-                label="right",
-                metadata=Metadata(
-                    id="metadata-lkasdfv9j",
-                    data={"one": "two", "three": "four"},
-                ),
-            ),
-        ],
-    )
-    """
-
     nodes: typing.Optional[typing.List[Node]] = None
 
     if IS_PYDANTIC_V2:

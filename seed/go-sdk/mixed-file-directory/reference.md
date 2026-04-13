@@ -49,7 +49,7 @@ client.Organization.Create(
 <dl>
 <dd>
 
-**request:** `*fern.CreateOrganizationRequest` 
+**name:** `string` 
     
 </dd>
 </dl>
@@ -89,11 +89,7 @@ List all users.
 <dd>
 
 ```go
-request := &fern.ListUsersRequest{
-        Limit: fern.Int(
-            1,
-        ),
-    }
+request := &fern.UserListRequest{}
 client.User.List(
         context.TODO(),
         request,
@@ -125,8 +121,8 @@ client.User.List(
 </dl>
 </details>
 
-## User Events
-<details><summary><code>client.User.Events.ListEvents() -> []*user.Event</code></summary>
+## UserEvents
+<details><summary><code>client.UserEvents.UserEventsListEvents() -> []*fern.UserEvent</code></summary>
 <dl>
 <dd>
 
@@ -153,12 +149,8 @@ List all user events.
 <dd>
 
 ```go
-request := &user.ListUserEventsRequest{
-        Limit: fern.Int(
-            1,
-        ),
-    }
-client.User.Events.ListEvents(
+request := &fern.UserEventsListEventsRequest{}
+client.UserEvents.UserEventsListEvents(
         context.TODO(),
         request,
     )
@@ -189,8 +181,8 @@ client.User.Events.ListEvents(
 </dl>
 </details>
 
-## User Events Metadata
-<details><summary><code>client.User.Events.Metadata.GetMetadata() -> *events.Metadata</code></summary>
+## UserEventsMetadata
+<details><summary><code>client.UserEventsMetadata.UserEventsMetadataGetMetadata() -> *fern.UsereventsMetadata</code></summary>
 <dl>
 <dd>
 
@@ -217,10 +209,10 @@ Get event metadata.
 <dd>
 
 ```go
-request := &events.GetEventMetadataRequest{
+request := &fern.UserEventsMetadataGetMetadataRequest{
         ID: "id",
     }
-client.User.Events.Metadata.GetMetadata(
+client.UserEventsMetadata.UserEventsMetadataGetMetadata(
         context.TODO(),
         request,
     )

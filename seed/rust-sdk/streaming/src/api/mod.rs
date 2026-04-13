@@ -1,4 +1,4 @@
-//! API client and types for the Streaming
+//! API client and types for the streaming
 //!
 //! This module contains all the API definitions including request/response types
 //! and client implementations for interacting with the API.
@@ -11,5 +11,5 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::{DummyClient, StreamingClient};
+pub use resources::{ApiClient, DummyClient};
 pub use types::*;

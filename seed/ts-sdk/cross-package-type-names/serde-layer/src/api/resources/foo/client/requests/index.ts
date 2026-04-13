@@ -1,1 +1,1 @@
-export type { FindRequest } from "./FindRequest.js";
+export type { FooFindRequest } from "./FooFindRequest.js";

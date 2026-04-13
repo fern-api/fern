@@ -3,6 +3,8 @@
 namespace Example;
 
 use Seed\SeedClient;
+use Seed\Payment\Requests\PaymentCreateRequest;
+use Seed\Types\Currency;
 
 $client = new SeedClient(
     token: '<token>',
@@ -10,6 +12,9 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->payment->delete(
-    'paymentId',
+$client->payment->create(
+    new PaymentCreateRequest([
+        'amount' => 1,
+        'currency' => Currency::Usd->value,
+    ]),
 );

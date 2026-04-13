@@ -1,18 +1,18 @@
-//! # NurseryApi SDK
+//! # reserved-keywords SDK
 //!
-//! The official Rust SDK for the NurseryApi.
+//! The official Rust SDK for the reserved-keywords.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_nursery_api::prelude::*;
+//! use seed_api::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
 //!     let config = ClientConfig {
 //!         ..Default::default()
 //!     };
-//!     let client = NurseryApiClient::new(config).expect("Failed to build client");
+//!     let client = ApiClient::new(config).expect("Failed to build client");
 //!     client
 //!         .package
 //!         .test(

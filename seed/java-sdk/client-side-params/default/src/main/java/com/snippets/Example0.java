@@ -1,24 +1,22 @@
 package com.snippets;
 
-import com.seed.clientSideParams.SeedClientSideParamsClient;
-import com.seed.clientSideParams.resources.service.requests.ListResourcesRequest;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.service.requests.ServiceListResourcesRequest;
 
 public class Example0 {
     public static void main(String[] args) {
-        SeedClientSideParamsClient client = SeedClientSideParamsClient.builder()
+        SeedApiClient client = SeedApiClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
         client.service()
-                .listResources(ListResourcesRequest.builder()
+                .listresources(ServiceListResourcesRequest.builder()
                         .page(1)
                         .perPage(1)
-                        .sort("created_at")
-                        .order("desc")
+                        .sort("sort")
+                        .order("order")
                         .includeTotals(true)
-                        .fields("fields")
-                        .search("search")
                         .build());
     }
 }

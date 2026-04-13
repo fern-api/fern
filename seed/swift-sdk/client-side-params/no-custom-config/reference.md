@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">listResources</a>(page: Int, perPage: Int, sort: String, order: String, includeTotals: Bool, fields: String?, search: String?, requestOptions: RequestOptions?) -> [Resource]</code></summary>
+<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">listresources</a>(page: Int, perPage: Int, sort: String, order: String, includeTotals: Bool, fields: Nullable&lt;String&gt;?, search: Nullable&lt;String&gt;?, requestOptions: RequestOptions?) -> [Resource]</code></summary>
 <dl>
 <dd>
 
@@ -28,19 +28,17 @@ List resources with pagination
 
 ```swift
 import Foundation
-import ClientSideParams
+import Api
 
 private func main() async throws {
-    let client = ClientSideParamsClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.service.listResources(
+    _ = try await client.service.listresources(
         page: 1,
         perPage: 1,
-        sort: "created_at",
-        order: "desc",
-        includeTotals: true,
-        fields: "fields",
-        search: "search"
+        sort: "sort",
+        order: "order",
+        includeTotals: true
     )
 }
 
@@ -99,7 +97,7 @@ try await main()
 <dl>
 <dd>
 
-**fields:** `String?` — Comma-separated list of fields to include
+**fields:** `Nullable<String>?` — Comma-separated list of fields to include
     
 </dd>
 </dl>
@@ -107,7 +105,7 @@ try await main()
 <dl>
 <dd>
 
-**search:** `String?` — Search query
+**search:** `Nullable<String>?` — Search query
     
 </dd>
 </dl>
@@ -127,7 +125,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">getResource</a>(resourceId: String, includeMetadata: Bool, format: String, requestOptions: RequestOptions?) -> Resource</code></summary>
+<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">getresource</a>(resourceId: String, includeMetadata: Bool, format: String, requestOptions: RequestOptions?) -> Resource</code></summary>
 <dl>
 <dd>
 
@@ -155,15 +153,15 @@ Get a single resource
 
 ```swift
 import Foundation
-import ClientSideParams
+import Api
 
 private func main() async throws {
-    let client = ClientSideParamsClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.service.getResource(
+    _ = try await client.service.getresource(
         resourceId: "resourceId",
         includeMetadata: true,
-        format: "json"
+        format: "format"
     )
 }
 
@@ -218,7 +216,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">searchResources</a>(limit: Int, offset: Int, request: Requests.SearchResourcesRequest, requestOptions: RequestOptions?) -> SearchResponse</code></summary>
+<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">searchresources</a>(limit: Int, offset: Int, request: Requests.ServiceSearchResourcesRequest, requestOptions: RequestOptions?) -> SearchResponse</code></summary>
 <dl>
 <dd>
 
@@ -246,22 +244,15 @@ Search resources with complex parameters
 
 ```swift
 import Foundation
-import ClientSideParams
+import Api
 
 private func main() async throws {
-    let client = ClientSideParamsClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.service.searchResources(
+    _ = try await client.service.searchresources(
         limit: 1,
         offset: 1,
-        request: .init(
-            query: "query",
-            filters: [
-                "filters": .object([
-                    "key": .string("value")
-                ])
-            ]
-        )
+        request: .init()
     )
 }
 
@@ -296,7 +287,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.SearchResourcesRequest` 
+**request:** `Requests.ServiceSearchResourcesRequest` 
     
 </dd>
 </dl>
@@ -316,7 +307,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">listUsers</a>(page: Int?, perPage: Int?, includeTotals: Bool?, sort: String?, connection: String?, q: String?, searchEngine: String?, fields: String?, requestOptions: RequestOptions?) -> PaginatedUserResponse</code></summary>
+<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">listusers</a>(page: Nullable&lt;Int&gt;?, perPage: Nullable&lt;Int&gt;?, includeTotals: Nullable&lt;Bool&gt;?, sort: Nullable&lt;String&gt;?, connection: Nullable&lt;String&gt;?, q: Nullable&lt;String&gt;?, searchEngine: Nullable&lt;String&gt;?, fields: Nullable&lt;String&gt;?, requestOptions: RequestOptions?) -> PaginatedUserResponse</code></summary>
 <dl>
 <dd>
 
@@ -344,21 +335,12 @@ List or search for users
 
 ```swift
 import Foundation
-import ClientSideParams
+import Api
 
 private func main() async throws {
-    let client = ClientSideParamsClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.service.listUsers(
-        page: 1,
-        perPage: 1,
-        includeTotals: true,
-        sort: "sort",
-        connection: "connection",
-        q: "q",
-        searchEngine: "search_engine",
-        fields: "fields"
-    )
+    _ = try await client.service.listusers()
 }
 
 try await main()
@@ -376,7 +358,7 @@ try await main()
 <dl>
 <dd>
 
-**page:** `Int?` — Page index of the results to return. First page is 0.
+**page:** `Nullable<Int>?` — Page index of the results to return. First page is 0.
     
 </dd>
 </dl>
@@ -384,7 +366,7 @@ try await main()
 <dl>
 <dd>
 
-**perPage:** `Int?` — Number of results per page.
+**perPage:** `Nullable<Int>?` — Number of results per page.
     
 </dd>
 </dl>
@@ -392,7 +374,7 @@ try await main()
 <dl>
 <dd>
 
-**includeTotals:** `Bool?` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+**includeTotals:** `Nullable<Bool>?` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
     
 </dd>
 </dl>
@@ -400,7 +382,7 @@ try await main()
 <dl>
 <dd>
 
-**sort:** `String?` — Field to sort by. Use field:order where order is 1 for ascending and -1 for descending.
+**sort:** `Nullable<String>?` — Field to sort by. Use field:order where order is 1 for ascending and -1 for descending.
     
 </dd>
 </dl>
@@ -408,7 +390,7 @@ try await main()
 <dl>
 <dd>
 
-**connection:** `String?` — Connection filter
+**connection:** `Nullable<String>?` — Connection filter
     
 </dd>
 </dl>
@@ -416,7 +398,7 @@ try await main()
 <dl>
 <dd>
 
-**q:** `String?` — Query string following Lucene query string syntax
+**q:** `Nullable<String>?` — Query string following Lucene query string syntax
     
 </dd>
 </dl>
@@ -424,7 +406,7 @@ try await main()
 <dl>
 <dd>
 
-**searchEngine:** `String?` — Search engine version (v1, v2, or v3)
+**searchEngine:** `Nullable<String>?` — Search engine version (v1, v2, or v3)
     
 </dd>
 </dl>
@@ -432,7 +414,7 @@ try await main()
 <dl>
 <dd>
 
-**fields:** `String?` — Comma-separated list of fields to include or exclude
+**fields:** `Nullable<String>?` — Comma-separated list of fields to include or exclude
     
 </dd>
 </dl>
@@ -452,98 +434,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">getUserById</a>(userId: String, fields: String?, includeFields: Bool?, requestOptions: RequestOptions?) -> User</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get a user by ID
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```swift
-import Foundation
-import ClientSideParams
-
-private func main() async throws {
-    let client = ClientSideParamsClient(token: "<token>")
-
-    _ = try await client.service.getUserById(
-        userId: "userId",
-        fields: "fields",
-        includeFields: true
-    )
-}
-
-try await main()
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**userId:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**fields:** `String?` — Comma-separated list of fields to include or exclude
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**includeFields:** `Bool?` — true to include the fields specified, false to exclude them
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">createUser</a>(request: CreateUserRequest, requestOptions: RequestOptions?) -> User</code></summary>
+<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">createuser</a>(request: Requests.CreateUserRequest, requestOptions: RequestOptions?) -> User</code></summary>
 <dl>
 <dd>
 
@@ -571,28 +462,13 @@ Create a new user
 
 ```swift
 import Foundation
-import ClientSideParams
+import Api
 
 private func main() async throws {
-    let client = ClientSideParamsClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.service.createUser(request: CreateUserRequest(
+    _ = try await client.service.createuser(request: .init(
         email: "email",
-        emailVerified: true,
-        username: "username",
-        password: "password",
-        phoneNumber: "phone_number",
-        phoneVerified: true,
-        userMetadata: [
-            "user_metadata": .object([
-                "key": .string("value")
-            ])
-        ],
-        appMetadata: [
-            "app_metadata": .object([
-                "key": .string("value")
-            ])
-        ],
         connection: "connection"
     ))
 }
@@ -612,7 +488,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `CreateUserRequest` 
+**request:** `Requests.CreateUserRequest` 
     
 </dd>
 </dl>
@@ -632,7 +508,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">updateUser</a>(userId: String, request: UpdateUserRequest, requestOptions: RequestOptions?) -> User</code></summary>
+<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">getuserbyid</a>(userId: String, fields: Nullable&lt;String&gt;?, includeFields: Nullable&lt;Bool&gt;?, requestOptions: RequestOptions?) -> User</code></summary>
 <dl>
 <dd>
 
@@ -644,7 +520,7 @@ try await main()
 <dl>
 <dd>
 
-Update a user
+Get a user by ID
 </dd>
 </dl>
 </dd>
@@ -660,33 +536,12 @@ Update a user
 
 ```swift
 import Foundation
-import ClientSideParams
+import Api
 
 private func main() async throws {
-    let client = ClientSideParamsClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.service.updateUser(
-        userId: "userId",
-        request: UpdateUserRequest(
-            email: "email",
-            emailVerified: true,
-            username: "username",
-            phoneNumber: "phone_number",
-            phoneVerified: true,
-            userMetadata: [
-                "user_metadata": .object([
-                    "key": .string("value")
-                ])
-            ],
-            appMetadata: [
-                "app_metadata": .object([
-                    "key": .string("value")
-                ])
-            ],
-            password: "password",
-            blocked: true
-        )
-    )
+    _ = try await client.service.getuserbyid(userId: "userId")
 }
 
 try await main()
@@ -712,7 +567,15 @@ try await main()
 <dl>
 <dd>
 
-**request:** `UpdateUserRequest` 
+**fields:** `Nullable<String>?` — Comma-separated list of fields to include or exclude
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeFields:** `Nullable<Bool>?` — true to include the fields specified, false to exclude them
     
 </dd>
 </dl>
@@ -732,7 +595,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">deleteUser</a>(userId: String, requestOptions: RequestOptions?) -> Void</code></summary>
+<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">deleteuser</a>(userId: String, requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -760,12 +623,12 @@ Delete a user
 
 ```swift
 import Foundation
-import ClientSideParams
+import Api
 
 private func main() async throws {
-    let client = ClientSideParamsClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.service.deleteUser(userId: "userId")
+    _ = try await client.service.deleteuser(userId: "userId")
 }
 
 try await main()
@@ -803,7 +666,89 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">listConnections</a>(strategy: String?, name: String?, fields: String?, requestOptions: RequestOptions?) -> [Connection]</code></summary>
+<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">updateuser</a>(userId: String, request: Requests.UpdateUserRequest, requestOptions: RequestOptions?) -> User</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update a user
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import Api
+
+private func main() async throws {
+    let client = ApiClient(token: "<token>")
+
+    _ = try await client.service.updateuser(
+        userId: "userId",
+        request: .init()
+    )
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**userId:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Requests.UpdateUserRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">listconnections</a>(strategy: Nullable&lt;String&gt;?, name: Nullable&lt;String&gt;?, fields: Nullable&lt;String&gt;?, requestOptions: RequestOptions?) -> [Connection]</code></summary>
 <dl>
 <dd>
 
@@ -831,16 +776,12 @@ List all connections
 
 ```swift
 import Foundation
-import ClientSideParams
+import Api
 
 private func main() async throws {
-    let client = ClientSideParamsClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.service.listConnections(
-        strategy: "strategy",
-        name: "name",
-        fields: "fields"
-    )
+    _ = try await client.service.listconnections()
 }
 
 try await main()
@@ -858,7 +799,7 @@ try await main()
 <dl>
 <dd>
 
-**strategy:** `String?` — Filter by strategy type (e.g., auth0, google-oauth2, samlp)
+**strategy:** `Nullable<String>?` — Filter by strategy type (e.g., auth0, google-oauth2, samlp)
     
 </dd>
 </dl>
@@ -866,7 +807,7 @@ try await main()
 <dl>
 <dd>
 
-**name:** `String?` — Filter by connection name
+**name:** `Nullable<String>?` — Filter by connection name
     
 </dd>
 </dl>
@@ -874,7 +815,7 @@ try await main()
 <dl>
 <dd>
 
-**fields:** `String?` — Comma-separated list of fields to include
+**fields:** `Nullable<String>?` — Comma-separated list of fields to include
     
 </dd>
 </dl>
@@ -894,7 +835,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">getConnection</a>(connectionId: String, fields: String?, requestOptions: RequestOptions?) -> Connection</code></summary>
+<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">getconnection</a>(connectionId: String, fields: Nullable&lt;String&gt;?, requestOptions: RequestOptions?) -> Connection</code></summary>
 <dl>
 <dd>
 
@@ -922,15 +863,12 @@ Get a connection by ID
 
 ```swift
 import Foundation
-import ClientSideParams
+import Api
 
 private func main() async throws {
-    let client = ClientSideParamsClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.service.getConnection(
-        connectionId: "connectionId",
-        fields: "fields"
-    )
+    _ = try await client.service.getconnection(connectionId: "connectionId")
 }
 
 try await main()
@@ -956,7 +894,7 @@ try await main()
 <dl>
 <dd>
 
-**fields:** `String?` — Comma-separated list of fields to include
+**fields:** `Nullable<String>?` — Comma-separated list of fields to include
     
 </dd>
 </dl>
@@ -976,7 +914,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">listClients</a>(fields: String?, includeFields: Bool?, page: Int?, perPage: Int?, includeTotals: Bool?, isGlobal: Bool?, isFirstParty: Bool?, appType: [String]?, requestOptions: RequestOptions?) -> PaginatedClientResponse</code></summary>
+<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">listclients</a>(fields: Nullable&lt;String&gt;?, includeFields: Nullable&lt;Bool&gt;?, page: Nullable&lt;Int&gt;?, perPage: Nullable&lt;Int&gt;?, includeTotals: Nullable&lt;Bool&gt;?, isGlobal: Nullable&lt;Bool&gt;?, isFirstParty: Nullable&lt;Bool&gt;?, appType: Nullable&lt;[String]&gt;?, requestOptions: RequestOptions?) -> PaginatedClientResponse</code></summary>
 <dl>
 <dd>
 
@@ -1004,24 +942,12 @@ List all clients/applications
 
 ```swift
 import Foundation
-import ClientSideParams
+import Api
 
 private func main() async throws {
-    let client = ClientSideParamsClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.service.listClients(
-        fields: "fields",
-        includeFields: true,
-        page: 1,
-        perPage: 1,
-        includeTotals: true,
-        isGlobal: true,
-        isFirstParty: true,
-        appType: [
-            "app_type",
-            "app_type"
-        ]
-    )
+    _ = try await client.service.listclients()
 }
 
 try await main()
@@ -1039,7 +965,7 @@ try await main()
 <dl>
 <dd>
 
-**fields:** `String?` — Comma-separated list of fields to include
+**fields:** `Nullable<String>?` — Comma-separated list of fields to include
     
 </dd>
 </dl>
@@ -1047,7 +973,7 @@ try await main()
 <dl>
 <dd>
 
-**includeFields:** `Bool?` — Whether specified fields are included or excluded
+**includeFields:** `Nullable<Bool>?` — Whether specified fields are included or excluded
     
 </dd>
 </dl>
@@ -1055,7 +981,7 @@ try await main()
 <dl>
 <dd>
 
-**page:** `Int?` — Page number (zero-based)
+**page:** `Nullable<Int>?` — Page number (zero-based)
     
 </dd>
 </dl>
@@ -1063,7 +989,7 @@ try await main()
 <dl>
 <dd>
 
-**perPage:** `Int?` — Number of results per page
+**perPage:** `Nullable<Int>?` — Number of results per page
     
 </dd>
 </dl>
@@ -1071,7 +997,7 @@ try await main()
 <dl>
 <dd>
 
-**includeTotals:** `Bool?` — Include total count in response
+**includeTotals:** `Nullable<Bool>?` — Include total count in response
     
 </dd>
 </dl>
@@ -1079,7 +1005,7 @@ try await main()
 <dl>
 <dd>
 
-**isGlobal:** `Bool?` — Filter by global clients
+**isGlobal:** `Nullable<Bool>?` — Filter by global clients
     
 </dd>
 </dl>
@@ -1087,7 +1013,7 @@ try await main()
 <dl>
 <dd>
 
-**isFirstParty:** `Bool?` — Filter by first party clients
+**isFirstParty:** `Nullable<Bool>?` — Filter by first party clients
     
 </dd>
 </dl>
@@ -1095,7 +1021,7 @@ try await main()
 <dl>
 <dd>
 
-**appType:** `[String]?` — Filter by application type (spa, native, regular_web, non_interactive)
+**appType:** `Nullable<[String]>?` — Filter by application type (spa, native, regular_web, non_interactive)
     
 </dd>
 </dl>
@@ -1115,7 +1041,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">getClient</a>(clientId: String, fields: String?, includeFields: Bool?, requestOptions: RequestOptions?) -> Client</code></summary>
+<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">getclient</a>(clientId: String, fields: Nullable&lt;String&gt;?, includeFields: Nullable&lt;Bool&gt;?, requestOptions: RequestOptions?) -> Client</code></summary>
 <dl>
 <dd>
 
@@ -1143,16 +1069,12 @@ Get a client by ID
 
 ```swift
 import Foundation
-import ClientSideParams
+import Api
 
 private func main() async throws {
-    let client = ClientSideParamsClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.service.getClient(
-        clientId: "clientId",
-        fields: "fields",
-        includeFields: true
-    )
+    _ = try await client.service.getclient(clientId: "clientId")
 }
 
 try await main()
@@ -1178,7 +1100,7 @@ try await main()
 <dl>
 <dd>
 
-**fields:** `String?` — Comma-separated list of fields to include
+**fields:** `Nullable<String>?` — Comma-separated list of fields to include
     
 </dd>
 </dl>
@@ -1186,7 +1108,7 @@ try await main()
 <dl>
 <dd>
 
-**includeFields:** `Bool?` — Whether specified fields are included or excluded
+**includeFields:** `Nullable<Bool>?` — Whether specified fields are included or excluded
     
 </dd>
 </dl>

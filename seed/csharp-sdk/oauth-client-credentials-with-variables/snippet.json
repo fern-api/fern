@@ -6,23 +6,23 @@
             "id": {
                 "path": "/token",
                 "method": "POST",
-                "identifier_override": "endpoint_auth.getTokenWithClientCredentials"
+                "identifier_override": "endpoint_auth.gettokenwithclientcredentials"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedOauthClientCredentialsWithVariables;\n\nvar client = new SeedOauthClientCredentialsWithVariablesClient(\"client_id\", \"client_secret\");\nawait client.Auth.GetTokenWithClientCredentialsAsync(\n    new GetTokenRequest\n    {\n        ClientId = \"client_id\",\n        ClientSecret = \"client_secret\",\n        Audience = \"https://api.example.com\",\n        GrantType = \"client_credentials\",\n        Scope = \"scope\",\n    }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Auth.GettokenwithclientcredentialsAsync(\n    new AuthGetTokenWithClientCredentialsRequest\n    {\n        ClientId = \"client_id\",\n        ClientSecret = \"client_secret\",\n        Audience = AuthGetTokenWithClientCredentialsRequestAudience.HttpsApiExampleCom,\n        GrantType = AuthGetTokenWithClientCredentialsRequestGrantType.ClientCredentials,\n    }\n);\n"
             }
         },
         {
             "example_identifier": null,
             "id": {
-                "path": "/token",
+                "path": "/token/refresh",
                 "method": "POST",
-                "identifier_override": "endpoint_auth.refreshToken"
+                "identifier_override": "endpoint_auth.refreshtoken"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedOauthClientCredentialsWithVariables;\n\nvar client = new SeedOauthClientCredentialsWithVariablesClient(\"client_id\", \"client_secret\");\nawait client.Auth.RefreshTokenAsync(\n    new RefreshTokenRequest\n    {\n        ClientId = \"client_id\",\n        ClientSecret = \"client_secret\",\n        RefreshToken = \"refresh_token\",\n        Audience = \"https://api.example.com\",\n        GrantType = \"refresh_token\",\n        Scope = \"scope\",\n    }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Auth.RefreshtokenAsync(\n    new AuthRefreshTokenRequest\n    {\n        ClientId = \"client_id\",\n        ClientSecret = \"client_secret\",\n        RefreshToken = \"refresh_token\",\n        Audience = AuthRefreshTokenRequestAudience.HttpsApiExampleCom,\n        GrantType = AuthRefreshTokenRequestGrantType.RefreshToken,\n    }\n);\n"
             }
         },
         {
@@ -30,11 +30,11 @@
             "id": {
                 "path": "/nested-no-auth/get-something",
                 "method": "GET",
-                "identifier_override": "endpoint_nested-no-auth/api.getSomething"
+                "identifier_override": "endpoint_nestedNoAuthApi.nestedNoAuth_api_getSomething"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedOauthClientCredentialsWithVariables;\n\nvar client = new SeedOauthClientCredentialsWithVariablesClient(\"client_id\", \"client_secret\");\nawait client.NestedNoAuth.Api.GetSomethingAsync();\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.NestedNoAuthApi.NestedNoAuthApiGetSomethingAsync();\n"
             }
         },
         {
@@ -42,11 +42,11 @@
             "id": {
                 "path": "/nested/get-something",
                 "method": "GET",
-                "identifier_override": "endpoint_nested/api.getSomething"
+                "identifier_override": "endpoint_nestedApi.nested_api_getSomething"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedOauthClientCredentialsWithVariables;\n\nvar client = new SeedOauthClientCredentialsWithVariablesClient(\"client_id\", \"client_secret\");\nawait client.Nested.Api.GetSomethingAsync();\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.NestedApi.NestedApiGetSomethingAsync();\n"
             }
         },
         {
@@ -58,7 +58,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedOauthClientCredentialsWithVariables;\n\nvar client = new SeedOauthClientCredentialsWithVariablesClient(\"client_id\", \"client_secret\");\nawait client.Service.PostAsync(\"endpointParam\");\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Service.PostAsync(new ServicePostRequest { EndpointParam = \"endpointParam\" });\n"
             }
         },
         {
@@ -66,11 +66,11 @@
             "id": {
                 "path": "/get-something",
                 "method": "GET",
-                "identifier_override": "endpoint_simple.getSomething"
+                "identifier_override": "endpoint_simple.getsomething"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedOauthClientCredentialsWithVariables;\n\nvar client = new SeedOauthClientCredentialsWithVariablesClient(\"client_id\", \"client_secret\");\nawait client.Simple.GetSomethingAsync();\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Simple.GetsomethingAsync();\n"
             }
         }
     ]

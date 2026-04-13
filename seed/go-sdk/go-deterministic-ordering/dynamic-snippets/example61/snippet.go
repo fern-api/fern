@@ -6,8 +6,6 @@ import (
     fern "github.com/go-deterministic-ordering/fern"
     client "github.com/go-deterministic-ordering/fern/client"
     option "github.com/go-deterministic-ordering/fern/option"
-    types "github.com/go-deterministic-ordering/fern/types"
-    uuid "github.com/google/uuid"
 )
 
 func do() {
@@ -19,59 +17,113 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.PostWithObjectBody{
-        FieldString: "string",
-        Integer: 1,
-        NestedObject: &types.ObjectWithOptionalField{
-            FieldString: fern.String(
-                "string",
-            ),
-            Integer: fern.Int(
-                1,
-            ),
-            Long: fern.Int64(
-                int64(1000000),
-            ),
-            Double: fern.Float64(
-                1.1,
-            ),
-            Bool: fern.Bool(
-                true,
-            ),
-            Datetime: fern.Time(
-                fern.MustParseDateTime(
-                    "2024-01-15T09:30:00Z",
+    request := []*fern.TypesNestedObjectWithRequiredField{
+        &fern.TypesNestedObjectWithRequiredField{
+            FieldString: "string",
+            NestedObject: &fern.TypesObjectWithOptionalField{
+                FieldString: fern.String(
+                    "string",
                 ),
-            ),
-            Date: fern.Time(
-                fern.MustParseDate(
-                    "2023-01-15",
+                Integer: fern.Int(
+                    1,
                 ),
-            ),
-            UUID: fern.UUID(
-                uuid.MustParse(
-                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                Long: fern.Int64(
+                    int64(1000000),
                 ),
-            ),
-            Base64: fern.Bytes(
-                []byte("SGVsbG8gd29ybGQh"),
-            ),
-            List: []string{
-                "list",
-                "list",
+                Double: fern.Float64(
+                    1.1,
+                ),
+                Bool: fern.Bool(
+                    true,
+                ),
+                Datetime: fern.Time(
+                    fern.MustParseDateTime(
+                        "2024-01-15T09:30:00Z",
+                    ),
+                ),
+                Date: fern.Time(
+                    fern.MustParseDate(
+                        "2023-01-15",
+                    ),
+                ),
+                UUID: fern.String(
+                    "uuid",
+                ),
+                Base64: fern.String(
+                    "base64",
+                ),
+                List: []string{
+                    "list",
+                    "list",
+                },
+                Set: []string{
+                    "set",
+                    "set",
+                },
+                Map: map[string]*string{
+                    "map": fern.String(
+                        "map",
+                    ),
+                },
+                Bigint: fern.Int(
+                    1,
+                ),
             },
-            Set: []string{
-                "set",
+        },
+        &fern.TypesNestedObjectWithRequiredField{
+            FieldString: "string",
+            NestedObject: &fern.TypesObjectWithOptionalField{
+                FieldString: fern.String(
+                    "string",
+                ),
+                Integer: fern.Int(
+                    1,
+                ),
+                Long: fern.Int64(
+                    int64(1000000),
+                ),
+                Double: fern.Float64(
+                    1.1,
+                ),
+                Bool: fern.Bool(
+                    true,
+                ),
+                Datetime: fern.Time(
+                    fern.MustParseDateTime(
+                        "2024-01-15T09:30:00Z",
+                    ),
+                ),
+                Date: fern.Time(
+                    fern.MustParseDate(
+                        "2023-01-15",
+                    ),
+                ),
+                UUID: fern.String(
+                    "uuid",
+                ),
+                Base64: fern.String(
+                    "base64",
+                ),
+                List: []string{
+                    "list",
+                    "list",
+                },
+                Set: []string{
+                    "set",
+                    "set",
+                },
+                Map: map[string]*string{
+                    "map": fern.String(
+                        "map",
+                    ),
+                },
+                Bigint: fern.Int(
+                    1,
+                ),
             },
-            Map: map[int]string{
-                1: "map",
-            },
-            Bigint: fern.String(
-                "1000000",
-            ),
         },
     }
-    client.InlinedRequests.PostWithObjectBodyandResponse(
+    client.EndpointsObject.EndpointsObjectGetAndReturnNestedWithRequiredFieldAsList(
         context.TODO(),
         request,
     )

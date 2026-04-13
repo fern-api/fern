@@ -17,10 +17,10 @@ func do() {
             "<token>",
         ),
     )
-    request := &pleaseinhere.RefreshTokenRequest{
-        TTL: 1,
+    request := &pleaseinhere.Type{
+        BasicType: pleaseinhere.BasicTypePrimitive,
     }
-    client.Service.RefreshToken(
+    client.CreateType(
         context.TODO(),
         request,
     )

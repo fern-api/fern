@@ -1,12 +1,12 @@
 package com.snippets;
 
-import com.seed.noRetries.SeedNoRetriesClient;
+import com.seed.api.SeedApiClient;
 
 public class Example0 {
     public static void main(String[] args) {
-        SeedNoRetriesClient client =
-                SeedNoRetriesClient.builder().url("https://api.fern.com").build();
+        SeedApiClient client =
+                SeedApiClient.builder().url("https://api.fern.com").build();
 
-        client.retries().getUsers();
+        client.retries().getusers();
     }
 }

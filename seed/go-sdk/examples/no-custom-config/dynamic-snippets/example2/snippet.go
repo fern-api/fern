@@ -17,10 +17,10 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.Type{
-        BasicType: fern.BasicTypePrimitive,
+    request := &fern.FileServiceGetFileRequest{
+        Filename: "filename",
     }
-    client.CreateType(
+    client.FileService.FileServiceGetFile(
         context.TODO(),
         request,
     )

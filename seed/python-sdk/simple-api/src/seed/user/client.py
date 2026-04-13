@@ -4,8 +4,8 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
+from ..types.user import User
 from .raw_client import AsyncRawUserClient, RawUserClient
-from .types.user import User
 
 
 class UserClient:
@@ -36,14 +36,13 @@ class UserClient:
         -------
         User
 
+
         Examples
         --------
-        from seed import SeedSimpleApi
-        from seed.environment import SeedSimpleApiEnvironment
+        from seed import SeedApi
 
-        client = SeedSimpleApi(
+        client = SeedApi(
             token="YOUR_TOKEN",
-            environment=SeedSimpleApiEnvironment.PRODUCTION,
         )
         client.user.get(
             id="id",
@@ -81,16 +80,15 @@ class AsyncUserClient:
         -------
         User
 
+
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedSimpleApi
-        from seed.environment import SeedSimpleApiEnvironment
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedSimpleApi(
+        client = AsyncSeedApi(
             token="YOUR_TOKEN",
-            environment=SeedSimpleApiEnvironment.PRODUCTION,
         )
 
 

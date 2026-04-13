@@ -3,7 +3,7 @@
 namespace Seed;
 
 use Seed\Complex\ComplexClient;
-use Seed\InlineUsers\InlineUsersClient;
+use Seed\InlineUsersInlineUsers\InlineUsersInlineUsersClient;
 use Seed\Users\UsersClient;
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
@@ -16,9 +16,9 @@ class SeedClient
     public ComplexClient $complex;
 
     /**
-     * @var InlineUsersClient $inlineUsers
+     * @var InlineUsersInlineUsersClient $inlineUsersInlineUsers
      */
-    public InlineUsersClient $inlineUsers;
+    public InlineUsersInlineUsersClient $inlineUsersInlineUsers;
 
     /**
      * @var UsersClient $users
@@ -77,7 +77,7 @@ class SeedClient
         );
 
         $this->complex = new ComplexClient($this->client, $this->options);
-        $this->inlineUsers = new InlineUsersClient($this->client, $this->options);
+        $this->inlineUsersInlineUsers = new InlineUsersInlineUsersClient($this->client, $this->options);
         $this->users = new UsersClient($this->client, $this->options);
     }
 }

@@ -1,5 +1,6 @@
 # Reference
-<details><summary><code>client.<a href="/Sources/ApiClient.swift">getFoo</a>(optionalBaz: String?, optionalNullableBaz: Nullable&lt;String&gt;?, requiredBaz: String, requiredNullableBaz: Nullable&lt;String&gt;, requestOptions: RequestOptions?) -> Foo</code></summary>
+## 
+<details><summary><code>client..<a href="/Sources/Resources//Client.swift">getFoo</a>(optionalBaz: Nullable&lt;String&gt;?, optionalNullableBaz: Nullable&lt;String&gt;?, requiredBaz: String, requiredNullableBaz: Nullable&lt;String&gt;, requestOptions: RequestOptions?) -> Foo</code></summary>
 <dl>
 <dd>
 
@@ -18,7 +19,7 @@ import Api
 private func main() async throws {
     let client = ApiClient()
 
-    _ = try await client.getFoo(
+    _ = try await client..getFoo(
         requiredBaz: "required_baz",
         requiredNullableBaz: .value("required_nullable_baz")
     )
@@ -39,7 +40,7 @@ try await main()
 <dl>
 <dd>
 
-**optionalBaz:** `String?` — An optional baz
+**optionalBaz:** `Nullable<String>?` — An optional baz
     
 </dd>
 </dl>
@@ -83,7 +84,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/Sources/ApiClient.swift">updateFoo</a>(id: String, xIdempotencyKey: String, request: Requests.UpdateFooRequest, requestOptions: RequestOptions?) -> Foo</code></summary>
+<details><summary><code>client..<a href="/Sources/Resources//Client.swift">updateFoo</a>(id: String, idempotencyKey: String, request: Requests.UpdateFooRequest, requestOptions: RequestOptions?) -> Foo</code></summary>
 <dl>
 <dd>
 
@@ -102,13 +103,9 @@ import Api
 private func main() async throws {
     let client = ApiClient()
 
-    _ = try await client.updateFoo(
+    _ = try await client..updateFoo(
         id: "id",
-        request: .init(
-            nullableText: .value("nullable_text"),
-            nullableNumber: .value(1.1),
-            nonNullableText: "non_nullable_text"
-        )
+        request: .init()
     )
 }
 
@@ -135,7 +132,7 @@ try await main()
 <dl>
 <dd>
 
-**xIdempotencyKey:** `String` 
+**idempotencyKey:** `String` 
     
 </dd>
 </dl>

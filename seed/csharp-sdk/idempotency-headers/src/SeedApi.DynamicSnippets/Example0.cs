@@ -1,11 +1,11 @@
-using SeedIdempotencyHeaders;
+using SeedApi;
 
 namespace Usage;
 
 public class Example0
 {
     public async Task Do() {
-        var client = new SeedIdempotencyHeadersClient(
+        var client = new SeedApiClient(
             token: "<token>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
@@ -13,7 +13,7 @@ public class Example0
         );
 
         await client.Payment.CreateAsync(
-            new CreatePaymentRequest {
+            new PaymentCreateRequest {
                 Amount = 1,
                 Currency = Currency.Usd
             }

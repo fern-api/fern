@@ -1,6 +1,6 @@
 # Reference
 ## Imdb
-<details><summary><code>$client-&gt;imdb-&gt;createMovie($request) -> ?string</code></summary>
+<details><summary><code>$client-&gt;imdb-&gt;createmovie($request) -> ?string</code></summary>
 <dl>
 <dd>
 
@@ -27,7 +27,7 @@ Add a movie to the database using the movies/* /... path.
 <dd>
 
 ```php
-$client->imdb->createMovie(
+$client->imdb->createmovie(
     new CreateMovieRequest([
         'title' => 'title',
         'rating' => 1.1,
@@ -47,7 +47,15 @@ $client->imdb->createMovie(
 <dl>
 <dd>
 
-**$request:** `CreateMovieRequest` 
+**$title:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$rating:** `float` 
     
 </dd>
 </dl>
@@ -59,7 +67,7 @@ $client->imdb->createMovie(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;imdb-&gt;getMovie($movieId) -> ?Movie</code></summary>
+<details><summary><code>$client-&gt;imdb-&gt;getmovie($movieId) -> ?Movie</code></summary>
 <dl>
 <dd>
 
@@ -72,7 +80,7 @@ $client->imdb->createMovie(
 <dd>
 
 ```php
-$client->imdb->getMovie(
+$client->imdb->getmovie(
     'movieId',
 );
 ```

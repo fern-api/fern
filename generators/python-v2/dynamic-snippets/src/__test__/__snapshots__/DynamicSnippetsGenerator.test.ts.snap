@@ -7,13 +7,13 @@ client = Acme(
     token="<YOUR_API_KEY>",
 )
 
-client.service.getmetadata(
+client.service.get_metadata(
     shallow=False,
     tag=[
         "development",
         "public"
     ],
-    api_version="0.0.1",
+    x_api_version="0.0.1",
 )
 "
 `;
@@ -25,24 +25,26 @@ client = Acme(
     token="<YOUR_API_KEY>",
 )
 
-client.service.getmetadata(
+client.service.get_metadata(
     shallow=False,
     tag=[
         "development"
     ],
-    api_version="0.0.1",
+    x_api_version="0.0.1",
 )
 "
 `;
 
 exports[`snippets > examples > 'POST /big-entity (simple)' 1`] = `
-"from acme import Acme, Actor, ExtendedMovie, CommonsEventInfoZero, Migration
+"from acme import Acme
+from acme.types import Actor, ExtendedMovie, Migration
+from acme.commons.types import EventInfo_Metadata
 
 client = Acme(
     token="<YOUR_API_KEY>",
 )
 
-client.service.createbigentity(
+client.service.create_big_entity(
     cast_member=Actor(
         id="john.doe",
         name="John Doe",
@@ -67,8 +69,7 @@ client.service.createbigentity(
         },
         revenue=1000000,
     ),
-    event_info=CommonsEventInfoZero(
-        type="metadata",
+    event_info=EventInfo_Metadata(
         id="event-12345",
         data={
             "key1": "val1",
@@ -110,13 +111,12 @@ client = Acme(
     token="<YOUR_API_KEY>",
 )
 
-client.service.createmovie(
+client.service.create_movie(
     id="movie-c06a4ad7",
     prequel="movie-cv9b914f",
     title="The Boy and the Heron",
     from="Hayao Miyazaki",
     rating=8,
-    type="movie",
     tag="development",
     metadata={
         "actors": ["Christian Bale", "Florence Pugh", "Willem Dafoe"],
@@ -129,22 +129,37 @@ client.service.createmovie(
 `;
 
 exports[`snippets > exhaustive > 'GET /object/get-and-return-with-optio…' 1`] = `
-"[
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "pathParameters"
+"from acme import Acme
+import datetime
+import uuid
+
+client = Acme(
+    token="<YOUR_API_KEY>",
+)
+
+client.endpoints.object.get_and_return_with_optional_field(
+    string="string",
+    integer=1,
+    long=1000000,
+    double=1.1,
+    bool=True,
+    datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+    date=datetime.date.fromisoformat("2023-01-15"),
+    uuid=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+    base64="SGVsbG8gd29ybGQh",
+    list=[
+        "list",
+        "list"
     ],
-    "message": "Expected number, got string"
-  },
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody"
+    set=[
+        "set"
     ],
-    "message": "Expected number, got string"
-  }
-]"
+    map={
+        1: "map"
+    },
+    bigint="1000000",
+)
+"
 `;
 
 exports[`snippets > exhaustive > 'POST /container/list-of-objects (inva…' 1`] = `
@@ -201,21 +216,22 @@ exports[`snippets > exhaustive > 'POST /container/list-of-objects (inva…' 1`] 
 `;
 
 exports[`snippets > exhaustive > 'POST /container/list-of-objects (simp…' 1`] = `
-"from acme import Acme, TypesObjectWithRequiredField
+"from acme import Acme
+from acme.types.object import ObjectWithRequiredField
 
 client = Acme(
     token="<YOUR_API_KEY>",
 )
 
-client.endpoints_container.endpoints_container_get_and_return_list_of_objects(
+client.endpoints.container.get_and_return_list_of_objects(
     request=[
-        TypesObjectWithRequiredField(
+        ObjectWithRequiredField(
             string="one",
         ),
-        TypesObjectWithRequiredField(
+        ObjectWithRequiredField(
             string="two",
         ),
-        TypesObjectWithRequiredField(
+        ObjectWithRequiredField(
             string="three",
         )
     ],
@@ -230,7 +246,7 @@ client = Acme(
     token="<YOUR_API_KEY>",
 )
 
-client.endpoints_container.endpoints_container_get_and_return_list_of_primitives(
+client.endpoints.container.get_and_return_list_of_primitives(
     request=[
         "one",
         "two",
@@ -247,7 +263,7 @@ client = Acme(
     token="<YOUR_API_KEY>",
 )
 
-client.endpoints_container.endpoints_container_get_and_return_map_of_prim_to_undiscriminated_union(
+client.endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union(
     request={
         "test": 0,
         "test2": True,
@@ -264,15 +280,17 @@ client.endpoints_container.endpoints_container_get_and_return_map_of_prim_to_und
 `;
 
 exports[`snippets > file-upload > 'POST /' 1`] = `
-"[
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody"
-    ],
-    "message": "Expected file value to be a string, got object"
-  }
-]"
+"from acme import Acme
+
+client = Acme()
+
+client.service.post(
+    file="Hello, world!",
+    file_list=["First", "Second"],
+    maybe_file="example_maybe_file",
+    maybe_file_list=["example_maybe_file_list"],
+)
+"
 `;
 
 exports[`snippets > file-upload > 'POST /just-file' 1`] = `
@@ -280,7 +298,7 @@ exports[`snippets > file-upload > 'POST /just-file' 1`] = `
 
 client = Acme()
 
-client.service.justfile(
+client.service.just_file(
     file="Hello, world!",
 )
 "
@@ -291,7 +309,7 @@ exports[`snippets > file-upload > 'POST /just-file-with-query-params' 1`] = `
 
 client = Acme()
 
-client.service.justfilewithqueryparams(
+client.service.just_file_with_query_params(
     integer=42,
     maybe_string="exists",
     file="Hello, world!",
@@ -306,7 +324,7 @@ client = Acme(
     token="<YOUR_API_KEY>",
 )
 
-client.imdb.getmovie(
+client.imdb.get_movie(
     movie_id="movie_xyz",
 )
 "
@@ -319,7 +337,7 @@ client = Acme(
     token="<YOUR_API_KEY>",
 )
 
-client.imdb.createmovie(
+client.imdb.create_movie(
     title="The Matrix",
     rating=8.2,
 )
@@ -327,13 +345,21 @@ client.imdb.createmovie(
 `;
 
 exports[`snippets > multi-url-environment > 'Custom environment' 1`] = `
-"[
-  {
-    "severity": "CRITICAL",
-    "path": [],
-    "message": "Multiple environments are not supported for single base URL environments; use the baseUrl option instead"
-  }
-]"
+"from acme import Acme
+from acme.environment import AcmeEnvironment
+
+client = Acme(
+    environment=AcmeEnvironment(
+        ec2="https://custom.ec2.aws.com",
+        s3="https://custom.s3.aws.com",
+    ),
+    token="<YOUR_API_KEY>",
+)
+
+client.s3.get_presigned_url(
+    s3key="xyz",
+)
+"
 `;
 
 exports[`snippets > multi-url-environment > 'Invalid multi url environment' 1`] = `
@@ -341,29 +367,39 @@ exports[`snippets > multi-url-environment > 'Invalid multi url environment' 1`] 
   {
     "severity": "CRITICAL",
     "path": [],
-    "message": "Multiple environments are not supported for single base URL environments; use the baseUrl option instead"
+    "message": "The provided environments are invalid; got: [ec2], expected: [ec2, s3]"
   }
 ]"
 `;
 
 exports[`snippets > multi-url-environment > 'Production environment' 1`] = `
-"[
-  {
-    "severity": "WARNING",
-    "path": [],
-    "message": "Environment \\"Production\\" was not found"
-  }
-]"
+"from acme import Acme
+from acme.environment import AcmeEnvironment
+
+client = Acme(
+    environment=AcmeEnvironment.PRODUCTION,
+    token="<YOUR_API_KEY>",
+)
+
+client.s3.get_presigned_url(
+    s3key="xyz",
+)
+"
 `;
 
 exports[`snippets > multi-url-environment > 'Staging environment' 1`] = `
-"[
-  {
-    "severity": "WARNING",
-    "path": [],
-    "message": "Environment \\"Staging\\" was not found"
-  }
-]"
+"from acme import Acme
+from acme.environment import AcmeEnvironment
+
+client = Acme(
+    environment=AcmeEnvironment.STAGING,
+    token="<YOUR_API_KEY>",
+)
+
+client.s3.get_presigned_url(
+    s3key="xyz",
+)
+"
 `;
 
 exports[`snippets > multi-url-environment > 'Unrecognized environment' 1`] = `
@@ -377,14 +413,15 @@ exports[`snippets > multi-url-environment > 'Unrecognized environment' 1`] = `
 `;
 
 exports[`snippets > nullable > 'Body properties' 1`] = `
-"from acme import Acme, Metadata
+"from acme import Acme
+from acme.nullable import Metadata
 import datetime
 
 client = Acme(
     base_url="https://api.example.com",
 )
 
-client.nullable.createuser(
+client.nullable.create_user(
     username="john.doe",
     tags=[
         "admin"
@@ -419,7 +456,7 @@ client = Acme(
     base_url="https://api.example.com",
 )
 
-client.nullable.getusers(
+client.nullable.get_users(
     usernames=[
         "john.doe",
         "jane.doe"
@@ -443,7 +480,9 @@ client.create_user(
     password="password",
     profile=UserProfile(
         name="name",
-        verification=UserProfileVerification(),
+        verification=UserProfileVerification(
+            verified="string",
+        ),
         ssn="ssn",
     ),
 )
@@ -462,7 +501,9 @@ client.create_user(
     password="password",
     profile=UserProfile(
         name="name",
-        verification=UserProfileVerification(),
+        verification=UserProfileVerification(
+            verified="string",
+        ),
         ssn="ssn",
     ),
 )
@@ -505,18 +546,21 @@ client = Acme(
     token="<YOUR_API_KEY>",
 )
 
-client.dummy.getdummy()
+client.dummy.get_dummy()
 "
 `;
 
 exports[`snippets > single-url-environment-default > 'Staging environment' 1`] = `
-"[
-  {
-    "severity": "WARNING",
-    "path": [],
-    "message": "Environment \\"Staging\\" was not found"
-  }
-]"
+"from acme import Acme
+from acme.environment import AcmeEnvironment
+
+client = Acme(
+    environment=AcmeEnvironment.STAGING,
+    token="<YOUR_API_KEY>",
+)
+
+client.dummy.get_dummy()
+"
 `;
 
 exports[`snippets > single-url-environment-default > 'custom baseURL' 1`] = `
@@ -527,7 +571,7 @@ client = Acme(
     token="<YOUR_API_KEY>",
 )
 
-client.dummy.getdummy()
+client.dummy.get_dummy()
 "
 `;
 

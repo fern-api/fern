@@ -3,6 +3,7 @@ package example
 import (
     context "context"
 
+    pleaseinhere "github.com/examples/fern/pleaseinhere"
     client "github.com/examples/fern/pleaseinhere/client"
     option "github.com/examples/fern/pleaseinhere/option"
 )
@@ -16,8 +17,11 @@ func do() {
             "<token>",
         ),
     )
-    client.Health.Service.Check(
+    request := &pleaseinhere.ServiceGetMovieRequest{
+        MovieID: "movieId",
+    }
+    client.Service.Getmovie(
         context.TODO(),
-        "id-3tey93i",
+        request,
     )
 }

@@ -1,6 +1,6 @@
 # Reference
-## Conversations
-<details><summary><code>client.complex.<a href="/src/api/resources/complex/client/Client.ts">search</a>(index, { ...params }) -> core.Page&lt;SeedPagination.Conversation, SeedPagination.PaginatedConversationResponse&gt;</code></summary>
+## Complex
+<details><summary><code>client.complex.<a href="/src/api/resources/complex/client/Client.ts">search</a>({ ...params }) -> SeedApi.PaginatedConversationResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,39 +13,10 @@
 <dd>
 
 ```typescript
-const pageableResponse = await client.complex.search("index", {
-    pagination: {
-        per_page: 1,
-        starting_after: "starting_after"
-    },
-    query: {
-        field: "field",
-        operator: "=",
-        value: "value"
-    }
+await client.complex.search({
+    index: "index",
+    query: {}
 });
-for await (const item of pageableResponse) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.complex.search("index", {
-    pagination: {
-        per_page: 1,
-        starting_after: "starting_after"
-    },
-    query: {
-        field: "field",
-        operator: "=",
-        value: "value"
-    }
-});
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
-
-// You can also access the underlying response
-const response = page.response;
 
 ```
 </dd>
@@ -61,15 +32,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**index:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `SeedPagination.SearchRequest` 
+**request:** `SeedApi.SearchRequest` 
     
 </dd>
 </dl>
@@ -89,8 +52,8 @@ const response = page.response;
 </dl>
 </details>
 
-## InlineUsers InlineUsers
-<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithCursorPagination</a>({ ...params }) -> core.Page&lt;SeedPagination.ListUsersPaginationResponse.Data.Users.Item, SeedPagination.ListUsersPaginationResponse&gt;</code></summary>
+## InlineUsersInlineUsers
+<details><summary><code>client.inlineUsersInlineUsers.<a href="/src/api/resources/inlineUsersInlineUsers/client/Client.ts">inlineUsersInlineUsersListWithCursorPagination</a>({ ...params }) -> SeedApi.InlineUsersListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -103,29 +66,7 @@ const response = page.response;
 <dd>
 
 ```typescript
-const pageableResponse = await client.inlineUsers.inlineUsers.listWithCursorPagination({
-    page: 1,
-    per_page: 1,
-    order: "asc",
-    starting_after: "starting_after"
-});
-for await (const item of pageableResponse) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.inlineUsers.inlineUsers.listWithCursorPagination({
-    page: 1,
-    per_page: 1,
-    order: "asc",
-    starting_after: "starting_after"
-});
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
-
-// You can also access the underlying response
-const response = page.response;
+await client.inlineUsersInlineUsers.inlineUsersInlineUsersListWithCursorPagination();
 
 ```
 </dd>
@@ -141,7 +82,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**request:** `SeedPagination.inlineUsers.ListUsersCursorPaginationRequest` 
+**request:** `SeedApi.InlineUsersInlineUsersListWithCursorPaginationRequest` 
     
 </dd>
 </dl>
@@ -149,7 +90,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**requestOptions:** `InlineUsersClient.RequestOptions` 
+**requestOptions:** `InlineUsersInlineUsersClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -161,7 +102,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithMixedTypeCursorPagination</a>({ ...params }) -> core.Page&lt;SeedPagination.ListUsersMixedTypePaginationResponse.Data.Users.Item, SeedPagination.ListUsersMixedTypePaginationResponse&gt;</code></summary>
+<details><summary><code>client.inlineUsersInlineUsers.<a href="/src/api/resources/inlineUsersInlineUsers/client/Client.ts">inlineUsersInlineUsersListWithMixedTypeCursorPagination</a>({ ...params }) -> SeedApi.InlineUsersListUsersMixedTypePaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -174,23 +115,7 @@ const response = page.response;
 <dd>
 
 ```typescript
-const pageableResponse = await client.inlineUsers.inlineUsers.listWithMixedTypeCursorPagination({
-    cursor: "cursor"
-});
-for await (const item of pageableResponse) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.inlineUsers.inlineUsers.listWithMixedTypeCursorPagination({
-    cursor: "cursor"
-});
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
-
-// You can also access the underlying response
-const response = page.response;
+await client.inlineUsersInlineUsers.inlineUsersInlineUsersListWithMixedTypeCursorPagination();
 
 ```
 </dd>
@@ -206,7 +131,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**request:** `SeedPagination.inlineUsers.ListUsersMixedTypeCursorPaginationRequest` 
+**request:** `SeedApi.InlineUsersInlineUsersListWithMixedTypeCursorPaginationRequest` 
     
 </dd>
 </dl>
@@ -214,7 +139,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**requestOptions:** `InlineUsersClient.RequestOptions` 
+**requestOptions:** `InlineUsersInlineUsersClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -226,7 +151,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithBodyCursorPagination</a>({ ...params }) -> core.Page&lt;SeedPagination.ListUsersPaginationResponse.Data.Users.Item, SeedPagination.ListUsersPaginationResponse&gt;</code></summary>
+<details><summary><code>client.inlineUsersInlineUsers.<a href="/src/api/resources/inlineUsersInlineUsers/client/Client.ts">inlineUsersInlineUsersListWithBodyCursorPagination</a>({ ...params }) -> SeedApi.InlineUsersListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -239,27 +164,7 @@ const response = page.response;
 <dd>
 
 ```typescript
-const pageableResponse = await client.inlineUsers.inlineUsers.listWithBodyCursorPagination({
-    pagination: {
-        cursor: "cursor"
-    }
-});
-for await (const item of pageableResponse) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.inlineUsers.inlineUsers.listWithBodyCursorPagination({
-    pagination: {
-        cursor: "cursor"
-    }
-});
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
-
-// You can also access the underlying response
-const response = page.response;
+await client.inlineUsersInlineUsers.inlineUsersInlineUsersListWithBodyCursorPagination();
 
 ```
 </dd>
@@ -275,7 +180,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**request:** `SeedPagination.inlineUsers.ListUsersBodyCursorPaginationRequest` 
+**request:** `SeedApi.InlineUsersInlineUsersListWithBodyCursorPaginationRequest` 
     
 </dd>
 </dl>
@@ -283,7 +188,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**requestOptions:** `InlineUsersClient.RequestOptions` 
+**requestOptions:** `InlineUsersInlineUsersClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -295,7 +200,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithOffsetPagination</a>({ ...params }) -> core.Page&lt;SeedPagination.ListUsersPaginationResponse.Data.Users.Item, SeedPagination.ListUsersPaginationResponse&gt;</code></summary>
+<details><summary><code>client.inlineUsersInlineUsers.<a href="/src/api/resources/inlineUsersInlineUsers/client/Client.ts">inlineUsersInlineUsersListWithOffsetPagination</a>({ ...params }) -> SeedApi.InlineUsersListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -308,29 +213,7 @@ const response = page.response;
 <dd>
 
 ```typescript
-const pageableResponse = await client.inlineUsers.inlineUsers.listWithOffsetPagination({
-    page: 1,
-    per_page: 1,
-    order: "asc",
-    starting_after: "starting_after"
-});
-for await (const item of pageableResponse) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.inlineUsers.inlineUsers.listWithOffsetPagination({
-    page: 1,
-    per_page: 1,
-    order: "asc",
-    starting_after: "starting_after"
-});
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
-
-// You can also access the underlying response
-const response = page.response;
+await client.inlineUsersInlineUsers.inlineUsersInlineUsersListWithOffsetPagination();
 
 ```
 </dd>
@@ -346,7 +229,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**request:** `SeedPagination.inlineUsers.ListUsersOffsetPaginationRequest` 
+**request:** `SeedApi.InlineUsersInlineUsersListWithOffsetPaginationRequest` 
     
 </dd>
 </dl>
@@ -354,7 +237,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**requestOptions:** `InlineUsersClient.RequestOptions` 
+**requestOptions:** `InlineUsersInlineUsersClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -366,7 +249,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithDoubleOffsetPagination</a>({ ...params }) -> core.Page&lt;SeedPagination.ListUsersPaginationResponse.Data.Users.Item, SeedPagination.ListUsersPaginationResponse&gt;</code></summary>
+<details><summary><code>client.inlineUsersInlineUsers.<a href="/src/api/resources/inlineUsersInlineUsers/client/Client.ts">inlineUsersInlineUsersListWithDoubleOffsetPagination</a>({ ...params }) -> SeedApi.InlineUsersListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -379,29 +262,7 @@ const response = page.response;
 <dd>
 
 ```typescript
-const pageableResponse = await client.inlineUsers.inlineUsers.listWithDoubleOffsetPagination({
-    page: 1.1,
-    per_page: 1.1,
-    order: "asc",
-    starting_after: "starting_after"
-});
-for await (const item of pageableResponse) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.inlineUsers.inlineUsers.listWithDoubleOffsetPagination({
-    page: 1.1,
-    per_page: 1.1,
-    order: "asc",
-    starting_after: "starting_after"
-});
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
-
-// You can also access the underlying response
-const response = page.response;
+await client.inlineUsersInlineUsers.inlineUsersInlineUsersListWithDoubleOffsetPagination();
 
 ```
 </dd>
@@ -417,7 +278,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**request:** `SeedPagination.inlineUsers.ListUsersDoubleOffsetPaginationRequest` 
+**request:** `SeedApi.InlineUsersInlineUsersListWithDoubleOffsetPaginationRequest` 
     
 </dd>
 </dl>
@@ -425,7 +286,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**requestOptions:** `InlineUsersClient.RequestOptions` 
+**requestOptions:** `InlineUsersInlineUsersClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -437,7 +298,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithBodyOffsetPagination</a>({ ...params }) -> core.Page&lt;SeedPagination.ListUsersPaginationResponse.Data.Users.Item, SeedPagination.ListUsersPaginationResponse&gt;</code></summary>
+<details><summary><code>client.inlineUsersInlineUsers.<a href="/src/api/resources/inlineUsersInlineUsers/client/Client.ts">inlineUsersInlineUsersListWithBodyOffsetPagination</a>({ ...params }) -> SeedApi.InlineUsersListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -450,27 +311,7 @@ const response = page.response;
 <dd>
 
 ```typescript
-const pageableResponse = await client.inlineUsers.inlineUsers.listWithBodyOffsetPagination({
-    pagination: {
-        page: 1
-    }
-});
-for await (const item of pageableResponse) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.inlineUsers.inlineUsers.listWithBodyOffsetPagination({
-    pagination: {
-        page: 1
-    }
-});
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
-
-// You can also access the underlying response
-const response = page.response;
+await client.inlineUsersInlineUsers.inlineUsersInlineUsersListWithBodyOffsetPagination();
 
 ```
 </dd>
@@ -486,7 +327,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**request:** `SeedPagination.inlineUsers.ListUsersBodyOffsetPaginationRequest` 
+**request:** `SeedApi.InlineUsersInlineUsersListWithBodyOffsetPaginationRequest` 
     
 </dd>
 </dl>
@@ -494,7 +335,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**requestOptions:** `InlineUsersClient.RequestOptions` 
+**requestOptions:** `InlineUsersInlineUsersClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -506,7 +347,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithOffsetStepPagination</a>({ ...params }) -> core.Page&lt;SeedPagination.ListUsersPaginationResponse.Data.Users.Item, SeedPagination.ListUsersPaginationResponse&gt;</code></summary>
+<details><summary><code>client.inlineUsersInlineUsers.<a href="/src/api/resources/inlineUsersInlineUsers/client/Client.ts">inlineUsersInlineUsersListWithOffsetStepPagination</a>({ ...params }) -> SeedApi.InlineUsersListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -519,27 +360,7 @@ const response = page.response;
 <dd>
 
 ```typescript
-const pageableResponse = await client.inlineUsers.inlineUsers.listWithOffsetStepPagination({
-    page: 1,
-    limit: 1,
-    order: "asc"
-});
-for await (const item of pageableResponse) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.inlineUsers.inlineUsers.listWithOffsetStepPagination({
-    page: 1,
-    limit: 1,
-    order: "asc"
-});
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
-
-// You can also access the underlying response
-const response = page.response;
+await client.inlineUsersInlineUsers.inlineUsersInlineUsersListWithOffsetStepPagination();
 
 ```
 </dd>
@@ -555,7 +376,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**request:** `SeedPagination.inlineUsers.ListUsersOffsetStepPaginationRequest` 
+**request:** `SeedApi.InlineUsersInlineUsersListWithOffsetStepPaginationRequest` 
     
 </dd>
 </dl>
@@ -563,7 +384,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**requestOptions:** `InlineUsersClient.RequestOptions` 
+**requestOptions:** `InlineUsersInlineUsersClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -575,7 +396,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithOffsetPaginationHasNextPage</a>({ ...params }) -> core.Page&lt;SeedPagination.ListUsersPaginationResponse.Data.Users.Item, SeedPagination.ListUsersPaginationResponse&gt;</code></summary>
+<details><summary><code>client.inlineUsersInlineUsers.<a href="/src/api/resources/inlineUsersInlineUsers/client/Client.ts">inlineUsersInlineUsersListWithOffsetPaginationHasNextPage</a>({ ...params }) -> SeedApi.InlineUsersListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -588,27 +409,7 @@ const response = page.response;
 <dd>
 
 ```typescript
-const pageableResponse = await client.inlineUsers.inlineUsers.listWithOffsetPaginationHasNextPage({
-    page: 1,
-    limit: 1,
-    order: "asc"
-});
-for await (const item of pageableResponse) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.inlineUsers.inlineUsers.listWithOffsetPaginationHasNextPage({
-    page: 1,
-    limit: 1,
-    order: "asc"
-});
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
-
-// You can also access the underlying response
-const response = page.response;
+await client.inlineUsersInlineUsers.inlineUsersInlineUsersListWithOffsetPaginationHasNextPage();
 
 ```
 </dd>
@@ -624,7 +425,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**request:** `SeedPagination.inlineUsers.ListWithOffsetPaginationHasNextPageRequest` 
+**request:** `SeedApi.InlineUsersInlineUsersListWithOffsetPaginationHasNextPageRequest` 
     
 </dd>
 </dl>
@@ -632,7 +433,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**requestOptions:** `InlineUsersClient.RequestOptions` 
+**requestOptions:** `InlineUsersInlineUsersClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -644,7 +445,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithExtendedResults</a>({ ...params }) -> core.Page&lt;SeedPagination.UserListContainer.Users.Item, SeedPagination.ListUsersExtendedResponse&gt;</code></summary>
+<details><summary><code>client.inlineUsersInlineUsers.<a href="/src/api/resources/inlineUsersInlineUsers/client/Client.ts">inlineUsersInlineUsersListWithExtendedResults</a>({ ...params }) -> SeedApi.InlineUsersListUsersExtendedResponse</code></summary>
 <dl>
 <dd>
 
@@ -657,23 +458,7 @@ const response = page.response;
 <dd>
 
 ```typescript
-const pageableResponse = await client.inlineUsers.inlineUsers.listWithExtendedResults({
-    cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
-});
-for await (const item of pageableResponse) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.inlineUsers.inlineUsers.listWithExtendedResults({
-    cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
-});
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
-
-// You can also access the underlying response
-const response = page.response;
+await client.inlineUsersInlineUsers.inlineUsersInlineUsersListWithExtendedResults();
 
 ```
 </dd>
@@ -689,7 +474,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**request:** `SeedPagination.inlineUsers.ListUsersExtendedRequest` 
+**request:** `SeedApi.InlineUsersInlineUsersListWithExtendedResultsRequest` 
     
 </dd>
 </dl>
@@ -697,7 +482,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**requestOptions:** `InlineUsersClient.RequestOptions` 
+**requestOptions:** `InlineUsersInlineUsersClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -709,7 +494,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithExtendedResultsAndOptionalData</a>({ ...params }) -> core.Page&lt;SeedPagination.UserOptionalListContainer.Users.Item, SeedPagination.ListUsersExtendedOptionalListResponse&gt;</code></summary>
+<details><summary><code>client.inlineUsersInlineUsers.<a href="/src/api/resources/inlineUsersInlineUsers/client/Client.ts">inlineUsersInlineUsersListWithExtendedResultsAndOptionalData</a>({ ...params }) -> SeedApi.InlineUsersListUsersExtendedOptionalListResponse</code></summary>
 <dl>
 <dd>
 
@@ -722,23 +507,7 @@ const response = page.response;
 <dd>
 
 ```typescript
-const pageableResponse = await client.inlineUsers.inlineUsers.listWithExtendedResultsAndOptionalData({
-    cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
-});
-for await (const item of pageableResponse) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.inlineUsers.inlineUsers.listWithExtendedResultsAndOptionalData({
-    cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
-});
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
-
-// You can also access the underlying response
-const response = page.response;
+await client.inlineUsersInlineUsers.inlineUsersInlineUsersListWithExtendedResultsAndOptionalData();
 
 ```
 </dd>
@@ -754,7 +523,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**request:** `SeedPagination.inlineUsers.ListUsersExtendedRequestForOptionalData` 
+**request:** `SeedApi.InlineUsersInlineUsersListWithExtendedResultsAndOptionalDataRequest` 
     
 </dd>
 </dl>
@@ -762,7 +531,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**requestOptions:** `InlineUsersClient.RequestOptions` 
+**requestOptions:** `InlineUsersInlineUsersClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -774,7 +543,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listUsernames</a>({ ...params }) -> core.Page&lt;string, SeedPagination.UsernameCursor&gt;</code></summary>
+<details><summary><code>client.inlineUsersInlineUsers.<a href="/src/api/resources/inlineUsersInlineUsers/client/Client.ts">inlineUsersInlineUsersListUsernames</a>({ ...params }) -> SeedApi.UsernameCursor</code></summary>
 <dl>
 <dd>
 
@@ -787,23 +556,7 @@ const response = page.response;
 <dd>
 
 ```typescript
-const pageableResponse = await client.inlineUsers.inlineUsers.listUsernames({
-    starting_after: "starting_after"
-});
-for await (const item of pageableResponse) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.inlineUsers.inlineUsers.listUsernames({
-    starting_after: "starting_after"
-});
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
-
-// You can also access the underlying response
-const response = page.response;
+await client.inlineUsersInlineUsers.inlineUsersInlineUsersListUsernames();
 
 ```
 </dd>
@@ -819,7 +572,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**request:** `SeedPagination.inlineUsers.ListUsernamesRequest` 
+**request:** `SeedApi.InlineUsersInlineUsersListUsernamesRequest` 
     
 </dd>
 </dl>
@@ -827,7 +580,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**requestOptions:** `InlineUsersClient.RequestOptions` 
+**requestOptions:** `InlineUsersInlineUsersClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -839,7 +592,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithGlobalConfig</a>({ ...params }) -> core.Page&lt;string, SeedPagination.UsernameContainer&gt;</code></summary>
+<details><summary><code>client.inlineUsersInlineUsers.<a href="/src/api/resources/inlineUsersInlineUsers/client/Client.ts">inlineUsersInlineUsersListWithGlobalConfig</a>({ ...params }) -> SeedApi.InlineUsersUsernameContainer</code></summary>
 <dl>
 <dd>
 
@@ -852,23 +605,7 @@ const response = page.response;
 <dd>
 
 ```typescript
-const pageableResponse = await client.inlineUsers.inlineUsers.listWithGlobalConfig({
-    offset: 1
-});
-for await (const item of pageableResponse) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.inlineUsers.inlineUsers.listWithGlobalConfig({
-    offset: 1
-});
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
-
-// You can also access the underlying response
-const response = page.response;
+await client.inlineUsersInlineUsers.inlineUsersInlineUsersListWithGlobalConfig();
 
 ```
 </dd>
@@ -884,7 +621,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**request:** `SeedPagination.inlineUsers.ListWithGlobalConfigRequest` 
+**request:** `SeedApi.InlineUsersInlineUsersListWithGlobalConfigRequest` 
     
 </dd>
 </dl>
@@ -892,7 +629,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**requestOptions:** `InlineUsersClient.RequestOptions` 
+**requestOptions:** `InlineUsersInlineUsersClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -905,7 +642,7 @@ const response = page.response;
 </details>
 
 ## Users
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithCursorPagination</a>({ ...params }) -> core.Page&lt;SeedPagination.User, SeedPagination.ListUsersPaginationResponse&gt;</code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listwithcursorpagination</a>({ ...params }) -> SeedApi.ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -918,29 +655,7 @@ const response = page.response;
 <dd>
 
 ```typescript
-const pageableResponse = await client.users.listWithCursorPagination({
-    page: 1,
-    per_page: 1,
-    order: "asc",
-    starting_after: "starting_after"
-});
-for await (const item of pageableResponse) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.users.listWithCursorPagination({
-    page: 1,
-    per_page: 1,
-    order: "asc",
-    starting_after: "starting_after"
-});
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
-
-// You can also access the underlying response
-const response = page.response;
+await client.users.listwithcursorpagination();
 
 ```
 </dd>
@@ -956,7 +671,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**request:** `SeedPagination.ListUsersCursorPaginationRequest` 
+**request:** `SeedApi.UsersListWithCursorPaginationRequest` 
     
 </dd>
 </dl>
@@ -976,7 +691,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithMixedTypeCursorPagination</a>({ ...params }) -> core.Page&lt;SeedPagination.User, SeedPagination.ListUsersMixedTypePaginationResponse&gt;</code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listwithmixedtypecursorpagination</a>({ ...params }) -> SeedApi.ListUsersMixedTypePaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -989,23 +704,7 @@ const response = page.response;
 <dd>
 
 ```typescript
-const pageableResponse = await client.users.listWithMixedTypeCursorPagination({
-    cursor: "cursor"
-});
-for await (const item of pageableResponse) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.users.listWithMixedTypeCursorPagination({
-    cursor: "cursor"
-});
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
-
-// You can also access the underlying response
-const response = page.response;
+await client.users.listwithmixedtypecursorpagination();
 
 ```
 </dd>
@@ -1021,7 +720,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**request:** `SeedPagination.ListUsersMixedTypeCursorPaginationRequest` 
+**request:** `SeedApi.UsersListWithMixedTypeCursorPaginationRequest` 
     
 </dd>
 </dl>
@@ -1041,7 +740,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithBodyCursorPagination</a>({ ...params }) -> core.Page&lt;SeedPagination.User, SeedPagination.ListUsersPaginationResponse&gt;</code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listwithbodycursorpagination</a>({ ...params }) -> SeedApi.ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1054,27 +753,7 @@ const response = page.response;
 <dd>
 
 ```typescript
-const pageableResponse = await client.users.listWithBodyCursorPagination({
-    pagination: {
-        cursor: "cursor"
-    }
-});
-for await (const item of pageableResponse) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.users.listWithBodyCursorPagination({
-    pagination: {
-        cursor: "cursor"
-    }
-});
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
-
-// You can also access the underlying response
-const response = page.response;
+await client.users.listwithbodycursorpagination();
 
 ```
 </dd>
@@ -1090,7 +769,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**request:** `SeedPagination.ListUsersBodyCursorPaginationRequest` 
+**request:** `SeedApi.UsersListWithBodyCursorPaginationRequest` 
     
 </dd>
 </dl>
@@ -1110,7 +789,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithTopLevelBodyCursorPagination</a>({ ...params }) -> core.Page&lt;SeedPagination.User, SeedPagination.ListUsersTopLevelCursorPaginationResponse&gt;</code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listwithtoplevelbodycursorpagination</a>({ ...params }) -> SeedApi.ListUsersTopLevelCursorPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1139,25 +818,7 @@ when getNextPage() is called with a different cursor value.
 <dd>
 
 ```typescript
-const pageableResponse = await client.users.listWithTopLevelBodyCursorPagination({
-    cursor: "initial_cursor",
-    filter: "active"
-});
-for await (const item of pageableResponse) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.users.listWithTopLevelBodyCursorPagination({
-    cursor: "initial_cursor",
-    filter: "active"
-});
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
-
-// You can also access the underlying response
-const response = page.response;
+await client.users.listwithtoplevelbodycursorpagination();
 
 ```
 </dd>
@@ -1173,7 +834,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**request:** `SeedPagination.ListUsersTopLevelBodyCursorPaginationRequest` 
+**request:** `SeedApi.UsersListWithTopLevelBodyCursorPaginationRequest` 
     
 </dd>
 </dl>
@@ -1193,7 +854,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithOffsetPagination</a>({ ...params }) -> core.Page&lt;SeedPagination.User, SeedPagination.ListUsersPaginationResponse&gt;</code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listwithoffsetpagination</a>({ ...params }) -> SeedApi.ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1206,29 +867,7 @@ const response = page.response;
 <dd>
 
 ```typescript
-const pageableResponse = await client.users.listWithOffsetPagination({
-    page: 1,
-    per_page: 1,
-    order: "asc",
-    starting_after: "starting_after"
-});
-for await (const item of pageableResponse) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.users.listWithOffsetPagination({
-    page: 1,
-    per_page: 1,
-    order: "asc",
-    starting_after: "starting_after"
-});
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
-
-// You can also access the underlying response
-const response = page.response;
+await client.users.listwithoffsetpagination();
 
 ```
 </dd>
@@ -1244,7 +883,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**request:** `SeedPagination.ListUsersOffsetPaginationRequest` 
+**request:** `SeedApi.UsersListWithOffsetPaginationRequest` 
     
 </dd>
 </dl>
@@ -1264,7 +903,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithDoubleOffsetPagination</a>({ ...params }) -> core.Page&lt;SeedPagination.User, SeedPagination.ListUsersPaginationResponse&gt;</code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listwithdoubleoffsetpagination</a>({ ...params }) -> SeedApi.ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1277,29 +916,7 @@ const response = page.response;
 <dd>
 
 ```typescript
-const pageableResponse = await client.users.listWithDoubleOffsetPagination({
-    page: 1.1,
-    per_page: 1.1,
-    order: "asc",
-    starting_after: "starting_after"
-});
-for await (const item of pageableResponse) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.users.listWithDoubleOffsetPagination({
-    page: 1.1,
-    per_page: 1.1,
-    order: "asc",
-    starting_after: "starting_after"
-});
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
-
-// You can also access the underlying response
-const response = page.response;
+await client.users.listwithdoubleoffsetpagination();
 
 ```
 </dd>
@@ -1315,7 +932,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**request:** `SeedPagination.ListUsersDoubleOffsetPaginationRequest` 
+**request:** `SeedApi.UsersListWithDoubleOffsetPaginationRequest` 
     
 </dd>
 </dl>
@@ -1335,7 +952,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithBodyOffsetPagination</a>({ ...params }) -> core.Page&lt;SeedPagination.User, SeedPagination.ListUsersPaginationResponse&gt;</code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listwithbodyoffsetpagination</a>({ ...params }) -> SeedApi.ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1348,27 +965,7 @@ const response = page.response;
 <dd>
 
 ```typescript
-const pageableResponse = await client.users.listWithBodyOffsetPagination({
-    pagination: {
-        page: 1
-    }
-});
-for await (const item of pageableResponse) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.users.listWithBodyOffsetPagination({
-    pagination: {
-        page: 1
-    }
-});
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
-
-// You can also access the underlying response
-const response = page.response;
+await client.users.listwithbodyoffsetpagination();
 
 ```
 </dd>
@@ -1384,7 +981,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**request:** `SeedPagination.ListUsersBodyOffsetPaginationRequest` 
+**request:** `SeedApi.UsersListWithBodyOffsetPaginationRequest` 
     
 </dd>
 </dl>
@@ -1404,7 +1001,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithOffsetStepPagination</a>({ ...params }) -> core.Page&lt;SeedPagination.User, SeedPagination.ListUsersPaginationResponse&gt;</code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listwithoffsetsteppagination</a>({ ...params }) -> SeedApi.ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1417,27 +1014,7 @@ const response = page.response;
 <dd>
 
 ```typescript
-const pageableResponse = await client.users.listWithOffsetStepPagination({
-    page: 1,
-    limit: 1,
-    order: "asc"
-});
-for await (const item of pageableResponse) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.users.listWithOffsetStepPagination({
-    page: 1,
-    limit: 1,
-    order: "asc"
-});
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
-
-// You can also access the underlying response
-const response = page.response;
+await client.users.listwithoffsetsteppagination();
 
 ```
 </dd>
@@ -1453,7 +1030,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**request:** `SeedPagination.ListUsersOffsetStepPaginationRequest` 
+**request:** `SeedApi.UsersListWithOffsetStepPaginationRequest` 
     
 </dd>
 </dl>
@@ -1473,7 +1050,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithOffsetPaginationHasNextPage</a>({ ...params }) -> core.Page&lt;SeedPagination.User, SeedPagination.ListUsersPaginationResponse&gt;</code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listwithoffsetpaginationhasnextpage</a>({ ...params }) -> SeedApi.ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1486,27 +1063,7 @@ const response = page.response;
 <dd>
 
 ```typescript
-const pageableResponse = await client.users.listWithOffsetPaginationHasNextPage({
-    page: 1,
-    limit: 3,
-    order: "asc"
-});
-for await (const item of pageableResponse) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.users.listWithOffsetPaginationHasNextPage({
-    page: 1,
-    limit: 3,
-    order: "asc"
-});
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
-
-// You can also access the underlying response
-const response = page.response;
+await client.users.listwithoffsetpaginationhasnextpage();
 
 ```
 </dd>
@@ -1522,7 +1079,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**request:** `SeedPagination.ListWithOffsetPaginationHasNextPageRequest` 
+**request:** `SeedApi.UsersListWithOffsetPaginationHasNextPageRequest` 
     
 </dd>
 </dl>
@@ -1542,7 +1099,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithExtendedResults</a>({ ...params }) -> core.Page&lt;SeedPagination.User, SeedPagination.ListUsersExtendedResponse&gt;</code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listwithextendedresults</a>({ ...params }) -> SeedApi.ListUsersExtendedResponse</code></summary>
 <dl>
 <dd>
 
@@ -1555,23 +1112,7 @@ const response = page.response;
 <dd>
 
 ```typescript
-const pageableResponse = await client.users.listWithExtendedResults({
-    cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
-});
-for await (const item of pageableResponse) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.users.listWithExtendedResults({
-    cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
-});
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
-
-// You can also access the underlying response
-const response = page.response;
+await client.users.listwithextendedresults();
 
 ```
 </dd>
@@ -1587,7 +1128,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**request:** `SeedPagination.ListUsersExtendedRequest` 
+**request:** `SeedApi.UsersListWithExtendedResultsRequest` 
     
 </dd>
 </dl>
@@ -1607,7 +1148,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithExtendedResultsAndOptionalData</a>({ ...params }) -> core.Page&lt;SeedPagination.User, SeedPagination.ListUsersExtendedOptionalListResponse&gt;</code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listwithextendedresultsandoptionaldata</a>({ ...params }) -> SeedApi.ListUsersExtendedOptionalListResponse</code></summary>
 <dl>
 <dd>
 
@@ -1620,23 +1161,7 @@ const response = page.response;
 <dd>
 
 ```typescript
-const pageableResponse = await client.users.listWithExtendedResultsAndOptionalData({
-    cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
-});
-for await (const item of pageableResponse) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.users.listWithExtendedResultsAndOptionalData({
-    cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
-});
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
-
-// You can also access the underlying response
-const response = page.response;
+await client.users.listwithextendedresultsandoptionaldata();
 
 ```
 </dd>
@@ -1652,7 +1177,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**request:** `SeedPagination.ListUsersExtendedRequestForOptionalData` 
+**request:** `SeedApi.UsersListWithExtendedResultsAndOptionalDataRequest` 
     
 </dd>
 </dl>
@@ -1672,7 +1197,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listUsernames</a>({ ...params }) -> core.Page&lt;string, SeedPagination.UsernameCursor&gt;</code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listusernames</a>({ ...params }) -> SeedApi.UsernameCursor</code></summary>
 <dl>
 <dd>
 
@@ -1685,23 +1210,7 @@ const response = page.response;
 <dd>
 
 ```typescript
-const pageableResponse = await client.users.listUsernames({
-    starting_after: "starting_after"
-});
-for await (const item of pageableResponse) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.users.listUsernames({
-    starting_after: "starting_after"
-});
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
-
-// You can also access the underlying response
-const response = page.response;
+await client.users.listusernames();
 
 ```
 </dd>
@@ -1717,7 +1226,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**request:** `SeedPagination.ListUsernamesRequest` 
+**request:** `SeedApi.UsersListUsernamesRequest` 
     
 </dd>
 </dl>
@@ -1737,7 +1246,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listUsernamesWithOptionalResponse</a>({ ...params }) -> core.Page&lt;string, SeedPagination.UsernameCursor | undefined&gt;</code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listusernameswithoptionalresponse</a>({ ...params }) -> SeedApi.UsernameCursor</code></summary>
 <dl>
 <dd>
 
@@ -1750,23 +1259,7 @@ const response = page.response;
 <dd>
 
 ```typescript
-const pageableResponse = await client.users.listUsernamesWithOptionalResponse({
-    starting_after: "starting_after"
-});
-for await (const item of pageableResponse) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.users.listUsernamesWithOptionalResponse({
-    starting_after: "starting_after"
-});
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
-
-// You can also access the underlying response
-const response = page.response;
+await client.users.listusernameswithoptionalresponse();
 
 ```
 </dd>
@@ -1782,7 +1275,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**request:** `SeedPagination.ListUsernamesWithOptionalResponseRequest` 
+**request:** `SeedApi.UsersListUsernamesWithOptionalResponseRequest` 
     
 </dd>
 </dl>
@@ -1802,7 +1295,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithGlobalConfig</a>({ ...params }) -> core.Page&lt;string, SeedPagination.UsernameContainer&gt;</code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listwithglobalconfig</a>({ ...params }) -> SeedApi.UsernameContainer</code></summary>
 <dl>
 <dd>
 
@@ -1815,23 +1308,7 @@ const response = page.response;
 <dd>
 
 ```typescript
-const pageableResponse = await client.users.listWithGlobalConfig({
-    offset: 1
-});
-for await (const item of pageableResponse) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.users.listWithGlobalConfig({
-    offset: 1
-});
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
-
-// You can also access the underlying response
-const response = page.response;
+await client.users.listwithglobalconfig();
 
 ```
 </dd>
@@ -1847,7 +1324,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**request:** `SeedPagination.ListWithGlobalConfigRequest` 
+**request:** `SeedApi.UsersListWithGlobalConfigRequest` 
     
 </dd>
 </dl>
@@ -1867,7 +1344,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithOptionalData</a>({ ...params }) -> core.Page&lt;SeedPagination.User, SeedPagination.ListUsersOptionalDataPaginationResponse&gt;</code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listwithoptionaldata</a>({ ...params }) -> SeedApi.ListUsersOptionalDataPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1880,23 +1357,7 @@ const response = page.response;
 <dd>
 
 ```typescript
-const pageableResponse = await client.users.listWithOptionalData({
-    page: 1
-});
-for await (const item of pageableResponse) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.users.listWithOptionalData({
-    page: 1
-});
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
-
-// You can also access the underlying response
-const response = page.response;
+await client.users.listwithoptionaldata();
 
 ```
 </dd>
@@ -1912,7 +1373,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**request:** `SeedPagination.ListUsersOptionalDataRequest` 
+**request:** `SeedApi.UsersListWithOptionalDataRequest` 
     
 </dd>
 </dl>
@@ -1932,7 +1393,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithAliasedData</a>({ ...params }) -> SeedPagination.ListUsersAliasedDataPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listwithaliaseddata</a>({ ...params }) -> SeedApi.ListUsersAliasedDataPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1945,27 +1406,7 @@ const response = page.response;
 <dd>
 
 ```typescript
-const pageableResponse = await client.users.listWithAliasedData({
-    page: 1,
-    per_page: 1,
-    starting_after: "starting_after"
-});
-for await (const item of pageableResponse) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.users.listWithAliasedData({
-    page: 1,
-    per_page: 1,
-    starting_after: "starting_after"
-});
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
-
-// You can also access the underlying response
-const response = page.response;
+await client.users.listwithaliaseddata();
 
 ```
 </dd>
@@ -1981,7 +1422,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**request:** `SeedPagination.ListUsersAliasedDataRequest` 
+**request:** `SeedApi.UsersListWithAliasedDataRequest` 
     
 </dd>
 </dl>

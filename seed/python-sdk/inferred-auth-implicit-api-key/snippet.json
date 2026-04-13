@@ -6,11 +6,11 @@
             "id": {
                 "path": "/token",
                 "method": "POST",
-                "identifier_override": "endpoint_auth.getToken"
+                "identifier_override": "endpoint_auth.gettoken"
             },
             "snippet": {
-                "sync_client": "from seed import SeedInferredAuthImplicitApiKey\n\nclient = SeedInferredAuthImplicitApiKey(\n    base_url=\"https://yourhost.com/path/to/api\",\n    api_key=\"YOUR_API_KEY\",\n)\nclient.auth.get_token(\n    api_key=\"api_key\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedInferredAuthImplicitApiKey\n\nclient = AsyncSeedInferredAuthImplicitApiKey(\n    base_url=\"https://yourhost.com/path/to/api\",\n    api_key=\"YOUR_API_KEY\",\n)\n\n\nasync def main() -> None:\n    await client.auth.get_token(\n        api_key=\"api_key\",\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.auth.gettoken(\n    api_key=\"X-Api-Key\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.auth.gettoken(\n        api_key=\"X-Api-Key\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -19,11 +19,11 @@
             "id": {
                 "path": "/nested-no-auth/get-something",
                 "method": "GET",
-                "identifier_override": "endpoint_nested-no-auth/api.getSomething"
+                "identifier_override": "endpoint_nestedNoAuthApi.nestedNoAuth_api_getSomething"
             },
             "snippet": {
-                "sync_client": "from seed import SeedInferredAuthImplicitApiKey\n\nclient = SeedInferredAuthImplicitApiKey(\n    base_url=\"https://yourhost.com/path/to/api\",\n    api_key=\"YOUR_API_KEY\",\n)\nclient.nested_no_auth.api.get_something()\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedInferredAuthImplicitApiKey\n\nclient = AsyncSeedInferredAuthImplicitApiKey(\n    base_url=\"https://yourhost.com/path/to/api\",\n    api_key=\"YOUR_API_KEY\",\n)\n\n\nasync def main() -> None:\n    await client.nested_no_auth.api.get_something()\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.nested_no_auth_api.nested_no_auth_api_get_something()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.nested_no_auth_api.nested_no_auth_api_get_something()\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -32,11 +32,11 @@
             "id": {
                 "path": "/nested/get-something",
                 "method": "GET",
-                "identifier_override": "endpoint_nested/api.getSomething"
+                "identifier_override": "endpoint_nestedApi.nested_api_getSomething"
             },
             "snippet": {
-                "sync_client": "from seed import SeedInferredAuthImplicitApiKey\n\nclient = SeedInferredAuthImplicitApiKey(\n    base_url=\"https://yourhost.com/path/to/api\",\n    api_key=\"YOUR_API_KEY\",\n)\nclient.nested.api.get_something()\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedInferredAuthImplicitApiKey\n\nclient = AsyncSeedInferredAuthImplicitApiKey(\n    base_url=\"https://yourhost.com/path/to/api\",\n    api_key=\"YOUR_API_KEY\",\n)\n\n\nasync def main() -> None:\n    await client.nested.api.get_something()\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.nested_api.nested_api_get_something()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.nested_api.nested_api_get_something()\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -45,11 +45,11 @@
             "id": {
                 "path": "/get-something",
                 "method": "GET",
-                "identifier_override": "endpoint_simple.getSomething"
+                "identifier_override": "endpoint_simple.getsomething"
             },
             "snippet": {
-                "sync_client": "from seed import SeedInferredAuthImplicitApiKey\n\nclient = SeedInferredAuthImplicitApiKey(\n    base_url=\"https://yourhost.com/path/to/api\",\n    api_key=\"YOUR_API_KEY\",\n)\nclient.simple.get_something()\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedInferredAuthImplicitApiKey\n\nclient = AsyncSeedInferredAuthImplicitApiKey(\n    base_url=\"https://yourhost.com/path/to/api\",\n    api_key=\"YOUR_API_KEY\",\n)\n\n\nasync def main() -> None:\n    await client.simple.get_something()\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.simple.getsomething()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.simple.getsomething()\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         }

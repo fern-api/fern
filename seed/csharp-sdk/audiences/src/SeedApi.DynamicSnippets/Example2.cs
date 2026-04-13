@@ -1,18 +1,18 @@
-using SeedAudiences;
+using SeedApi;
 
 namespace Usage;
 
 public class Example2
 {
     public async Task Do() {
-        var client = new SeedAudiencesClient(
+        var client = new SeedApiClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.Foo.FindAsync(
-            new FindRequest {
+            new FooFindRequest {
                 OptionalString = "optionalString",
                 PublicProperty = "publicProperty",
                 PrivateProperty = 1

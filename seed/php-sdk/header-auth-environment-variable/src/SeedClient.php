@@ -5,7 +5,6 @@ namespace Seed;
 use Seed\Service\ServiceClient;
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Exception;
 
 class SeedClient
 {
@@ -31,7 +30,7 @@ class SeedClient
     private RawClient $client;
 
     /**
-     * @param ?string $headerTokenAuth The headerTokenAuth to use for authentication.
+     * @param string $apiKey The apiKey to use for authentication.
      * @param ?array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
@@ -41,12 +40,11 @@ class SeedClient
      * } $options
      */
     public function __construct(
-        ?string $headerTokenAuth = null,
+        string $apiKey,
         ?array $options = null,
     ) {
-        $headerTokenAuth ??= $this->getFromEnvOrThrow('HEADER_TOKEN_ENV_VAR', 'Please pass in headerTokenAuth or set the environment variable HEADER_TOKEN_ENV_VAR.');
         $defaultHeaders = [
-            'x-api-key' => "test_prefix $headerTokenAuth",
+            'x-api-key' => $apiKey,
             'X-Fern-Language' => 'PHP',
             'X-Fern-SDK-Name' => 'Seed',
             'X-Fern-SDK-Version' => '0.0.1',
@@ -65,16 +63,5 @@ class SeedClient
         );
 
         $this->service = new ServiceClient($this->client, $this->options);
-    }
-
-    /**
-     * @param string $env
-     * @param string $message
-     * @return string
-     */
-    private function getFromEnvOrThrow(string $env, string $message): string
-    {
-        $value = getenv($env);
-        return $value ? (string) $value : throw new Exception($message);
     }
 }

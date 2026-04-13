@@ -40,18 +40,12 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedClientSideParamsClient } from "@fern/client-side-params";
+import { SeedApiClient } from "@fern/client-side-params";
 
-const client = new SeedClientSideParamsClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
-await client.service.searchResources({
+const client = new SeedApiClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
+await client.service.searchresources({
     limit: 1,
-    offset: 1,
-    query: "query",
-    filters: {
-        "filters": {
-            "key": "value"
-        }
-    }
+    offset: 1
 });
 ```
 
@@ -61,9 +55,9 @@ The SDK exports all request and response types as TypeScript interfaces. Simply 
 following namespace:
 
 ```typescript
-import { SeedClientSideParams } from "@fern/client-side-params";
+import { SeedApi } from "@fern/client-side-params";
 
-const request: SeedClientSideParams.ListResourcesRequest = {
+const request: SeedApi.ServiceListResourcesRequest = {
     ...
 };
 ```
@@ -74,12 +68,12 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedClientSideParamsError } from "@fern/client-side-params";
+import { SeedApiError } from "@fern/client-side-params";
 
 try {
-    await client.service.searchResources(...);
+    await client.service.searchresources(...);
 } catch (err) {
-    if (err instanceof SeedClientSideParamsError) {
+    if (err instanceof SeedApiError) {
         console.log(err.statusCode);
         console.log(err.message);
         console.log(err.body);
@@ -105,16 +99,16 @@ const client = new ServiceClient({...});
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
-import { SeedClientSideParamsClient } from "@fern/client-side-params";
+import { SeedApiClient } from "@fern/client-side-params";
 
-const client = new SeedClientSideParamsClient({
+const client = new SeedApiClient({
     ...
     headers: {
         'X-Custom-Header': 'custom value'
     }
 });
 
-const response = await client.service.searchResources(..., {
+const response = await client.service.searchresources(..., {
     headers: {
         'X-Custom-Header': 'custom value'
     }
@@ -126,7 +120,7 @@ const response = await client.service.searchResources(..., {
 If you would like to send additional query string parameters as part of the request, use the `queryParams` request option.
 
 ```typescript
-const response = await client.service.searchResources(..., {
+const response = await client.service.searchresources(..., {
     queryParams: {
         'customQueryParamKey': 'custom query param value'
     }
@@ -148,7 +142,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.service.searchResources(..., {
+const response = await client.service.searchresources(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -158,7 +152,7 @@ const response = await client.service.searchResources(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.service.searchResources(..., {
+const response = await client.service.searchresources(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -169,7 +163,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.service.searchResources(..., {
+const response = await client.service.searchresources(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -181,7 +175,7 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.withRawResponse()` method returns a promise that results to an object with a `data` and a `rawResponse` property.
 
 ```typescript
-const { data, rawResponse } = await client.service.searchResources(...).withRawResponse();
+const { data, rawResponse } = await client.service.searchresources(...).withRawResponse();
 
 console.log(data);
 console.log(rawResponse.headers['X-My-Header']);
@@ -192,9 +186,9 @@ console.log(rawResponse.headers['X-My-Header']);
 The SDK supports logging. You can configure the logger by passing in a `logging` object to the client options.
 
 ```typescript
-import { SeedClientSideParamsClient, logging } from "@fern/client-side-params";
+import { SeedApiClient, logging } from "@fern/client-side-params";
 
-const client = new SeedClientSideParamsClient({
+const client = new SeedApiClient({
     ...
     logging: {
         level: logging.LogLevel.Debug, // defaults to logging.LogLevel.Info

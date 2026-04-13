@@ -22,16 +22,16 @@
             },
             "default": "./dist/cjs/index.js"
         },
-        "./propertyBasedError": {
+        "./propertybasederror": {
             "import": {
-                "types": "./dist/esm/api/resources/propertyBasedError/exports.d.mts",
-                "default": "./dist/esm/api/resources/propertyBasedError/exports.mjs"
+                "types": "./dist/esm/api/resources/propertybasederror/exports.d.mts",
+                "default": "./dist/esm/api/resources/propertybasederror/exports.mjs"
             },
             "require": {
-                "types": "./dist/cjs/api/resources/propertyBasedError/exports.d.ts",
-                "default": "./dist/cjs/api/resources/propertyBasedError/exports.js"
+                "types": "./dist/cjs/api/resources/propertybasederror/exports.d.ts",
+                "default": "./dist/cjs/api/resources/propertybasederror/exports.js"
             },
-            "default": "./dist/cjs/api/resources/propertyBasedError/exports.js"
+            "default": "./dist/cjs/api/resources/propertybasederror/exports.js"
         },
         "./package.json": "./package.json"
     },

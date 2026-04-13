@@ -1,6 +1,6 @@
 # Reference
 ## Organizations
-<details><summary><code>client.organizations.<a href="/src/api/resources/organizations/client.rs">get_organization</a>(tenant_id: String, organization_id: String) -> Result&lt;Organization, ApiError&gt;</code></summary>
+<details><summary><code>client.organizations.<a href="/src/api/resources/organizations/client.rs">getorganization</a>(tenant_id: String, organization_id: String) -> Result&lt;Organization, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,17 +13,17 @@
 <dd>
 
 ```rust
-use seed_path_parameters::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = PathParametersClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .organizations
-        .get_organization(
+        .getorganization(
             &"tenant_id".to_string(),
             &"organization_id".to_string(),
             None,
@@ -64,7 +64,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.organizations.<a href="/src/api/resources/organizations/client.rs">get_organization_user</a>(tenant_id: String, organization_id: String, user_id: String) -> Result&lt;User, ApiError&gt;</code></summary>
+<details><summary><code>client.organizations.<a href="/src/api/resources/organizations/client.rs">getorganizationuser</a>(tenant_id: String, organization_id: String, user_id: String) -> Result&lt;User, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -77,17 +77,17 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_path_parameters::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = PathParametersClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .organizations
-        .get_organization_user(
+        .getorganizationuser(
             &"tenant_id".to_string(),
             &"organization_id".to_string(),
             &"user_id".to_string(),
@@ -137,7 +137,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.organizations.<a href="/src/api/resources/organizations/client.rs">search_organizations</a>(tenant_id: String, organization_id: String, limit: Option&lt;Option&lt;i64&gt;&gt;) -> Result&lt;Vec&lt;Organization&gt;, ApiError&gt;</code></summary>
+<details><summary><code>client.organizations.<a href="/src/api/resources/organizations/client.rs">searchorganizations</a>(tenant_id: String, organization_id: String, limit: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;) -> Result&lt;Vec&lt;Organization&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -150,21 +150,20 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_path_parameters::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = PathParametersClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .organizations
-        .search_organizations(
+        .searchorganizations(
             &"tenant_id".to_string(),
             &"organization_id".to_string(),
-            &SearchOrganizationsQueryRequest {
-                limit: Some(1),
+            &SearchorganizationsQueryRequest {
                 ..Default::default()
             },
             None,
@@ -201,7 +200,7 @@ async fn main() {
 <dl>
 <dd>
 
-**limit:** `Option<i64>` 
+**limit:** `Option<Option<i64>>` 
     
 </dd>
 </dl>
@@ -214,7 +213,7 @@ async fn main() {
 </details>
 
 ## User
-<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">get_user</a>(tenant_id: String, user_id: String) -> Result&lt;User, ApiError&gt;</code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">getuser</a>(tenant_id: String, user_id: String) -> Result&lt;User, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -227,17 +226,17 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_path_parameters::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = PathParametersClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .user
-        .get_user(&"tenant_id".to_string(), &"user_id".to_string(), None)
+        .getuser(&"tenant_id".to_string(), &"user_id".to_string(), None)
         .await;
 }
 ```
@@ -274,7 +273,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">create_user</a>(tenant_id: String, request: User) -> Result&lt;User, ApiError&gt;</code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">updateuser</a>(tenant_id: String, user_id: String, request: User) -> Result&lt;User, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -287,82 +286,22 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_path_parameters::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = PathParametersClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .user
-        .create_user(
-            &"tenant_id".to_string(),
-            &User {
-                name: "name".to_string(),
-                tags: vec!["tags".to_string(), "tags".to_string()],
-                ..Default::default()
-            },
-            None,
-        )
-        .await;
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**tenant_id:** `String` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">update_user</a>(tenant_id: String, user_id: String, request: User) -> Result&lt;User, ApiError&gt;</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```rust
-use seed_path_parameters::prelude::*;
-
-#[tokio::main]
-async fn main() {
-    let config = ClientConfig {
-        ..Default::default()
-    };
-    let client = PathParametersClient::new(config).expect("Failed to build client");
-    client
-        .user
-        .update_user(
+        .updateuser(
             &"tenant_id".to_string(),
             &"user_id".to_string(),
             &User {
                 name: "name".to_string(),
-                tags: vec!["tags".to_string(), "tags".to_string()],
+                tags: vec!["tags".to_string()],
                 ..Default::default()
             },
             None,
@@ -403,7 +342,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">search_users</a>(tenant_id: String, user_id: String, limit: Option&lt;Option&lt;i64&gt;&gt;) -> Result&lt;Vec&lt;User&gt;, ApiError&gt;</code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">createuser</a>(tenant_id: String, request: User) -> Result&lt;User, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -416,21 +355,80 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_path_parameters::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = PathParametersClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .user
-        .search_users(
+        .createuser(
+            &"tenant_id".to_string(),
+            &User {
+                name: "name".to_string(),
+                tags: vec!["tags".to_string()],
+                ..Default::default()
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**tenant_id:** `String` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">searchusers</a>(tenant_id: String, user_id: String, limit: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;) -> Result&lt;Vec&lt;User&gt;, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_api::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        ..Default::default()
+    };
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client
+        .user
+        .searchusers(
             &"tenant_id".to_string(),
             &"user_id".to_string(),
-            &SearchUsersQueryRequest {
-                limit: Some(1),
+            &SearchusersQueryRequest {
                 ..Default::default()
             },
             None,
@@ -467,7 +465,7 @@ async fn main() {
 <dl>
 <dd>
 
-**limit:** `Option<i64>` 
+**limit:** `Option<Option<i64>>` 
     
 </dd>
 </dl>
@@ -479,7 +477,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">get_user_metadata</a>(tenant_id: String, user_id: String, version: i64) -> Result&lt;User, ApiError&gt;</code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">getusermetadata</a>(tenant_id: String, user_id: String, version: i64) -> Result&lt;User, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -506,17 +504,17 @@ Test endpoint with path parameter that has a text prefix (v{version})
 <dd>
 
 ```rust
-use seed_path_parameters::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = PathParametersClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .user
-        .get_user_metadata(&"tenant_id".to_string(), &"user_id".to_string(), 1, None)
+        .getusermetadata(&"tenant_id".to_string(), &"user_id".to_string(), 1, None)
         .await;
 }
 ```
@@ -561,7 +559,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">get_user_specifics</a>(tenant_id: String, user_id: String, version: i64, thought: String) -> Result&lt;User, ApiError&gt;</code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">getuserspecifics</a>(tenant_id: String, user_id: String, version: i64, thought: String) -> Result&lt;User, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -588,17 +586,17 @@ Test endpoint with path parameters listed in different order than found in path
 <dd>
 
 ```rust
-use seed_path_parameters::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = PathParametersClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .user
-        .get_user_specifics(
+        .getuserspecifics(
             &"tenant_id".to_string(),
             &"user_id".to_string(),
             1,

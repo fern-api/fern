@@ -3,10 +3,8 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Complex\Types\SearchRequest;
-use Seed\Complex\Types\StartingAfterPaging;
-use Seed\Complex\Types\SingleFilterSearchRequest;
-use Seed\Complex\Types\SingleFilterSearchRequestOperator;
+use Seed\Complex\Requests\SearchRequest;
+use Seed\Types\SingleFilterSearchRequest;
 
 $client = new SeedClient(
     token: '<token>',
@@ -17,14 +15,6 @@ $client = new SeedClient(
 $client->complex->search(
     'index',
     new SearchRequest([
-        'pagination' => new StartingAfterPaging([
-            'perPage' => 1,
-            'startingAfter' => 'starting_after',
-        ]),
-        'query' => new SingleFilterSearchRequest([
-            'field' => 'field',
-            'operator' => SingleFilterSearchRequestOperator::Equals->value,
-            'value' => 'value',
-        ]),
+        'query' => new SingleFilterSearchRequest([]),
     ]),
 );

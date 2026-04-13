@@ -14,13 +14,10 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.CreateUserRequest{
-        Name: "name",
-        Age: fern.Int(
-            1,
-        ),
+    request := &fern.UserGetUserRequest{
+        UserID: "userId",
     }
-    client.User.CreateUser(
+    client.User.Getuser(
         context.TODO(),
         request,
     )

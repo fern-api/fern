@@ -37,12 +37,12 @@ Instantiate and use the client with the following:
 namespace Example;
 
 use Seed\FernClient;
-use Seed\Imdb\Types\CreateMovieRequest;
+use Seed\Imdb\Requests\CreateMovieRequest;
 
 $client = new FernClient(
     token: '<token>',
 );
-$client->imdb->createMovie(
+$client->imdb->createmovie(
     new CreateMovieRequest([
         'title' => 'title',
         'rating' => 1.1,
@@ -60,7 +60,7 @@ use Seed\Exceptions\SeedApiException;
 use Seed\Exceptions\SeedException;
 
 try {
-    $response = $client->imdb->createMovie(...);
+    $response = $client->imdb->createmovie(...);
 } catch (SeedApiException $e) {
     echo 'API Exception occurred: ' . $e->getMessage() . "\n";
     echo 'Status Code: ' . $e->getCode() . "\n";
@@ -114,7 +114,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```php
-$response = $client->imdb->createMovie(
+$response = $client->imdb->createmovie(
     ...,
     options: [
         'maxRetries' => 0 // Override maxRetries at the request level
@@ -127,7 +127,7 @@ $response = $client->imdb->createMovie(
 The SDK defaults to a 30 second timeout. Use the `timeout` option to configure this behavior.
 
 ```php
-$response = $client->imdb->createMovie(
+$response = $client->imdb->createmovie(
     ...,
     options: [
         'timeout' => 3.0 // Override timeout at the request level

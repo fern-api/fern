@@ -9,13 +9,13 @@ use crate::{ApiError, ClientConfig};
 
 pub mod auth;
 pub mod user;
-pub struct AnyAuthClient {
+pub struct ApiClient {
     pub config: ClientConfig,
     pub auth: AuthClient,
     pub user: UserClient,
 }
 
-impl AnyAuthClient {
+impl ApiClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),

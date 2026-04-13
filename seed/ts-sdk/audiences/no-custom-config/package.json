@@ -22,71 +22,16 @@
             },
             "default": "./dist/cjs/index.js"
         },
-        "./folderA": {
+        "./folderAService": {
             "import": {
-                "types": "./dist/esm/api/resources/folderA/exports.d.mts",
-                "default": "./dist/esm/api/resources/folderA/exports.mjs"
+                "types": "./dist/esm/api/resources/folderAService/exports.d.mts",
+                "default": "./dist/esm/api/resources/folderAService/exports.mjs"
             },
             "require": {
-                "types": "./dist/cjs/api/resources/folderA/exports.d.ts",
-                "default": "./dist/cjs/api/resources/folderA/exports.js"
+                "types": "./dist/cjs/api/resources/folderAService/exports.d.ts",
+                "default": "./dist/cjs/api/resources/folderAService/exports.js"
             },
-            "default": "./dist/cjs/api/resources/folderA/exports.js"
-        },
-        "./folderA/service": {
-            "import": {
-                "types": "./dist/esm/api/resources/folderA/resources/service/exports.d.mts",
-                "default": "./dist/esm/api/resources/folderA/resources/service/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/folderA/resources/service/exports.d.ts",
-                "default": "./dist/cjs/api/resources/folderA/resources/service/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/folderA/resources/service/exports.js"
-        },
-        "./folderB": {
-            "import": {
-                "types": "./dist/esm/api/resources/folderB/exports.d.mts",
-                "default": "./dist/esm/api/resources/folderB/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/folderB/exports.d.ts",
-                "default": "./dist/cjs/api/resources/folderB/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/folderB/exports.js"
-        },
-        "./folderC": {
-            "import": {
-                "types": "./dist/esm/api/resources/folderC/exports.d.mts",
-                "default": "./dist/esm/api/resources/folderC/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/folderC/exports.d.ts",
-                "default": "./dist/cjs/api/resources/folderC/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/folderC/exports.js"
-        },
-        "./folderD": {
-            "import": {
-                "types": "./dist/esm/api/resources/folderD/exports.d.mts",
-                "default": "./dist/esm/api/resources/folderD/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/folderD/exports.d.ts",
-                "default": "./dist/cjs/api/resources/folderD/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/folderD/exports.js"
-        },
-        "./folderD/service": {
-            "import": {
-                "types": "./dist/esm/api/resources/folderD/resources/service/exports.d.mts",
-                "default": "./dist/esm/api/resources/folderD/resources/service/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/folderD/resources/service/exports.d.ts",
-                "default": "./dist/cjs/api/resources/folderD/resources/service/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/folderD/resources/service/exports.js"
+            "default": "./dist/cjs/api/resources/folderAService/exports.js"
         },
         "./foo": {
             "import": {
@@ -98,6 +43,17 @@
                 "default": "./dist/cjs/api/resources/foo/exports.js"
             },
             "default": "./dist/cjs/api/resources/foo/exports.js"
+        },
+        "./folderDService": {
+            "import": {
+                "types": "./dist/esm/api/resources/folderDService/exports.d.mts",
+                "default": "./dist/esm/api/resources/folderDService/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/folderDService/exports.d.ts",
+                "default": "./dist/cjs/api/resources/folderDService/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/folderDService/exports.js"
         },
         "./package.json": "./package.json"
     },

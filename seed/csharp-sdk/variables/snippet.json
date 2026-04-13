@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedVariables;\n\nvar client = new SeedVariablesClient();\nawait client.Service.PostAsync(\"endpointParam\");\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Service.PostAsync(new ServicePostRequest { EndpointParam = \"endpointParam\" });\n"
             }
         }
     ]

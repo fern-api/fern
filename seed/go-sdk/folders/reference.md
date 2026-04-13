@@ -27,8 +27,8 @@ client.Foo(
 </dl>
 </details>
 
-## A B
-<details><summary><code>client.A.B.Foo() -> error</code></summary>
+## Ab
+<details><summary><code>client.Ab.ABFoo() -> error</code></summary>
 <dl>
 <dd>
 
@@ -41,7 +41,7 @@ client.Foo(
 <dd>
 
 ```go
-client.Foo(
+client.Ab.ABFoo(
         context.TODO(),
     )
 }
@@ -56,8 +56,8 @@ client.Foo(
 </dl>
 </details>
 
-## A C
-<details><summary><code>client.A.C.Foo() -> error</code></summary>
+## Ac
+<details><summary><code>client.Ac.ACFoo() -> error</code></summary>
 <dl>
 <dd>
 
@@ -70,7 +70,7 @@ client.Foo(
 <dd>
 
 ```go
-client.Foo(
+client.Ac.ACFoo(
         context.TODO(),
     )
 }
@@ -99,7 +99,7 @@ client.Foo(
 <dd>
 
 ```go
-client.Foo(
+client.Folder.Foo(
         context.TODO(),
     )
 }
@@ -114,8 +114,8 @@ client.Foo(
 </dl>
 </details>
 
-## Folder Service
-<details><summary><code>client.Folder.Service.Endpoint() -> error</code></summary>
+## FolderService
+<details><summary><code>client.FolderService.FolderServiceEndpoint() -> error</code></summary>
 <dl>
 <dd>
 
@@ -128,7 +128,7 @@ client.Foo(
 <dd>
 
 ```go
-client.Folder.Service.Endpoint(
+client.FolderService.FolderServiceEndpoint(
         context.TODO(),
     )
 }
@@ -143,7 +143,7 @@ client.Folder.Service.Endpoint(
 </dl>
 </details>
 
-<details><summary><code>client.Folder.Service.UnknownRequest(request) -> error</code></summary>
+<details><summary><code>client.FolderService.FolderServiceUnknownRequest(request) -> error</code></summary>
 <dl>
 <dd>
 
@@ -159,7 +159,7 @@ client.Folder.Service.Endpoint(
 request := map[string]any{
         "key": "value",
     }
-client.Folder.Service.UnknownRequest(
+client.FolderService.FolderServiceUnknownRequest(
         context.TODO(),
         request,
     )

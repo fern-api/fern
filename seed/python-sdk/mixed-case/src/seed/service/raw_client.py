@@ -11,7 +11,7 @@ from ..core.jsonable_encoder import encode_path_param
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
-from .types.resource import Resource
+from ..types.resource import Resource
 from pydantic import ValidationError
 
 
@@ -19,7 +19,7 @@ class RawServiceClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get_resource(
+    def getresource(
         self, resource_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[Resource]:
         """
@@ -33,6 +33,7 @@ class RawServiceClient:
         Returns
         -------
         HttpResponse[Resource]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             f"resource/{encode_path_param(resource_id)}",
@@ -58,7 +59,7 @@ class RawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def list_resources(
+    def listresources(
         self, *, page_limit: int, before_date: dt.date, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[typing.List[Resource]]:
         """
@@ -74,6 +75,7 @@ class RawServiceClient:
         Returns
         -------
         HttpResponse[typing.List[Resource]]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "resource",
@@ -108,7 +110,7 @@ class AsyncRawServiceClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get_resource(
+    async def getresource(
         self, resource_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[Resource]:
         """
@@ -122,6 +124,7 @@ class AsyncRawServiceClient:
         Returns
         -------
         AsyncHttpResponse[Resource]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"resource/{encode_path_param(resource_id)}",
@@ -147,7 +150,7 @@ class AsyncRawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def list_resources(
+    async def listresources(
         self, *, page_limit: int, before_date: dt.date, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[typing.List[Resource]]:
         """
@@ -163,6 +166,7 @@ class AsyncRawServiceClient:
         Returns
         -------
         AsyncHttpResponse[typing.List[Resource]]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "resource",

@@ -1,4 +1,4 @@
-package inferredauthimplicitnoexpiry
+package api
 
 import (
 	"testing"

@@ -14,12 +14,11 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &path.GetUserMetadataRequest{
+    request := &path.UserGetUserRequest{
         TenantID: "tenant_id",
         UserID: "user_id",
-        Version: 1,
     }
-    client.User.GetUserMetadata(
+    client.User.Getuser(
         context.TODO(),
         request,
     )

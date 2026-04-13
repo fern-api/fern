@@ -2,35 +2,35 @@
     "endpoints": [
         {
             "id": {
-                "path": "/{id}",
+                "path": "/bigunion/{id}",
                 "method": "GET",
                 "identifier_override": "endpoint_bigunion.get"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedUnionsClient } from \"@fern/unions-with-local-date\";\n\nconst client = new SeedUnionsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.bigunion.get(\"id\");\n"
+                "client": "import { SeedApiClient } from \"@fern/unions-with-local-date\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.bigunion.get({\n    id: \"id\"\n});\n"
             }
         },
         {
             "id": {
-                "path": "/",
+                "path": "/bigunion",
                 "method": "PATCH",
                 "identifier_override": "endpoint_bigunion.update"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedUnionsClient } from \"@fern/unions-with-local-date\";\n\nconst client = new SeedUnionsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.bigunion.update({\n    type: \"normalSweet\",\n    id: \"id\",\n    \"created-at\": \"2024-01-15T09:30:00Z\",\n    \"archived-at\": \"2024-01-15T09:30:00Z\",\n    value: \"value\"\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/unions-with-local-date\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.bigunion.update({\n    value: \"value\",\n    type: \"normalSweet\"\n});\n"
             }
         },
         {
             "id": {
-                "path": "/many",
+                "path": "/bigunion/many",
                 "method": "PATCH",
-                "identifier_override": "endpoint_bigunion.update-many"
+                "identifier_override": "endpoint_bigunion.updateMany"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedUnionsClient } from \"@fern/unions-with-local-date\";\n\nconst client = new SeedUnionsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.bigunion.updateMany([{\n        type: \"normalSweet\",\n        id: \"id\",\n        \"created-at\": \"2024-01-15T09:30:00Z\",\n        \"archived-at\": \"2024-01-15T09:30:00Z\",\n        value: \"value\"\n    }, {\n        type: \"normalSweet\",\n        id: \"id\",\n        \"created-at\": \"2024-01-15T09:30:00Z\",\n        \"archived-at\": \"2024-01-15T09:30:00Z\",\n        value: \"value\"\n    }]);\n"
+                "client": "import { SeedApiClient } from \"@fern/unions-with-local-date\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.bigunion.updateMany([{\n        value: \"value\",\n        type: \"normalSweet\"\n    }]);\n"
             }
         },
         {
@@ -41,18 +41,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedUnionsClient } from \"@fern/unions-with-local-date\";\n\nconst client = new SeedUnionsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.types.get(\"date-example\");\n"
-            }
-        },
-        {
-            "id": {
-                "path": "/time/{id}",
-                "method": "GET",
-                "identifier_override": "endpoint_types.get"
-            },
-            "snippet": {
-                "type": "typescript",
-                "client": "import { SeedUnionsClient } from \"@fern/unions-with-local-date\";\n\nconst client = new SeedUnionsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.types.get(\"datetime-example\");\n"
+                "client": "import { SeedApiClient } from \"@fern/unions-with-local-date\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.types.get({\n    id: \"id\"\n});\n"
             }
         },
         {
@@ -63,18 +52,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedUnionsClient } from \"@fern/unions-with-local-date\";\n\nconst client = new SeedUnionsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.types.update({\n    type: \"date\",\n    value: \"1994-01-01\"\n});\n"
-            }
-        },
-        {
-            "id": {
-                "path": "/time",
-                "method": "PATCH",
-                "identifier_override": "endpoint_types.update"
-            },
-            "snippet": {
-                "type": "typescript",
-                "client": "import { SeedUnionsClient } from \"@fern/unions-with-local-date\";\n\nconst client = new SeedUnionsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.types.update({\n    type: \"datetime\",\n    value: \"1994-01-01T01:01:01Z\"\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/unions-with-local-date\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.types.update({\n    type: \"value\"\n});\n"
             }
         },
         {
@@ -85,7 +63,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedUnionsClient } from \"@fern/unions-with-local-date\";\n\nconst client = new SeedUnionsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.union.get(\"id\");\n"
+                "client": "import { SeedApiClient } from \"@fern/unions-with-local-date\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.union.get({\n    id: \"id\"\n});\n"
             }
         },
         {
@@ -96,7 +74,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedUnionsClient } from \"@fern/unions-with-local-date\";\n\nconst client = new SeedUnionsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.union.update({\n    type: \"circle\",\n    id: \"id\",\n    name: \"name\",\n    radius: 1.1\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/unions-with-local-date\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.union.update({\n    radius: 1.1,\n    type: \"circle\"\n});\n"
             }
         }
     ],

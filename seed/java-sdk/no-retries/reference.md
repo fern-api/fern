@@ -1,6 +1,6 @@
 # Reference
 ## Retries
-<details><summary><code>client.retries.getUsers() -> List&amp;lt;User&amp;gt;</code></summary>
+<details><summary><code>client.retries.getusers() -> List&amp;lt;User&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```java
-client.retries().getUsers();
+client.retries().getusers();
 ```
 </dd>
 </dl>

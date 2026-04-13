@@ -1,14 +1,18 @@
 package com.snippets;
 
-import com.seed.examples.SeedExamplesClient;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.service.requests.ServiceGetMetadataRequest;
 
 public class Example13 {
     public static void main(String[] args) {
-        SeedExamplesClient client = SeedExamplesClient.builder()
+        SeedApiClient client = SeedApiClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
-        client.service().getMovie("movie-c06a4ad7");
+        client.service()
+                .getmetadata(ServiceGetMetadataRequest.builder()
+                        .apiVersion("X-API-Version")
+                        .build());
     }
 }

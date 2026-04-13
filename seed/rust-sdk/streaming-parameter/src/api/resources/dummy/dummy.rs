@@ -15,9 +15,9 @@ impl DummyClient {
 
     pub async fn generate(
         &self,
-        request: &GenerateRequest,
+        request: &DummyGenerateRequest,
         options: Option<RequestOptions>,
-    ) -> Result<serde_json::Value, ApiError> {
+    ) -> Result<(), ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,

@@ -2,18 +2,18 @@ use crate::api::*;
 use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
 use reqwest::Method;
 
-pub struct ServiceClient4 {
+pub struct ServiceClient {
     pub http_client: HttpClient,
 }
 
-impl ServiceClient4 {
+impl ServiceClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             http_client: HttpClient::new(config.clone())?,
         })
     }
 
-    pub async fn get_movie(
+    pub async fn getmovie(
         &self,
         movie_id: &MovieId,
         options: Option<RequestOptions>,
@@ -21,7 +21,7 @@ impl ServiceClient4 {
         self.http_client
             .execute_request(
                 Method::GET,
-                &format!("/movie/{}", movie_id.0),
+                &format!("movie/{}", movie_id.0),
                 None,
                 None,
                 options,
@@ -29,7 +29,7 @@ impl ServiceClient4 {
             .await
     }
 
-    pub async fn create_movie(
+    pub async fn createmovie(
         &self,
         request: &Movie,
         options: Option<RequestOptions>,
@@ -37,7 +37,7 @@ impl ServiceClient4 {
         self.http_client
             .execute_request(
                 Method::POST,
-                "/movie",
+                "movie",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -45,26 +45,26 @@ impl ServiceClient4 {
             .await
     }
 
-    pub async fn get_metadata(
+    pub async fn getmetadata(
         &self,
-        request: &GetMetadataQueryRequest,
+        request: &GetmetadataQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<Metadata2, ApiError> {
+    ) -> Result<Metadata, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
-                "/metadata",
+                "metadata",
                 None,
                 QueryBuilder::new()
-                    .bool("shallow", request.shallow.clone())
-                    .string_array("tag", request.tag.clone())
+                    .serialize("shallow", request.shallow.clone())
+                    .serialize_array("tag", request.tag.clone())
                     .build(),
                 options,
             )
             .await
     }
 
-    pub async fn create_big_entity(
+    pub async fn createbigentity(
         &self,
         request: &BigEntity,
         options: Option<RequestOptions>,
@@ -72,7 +72,7 @@ impl ServiceClient4 {
         self.http_client
             .execute_request(
                 Method::POST,
-                "/big-entity",
+                "big-entity",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -80,15 +80,15 @@ impl ServiceClient4 {
             .await
     }
 
-    pub async fn refresh_token(
+    pub async fn refreshtoken(
         &self,
-        request: &Option<RefreshTokenRequest>,
+        request: &RefreshTokenRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
-                "/refresh-token",
+                "refresh-token",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,

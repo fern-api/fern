@@ -1,4 +1,4 @@
-import PlainText
+import Api
 import Foundation
 
 final class HTTPStub {

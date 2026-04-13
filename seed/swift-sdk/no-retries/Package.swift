@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "NoRetries",
+    name: "Api",
     platforms: [
         .iOS(.v15),
         .macOS(.v12),
@@ -12,19 +12,19 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "NoRetries",
-            targets: ["NoRetries"]
+            name: "Api",
+            targets: ["Api"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "NoRetries",
+            name: "Api",
             path: "Sources"
         ),
         .testTarget(
-            name: "NoRetriesTests",
-            dependencies: ["NoRetries"],
+            name: "ApiTests",
+            dependencies: ["Api"],
             path: "Tests"
         )
     ]

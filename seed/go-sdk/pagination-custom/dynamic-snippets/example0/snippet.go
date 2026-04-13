@@ -17,15 +17,8 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.ListWithCustomPagerRequest{
-        Limit: fern.Int(
-            1,
-        ),
-        StartingAfter: fern.String(
-            "starting_after",
-        ),
-    }
-    client.Users.ListWithCustomPager(
+    request := &fern.UsersListWithCustomPagerRequest{}
+    client.Users.Listwithcustompager(
         context.TODO(),
         request,
     )

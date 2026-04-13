@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="src/seed/service/client.py">get_with_bearer_token</a>() -> str</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">getwithbearertoken</a>() -> str</code></summary>
 <dl>
 <dd>
 
@@ -27,14 +27,14 @@ GET request with custom api key
 <dd>
 
 ```python
-from seed import SeedBearerTokenEnvironmentVariable
+from seed import SeedApi
 
-client = SeedBearerTokenEnvironmentVariable(
-    api_key="<token>",
+client = SeedApi(
+    token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.service.get_with_bearer_token()
+client.service.getwithbearertoken()
 
 ```
 </dd>

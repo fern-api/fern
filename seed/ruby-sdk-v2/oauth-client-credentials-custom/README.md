@@ -28,19 +28,15 @@ Instantiate and use the client with the following:
 ```ruby
 require "seed"
 
-client = Seed::Client.new(
-  client_id: "<clientId>",
-  client_secret: "<clientSecret>"
-)
+client = Seed::Client.new(token: "<token>")
 
-client.auth.get_token_with_client_credentials(
+client.auth.gettokenwithclientcredentials(
   cid: "cid",
   csr: "csr",
   scp: "scp",
   entity_id: "entity_id",
   audience: "https://api.example.com",
-  grant_type: "client_credentials",
-  scope: "scope"
+  grant_type: "client_credentials"
 )
 ```
 
@@ -69,7 +65,7 @@ client = Seed::Client.new(
 )
 
 begin
-    result = client.auth.get_token_with_client_credentials
+    result = client.auth.gettokenwithclientcredentials
 rescue Seed::Errors::TimeoutError
     puts "API didn't respond before our timeout elapsed"
 rescue Seed::Errors::ServiceUnavailableError
@@ -114,7 +110,7 @@ The SDK defaults to a 60 second timeout. Use the `timeout` option to configure t
 ```ruby
 require "seed"
 
-response = client.auth.get_token_with_client_credentials(
+response = client.auth.gettokenwithclientcredentials(
     ...,
     timeout: 30  # 30 second timeout
 )
@@ -127,7 +123,7 @@ If you would like to send additional headers as part of the request, use the `ad
 ```ruby
 require "seed"
 
-response = client.auth.get_token_with_client_credentials(
+response = client.auth.gettokenwithclientcredentials(
     ...,
     request_options: {
         additional_headers: {
@@ -144,7 +140,7 @@ If you would like to send additional query parameters as part of the request, us
 ```ruby
 require "seed"
 
-response = client.auth.get_token_with_client_credentials(
+response = client.auth.gettokenwithclientcredentials(
     ...,
     request_options: {
         additional_query_parameters: {

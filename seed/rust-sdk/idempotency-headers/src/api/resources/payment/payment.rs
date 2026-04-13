@@ -1,7 +1,6 @@
 use crate::api::*;
 use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
 use reqwest::Method;
-use uuid::Uuid;
 
 pub struct PaymentClient {
     pub http_client: HttpClient,
@@ -16,13 +15,13 @@ impl PaymentClient {
 
     pub async fn create(
         &self,
-        request: &CreatePaymentRequest,
+        request: &PaymentCreateRequest,
         options: Option<RequestOptions>,
-    ) -> Result<Uuid, ApiError> {
+    ) -> Result<String, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
-                "/payment",
+                "payment",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -38,7 +37,7 @@ impl PaymentClient {
         self.http_client
             .execute_request(
                 Method::DELETE,
-                &format!("/payment/{}", payment_id),
+                &format!("payment/{}", payment_id),
                 None,
                 None,
                 options,

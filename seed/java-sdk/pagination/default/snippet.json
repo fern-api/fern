@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "d43ff4cb",
+            "example_identifier": "6928d37a",
             "id": {
                 "method": "POST",
                 "path": "/{index}/conversations/search",
@@ -9,437 +9,749 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.complex.types.SearchRequest;\nimport com.seed.pagination.resources.complex.types.SearchRequestQuery;\nimport com.seed.pagination.resources.complex.types.SingleFilterSearchRequest;\nimport com.seed.pagination.resources.complex.types.SingleFilterSearchRequestOperator;\nimport com.seed.pagination.resources.complex.types.StartingAfterPaging;\nimport java.util.Optional;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.complex().search(\n            \"index\",\n            SearchRequest\n                .builder()\n                .query(\n                    SearchRequestQuery.of(\n                        SingleFilterSearchRequest\n                            .builder()\n                            .field(Optional.of(\"field\"))\n                            .operator(Optional.of(SingleFilterSearchRequestOperator.EQUALS))\n                            .value(Optional.of(\"value\"))\n                            .build()\n                    )\n                )\n                .pagination(\n                    StartingAfterPaging\n                        .builder()\n                        .perPage(1)\n                        .startingAfter(\"starting_after\")\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.complex.types.SearchRequest;\nimport com.seed.pagination.resources.complex.types.SearchRequestQuery;\nimport com.seed.pagination.resources.complex.types.SingleFilterSearchRequest;\nimport com.seed.pagination.resources.complex.types.SingleFilterSearchRequestOperator;\nimport com.seed.pagination.resources.complex.types.StartingAfterPaging;\nimport java.util.Optional;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.complex().search(\n            \"index\",\n            SearchRequest\n                .builder()\n                .query(\n                    SearchRequestQuery.of(\n                        SingleFilterSearchRequest\n                            .builder()\n                            .field(Optional.of(\"field\"))\n                            .operator(Optional.of(SingleFilterSearchRequestOperator.EQUALS))\n                            .value(Optional.of(\"value\"))\n                            .build()\n                    )\n                )\n                .pagination(\n                    StartingAfterPaging\n                        .builder()\n                        .perPage(1)\n                        .startingAfter(\"starting_after\")\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.complex.requests.SearchRequest;\nimport com.seed.api.types.SearchRequestQuery;\nimport com.seed.api.types.SingleFilterSearchRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.complex().search(\n            \"index\",\n            SearchRequest\n                .builder()\n                .query(\n                    SearchRequestQuery.of(\n                        SingleFilterSearchRequest\n                            .builder()\n                            .build()\n                    )\n                )\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.complex.requests.SearchRequest;\nimport com.seed.api.types.SearchRequestQuery;\nimport com.seed.api.types.SingleFilterSearchRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.complex().search(\n            \"index\",\n            SearchRequest\n                .builder()\n                .query(\n                    SearchRequestQuery.of(\n                        SingleFilterSearchRequest\n                            .builder()\n                            .build()\n                    )\n                )\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "42d442e7",
-            "id": {
-                "method": "GET",
-                "path": "/inline-users",
-                "identifier_override": "endpoint_inline-users/inline-users.listWithCursorPagination"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersCursorPaginationRequest;\nimport com.seed.pagination.resources.inlineusers.inlineusers.types.Order;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsers().inlineUsers().listWithCursorPagination(\n            ListUsersCursorPaginationRequest\n                .builder()\n                .page(1)\n                .perPage(1)\n                .order(Order.ASC)\n                .startingAfter(\"starting_after\")\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersCursorPaginationRequest;\nimport com.seed.pagination.resources.inlineusers.inlineusers.types.Order;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsers().inlineUsers().listWithCursorPagination(\n            ListUsersCursorPaginationRequest\n                .builder()\n                .page(1)\n                .perPage(1)\n                .order(Order.ASC)\n                .startingAfter(\"starting_after\")\n                .build()\n        );\n    }\n}\n"
-            }
-        },
-        {
-            "example_identifier": "2994ef3d",
+            "example_identifier": "cd84375f",
             "id": {
                 "method": "POST",
-                "path": "/inline-users",
-                "identifier_override": "endpoint_inline-users/inline-users.listWithMixedTypeCursorPagination"
+                "path": "/{index}/conversations/search",
+                "identifier_override": "endpoint_complex.search"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersMixedTypeCursorPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsers().inlineUsers().listWithMixedTypeCursorPagination(\n            ListUsersMixedTypeCursorPaginationRequest\n                .builder()\n                .cursor(\"cursor\")\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersMixedTypeCursorPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsers().inlineUsers().listWithMixedTypeCursorPagination(\n            ListUsersMixedTypeCursorPaginationRequest\n                .builder()\n                .cursor(\"cursor\")\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.complex.requests.SearchRequest;\nimport com.seed.api.types.SearchRequestQuery;\nimport com.seed.api.types.SingleFilterSearchRequest;\nimport com.seed.api.types.SingleFilterSearchRequestOperator;\nimport com.seed.api.types.StartingAfterPaging;\nimport java.util.Optional;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.complex().search(\n            \"index\",\n            SearchRequest\n                .builder()\n                .query(\n                    SearchRequestQuery.of(\n                        SingleFilterSearchRequest\n                            .builder()\n                            .field(Optional.of(\"field\"))\n                            .operator(Optional.of(SingleFilterSearchRequestOperator.EQUAL_TO))\n                            .value(Optional.of(\"value\"))\n                            .build()\n                    )\n                )\n                .pagination(\n                    StartingAfterPaging\n                        .builder()\n                        .perPage(1)\n                        .startingAfter(\"starting_after\")\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.complex.requests.SearchRequest;\nimport com.seed.api.types.SearchRequestQuery;\nimport com.seed.api.types.SingleFilterSearchRequest;\nimport com.seed.api.types.SingleFilterSearchRequestOperator;\nimport com.seed.api.types.StartingAfterPaging;\nimport java.util.Optional;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.complex().search(\n            \"index\",\n            SearchRequest\n                .builder()\n                .query(\n                    SearchRequestQuery.of(\n                        SingleFilterSearchRequest\n                            .builder()\n                            .field(Optional.of(\"field\"))\n                            .operator(Optional.of(SingleFilterSearchRequestOperator.EQUAL_TO))\n                            .value(Optional.of(\"value\"))\n                            .build()\n                    )\n                )\n                .pagination(\n                    StartingAfterPaging\n                        .builder()\n                        .perPage(1)\n                        .startingAfter(\"starting_after\")\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "5f87117b",
+            "example_identifier": "95eb8d5a",
+            "id": {
+                "method": "GET",
+                "path": "/inline-users/cursor",
+                "identifier_override": "endpoint_inlineUsersInlineUsers.inlineUsers_inlineUsers_listWithCursorPagination"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListWithCursorPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithCursorPagination(\n            InlineUsersInlineUsersListWithCursorPaginationRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListWithCursorPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithCursorPagination(\n            InlineUsersInlineUsersListWithCursorPaginationRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "3b3f394b",
+            "id": {
+                "method": "GET",
+                "path": "/inline-users/cursor",
+                "identifier_override": "endpoint_inlineUsersInlineUsers.inlineUsers_inlineUsers_listWithCursorPagination"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListWithCursorPaginationRequest;\nimport com.seed.api.types.InlineUsersOrder;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithCursorPagination(\n            InlineUsersInlineUsersListWithCursorPaginationRequest\n                .builder()\n                .page(1)\n                .perPage(1)\n                .order(InlineUsersOrder.ASC)\n                .startingAfter(\"starting_after\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListWithCursorPaginationRequest;\nimport com.seed.api.types.InlineUsersOrder;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithCursorPagination(\n            InlineUsersInlineUsersListWithCursorPaginationRequest\n                .builder()\n                .page(1)\n                .perPage(1)\n                .order(InlineUsersOrder.ASC)\n                .startingAfter(\"starting_after\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "ad042ac0",
             "id": {
                 "method": "POST",
-                "path": "/inline-users",
-                "identifier_override": "endpoint_inline-users/inline-users.listWithBodyCursorPagination"
+                "path": "/inline-users/mixed-type-cursor",
+                "identifier_override": "endpoint_inlineUsersInlineUsers.inlineUsers_inlineUsers_listWithMixedTypeCursorPagination"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersMixedTypeCursorPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsers().inlineUsers().listWithMixedTypeCursorPagination(\n            ListUsersMixedTypeCursorPaginationRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersMixedTypeCursorPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsers().inlineUsers().listWithMixedTypeCursorPagination(\n            ListUsersMixedTypeCursorPaginationRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListWithMixedTypeCursorPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithMixedTypeCursorPagination(\n            InlineUsersInlineUsersListWithMixedTypeCursorPaginationRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListWithMixedTypeCursorPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithMixedTypeCursorPagination(\n            InlineUsersInlineUsersListWithMixedTypeCursorPaginationRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "2a9f8ed7",
-            "id": {
-                "method": "GET",
-                "path": "/inline-users",
-                "identifier_override": "endpoint_inline-users/inline-users.listWithOffsetPagination"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersCursorPaginationRequest;\nimport com.seed.pagination.resources.inlineusers.inlineusers.types.Order;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsers().inlineUsers().listWithCursorPagination(\n            ListUsersCursorPaginationRequest\n                .builder()\n                .page(1)\n                .perPage(1)\n                .order(Order.ASC)\n                .startingAfter(\"starting_after\")\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersCursorPaginationRequest;\nimport com.seed.pagination.resources.inlineusers.inlineusers.types.Order;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsers().inlineUsers().listWithCursorPagination(\n            ListUsersCursorPaginationRequest\n                .builder()\n                .page(1)\n                .perPage(1)\n                .order(Order.ASC)\n                .startingAfter(\"starting_after\")\n                .build()\n        );\n    }\n}\n"
-            }
-        },
-        {
-            "example_identifier": "5b7acca3",
-            "id": {
-                "method": "GET",
-                "path": "/inline-users",
-                "identifier_override": "endpoint_inline-users/inline-users.listWithDoubleOffsetPagination"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersCursorPaginationRequest;\nimport com.seed.pagination.resources.inlineusers.inlineusers.types.Order;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsers().inlineUsers().listWithCursorPagination(\n            ListUsersCursorPaginationRequest\n                .builder()\n                .page(1)\n                .perPage(1)\n                .order(Order.ASC)\n                .startingAfter(\"starting_after\")\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersCursorPaginationRequest;\nimport com.seed.pagination.resources.inlineusers.inlineusers.types.Order;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsers().inlineUsers().listWithCursorPagination(\n            ListUsersCursorPaginationRequest\n                .builder()\n                .page(1)\n                .perPage(1)\n                .order(Order.ASC)\n                .startingAfter(\"starting_after\")\n                .build()\n        );\n    }\n}\n"
-            }
-        },
-        {
-            "example_identifier": "3c4bbea",
+            "example_identifier": "833c42cd",
             "id": {
                 "method": "POST",
-                "path": "/inline-users",
-                "identifier_override": "endpoint_inline-users/inline-users.listWithBodyOffsetPagination"
+                "path": "/inline-users/mixed-type-cursor",
+                "identifier_override": "endpoint_inlineUsersInlineUsers.inlineUsers_inlineUsers_listWithMixedTypeCursorPagination"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersMixedTypeCursorPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsers().inlineUsers().listWithMixedTypeCursorPagination(\n            ListUsersMixedTypeCursorPaginationRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersMixedTypeCursorPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsers().inlineUsers().listWithMixedTypeCursorPagination(\n            ListUsersMixedTypeCursorPaginationRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListWithMixedTypeCursorPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithMixedTypeCursorPagination(\n            InlineUsersInlineUsersListWithMixedTypeCursorPaginationRequest\n                .builder()\n                .cursor(\"cursor\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListWithMixedTypeCursorPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithMixedTypeCursorPagination(\n            InlineUsersInlineUsersListWithMixedTypeCursorPaginationRequest\n                .builder()\n                .cursor(\"cursor\")\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "bc4610a0",
-            "id": {
-                "method": "GET",
-                "path": "/inline-users",
-                "identifier_override": "endpoint_inline-users/inline-users.listWithOffsetStepPagination"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersOffsetStepPaginationRequest;\nimport com.seed.pagination.resources.inlineusers.inlineusers.types.Order;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsers().inlineUsers().listWithOffsetStepPagination(\n            ListUsersOffsetStepPaginationRequest\n                .builder()\n                .page(1)\n                .limit(1)\n                .order(Order.ASC)\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersOffsetStepPaginationRequest;\nimport com.seed.pagination.resources.inlineusers.inlineusers.types.Order;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsers().inlineUsers().listWithOffsetStepPagination(\n            ListUsersOffsetStepPaginationRequest\n                .builder()\n                .page(1)\n                .limit(1)\n                .order(Order.ASC)\n                .build()\n        );\n    }\n}\n"
-            }
-        },
-        {
-            "example_identifier": "bc4610a0",
-            "id": {
-                "method": "GET",
-                "path": "/inline-users",
-                "identifier_override": "endpoint_inline-users/inline-users.listWithOffsetPaginationHasNextPage"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersOffsetStepPaginationRequest;\nimport com.seed.pagination.resources.inlineusers.inlineusers.types.Order;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsers().inlineUsers().listWithOffsetStepPagination(\n            ListUsersOffsetStepPaginationRequest\n                .builder()\n                .page(1)\n                .limit(1)\n                .order(Order.ASC)\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersOffsetStepPaginationRequest;\nimport com.seed.pagination.resources.inlineusers.inlineusers.types.Order;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsers().inlineUsers().listWithOffsetStepPagination(\n            ListUsersOffsetStepPaginationRequest\n                .builder()\n                .page(1)\n                .limit(1)\n                .order(Order.ASC)\n                .build()\n        );\n    }\n}\n"
-            }
-        },
-        {
-            "example_identifier": "51e77e2b",
-            "id": {
-                "method": "GET",
-                "path": "/inline-users",
-                "identifier_override": "endpoint_inline-users/inline-users.listWithExtendedResults"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersExtendedRequest;\nimport java.util.UUID;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsers().inlineUsers().listWithExtendedResults(\n            ListUsersExtendedRequest\n                .builder()\n                .cursor(UUID.fromString(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"))\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersExtendedRequest;\nimport java.util.UUID;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsers().inlineUsers().listWithExtendedResults(\n            ListUsersExtendedRequest\n                .builder()\n                .cursor(UUID.fromString(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"))\n                .build()\n        );\n    }\n}\n"
-            }
-        },
-        {
-            "example_identifier": "4b255138",
-            "id": {
-                "method": "GET",
-                "path": "/inline-users",
-                "identifier_override": "endpoint_inline-users/inline-users.listWithExtendedResultsAndOptionalData"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersExtendedRequest;\nimport java.util.UUID;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsers().inlineUsers().listWithExtendedResults(\n            ListUsersExtendedRequest\n                .builder()\n                .cursor(UUID.fromString(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"))\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersExtendedRequest;\nimport java.util.UUID;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsers().inlineUsers().listWithExtendedResults(\n            ListUsersExtendedRequest\n                .builder()\n                .cursor(UUID.fromString(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"))\n                .build()\n        );\n    }\n}\n"
-            }
-        },
-        {
-            "example_identifier": "fdccf19a",
-            "id": {
-                "method": "GET",
-                "path": "/inline-users",
-                "identifier_override": "endpoint_inline-users/inline-users.listUsernames"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersCursorPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsers().inlineUsers().listWithCursorPagination(\n            ListUsersCursorPaginationRequest\n                .builder()\n                .startingAfter(\"starting_after\")\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersCursorPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsers().inlineUsers().listWithCursorPagination(\n            ListUsersCursorPaginationRequest\n                .builder()\n                .startingAfter(\"starting_after\")\n                .build()\n        );\n    }\n}\n"
-            }
-        },
-        {
-            "example_identifier": "6267ab94",
-            "id": {
-                "method": "GET",
-                "path": "/inline-users",
-                "identifier_override": "endpoint_inline-users/inline-users.listWithGlobalConfig"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.inlineusers.inlineusers.requests.ListWithGlobalConfigRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsers().inlineUsers().listWithGlobalConfig(\n            ListWithGlobalConfigRequest\n                .builder()\n                .offset(1)\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.inlineusers.inlineusers.requests.ListWithGlobalConfigRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsers().inlineUsers().listWithGlobalConfig(\n            ListWithGlobalConfigRequest\n                .builder()\n                .offset(1)\n                .build()\n        );\n    }\n}\n"
-            }
-        },
-        {
-            "example_identifier": "2ba1a91f",
-            "id": {
-                "method": "GET",
-                "path": "/users",
-                "identifier_override": "endpoint_users.listWithCursorPagination"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersCursorPaginationRequest;\nimport com.seed.pagination.resources.users.types.Order;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithCursorPagination(\n            ListUsersCursorPaginationRequest\n                .builder()\n                .page(1)\n                .perPage(1)\n                .order(Order.ASC)\n                .startingAfter(\"starting_after\")\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersCursorPaginationRequest;\nimport com.seed.pagination.resources.users.types.Order;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithCursorPagination(\n            ListUsersCursorPaginationRequest\n                .builder()\n                .page(1)\n                .perPage(1)\n                .order(Order.ASC)\n                .startingAfter(\"starting_after\")\n                .build()\n        );\n    }\n}\n"
-            }
-        },
-        {
-            "example_identifier": "b47f5999",
+            "example_identifier": "34607b83",
             "id": {
                 "method": "POST",
-                "path": "/users",
-                "identifier_override": "endpoint_users.listWithMixedTypeCursorPagination"
+                "path": "/inline-users/body-cursor",
+                "identifier_override": "endpoint_inlineUsersInlineUsers.inlineUsers_inlineUsers_listWithBodyCursorPagination"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersMixedTypeCursorPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithMixedTypeCursorPagination(\n            ListUsersMixedTypeCursorPaginationRequest\n                .builder()\n                .cursor(\"cursor\")\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersMixedTypeCursorPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithMixedTypeCursorPagination(\n            ListUsersMixedTypeCursorPaginationRequest\n                .builder()\n                .cursor(\"cursor\")\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListWithBodyCursorPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithBodyCursorPagination(\n            InlineUsersInlineUsersListWithBodyCursorPaginationRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListWithBodyCursorPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithBodyCursorPagination(\n            InlineUsersInlineUsersListWithBodyCursorPaginationRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "8db9c65a",
+            "example_identifier": "966a6ad1",
             "id": {
                 "method": "POST",
-                "path": "/users",
-                "identifier_override": "endpoint_users.listWithBodyCursorPagination"
+                "path": "/inline-users/body-cursor",
+                "identifier_override": "endpoint_inlineUsersInlineUsers.inlineUsers_inlineUsers_listWithBodyCursorPagination"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersMixedTypeCursorPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithMixedTypeCursorPagination(\n            ListUsersMixedTypeCursorPaginationRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersMixedTypeCursorPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithMixedTypeCursorPagination(\n            ListUsersMixedTypeCursorPaginationRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListWithBodyCursorPaginationRequest;\nimport com.seed.api.types.InlineUsersWithCursor;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithBodyCursorPagination(\n            InlineUsersInlineUsersListWithBodyCursorPaginationRequest\n                .builder()\n                .pagination(\n                    InlineUsersWithCursor\n                        .builder()\n                        .cursor(\"cursor\")\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListWithBodyCursorPaginationRequest;\nimport com.seed.api.types.InlineUsersWithCursor;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithBodyCursorPagination(\n            InlineUsersInlineUsersListWithBodyCursorPaginationRequest\n                .builder()\n                .pagination(\n                    InlineUsersWithCursor\n                        .builder()\n                        .cursor(\"cursor\")\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "WithCursor",
+            "example_identifier": "95eb8d5a",
+            "id": {
+                "method": "GET",
+                "path": "/inline-users/offset",
+                "identifier_override": "endpoint_inlineUsersInlineUsers.inlineUsers_inlineUsers_listWithOffsetPagination"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListWithOffsetPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithOffsetPagination(\n            InlineUsersInlineUsersListWithOffsetPaginationRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListWithOffsetPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithOffsetPagination(\n            InlineUsersInlineUsersListWithOffsetPaginationRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "3b3f394b",
+            "id": {
+                "method": "GET",
+                "path": "/inline-users/offset",
+                "identifier_override": "endpoint_inlineUsersInlineUsers.inlineUsers_inlineUsers_listWithOffsetPagination"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListWithOffsetPaginationRequest;\nimport com.seed.api.types.InlineUsersOrder;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithOffsetPagination(\n            InlineUsersInlineUsersListWithOffsetPaginationRequest\n                .builder()\n                .page(1)\n                .perPage(1)\n                .order(InlineUsersOrder.ASC)\n                .startingAfter(\"starting_after\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListWithOffsetPaginationRequest;\nimport com.seed.api.types.InlineUsersOrder;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithOffsetPagination(\n            InlineUsersInlineUsersListWithOffsetPaginationRequest\n                .builder()\n                .page(1)\n                .perPage(1)\n                .order(InlineUsersOrder.ASC)\n                .startingAfter(\"starting_after\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "95eb8d5a",
+            "id": {
+                "method": "GET",
+                "path": "/inline-users/double-offset",
+                "identifier_override": "endpoint_inlineUsersInlineUsers.inlineUsers_inlineUsers_listWithDoubleOffsetPagination"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListWithDoubleOffsetPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithDoubleOffsetPagination(\n            InlineUsersInlineUsersListWithDoubleOffsetPaginationRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListWithDoubleOffsetPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithDoubleOffsetPagination(\n            InlineUsersInlineUsersListWithDoubleOffsetPaginationRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "6ae92043",
+            "id": {
+                "method": "GET",
+                "path": "/inline-users/double-offset",
+                "identifier_override": "endpoint_inlineUsersInlineUsers.inlineUsers_inlineUsers_listWithDoubleOffsetPagination"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListWithDoubleOffsetPaginationRequest;\nimport com.seed.api.types.InlineUsersOrder;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithDoubleOffsetPagination(\n            InlineUsersInlineUsersListWithDoubleOffsetPaginationRequest\n                .builder()\n                .page(1.1)\n                .perPage(1.1)\n                .order(InlineUsersOrder.ASC)\n                .startingAfter(\"starting_after\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListWithDoubleOffsetPaginationRequest;\nimport com.seed.api.types.InlineUsersOrder;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithDoubleOffsetPagination(\n            InlineUsersInlineUsersListWithDoubleOffsetPaginationRequest\n                .builder()\n                .page(1.1)\n                .perPage(1.1)\n                .order(InlineUsersOrder.ASC)\n                .startingAfter(\"starting_after\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "34607b83",
+            "id": {
+                "method": "POST",
+                "path": "/inline-users/body-offset",
+                "identifier_override": "endpoint_inlineUsersInlineUsers.inlineUsers_inlineUsers_listWithBodyOffsetPagination"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListWithBodyOffsetPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithBodyOffsetPagination(\n            InlineUsersInlineUsersListWithBodyOffsetPaginationRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListWithBodyOffsetPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithBodyOffsetPagination(\n            InlineUsersInlineUsersListWithBodyOffsetPaginationRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "73e93169",
+            "id": {
+                "method": "POST",
+                "path": "/inline-users/body-offset",
+                "identifier_override": "endpoint_inlineUsersInlineUsers.inlineUsers_inlineUsers_listWithBodyOffsetPagination"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListWithBodyOffsetPaginationRequest;\nimport com.seed.api.types.InlineUsersWithPage;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithBodyOffsetPagination(\n            InlineUsersInlineUsersListWithBodyOffsetPaginationRequest\n                .builder()\n                .pagination(\n                    InlineUsersWithPage\n                        .builder()\n                        .page(1)\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListWithBodyOffsetPaginationRequest;\nimport com.seed.api.types.InlineUsersWithPage;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithBodyOffsetPagination(\n            InlineUsersInlineUsersListWithBodyOffsetPaginationRequest\n                .builder()\n                .pagination(\n                    InlineUsersWithPage\n                        .builder()\n                        .page(1)\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "95eb8d5a",
+            "id": {
+                "method": "GET",
+                "path": "/inline-users/offset-step",
+                "identifier_override": "endpoint_inlineUsersInlineUsers.inlineUsers_inlineUsers_listWithOffsetStepPagination"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListWithOffsetStepPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithOffsetStepPagination(\n            InlineUsersInlineUsersListWithOffsetStepPaginationRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListWithOffsetStepPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithOffsetStepPagination(\n            InlineUsersInlineUsersListWithOffsetStepPaginationRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "33405f99",
+            "id": {
+                "method": "GET",
+                "path": "/inline-users/offset-step",
+                "identifier_override": "endpoint_inlineUsersInlineUsers.inlineUsers_inlineUsers_listWithOffsetStepPagination"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListWithOffsetStepPaginationRequest;\nimport com.seed.api.types.InlineUsersOrder;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithOffsetStepPagination(\n            InlineUsersInlineUsersListWithOffsetStepPaginationRequest\n                .builder()\n                .page(1)\n                .limit(1)\n                .order(InlineUsersOrder.ASC)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListWithOffsetStepPaginationRequest;\nimport com.seed.api.types.InlineUsersOrder;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithOffsetStepPagination(\n            InlineUsersInlineUsersListWithOffsetStepPaginationRequest\n                .builder()\n                .page(1)\n                .limit(1)\n                .order(InlineUsersOrder.ASC)\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "95eb8d5a",
+            "id": {
+                "method": "GET",
+                "path": "/inline-users/offset-has-next-page",
+                "identifier_override": "endpoint_inlineUsersInlineUsers.inlineUsers_inlineUsers_listWithOffsetPaginationHasNextPage"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListWithOffsetPaginationHasNextPageRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithOffsetPaginationHasNextPage(\n            InlineUsersInlineUsersListWithOffsetPaginationHasNextPageRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListWithOffsetPaginationHasNextPageRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithOffsetPaginationHasNextPage(\n            InlineUsersInlineUsersListWithOffsetPaginationHasNextPageRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "33405f99",
+            "id": {
+                "method": "GET",
+                "path": "/inline-users/offset-has-next-page",
+                "identifier_override": "endpoint_inlineUsersInlineUsers.inlineUsers_inlineUsers_listWithOffsetPaginationHasNextPage"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListWithOffsetPaginationHasNextPageRequest;\nimport com.seed.api.types.InlineUsersOrder;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithOffsetPaginationHasNextPage(\n            InlineUsersInlineUsersListWithOffsetPaginationHasNextPageRequest\n                .builder()\n                .page(1)\n                .limit(1)\n                .order(InlineUsersOrder.ASC)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListWithOffsetPaginationHasNextPageRequest;\nimport com.seed.api.types.InlineUsersOrder;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithOffsetPaginationHasNextPage(\n            InlineUsersInlineUsersListWithOffsetPaginationHasNextPageRequest\n                .builder()\n                .page(1)\n                .limit(1)\n                .order(InlineUsersOrder.ASC)\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "a243f4ad",
+            "id": {
+                "method": "GET",
+                "path": "/inline-users/extended",
+                "identifier_override": "endpoint_inlineUsersInlineUsers.inlineUsers_inlineUsers_listWithExtendedResults"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListWithExtendedResultsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithExtendedResults(\n            InlineUsersInlineUsersListWithExtendedResultsRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListWithExtendedResultsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithExtendedResults(\n            InlineUsersInlineUsersListWithExtendedResultsRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "ce683438",
+            "id": {
+                "method": "GET",
+                "path": "/inline-users/extended",
+                "identifier_override": "endpoint_inlineUsersInlineUsers.inlineUsers_inlineUsers_listWithExtendedResults"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListWithExtendedResultsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithExtendedResults(\n            InlineUsersInlineUsersListWithExtendedResultsRequest\n                .builder()\n                .cursor(\"cursor\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListWithExtendedResultsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithExtendedResults(\n            InlineUsersInlineUsersListWithExtendedResultsRequest\n                .builder()\n                .cursor(\"cursor\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "a243f4ad",
+            "id": {
+                "method": "GET",
+                "path": "/inline-users/extended-optional",
+                "identifier_override": "endpoint_inlineUsersInlineUsers.inlineUsers_inlineUsers_listWithExtendedResultsAndOptionalData"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListWithExtendedResultsAndOptionalDataRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithExtendedResultsAndOptionalData(\n            InlineUsersInlineUsersListWithExtendedResultsAndOptionalDataRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListWithExtendedResultsAndOptionalDataRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithExtendedResultsAndOptionalData(\n            InlineUsersInlineUsersListWithExtendedResultsAndOptionalDataRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "9c2d0502",
+            "id": {
+                "method": "GET",
+                "path": "/inline-users/extended-optional",
+                "identifier_override": "endpoint_inlineUsersInlineUsers.inlineUsers_inlineUsers_listWithExtendedResultsAndOptionalData"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListWithExtendedResultsAndOptionalDataRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithExtendedResultsAndOptionalData(\n            InlineUsersInlineUsersListWithExtendedResultsAndOptionalDataRequest\n                .builder()\n                .cursor(\"cursor\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListWithExtendedResultsAndOptionalDataRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithExtendedResultsAndOptionalData(\n            InlineUsersInlineUsersListWithExtendedResultsAndOptionalDataRequest\n                .builder()\n                .cursor(\"cursor\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "7c3d325c",
+            "id": {
+                "method": "GET",
+                "path": "/inline-users/usernames",
+                "identifier_override": "endpoint_inlineUsersInlineUsers.inlineUsers_inlineUsers_listUsernames"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListUsernamesRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsersInlineUsers().inlineUsersInlineUsersListUsernames(\n            InlineUsersInlineUsersListUsernamesRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListUsernamesRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsersInlineUsers().inlineUsersInlineUsersListUsernames(\n            InlineUsersInlineUsersListUsernamesRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "c43414a1",
+            "id": {
+                "method": "GET",
+                "path": "/inline-users/usernames",
+                "identifier_override": "endpoint_inlineUsersInlineUsers.inlineUsers_inlineUsers_listUsernames"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListUsernamesRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsersInlineUsers().inlineUsersInlineUsersListUsernames(\n            InlineUsersInlineUsersListUsernamesRequest\n                .builder()\n                .startingAfter(\"starting_after\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListUsernamesRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsersInlineUsers().inlineUsersInlineUsersListUsernames(\n            InlineUsersInlineUsersListUsernamesRequest\n                .builder()\n                .startingAfter(\"starting_after\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "3fb6ec4",
+            "id": {
+                "method": "GET",
+                "path": "/inline-users/global-config",
+                "identifier_override": "endpoint_inlineUsersInlineUsers.inlineUsers_inlineUsers_listWithGlobalConfig"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListWithGlobalConfigRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithGlobalConfig(\n            InlineUsersInlineUsersListWithGlobalConfigRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListWithGlobalConfigRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithGlobalConfig(\n            InlineUsersInlineUsersListWithGlobalConfigRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "f0ba1303",
+            "id": {
+                "method": "GET",
+                "path": "/inline-users/global-config",
+                "identifier_override": "endpoint_inlineUsersInlineUsers.inlineUsers_inlineUsers_listWithGlobalConfig"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListWithGlobalConfigRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithGlobalConfig(\n            InlineUsersInlineUsersListWithGlobalConfigRequest\n                .builder()\n                .offset(1)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListWithGlobalConfigRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithGlobalConfig(\n            InlineUsersInlineUsersListWithGlobalConfigRequest\n                .builder()\n                .offset(1)\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "9e73f394",
+            "id": {
+                "method": "GET",
+                "path": "/users/cursor",
+                "identifier_override": "endpoint_users.listwithcursorpagination"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithCursorPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithcursorpagination(\n            UsersListWithCursorPaginationRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithCursorPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithcursorpagination(\n            UsersListWithCursorPaginationRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "a2cae205",
+            "id": {
+                "method": "GET",
+                "path": "/users/cursor",
+                "identifier_override": "endpoint_users.listwithcursorpagination"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithCursorPaginationRequest;\nimport com.seed.api.types.Order;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithcursorpagination(\n            UsersListWithCursorPaginationRequest\n                .builder()\n                .page(1)\n                .perPage(1)\n                .order(Order.ASC)\n                .startingAfter(\"starting_after\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithCursorPaginationRequest;\nimport com.seed.api.types.Order;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithcursorpagination(\n            UsersListWithCursorPaginationRequest\n                .builder()\n                .page(1)\n                .perPage(1)\n                .order(Order.ASC)\n                .startingAfter(\"starting_after\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "c84847f2",
+            "id": {
+                "method": "POST",
+                "path": "/users/mixed-type-cursor",
+                "identifier_override": "endpoint_users.listwithmixedtypecursorpagination"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithMixedTypeCursorPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithmixedtypecursorpagination(\n            UsersListWithMixedTypeCursorPaginationRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithMixedTypeCursorPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithmixedtypecursorpagination(\n            UsersListWithMixedTypeCursorPaginationRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "4720b21b",
+            "id": {
+                "method": "POST",
+                "path": "/users/mixed-type-cursor",
+                "identifier_override": "endpoint_users.listwithmixedtypecursorpagination"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithMixedTypeCursorPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithmixedtypecursorpagination(\n            UsersListWithMixedTypeCursorPaginationRequest\n                .builder()\n                .cursor(\"cursor\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithMixedTypeCursorPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithmixedtypecursorpagination(\n            UsersListWithMixedTypeCursorPaginationRequest\n                .builder()\n                .cursor(\"cursor\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "63be10f9",
+            "id": {
+                "method": "POST",
+                "path": "/users/body-cursor",
+                "identifier_override": "endpoint_users.listwithbodycursorpagination"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithBodyCursorPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithbodycursorpagination(\n            UsersListWithBodyCursorPaginationRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithBodyCursorPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithbodycursorpagination(\n            UsersListWithBodyCursorPaginationRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "db8cc555",
+            "id": {
+                "method": "POST",
+                "path": "/users/body-cursor",
+                "identifier_override": "endpoint_users.listwithbodycursorpagination"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithBodyCursorPaginationRequest;\nimport com.seed.api.types.WithCursor;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithbodycursorpagination(\n            UsersListWithBodyCursorPaginationRequest\n                .builder()\n                .pagination(\n                    WithCursor\n                        .builder()\n                        .cursor(\"cursor\")\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithBodyCursorPaginationRequest;\nimport com.seed.api.types.WithCursor;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithbodycursorpagination(\n            UsersListWithBodyCursorPaginationRequest\n                .builder()\n                .pagination(\n                    WithCursor\n                        .builder()\n                        .cursor(\"cursor\")\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "aca3062b",
             "id": {
                 "method": "POST",
                 "path": "/users/top-level-cursor",
-                "identifier_override": "endpoint_users.listWithTopLevelBodyCursorPagination"
+                "identifier_override": "endpoint_users.listwithtoplevelbodycursorpagination"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersTopLevelBodyCursorPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithTopLevelBodyCursorPagination(\n            ListUsersTopLevelBodyCursorPaginationRequest\n                .builder()\n                .cursor(\"initial_cursor\")\n                .filter(\"active\")\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersTopLevelBodyCursorPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithTopLevelBodyCursorPagination(\n            ListUsersTopLevelBodyCursorPaginationRequest\n                .builder()\n                .cursor(\"initial_cursor\")\n                .filter(\"active\")\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithTopLevelBodyCursorPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithtoplevelbodycursorpagination(\n            UsersListWithTopLevelBodyCursorPaginationRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithTopLevelBodyCursorPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithtoplevelbodycursorpagination(\n            UsersListWithTopLevelBodyCursorPaginationRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "df1aae31",
+            "example_identifier": "581265c5",
             "id": {
                 "method": "POST",
                 "path": "/users/top-level-cursor",
-                "identifier_override": "endpoint_users.listWithTopLevelBodyCursorPagination"
+                "identifier_override": "endpoint_users.listwithtoplevelbodycursorpagination"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersTopLevelBodyCursorPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithTopLevelBodyCursorPagination(\n            ListUsersTopLevelBodyCursorPaginationRequest\n                .builder()\n                .cursor(\"cursor\")\n                .filter(\"filter\")\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersTopLevelBodyCursorPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithTopLevelBodyCursorPagination(\n            ListUsersTopLevelBodyCursorPaginationRequest\n                .builder()\n                .cursor(\"cursor\")\n                .filter(\"filter\")\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithTopLevelBodyCursorPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithtoplevelbodycursorpagination(\n            UsersListWithTopLevelBodyCursorPaginationRequest\n                .builder()\n                .cursor(\"cursor\")\n                .filter(\"filter\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithTopLevelBodyCursorPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithtoplevelbodycursorpagination(\n            UsersListWithTopLevelBodyCursorPaginationRequest\n                .builder()\n                .cursor(\"cursor\")\n                .filter(\"filter\")\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "da96568f",
+            "example_identifier": "9e73f394",
             "id": {
                 "method": "GET",
-                "path": "/users",
-                "identifier_override": "endpoint_users.listWithOffsetPagination"
+                "path": "/users/offset",
+                "identifier_override": "endpoint_users.listwithoffsetpagination"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersCursorPaginationRequest;\nimport com.seed.pagination.resources.users.types.Order;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithCursorPagination(\n            ListUsersCursorPaginationRequest\n                .builder()\n                .page(1)\n                .perPage(1)\n                .order(Order.ASC)\n                .startingAfter(\"starting_after\")\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersCursorPaginationRequest;\nimport com.seed.pagination.resources.users.types.Order;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithCursorPagination(\n            ListUsersCursorPaginationRequest\n                .builder()\n                .page(1)\n                .perPage(1)\n                .order(Order.ASC)\n                .startingAfter(\"starting_after\")\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithOffsetPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithoffsetpagination(\n            UsersListWithOffsetPaginationRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithOffsetPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithoffsetpagination(\n            UsersListWithOffsetPaginationRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "f21cccbb",
+            "example_identifier": "a2cae205",
             "id": {
                 "method": "GET",
-                "path": "/users",
-                "identifier_override": "endpoint_users.listWithDoubleOffsetPagination"
+                "path": "/users/offset",
+                "identifier_override": "endpoint_users.listwithoffsetpagination"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersCursorPaginationRequest;\nimport com.seed.pagination.resources.users.types.Order;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithCursorPagination(\n            ListUsersCursorPaginationRequest\n                .builder()\n                .page(1)\n                .perPage(1)\n                .order(Order.ASC)\n                .startingAfter(\"starting_after\")\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersCursorPaginationRequest;\nimport com.seed.pagination.resources.users.types.Order;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithCursorPagination(\n            ListUsersCursorPaginationRequest\n                .builder()\n                .page(1)\n                .perPage(1)\n                .order(Order.ASC)\n                .startingAfter(\"starting_after\")\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithOffsetPaginationRequest;\nimport com.seed.api.types.Order;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithoffsetpagination(\n            UsersListWithOffsetPaginationRequest\n                .builder()\n                .page(1)\n                .perPage(1)\n                .order(Order.ASC)\n                .startingAfter(\"starting_after\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithOffsetPaginationRequest;\nimport com.seed.api.types.Order;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithoffsetpagination(\n            UsersListWithOffsetPaginationRequest\n                .builder()\n                .page(1)\n                .perPage(1)\n                .order(Order.ASC)\n                .startingAfter(\"starting_after\")\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "9123505d",
+            "example_identifier": "9e73f394",
+            "id": {
+                "method": "GET",
+                "path": "/users/double-offset",
+                "identifier_override": "endpoint_users.listwithdoubleoffsetpagination"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithDoubleOffsetPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithdoubleoffsetpagination(\n            UsersListWithDoubleOffsetPaginationRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithDoubleOffsetPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithdoubleoffsetpagination(\n            UsersListWithDoubleOffsetPaginationRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "3204730d",
+            "id": {
+                "method": "GET",
+                "path": "/users/double-offset",
+                "identifier_override": "endpoint_users.listwithdoubleoffsetpagination"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithDoubleOffsetPaginationRequest;\nimport com.seed.api.types.Order;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithdoubleoffsetpagination(\n            UsersListWithDoubleOffsetPaginationRequest\n                .builder()\n                .page(1.1)\n                .perPage(1.1)\n                .order(Order.ASC)\n                .startingAfter(\"starting_after\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithDoubleOffsetPaginationRequest;\nimport com.seed.api.types.Order;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithdoubleoffsetpagination(\n            UsersListWithDoubleOffsetPaginationRequest\n                .builder()\n                .page(1.1)\n                .perPage(1.1)\n                .order(Order.ASC)\n                .startingAfter(\"starting_after\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "63be10f9",
             "id": {
                 "method": "POST",
-                "path": "/users",
-                "identifier_override": "endpoint_users.listWithBodyOffsetPagination"
+                "path": "/users/body-offset",
+                "identifier_override": "endpoint_users.listwithbodyoffsetpagination"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersMixedTypeCursorPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithMixedTypeCursorPagination(\n            ListUsersMixedTypeCursorPaginationRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersMixedTypeCursorPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithMixedTypeCursorPagination(\n            ListUsersMixedTypeCursorPaginationRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithBodyOffsetPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithbodyoffsetpagination(\n            UsersListWithBodyOffsetPaginationRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithBodyOffsetPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithbodyoffsetpagination(\n            UsersListWithBodyOffsetPaginationRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "c3eb1c94",
+            "example_identifier": "28db367",
+            "id": {
+                "method": "POST",
+                "path": "/users/body-offset",
+                "identifier_override": "endpoint_users.listwithbodyoffsetpagination"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithBodyOffsetPaginationRequest;\nimport com.seed.api.types.WithPage;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithbodyoffsetpagination(\n            UsersListWithBodyOffsetPaginationRequest\n                .builder()\n                .pagination(\n                    WithPage\n                        .builder()\n                        .page(1)\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithBodyOffsetPaginationRequest;\nimport com.seed.api.types.WithPage;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithbodyoffsetpagination(\n            UsersListWithBodyOffsetPaginationRequest\n                .builder()\n                .pagination(\n                    WithPage\n                        .builder()\n                        .page(1)\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "9e73f394",
             "id": {
                 "method": "GET",
-                "path": "/users",
-                "identifier_override": "endpoint_users.listWithOffsetStepPagination"
+                "path": "/users/offset-step",
+                "identifier_override": "endpoint_users.listwithoffsetsteppagination"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersOffsetStepPaginationRequest;\nimport com.seed.pagination.resources.users.types.Order;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithOffsetStepPagination(\n            ListUsersOffsetStepPaginationRequest\n                .builder()\n                .page(1)\n                .limit(1)\n                .order(Order.ASC)\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersOffsetStepPaginationRequest;\nimport com.seed.pagination.resources.users.types.Order;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithOffsetStepPagination(\n            ListUsersOffsetStepPaginationRequest\n                .builder()\n                .page(1)\n                .limit(1)\n                .order(Order.ASC)\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithOffsetStepPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithoffsetsteppagination(\n            UsersListWithOffsetStepPaginationRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithOffsetStepPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithoffsetsteppagination(\n            UsersListWithOffsetStepPaginationRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "HasNextPage",
+            "example_identifier": "8f3d606b",
             "id": {
                 "method": "GET",
-                "path": "/users",
-                "identifier_override": "endpoint_users.listWithOffsetPaginationHasNextPage"
+                "path": "/users/offset-step",
+                "identifier_override": "endpoint_users.listwithoffsetsteppagination"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersOffsetStepPaginationRequest;\nimport com.seed.pagination.resources.users.types.Order;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithOffsetStepPagination(\n            ListUsersOffsetStepPaginationRequest\n                .builder()\n                .page(1)\n                .limit(3)\n                .order(Order.ASC)\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersOffsetStepPaginationRequest;\nimport com.seed.pagination.resources.users.types.Order;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithOffsetStepPagination(\n            ListUsersOffsetStepPaginationRequest\n                .builder()\n                .page(1)\n                .limit(3)\n                .order(Order.ASC)\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithOffsetStepPaginationRequest;\nimport com.seed.api.types.Order;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithoffsetsteppagination(\n            UsersListWithOffsetStepPaginationRequest\n                .builder()\n                .page(1)\n                .limit(1)\n                .order(Order.ASC)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithOffsetStepPaginationRequest;\nimport com.seed.api.types.Order;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithoffsetsteppagination(\n            UsersListWithOffsetStepPaginationRequest\n                .builder()\n                .page(1)\n                .limit(1)\n                .order(Order.ASC)\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "NoNextPage",
+            "example_identifier": "9e73f394",
             "id": {
                 "method": "GET",
-                "path": "/users",
-                "identifier_override": "endpoint_users.listWithOffsetPaginationHasNextPage"
+                "path": "/users/offset-has-next-page",
+                "identifier_override": "endpoint_users.listwithoffsetpaginationhasnextpage"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersOffsetStepPaginationRequest;\nimport com.seed.pagination.resources.users.types.Order;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithOffsetStepPagination(\n            ListUsersOffsetStepPaginationRequest\n                .builder()\n                .page(1)\n                .limit(10)\n                .order(Order.ASC)\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersOffsetStepPaginationRequest;\nimport com.seed.pagination.resources.users.types.Order;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithOffsetStepPagination(\n            ListUsersOffsetStepPaginationRequest\n                .builder()\n                .page(1)\n                .limit(10)\n                .order(Order.ASC)\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithOffsetPaginationHasNextPageRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithoffsetpaginationhasnextpage(\n            UsersListWithOffsetPaginationHasNextPageRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithOffsetPaginationHasNextPageRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithoffsetpaginationhasnextpage(\n            UsersListWithOffsetPaginationHasNextPageRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "939533a0",
+            "example_identifier": "8f3d606b",
             "id": {
                 "method": "GET",
-                "path": "/users",
-                "identifier_override": "endpoint_users.listWithOffsetPaginationHasNextPage"
+                "path": "/users/offset-has-next-page",
+                "identifier_override": "endpoint_users.listwithoffsetpaginationhasnextpage"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersOffsetStepPaginationRequest;\nimport com.seed.pagination.resources.users.types.Order;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithOffsetStepPagination(\n            ListUsersOffsetStepPaginationRequest\n                .builder()\n                .page(1)\n                .limit(1)\n                .order(Order.ASC)\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersOffsetStepPaginationRequest;\nimport com.seed.pagination.resources.users.types.Order;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithOffsetStepPagination(\n            ListUsersOffsetStepPaginationRequest\n                .builder()\n                .page(1)\n                .limit(1)\n                .order(Order.ASC)\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithOffsetPaginationHasNextPageRequest;\nimport com.seed.api.types.Order;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithoffsetpaginationhasnextpage(\n            UsersListWithOffsetPaginationHasNextPageRequest\n                .builder()\n                .page(1)\n                .limit(1)\n                .order(Order.ASC)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithOffsetPaginationHasNextPageRequest;\nimport com.seed.api.types.Order;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithoffsetpaginationhasnextpage(\n            UsersListWithOffsetPaginationHasNextPageRequest\n                .builder()\n                .page(1)\n                .limit(1)\n                .order(Order.ASC)\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "652f9754",
+            "example_identifier": "a243f4ad",
             "id": {
                 "method": "GET",
-                "path": "/users",
-                "identifier_override": "endpoint_users.listWithExtendedResults"
+                "path": "/users/extended",
+                "identifier_override": "endpoint_users.listwithextendedresults"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersExtendedRequest;\nimport java.util.UUID;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithExtendedResults(\n            ListUsersExtendedRequest\n                .builder()\n                .cursor(UUID.fromString(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"))\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersExtendedRequest;\nimport java.util.UUID;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithExtendedResults(\n            ListUsersExtendedRequest\n                .builder()\n                .cursor(UUID.fromString(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"))\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithExtendedResultsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithextendedresults(\n            UsersListWithExtendedResultsRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithExtendedResultsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithextendedresults(\n            UsersListWithExtendedResultsRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "d155acc0",
+            "example_identifier": "1ccca944",
             "id": {
                 "method": "GET",
-                "path": "/users",
-                "identifier_override": "endpoint_users.listWithExtendedResultsAndOptionalData"
+                "path": "/users/extended",
+                "identifier_override": "endpoint_users.listwithextendedresults"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersExtendedRequest;\nimport java.util.UUID;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithExtendedResults(\n            ListUsersExtendedRequest\n                .builder()\n                .cursor(UUID.fromString(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"))\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersExtendedRequest;\nimport java.util.UUID;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithExtendedResults(\n            ListUsersExtendedRequest\n                .builder()\n                .cursor(UUID.fromString(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"))\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithExtendedResultsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithextendedresults(\n            UsersListWithExtendedResultsRequest\n                .builder()\n                .cursor(\"cursor\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithExtendedResultsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithextendedresults(\n            UsersListWithExtendedResultsRequest\n                .builder()\n                .cursor(\"cursor\")\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "fdccf19a",
+            "example_identifier": "a243f4ad",
             "id": {
                 "method": "GET",
-                "path": "/users",
-                "identifier_override": "endpoint_users.listUsernames"
+                "path": "/users/extended-optional",
+                "identifier_override": "endpoint_users.listwithextendedresultsandoptionaldata"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersCursorPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithCursorPagination(\n            ListUsersCursorPaginationRequest\n                .builder()\n                .startingAfter(\"starting_after\")\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersCursorPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithCursorPagination(\n            ListUsersCursorPaginationRequest\n                .builder()\n                .startingAfter(\"starting_after\")\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithExtendedResultsAndOptionalDataRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithextendedresultsandoptionaldata(\n            UsersListWithExtendedResultsAndOptionalDataRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithExtendedResultsAndOptionalDataRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithextendedresultsandoptionaldata(\n            UsersListWithExtendedResultsAndOptionalDataRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "ad6517ae",
+            "example_identifier": "84fe1c42",
             "id": {
                 "method": "GET",
-                "path": "/users",
-                "identifier_override": "endpoint_users.listUsernamesWithOptionalResponse"
+                "path": "/users/extended-optional",
+                "identifier_override": "endpoint_users.listwithextendedresultsandoptionaldata"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersCursorPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithCursorPagination(\n            ListUsersCursorPaginationRequest\n                .builder()\n                .startingAfter(\"starting_after\")\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersCursorPaginationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithCursorPagination(\n            ListUsersCursorPaginationRequest\n                .builder()\n                .startingAfter(\"starting_after\")\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithExtendedResultsAndOptionalDataRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithextendedresultsandoptionaldata(\n            UsersListWithExtendedResultsAndOptionalDataRequest\n                .builder()\n                .cursor(\"cursor\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithExtendedResultsAndOptionalDataRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithextendedresultsandoptionaldata(\n            UsersListWithExtendedResultsAndOptionalDataRequest\n                .builder()\n                .cursor(\"cursor\")\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "27b19490",
+            "example_identifier": "7c3d325c",
             "id": {
                 "method": "GET",
-                "path": "/users",
-                "identifier_override": "endpoint_users.listWithGlobalConfig"
+                "path": "/users/usernames",
+                "identifier_override": "endpoint_users.listusernames"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListWithGlobalConfigRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithGlobalConfig(\n            ListWithGlobalConfigRequest\n                .builder()\n                .offset(1)\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListWithGlobalConfigRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithGlobalConfig(\n            ListWithGlobalConfigRequest\n                .builder()\n                .offset(1)\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListUsernamesRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listusernames(\n            UsersListUsernamesRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListUsernamesRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listusernames(\n            UsersListUsernamesRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "WithData",
+            "example_identifier": "c43414a1",
+            "id": {
+                "method": "GET",
+                "path": "/users/usernames",
+                "identifier_override": "endpoint_users.listusernames"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListUsernamesRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listusernames(\n            UsersListUsernamesRequest\n                .builder()\n                .startingAfter(\"starting_after\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListUsernamesRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listusernames(\n            UsersListUsernamesRequest\n                .builder()\n                .startingAfter(\"starting_after\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "7c3d325c",
+            "id": {
+                "method": "GET",
+                "path": "/users/usernames-optional",
+                "identifier_override": "endpoint_users.listusernameswithoptionalresponse"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListUsernamesWithOptionalResponseRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listusernameswithoptionalresponse(\n            UsersListUsernamesWithOptionalResponseRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListUsernamesWithOptionalResponseRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listusernameswithoptionalresponse(\n            UsersListUsernamesWithOptionalResponseRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "c43414a1",
+            "id": {
+                "method": "GET",
+                "path": "/users/usernames-optional",
+                "identifier_override": "endpoint_users.listusernameswithoptionalresponse"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListUsernamesWithOptionalResponseRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listusernameswithoptionalresponse(\n            UsersListUsernamesWithOptionalResponseRequest\n                .builder()\n                .startingAfter(\"starting_after\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListUsernamesWithOptionalResponseRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listusernameswithoptionalresponse(\n            UsersListUsernamesWithOptionalResponseRequest\n                .builder()\n                .startingAfter(\"starting_after\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "3fb6ec4",
+            "id": {
+                "method": "GET",
+                "path": "/users/global-config",
+                "identifier_override": "endpoint_users.listwithglobalconfig"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithGlobalConfigRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithglobalconfig(\n            UsersListWithGlobalConfigRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithGlobalConfigRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithglobalconfig(\n            UsersListWithGlobalConfigRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "e53e9daf",
+            "id": {
+                "method": "GET",
+                "path": "/users/global-config",
+                "identifier_override": "endpoint_users.listwithglobalconfig"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithGlobalConfigRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithglobalconfig(\n            UsersListWithGlobalConfigRequest\n                .builder()\n                .offset(1)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithGlobalConfigRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithglobalconfig(\n            UsersListWithGlobalConfigRequest\n                .builder()\n                .offset(1)\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "9e73f394",
             "id": {
                 "method": "GET",
                 "path": "/users/optional-data",
-                "identifier_override": "endpoint_users.listWithOptionalData"
+                "identifier_override": "endpoint_users.listwithoptionaldata"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersOptionalDataRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithOptionalData(\n            ListUsersOptionalDataRequest\n                .builder()\n                .page(1)\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersOptionalDataRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithOptionalData(\n            ListUsersOptionalDataRequest\n                .builder()\n                .page(1)\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithOptionalDataRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithoptionaldata(\n            UsersListWithOptionalDataRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithOptionalDataRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithoptionaldata(\n            UsersListWithOptionalDataRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "WithoutData",
+            "example_identifier": "66ee9c90",
             "id": {
                 "method": "GET",
                 "path": "/users/optional-data",
-                "identifier_override": "endpoint_users.listWithOptionalData"
+                "identifier_override": "endpoint_users.listwithoptionaldata"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersOptionalDataRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithOptionalData(\n            ListUsersOptionalDataRequest\n                .builder()\n                .page(1)\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersOptionalDataRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithOptionalData(\n            ListUsersOptionalDataRequest\n                .builder()\n                .page(1)\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithOptionalDataRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithoptionaldata(\n            UsersListWithOptionalDataRequest\n                .builder()\n                .page(1)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithOptionalDataRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithoptionaldata(\n            UsersListWithOptionalDataRequest\n                .builder()\n                .page(1)\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "d616a3f8",
-            "id": {
-                "method": "GET",
-                "path": "/users/optional-data",
-                "identifier_override": "endpoint_users.listWithOptionalData"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersOptionalDataRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithOptionalData(\n            ListUsersOptionalDataRequest\n                .builder()\n                .page(1)\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersOptionalDataRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithOptionalData(\n            ListUsersOptionalDataRequest\n                .builder()\n                .page(1)\n                .build()\n        );\n    }\n}\n"
-            }
-        },
-        {
-            "example_identifier": "6b370bc1",
+            "example_identifier": "9e73f394",
             "id": {
                 "method": "GET",
                 "path": "/users/aliased-data",
-                "identifier_override": "endpoint_users.listWithAliasedData"
+                "identifier_override": "endpoint_users.listwithaliaseddata"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersAliasedDataRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithAliasedData(\n            ListUsersAliasedDataRequest\n                .builder()\n                .page(1)\n                .perPage(1)\n                .startingAfter(\"starting_after\")\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.pagination.SeedPaginationClient;\nimport com.seed.pagination.resources.users.requests.ListUsersAliasedDataRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPaginationClient client = SeedPaginationClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listWithAliasedData(\n            ListUsersAliasedDataRequest\n                .builder()\n                .page(1)\n                .perPage(1)\n                .startingAfter(\"starting_after\")\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithAliasedDataRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithaliaseddata(\n            UsersListWithAliasedDataRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithAliasedDataRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithaliaseddata(\n            UsersListWithAliasedDataRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "af954373",
+            "id": {
+                "method": "GET",
+                "path": "/users/aliased-data",
+                "identifier_override": "endpoint_users.listwithaliaseddata"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithAliasedDataRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithaliaseddata(\n            UsersListWithAliasedDataRequest\n                .builder()\n                .page(1)\n                .perPage(1)\n                .startingAfter(\"starting_after\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.users.requests.UsersListWithAliasedDataRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.users().listwithaliaseddata(\n            UsersListWithAliasedDataRequest\n                .builder()\n                .page(1)\n                .perPage(1)\n                .startingAfter(\"starting_after\")\n                .build()\n        );\n    }\n}\n"
             }
         }
     ],

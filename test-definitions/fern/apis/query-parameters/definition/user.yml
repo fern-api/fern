@@ -1,0 +1,39 @@
+types:
+  User:
+    properties:
+      name: string
+      tags: list<string>
+  NestedUser:
+    properties:
+      name: string
+      user: User
+
+service:
+  base-path: /user
+  auth: false
+  endpoints:
+    getUsername:
+      path: ""
+      method: GET
+      request:
+        name: GetUsersRequest
+        query-parameters:
+          limit: integer
+          id: uuid
+          date: date
+          deadline: datetime
+          bytes: base64
+          user: User
+          userList: list<User>
+          optionalDeadline: optional<datetime>
+          keyValue: map<string, string>
+          optionalString: optional<string>
+          nestedUser: NestedUser
+          optionalUser: optional<User>
+          excludeUser:
+            type: User
+            allow-multiple: true
+          filter:
+            type: string
+            allow-multiple: true
+      response: User

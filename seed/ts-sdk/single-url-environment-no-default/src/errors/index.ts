@@ -1,2 +1,2 @@
-export { SeedSingleUrlEnvironmentNoDefaultError } from "./SeedSingleUrlEnvironmentNoDefaultError.js";
-export { SeedSingleUrlEnvironmentNoDefaultTimeoutError } from "./SeedSingleUrlEnvironmentNoDefaultTimeoutError.js";
+export { SeedApiError } from "./SeedApiError.js";
+export { SeedApiTimeoutError } from "./SeedApiTimeoutError.js";

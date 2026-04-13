@@ -110,3 +110,532 @@ func (r *RootType) String() string {
 	}
 	return fmt.Sprintf("%#v", r)
 }
+
+type A = *RootType
+
+type TorU struct {
+	T *T
+	U *U
+}
+
+type T struct {
+	Child *TorU `json:"child" url:"child"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (t *T) GetChild() *TorU {
+	if t == nil {
+		return nil
+	}
+	return t.Child
+}
+
+func (t *T) GetExtraProperties() map[string]any {
+	if t == nil {
+		return nil
+	}
+	return t.extraProperties
+}
+
+func (t *T) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler T
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*t = T(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *t)
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+	t.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (t *T) String() string {
+	if len(t.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
+}
+
+type U struct {
+	Child *T `json:"child" url:"child"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (u *U) GetChild() *T {
+	if u == nil {
+		return nil
+	}
+	return u.Child
+}
+
+func (u *U) GetExtraProperties() map[string]any {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *U) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler U
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = U(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *U) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+type FieldValueZeroType string
+
+const (
+	FieldValueZeroTypePrimitiveValue = "primitive_value"
+)
+
+func NewFieldValueZeroTypeFromString(s string) (FieldValueZeroType, error) {
+	switch s {
+	case "primitive_value":
+		return FieldValueZeroTypePrimitiveValue, nil
+	}
+	var t FieldValueZeroType
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FieldValueZeroType) Ptr() *FieldValueZeroType {
+	return &f
+}
+
+type FieldValueZero struct {
+	Type  *FieldValueZeroType `json:"type" url:"type"`
+	Value *PrimitiveValue     `json:"value,omitempty" url:"value,omitempty"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (f *FieldValueZero) GetType() *FieldValueZeroType {
+	if f == nil {
+		return nil
+	}
+	return f.Type
+}
+
+func (f *FieldValueZero) GetValue() *PrimitiveValue {
+	if f == nil {
+		return nil
+	}
+	return f.Value
+}
+
+func (f *FieldValueZero) GetExtraProperties() map[string]any {
+	if f == nil {
+		return nil
+	}
+	return f.extraProperties
+}
+
+func (f *FieldValueZero) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler FieldValueZero
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*f = FieldValueZero(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+	f.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (f *FieldValueZero) String() string {
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
+}
+
+type FieldValueOneType string
+
+const (
+	FieldValueOneTypeObjectValue = "object_value"
+)
+
+func NewFieldValueOneTypeFromString(s string) (FieldValueOneType, error) {
+	switch s {
+	case "object_value":
+		return FieldValueOneTypeObjectValue, nil
+	}
+	var t FieldValueOneType
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FieldValueOneType) Ptr() *FieldValueOneType {
+	return &f
+}
+
+type FieldValueOne struct {
+	Type *FieldValueOneType `json:"type" url:"type"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (f *FieldValueOne) GetType() *FieldValueOneType {
+	if f == nil {
+		return nil
+	}
+	return f.Type
+}
+
+func (f *FieldValueOne) GetExtraProperties() map[string]any {
+	if f == nil {
+		return nil
+	}
+	return f.extraProperties
+}
+
+func (f *FieldValueOne) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler FieldValueOne
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*f = FieldValueOne(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+	f.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (f *FieldValueOne) String() string {
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
+}
+
+type FieldValueTwoType string
+
+const (
+	FieldValueTwoTypeContainerValue = "container_value"
+)
+
+func NewFieldValueTwoTypeFromString(s string) (FieldValueTwoType, error) {
+	switch s {
+	case "container_value":
+		return FieldValueTwoTypeContainerValue, nil
+	}
+	var t FieldValueTwoType
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FieldValueTwoType) Ptr() *FieldValueTwoType {
+	return &f
+}
+
+type FieldValueTwo struct {
+	Type  *FieldValueTwoType `json:"type" url:"type"`
+	Value *ContainerValue    `json:"value,omitempty" url:"value,omitempty"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (f *FieldValueTwo) GetType() *FieldValueTwoType {
+	if f == nil {
+		return nil
+	}
+	return f.Type
+}
+
+func (f *FieldValueTwo) GetValue() *ContainerValue {
+	if f == nil {
+		return nil
+	}
+	return f.Value
+}
+
+func (f *FieldValueTwo) GetExtraProperties() map[string]any {
+	if f == nil {
+		return nil
+	}
+	return f.extraProperties
+}
+
+func (f *FieldValueTwo) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler FieldValueTwo
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*f = FieldValueTwo(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+	f.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (f *FieldValueTwo) String() string {
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
+}
+
+type FieldValue struct {
+	FieldValueZero *FieldValueZero
+	FieldValueOne  *FieldValueOne
+	FieldValueTwo  *FieldValueTwo
+}
+
+type ContainerValueList struct {
+	Value []*FieldValue `json:"value,omitempty" url:"value,omitempty"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (c *ContainerValueList) GetValue() []*FieldValue {
+	if c == nil {
+		return nil
+	}
+	return c.Value
+}
+
+func (c *ContainerValueList) GetExtraProperties() map[string]any {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *ContainerValueList) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler ContainerValueList
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ContainerValueList(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ContainerValueList) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type ContainerValueOptional struct {
+	Value *FieldValue `json:"value,omitempty" url:"value,omitempty"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (c *ContainerValueOptional) GetValue() *FieldValue {
+	if c == nil {
+		return nil
+	}
+	return c.Value
+}
+
+func (c *ContainerValueOptional) GetExtraProperties() map[string]any {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *ContainerValueOptional) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler ContainerValueOptional
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ContainerValueOptional(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ContainerValueOptional) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type ContainerValue struct {
+	Type     string
+	List     ContainerValueList
+	Optional ContainerValueOptional
+}
+
+type PrimitiveValue string
+
+const (
+	PrimitiveValueString = "STRING"
+	PrimitiveValueNumber = "NUMBER"
+)
+
+func NewPrimitiveValueFromString(s string) (PrimitiveValue, error) {
+	switch s {
+	case "STRING":
+		return PrimitiveValueString, nil
+	case "NUMBER":
+		return PrimitiveValueNumber, nil
+	}
+	var t PrimitiveValue
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (p PrimitiveValue) Ptr() *PrimitiveValue {
+	return &p
+}
+
+type ObjectValue struct {
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (o *ObjectValue) GetExtraProperties() map[string]any {
+	if o == nil {
+		return nil
+	}
+	return o.extraProperties
+}
+
+func (o *ObjectValue) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler ObjectValue
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = ObjectValue(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (o *ObjectValue) String() string {
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
+type JSONLike struct {
+	JSONLikeList      []*JSONLike
+	StringJSONLikeMap map[string]*JSONLike
+	String            string
+	Integer           int
+	Boolean           bool
+}
+
+type JSONLikeWithNullAndUndefined struct {
+	JSONLikeWithNullAndUndefinedList      []*JSONLikeWithNullAndUndefined
+	StringJSONLikeWithNullAndUndefinedMap map[string]*JSONLikeWithNullAndUndefined
+	StringOptional                        *string
+	IntegerOptional                       *int
+	BooleanOptional                       *bool
+}

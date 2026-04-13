@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">createUsername</a>(tags: [String], request: Requests.CreateUsernameRequest, requestOptions: RequestOptions?) -> Void</code></summary>
+<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">createusername</a>(tags: String?, request: Requests.UserCreateUsernameRequest, requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -14,22 +14,16 @@
 
 ```swift
 import Foundation
-import RequestParameters
+import Api
 
 private func main() async throws {
-    let client = RequestParametersClient()
+    let client = ApiClient()
 
-    _ = try await client.user.createUsername(
-        tags: [
-            "tags",
-            "tags"
-        ],
-        request: .init(
-            username: "username",
-            password: "password",
-            name: "test"
-        )
-    )
+    _ = try await client.user.createusername(request: .init(
+        username: "username",
+        password: "password",
+        name: "name"
+    ))
 }
 
 try await main()
@@ -47,7 +41,7 @@ try await main()
 <dl>
 <dd>
 
-**tags:** `[String]` 
+**tags:** `String?` 
     
 </dd>
 </dl>
@@ -55,7 +49,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.CreateUsernameRequest` 
+**request:** `Requests.UserCreateUsernameRequest` 
     
 </dd>
 </dl>
@@ -75,7 +69,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">createUsernameWithReferencedType</a>(tags: [String], request: CreateUsernameBody, requestOptions: RequestOptions?) -> Void</code></summary>
+<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">createusernamewithreferencedtype</a>(tags: String?, request: Requests.CreateUsernameBody, requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -89,22 +83,16 @@ try await main()
 
 ```swift
 import Foundation
-import RequestParameters
+import Api
 
 private func main() async throws {
-    let client = RequestParametersClient()
+    let client = ApiClient()
 
-    _ = try await client.user.createUsernameWithReferencedType(
-        tags: [
-            "tags",
-            "tags"
-        ],
-        request: .init(body: CreateUsernameBody(
-            username: "username",
-            password: "password",
-            name: "test"
-        ))
-    )
+    _ = try await client.user.createusernamewithreferencedtype(request: .init(
+        username: "username",
+        password: "password",
+        name: "name"
+    ))
 }
 
 try await main()
@@ -122,7 +110,7 @@ try await main()
 <dl>
 <dd>
 
-**tags:** `[String]` 
+**tags:** `String?` 
     
 </dd>
 </dl>
@@ -130,7 +118,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `CreateUsernameBody` 
+**request:** `Requests.CreateUsernameBody` 
     
 </dd>
 </dl>
@@ -150,7 +138,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">createUsernameOptional</a>(request: Nullable&lt;CreateUsernameBodyOptionalProperties&gt;?, requestOptions: RequestOptions?) -> Void</code></summary>
+<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">createusernameoptional</a>(request: Requests.CreateUsernameBodyOptionalProperties, requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -164,14 +152,12 @@ try await main()
 
 ```swift
 import Foundation
-import RequestParameters
+import Api
 
 private func main() async throws {
-    let client = RequestParametersClient()
+    let client = ApiClient()
 
-    _ = try await client.user.createUsernameOptional(request: .value(CreateUsernameBodyOptionalProperties(
-
-    )))
+    _ = try await client.user.createusernameoptional(request: .init())
 }
 
 try await main()
@@ -189,7 +175,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Nullable<CreateUsernameBodyOptionalProperties>?` 
+**request:** `Requests.CreateUsernameBodyOptionalProperties` 
     
 </dd>
 </dl>
@@ -209,7 +195,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">getUsername</a>(limit: Int, id: UUID, date: CalendarDate, deadline: Date, bytes: String, user: User, userList: [User], optionalDeadline: Date?, keyValue: [String: String], optionalString: String?, nestedUser: NestedUser, optionalUser: User?, excludeUser: User, filter: String, longParam: Int64, bigIntParam: String, requestOptions: RequestOptions?) -> User</code></summary>
+<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">getusername</a>(limit: Int, id: String, date: CalendarDate, deadline: Date, bytes: String, user: User, userList: User?, optionalDeadline: Nullable&lt;Date&gt;?, keyValue: [String: String], optionalString: Nullable&lt;String&gt;?, nestedUser: NestedUser, optionalUser: User?, excludeUser: User?, filter: String?, longParam: Int64, bigIntParam: Int, requestOptions: RequestOptions?) -> User</code></summary>
 <dl>
 <dd>
 
@@ -223,17 +209,17 @@ try await main()
 
 ```swift
 import Foundation
-import RequestParameters
+import Api
 
 private func main() async throws {
-    let client = RequestParametersClient()
+    let client = ApiClient()
 
-    _ = try await client.user.getUsername(
+    _ = try await client.user.getusername(
         limit: 1,
-        id: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+        id: "id",
         date: CalendarDate("2023-01-15")!,
         deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-        bytes: "SGVsbG8gd29ybGQh",
+        bytes: "bytes",
         user: User(
             name: "name",
             tags: [
@@ -241,27 +227,11 @@ private func main() async throws {
                 "tags"
             ]
         ),
-        userList: [
-            User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            ),
-            User(
-                name: "name",
-                tags: [
-                    "tags",
-                    "tags"
-                ]
-            )
-        ],
-        optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+        optionalDeadline: .value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
         keyValue: [
             "keyValue": "keyValue"
         ],
-        optionalString: "optionalString",
+        optionalString: .value("optionalString"),
         nestedUser: NestedUser(
             name: "name",
             user: User(
@@ -279,7 +249,8 @@ private func main() async throws {
                 "tags"
             ]
         ),
-        longParam: 1000000
+        longParam: 1000000,
+        bigIntParam: 1
     )
 }
 
@@ -306,7 +277,7 @@ try await main()
 <dl>
 <dd>
 
-**id:** `UUID` 
+**id:** `String` 
     
 </dd>
 </dl>
@@ -346,7 +317,7 @@ try await main()
 <dl>
 <dd>
 
-**userList:** `[User]` 
+**userList:** `User?` 
     
 </dd>
 </dl>
@@ -354,7 +325,7 @@ try await main()
 <dl>
 <dd>
 
-**optionalDeadline:** `Date?` 
+**optionalDeadline:** `Nullable<Date>?` 
     
 </dd>
 </dl>
@@ -370,7 +341,7 @@ try await main()
 <dl>
 <dd>
 
-**optionalString:** `String?` 
+**optionalString:** `Nullable<String>?` 
     
 </dd>
 </dl>
@@ -394,7 +365,7 @@ try await main()
 <dl>
 <dd>
 
-**excludeUser:** `User` 
+**excludeUser:** `User?` 
     
 </dd>
 </dl>
@@ -402,7 +373,7 @@ try await main()
 <dl>
 <dd>
 
-**filter:** `String` 
+**filter:** `String?` 
     
 </dd>
 </dl>
@@ -418,7 +389,7 @@ try await main()
 <dl>
 <dd>
 
-**bigIntParam:** `String` 
+**bigIntParam:** `Int` 
     
 </dd>
 </dl>

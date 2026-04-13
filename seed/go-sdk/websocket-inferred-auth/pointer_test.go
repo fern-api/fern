@@ -1,4 +1,4 @@
-package websocketauth
+package api
 
 import (
 	"testing"

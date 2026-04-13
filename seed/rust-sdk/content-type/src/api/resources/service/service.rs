@@ -15,7 +15,7 @@ impl ServiceClient {
 
     pub async fn patch(
         &self,
-        request: &PatchProxyRequest,
+        request: &ServicePatchRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
@@ -41,10 +41,10 @@ impl ServiceClient {
     /// # Returns
     ///
     /// Empty response
-    pub async fn patch_complex(
+    pub async fn patchcomplex(
         &self,
         id: &str,
-        request: &PatchComplexRequest,
+        request: &ServicePatchComplexRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
@@ -68,10 +68,10 @@ impl ServiceClient {
     /// # Returns
     ///
     /// Empty response
-    pub async fn named_patch_with_mixed(
+    pub async fn namedpatchwithmixed(
         &self,
         id: &str,
-        request: &NamedMixedPatchRequest,
+        request: &ServiceNamedPatchWithMixedRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
@@ -97,9 +97,9 @@ impl ServiceClient {
     /// # Returns
     ///
     /// Empty response
-    pub async fn optional_merge_patch_test(
+    pub async fn optionalmergepatchtest(
         &self,
-        request: &OptionalMergePatchRequest,
+        request: &ServiceOptionalMergePatchTestRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
@@ -122,10 +122,10 @@ impl ServiceClient {
     /// # Returns
     ///
     /// Empty response
-    pub async fn regular_patch(
+    pub async fn regularpatch(
         &self,
         id: &str,
-        request: &RegularPatchRequest,
+        request: &ServiceRegularPatchRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client

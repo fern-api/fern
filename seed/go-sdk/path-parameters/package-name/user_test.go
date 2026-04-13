@@ -9,9 +9,54 @@ import (
 	testing "testing"
 )
 
-func TestSettersGetUsersRequest(t *testing.T) {
+func TestSettersUserCreateUserRequest(t *testing.T) {
 	t.Run("SetTenantID", func(t *testing.T) {
-		obj := &GetUsersRequest{}
+		obj := &UserCreateUserRequest{}
+		var fernTestValueTenantID string
+		obj.SetTenantID(fernTestValueTenantID)
+		assert.Equal(t, fernTestValueTenantID, obj.TenantID)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestSettersMarkExplicitUserCreateUserRequest(t *testing.T) {
+	t.Run("SetTenantID_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UserCreateUserRequest{}
+		var fernTestValueTenantID string
+
+		// Act
+		obj.SetTenantID(fernTestValueTenantID)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersUserGetUserRequest(t *testing.T) {
+	t.Run("SetTenantID", func(t *testing.T) {
+		obj := &UserGetUserRequest{}
 		var fernTestValueTenantID string
 		obj.SetTenantID(fernTestValueTenantID)
 		assert.Equal(t, fernTestValueTenantID, obj.TenantID)
@@ -19,7 +64,7 @@ func TestSettersGetUsersRequest(t *testing.T) {
 	})
 
 	t.Run("SetUserID", func(t *testing.T) {
-		obj := &GetUsersRequest{}
+		obj := &UserGetUserRequest{}
 		var fernTestValueUserID string
 		obj.SetUserID(fernTestValueUserID)
 		assert.Equal(t, fernTestValueUserID, obj.UserID)
@@ -28,11 +73,11 @@ func TestSettersGetUsersRequest(t *testing.T) {
 
 }
 
-func TestSettersMarkExplicitGetUsersRequest(t *testing.T) {
+func TestSettersMarkExplicitUserGetUserRequest(t *testing.T) {
 	t.Run("SetTenantID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &GetUsersRequest{}
+		obj := &UserGetUserRequest{}
 		var fernTestValueTenantID string
 
 		// Act
@@ -63,7 +108,7 @@ func TestSettersMarkExplicitGetUsersRequest(t *testing.T) {
 	t.Run("SetUserID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &GetUsersRequest{}
+		obj := &UserGetUserRequest{}
 		var fernTestValueUserID string
 
 		// Act
@@ -93,9 +138,9 @@ func TestSettersMarkExplicitGetUsersRequest(t *testing.T) {
 
 }
 
-func TestSettersGetUserMetadataRequest(t *testing.T) {
+func TestSettersUserGetUserMetadataRequest(t *testing.T) {
 	t.Run("SetTenantID", func(t *testing.T) {
-		obj := &GetUserMetadataRequest{}
+		obj := &UserGetUserMetadataRequest{}
 		var fernTestValueTenantID string
 		obj.SetTenantID(fernTestValueTenantID)
 		assert.Equal(t, fernTestValueTenantID, obj.TenantID)
@@ -103,7 +148,7 @@ func TestSettersGetUserMetadataRequest(t *testing.T) {
 	})
 
 	t.Run("SetUserID", func(t *testing.T) {
-		obj := &GetUserMetadataRequest{}
+		obj := &UserGetUserMetadataRequest{}
 		var fernTestValueUserID string
 		obj.SetUserID(fernTestValueUserID)
 		assert.Equal(t, fernTestValueUserID, obj.UserID)
@@ -111,7 +156,7 @@ func TestSettersGetUserMetadataRequest(t *testing.T) {
 	})
 
 	t.Run("SetVersion", func(t *testing.T) {
-		obj := &GetUserMetadataRequest{}
+		obj := &UserGetUserMetadataRequest{}
 		var fernTestValueVersion int
 		obj.SetVersion(fernTestValueVersion)
 		assert.Equal(t, fernTestValueVersion, obj.Version)
@@ -120,11 +165,11 @@ func TestSettersGetUserMetadataRequest(t *testing.T) {
 
 }
 
-func TestSettersMarkExplicitGetUserMetadataRequest(t *testing.T) {
+func TestSettersMarkExplicitUserGetUserMetadataRequest(t *testing.T) {
 	t.Run("SetTenantID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &GetUserMetadataRequest{}
+		obj := &UserGetUserMetadataRequest{}
 		var fernTestValueTenantID string
 
 		// Act
@@ -155,7 +200,7 @@ func TestSettersMarkExplicitGetUserMetadataRequest(t *testing.T) {
 	t.Run("SetUserID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &GetUserMetadataRequest{}
+		obj := &UserGetUserMetadataRequest{}
 		var fernTestValueUserID string
 
 		// Act
@@ -186,7 +231,7 @@ func TestSettersMarkExplicitGetUserMetadataRequest(t *testing.T) {
 	t.Run("SetVersion_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &GetUserMetadataRequest{}
+		obj := &UserGetUserMetadataRequest{}
 		var fernTestValueVersion int
 
 		// Act
@@ -216,9 +261,9 @@ func TestSettersMarkExplicitGetUserMetadataRequest(t *testing.T) {
 
 }
 
-func TestSettersGetUserSpecificsRequest(t *testing.T) {
+func TestSettersUserGetUserSpecificsRequest(t *testing.T) {
 	t.Run("SetTenantID", func(t *testing.T) {
-		obj := &GetUserSpecificsRequest{}
+		obj := &UserGetUserSpecificsRequest{}
 		var fernTestValueTenantID string
 		obj.SetTenantID(fernTestValueTenantID)
 		assert.Equal(t, fernTestValueTenantID, obj.TenantID)
@@ -226,7 +271,7 @@ func TestSettersGetUserSpecificsRequest(t *testing.T) {
 	})
 
 	t.Run("SetUserID", func(t *testing.T) {
-		obj := &GetUserSpecificsRequest{}
+		obj := &UserGetUserSpecificsRequest{}
 		var fernTestValueUserID string
 		obj.SetUserID(fernTestValueUserID)
 		assert.Equal(t, fernTestValueUserID, obj.UserID)
@@ -234,7 +279,7 @@ func TestSettersGetUserSpecificsRequest(t *testing.T) {
 	})
 
 	t.Run("SetVersion", func(t *testing.T) {
-		obj := &GetUserSpecificsRequest{}
+		obj := &UserGetUserSpecificsRequest{}
 		var fernTestValueVersion int
 		obj.SetVersion(fernTestValueVersion)
 		assert.Equal(t, fernTestValueVersion, obj.Version)
@@ -242,7 +287,7 @@ func TestSettersGetUserSpecificsRequest(t *testing.T) {
 	})
 
 	t.Run("SetThought", func(t *testing.T) {
-		obj := &GetUserSpecificsRequest{}
+		obj := &UserGetUserSpecificsRequest{}
 		var fernTestValueThought string
 		obj.SetThought(fernTestValueThought)
 		assert.Equal(t, fernTestValueThought, obj.Thought)
@@ -251,11 +296,11 @@ func TestSettersGetUserSpecificsRequest(t *testing.T) {
 
 }
 
-func TestSettersMarkExplicitGetUserSpecificsRequest(t *testing.T) {
+func TestSettersMarkExplicitUserGetUserSpecificsRequest(t *testing.T) {
 	t.Run("SetTenantID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &GetUserSpecificsRequest{}
+		obj := &UserGetUserSpecificsRequest{}
 		var fernTestValueTenantID string
 
 		// Act
@@ -286,7 +331,7 @@ func TestSettersMarkExplicitGetUserSpecificsRequest(t *testing.T) {
 	t.Run("SetUserID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &GetUserSpecificsRequest{}
+		obj := &UserGetUserSpecificsRequest{}
 		var fernTestValueUserID string
 
 		// Act
@@ -317,7 +362,7 @@ func TestSettersMarkExplicitGetUserSpecificsRequest(t *testing.T) {
 	t.Run("SetVersion_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &GetUserSpecificsRequest{}
+		obj := &UserGetUserSpecificsRequest{}
 		var fernTestValueVersion int
 
 		// Act
@@ -348,7 +393,7 @@ func TestSettersMarkExplicitGetUserSpecificsRequest(t *testing.T) {
 	t.Run("SetThought_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &GetUserSpecificsRequest{}
+		obj := &UserGetUserSpecificsRequest{}
 		var fernTestValueThought string
 
 		// Act
@@ -378,9 +423,9 @@ func TestSettersMarkExplicitGetUserSpecificsRequest(t *testing.T) {
 
 }
 
-func TestSettersSearchUsersRequest(t *testing.T) {
+func TestSettersUserSearchUsersRequest(t *testing.T) {
 	t.Run("SetTenantID", func(t *testing.T) {
-		obj := &SearchUsersRequest{}
+		obj := &UserSearchUsersRequest{}
 		var fernTestValueTenantID string
 		obj.SetTenantID(fernTestValueTenantID)
 		assert.Equal(t, fernTestValueTenantID, obj.TenantID)
@@ -388,7 +433,7 @@ func TestSettersSearchUsersRequest(t *testing.T) {
 	})
 
 	t.Run("SetUserID", func(t *testing.T) {
-		obj := &SearchUsersRequest{}
+		obj := &UserSearchUsersRequest{}
 		var fernTestValueUserID string
 		obj.SetUserID(fernTestValueUserID)
 		assert.Equal(t, fernTestValueUserID, obj.UserID)
@@ -396,7 +441,7 @@ func TestSettersSearchUsersRequest(t *testing.T) {
 	})
 
 	t.Run("SetLimit", func(t *testing.T) {
-		obj := &SearchUsersRequest{}
+		obj := &UserSearchUsersRequest{}
 		var fernTestValueLimit *int
 		obj.SetLimit(fernTestValueLimit)
 		assert.Equal(t, fernTestValueLimit, obj.Limit)
@@ -405,11 +450,11 @@ func TestSettersSearchUsersRequest(t *testing.T) {
 
 }
 
-func TestSettersMarkExplicitSearchUsersRequest(t *testing.T) {
+func TestSettersMarkExplicitUserSearchUsersRequest(t *testing.T) {
 	t.Run("SetTenantID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &SearchUsersRequest{}
+		obj := &UserSearchUsersRequest{}
 		var fernTestValueTenantID string
 
 		// Act
@@ -440,7 +485,7 @@ func TestSettersMarkExplicitSearchUsersRequest(t *testing.T) {
 	t.Run("SetUserID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &SearchUsersRequest{}
+		obj := &UserSearchUsersRequest{}
 		var fernTestValueUserID string
 
 		// Act
@@ -471,7 +516,7 @@ func TestSettersMarkExplicitSearchUsersRequest(t *testing.T) {
 	t.Run("SetLimit_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &SearchUsersRequest{}
+		obj := &UserSearchUsersRequest{}
 		var fernTestValueLimit *int
 
 		// Act
@@ -501,152 +546,9 @@ func TestSettersMarkExplicitSearchUsersRequest(t *testing.T) {
 
 }
 
-func TestSettersUser(t *testing.T) {
-	t.Run("SetName", func(t *testing.T) {
-		obj := &User{}
-		var fernTestValueName string
-		obj.SetName(fernTestValueName)
-		assert.Equal(t, fernTestValueName, obj.Name)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetTags", func(t *testing.T) {
-		obj := &User{}
-		var fernTestValueTags []string
-		obj.SetTags(fernTestValueTags)
-		assert.Equal(t, fernTestValueTags, obj.Tags)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-}
-
-func TestGettersUser(t *testing.T) {
-	t.Run("GetName", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &User{}
-		var expected string
-		obj.Name = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetName(), "getter should return the property value")
-	})
-
-	t.Run("GetName_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *User
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetName() // Should return zero value
-	})
-
-	t.Run("GetTags", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &User{}
-		var expected []string
-		obj.Tags = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetTags(), "getter should return the property value")
-	})
-
-	t.Run("GetTags_NilValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &User{}
-		obj.Tags = nil
-
-		// Act & Assert
-		assert.Nil(t, obj.GetTags(), "getter should return nil when property is nil")
-	})
-
-	t.Run("GetTags_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *User
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetTags() // Should return zero value
-	})
-
-}
-
-func TestSettersMarkExplicitUser(t *testing.T) {
-	t.Run("SetName_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &User{}
-		var fernTestValueName string
-
-		// Act
-		obj.SetName(fernTestValueName)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetTags_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &User{}
-		var fernTestValueTags []string
-
-		// Act
-		obj.SetTags(fernTestValueTags)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-}
-
-func TestSettersUpdateUserRequest(t *testing.T) {
+func TestSettersUserUpdateUserRequest(t *testing.T) {
 	t.Run("SetTenantID", func(t *testing.T) {
-		obj := &UpdateUserRequest{}
+		obj := &UserUpdateUserRequest{}
 		var fernTestValueTenantID string
 		obj.SetTenantID(fernTestValueTenantID)
 		assert.Equal(t, fernTestValueTenantID, obj.TenantID)
@@ -654,7 +556,7 @@ func TestSettersUpdateUserRequest(t *testing.T) {
 	})
 
 	t.Run("SetUserID", func(t *testing.T) {
-		obj := &UpdateUserRequest{}
+		obj := &UserUpdateUserRequest{}
 		var fernTestValueUserID string
 		obj.SetUserID(fernTestValueUserID)
 		assert.Equal(t, fernTestValueUserID, obj.UserID)
@@ -663,11 +565,11 @@ func TestSettersUpdateUserRequest(t *testing.T) {
 
 }
 
-func TestSettersMarkExplicitUpdateUserRequest(t *testing.T) {
+func TestSettersMarkExplicitUserUpdateUserRequest(t *testing.T) {
 	t.Run("SetTenantID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &UpdateUserRequest{}
+		obj := &UserUpdateUserRequest{}
 		var fernTestValueTenantID string
 
 		// Act
@@ -698,7 +600,7 @@ func TestSettersMarkExplicitUpdateUserRequest(t *testing.T) {
 	t.Run("SetUserID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &UpdateUserRequest{}
+		obj := &UserUpdateUserRequest{}
 		var fernTestValueUserID string
 
 		// Act
@@ -726,76 +628,4 @@ func TestSettersMarkExplicitUpdateUserRequest(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-}
-
-func TestJSONMarshalingUser(t *testing.T) {
-	t.Run("MarshalUnmarshal", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &User{}
-
-		// Act - Marshal to JSON
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		assert.NotNil(t, data, "marshaled data should not be nil")
-		assert.NotEmpty(t, data, "marshaled data should not be empty")
-
-		// Unmarshal back and verify round-trip
-		var unmarshaled User
-		err = json.Unmarshal(data, &unmarshaled)
-		assert.NoError(t, err, "round-trip unmarshal should succeed")
-	})
-
-	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
-		t.Parallel()
-		var obj User
-		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
-		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
-	})
-
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj User
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
-}
-
-func TestStringUser(t *testing.T) {
-	t.Run("StringMethod", func(t *testing.T) {
-		t.Parallel()
-		obj := &User{}
-		result := obj.String()
-		assert.NotEmpty(t, result, "String() should return a non-empty representation")
-	})
-
-	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *User
-		result := obj.String()
-		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
-	})
-}
-
-func TestExtraPropertiesUser(t *testing.T) {
-	t.Run("GetExtraProperties", func(t *testing.T) {
-		t.Parallel()
-		obj := &User{}
-		// Should not panic when calling GetExtraProperties()
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("GetExtraProperties() panicked: %v", r)
-			}
-		}()
-		extraProps := obj.GetExtraProperties()
-		// Result can be nil or an empty/non-empty map
-		_ = extraProps
-	})
-
-	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *User
-		extraProps := obj.GetExtraProperties()
-		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
-	})
 }

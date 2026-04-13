@@ -1,2 +1,2 @@
-export { SeedPathParametersError } from "./SeedPathParametersError.js";
-export { SeedPathParametersTimeoutError } from "./SeedPathParametersTimeoutError.js";
+export { SeedApiError } from "./SeedApiError.js";
+export { SeedApiTimeoutError } from "./SeedApiTimeoutError.js";

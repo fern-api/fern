@@ -1,4 +1,4 @@
-package filedownload
+package api
 
 import (
 	"time"

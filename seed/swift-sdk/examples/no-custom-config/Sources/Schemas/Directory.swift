@@ -2,15 +2,15 @@ import Foundation
 
 public struct Directory: Codable, Hashable, Sendable {
     public let name: String
-    public let files: [File]?
-    public let directories: [Directory]?
+    public let files: Nullable<[File]>?
+    public let directories: Nullable<[Directory]>?
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
         name: String,
-        files: [File]? = nil,
-        directories: [Directory]? = nil,
+        files: Nullable<[File]>? = nil,
+        directories: Nullable<[Directory]>? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.name = name
@@ -22,8 +22,8 @@ public struct Directory: Codable, Hashable, Sendable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.name = try container.decode(String.self, forKey: .name)
-        self.files = try container.decodeIfPresent([File].self, forKey: .files)
-        self.directories = try container.decodeIfPresent([Directory].self, forKey: .directories)
+        self.files = try container.decodeNullableIfPresent([File].self, forKey: .files)
+        self.directories = try container.decodeNullableIfPresent([Directory].self, forKey: .directories)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
@@ -31,8 +31,8 @@ public struct Directory: Codable, Hashable, Sendable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.name, forKey: .name)
-        try container.encodeIfPresent(self.files, forKey: .files)
-        try container.encodeIfPresent(self.directories, forKey: .directories)
+        try container.encodeNullableIfPresent(self.files, forKey: .files)
+        try container.encodeNullableIfPresent(self.directories, forKey: .directories)
     }
 
     /// Keys for encoding/decoding struct properties.

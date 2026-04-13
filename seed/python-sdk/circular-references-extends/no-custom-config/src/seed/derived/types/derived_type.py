@@ -5,7 +5,6 @@ from __future__ import annotations
 import typing
 
 import pydantic
-from ...common.types.base_type import BaseType
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 
 

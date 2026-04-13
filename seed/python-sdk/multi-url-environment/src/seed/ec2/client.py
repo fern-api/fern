@@ -25,7 +25,7 @@ class Ec2Client:
         """
         return self._raw_client
 
-    def boot_instance(self, *, size: str, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def bootinstance(self, *, size: str, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
         ----------
@@ -40,16 +40,17 @@ class Ec2Client:
 
         Examples
         --------
-        from seed import SeedMultiUrlEnvironment
+        from seed import SeedApi
 
-        client = SeedMultiUrlEnvironment(
+        client = SeedApi(
             token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
         )
-        client.ec2.boot_instance(
+        client.ec2.bootinstance(
             size="size",
         )
         """
-        _response = self._raw_client.boot_instance(size=size, request_options=request_options)
+        _response = self._raw_client.bootinstance(size=size, request_options=request_options)
         return _response.data
 
 
@@ -68,7 +69,7 @@ class AsyncEc2Client:
         """
         return self._raw_client
 
-    async def boot_instance(self, *, size: str, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def bootinstance(self, *, size: str, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
         ----------
@@ -85,20 +86,21 @@ class AsyncEc2Client:
         --------
         import asyncio
 
-        from seed import AsyncSeedMultiUrlEnvironment
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedMultiUrlEnvironment(
+        client = AsyncSeedApi(
             token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.ec2.boot_instance(
+            await client.ec2.bootinstance(
                 size="size",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.boot_instance(size=size, request_options=request_options)
+        _response = await self._raw_client.bootinstance(size=size, request_options=request_options)
         return _response.data

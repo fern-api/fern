@@ -31,30 +31,23 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) BootInstance(
+func (r *RawClient) Bootinstance(
 	ctx context.Context,
-	request *fern.BootInstanceRequest,
+	request *fern.Ec2BootInstanceRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
-		internal.ResolveEnvironmentBaseURL(
-			options.Environment,
-			"Ec2",
-		),
 		r.baseURL,
-		internal.ResolveEnvironmentBaseURL(
-			r.options.Environment,
-			"Ec2",
-		),
-		"https://ec2.aws.com",
+		"",
 	)
 	endpointURL := baseURL + "/ec2/boot"
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
+	headers.Add("Content-Type", "application/json")
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{

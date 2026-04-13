@@ -4,7 +4,6 @@ import (
     context "context"
 
     client "github.com/examples/fern/pleaseinhere/client"
-    file "github.com/examples/fern/pleaseinhere/file"
     option "github.com/examples/fern/pleaseinhere/option"
 )
 
@@ -17,12 +16,7 @@ func do() {
             "<token>",
         ),
     )
-    request := &file.GetFileRequest{
-        XFileAPIVersion: "X-File-API-Version",
-    }
-    client.File.Service.GetFile(
+    client.HealthService.HealthServicePing(
         context.TODO(),
-        "filename",
-        request,
     )
 }

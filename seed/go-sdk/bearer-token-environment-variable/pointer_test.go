@@ -1,4 +1,4 @@
-package bearertokenenvironmentvariable
+package api
 
 import (
 	"testing"

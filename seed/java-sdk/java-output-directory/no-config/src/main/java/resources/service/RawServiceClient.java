@@ -10,7 +10,8 @@ import com.test.sdk.core.RequestOptions;
 import com.test.sdk.core.SeedApiApiException;
 import com.test.sdk.core.SeedApiException;
 import com.test.sdk.core.SeedApiHttpResponse;
-import com.test.sdk.resources.service.types.User;
+import com.test.sdk.resources.service.requests.ServiceGetUserRequest;
+import com.test.sdk.types.User;
 import java.io.IOException;
 import java.lang.Object;
 import java.lang.String;
@@ -28,25 +29,34 @@ public class RawServiceClient {
     this.clientOptions = clientOptions;
   }
 
-  public SeedApiHttpResponse<User> getUser(String userId) {
-    return getUser(userId,null);
+  public SeedApiHttpResponse<User> getuser(String userId) {
+    return getuser(userId,ServiceGetUserRequest.builder().build());
   }
 
-  public SeedApiHttpResponse<User> getUser(String userId, RequestOptions requestOptions) {
-    HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-      .addPathSegments("users")
+  public SeedApiHttpResponse<User> getuser(String userId, RequestOptions requestOptions) {
+    return getuser(userId,ServiceGetUserRequest.builder().build(),requestOptions);
+  }
 
+  public SeedApiHttpResponse<User> getuser(String userId, ServiceGetUserRequest request) {
+    return getuser(userId,request,null);
+  }
+
+  public SeedApiHttpResponse<User> getuser(String userId, ServiceGetUserRequest request,
+      RequestOptions requestOptions) {
+    HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
+
+      .addPathSegments("users")
       .addPathSegment(userId);if (requestOptions != null) {
         requestOptions.getQueryParameters().forEach((_key, _value) -> {
           httpUrl.addQueryParameter(_key, _value);
         } );
       }
-      Request okhttpRequest = new Request.Builder()
+      Request.Builder _requestBuilder = new Request.Builder()
         .url(httpUrl.build())
         .method("GET", null)
         .headers(Headers.of(clientOptions.headers(requestOptions)))
-        .addHeader("Accept", "application/json")
-        .build();
+        .addHeader("Accept", "application/json");
+      Request okhttpRequest = _requestBuilder.build();
       OkHttpClient client = clientOptions.httpClient();
       if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
         client = clientOptions.httpClientWithTimeout(requestOptions);

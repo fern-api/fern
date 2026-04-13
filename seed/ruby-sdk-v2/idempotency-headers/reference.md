@@ -39,7 +39,7 @@ client.payment.create(
 <dl>
 <dd>
 
-**currency:** `Seed::Payment::Types::Currency` 
+**currency:** `Seed::Types::Currency` 
     
 </dd>
 </dl>

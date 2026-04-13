@@ -9,7 +9,7 @@ from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
-from .types.organization import Organization
+from ..types.organization import Organization
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -36,12 +36,16 @@ class RawOrganizationClient:
         Returns
         -------
         HttpResponse[Organization]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "organizations/",
             method="POST",
             json={
                 "name": name,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -86,12 +90,16 @@ class AsyncRawOrganizationClient:
         Returns
         -------
         AsyncHttpResponse[Organization]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "organizations/",
             method="POST",
             json={
                 "name": name,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

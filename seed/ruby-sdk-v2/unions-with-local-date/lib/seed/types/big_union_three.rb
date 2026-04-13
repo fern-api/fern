@@ -1,0 +1,9 @@
+# frozen_string_literal: true
+
+module Seed
+  module Types
+    class BigUnionThree < Internal::Types::Model
+      field :type, -> { Seed::Types::BigUnionThreeType }, optional: false, nullable: false
+    end
+  end
+end

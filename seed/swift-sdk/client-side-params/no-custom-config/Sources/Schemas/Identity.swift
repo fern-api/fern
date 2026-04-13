@@ -5,8 +5,8 @@ public struct Identity: Codable, Hashable, Sendable {
     public let userId: String
     public let provider: String
     public let isSocial: Bool
-    public let accessToken: String?
-    public let expiresIn: Int?
+    public let accessToken: Nullable<String>?
+    public let expiresIn: Nullable<Int>?
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
@@ -15,8 +15,8 @@ public struct Identity: Codable, Hashable, Sendable {
         userId: String,
         provider: String,
         isSocial: Bool,
-        accessToken: String? = nil,
-        expiresIn: Int? = nil,
+        accessToken: Nullable<String>? = nil,
+        expiresIn: Nullable<Int>? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.connection = connection
@@ -34,8 +34,8 @@ public struct Identity: Codable, Hashable, Sendable {
         self.userId = try container.decode(String.self, forKey: .userId)
         self.provider = try container.decode(String.self, forKey: .provider)
         self.isSocial = try container.decode(Bool.self, forKey: .isSocial)
-        self.accessToken = try container.decodeIfPresent(String.self, forKey: .accessToken)
-        self.expiresIn = try container.decodeIfPresent(Int.self, forKey: .expiresIn)
+        self.accessToken = try container.decodeNullableIfPresent(String.self, forKey: .accessToken)
+        self.expiresIn = try container.decodeNullableIfPresent(Int.self, forKey: .expiresIn)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
@@ -46,8 +46,8 @@ public struct Identity: Codable, Hashable, Sendable {
         try container.encode(self.userId, forKey: .userId)
         try container.encode(self.provider, forKey: .provider)
         try container.encode(self.isSocial, forKey: .isSocial)
-        try container.encodeIfPresent(self.accessToken, forKey: .accessToken)
-        try container.encodeIfPresent(self.expiresIn, forKey: .expiresIn)
+        try container.encodeNullableIfPresent(self.accessToken, forKey: .accessToken)
+        try container.encodeNullableIfPresent(self.expiresIn, forKey: .expiresIn)
     }
 
     /// Keys for encoding/decoding struct properties.

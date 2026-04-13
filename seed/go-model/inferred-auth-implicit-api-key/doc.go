@@ -1,1 +1,1 @@
-package inferredauthimplicitapikey
+package api

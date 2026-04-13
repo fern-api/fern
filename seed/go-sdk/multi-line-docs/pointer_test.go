@@ -1,4 +1,4 @@
-package multilinedocs
+package api
 
 import (
 	"testing"

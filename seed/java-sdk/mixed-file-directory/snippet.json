@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "2b4409ef",
+            "example_identifier": "bfe9ef63",
             "id": {
                 "method": "POST",
                 "path": "/organizations/",
@@ -9,12 +9,25 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.mixedFileDirectory.SeedMixedFileDirectoryClient;\nimport com.seed.mixedFileDirectory.resources.organization.types.CreateOrganizationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedMixedFileDirectoryClient client = SeedMixedFileDirectoryClient\n            .builder()\n            .build();\n\n        client.organization().create(\n            CreateOrganizationRequest\n                .builder()\n                .name(\"name\")\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.mixedFileDirectory.SeedMixedFileDirectoryClient;\nimport com.seed.mixedFileDirectory.resources.organization.types.CreateOrganizationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedMixedFileDirectoryClient client = SeedMixedFileDirectoryClient\n            .builder()\n            .build();\n\n        client.organization().create(\n            CreateOrganizationRequest\n                .builder()\n                .name(\"name\")\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.organization.requests.CreateOrganizationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.organization().create(\n            CreateOrganizationRequest\n                .builder()\n                .name(\"name\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.organization.requests.CreateOrganizationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.organization().create(\n            CreateOrganizationRequest\n                .builder()\n                .name(\"name\")\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "6980ef79",
+            "example_identifier": "3138d244",
+            "id": {
+                "method": "POST",
+                "path": "/organizations/",
+                "identifier_override": "endpoint_organization.create"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.organization.requests.CreateOrganizationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.organization().create(\n            CreateOrganizationRequest\n                .builder()\n                .name(\"name\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.organization.requests.CreateOrganizationRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.organization().create(\n            CreateOrganizationRequest\n                .builder()\n                .name(\"name\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "554b2c70",
             "id": {
                 "method": "GET",
                 "path": "/users/",
@@ -22,34 +35,73 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.mixedFileDirectory.SeedMixedFileDirectoryClient;\nimport com.seed.mixedFileDirectory.resources.user.requests.ListUsersRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedMixedFileDirectoryClient client = SeedMixedFileDirectoryClient\n            .builder()\n            .build();\n\n        client.user().list(\n            ListUsersRequest\n                .builder()\n                .limit(1)\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.mixedFileDirectory.SeedMixedFileDirectoryClient;\nimport com.seed.mixedFileDirectory.resources.user.requests.ListUsersRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedMixedFileDirectoryClient client = SeedMixedFileDirectoryClient\n            .builder()\n            .build();\n\n        client.user().list(\n            ListUsersRequest\n                .builder()\n                .limit(1)\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.user.requests.UserListRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.user().list(\n            UserListRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.user.requests.UserListRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.user().list(\n            UserListRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "e054c41d",
+            "example_identifier": "e22e72dd",
+            "id": {
+                "method": "GET",
+                "path": "/users/",
+                "identifier_override": "endpoint_user.list"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.user.requests.UserListRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.user().list(\n            UserListRequest\n                .builder()\n                .limit(1)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.user.requests.UserListRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.user().list(\n            UserListRequest\n                .builder()\n                .limit(1)\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "8092e21e",
             "id": {
                 "method": "GET",
                 "path": "/users/events/",
-                "identifier_override": "endpoint_user/events.listEvents"
+                "identifier_override": "endpoint_userEvents.user_events_listEvents"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.mixedFileDirectory.SeedMixedFileDirectoryClient;\nimport com.seed.mixedFileDirectory.resources.user.events.requests.ListUserEventsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedMixedFileDirectoryClient client = SeedMixedFileDirectoryClient\n            .builder()\n            .build();\n\n        client.user().events().listEvents(\n            ListUserEventsRequest\n                .builder()\n                .limit(1)\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.mixedFileDirectory.SeedMixedFileDirectoryClient;\nimport com.seed.mixedFileDirectory.resources.user.events.requests.ListUserEventsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedMixedFileDirectoryClient client = SeedMixedFileDirectoryClient\n            .builder()\n            .build();\n\n        client.user().events().listEvents(\n            ListUserEventsRequest\n                .builder()\n                .limit(1)\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.userevents.requests.UserEventsListEventsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.userEvents().userEventsListEvents(\n            UserEventsListEventsRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.userevents.requests.UserEventsListEventsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.userEvents().userEventsListEvents(\n            UserEventsListEventsRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "523daf45",
+            "example_identifier": "73b7f28b",
             "id": {
                 "method": "GET",
-                "path": "/users/events/metadata/",
-                "identifier_override": "endpoint_user/events/metadata.getMetadata"
+                "path": "/users/events/",
+                "identifier_override": "endpoint_userEvents.user_events_listEvents"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.mixedFileDirectory.SeedMixedFileDirectoryClient;\nimport com.seed.mixedFileDirectory.resources.user.events.metadata.requests.GetEventMetadataRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedMixedFileDirectoryClient client = SeedMixedFileDirectoryClient\n            .builder()\n            .build();\n\n        client.user().events().metadata().getMetadata(\n            GetEventMetadataRequest\n                .builder()\n                .id(\"id\")\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.mixedFileDirectory.SeedMixedFileDirectoryClient;\nimport com.seed.mixedFileDirectory.resources.user.events.metadata.requests.GetEventMetadataRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedMixedFileDirectoryClient client = SeedMixedFileDirectoryClient\n            .builder()\n            .build();\n\n        client.user().events().metadata().getMetadata(\n            GetEventMetadataRequest\n                .builder()\n                .id(\"id\")\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.userevents.requests.UserEventsListEventsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.userEvents().userEventsListEvents(\n            UserEventsListEventsRequest\n                .builder()\n                .limit(1)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.userevents.requests.UserEventsListEventsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.userEvents().userEventsListEvents(\n            UserEventsListEventsRequest\n                .builder()\n                .limit(1)\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "db45c19e",
+            "id": {
+                "method": "GET",
+                "path": "/users/events/metadata/",
+                "identifier_override": "endpoint_userEventsMetadata.user_events_metadata_getMetadata"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.usereventsmetadata.requests.UserEventsMetadataGetMetadataRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.userEventsMetadata().userEventsMetadataGetMetadata(\n            UserEventsMetadataGetMetadataRequest\n                .builder()\n                .id(\"id\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.usereventsmetadata.requests.UserEventsMetadataGetMetadataRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.userEventsMetadata().userEventsMetadataGetMetadata(\n            UserEventsMetadataGetMetadataRequest\n                .builder()\n                .id(\"id\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "f7f031da",
+            "id": {
+                "method": "GET",
+                "path": "/users/events/metadata/",
+                "identifier_override": "endpoint_userEventsMetadata.user_events_metadata_getMetadata"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.usereventsmetadata.requests.UserEventsMetadataGetMetadataRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.userEventsMetadata().userEventsMetadataGetMetadata(\n            UserEventsMetadataGetMetadataRequest\n                .builder()\n                .id(\"id\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.usereventsmetadata.requests.UserEventsMetadataGetMetadataRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.userEventsMetadata().userEventsMetadataGetMetadata(\n            UserEventsMetadataGetMetadataRequest\n                .builder()\n                .id(\"id\")\n                .build()\n        );\n    }\n}\n"
             }
         }
     ],

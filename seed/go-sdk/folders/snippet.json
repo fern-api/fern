@@ -4,27 +4,38 @@
             "id": {
                 "path": "/",
                 "method": "POST",
-                "identifier_override": "endpoint_a/b.foo"
+                "identifier_override": "endpoint_.foo"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/folders/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.A.B.Foo(\n\tcontext.TODO(),\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/folders/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Foo(\n\tcontext.TODO(),\n)\n"
             }
         },
         {
             "id": {
-                "path": "/",
+                "path": "/a/b",
                 "method": "POST",
-                "identifier_override": "endpoint_a/c.foo"
+                "identifier_override": "endpoint_ab.a_b_foo"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/folders/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.A.C.Foo(\n\tcontext.TODO(),\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/folders/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Ab.ABFoo(\n\tcontext.TODO(),\n)\n"
             }
         },
         {
             "id": {
-                "path": "/",
+                "path": "/a/c",
+                "method": "POST",
+                "identifier_override": "endpoint_ac.a_c_foo"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/folders/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Ac.ACFoo(\n\tcontext.TODO(),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/folder",
                 "method": "POST",
                 "identifier_override": "endpoint_folder.foo"
             },
@@ -35,35 +46,24 @@
         },
         {
             "id": {
-                "path": "/",
-                "method": "POST",
-                "identifier_override": "endpoint_.foo"
-            },
-            "snippet": {
-                "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/folders/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Foo(\n\tcontext.TODO(),\n)\n"
-            }
-        },
-        {
-            "id": {
                 "path": "/service",
                 "method": "GET",
-                "identifier_override": "endpoint_folder/service.endpoint"
+                "identifier_override": "endpoint_folderService.folder_service_endpoint"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/folders/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Folder.Service.Endpoint(\n\tcontext.TODO(),\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/folders/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.FolderService.FolderServiceEndpoint(\n\tcontext.TODO(),\n)\n"
             }
         },
         {
             "id": {
                 "path": "/service",
                 "method": "POST",
-                "identifier_override": "endpoint_folder/service.unknownRequest"
+                "identifier_override": "endpoint_folderService.folder_service_unknownRequest"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/folders/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Folder.Service.UnknownRequest(\n\tcontext.TODO(),\n\tmap[string]interface{}{\n\t\t\"key\": \"value\",\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/folders/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.FolderService.FolderServiceUnknownRequest(\n\tcontext.TODO(),\n\tmap[string]interface{}{\n\t\t\"key\": \"value\",\n\t},\n)\n"
             }
         }
     ]

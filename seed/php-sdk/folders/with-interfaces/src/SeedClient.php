@@ -2,8 +2,10 @@
 
 namespace Seed;
 
-use Seed\A\AClient;
+use Seed\Ab\AbClient;
+use Seed\Ac\AcClient;
 use Seed\Folder\FolderClient;
+use Seed\FolderService\FolderServiceClient;
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\Exceptions\SeedException;
@@ -11,20 +13,32 @@ use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
 use Seed\Core\Client\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
-use Seed\A\AClientInterface;
+use Seed\Ab\AbClientInterface;
+use Seed\Ac\AcClientInterface;
 use Seed\Folder\FolderClientInterface;
+use Seed\FolderService\FolderServiceClientInterface;
 
 class SeedClient implements SeedClientInterface
 {
     /**
-     * @var AClient $a
+     * @var AbClient $ab
      */
-    public AClient $a;
+    public AbClient $ab;
+
+    /**
+     * @var AcClient $ac
+     */
+    public AcClient $ac;
 
     /**
      * @var FolderClient $folder
      */
     public FolderClient $folder;
+
+    /**
+     * @var FolderServiceClient $folderService
+     */
+    public FolderServiceClient $folderService;
 
     /**
      * @var array{
@@ -72,8 +86,10 @@ class SeedClient implements SeedClientInterface
             options: $this->options,
         );
 
-        $this->a = new AClient($this->client, $this->options);
+        $this->ab = new AbClient($this->client, $this->options);
+        $this->ac = new AcClient($this->client, $this->options);
         $this->folder = new FolderClient($this->client, $this->options);
+        $this->folderService = new FolderServiceClient($this->client, $this->options);
     }
 
     /**
@@ -115,11 +131,19 @@ class SeedClient implements SeedClientInterface
     }
 
     /**
-     * @return AClientInterface
+     * @return AbClientInterface
      */
-    public function getA(): AClientInterface
+    public function getAb(): AbClientInterface
     {
-        return $this->a;
+        return $this->ab;
+    }
+
+    /**
+     * @return AcClientInterface
+     */
+    public function getAc(): AcClientInterface
+    {
+        return $this->ac;
     }
 
     /**
@@ -128,5 +152,13 @@ class SeedClient implements SeedClientInterface
     public function getFolder(): FolderClientInterface
     {
         return $this->folder;
+    }
+
+    /**
+     * @return FolderServiceClientInterface
+     */
+    public function getFolderService(): FolderServiceClientInterface
+    {
+        return $this->folderService;
     }
 }

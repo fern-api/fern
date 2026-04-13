@@ -3,21 +3,20 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\User\Requests\CreateUsernameRequest;
+use Seed\User\Requests\UserCreateUsernameRequest;
 
 $client = new SeedClient(
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->user->createUsername(
-    new CreateUsernameRequest([
+$client->user->createusername(
+    new UserCreateUsernameRequest([
         'tags' => [
-            'tags',
             'tags',
         ],
         'username' => 'username',
         'password' => 'password',
-        'name' => 'test',
+        'name' => 'name',
     ]),
 );

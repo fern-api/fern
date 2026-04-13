@@ -1,4 +1,4 @@
-import BasicAuthPwOmitted
+import Api
 import Foundation
 
 final class HTTPStub {

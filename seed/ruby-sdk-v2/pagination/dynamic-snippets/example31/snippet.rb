@@ -5,4 +5,6 @@ client = Seed::Client.new(
   base_url: "https://api.fern.com"
 )
 
-client.users.list_with_optional_data(page: 1)
+client.users.listwithbodycursorpagination(pagination: {
+  cursor: "cursor"
+})

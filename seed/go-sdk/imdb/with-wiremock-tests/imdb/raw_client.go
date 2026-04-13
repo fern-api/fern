@@ -31,7 +31,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) CreateMovie(
+func (r *RawClient) Createmovie(
 	ctx context.Context,
 	request *testPackageName.CreateMovieRequest,
 	opts ...option.RequestOption,
@@ -47,6 +47,7 @@ func (r *RawClient) CreateMovie(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
+	headers.Add("Content-Type", "application/json")
 	var response testPackageName.MovieID
 	raw, err := r.caller.Call(
 		ctx,
@@ -72,9 +73,9 @@ func (r *RawClient) CreateMovie(
 	}, nil
 }
 
-func (r *RawClient) GetMovie(
+func (r *RawClient) Getmovie(
 	ctx context.Context,
-	movieID testPackageName.MovieID,
+	request *testPackageName.ImdbGetMovieRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*testPackageName.Movie], error) {
 	options := core.NewRequestOptions(opts...)
@@ -85,7 +86,7 @@ func (r *RawClient) GetMovie(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/movies/%v",
-		movieID,
+		request.MovieID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
@@ -93,7 +94,7 @@ func (r *RawClient) GetMovie(
 	)
 	errorCodes := internal.ErrorCodes{
 		404: func(apiError *core.APIError) error {
-			return &testPackageName.MovieDoesNotExistError{
+			return &testPackageName.NotFoundError{
 				APIError: apiError,
 			}
 		},

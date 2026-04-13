@@ -11,7 +11,7 @@ public class Example4
             }
         );
 
-        await client.Folder.Service.EndpointAsync();
+        await client.Folder.FooAsync();
     }
 
 }

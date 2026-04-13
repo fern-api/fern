@@ -1,4 +1,4 @@
-import OauthClientCredentialsEnvironmentVariables
+import Api
 import Foundation
 import Testing
 
@@ -14,19 +14,19 @@ import Testing
             ),
         ])
 
-        let client = OauthClientCredentialsEnvironmentVariablesClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
+            token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.auth.getTokenWithClientCredentials(
+            _ = try await client.auth.gettokenwithclientcredentials(
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
                     audience: .httpsApiExampleCom,
-                    grantType: .clientCredentials,
-                    scope: "scope"
+                    grantType: .clientCredentials
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -47,19 +47,19 @@ import Testing
             ),
         ])
 
-        let client = OauthClientCredentialsEnvironmentVariablesClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
+            token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.auth.getTokenWithClientCredentials(
+            _ = try await client.auth.gettokenwithclientcredentials(
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
                     audience: .httpsApiExampleCom,
-                    grantType: .clientCredentials,
-                    scope: "scope"
+                    grantType: .clientCredentials
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -80,19 +80,19 @@ import Testing
             ),
         ])
 
-        let client = OauthClientCredentialsEnvironmentVariablesClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
+            token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.auth.getTokenWithClientCredentials(
+            _ = try await client.auth.gettokenwithclientcredentials(
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
                     audience: .httpsApiExampleCom,
-                    grantType: .clientCredentials,
-                    scope: "scope"
+                    grantType: .clientCredentials
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -112,19 +112,19 @@ import Testing
             ),
         ])
 
-        let client = OauthClientCredentialsEnvironmentVariablesClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
+            token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.auth.getTokenWithClientCredentials(
+            _ = try await client.auth.gettokenwithclientcredentials(
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
                     audience: .httpsApiExampleCom,
-                    grantType: .clientCredentials,
-                    scope: "scope"
+                    grantType: .clientCredentials
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -143,19 +143,19 @@ import Testing
             )
         ])
 
-        let client = OauthClientCredentialsEnvironmentVariablesClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
+            token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.auth.getTokenWithClientCredentials(
+            _ = try await client.auth.gettokenwithclientcredentials(
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
                     audience: .httpsApiExampleCom,
-                    grantType: .clientCredentials,
-                    scope: "scope"
+                    grantType: .clientCredentials
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -175,19 +175,19 @@ import Testing
             )
         ])
 
-        let client = OauthClientCredentialsEnvironmentVariablesClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
+            token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.auth.getTokenWithClientCredentials(
+            _ = try await client.auth.gettokenwithclientcredentials(
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
                     audience: .httpsApiExampleCom,
-                    grantType: .clientCredentials,
-                    scope: "scope"
+                    grantType: .clientCredentials
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -207,19 +207,19 @@ import Testing
             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
         ])
 
-        let client = OauthClientCredentialsEnvironmentVariablesClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
+            token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.auth.getTokenWithClientCredentials(
+            _ = try await client.auth.gettokenwithclientcredentials(
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
                     audience: .httpsApiExampleCom,
-                    grantType: .clientCredentials,
-                    scope: "scope"
+                    grantType: .clientCredentials
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -243,20 +243,20 @@ import Testing
             ),
         ])
 
-        let client = OauthClientCredentialsEnvironmentVariablesClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
+            token: "<token>",
             urlSession: stub.urlSession
         )
 
         let startTime = Date()
         do {
-            _ = try await client.auth.getTokenWithClientCredentials(
+            _ = try await client.auth.gettokenwithclientcredentials(
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
                     audience: .httpsApiExampleCom,
-                    grantType: .clientCredentials,
-                    scope: "scope"
+                    grantType: .clientCredentials
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -290,20 +290,20 @@ import Testing
             ),
         ])
 
-        let client = OauthClientCredentialsEnvironmentVariablesClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
+            token: "<token>",
             urlSession: stub.urlSession
         )
 
         let startTime = Date()
         do {
-            _ = try await client.auth.getTokenWithClientCredentials(
+            _ = try await client.auth.gettokenwithclientcredentials(
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
                     audience: .httpsApiExampleCom,
-                    grantType: .clientCredentials,
-                    scope: "scope"
+                    grantType: .clientCredentials
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -333,20 +333,20 @@ import Testing
             ),
         ])
 
-        let client = OauthClientCredentialsEnvironmentVariablesClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
+            token: "<token>",
             urlSession: stub.urlSession
         )
 
         let startTime = Date()
         do {
-            _ = try await client.auth.getTokenWithClientCredentials(
+            _ = try await client.auth.gettokenwithclientcredentials(
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
                     audience: .httpsApiExampleCom,
-                    grantType: .clientCredentials,
-                    scope: "scope"
+                    grantType: .clientCredentials
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -388,19 +388,19 @@ import Testing
             ),
         ])
 
-        let client = OauthClientCredentialsEnvironmentVariablesClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
+            token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.auth.getTokenWithClientCredentials(
+            _ = try await client.auth.gettokenwithclientcredentials(
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
                     audience: .httpsApiExampleCom,
-                    grantType: .clientCredentials,
-                    scope: "scope"
+                    grantType: .clientCredentials
                 ),
                 requestOptions: RequestOptions(maxRetries: 5, additionalHeaders: stub.headers)
             )
@@ -416,19 +416,19 @@ import Testing
             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data())
         ])
 
-        let client = OauthClientCredentialsEnvironmentVariablesClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
+            token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.auth.getTokenWithClientCredentials(
+            _ = try await client.auth.gettokenwithclientcredentials(
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
                     audience: .httpsApiExampleCom,
-                    grantType: .clientCredentials,
-                    scope: "scope"
+                    grantType: .clientCredentials
                 ),
                 requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
             )
@@ -448,19 +448,19 @@ import Testing
             )
         ])
 
-        let client = OauthClientCredentialsEnvironmentVariablesClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
+            token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.auth.getTokenWithClientCredentials(
+            _ = try await client.auth.gettokenwithclientcredentials(
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
                     audience: .httpsApiExampleCom,
-                    grantType: .clientCredentials,
-                    scope: "scope"
+                    grantType: .clientCredentials
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )

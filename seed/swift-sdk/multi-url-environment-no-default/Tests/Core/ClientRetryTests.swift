@@ -1,4 +1,4 @@
-import MultiUrlEnvironmentNoDefault
+import Api
 import Foundation
 import Testing
 
@@ -14,13 +14,14 @@ import Testing
             ),
         ])
 
-        let client = MultiUrlEnvironmentNoDefaultClient(
+        let client = ApiClient(
+            baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.ec2.bootInstance(
+            _ = try await client.ec2.bootinstance(
                 request: .init(size: "size"),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -41,13 +42,14 @@ import Testing
             ),
         ])
 
-        let client = MultiUrlEnvironmentNoDefaultClient(
+        let client = ApiClient(
+            baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.ec2.bootInstance(
+            _ = try await client.ec2.bootinstance(
                 request: .init(size: "size"),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -68,13 +70,14 @@ import Testing
             ),
         ])
 
-        let client = MultiUrlEnvironmentNoDefaultClient(
+        let client = ApiClient(
+            baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.ec2.bootInstance(
+            _ = try await client.ec2.bootinstance(
                 request: .init(size: "size"),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -94,13 +97,14 @@ import Testing
             ),
         ])
 
-        let client = MultiUrlEnvironmentNoDefaultClient(
+        let client = ApiClient(
+            baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.ec2.bootInstance(
+            _ = try await client.ec2.bootinstance(
                 request: .init(size: "size"),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -119,13 +123,14 @@ import Testing
             )
         ])
 
-        let client = MultiUrlEnvironmentNoDefaultClient(
+        let client = ApiClient(
+            baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.ec2.bootInstance(
+            _ = try await client.ec2.bootinstance(
                 request: .init(size: "size"),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -145,13 +150,14 @@ import Testing
             )
         ])
 
-        let client = MultiUrlEnvironmentNoDefaultClient(
+        let client = ApiClient(
+            baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.ec2.bootInstance(
+            _ = try await client.ec2.bootinstance(
                 request: .init(size: "size"),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -171,13 +177,14 @@ import Testing
             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
         ])
 
-        let client = MultiUrlEnvironmentNoDefaultClient(
+        let client = ApiClient(
+            baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.ec2.bootInstance(
+            _ = try await client.ec2.bootinstance(
                 request: .init(size: "size"),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -201,14 +208,15 @@ import Testing
             ),
         ])
 
-        let client = MultiUrlEnvironmentNoDefaultClient(
+        let client = ApiClient(
+            baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
 
         let startTime = Date()
         do {
-            _ = try await client.ec2.bootInstance(
+            _ = try await client.ec2.bootinstance(
                 request: .init(size: "size"),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -242,14 +250,15 @@ import Testing
             ),
         ])
 
-        let client = MultiUrlEnvironmentNoDefaultClient(
+        let client = ApiClient(
+            baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
 
         let startTime = Date()
         do {
-            _ = try await client.ec2.bootInstance(
+            _ = try await client.ec2.bootinstance(
                 request: .init(size: "size"),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -279,14 +288,15 @@ import Testing
             ),
         ])
 
-        let client = MultiUrlEnvironmentNoDefaultClient(
+        let client = ApiClient(
+            baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
 
         let startTime = Date()
         do {
-            _ = try await client.ec2.bootInstance(
+            _ = try await client.ec2.bootinstance(
                 request: .init(size: "size"),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -328,13 +338,14 @@ import Testing
             ),
         ])
 
-        let client = MultiUrlEnvironmentNoDefaultClient(
+        let client = ApiClient(
+            baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.ec2.bootInstance(
+            _ = try await client.ec2.bootinstance(
                 request: .init(size: "size"),
                 requestOptions: RequestOptions(maxRetries: 5, additionalHeaders: stub.headers)
             )
@@ -350,13 +361,14 @@ import Testing
             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data())
         ])
 
-        let client = MultiUrlEnvironmentNoDefaultClient(
+        let client = ApiClient(
+            baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.ec2.bootInstance(
+            _ = try await client.ec2.bootinstance(
                 request: .init(size: "size"),
                 requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
             )
@@ -376,13 +388,14 @@ import Testing
             )
         ])
 
-        let client = MultiUrlEnvironmentNoDefaultClient(
+        let client = ApiClient(
+            baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.ec2.bootInstance(
+            _ = try await client.ec2.bootinstance(
                 request: .init(size: "size"),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )

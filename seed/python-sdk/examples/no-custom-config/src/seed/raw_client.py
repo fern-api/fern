@@ -18,7 +18,7 @@ from pydantic import ValidationError
 OMIT = typing.cast(typing.Any, ...)
 
 
-class RawSeedExamples:
+class RawSeedApi:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
@@ -34,10 +34,15 @@ class RawSeedExamples:
         Returns
         -------
         HttpResponse[str]
+
         """
         _response = self._client_wrapper.httpx_client.request(
+            "echo",
             method="POST",
             json=request,
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -74,10 +79,15 @@ class RawSeedExamples:
         Returns
         -------
         HttpResponse[Identifier]
+
         """
         _response = self._client_wrapper.httpx_client.request(
+            "type",
             method="POST",
             json=convert_and_respect_annotation_metadata(object_=request, annotation=Type, direction="write"),
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -101,7 +111,7 @@ class RawSeedExamples:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
-class AsyncRawSeedExamples:
+class AsyncRawSeedApi:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
@@ -119,10 +129,15 @@ class AsyncRawSeedExamples:
         Returns
         -------
         AsyncHttpResponse[str]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
+            "echo",
             method="POST",
             json=request,
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -159,10 +174,15 @@ class AsyncRawSeedExamples:
         Returns
         -------
         AsyncHttpResponse[Identifier]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
+            "type",
             method="POST",
             json=convert_and_respect_annotation_metadata(object_=request, annotation=Type, direction="write"),
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )

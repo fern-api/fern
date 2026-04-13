@@ -3,6 +3,7 @@ package example
 import (
     context "context"
 
+    fern "github.com/inferred-auth-implicit-api-key/fern"
     client "github.com/inferred-auth-implicit-api-key/fern/client"
     option "github.com/inferred-auth-implicit-api-key/fern/option"
 )
@@ -12,11 +13,15 @@ func do() {
         option.WithBaseURL(
             "https://api.fern.com",
         ),
-        option.WithAPIKey(
-            "X-Api-Key",
+        option.WithToken(
+            "<token>",
         ),
     )
-    client.NestedNoAuth.API.GetSomething(
+    request := &fern.AuthGetTokenRequest{
+        APIKey: "apiKey",
+    }
+    client.Auth.Gettoken(
         context.TODO(),
+        request,
     )
 }

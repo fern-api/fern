@@ -3,7 +3,6 @@
 package core
 
 import (
-	fmt "fmt"
 	http "net/http"
 	url "net/url"
 )
@@ -25,7 +24,7 @@ type RequestOptions struct {
 	QueryParameters url.Values
 	MaxAttempts     uint
 	MaxBufSize      int
-	APIKey          string
+	Token           string
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
@@ -48,10 +47,9 @@ func NewRequestOptions(opts ...RequestOption) *RequestOptions {
 // for the request(s).
 func (r *RequestOptions) ToHeader() http.Header {
 	header := r.cloneHeader()
-	if r.APIKey != "" {
-		header.Set("Authorization", "Bearer "+r.APIKey)
+	if r.Token != "" {
+		header.Set("Authorization", "Bearer "+r.Token)
 	}
-	header.Set("X-API-Version", fmt.Sprintf("%v", "1.0.0"))
 	return header
 }
 
@@ -127,11 +125,11 @@ func (m *MaxBufSizeOption) applyRequestOptions(opts *RequestOptions) {
 	opts.MaxBufSize = m.MaxBufSize
 }
 
-// APIKeyOption implements the RequestOption interface.
-type APIKeyOption struct {
-	APIKey string
+// TokenOption implements the RequestOption interface.
+type TokenOption struct {
+	Token string
 }
 
-func (a *APIKeyOption) applyRequestOptions(opts *RequestOptions) {
-	opts.APIKey = a.APIKey
+func (t *TokenOption) applyRequestOptions(opts *RequestOptions) {
+	opts.Token = t.Token
 }

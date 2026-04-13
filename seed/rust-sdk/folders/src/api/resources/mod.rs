@@ -2,20 +2,26 @@
 //!
 //! This module contains client implementations for:
 //!
-//! - **A**
+//! - **Ab**
+//! - **Ac**
 //! - **Folder**
+//! - **FolderService**
 
 use crate::api::*;
 use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
 use reqwest::Method;
 
-pub mod a;
+pub mod ab;
+pub mod ac;
 pub mod folder;
+pub mod folder_service;
 pub struct ApiClient {
     pub config: ClientConfig,
     pub http_client: HttpClient,
-    pub a: AClient,
+    pub ab: AbClient,
+    pub ac: AcClient,
     pub folder: FolderClient,
+    pub folder_service: FolderServiceClient,
 }
 
 impl ApiClient {
@@ -23,8 +29,10 @@ impl ApiClient {
         Ok(Self {
             config: config.clone(),
             http_client: HttpClient::new(config.clone())?,
-            a: AClient::new(config.clone())?,
+            ab: AbClient::new(config.clone())?,
+            ac: AcClient::new(config.clone())?,
             folder: FolderClient::new(config.clone())?,
+            folder_service: FolderServiceClient::new(config.clone())?,
         })
     }
 
@@ -35,5 +43,7 @@ impl ApiClient {
     }
 }
 
-pub use a::AClient;
+pub use ab::AbClient;
+pub use ac::AcClient;
 pub use folder::FolderClient;
+pub use folder_service::FolderServiceClient;

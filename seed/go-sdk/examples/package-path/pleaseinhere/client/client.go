@@ -7,18 +7,20 @@ import (
 
 	pleaseinhere "github.com/examples/fern/pleaseinhere"
 	core "github.com/examples/fern/pleaseinhere/core"
-	client "github.com/examples/fern/pleaseinhere/file/client"
-	healthclient "github.com/examples/fern/pleaseinhere/health/client"
+	filenotificationservice "github.com/examples/fern/pleaseinhere/filenotificationservice"
+	fileservice "github.com/examples/fern/pleaseinhere/fileservice"
+	healthservice "github.com/examples/fern/pleaseinhere/healthservice"
 	internal "github.com/examples/fern/pleaseinhere/internal"
 	option "github.com/examples/fern/pleaseinhere/option"
 	service "github.com/examples/fern/pleaseinhere/service"
 )
 
 type Client struct {
-	WithRawResponse *RawClient
-	File            *client.Client
-	Health          *healthclient.Client
-	Service         *service.Client
+	WithRawResponse         *RawClient
+	FileNotificationService *filenotificationservice.Client
+	FileService             *fileservice.Client
+	HealthService           *healthservice.Client
+	Service                 *service.Client
 
 	options *core.RequestOptions
 	baseURL string
@@ -28,12 +30,13 @@ type Client struct {
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
-		File:            client.NewClient(options),
-		Health:          healthclient.NewClient(options),
-		Service:         service.NewClient(options),
-		WithRawResponse: NewRawClient(options),
-		options:         options,
-		baseURL:         options.BaseURL,
+		FileNotificationService: filenotificationservice.NewClient(options),
+		FileService:             fileservice.NewClient(options),
+		HealthService:           healthservice.NewClient(options),
+		Service:                 service.NewClient(options),
+		WithRawResponse:         NewRawClient(options),
+		options:                 options,
+		baseURL:                 options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
 				Client:      options.HTTPClient,

@@ -3,12 +3,11 @@
 namespace Seed;
 
 use Seed\Auth\AuthClient;
-use Seed\NestedNoAuth\NestedNoAuthClient;
-use Seed\Nested\NestedClient;
+use Seed\NestedNoAuthApi\NestedNoAuthApiClient;
+use Seed\NestedApi\NestedApiClient;
 use Seed\Simple\SimpleClient;
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Core\InferredAuthProvider;
 
 class SeedClient
 {
@@ -18,14 +17,14 @@ class SeedClient
     public AuthClient $auth;
 
     /**
-     * @var NestedNoAuthClient $nestedNoAuth
+     * @var NestedNoAuthApiClient $nestedNoAuthApi
      */
-    public NestedNoAuthClient $nestedNoAuth;
+    public NestedNoAuthApiClient $nestedNoAuthApi;
 
     /**
-     * @var NestedClient $nested
+     * @var NestedApiClient $nestedApi
      */
-    public NestedClient $nested;
+    public NestedApiClient $nestedApi;
 
     /**
      * @var SimpleClient $simple
@@ -49,11 +48,7 @@ class SeedClient
     private RawClient $client;
 
     /**
-     * @var InferredAuthProvider $inferredAuthProvider
-     */
-    private InferredAuthProvider $inferredAuthProvider;
-
-    /**
+     * @param ?string $token The token to use for authentication.
      * @param ?array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
@@ -63,6 +58,7 @@ class SeedClient
      * } $options
      */
     public function __construct(
+        ?string $token = null,
         ?array $options = null,
     ) {
         $defaultHeaders = [
@@ -71,30 +67,24 @@ class SeedClient
             'X-Fern-SDK-Version' => '0.0.1',
             'User-Agent' => 'seed/seed/0.0.1',
         ];
+        if ($token != null) {
+            $defaultHeaders['Authorization'] = "Bearer $token";
+        }
 
         $this->options = $options ?? [];
-
-        $authRawClient = new RawClient(['headers' => []]);
-        $authClient = new AuthClient($authRawClient);
-        $inferredAuthOptions = [
-        ];
-        $this->inferredAuthProvider = new InferredAuthProvider($authClient, $inferredAuthOptions);
 
         $this->options['headers'] = array_merge(
             $defaultHeaders,
             $this->options['headers'] ?? [],
         );
 
-        $this->options['getAuthHeaders'] = fn () =>
-            $this->inferredAuthProvider->getAuthHeaders();
-
         $this->client = new RawClient(
             options: $this->options,
         );
 
         $this->auth = new AuthClient($this->client, $this->options);
-        $this->nestedNoAuth = new NestedNoAuthClient($this->client, $this->options);
-        $this->nested = new NestedClient($this->client, $this->options);
+        $this->nestedNoAuthApi = new NestedNoAuthApiClient($this->client, $this->options);
+        $this->nestedApi = new NestedApiClient($this->client, $this->options);
         $this->simple = new SimpleClient($this->client, $this->options);
     }
 }

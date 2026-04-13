@@ -19,7 +19,7 @@ func do() {
             "key": "value",
         },
     }
-    client.Unknown.PostObject(
+    client.Unknown.Postobject(
         context.TODO(),
         request,
     )

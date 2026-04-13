@@ -1,6 +1,6 @@
 # Reference
 ## Users
-<details><summary><code>$client-&gt;users-&gt;listWithUriPagination() -> ?ListUsersUriPaginationResponse</code></summary>
+<details><summary><code>$client-&gt;users-&gt;listwithuripagination() -> ?ListUsersUriPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```php
-$client->users->listWithUriPagination();
+$client->users->listwithuripagination();
 ```
 </dd>
 </dl>
@@ -25,7 +25,7 @@ $client->users->listWithUriPagination();
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;users-&gt;listWithPathPagination() -> ?ListUsersPathPaginationResponse</code></summary>
+<details><summary><code>$client-&gt;users-&gt;listwithpathpagination() -> ?ListUsersPathPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -38,7 +38,7 @@ $client->users->listWithUriPagination();
 <dd>
 
 ```php
-$client->users->listWithPathPagination();
+$client->users->listwithpathpagination();
 ```
 </dd>
 </dl>

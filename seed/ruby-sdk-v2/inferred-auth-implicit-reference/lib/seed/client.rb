@@ -3,32 +3,17 @@
 module Seed
   class Client
     # @param base_url [String, nil]
+    # @param token [String]
     #
     # @return [void]
-    def initialize(base_url: nil)
-      # Create an unauthenticated client for the auth endpoint
-      auth_raw_client = Seed::Internal::Http::RawClient.new(
-        base_url: base_url,
-        headers: {
-          "X-Fern-Language" => "Ruby"
-        }
-      )
-
-      # Create the auth client for token retrieval
-      auth_client = Seed::Auth::Client.new(client: auth_raw_client)
-
-      # Create the auth provider with the auth client and credentials
-      @auth_provider = Seed::Internal::InferredAuthProvider.new(
-        auth_client: auth_client,
-        options: { base_url: base_url }
-      )
-
+    def initialize(token:, base_url: nil)
       @raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: {
           "User-Agent" => "fern_inferred-auth-implicit-reference/0.0.1",
-          "X-Fern-Language" => "Ruby"
-        }.merge(@auth_provider.auth_headers)
+          "X-Fern-Language" => "Ruby",
+          Authorization: "Bearer #{token}"
+        }
       )
     end
 
@@ -37,14 +22,14 @@ module Seed
       @auth ||= Seed::Auth::Client.new(client: @raw_client)
     end
 
-    # @return [Seed::NestedNoAuth::Client]
-    def nested_no_auth
-      @nested_no_auth ||= Seed::NestedNoAuth::Client.new(client: @raw_client)
+    # @return [Seed::NestedNoAuthAPI::Client]
+    def nested_no_auth_api
+      @nested_no_auth_api ||= Seed::NestedNoAuthAPI::Client.new(client: @raw_client)
     end
 
-    # @return [Seed::Nested::Client]
-    def nested
-      @nested ||= Seed::Nested::Client.new(client: @raw_client)
+    # @return [Seed::NestedAPI::Client]
+    def nested_api
+      @nested_api ||= Seed::NestedAPI::Client.new(client: @raw_client)
     end
 
     # @return [Seed::Simple::Client]

@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_:StreamedCompletion": {
+        "type_completions:StreamedCompletion": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -24,9 +24,47 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        {
+                            "originalName": "completions",
+                            "camelCase": {
+                                "unsafeName": "completions",
+                                "safeName": "completions"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "completions",
+                                "safeName": "completions"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "COMPLETIONS",
+                                "safeName": "COMPLETIONS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Completions",
+                                "safeName": "Completions"
+                            }
+                        }
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": {
+                        "originalName": "completions",
+                        "camelCase": {
+                            "unsafeName": "completions",
+                            "safeName": "completions"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "completions",
+                            "safeName": "completions"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "COMPLETIONS",
+                            "safeName": "COMPLETIONS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Completions",
+                            "safeName": "Completions"
+                        }
+                    }
                 }
             },
             "properties": [
@@ -86,11 +124,8 @@
                     "typeReference": {
                         "type": "optional",
                         "value": {
-                            "type": "nullable",
-                            "value": {
-                                "type": "primitive",
-                                "value": "INTEGER"
-                            }
+                            "type": "primitive",
+                            "value": "INTEGER"
                         }
                     },
                     "propertyAccess": null,
@@ -100,7 +135,7 @@
             "extends": null,
             "additionalProperties": false
         },
-        "type_:CompletionEvent": {
+        "type_completions:CompletionEvent": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -123,9 +158,47 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        {
+                            "originalName": "completions",
+                            "camelCase": {
+                                "unsafeName": "completions",
+                                "safeName": "completions"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "completions",
+                                "safeName": "completions"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "COMPLETIONS",
+                                "safeName": "COMPLETIONS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Completions",
+                                "safeName": "Completions"
+                            }
+                        }
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": {
+                        "originalName": "completions",
+                        "camelCase": {
+                            "unsafeName": "completions",
+                            "safeName": "completions"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "completions",
+                            "safeName": "completions"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "COMPLETIONS",
+                            "safeName": "COMPLETIONS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Completions",
+                            "safeName": "Completions"
+                        }
+                    }
                 }
             },
             "properties": [
@@ -163,7 +236,7 @@
             "extends": null,
             "additionalProperties": false
         },
-        "type_:EventEvent": {
+        "type_completions:EventEvent": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -186,9 +259,47 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        {
+                            "originalName": "completions",
+                            "camelCase": {
+                                "unsafeName": "completions",
+                                "safeName": "completions"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "completions",
+                                "safeName": "completions"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "COMPLETIONS",
+                                "safeName": "COMPLETIONS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Completions",
+                                "safeName": "Completions"
+                            }
+                        }
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": {
+                        "originalName": "completions",
+                        "camelCase": {
+                            "unsafeName": "completions",
+                            "safeName": "completions"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "completions",
+                            "safeName": "completions"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "COMPLETIONS",
+                            "safeName": "COMPLETIONS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Completions",
+                            "safeName": "Completions"
+                        }
+                    }
                 }
             },
             "properties": [
@@ -256,7 +367,7 @@
             "extends": null,
             "additionalProperties": false
         },
-        "type_:ErrorEvent": {
+        "type_completions:ErrorEvent": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -279,9 +390,47 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        {
+                            "originalName": "completions",
+                            "camelCase": {
+                                "unsafeName": "completions",
+                                "safeName": "completions"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "completions",
+                                "safeName": "completions"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "COMPLETIONS",
+                                "safeName": "COMPLETIONS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Completions",
+                                "safeName": "Completions"
+                            }
+                        }
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": {
+                        "originalName": "completions",
+                        "camelCase": {
+                            "unsafeName": "completions",
+                            "safeName": "completions"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "completions",
+                            "safeName": "completions"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "COMPLETIONS",
+                            "safeName": "COMPLETIONS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Completions",
+                            "safeName": "Completions"
+                        }
+                    }
                 }
             },
             "properties": [
@@ -341,11 +490,8 @@
                     "typeReference": {
                         "type": "optional",
                         "value": {
-                            "type": "nullable",
-                            "value": {
-                                "type": "primitive",
-                                "value": "INTEGER"
-                            }
+                            "type": "primitive",
+                            "value": "INTEGER"
                         }
                     },
                     "propertyAccess": null,
@@ -355,486 +501,8 @@
             "extends": null,
             "additionalProperties": false
         },
-        "type_:StreamEventContextProtocolZeroEvent": {
-            "type": "enum",
-            "declaration": {
-                "name": {
-                    "originalName": "StreamEventContextProtocolZeroEvent",
-                    "camelCase": {
-                        "unsafeName": "streamEventContextProtocolZeroEvent",
-                        "safeName": "streamEventContextProtocolZeroEvent"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "stream_event_context_protocol_zero_event",
-                        "safeName": "stream_event_context_protocol_zero_event"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "STREAM_EVENT_CONTEXT_PROTOCOL_ZERO_EVENT",
-                        "safeName": "STREAM_EVENT_CONTEXT_PROTOCOL_ZERO_EVENT"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "StreamEventContextProtocolZeroEvent",
-                        "safeName": "StreamEventContextProtocolZeroEvent"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": [],
-                    "file": null
-                }
-            },
-            "values": [
-                {
-                    "wireValue": "completion",
-                    "name": {
-                        "originalName": "completion",
-                        "camelCase": {
-                            "unsafeName": "completion",
-                            "safeName": "completion"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "completion",
-                            "safeName": "completion"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "COMPLETION",
-                            "safeName": "COMPLETION"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Completion",
-                            "safeName": "Completion"
-                        }
-                    }
-                }
-            ]
-        },
-        "type_:StreamEventContextProtocolZero": {
-            "type": "object",
-            "declaration": {
-                "name": {
-                    "originalName": "StreamEventContextProtocolZero",
-                    "camelCase": {
-                        "unsafeName": "streamEventContextProtocolZero",
-                        "safeName": "streamEventContextProtocolZero"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "stream_event_context_protocol_zero",
-                        "safeName": "stream_event_context_protocol_zero"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "STREAM_EVENT_CONTEXT_PROTOCOL_ZERO",
-                        "safeName": "STREAM_EVENT_CONTEXT_PROTOCOL_ZERO"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "StreamEventContextProtocolZero",
-                        "safeName": "StreamEventContextProtocolZero"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": [],
-                    "file": null
-                }
-            },
-            "properties": [
-                {
-                    "name": {
-                        "wireValue": "content",
-                        "name": {
-                            "originalName": "content",
-                            "camelCase": {
-                                "unsafeName": "content",
-                                "safeName": "content"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "content",
-                                "safeName": "content"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "CONTENT",
-                                "safeName": "CONTENT"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Content",
-                                "safeName": "Content"
-                            }
-                        }
-                    },
-                    "typeReference": {
-                        "type": "primitive",
-                        "value": "STRING"
-                    },
-                    "propertyAccess": null,
-                    "variable": null
-                },
-                {
-                    "name": {
-                        "wireValue": "event",
-                        "name": {
-                            "originalName": "event",
-                            "camelCase": {
-                                "unsafeName": "event",
-                                "safeName": "event"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "event",
-                                "safeName": "event"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "EVENT",
-                                "safeName": "EVENT"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Event",
-                                "safeName": "Event"
-                            }
-                        }
-                    },
-                    "typeReference": {
-                        "type": "named",
-                        "value": "type_:StreamEventContextProtocolZeroEvent"
-                    },
-                    "propertyAccess": null,
-                    "variable": null
-                }
-            ],
-            "extends": [
-                "type_:CompletionEvent"
-            ],
-            "additionalProperties": false
-        },
-        "type_:StreamEventContextProtocolOneEvent": {
-            "type": "enum",
-            "declaration": {
-                "name": {
-                    "originalName": "StreamEventContextProtocolOneEvent",
-                    "camelCase": {
-                        "unsafeName": "streamEventContextProtocolOneEvent",
-                        "safeName": "streamEventContextProtocolOneEvent"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "stream_event_context_protocol_one_event",
-                        "safeName": "stream_event_context_protocol_one_event"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "STREAM_EVENT_CONTEXT_PROTOCOL_ONE_EVENT",
-                        "safeName": "STREAM_EVENT_CONTEXT_PROTOCOL_ONE_EVENT"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "StreamEventContextProtocolOneEvent",
-                        "safeName": "StreamEventContextProtocolOneEvent"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": [],
-                    "file": null
-                }
-            },
-            "values": [
-                {
-                    "wireValue": "error",
-                    "name": {
-                        "originalName": "error",
-                        "camelCase": {
-                            "unsafeName": "error",
-                            "safeName": "error"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "error",
-                            "safeName": "error"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "ERROR",
-                            "safeName": "ERROR"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Error",
-                            "safeName": "Error"
-                        }
-                    }
-                }
-            ]
-        },
-        "type_:StreamEventContextProtocolOne": {
-            "type": "object",
-            "declaration": {
-                "name": {
-                    "originalName": "StreamEventContextProtocolOne",
-                    "camelCase": {
-                        "unsafeName": "streamEventContextProtocolOne",
-                        "safeName": "streamEventContextProtocolOne"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "stream_event_context_protocol_one",
-                        "safeName": "stream_event_context_protocol_one"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "STREAM_EVENT_CONTEXT_PROTOCOL_ONE",
-                        "safeName": "STREAM_EVENT_CONTEXT_PROTOCOL_ONE"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "StreamEventContextProtocolOne",
-                        "safeName": "StreamEventContextProtocolOne"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": [],
-                    "file": null
-                }
-            },
-            "properties": [
-                {
-                    "name": {
-                        "wireValue": "error",
-                        "name": {
-                            "originalName": "error",
-                            "camelCase": {
-                                "unsafeName": "error",
-                                "safeName": "error"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "error",
-                                "safeName": "error"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "ERROR",
-                                "safeName": "ERROR"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Error",
-                                "safeName": "Error"
-                            }
-                        }
-                    },
-                    "typeReference": {
-                        "type": "primitive",
-                        "value": "STRING"
-                    },
-                    "propertyAccess": null,
-                    "variable": null
-                },
-                {
-                    "name": {
-                        "wireValue": "code",
-                        "name": {
-                            "originalName": "code",
-                            "camelCase": {
-                                "unsafeName": "code",
-                                "safeName": "code"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "code",
-                                "safeName": "code"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "CODE",
-                                "safeName": "CODE"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Code",
-                                "safeName": "Code"
-                            }
-                        }
-                    },
-                    "typeReference": {
-                        "type": "optional",
-                        "value": {
-                            "type": "nullable",
-                            "value": {
-                                "type": "primitive",
-                                "value": "INTEGER"
-                            }
-                        }
-                    },
-                    "propertyAccess": null,
-                    "variable": null
-                },
-                {
-                    "name": {
-                        "wireValue": "event",
-                        "name": {
-                            "originalName": "event",
-                            "camelCase": {
-                                "unsafeName": "event",
-                                "safeName": "event"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "event",
-                                "safeName": "event"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "EVENT",
-                                "safeName": "EVENT"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Event",
-                                "safeName": "Event"
-                            }
-                        }
-                    },
-                    "typeReference": {
-                        "type": "named",
-                        "value": "type_:StreamEventContextProtocolOneEvent"
-                    },
-                    "propertyAccess": null,
-                    "variable": null
-                }
-            ],
-            "extends": [
-                "type_:ErrorEvent"
-            ],
-            "additionalProperties": false
-        },
-        "type_:StreamEventContextProtocolTwoEvent": {
-            "type": "enum",
-            "declaration": {
-                "name": {
-                    "originalName": "StreamEventContextProtocolTwoEvent",
-                    "camelCase": {
-                        "unsafeName": "streamEventContextProtocolTwoEvent",
-                        "safeName": "streamEventContextProtocolTwoEvent"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "stream_event_context_protocol_two_event",
-                        "safeName": "stream_event_context_protocol_two_event"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "STREAM_EVENT_CONTEXT_PROTOCOL_TWO_EVENT",
-                        "safeName": "STREAM_EVENT_CONTEXT_PROTOCOL_TWO_EVENT"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "StreamEventContextProtocolTwoEvent",
-                        "safeName": "StreamEventContextProtocolTwoEvent"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": [],
-                    "file": null
-                }
-            },
-            "values": [
-                {
-                    "wireValue": "event",
-                    "name": {
-                        "originalName": "event",
-                        "camelCase": {
-                            "unsafeName": "event",
-                            "safeName": "event"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "event",
-                            "safeName": "event"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "EVENT",
-                            "safeName": "EVENT"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Event",
-                            "safeName": "Event"
-                        }
-                    }
-                }
-            ]
-        },
-        "type_:StreamEventContextProtocolTwo": {
-            "type": "object",
-            "declaration": {
-                "name": {
-                    "originalName": "StreamEventContextProtocolTwo",
-                    "camelCase": {
-                        "unsafeName": "streamEventContextProtocolTwo",
-                        "safeName": "streamEventContextProtocolTwo"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "stream_event_context_protocol_two",
-                        "safeName": "stream_event_context_protocol_two"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "STREAM_EVENT_CONTEXT_PROTOCOL_TWO",
-                        "safeName": "STREAM_EVENT_CONTEXT_PROTOCOL_TWO"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "StreamEventContextProtocolTwo",
-                        "safeName": "StreamEventContextProtocolTwo"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": [],
-                    "file": null
-                }
-            },
-            "properties": [
-                {
-                    "name": {
-                        "wireValue": "event",
-                        "name": {
-                            "originalName": "event",
-                            "camelCase": {
-                                "unsafeName": "event",
-                                "safeName": "event"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "event",
-                                "safeName": "event"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "EVENT",
-                                "safeName": "EVENT"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Event",
-                                "safeName": "Event"
-                            }
-                        }
-                    },
-                    "typeReference": {
-                        "type": "named",
-                        "value": "type_:StreamEventContextProtocolTwoEvent"
-                    },
-                    "propertyAccess": null,
-                    "variable": null
-                },
-                {
-                    "name": {
-                        "wireValue": "name",
-                        "name": {
-                            "originalName": "name",
-                            "camelCase": {
-                                "unsafeName": "name",
-                                "safeName": "name"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "name",
-                                "safeName": "name"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "NAME",
-                                "safeName": "NAME"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Name",
-                                "safeName": "Name"
-                            }
-                        }
-                    },
-                    "typeReference": {
-                        "type": "primitive",
-                        "value": "STRING"
-                    },
-                    "propertyAccess": null,
-                    "variable": null
-                }
-            ],
-            "extends": null,
-            "additionalProperties": false
-        },
-        "type_:StreamEventContextProtocol": {
-            "type": "undiscriminatedUnion",
+        "type_completions:StreamEventContextProtocol": {
+            "type": "discriminatedUnion",
             "declaration": {
                 "name": {
                     "originalName": "StreamEventContextProtocol",
@@ -856,258 +524,103 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        {
+                            "originalName": "completions",
+                            "camelCase": {
+                                "unsafeName": "completions",
+                                "safeName": "completions"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "completions",
+                                "safeName": "completions"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "COMPLETIONS",
+                                "safeName": "COMPLETIONS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Completions",
+                                "safeName": "Completions"
+                            }
+                        }
+                    ],
                     "packagePath": [],
-                    "file": null
-                }
-            },
-            "types": [
-                {
-                    "type": "named",
-                    "value": "type_:StreamEventContextProtocolZero"
-                },
-                {
-                    "type": "named",
-                    "value": "type_:StreamEventContextProtocolOne"
-                },
-                {
-                    "type": "named",
-                    "value": "type_:StreamEventContextProtocolTwo"
-                }
-            ]
-        },
-        "type_:StreamEventZeroEvent": {
-            "type": "enum",
-            "declaration": {
-                "name": {
-                    "originalName": "StreamEventZeroEvent",
-                    "camelCase": {
-                        "unsafeName": "streamEventZeroEvent",
-                        "safeName": "streamEventZeroEvent"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "stream_event_zero_event",
-                        "safeName": "stream_event_zero_event"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "STREAM_EVENT_ZERO_EVENT",
-                        "safeName": "STREAM_EVENT_ZERO_EVENT"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "StreamEventZeroEvent",
-                        "safeName": "StreamEventZeroEvent"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": [],
-                    "file": null
-                }
-            },
-            "values": [
-                {
-                    "wireValue": "completion",
-                    "name": {
-                        "originalName": "completion",
+                    "file": {
+                        "originalName": "completions",
                         "camelCase": {
-                            "unsafeName": "completion",
-                            "safeName": "completion"
+                            "unsafeName": "completions",
+                            "safeName": "completions"
                         },
                         "snakeCase": {
-                            "unsafeName": "completion",
-                            "safeName": "completion"
+                            "unsafeName": "completions",
+                            "safeName": "completions"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "COMPLETION",
-                            "safeName": "COMPLETION"
+                            "unsafeName": "COMPLETIONS",
+                            "safeName": "COMPLETIONS"
                         },
                         "pascalCase": {
-                            "unsafeName": "Completion",
-                            "safeName": "Completion"
+                            "unsafeName": "Completions",
+                            "safeName": "Completions"
                         }
                     }
                 }
-            ]
-        },
-        "type_:StreamEventZero": {
-            "type": "object",
-            "declaration": {
+            },
+            "discriminant": {
+                "wireValue": "event",
                 "name": {
-                    "originalName": "StreamEventZero",
+                    "originalName": "event",
                     "camelCase": {
-                        "unsafeName": "streamEventZero",
-                        "safeName": "streamEventZero"
+                        "unsafeName": "event",
+                        "safeName": "event"
                     },
                     "snakeCase": {
-                        "unsafeName": "stream_event_zero",
-                        "safeName": "stream_event_zero"
+                        "unsafeName": "event",
+                        "safeName": "event"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "STREAM_EVENT_ZERO",
-                        "safeName": "STREAM_EVENT_ZERO"
+                        "unsafeName": "EVENT",
+                        "safeName": "EVENT"
                     },
                     "pascalCase": {
-                        "unsafeName": "StreamEventZero",
-                        "safeName": "StreamEventZero"
+                        "unsafeName": "Event",
+                        "safeName": "Event"
                     }
-                },
-                "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": [],
-                    "file": null
                 }
             },
-            "properties": [
-                {
-                    "name": {
-                        "wireValue": "content",
+            "types": {
+                "completion": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_completions:CompletionEvent",
+                    "discriminantValue": {
+                        "wireValue": "completion",
                         "name": {
-                            "originalName": "content",
+                            "originalName": "completion",
                             "camelCase": {
-                                "unsafeName": "content",
-                                "safeName": "content"
+                                "unsafeName": "completion",
+                                "safeName": "completion"
                             },
                             "snakeCase": {
-                                "unsafeName": "content",
-                                "safeName": "content"
+                                "unsafeName": "completion",
+                                "safeName": "completion"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "CONTENT",
-                                "safeName": "CONTENT"
+                                "unsafeName": "COMPLETION",
+                                "safeName": "COMPLETION"
                             },
                             "pascalCase": {
-                                "unsafeName": "Content",
-                                "safeName": "Content"
+                                "unsafeName": "Completion",
+                                "safeName": "Completion"
                             }
                         }
                     },
-                    "typeReference": {
-                        "type": "primitive",
-                        "value": "STRING"
-                    },
-                    "propertyAccess": null,
-                    "variable": null
+                    "properties": []
                 },
-                {
-                    "name": {
-                        "wireValue": "event",
-                        "name": {
-                            "originalName": "event",
-                            "camelCase": {
-                                "unsafeName": "event",
-                                "safeName": "event"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "event",
-                                "safeName": "event"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "EVENT",
-                                "safeName": "EVENT"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Event",
-                                "safeName": "Event"
-                            }
-                        }
-                    },
-                    "typeReference": {
-                        "type": "named",
-                        "value": "type_:StreamEventZeroEvent"
-                    },
-                    "propertyAccess": null,
-                    "variable": null
-                }
-            ],
-            "extends": [
-                "type_:CompletionEvent"
-            ],
-            "additionalProperties": false
-        },
-        "type_:StreamEventOneEvent": {
-            "type": "enum",
-            "declaration": {
-                "name": {
-                    "originalName": "StreamEventOneEvent",
-                    "camelCase": {
-                        "unsafeName": "streamEventOneEvent",
-                        "safeName": "streamEventOneEvent"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "stream_event_one_event",
-                        "safeName": "stream_event_one_event"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "STREAM_EVENT_ONE_EVENT",
-                        "safeName": "STREAM_EVENT_ONE_EVENT"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "StreamEventOneEvent",
-                        "safeName": "StreamEventOneEvent"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": [],
-                    "file": null
-                }
-            },
-            "values": [
-                {
-                    "wireValue": "error",
-                    "name": {
-                        "originalName": "error",
-                        "camelCase": {
-                            "unsafeName": "error",
-                            "safeName": "error"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "error",
-                            "safeName": "error"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "ERROR",
-                            "safeName": "ERROR"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Error",
-                            "safeName": "Error"
-                        }
-                    }
-                }
-            ]
-        },
-        "type_:StreamEventOne": {
-            "type": "object",
-            "declaration": {
-                "name": {
-                    "originalName": "StreamEventOne",
-                    "camelCase": {
-                        "unsafeName": "streamEventOne",
-                        "safeName": "streamEventOne"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "stream_event_one",
-                        "safeName": "stream_event_one"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "STREAM_EVENT_ONE",
-                        "safeName": "STREAM_EVENT_ONE"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "StreamEventOne",
-                        "safeName": "StreamEventOne"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": [],
-                    "file": null
-                }
-            },
-            "properties": [
-                {
-                    "name": {
+                "error": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_completions:ErrorEvent",
+                    "discriminantValue": {
                         "wireValue": "error",
                         "name": {
                             "originalName": "error",
@@ -1129,51 +642,12 @@
                             }
                         }
                     },
-                    "typeReference": {
-                        "type": "primitive",
-                        "value": "STRING"
-                    },
-                    "propertyAccess": null,
-                    "variable": null
+                    "properties": []
                 },
-                {
-                    "name": {
-                        "wireValue": "code",
-                        "name": {
-                            "originalName": "code",
-                            "camelCase": {
-                                "unsafeName": "code",
-                                "safeName": "code"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "code",
-                                "safeName": "code"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "CODE",
-                                "safeName": "CODE"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Code",
-                                "safeName": "Code"
-                            }
-                        }
-                    },
-                    "typeReference": {
-                        "type": "optional",
-                        "value": {
-                            "type": "nullable",
-                            "value": {
-                                "type": "primitive",
-                                "value": "INTEGER"
-                            }
-                        }
-                    },
-                    "propertyAccess": null,
-                    "variable": null
-                },
-                {
-                    "name": {
+                "event": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_completions:EventEvent",
+                    "discriminantValue": {
                         "wireValue": "event",
                         "name": {
                             "originalName": "event",
@@ -1195,21 +669,12 @@
                             }
                         }
                     },
-                    "typeReference": {
-                        "type": "named",
-                        "value": "type_:StreamEventOneEvent"
-                    },
-                    "propertyAccess": null,
-                    "variable": null
+                    "properties": []
                 }
-            ],
-            "extends": [
-                "type_:ErrorEvent"
-            ],
-            "additionalProperties": false
+            }
         },
-        "type_:StreamEvent": {
-            "type": "undiscriminatedUnion",
+        "type_completions:StreamEvent": {
+            "type": "discriminatedUnion",
             "declaration": {
                 "name": {
                     "originalName": "StreamEvent",
@@ -1231,21 +696,127 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        {
+                            "originalName": "completions",
+                            "camelCase": {
+                                "unsafeName": "completions",
+                                "safeName": "completions"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "completions",
+                                "safeName": "completions"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "COMPLETIONS",
+                                "safeName": "COMPLETIONS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Completions",
+                                "safeName": "Completions"
+                            }
+                        }
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": {
+                        "originalName": "completions",
+                        "camelCase": {
+                            "unsafeName": "completions",
+                            "safeName": "completions"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "completions",
+                            "safeName": "completions"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "COMPLETIONS",
+                            "safeName": "COMPLETIONS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Completions",
+                            "safeName": "Completions"
+                        }
+                    }
                 }
             },
-            "types": [
-                {
-                    "type": "named",
-                    "value": "type_:StreamEventZero"
-                },
-                {
-                    "type": "named",
-                    "value": "type_:StreamEventOne"
+            "discriminant": {
+                "wireValue": "event",
+                "name": {
+                    "originalName": "event",
+                    "camelCase": {
+                        "unsafeName": "event",
+                        "safeName": "event"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "event",
+                        "safeName": "event"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "EVENT",
+                        "safeName": "EVENT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Event",
+                        "safeName": "Event"
+                    }
                 }
-            ]
+            },
+            "types": {
+                "completion": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_completions:CompletionEvent",
+                    "discriminantValue": {
+                        "wireValue": "completion",
+                        "name": {
+                            "originalName": "completion",
+                            "camelCase": {
+                                "unsafeName": "completion",
+                                "safeName": "completion"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "completion",
+                                "safeName": "completion"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "COMPLETION",
+                                "safeName": "COMPLETION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Completion",
+                                "safeName": "Completion"
+                            }
+                        }
+                    },
+                    "properties": []
+                },
+                "error": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_completions:ErrorEvent",
+                    "discriminantValue": {
+                        "wireValue": "error",
+                        "name": {
+                            "originalName": "error",
+                            "camelCase": {
+                                "unsafeName": "error",
+                                "safeName": "error"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "error",
+                                "safeName": "error"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ERROR",
+                                "safeName": "ERROR"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Error",
+                                "safeName": "Error"
+                            }
+                        }
+                    },
+                    "properties": []
+                }
+            }
         }
     },
     "headers": [],
@@ -1324,22 +895,22 @@
                 "type": "inlined",
                 "declaration": {
                     "name": {
-                        "originalName": "CompletionsStreamRequest",
+                        "originalName": "StreamCompletionRequest",
                         "camelCase": {
-                            "unsafeName": "completionsStreamRequest",
-                            "safeName": "completionsStreamRequest"
+                            "unsafeName": "streamCompletionRequest",
+                            "safeName": "streamCompletionRequest"
                         },
                         "snakeCase": {
-                            "unsafeName": "completions_stream_request",
-                            "safeName": "completions_stream_request"
+                            "unsafeName": "stream_completion_request",
+                            "safeName": "stream_completion_request"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "COMPLETIONS_STREAM_REQUEST",
-                            "safeName": "COMPLETIONS_STREAM_REQUEST"
+                            "unsafeName": "STREAM_COMPLETION_REQUEST",
+                            "safeName": "STREAM_COMPLETION_REQUEST"
                         },
                         "pascalCase": {
-                            "unsafeName": "CompletionsStreamRequest",
-                            "safeName": "CompletionsStreamRequest"
+                            "unsafeName": "StreamCompletionRequest",
+                            "safeName": "StreamCompletionRequest"
                         }
                     },
                     "fernFilepath": {
@@ -1430,30 +1001,30 @@
                 }
             },
             "response": {
-                "type": "fileDownload"
+                "type": "streaming"
             },
             "examples": null
         },
-        "endpoint_completions.streamevents": {
+        "endpoint_completions.streamEvents": {
             "auth": null,
             "declaration": {
                 "name": {
-                    "originalName": "streamevents",
+                    "originalName": "streamEvents",
                     "camelCase": {
-                        "unsafeName": "streamevents",
-                        "safeName": "streamevents"
+                        "unsafeName": "streamEvents",
+                        "safeName": "streamEvents"
                     },
                     "snakeCase": {
-                        "unsafeName": "streamevents",
-                        "safeName": "streamevents"
+                        "unsafeName": "stream_events",
+                        "safeName": "stream_events"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "STREAMEVENTS",
-                        "safeName": "STREAMEVENTS"
+                        "unsafeName": "STREAM_EVENTS",
+                        "safeName": "STREAM_EVENTS"
                     },
                     "pascalCase": {
-                        "unsafeName": "Streamevents",
-                        "safeName": "Streamevents"
+                        "unsafeName": "StreamEvents",
+                        "safeName": "StreamEvents"
                     }
                 },
                 "fernFilepath": {
@@ -1508,22 +1079,22 @@
                 "type": "inlined",
                 "declaration": {
                     "name": {
-                        "originalName": "CompletionsStreamEventsRequest",
+                        "originalName": "StreamEventsRequest",
                         "camelCase": {
-                            "unsafeName": "completionsStreamEventsRequest",
-                            "safeName": "completionsStreamEventsRequest"
+                            "unsafeName": "streamEventsRequest",
+                            "safeName": "streamEventsRequest"
                         },
                         "snakeCase": {
-                            "unsafeName": "completions_stream_events_request",
-                            "safeName": "completions_stream_events_request"
+                            "unsafeName": "stream_events_request",
+                            "safeName": "stream_events_request"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "COMPLETIONS_STREAM_EVENTS_REQUEST",
-                            "safeName": "COMPLETIONS_STREAM_EVENTS_REQUEST"
+                            "unsafeName": "STREAM_EVENTS_REQUEST",
+                            "safeName": "STREAM_EVENTS_REQUEST"
                         },
                         "pascalCase": {
-                            "unsafeName": "CompletionsStreamEventsRequest",
-                            "safeName": "CompletionsStreamEventsRequest"
+                            "unsafeName": "StreamEventsRequest",
+                            "safeName": "StreamEventsRequest"
                         }
                     },
                     "fernFilepath": {
@@ -1614,30 +1185,30 @@
                 }
             },
             "response": {
-                "type": "fileDownload"
+                "type": "streaming"
             },
             "examples": null
         },
-        "endpoint_completions.streameventscontextprotocol": {
+        "endpoint_completions.streamEventsContextProtocol": {
             "auth": null,
             "declaration": {
                 "name": {
-                    "originalName": "streameventscontextprotocol",
+                    "originalName": "streamEventsContextProtocol",
                     "camelCase": {
-                        "unsafeName": "streameventscontextprotocol",
-                        "safeName": "streameventscontextprotocol"
+                        "unsafeName": "streamEventsContextProtocol",
+                        "safeName": "streamEventsContextProtocol"
                     },
                     "snakeCase": {
-                        "unsafeName": "streameventscontextprotocol",
-                        "safeName": "streameventscontextprotocol"
+                        "unsafeName": "stream_events_context_protocol",
+                        "safeName": "stream_events_context_protocol"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "STREAMEVENTSCONTEXTPROTOCOL",
-                        "safeName": "STREAMEVENTSCONTEXTPROTOCOL"
+                        "unsafeName": "STREAM_EVENTS_CONTEXT_PROTOCOL",
+                        "safeName": "STREAM_EVENTS_CONTEXT_PROTOCOL"
                     },
                     "pascalCase": {
-                        "unsafeName": "Streameventscontextprotocol",
-                        "safeName": "Streameventscontextprotocol"
+                        "unsafeName": "StreamEventsContextProtocol",
+                        "safeName": "StreamEventsContextProtocol"
                     }
                 },
                 "fernFilepath": {
@@ -1692,22 +1263,22 @@
                 "type": "inlined",
                 "declaration": {
                     "name": {
-                        "originalName": "CompletionsStreamEventsContextProtocolRequest",
+                        "originalName": "StreamEventsContextProtocolRequest",
                         "camelCase": {
-                            "unsafeName": "completionsStreamEventsContextProtocolRequest",
-                            "safeName": "completionsStreamEventsContextProtocolRequest"
+                            "unsafeName": "streamEventsContextProtocolRequest",
+                            "safeName": "streamEventsContextProtocolRequest"
                         },
                         "snakeCase": {
-                            "unsafeName": "completions_stream_events_context_protocol_request",
-                            "safeName": "completions_stream_events_context_protocol_request"
+                            "unsafeName": "stream_events_context_protocol_request",
+                            "safeName": "stream_events_context_protocol_request"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "COMPLETIONS_STREAM_EVENTS_CONTEXT_PROTOCOL_REQUEST",
-                            "safeName": "COMPLETIONS_STREAM_EVENTS_CONTEXT_PROTOCOL_REQUEST"
+                            "unsafeName": "STREAM_EVENTS_CONTEXT_PROTOCOL_REQUEST",
+                            "safeName": "STREAM_EVENTS_CONTEXT_PROTOCOL_REQUEST"
                         },
                         "pascalCase": {
-                            "unsafeName": "CompletionsStreamEventsContextProtocolRequest",
-                            "safeName": "CompletionsStreamEventsContextProtocolRequest"
+                            "unsafeName": "StreamEventsContextProtocolRequest",
+                            "safeName": "StreamEventsContextProtocolRequest"
                         }
                     },
                     "fernFilepath": {
@@ -1798,7 +1369,7 @@
                 }
             },
             "response": {
-                "type": "fileDownload"
+                "type": "streaming"
             },
             "examples": null
         }

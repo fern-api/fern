@@ -1,10 +1,10 @@
 pub use crate::prelude::*;
 
-/// Query parameters for listWithExtendedResultsAndOptionalData
+/// Query parameters for inlineUsers_inlineUsers_listWithExtendedResultsAndOptionalData
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
 pub struct InlineUsersInlineUsersListWithExtendedResultsAndOptionalDataQueryRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub cursor: Option<Uuid>,
+    pub cursor: Option<String>,
 }
 
 impl InlineUsersInlineUsersListWithExtendedResultsAndOptionalDataQueryRequest {
@@ -17,12 +17,12 @@ impl InlineUsersInlineUsersListWithExtendedResultsAndOptionalDataQueryRequest {
 #[derive(Clone, PartialEq, Default, Debug)]
 #[non_exhaustive]
 pub struct InlineUsersInlineUsersListWithExtendedResultsAndOptionalDataQueryRequestBuilder {
-    cursor: Option<Uuid>,
+    cursor: Option<String>,
 }
 
 impl InlineUsersInlineUsersListWithExtendedResultsAndOptionalDataQueryRequestBuilder {
-    pub fn cursor(mut self, value: Uuid) -> Self {
-        self.cursor = Some(value);
+    pub fn cursor(mut self, value: impl Into<String>) -> Self {
+        self.cursor = Some(value.into());
         self
     }
 

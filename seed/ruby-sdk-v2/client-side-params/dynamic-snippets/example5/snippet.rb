@@ -5,14 +5,9 @@ client = Seed::Client.new(
   base_url: "https://api.fern.com"
 )
 
-client.service.create_user(
-  email: "email",
-  email_verified: true,
-  username: "username",
-  password: "password",
-  phone_number: "phone_number",
-  phone_verified: true,
-  user_metadata: {},
-  app_metadata: {},
-  connection: "connection"
+client.service.searchresources(
+  limit: 1,
+  offset: 1,
+  query: "query",
+  filters: {}
 )

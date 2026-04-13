@@ -5,8 +5,4 @@ client = Seed::Client.new(
   base_url: "https://api.fern.com"
 )
 
-client.users.list_with_offset_pagination_has_next_page(
-  page: 1,
-  limit: 3,
-  order: "asc"
-)
+client.inline_users_inline_users.inline_users_inline_users_list_usernames

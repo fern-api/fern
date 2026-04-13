@@ -3,17 +3,19 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\User\Requests\CreateUserRequest;
+use Seed\User\Requests\UserCreateUserRequest;
+use Seed\User\Types\UserCreateUserRequestType;
+use Seed\User\Types\UserCreateUserRequestVersion;
 
 $client = new SeedClient(
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->user->createUser(
-    new CreateUserRequest([
-        'type' => 'CreateUserRequest',
-        'version' => 'v1',
+$client->user->createuser(
+    new UserCreateUserRequest([
+        'type' => UserCreateUserRequestType::CreateUserRequest->value,
+        'version' => UserCreateUserRequestVersion::V1->value,
         'name' => 'name',
     ]),
 );

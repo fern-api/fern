@@ -33,12 +33,12 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
-func (c *Client) GetUsers(
+func (c *Client) Getusers(
 	ctx context.Context,
-	request *fern.GetUsersRequest,
+	request *fern.NullableGetUsersRequest,
 	opts ...option.RequestOption,
 ) ([]*fern.User, error) {
-	response, err := c.WithRawResponse.GetUsers(
+	response, err := c.WithRawResponse.Getusers(
 		ctx,
 		request,
 		opts...,
@@ -49,12 +49,12 @@ func (c *Client) GetUsers(
 	return response.Body, nil
 }
 
-func (c *Client) CreateUser(
+func (c *Client) Createuser(
 	ctx context.Context,
-	request *fern.CreateUserRequest,
+	request *fern.NullableCreateUserRequest,
 	opts ...option.RequestOption,
 ) (*fern.User, error) {
-	response, err := c.WithRawResponse.CreateUser(
+	response, err := c.WithRawResponse.Createuser(
 		ctx,
 		request,
 		opts...,
@@ -65,12 +65,12 @@ func (c *Client) CreateUser(
 	return response.Body, nil
 }
 
-func (c *Client) DeleteUser(
+func (c *Client) Deleteuser(
 	ctx context.Context,
-	request *fern.DeleteUserRequest,
+	request *fern.NullableDeleteUserRequest,
 	opts ...option.RequestOption,
 ) (bool, error) {
-	response, err := c.WithRawResponse.DeleteUser(
+	response, err := c.WithRawResponse.Deleteuser(
 		ctx,
 		request,
 		opts...,

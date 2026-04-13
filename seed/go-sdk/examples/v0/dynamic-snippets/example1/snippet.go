@@ -16,9 +16,8 @@ func do() {
             "<token>",
         ),
     )
-    request := "string"
-    client.Echo(
+    client.FileNotificationService.FileNotificationServiceGetException(
         context.TODO(),
-        request,
+        "notificationId",
     )
 }

@@ -1,18 +1,18 @@
-//! # BytesDownload SDK
+//! # bytes-download SDK
 //!
-//! The official Rust SDK for the BytesDownload.
+//! The official Rust SDK for the bytes-download.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_bytes_download::prelude::*;
+//! use seed_api::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
 //!     let config = ClientConfig {
 //!         ..Default::default()
 //!     };
-//!     let client = BytesDownloadClient::new(config).expect("Failed to build client");
+//!     let client = ApiClient::new(config).expect("Failed to build client");
 //!     client.service.simple(None).await;
 //! }
 //! ```

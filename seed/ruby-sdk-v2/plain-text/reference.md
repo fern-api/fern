@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_text</a>() -> String</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">gettext</a>() -> String</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.service.get_text
+client.service.gettext
 ```
 </dd>
 </dl>

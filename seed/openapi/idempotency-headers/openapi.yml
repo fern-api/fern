@@ -16,9 +16,11 @@ paths:
             application/json:
               schema:
                 type: string
-                format: uuid
+              examples:
+                Example1:
+                  value: string
       security:
-        - Bearer: []
+        - BearerAuth: []
       requestBody:
         required: true
         content:
@@ -28,11 +30,17 @@ paths:
               properties:
                 amount:
                   type: integer
+                  example: 1
                 currency:
                   $ref: '#/components/schemas/Currency'
               required:
                 - amount
                 - currency
+            examples:
+              Example1:
+                value:
+                  amount: 1
+                  currency: USD
   /payment/{paymentId}:
     delete:
       operationId: payment_delete
@@ -44,11 +52,15 @@ paths:
           required: true
           schema:
             type: string
+          example: paymentId
+          examples:
+            Example1:
+              value: paymentId
       responses:
         '204':
           description: ''
       security:
-        - Bearer: []
+        - BearerAuth: []
 components:
   schemas:
     Currency:
@@ -58,6 +70,6 @@ components:
         - USD
         - YEN
   securitySchemes:
-    Bearer:
+    BearerAuth:
       type: http
       scheme: bearer

@@ -1,11 +1,11 @@
-//! # BearerTokenEnvironmentVariable SDK
+//! # bearer-token-environment-variable SDK
 //!
-//! The official Rust SDK for the BearerTokenEnvironmentVariable.
+//! The official Rust SDK for the bearer-token-environment-variable.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_bearer_token_environment_variable::prelude::*;
+//! use seed_api::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
@@ -13,8 +13,8 @@
 //!         token: Some("<token>".to_string()),
 //!         ..Default::default()
 //!     };
-//!     let client = BearerTokenEnvironmentVariableClient::new(config).expect("Failed to build client");
-//!     client.service.get_with_bearer_token(None).await;
+//!     let client = ApiClient::new(config).expect("Failed to build client");
+//!     client.service.getwithbearertoken(None).await;
 //! }
 //! ```
 //!

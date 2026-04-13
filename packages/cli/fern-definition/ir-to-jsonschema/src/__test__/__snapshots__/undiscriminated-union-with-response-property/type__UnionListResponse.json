@@ -13,60 +13,64 @@
   ],
   "additionalProperties": false,
   "definitions": {
-    "MyUnion": {
+    "VariantA": {
       "type": "object",
       "properties": {
         "type": {
-          "type": "string",
-          "enum": [
-            "A",
-            "B",
-            "C"
-          ]
+          "const": "A"
+        },
+        "valueA": {
+          "type": "string"
         }
       },
-      "oneOf": [
+      "required": [
+        "type",
+        "valueA"
+      ],
+      "additionalProperties": false
+    },
+    "VariantB": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "B"
+        },
+        "valueB": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "type",
+        "valueB"
+      ],
+      "additionalProperties": false
+    },
+    "VariantC": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "C"
+        },
+        "valueC": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "type",
+        "valueC"
+      ],
+      "additionalProperties": false
+    },
+    "MyUnion": {
+      "anyOf": [
         {
-          "properties": {
-            "type": {
-              "const": "A"
-            },
-            "valueA": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "type",
-            "valueA"
-          ]
+          "$ref": "#/definitions/VariantA"
         },
         {
-          "properties": {
-            "type": {
-              "const": "B"
-            },
-            "valueB": {
-              "type": "integer"
-            }
-          },
-          "required": [
-            "type",
-            "valueB"
-          ]
+          "$ref": "#/definitions/VariantB"
         },
         {
-          "properties": {
-            "type": {
-              "const": "C"
-            },
-            "valueC": {
-              "type": "boolean"
-            }
-          },
-          "required": [
-            "type",
-            "valueC"
-          ]
+          "$ref": "#/definitions/VariantC"
         }
       ]
     }

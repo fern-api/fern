@@ -6,11 +6,11 @@
             "id": {
                 "path": "/users",
                 "method": "GET",
-                "identifier_override": "endpoint_retries.getUsers"
+                "identifier_override": "endpoint_retries.getusers"
             },
             "snippet": {
-                "sync_client": "from seed import SeedNoRetries\n\nclient = SeedNoRetries(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.retries.get_users()\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedNoRetries\n\nclient = AsyncSeedNoRetries(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.retries.get_users()\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.retries.getusers()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.retries.getusers()\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         }

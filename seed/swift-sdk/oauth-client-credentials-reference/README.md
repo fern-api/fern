@@ -12,6 +12,7 @@ The Seed Swift library provides convenient access to the Seed APIs from Swift.
 - [Reference](#reference)
 - [Usage](#usage)
 - [Errors](#errors)
+- [Request Types](#request-types)
 - [Advanced](#advanced)
   - [Additional Headers](#additional-headers)
   - [Additional Query String Parameters](#additional-query-string-parameters)
@@ -48,12 +49,12 @@ Instantiate and use the client with the following:
 
 ```swift
 import Foundation
-import OauthClientCredentialsReference
+import Api
 
 private func main() async throws {
-    let client = OauthClientCredentialsReferenceClient()
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.auth.getToken(request: GetTokenRequest(
+    _ = try await client.auth.gettoken(request: .init(
         clientId: "client_id",
         clientSecret: "client_secret"
     ))
@@ -67,14 +68,14 @@ try await main()
 The SDK throws a single error enum for all failures. Client-side issues encoding/decoding failures and network errors use dedicated cases, while non-success HTTP responses are wrapped in an `HTTPError` that exposes the status code, a simple classification and an optional decoded message.
 
 ```swift
-import OauthClientCredentialsReference
+import Api
 
-let client = OauthClientCredentialsReferenceClient(...)
+let client = ApiClient(...)
 
 do {
-    let response = try await client.auth.getToken(...)
+    let response = try await client.auth.gettoken(...)
     // Handle successful response
-} catch let error as OauthClientCredentialsReferenceError {
+} catch let error as ApiError {
     switch error {
     case .httpError(let httpError):
         print("Status code:", httpError.statusCode)
@@ -92,6 +93,18 @@ do {
 }
 ```
 
+## Request Types
+
+The SDK exports all request types as Swift structs. Simply import the SDK module to access them:
+
+```swift
+import Api
+
+let request = Requests.GetTokenRequest(
+    ...
+)
+```
+
 ## Advanced
 
 ### Additional Headers
@@ -99,7 +112,7 @@ do {
 If you would like to send additional headers as part of the request, use the `additionalHeaders` request option.
 
 ```swift
-try await client.auth.getToken(..., requestOptions: .init(
+try await client.auth.gettoken(..., requestOptions: .init(
     additionalHeaders: [
         "X-Custom-Header": "custom value"
     ]
@@ -111,7 +124,7 @@ try await client.auth.getToken(..., requestOptions: .init(
 If you would like to send additional query string parameters as part of the request, use the `additionalQueryParameters` request option.
 
 ```swift
-try await client.auth.getToken(..., requestOptions: .init(
+try await client.auth.gettoken(..., requestOptions: .init(
     additionalQueryParameters: [
         "custom_query_param_key": "custom_query_param_value"
     ]
@@ -123,7 +136,7 @@ try await client.auth.getToken(..., requestOptions: .init(
 The SDK defaults to a 60-second timeout. Use the `timeout` option to configure this behavior.
 
 ```swift
-try await client.auth.getToken(..., requestOptions: .init(
+try await client.auth.gettoken(..., requestOptions: .init(
     timeout: 30
 ))
 ```
@@ -134,9 +147,9 @@ The SDK allows you to customize the underlying `URLSession` used for HTTP reques
 
 ```swift
 import Foundation
-import OauthClientCredentialsReference
+import Api
 
-let client = OauthClientCredentialsReferenceClient(
+let client = ApiClient(
     ...,
     urlSession: // Provide your implementation here
 )

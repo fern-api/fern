@@ -6,8 +6,18 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import TokenResponse
-_dynamic_imports: typing.Dict[str, str] = {"TokenResponse": ".types"}
+    from .types import (
+        AuthGetTokenWithClientCredentialsRequestAudience,
+        AuthGetTokenWithClientCredentialsRequestGrantType,
+        AuthRefreshTokenRequestAudience,
+        AuthRefreshTokenRequestGrantType,
+    )
+_dynamic_imports: typing.Dict[str, str] = {
+    "AuthGetTokenWithClientCredentialsRequestAudience": ".types",
+    "AuthGetTokenWithClientCredentialsRequestGrantType": ".types",
+    "AuthRefreshTokenRequestAudience": ".types",
+    "AuthRefreshTokenRequestGrantType": ".types",
+}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -31,4 +41,9 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["TokenResponse"]
+__all__ = [
+    "AuthGetTokenWithClientCredentialsRequestAudience",
+    "AuthGetTokenWithClientCredentialsRequestGrantType",
+    "AuthRefreshTokenRequestAudience",
+    "AuthRefreshTokenRequestGrantType",
+]

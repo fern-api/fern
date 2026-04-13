@@ -1,6 +1,6 @@
 # Reference
 ## Users
-<details><summary><code>client.Users.ListWithCustomPager() -> *core.PayrocPager[*fern.UsersListResponse, []string, *fern.Link]</code></summary>
+<details><summary><code>client.Users.Listwithcustompager() -> *fern.UsersListResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,15 +13,8 @@
 <dd>
 
 ```go
-request := &fern.ListWithCustomPagerRequest{
-        Limit: fern.Int(
-            1,
-        ),
-        StartingAfter: fern.String(
-            "starting_after",
-        ),
-    }
-client.Users.ListWithCustomPager(
+request := &fern.UsersListWithCustomPagerRequest{}
+client.Users.Listwithcustompager(
         context.TODO(),
         request,
     )
