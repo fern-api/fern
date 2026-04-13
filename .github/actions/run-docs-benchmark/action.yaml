@@ -150,14 +150,16 @@ runs:
         # --id ensures repeated runs overwrite the same preview URL.
         # --force skips any confirmation prompts.
         # FERN_CWD tells the CLI which project directory to use (avoids fragile `cd`).
-        # Use pipefail so tee doesn't mask the CLI's exit code.
-        set -o pipefail
+        # GitHub Actions sets `bash -eo pipefail`, so a failing command
+        # normally kills the step.  Temporarily disable errexit so we can
+        # capture the exit code AND the CLI output via tee.
+        set +e
         FERN_CWD="${GITHUB_WORKSPACE}/benchmarks/fern" \
         node --enable-source-maps "${GITHUB_WORKSPACE}/packages/cli/cli/dist/prod/cli.cjs" \
           generate --docs --preview --id benchmark-run --force \
           2>&1 | tee "$LOG_FILE"
         EXIT_CODE=$?
-        set +o pipefail
+        set -e
 
         END_TIME=$(date +%s.%N)
         DURATION=$(awk "BEGIN {printf \"%.1f\", ${END_TIME} - ${START_TIME}}")
