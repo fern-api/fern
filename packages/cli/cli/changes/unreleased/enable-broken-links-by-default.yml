@@ -1,9 +1,8 @@
 # yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
 
 - summary: |
-    Enable broken link validation by default in `fern check`. Previously, the
-    `valid-markdown-links` rule was excluded unless `--broken-links` or
-    `--strict-broken-links` was passed. Now broken links (including href
-    attributes on Card components) are always checked. Severity can still be
-    controlled via `check.rules.broken-links` in docs.yml.
-  type: feat
+    Improve broken link validation resilience: gracefully handle docs workspaces
+    that lack navigation or versions instead of throwing, and add debug logging
+    when the check is skipped. Also adds Card and CardGroup href coverage to
+    broken-links test fixtures.
+  type: fix
