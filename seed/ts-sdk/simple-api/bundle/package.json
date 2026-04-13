@@ -9,7 +9,8 @@
     "files": [
         "dist",
         "types",
-        "api/resources/user.d.ts"
+        "api/resources/user.d.ts",
+        "LICENSE"
     ],
     "exports": {
         ".": {

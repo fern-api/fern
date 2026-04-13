@@ -48,7 +48,7 @@ export function constructNpmPackage({
                     registryUrl: outputMode.registriesV2.npm.registryUrl,
                     token: outputMode.registriesV2.npm.token
                 },
-                license: undefined,
+                license: licenseFromLicenseConfig(generatorConfig.license),
                 repoUrl: undefined
             };
         case "github":
