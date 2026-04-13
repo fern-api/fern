@@ -100,6 +100,9 @@ export const ValidMarkdownLinks: Rule = {
             visitableSlugs.add(pageWithBasePath);
         }
 
+        logger.debug(`[valid-markdown-links] Collected ${visitableSlugs.size} visitable slugs`);
+        logger.debug(`[valid-markdown-links] Collected ${absoluteFilePathsToSlugs.size} file-to-slug mappings`);
+
         return {
             markdownPage: async ({ content, absoluteFilepath }) => {
                 const slugs = absoluteFilePathsToSlugs.get(absoluteFilepath);
@@ -107,6 +110,7 @@ export const ValidMarkdownLinks: Rule = {
                 // if this happens, this probably means that the current file is omitted from the docs navigation
                 // most likely due to a slug collision. This should be handled in a different rule.
                 if (!slugs || slugs.length === 0) {
+                    logger.debug(`[valid-markdown-links] Skipping ${absoluteFilepath} — no slugs found`);
                     return [];
                 }
 
@@ -122,6 +126,10 @@ export const ValidMarkdownLinks: Rule = {
                     absoluteFilepath,
                     instanceUrls
                 });
+
+                logger.debug(
+                    `[valid-markdown-links] ${absoluteFilepath}: ${pathnamesToCheck.length} pathnames to check, ${violations.length} parse violations`
+                );
 
                 const pathToCheckViolations = await Promise.all(
                     pathnamesToCheck.map(async (pathnameToCheck) => {

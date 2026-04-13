@@ -5,6 +5,7 @@ import { NodePath } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, dirname, doesPathExist, relative, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
+import path from "path";
 import { readdir, readFile, stat } from "fs/promises";
 import { asyncPool } from "../utils/asyncPool.js";
 import { DocsConfigFileAstVisitor } from "./DocsConfigFileAstVisitor.js";
@@ -177,7 +178,11 @@ async function visitNavigationItem({
             }
         },
         orphaned: noop,
-        availability: noop
+        availability: noop,
+        folder: noop,
+        titleSource: noop,
+        collapsible: noop,
+        collapsedByDefault: noop
     });
 
     const markdownPath = getNavigationItemMarkdownPath(navigationItem);
@@ -248,6 +253,49 @@ async function visitNavigationItem({
                 },
                 [...nodePath, "api"]
             );
+        }
+    }
+
+    if (navigationItemIsFolder(navigationItem)) {
+        const folderDir = resolve(dirname(absoluteFilepathToConfiguration), navigationItem.folder);
+
+        if (await doesPathExist(folderDir)) {
+            const markdownFiles = await collectMarkdownFiles(folderDir);
+            context.logger.debug(`Processing ${markdownFiles.length} markdown files in folder: ${navigationItem.folder}`);
+
+            await asyncPool(VALIDATION_CONCURRENCY, markdownFiles, async (absoluteFilepath) => {
+                const content = (await readFile(absoluteFilepath, "utf8")).toString();
+                const title = path.basename(absoluteFilepath, path.extname(absoluteFilepath));
+
+                await visitor.markdownPage?.(
+                    {
+                        title,
+                        content,
+                        absoluteFilepath
+                    },
+                    [...nodePath, "folder", path.relative(folderDir, absoluteFilepath)]
+                );
+
+                try {
+                    const { filepaths } = parseImagePaths(content, {
+                        absolutePathToFernFolder,
+                        absolutePathToMarkdownFile: absoluteFilepath
+                    });
+
+                    for (const filepath of filepaths) {
+                        await visitor.filepath?.(
+                            {
+                                absoluteFilepath: filepath,
+                                value: relative(absolutePathToFernFolder, filepath),
+                                willBeUploaded: true
+                            },
+                            [...nodePath, "folder", path.relative(folderDir, absoluteFilepath)]
+                        );
+                    }
+                } catch (err) {
+                    context.logger.trace(`Failed to parse image paths in ${absoluteFilepath}: ${err}`);
+                }
+            });
         }
     }
 
@@ -323,6 +371,28 @@ function getNavigationItemTitle(item: docsYml.RawSchemas.NavigationItem): string
         return item.section;
     }
     return "Unknown";
+}
+
+function navigationItemIsFolder(
+    item: docsYml.RawSchemas.NavigationItem
+): item is docsYml.RawSchemas.FolderConfiguration {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    return (item as docsYml.RawSchemas.FolderConfiguration)?.folder != null;
+}
+
+async function collectMarkdownFiles(dirPath: AbsoluteFilePath): Promise<AbsoluteFilePath[]> {
+    const results: AbsoluteFilePath[] = [];
+    const entries = await readdir(dirPath, { withFileTypes: true });
+    for (const entry of entries) {
+        const fullPath = resolve(dirPath, entry.name);
+        if (entry.isDirectory()) {
+            const nested = await collectMarkdownFiles(fullPath);
+            results.push(...nested);
+        } else if (entry.name.endsWith(".md") || entry.name.endsWith(".mdx")) {
+            results.push(fullPath);
+        }
+    }
+    return results;
 }
 
 function navigationItemIsApi(

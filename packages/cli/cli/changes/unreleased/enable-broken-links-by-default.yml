@@ -1,8 +1,8 @@
 # yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
 
 - summary: |
-    Improve broken link validation resilience: gracefully handle docs workspaces
-    that lack navigation or versions instead of throwing, and add debug logging
-    when the check is skipped. Also adds Card and CardGroup href coverage to
-    broken-links test fixtures.
+    Fix broken link validation for folder-based navigation: pages inside `folder`
+    navigation items were not being visited by the AST validator, so broken links
+    in those files (including Card href attributes) were silently missed. Also
+    improves resilience by gracefully handling docs workspaces that lack navigation.
   type: fix

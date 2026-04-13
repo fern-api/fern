@@ -109,10 +109,10 @@ export async function runRulesOnDocsWorkspace({
     const ruleCreationStart = performance.now();
     const allRulesWithVisitors = await Promise.all(
         rules.map(
-            async (rule): Promise<RuleWithVisitor> => ({
-                ruleName: rule.name,
-                visitor: await rule.create({ workspace, apiWorkspaces, ossWorkspaces, logger: context.logger })
-            })
+            async (rule): Promise<RuleWithVisitor> => {
+                const visitor = await rule.create({ workspace, apiWorkspaces, ossWorkspaces, logger: context.logger });
+                return { ruleName: rule.name, visitor };
+            }
         )
     );
     const ruleCreationTime = performance.now() - ruleCreationStart;
