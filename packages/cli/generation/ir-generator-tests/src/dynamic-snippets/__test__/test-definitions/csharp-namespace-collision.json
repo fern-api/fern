@@ -57,7 +57,7 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null,
+                    "propertyAccess": "READ_ONLY",
                     "variable": null
                 },
                 {
@@ -147,7 +147,7 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null,
+                    "propertyAccess": "WRITE_ONLY",
                     "variable": null
                 }
             ],
@@ -210,7 +210,7 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null,
+                    "propertyAccess": "READ_ONLY",
                     "variable": null
                 },
                 {
@@ -300,38 +300,78 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null,
+                    "propertyAccess": "WRITE_ONLY",
                     "variable": null
                 }
             ],
             "extends": null,
             "additionalProperties": false
         },
-        "type_:ScimConfigurationScimConfiguration": {
+        "type_ScimConfiguration:ScimConfiguration": {
             "type": "object",
             "declaration": {
                 "name": {
-                    "originalName": "ScimConfigurationScimConfiguration",
+                    "originalName": "ScimConfiguration",
                     "camelCase": {
-                        "unsafeName": "scimConfigurationSCIMConfiguration",
-                        "safeName": "scimConfigurationSCIMConfiguration"
+                        "unsafeName": "scimConfiguration",
+                        "safeName": "scimConfiguration"
                     },
                     "snakeCase": {
-                        "unsafeName": "scim_configuration_scim_configuration",
-                        "safeName": "scim_configuration_scim_configuration"
+                        "unsafeName": "scim_configuration",
+                        "safeName": "scim_configuration"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "SCIM_CONFIGURATION_SCIM_CONFIGURATION",
-                        "safeName": "SCIM_CONFIGURATION_SCIM_CONFIGURATION"
+                        "unsafeName": "SCIM_CONFIGURATION",
+                        "safeName": "SCIM_CONFIGURATION"
                     },
                     "pascalCase": {
-                        "unsafeName": "SCIMConfigurationSCIMConfiguration",
-                        "safeName": "SCIMConfigurationSCIMConfiguration"
+                        "unsafeName": "SCIMConfiguration",
+                        "safeName": "SCIMConfiguration"
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": [],
+                    "allParts": [
+                        {
+                            "originalName": "ScimConfiguration",
+                            "camelCase": {
+                                "unsafeName": "scimConfiguration",
+                                "safeName": "scimConfiguration"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "scim_configuration",
+                                "safeName": "scim_configuration"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SCIM_CONFIGURATION",
+                                "safeName": "SCIM_CONFIGURATION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "SCIMConfiguration",
+                                "safeName": "SCIMConfiguration"
+                            }
+                        }
+                    ],
+                    "packagePath": [
+                        {
+                            "originalName": "ScimConfiguration",
+                            "camelCase": {
+                                "unsafeName": "scimConfiguration",
+                                "safeName": "scimConfiguration"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "scim_configuration",
+                                "safeName": "scim_configuration"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SCIM_CONFIGURATION",
+                                "safeName": "SCIM_CONFIGURATION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "SCIMConfiguration",
+                                "safeName": "SCIMConfiguration"
+                            }
+                        }
+                    ],
                     "file": null
                 }
             },
@@ -460,31 +500,71 @@
             "extends": null,
             "additionalProperties": false
         },
-        "type_:ScimConfigurationScimToken": {
+        "type_ScimConfiguration:ScimToken": {
             "type": "object",
             "declaration": {
                 "name": {
-                    "originalName": "ScimConfigurationScimToken",
+                    "originalName": "ScimToken",
                     "camelCase": {
-                        "unsafeName": "scimConfigurationSCIMToken",
-                        "safeName": "scimConfigurationSCIMToken"
+                        "unsafeName": "scimToken",
+                        "safeName": "scimToken"
                     },
                     "snakeCase": {
-                        "unsafeName": "scim_configuration_scim_token",
-                        "safeName": "scim_configuration_scim_token"
+                        "unsafeName": "scim_token",
+                        "safeName": "scim_token"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "SCIM_CONFIGURATION_SCIM_TOKEN",
-                        "safeName": "SCIM_CONFIGURATION_SCIM_TOKEN"
+                        "unsafeName": "SCIM_TOKEN",
+                        "safeName": "SCIM_TOKEN"
                     },
                     "pascalCase": {
-                        "unsafeName": "SCIMConfigurationSCIMToken",
-                        "safeName": "SCIMConfigurationSCIMToken"
+                        "unsafeName": "SCIMToken",
+                        "safeName": "SCIMToken"
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": [],
+                    "allParts": [
+                        {
+                            "originalName": "ScimConfiguration",
+                            "camelCase": {
+                                "unsafeName": "scimConfiguration",
+                                "safeName": "scimConfiguration"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "scim_configuration",
+                                "safeName": "scim_configuration"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SCIM_CONFIGURATION",
+                                "safeName": "SCIM_CONFIGURATION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "SCIMConfiguration",
+                                "safeName": "SCIMConfiguration"
+                            }
+                        }
+                    ],
+                    "packagePath": [
+                        {
+                            "originalName": "ScimConfiguration",
+                            "camelCase": {
+                                "unsafeName": "scimConfiguration",
+                                "safeName": "scimConfiguration"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "scim_configuration",
+                                "safeName": "scim_configuration"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SCIM_CONFIGURATION",
+                                "safeName": "SCIM_CONFIGURATION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "SCIMConfiguration",
+                                "safeName": "SCIMConfiguration"
+                            }
+                        }
+                    ],
                     "file": null
                 }
             },
@@ -545,11 +625,8 @@
                     "typeReference": {
                         "type": "optional",
                         "value": {
-                            "type": "nullable",
-                            "value": {
-                                "type": "primitive",
-                                "value": "STRING"
-                            }
+                            "type": "primitive",
+                            "value": "STRING"
                         }
                     },
                     "propertyAccess": null,
@@ -581,13 +658,10 @@
                     "typeReference": {
                         "type": "optional",
                         "value": {
-                            "type": "nullable",
+                            "type": "list",
                             "value": {
-                                "type": "list",
-                                "value": {
-                                    "type": "primitive",
-                                    "value": "STRING"
-                                }
+                                "type": "primitive",
+                                "value": "STRING"
                             }
                         }
                     },
@@ -628,31 +702,71 @@
             "extends": null,
             "additionalProperties": false
         },
-        "type_:SystemTask": {
+        "type_System:Task": {
             "type": "object",
             "declaration": {
                 "name": {
-                    "originalName": "SystemTask",
+                    "originalName": "Task",
                     "camelCase": {
-                        "unsafeName": "systemTask",
-                        "safeName": "systemTask"
+                        "unsafeName": "task",
+                        "safeName": "task"
                     },
                     "snakeCase": {
-                        "unsafeName": "system_task",
-                        "safeName": "system_task"
+                        "unsafeName": "task",
+                        "safeName": "task"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "SYSTEM_TASK",
-                        "safeName": "SYSTEM_TASK"
+                        "unsafeName": "TASK",
+                        "safeName": "TASK"
                     },
                     "pascalCase": {
-                        "unsafeName": "SystemTask",
-                        "safeName": "SystemTask"
+                        "unsafeName": "Task",
+                        "safeName": "Task"
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": [],
+                    "allParts": [
+                        {
+                            "originalName": "System",
+                            "camelCase": {
+                                "unsafeName": "system",
+                                "safeName": "system"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "system",
+                                "safeName": "system"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SYSTEM",
+                                "safeName": "SYSTEM"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "System",
+                                "safeName": "System"
+                            }
+                        }
+                    ],
+                    "packagePath": [
+                        {
+                            "originalName": "System",
+                            "camelCase": {
+                                "unsafeName": "system",
+                                "safeName": "system"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "system",
+                                "safeName": "system"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SYSTEM",
+                                "safeName": "SYSTEM"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "System",
+                                "safeName": "System"
+                            }
+                        }
+                    ],
                     "file": null
                 }
             },
@@ -712,7 +826,7 @@
                     },
                     "typeReference": {
                         "type": "named",
-                        "value": "type_:SystemUser"
+                        "value": "type_System:User"
                     },
                     "propertyAccess": null,
                     "variable": null
@@ -742,7 +856,7 @@
                     },
                     "typeReference": {
                         "type": "named",
-                        "value": "type_:SystemUser"
+                        "value": "type_System:User"
                     },
                     "propertyAccess": null,
                     "variable": null
@@ -751,84 +865,71 @@
             "extends": null,
             "additionalProperties": false
         },
-        "type_:SystemUserCountry": {
-            "type": "enum",
-            "declaration": {
-                "name": {
-                    "originalName": "SystemUserCountry",
-                    "camelCase": {
-                        "unsafeName": "systemUserCountry",
-                        "safeName": "systemUserCountry"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "system_user_country",
-                        "safeName": "system_user_country"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "SYSTEM_USER_COUNTRY",
-                        "safeName": "SYSTEM_USER_COUNTRY"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "SystemUserCountry",
-                        "safeName": "SystemUserCountry"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": [],
-                    "file": null
-                }
-            },
-            "values": [
-                {
-                    "wireValue": "USA",
-                    "name": {
-                        "originalName": "USA",
-                        "camelCase": {
-                            "unsafeName": "usa",
-                            "safeName": "usa"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "usa",
-                            "safeName": "usa"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "USA",
-                            "safeName": "USA"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Usa",
-                            "safeName": "Usa"
-                        }
-                    }
-                }
-            ]
-        },
-        "type_:SystemUser": {
+        "type_System:User": {
             "type": "object",
             "declaration": {
                 "name": {
-                    "originalName": "SystemUser",
+                    "originalName": "User",
                     "camelCase": {
-                        "unsafeName": "systemUser",
-                        "safeName": "systemUser"
+                        "unsafeName": "user",
+                        "safeName": "user"
                     },
                     "snakeCase": {
-                        "unsafeName": "system_user",
-                        "safeName": "system_user"
+                        "unsafeName": "user",
+                        "safeName": "user"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "SYSTEM_USER",
-                        "safeName": "SYSTEM_USER"
+                        "unsafeName": "USER",
+                        "safeName": "USER"
                     },
                     "pascalCase": {
-                        "unsafeName": "SystemUser",
-                        "safeName": "SystemUser"
+                        "unsafeName": "User",
+                        "safeName": "User"
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": [],
+                    "allParts": [
+                        {
+                            "originalName": "System",
+                            "camelCase": {
+                                "unsafeName": "system",
+                                "safeName": "system"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "system",
+                                "safeName": "system"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SYSTEM",
+                                "safeName": "SYSTEM"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "System",
+                                "safeName": "System"
+                            }
+                        }
+                    ],
+                    "packagePath": [
+                        {
+                            "originalName": "System",
+                            "camelCase": {
+                                "unsafeName": "system",
+                                "safeName": "system"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "system",
+                                "safeName": "system"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SYSTEM",
+                                "safeName": "SYSTEM"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "System",
+                                "safeName": "System"
+                            }
+                        }
+                    ],
                     "file": null
                 }
             },
@@ -889,11 +990,8 @@
                     "typeReference": {
                         "type": "optional",
                         "value": {
-                            "type": "nullable",
-                            "value": {
-                                "type": "primitive",
-                                "value": "STRING"
-                            }
+                            "type": "primitive",
+                            "value": "STRING"
                         }
                     },
                     "propertyAccess": null,
@@ -1013,8 +1111,11 @@
                         }
                     },
                     "typeReference": {
-                        "type": "named",
-                        "value": "type_:SystemUserCountry"
+                        "type": "literal",
+                        "value": {
+                            "type": "string",
+                            "value": "USA"
+                        }
                     },
                     "propertyAccess": null,
                     "variable": null
@@ -1049,52 +1150,14 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "",
-                            "camelCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "snakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "pascalCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            }
-                        }
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "",
-                        "camelCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        },
-                        "snakeCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        },
-                        "pascalCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        }
-                    }
+                    "file": null
                 }
             },
             "location": {
                 "method": "POST",
-                "path": "/root-users"
+                "path": "/users"
             },
             "request": {
                 "type": "body",
@@ -1135,52 +1198,14 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "",
-                            "camelCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "snakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "pascalCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            }
-                        }
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "",
-                        "camelCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        },
-                        "snakeCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        },
-                        "pascalCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        }
-                    }
+                    "file": null
                 }
             },
             "location": {
                 "method": "POST",
-                "path": "/root-users/tasks"
+                "path": "/users"
             },
             "request": {
                 "type": "body",
@@ -1198,70 +1223,72 @@
             },
             "examples": null
         },
-        "endpoint_scimconfiguration.getconfiguration": {
+        "endpoint_ScimConfiguration.getConfiguration": {
             "auth": null,
             "declaration": {
                 "name": {
-                    "originalName": "getconfiguration",
+                    "originalName": "getConfiguration",
                     "camelCase": {
-                        "unsafeName": "getconfiguration",
-                        "safeName": "getconfiguration"
+                        "unsafeName": "getConfiguration",
+                        "safeName": "getConfiguration"
                     },
                     "snakeCase": {
-                        "unsafeName": "getconfiguration",
-                        "safeName": "getconfiguration"
+                        "unsafeName": "get_configuration",
+                        "safeName": "get_configuration"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "GETCONFIGURATION",
-                        "safeName": "GETCONFIGURATION"
+                        "unsafeName": "GET_CONFIGURATION",
+                        "safeName": "GET_CONFIGURATION"
                     },
                     "pascalCase": {
-                        "unsafeName": "Getconfiguration",
-                        "safeName": "Getconfiguration"
+                        "unsafeName": "GetConfiguration",
+                        "safeName": "GetConfiguration"
                     }
                 },
                 "fernFilepath": {
                     "allParts": [
                         {
-                            "originalName": "scimconfiguration",
+                            "originalName": "ScimConfiguration",
                             "camelCase": {
-                                "unsafeName": "scimconfiguration",
-                                "safeName": "scimconfiguration"
+                                "unsafeName": "scimConfiguration",
+                                "safeName": "scimConfiguration"
                             },
                             "snakeCase": {
-                                "unsafeName": "scimconfiguration",
-                                "safeName": "scimconfiguration"
+                                "unsafeName": "scim_configuration",
+                                "safeName": "scim_configuration"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "SCIMCONFIGURATION",
-                                "safeName": "SCIMCONFIGURATION"
+                                "unsafeName": "SCIM_CONFIGURATION",
+                                "safeName": "SCIM_CONFIGURATION"
                             },
                             "pascalCase": {
-                                "unsafeName": "Scimconfiguration",
-                                "safeName": "Scimconfiguration"
+                                "unsafeName": "SCIMConfiguration",
+                                "safeName": "SCIMConfiguration"
                             }
                         }
                     ],
-                    "packagePath": [],
-                    "file": {
-                        "originalName": "scimconfiguration",
-                        "camelCase": {
-                            "unsafeName": "scimconfiguration",
-                            "safeName": "scimconfiguration"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "scimconfiguration",
-                            "safeName": "scimconfiguration"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "SCIMCONFIGURATION",
-                            "safeName": "SCIMCONFIGURATION"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Scimconfiguration",
-                            "safeName": "Scimconfiguration"
+                    "packagePath": [
+                        {
+                            "originalName": "ScimConfiguration",
+                            "camelCase": {
+                                "unsafeName": "scimConfiguration",
+                                "safeName": "scimConfiguration"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "scim_configuration",
+                                "safeName": "scim_configuration"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SCIM_CONFIGURATION",
+                                "safeName": "SCIM_CONFIGURATION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "SCIMConfiguration",
+                                "safeName": "SCIMConfiguration"
+                            }
                         }
-                    }
+                    ],
+                    "file": null
                 }
             },
             "location": {
@@ -1278,70 +1305,72 @@
             },
             "examples": null
         },
-        "endpoint_scimconfiguration.createtoken": {
+        "endpoint_ScimConfiguration.createToken": {
             "auth": null,
             "declaration": {
                 "name": {
-                    "originalName": "createtoken",
+                    "originalName": "createToken",
                     "camelCase": {
-                        "unsafeName": "createtoken",
-                        "safeName": "createtoken"
+                        "unsafeName": "createToken",
+                        "safeName": "createToken"
                     },
                     "snakeCase": {
-                        "unsafeName": "createtoken",
-                        "safeName": "createtoken"
+                        "unsafeName": "create_token",
+                        "safeName": "create_token"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "CREATETOKEN",
-                        "safeName": "CREATETOKEN"
+                        "unsafeName": "CREATE_TOKEN",
+                        "safeName": "CREATE_TOKEN"
                     },
                     "pascalCase": {
-                        "unsafeName": "Createtoken",
-                        "safeName": "Createtoken"
+                        "unsafeName": "CreateToken",
+                        "safeName": "CreateToken"
                     }
                 },
                 "fernFilepath": {
                     "allParts": [
                         {
-                            "originalName": "scimconfiguration",
+                            "originalName": "ScimConfiguration",
                             "camelCase": {
-                                "unsafeName": "scimconfiguration",
-                                "safeName": "scimconfiguration"
+                                "unsafeName": "scimConfiguration",
+                                "safeName": "scimConfiguration"
                             },
                             "snakeCase": {
-                                "unsafeName": "scimconfiguration",
-                                "safeName": "scimconfiguration"
+                                "unsafeName": "scim_configuration",
+                                "safeName": "scim_configuration"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "SCIMCONFIGURATION",
-                                "safeName": "SCIMCONFIGURATION"
+                                "unsafeName": "SCIM_CONFIGURATION",
+                                "safeName": "SCIM_CONFIGURATION"
                             },
                             "pascalCase": {
-                                "unsafeName": "Scimconfiguration",
-                                "safeName": "Scimconfiguration"
+                                "unsafeName": "SCIMConfiguration",
+                                "safeName": "SCIMConfiguration"
                             }
                         }
                     ],
-                    "packagePath": [],
-                    "file": {
-                        "originalName": "scimconfiguration",
-                        "camelCase": {
-                            "unsafeName": "scimconfiguration",
-                            "safeName": "scimconfiguration"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "scimconfiguration",
-                            "safeName": "scimconfiguration"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "SCIMCONFIGURATION",
-                            "safeName": "SCIMCONFIGURATION"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Scimconfiguration",
-                            "safeName": "Scimconfiguration"
+                    "packagePath": [
+                        {
+                            "originalName": "ScimConfiguration",
+                            "camelCase": {
+                                "unsafeName": "scimConfiguration",
+                                "safeName": "scimConfiguration"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "scim_configuration",
+                                "safeName": "scim_configuration"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SCIM_CONFIGURATION",
+                                "safeName": "SCIM_CONFIGURATION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "SCIMConfiguration",
+                                "safeName": "SCIMConfiguration"
+                            }
                         }
-                    }
+                    ],
+                    "file": null
                 }
             },
             "location": {
@@ -1355,7 +1384,7 @@
                     "type": "typeReference",
                     "value": {
                         "type": "named",
-                        "value": "type_:ScimConfigurationScimToken"
+                        "value": "type_ScimConfiguration:ScimToken"
                     }
                 }
             },
@@ -1364,70 +1393,72 @@
             },
             "examples": null
         },
-        "endpoint_scimconfiguration.listusers": {
+        "endpoint_ScimConfiguration.listUsers": {
             "auth": null,
             "declaration": {
                 "name": {
-                    "originalName": "listusers",
+                    "originalName": "listUsers",
                     "camelCase": {
-                        "unsafeName": "listusers",
-                        "safeName": "listusers"
+                        "unsafeName": "listUsers",
+                        "safeName": "listUsers"
                     },
                     "snakeCase": {
-                        "unsafeName": "listusers",
-                        "safeName": "listusers"
+                        "unsafeName": "list_users",
+                        "safeName": "list_users"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "LISTUSERS",
-                        "safeName": "LISTUSERS"
+                        "unsafeName": "LIST_USERS",
+                        "safeName": "LIST_USERS"
                     },
                     "pascalCase": {
-                        "unsafeName": "Listusers",
-                        "safeName": "Listusers"
+                        "unsafeName": "ListUsers",
+                        "safeName": "ListUsers"
                     }
                 },
                 "fernFilepath": {
                     "allParts": [
                         {
-                            "originalName": "scimconfiguration",
+                            "originalName": "ScimConfiguration",
                             "camelCase": {
-                                "unsafeName": "scimconfiguration",
-                                "safeName": "scimconfiguration"
+                                "unsafeName": "scimConfiguration",
+                                "safeName": "scimConfiguration"
                             },
                             "snakeCase": {
-                                "unsafeName": "scimconfiguration",
-                                "safeName": "scimconfiguration"
+                                "unsafeName": "scim_configuration",
+                                "safeName": "scim_configuration"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "SCIMCONFIGURATION",
-                                "safeName": "SCIMCONFIGURATION"
+                                "unsafeName": "SCIM_CONFIGURATION",
+                                "safeName": "SCIM_CONFIGURATION"
                             },
                             "pascalCase": {
-                                "unsafeName": "Scimconfiguration",
-                                "safeName": "Scimconfiguration"
+                                "unsafeName": "SCIMConfiguration",
+                                "safeName": "SCIMConfiguration"
                             }
                         }
                     ],
-                    "packagePath": [],
-                    "file": {
-                        "originalName": "scimconfiguration",
-                        "camelCase": {
-                            "unsafeName": "scimconfiguration",
-                            "safeName": "scimconfiguration"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "scimconfiguration",
-                            "safeName": "scimconfiguration"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "SCIMCONFIGURATION",
-                            "safeName": "SCIMCONFIGURATION"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Scimconfiguration",
-                            "safeName": "Scimconfiguration"
+                    "packagePath": [
+                        {
+                            "originalName": "ScimConfiguration",
+                            "camelCase": {
+                                "unsafeName": "scimConfiguration",
+                                "safeName": "scimConfiguration"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "scim_configuration",
+                                "safeName": "scim_configuration"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SCIM_CONFIGURATION",
+                                "safeName": "SCIM_CONFIGURATION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "SCIMConfiguration",
+                                "safeName": "SCIMConfiguration"
+                            }
                         }
-                    }
+                    ],
+                    "file": null
                 }
             },
             "location": {
@@ -1444,32 +1475,32 @@
             },
             "examples": null
         },
-        "endpoint_system.createuser": {
+        "endpoint_System.createUser": {
             "auth": null,
             "declaration": {
                 "name": {
-                    "originalName": "createuser",
+                    "originalName": "createUser",
                     "camelCase": {
-                        "unsafeName": "createuser",
-                        "safeName": "createuser"
+                        "unsafeName": "createUser",
+                        "safeName": "createUser"
                     },
                     "snakeCase": {
-                        "unsafeName": "createuser",
-                        "safeName": "createuser"
+                        "unsafeName": "create_user",
+                        "safeName": "create_user"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "CREATEUSER",
-                        "safeName": "CREATEUSER"
+                        "unsafeName": "CREATE_USER",
+                        "safeName": "CREATE_USER"
                     },
                     "pascalCase": {
-                        "unsafeName": "Createuser",
-                        "safeName": "Createuser"
+                        "unsafeName": "CreateUser",
+                        "safeName": "CreateUser"
                     }
                 },
                 "fernFilepath": {
                     "allParts": [
                         {
-                            "originalName": "system",
+                            "originalName": "System",
                             "camelCase": {
                                 "unsafeName": "system",
                                 "safeName": "system"
@@ -1488,26 +1519,28 @@
                             }
                         }
                     ],
-                    "packagePath": [],
-                    "file": {
-                        "originalName": "system",
-                        "camelCase": {
-                            "unsafeName": "system",
-                            "safeName": "system"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "system",
-                            "safeName": "system"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "SYSTEM",
-                            "safeName": "SYSTEM"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "System",
-                            "safeName": "System"
+                    "packagePath": [
+                        {
+                            "originalName": "System",
+                            "camelCase": {
+                                "unsafeName": "system",
+                                "safeName": "system"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "system",
+                                "safeName": "system"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SYSTEM",
+                                "safeName": "SYSTEM"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "System",
+                                "safeName": "System"
+                            }
                         }
-                    }
+                    ],
+                    "file": null
                 }
             },
             "location": {
@@ -1521,7 +1554,7 @@
                     "type": "typeReference",
                     "value": {
                         "type": "named",
-                        "value": "type_:SystemUser"
+                        "value": "type_System:User"
                     }
                 }
             },
@@ -1530,32 +1563,32 @@
             },
             "examples": null
         },
-        "endpoint_system.createtask": {
+        "endpoint_System.createTask": {
             "auth": null,
             "declaration": {
                 "name": {
-                    "originalName": "createtask",
+                    "originalName": "createTask",
                     "camelCase": {
-                        "unsafeName": "createtask",
-                        "safeName": "createtask"
+                        "unsafeName": "createTask",
+                        "safeName": "createTask"
                     },
                     "snakeCase": {
-                        "unsafeName": "createtask",
-                        "safeName": "createtask"
+                        "unsafeName": "create_task",
+                        "safeName": "create_task"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "CREATETASK",
-                        "safeName": "CREATETASK"
+                        "unsafeName": "CREATE_TASK",
+                        "safeName": "CREATE_TASK"
                     },
                     "pascalCase": {
-                        "unsafeName": "Createtask",
-                        "safeName": "Createtask"
+                        "unsafeName": "CreateTask",
+                        "safeName": "CreateTask"
                     }
                 },
                 "fernFilepath": {
                     "allParts": [
                         {
-                            "originalName": "system",
+                            "originalName": "System",
                             "camelCase": {
                                 "unsafeName": "system",
                                 "safeName": "system"
@@ -1574,31 +1607,33 @@
                             }
                         }
                     ],
-                    "packagePath": [],
-                    "file": {
-                        "originalName": "system",
-                        "camelCase": {
-                            "unsafeName": "system",
-                            "safeName": "system"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "system",
-                            "safeName": "system"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "SYSTEM",
-                            "safeName": "SYSTEM"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "System",
-                            "safeName": "System"
+                    "packagePath": [
+                        {
+                            "originalName": "System",
+                            "camelCase": {
+                                "unsafeName": "system",
+                                "safeName": "system"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "system",
+                                "safeName": "system"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SYSTEM",
+                                "safeName": "SYSTEM"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "System",
+                                "safeName": "System"
+                            }
                         }
-                    }
+                    ],
+                    "file": null
                 }
             },
             "location": {
                 "method": "POST",
-                "path": "/users/tasks"
+                "path": "/users"
             },
             "request": {
                 "type": "body",
@@ -1607,7 +1642,7 @@
                     "type": "typeReference",
                     "value": {
                         "type": "named",
-                        "value": "type_:SystemTask"
+                        "value": "type_System:Task"
                     }
                 }
             },
@@ -1616,32 +1651,32 @@
             },
             "examples": null
         },
-        "endpoint_system.getuser": {
+        "endpoint_System.getUser": {
             "auth": null,
             "declaration": {
                 "name": {
-                    "originalName": "getuser",
+                    "originalName": "getUser",
                     "camelCase": {
-                        "unsafeName": "getuser",
-                        "safeName": "getuser"
+                        "unsafeName": "getUser",
+                        "safeName": "getUser"
                     },
                     "snakeCase": {
-                        "unsafeName": "getuser",
-                        "safeName": "getuser"
+                        "unsafeName": "get_user",
+                        "safeName": "get_user"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "GETUSER",
-                        "safeName": "GETUSER"
+                        "unsafeName": "GET_USER",
+                        "safeName": "GET_USER"
                     },
                     "pascalCase": {
-                        "unsafeName": "Getuser",
-                        "safeName": "Getuser"
+                        "unsafeName": "GetUser",
+                        "safeName": "GetUser"
                     }
                 },
                 "fernFilepath": {
                     "allParts": [
                         {
-                            "originalName": "system",
+                            "originalName": "System",
                             "camelCase": {
                                 "unsafeName": "system",
                                 "safeName": "system"
@@ -1660,79 +1695,9 @@
                             }
                         }
                     ],
-                    "packagePath": [],
-                    "file": {
-                        "originalName": "system",
-                        "camelCase": {
-                            "unsafeName": "system",
-                            "safeName": "system"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "system",
-                            "safeName": "system"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "SYSTEM",
-                            "safeName": "SYSTEM"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "System",
-                            "safeName": "System"
-                        }
-                    }
-                }
-            },
-            "location": {
-                "method": "GET",
-                "path": "/users/{userId}"
-            },
-            "request": {
-                "type": "inlined",
-                "declaration": {
-                    "name": {
-                        "originalName": "SystemGetUserRequest",
-                        "camelCase": {
-                            "unsafeName": "systemGetUserRequest",
-                            "safeName": "systemGetUserRequest"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "system_get_user_request",
-                            "safeName": "system_get_user_request"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "SYSTEM_GET_USER_REQUEST",
-                            "safeName": "SYSTEM_GET_USER_REQUEST"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "SystemGetUserRequest",
-                            "safeName": "SystemGetUserRequest"
-                        }
-                    },
-                    "fernFilepath": {
-                        "allParts": [
-                            {
-                                "originalName": "system",
-                                "camelCase": {
-                                    "unsafeName": "system",
-                                    "safeName": "system"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "system",
-                                    "safeName": "system"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "SYSTEM",
-                                    "safeName": "SYSTEM"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "System",
-                                    "safeName": "System"
-                                }
-                            }
-                        ],
-                        "packagePath": [],
-                        "file": {
-                            "originalName": "system",
+                    "packagePath": [
+                        {
+                            "originalName": "System",
                             "camelCase": {
                                 "unsafeName": "system",
                                 "safeName": "system"
@@ -1750,8 +1715,16 @@
                                 "safeName": "System"
                             }
                         }
-                    }
-                },
+                    ],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/users/{userId}"
+            },
+            "request": {
+                "type": "body",
                 "pathParameters": [
                     {
                         "name": {
@@ -1784,13 +1757,7 @@
                         "variable": null
                     }
                 ],
-                "queryParameters": [],
-                "headers": [],
-                "body": null,
-                "metadata": {
-                    "includePathParameters": true,
-                    "onlyPathParameters": true
-                }
+                "body": null
             },
             "response": {
                 "type": "json"

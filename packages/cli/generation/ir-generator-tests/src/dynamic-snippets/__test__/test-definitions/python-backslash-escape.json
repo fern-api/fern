@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_:User": {
+        "type_user:User": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -24,9 +24,47 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        {
+                            "originalName": "user",
+                            "camelCase": {
+                                "unsafeName": "user",
+                                "safeName": "user"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "user",
+                                "safeName": "user"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "USER",
+                                "safeName": "USER"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "User",
+                                "safeName": "User"
+                            }
+                        }
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": {
+                        "originalName": "user",
+                        "camelCase": {
+                            "unsafeName": "user",
+                            "safeName": "user"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "user",
+                            "safeName": "user"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "USER",
+                            "safeName": "USER"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "User",
+                            "safeName": "User"
+                        }
+                    }
                 }
             },
             "properties": [
@@ -201,22 +239,22 @@
                 "type": "inlined",
                 "declaration": {
                     "name": {
-                        "originalName": "UserGetRequest",
+                        "originalName": "GetUserRequest",
                         "camelCase": {
-                            "unsafeName": "userGetRequest",
-                            "safeName": "userGetRequest"
+                            "unsafeName": "getUserRequest",
+                            "safeName": "getUserRequest"
                         },
                         "snakeCase": {
-                            "unsafeName": "user_get_request",
-                            "safeName": "user_get_request"
+                            "unsafeName": "get_user_request",
+                            "safeName": "get_user_request"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "USER_GET_REQUEST",
-                            "safeName": "USER_GET_REQUEST"
+                            "unsafeName": "GET_USER_REQUEST",
+                            "safeName": "GET_USER_REQUEST"
                         },
                         "pascalCase": {
-                            "unsafeName": "UserGetRequest",
-                            "safeName": "UserGetRequest"
+                            "unsafeName": "GetUserRequest",
+                            "safeName": "GetUserRequest"
                         }
                     },
                     "fernFilepath": {
@@ -322,11 +360,8 @@
                         "typeReference": {
                             "type": "optional",
                             "value": {
-                                "type": "nullable",
-                                "value": {
-                                    "type": "primitive",
-                                    "value": "STRING"
-                                }
+                                "type": "primitive",
+                                "value": "STRING"
                             }
                         },
                         "propertyAccess": null,
@@ -336,7 +371,7 @@
                 "headers": [],
                 "body": null,
                 "metadata": {
-                    "includePathParameters": true,
+                    "includePathParameters": false,
                     "onlyPathParameters": false
                 }
             },

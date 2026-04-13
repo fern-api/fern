@@ -2,8 +2,8 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": "api",
-    "apiDisplayName": "go-bytes-request",
+    "apiName": "go-bytes-request",
+    "apiDisplayName": null,
     "apiDocs": null,
     "auth": {
         "requirement": "ALL",

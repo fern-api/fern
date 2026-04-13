@@ -56,11 +56,8 @@
                     "typeReference": {
                         "type": "optional",
                         "value": {
-                            "type": "nullable",
-                            "value": {
-                                "type": "primitive",
-                                "value": "INTEGER"
-                            }
+                            "type": "primitive",
+                            "value": "INTEGER"
                         }
                     },
                     "propertyAccess": null,
@@ -92,11 +89,8 @@
                     "typeReference": {
                         "type": "optional",
                         "value": {
-                            "type": "nullable",
-                            "value": {
-                                "type": "primitive",
-                                "value": "INTEGER"
-                            }
+                            "type": "primitive",
+                            "value": "INTEGER"
                         }
                     },
                     "propertyAccess": null,
@@ -128,11 +122,8 @@
                     "typeReference": {
                         "type": "optional",
                         "value": {
-                            "type": "nullable",
-                            "value": {
-                                "type": "primitive",
-                                "value": "BOOLEAN"
-                            }
+                            "type": "primitive",
+                            "value": "BOOLEAN"
                         }
                     },
                     "propertyAccess": null,
@@ -334,7 +325,7 @@
     },
     "headers": [],
     "endpoints": {
-        "endpoint_users.listwithcustompager": {
+        "endpoint_users.listWithCustomPager": {
             "auth": {
                 "type": "bearer",
                 "token": {
@@ -359,22 +350,22 @@
             },
             "declaration": {
                 "name": {
-                    "originalName": "listwithcustompager",
+                    "originalName": "listWithCustomPager",
                     "camelCase": {
-                        "unsafeName": "listwithcustompager",
-                        "safeName": "listwithcustompager"
+                        "unsafeName": "listWithCustomPager",
+                        "safeName": "listWithCustomPager"
                     },
                     "snakeCase": {
-                        "unsafeName": "listwithcustompager",
-                        "safeName": "listwithcustompager"
+                        "unsafeName": "list_with_custom_pager",
+                        "safeName": "list_with_custom_pager"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "LISTWITHCUSTOMPAGER",
-                        "safeName": "LISTWITHCUSTOMPAGER"
+                        "unsafeName": "LIST_WITH_CUSTOM_PAGER",
+                        "safeName": "LIST_WITH_CUSTOM_PAGER"
                     },
                     "pascalCase": {
-                        "unsafeName": "Listwithcustompager",
-                        "safeName": "Listwithcustompager"
+                        "unsafeName": "ListWithCustomPager",
+                        "safeName": "ListWithCustomPager"
                     }
                 },
                 "fernFilepath": {
@@ -429,22 +420,22 @@
                 "type": "inlined",
                 "declaration": {
                     "name": {
-                        "originalName": "UsersListWithCustomPagerRequest",
+                        "originalName": "ListWithCustomPagerRequest",
                         "camelCase": {
-                            "unsafeName": "usersListWithCustomPagerRequest",
-                            "safeName": "usersListWithCustomPagerRequest"
+                            "unsafeName": "listWithCustomPagerRequest",
+                            "safeName": "listWithCustomPagerRequest"
                         },
                         "snakeCase": {
-                            "unsafeName": "users_list_with_custom_pager_request",
-                            "safeName": "users_list_with_custom_pager_request"
+                            "unsafeName": "list_with_custom_pager_request",
+                            "safeName": "list_with_custom_pager_request"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "USERS_LIST_WITH_CUSTOM_PAGER_REQUEST",
-                            "safeName": "USERS_LIST_WITH_CUSTOM_PAGER_REQUEST"
+                            "unsafeName": "LIST_WITH_CUSTOM_PAGER_REQUEST",
+                            "safeName": "LIST_WITH_CUSTOM_PAGER_REQUEST"
                         },
                         "pascalCase": {
-                            "unsafeName": "UsersListWithCustomPagerRequest",
-                            "safeName": "UsersListWithCustomPagerRequest"
+                            "unsafeName": "ListWithCustomPagerRequest",
+                            "safeName": "ListWithCustomPagerRequest"
                         }
                     },
                     "fernFilepath": {
@@ -519,11 +510,8 @@
                         "typeReference": {
                             "type": "optional",
                             "value": {
-                                "type": "nullable",
-                                "value": {
-                                    "type": "primitive",
-                                    "value": "INTEGER"
-                                }
+                                "type": "primitive",
+                                "value": "INTEGER"
                             }
                         },
                         "propertyAccess": null,
@@ -555,11 +543,8 @@
                         "typeReference": {
                             "type": "optional",
                             "value": {
-                                "type": "nullable",
-                                "value": {
-                                    "type": "primitive",
-                                    "value": "STRING"
-                                }
+                                "type": "primitive",
+                                "value": "STRING"
                             }
                         },
                         "propertyAccess": null,

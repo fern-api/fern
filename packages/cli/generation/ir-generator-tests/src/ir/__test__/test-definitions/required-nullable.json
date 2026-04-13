@@ -36,19 +36,13 @@
                             "container": {
                                 "_type": "optional",
                                 "optional": {
-                                    "_type": "container",
-                                    "container": {
-                                        "_type": "nullable",
-                                        "nullable": {
-                                            "_type": "primitive",
-                                            "primitive": {
-                                                "v1": "STRING",
-                                                "v2": {
-                                                    "type": "string",
-                                                    "default": null,
-                                                    "validation": null
-                                                }
-                                            }
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
                                         }
                                     }
                                 }
@@ -166,11 +160,9 @@
             "availability": null,
             "name": {
                 "fernFilepath": {
-                    "allParts": [
-                        ""
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": ""
+                    "file": null
                 }
             },
             "displayName": null,
@@ -217,19 +209,13 @@
                                 "container": {
                                     "_type": "optional",
                                     "optional": {
-                                        "_type": "container",
-                                        "container": {
-                                            "_type": "nullable",
-                                            "nullable": {
-                                                "_type": "primitive",
-                                                "primitive": {
-                                                    "v1": "STRING",
-                                                    "v2": {
-                                                        "type": "string",
-                                                        "default": null,
-                                                        "validation": null
-                                                    }
-                                                }
+                                        "_type": "primitive",
+                                        "primitive": {
+                                            "v1": "STRING",
+                                            "v2": {
+                                                "type": "string",
+                                                "default": null,
+                                                "validation": null
                                             }
                                         }
                                     }
@@ -474,50 +460,24 @@
                                                                         "type": "optional",
                                                                         "optional": {
                                                                             "shape": {
-                                                                                "type": "container",
-                                                                                "container": {
-                                                                                    "type": "nullable",
-                                                                                    "nullable": {
-                                                                                        "shape": {
-                                                                                            "type": "primitive",
-                                                                                            "primitive": {
-                                                                                                "type": "string",
-                                                                                                "string": {
-                                                                                                    "original": "bar"
-                                                                                                }
-                                                                                            }
-                                                                                        },
-                                                                                        "jsonExample": "bar"
-                                                                                    },
-                                                                                    "valueType": {
-                                                                                        "_type": "primitive",
-                                                                                        "primitive": {
-                                                                                            "v1": "STRING",
-                                                                                            "v2": {
-                                                                                                "type": "string",
-                                                                                                "default": null,
-                                                                                                "validation": null
-                                                                                            }
-                                                                                        }
+                                                                                "type": "primitive",
+                                                                                "primitive": {
+                                                                                    "type": "string",
+                                                                                    "string": {
+                                                                                        "original": "bar"
                                                                                     }
                                                                                 }
                                                                             },
                                                                             "jsonExample": "bar"
                                                                         },
                                                                         "valueType": {
-                                                                            "_type": "container",
-                                                                            "container": {
-                                                                                "_type": "nullable",
-                                                                                "nullable": {
-                                                                                    "_type": "primitive",
-                                                                                    "primitive": {
-                                                                                        "v1": "STRING",
-                                                                                        "v2": {
-                                                                                            "type": "string",
-                                                                                            "default": null,
-                                                                                            "validation": null
-                                                                                        }
-                                                                                    }
+                                                                            "_type": "primitive",
+                                                                            "primitive": {
+                                                                                "v1": "STRING",
+                                                                                "v2": {
+                                                                                    "type": "string",
+                                                                                    "default": null,
+                                                                                    "validation": null
                                                                                 }
                                                                             }
                                                                         }
@@ -702,7 +662,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "ab7aeb50",
+                                "id": "37cfcfc1",
                                 "url": "/foo",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -786,50 +746,24 @@
                                                                         "type": "optional",
                                                                         "optional": {
                                                                             "shape": {
-                                                                                "type": "container",
-                                                                                "container": {
-                                                                                    "type": "nullable",
-                                                                                    "nullable": {
-                                                                                        "shape": {
-                                                                                            "type": "primitive",
-                                                                                            "primitive": {
-                                                                                                "type": "string",
-                                                                                                "string": {
-                                                                                                    "original": "bar"
-                                                                                                }
-                                                                                            }
-                                                                                        },
-                                                                                        "jsonExample": "bar"
-                                                                                    },
-                                                                                    "valueType": {
-                                                                                        "_type": "primitive",
-                                                                                        "primitive": {
-                                                                                            "v1": "STRING",
-                                                                                            "v2": {
-                                                                                                "type": "string",
-                                                                                                "default": null,
-                                                                                                "validation": null
-                                                                                            }
-                                                                                        }
+                                                                                "type": "primitive",
+                                                                                "primitive": {
+                                                                                    "type": "string",
+                                                                                    "string": {
+                                                                                        "original": "bar"
                                                                                     }
                                                                                 }
                                                                             },
                                                                             "jsonExample": "bar"
                                                                         },
                                                                         "valueType": {
-                                                                            "_type": "container",
-                                                                            "container": {
-                                                                                "_type": "nullable",
-                                                                                "nullable": {
-                                                                                    "_type": "primitive",
-                                                                                    "primitive": {
-                                                                                        "v1": "STRING",
-                                                                                        "v2": {
-                                                                                            "type": "string",
-                                                                                            "default": null,
-                                                                                            "validation": null
-                                                                                        }
-                                                                                    }
+                                                                            "_type": "primitive",
+                                                                            "primitive": {
+                                                                                "v1": "STRING",
+                                                                                "v2": {
+                                                                                    "type": "string",
+                                                                                    "default": null,
+                                                                                    "validation": null
                                                                                 }
                                                                             }
                                                                         }
@@ -1103,10 +1037,7 @@
                     "queryParameters": [],
                     "headers": [
                         {
-                            "name": {
-                                "wireValue": "X-Idempotency-Key",
-                                "name": "idempotencyKey"
-                            },
+                            "name": "X-Idempotency-Key",
                             "valueType": {
                                 "_type": "primitive",
                                 "primitive": {
@@ -1206,19 +1137,13 @@
                                     "container": {
                                         "_type": "optional",
                                         "optional": {
-                                            "_type": "container",
-                                            "container": {
-                                                "_type": "nullable",
-                                                "nullable": {
-                                                    "_type": "primitive",
-                                                    "primitive": {
-                                                        "v1": "STRING",
-                                                        "v2": {
-                                                            "type": "string",
-                                                            "default": null,
-                                                            "validation": null
-                                                        }
-                                                    }
+                                            "_type": "primitive",
+                                            "primitive": {
+                                                "v1": "STRING",
+                                                "v2": {
+                                                    "type": "string",
+                                                    "default": null,
+                                                    "validation": null
                                                 }
                                             }
                                         }
@@ -1237,7 +1162,7 @@
                         "extendedProperties": [],
                         "docs": null,
                         "v2Examples": null,
-                        "contentType": "application/json"
+                        "contentType": null
                     },
                     "v2RequestBodies": null,
                     "sdkRequest": {
@@ -1245,7 +1170,7 @@
                             "type": "wrapper",
                             "wrapperName": "UpdateFooRequest",
                             "bodyKey": "body",
-                            "includePathParameters": true,
+                            "includePathParameters": false,
                             "onlyPathParameters": false
                         },
                         "requestParameterName": "request",
@@ -1279,37 +1204,16 @@
                     },
                     "v2Responses": null,
                     "errors": [],
-                    "userSpecifiedExamples": [
+                    "userSpecifiedExamples": [],
+                    "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "f20fce25",
-                                "name": null,
+                                "id": "1b8be228",
                                 "url": "/foo/id",
-                                "rootPathParameters": [],
-                                "endpointPathParameters": [
-                                    {
-                                        "name": "id",
-                                        "value": {
-                                            "shape": {
-                                                "type": "primitive",
-                                                "primitive": {
-                                                    "type": "string",
-                                                    "string": {
-                                                        "original": "id"
-                                                    }
-                                                }
-                                            },
-                                            "jsonExample": "id"
-                                        }
-                                    }
-                                ],
-                                "servicePathParameters": [],
+                                "name": null,
                                 "endpointHeaders": [
                                     {
-                                        "name": {
-                                            "wireValue": "X-Idempotency-Key",
-                                            "name": "idempotencyKey"
-                                        },
+                                        "name": "X-Idempotency-Key",
                                         "value": {
                                             "shape": {
                                                 "type": "primitive",
@@ -1321,294 +1225,6 @@
                                                 }
                                             },
                                             "jsonExample": "X-Idempotency-Key"
-                                        }
-                                    }
-                                ],
-                                "serviceHeaders": [],
-                                "queryParameters": [],
-                                "request": {
-                                    "type": "inlinedRequestBody",
-                                    "properties": [],
-                                    "extraProperties": null,
-                                    "jsonExample": {}
-                                },
-                                "response": {
-                                    "type": "ok",
-                                    "value": {
-                                        "type": "body",
-                                        "value": {
-                                            "shape": {
-                                                "type": "named",
-                                                "typeName": {
-                                                    "typeId": "type_:Foo",
-                                                    "fernFilepath": {
-                                                        "allParts": [],
-                                                        "packagePath": [],
-                                                        "file": null
-                                                    },
-                                                    "name": "Foo",
-                                                    "displayName": null
-                                                },
-                                                "shape": {
-                                                    "type": "object",
-                                                    "properties": [
-                                                        {
-                                                            "name": "bar",
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "container",
-                                                                    "container": {
-                                                                        "type": "optional",
-                                                                        "optional": {
-                                                                            "shape": {
-                                                                                "type": "container",
-                                                                                "container": {
-                                                                                    "type": "nullable",
-                                                                                    "nullable": {
-                                                                                        "shape": {
-                                                                                            "type": "primitive",
-                                                                                            "primitive": {
-                                                                                                "type": "string",
-                                                                                                "string": {
-                                                                                                    "original": "bar"
-                                                                                                }
-                                                                                            }
-                                                                                        },
-                                                                                        "jsonExample": "bar"
-                                                                                    },
-                                                                                    "valueType": {
-                                                                                        "_type": "primitive",
-                                                                                        "primitive": {
-                                                                                            "v1": "STRING",
-                                                                                            "v2": {
-                                                                                                "type": "string",
-                                                                                                "default": null,
-                                                                                                "validation": null
-                                                                                            }
-                                                                                        }
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            "jsonExample": "bar"
-                                                                        },
-                                                                        "valueType": {
-                                                                            "_type": "container",
-                                                                            "container": {
-                                                                                "_type": "nullable",
-                                                                                "nullable": {
-                                                                                    "_type": "primitive",
-                                                                                    "primitive": {
-                                                                                        "v1": "STRING",
-                                                                                        "v2": {
-                                                                                            "type": "string",
-                                                                                            "default": null,
-                                                                                            "validation": null
-                                                                                        }
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "jsonExample": "bar"
-                                                            },
-                                                            "originalTypeDeclaration": {
-                                                                "typeId": "type_:Foo",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "name": "Foo",
-                                                                "displayName": null
-                                                            },
-                                                            "propertyAccess": null
-                                                        },
-                                                        {
-                                                            "name": "nullable_bar",
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "container",
-                                                                    "container": {
-                                                                        "type": "optional",
-                                                                        "optional": {
-                                                                            "shape": {
-                                                                                "type": "container",
-                                                                                "container": {
-                                                                                    "type": "nullable",
-                                                                                    "nullable": {
-                                                                                        "shape": {
-                                                                                            "type": "primitive",
-                                                                                            "primitive": {
-                                                                                                "type": "string",
-                                                                                                "string": {
-                                                                                                    "original": "nullable_bar"
-                                                                                                }
-                                                                                            }
-                                                                                        },
-                                                                                        "jsonExample": "nullable_bar"
-                                                                                    },
-                                                                                    "valueType": {
-                                                                                        "_type": "primitive",
-                                                                                        "primitive": {
-                                                                                            "v1": "STRING",
-                                                                                            "v2": {
-                                                                                                "type": "string",
-                                                                                                "default": null,
-                                                                                                "validation": null
-                                                                                            }
-                                                                                        }
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            "jsonExample": "nullable_bar"
-                                                                        },
-                                                                        "valueType": {
-                                                                            "_type": "container",
-                                                                            "container": {
-                                                                                "_type": "nullable",
-                                                                                "nullable": {
-                                                                                    "_type": "primitive",
-                                                                                    "primitive": {
-                                                                                        "v1": "STRING",
-                                                                                        "v2": {
-                                                                                            "type": "string",
-                                                                                            "default": null,
-                                                                                            "validation": null
-                                                                                        }
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "jsonExample": "nullable_bar"
-                                                            },
-                                                            "originalTypeDeclaration": {
-                                                                "typeId": "type_:Foo",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "name": "Foo",
-                                                                "displayName": null
-                                                            },
-                                                            "propertyAccess": null
-                                                        },
-                                                        {
-                                                            "name": "nullable_required_bar",
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "container",
-                                                                    "container": {
-                                                                        "type": "nullable",
-                                                                        "nullable": {
-                                                                            "shape": {
-                                                                                "type": "primitive",
-                                                                                "primitive": {
-                                                                                    "type": "string",
-                                                                                    "string": {
-                                                                                        "original": "nullable_required_bar"
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            "jsonExample": "nullable_required_bar"
-                                                                        },
-                                                                        "valueType": {
-                                                                            "_type": "primitive",
-                                                                            "primitive": {
-                                                                                "v1": "STRING",
-                                                                                "v2": {
-                                                                                    "type": "string",
-                                                                                    "default": null,
-                                                                                    "validation": null
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "jsonExample": "nullable_required_bar"
-                                                            },
-                                                            "originalTypeDeclaration": {
-                                                                "typeId": "type_:Foo",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "name": "Foo",
-                                                                "displayName": null
-                                                            },
-                                                            "propertyAccess": null
-                                                        },
-                                                        {
-                                                            "name": "required_bar",
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "primitive",
-                                                                    "primitive": {
-                                                                        "type": "string",
-                                                                        "string": {
-                                                                            "original": "required_bar"
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "jsonExample": "required_bar"
-                                                            },
-                                                            "originalTypeDeclaration": {
-                                                                "typeId": "type_:Foo",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "name": "Foo",
-                                                                "displayName": null
-                                                            },
-                                                            "propertyAccess": null
-                                                        }
-                                                    ],
-                                                    "extraProperties": null
-                                                }
-                                            },
-                                            "jsonExample": {
-                                                "bar": "bar",
-                                                "nullable_bar": "nullable_bar",
-                                                "nullable_required_bar": "nullable_required_bar",
-                                                "required_bar": "required_bar"
-                                            }
-                                        }
-                                    }
-                                },
-                                "docs": null
-                            },
-                            "codeSamples": null
-                        }
-                    ],
-                    "autogeneratedExamples": [
-                        {
-                            "example": {
-                                "id": "2fbdbacc",
-                                "url": "/foo/id",
-                                "name": null,
-                                "endpointHeaders": [
-                                    {
-                                        "name": {
-                                            "wireValue": "X-Idempotency-Key",
-                                            "name": "idempotencyKey"
-                                        },
-                                        "value": {
-                                            "shape": {
-                                                "type": "primitive",
-                                                "primitive": {
-                                                    "type": "string",
-                                                    "string": {
-                                                        "original": "idempotencyKey"
-                                                    }
-                                                }
-                                            },
-                                            "jsonExample": "idempotencyKey"
                                         }
                                     }
                                 ],
@@ -1706,19 +1322,13 @@
                                                         "type": "optional",
                                                         "optional": null,
                                                         "valueType": {
-                                                            "_type": "container",
-                                                            "container": {
-                                                                "_type": "nullable",
-                                                                "nullable": {
-                                                                    "_type": "primitive",
-                                                                    "primitive": {
-                                                                        "v1": "STRING",
-                                                                        "v2": {
-                                                                            "type": "string",
-                                                                            "default": null,
-                                                                            "validation": null
-                                                                        }
-                                                                    }
+                                                            "_type": "primitive",
+                                                            "primitive": {
+                                                                "v1": "STRING",
+                                                                "v2": {
+                                                                    "type": "string",
+                                                                    "default": null,
+                                                                    "validation": null
                                                                 }
                                                             }
                                                         }
@@ -1759,50 +1369,24 @@
                                                                         "type": "optional",
                                                                         "optional": {
                                                                             "shape": {
-                                                                                "type": "container",
-                                                                                "container": {
-                                                                                    "type": "nullable",
-                                                                                    "nullable": {
-                                                                                        "shape": {
-                                                                                            "type": "primitive",
-                                                                                            "primitive": {
-                                                                                                "type": "string",
-                                                                                                "string": {
-                                                                                                    "original": "bar"
-                                                                                                }
-                                                                                            }
-                                                                                        },
-                                                                                        "jsonExample": "bar"
-                                                                                    },
-                                                                                    "valueType": {
-                                                                                        "_type": "primitive",
-                                                                                        "primitive": {
-                                                                                            "v1": "STRING",
-                                                                                            "v2": {
-                                                                                                "type": "string",
-                                                                                                "default": null,
-                                                                                                "validation": null
-                                                                                            }
-                                                                                        }
+                                                                                "type": "primitive",
+                                                                                "primitive": {
+                                                                                    "type": "string",
+                                                                                    "string": {
+                                                                                        "original": "bar"
                                                                                     }
                                                                                 }
                                                                             },
                                                                             "jsonExample": "bar"
                                                                         },
                                                                         "valueType": {
-                                                                            "_type": "container",
-                                                                            "container": {
-                                                                                "_type": "nullable",
-                                                                                "nullable": {
-                                                                                    "_type": "primitive",
-                                                                                    "primitive": {
-                                                                                        "v1": "STRING",
-                                                                                        "v2": {
-                                                                                            "type": "string",
-                                                                                            "default": null,
-                                                                                            "validation": null
-                                                                                        }
-                                                                                    }
+                                                                            "_type": "primitive",
+                                                                            "primitive": {
+                                                                                "v1": "STRING",
+                                                                                "v2": {
+                                                                                    "type": "string",
+                                                                                    "default": null,
+                                                                                    "validation": null
                                                                                 }
                                                                             }
                                                                         }
@@ -2079,11 +1663,8 @@
                         "typeReference": {
                             "type": "optional",
                             "value": {
-                                "type": "nullable",
-                                "value": {
-                                    "type": "primitive",
-                                    "value": "STRING"
-                                }
+                                "type": "primitive",
+                                "value": "STRING"
                             }
                         },
                         "propertyAccess": null,
@@ -2218,47 +1799,9 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [
-                            {
-                                "originalName": "",
-                                "camelCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                }
-                            }
-                        ],
+                        "allParts": [],
                         "packagePath": [],
-                        "file": {
-                            "originalName": "",
-                            "camelCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "snakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "pascalCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            }
-                        }
+                        "file": null
                     }
                 },
                 "location": {
@@ -2288,47 +1831,9 @@
                             }
                         },
                         "fernFilepath": {
-                            "allParts": [
-                                {
-                                    "originalName": "",
-                                    "camelCase": {
-                                        "unsafeName": "",
-                                        "safeName": ""
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "",
-                                        "safeName": ""
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "",
-                                        "safeName": ""
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "",
-                                        "safeName": ""
-                                    }
-                                }
-                            ],
+                            "allParts": [],
                             "packagePath": [],
-                            "file": {
-                                "originalName": "",
-                                "camelCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                }
-                            }
+                            "file": null
                         }
                     },
                     "pathParameters": [],
@@ -2359,11 +1864,8 @@
                             "typeReference": {
                                 "type": "optional",
                                 "value": {
-                                    "type": "nullable",
-                                    "value": {
-                                        "type": "primitive",
-                                        "value": "STRING"
-                                    }
+                                    "type": "primitive",
+                                    "value": "STRING"
                                 }
                             },
                             "propertyAccess": null,
@@ -2504,47 +2006,9 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [
-                            {
-                                "originalName": "",
-                                "camelCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                }
-                            }
-                        ],
+                        "allParts": [],
                         "packagePath": [],
-                        "file": {
-                            "originalName": "",
-                            "camelCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "snakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "pascalCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            }
-                        }
+                        "file": null
                     }
                 },
                 "location": {
@@ -2574,47 +2038,9 @@
                             }
                         },
                         "fernFilepath": {
-                            "allParts": [
-                                {
-                                    "originalName": "",
-                                    "camelCase": {
-                                        "unsafeName": "",
-                                        "safeName": ""
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "",
-                                        "safeName": ""
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "",
-                                        "safeName": ""
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "",
-                                        "safeName": ""
-                                    }
-                                }
-                            ],
+                            "allParts": [],
                             "packagePath": [],
-                            "file": {
-                                "originalName": "",
-                                "camelCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                }
-                            }
+                            "file": null
                         }
                     },
                     "pathParameters": [
@@ -2655,22 +2081,22 @@
                             "name": {
                                 "wireValue": "X-Idempotency-Key",
                                 "name": {
-                                    "originalName": "idempotencyKey",
+                                    "originalName": "X-Idempotency-Key",
                                     "camelCase": {
-                                        "unsafeName": "idempotencyKey",
-                                        "safeName": "idempotencyKey"
+                                        "unsafeName": "xIdempotencyKey",
+                                        "safeName": "xIdempotencyKey"
                                     },
                                     "snakeCase": {
-                                        "unsafeName": "idempotency_key",
-                                        "safeName": "idempotency_key"
+                                        "unsafeName": "x_idempotency_key",
+                                        "safeName": "x_idempotency_key"
                                     },
                                     "screamingSnakeCase": {
-                                        "unsafeName": "IDEMPOTENCY_KEY",
-                                        "safeName": "IDEMPOTENCY_KEY"
+                                        "unsafeName": "X_IDEMPOTENCY_KEY",
+                                        "safeName": "X_IDEMPOTENCY_KEY"
                                     },
                                     "pascalCase": {
-                                        "unsafeName": "IdempotencyKey",
-                                        "safeName": "IdempotencyKey"
+                                        "unsafeName": "XIdempotencyKey",
+                                        "safeName": "XIdempotencyKey"
                                     }
                                 }
                             },
@@ -2783,11 +2209,8 @@
                                 "typeReference": {
                                     "type": "optional",
                                     "value": {
-                                        "type": "nullable",
-                                        "value": {
-                                            "type": "primitive",
-                                            "value": "STRING"
-                                        }
+                                        "type": "primitive",
+                                        "value": "STRING"
                                     }
                                 },
                                 "propertyAccess": null,
@@ -2796,7 +2219,7 @@
                         ]
                     },
                     "metadata": {
-                        "includePathParameters": true,
+                        "includePathParameters": false,
                         "onlyPathParameters": false
                     }
                 },
@@ -2819,28 +2242,7 @@
         "keywords": null,
         "smartCasing": true
     },
-    "subpackages": {
-        "subpackage_": {
-            "name": "",
-            "displayName": null,
-            "fernFilepath": {
-                "allParts": [
-                    ""
-                ],
-                "packagePath": [],
-                "file": ""
-            },
-            "service": "service_",
-            "types": [],
-            "errors": [],
-            "subpackages": [],
-            "navigationConfig": null,
-            "webhooks": null,
-            "websocket": null,
-            "hasEndpointsInTree": true,
-            "docs": null
-        }
-    },
+    "subpackages": {},
     "rootPackage": {
         "fernFilepath": {
             "allParts": [],
@@ -2848,14 +2250,12 @@
             "file": null
         },
         "websocket": null,
-        "service": null,
+        "service": "service_",
         "types": [
             "type_:Foo"
         ],
         "errors": [],
-        "subpackages": [
-            "subpackage_"
-        ],
+        "subpackages": [],
         "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": true,

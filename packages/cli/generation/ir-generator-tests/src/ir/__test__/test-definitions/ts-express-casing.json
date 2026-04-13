@@ -3,7 +3,7 @@
     "fdrApiDefinitionId": null,
     "apiVersion": null,
     "apiName": "api",
-    "apiDisplayName": "ts-express-casing",
+    "apiDisplayName": null,
     "apiDocs": null,
     "auth": {
         "requirement": "ALL",
@@ -12,7 +12,7 @@
                 "_type": "bearer",
                 "token": "token",
                 "tokenEnvVar": null,
-                "key": "BearerAuth",
+                "key": "bearer",
                 "docs": null
             }
         ],
@@ -21,17 +21,19 @@
     "headers": [],
     "idempotencyHeaders": [],
     "types": {
-        "type_:MovieId": {
+        "type_imdb:MovieId": {
             "inline": null,
             "name": {
                 "name": "MovieId",
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        "imdb"
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": "imdb"
                 },
                 "displayName": null,
-                "typeId": "type_:MovieId"
+                "typeId": "type_imdb:MovieId"
             },
             "shape": {
                 "_type": "alias",
@@ -70,17 +72,19 @@
             "availability": null,
             "docs": null
         },
-        "type_:Movie": {
+        "type_imdb:Movie": {
             "inline": null,
             "name": {
                 "name": "Movie",
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        "imdb"
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": "imdb"
                 },
                 "displayName": null,
-                "typeId": "type_:Movie"
+                "typeId": "type_imdb:Movie"
             },
             "shape": {
                 "_type": "object",
@@ -92,12 +96,14 @@
                             "_type": "named",
                             "name": "MovieId",
                             "fernFilepath": {
-                                "allParts": [],
+                                "allParts": [
+                                    "imdb"
+                                ],
                                 "packagePath": [],
-                                "file": null
+                                "file": "imdb"
                             },
                             "displayName": null,
-                            "typeId": "type_:MovieId",
+                            "typeId": "type_imdb:MovieId",
                             "default": null,
                             "inline": null
                         },
@@ -156,7 +162,7 @@
                 "extendedProperties": []
             },
             "referencedTypes": [
-                "type_:MovieId"
+                "type_imdb:MovieId"
             ],
             "encoding": {
                 "json": {},
@@ -171,74 +177,41 @@
         }
     },
     "errors": {
-        "error_:NotFoundError": {
+        "error_imdb:MovieDoesNotExistError": {
             "name": {
-                "name": "NotFoundError",
+                "name": "MovieDoesNotExistError",
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        "imdb"
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": "imdb"
                 },
-                "errorId": "error_:NotFoundError"
+                "errorId": "error_imdb:MovieDoesNotExistError"
             },
-            "discriminantValue": "NotFoundError",
+            "discriminantValue": "MovieDoesNotExistError",
             "statusCode": 404,
             "isWildcardStatusCode": null,
             "type": {
                 "_type": "named",
                 "name": "MovieId",
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        "imdb"
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": "imdb"
                 },
                 "displayName": null,
-                "typeId": "type_:MovieId",
+                "typeId": "type_imdb:MovieId",
                 "default": null,
                 "inline": null
             },
-            "examples": [
-                {
-                    "name": null,
-                    "shape": {
-                        "shape": {
-                            "type": "named",
-                            "typeName": {
-                                "typeId": "type_:MovieId",
-                                "fernFilepath": {
-                                    "allParts": [],
-                                    "packagePath": [],
-                                    "file": null
-                                },
-                                "name": "MovieId",
-                                "displayName": null
-                            },
-                            "shape": {
-                                "type": "alias",
-                                "value": {
-                                    "shape": {
-                                        "type": "primitive",
-                                        "primitive": {
-                                            "type": "string",
-                                            "string": {
-                                                "original": "string"
-                                            }
-                                        }
-                                    },
-                                    "jsonExample": "string"
-                                }
-                            }
-                        },
-                        "jsonExample": "string"
-                    },
-                    "jsonExample": "string",
-                    "docs": null
-                }
-            ],
+            "examples": [],
             "v2Examples": null,
             "displayName": null,
             "headers": [],
-            "docs": ""
+            "docs": null
         }
     },
     "services": {
@@ -255,7 +228,7 @@
             },
             "displayName": null,
             "basePath": {
-                "head": "",
+                "head": "/movies",
                 "parts": []
             },
             "headers": [],
@@ -269,8 +242,8 @@
             },
             "endpoints": [
                 {
-                    "id": "endpoint_imdb.createMovie",
-                    "name": "createMovie",
+                    "id": "endpoint_imdb.create_movie",
+                    "name": "create_movie",
                     "displayName": null,
                     "auth": false,
                     "security": null,
@@ -280,11 +253,11 @@
                     "method": "POST",
                     "basePath": null,
                     "path": {
-                        "head": "/movies/create-movie",
+                        "head": "/create-movie",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "movies/create-movie",
+                        "head": "/movies/create-movie",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -293,7 +266,7 @@
                     "headers": [],
                     "requestBody": {
                         "type": "inlinedRequestBody",
-                        "name": "ImdbCreateMovieRequest",
+                        "name": "CreateMovieRequest",
                         "extends": [],
                         "properties": [
                             {
@@ -302,12 +275,14 @@
                                     "_type": "named",
                                     "name": "MovieId",
                                     "fernFilepath": {
-                                        "allParts": [],
+                                        "allParts": [
+                                            "imdb"
+                                        ],
                                         "packagePath": [],
-                                        "file": null
+                                        "file": "imdb"
                                     },
                                     "displayName": null,
-                                    "typeId": "type_:MovieId",
+                                    "typeId": "type_imdb:MovieId",
                                     "default": null,
                                     "inline": null
                                 },
@@ -366,13 +341,13 @@
                         "extendedProperties": [],
                         "docs": null,
                         "v2Examples": null,
-                        "contentType": "application/json"
+                        "contentType": null
                     },
                     "v2RequestBodies": null,
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",
-                            "wrapperName": "ImdbCreateMovieRequest",
+                            "wrapperName": "CreateMovieRequest",
                             "bodyKey": "body",
                             "includePathParameters": false,
                             "onlyPathParameters": false
@@ -389,159 +364,32 @@
                                     "_type": "named",
                                     "name": "MovieId",
                                     "fernFilepath": {
-                                        "allParts": [],
+                                        "allParts": [
+                                            "imdb"
+                                        ],
                                         "packagePath": [],
-                                        "file": null
+                                        "file": "imdb"
                                     },
                                     "displayName": null,
-                                    "typeId": "type_:MovieId",
+                                    "typeId": "type_imdb:MovieId",
                                     "default": null,
                                     "inline": null
                                 },
-                                "docs": "",
+                                "docs": null,
                                 "v2Examples": null
                             }
                         },
                         "status-code": 201,
                         "isWildcardStatusCode": null,
-                        "docs": ""
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [],
-                    "userSpecifiedExamples": [
-                        {
-                            "example": {
-                                "id": "7676f5cc",
-                                "name": null,
-                                "url": "/movies/create-movie",
-                                "rootPathParameters": [],
-                                "endpointPathParameters": [],
-                                "servicePathParameters": [],
-                                "endpointHeaders": [],
-                                "serviceHeaders": [],
-                                "queryParameters": [],
-                                "request": {
-                                    "type": "inlinedRequestBody",
-                                    "properties": [
-                                        {
-                                            "name": "id",
-                                            "value": {
-                                                "shape": {
-                                                    "type": "named",
-                                                    "typeName": {
-                                                        "typeId": "type_:MovieId",
-                                                        "fernFilepath": {
-                                                            "allParts": [],
-                                                            "packagePath": [],
-                                                            "file": null
-                                                        },
-                                                        "name": "MovieId",
-                                                        "displayName": null
-                                                    },
-                                                    "shape": {
-                                                        "type": "alias",
-                                                        "value": {
-                                                            "shape": {
-                                                                "type": "primitive",
-                                                                "primitive": {
-                                                                    "type": "string",
-                                                                    "string": {
-                                                                        "original": "id"
-                                                                    }
-                                                                }
-                                                            },
-                                                            "jsonExample": "id"
-                                                        }
-                                                    }
-                                                },
-                                                "jsonExample": "id"
-                                            },
-                                            "originalTypeDeclaration": null
-                                        },
-                                        {
-                                            "name": "movie_title",
-                                            "value": {
-                                                "shape": {
-                                                    "type": "primitive",
-                                                    "primitive": {
-                                                        "type": "string",
-                                                        "string": {
-                                                            "original": "movie_title"
-                                                        }
-                                                    }
-                                                },
-                                                "jsonExample": "movie_title"
-                                            },
-                                            "originalTypeDeclaration": null
-                                        },
-                                        {
-                                            "name": "movie_rating",
-                                            "value": {
-                                                "shape": {
-                                                    "type": "primitive",
-                                                    "primitive": {
-                                                        "type": "double",
-                                                        "double": 1.1
-                                                    }
-                                                },
-                                                "jsonExample": 1.1
-                                            },
-                                            "originalTypeDeclaration": null
-                                        }
-                                    ],
-                                    "extraProperties": null,
-                                    "jsonExample": {
-                                        "id": "id",
-                                        "movie_title": "movie_title",
-                                        "movie_rating": 1.1
-                                    }
-                                },
-                                "response": {
-                                    "type": "ok",
-                                    "value": {
-                                        "type": "body",
-                                        "value": {
-                                            "shape": {
-                                                "type": "named",
-                                                "typeName": {
-                                                    "typeId": "type_:MovieId",
-                                                    "fernFilepath": {
-                                                        "allParts": [],
-                                                        "packagePath": [],
-                                                        "file": null
-                                                    },
-                                                    "name": "MovieId",
-                                                    "displayName": null
-                                                },
-                                                "shape": {
-                                                    "type": "alias",
-                                                    "value": {
-                                                        "shape": {
-                                                            "type": "primitive",
-                                                            "primitive": {
-                                                                "type": "string",
-                                                                "string": {
-                                                                    "original": "string"
-                                                                }
-                                                            }
-                                                        },
-                                                        "jsonExample": "string"
-                                                    }
-                                                }
-                                            },
-                                            "jsonExample": "string"
-                                        }
-                                    }
-                                },
-                                "docs": null
-                            },
-                            "codeSamples": null
-                        }
-                    ],
+                    "userSpecifiedExamples": [],
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "f9d86878",
+                                "id": "82cf204",
                                 "url": "/movies/create-movie",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -577,12 +425,14 @@
                                                     "typeName": {
                                                         "name": "MovieId",
                                                         "fernFilepath": {
-                                                            "allParts": [],
+                                                            "allParts": [
+                                                                "imdb"
+                                                            ],
                                                             "packagePath": [],
-                                                            "file": null
+                                                            "file": "imdb"
                                                         },
                                                         "displayName": null,
-                                                        "typeId": "type_:MovieId"
+                                                        "typeId": "type_imdb:MovieId"
                                                     }
                                                 },
                                                 "jsonExample": "id"
@@ -651,12 +501,14 @@
                                                 "typeName": {
                                                     "name": "MovieId",
                                                     "fernFilepath": {
-                                                        "allParts": [],
+                                                        "allParts": [
+                                                            "imdb"
+                                                        ],
                                                         "packagePath": [],
-                                                        "file": null
+                                                        "file": "imdb"
                                                     },
                                                     "displayName": null,
-                                                    "typeId": "type_:MovieId"
+                                                    "typeId": "type_imdb:MovieId"
                                                 }
                                             },
                                             "jsonExample": "string"
@@ -679,8 +531,8 @@
                     "docs": "Add a movie to the database"
                 },
                 {
-                    "id": "endpoint_imdb.getMovie",
-                    "name": "getMovie",
+                    "id": "endpoint_imdb.get_movie",
+                    "name": "get_movie",
                     "displayName": null,
                     "auth": false,
                     "security": null,
@@ -690,7 +542,7 @@
                     "method": "GET",
                     "basePath": null,
                     "path": {
-                        "head": "/movies/",
+                        "head": "/",
                         "parts": [
                             {
                                 "pathParameter": "movie_id",
@@ -699,7 +551,7 @@
                         ]
                     },
                     "fullPath": {
-                        "head": "movies/",
+                        "head": "/movies/",
                         "parts": [
                             {
                                 "pathParameter": "movie_id",
@@ -714,12 +566,14 @@
                                 "_type": "named",
                                 "name": "MovieId",
                                 "fernFilepath": {
-                                    "allParts": [],
+                                    "allParts": [
+                                        "imdb"
+                                    ],
                                     "packagePath": [],
-                                    "file": null
+                                    "file": "imdb"
                                 },
                                 "displayName": null,
-                                "typeId": "type_:MovieId",
+                                "typeId": "type_imdb:MovieId",
                                 "default": null,
                                 "inline": null
                             },
@@ -741,12 +595,14 @@
                                 "_type": "named",
                                 "name": "MovieId",
                                 "fernFilepath": {
-                                    "allParts": [],
+                                    "allParts": [
+                                        "imdb"
+                                    ],
                                     "packagePath": [],
-                                    "file": null
+                                    "file": "imdb"
                                 },
                                 "displayName": null,
-                                "typeId": "type_:MovieId",
+                                "typeId": "type_imdb:MovieId",
                                 "default": null,
                                 "inline": null
                             },
@@ -765,17 +621,7 @@
                     "headers": [],
                     "requestBody": null,
                     "v2RequestBodies": null,
-                    "sdkRequest": {
-                        "shape": {
-                            "type": "wrapper",
-                            "wrapperName": "ImdbGetMovieRequest",
-                            "bodyKey": "body",
-                            "includePathParameters": true,
-                            "onlyPathParameters": true
-                        },
-                        "requestParameterName": "request",
-                        "streamParameter": null
-                    },
+                    "sdkRequest": null,
                     "response": {
                         "body": {
                             "type": "json",
@@ -785,222 +631,47 @@
                                     "_type": "named",
                                     "name": "Movie",
                                     "fernFilepath": {
-                                        "allParts": [],
+                                        "allParts": [
+                                            "imdb"
+                                        ],
                                         "packagePath": [],
-                                        "file": null
+                                        "file": "imdb"
                                     },
                                     "displayName": null,
-                                    "typeId": "type_:Movie",
+                                    "typeId": "type_imdb:Movie",
                                     "default": null,
                                     "inline": null
                                 },
-                                "docs": "",
+                                "docs": null,
                                 "v2Examples": null
                             }
                         },
-                        "status-code": 200,
+                        "status-code": null,
                         "isWildcardStatusCode": null,
-                        "docs": ""
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [
                         {
                             "error": {
-                                "name": "NotFoundError",
+                                "name": "MovieDoesNotExistError",
                                 "fernFilepath": {
-                                    "allParts": [],
+                                    "allParts": [
+                                        "imdb"
+                                    ],
                                     "packagePath": [],
-                                    "file": null
+                                    "file": "imdb"
                                 },
-                                "errorId": "error_:NotFoundError"
+                                "errorId": "error_imdb:MovieDoesNotExistError"
                             },
                             "docs": null
                         }
                     ],
-                    "userSpecifiedExamples": [
-                        {
-                            "example": {
-                                "id": "2e825f87",
-                                "name": null,
-                                "url": "/movies/movie_id",
-                                "rootPathParameters": [],
-                                "endpointPathParameters": [
-                                    {
-                                        "name": "movie_id",
-                                        "value": {
-                                            "shape": {
-                                                "type": "named",
-                                                "typeName": {
-                                                    "typeId": "type_:MovieId",
-                                                    "fernFilepath": {
-                                                        "allParts": [],
-                                                        "packagePath": [],
-                                                        "file": null
-                                                    },
-                                                    "name": "MovieId",
-                                                    "displayName": null
-                                                },
-                                                "shape": {
-                                                    "type": "alias",
-                                                    "value": {
-                                                        "shape": {
-                                                            "type": "primitive",
-                                                            "primitive": {
-                                                                "type": "string",
-                                                                "string": {
-                                                                    "original": "movie_id"
-                                                                }
-                                                            }
-                                                        },
-                                                        "jsonExample": "movie_id"
-                                                    }
-                                                }
-                                            },
-                                            "jsonExample": "movie_id"
-                                        }
-                                    }
-                                ],
-                                "servicePathParameters": [],
-                                "endpointHeaders": [],
-                                "serviceHeaders": [],
-                                "queryParameters": [],
-                                "request": null,
-                                "response": {
-                                    "type": "ok",
-                                    "value": {
-                                        "type": "body",
-                                        "value": {
-                                            "shape": {
-                                                "type": "named",
-                                                "typeName": {
-                                                    "typeId": "type_:Movie",
-                                                    "fernFilepath": {
-                                                        "allParts": [],
-                                                        "packagePath": [],
-                                                        "file": null
-                                                    },
-                                                    "name": "Movie",
-                                                    "displayName": null
-                                                },
-                                                "shape": {
-                                                    "type": "object",
-                                                    "properties": [
-                                                        {
-                                                            "name": "id",
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "named",
-                                                                    "typeName": {
-                                                                        "typeId": "type_:MovieId",
-                                                                        "fernFilepath": {
-                                                                            "allParts": [],
-                                                                            "packagePath": [],
-                                                                            "file": null
-                                                                        },
-                                                                        "name": "MovieId",
-                                                                        "displayName": null
-                                                                    },
-                                                                    "shape": {
-                                                                        "type": "alias",
-                                                                        "value": {
-                                                                            "shape": {
-                                                                                "type": "primitive",
-                                                                                "primitive": {
-                                                                                    "type": "string",
-                                                                                    "string": {
-                                                                                        "original": "id"
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            "jsonExample": "id"
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "jsonExample": "id"
-                                                            },
-                                                            "originalTypeDeclaration": {
-                                                                "typeId": "type_:Movie",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "name": "Movie",
-                                                                "displayName": null
-                                                            },
-                                                            "propertyAccess": null
-                                                        },
-                                                        {
-                                                            "name": "title",
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "primitive",
-                                                                    "primitive": {
-                                                                        "type": "string",
-                                                                        "string": {
-                                                                            "original": "title"
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "jsonExample": "title"
-                                                            },
-                                                            "originalTypeDeclaration": {
-                                                                "typeId": "type_:Movie",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "name": "Movie",
-                                                                "displayName": null
-                                                            },
-                                                            "propertyAccess": null
-                                                        },
-                                                        {
-                                                            "name": "rating",
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "primitive",
-                                                                    "primitive": {
-                                                                        "type": "double",
-                                                                        "double": 1.1
-                                                                    }
-                                                                },
-                                                                "jsonExample": 1.1
-                                                            },
-                                                            "originalTypeDeclaration": {
-                                                                "typeId": "type_:Movie",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "name": "Movie",
-                                                                "displayName": null
-                                                            },
-                                                            "propertyAccess": null
-                                                        }
-                                                    ],
-                                                    "extraProperties": null
-                                                }
-                                            },
-                                            "jsonExample": {
-                                                "id": "id",
-                                                "title": "title",
-                                                "rating": 1.1
-                                            }
-                                        }
-                                    }
-                                },
-                                "docs": null
-                            },
-                            "codeSamples": null
-                        }
-                    ],
+                    "userSpecifiedExamples": [],
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "1f26f6b3",
+                                "id": "68dc29d9",
                                 "url": "/movies/movie_id",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -1028,12 +699,14 @@
                                                 "typeName": {
                                                     "name": "MovieId",
                                                     "fernFilepath": {
-                                                        "allParts": [],
+                                                        "allParts": [
+                                                            "imdb"
+                                                        ],
                                                         "packagePath": [],
-                                                        "file": null
+                                                        "file": "imdb"
                                                     },
                                                     "displayName": null,
-                                                    "typeId": "type_:MovieId"
+                                                    "typeId": "type_imdb:MovieId"
                                                 }
                                             },
                                             "jsonExample": "movie_id"
@@ -1060,12 +733,14 @@
                                                             "originalTypeDeclaration": {
                                                                 "name": "Movie",
                                                                 "fernFilepath": {
-                                                                    "allParts": [],
+                                                                    "allParts": [
+                                                                        "imdb"
+                                                                    ],
                                                                     "packagePath": [],
-                                                                    "file": null
+                                                                    "file": "imdb"
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_:Movie"
+                                                                "typeId": "type_imdb:Movie"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -1088,12 +763,14 @@
                                                                     "typeName": {
                                                                         "name": "MovieId",
                                                                         "fernFilepath": {
-                                                                            "allParts": [],
+                                                                            "allParts": [
+                                                                                "imdb"
+                                                                            ],
                                                                             "packagePath": [],
-                                                                            "file": null
+                                                                            "file": "imdb"
                                                                         },
                                                                         "displayName": null,
-                                                                        "typeId": "type_:MovieId"
+                                                                        "typeId": "type_imdb:MovieId"
                                                                     }
                                                                 },
                                                                 "jsonExample": "id"
@@ -1105,12 +782,14 @@
                                                             "originalTypeDeclaration": {
                                                                 "name": "Movie",
                                                                 "fernFilepath": {
-                                                                    "allParts": [],
+                                                                    "allParts": [
+                                                                        "imdb"
+                                                                    ],
                                                                     "packagePath": [],
-                                                                    "file": null
+                                                                    "file": "imdb"
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_:Movie"
+                                                                "typeId": "type_imdb:Movie"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -1131,12 +810,14 @@
                                                             "originalTypeDeclaration": {
                                                                 "name": "Movie",
                                                                 "fernFilepath": {
-                                                                    "allParts": [],
+                                                                    "allParts": [
+                                                                        "imdb"
+                                                                    ],
                                                                     "packagePath": [],
-                                                                    "file": null
+                                                                    "file": "imdb"
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_:Movie"
+                                                                "typeId": "type_imdb:Movie"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -1156,12 +837,14 @@
                                                 "typeName": {
                                                     "name": "Movie",
                                                     "fernFilepath": {
-                                                        "allParts": [],
+                                                        "allParts": [
+                                                            "imdb"
+                                                        ],
                                                         "packagePath": [],
-                                                        "file": null
+                                                        "file": "imdb"
                                                     },
                                                     "displayName": null,
-                                                    "typeId": "type_:Movie"
+                                                    "typeId": "type_imdb:Movie"
                                                 }
                                             },
                                             "jsonExample": {
@@ -1177,7 +860,7 @@
                         },
                         {
                             "example": {
-                                "id": "9e6d3838",
+                                "id": "a0ed4ad6",
                                 "url": "/movies/movie_id",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -1205,12 +888,14 @@
                                                 "typeName": {
                                                     "name": "MovieId",
                                                     "fernFilepath": {
-                                                        "allParts": [],
+                                                        "allParts": [
+                                                            "imdb"
+                                                        ],
                                                         "packagePath": [],
-                                                        "file": null
+                                                        "file": "imdb"
                                                     },
                                                     "displayName": null,
-                                                    "typeId": "type_:MovieId"
+                                                    "typeId": "type_imdb:MovieId"
                                                 }
                                             },
                                             "jsonExample": "movie_id"
@@ -1245,24 +930,28 @@
                                             "typeName": {
                                                 "name": "MovieId",
                                                 "fernFilepath": {
-                                                    "allParts": [],
+                                                    "allParts": [
+                                                        "imdb"
+                                                    ],
                                                     "packagePath": [],
-                                                    "file": null
+                                                    "file": "imdb"
                                                 },
                                                 "displayName": null,
-                                                "typeId": "type_:MovieId"
+                                                "typeId": "type_imdb:MovieId"
                                             }
                                         },
                                         "jsonExample": "string"
                                     },
                                     "error": {
-                                        "name": "NotFoundError",
+                                        "name": "MovieDoesNotExistError",
                                         "fernFilepath": {
-                                            "allParts": [],
+                                            "allParts": [
+                                                "imdb"
+                                            ],
                                             "packagePath": [],
-                                            "file": null
+                                            "file": "imdb"
                                         },
-                                        "errorId": "error_:NotFoundError"
+                                        "errorId": "error_imdb:MovieDoesNotExistError"
                                     }
                                 },
                                 "docs": null
@@ -1297,8 +986,8 @@
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_imdb": [
-                "type_:MovieId",
-                "type_:Movie"
+                "type_imdb:MovieId",
+                "type_imdb:Movie"
             ]
         },
         "sharedTypes": []
@@ -1311,7 +1000,7 @@
     "dynamic": {
         "version": "1.0.0",
         "types": {
-            "type_:MovieId": {
+            "type_imdb:MovieId": {
                 "type": "alias",
                 "declaration": {
                     "name": {
@@ -1334,9 +1023,47 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [],
+                        "allParts": [
+                            {
+                                "originalName": "imdb",
+                                "camelCase": {
+                                    "unsafeName": "imdb",
+                                    "safeName": "imdb"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "imdb",
+                                    "safeName": "imdb"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "IMDB",
+                                    "safeName": "IMDB"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Imdb",
+                                    "safeName": "Imdb"
+                                }
+                            }
+                        ],
                         "packagePath": [],
-                        "file": null
+                        "file": {
+                            "originalName": "imdb",
+                            "camelCase": {
+                                "unsafeName": "imdb",
+                                "safeName": "imdb"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "imdb",
+                                "safeName": "imdb"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "IMDB",
+                                "safeName": "IMDB"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Imdb",
+                                "safeName": "Imdb"
+                            }
+                        }
                     }
                 },
                 "typeReference": {
@@ -1344,7 +1071,7 @@
                     "value": "STRING"
                 }
             },
-            "type_:Movie": {
+            "type_imdb:Movie": {
                 "type": "object",
                 "declaration": {
                     "name": {
@@ -1367,9 +1094,47 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [],
+                        "allParts": [
+                            {
+                                "originalName": "imdb",
+                                "camelCase": {
+                                    "unsafeName": "imdb",
+                                    "safeName": "imdb"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "imdb",
+                                    "safeName": "imdb"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "IMDB",
+                                    "safeName": "IMDB"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Imdb",
+                                    "safeName": "Imdb"
+                                }
+                            }
+                        ],
                         "packagePath": [],
-                        "file": null
+                        "file": {
+                            "originalName": "imdb",
+                            "camelCase": {
+                                "unsafeName": "imdb",
+                                "safeName": "imdb"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "imdb",
+                                "safeName": "imdb"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "IMDB",
+                                "safeName": "IMDB"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Imdb",
+                                "safeName": "Imdb"
+                            }
+                        }
                     }
                 },
                 "properties": [
@@ -1398,7 +1163,7 @@
                         },
                         "typeReference": {
                             "type": "named",
-                            "value": "type_:MovieId"
+                            "value": "type_imdb:MovieId"
                         },
                         "propertyAccess": null,
                         "variable": null
@@ -1470,7 +1235,7 @@
         },
         "headers": [],
         "endpoints": {
-            "endpoint_imdb.createMovie": {
+            "endpoint_imdb.create_movie": {
                 "auth": {
                     "type": "bearer",
                     "token": {
@@ -1495,7 +1260,7 @@
                 },
                 "declaration": {
                     "name": {
-                        "originalName": "createMovie",
+                        "originalName": "create_movie",
                         "camelCase": {
                             "unsafeName": "createMovie",
                             "safeName": "createMovie"
@@ -1565,22 +1330,22 @@
                     "type": "inlined",
                     "declaration": {
                         "name": {
-                            "originalName": "ImdbCreateMovieRequest",
+                            "originalName": "CreateMovieRequest",
                             "camelCase": {
-                                "unsafeName": "imdbCreateMovieRequest",
-                                "safeName": "imdbCreateMovieRequest"
+                                "unsafeName": "createMovieRequest",
+                                "safeName": "createMovieRequest"
                             },
                             "snakeCase": {
-                                "unsafeName": "imdb_create_movie_request",
-                                "safeName": "imdb_create_movie_request"
+                                "unsafeName": "create_movie_request",
+                                "safeName": "create_movie_request"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "IMDB_CREATE_MOVIE_REQUEST",
-                                "safeName": "IMDB_CREATE_MOVIE_REQUEST"
+                                "unsafeName": "CREATE_MOVIE_REQUEST",
+                                "safeName": "CREATE_MOVIE_REQUEST"
                             },
                             "pascalCase": {
-                                "unsafeName": "ImdbCreateMovieRequest",
-                                "safeName": "ImdbCreateMovieRequest"
+                                "unsafeName": "CreateMovieRequest",
+                                "safeName": "CreateMovieRequest"
                             }
                         },
                         "fernFilepath": {
@@ -1658,7 +1423,7 @@
                                 },
                                 "typeReference": {
                                     "type": "named",
-                                    "value": "type_:MovieId"
+                                    "value": "type_imdb:MovieId"
                                 },
                                 "propertyAccess": null,
                                 "variable": null
@@ -1735,7 +1500,7 @@
                 },
                 "examples": null
             },
-            "endpoint_imdb.getMovie": {
+            "endpoint_imdb.get_movie": {
                 "auth": {
                     "type": "bearer",
                     "token": {
@@ -1760,7 +1525,7 @@
                 },
                 "declaration": {
                     "name": {
-                        "originalName": "getMovie",
+                        "originalName": "get_movie",
                         "camelCase": {
                             "unsafeName": "getMovie",
                             "safeName": "getMovie"
@@ -1827,71 +1592,7 @@
                     "path": "/movies/{movie_id}"
                 },
                 "request": {
-                    "type": "inlined",
-                    "declaration": {
-                        "name": {
-                            "originalName": "ImdbGetMovieRequest",
-                            "camelCase": {
-                                "unsafeName": "imdbGetMovieRequest",
-                                "safeName": "imdbGetMovieRequest"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "imdb_get_movie_request",
-                                "safeName": "imdb_get_movie_request"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "IMDB_GET_MOVIE_REQUEST",
-                                "safeName": "IMDB_GET_MOVIE_REQUEST"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "ImdbGetMovieRequest",
-                                "safeName": "ImdbGetMovieRequest"
-                            }
-                        },
-                        "fernFilepath": {
-                            "allParts": [
-                                {
-                                    "originalName": "imdb",
-                                    "camelCase": {
-                                        "unsafeName": "imdb",
-                                        "safeName": "imdb"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "imdb",
-                                        "safeName": "imdb"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "IMDB",
-                                        "safeName": "IMDB"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Imdb",
-                                        "safeName": "Imdb"
-                                    }
-                                }
-                            ],
-                            "packagePath": [],
-                            "file": {
-                                "originalName": "imdb",
-                                "camelCase": {
-                                    "unsafeName": "imdb",
-                                    "safeName": "imdb"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "imdb",
-                                    "safeName": "imdb"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "IMDB",
-                                    "safeName": "IMDB"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Imdb",
-                                    "safeName": "Imdb"
-                                }
-                            }
-                        }
-                    },
+                    "type": "body",
                     "pathParameters": [
                         {
                             "name": {
@@ -1918,19 +1619,13 @@
                             },
                             "typeReference": {
                                 "type": "named",
-                                "value": "type_:MovieId"
+                                "value": "type_imdb:MovieId"
                             },
                             "propertyAccess": null,
                             "variable": null
                         }
                     ],
-                    "queryParameters": [],
-                    "headers": [],
-                    "body": null,
-                    "metadata": {
-                        "includePathParameters": true,
-                        "onlyPathParameters": true
-                    }
+                    "body": null
                 },
                 "response": {
                     "type": "json"
@@ -1963,8 +1658,13 @@
                 "file": "imdb"
             },
             "service": "service_imdb",
-            "types": [],
-            "errors": [],
+            "types": [
+                "type_imdb:MovieId",
+                "type_imdb:Movie"
+            ],
+            "errors": [
+                "error_imdb:MovieDoesNotExistError"
+            ],
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
@@ -1981,13 +1681,8 @@
         },
         "websocket": null,
         "service": null,
-        "types": [
-            "type_:MovieId",
-            "type_:Movie"
-        ],
-        "errors": [
-            "error_:NotFoundError"
-        ],
+        "types": [],
+        "errors": [],
         "subpackages": [
             "subpackage_imdb"
         ],

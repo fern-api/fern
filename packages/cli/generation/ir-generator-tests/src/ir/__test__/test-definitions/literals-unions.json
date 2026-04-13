@@ -2,8 +2,8 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": "api",
-    "apiDisplayName": "literals-unions",
+    "apiName": "literals-unions",
+    "apiDisplayName": null,
     "apiDocs": null,
     "auth": {
         "requirement": "ALL",
@@ -13,29 +13,42 @@
     "headers": [],
     "idempotencyHeaders": [],
     "types": {
-        "type_:LiteralString": {
+        "type_literals:LiteralString": {
             "inline": null,
             "name": {
                 "name": "LiteralString",
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        "literals"
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": "literals"
                 },
                 "displayName": null,
-                "typeId": "type_:LiteralString"
+                "typeId": "type_literals:LiteralString"
             },
             "shape": {
-                "_type": "enum",
-                "default": null,
-                "values": [
-                    {
-                        "name": "literally",
-                        "availability": null,
-                        "docs": null
+                "_type": "alias",
+                "aliasOf": {
+                    "_type": "container",
+                    "container": {
+                        "_type": "literal",
+                        "literal": {
+                            "type": "string",
+                            "string": "literally"
+                        }
                     }
-                ],
-                "forwardCompatible": null
+                },
+                "resolvedType": {
+                    "_type": "container",
+                    "container": {
+                        "_type": "literal",
+                        "literal": {
+                            "type": "string",
+                            "string": "literally"
+                        }
+                    }
+                }
             },
             "referencedTypes": [],
             "encoding": {
@@ -49,17 +62,19 @@
             "availability": null,
             "docs": "A string literal."
         },
-        "type_:UnionOverLiteral": {
+        "type_literals:UnionOverLiteral": {
             "inline": null,
             "name": {
                 "name": "UnionOverLiteral",
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        "literals"
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": "literals"
                 },
                 "displayName": null,
-                "typeId": "type_:UnionOverLiteral"
+                "typeId": "type_literals:UnionOverLiteral"
             },
             "shape": {
                 "_type": "undiscriminatedUnion",
@@ -83,12 +98,14 @@
                             "_type": "named",
                             "name": "LiteralString",
                             "fernFilepath": {
-                                "allParts": [],
+                                "allParts": [
+                                    "literals"
+                                ],
                                 "packagePath": [],
-                                "file": null
+                                "file": "literals"
                             },
                             "displayName": "Literal String",
-                            "typeId": "type_:LiteralString",
+                            "typeId": "type_literals:LiteralString",
                             "default": null,
                             "inline": null
                         },
@@ -97,7 +114,7 @@
                 ]
             },
             "referencedTypes": [
-                "type_:LiteralString"
+                "type_literals:LiteralString"
             ],
             "encoding": {
                 "json": {},
@@ -126,8 +143,8 @@
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": [
-            "type_:LiteralString",
-            "type_:UnionOverLiteral"
+            "type_literals:LiteralString",
+            "type_literals:UnionOverLiteral"
         ]
     },
     "webhookGroups": {},
@@ -138,8 +155,8 @@
     "dynamic": {
         "version": "1.0.0",
         "types": {
-            "type_:LiteralString": {
-                "type": "enum",
+            "type_literals:LiteralString": {
+                "type": "alias",
                 "declaration": {
                     "name": {
                         "originalName": "LiteralString",
@@ -161,37 +178,58 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [],
+                        "allParts": [
+                            {
+                                "originalName": "literals",
+                                "camelCase": {
+                                    "unsafeName": "literals",
+                                    "safeName": "literals"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "literals",
+                                    "safeName": "literals"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "LITERALS",
+                                    "safeName": "LITERALS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Literals",
+                                    "safeName": "Literals"
+                                }
+                            }
+                        ],
                         "packagePath": [],
-                        "file": null
-                    }
-                },
-                "values": [
-                    {
-                        "wireValue": "literally",
-                        "name": {
-                            "originalName": "literally",
+                        "file": {
+                            "originalName": "literals",
                             "camelCase": {
-                                "unsafeName": "literally",
-                                "safeName": "literally"
+                                "unsafeName": "literals",
+                                "safeName": "literals"
                             },
                             "snakeCase": {
-                                "unsafeName": "literally",
-                                "safeName": "literally"
+                                "unsafeName": "literals",
+                                "safeName": "literals"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "LITERALLY",
-                                "safeName": "LITERALLY"
+                                "unsafeName": "LITERALS",
+                                "safeName": "LITERALS"
                             },
                             "pascalCase": {
-                                "unsafeName": "Literally",
-                                "safeName": "Literally"
+                                "unsafeName": "Literals",
+                                "safeName": "Literals"
                             }
                         }
                     }
-                ]
+                },
+                "typeReference": {
+                    "type": "literal",
+                    "value": {
+                        "type": "string",
+                        "value": "literally"
+                    }
+                }
             },
-            "type_:UnionOverLiteral": {
+            "type_literals:UnionOverLiteral": {
                 "type": "undiscriminatedUnion",
                 "declaration": {
                     "name": {
@@ -214,9 +252,47 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [],
+                        "allParts": [
+                            {
+                                "originalName": "literals",
+                                "camelCase": {
+                                    "unsafeName": "literals",
+                                    "safeName": "literals"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "literals",
+                                    "safeName": "literals"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "LITERALS",
+                                    "safeName": "LITERALS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Literals",
+                                    "safeName": "Literals"
+                                }
+                            }
+                        ],
                         "packagePath": [],
-                        "file": null
+                        "file": {
+                            "originalName": "literals",
+                            "camelCase": {
+                                "unsafeName": "literals",
+                                "safeName": "literals"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "literals",
+                                "safeName": "literals"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "LITERALS",
+                                "safeName": "LITERALS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Literals",
+                                "safeName": "Literals"
+                            }
+                        }
                     }
                 },
                 "types": [
@@ -226,7 +302,7 @@
                     },
                     {
                         "type": "named",
-                        "value": "type_:LiteralString"
+                        "value": "type_literals:LiteralString"
                     }
                 ]
             }
@@ -246,7 +322,31 @@
         "keywords": null,
         "smartCasing": true
     },
-    "subpackages": {},
+    "subpackages": {
+        "subpackage_literals": {
+            "name": "literals",
+            "displayName": null,
+            "fernFilepath": {
+                "allParts": [
+                    "literals"
+                ],
+                "packagePath": [],
+                "file": "literals"
+            },
+            "service": null,
+            "types": [
+                "type_literals:LiteralString",
+                "type_literals:UnionOverLiteral"
+            ],
+            "errors": [],
+            "subpackages": [],
+            "navigationConfig": null,
+            "webhooks": null,
+            "websocket": null,
+            "hasEndpointsInTree": false,
+            "docs": null
+        }
+    },
     "rootPackage": {
         "fernFilepath": {
             "allParts": [],
@@ -255,12 +355,11 @@
         },
         "websocket": null,
         "service": null,
-        "types": [
-            "type_:LiteralString",
-            "type_:UnionOverLiteral"
-        ],
+        "types": [],
         "errors": [],
-        "subpackages": [],
+        "subpackages": [
+            "subpackage_literals"
+        ],
         "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": false,

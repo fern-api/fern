@@ -56,11 +56,8 @@
                     "typeReference": {
                         "type": "optional",
                         "value": {
-                            "type": "nullable",
-                            "value": {
-                                "type": "primitive",
-                                "value": "STRING"
-                            }
+                            "type": "primitive",
+                            "value": "STRING"
                         }
                     },
                     "propertyAccess": null,
@@ -195,47 +192,9 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "",
-                            "camelCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "snakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "pascalCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            }
-                        }
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "",
-                        "camelCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        },
-                        "snakeCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        },
-                        "pascalCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        }
-                    }
+                    "file": null
                 }
             },
             "location": {
@@ -265,47 +224,9 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [
-                            {
-                                "originalName": "",
-                                "camelCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                }
-                            }
-                        ],
+                        "allParts": [],
                         "packagePath": [],
-                        "file": {
-                            "originalName": "",
-                            "camelCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "snakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "pascalCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            }
-                        }
+                        "file": null
                     }
                 },
                 "pathParameters": [],
@@ -336,11 +257,8 @@
                         "typeReference": {
                             "type": "optional",
                             "value": {
-                                "type": "nullable",
-                                "value": {
-                                    "type": "primitive",
-                                    "value": "STRING"
-                                }
+                                "type": "primitive",
+                                "value": "STRING"
                             }
                         },
                         "propertyAccess": null,
@@ -481,47 +399,9 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "",
-                            "camelCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "snakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "pascalCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            }
-                        }
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "",
-                        "camelCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        },
-                        "snakeCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        },
-                        "pascalCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        }
-                    }
+                    "file": null
                 }
             },
             "location": {
@@ -551,47 +431,9 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [
-                            {
-                                "originalName": "",
-                                "camelCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                }
-                            }
-                        ],
+                        "allParts": [],
                         "packagePath": [],
-                        "file": {
-                            "originalName": "",
-                            "camelCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "snakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "pascalCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            }
-                        }
+                        "file": null
                     }
                 },
                 "pathParameters": [
@@ -632,22 +474,22 @@
                         "name": {
                             "wireValue": "X-Idempotency-Key",
                             "name": {
-                                "originalName": "idempotencyKey",
+                                "originalName": "X-Idempotency-Key",
                                 "camelCase": {
-                                    "unsafeName": "idempotencyKey",
-                                    "safeName": "idempotencyKey"
+                                    "unsafeName": "xIdempotencyKey",
+                                    "safeName": "xIdempotencyKey"
                                 },
                                 "snakeCase": {
-                                    "unsafeName": "idempotency_key",
-                                    "safeName": "idempotency_key"
+                                    "unsafeName": "x_idempotency_key",
+                                    "safeName": "x_idempotency_key"
                                 },
                                 "screamingSnakeCase": {
-                                    "unsafeName": "IDEMPOTENCY_KEY",
-                                    "safeName": "IDEMPOTENCY_KEY"
+                                    "unsafeName": "X_IDEMPOTENCY_KEY",
+                                    "safeName": "X_IDEMPOTENCY_KEY"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "IdempotencyKey",
-                                    "safeName": "IdempotencyKey"
+                                    "unsafeName": "XIdempotencyKey",
+                                    "safeName": "XIdempotencyKey"
                                 }
                             }
                         },
@@ -760,11 +602,8 @@
                             "typeReference": {
                                 "type": "optional",
                                 "value": {
-                                    "type": "nullable",
-                                    "value": {
-                                        "type": "primitive",
-                                        "value": "STRING"
-                                    }
+                                    "type": "primitive",
+                                    "value": "STRING"
                                 }
                             },
                             "propertyAccess": null,
@@ -773,7 +612,7 @@
                     ]
                 },
                 "metadata": {
-                    "includePathParameters": true,
+                    "includePathParameters": false,
                     "onlyPathParameters": false
                 }
             },

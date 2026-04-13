@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_:UnauthorizedRequestErrorBody": {
+        "type_errors:UnauthorizedRequestErrorBody": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -24,9 +24,47 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        {
+                            "originalName": "errors",
+                            "camelCase": {
+                                "unsafeName": "errors",
+                                "safeName": "errors"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "errors",
+                                "safeName": "errors"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ERRORS",
+                                "safeName": "ERRORS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Errors",
+                                "safeName": "Errors"
+                            }
+                        }
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": {
+                        "originalName": "errors",
+                        "camelCase": {
+                            "unsafeName": "errors",
+                            "safeName": "errors"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "errors",
+                            "safeName": "errors"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "ERRORS",
+                            "safeName": "ERRORS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Errors",
+                            "safeName": "Errors"
+                        }
+                    }
                 }
             },
             "properties": [
@@ -67,7 +105,7 @@
     },
     "headers": [],
     "endpoints": {
-        "endpoint_basicauth.getwithbasicauth": {
+        "endpoint_basic-auth.getWithBasicAuth": {
             "auth": {
                 "type": "basic",
                 "username": {
@@ -90,85 +128,85 @@
                     }
                 },
                 "password": {
-                    "originalName": "password",
+                    "originalName": "accessToken",
                     "camelCase": {
-                        "unsafeName": "password",
-                        "safeName": "password"
+                        "unsafeName": "accessToken",
+                        "safeName": "accessToken"
                     },
                     "snakeCase": {
-                        "unsafeName": "password",
-                        "safeName": "password"
+                        "unsafeName": "access_token",
+                        "safeName": "access_token"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "PASSWORD",
-                        "safeName": "PASSWORD"
+                        "unsafeName": "ACCESS_TOKEN",
+                        "safeName": "ACCESS_TOKEN"
                     },
                     "pascalCase": {
-                        "unsafeName": "Password",
-                        "safeName": "Password"
+                        "unsafeName": "AccessToken",
+                        "safeName": "AccessToken"
                     }
                 }
             },
             "declaration": {
                 "name": {
-                    "originalName": "getwithbasicauth",
+                    "originalName": "getWithBasicAuth",
                     "camelCase": {
-                        "unsafeName": "getwithbasicauth",
-                        "safeName": "getwithbasicauth"
+                        "unsafeName": "getWithBasicAuth",
+                        "safeName": "getWithBasicAuth"
                     },
                     "snakeCase": {
-                        "unsafeName": "getwithbasicauth",
-                        "safeName": "getwithbasicauth"
+                        "unsafeName": "get_with_basic_auth",
+                        "safeName": "get_with_basic_auth"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "GETWITHBASICAUTH",
-                        "safeName": "GETWITHBASICAUTH"
+                        "unsafeName": "GET_WITH_BASIC_AUTH",
+                        "safeName": "GET_WITH_BASIC_AUTH"
                     },
                     "pascalCase": {
-                        "unsafeName": "Getwithbasicauth",
-                        "safeName": "Getwithbasicauth"
+                        "unsafeName": "GetWithBasicAuth",
+                        "safeName": "GetWithBasicAuth"
                     }
                 },
                 "fernFilepath": {
                     "allParts": [
                         {
-                            "originalName": "basicauth",
+                            "originalName": "basic-auth",
                             "camelCase": {
-                                "unsafeName": "basicauth",
-                                "safeName": "basicauth"
+                                "unsafeName": "basicAuth",
+                                "safeName": "basicAuth"
                             },
                             "snakeCase": {
-                                "unsafeName": "basicauth",
-                                "safeName": "basicauth"
+                                "unsafeName": "basic_auth",
+                                "safeName": "basic_auth"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "BASICAUTH",
-                                "safeName": "BASICAUTH"
+                                "unsafeName": "BASIC_AUTH",
+                                "safeName": "BASIC_AUTH"
                             },
                             "pascalCase": {
-                                "unsafeName": "Basicauth",
-                                "safeName": "Basicauth"
+                                "unsafeName": "BasicAuth",
+                                "safeName": "BasicAuth"
                             }
                         }
                     ],
                     "packagePath": [],
                     "file": {
-                        "originalName": "basicauth",
+                        "originalName": "basic-auth",
                         "camelCase": {
-                            "unsafeName": "basicauth",
-                            "safeName": "basicauth"
+                            "unsafeName": "basicAuth",
+                            "safeName": "basicAuth"
                         },
                         "snakeCase": {
-                            "unsafeName": "basicauth",
-                            "safeName": "basicauth"
+                            "unsafeName": "basic_auth",
+                            "safeName": "basic_auth"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "BASICAUTH",
-                            "safeName": "BASICAUTH"
+                            "unsafeName": "BASIC_AUTH",
+                            "safeName": "BASIC_AUTH"
                         },
                         "pascalCase": {
-                            "unsafeName": "Basicauth",
-                            "safeName": "Basicauth"
+                            "unsafeName": "BasicAuth",
+                            "safeName": "BasicAuth"
                         }
                     }
                 }
@@ -187,7 +225,7 @@
             },
             "examples": null
         },
-        "endpoint_basicauth.postwithbasicauth": {
+        "endpoint_basic-auth.postWithBasicAuth": {
             "auth": {
                 "type": "basic",
                 "username": {
@@ -210,85 +248,85 @@
                     }
                 },
                 "password": {
-                    "originalName": "password",
+                    "originalName": "accessToken",
                     "camelCase": {
-                        "unsafeName": "password",
-                        "safeName": "password"
+                        "unsafeName": "accessToken",
+                        "safeName": "accessToken"
                     },
                     "snakeCase": {
-                        "unsafeName": "password",
-                        "safeName": "password"
+                        "unsafeName": "access_token",
+                        "safeName": "access_token"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "PASSWORD",
-                        "safeName": "PASSWORD"
+                        "unsafeName": "ACCESS_TOKEN",
+                        "safeName": "ACCESS_TOKEN"
                     },
                     "pascalCase": {
-                        "unsafeName": "Password",
-                        "safeName": "Password"
+                        "unsafeName": "AccessToken",
+                        "safeName": "AccessToken"
                     }
                 }
             },
             "declaration": {
                 "name": {
-                    "originalName": "postwithbasicauth",
+                    "originalName": "postWithBasicAuth",
                     "camelCase": {
-                        "unsafeName": "postwithbasicauth",
-                        "safeName": "postwithbasicauth"
+                        "unsafeName": "postWithBasicAuth",
+                        "safeName": "postWithBasicAuth"
                     },
                     "snakeCase": {
-                        "unsafeName": "postwithbasicauth",
-                        "safeName": "postwithbasicauth"
+                        "unsafeName": "post_with_basic_auth",
+                        "safeName": "post_with_basic_auth"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "POSTWITHBASICAUTH",
-                        "safeName": "POSTWITHBASICAUTH"
+                        "unsafeName": "POST_WITH_BASIC_AUTH",
+                        "safeName": "POST_WITH_BASIC_AUTH"
                     },
                     "pascalCase": {
-                        "unsafeName": "Postwithbasicauth",
-                        "safeName": "Postwithbasicauth"
+                        "unsafeName": "PostWithBasicAuth",
+                        "safeName": "PostWithBasicAuth"
                     }
                 },
                 "fernFilepath": {
                     "allParts": [
                         {
-                            "originalName": "basicauth",
+                            "originalName": "basic-auth",
                             "camelCase": {
-                                "unsafeName": "basicauth",
-                                "safeName": "basicauth"
+                                "unsafeName": "basicAuth",
+                                "safeName": "basicAuth"
                             },
                             "snakeCase": {
-                                "unsafeName": "basicauth",
-                                "safeName": "basicauth"
+                                "unsafeName": "basic_auth",
+                                "safeName": "basic_auth"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "BASICAUTH",
-                                "safeName": "BASICAUTH"
+                                "unsafeName": "BASIC_AUTH",
+                                "safeName": "BASIC_AUTH"
                             },
                             "pascalCase": {
-                                "unsafeName": "Basicauth",
-                                "safeName": "Basicauth"
+                                "unsafeName": "BasicAuth",
+                                "safeName": "BasicAuth"
                             }
                         }
                     ],
                     "packagePath": [],
                     "file": {
-                        "originalName": "basicauth",
+                        "originalName": "basic-auth",
                         "camelCase": {
-                            "unsafeName": "basicauth",
-                            "safeName": "basicauth"
+                            "unsafeName": "basicAuth",
+                            "safeName": "basicAuth"
                         },
                         "snakeCase": {
-                            "unsafeName": "basicauth",
-                            "safeName": "basicauth"
+                            "unsafeName": "basic_auth",
+                            "safeName": "basic_auth"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "BASICAUTH",
-                            "safeName": "BASICAUTH"
+                            "unsafeName": "BASIC_AUTH",
+                            "safeName": "BASIC_AUTH"
                         },
                         "pascalCase": {
-                            "unsafeName": "Basicauth",
-                            "safeName": "Basicauth"
+                            "unsafeName": "BasicAuth",
+                            "safeName": "BasicAuth"
                         }
                     }
                 }

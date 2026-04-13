@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_:Foo": {
+        "type_service:Foo": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -24,9 +24,47 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
                 }
             },
             "properties": [

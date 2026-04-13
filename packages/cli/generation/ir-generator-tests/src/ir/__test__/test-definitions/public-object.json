@@ -2,8 +2,8 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": "api",
-    "apiDisplayName": "public-object",
+    "apiName": "public-object",
+    "apiDisplayName": null,
     "apiDocs": null,
     "auth": {
         "requirement": "ALL",
@@ -28,7 +28,7 @@
             },
             "displayName": null,
             "basePath": {
-                "head": "",
+                "head": "/",
                 "parts": []
             },
             "headers": [],
@@ -57,7 +57,7 @@
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "helloworld.txt",
+                        "head": "/helloworld.txt",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -70,12 +70,12 @@
                     "response": {
                         "body": {
                             "type": "fileDownload",
-                            "docs": "",
+                            "docs": null,
                             "v2Examples": null
                         },
-                        "status-code": 200,
+                        "status-code": null,
                         "isWildcardStatusCode": null,
-                        "docs": ""
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [],

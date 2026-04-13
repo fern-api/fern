@@ -1,59 +1,6 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_:TypeEighteen": {
-            "type": "enum",
-            "declaration": {
-                "name": {
-                    "originalName": "TypeEighteen",
-                    "camelCase": {
-                        "unsafeName": "typeEighteen",
-                        "safeName": "typeEighteen"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "type_eighteen",
-                        "safeName": "type_eighteen"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "TYPE_EIGHTEEN",
-                        "safeName": "TYPE_EIGHTEEN"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "TypeEighteen",
-                        "safeName": "TypeEighteen"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": [],
-                    "file": null
-                }
-            },
-            "values": [
-                {
-                    "wireValue": "eighteen",
-                    "name": {
-                        "originalName": "eighteen",
-                        "camelCase": {
-                            "unsafeName": "eighteen",
-                            "safeName": "eighteen"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "eighteen",
-                            "safeName": "eighteen"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "EIGHTEEN",
-                            "safeName": "EIGHTEEN"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Eighteen",
-                            "safeName": "Eighteen"
-                        }
-                    }
-                }
-            ]
-        },
         "type_:Type": {
             "type": "object",
             "declaration": {
@@ -318,7 +265,7 @@
                     },
                     "typeReference": {
                         "type": "primitive",
-                        "value": "STRING"
+                        "value": "UUID"
                     },
                     "propertyAccess": null,
                     "variable": null
@@ -348,7 +295,7 @@
                     },
                     "typeReference": {
                         "type": "primitive",
-                        "value": "STRING"
+                        "value": "BASE_64"
                     },
                     "propertyAccess": null,
                     "variable": null
@@ -410,7 +357,7 @@
                         }
                     },
                     "typeReference": {
-                        "type": "list",
+                        "type": "set",
                         "value": {
                             "type": "primitive",
                             "value": "DOUBLE"
@@ -482,11 +429,8 @@
                     "typeReference": {
                         "type": "optional",
                         "value": {
-                            "type": "nullable",
-                            "value": {
-                                "type": "primitive",
-                                "value": "LONG"
-                            }
+                            "type": "primitive",
+                            "value": "LONG"
                         }
                     },
                     "propertyAccess": null,
@@ -623,10 +567,10 @@
                     "typeReference": {
                         "type": "list",
                         "value": {
-                            "type": "nullable",
+                            "type": "optional",
                             "value": {
                                 "type": "primitive",
-                                "value": "STRING"
+                                "value": "UUID"
                             }
                         }
                     },
@@ -657,8 +601,11 @@
                         }
                     },
                     "typeReference": {
-                        "type": "named",
-                        "value": "type_:TypeEighteen"
+                        "type": "literal",
+                        "value": {
+                            "type": "string",
+                            "value": "eighteen"
+                        }
                     },
                     "propertyAccess": null,
                     "variable": null
@@ -718,7 +665,7 @@
                     },
                     "typeReference": {
                         "type": "primitive",
-                        "value": "LONG"
+                        "value": "UINT"
                     },
                     "propertyAccess": null,
                     "variable": null
@@ -748,7 +695,7 @@
                     },
                     "typeReference": {
                         "type": "primitive",
-                        "value": "LONG"
+                        "value": "UINT_64"
                     },
                     "propertyAccess": null,
                     "variable": null
@@ -808,7 +755,7 @@
                     },
                     "typeReference": {
                         "type": "primitive",
-                        "value": "INTEGER"
+                        "value": "BIG_INTEGER"
                     },
                     "propertyAccess": null,
                     "variable": null
@@ -839,11 +786,8 @@
                     "typeReference": {
                         "type": "optional",
                         "value": {
-                            "type": "nullable",
-                            "value": {
-                                "type": "primitive",
-                                "value": "DATE_TIME"
-                            }
+                            "type": "primitive",
+                            "value": "DATE_TIME"
                         }
                     },
                     "propertyAccess": null,
@@ -875,11 +819,8 @@
                     "typeReference": {
                         "type": "optional",
                         "value": {
-                            "type": "nullable",
-                            "value": {
-                                "type": "primitive",
-                                "value": "DATE"
-                            }
+                            "type": "primitive",
+                            "value": "DATE"
                         }
                     },
                     "propertyAccess": null,

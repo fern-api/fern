@@ -2,8 +2,8 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": "api",
-    "apiDisplayName": "reserved-keywords",
+    "apiName": "nursery-api",
+    "apiDisplayName": null,
     "apiDocs": null,
     "auth": {
         "requirement": "ALL",
@@ -13,17 +13,19 @@
     "headers": [],
     "idempotencyHeaders": [],
     "types": {
-        "type_:Package": {
+        "type_package:Package": {
             "inline": null,
             "name": {
                 "name": "Package",
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        "package"
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": "package"
                 },
                 "displayName": null,
-                "typeId": "type_:Package"
+                "typeId": "type_package:Package"
             },
             "shape": {
                 "_type": "object",
@@ -66,17 +68,19 @@
             "availability": null,
             "docs": null
         },
-        "type_:Record": {
+        "type_package:Record": {
             "inline": null,
             "name": {
                 "name": "Record",
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        "package"
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": "package"
                 },
                 "displayName": null,
-                "typeId": "type_:Record"
+                "typeId": "type_package:Record"
             },
             "shape": {
                 "_type": "object",
@@ -121,10 +125,7 @@
                         "docs": null
                     },
                     {
-                        "name": {
-                            "wireValue": "3d",
-                            "name": "_3d"
-                        },
+                        "name": "3d",
                         "valueType": {
                             "_type": "primitive",
                             "primitive": {
@@ -176,7 +177,7 @@
             },
             "displayName": null,
             "basePath": {
-                "head": "",
+                "head": "/",
                 "parts": []
             },
             "headers": [],
@@ -201,7 +202,7 @@
                     "method": "POST",
                     "basePath": null,
                     "path": {
-                        "head": "/",
+                        "head": "",
                         "parts": []
                     },
                     "fullPath": {
@@ -241,7 +242,7 @@
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",
-                            "wrapperName": "PackageTestRequest",
+                            "wrapperName": "TestRequest",
                             "bodyKey": "body",
                             "includePathParameters": false,
                             "onlyPathParameters": false
@@ -257,50 +258,7 @@
                     },
                     "v2Responses": null,
                     "errors": [],
-                    "userSpecifiedExamples": [
-                        {
-                            "example": {
-                                "id": "57940d82",
-                                "name": null,
-                                "url": "/",
-                                "rootPathParameters": [],
-                                "endpointPathParameters": [],
-                                "servicePathParameters": [],
-                                "endpointHeaders": [],
-                                "serviceHeaders": [],
-                                "queryParameters": [
-                                    {
-                                        "name": "for",
-                                        "value": {
-                                            "shape": {
-                                                "type": "primitive",
-                                                "primitive": {
-                                                    "type": "string",
-                                                    "string": {
-                                                        "original": "for"
-                                                    }
-                                                }
-                                            },
-                                            "jsonExample": "for"
-                                        },
-                                        "shape": {
-                                            "type": "single"
-                                        }
-                                    }
-                                ],
-                                "request": null,
-                                "response": {
-                                    "type": "ok",
-                                    "value": {
-                                        "type": "body",
-                                        "value": null
-                                    }
-                                },
-                                "docs": null
-                            },
-                            "codeSamples": null
-                        }
-                    ],
+                    "userSpecifiedExamples": [],
                     "autogeneratedExamples": [
                         {
                             "example": {
@@ -364,7 +322,9 @@
     },
     "environments": null,
     "errorDiscriminationStrategy": {
-        "type": "statusCode"
+        "type": "property",
+        "discriminant": "errorName",
+        "contentProperty": "content"
     },
     "basePath": null,
     "pathParameters": [],
@@ -372,8 +332,8 @@
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": [
-            "type_:Package",
-            "type_:Record"
+            "type_package:Package",
+            "type_package:Record"
         ]
     },
     "webhookGroups": {},
@@ -384,7 +344,7 @@
     "dynamic": {
         "version": "1.0.0",
         "types": {
-            "type_:Package": {
+            "type_package:Package": {
                 "type": "object",
                 "declaration": {
                     "name": {
@@ -407,9 +367,47 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [],
+                        "allParts": [
+                            {
+                                "originalName": "package",
+                                "camelCase": {
+                                    "unsafeName": "package",
+                                    "safeName": "package"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "package",
+                                    "safeName": "package"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "PACKAGE",
+                                    "safeName": "PACKAGE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Package",
+                                    "safeName": "Package"
+                                }
+                            }
+                        ],
                         "packagePath": [],
-                        "file": null
+                        "file": {
+                            "originalName": "package",
+                            "camelCase": {
+                                "unsafeName": "package",
+                                "safeName": "package"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "package",
+                                "safeName": "package"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PACKAGE",
+                                "safeName": "PACKAGE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Package",
+                                "safeName": "Package"
+                            }
+                        }
                     }
                 },
                 "properties": [
@@ -447,7 +445,7 @@
                 "extends": null,
                 "additionalProperties": false
             },
-            "type_:Record": {
+            "type_package:Record": {
                 "type": "object",
                 "declaration": {
                     "name": {
@@ -470,9 +468,47 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [],
+                        "allParts": [
+                            {
+                                "originalName": "package",
+                                "camelCase": {
+                                    "unsafeName": "package",
+                                    "safeName": "package"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "package",
+                                    "safeName": "package"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "PACKAGE",
+                                    "safeName": "PACKAGE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Package",
+                                    "safeName": "Package"
+                                }
+                            }
+                        ],
                         "packagePath": [],
-                        "file": null
+                        "file": {
+                            "originalName": "package",
+                            "camelCase": {
+                                "unsafeName": "package",
+                                "safeName": "package"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "package",
+                                "safeName": "package"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PACKAGE",
+                                "safeName": "PACKAGE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Package",
+                                "safeName": "Package"
+                            }
+                        }
                     }
                 },
                 "properties": [
@@ -517,7 +553,7 @@
                         "name": {
                             "wireValue": "3d",
                             "name": {
-                                "originalName": "_3d",
+                                "originalName": "3d",
                                 "camelCase": {
                                     "unsafeName": "3D",
                                     "safeName": "3D"
@@ -624,22 +660,22 @@
                     "type": "inlined",
                     "declaration": {
                         "name": {
-                            "originalName": "PackageTestRequest",
+                            "originalName": "TestRequest",
                             "camelCase": {
-                                "unsafeName": "packageTestRequest",
-                                "safeName": "packageTestRequest"
+                                "unsafeName": "testRequest",
+                                "safeName": "testRequest"
                             },
                             "snakeCase": {
-                                "unsafeName": "package_test_request",
-                                "safeName": "package_test_request"
+                                "unsafeName": "test_request",
+                                "safeName": "test_request"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "PACKAGE_TEST_REQUEST",
-                                "safeName": "PACKAGE_TEST_REQUEST"
+                                "unsafeName": "TEST_REQUEST",
+                                "safeName": "TEST_REQUEST"
                             },
                             "pascalCase": {
-                                "unsafeName": "PackageTestRequest",
-                                "safeName": "PackageTestRequest"
+                                "unsafeName": "TestRequest",
+                                "safeName": "TestRequest"
                             }
                         },
                         "fernFilepath": {
@@ -757,7 +793,10 @@
                 "file": "package"
             },
             "service": "service_package",
-            "types": [],
+            "types": [
+                "type_package:Package",
+                "type_package:Record"
+            ],
             "errors": [],
             "subpackages": [],
             "navigationConfig": null,
@@ -775,10 +814,7 @@
         },
         "websocket": null,
         "service": null,
-        "types": [
-            "type_:Package",
-            "type_:Record"
-        ],
+        "types": [],
         "errors": [],
         "subpackages": [
             "subpackage_package"

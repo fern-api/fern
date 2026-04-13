@@ -3,68 +3,68 @@
     "types": {},
     "headers": [],
     "endpoints": {
-        "endpoint_singleproperty.dothing": {
+        "endpoint_single-property.doThing": {
             "auth": null,
             "declaration": {
                 "name": {
-                    "originalName": "dothing",
+                    "originalName": "doThing",
                     "camelCase": {
-                        "unsafeName": "dothing",
-                        "safeName": "dothing"
+                        "unsafeName": "doThing",
+                        "safeName": "doThing"
                     },
                     "snakeCase": {
-                        "unsafeName": "dothing",
-                        "safeName": "dothing"
+                        "unsafeName": "do_thing",
+                        "safeName": "do_thing"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "DOTHING",
-                        "safeName": "DOTHING"
+                        "unsafeName": "DO_THING",
+                        "safeName": "DO_THING"
                     },
                     "pascalCase": {
-                        "unsafeName": "Dothing",
-                        "safeName": "Dothing"
+                        "unsafeName": "DoThing",
+                        "safeName": "DoThing"
                     }
                 },
                 "fernFilepath": {
                     "allParts": [
                         {
-                            "originalName": "singleproperty",
+                            "originalName": "single-property",
                             "camelCase": {
-                                "unsafeName": "singleproperty",
-                                "safeName": "singleproperty"
+                                "unsafeName": "singleProperty",
+                                "safeName": "singleProperty"
                             },
                             "snakeCase": {
-                                "unsafeName": "singleproperty",
-                                "safeName": "singleproperty"
+                                "unsafeName": "single_property",
+                                "safeName": "single_property"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "SINGLEPROPERTY",
-                                "safeName": "SINGLEPROPERTY"
+                                "unsafeName": "SINGLE_PROPERTY",
+                                "safeName": "SINGLE_PROPERTY"
                             },
                             "pascalCase": {
-                                "unsafeName": "Singleproperty",
-                                "safeName": "Singleproperty"
+                                "unsafeName": "SingleProperty",
+                                "safeName": "SingleProperty"
                             }
                         }
                     ],
                     "packagePath": [],
                     "file": {
-                        "originalName": "singleproperty",
+                        "originalName": "single-property",
                         "camelCase": {
-                            "unsafeName": "singleproperty",
-                            "safeName": "singleproperty"
+                            "unsafeName": "singleProperty",
+                            "safeName": "singleProperty"
                         },
                         "snakeCase": {
-                            "unsafeName": "singleproperty",
-                            "safeName": "singleproperty"
+                            "unsafeName": "single_property",
+                            "safeName": "single_property"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "SINGLEPROPERTY",
-                            "safeName": "SINGLEPROPERTY"
+                            "unsafeName": "SINGLE_PROPERTY",
+                            "safeName": "SINGLE_PROPERTY"
                         },
                         "pascalCase": {
-                            "unsafeName": "Singleproperty",
-                            "safeName": "Singleproperty"
+                            "unsafeName": "SingleProperty",
+                            "safeName": "SingleProperty"
                         }
                     }
                 }
@@ -77,64 +77,64 @@
                 "type": "inlined",
                 "declaration": {
                     "name": {
-                        "originalName": "SinglePropertyDoThingRequest",
+                        "originalName": "GetThingRequest",
                         "camelCase": {
-                            "unsafeName": "singlePropertyDoThingRequest",
-                            "safeName": "singlePropertyDoThingRequest"
+                            "unsafeName": "getThingRequest",
+                            "safeName": "getThingRequest"
                         },
                         "snakeCase": {
-                            "unsafeName": "single_property_do_thing_request",
-                            "safeName": "single_property_do_thing_request"
+                            "unsafeName": "get_thing_request",
+                            "safeName": "get_thing_request"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "SINGLE_PROPERTY_DO_THING_REQUEST",
-                            "safeName": "SINGLE_PROPERTY_DO_THING_REQUEST"
+                            "unsafeName": "GET_THING_REQUEST",
+                            "safeName": "GET_THING_REQUEST"
                         },
                         "pascalCase": {
-                            "unsafeName": "SinglePropertyDoThingRequest",
-                            "safeName": "SinglePropertyDoThingRequest"
+                            "unsafeName": "GetThingRequest",
+                            "safeName": "GetThingRequest"
                         }
                     },
                     "fernFilepath": {
                         "allParts": [
                             {
-                                "originalName": "singleproperty",
+                                "originalName": "single-property",
                                 "camelCase": {
-                                    "unsafeName": "singleproperty",
-                                    "safeName": "singleproperty"
+                                    "unsafeName": "singleProperty",
+                                    "safeName": "singleProperty"
                                 },
                                 "snakeCase": {
-                                    "unsafeName": "singleproperty",
-                                    "safeName": "singleproperty"
+                                    "unsafeName": "single_property",
+                                    "safeName": "single_property"
                                 },
                                 "screamingSnakeCase": {
-                                    "unsafeName": "SINGLEPROPERTY",
-                                    "safeName": "SINGLEPROPERTY"
+                                    "unsafeName": "SINGLE_PROPERTY",
+                                    "safeName": "SINGLE_PROPERTY"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "Singleproperty",
-                                    "safeName": "Singleproperty"
+                                    "unsafeName": "SingleProperty",
+                                    "safeName": "SingleProperty"
                                 }
                             }
                         ],
                         "packagePath": [],
                         "file": {
-                            "originalName": "singleproperty",
+                            "originalName": "single-property",
                             "camelCase": {
-                                "unsafeName": "singleproperty",
-                                "safeName": "singleproperty"
+                                "unsafeName": "singleProperty",
+                                "safeName": "singleProperty"
                             },
                             "snakeCase": {
-                                "unsafeName": "singleproperty",
-                                "safeName": "singleproperty"
+                                "unsafeName": "single_property",
+                                "safeName": "single_property"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "SINGLEPROPERTY",
-                                "safeName": "SINGLEPROPERTY"
+                                "unsafeName": "SINGLE_PROPERTY",
+                                "safeName": "SINGLE_PROPERTY"
                             },
                             "pascalCase": {
-                                "unsafeName": "Singleproperty",
-                                "safeName": "Singleproperty"
+                                "unsafeName": "SingleProperty",
+                                "safeName": "SingleProperty"
                             }
                         }
                     }
@@ -198,11 +198,8 @@
                         "typeReference": {
                             "type": "optional",
                             "value": {
-                                "type": "nullable",
-                                "value": {
-                                    "type": "primitive",
-                                    "value": "BOOLEAN"
-                                }
+                                "type": "primitive",
+                                "value": "BOOLEAN"
                             }
                         },
                         "propertyAccess": null,

@@ -86,11 +86,8 @@
                     "typeReference": {
                         "type": "optional",
                         "value": {
-                            "type": "nullable",
-                            "value": {
-                                "type": "primitive",
-                                "value": "STRING"
-                            }
+                            "type": "primitive",
+                            "value": "STRING"
                         }
                     },
                     "propertyAccess": null,
@@ -123,7 +120,7 @@
                         "type": "optional",
                         "value": {
                             "type": "named",
-                            "value": "type_:CommonsMetadata"
+                            "value": "type_commons/metadata:Metadata"
                         }
                     },
                     "propertyAccess": null,
@@ -188,13 +185,10 @@
                     "typeReference": {
                         "type": "optional",
                         "value": {
-                            "type": "nullable",
+                            "type": "list",
                             "value": {
-                                "type": "list",
-                                "value": {
-                                    "type": "named",
-                                    "value": "type_:Node"
-                                }
+                                "type": "named",
+                                "value": "type_:Node"
                             }
                         }
                     },
@@ -205,32 +199,109 @@
             "extends": null,
             "additionalProperties": false
         },
-        "type_:CommonsMetadata": {
+        "type_commons/metadata:Metadata": {
             "type": "object",
             "declaration": {
                 "name": {
-                    "originalName": "CommonsMetadata",
+                    "originalName": "Metadata",
                     "camelCase": {
-                        "unsafeName": "commonsMetadata",
-                        "safeName": "commonsMetadata"
+                        "unsafeName": "metadata",
+                        "safeName": "metadata"
                     },
                     "snakeCase": {
-                        "unsafeName": "commons_metadata",
-                        "safeName": "commons_metadata"
+                        "unsafeName": "metadata",
+                        "safeName": "metadata"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "COMMONS_METADATA",
-                        "safeName": "COMMONS_METADATA"
+                        "unsafeName": "METADATA",
+                        "safeName": "METADATA"
                     },
                     "pascalCase": {
-                        "unsafeName": "CommonsMetadata",
-                        "safeName": "CommonsMetadata"
+                        "unsafeName": "Metadata",
+                        "safeName": "Metadata"
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": [],
-                    "file": null
+                    "allParts": [
+                        {
+                            "originalName": "commons",
+                            "camelCase": {
+                                "unsafeName": "commons",
+                                "safeName": "commons"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "commons",
+                                "safeName": "commons"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "COMMONS",
+                                "safeName": "COMMONS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Commons",
+                                "safeName": "Commons"
+                            }
+                        },
+                        {
+                            "originalName": "metadata",
+                            "camelCase": {
+                                "unsafeName": "metadata",
+                                "safeName": "metadata"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "metadata",
+                                "safeName": "metadata"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "METADATA",
+                                "safeName": "METADATA"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Metadata",
+                                "safeName": "Metadata"
+                            }
+                        }
+                    ],
+                    "packagePath": [
+                        {
+                            "originalName": "commons",
+                            "camelCase": {
+                                "unsafeName": "commons",
+                                "safeName": "commons"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "commons",
+                                "safeName": "commons"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "COMMONS",
+                                "safeName": "COMMONS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Commons",
+                                "safeName": "Commons"
+                            }
+                        }
+                    ],
+                    "file": {
+                        "originalName": "metadata",
+                        "camelCase": {
+                            "unsafeName": "metadata",
+                            "safeName": "metadata"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "metadata",
+                            "safeName": "metadata"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "METADATA",
+                            "safeName": "METADATA"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Metadata",
+                            "safeName": "Metadata"
+                        }
+                    }
                 }
             },
             "properties": [
@@ -290,20 +361,14 @@
                     "typeReference": {
                         "type": "optional",
                         "value": {
-                            "type": "nullable",
+                            "type": "map",
+                            "key": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            },
                             "value": {
-                                "type": "map",
-                                "key": {
-                                    "type": "primitive",
-                                    "value": "STRING"
-                                },
-                                "value": {
-                                    "type": "nullable",
-                                    "value": {
-                                        "type": "primitive",
-                                        "value": "STRING"
-                                    }
-                                }
+                                "type": "primitive",
+                                "value": "STRING"
                             }
                         }
                     },
@@ -314,7 +379,7 @@
             "extends": null,
             "additionalProperties": false
         },
-        "type_:File": {
+        "type_file:File": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -337,9 +402,47 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        {
+                            "originalName": "file",
+                            "camelCase": {
+                                "unsafeName": "file",
+                                "safeName": "file"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "file",
+                                "safeName": "file"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "FILE",
+                                "safeName": "FILE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "File",
+                                "safeName": "File"
+                            }
+                        }
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": {
+                        "originalName": "file",
+                        "camelCase": {
+                            "unsafeName": "file",
+                            "safeName": "file"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "file",
+                            "safeName": "file"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "FILE",
+                            "safeName": "FILE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "File",
+                            "safeName": "File"
+                        }
+                    }
                 }
             },
             "properties": [
@@ -428,7 +531,7 @@
                     },
                     "typeReference": {
                         "type": "named",
-                        "value": "type_:FileInfo"
+                        "value": "type_file:FileInfo"
                     },
                     "propertyAccess": null,
                     "variable": null
@@ -437,7 +540,7 @@
             "extends": null,
             "additionalProperties": false
         },
-        "type_:FileInfo": {
+        "type_file:FileInfo": {
             "type": "enum",
             "declaration": {
                 "name": {
@@ -460,9 +563,47 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        {
+                            "originalName": "file",
+                            "camelCase": {
+                                "unsafeName": "file",
+                                "safeName": "file"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "file",
+                                "safeName": "file"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "FILE",
+                                "safeName": "FILE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "File",
+                                "safeName": "File"
+                            }
+                        }
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": {
+                        "originalName": "file",
+                        "camelCase": {
+                            "unsafeName": "file",
+                            "safeName": "file"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "file",
+                            "safeName": "file"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "FILE",
+                            "safeName": "FILE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "File",
+                            "safeName": "File"
+                        }
+                    }
                 }
             },
             "values": [
@@ -512,32 +653,109 @@
                 }
             ]
         },
-        "type_:FileDirectory": {
+        "type_file/directory:Directory": {
             "type": "object",
             "declaration": {
                 "name": {
-                    "originalName": "FileDirectory",
+                    "originalName": "Directory",
                     "camelCase": {
-                        "unsafeName": "fileDirectory",
-                        "safeName": "fileDirectory"
+                        "unsafeName": "directory",
+                        "safeName": "directory"
                     },
                     "snakeCase": {
-                        "unsafeName": "file_directory",
-                        "safeName": "file_directory"
+                        "unsafeName": "directory",
+                        "safeName": "directory"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "FILE_DIRECTORY",
-                        "safeName": "FILE_DIRECTORY"
+                        "unsafeName": "DIRECTORY",
+                        "safeName": "DIRECTORY"
                     },
                     "pascalCase": {
-                        "unsafeName": "FileDirectory",
-                        "safeName": "FileDirectory"
+                        "unsafeName": "Directory",
+                        "safeName": "Directory"
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": [],
-                    "file": null
+                    "allParts": [
+                        {
+                            "originalName": "file",
+                            "camelCase": {
+                                "unsafeName": "file",
+                                "safeName": "file"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "file",
+                                "safeName": "file"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "FILE",
+                                "safeName": "FILE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "File",
+                                "safeName": "File"
+                            }
+                        },
+                        {
+                            "originalName": "directory",
+                            "camelCase": {
+                                "unsafeName": "directory",
+                                "safeName": "directory"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "directory",
+                                "safeName": "directory"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DIRECTORY",
+                                "safeName": "DIRECTORY"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Directory",
+                                "safeName": "Directory"
+                            }
+                        }
+                    ],
+                    "packagePath": [
+                        {
+                            "originalName": "file",
+                            "camelCase": {
+                                "unsafeName": "file",
+                                "safeName": "file"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "file",
+                                "safeName": "file"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "FILE",
+                                "safeName": "FILE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "File",
+                                "safeName": "File"
+                            }
+                        }
+                    ],
+                    "file": {
+                        "originalName": "directory",
+                        "camelCase": {
+                            "unsafeName": "directory",
+                            "safeName": "directory"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "directory",
+                            "safeName": "directory"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "DIRECTORY",
+                            "safeName": "DIRECTORY"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Directory",
+                            "safeName": "Directory"
+                        }
+                    }
                 }
             },
             "properties": [
@@ -597,13 +815,10 @@
                     "typeReference": {
                         "type": "optional",
                         "value": {
-                            "type": "nullable",
+                            "type": "list",
                             "value": {
-                                "type": "list",
-                                "value": {
-                                    "type": "named",
-                                    "value": "type_:File"
-                                }
+                                "type": "named",
+                                "value": "type_file:File"
                             }
                         }
                     },
@@ -636,13 +851,10 @@
                     "typeReference": {
                         "type": "optional",
                         "value": {
-                            "type": "nullable",
+                            "type": "list",
                             "value": {
-                                "type": "list",
-                                "value": {
-                                    "type": "named",
-                                    "value": "type_:FileDirectory"
-                                }
+                                "type": "named",
+                                "value": "type_file/directory:Directory"
                             }
                         }
                     },

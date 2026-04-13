@@ -2,8 +2,8 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": "api",
-    "apiDisplayName": "plain-text",
+    "apiName": "plain-text",
+    "apiDisplayName": null,
     "apiDocs": null,
     "auth": {
         "requirement": "ALL",
@@ -42,8 +42,8 @@
             },
             "endpoints": [
                 {
-                    "id": "endpoint_service.gettext",
-                    "name": "gettext",
+                    "id": "endpoint_service.getText",
+                    "name": "getText",
                     "displayName": null,
                     "auth": false,
                     "security": null,
@@ -70,12 +70,12 @@
                     "response": {
                         "body": {
                             "type": "text",
-                            "docs": "",
+                            "docs": null,
                             "v2Examples": null
                         },
-                        "status-code": 200,
+                        "status-code": null,
                         "isWildcardStatusCode": null,
-                        "docs": ""
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [],
@@ -154,26 +154,26 @@
         "types": {},
         "headers": [],
         "endpoints": {
-            "endpoint_service.gettext": {
+            "endpoint_service.getText": {
                 "auth": null,
                 "declaration": {
                     "name": {
-                        "originalName": "gettext",
+                        "originalName": "getText",
                         "camelCase": {
-                            "unsafeName": "gettext",
-                            "safeName": "gettext"
+                            "unsafeName": "getText",
+                            "safeName": "getText"
                         },
                         "snakeCase": {
-                            "unsafeName": "gettext",
-                            "safeName": "gettext"
+                            "unsafeName": "get_text",
+                            "safeName": "get_text"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "GETTEXT",
-                            "safeName": "GETTEXT"
+                            "unsafeName": "GET_TEXT",
+                            "safeName": "GET_TEXT"
                         },
                         "pascalCase": {
-                            "unsafeName": "Gettext",
-                            "safeName": "Gettext"
+                            "unsafeName": "GetText",
+                            "safeName": "GetText"
                         }
                     },
                     "fernFilepath": {

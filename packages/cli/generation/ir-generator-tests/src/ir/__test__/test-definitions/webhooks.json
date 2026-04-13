@@ -2,8 +2,8 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": "api",
-    "apiDisplayName": "webhooks",
+    "apiName": "webhooks",
+    "apiDisplayName": null,
     "apiDocs": null,
     "auth": {
         "requirement": "ALL",
@@ -363,19 +363,13 @@
                             "container": {
                                 "_type": "optional",
                                 "optional": {
-                                    "_type": "container",
-                                    "container": {
-                                        "_type": "nullable",
-                                        "nullable": {
-                                            "_type": "primitive",
-                                            "primitive": {
-                                                "v1": "STRING",
-                                                "v2": {
-                                                    "type": "string",
-                                                    "default": null,
-                                                    "validation": null
-                                                }
-                                            }
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
                                         }
                                     }
                                 }
@@ -427,7 +421,648 @@
             "type_:RefundProcessedPayload"
         ]
     },
-    "webhookGroups": {},
+    "webhookGroups": {
+        "webhooks_": [
+            {
+                "id": "webhooks_.userCreated",
+                "displayName": "User Created",
+                "method": "POST",
+                "name": "userCreated",
+                "headers": [],
+                "payload": {
+                    "type": "reference",
+                    "payloadType": {
+                        "_type": "named",
+                        "name": "UserCreatedPayload",
+                        "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": [],
+                            "file": null
+                        },
+                        "displayName": null,
+                        "typeId": "type_:UserCreatedPayload",
+                        "default": null,
+                        "inline": null
+                    },
+                    "docs": null
+                },
+                "signatureVerification": {
+                    "type": "hmac",
+                    "signatureHeaderName": "x-webhook-signature",
+                    "algorithm": "SHA256",
+                    "encoding": "HEX",
+                    "signaturePrefix": "sha256=",
+                    "payloadFormat": {
+                        "components": [
+                            "TIMESTAMP",
+                            "BODY"
+                        ],
+                        "delimiter": ".",
+                        "bodySort": null
+                    },
+                    "timestamp": {
+                        "headerName": "x-webhook-timestamp",
+                        "format": "UNIX_SECONDS",
+                        "tolerance": 300
+                    }
+                },
+                "fileUploadPayload": null,
+                "responses": null,
+                "examples": [
+                    {
+                        "name": "UserCreatedExample",
+                        "payload": {
+                            "shape": {
+                                "type": "named",
+                                "typeName": {
+                                    "typeId": "type_:UserCreatedPayload",
+                                    "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": [],
+                                        "file": null
+                                    },
+                                    "name": "UserCreatedPayload",
+                                    "displayName": null
+                                },
+                                "shape": {
+                                    "type": "object",
+                                    "properties": [
+                                        {
+                                            "name": "userId",
+                                            "value": {
+                                                "shape": {
+                                                    "type": "primitive",
+                                                    "primitive": {
+                                                        "type": "string",
+                                                        "string": {
+                                                            "original": "user_123"
+                                                        }
+                                                    }
+                                                },
+                                                "jsonExample": "user_123"
+                                            },
+                                            "originalTypeDeclaration": {
+                                                "typeId": "type_:UserCreatedPayload",
+                                                "fernFilepath": {
+                                                    "allParts": [],
+                                                    "packagePath": [],
+                                                    "file": null
+                                                },
+                                                "name": "UserCreatedPayload",
+                                                "displayName": null
+                                            },
+                                            "propertyAccess": null
+                                        },
+                                        {
+                                            "name": "email",
+                                            "value": {
+                                                "shape": {
+                                                    "type": "primitive",
+                                                    "primitive": {
+                                                        "type": "string",
+                                                        "string": {
+                                                            "original": "john@example.com"
+                                                        }
+                                                    }
+                                                },
+                                                "jsonExample": "john@example.com"
+                                            },
+                                            "originalTypeDeclaration": {
+                                                "typeId": "type_:UserCreatedPayload",
+                                                "fernFilepath": {
+                                                    "allParts": [],
+                                                    "packagePath": [],
+                                                    "file": null
+                                                },
+                                                "name": "UserCreatedPayload",
+                                                "displayName": null
+                                            },
+                                            "propertyAccess": null
+                                        },
+                                        {
+                                            "name": "createdAt",
+                                            "value": {
+                                                "shape": {
+                                                    "type": "primitive",
+                                                    "primitive": {
+                                                        "type": "string",
+                                                        "string": {
+                                                            "original": "2024-01-15T09:30:00Z"
+                                                        }
+                                                    }
+                                                },
+                                                "jsonExample": "2024-01-15T09:30:00Z"
+                                            },
+                                            "originalTypeDeclaration": {
+                                                "typeId": "type_:UserCreatedPayload",
+                                                "fernFilepath": {
+                                                    "allParts": [],
+                                                    "packagePath": [],
+                                                    "file": null
+                                                },
+                                                "name": "UserCreatedPayload",
+                                                "displayName": null
+                                            },
+                                            "propertyAccess": null
+                                        }
+                                    ],
+                                    "extraProperties": null
+                                }
+                            },
+                            "jsonExample": {
+                                "userId": "user_123",
+                                "email": "john@example.com",
+                                "createdAt": "2024-01-15T09:30:00Z"
+                            }
+                        },
+                        "docs": "Fired when a new user is created. Inherits the document-level HMAC-SHA256\nsignature verification configuration."
+                    }
+                ],
+                "v2Examples": null,
+                "availability": null,
+                "docs": "Fired when a new user is created. Inherits the document-level HMAC-SHA256\nsignature verification configuration."
+            },
+            {
+                "id": "webhooks_.orderCompleted",
+                "displayName": "Order Completed",
+                "method": "POST",
+                "name": "orderCompleted",
+                "headers": [],
+                "payload": {
+                    "type": "reference",
+                    "payloadType": {
+                        "_type": "named",
+                        "name": "OrderCompletedPayload",
+                        "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": [],
+                            "file": null
+                        },
+                        "displayName": null,
+                        "typeId": "type_:OrderCompletedPayload",
+                        "default": null,
+                        "inline": null
+                    },
+                    "docs": null
+                },
+                "signatureVerification": {
+                    "type": "hmac",
+                    "signatureHeaderName": "x-webhook-signature",
+                    "algorithm": "SHA256",
+                    "encoding": "HEX",
+                    "signaturePrefix": "sha256=",
+                    "payloadFormat": {
+                        "components": [
+                            "TIMESTAMP",
+                            "BODY"
+                        ],
+                        "delimiter": ".",
+                        "bodySort": null
+                    },
+                    "timestamp": {
+                        "headerName": "x-webhook-timestamp",
+                        "format": "UNIX_SECONDS",
+                        "tolerance": 300
+                    }
+                },
+                "fileUploadPayload": null,
+                "responses": null,
+                "examples": [
+                    {
+                        "name": "OrderCompletedExample",
+                        "payload": {
+                            "shape": {
+                                "type": "named",
+                                "typeName": {
+                                    "typeId": "type_:OrderCompletedPayload",
+                                    "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": [],
+                                        "file": null
+                                    },
+                                    "name": "OrderCompletedPayload",
+                                    "displayName": null
+                                },
+                                "shape": {
+                                    "type": "object",
+                                    "properties": [
+                                        {
+                                            "name": "orderId",
+                                            "value": {
+                                                "shape": {
+                                                    "type": "primitive",
+                                                    "primitive": {
+                                                        "type": "string",
+                                                        "string": {
+                                                            "original": "order_abc"
+                                                        }
+                                                    }
+                                                },
+                                                "jsonExample": "order_abc"
+                                            },
+                                            "originalTypeDeclaration": {
+                                                "typeId": "type_:OrderCompletedPayload",
+                                                "fernFilepath": {
+                                                    "allParts": [],
+                                                    "packagePath": [],
+                                                    "file": null
+                                                },
+                                                "name": "OrderCompletedPayload",
+                                                "displayName": null
+                                            },
+                                            "propertyAccess": null
+                                        },
+                                        {
+                                            "name": "total",
+                                            "value": {
+                                                "shape": {
+                                                    "type": "primitive",
+                                                    "primitive": {
+                                                        "type": "double",
+                                                        "double": 99.99
+                                                    }
+                                                },
+                                                "jsonExample": 99.99
+                                            },
+                                            "originalTypeDeclaration": {
+                                                "typeId": "type_:OrderCompletedPayload",
+                                                "fernFilepath": {
+                                                    "allParts": [],
+                                                    "packagePath": [],
+                                                    "file": null
+                                                },
+                                                "name": "OrderCompletedPayload",
+                                                "displayName": null
+                                            },
+                                            "propertyAccess": null
+                                        },
+                                        {
+                                            "name": "currency",
+                                            "value": {
+                                                "shape": {
+                                                    "type": "primitive",
+                                                    "primitive": {
+                                                        "type": "string",
+                                                        "string": {
+                                                            "original": "USD"
+                                                        }
+                                                    }
+                                                },
+                                                "jsonExample": "USD"
+                                            },
+                                            "originalTypeDeclaration": {
+                                                "typeId": "type_:OrderCompletedPayload",
+                                                "fernFilepath": {
+                                                    "allParts": [],
+                                                    "packagePath": [],
+                                                    "file": null
+                                                },
+                                                "name": "OrderCompletedPayload",
+                                                "displayName": null
+                                            },
+                                            "propertyAccess": null
+                                        }
+                                    ],
+                                    "extraProperties": null
+                                }
+                            },
+                            "jsonExample": {
+                                "orderId": "order_abc",
+                                "total": 99.99,
+                                "currency": "USD"
+                            }
+                        },
+                        "docs": "Fired when an order is completed. Inherits the document-level HMAC-SHA256\nsignature verification configuration."
+                    }
+                ],
+                "v2Examples": null,
+                "availability": null,
+                "docs": "Fired when an order is completed. Inherits the document-level HMAC-SHA256\nsignature verification configuration."
+            },
+            {
+                "id": "webhooks_.paymentNotification",
+                "displayName": "Payment Notification",
+                "method": "POST",
+                "name": "paymentNotification",
+                "headers": [],
+                "payload": {
+                    "type": "reference",
+                    "payloadType": {
+                        "_type": "named",
+                        "name": "PaymentNotificationPayload",
+                        "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": [],
+                            "file": null
+                        },
+                        "displayName": null,
+                        "typeId": "type_:PaymentNotificationPayload",
+                        "default": null,
+                        "inline": null
+                    },
+                    "docs": null
+                },
+                "signatureVerification": {
+                    "type": "asymmetric",
+                    "signatureHeaderName": "x-payment-signature",
+                    "algorithm": "RSA_SHA256",
+                    "encoding": "BASE64",
+                    "signaturePrefix": "rsa=",
+                    "keySource": {
+                        "type": "jwks",
+                        "url": "https://api.example.com/.well-known/jwks.json",
+                        "keyIdHeader": "x-key-id"
+                    },
+                    "timestamp": {
+                        "headerName": "x-payment-timestamp",
+                        "format": "ISO8601",
+                        "tolerance": null
+                    }
+                },
+                "fileUploadPayload": null,
+                "responses": null,
+                "examples": [
+                    {
+                        "name": "PaymentNotificationExample",
+                        "payload": {
+                            "shape": {
+                                "type": "named",
+                                "typeName": {
+                                    "typeId": "type_:PaymentNotificationPayload",
+                                    "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": [],
+                                        "file": null
+                                    },
+                                    "name": "PaymentNotificationPayload",
+                                    "displayName": null
+                                },
+                                "shape": {
+                                    "type": "object",
+                                    "properties": [
+                                        {
+                                            "name": "paymentId",
+                                            "value": {
+                                                "shape": {
+                                                    "type": "primitive",
+                                                    "primitive": {
+                                                        "type": "string",
+                                                        "string": {
+                                                            "original": "pay_xyz"
+                                                        }
+                                                    }
+                                                },
+                                                "jsonExample": "pay_xyz"
+                                            },
+                                            "originalTypeDeclaration": {
+                                                "typeId": "type_:PaymentNotificationPayload",
+                                                "fernFilepath": {
+                                                    "allParts": [],
+                                                    "packagePath": [],
+                                                    "file": null
+                                                },
+                                                "name": "PaymentNotificationPayload",
+                                                "displayName": null
+                                            },
+                                            "propertyAccess": null
+                                        },
+                                        {
+                                            "name": "amount",
+                                            "value": {
+                                                "shape": {
+                                                    "type": "primitive",
+                                                    "primitive": {
+                                                        "type": "double",
+                                                        "double": 150
+                                                    }
+                                                },
+                                                "jsonExample": 150
+                                            },
+                                            "originalTypeDeclaration": {
+                                                "typeId": "type_:PaymentNotificationPayload",
+                                                "fernFilepath": {
+                                                    "allParts": [],
+                                                    "packagePath": [],
+                                                    "file": null
+                                                },
+                                                "name": "PaymentNotificationPayload",
+                                                "displayName": null
+                                            },
+                                            "propertyAccess": null
+                                        },
+                                        {
+                                            "name": "status",
+                                            "value": {
+                                                "shape": {
+                                                    "type": "primitive",
+                                                    "primitive": {
+                                                        "type": "string",
+                                                        "string": {
+                                                            "original": "completed"
+                                                        }
+                                                    }
+                                                },
+                                                "jsonExample": "completed"
+                                            },
+                                            "originalTypeDeclaration": {
+                                                "typeId": "type_:PaymentNotificationPayload",
+                                                "fernFilepath": {
+                                                    "allParts": [],
+                                                    "packagePath": [],
+                                                    "file": null
+                                                },
+                                                "name": "PaymentNotificationPayload",
+                                                "displayName": null
+                                            },
+                                            "propertyAccess": null
+                                        }
+                                    ],
+                                    "extraProperties": null
+                                }
+                            },
+                            "jsonExample": {
+                                "paymentId": "pay_xyz",
+                                "amount": 150,
+                                "status": "completed"
+                            }
+                        },
+                        "docs": "Fired when a payment status changes. Uses asymmetric RSA-SHA256 signature\nverification with keys fetched from a JWKS endpoint, overriding the\ndocument-level default."
+                    }
+                ],
+                "v2Examples": null,
+                "availability": null,
+                "docs": "Fired when a payment status changes. Uses asymmetric RSA-SHA256 signature\nverification with keys fetched from a JWKS endpoint, overriding the\ndocument-level default."
+            },
+            {
+                "id": "webhooks_.refundProcessed",
+                "displayName": "Refund Processed",
+                "method": "POST",
+                "name": "refundProcessed",
+                "headers": [],
+                "payload": {
+                    "type": "reference",
+                    "payloadType": {
+                        "_type": "named",
+                        "name": "RefundProcessedPayload",
+                        "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": [],
+                            "file": null
+                        },
+                        "displayName": null,
+                        "typeId": "type_:RefundProcessedPayload",
+                        "default": null,
+                        "inline": null
+                    },
+                    "docs": null
+                },
+                "signatureVerification": {
+                    "type": "asymmetric",
+                    "signatureHeaderName": "x-refund-signature",
+                    "algorithm": "ECDSA_SHA256",
+                    "encoding": "HEX",
+                    "signaturePrefix": null,
+                    "keySource": {
+                        "type": "static"
+                    },
+                    "timestamp": null
+                },
+                "fileUploadPayload": null,
+                "responses": null,
+                "examples": [
+                    {
+                        "name": "RefundProcessedExample",
+                        "payload": {
+                            "shape": {
+                                "type": "named",
+                                "typeName": {
+                                    "typeId": "type_:RefundProcessedPayload",
+                                    "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": [],
+                                        "file": null
+                                    },
+                                    "name": "RefundProcessedPayload",
+                                    "displayName": null
+                                },
+                                "shape": {
+                                    "type": "object",
+                                    "properties": [
+                                        {
+                                            "name": "refundId",
+                                            "value": {
+                                                "shape": {
+                                                    "type": "primitive",
+                                                    "primitive": {
+                                                        "type": "string",
+                                                        "string": {
+                                                            "original": "ref_456"
+                                                        }
+                                                    }
+                                                },
+                                                "jsonExample": "ref_456"
+                                            },
+                                            "originalTypeDeclaration": {
+                                                "typeId": "type_:RefundProcessedPayload",
+                                                "fernFilepath": {
+                                                    "allParts": [],
+                                                    "packagePath": [],
+                                                    "file": null
+                                                },
+                                                "name": "RefundProcessedPayload",
+                                                "displayName": null
+                                            },
+                                            "propertyAccess": null
+                                        },
+                                        {
+                                            "name": "amount",
+                                            "value": {
+                                                "shape": {
+                                                    "type": "primitive",
+                                                    "primitive": {
+                                                        "type": "double",
+                                                        "double": 25
+                                                    }
+                                                },
+                                                "jsonExample": 25
+                                            },
+                                            "originalTypeDeclaration": {
+                                                "typeId": "type_:RefundProcessedPayload",
+                                                "fernFilepath": {
+                                                    "allParts": [],
+                                                    "packagePath": [],
+                                                    "file": null
+                                                },
+                                                "name": "RefundProcessedPayload",
+                                                "displayName": null
+                                            },
+                                            "propertyAccess": null
+                                        },
+                                        {
+                                            "name": "reason",
+                                            "value": {
+                                                "shape": {
+                                                    "type": "container",
+                                                    "container": {
+                                                        "type": "optional",
+                                                        "optional": {
+                                                            "shape": {
+                                                                "type": "primitive",
+                                                                "primitive": {
+                                                                    "type": "string",
+                                                                    "string": {
+                                                                        "original": "Customer request"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "jsonExample": "Customer request"
+                                                        },
+                                                        "valueType": {
+                                                            "_type": "primitive",
+                                                            "primitive": {
+                                                                "v1": "STRING",
+                                                                "v2": {
+                                                                    "type": "string",
+                                                                    "default": null,
+                                                                    "validation": null
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "jsonExample": "Customer request"
+                                            },
+                                            "originalTypeDeclaration": {
+                                                "typeId": "type_:RefundProcessedPayload",
+                                                "fernFilepath": {
+                                                    "allParts": [],
+                                                    "packagePath": [],
+                                                    "file": null
+                                                },
+                                                "name": "RefundProcessedPayload",
+                                                "displayName": null
+                                            },
+                                            "propertyAccess": null
+                                        }
+                                    ],
+                                    "extraProperties": null
+                                }
+                            },
+                            "jsonExample": {
+                                "refundId": "ref_456",
+                                "amount": 25,
+                                "reason": "Customer request"
+                            }
+                        },
+                        "docs": "Fired when a refund is processed. Uses asymmetric ECDSA-SHA256 signature\nverification with a static public key, overriding the document-level default."
+                    }
+                ],
+                "v2Examples": null,
+                "availability": null,
+                "docs": "Fired when a refund is processed. Uses asymmetric ECDSA-SHA256 signature\nverification with a static public key, overriding the document-level default."
+            }
+        ]
+    },
     "websocketChannels": {},
     "readmeConfig": null,
     "sourceConfig": null,
@@ -919,11 +1554,8 @@
                         "typeReference": {
                             "type": "optional",
                             "value": {
-                                "type": "nullable",
-                                "value": {
-                                    "type": "primitive",
-                                    "value": "STRING"
-                                }
+                                "type": "primitive",
+                                "value": "STRING"
                             }
                         },
                         "propertyAccess": null,
@@ -966,7 +1598,7 @@
         ],
         "errors": [],
         "subpackages": [],
-        "webhooks": null,
+        "webhooks": "webhooks_",
         "navigationConfig": null,
         "hasEndpointsInTree": false,
         "docs": null

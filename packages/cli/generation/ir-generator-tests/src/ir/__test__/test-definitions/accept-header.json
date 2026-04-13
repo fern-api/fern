@@ -2,8 +2,8 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": "api",
-    "apiDisplayName": "accept-header",
+    "apiName": "accept",
+    "apiDisplayName": null,
     "apiDocs": null,
     "auth": {
         "requirement": "ALL",
@@ -12,7 +12,7 @@
                 "_type": "bearer",
                 "token": "token",
                 "tokenEnvVar": null,
-                "key": "BearerAuth",
+                "key": "bearer",
                 "docs": null
             }
         ],
@@ -22,15 +22,17 @@
     "idempotencyHeaders": [],
     "types": {},
     "errors": {
-        "error_:NotFoundError": {
+        "error_service:NotFoundError": {
             "name": {
                 "name": "NotFoundError",
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        "service"
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": "service"
                 },
-                "errorId": "error_:NotFoundError"
+                "errorId": "error_service:NotFoundError"
             },
             "discriminantValue": "NotFoundError",
             "statusCode": 404,
@@ -38,30 +40,11 @@
             "type": {
                 "_type": "unknown"
             },
-            "examples": [
-                {
-                    "name": null,
-                    "shape": {
-                        "shape": {
-                            "type": "unknown",
-                            "unknown": {
-                                "key": "value"
-                            }
-                        },
-                        "jsonExample": {
-                            "key": "value"
-                        }
-                    },
-                    "jsonExample": {
-                        "key": "value"
-                    },
-                    "docs": null
-                }
-            ],
+            "examples": [],
             "v2Examples": null,
             "displayName": null,
             "headers": [],
-            "docs": ""
+            "docs": "Admin not found"
         }
     },
     "services": {
@@ -78,7 +61,7 @@
             },
             "displayName": null,
             "basePath": {
-                "head": "",
+                "head": "/container",
                 "parts": []
             },
             "headers": [],
@@ -98,7 +81,7 @@
                     "auth": true,
                     "security": [
                         {
-                            "BearerAuth": []
+                            "bearer": []
                         }
                     ],
                     "idempotent": false,
@@ -107,11 +90,11 @@
                     "method": "DELETE",
                     "basePath": null,
                     "path": {
-                        "head": "/container/",
+                        "head": "/",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "container/",
+                        "head": "/container/",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -133,40 +116,18 @@
                             "error": {
                                 "name": "NotFoundError",
                                 "fernFilepath": {
-                                    "allParts": [],
+                                    "allParts": [
+                                        "service"
+                                    ],
                                     "packagePath": [],
-                                    "file": null
+                                    "file": "service"
                                 },
-                                "errorId": "error_:NotFoundError"
+                                "errorId": "error_service:NotFoundError"
                             },
                             "docs": null
                         }
                     ],
-                    "userSpecifiedExamples": [
-                        {
-                            "example": {
-                                "id": "5465b825",
-                                "name": null,
-                                "url": "/container/",
-                                "rootPathParameters": [],
-                                "endpointPathParameters": [],
-                                "servicePathParameters": [],
-                                "endpointHeaders": [],
-                                "serviceHeaders": [],
-                                "queryParameters": [],
-                                "request": null,
-                                "response": {
-                                    "type": "ok",
-                                    "value": {
-                                        "type": "body",
-                                        "value": null
-                                    }
-                                },
-                                "docs": null
-                            },
-                            "codeSamples": null
-                        }
-                    ],
+                    "userSpecifiedExamples": [],
                     "autogeneratedExamples": [
                         {
                             "example": {
@@ -192,7 +153,7 @@
                         },
                         {
                             "example": {
-                                "id": "e6ea1279",
+                                "id": "b432390e",
                                 "url": "/container/",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -218,11 +179,13 @@
                                     "error": {
                                         "name": "NotFoundError",
                                         "fernFilepath": {
-                                            "allParts": [],
+                                            "allParts": [
+                                                "service"
+                                            ],
                                             "packagePath": [],
-                                            "file": null
+                                            "file": "service"
                                         },
-                                        "errorId": "error_:NotFoundError"
+                                        "errorId": "error_service:NotFoundError"
                                     }
                                 },
                                 "docs": null
@@ -396,7 +359,9 @@
             },
             "service": "service_service",
             "types": [],
-            "errors": [],
+            "errors": [
+                "error_service:NotFoundError"
+            ],
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
@@ -414,9 +379,7 @@
         "websocket": null,
         "service": null,
         "types": [],
-        "errors": [
-            "error_:NotFoundError"
-        ],
+        "errors": [],
         "subpackages": [
             "subpackage_service"
         ],

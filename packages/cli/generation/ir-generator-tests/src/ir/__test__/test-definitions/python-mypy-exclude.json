@@ -3,7 +3,7 @@
     "fdrApiDefinitionId": null,
     "apiVersion": null,
     "apiName": "api",
-    "apiDisplayName": "python-mypy-exclude",
+    "apiDisplayName": null,
     "apiDocs": null,
     "auth": {
         "requirement": "ALL",

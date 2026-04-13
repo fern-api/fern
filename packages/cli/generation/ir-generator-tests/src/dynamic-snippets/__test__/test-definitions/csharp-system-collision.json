@@ -94,59 +94,6 @@
             "extends": null,
             "additionalProperties": false
         },
-        "type_:UserCountry": {
-            "type": "enum",
-            "declaration": {
-                "name": {
-                    "originalName": "UserCountry",
-                    "camelCase": {
-                        "unsafeName": "userCountry",
-                        "safeName": "userCountry"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "user_country",
-                        "safeName": "user_country"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "USER_COUNTRY",
-                        "safeName": "USER_COUNTRY"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "UserCountry",
-                        "safeName": "UserCountry"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": [],
-                    "file": null
-                }
-            },
-            "values": [
-                {
-                    "wireValue": "USA",
-                    "name": {
-                        "originalName": "USA",
-                        "camelCase": {
-                            "unsafeName": "usa",
-                            "safeName": "usa"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "usa",
-                            "safeName": "usa"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "USA",
-                            "safeName": "USA"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Usa",
-                            "safeName": "Usa"
-                        }
-                    }
-                }
-            ]
-        },
         "type_:User": {
             "type": "object",
             "declaration": {
@@ -232,11 +179,8 @@
                     "typeReference": {
                         "type": "optional",
                         "value": {
-                            "type": "nullable",
-                            "value": {
-                                "type": "primitive",
-                                "value": "STRING"
-                            }
+                            "type": "primitive",
+                            "value": "STRING"
                         }
                     },
                     "propertyAccess": null,
@@ -356,8 +300,11 @@
                         }
                     },
                     "typeReference": {
-                        "type": "named",
-                        "value": "type_:UserCountry"
+                        "type": "literal",
+                        "value": {
+                            "type": "string",
+                            "value": "USA"
+                        }
                     },
                     "propertyAccess": null,
                     "variable": null
@@ -392,47 +339,9 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "",
-                            "camelCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "snakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "pascalCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            }
-                        }
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "",
-                        "camelCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        },
-                        "snakeCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        },
-                        "pascalCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        }
-                    }
+                    "file": null
                 }
             },
             "location": {
@@ -478,52 +387,14 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "",
-                            "camelCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "snakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "pascalCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            }
-                        }
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "",
-                        "camelCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        },
-                        "snakeCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        },
-                        "pascalCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        }
-                    }
+                    "file": null
                 }
             },
             "location": {
                 "method": "POST",
-                "path": "/users/tasks"
+                "path": "/users"
             },
             "request": {
                 "type": "body",
@@ -564,47 +435,9 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "",
-                            "camelCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "snakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "pascalCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            }
-                        }
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "",
-                        "camelCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        },
-                        "snakeCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        },
-                        "pascalCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        }
-                    }
+                    "file": null
                 }
             },
             "location": {

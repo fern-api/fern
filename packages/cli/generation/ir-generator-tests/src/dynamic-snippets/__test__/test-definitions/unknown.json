@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_:MyAlias": {
+        "type_unknown:MyAlias": {
             "type": "alias",
             "declaration": {
                 "name": {
@@ -24,14 +24,152 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        {
+                            "originalName": "unknown",
+                            "camelCase": {
+                                "unsafeName": "unknown",
+                                "safeName": "unknown"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "unknown",
+                                "safeName": "unknown"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UNKNOWN",
+                                "safeName": "UNKNOWN"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Unknown",
+                                "safeName": "Unknown"
+                            }
+                        }
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": {
+                        "originalName": "unknown",
+                        "camelCase": {
+                            "unsafeName": "unknown",
+                            "safeName": "unknown"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "unknown",
+                            "safeName": "unknown"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UNKNOWN",
+                            "safeName": "UNKNOWN"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Unknown",
+                            "safeName": "Unknown"
+                        }
+                    }
                 }
             },
             "typeReference": {
                 "type": "unknown"
             }
+        },
+        "type_unknown:MyObject": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "MyObject",
+                    "camelCase": {
+                        "unsafeName": "myObject",
+                        "safeName": "myObject"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "my_object",
+                        "safeName": "my_object"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "MY_OBJECT",
+                        "safeName": "MY_OBJECT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "MyObject",
+                        "safeName": "MyObject"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "unknown",
+                            "camelCase": {
+                                "unsafeName": "unknown",
+                                "safeName": "unknown"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "unknown",
+                                "safeName": "unknown"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UNKNOWN",
+                                "safeName": "UNKNOWN"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Unknown",
+                                "safeName": "Unknown"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "unknown",
+                        "camelCase": {
+                            "unsafeName": "unknown",
+                            "safeName": "unknown"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "unknown",
+                            "safeName": "unknown"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UNKNOWN",
+                            "safeName": "UNKNOWN"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Unknown",
+                            "safeName": "Unknown"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "unknown",
+                        "name": {
+                            "originalName": "unknown",
+                            "camelCase": {
+                                "unsafeName": "unknown",
+                                "safeName": "unknown"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "unknown",
+                                "safeName": "unknown"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UNKNOWN",
+                                "safeName": "UNKNOWN"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Unknown",
+                                "safeName": "Unknown"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "unknown"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
         }
     },
     "headers": [],
@@ -121,26 +259,26 @@
             },
             "examples": null
         },
-        "endpoint_unknown.postobject": {
+        "endpoint_unknown.postObject": {
             "auth": null,
             "declaration": {
                 "name": {
-                    "originalName": "postobject",
+                    "originalName": "postObject",
                     "camelCase": {
-                        "unsafeName": "postobject",
-                        "safeName": "postobject"
+                        "unsafeName": "postObject",
+                        "safeName": "postObject"
                     },
                     "snakeCase": {
-                        "unsafeName": "postobject",
-                        "safeName": "postobject"
+                        "unsafeName": "post_object",
+                        "safeName": "post_object"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "POSTOBJECT",
-                        "safeName": "POSTOBJECT"
+                        "unsafeName": "POST_OBJECT",
+                        "safeName": "POST_OBJECT"
                     },
                     "pascalCase": {
-                        "unsafeName": "Postobject",
-                        "safeName": "Postobject"
+                        "unsafeName": "PostObject",
+                        "safeName": "PostObject"
                     }
                 },
                 "fernFilepath": {
@@ -192,111 +330,14 @@
                 "path": "/with-object"
             },
             "request": {
-                "type": "inlined",
-                "declaration": {
-                    "name": {
-                        "originalName": "MyObject",
-                        "camelCase": {
-                            "unsafeName": "myObject",
-                            "safeName": "myObject"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "my_object",
-                            "safeName": "my_object"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "MY_OBJECT",
-                            "safeName": "MY_OBJECT"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "MyObject",
-                            "safeName": "MyObject"
-                        }
-                    },
-                    "fernFilepath": {
-                        "allParts": [
-                            {
-                                "originalName": "unknown",
-                                "camelCase": {
-                                    "unsafeName": "unknown",
-                                    "safeName": "unknown"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "unknown",
-                                    "safeName": "unknown"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "UNKNOWN",
-                                    "safeName": "UNKNOWN"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Unknown",
-                                    "safeName": "Unknown"
-                                }
-                            }
-                        ],
-                        "packagePath": [],
-                        "file": {
-                            "originalName": "unknown",
-                            "camelCase": {
-                                "unsafeName": "unknown",
-                                "safeName": "unknown"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "unknown",
-                                "safeName": "unknown"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "UNKNOWN",
-                                "safeName": "UNKNOWN"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Unknown",
-                                "safeName": "Unknown"
-                            }
-                        }
-                    }
-                },
+                "type": "body",
                 "pathParameters": [],
-                "queryParameters": [],
-                "headers": [],
                 "body": {
-                    "type": "properties",
-                    "value": [
-                        {
-                            "name": {
-                                "wireValue": "unknown",
-                                "name": {
-                                    "originalName": "unknown",
-                                    "camelCase": {
-                                        "unsafeName": "unknown",
-                                        "safeName": "unknown"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "unknown",
-                                        "safeName": "unknown"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "UNKNOWN",
-                                        "safeName": "UNKNOWN"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Unknown",
-                                        "safeName": "Unknown"
-                                    }
-                                }
-                            },
-                            "typeReference": {
-                                "type": "unknown"
-                            },
-                            "propertyAccess": null,
-                            "variable": null
-                        }
-                    ]
-                },
-                "metadata": {
-                    "includePathParameters": false,
-                    "onlyPathParameters": false
+                    "type": "typeReference",
+                    "value": {
+                        "type": "named",
+                        "value": "type_unknown:MyObject"
+                    }
                 }
             },
             "response": {

@@ -1,8 +1,8 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_:LiteralString": {
-            "type": "enum",
+        "type_literals:LiteralString": {
+            "type": "alias",
             "declaration": {
                 "name": {
                     "originalName": "LiteralString",
@@ -24,37 +24,58 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        {
+                            "originalName": "literals",
+                            "camelCase": {
+                                "unsafeName": "literals",
+                                "safeName": "literals"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "literals",
+                                "safeName": "literals"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "LITERALS",
+                                "safeName": "LITERALS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Literals",
+                                "safeName": "Literals"
+                            }
+                        }
+                    ],
                     "packagePath": [],
-                    "file": null
-                }
-            },
-            "values": [
-                {
-                    "wireValue": "literally",
-                    "name": {
-                        "originalName": "literally",
+                    "file": {
+                        "originalName": "literals",
                         "camelCase": {
-                            "unsafeName": "literally",
-                            "safeName": "literally"
+                            "unsafeName": "literals",
+                            "safeName": "literals"
                         },
                         "snakeCase": {
-                            "unsafeName": "literally",
-                            "safeName": "literally"
+                            "unsafeName": "literals",
+                            "safeName": "literals"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "LITERALLY",
-                            "safeName": "LITERALLY"
+                            "unsafeName": "LITERALS",
+                            "safeName": "LITERALS"
                         },
                         "pascalCase": {
-                            "unsafeName": "Literally",
-                            "safeName": "Literally"
+                            "unsafeName": "Literals",
+                            "safeName": "Literals"
                         }
                     }
                 }
-            ]
+            },
+            "typeReference": {
+                "type": "literal",
+                "value": {
+                    "type": "string",
+                    "value": "literally"
+                }
+            }
         },
-        "type_:UnionOverLiteral": {
+        "type_literals:UnionOverLiteral": {
             "type": "undiscriminatedUnion",
             "declaration": {
                 "name": {
@@ -77,9 +98,47 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        {
+                            "originalName": "literals",
+                            "camelCase": {
+                                "unsafeName": "literals",
+                                "safeName": "literals"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "literals",
+                                "safeName": "literals"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "LITERALS",
+                                "safeName": "LITERALS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Literals",
+                                "safeName": "Literals"
+                            }
+                        }
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": {
+                        "originalName": "literals",
+                        "camelCase": {
+                            "unsafeName": "literals",
+                            "safeName": "literals"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "literals",
+                            "safeName": "literals"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "LITERALS",
+                            "safeName": "LITERALS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Literals",
+                            "safeName": "Literals"
+                        }
+                    }
                 }
             },
             "types": [
@@ -89,7 +148,7 @@
                 },
                 {
                     "type": "named",
-                    "value": "type_:LiteralString"
+                    "value": "type_literals:LiteralString"
                 }
             ]
         }

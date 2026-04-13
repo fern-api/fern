@@ -83,26 +83,26 @@
             },
             "examples": null
         },
-        "endpoint_service.downloadfile": {
+        "endpoint_service.downloadFile": {
             "auth": null,
             "declaration": {
                 "name": {
-                    "originalName": "downloadfile",
+                    "originalName": "downloadFile",
                     "camelCase": {
-                        "unsafeName": "downloadfile",
-                        "safeName": "downloadfile"
+                        "unsafeName": "downloadFile",
+                        "safeName": "downloadFile"
                     },
                     "snakeCase": {
-                        "unsafeName": "downloadfile",
-                        "safeName": "downloadfile"
+                        "unsafeName": "download_file",
+                        "safeName": "download_file"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "DOWNLOADFILE",
-                        "safeName": "DOWNLOADFILE"
+                        "unsafeName": "DOWNLOAD_FILE",
+                        "safeName": "DOWNLOAD_FILE"
                     },
                     "pascalCase": {
-                        "unsafeName": "Downloadfile",
-                        "safeName": "Downloadfile"
+                        "unsafeName": "DownloadFile",
+                        "safeName": "DownloadFile"
                     }
                 },
                 "fernFilepath": {

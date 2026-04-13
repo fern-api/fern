@@ -2,8 +2,8 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": "api",
-    "apiDisplayName": "java-default-timeout",
+    "apiName": "java-default-timeout",
+    "apiDisplayName": null,
     "apiDocs": null,
     "auth": {
         "requirement": "ALL",
@@ -94,16 +94,14 @@
             "availability": null,
             "name": {
                 "fernFilepath": {
-                    "allParts": [
-                        ""
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": ""
+                    "file": null
                 }
             },
             "displayName": null,
             "basePath": {
-                "head": "",
+                "head": "/",
                 "parts": []
             },
             "headers": [],
@@ -132,7 +130,7 @@
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "user",
+                        "head": "/user",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -160,117 +158,17 @@
                                     "default": null,
                                     "inline": null
                                 },
-                                "docs": "",
+                                "docs": null,
                                 "v2Examples": null
                             }
                         },
-                        "status-code": 200,
+                        "status-code": null,
                         "isWildcardStatusCode": null,
-                        "docs": ""
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [],
-                    "userSpecifiedExamples": [
-                        {
-                            "example": {
-                                "id": "3ae687ec",
-                                "name": null,
-                                "url": "/user",
-                                "rootPathParameters": [],
-                                "endpointPathParameters": [],
-                                "servicePathParameters": [],
-                                "endpointHeaders": [],
-                                "serviceHeaders": [],
-                                "queryParameters": [],
-                                "request": null,
-                                "response": {
-                                    "type": "ok",
-                                    "value": {
-                                        "type": "body",
-                                        "value": {
-                                            "shape": {
-                                                "type": "named",
-                                                "typeName": {
-                                                    "typeId": "type_:User",
-                                                    "fernFilepath": {
-                                                        "allParts": [],
-                                                        "packagePath": [],
-                                                        "file": null
-                                                    },
-                                                    "name": "User",
-                                                    "displayName": null
-                                                },
-                                                "shape": {
-                                                    "type": "object",
-                                                    "properties": [
-                                                        {
-                                                            "name": "id",
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "primitive",
-                                                                    "primitive": {
-                                                                        "type": "string",
-                                                                        "string": {
-                                                                            "original": "id"
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "jsonExample": "id"
-                                                            },
-                                                            "originalTypeDeclaration": {
-                                                                "typeId": "type_:User",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "name": "User",
-                                                                "displayName": null
-                                                            },
-                                                            "propertyAccess": null
-                                                        },
-                                                        {
-                                                            "name": "name",
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "primitive",
-                                                                    "primitive": {
-                                                                        "type": "string",
-                                                                        "string": {
-                                                                            "original": "name"
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "jsonExample": "name"
-                                                            },
-                                                            "originalTypeDeclaration": {
-                                                                "typeId": "type_:User",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "name": "User",
-                                                                "displayName": null
-                                                            },
-                                                            "propertyAccess": null
-                                                        }
-                                                    ],
-                                                    "extraProperties": null
-                                                }
-                                            },
-                                            "jsonExample": {
-                                                "id": "id",
-                                                "name": "name"
-                                            }
-                                        }
-                                    }
-                                },
-                                "docs": null
-                            },
-                            "codeSamples": null
-                        }
-                    ],
+                    "userSpecifiedExamples": [],
                     "autogeneratedExamples": [
                         {
                             "example": {
@@ -531,47 +429,9 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [
-                            {
-                                "originalName": "",
-                                "camelCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                }
-                            }
-                        ],
+                        "allParts": [],
                         "packagePath": [],
-                        "file": {
-                            "originalName": "",
-                            "camelCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "snakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "pascalCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            }
-                        }
+                        "file": null
                     }
                 },
                 "location": {
@@ -602,28 +462,7 @@
         "keywords": null,
         "smartCasing": true
     },
-    "subpackages": {
-        "subpackage_": {
-            "name": "",
-            "displayName": null,
-            "fernFilepath": {
-                "allParts": [
-                    ""
-                ],
-                "packagePath": [],
-                "file": ""
-            },
-            "service": "service_",
-            "types": [],
-            "errors": [],
-            "subpackages": [],
-            "navigationConfig": null,
-            "webhooks": null,
-            "websocket": null,
-            "hasEndpointsInTree": true,
-            "docs": null
-        }
-    },
+    "subpackages": {},
     "rootPackage": {
         "fernFilepath": {
             "allParts": [],
@@ -631,14 +470,12 @@
             "file": null
         },
         "websocket": null,
-        "service": null,
+        "service": "service_",
         "types": [
             "type_:User"
         ],
         "errors": [],
-        "subpackages": [
-            "subpackage_"
-        ],
+        "subpackages": [],
         "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": true,

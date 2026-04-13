@@ -1,189 +1,7 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_auth:AuthGetTokenRequestAudience": {
-            "type": "enum",
-            "declaration": {
-                "name": {
-                    "originalName": "AuthGetTokenRequestAudience",
-                    "camelCase": {
-                        "unsafeName": "authGetTokenRequestAudience",
-                        "safeName": "authGetTokenRequestAudience"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "auth_get_token_request_audience",
-                        "safeName": "auth_get_token_request_audience"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "AUTH_GET_TOKEN_REQUEST_AUDIENCE",
-                        "safeName": "AUTH_GET_TOKEN_REQUEST_AUDIENCE"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "AuthGetTokenRequestAudience",
-                        "safeName": "AuthGetTokenRequestAudience"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "auth",
-                            "camelCase": {
-                                "unsafeName": "auth",
-                                "safeName": "auth"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "auth",
-                                "safeName": "auth"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "AUTH",
-                                "safeName": "AUTH"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Auth",
-                                "safeName": "Auth"
-                            }
-                        }
-                    ],
-                    "packagePath": [],
-                    "file": {
-                        "originalName": "auth",
-                        "camelCase": {
-                            "unsafeName": "auth",
-                            "safeName": "auth"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "auth",
-                            "safeName": "auth"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "AUTH",
-                            "safeName": "AUTH"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Auth",
-                            "safeName": "Auth"
-                        }
-                    }
-                }
-            },
-            "values": [
-                {
-                    "wireValue": "https://api.example.com",
-                    "name": {
-                        "originalName": "HttpsApiExampleCom",
-                        "camelCase": {
-                            "unsafeName": "httpsApiExampleCom",
-                            "safeName": "httpsApiExampleCom"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "https_api_example_com",
-                            "safeName": "https_api_example_com"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "HTTPS_API_EXAMPLE_COM",
-                            "safeName": "HTTPS_API_EXAMPLE_COM"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "HttpsApiExampleCom",
-                            "safeName": "HttpsApiExampleCom"
-                        }
-                    }
-                }
-            ]
-        },
-        "type_auth:AuthGetTokenRequestGrantType": {
-            "type": "enum",
-            "declaration": {
-                "name": {
-                    "originalName": "AuthGetTokenRequestGrantType",
-                    "camelCase": {
-                        "unsafeName": "authGetTokenRequestGrantType",
-                        "safeName": "authGetTokenRequestGrantType"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "auth_get_token_request_grant_type",
-                        "safeName": "auth_get_token_request_grant_type"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "AUTH_GET_TOKEN_REQUEST_GRANT_TYPE",
-                        "safeName": "AUTH_GET_TOKEN_REQUEST_GRANT_TYPE"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "AuthGetTokenRequestGrantType",
-                        "safeName": "AuthGetTokenRequestGrantType"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "auth",
-                            "camelCase": {
-                                "unsafeName": "auth",
-                                "safeName": "auth"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "auth",
-                                "safeName": "auth"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "AUTH",
-                                "safeName": "AUTH"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Auth",
-                                "safeName": "Auth"
-                            }
-                        }
-                    ],
-                    "packagePath": [],
-                    "file": {
-                        "originalName": "auth",
-                        "camelCase": {
-                            "unsafeName": "auth",
-                            "safeName": "auth"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "auth",
-                            "safeName": "auth"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "AUTH",
-                            "safeName": "AUTH"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Auth",
-                            "safeName": "Auth"
-                        }
-                    }
-                }
-            },
-            "values": [
-                {
-                    "wireValue": "client_credentials",
-                    "name": {
-                        "originalName": "client_credentials",
-                        "camelCase": {
-                            "unsafeName": "clientCredentials",
-                            "safeName": "clientCredentials"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "client_credentials",
-                            "safeName": "client_credentials"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "CLIENT_CREDENTIALS",
-                            "safeName": "CLIENT_CREDENTIALS"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "ClientCredentials",
-                            "safeName": "ClientCredentials"
-                        }
-                    }
-                }
-            ]
-        },
-        "type_:TokenResponse": {
+        "type_auth:TokenResponse": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -206,9 +24,47 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        {
+                            "originalName": "auth",
+                            "camelCase": {
+                                "unsafeName": "auth",
+                                "safeName": "auth"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "auth",
+                                "safeName": "auth"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "AUTH",
+                                "safeName": "AUTH"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Auth",
+                                "safeName": "Auth"
+                            }
+                        }
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": {
+                        "originalName": "auth",
+                        "camelCase": {
+                            "unsafeName": "auth",
+                            "safeName": "auth"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "auth",
+                            "safeName": "auth"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "AUTH",
+                            "safeName": "AUTH"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Auth",
+                            "safeName": "Auth"
+                        }
+                    }
                 }
             },
             "properties": [
@@ -298,11 +154,8 @@
                     "typeReference": {
                         "type": "optional",
                         "value": {
-                            "type": "nullable",
-                            "value": {
-                                "type": "primitive",
-                                "value": "STRING"
-                            }
+                            "type": "primitive",
+                            "value": "STRING"
                         }
                     },
                     "propertyAccess": null,
@@ -312,7 +165,7 @@
             "extends": null,
             "additionalProperties": false
         },
-        "type_:User": {
+        "type_user:User": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -335,9 +188,47 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        {
+                            "originalName": "user",
+                            "camelCase": {
+                                "unsafeName": "user",
+                                "safeName": "user"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "user",
+                                "safeName": "user"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "USER",
+                                "safeName": "USER"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "User",
+                                "safeName": "User"
+                            }
+                        }
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": {
+                        "originalName": "user",
+                        "camelCase": {
+                            "unsafeName": "user",
+                            "safeName": "user"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "user",
+                            "safeName": "user"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "USER",
+                            "safeName": "USER"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "User",
+                            "safeName": "User"
+                        }
+                    }
                 }
             },
             "properties": [
@@ -406,40 +297,9 @@
             "additionalProperties": false
         }
     },
-    "headers": [
-        {
-            "name": {
-                "wireValue": "X-API-Key",
-                "name": {
-                    "originalName": "apiKey",
-                    "camelCase": {
-                        "unsafeName": "apiKey",
-                        "safeName": "apiKey"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "api_key",
-                        "safeName": "api_key"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "API_KEY",
-                        "safeName": "API_KEY"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "APIKey",
-                        "safeName": "APIKey"
-                    }
-                }
-            },
-            "typeReference": {
-                "type": "primitive",
-                "value": "STRING"
-            },
-            "propertyAccess": null,
-            "variable": null
-        }
-    ],
+    "headers": [],
     "endpoints": {
-        "endpoint_auth.gettoken": {
+        "endpoint_auth.getToken": {
             "auth": {
                 "type": "bearer",
                 "token": {
@@ -464,22 +324,22 @@
             },
             "declaration": {
                 "name": {
-                    "originalName": "gettoken",
+                    "originalName": "getToken",
                     "camelCase": {
-                        "unsafeName": "gettoken",
-                        "safeName": "gettoken"
+                        "unsafeName": "getToken",
+                        "safeName": "getToken"
                     },
                     "snakeCase": {
-                        "unsafeName": "gettoken",
-                        "safeName": "gettoken"
+                        "unsafeName": "get_token",
+                        "safeName": "get_token"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "GETTOKEN",
-                        "safeName": "GETTOKEN"
+                        "unsafeName": "GET_TOKEN",
+                        "safeName": "GET_TOKEN"
                     },
                     "pascalCase": {
-                        "unsafeName": "Gettoken",
-                        "safeName": "Gettoken"
+                        "unsafeName": "GetToken",
+                        "safeName": "GetToken"
                     }
                 },
                 "fernFilepath": {
@@ -534,22 +394,22 @@
                 "type": "inlined",
                 "declaration": {
                     "name": {
-                        "originalName": "AuthGetTokenRequest",
+                        "originalName": "GetTokenRequest",
                         "camelCase": {
-                            "unsafeName": "authGetTokenRequest",
-                            "safeName": "authGetTokenRequest"
+                            "unsafeName": "getTokenRequest",
+                            "safeName": "getTokenRequest"
                         },
                         "snakeCase": {
-                            "unsafeName": "auth_get_token_request",
-                            "safeName": "auth_get_token_request"
+                            "unsafeName": "get_token_request",
+                            "safeName": "get_token_request"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "AUTH_GET_TOKEN_REQUEST",
-                            "safeName": "AUTH_GET_TOKEN_REQUEST"
+                            "unsafeName": "GET_TOKEN_REQUEST",
+                            "safeName": "GET_TOKEN_REQUEST"
                         },
                         "pascalCase": {
-                            "unsafeName": "AuthGetTokenRequest",
-                            "safeName": "AuthGetTokenRequest"
+                            "unsafeName": "GetTokenRequest",
+                            "safeName": "GetTokenRequest"
                         }
                     },
                     "fernFilepath": {
@@ -686,8 +546,11 @@
                                 }
                             },
                             "typeReference": {
-                                "type": "named",
-                                "value": "type_auth:AuthGetTokenRequestAudience"
+                                "type": "literal",
+                                "value": {
+                                    "type": "string",
+                                    "value": "https://api.example.com"
+                                }
                             },
                             "propertyAccess": null,
                             "variable": null
@@ -716,8 +579,11 @@
                                 }
                             },
                             "typeReference": {
-                                "type": "named",
-                                "value": "type_auth:AuthGetTokenRequestGrantType"
+                                "type": "literal",
+                                "value": {
+                                    "type": "string",
+                                    "value": "client_credentials"
+                                }
                             },
                             "propertyAccess": null,
                             "variable": null
@@ -734,7 +600,7 @@
             },
             "examples": null
         },
-        "endpoint_user.getwithbearer": {
+        "endpoint_user.getWithBearer": {
             "auth": {
                 "type": "bearer",
                 "token": {
@@ -759,22 +625,22 @@
             },
             "declaration": {
                 "name": {
-                    "originalName": "getwithbearer",
+                    "originalName": "getWithBearer",
                     "camelCase": {
-                        "unsafeName": "getwithbearer",
-                        "safeName": "getwithbearer"
+                        "unsafeName": "getWithBearer",
+                        "safeName": "getWithBearer"
                     },
                     "snakeCase": {
-                        "unsafeName": "getwithbearer",
-                        "safeName": "getwithbearer"
+                        "unsafeName": "get_with_bearer",
+                        "safeName": "get_with_bearer"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "GETWITHBEARER",
-                        "safeName": "GETWITHBEARER"
+                        "unsafeName": "GET_WITH_BEARER",
+                        "safeName": "GET_WITH_BEARER"
                     },
                     "pascalCase": {
-                        "unsafeName": "Getwithbearer",
-                        "safeName": "Getwithbearer"
+                        "unsafeName": "GetWithBearer",
+                        "safeName": "GetWithBearer"
                     }
                 },
                 "fernFilepath": {
@@ -823,7 +689,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/users/bearer"
+                "path": "/users"
             },
             "request": {
                 "type": "body",
@@ -835,7 +701,7 @@
             },
             "examples": null
         },
-        "endpoint_user.getwithapikey": {
+        "endpoint_user.getWithApiKey": {
             "auth": {
                 "type": "bearer",
                 "token": {
@@ -860,22 +726,22 @@
             },
             "declaration": {
                 "name": {
-                    "originalName": "getwithapikey",
+                    "originalName": "getWithApiKey",
                     "camelCase": {
-                        "unsafeName": "getwithapikey",
-                        "safeName": "getwithapikey"
+                        "unsafeName": "getWithAPIKey",
+                        "safeName": "getWithAPIKey"
                     },
                     "snakeCase": {
-                        "unsafeName": "getwithapikey",
-                        "safeName": "getwithapikey"
+                        "unsafeName": "get_with_api_key",
+                        "safeName": "get_with_api_key"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "GETWITHAPIKEY",
-                        "safeName": "GETWITHAPIKEY"
+                        "unsafeName": "GET_WITH_API_KEY",
+                        "safeName": "GET_WITH_API_KEY"
                     },
                     "pascalCase": {
-                        "unsafeName": "Getwithapikey",
-                        "safeName": "Getwithapikey"
+                        "unsafeName": "GetWithAPIKey",
+                        "safeName": "GetWithAPIKey"
                     }
                 },
                 "fernFilepath": {
@@ -924,7 +790,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/users/api-key"
+                "path": "/users"
             },
             "request": {
                 "type": "body",
@@ -936,7 +802,7 @@
             },
             "examples": null
         },
-        "endpoint_user.getwithoauth": {
+        "endpoint_user.getWithOAuth": {
             "auth": {
                 "type": "bearer",
                 "token": {
@@ -961,22 +827,22 @@
             },
             "declaration": {
                 "name": {
-                    "originalName": "getwithoauth",
+                    "originalName": "getWithOAuth",
                     "camelCase": {
-                        "unsafeName": "getwithoauth",
-                        "safeName": "getwithoauth"
+                        "unsafeName": "getWithOAuth",
+                        "safeName": "getWithOAuth"
                     },
                     "snakeCase": {
-                        "unsafeName": "getwithoauth",
-                        "safeName": "getwithoauth"
+                        "unsafeName": "get_with_o_auth",
+                        "safeName": "get_with_o_auth"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "GETWITHOAUTH",
-                        "safeName": "GETWITHOAUTH"
+                        "unsafeName": "GET_WITH_O_AUTH",
+                        "safeName": "GET_WITH_O_AUTH"
                     },
                     "pascalCase": {
-                        "unsafeName": "Getwithoauth",
-                        "safeName": "Getwithoauth"
+                        "unsafeName": "GetWithOAuth",
+                        "safeName": "GetWithOAuth"
                     }
                 },
                 "fernFilepath": {
@@ -1025,7 +891,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/users/oauth"
+                "path": "/users"
             },
             "request": {
                 "type": "body",
@@ -1037,7 +903,7 @@
             },
             "examples": null
         },
-        "endpoint_user.getwithbasic": {
+        "endpoint_user.getWithBasic": {
             "auth": {
                 "type": "bearer",
                 "token": {
@@ -1062,22 +928,22 @@
             },
             "declaration": {
                 "name": {
-                    "originalName": "getwithbasic",
+                    "originalName": "getWithBasic",
                     "camelCase": {
-                        "unsafeName": "getwithbasic",
-                        "safeName": "getwithbasic"
+                        "unsafeName": "getWithBasic",
+                        "safeName": "getWithBasic"
                     },
                     "snakeCase": {
-                        "unsafeName": "getwithbasic",
-                        "safeName": "getwithbasic"
+                        "unsafeName": "get_with_basic",
+                        "safeName": "get_with_basic"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "GETWITHBASIC",
-                        "safeName": "GETWITHBASIC"
+                        "unsafeName": "GET_WITH_BASIC",
+                        "safeName": "GET_WITH_BASIC"
                     },
                     "pascalCase": {
-                        "unsafeName": "Getwithbasic",
-                        "safeName": "Getwithbasic"
+                        "unsafeName": "GetWithBasic",
+                        "safeName": "GetWithBasic"
                     }
                 },
                 "fernFilepath": {
@@ -1126,7 +992,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/users/basic"
+                "path": "/users"
             },
             "request": {
                 "type": "body",
@@ -1138,7 +1004,7 @@
             },
             "examples": null
         },
-        "endpoint_user.getwithinferredauth": {
+        "endpoint_user.getWithInferredAuth": {
             "auth": {
                 "type": "bearer",
                 "token": {
@@ -1163,22 +1029,22 @@
             },
             "declaration": {
                 "name": {
-                    "originalName": "getwithinferredauth",
+                    "originalName": "getWithInferredAuth",
                     "camelCase": {
-                        "unsafeName": "getwithinferredauth",
-                        "safeName": "getwithinferredauth"
+                        "unsafeName": "getWithInferredAuth",
+                        "safeName": "getWithInferredAuth"
                     },
                     "snakeCase": {
-                        "unsafeName": "getwithinferredauth",
-                        "safeName": "getwithinferredauth"
+                        "unsafeName": "get_with_inferred_auth",
+                        "safeName": "get_with_inferred_auth"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "GETWITHINFERREDAUTH",
-                        "safeName": "GETWITHINFERREDAUTH"
+                        "unsafeName": "GET_WITH_INFERRED_AUTH",
+                        "safeName": "GET_WITH_INFERRED_AUTH"
                     },
                     "pascalCase": {
-                        "unsafeName": "Getwithinferredauth",
-                        "safeName": "Getwithinferredauth"
+                        "unsafeName": "GetWithInferredAuth",
+                        "safeName": "GetWithInferredAuth"
                     }
                 },
                 "fernFilepath": {
@@ -1227,7 +1093,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/users/inferred"
+                "path": "/users"
             },
             "request": {
                 "type": "body",
@@ -1239,7 +1105,7 @@
             },
             "examples": null
         },
-        "endpoint_user.getwithanyauth": {
+        "endpoint_user.getWithAnyAuth": {
             "auth": {
                 "type": "bearer",
                 "token": {
@@ -1264,22 +1130,22 @@
             },
             "declaration": {
                 "name": {
-                    "originalName": "getwithanyauth",
+                    "originalName": "getWithAnyAuth",
                     "camelCase": {
-                        "unsafeName": "getwithanyauth",
-                        "safeName": "getwithanyauth"
+                        "unsafeName": "getWithAnyAuth",
+                        "safeName": "getWithAnyAuth"
                     },
                     "snakeCase": {
-                        "unsafeName": "getwithanyauth",
-                        "safeName": "getwithanyauth"
+                        "unsafeName": "get_with_any_auth",
+                        "safeName": "get_with_any_auth"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "GETWITHANYAUTH",
-                        "safeName": "GETWITHANYAUTH"
+                        "unsafeName": "GET_WITH_ANY_AUTH",
+                        "safeName": "GET_WITH_ANY_AUTH"
                     },
                     "pascalCase": {
-                        "unsafeName": "Getwithanyauth",
-                        "safeName": "Getwithanyauth"
+                        "unsafeName": "GetWithAnyAuth",
+                        "safeName": "GetWithAnyAuth"
                     }
                 },
                 "fernFilepath": {
@@ -1328,7 +1194,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/users/any"
+                "path": "/users"
             },
             "request": {
                 "type": "body",
@@ -1340,7 +1206,7 @@
             },
             "examples": null
         },
-        "endpoint_user.getwithallauth": {
+        "endpoint_user.getWithAllAuth": {
             "auth": {
                 "type": "bearer",
                 "token": {
@@ -1365,22 +1231,22 @@
             },
             "declaration": {
                 "name": {
-                    "originalName": "getwithallauth",
+                    "originalName": "getWithAllAuth",
                     "camelCase": {
-                        "unsafeName": "getwithallauth",
-                        "safeName": "getwithallauth"
+                        "unsafeName": "getWithAllAuth",
+                        "safeName": "getWithAllAuth"
                     },
                     "snakeCase": {
-                        "unsafeName": "getwithallauth",
-                        "safeName": "getwithallauth"
+                        "unsafeName": "get_with_all_auth",
+                        "safeName": "get_with_all_auth"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "GETWITHALLAUTH",
-                        "safeName": "GETWITHALLAUTH"
+                        "unsafeName": "GET_WITH_ALL_AUTH",
+                        "safeName": "GET_WITH_ALL_AUTH"
                     },
                     "pascalCase": {
-                        "unsafeName": "Getwithallauth",
-                        "safeName": "Getwithallauth"
+                        "unsafeName": "GetWithAllAuth",
+                        "safeName": "GetWithAllAuth"
                     }
                 },
                 "fernFilepath": {
@@ -1429,7 +1295,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/users/all"
+                "path": "/users"
             },
             "request": {
                 "type": "body",

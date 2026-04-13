@@ -2,8 +2,8 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": "api",
-    "apiDisplayName": "java-streaming-accept-header",
+    "apiName": "java-streaming-accept-header",
+    "apiDisplayName": null,
     "apiDocs": null,
     "auth": {
         "requirement": "ALL",
@@ -13,17 +13,19 @@
     "headers": [],
     "idempotencyHeaders": [],
     "types": {
-        "type_:ErrorBody": {
+        "type_commons:ErrorBody": {
             "inline": null,
             "name": {
                 "name": "ErrorBody",
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        "commons"
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": "commons"
                 },
                 "displayName": null,
-                "typeId": "type_:ErrorBody"
+                "typeId": "type_commons:ErrorBody"
             },
             "shape": {
                 "_type": "object",
@@ -66,17 +68,19 @@
             "availability": null,
             "docs": null
         },
-        "type_:StreamResponse": {
+        "type_dummy:StreamResponse": {
             "inline": null,
             "name": {
                 "name": "StreamResponse",
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        "dummy"
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": "dummy"
                 },
                 "displayName": null,
-                "typeId": "type_:StreamResponse"
+                "typeId": "type_dummy:StreamResponse"
             },
             "shape": {
                 "_type": "object",
@@ -110,19 +114,13 @@
                             "container": {
                                 "_type": "optional",
                                 "optional": {
-                                    "_type": "container",
-                                    "container": {
-                                        "_type": "nullable",
-                                        "nullable": {
-                                            "_type": "primitive",
-                                            "primitive": {
-                                                "v1": "STRING",
-                                                "v2": {
-                                                    "type": "string",
-                                                    "default": null,
-                                                    "validation": null
-                                                }
-                                            }
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
                                         }
                                     }
                                 }
@@ -154,15 +152,17 @@
         }
     },
     "errors": {
-        "error_:BadRequestError": {
+        "error_commons:BadRequestError": {
             "name": {
                 "name": "BadRequestError",
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        "commons"
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": "commons"
                 },
-                "errorId": "error_:BadRequestError"
+                "errorId": "error_commons:BadRequestError"
             },
             "discriminantValue": "BadRequestError",
             "statusCode": 400,
@@ -171,78 +171,22 @@
                 "_type": "named",
                 "name": "ErrorBody",
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        "commons"
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": "commons"
                 },
                 "displayName": null,
-                "typeId": "type_:ErrorBody",
+                "typeId": "type_commons:ErrorBody",
                 "default": null,
                 "inline": null
             },
-            "examples": [
-                {
-                    "name": null,
-                    "shape": {
-                        "shape": {
-                            "type": "named",
-                            "typeName": {
-                                "typeId": "type_:ErrorBody",
-                                "fernFilepath": {
-                                    "allParts": [],
-                                    "packagePath": [],
-                                    "file": null
-                                },
-                                "name": "ErrorBody",
-                                "displayName": null
-                            },
-                            "shape": {
-                                "type": "object",
-                                "properties": [
-                                    {
-                                        "name": "message",
-                                        "value": {
-                                            "shape": {
-                                                "type": "primitive",
-                                                "primitive": {
-                                                    "type": "string",
-                                                    "string": {
-                                                        "original": "message"
-                                                    }
-                                                }
-                                            },
-                                            "jsonExample": "message"
-                                        },
-                                        "originalTypeDeclaration": {
-                                            "typeId": "type_:ErrorBody",
-                                            "fernFilepath": {
-                                                "allParts": [],
-                                                "packagePath": [],
-                                                "file": null
-                                            },
-                                            "name": "ErrorBody",
-                                            "displayName": null
-                                        },
-                                        "propertyAccess": null
-                                    }
-                                ],
-                                "extraProperties": null
-                            }
-                        },
-                        "jsonExample": {
-                            "message": "message"
-                        }
-                    },
-                    "jsonExample": {
-                        "message": "message"
-                    },
-                    "docs": null
-                }
-            ],
+            "examples": [],
             "v2Examples": null,
             "displayName": null,
             "headers": [],
-            "docs": ""
+            "docs": null
         }
     },
     "services": {
@@ -273,8 +217,8 @@
             },
             "endpoints": [
                 {
-                    "id": "endpoint_dummy.generateStream",
-                    "name": "generateStream",
+                    "id": "endpoint_dummy.generate-stream",
+                    "name": "generate-stream",
                     "displayName": null,
                     "auth": false,
                     "security": null,
@@ -297,7 +241,7 @@
                     "headers": [],
                     "requestBody": {
                         "type": "inlinedRequestBody",
-                        "name": "DummyGenerateStreamRequest",
+                        "name": "GenerateStreamRequest",
                         "extends": [],
                         "properties": [
                             {
@@ -326,13 +270,13 @@
                         "extendedProperties": [],
                         "docs": null,
                         "v2Examples": null,
-                        "contentType": "application/json"
+                        "contentType": null
                     },
                     "v2RequestBodies": null,
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",
-                            "wrapperName": "DummyGenerateStreamRequest",
+                            "wrapperName": "GenerateStreamRequest",
                             "bodyKey": "body",
                             "includePathParameters": false,
                             "onlyPathParameters": false
@@ -342,13 +286,32 @@
                     },
                     "response": {
                         "body": {
-                            "type": "fileDownload",
-                            "docs": "",
-                            "v2Examples": null
+                            "type": "streaming",
+                            "value": {
+                                "type": "json",
+                                "payload": {
+                                    "_type": "named",
+                                    "name": "StreamResponse",
+                                    "fernFilepath": {
+                                        "allParts": [
+                                            "dummy"
+                                        ],
+                                        "packagePath": [],
+                                        "file": "dummy"
+                                    },
+                                    "displayName": null,
+                                    "typeId": "type_dummy:StreamResponse",
+                                    "default": null,
+                                    "inline": null
+                                },
+                                "terminator": null,
+                                "docs": null,
+                                "v2Examples": null
+                            }
                         },
-                        "status-code": 200,
+                        "status-code": null,
                         "isWildcardStatusCode": null,
-                        "docs": ""
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [
@@ -356,11 +319,27 @@
                             "error": {
                                 "name": "BadRequestError",
                                 "fernFilepath": {
-                                    "allParts": [],
+                                    "allParts": [
+                                        "commons"
+                                    ],
                                     "packagePath": [],
-                                    "file": null
+                                    "file": "commons"
                                 },
-                                "errorId": "error_:BadRequestError"
+                                "errorId": "error_commons:BadRequestError"
+                            },
+                            "docs": null
+                        },
+                        {
+                            "error": {
+                                "name": "BadRequestError",
+                                "fernFilepath": {
+                                    "allParts": [
+                                        "commons"
+                                    ],
+                                    "packagePath": [],
+                                    "file": "commons"
+                                },
+                                "errorId": "error_commons:BadRequestError"
                             },
                             "docs": null
                         }
@@ -369,7 +348,155 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "1e94bf07",
+                                "id": "a973541d",
+                                "url": "/generate-stream",
+                                "name": null,
+                                "endpointHeaders": [],
+                                "endpointPathParameters": [],
+                                "queryParameters": [],
+                                "servicePathParameters": [],
+                                "serviceHeaders": [],
+                                "rootPathParameters": [],
+                                "request": {
+                                    "type": "inlinedRequestBody",
+                                    "properties": [
+                                        {
+                                            "name": "num_events",
+                                            "originalTypeDeclaration": null,
+                                            "value": {
+                                                "shape": {
+                                                    "type": "primitive",
+                                                    "primitive": {
+                                                        "type": "integer",
+                                                        "integer": 1
+                                                    }
+                                                },
+                                                "jsonExample": 1
+                                            }
+                                        }
+                                    ],
+                                    "extraProperties": null,
+                                    "jsonExample": {
+                                        "num_events": 1
+                                    }
+                                },
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "stream",
+                                        "value": [
+                                            {
+                                                "shape": {
+                                                    "type": "named",
+                                                    "shape": {
+                                                        "type": "object",
+                                                        "properties": [
+                                                            {
+                                                                "name": "id",
+                                                                "originalTypeDeclaration": {
+                                                                    "name": "StreamResponse",
+                                                                    "fernFilepath": {
+                                                                        "allParts": [
+                                                                            "dummy"
+                                                                        ],
+                                                                        "packagePath": [],
+                                                                        "file": "dummy"
+                                                                    },
+                                                                    "displayName": null,
+                                                                    "typeId": "type_dummy:StreamResponse"
+                                                                },
+                                                                "value": {
+                                                                    "shape": {
+                                                                        "type": "primitive",
+                                                                        "primitive": {
+                                                                            "type": "string",
+                                                                            "string": {
+                                                                                "original": "id"
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    "jsonExample": "id"
+                                                                },
+                                                                "propertyAccess": null
+                                                            },
+                                                            {
+                                                                "name": "name",
+                                                                "originalTypeDeclaration": {
+                                                                    "name": "StreamResponse",
+                                                                    "fernFilepath": {
+                                                                        "allParts": [
+                                                                            "dummy"
+                                                                        ],
+                                                                        "packagePath": [],
+                                                                        "file": "dummy"
+                                                                    },
+                                                                    "displayName": null,
+                                                                    "typeId": "type_dummy:StreamResponse"
+                                                                },
+                                                                "value": {
+                                                                    "shape": {
+                                                                        "type": "container",
+                                                                        "container": {
+                                                                            "type": "optional",
+                                                                            "optional": {
+                                                                                "shape": {
+                                                                                    "type": "primitive",
+                                                                                    "primitive": {
+                                                                                        "type": "string",
+                                                                                        "string": {
+                                                                                            "original": "name"
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                "jsonExample": "name"
+                                                                            },
+                                                                            "valueType": {
+                                                                                "_type": "primitive",
+                                                                                "primitive": {
+                                                                                    "v1": "STRING",
+                                                                                    "v2": {
+                                                                                        "type": "string",
+                                                                                        "default": null,
+                                                                                        "validation": null
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    "jsonExample": "name"
+                                                                },
+                                                                "propertyAccess": null
+                                                            }
+                                                        ],
+                                                        "extraProperties": null
+                                                    },
+                                                    "typeName": {
+                                                        "name": "StreamResponse",
+                                                        "fernFilepath": {
+                                                            "allParts": [
+                                                                "dummy"
+                                                            ],
+                                                            "packagePath": [],
+                                                            "file": "dummy"
+                                                        },
+                                                        "displayName": null,
+                                                        "typeId": "type_dummy:StreamResponse"
+                                                    }
+                                                },
+                                                "jsonExample": {
+                                                    "id": "id",
+                                                    "name": "name"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                "docs": null
+                            }
+                        },
+                        {
+                            "example": {
+                                "id": "77784e47",
                                 "url": "/generate-stream",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -414,12 +541,14 @@
                                                         "originalTypeDeclaration": {
                                                             "name": "ErrorBody",
                                                             "fernFilepath": {
-                                                                "allParts": [],
+                                                                "allParts": [
+                                                                    "commons"
+                                                                ],
                                                                 "packagePath": [],
-                                                                "file": null
+                                                                "file": "commons"
                                                             },
                                                             "displayName": null,
-                                                            "typeId": "type_:ErrorBody"
+                                                            "typeId": "type_commons:ErrorBody"
                                                         },
                                                         "value": {
                                                             "shape": {
@@ -441,12 +570,14 @@
                                             "typeName": {
                                                 "name": "ErrorBody",
                                                 "fernFilepath": {
-                                                    "allParts": [],
+                                                    "allParts": [
+                                                        "commons"
+                                                    ],
                                                     "packagePath": [],
-                                                    "file": null
+                                                    "file": "commons"
                                                 },
                                                 "displayName": null,
-                                                "typeId": "type_:ErrorBody"
+                                                "typeId": "type_commons:ErrorBody"
                                             }
                                         },
                                         "jsonExample": {
@@ -456,11 +587,118 @@
                                     "error": {
                                         "name": "BadRequestError",
                                         "fernFilepath": {
-                                            "allParts": [],
+                                            "allParts": [
+                                                "commons"
+                                            ],
                                             "packagePath": [],
-                                            "file": null
+                                            "file": "commons"
                                         },
-                                        "errorId": "error_:BadRequestError"
+                                        "errorId": "error_commons:BadRequestError"
+                                    }
+                                },
+                                "docs": null
+                            }
+                        },
+                        {
+                            "example": {
+                                "id": "77784e47",
+                                "url": "/generate-stream",
+                                "name": null,
+                                "endpointHeaders": [],
+                                "endpointPathParameters": [],
+                                "queryParameters": [],
+                                "servicePathParameters": [],
+                                "serviceHeaders": [],
+                                "rootPathParameters": [],
+                                "request": {
+                                    "type": "inlinedRequestBody",
+                                    "properties": [
+                                        {
+                                            "name": "num_events",
+                                            "originalTypeDeclaration": null,
+                                            "value": {
+                                                "shape": {
+                                                    "type": "primitive",
+                                                    "primitive": {
+                                                        "type": "integer",
+                                                        "integer": 1
+                                                    }
+                                                },
+                                                "jsonExample": 1
+                                            }
+                                        }
+                                    ],
+                                    "extraProperties": null,
+                                    "jsonExample": {
+                                        "num_events": 1
+                                    }
+                                },
+                                "response": {
+                                    "type": "error",
+                                    "body": {
+                                        "shape": {
+                                            "type": "named",
+                                            "shape": {
+                                                "type": "object",
+                                                "properties": [
+                                                    {
+                                                        "name": "message",
+                                                        "originalTypeDeclaration": {
+                                                            "name": "ErrorBody",
+                                                            "fernFilepath": {
+                                                                "allParts": [
+                                                                    "commons"
+                                                                ],
+                                                                "packagePath": [],
+                                                                "file": "commons"
+                                                            },
+                                                            "displayName": null,
+                                                            "typeId": "type_commons:ErrorBody"
+                                                        },
+                                                        "value": {
+                                                            "shape": {
+                                                                "type": "primitive",
+                                                                "primitive": {
+                                                                    "type": "string",
+                                                                    "string": {
+                                                                        "original": "message"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "jsonExample": "message"
+                                                        },
+                                                        "propertyAccess": null
+                                                    }
+                                                ],
+                                                "extraProperties": null
+                                            },
+                                            "typeName": {
+                                                "name": "ErrorBody",
+                                                "fernFilepath": {
+                                                    "allParts": [
+                                                        "commons"
+                                                    ],
+                                                    "packagePath": [],
+                                                    "file": "commons"
+                                                },
+                                                "displayName": null,
+                                                "typeId": "type_commons:ErrorBody"
+                                            }
+                                        },
+                                        "jsonExample": {
+                                            "message": "message"
+                                        }
+                                    },
+                                    "error": {
+                                        "name": "BadRequestError",
+                                        "fernFilepath": {
+                                            "allParts": [
+                                                "commons"
+                                            ],
+                                            "packagePath": [],
+                                            "file": "commons"
+                                        },
+                                        "errorId": "error_commons:BadRequestError"
                                     }
                                 },
                                 "docs": null
@@ -503,7 +741,7 @@
                     "headers": [],
                     "requestBody": {
                         "type": "inlinedRequestBody",
-                        "name": "DummyGenerateRequest",
+                        "name": "GenerateRequest",
                         "extends": [],
                         "properties": [
                             {
@@ -532,13 +770,13 @@
                         "extendedProperties": [],
                         "docs": null,
                         "v2Examples": null,
-                        "contentType": "application/json"
+                        "contentType": null
                     },
                     "v2RequestBodies": null,
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",
-                            "wrapperName": "DummyGenerateRequest",
+                            "wrapperName": "GenerateRequest",
                             "bodyKey": "body",
                             "includePathParameters": false,
                             "onlyPathParameters": false
@@ -555,22 +793,24 @@
                                     "_type": "named",
                                     "name": "StreamResponse",
                                     "fernFilepath": {
-                                        "allParts": [],
+                                        "allParts": [
+                                            "dummy"
+                                        ],
                                         "packagePath": [],
-                                        "file": null
+                                        "file": "dummy"
                                     },
                                     "displayName": null,
-                                    "typeId": "type_:StreamResponse",
+                                    "typeId": "type_dummy:StreamResponse",
                                     "default": null,
                                     "inline": null
                                 },
-                                "docs": "",
+                                "docs": null,
                                 "v2Examples": null
                             }
                         },
-                        "status-code": 200,
+                        "status-code": null,
                         "isWildcardStatusCode": null,
-                        "docs": ""
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [
@@ -578,11 +818,27 @@
                             "error": {
                                 "name": "BadRequestError",
                                 "fernFilepath": {
-                                    "allParts": [],
+                                    "allParts": [
+                                        "commons"
+                                    ],
                                     "packagePath": [],
-                                    "file": null
+                                    "file": "commons"
                                 },
-                                "errorId": "error_:BadRequestError"
+                                "errorId": "error_commons:BadRequestError"
+                            },
+                            "docs": null
+                        },
+                        {
+                            "error": {
+                                "name": "BadRequestError",
+                                "fernFilepath": {
+                                    "allParts": [
+                                        "commons"
+                                    ],
+                                    "packagePath": [],
+                                    "file": "commons"
+                                },
+                                "errorId": "error_commons:BadRequestError"
                             },
                             "docs": null
                         }
@@ -590,8 +846,8 @@
                     "userSpecifiedExamples": [
                         {
                             "example": {
-                                "id": "a711ebc2",
-                                "name": null,
+                                "id": "Default",
+                                "name": "Default",
                                 "url": "/generate",
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [],
@@ -609,17 +865,17 @@
                                                     "type": "primitive",
                                                     "primitive": {
                                                         "type": "integer",
-                                                        "integer": 1
+                                                        "integer": 5
                                                     }
                                                 },
-                                                "jsonExample": 1
+                                                "jsonExample": 5
                                             },
                                             "originalTypeDeclaration": null
                                         }
                                     ],
                                     "extraProperties": null,
                                     "jsonExample": {
-                                        "num_events": 1
+                                        "num_events": 5
                                     }
                                 },
                                 "response": {
@@ -630,11 +886,13 @@
                                             "shape": {
                                                 "type": "named",
                                                 "typeName": {
-                                                    "typeId": "type_:StreamResponse",
+                                                    "typeId": "type_dummy:StreamResponse",
                                                     "fernFilepath": {
-                                                        "allParts": [],
+                                                        "allParts": [
+                                                            "dummy"
+                                                        ],
                                                         "packagePath": [],
-                                                        "file": null
+                                                        "file": "dummy"
                                                     },
                                                     "name": "StreamResponse",
                                                     "displayName": null
@@ -657,11 +915,13 @@
                                                                 "jsonExample": "id"
                                                             },
                                                             "originalTypeDeclaration": {
-                                                                "typeId": "type_:StreamResponse",
+                                                                "typeId": "type_dummy:StreamResponse",
                                                                 "fernFilepath": {
-                                                                    "allParts": [],
+                                                                    "allParts": [
+                                                                        "dummy"
+                                                                    ],
                                                                     "packagePath": [],
-                                                                    "file": null
+                                                                    "file": "dummy"
                                                                 },
                                                                 "name": "StreamResponse",
                                                                 "displayName": null
@@ -677,50 +937,24 @@
                                                                         "type": "optional",
                                                                         "optional": {
                                                                             "shape": {
-                                                                                "type": "container",
-                                                                                "container": {
-                                                                                    "type": "nullable",
-                                                                                    "nullable": {
-                                                                                        "shape": {
-                                                                                            "type": "primitive",
-                                                                                            "primitive": {
-                                                                                                "type": "string",
-                                                                                                "string": {
-                                                                                                    "original": "name"
-                                                                                                }
-                                                                                            }
-                                                                                        },
-                                                                                        "jsonExample": "name"
-                                                                                    },
-                                                                                    "valueType": {
-                                                                                        "_type": "primitive",
-                                                                                        "primitive": {
-                                                                                            "v1": "STRING",
-                                                                                            "v2": {
-                                                                                                "type": "string",
-                                                                                                "default": null,
-                                                                                                "validation": null
-                                                                                            }
-                                                                                        }
+                                                                                "type": "primitive",
+                                                                                "primitive": {
+                                                                                    "type": "string",
+                                                                                    "string": {
+                                                                                        "original": "name"
                                                                                     }
                                                                                 }
                                                                             },
                                                                             "jsonExample": "name"
                                                                         },
                                                                         "valueType": {
-                                                                            "_type": "container",
-                                                                            "container": {
-                                                                                "_type": "nullable",
-                                                                                "nullable": {
-                                                                                    "_type": "primitive",
-                                                                                    "primitive": {
-                                                                                        "v1": "STRING",
-                                                                                        "v2": {
-                                                                                            "type": "string",
-                                                                                            "default": null,
-                                                                                            "validation": null
-                                                                                        }
-                                                                                    }
+                                                                            "_type": "primitive",
+                                                                            "primitive": {
+                                                                                "v1": "STRING",
+                                                                                "v2": {
+                                                                                    "type": "string",
+                                                                                    "default": null,
+                                                                                    "validation": null
                                                                                 }
                                                                             }
                                                                         }
@@ -729,11 +963,13 @@
                                                                 "jsonExample": "name"
                                                             },
                                                             "originalTypeDeclaration": {
-                                                                "typeId": "type_:StreamResponse",
+                                                                "typeId": "type_dummy:StreamResponse",
                                                                 "fernFilepath": {
-                                                                    "allParts": [],
+                                                                    "allParts": [
+                                                                        "dummy"
+                                                                    ],
                                                                     "packagePath": [],
-                                                                    "file": null
+                                                                    "file": "dummy"
                                                                 },
                                                                 "name": "StreamResponse",
                                                                 "displayName": null
@@ -759,7 +995,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "e91739c6",
+                                "id": "6227a329",
                                 "url": "/generate",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -806,12 +1042,14 @@
                                                             "originalTypeDeclaration": {
                                                                 "name": "StreamResponse",
                                                                 "fernFilepath": {
-                                                                    "allParts": [],
+                                                                    "allParts": [
+                                                                        "dummy"
+                                                                    ],
                                                                     "packagePath": [],
-                                                                    "file": null
+                                                                    "file": "dummy"
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_:StreamResponse"
+                                                                "typeId": "type_dummy:StreamResponse"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -832,12 +1070,14 @@
                                                             "originalTypeDeclaration": {
                                                                 "name": "StreamResponse",
                                                                 "fernFilepath": {
-                                                                    "allParts": [],
+                                                                    "allParts": [
+                                                                        "dummy"
+                                                                    ],
                                                                     "packagePath": [],
-                                                                    "file": null
+                                                                    "file": "dummy"
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_:StreamResponse"
+                                                                "typeId": "type_dummy:StreamResponse"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -846,50 +1086,24 @@
                                                                         "type": "optional",
                                                                         "optional": {
                                                                             "shape": {
-                                                                                "type": "container",
-                                                                                "container": {
-                                                                                    "type": "nullable",
-                                                                                    "nullable": {
-                                                                                        "shape": {
-                                                                                            "type": "primitive",
-                                                                                            "primitive": {
-                                                                                                "type": "string",
-                                                                                                "string": {
-                                                                                                    "original": "name"
-                                                                                                }
-                                                                                            }
-                                                                                        },
-                                                                                        "jsonExample": "name"
-                                                                                    },
-                                                                                    "valueType": {
-                                                                                        "_type": "primitive",
-                                                                                        "primitive": {
-                                                                                            "v1": "STRING",
-                                                                                            "v2": {
-                                                                                                "type": "string",
-                                                                                                "default": null,
-                                                                                                "validation": null
-                                                                                            }
-                                                                                        }
+                                                                                "type": "primitive",
+                                                                                "primitive": {
+                                                                                    "type": "string",
+                                                                                    "string": {
+                                                                                        "original": "name"
                                                                                     }
                                                                                 }
                                                                             },
                                                                             "jsonExample": "name"
                                                                         },
                                                                         "valueType": {
-                                                                            "_type": "container",
-                                                                            "container": {
-                                                                                "_type": "nullable",
-                                                                                "nullable": {
-                                                                                    "_type": "primitive",
-                                                                                    "primitive": {
-                                                                                        "v1": "STRING",
-                                                                                        "v2": {
-                                                                                            "type": "string",
-                                                                                            "default": null,
-                                                                                            "validation": null
-                                                                                        }
-                                                                                    }
+                                                                            "_type": "primitive",
+                                                                            "primitive": {
+                                                                                "v1": "STRING",
+                                                                                "v2": {
+                                                                                    "type": "string",
+                                                                                    "default": null,
+                                                                                    "validation": null
                                                                                 }
                                                                             }
                                                                         }
@@ -905,12 +1119,14 @@
                                                 "typeName": {
                                                     "name": "StreamResponse",
                                                     "fernFilepath": {
-                                                        "allParts": [],
+                                                        "allParts": [
+                                                            "dummy"
+                                                        ],
                                                         "packagePath": [],
-                                                        "file": null
+                                                        "file": "dummy"
                                                     },
                                                     "displayName": null,
-                                                    "typeId": "type_:StreamResponse"
+                                                    "typeId": "type_dummy:StreamResponse"
                                                 }
                                             },
                                             "jsonExample": {
@@ -925,7 +1141,7 @@
                         },
                         {
                             "example": {
-                                "id": "1e94bf07",
+                                "id": "77784e47",
                                 "url": "/generate",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -970,12 +1186,14 @@
                                                         "originalTypeDeclaration": {
                                                             "name": "ErrorBody",
                                                             "fernFilepath": {
-                                                                "allParts": [],
+                                                                "allParts": [
+                                                                    "commons"
+                                                                ],
                                                                 "packagePath": [],
-                                                                "file": null
+                                                                "file": "commons"
                                                             },
                                                             "displayName": null,
-                                                            "typeId": "type_:ErrorBody"
+                                                            "typeId": "type_commons:ErrorBody"
                                                         },
                                                         "value": {
                                                             "shape": {
@@ -997,12 +1215,14 @@
                                             "typeName": {
                                                 "name": "ErrorBody",
                                                 "fernFilepath": {
-                                                    "allParts": [],
+                                                    "allParts": [
+                                                        "commons"
+                                                    ],
                                                     "packagePath": [],
-                                                    "file": null
+                                                    "file": "commons"
                                                 },
                                                 "displayName": null,
-                                                "typeId": "type_:ErrorBody"
+                                                "typeId": "type_commons:ErrorBody"
                                             }
                                         },
                                         "jsonExample": {
@@ -1012,11 +1232,118 @@
                                     "error": {
                                         "name": "BadRequestError",
                                         "fernFilepath": {
-                                            "allParts": [],
+                                            "allParts": [
+                                                "commons"
+                                            ],
                                             "packagePath": [],
-                                            "file": null
+                                            "file": "commons"
                                         },
-                                        "errorId": "error_:BadRequestError"
+                                        "errorId": "error_commons:BadRequestError"
+                                    }
+                                },
+                                "docs": null
+                            }
+                        },
+                        {
+                            "example": {
+                                "id": "77784e47",
+                                "url": "/generate",
+                                "name": null,
+                                "endpointHeaders": [],
+                                "endpointPathParameters": [],
+                                "queryParameters": [],
+                                "servicePathParameters": [],
+                                "serviceHeaders": [],
+                                "rootPathParameters": [],
+                                "request": {
+                                    "type": "inlinedRequestBody",
+                                    "properties": [
+                                        {
+                                            "name": "num_events",
+                                            "originalTypeDeclaration": null,
+                                            "value": {
+                                                "shape": {
+                                                    "type": "primitive",
+                                                    "primitive": {
+                                                        "type": "integer",
+                                                        "integer": 1
+                                                    }
+                                                },
+                                                "jsonExample": 1
+                                            }
+                                        }
+                                    ],
+                                    "extraProperties": null,
+                                    "jsonExample": {
+                                        "num_events": 1
+                                    }
+                                },
+                                "response": {
+                                    "type": "error",
+                                    "body": {
+                                        "shape": {
+                                            "type": "named",
+                                            "shape": {
+                                                "type": "object",
+                                                "properties": [
+                                                    {
+                                                        "name": "message",
+                                                        "originalTypeDeclaration": {
+                                                            "name": "ErrorBody",
+                                                            "fernFilepath": {
+                                                                "allParts": [
+                                                                    "commons"
+                                                                ],
+                                                                "packagePath": [],
+                                                                "file": "commons"
+                                                            },
+                                                            "displayName": null,
+                                                            "typeId": "type_commons:ErrorBody"
+                                                        },
+                                                        "value": {
+                                                            "shape": {
+                                                                "type": "primitive",
+                                                                "primitive": {
+                                                                    "type": "string",
+                                                                    "string": {
+                                                                        "original": "message"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "jsonExample": "message"
+                                                        },
+                                                        "propertyAccess": null
+                                                    }
+                                                ],
+                                                "extraProperties": null
+                                            },
+                                            "typeName": {
+                                                "name": "ErrorBody",
+                                                "fernFilepath": {
+                                                    "allParts": [
+                                                        "commons"
+                                                    ],
+                                                    "packagePath": [],
+                                                    "file": "commons"
+                                                },
+                                                "displayName": null,
+                                                "typeId": "type_commons:ErrorBody"
+                                            }
+                                        },
+                                        "jsonExample": {
+                                            "message": "message"
+                                        }
+                                    },
+                                    "error": {
+                                        "name": "BadRequestError",
+                                        "fernFilepath": {
+                                            "allParts": [
+                                                "commons"
+                                            ],
+                                            "packagePath": [],
+                                            "file": "commons"
+                                        },
+                                        "errorId": "error_commons:BadRequestError"
                                     }
                                 },
                                 "docs": null
@@ -1051,11 +1378,11 @@
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_dummy": [
-                "type_:StreamResponse"
+                "type_dummy:StreamResponse"
             ]
         },
         "sharedTypes": [
-            "type_:ErrorBody"
+            "type_commons:ErrorBody"
         ]
     },
     "webhookGroups": {},
@@ -1066,7 +1393,7 @@
     "dynamic": {
         "version": "1.0.0",
         "types": {
-            "type_:ErrorBody": {
+            "type_commons:ErrorBody": {
                 "type": "object",
                 "declaration": {
                     "name": {
@@ -1089,9 +1416,47 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [],
+                        "allParts": [
+                            {
+                                "originalName": "commons",
+                                "camelCase": {
+                                    "unsafeName": "commons",
+                                    "safeName": "commons"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "commons",
+                                    "safeName": "commons"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "COMMONS",
+                                    "safeName": "COMMONS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Commons",
+                                    "safeName": "Commons"
+                                }
+                            }
+                        ],
                         "packagePath": [],
-                        "file": null
+                        "file": {
+                            "originalName": "commons",
+                            "camelCase": {
+                                "unsafeName": "commons",
+                                "safeName": "commons"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "commons",
+                                "safeName": "commons"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "COMMONS",
+                                "safeName": "COMMONS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Commons",
+                                "safeName": "Commons"
+                            }
+                        }
                     }
                 },
                 "properties": [
@@ -1129,7 +1494,7 @@
                 "extends": null,
                 "additionalProperties": false
             },
-            "type_:StreamResponse": {
+            "type_dummy:StreamResponse": {
                 "type": "object",
                 "declaration": {
                     "name": {
@@ -1152,9 +1517,47 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [],
+                        "allParts": [
+                            {
+                                "originalName": "dummy",
+                                "camelCase": {
+                                    "unsafeName": "dummy",
+                                    "safeName": "dummy"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "dummy",
+                                    "safeName": "dummy"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "DUMMY",
+                                    "safeName": "DUMMY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Dummy",
+                                    "safeName": "Dummy"
+                                }
+                            }
+                        ],
                         "packagePath": [],
-                        "file": null
+                        "file": {
+                            "originalName": "dummy",
+                            "camelCase": {
+                                "unsafeName": "dummy",
+                                "safeName": "dummy"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "dummy",
+                                "safeName": "dummy"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DUMMY",
+                                "safeName": "DUMMY"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Dummy",
+                                "safeName": "Dummy"
+                            }
+                        }
                     }
                 },
                 "properties": [
@@ -1214,11 +1617,8 @@
                         "typeReference": {
                             "type": "optional",
                             "value": {
-                                "type": "nullable",
-                                "value": {
-                                    "type": "primitive",
-                                    "value": "STRING"
-                                }
+                                "type": "primitive",
+                                "value": "STRING"
                             }
                         },
                         "propertyAccess": null,
@@ -1231,11 +1631,11 @@
         },
         "headers": [],
         "endpoints": {
-            "endpoint_dummy.generateStream": {
+            "endpoint_dummy.generate-stream": {
                 "auth": null,
                 "declaration": {
                     "name": {
-                        "originalName": "generateStream",
+                        "originalName": "generate-stream",
                         "camelCase": {
                             "unsafeName": "generateStream",
                             "safeName": "generateStream"
@@ -1305,22 +1705,22 @@
                     "type": "inlined",
                     "declaration": {
                         "name": {
-                            "originalName": "DummyGenerateStreamRequest",
+                            "originalName": "GenerateStreamRequest",
                             "camelCase": {
-                                "unsafeName": "dummyGenerateStreamRequest",
-                                "safeName": "dummyGenerateStreamRequest"
+                                "unsafeName": "generateStreamRequest",
+                                "safeName": "generateStreamRequest"
                             },
                             "snakeCase": {
-                                "unsafeName": "dummy_generate_stream_request",
-                                "safeName": "dummy_generate_stream_request"
+                                "unsafeName": "generate_stream_request",
+                                "safeName": "generate_stream_request"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "DUMMY_GENERATE_STREAM_REQUEST",
-                                "safeName": "DUMMY_GENERATE_STREAM_REQUEST"
+                                "unsafeName": "GENERATE_STREAM_REQUEST",
+                                "safeName": "GENERATE_STREAM_REQUEST"
                             },
                             "pascalCase": {
-                                "unsafeName": "DummyGenerateStreamRequest",
-                                "safeName": "DummyGenerateStreamRequest"
+                                "unsafeName": "GenerateStreamRequest",
+                                "safeName": "GenerateStreamRequest"
                             }
                         },
                         "fernFilepath": {
@@ -1411,7 +1811,7 @@
                     }
                 },
                 "response": {
-                    "type": "fileDownload"
+                    "type": "streaming"
                 },
                 "examples": null
             },
@@ -1489,22 +1889,22 @@
                     "type": "inlined",
                     "declaration": {
                         "name": {
-                            "originalName": "DummyGenerateRequest",
+                            "originalName": "GenerateRequest",
                             "camelCase": {
-                                "unsafeName": "dummyGenerateRequest",
-                                "safeName": "dummyGenerateRequest"
+                                "unsafeName": "generateRequest",
+                                "safeName": "generateRequest"
                             },
                             "snakeCase": {
-                                "unsafeName": "dummy_generate_request",
-                                "safeName": "dummy_generate_request"
+                                "unsafeName": "generate_request",
+                                "safeName": "generate_request"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "DUMMY_GENERATE_REQUEST",
-                                "safeName": "DUMMY_GENERATE_REQUEST"
+                                "unsafeName": "GENERATE_REQUEST",
+                                "safeName": "GENERATE_REQUEST"
                             },
                             "pascalCase": {
-                                "unsafeName": "DummyGenerateRequest",
-                                "safeName": "DummyGenerateRequest"
+                                "unsafeName": "GenerateRequest",
+                                "safeName": "GenerateRequest"
                             }
                         },
                         "fernFilepath": {
@@ -1614,6 +2014,30 @@
         "smartCasing": true
     },
     "subpackages": {
+        "subpackage_commons": {
+            "name": "commons",
+            "displayName": null,
+            "fernFilepath": {
+                "allParts": [
+                    "commons"
+                ],
+                "packagePath": [],
+                "file": "commons"
+            },
+            "service": null,
+            "types": [
+                "type_commons:ErrorBody"
+            ],
+            "errors": [
+                "error_commons:BadRequestError"
+            ],
+            "subpackages": [],
+            "navigationConfig": null,
+            "webhooks": null,
+            "websocket": null,
+            "hasEndpointsInTree": false,
+            "docs": null
+        },
         "subpackage_dummy": {
             "name": "dummy",
             "displayName": null,
@@ -1625,7 +2049,9 @@
                 "file": "dummy"
             },
             "service": "service_dummy",
-            "types": [],
+            "types": [
+                "type_dummy:StreamResponse"
+            ],
             "errors": [],
             "subpackages": [],
             "navigationConfig": null,
@@ -1643,14 +2069,10 @@
         },
         "websocket": null,
         "service": null,
-        "types": [
-            "type_:ErrorBody",
-            "type_:StreamResponse"
-        ],
-        "errors": [
-            "error_:BadRequestError"
-        ],
+        "types": [],
+        "errors": [],
         "subpackages": [
+            "subpackage_commons",
             "subpackage_dummy"
         ],
         "webhooks": null,
@@ -1660,9 +2082,9 @@
     },
     "sdkConfig": {
         "isAuthMandatory": false,
-        "hasStreamingEndpoints": false,
+        "hasStreamingEndpoints": true,
         "hasPaginatedEndpoints": false,
-        "hasFileDownloadEndpoints": true,
+        "hasFileDownloadEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",

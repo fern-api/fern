@@ -146,11 +146,8 @@
                     "typeReference": {
                         "type": "optional",
                         "value": {
-                            "type": "nullable",
-                            "value": {
-                                "type": "primitive",
-                                "value": "STRING"
-                            }
+                            "type": "primitive",
+                            "value": "STRING"
                         }
                     },
                     "propertyAccess": null,
@@ -186,47 +183,9 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "",
-                            "camelCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "snakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "pascalCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            }
-                        }
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "",
-                        "camelCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        },
-                        "snakeCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        },
-                        "pascalCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        }
-                    }
+                    "file": null
                 }
             },
             "location": {

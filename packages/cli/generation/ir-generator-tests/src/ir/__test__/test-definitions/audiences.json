@@ -2,7 +2,7 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": "api",
+    "apiName": "audiences",
     "apiDisplayName": "Audiences API",
     "apiDocs": null,
     "auth": {
@@ -13,17 +13,19 @@
     "headers": [],
     "idempotencyHeaders": [],
     "types": {
-        "type_:Imported": {
+        "type_commons:Imported": {
             "inline": null,
             "name": {
                 "name": "Imported",
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        "commons"
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": "commons"
                 },
                 "displayName": null,
-                "typeId": "type_:Imported"
+                "typeId": "type_commons:Imported"
             },
             "shape": {
                 "_type": "alias",
@@ -62,17 +64,22 @@
             "availability": null,
             "docs": null
         },
-        "type_:FolderAResponse": {
+        "type_folder-a/service:Response": {
             "inline": null,
             "name": {
-                "name": "FolderAResponse",
+                "name": "Response",
                 "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": [],
-                    "file": null
+                    "allParts": [
+                        "folder-a",
+                        "service"
+                    ],
+                    "packagePath": [
+                        "folder-a"
+                    ],
+                    "file": "service"
                 },
                 "displayName": null,
-                "typeId": "type_:FolderAResponse"
+                "typeId": "type_folder-a/service:Response"
             },
             "shape": {
                 "_type": "object",
@@ -86,14 +93,19 @@
                                 "_type": "optional",
                                 "optional": {
                                     "_type": "named",
-                                    "name": "FolderBFoo",
+                                    "name": "Foo",
                                     "fernFilepath": {
-                                        "allParts": [],
-                                        "packagePath": [],
-                                        "file": null
+                                        "allParts": [
+                                            "folder-b",
+                                            "common"
+                                        ],
+                                        "packagePath": [
+                                            "folder-b"
+                                        ],
+                                        "file": "common"
                                     },
                                     "displayName": null,
-                                    "typeId": "type_:FolderBFoo",
+                                    "typeId": "type_folder-b/common:Foo",
                                     "default": null,
                                     "inline": null
                                 }
@@ -112,8 +124,8 @@
                 "extendedProperties": []
             },
             "referencedTypes": [
-                "type_:FolderBFoo",
-                "type_:FolderCFolderCFoo"
+                "type_folder-b/common:Foo",
+                "type_folder-c/common:FolderCFoo"
             ],
             "encoding": {
                 "json": {},
@@ -126,17 +138,22 @@
             "availability": null,
             "docs": null
         },
-        "type_:FolderBFoo": {
+        "type_folder-b/common:Foo": {
             "inline": null,
             "name": {
-                "name": "FolderBFoo",
+                "name": "Foo",
                 "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": [],
-                    "file": null
+                    "allParts": [
+                        "folder-b",
+                        "common"
+                    ],
+                    "packagePath": [
+                        "folder-b"
+                    ],
+                    "file": "common"
                 },
                 "displayName": null,
-                "typeId": "type_:FolderBFoo"
+                "typeId": "type_folder-b/common:Foo"
             },
             "shape": {
                 "_type": "object",
@@ -150,14 +167,19 @@
                                 "_type": "optional",
                                 "optional": {
                                     "_type": "named",
-                                    "name": "FolderCFolderCFoo",
+                                    "name": "FolderCFoo",
                                     "fernFilepath": {
-                                        "allParts": [],
-                                        "packagePath": [],
-                                        "file": null
+                                        "allParts": [
+                                            "folder-c",
+                                            "common"
+                                        ],
+                                        "packagePath": [
+                                            "folder-c"
+                                        ],
+                                        "file": "common"
                                     },
                                     "displayName": null,
-                                    "typeId": "type_:FolderCFolderCFoo",
+                                    "typeId": "type_folder-c/common:FolderCFoo",
                                     "default": null,
                                     "inline": null
                                 }
@@ -176,7 +198,7 @@
                 "extendedProperties": []
             },
             "referencedTypes": [
-                "type_:FolderCFolderCFoo"
+                "type_folder-c/common:FolderCFoo"
             ],
             "encoding": {
                 "json": {},
@@ -189,17 +211,22 @@
             "availability": null,
             "docs": null
         },
-        "type_:FolderCFolderCFoo": {
+        "type_folder-c/common:FolderCFoo": {
             "inline": null,
             "name": {
-                "name": "FolderCFolderCFoo",
+                "name": "FolderCFoo",
                 "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": [],
-                    "file": null
+                    "allParts": [
+                        "folder-c",
+                        "common"
+                    ],
+                    "packagePath": [
+                        "folder-c"
+                    ],
+                    "file": "common"
                 },
                 "displayName": null,
-                "typeId": "type_:FolderCFolderCFoo"
+                "typeId": "type_folder-c/common:FolderCFoo"
             },
             "shape": {
                 "_type": "object",
@@ -210,17 +237,8 @@
                         "valueType": {
                             "_type": "primitive",
                             "primitive": {
-                                "v1": "STRING",
-                                "v2": {
-                                    "type": "string",
-                                    "default": null,
-                                    "validation": {
-                                        "format": "uuid",
-                                        "pattern": null,
-                                        "minLength": null,
-                                        "maxLength": null
-                                    }
-                                }
+                                "v1": "UUID",
+                                "v2": null
                             }
                         },
                         "propertyAccess": null,
@@ -247,17 +265,22 @@
             "availability": null,
             "docs": null
         },
-        "type_:FolderDResponse": {
+        "type_folder-d/service:Response": {
             "inline": null,
             "name": {
-                "name": "FolderDResponse",
+                "name": "Response",
                 "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": [],
-                    "file": null
+                    "allParts": [
+                        "folder-d",
+                        "service"
+                    ],
+                    "packagePath": [
+                        "folder-d"
+                    ],
+                    "file": "service"
                 },
                 "displayName": null,
-                "typeId": "type_:FolderDResponse"
+                "typeId": "type_folder-d/service:Response"
             },
             "shape": {
                 "_type": "object",
@@ -300,17 +323,19 @@
             "availability": null,
             "docs": null
         },
-        "type_:ImportingType": {
+        "type_foo:ImportingType": {
             "inline": null,
             "name": {
                 "name": "ImportingType",
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        "foo"
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": "foo"
                 },
                 "displayName": null,
-                "typeId": "type_:ImportingType"
+                "typeId": "type_foo:ImportingType"
             },
             "shape": {
                 "_type": "object",
@@ -322,12 +347,14 @@
                             "_type": "named",
                             "name": "Imported",
                             "fernFilepath": {
-                                "allParts": [],
+                                "allParts": [
+                                    "commons"
+                                ],
                                 "packagePath": [],
-                                "file": null
+                                "file": "commons"
                             },
                             "displayName": null,
-                            "typeId": "type_:Imported",
+                            "typeId": "type_commons:Imported",
                             "default": null,
                             "inline": null
                         },
@@ -344,7 +371,7 @@
                 "extendedProperties": []
             },
             "referencedTypes": [
-                "type_:Imported"
+                "type_commons:Imported"
             ],
             "encoding": {
                 "json": {},
@@ -357,25 +384,27 @@
             "availability": null,
             "docs": null
         },
-        "type_:OptionalString": {
+        "type_foo:OptionalString": {
             "inline": null,
             "name": {
                 "name": "OptionalString",
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        "foo"
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": "foo"
                 },
                 "displayName": null,
-                "typeId": "type_:OptionalString"
+                "typeId": "type_foo:OptionalString"
             },
             "shape": {
                 "_type": "alias",
                 "aliasOf": {
                     "_type": "container",
                     "container": {
-                        "_type": "nullable",
-                        "nullable": {
+                        "_type": "optional",
+                        "optional": {
                             "_type": "primitive",
                             "primitive": {
                                 "v1": "STRING",
@@ -391,8 +420,8 @@
                 "resolvedType": {
                     "_type": "container",
                     "container": {
-                        "_type": "nullable",
-                        "nullable": {
+                        "_type": "optional",
+                        "optional": {
                             "_type": "primitive",
                             "primitive": {
                                 "v1": "STRING",
@@ -418,17 +447,19 @@
             "availability": null,
             "docs": null
         },
-        "type_:FilteredType": {
+        "type_foo:FilteredType": {
             "inline": null,
             "name": {
                 "name": "FilteredType",
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        "foo"
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": "foo"
                 },
                 "displayName": null,
-                "typeId": "type_:FilteredType"
+                "typeId": "type_foo:FilteredType"
             },
             "shape": {
                 "_type": "object",
@@ -441,19 +472,13 @@
                             "container": {
                                 "_type": "optional",
                                 "optional": {
-                                    "_type": "container",
-                                    "container": {
-                                        "_type": "nullable",
-                                        "nullable": {
-                                            "_type": "primitive",
-                                            "primitive": {
-                                                "v1": "STRING",
-                                                "v2": {
-                                                    "type": "string",
-                                                    "default": null,
-                                                    "validation": null
-                                                }
-                                            }
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
                                         }
                                     }
                                 }
@@ -507,20 +532,23 @@
     },
     "errors": {},
     "services": {
-        "service_folderAService": {
+        "service_folder-a/service": {
             "availability": null,
             "name": {
                 "fernFilepath": {
                     "allParts": [
-                        "folderAService"
+                        "folder-a",
+                        "service"
                     ],
-                    "packagePath": [],
-                    "file": "folderAService"
+                    "packagePath": [
+                        "folder-a"
+                    ],
+                    "file": "service"
                 }
             },
             "displayName": null,
             "basePath": {
-                "head": "",
+                "head": "/",
                 "parts": []
             },
             "headers": [],
@@ -534,8 +562,8 @@
             },
             "endpoints": [
                 {
-                    "id": "endpoint_folderAService.folderA_service_getDirectThread",
-                    "name": "folderA_service_getDirectThread",
+                    "id": "endpoint_folder-a/service.getDirectThread",
+                    "name": "getDirectThread",
                     "displayName": null,
                     "auth": false,
                     "security": null,
@@ -545,7 +573,7 @@
                     "method": "GET",
                     "basePath": null,
                     "path": {
-                        "head": "/",
+                        "head": "",
                         "parts": []
                     },
                     "fullPath": {
@@ -558,19 +586,13 @@
                         {
                             "name": "ids",
                             "valueType": {
-                                "_type": "container",
-                                "container": {
-                                    "_type": "optional",
-                                    "optional": {
-                                        "_type": "primitive",
-                                        "primitive": {
-                                            "v1": "STRING",
-                                            "v2": {
-                                                "type": "string",
-                                                "default": null,
-                                                "validation": null
-                                            }
-                                        }
+                                "_type": "primitive",
+                                "primitive": {
+                                    "v1": "STRING",
+                                    "v2": {
+                                        "type": "string",
+                                        "default": null,
+                                        "validation": null
                                     }
                                 }
                             },
@@ -587,19 +609,13 @@
                         {
                             "name": "tags",
                             "valueType": {
-                                "_type": "container",
-                                "container": {
-                                    "_type": "optional",
-                                    "optional": {
-                                        "_type": "primitive",
-                                        "primitive": {
-                                            "v1": "STRING",
-                                            "v2": {
-                                                "type": "string",
-                                                "default": null,
-                                                "validation": null
-                                            }
-                                        }
+                                "_type": "primitive",
+                                "primitive": {
+                                    "v1": "STRING",
+                                    "v2": {
+                                        "type": "string",
+                                        "default": null,
+                                        "validation": null
                                     }
                                 }
                             },
@@ -620,7 +636,7 @@
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",
-                            "wrapperName": "FolderAServiceGetDirectThreadRequest",
+                            "wrapperName": "GetDirectThreadRequest",
                             "bodyKey": "body",
                             "includePathParameters": false,
                             "onlyPathParameters": false
@@ -635,24 +651,29 @@
                                 "type": "response",
                                 "responseBodyType": {
                                     "_type": "named",
-                                    "name": "FolderAResponse",
+                                    "name": "Response",
                                     "fernFilepath": {
-                                        "allParts": [],
-                                        "packagePath": [],
-                                        "file": null
+                                        "allParts": [
+                                            "folder-a",
+                                            "service"
+                                        ],
+                                        "packagePath": [
+                                            "folder-a"
+                                        ],
+                                        "file": "service"
                                     },
                                     "displayName": null,
-                                    "typeId": "type_:FolderAResponse",
+                                    "typeId": "type_folder-a/service:Response",
                                     "default": null,
                                     "inline": null
                                 },
-                                "docs": "",
+                                "docs": null,
                                 "v2Examples": null
                             }
                         },
-                        "status-code": 200,
+                        "status-code": null,
                         "isWildcardStatusCode": null,
-                        "docs": ""
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [],
@@ -660,12 +681,49 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "ceee36a8",
+                                "id": "92cc176f",
                                 "url": "",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
-                                "queryParameters": [],
+                                "queryParameters": [
+                                    {
+                                        "name": "ids",
+                                        "shape": {
+                                            "type": "exploded"
+                                        },
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "string",
+                                                    "string": {
+                                                        "original": "ids"
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "ids"
+                                        }
+                                    },
+                                    {
+                                        "name": "tags",
+                                        "shape": {
+                                            "type": "exploded"
+                                        },
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "string",
+                                                    "string": {
+                                                        "original": "tags"
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "tags"
+                                        }
+                                    }
+                                ],
                                 "servicePathParameters": [],
                                 "serviceHeaders": [],
                                 "rootPathParameters": [],
@@ -683,14 +741,19 @@
                                                         {
                                                             "name": "foo",
                                                             "originalTypeDeclaration": {
-                                                                "name": "FolderAResponse",
+                                                                "name": "Response",
                                                                 "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
+                                                                    "allParts": [
+                                                                        "folder-a",
+                                                                        "service"
+                                                                    ],
+                                                                    "packagePath": [
+                                                                        "folder-a"
+                                                                    ],
+                                                                    "file": "service"
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_:FolderAResponse"
+                                                                "typeId": "type_folder-a/service:Response"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -706,14 +769,19 @@
                                                                                         {
                                                                                             "name": "foo",
                                                                                             "originalTypeDeclaration": {
-                                                                                                "name": "FolderBFoo",
+                                                                                                "name": "Foo",
                                                                                                 "fernFilepath": {
-                                                                                                    "allParts": [],
-                                                                                                    "packagePath": [],
-                                                                                                    "file": null
+                                                                                                    "allParts": [
+                                                                                                        "folder-b",
+                                                                                                        "common"
+                                                                                                    ],
+                                                                                                    "packagePath": [
+                                                                                                        "folder-b"
+                                                                                                    ],
+                                                                                                    "file": "common"
                                                                                                 },
                                                                                                 "displayName": null,
-                                                                                                "typeId": "type_:FolderBFoo"
+                                                                                                "typeId": "type_folder-b/common:Foo"
                                                                                             },
                                                                                             "value": {
                                                                                                 "shape": {
@@ -729,26 +797,29 @@
                                                                                                                         {
                                                                                                                             "name": "bar_property",
                                                                                                                             "originalTypeDeclaration": {
-                                                                                                                                "name": "FolderCFolderCFoo",
+                                                                                                                                "name": "FolderCFoo",
                                                                                                                                 "fernFilepath": {
-                                                                                                                                    "allParts": [],
-                                                                                                                                    "packagePath": [],
-                                                                                                                                    "file": null
+                                                                                                                                    "allParts": [
+                                                                                                                                        "folder-c",
+                                                                                                                                        "common"
+                                                                                                                                    ],
+                                                                                                                                    "packagePath": [
+                                                                                                                                        "folder-c"
+                                                                                                                                    ],
+                                                                                                                                    "file": "common"
                                                                                                                                 },
                                                                                                                                 "displayName": null,
-                                                                                                                                "typeId": "type_:FolderCFolderCFoo"
+                                                                                                                                "typeId": "type_folder-c/common:FolderCFoo"
                                                                                                                             },
                                                                                                                             "value": {
                                                                                                                                 "shape": {
                                                                                                                                     "type": "primitive",
                                                                                                                                     "primitive": {
-                                                                                                                                        "type": "string",
-                                                                                                                                        "string": {
-                                                                                                                                            "original": "bar_property"
-                                                                                                                                        }
+                                                                                                                                        "type": "uuid",
+                                                                                                                                        "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
                                                                                                                                     }
                                                                                                                                 },
-                                                                                                                                "jsonExample": "bar_property"
+                                                                                                                                "jsonExample": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
                                                                                                                             },
                                                                                                                             "propertyAccess": null
                                                                                                                         }
@@ -756,37 +827,47 @@
                                                                                                                     "extraProperties": null
                                                                                                                 },
                                                                                                                 "typeName": {
-                                                                                                                    "name": "FolderCFolderCFoo",
+                                                                                                                    "name": "FolderCFoo",
                                                                                                                     "fernFilepath": {
-                                                                                                                        "allParts": [],
-                                                                                                                        "packagePath": [],
-                                                                                                                        "file": null
+                                                                                                                        "allParts": [
+                                                                                                                            "folder-c",
+                                                                                                                            "common"
+                                                                                                                        ],
+                                                                                                                        "packagePath": [
+                                                                                                                            "folder-c"
+                                                                                                                        ],
+                                                                                                                        "file": "common"
                                                                                                                     },
                                                                                                                     "displayName": null,
-                                                                                                                    "typeId": "type_:FolderCFolderCFoo"
+                                                                                                                    "typeId": "type_folder-c/common:FolderCFoo"
                                                                                                                 }
                                                                                                             },
                                                                                                             "jsonExample": {
-                                                                                                                "bar_property": "bar_property"
+                                                                                                                "bar_property": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
                                                                                                             }
                                                                                                         },
                                                                                                         "valueType": {
                                                                                                             "_type": "named",
-                                                                                                            "name": "FolderCFolderCFoo",
+                                                                                                            "name": "FolderCFoo",
                                                                                                             "fernFilepath": {
-                                                                                                                "allParts": [],
-                                                                                                                "packagePath": [],
-                                                                                                                "file": null
+                                                                                                                "allParts": [
+                                                                                                                    "folder-c",
+                                                                                                                    "common"
+                                                                                                                ],
+                                                                                                                "packagePath": [
+                                                                                                                    "folder-c"
+                                                                                                                ],
+                                                                                                                "file": "common"
                                                                                                             },
                                                                                                             "displayName": null,
-                                                                                                            "typeId": "type_:FolderCFolderCFoo",
+                                                                                                            "typeId": "type_folder-c/common:FolderCFoo",
                                                                                                             "default": null,
                                                                                                             "inline": null
                                                                                                         }
                                                                                                     }
                                                                                                 },
                                                                                                 "jsonExample": {
-                                                                                                    "bar_property": "bar_property"
+                                                                                                    "bar_property": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
                                                                                                 }
                                                                                             },
                                                                                             "propertyAccess": null
@@ -795,32 +876,42 @@
                                                                                     "extraProperties": null
                                                                                 },
                                                                                 "typeName": {
-                                                                                    "name": "FolderBFoo",
+                                                                                    "name": "Foo",
                                                                                     "fernFilepath": {
-                                                                                        "allParts": [],
-                                                                                        "packagePath": [],
-                                                                                        "file": null
+                                                                                        "allParts": [
+                                                                                            "folder-b",
+                                                                                            "common"
+                                                                                        ],
+                                                                                        "packagePath": [
+                                                                                            "folder-b"
+                                                                                        ],
+                                                                                        "file": "common"
                                                                                     },
                                                                                     "displayName": null,
-                                                                                    "typeId": "type_:FolderBFoo"
+                                                                                    "typeId": "type_folder-b/common:Foo"
                                                                                 }
                                                                             },
                                                                             "jsonExample": {
                                                                                 "foo": {
-                                                                                    "bar_property": "bar_property"
+                                                                                    "bar_property": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
                                                                                 }
                                                                             }
                                                                         },
                                                                         "valueType": {
                                                                             "_type": "named",
-                                                                            "name": "FolderBFoo",
+                                                                            "name": "Foo",
                                                                             "fernFilepath": {
-                                                                                "allParts": [],
-                                                                                "packagePath": [],
-                                                                                "file": null
+                                                                                "allParts": [
+                                                                                    "folder-b",
+                                                                                    "common"
+                                                                                ],
+                                                                                "packagePath": [
+                                                                                    "folder-b"
+                                                                                ],
+                                                                                "file": "common"
                                                                             },
                                                                             "displayName": null,
-                                                                            "typeId": "type_:FolderBFoo",
+                                                                            "typeId": "type_folder-b/common:Foo",
                                                                             "default": null,
                                                                             "inline": null
                                                                         }
@@ -828,7 +919,7 @@
                                                                 },
                                                                 "jsonExample": {
                                                                     "foo": {
-                                                                        "bar_property": "bar_property"
+                                                                        "bar_property": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
                                                                     }
                                                                 }
                                                             },
@@ -838,20 +929,25 @@
                                                     "extraProperties": null
                                                 },
                                                 "typeName": {
-                                                    "name": "FolderAResponse",
+                                                    "name": "Response",
                                                     "fernFilepath": {
-                                                        "allParts": [],
-                                                        "packagePath": [],
-                                                        "file": null
+                                                        "allParts": [
+                                                            "folder-a",
+                                                            "service"
+                                                        ],
+                                                        "packagePath": [
+                                                            "folder-a"
+                                                        ],
+                                                        "file": "service"
                                                     },
                                                     "displayName": null,
-                                                    "typeId": "type_:FolderAResponse"
+                                                    "typeId": "type_folder-a/service:Response"
                                                 }
                                             },
                                             "jsonExample": {
                                                 "foo": {
                                                     "foo": {
-                                                        "bar_property": "bar_property"
+                                                        "bar_property": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
                                                     }
                                                 }
                                             }
@@ -874,7 +970,197 @@
                     "docs": null
                 }
             ],
-            "audiences": null
+            "audiences": [
+                "public"
+            ]
+        },
+        "service_folder-d/service": {
+            "availability": null,
+            "name": {
+                "fernFilepath": {
+                    "allParts": [
+                        "folder-d",
+                        "service"
+                    ],
+                    "packagePath": [
+                        "folder-d"
+                    ],
+                    "file": "service"
+                }
+            },
+            "displayName": null,
+            "basePath": {
+                "head": "/partner-path",
+                "parts": []
+            },
+            "headers": [],
+            "pathParameters": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "transport": {
+                "type": "http"
+            },
+            "endpoints": [
+                {
+                    "id": "endpoint_folder-d/service.getDirectThread",
+                    "name": "getDirectThread",
+                    "displayName": null,
+                    "auth": false,
+                    "security": null,
+                    "idempotent": false,
+                    "baseUrl": null,
+                    "v2BaseUrls": null,
+                    "method": "GET",
+                    "basePath": null,
+                    "path": {
+                        "head": "",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "/partner-path",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "requestBody": null,
+                    "v2RequestBodies": null,
+                    "sdkRequest": null,
+                    "response": {
+                        "body": {
+                            "type": "json",
+                            "value": {
+                                "type": "response",
+                                "responseBodyType": {
+                                    "_type": "named",
+                                    "name": "Response",
+                                    "fernFilepath": {
+                                        "allParts": [
+                                            "folder-d",
+                                            "service"
+                                        ],
+                                        "packagePath": [
+                                            "folder-d"
+                                        ],
+                                        "file": "service"
+                                    },
+                                    "displayName": null,
+                                    "typeId": "type_folder-d/service:Response",
+                                    "default": null,
+                                    "inline": null
+                                },
+                                "docs": null,
+                                "v2Examples": null
+                            }
+                        },
+                        "status-code": null,
+                        "isWildcardStatusCode": null,
+                        "docs": null
+                    },
+                    "v2Responses": null,
+                    "errors": [],
+                    "userSpecifiedExamples": [],
+                    "autogeneratedExamples": [
+                        {
+                            "example": {
+                                "id": "7cd5417f",
+                                "url": "/partner-path",
+                                "name": null,
+                                "endpointHeaders": [],
+                                "endpointPathParameters": [],
+                                "queryParameters": [],
+                                "servicePathParameters": [],
+                                "serviceHeaders": [],
+                                "rootPathParameters": [],
+                                "request": null,
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": {
+                                            "shape": {
+                                                "type": "named",
+                                                "shape": {
+                                                    "type": "object",
+                                                    "properties": [
+                                                        {
+                                                            "name": "foo",
+                                                            "originalTypeDeclaration": {
+                                                                "name": "Response",
+                                                                "fernFilepath": {
+                                                                    "allParts": [
+                                                                        "folder-d",
+                                                                        "service"
+                                                                    ],
+                                                                    "packagePath": [
+                                                                        "folder-d"
+                                                                    ],
+                                                                    "file": "service"
+                                                                },
+                                                                "displayName": null,
+                                                                "typeId": "type_folder-d/service:Response"
+                                                            },
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "foo"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "foo"
+                                                            },
+                                                            "propertyAccess": null
+                                                        }
+                                                    ],
+                                                    "extraProperties": null
+                                                },
+                                                "typeName": {
+                                                    "name": "Response",
+                                                    "fernFilepath": {
+                                                        "allParts": [
+                                                            "folder-d",
+                                                            "service"
+                                                        ],
+                                                        "packagePath": [
+                                                            "folder-d"
+                                                        ],
+                                                        "file": "service"
+                                                    },
+                                                    "displayName": null,
+                                                    "typeId": "type_folder-d/service:Response"
+                                                }
+                                            },
+                                            "jsonExample": {
+                                                "foo": "foo"
+                                            }
+                                        }
+                                    }
+                                },
+                                "docs": null
+                            }
+                        }
+                    ],
+                    "pagination": null,
+                    "transport": null,
+                    "v2Examples": null,
+                    "source": null,
+                    "audiences": null,
+                    "retries": null,
+                    "apiPlayground": null,
+                    "responseHeaders": [],
+                    "availability": null,
+                    "docs": null
+                }
+            ],
+            "audiences": [
+                "partner"
+            ]
         },
         "service_foo": {
             "availability": null,
@@ -889,7 +1175,7 @@
             },
             "displayName": null,
             "basePath": {
-                "head": "",
+                "head": "/",
                 "parts": []
             },
             "headers": [],
@@ -914,7 +1200,7 @@
                     "method": "POST",
                     "basePath": null,
                     "path": {
-                        "head": "/",
+                        "head": "",
                         "parts": []
                     },
                     "fullPath": {
@@ -927,29 +1213,19 @@
                         {
                             "name": "optionalString",
                             "valueType": {
-                                "_type": "container",
-                                "container": {
-                                    "_type": "optional",
-                                    "optional": {
-                                        "_type": "container",
-                                        "container": {
-                                            "_type": "nullable",
-                                            "nullable": {
-                                                "_type": "named",
-                                                "name": "OptionalString",
-                                                "fernFilepath": {
-                                                    "allParts": [],
-                                                    "packagePath": [],
-                                                    "file": null
-                                                },
-                                                "displayName": null,
-                                                "typeId": "type_:OptionalString",
-                                                "default": null,
-                                                "inline": null
-                                            }
-                                        }
-                                    }
-                                }
+                                "_type": "named",
+                                "name": "OptionalString",
+                                "fernFilepath": {
+                                    "allParts": [
+                                        "foo"
+                                    ],
+                                    "packagePath": [],
+                                    "file": "foo"
+                                },
+                                "displayName": null,
+                                "typeId": "type_foo:OptionalString",
+                                "default": null,
+                                "inline": null
                             },
                             "allowMultiple": false,
                             "clientDefault": null,
@@ -965,7 +1241,7 @@
                     "headers": [],
                     "requestBody": {
                         "type": "inlinedRequestBody",
-                        "name": "FooFindRequest",
+                        "name": "FindRequest",
                         "extends": [],
                         "properties": [
                             {
@@ -975,19 +1251,13 @@
                                     "container": {
                                         "_type": "optional",
                                         "optional": {
-                                            "_type": "container",
-                                            "container": {
-                                                "_type": "nullable",
-                                                "nullable": {
-                                                    "_type": "primitive",
-                                                    "primitive": {
-                                                        "v1": "STRING",
-                                                        "v2": {
-                                                            "type": "string",
-                                                            "default": null,
-                                                            "validation": null
-                                                        }
-                                                    }
+                                            "_type": "primitive",
+                                            "primitive": {
+                                                "v1": "STRING",
+                                                "v2": {
+                                                    "type": "string",
+                                                    "default": null,
+                                                    "validation": null
                                                 }
                                             }
                                         }
@@ -1008,19 +1278,13 @@
                                     "container": {
                                         "_type": "optional",
                                         "optional": {
-                                            "_type": "container",
-                                            "container": {
-                                                "_type": "nullable",
-                                                "nullable": {
-                                                    "_type": "primitive",
-                                                    "primitive": {
-                                                        "v1": "INTEGER",
-                                                        "v2": {
-                                                            "type": "integer",
-                                                            "default": null,
-                                                            "validation": null
-                                                        }
-                                                    }
+                                            "_type": "primitive",
+                                            "primitive": {
+                                                "v1": "INTEGER",
+                                                "v2": {
+                                                    "type": "integer",
+                                                    "default": null,
+                                                    "validation": null
                                                 }
                                             }
                                         }
@@ -1039,13 +1303,13 @@
                         "extendedProperties": [],
                         "docs": null,
                         "v2Examples": null,
-                        "contentType": "application/json"
+                        "contentType": null
                     },
                     "v2RequestBodies": null,
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",
-                            "wrapperName": "FooFindRequest",
+                            "wrapperName": "FindRequest",
                             "bodyKey": "body",
                             "includePathParameters": false,
                             "onlyPathParameters": false
@@ -1062,127 +1326,32 @@
                                     "_type": "named",
                                     "name": "ImportingType",
                                     "fernFilepath": {
-                                        "allParts": [],
+                                        "allParts": [
+                                            "foo"
+                                        ],
                                         "packagePath": [],
-                                        "file": null
+                                        "file": "foo"
                                     },
                                     "displayName": null,
-                                    "typeId": "type_:ImportingType",
+                                    "typeId": "type_foo:ImportingType",
                                     "default": null,
                                     "inline": null
                                 },
-                                "docs": "",
+                                "docs": null,
                                 "v2Examples": null
                             }
                         },
-                        "status-code": 200,
+                        "status-code": null,
                         "isWildcardStatusCode": null,
-                        "docs": ""
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [],
-                    "userSpecifiedExamples": [
-                        {
-                            "example": {
-                                "id": "c5c2ccd1",
-                                "name": null,
-                                "url": "/",
-                                "rootPathParameters": [],
-                                "endpointPathParameters": [],
-                                "servicePathParameters": [],
-                                "endpointHeaders": [],
-                                "serviceHeaders": [],
-                                "queryParameters": [],
-                                "request": {
-                                    "type": "inlinedRequestBody",
-                                    "properties": [],
-                                    "extraProperties": null,
-                                    "jsonExample": {}
-                                },
-                                "response": {
-                                    "type": "ok",
-                                    "value": {
-                                        "type": "body",
-                                        "value": {
-                                            "shape": {
-                                                "type": "named",
-                                                "typeName": {
-                                                    "typeId": "type_:ImportingType",
-                                                    "fernFilepath": {
-                                                        "allParts": [],
-                                                        "packagePath": [],
-                                                        "file": null
-                                                    },
-                                                    "name": "ImportingType",
-                                                    "displayName": null
-                                                },
-                                                "shape": {
-                                                    "type": "object",
-                                                    "properties": [
-                                                        {
-                                                            "name": "imported",
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "named",
-                                                                    "typeName": {
-                                                                        "typeId": "type_:Imported",
-                                                                        "fernFilepath": {
-                                                                            "allParts": [],
-                                                                            "packagePath": [],
-                                                                            "file": null
-                                                                        },
-                                                                        "name": "Imported",
-                                                                        "displayName": null
-                                                                    },
-                                                                    "shape": {
-                                                                        "type": "alias",
-                                                                        "value": {
-                                                                            "shape": {
-                                                                                "type": "primitive",
-                                                                                "primitive": {
-                                                                                    "type": "string",
-                                                                                    "string": {
-                                                                                        "original": "imported"
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            "jsonExample": "imported"
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "jsonExample": "imported"
-                                                            },
-                                                            "originalTypeDeclaration": {
-                                                                "typeId": "type_:ImportingType",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "name": "ImportingType",
-                                                                "displayName": null
-                                                            },
-                                                            "propertyAccess": null
-                                                        }
-                                                    ],
-                                                    "extraProperties": null
-                                                }
-                                            },
-                                            "jsonExample": {
-                                                "imported": "imported"
-                                            }
-                                        }
-                                    }
-                                },
-                                "docs": null
-                            },
-                            "codeSamples": null
-                        }
-                    ],
+                    "userSpecifiedExamples": [],
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "1a8a8cdd",
+                                "id": "b50597d7",
                                 "url": "",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -1204,19 +1373,13 @@
                                                         "type": "optional",
                                                         "optional": null,
                                                         "valueType": {
-                                                            "_type": "container",
-                                                            "container": {
-                                                                "_type": "nullable",
-                                                                "nullable": {
-                                                                    "_type": "primitive",
-                                                                    "primitive": {
-                                                                        "v1": "STRING",
-                                                                        "v2": {
-                                                                            "type": "string",
-                                                                            "default": null,
-                                                                            "validation": null
-                                                                        }
-                                                                    }
+                                                            "_type": "primitive",
+                                                            "primitive": {
+                                                                "v1": "STRING",
+                                                                "v2": {
+                                                                    "type": "string",
+                                                                    "default": null,
+                                                                    "validation": null
                                                                 }
                                                             }
                                                         }
@@ -1234,19 +1397,13 @@
                                                         "type": "optional",
                                                         "optional": null,
                                                         "valueType": {
-                                                            "_type": "container",
-                                                            "container": {
-                                                                "_type": "nullable",
-                                                                "nullable": {
-                                                                    "_type": "primitive",
-                                                                    "primitive": {
-                                                                        "v1": "INTEGER",
-                                                                        "v2": {
-                                                                            "type": "integer",
-                                                                            "default": null,
-                                                                            "validation": null
-                                                                        }
-                                                                    }
+                                                            "_type": "primitive",
+                                                            "primitive": {
+                                                                "v1": "INTEGER",
+                                                                "v2": {
+                                                                    "type": "integer",
+                                                                    "default": null,
+                                                                    "validation": null
                                                                 }
                                                             }
                                                         }
@@ -1273,12 +1430,14 @@
                                                             "originalTypeDeclaration": {
                                                                 "name": "ImportingType",
                                                                 "fernFilepath": {
-                                                                    "allParts": [],
+                                                                    "allParts": [
+                                                                        "foo"
+                                                                    ],
                                                                     "packagePath": [],
-                                                                    "file": null
+                                                                    "file": "foo"
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_:ImportingType"
+                                                                "typeId": "type_foo:ImportingType"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -1301,12 +1460,14 @@
                                                                     "typeName": {
                                                                         "name": "Imported",
                                                                         "fernFilepath": {
-                                                                            "allParts": [],
+                                                                            "allParts": [
+                                                                                "commons"
+                                                                            ],
                                                                             "packagePath": [],
-                                                                            "file": null
+                                                                            "file": "commons"
                                                                         },
                                                                         "displayName": null,
-                                                                        "typeId": "type_:Imported"
+                                                                        "typeId": "type_commons:Imported"
                                                                     }
                                                                 },
                                                                 "jsonExample": "imported"
@@ -1319,12 +1480,14 @@
                                                 "typeName": {
                                                     "name": "ImportingType",
                                                     "fernFilepath": {
-                                                        "allParts": [],
+                                                        "allParts": [
+                                                            "foo"
+                                                        ],
                                                         "packagePath": [],
-                                                        "file": null
+                                                        "file": "foo"
                                                     },
                                                     "displayName": null,
-                                                    "typeId": "type_:ImportingType"
+                                                    "typeId": "type_foo:ImportingType"
                                                 }
                                             },
                                             "jsonExample": {
@@ -1341,248 +1504,10 @@
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
-                    "audiences": null,
-                    "retries": null,
-                    "apiPlayground": null,
-                    "responseHeaders": [],
-                    "availability": null,
-                    "docs": null
-                }
-            ],
-            "audiences": null
-        },
-        "service_folderDService": {
-            "availability": null,
-            "name": {
-                "fernFilepath": {
-                    "allParts": [
-                        "folderDService"
+                    "audiences": [
+                        "public",
+                        "private"
                     ],
-                    "packagePath": [],
-                    "file": "folderDService"
-                }
-            },
-            "displayName": null,
-            "basePath": {
-                "head": "",
-                "parts": []
-            },
-            "headers": [],
-            "pathParameters": [],
-            "encoding": {
-                "json": {},
-                "proto": null
-            },
-            "transport": {
-                "type": "http"
-            },
-            "endpoints": [
-                {
-                    "id": "endpoint_folderDService.folderD_service_getDirectThread",
-                    "name": "folderD_service_getDirectThread",
-                    "displayName": null,
-                    "auth": false,
-                    "security": null,
-                    "idempotent": false,
-                    "baseUrl": null,
-                    "v2BaseUrls": null,
-                    "method": "GET",
-                    "basePath": null,
-                    "path": {
-                        "head": "/partner-path",
-                        "parts": []
-                    },
-                    "fullPath": {
-                        "head": "partner-path",
-                        "parts": []
-                    },
-                    "pathParameters": [],
-                    "allPathParameters": [],
-                    "queryParameters": [],
-                    "headers": [],
-                    "requestBody": null,
-                    "v2RequestBodies": null,
-                    "sdkRequest": null,
-                    "response": {
-                        "body": {
-                            "type": "json",
-                            "value": {
-                                "type": "response",
-                                "responseBodyType": {
-                                    "_type": "named",
-                                    "name": "FolderDResponse",
-                                    "fernFilepath": {
-                                        "allParts": [],
-                                        "packagePath": [],
-                                        "file": null
-                                    },
-                                    "displayName": null,
-                                    "typeId": "type_:FolderDResponse",
-                                    "default": null,
-                                    "inline": null
-                                },
-                                "docs": "",
-                                "v2Examples": null
-                            }
-                        },
-                        "status-code": 200,
-                        "isWildcardStatusCode": null,
-                        "docs": ""
-                    },
-                    "v2Responses": null,
-                    "errors": [],
-                    "userSpecifiedExamples": [
-                        {
-                            "example": {
-                                "id": "3e4c4b72",
-                                "name": null,
-                                "url": "/partner-path",
-                                "rootPathParameters": [],
-                                "endpointPathParameters": [],
-                                "servicePathParameters": [],
-                                "endpointHeaders": [],
-                                "serviceHeaders": [],
-                                "queryParameters": [],
-                                "request": null,
-                                "response": {
-                                    "type": "ok",
-                                    "value": {
-                                        "type": "body",
-                                        "value": {
-                                            "shape": {
-                                                "type": "named",
-                                                "typeName": {
-                                                    "typeId": "type_:FolderDResponse",
-                                                    "fernFilepath": {
-                                                        "allParts": [],
-                                                        "packagePath": [],
-                                                        "file": null
-                                                    },
-                                                    "name": "FolderDResponse",
-                                                    "displayName": null
-                                                },
-                                                "shape": {
-                                                    "type": "object",
-                                                    "properties": [
-                                                        {
-                                                            "name": "foo",
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "primitive",
-                                                                    "primitive": {
-                                                                        "type": "string",
-                                                                        "string": {
-                                                                            "original": "foo"
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "jsonExample": "foo"
-                                                            },
-                                                            "originalTypeDeclaration": {
-                                                                "typeId": "type_:FolderDResponse",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "name": "FolderDResponse",
-                                                                "displayName": null
-                                                            },
-                                                            "propertyAccess": null
-                                                        }
-                                                    ],
-                                                    "extraProperties": null
-                                                }
-                                            },
-                                            "jsonExample": {
-                                                "foo": "foo"
-                                            }
-                                        }
-                                    }
-                                },
-                                "docs": null
-                            },
-                            "codeSamples": null
-                        }
-                    ],
-                    "autogeneratedExamples": [
-                        {
-                            "example": {
-                                "id": "a823b89d",
-                                "url": "/partner-path",
-                                "name": null,
-                                "endpointHeaders": [],
-                                "endpointPathParameters": [],
-                                "queryParameters": [],
-                                "servicePathParameters": [],
-                                "serviceHeaders": [],
-                                "rootPathParameters": [],
-                                "request": null,
-                                "response": {
-                                    "type": "ok",
-                                    "value": {
-                                        "type": "body",
-                                        "value": {
-                                            "shape": {
-                                                "type": "named",
-                                                "shape": {
-                                                    "type": "object",
-                                                    "properties": [
-                                                        {
-                                                            "name": "foo",
-                                                            "originalTypeDeclaration": {
-                                                                "name": "FolderDResponse",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "displayName": null,
-                                                                "typeId": "type_:FolderDResponse"
-                                                            },
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "primitive",
-                                                                    "primitive": {
-                                                                        "type": "string",
-                                                                        "string": {
-                                                                            "original": "foo"
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "jsonExample": "foo"
-                                                            },
-                                                            "propertyAccess": null
-                                                        }
-                                                    ],
-                                                    "extraProperties": null
-                                                },
-                                                "typeName": {
-                                                    "name": "FolderDResponse",
-                                                    "fernFilepath": {
-                                                        "allParts": [],
-                                                        "packagePath": [],
-                                                        "file": null
-                                                    },
-                                                    "displayName": null,
-                                                    "typeId": "type_:FolderDResponse"
-                                                }
-                                            },
-                                            "jsonExample": {
-                                                "foo": "foo"
-                                            }
-                                        }
-                                    }
-                                },
-                                "docs": null
-                            }
-                        }
-                    ],
-                    "pagination": null,
-                    "transport": null,
-                    "v2Examples": null,
-                    "source": null,
-                    "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
@@ -1597,15 +1522,29 @@
         "errorInstanceIdKey": "errorInstanceId"
     },
     "environments": {
-        "defaultEnvironment": "Default",
+        "defaultEnvironment": null,
         "environments": {
             "type": "singleBaseUrl",
             "environments": [
                 {
-                    "id": "Default",
-                    "name": "Default",
+                    "id": "environment-a",
+                    "name": "environment-a",
                     "url": "https://api.example.a.com",
-                    "audiences": null,
+                    "audiences": [
+                        "public"
+                    ],
+                    "defaultUrl": null,
+                    "urlTemplate": null,
+                    "urlVariables": null,
+                    "docs": null
+                },
+                {
+                    "id": "environment-b",
+                    "name": "environment-b",
+                    "url": "https://api.example.b.com",
+                    "audiences": [
+                        "private"
+                    ],
                     "defaultUrl": null,
                     "urlTemplate": null,
                     "urlVariables": null,
@@ -1623,21 +1562,21 @@
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_foo": [
-                "type_:Imported",
-                "type_:ImportingType",
-                "type_:OptionalString"
+                "type_commons:Imported",
+                "type_foo:ImportingType",
+                "type_foo:OptionalString"
             ],
-            "service_folderAService": [
-                "type_:FolderAResponse",
-                "type_:FolderBFoo",
-                "type_:FolderCFolderCFoo"
+            "service_folder-a/service": [
+                "type_folder-a/service:Response",
+                "type_folder-b/common:Foo",
+                "type_folder-c/common:FolderCFoo"
             ],
-            "service_folderDService": [
-                "type_:FolderDResponse"
+            "service_folder-d/service": [
+                "type_folder-d/service:Response"
             ]
         },
         "sharedTypes": [
-            "type_:FilteredType"
+            "type_foo:FilteredType"
         ]
     },
     "webhookGroups": {},
@@ -1648,7 +1587,7 @@
     "dynamic": {
         "version": "1.0.0",
         "types": {
-            "type_:Imported": {
+            "type_commons:Imported": {
                 "type": "alias",
                 "declaration": {
                     "name": {
@@ -1671,9 +1610,47 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [],
+                        "allParts": [
+                            {
+                                "originalName": "commons",
+                                "camelCase": {
+                                    "unsafeName": "commons",
+                                    "safeName": "commons"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "commons",
+                                    "safeName": "commons"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "COMMONS",
+                                    "safeName": "COMMONS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Commons",
+                                    "safeName": "Commons"
+                                }
+                            }
+                        ],
                         "packagePath": [],
-                        "file": null
+                        "file": {
+                            "originalName": "commons",
+                            "camelCase": {
+                                "unsafeName": "commons",
+                                "safeName": "commons"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "commons",
+                                "safeName": "commons"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "COMMONS",
+                                "safeName": "COMMONS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Commons",
+                                "safeName": "Commons"
+                            }
+                        }
                     }
                 },
                 "typeReference": {
@@ -1681,32 +1658,109 @@
                     "value": "STRING"
                 }
             },
-            "type_:FolderAResponse": {
+            "type_folder-a/service:Response": {
                 "type": "object",
                 "declaration": {
                     "name": {
-                        "originalName": "FolderAResponse",
+                        "originalName": "Response",
                         "camelCase": {
-                            "unsafeName": "folderAResponse",
-                            "safeName": "folderAResponse"
+                            "unsafeName": "response",
+                            "safeName": "response"
                         },
                         "snakeCase": {
-                            "unsafeName": "folder_a_response",
-                            "safeName": "folder_a_response"
+                            "unsafeName": "response",
+                            "safeName": "response"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "FOLDER_A_RESPONSE",
-                            "safeName": "FOLDER_A_RESPONSE"
+                            "unsafeName": "RESPONSE",
+                            "safeName": "RESPONSE"
                         },
                         "pascalCase": {
-                            "unsafeName": "FolderAResponse",
-                            "safeName": "FolderAResponse"
+                            "unsafeName": "Response",
+                            "safeName": "Response"
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": [],
-                        "file": null
+                        "allParts": [
+                            {
+                                "originalName": "folder-a",
+                                "camelCase": {
+                                    "unsafeName": "folderA",
+                                    "safeName": "folderA"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "folder_a",
+                                    "safeName": "folder_a"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "FOLDER_A",
+                                    "safeName": "FOLDER_A"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "FolderA",
+                                    "safeName": "FolderA"
+                                }
+                            },
+                            {
+                                "originalName": "service",
+                                "camelCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SERVICE",
+                                    "safeName": "SERVICE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Service",
+                                    "safeName": "Service"
+                                }
+                            }
+                        ],
+                        "packagePath": [
+                            {
+                                "originalName": "folder-a",
+                                "camelCase": {
+                                    "unsafeName": "folderA",
+                                    "safeName": "folderA"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "folder_a",
+                                    "safeName": "folder_a"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "FOLDER_A",
+                                    "safeName": "FOLDER_A"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "FolderA",
+                                    "safeName": "FolderA"
+                                }
+                            }
+                        ],
+                        "file": {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
                     }
                 },
                 "properties": [
@@ -1737,7 +1791,7 @@
                             "type": "optional",
                             "value": {
                                 "type": "named",
-                                "value": "type_:FolderBFoo"
+                                "value": "type_folder-b/common:Foo"
                             }
                         },
                         "propertyAccess": null,
@@ -1747,32 +1801,109 @@
                 "extends": null,
                 "additionalProperties": false
             },
-            "type_:FolderBFoo": {
+            "type_folder-b/common:Foo": {
                 "type": "object",
                 "declaration": {
                     "name": {
-                        "originalName": "FolderBFoo",
+                        "originalName": "Foo",
                         "camelCase": {
-                            "unsafeName": "folderBFoo",
-                            "safeName": "folderBFoo"
+                            "unsafeName": "foo",
+                            "safeName": "foo"
                         },
                         "snakeCase": {
-                            "unsafeName": "folder_b_foo",
-                            "safeName": "folder_b_foo"
+                            "unsafeName": "foo",
+                            "safeName": "foo"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "FOLDER_B_FOO",
-                            "safeName": "FOLDER_B_FOO"
+                            "unsafeName": "FOO",
+                            "safeName": "FOO"
                         },
                         "pascalCase": {
-                            "unsafeName": "FolderBFoo",
-                            "safeName": "FolderBFoo"
+                            "unsafeName": "Foo",
+                            "safeName": "Foo"
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": [],
-                        "file": null
+                        "allParts": [
+                            {
+                                "originalName": "folder-b",
+                                "camelCase": {
+                                    "unsafeName": "folderB",
+                                    "safeName": "folderB"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "folder_b",
+                                    "safeName": "folder_b"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "FOLDER_B",
+                                    "safeName": "FOLDER_B"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "FolderB",
+                                    "safeName": "FolderB"
+                                }
+                            },
+                            {
+                                "originalName": "common",
+                                "camelCase": {
+                                    "unsafeName": "common",
+                                    "safeName": "common"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "common",
+                                    "safeName": "common"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "COMMON",
+                                    "safeName": "COMMON"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Common",
+                                    "safeName": "Common"
+                                }
+                            }
+                        ],
+                        "packagePath": [
+                            {
+                                "originalName": "folder-b",
+                                "camelCase": {
+                                    "unsafeName": "folderB",
+                                    "safeName": "folderB"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "folder_b",
+                                    "safeName": "folder_b"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "FOLDER_B",
+                                    "safeName": "FOLDER_B"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "FolderB",
+                                    "safeName": "FolderB"
+                                }
+                            }
+                        ],
+                        "file": {
+                            "originalName": "common",
+                            "camelCase": {
+                                "unsafeName": "common",
+                                "safeName": "common"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "common",
+                                "safeName": "common"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "COMMON",
+                                "safeName": "COMMON"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Common",
+                                "safeName": "Common"
+                            }
+                        }
                     }
                 },
                 "properties": [
@@ -1803,7 +1934,7 @@
                             "type": "optional",
                             "value": {
                                 "type": "named",
-                                "value": "type_:FolderCFolderCFoo"
+                                "value": "type_folder-c/common:FolderCFoo"
                             }
                         },
                         "propertyAccess": null,
@@ -1813,32 +1944,109 @@
                 "extends": null,
                 "additionalProperties": false
             },
-            "type_:FolderCFolderCFoo": {
+            "type_folder-c/common:FolderCFoo": {
                 "type": "object",
                 "declaration": {
                     "name": {
-                        "originalName": "FolderCFolderCFoo",
+                        "originalName": "FolderCFoo",
                         "camelCase": {
-                            "unsafeName": "folderCFolderCFoo",
-                            "safeName": "folderCFolderCFoo"
+                            "unsafeName": "folderCFoo",
+                            "safeName": "folderCFoo"
                         },
                         "snakeCase": {
-                            "unsafeName": "folder_c_folder_c_foo",
-                            "safeName": "folder_c_folder_c_foo"
+                            "unsafeName": "folder_c_foo",
+                            "safeName": "folder_c_foo"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "FOLDER_C_FOLDER_C_FOO",
-                            "safeName": "FOLDER_C_FOLDER_C_FOO"
+                            "unsafeName": "FOLDER_C_FOO",
+                            "safeName": "FOLDER_C_FOO"
                         },
                         "pascalCase": {
-                            "unsafeName": "FolderCFolderCFoo",
-                            "safeName": "FolderCFolderCFoo"
+                            "unsafeName": "FolderCFoo",
+                            "safeName": "FolderCFoo"
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": [],
-                        "file": null
+                        "allParts": [
+                            {
+                                "originalName": "folder-c",
+                                "camelCase": {
+                                    "unsafeName": "folderC",
+                                    "safeName": "folderC"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "folder_c",
+                                    "safeName": "folder_c"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "FOLDER_C",
+                                    "safeName": "FOLDER_C"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "FolderC",
+                                    "safeName": "FolderC"
+                                }
+                            },
+                            {
+                                "originalName": "common",
+                                "camelCase": {
+                                    "unsafeName": "common",
+                                    "safeName": "common"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "common",
+                                    "safeName": "common"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "COMMON",
+                                    "safeName": "COMMON"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Common",
+                                    "safeName": "Common"
+                                }
+                            }
+                        ],
+                        "packagePath": [
+                            {
+                                "originalName": "folder-c",
+                                "camelCase": {
+                                    "unsafeName": "folderC",
+                                    "safeName": "folderC"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "folder_c",
+                                    "safeName": "folder_c"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "FOLDER_C",
+                                    "safeName": "FOLDER_C"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "FolderC",
+                                    "safeName": "FolderC"
+                                }
+                            }
+                        ],
+                        "file": {
+                            "originalName": "common",
+                            "camelCase": {
+                                "unsafeName": "common",
+                                "safeName": "common"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "common",
+                                "safeName": "common"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "COMMON",
+                                "safeName": "COMMON"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Common",
+                                "safeName": "Common"
+                            }
+                        }
                     }
                 },
                 "properties": [
@@ -1867,7 +2075,7 @@
                         },
                         "typeReference": {
                             "type": "primitive",
-                            "value": "STRING"
+                            "value": "UUID"
                         },
                         "propertyAccess": null,
                         "variable": null
@@ -1876,32 +2084,109 @@
                 "extends": null,
                 "additionalProperties": false
             },
-            "type_:FolderDResponse": {
+            "type_folder-d/service:Response": {
                 "type": "object",
                 "declaration": {
                     "name": {
-                        "originalName": "FolderDResponse",
+                        "originalName": "Response",
                         "camelCase": {
-                            "unsafeName": "folderDResponse",
-                            "safeName": "folderDResponse"
+                            "unsafeName": "response",
+                            "safeName": "response"
                         },
                         "snakeCase": {
-                            "unsafeName": "folder_d_response",
-                            "safeName": "folder_d_response"
+                            "unsafeName": "response",
+                            "safeName": "response"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "FOLDER_D_RESPONSE",
-                            "safeName": "FOLDER_D_RESPONSE"
+                            "unsafeName": "RESPONSE",
+                            "safeName": "RESPONSE"
                         },
                         "pascalCase": {
-                            "unsafeName": "FolderDResponse",
-                            "safeName": "FolderDResponse"
+                            "unsafeName": "Response",
+                            "safeName": "Response"
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": [],
-                        "file": null
+                        "allParts": [
+                            {
+                                "originalName": "folder-d",
+                                "camelCase": {
+                                    "unsafeName": "folderD",
+                                    "safeName": "folderD"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "folder_d",
+                                    "safeName": "folder_d"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "FOLDER_D",
+                                    "safeName": "FOLDER_D"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "FolderD",
+                                    "safeName": "FolderD"
+                                }
+                            },
+                            {
+                                "originalName": "service",
+                                "camelCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SERVICE",
+                                    "safeName": "SERVICE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Service",
+                                    "safeName": "Service"
+                                }
+                            }
+                        ],
+                        "packagePath": [
+                            {
+                                "originalName": "folder-d",
+                                "camelCase": {
+                                    "unsafeName": "folderD",
+                                    "safeName": "folderD"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "folder_d",
+                                    "safeName": "folder_d"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "FOLDER_D",
+                                    "safeName": "FOLDER_D"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "FolderD",
+                                    "safeName": "FolderD"
+                                }
+                            }
+                        ],
+                        "file": {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
                     }
                 },
                 "properties": [
@@ -1939,7 +2224,7 @@
                 "extends": null,
                 "additionalProperties": false
             },
-            "type_:ImportingType": {
+            "type_foo:ImportingType": {
                 "type": "object",
                 "declaration": {
                     "name": {
@@ -1962,9 +2247,47 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [],
+                        "allParts": [
+                            {
+                                "originalName": "foo",
+                                "camelCase": {
+                                    "unsafeName": "foo",
+                                    "safeName": "foo"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "foo",
+                                    "safeName": "foo"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "FOO",
+                                    "safeName": "FOO"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Foo",
+                                    "safeName": "Foo"
+                                }
+                            }
+                        ],
                         "packagePath": [],
-                        "file": null
+                        "file": {
+                            "originalName": "foo",
+                            "camelCase": {
+                                "unsafeName": "foo",
+                                "safeName": "foo"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "foo",
+                                "safeName": "foo"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "FOO",
+                                "safeName": "FOO"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Foo",
+                                "safeName": "Foo"
+                            }
+                        }
                     }
                 },
                 "properties": [
@@ -1993,7 +2316,7 @@
                         },
                         "typeReference": {
                             "type": "named",
-                            "value": "type_:Imported"
+                            "value": "type_commons:Imported"
                         },
                         "propertyAccess": null,
                         "variable": null
@@ -2002,7 +2325,7 @@
                 "extends": null,
                 "additionalProperties": false
             },
-            "type_:OptionalString": {
+            "type_foo:OptionalString": {
                 "type": "alias",
                 "declaration": {
                     "name": {
@@ -2025,20 +2348,58 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [],
+                        "allParts": [
+                            {
+                                "originalName": "foo",
+                                "camelCase": {
+                                    "unsafeName": "foo",
+                                    "safeName": "foo"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "foo",
+                                    "safeName": "foo"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "FOO",
+                                    "safeName": "FOO"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Foo",
+                                    "safeName": "Foo"
+                                }
+                            }
+                        ],
                         "packagePath": [],
-                        "file": null
+                        "file": {
+                            "originalName": "foo",
+                            "camelCase": {
+                                "unsafeName": "foo",
+                                "safeName": "foo"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "foo",
+                                "safeName": "foo"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "FOO",
+                                "safeName": "FOO"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Foo",
+                                "safeName": "Foo"
+                            }
+                        }
                     }
                 },
                 "typeReference": {
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                         "type": "primitive",
                         "value": "STRING"
                     }
                 }
             },
-            "type_:FilteredType": {
+            "type_foo:FilteredType": {
                 "type": "object",
                 "declaration": {
                     "name": {
@@ -2061,9 +2422,47 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [],
+                        "allParts": [
+                            {
+                                "originalName": "foo",
+                                "camelCase": {
+                                    "unsafeName": "foo",
+                                    "safeName": "foo"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "foo",
+                                    "safeName": "foo"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "FOO",
+                                    "safeName": "FOO"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Foo",
+                                    "safeName": "Foo"
+                                }
+                            }
+                        ],
                         "packagePath": [],
-                        "file": null
+                        "file": {
+                            "originalName": "foo",
+                            "camelCase": {
+                                "unsafeName": "foo",
+                                "safeName": "foo"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "foo",
+                                "safeName": "foo"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "FOO",
+                                "safeName": "FOO"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Foo",
+                                "safeName": "Foo"
+                            }
+                        }
                     }
                 },
                 "properties": [
@@ -2093,11 +2492,8 @@
                         "typeReference": {
                             "type": "optional",
                             "value": {
-                                "type": "nullable",
-                                "value": {
-                                    "type": "primitive",
-                                    "value": "STRING"
-                                }
+                                "type": "primitive",
+                                "value": "STRING"
                             }
                         },
                         "propertyAccess": null,
@@ -2140,68 +2536,107 @@
         },
         "headers": [],
         "endpoints": {
-            "endpoint_folderAService.folderA_service_getDirectThread": {
+            "endpoint_folder-a/service.getDirectThread": {
                 "auth": null,
                 "declaration": {
                     "name": {
-                        "originalName": "folderA_service_getDirectThread",
+                        "originalName": "getDirectThread",
                         "camelCase": {
-                            "unsafeName": "folderAServiceGetDirectThread",
-                            "safeName": "folderAServiceGetDirectThread"
+                            "unsafeName": "getDirectThread",
+                            "safeName": "getDirectThread"
                         },
                         "snakeCase": {
-                            "unsafeName": "folder_a_service_get_direct_thread",
-                            "safeName": "folder_a_service_get_direct_thread"
+                            "unsafeName": "get_direct_thread",
+                            "safeName": "get_direct_thread"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "FOLDER_A_SERVICE_GET_DIRECT_THREAD",
-                            "safeName": "FOLDER_A_SERVICE_GET_DIRECT_THREAD"
+                            "unsafeName": "GET_DIRECT_THREAD",
+                            "safeName": "GET_DIRECT_THREAD"
                         },
                         "pascalCase": {
-                            "unsafeName": "FolderAServiceGetDirectThread",
-                            "safeName": "FolderAServiceGetDirectThread"
+                            "unsafeName": "GetDirectThread",
+                            "safeName": "GetDirectThread"
                         }
                     },
                     "fernFilepath": {
                         "allParts": [
                             {
-                                "originalName": "folderAService",
+                                "originalName": "folder-a",
                                 "camelCase": {
-                                    "unsafeName": "folderAService",
-                                    "safeName": "folderAService"
+                                    "unsafeName": "folderA",
+                                    "safeName": "folderA"
                                 },
                                 "snakeCase": {
-                                    "unsafeName": "folder_a_service",
-                                    "safeName": "folder_a_service"
+                                    "unsafeName": "folder_a",
+                                    "safeName": "folder_a"
                                 },
                                 "screamingSnakeCase": {
-                                    "unsafeName": "FOLDER_A_SERVICE",
-                                    "safeName": "FOLDER_A_SERVICE"
+                                    "unsafeName": "FOLDER_A",
+                                    "safeName": "FOLDER_A"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "FolderAService",
-                                    "safeName": "FolderAService"
+                                    "unsafeName": "FolderA",
+                                    "safeName": "FolderA"
+                                }
+                            },
+                            {
+                                "originalName": "service",
+                                "camelCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SERVICE",
+                                    "safeName": "SERVICE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Service",
+                                    "safeName": "Service"
                                 }
                             }
                         ],
-                        "packagePath": [],
+                        "packagePath": [
+                            {
+                                "originalName": "folder-a",
+                                "camelCase": {
+                                    "unsafeName": "folderA",
+                                    "safeName": "folderA"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "folder_a",
+                                    "safeName": "folder_a"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "FOLDER_A",
+                                    "safeName": "FOLDER_A"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "FolderA",
+                                    "safeName": "FolderA"
+                                }
+                            }
+                        ],
                         "file": {
-                            "originalName": "folderAService",
+                            "originalName": "service",
                             "camelCase": {
-                                "unsafeName": "folderAService",
-                                "safeName": "folderAService"
+                                "unsafeName": "service",
+                                "safeName": "service"
                             },
                             "snakeCase": {
-                                "unsafeName": "folder_a_service",
-                                "safeName": "folder_a_service"
+                                "unsafeName": "service",
+                                "safeName": "service"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "FOLDER_A_SERVICE",
-                                "safeName": "FOLDER_A_SERVICE"
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
                             },
                             "pascalCase": {
-                                "unsafeName": "FolderAService",
-                                "safeName": "FolderAService"
+                                "unsafeName": "Service",
+                                "safeName": "Service"
                             }
                         }
                     }
@@ -2214,64 +2649,103 @@
                     "type": "inlined",
                     "declaration": {
                         "name": {
-                            "originalName": "FolderAServiceGetDirectThreadRequest",
+                            "originalName": "GetDirectThreadRequest",
                             "camelCase": {
-                                "unsafeName": "folderAServiceGetDirectThreadRequest",
-                                "safeName": "folderAServiceGetDirectThreadRequest"
+                                "unsafeName": "getDirectThreadRequest",
+                                "safeName": "getDirectThreadRequest"
                             },
                             "snakeCase": {
-                                "unsafeName": "folder_a_service_get_direct_thread_request",
-                                "safeName": "folder_a_service_get_direct_thread_request"
+                                "unsafeName": "get_direct_thread_request",
+                                "safeName": "get_direct_thread_request"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "FOLDER_A_SERVICE_GET_DIRECT_THREAD_REQUEST",
-                                "safeName": "FOLDER_A_SERVICE_GET_DIRECT_THREAD_REQUEST"
+                                "unsafeName": "GET_DIRECT_THREAD_REQUEST",
+                                "safeName": "GET_DIRECT_THREAD_REQUEST"
                             },
                             "pascalCase": {
-                                "unsafeName": "FolderAServiceGetDirectThreadRequest",
-                                "safeName": "FolderAServiceGetDirectThreadRequest"
+                                "unsafeName": "GetDirectThreadRequest",
+                                "safeName": "GetDirectThreadRequest"
                             }
                         },
                         "fernFilepath": {
                             "allParts": [
                                 {
-                                    "originalName": "folderAService",
+                                    "originalName": "folder-a",
                                     "camelCase": {
-                                        "unsafeName": "folderAService",
-                                        "safeName": "folderAService"
+                                        "unsafeName": "folderA",
+                                        "safeName": "folderA"
                                     },
                                     "snakeCase": {
-                                        "unsafeName": "folder_a_service",
-                                        "safeName": "folder_a_service"
+                                        "unsafeName": "folder_a",
+                                        "safeName": "folder_a"
                                     },
                                     "screamingSnakeCase": {
-                                        "unsafeName": "FOLDER_A_SERVICE",
-                                        "safeName": "FOLDER_A_SERVICE"
+                                        "unsafeName": "FOLDER_A",
+                                        "safeName": "FOLDER_A"
                                     },
                                     "pascalCase": {
-                                        "unsafeName": "FolderAService",
-                                        "safeName": "FolderAService"
+                                        "unsafeName": "FolderA",
+                                        "safeName": "FolderA"
+                                    }
+                                },
+                                {
+                                    "originalName": "service",
+                                    "camelCase": {
+                                        "unsafeName": "service",
+                                        "safeName": "service"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "service",
+                                        "safeName": "service"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "SERVICE",
+                                        "safeName": "SERVICE"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Service",
+                                        "safeName": "Service"
                                     }
                                 }
                             ],
-                            "packagePath": [],
+                            "packagePath": [
+                                {
+                                    "originalName": "folder-a",
+                                    "camelCase": {
+                                        "unsafeName": "folderA",
+                                        "safeName": "folderA"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "folder_a",
+                                        "safeName": "folder_a"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "FOLDER_A",
+                                        "safeName": "FOLDER_A"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "FolderA",
+                                        "safeName": "FolderA"
+                                    }
+                                }
+                            ],
                             "file": {
-                                "originalName": "folderAService",
+                                "originalName": "service",
                                 "camelCase": {
-                                    "unsafeName": "folderAService",
-                                    "safeName": "folderAService"
+                                    "unsafeName": "service",
+                                    "safeName": "service"
                                 },
                                 "snakeCase": {
-                                    "unsafeName": "folder_a_service",
-                                    "safeName": "folder_a_service"
+                                    "unsafeName": "service",
+                                    "safeName": "service"
                                 },
                                 "screamingSnakeCase": {
-                                    "unsafeName": "FOLDER_A_SERVICE",
-                                    "safeName": "FOLDER_A_SERVICE"
+                                    "unsafeName": "SERVICE",
+                                    "safeName": "SERVICE"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "FolderAService",
-                                    "safeName": "FolderAService"
+                                    "unsafeName": "Service",
+                                    "safeName": "Service"
                                 }
                             }
                         }
@@ -2304,11 +2778,8 @@
                             "typeReference": {
                                 "type": "list",
                                 "value": {
-                                    "type": "optional",
-                                    "value": {
-                                        "type": "primitive",
-                                        "value": "STRING"
-                                    }
+                                    "type": "primitive",
+                                    "value": "STRING"
                                 }
                             },
                             "propertyAccess": null,
@@ -2340,11 +2811,8 @@
                             "typeReference": {
                                 "type": "list",
                                 "value": {
-                                    "type": "optional",
-                                    "value": {
-                                        "type": "primitive",
-                                        "value": "STRING"
-                                    }
+                                    "type": "primitive",
+                                    "value": "STRING"
                                 }
                             },
                             "propertyAccess": null,
@@ -2357,6 +2825,125 @@
                         "includePathParameters": false,
                         "onlyPathParameters": false
                     }
+                },
+                "response": {
+                    "type": "json"
+                },
+                "examples": null
+            },
+            "endpoint_folder-d/service.getDirectThread": {
+                "auth": null,
+                "declaration": {
+                    "name": {
+                        "originalName": "getDirectThread",
+                        "camelCase": {
+                            "unsafeName": "getDirectThread",
+                            "safeName": "getDirectThread"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "get_direct_thread",
+                            "safeName": "get_direct_thread"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "GET_DIRECT_THREAD",
+                            "safeName": "GET_DIRECT_THREAD"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "GetDirectThread",
+                            "safeName": "GetDirectThread"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "folder-d",
+                                "camelCase": {
+                                    "unsafeName": "folderD",
+                                    "safeName": "folderD"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "folder_d",
+                                    "safeName": "folder_d"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "FOLDER_D",
+                                    "safeName": "FOLDER_D"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "FolderD",
+                                    "safeName": "FolderD"
+                                }
+                            },
+                            {
+                                "originalName": "service",
+                                "camelCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SERVICE",
+                                    "safeName": "SERVICE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Service",
+                                    "safeName": "Service"
+                                }
+                            }
+                        ],
+                        "packagePath": [
+                            {
+                                "originalName": "folder-d",
+                                "camelCase": {
+                                    "unsafeName": "folderD",
+                                    "safeName": "folderD"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "folder_d",
+                                    "safeName": "folder_d"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "FOLDER_D",
+                                    "safeName": "FOLDER_D"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "FolderD",
+                                    "safeName": "FolderD"
+                                }
+                            }
+                        ],
+                        "file": {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    }
+                },
+                "location": {
+                    "method": "GET",
+                    "path": "/partner-path"
+                },
+                "request": {
+                    "type": "body",
+                    "pathParameters": [],
+                    "body": null
                 },
                 "response": {
                     "type": "json"
@@ -2437,22 +3024,22 @@
                     "type": "inlined",
                     "declaration": {
                         "name": {
-                            "originalName": "FooFindRequest",
+                            "originalName": "FindRequest",
                             "camelCase": {
-                                "unsafeName": "fooFindRequest",
-                                "safeName": "fooFindRequest"
+                                "unsafeName": "findRequest",
+                                "safeName": "findRequest"
                             },
                             "snakeCase": {
-                                "unsafeName": "foo_find_request",
-                                "safeName": "foo_find_request"
+                                "unsafeName": "find_request",
+                                "safeName": "find_request"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "FOO_FIND_REQUEST",
-                                "safeName": "FOO_FIND_REQUEST"
+                                "unsafeName": "FIND_REQUEST",
+                                "safeName": "FIND_REQUEST"
                             },
                             "pascalCase": {
-                                "unsafeName": "FooFindRequest",
-                                "safeName": "FooFindRequest"
+                                "unsafeName": "FindRequest",
+                                "safeName": "FindRequest"
                             }
                         },
                         "fernFilepath": {
@@ -2525,14 +3112,8 @@
                                 }
                             },
                             "typeReference": {
-                                "type": "optional",
-                                "value": {
-                                    "type": "nullable",
-                                    "value": {
-                                        "type": "named",
-                                        "value": "type_:OptionalString"
-                                    }
-                                }
+                                "type": "named",
+                                "value": "type_foo:OptionalString"
                             },
                             "propertyAccess": null,
                             "variable": null
@@ -2568,11 +3149,8 @@
                                 "typeReference": {
                                     "type": "optional",
                                     "value": {
-                                        "type": "nullable",
-                                        "value": {
-                                            "type": "primitive",
-                                            "value": "STRING"
-                                        }
+                                        "type": "primitive",
+                                        "value": "STRING"
                                     }
                                 },
                                 "propertyAccess": null,
@@ -2604,11 +3182,8 @@
                                 "typeReference": {
                                     "type": "optional",
                                     "value": {
-                                        "type": "nullable",
-                                        "value": {
-                                            "type": "primitive",
-                                            "value": "INTEGER"
-                                        }
+                                        "type": "primitive",
+                                        "value": "INTEGER"
                                     }
                                 },
                                 "propertyAccess": null,
@@ -2625,116 +3200,60 @@
                     "type": "json"
                 },
                 "examples": null
-            },
-            "endpoint_folderDService.folderD_service_getDirectThread": {
-                "auth": null,
-                "declaration": {
-                    "name": {
-                        "originalName": "folderD_service_getDirectThread",
-                        "camelCase": {
-                            "unsafeName": "folderDServiceGetDirectThread",
-                            "safeName": "folderDServiceGetDirectThread"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "folder_d_service_get_direct_thread",
-                            "safeName": "folder_d_service_get_direct_thread"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "FOLDER_D_SERVICE_GET_DIRECT_THREAD",
-                            "safeName": "FOLDER_D_SERVICE_GET_DIRECT_THREAD"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "FolderDServiceGetDirectThread",
-                            "safeName": "FolderDServiceGetDirectThread"
-                        }
-                    },
-                    "fernFilepath": {
-                        "allParts": [
-                            {
-                                "originalName": "folderDService",
-                                "camelCase": {
-                                    "unsafeName": "folderDService",
-                                    "safeName": "folderDService"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "folder_d_service",
-                                    "safeName": "folder_d_service"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "FOLDER_D_SERVICE",
-                                    "safeName": "FOLDER_D_SERVICE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "FolderDService",
-                                    "safeName": "FolderDService"
-                                }
-                            }
-                        ],
-                        "packagePath": [],
-                        "file": {
-                            "originalName": "folderDService",
-                            "camelCase": {
-                                "unsafeName": "folderDService",
-                                "safeName": "folderDService"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "folder_d_service",
-                                "safeName": "folder_d_service"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "FOLDER_D_SERVICE",
-                                "safeName": "FOLDER_D_SERVICE"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "FolderDService",
-                                "safeName": "FolderDService"
-                            }
-                        }
-                    }
-                },
-                "location": {
-                    "method": "GET",
-                    "path": "/partner-path"
-                },
-                "request": {
-                    "type": "body",
-                    "pathParameters": [],
-                    "body": null
-                },
-                "response": {
-                    "type": "json"
-                },
-                "examples": null
             }
         },
         "pathParameters": [],
         "environments": {
-            "defaultEnvironment": "Default",
+            "defaultEnvironment": null,
             "environments": {
                 "type": "singleBaseUrl",
                 "environments": [
                     {
-                        "id": "Default",
+                        "id": "environment-a",
                         "name": {
-                            "originalName": "Default",
+                            "originalName": "environment-a",
                             "camelCase": {
-                                "unsafeName": "default",
-                                "safeName": "default"
+                                "unsafeName": "environmentA",
+                                "safeName": "environmentA"
                             },
                             "snakeCase": {
-                                "unsafeName": "default",
-                                "safeName": "default"
+                                "unsafeName": "environment_a",
+                                "safeName": "environment_a"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "DEFAULT",
-                                "safeName": "DEFAULT"
+                                "unsafeName": "ENVIRONMENT_A",
+                                "safeName": "ENVIRONMENT_A"
                             },
                             "pascalCase": {
-                                "unsafeName": "Default",
-                                "safeName": "Default"
+                                "unsafeName": "EnvironmentA",
+                                "safeName": "EnvironmentA"
                             }
                         },
                         "url": "https://api.example.a.com",
+                        "docs": null
+                    },
+                    {
+                        "id": "environment-b",
+                        "name": {
+                            "originalName": "environment-b",
+                            "camelCase": {
+                                "unsafeName": "environmentB",
+                                "safeName": "environmentB"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "environment_b",
+                                "safeName": "environment_b"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ENVIRONMENT_B",
+                                "safeName": "ENVIRONMENT_B"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "EnvironmentB",
+                                "safeName": "EnvironmentB"
+                            }
+                        },
+                        "url": "https://api.example.b.com",
                         "docs": null
                     }
                 ]
@@ -2743,7 +3262,11 @@
         "variables": null,
         "generatorConfig": null
     },
-    "audiences": null,
+    "audiences": [
+        "public",
+        "private",
+        "partner"
+    ],
     "generationMetadata": null,
     "apiPlayground": true,
     "casingsConfig": {
@@ -2752,18 +3275,216 @@
         "smartCasing": true
     },
     "subpackages": {
-        "subpackage_folderAService": {
-            "name": "folderAService",
+        "subpackage_commons": {
+            "name": "commons",
             "displayName": null,
             "fernFilepath": {
                 "allParts": [
-                    "folderAService"
+                    "commons"
                 ],
                 "packagePath": [],
-                "file": "folderAService"
+                "file": "commons"
             },
-            "service": "service_folderAService",
+            "service": null,
+            "types": [
+                "type_commons:Imported"
+            ],
+            "errors": [],
+            "subpackages": [],
+            "navigationConfig": null,
+            "webhooks": null,
+            "websocket": null,
+            "hasEndpointsInTree": false,
+            "docs": null
+        },
+        "subpackage_folder-a": {
+            "name": "folder-a",
+            "displayName": null,
+            "fernFilepath": {
+                "allParts": [
+                    "folder-a"
+                ],
+                "packagePath": [
+                    "folder-a"
+                ],
+                "file": null
+            },
+            "service": null,
             "types": [],
+            "errors": [],
+            "subpackages": [
+                "subpackage_folder-a/service"
+            ],
+            "navigationConfig": null,
+            "webhooks": null,
+            "websocket": null,
+            "hasEndpointsInTree": true,
+            "docs": null
+        },
+        "subpackage_folder-a/service": {
+            "name": "service",
+            "displayName": null,
+            "fernFilepath": {
+                "allParts": [
+                    "folder-a",
+                    "service"
+                ],
+                "packagePath": [
+                    "folder-a"
+                ],
+                "file": "service"
+            },
+            "service": "service_folder-a/service",
+            "types": [
+                "type_folder-a/service:Response"
+            ],
+            "errors": [],
+            "subpackages": [],
+            "navigationConfig": null,
+            "webhooks": null,
+            "websocket": null,
+            "hasEndpointsInTree": true,
+            "docs": null
+        },
+        "subpackage_folder-b": {
+            "name": "folder-b",
+            "displayName": null,
+            "fernFilepath": {
+                "allParts": [
+                    "folder-b"
+                ],
+                "packagePath": [
+                    "folder-b"
+                ],
+                "file": null
+            },
+            "service": null,
+            "types": [],
+            "errors": [],
+            "subpackages": [
+                "subpackage_folder-b/common"
+            ],
+            "navigationConfig": null,
+            "webhooks": null,
+            "websocket": null,
+            "hasEndpointsInTree": false,
+            "docs": null
+        },
+        "subpackage_folder-b/common": {
+            "name": "common",
+            "displayName": null,
+            "fernFilepath": {
+                "allParts": [
+                    "folder-b",
+                    "common"
+                ],
+                "packagePath": [
+                    "folder-b"
+                ],
+                "file": "common"
+            },
+            "service": null,
+            "types": [
+                "type_folder-b/common:Foo"
+            ],
+            "errors": [],
+            "subpackages": [],
+            "navigationConfig": null,
+            "webhooks": null,
+            "websocket": null,
+            "hasEndpointsInTree": false,
+            "docs": null
+        },
+        "subpackage_folder-c": {
+            "name": "folder-c",
+            "displayName": null,
+            "fernFilepath": {
+                "allParts": [
+                    "folder-c"
+                ],
+                "packagePath": [
+                    "folder-c"
+                ],
+                "file": null
+            },
+            "service": null,
+            "types": [],
+            "errors": [],
+            "subpackages": [
+                "subpackage_folder-c/common"
+            ],
+            "navigationConfig": null,
+            "webhooks": null,
+            "websocket": null,
+            "hasEndpointsInTree": false,
+            "docs": null
+        },
+        "subpackage_folder-c/common": {
+            "name": "common",
+            "displayName": null,
+            "fernFilepath": {
+                "allParts": [
+                    "folder-c",
+                    "common"
+                ],
+                "packagePath": [
+                    "folder-c"
+                ],
+                "file": "common"
+            },
+            "service": null,
+            "types": [
+                "type_folder-c/common:FolderCFoo"
+            ],
+            "errors": [],
+            "subpackages": [],
+            "navigationConfig": null,
+            "webhooks": null,
+            "websocket": null,
+            "hasEndpointsInTree": false,
+            "docs": null
+        },
+        "subpackage_folder-d": {
+            "name": "folder-d",
+            "displayName": null,
+            "fernFilepath": {
+                "allParts": [
+                    "folder-d"
+                ],
+                "packagePath": [
+                    "folder-d"
+                ],
+                "file": null
+            },
+            "service": null,
+            "types": [],
+            "errors": [],
+            "subpackages": [
+                "subpackage_folder-d/service"
+            ],
+            "navigationConfig": null,
+            "webhooks": null,
+            "websocket": null,
+            "hasEndpointsInTree": true,
+            "docs": null
+        },
+        "subpackage_folder-d/service": {
+            "name": "service",
+            "displayName": null,
+            "fernFilepath": {
+                "allParts": [
+                    "folder-d",
+                    "service"
+                ],
+                "packagePath": [
+                    "folder-d"
+                ],
+                "file": "service"
+            },
+            "service": "service_folder-d/service",
+            "types": [
+                "type_folder-d/service:Response"
+            ],
             "errors": [],
             "subpackages": [],
             "navigationConfig": null,
@@ -2783,27 +3504,11 @@
                 "file": "foo"
             },
             "service": "service_foo",
-            "types": [],
-            "errors": [],
-            "subpackages": [],
-            "navigationConfig": null,
-            "webhooks": null,
-            "websocket": null,
-            "hasEndpointsInTree": true,
-            "docs": null
-        },
-        "subpackage_folderDService": {
-            "name": "folderDService",
-            "displayName": null,
-            "fernFilepath": {
-                "allParts": [
-                    "folderDService"
-                ],
-                "packagePath": [],
-                "file": "folderDService"
-            },
-            "service": "service_folderDService",
-            "types": [],
+            "types": [
+                "type_foo:ImportingType",
+                "type_foo:OptionalString",
+                "type_foo:FilteredType"
+            ],
             "errors": [],
             "subpackages": [],
             "navigationConfig": null,
@@ -2821,21 +3526,15 @@
         },
         "websocket": null,
         "service": null,
-        "types": [
-            "type_:Imported",
-            "type_:FolderAResponse",
-            "type_:FolderBFoo",
-            "type_:FolderCFolderCFoo",
-            "type_:FolderDResponse",
-            "type_:ImportingType",
-            "type_:OptionalString",
-            "type_:FilteredType"
-        ],
+        "types": [],
         "errors": [],
         "subpackages": [
-            "subpackage_folderAService",
-            "subpackage_foo",
-            "subpackage_folderDService"
+            "subpackage_commons",
+            "subpackage_folder-a",
+            "subpackage_folder-b",
+            "subpackage_folder-c",
+            "subpackage_folder-d",
+            "subpackage_foo"
         ],
         "webhooks": null,
         "navigationConfig": null,

@@ -2,8 +2,8 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": "api",
-    "apiDisplayName": "variables",
+    "apiName": "variables",
+    "apiDisplayName": null,
     "apiDocs": null,
     "auth": {
         "requirement": "ALL",
@@ -28,7 +28,7 @@
             },
             "displayName": null,
             "basePath": {
-                "head": "",
+                "head": "/",
                 "parts": []
             },
             "headers": [],
@@ -62,7 +62,7 @@
                         ]
                     },
                     "fullPath": {
-                        "head": "",
+                        "head": "/",
                         "parts": [
                             {
                                 "pathParameter": "endpointParam",
@@ -85,7 +85,7 @@
                                 }
                             },
                             "location": "ENDPOINT",
-                            "variable": null,
+                            "variable": "rootVariable",
                             "clientDefault": null,
                             "v2Examples": {
                                 "userSpecifiedExamples": {},
@@ -110,7 +110,7 @@
                                 }
                             },
                             "location": "ENDPOINT",
-                            "variable": null,
+                            "variable": "rootVariable",
                             "clientDefault": null,
                             "v2Examples": {
                                 "userSpecifiedExamples": {},
@@ -124,17 +124,7 @@
                     "headers": [],
                     "requestBody": null,
                     "v2RequestBodies": null,
-                    "sdkRequest": {
-                        "shape": {
-                            "type": "wrapper",
-                            "wrapperName": "ServicePostRequest",
-                            "bodyKey": "body",
-                            "includePathParameters": true,
-                            "onlyPathParameters": true
-                        },
-                        "requestParameterName": "request",
-                        "streamParameter": null
-                    },
+                    "sdkRequest": null,
                     "response": {
                         "body": null,
                         "status-code": null,
@@ -248,7 +238,24 @@
     },
     "basePath": null,
     "pathParameters": [],
-    "variables": [],
+    "variables": [
+        {
+            "id": "rootVariable",
+            "name": "rootVariable",
+            "type": {
+                "_type": "primitive",
+                "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                        "type": "string",
+                        "default": null,
+                        "validation": null
+                    }
+                }
+            },
+            "docs": null
+        }
+    ],
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": []
@@ -334,71 +341,7 @@
                     "path": "/{endpointParam}"
                 },
                 "request": {
-                    "type": "inlined",
-                    "declaration": {
-                        "name": {
-                            "originalName": "ServicePostRequest",
-                            "camelCase": {
-                                "unsafeName": "servicePostRequest",
-                                "safeName": "servicePostRequest"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "service_post_request",
-                                "safeName": "service_post_request"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "SERVICE_POST_REQUEST",
-                                "safeName": "SERVICE_POST_REQUEST"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "ServicePostRequest",
-                                "safeName": "ServicePostRequest"
-                            }
-                        },
-                        "fernFilepath": {
-                            "allParts": [
-                                {
-                                    "originalName": "service",
-                                    "camelCase": {
-                                        "unsafeName": "service",
-                                        "safeName": "service"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "service",
-                                        "safeName": "service"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "SERVICE",
-                                        "safeName": "SERVICE"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Service",
-                                        "safeName": "Service"
-                                    }
-                                }
-                            ],
-                            "packagePath": [],
-                            "file": {
-                                "originalName": "service",
-                                "camelCase": {
-                                    "unsafeName": "service",
-                                    "safeName": "service"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "service",
-                                    "safeName": "service"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "SERVICE",
-                                    "safeName": "SERVICE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Service",
-                                    "safeName": "Service"
-                                }
-                            }
-                        }
-                    },
+                    "type": "body",
                     "pathParameters": [
                         {
                             "name": {
@@ -428,16 +371,10 @@
                                 "value": "STRING"
                             },
                             "propertyAccess": null,
-                            "variable": null
+                            "variable": "rootVariable"
                         }
                     ],
-                    "queryParameters": [],
-                    "headers": [],
-                    "body": null,
-                    "metadata": {
-                        "includePathParameters": true,
-                        "onlyPathParameters": true
-                    }
+                    "body": null
                 },
                 "response": {
                     "type": "json"
@@ -447,7 +384,34 @@
         },
         "pathParameters": [],
         "environments": null,
-        "variables": null,
+        "variables": [
+            {
+                "id": "rootVariable",
+                "name": {
+                    "originalName": "rootVariable",
+                    "camelCase": {
+                        "unsafeName": "rootVariable",
+                        "safeName": "rootVariable"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "root_variable",
+                        "safeName": "root_variable"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "ROOT_VARIABLE",
+                        "safeName": "ROOT_VARIABLE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "RootVariable",
+                        "safeName": "RootVariable"
+                    }
+                },
+                "typeReference": {
+                    "type": "primitive",
+                    "value": "STRING"
+                }
+            }
+        ],
         "generatorConfig": null
     },
     "audiences": null,

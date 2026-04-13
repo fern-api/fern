@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_:MovieId": {
+        "type_imdb:MovieId": {
             "type": "alias",
             "declaration": {
                 "name": {
@@ -24,9 +24,47 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        {
+                            "originalName": "imdb",
+                            "camelCase": {
+                                "unsafeName": "imdb",
+                                "safeName": "imdb"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "imdb",
+                                "safeName": "imdb"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "IMDB",
+                                "safeName": "IMDB"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Imdb",
+                                "safeName": "Imdb"
+                            }
+                        }
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": {
+                        "originalName": "imdb",
+                        "camelCase": {
+                            "unsafeName": "imdb",
+                            "safeName": "imdb"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "imdb",
+                            "safeName": "imdb"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "IMDB",
+                            "safeName": "IMDB"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Imdb",
+                            "safeName": "Imdb"
+                        }
+                    }
                 }
             },
             "typeReference": {
@@ -34,7 +72,7 @@
                 "value": "STRING"
             }
         },
-        "type_:Movie": {
+        "type_imdb:Movie": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -57,9 +95,47 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        {
+                            "originalName": "imdb",
+                            "camelCase": {
+                                "unsafeName": "imdb",
+                                "safeName": "imdb"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "imdb",
+                                "safeName": "imdb"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "IMDB",
+                                "safeName": "IMDB"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Imdb",
+                                "safeName": "Imdb"
+                            }
+                        }
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": {
+                        "originalName": "imdb",
+                        "camelCase": {
+                            "unsafeName": "imdb",
+                            "safeName": "imdb"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "imdb",
+                            "safeName": "imdb"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "IMDB",
+                            "safeName": "IMDB"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Imdb",
+                            "safeName": "Imdb"
+                        }
+                    }
                 }
             },
             "properties": [
@@ -88,7 +164,7 @@
                     },
                     "typeReference": {
                         "type": "named",
-                        "value": "type_:MovieId"
+                        "value": "type_imdb:MovieId"
                     },
                     "propertyAccess": null,
                     "variable": null
@@ -160,7 +236,7 @@
     },
     "headers": [],
     "endpoints": {
-        "endpoint_imdb.createMovie": {
+        "endpoint_imdb.create_movie": {
             "auth": {
                 "type": "bearer",
                 "token": {
@@ -185,7 +261,7 @@
             },
             "declaration": {
                 "name": {
-                    "originalName": "createMovie",
+                    "originalName": "create_movie",
                     "camelCase": {
                         "unsafeName": "createMovie",
                         "safeName": "createMovie"
@@ -255,22 +331,22 @@
                 "type": "inlined",
                 "declaration": {
                     "name": {
-                        "originalName": "ImdbCreateMovieRequest",
+                        "originalName": "CreateMovieRequest",
                         "camelCase": {
-                            "unsafeName": "imdbCreateMovieRequest",
-                            "safeName": "imdbCreateMovieRequest"
+                            "unsafeName": "createMovieRequest",
+                            "safeName": "createMovieRequest"
                         },
                         "snakeCase": {
-                            "unsafeName": "imdb_create_movie_request",
-                            "safeName": "imdb_create_movie_request"
+                            "unsafeName": "create_movie_request",
+                            "safeName": "create_movie_request"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "IMDB_CREATE_MOVIE_REQUEST",
-                            "safeName": "IMDB_CREATE_MOVIE_REQUEST"
+                            "unsafeName": "CREATE_MOVIE_REQUEST",
+                            "safeName": "CREATE_MOVIE_REQUEST"
                         },
                         "pascalCase": {
-                            "unsafeName": "ImdbCreateMovieRequest",
-                            "safeName": "ImdbCreateMovieRequest"
+                            "unsafeName": "CreateMovieRequest",
+                            "safeName": "CreateMovieRequest"
                         }
                     },
                     "fernFilepath": {
@@ -348,7 +424,7 @@
                             },
                             "typeReference": {
                                 "type": "named",
-                                "value": "type_:MovieId"
+                                "value": "type_imdb:MovieId"
                             },
                             "propertyAccess": null,
                             "variable": null
@@ -425,7 +501,7 @@
             },
             "examples": null
         },
-        "endpoint_imdb.getMovie": {
+        "endpoint_imdb.get_movie": {
             "auth": {
                 "type": "bearer",
                 "token": {
@@ -450,7 +526,7 @@
             },
             "declaration": {
                 "name": {
-                    "originalName": "getMovie",
+                    "originalName": "get_movie",
                     "camelCase": {
                         "unsafeName": "getMovie",
                         "safeName": "getMovie"
@@ -517,71 +593,7 @@
                 "path": "/movies/{movie_id}"
             },
             "request": {
-                "type": "inlined",
-                "declaration": {
-                    "name": {
-                        "originalName": "ImdbGetMovieRequest",
-                        "camelCase": {
-                            "unsafeName": "imdbGetMovieRequest",
-                            "safeName": "imdbGetMovieRequest"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "imdb_get_movie_request",
-                            "safeName": "imdb_get_movie_request"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "IMDB_GET_MOVIE_REQUEST",
-                            "safeName": "IMDB_GET_MOVIE_REQUEST"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "ImdbGetMovieRequest",
-                            "safeName": "ImdbGetMovieRequest"
-                        }
-                    },
-                    "fernFilepath": {
-                        "allParts": [
-                            {
-                                "originalName": "imdb",
-                                "camelCase": {
-                                    "unsafeName": "imdb",
-                                    "safeName": "imdb"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "imdb",
-                                    "safeName": "imdb"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "IMDB",
-                                    "safeName": "IMDB"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Imdb",
-                                    "safeName": "Imdb"
-                                }
-                            }
-                        ],
-                        "packagePath": [],
-                        "file": {
-                            "originalName": "imdb",
-                            "camelCase": {
-                                "unsafeName": "imdb",
-                                "safeName": "imdb"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "imdb",
-                                "safeName": "imdb"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "IMDB",
-                                "safeName": "IMDB"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Imdb",
-                                "safeName": "Imdb"
-                            }
-                        }
-                    }
-                },
+                "type": "body",
                 "pathParameters": [
                     {
                         "name": {
@@ -608,19 +620,13 @@
                         },
                         "typeReference": {
                             "type": "named",
-                            "value": "type_:MovieId"
+                            "value": "type_imdb:MovieId"
                         },
                         "propertyAccess": null,
                         "variable": null
                     }
                 ],
-                "queryParameters": [],
-                "headers": [],
-                "body": null,
-                "metadata": {
-                    "includePathParameters": true,
-                    "onlyPathParameters": true
-                }
+                "body": null
             },
             "response": {
                 "type": "json"

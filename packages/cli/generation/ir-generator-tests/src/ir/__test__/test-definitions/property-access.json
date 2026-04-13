@@ -2,8 +2,8 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": "api",
-    "apiDisplayName": "property-access",
+    "apiName": "property-access",
+    "apiDisplayName": null,
     "apiDocs": null,
     "auth": {
         "requirement": "ALL",
@@ -32,19 +32,13 @@
                     {
                         "name": "id",
                         "valueType": {
-                            "_type": "container",
-                            "container": {
-                                "_type": "optional",
-                                "optional": {
-                                    "_type": "primitive",
-                                    "primitive": {
-                                        "v1": "STRING",
-                                        "v2": {
-                                            "type": "string",
-                                            "default": null,
-                                            "validation": null
-                                        }
-                                    }
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
                                 }
                             }
                         },
@@ -59,19 +53,13 @@
                     {
                         "name": "email",
                         "valueType": {
-                            "_type": "container",
-                            "container": {
-                                "_type": "optional",
-                                "optional": {
-                                    "_type": "primitive",
-                                    "primitive": {
-                                        "v1": "STRING",
-                                        "v2": {
-                                            "type": "string",
-                                            "default": null,
-                                            "validation": null
-                                        }
-                                    }
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
                                 }
                             }
                         },
@@ -264,19 +252,13 @@
                     {
                         "name": "verified",
                         "valueType": {
-                            "_type": "container",
-                            "container": {
-                                "_type": "optional",
-                                "optional": {
-                                    "_type": "primitive",
-                                    "primitive": {
-                                        "v1": "STRING",
-                                        "v2": {
-                                            "type": "string",
-                                            "default": null,
-                                            "validation": null
-                                        }
-                                    }
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
                                 }
                             }
                         },
@@ -424,19 +406,13 @@
                     {
                         "name": "id",
                         "valueType": {
-                            "_type": "container",
-                            "container": {
-                                "_type": "optional",
-                                "optional": {
-                                    "_type": "primitive",
-                                    "primitive": {
-                                        "v1": "STRING",
-                                        "v2": {
-                                            "type": "string",
-                                            "default": null,
-                                            "validation": null
-                                        }
-                                    }
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
                                 }
                             }
                         },
@@ -451,19 +427,13 @@
                     {
                         "name": "email",
                         "valueType": {
-                            "_type": "container",
-                            "container": {
-                                "_type": "optional",
-                                "optional": {
-                                    "_type": "primitive",
-                                    "primitive": {
-                                        "v1": "STRING",
-                                        "v2": {
-                                            "type": "string",
-                                            "default": null,
-                                            "validation": null
-                                        }
-                                    }
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
                                 }
                             }
                         },
@@ -537,431 +507,6 @@
             "availability": null,
             "docs": "Admin user object"
         },
-        "type_:UserOrAdminDiscriminatedZeroType": {
-            "inline": true,
-            "name": {
-                "name": "UserOrAdminDiscriminatedZeroType",
-                "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": [],
-                    "file": null
-                },
-                "displayName": null,
-                "typeId": "type_:UserOrAdminDiscriminatedZeroType"
-            },
-            "shape": {
-                "_type": "enum",
-                "default": null,
-                "values": [
-                    {
-                        "name": "user",
-                        "availability": null,
-                        "docs": null
-                    }
-                ],
-                "forwardCompatible": null
-            },
-            "referencedTypes": [],
-            "encoding": {
-                "json": {},
-                "proto": null
-            },
-            "source": null,
-            "userProvidedExamples": [],
-            "autogeneratedExamples": [],
-            "v2Examples": null,
-            "availability": null,
-            "docs": null
-        },
-        "type_:UserOrAdminDiscriminatedZero": {
-            "inline": true,
-            "name": {
-                "name": "UserOrAdminDiscriminatedZero",
-                "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": [],
-                    "file": null
-                },
-                "displayName": null,
-                "typeId": "type_:UserOrAdminDiscriminatedZero"
-            },
-            "shape": {
-                "_type": "object",
-                "extends": [
-                    {
-                        "name": "User",
-                        "fernFilepath": {
-                            "allParts": [],
-                            "packagePath": [],
-                            "file": null
-                        },
-                        "displayName": null,
-                        "typeId": "type_:User"
-                    }
-                ],
-                "properties": [
-                    {
-                        "name": "type",
-                        "valueType": {
-                            "_type": "named",
-                            "name": "UserOrAdminDiscriminatedZeroType",
-                            "fernFilepath": {
-                                "allParts": [],
-                                "packagePath": [],
-                                "file": null
-                            },
-                            "displayName": null,
-                            "typeId": "type_:UserOrAdminDiscriminatedZeroType",
-                            "default": null,
-                            "inline": null
-                        },
-                        "propertyAccess": null,
-                        "v2Examples": {
-                            "userSpecifiedExamples": {},
-                            "autogeneratedExamples": {}
-                        },
-                        "availability": null,
-                        "docs": null
-                    }
-                ],
-                "extra-properties": false,
-                "extendedProperties": [
-                    {
-                        "name": "id",
-                        "valueType": {
-                            "_type": "container",
-                            "container": {
-                                "_type": "optional",
-                                "optional": {
-                                    "_type": "primitive",
-                                    "primitive": {
-                                        "v1": "STRING",
-                                        "v2": {
-                                            "type": "string",
-                                            "default": null,
-                                            "validation": null
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        "propertyAccess": "READ_ONLY",
-                        "v2Examples": {
-                            "userSpecifiedExamples": {},
-                            "autogeneratedExamples": {}
-                        },
-                        "availability": null,
-                        "docs": "The unique identifier for the user."
-                    },
-                    {
-                        "name": "email",
-                        "valueType": {
-                            "_type": "container",
-                            "container": {
-                                "_type": "optional",
-                                "optional": {
-                                    "_type": "primitive",
-                                    "primitive": {
-                                        "v1": "STRING",
-                                        "v2": {
-                                            "type": "string",
-                                            "default": null,
-                                            "validation": null
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        "propertyAccess": "READ_ONLY",
-                        "v2Examples": {
-                            "userSpecifiedExamples": {},
-                            "autogeneratedExamples": {}
-                        },
-                        "availability": null,
-                        "docs": "The email address of the user."
-                    },
-                    {
-                        "name": "password",
-                        "valueType": {
-                            "_type": "primitive",
-                            "primitive": {
-                                "v1": "STRING",
-                                "v2": {
-                                    "type": "string",
-                                    "default": null,
-                                    "validation": null
-                                }
-                            }
-                        },
-                        "propertyAccess": "WRITE_ONLY",
-                        "v2Examples": {
-                            "userSpecifiedExamples": {},
-                            "autogeneratedExamples": {}
-                        },
-                        "availability": null,
-                        "docs": "The password for the user."
-                    },
-                    {
-                        "name": "profile",
-                        "valueType": {
-                            "_type": "named",
-                            "name": "UserProfile",
-                            "fernFilepath": {
-                                "allParts": [],
-                                "packagePath": [],
-                                "file": null
-                            },
-                            "displayName": null,
-                            "typeId": "type_:UserProfile",
-                            "default": null,
-                            "inline": null
-                        },
-                        "propertyAccess": null,
-                        "v2Examples": {
-                            "userSpecifiedExamples": {},
-                            "autogeneratedExamples": {}
-                        },
-                        "availability": null,
-                        "docs": "User profile object"
-                    }
-                ]
-            },
-            "referencedTypes": [
-                "type_:User",
-                "type_:UserProfile",
-                "type_:UserProfileVerification",
-                "type_:UserOrAdminDiscriminatedZeroType"
-            ],
-            "encoding": {
-                "json": {},
-                "proto": null
-            },
-            "source": null,
-            "userProvidedExamples": [],
-            "autogeneratedExamples": [],
-            "v2Examples": null,
-            "availability": null,
-            "docs": null
-        },
-        "type_:UserOrAdminDiscriminatedAdminType": {
-            "inline": true,
-            "name": {
-                "name": "UserOrAdminDiscriminatedAdminType",
-                "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": [],
-                    "file": null
-                },
-                "displayName": null,
-                "typeId": "type_:UserOrAdminDiscriminatedAdminType"
-            },
-            "shape": {
-                "_type": "enum",
-                "default": null,
-                "values": [
-                    {
-                        "name": "admin",
-                        "availability": null,
-                        "docs": null
-                    }
-                ],
-                "forwardCompatible": null
-            },
-            "referencedTypes": [],
-            "encoding": {
-                "json": {},
-                "proto": null
-            },
-            "source": null,
-            "userProvidedExamples": [],
-            "autogeneratedExamples": [],
-            "v2Examples": null,
-            "availability": null,
-            "docs": null
-        },
-        "type_:UserOrAdminDiscriminatedAdmin": {
-            "inline": true,
-            "name": {
-                "name": "UserOrAdminDiscriminatedAdmin",
-                "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": [],
-                    "file": null
-                },
-                "displayName": null,
-                "typeId": "type_:UserOrAdminDiscriminatedAdmin"
-            },
-            "shape": {
-                "_type": "object",
-                "extends": [],
-                "properties": [
-                    {
-                        "name": "type",
-                        "valueType": {
-                            "_type": "named",
-                            "name": "UserOrAdminDiscriminatedAdminType",
-                            "fernFilepath": {
-                                "allParts": [],
-                                "packagePath": [],
-                                "file": null
-                            },
-                            "displayName": null,
-                            "typeId": "type_:UserOrAdminDiscriminatedAdminType",
-                            "default": null,
-                            "inline": null
-                        },
-                        "propertyAccess": null,
-                        "v2Examples": {
-                            "userSpecifiedExamples": {},
-                            "autogeneratedExamples": {}
-                        },
-                        "availability": null,
-                        "docs": null
-                    },
-                    {
-                        "name": "admin",
-                        "valueType": {
-                            "_type": "container",
-                            "container": {
-                                "_type": "optional",
-                                "optional": {
-                                    "_type": "named",
-                                    "name": "Admin",
-                                    "fernFilepath": {
-                                        "allParts": [],
-                                        "packagePath": [],
-                                        "file": null
-                                    },
-                                    "displayName": null,
-                                    "typeId": "type_:Admin",
-                                    "default": null,
-                                    "inline": null
-                                }
-                            }
-                        },
-                        "propertyAccess": null,
-                        "v2Examples": {
-                            "userSpecifiedExamples": {},
-                            "autogeneratedExamples": {}
-                        },
-                        "availability": null,
-                        "docs": null
-                    }
-                ],
-                "extra-properties": false,
-                "extendedProperties": []
-            },
-            "referencedTypes": [
-                "type_:UserOrAdminDiscriminatedAdminType",
-                "type_:Admin",
-                "type_:User",
-                "type_:UserProfile",
-                "type_:UserProfileVerification"
-            ],
-            "encoding": {
-                "json": {},
-                "proto": null
-            },
-            "source": null,
-            "userProvidedExamples": [],
-            "autogeneratedExamples": [],
-            "v2Examples": null,
-            "availability": null,
-            "docs": null
-        },
-        "type_:UserOrAdminDiscriminatedTwoType": {
-            "inline": true,
-            "name": {
-                "name": "UserOrAdminDiscriminatedTwoType",
-                "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": [],
-                    "file": null
-                },
-                "displayName": null,
-                "typeId": "type_:UserOrAdminDiscriminatedTwoType"
-            },
-            "shape": {
-                "_type": "enum",
-                "default": null,
-                "values": [
-                    {
-                        "name": "empty",
-                        "availability": null,
-                        "docs": null
-                    }
-                ],
-                "forwardCompatible": null
-            },
-            "referencedTypes": [],
-            "encoding": {
-                "json": {},
-                "proto": null
-            },
-            "source": null,
-            "userProvidedExamples": [],
-            "autogeneratedExamples": [],
-            "v2Examples": null,
-            "availability": null,
-            "docs": null
-        },
-        "type_:UserOrAdminDiscriminatedTwo": {
-            "inline": true,
-            "name": {
-                "name": "UserOrAdminDiscriminatedTwo",
-                "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": [],
-                    "file": null
-                },
-                "displayName": null,
-                "typeId": "type_:UserOrAdminDiscriminatedTwo"
-            },
-            "shape": {
-                "_type": "object",
-                "extends": [],
-                "properties": [
-                    {
-                        "name": "type",
-                        "valueType": {
-                            "_type": "named",
-                            "name": "UserOrAdminDiscriminatedTwoType",
-                            "fernFilepath": {
-                                "allParts": [],
-                                "packagePath": [],
-                                "file": null
-                            },
-                            "displayName": null,
-                            "typeId": "type_:UserOrAdminDiscriminatedTwoType",
-                            "default": null,
-                            "inline": null
-                        },
-                        "propertyAccess": null,
-                        "v2Examples": {
-                            "userSpecifiedExamples": {},
-                            "autogeneratedExamples": {}
-                        },
-                        "availability": null,
-                        "docs": null
-                    }
-                ],
-                "extra-properties": false,
-                "extendedProperties": []
-            },
-            "referencedTypes": [
-                "type_:UserOrAdminDiscriminatedTwoType"
-            ],
-            "encoding": {
-                "json": {},
-                "proto": null
-            },
-            "source": null,
-            "userProvidedExamples": [],
-            "autogeneratedExamples": [],
-            "v2Examples": null,
-            "availability": null,
-            "docs": null
-        },
         "type_:UserOrAdminDiscriminated": {
             "inline": null,
             "name": {
@@ -975,69 +520,126 @@
                 "typeId": "type_:UserOrAdminDiscriminated"
             },
             "shape": {
-                "_type": "undiscriminatedUnion",
-                "members": [
+                "_type": "union",
+                "discriminant": "type",
+                "extends": [
                     {
-                        "type": {
-                            "_type": "named",
-                            "name": "UserOrAdminDiscriminatedZero",
-                            "fernFilepath": {
-                                "allParts": [],
-                                "packagePath": [],
-                                "file": null
-                            },
-                            "displayName": "User or Admin Discriminated Zero",
-                            "typeId": "type_:UserOrAdminDiscriminatedZero",
-                            "default": null,
-                            "inline": null
+                        "name": "Foo",
+                        "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": [],
+                            "file": null
                         },
+                        "displayName": null,
+                        "typeId": "type_:Foo"
+                    }
+                ],
+                "baseProperties": [
+                    {
+                        "name": "normal",
+                        "valueType": {
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
+                        },
+                        "propertyAccess": null,
+                        "v2Examples": {
+                            "userSpecifiedExamples": {},
+                            "autogeneratedExamples": {}
+                        },
+                        "availability": null,
                         "docs": null
                     },
                     {
-                        "type": {
+                        "name": "foo",
+                        "valueType": {
                             "_type": "named",
-                            "name": "UserOrAdminDiscriminatedAdmin",
+                            "name": "Foo",
                             "fernFilepath": {
                                 "allParts": [],
                                 "packagePath": [],
                                 "file": null
                             },
-                            "displayName": "User or Admin Discriminated Admin",
-                            "typeId": "type_:UserOrAdminDiscriminatedAdmin",
+                            "displayName": null,
+                            "typeId": "type_:Foo",
                             "default": null,
                             "inline": null
                         },
-                        "docs": null
-                    },
-                    {
-                        "type": {
-                            "_type": "named",
-                            "name": "UserOrAdminDiscriminatedTwo",
-                            "fernFilepath": {
-                                "allParts": [],
-                                "packagePath": [],
-                                "file": null
-                            },
-                            "displayName": "User or Admin Discriminated Two",
-                            "typeId": "type_:UserOrAdminDiscriminatedTwo",
-                            "default": null,
-                            "inline": null
+                        "propertyAccess": null,
+                        "v2Examples": {
+                            "userSpecifiedExamples": {},
+                            "autogeneratedExamples": {}
                         },
+                        "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "types": [
+                    {
+                        "discriminantValue": "user",
+                        "shape": {
+                            "_type": "samePropertiesAsObject",
+                            "name": "User",
+                            "fernFilepath": {
+                                "allParts": [],
+                                "packagePath": [],
+                                "file": null
+                            },
+                            "displayName": null,
+                            "typeId": "type_:User"
+                        },
+                        "displayName": null,
+                        "availability": null,
+                        "docs": null
+                    },
+                    {
+                        "discriminantValue": "admin",
+                        "shape": {
+                            "_type": "singleProperty",
+                            "name": "admin",
+                            "type": {
+                                "_type": "named",
+                                "name": "Admin",
+                                "fernFilepath": {
+                                    "allParts": [],
+                                    "packagePath": [],
+                                    "file": null
+                                },
+                                "displayName": null,
+                                "typeId": "type_:Admin",
+                                "default": null,
+                                "inline": null
+                            }
+                        },
+                        "displayName": null,
+                        "availability": null,
+                        "docs": null
+                    },
+                    {
+                        "discriminantValue": "empty",
+                        "shape": {
+                            "_type": "noProperties"
+                        },
+                        "displayName": null,
+                        "availability": null,
+                        "docs": null
+                    }
+                ],
+                "default": null,
+                "discriminatorContext": "data"
             },
             "referencedTypes": [
-                "type_:UserOrAdminDiscriminatedZero",
+                "type_:Foo",
                 "type_:User",
                 "type_:UserProfile",
                 "type_:UserProfileVerification",
-                "type_:UserOrAdminDiscriminatedZeroType",
-                "type_:UserOrAdminDiscriminatedAdmin",
-                "type_:UserOrAdminDiscriminatedAdminType",
-                "type_:Admin",
-                "type_:UserOrAdminDiscriminatedTwo",
-                "type_:UserOrAdminDiscriminatedTwoType"
+                "type_:Admin"
             ],
             "encoding": {
                 "json": {},
@@ -1090,19 +692,13 @@
                     {
                         "name": "read",
                         "valueType": {
-                            "_type": "container",
-                            "container": {
-                                "_type": "optional",
-                                "optional": {
-                                    "_type": "primitive",
-                                    "primitive": {
-                                        "v1": "STRING",
-                                        "v2": {
-                                            "type": "string",
-                                            "default": null,
-                                            "validation": null
-                                        }
-                                    }
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
                                 }
                             }
                         },
@@ -1165,7 +761,7 @@
             },
             "displayName": null,
             "basePath": {
-                "head": "",
+                "head": "/users",
                 "parts": []
             },
             "headers": [],
@@ -1190,11 +786,11 @@
                     "method": "POST",
                     "basePath": null,
                     "path": {
-                        "head": "/users",
+                        "head": "",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "users",
+                        "head": "/users",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -1217,7 +813,7 @@
                             "inline": null
                         },
                         "docs": null,
-                        "contentType": "application/json",
+                        "contentType": null,
                         "v2Examples": null
                     },
                     "v2RequestBodies": null,
@@ -1265,555 +861,21 @@
                                     "default": null,
                                     "inline": null
                                 },
-                                "docs": "",
+                                "docs": null,
                                 "v2Examples": null
                             }
                         },
-                        "status-code": 200,
+                        "status-code": null,
                         "isWildcardStatusCode": null,
-                        "docs": ""
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [],
-                    "userSpecifiedExamples": [
-                        {
-                            "example": {
-                                "id": "cad2b3bf",
-                                "name": null,
-                                "url": "/users",
-                                "rootPathParameters": [],
-                                "endpointPathParameters": [],
-                                "servicePathParameters": [],
-                                "endpointHeaders": [],
-                                "serviceHeaders": [],
-                                "queryParameters": [],
-                                "request": {
-                                    "type": "reference",
-                                    "shape": {
-                                        "type": "named",
-                                        "typeName": {
-                                            "typeId": "type_:User",
-                                            "fernFilepath": {
-                                                "allParts": [],
-                                                "packagePath": [],
-                                                "file": null
-                                            },
-                                            "name": "User",
-                                            "displayName": null
-                                        },
-                                        "shape": {
-                                            "type": "object",
-                                            "properties": [
-                                                {
-                                                    "name": "password",
-                                                    "value": {
-                                                        "shape": {
-                                                            "type": "primitive",
-                                                            "primitive": {
-                                                                "type": "string",
-                                                                "string": {
-                                                                    "original": "password"
-                                                                }
-                                                            }
-                                                        },
-                                                        "jsonExample": "password"
-                                                    },
-                                                    "originalTypeDeclaration": {
-                                                        "typeId": "type_:User",
-                                                        "fernFilepath": {
-                                                            "allParts": [],
-                                                            "packagePath": [],
-                                                            "file": null
-                                                        },
-                                                        "name": "User",
-                                                        "displayName": null
-                                                    },
-                                                    "propertyAccess": "WRITE_ONLY"
-                                                },
-                                                {
-                                                    "name": "profile",
-                                                    "value": {
-                                                        "shape": {
-                                                            "type": "named",
-                                                            "typeName": {
-                                                                "typeId": "type_:UserProfile",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "name": "UserProfile",
-                                                                "displayName": null
-                                                            },
-                                                            "shape": {
-                                                                "type": "object",
-                                                                "properties": [
-                                                                    {
-                                                                        "name": "name",
-                                                                        "value": {
-                                                                            "shape": {
-                                                                                "type": "primitive",
-                                                                                "primitive": {
-                                                                                    "type": "string",
-                                                                                    "string": {
-                                                                                        "original": "name"
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            "jsonExample": "name"
-                                                                        },
-                                                                        "originalTypeDeclaration": {
-                                                                            "typeId": "type_:UserProfile",
-                                                                            "fernFilepath": {
-                                                                                "allParts": [],
-                                                                                "packagePath": [],
-                                                                                "file": null
-                                                                            },
-                                                                            "name": "UserProfile",
-                                                                            "displayName": null
-                                                                        },
-                                                                        "propertyAccess": null
-                                                                    },
-                                                                    {
-                                                                        "name": "verification",
-                                                                        "value": {
-                                                                            "shape": {
-                                                                                "type": "named",
-                                                                                "typeName": {
-                                                                                    "typeId": "type_:UserProfileVerification",
-                                                                                    "fernFilepath": {
-                                                                                        "allParts": [],
-                                                                                        "packagePath": [],
-                                                                                        "file": null
-                                                                                    },
-                                                                                    "name": "UserProfileVerification",
-                                                                                    "displayName": null
-                                                                                },
-                                                                                "shape": {
-                                                                                    "type": "object",
-                                                                                    "properties": [],
-                                                                                    "extraProperties": null
-                                                                                }
-                                                                            },
-                                                                            "jsonExample": {}
-                                                                        },
-                                                                        "originalTypeDeclaration": {
-                                                                            "typeId": "type_:UserProfile",
-                                                                            "fernFilepath": {
-                                                                                "allParts": [],
-                                                                                "packagePath": [],
-                                                                                "file": null
-                                                                            },
-                                                                            "name": "UserProfile",
-                                                                            "displayName": null
-                                                                        },
-                                                                        "propertyAccess": null
-                                                                    },
-                                                                    {
-                                                                        "name": "ssn",
-                                                                        "value": {
-                                                                            "shape": {
-                                                                                "type": "primitive",
-                                                                                "primitive": {
-                                                                                    "type": "string",
-                                                                                    "string": {
-                                                                                        "original": "ssn"
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            "jsonExample": "ssn"
-                                                                        },
-                                                                        "originalTypeDeclaration": {
-                                                                            "typeId": "type_:UserProfile",
-                                                                            "fernFilepath": {
-                                                                                "allParts": [],
-                                                                                "packagePath": [],
-                                                                                "file": null
-                                                                            },
-                                                                            "name": "UserProfile",
-                                                                            "displayName": null
-                                                                        },
-                                                                        "propertyAccess": "WRITE_ONLY"
-                                                                    }
-                                                                ],
-                                                                "extraProperties": null
-                                                            }
-                                                        },
-                                                        "jsonExample": {
-                                                            "name": "name",
-                                                            "verification": {},
-                                                            "ssn": "ssn"
-                                                        }
-                                                    },
-                                                    "originalTypeDeclaration": {
-                                                        "typeId": "type_:User",
-                                                        "fernFilepath": {
-                                                            "allParts": [],
-                                                            "packagePath": [],
-                                                            "file": null
-                                                        },
-                                                        "name": "User",
-                                                        "displayName": null
-                                                    },
-                                                    "propertyAccess": null
-                                                }
-                                            ],
-                                            "extraProperties": null
-                                        }
-                                    },
-                                    "jsonExample": {
-                                        "password": "password",
-                                        "profile": {
-                                            "name": "name",
-                                            "verification": {},
-                                            "ssn": "ssn"
-                                        }
-                                    }
-                                },
-                                "response": {
-                                    "type": "ok",
-                                    "value": {
-                                        "type": "body",
-                                        "value": {
-                                            "shape": {
-                                                "type": "named",
-                                                "typeName": {
-                                                    "typeId": "type_:User",
-                                                    "fernFilepath": {
-                                                        "allParts": [],
-                                                        "packagePath": [],
-                                                        "file": null
-                                                    },
-                                                    "name": "User",
-                                                    "displayName": null
-                                                },
-                                                "shape": {
-                                                    "type": "object",
-                                                    "properties": [
-                                                        {
-                                                            "name": "id",
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "container",
-                                                                    "container": {
-                                                                        "type": "optional",
-                                                                        "optional": {
-                                                                            "shape": {
-                                                                                "type": "primitive",
-                                                                                "primitive": {
-                                                                                    "type": "string",
-                                                                                    "string": {
-                                                                                        "original": "id"
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            "jsonExample": "id"
-                                                                        },
-                                                                        "valueType": {
-                                                                            "_type": "primitive",
-                                                                            "primitive": {
-                                                                                "v1": "STRING",
-                                                                                "v2": {
-                                                                                    "type": "string",
-                                                                                    "default": null,
-                                                                                    "validation": null
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "jsonExample": "id"
-                                                            },
-                                                            "originalTypeDeclaration": {
-                                                                "typeId": "type_:User",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "name": "User",
-                                                                "displayName": null
-                                                            },
-                                                            "propertyAccess": "READ_ONLY"
-                                                        },
-                                                        {
-                                                            "name": "email",
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "container",
-                                                                    "container": {
-                                                                        "type": "optional",
-                                                                        "optional": {
-                                                                            "shape": {
-                                                                                "type": "primitive",
-                                                                                "primitive": {
-                                                                                    "type": "string",
-                                                                                    "string": {
-                                                                                        "original": "email"
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            "jsonExample": "email"
-                                                                        },
-                                                                        "valueType": {
-                                                                            "_type": "primitive",
-                                                                            "primitive": {
-                                                                                "v1": "STRING",
-                                                                                "v2": {
-                                                                                    "type": "string",
-                                                                                    "default": null,
-                                                                                    "validation": null
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "jsonExample": "email"
-                                                            },
-                                                            "originalTypeDeclaration": {
-                                                                "typeId": "type_:User",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "name": "User",
-                                                                "displayName": null
-                                                            },
-                                                            "propertyAccess": "READ_ONLY"
-                                                        },
-                                                        {
-                                                            "name": "password",
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "primitive",
-                                                                    "primitive": {
-                                                                        "type": "string",
-                                                                        "string": {
-                                                                            "original": "password"
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "jsonExample": "password"
-                                                            },
-                                                            "originalTypeDeclaration": {
-                                                                "typeId": "type_:User",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "name": "User",
-                                                                "displayName": null
-                                                            },
-                                                            "propertyAccess": "WRITE_ONLY"
-                                                        },
-                                                        {
-                                                            "name": "profile",
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "named",
-                                                                    "typeName": {
-                                                                        "typeId": "type_:UserProfile",
-                                                                        "fernFilepath": {
-                                                                            "allParts": [],
-                                                                            "packagePath": [],
-                                                                            "file": null
-                                                                        },
-                                                                        "name": "UserProfile",
-                                                                        "displayName": null
-                                                                    },
-                                                                    "shape": {
-                                                                        "type": "object",
-                                                                        "properties": [
-                                                                            {
-                                                                                "name": "name",
-                                                                                "value": {
-                                                                                    "shape": {
-                                                                                        "type": "primitive",
-                                                                                        "primitive": {
-                                                                                            "type": "string",
-                                                                                            "string": {
-                                                                                                "original": "name"
-                                                                                            }
-                                                                                        }
-                                                                                    },
-                                                                                    "jsonExample": "name"
-                                                                                },
-                                                                                "originalTypeDeclaration": {
-                                                                                    "typeId": "type_:UserProfile",
-                                                                                    "fernFilepath": {
-                                                                                        "allParts": [],
-                                                                                        "packagePath": [],
-                                                                                        "file": null
-                                                                                    },
-                                                                                    "name": "UserProfile",
-                                                                                    "displayName": null
-                                                                                },
-                                                                                "propertyAccess": null
-                                                                            },
-                                                                            {
-                                                                                "name": "verification",
-                                                                                "value": {
-                                                                                    "shape": {
-                                                                                        "type": "named",
-                                                                                        "typeName": {
-                                                                                            "typeId": "type_:UserProfileVerification",
-                                                                                            "fernFilepath": {
-                                                                                                "allParts": [],
-                                                                                                "packagePath": [],
-                                                                                                "file": null
-                                                                                            },
-                                                                                            "name": "UserProfileVerification",
-                                                                                            "displayName": null
-                                                                                        },
-                                                                                        "shape": {
-                                                                                            "type": "object",
-                                                                                            "properties": [
-                                                                                                {
-                                                                                                    "name": "verified",
-                                                                                                    "value": {
-                                                                                                        "shape": {
-                                                                                                            "type": "container",
-                                                                                                            "container": {
-                                                                                                                "type": "optional",
-                                                                                                                "optional": {
-                                                                                                                    "shape": {
-                                                                                                                        "type": "primitive",
-                                                                                                                        "primitive": {
-                                                                                                                            "type": "string",
-                                                                                                                            "string": {
-                                                                                                                                "original": "verified"
-                                                                                                                            }
-                                                                                                                        }
-                                                                                                                    },
-                                                                                                                    "jsonExample": "verified"
-                                                                                                                },
-                                                                                                                "valueType": {
-                                                                                                                    "_type": "primitive",
-                                                                                                                    "primitive": {
-                                                                                                                        "v1": "STRING",
-                                                                                                                        "v2": {
-                                                                                                                            "type": "string",
-                                                                                                                            "default": null,
-                                                                                                                            "validation": null
-                                                                                                                        }
-                                                                                                                    }
-                                                                                                                }
-                                                                                                            }
-                                                                                                        },
-                                                                                                        "jsonExample": "verified"
-                                                                                                    },
-                                                                                                    "originalTypeDeclaration": {
-                                                                                                        "typeId": "type_:UserProfileVerification",
-                                                                                                        "fernFilepath": {
-                                                                                                            "allParts": [],
-                                                                                                            "packagePath": [],
-                                                                                                            "file": null
-                                                                                                        },
-                                                                                                        "name": "UserProfileVerification",
-                                                                                                        "displayName": null
-                                                                                                    },
-                                                                                                    "propertyAccess": "READ_ONLY"
-                                                                                                }
-                                                                                            ],
-                                                                                            "extraProperties": null
-                                                                                        }
-                                                                                    },
-                                                                                    "jsonExample": {
-                                                                                        "verified": "verified"
-                                                                                    }
-                                                                                },
-                                                                                "originalTypeDeclaration": {
-                                                                                    "typeId": "type_:UserProfile",
-                                                                                    "fernFilepath": {
-                                                                                        "allParts": [],
-                                                                                        "packagePath": [],
-                                                                                        "file": null
-                                                                                    },
-                                                                                    "name": "UserProfile",
-                                                                                    "displayName": null
-                                                                                },
-                                                                                "propertyAccess": null
-                                                                            },
-                                                                            {
-                                                                                "name": "ssn",
-                                                                                "value": {
-                                                                                    "shape": {
-                                                                                        "type": "primitive",
-                                                                                        "primitive": {
-                                                                                            "type": "string",
-                                                                                            "string": {
-                                                                                                "original": "ssn"
-                                                                                            }
-                                                                                        }
-                                                                                    },
-                                                                                    "jsonExample": "ssn"
-                                                                                },
-                                                                                "originalTypeDeclaration": {
-                                                                                    "typeId": "type_:UserProfile",
-                                                                                    "fernFilepath": {
-                                                                                        "allParts": [],
-                                                                                        "packagePath": [],
-                                                                                        "file": null
-                                                                                    },
-                                                                                    "name": "UserProfile",
-                                                                                    "displayName": null
-                                                                                },
-                                                                                "propertyAccess": "WRITE_ONLY"
-                                                                            }
-                                                                        ],
-                                                                        "extraProperties": null
-                                                                    }
-                                                                },
-                                                                "jsonExample": {
-                                                                    "name": "name",
-                                                                    "verification": {
-                                                                        "verified": "verified"
-                                                                    },
-                                                                    "ssn": "ssn"
-                                                                }
-                                                            },
-                                                            "originalTypeDeclaration": {
-                                                                "typeId": "type_:User",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "name": "User",
-                                                                "displayName": null
-                                                            },
-                                                            "propertyAccess": null
-                                                        }
-                                                    ],
-                                                    "extraProperties": null
-                                                }
-                                            },
-                                            "jsonExample": {
-                                                "id": "id",
-                                                "email": "email",
-                                                "password": "password",
-                                                "profile": {
-                                                    "name": "name",
-                                                    "verification": {
-                                                        "verified": "verified"
-                                                    },
-                                                    "ssn": "ssn"
-                                                }
-                                            }
-                                        }
-                                    }
-                                },
-                                "docs": null
-                            },
-                            "codeSamples": null
-                        }
-                    ],
+                    "userSpecifiedExamples": [],
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "b15b2326",
+                                "id": "4a604423",
                                 "url": "/users",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -1843,23 +905,15 @@
                                                     },
                                                     "value": {
                                                         "shape": {
-                                                            "type": "container",
-                                                            "container": {
-                                                                "type": "optional",
-                                                                "optional": null,
-                                                                "valueType": {
-                                                                    "_type": "primitive",
-                                                                    "primitive": {
-                                                                        "v1": "STRING",
-                                                                        "v2": {
-                                                                            "type": "string",
-                                                                            "default": null,
-                                                                            "validation": null
-                                                                        }
-                                                                    }
+                                                            "type": "primitive",
+                                                            "primitive": {
+                                                                "type": "string",
+                                                                "string": {
+                                                                    "original": "id"
                                                                 }
                                                             }
-                                                        }
+                                                        },
+                                                        "jsonExample": "id"
                                                     },
                                                     "propertyAccess": "READ_ONLY"
                                                 },
@@ -1877,23 +931,15 @@
                                                     },
                                                     "value": {
                                                         "shape": {
-                                                            "type": "container",
-                                                            "container": {
-                                                                "type": "optional",
-                                                                "optional": null,
-                                                                "valueType": {
-                                                                    "_type": "primitive",
-                                                                    "primitive": {
-                                                                        "v1": "STRING",
-                                                                        "v2": {
-                                                                            "type": "string",
-                                                                            "default": null,
-                                                                            "validation": null
-                                                                        }
-                                                                    }
+                                                            "type": "primitive",
+                                                            "primitive": {
+                                                                "type": "string",
+                                                                "string": {
+                                                                    "original": "email"
                                                                 }
                                                             }
-                                                        }
+                                                        },
+                                                        "jsonExample": "email"
                                                     },
                                                     "propertyAccess": "READ_ONLY"
                                                 },
@@ -1999,23 +1045,15 @@
                                                                                             },
                                                                                             "value": {
                                                                                                 "shape": {
-                                                                                                    "type": "container",
-                                                                                                    "container": {
-                                                                                                        "type": "optional",
-                                                                                                        "optional": null,
-                                                                                                        "valueType": {
-                                                                                                            "_type": "primitive",
-                                                                                                            "primitive": {
-                                                                                                                "v1": "STRING",
-                                                                                                                "v2": {
-                                                                                                                    "type": "string",
-                                                                                                                    "default": null,
-                                                                                                                    "validation": null
-                                                                                                                }
-                                                                                                            }
+                                                                                                    "type": "primitive",
+                                                                                                    "primitive": {
+                                                                                                        "type": "string",
+                                                                                                        "string": {
+                                                                                                            "original": "verified"
                                                                                                         }
                                                                                                     }
-                                                                                                }
+                                                                                                },
+                                                                                                "jsonExample": "verified"
                                                                                             },
                                                                                             "propertyAccess": "READ_ONLY"
                                                                                         }
@@ -2033,7 +1071,9 @@
                                                                                     "typeId": "type_:UserProfileVerification"
                                                                                 }
                                                                             },
-                                                                            "jsonExample": {}
+                                                                            "jsonExample": {
+                                                                                "verified": "verified"
+                                                                            }
                                                                         },
                                                                         "propertyAccess": null
                                                                     },
@@ -2079,7 +1119,9 @@
                                                         },
                                                         "jsonExample": {
                                                             "name": "name",
-                                                            "verification": {},
+                                                            "verification": {
+                                                                "verified": "verified"
+                                                            },
                                                             "ssn": "ssn"
                                                         }
                                                     },
@@ -2100,10 +1142,14 @@
                                         }
                                     },
                                     "jsonExample": {
+                                        "id": "id",
+                                        "email": "email",
                                         "password": "password",
                                         "profile": {
                                             "name": "name",
-                                            "verification": {},
+                                            "verification": {
+                                                "verified": "verified"
+                                            },
                                             "ssn": "ssn"
                                         }
                                     }
@@ -2132,31 +1178,11 @@
                                                             },
                                                             "value": {
                                                                 "shape": {
-                                                                    "type": "container",
-                                                                    "container": {
-                                                                        "type": "optional",
-                                                                        "optional": {
-                                                                            "shape": {
-                                                                                "type": "primitive",
-                                                                                "primitive": {
-                                                                                    "type": "string",
-                                                                                    "string": {
-                                                                                        "original": "id"
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            "jsonExample": "id"
-                                                                        },
-                                                                        "valueType": {
-                                                                            "_type": "primitive",
-                                                                            "primitive": {
-                                                                                "v1": "STRING",
-                                                                                "v2": {
-                                                                                    "type": "string",
-                                                                                    "default": null,
-                                                                                    "validation": null
-                                                                                }
-                                                                            }
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "id"
                                                                         }
                                                                     }
                                                                 },
@@ -2178,31 +1204,11 @@
                                                             },
                                                             "value": {
                                                                 "shape": {
-                                                                    "type": "container",
-                                                                    "container": {
-                                                                        "type": "optional",
-                                                                        "optional": {
-                                                                            "shape": {
-                                                                                "type": "primitive",
-                                                                                "primitive": {
-                                                                                    "type": "string",
-                                                                                    "string": {
-                                                                                        "original": "email"
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            "jsonExample": "email"
-                                                                        },
-                                                                        "valueType": {
-                                                                            "_type": "primitive",
-                                                                            "primitive": {
-                                                                                "v1": "STRING",
-                                                                                "v2": {
-                                                                                    "type": "string",
-                                                                                    "default": null,
-                                                                                    "validation": null
-                                                                                }
-                                                                            }
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "email"
                                                                         }
                                                                     }
                                                                 },
@@ -2312,31 +1318,11 @@
                                                                                                     },
                                                                                                     "value": {
                                                                                                         "shape": {
-                                                                                                            "type": "container",
-                                                                                                            "container": {
-                                                                                                                "type": "optional",
-                                                                                                                "optional": {
-                                                                                                                    "shape": {
-                                                                                                                        "type": "primitive",
-                                                                                                                        "primitive": {
-                                                                                                                            "type": "string",
-                                                                                                                            "string": {
-                                                                                                                                "original": "verified"
-                                                                                                                            }
-                                                                                                                        }
-                                                                                                                    },
-                                                                                                                    "jsonExample": "verified"
-                                                                                                                },
-                                                                                                                "valueType": {
-                                                                                                                    "_type": "primitive",
-                                                                                                                    "primitive": {
-                                                                                                                        "v1": "STRING",
-                                                                                                                        "v2": {
-                                                                                                                            "type": "string",
-                                                                                                                            "default": null,
-                                                                                                                            "validation": null
-                                                                                                                        }
-                                                                                                                    }
+                                                                                                            "type": "primitive",
+                                                                                                            "primitive": {
+                                                                                                                "type": "string",
+                                                                                                                "string": {
+                                                                                                                    "original": "verified"
                                                                                                                 }
                                                                                                             }
                                                                                                         },
@@ -2483,12 +1469,6 @@
         "sharedTypes": [
             "type_:UserOrAdmin",
             "type_:Admin",
-            "type_:UserOrAdminDiscriminatedZeroType",
-            "type_:UserOrAdminDiscriminatedZero",
-            "type_:UserOrAdminDiscriminatedAdminType",
-            "type_:UserOrAdminDiscriminatedAdmin",
-            "type_:UserOrAdminDiscriminatedTwoType",
-            "type_:UserOrAdminDiscriminatedTwo",
             "type_:UserOrAdminDiscriminated",
             "type_:Foo"
         ]
@@ -2554,11 +1534,8 @@
                             }
                         },
                         "typeReference": {
-                            "type": "optional",
-                            "value": {
-                                "type": "primitive",
-                                "value": "STRING"
-                            }
+                            "type": "primitive",
+                            "value": "STRING"
                         },
                         "propertyAccess": "READ_ONLY",
                         "variable": null
@@ -2587,11 +1564,8 @@
                             }
                         },
                         "typeReference": {
-                            "type": "optional",
-                            "value": {
-                                "type": "primitive",
-                                "value": "STRING"
-                            }
+                            "type": "primitive",
+                            "value": "STRING"
                         },
                         "propertyAccess": "READ_ONLY",
                         "variable": null
@@ -2836,11 +1810,8 @@
                             }
                         },
                         "typeReference": {
-                            "type": "optional",
-                            "value": {
-                                "type": "primitive",
-                                "value": "STRING"
-                            }
+                            "type": "primitive",
+                            "value": "STRING"
                         },
                         "propertyAccess": "READ_ONLY",
                         "variable": null
@@ -2941,11 +1912,8 @@
                             }
                         },
                         "typeReference": {
-                            "type": "optional",
-                            "value": {
-                                "type": "primitive",
-                                "value": "STRING"
-                            }
+                            "type": "primitive",
+                            "value": "STRING"
                         },
                         "propertyAccess": "READ_ONLY",
                         "variable": null
@@ -2974,11 +1942,8 @@
                             }
                         },
                         "typeReference": {
-                            "type": "optional",
-                            "value": {
-                                "type": "primitive",
-                                "value": "STRING"
-                            }
+                            "type": "primitive",
+                            "value": "STRING"
                         },
                         "propertyAccess": "READ_ONLY",
                         "variable": null
@@ -3079,517 +2044,8 @@
                 ],
                 "additionalProperties": false
             },
-            "type_:UserOrAdminDiscriminatedZeroType": {
-                "type": "enum",
-                "declaration": {
-                    "name": {
-                        "originalName": "UserOrAdminDiscriminatedZeroType",
-                        "camelCase": {
-                            "unsafeName": "userOrAdminDiscriminatedZeroType",
-                            "safeName": "userOrAdminDiscriminatedZeroType"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "user_or_admin_discriminated_zero_type",
-                            "safeName": "user_or_admin_discriminated_zero_type"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "USER_OR_ADMIN_DISCRIMINATED_ZERO_TYPE",
-                            "safeName": "USER_OR_ADMIN_DISCRIMINATED_ZERO_TYPE"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "UserOrAdminDiscriminatedZeroType",
-                            "safeName": "UserOrAdminDiscriminatedZeroType"
-                        }
-                    },
-                    "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": [],
-                        "file": null
-                    }
-                },
-                "values": [
-                    {
-                        "wireValue": "user",
-                        "name": {
-                            "originalName": "user",
-                            "camelCase": {
-                                "unsafeName": "user",
-                                "safeName": "user"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "user",
-                                "safeName": "user"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "USER",
-                                "safeName": "USER"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "User",
-                                "safeName": "User"
-                            }
-                        }
-                    }
-                ]
-            },
-            "type_:UserOrAdminDiscriminatedZero": {
-                "type": "object",
-                "declaration": {
-                    "name": {
-                        "originalName": "UserOrAdminDiscriminatedZero",
-                        "camelCase": {
-                            "unsafeName": "userOrAdminDiscriminatedZero",
-                            "safeName": "userOrAdminDiscriminatedZero"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "user_or_admin_discriminated_zero",
-                            "safeName": "user_or_admin_discriminated_zero"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "USER_OR_ADMIN_DISCRIMINATED_ZERO",
-                            "safeName": "USER_OR_ADMIN_DISCRIMINATED_ZERO"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "UserOrAdminDiscriminatedZero",
-                            "safeName": "UserOrAdminDiscriminatedZero"
-                        }
-                    },
-                    "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": [],
-                        "file": null
-                    }
-                },
-                "properties": [
-                    {
-                        "name": {
-                            "wireValue": "id",
-                            "name": {
-                                "originalName": "id",
-                                "camelCase": {
-                                    "unsafeName": "id",
-                                    "safeName": "id"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "id",
-                                    "safeName": "id"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "ID",
-                                    "safeName": "ID"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "ID",
-                                    "safeName": "ID"
-                                }
-                            }
-                        },
-                        "typeReference": {
-                            "type": "optional",
-                            "value": {
-                                "type": "primitive",
-                                "value": "STRING"
-                            }
-                        },
-                        "propertyAccess": "READ_ONLY",
-                        "variable": null
-                    },
-                    {
-                        "name": {
-                            "wireValue": "email",
-                            "name": {
-                                "originalName": "email",
-                                "camelCase": {
-                                    "unsafeName": "email",
-                                    "safeName": "email"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "email",
-                                    "safeName": "email"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "EMAIL",
-                                    "safeName": "EMAIL"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Email",
-                                    "safeName": "Email"
-                                }
-                            }
-                        },
-                        "typeReference": {
-                            "type": "optional",
-                            "value": {
-                                "type": "primitive",
-                                "value": "STRING"
-                            }
-                        },
-                        "propertyAccess": "READ_ONLY",
-                        "variable": null
-                    },
-                    {
-                        "name": {
-                            "wireValue": "password",
-                            "name": {
-                                "originalName": "password",
-                                "camelCase": {
-                                    "unsafeName": "password",
-                                    "safeName": "password"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "password",
-                                    "safeName": "password"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "PASSWORD",
-                                    "safeName": "PASSWORD"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Password",
-                                    "safeName": "Password"
-                                }
-                            }
-                        },
-                        "typeReference": {
-                            "type": "primitive",
-                            "value": "STRING"
-                        },
-                        "propertyAccess": "WRITE_ONLY",
-                        "variable": null
-                    },
-                    {
-                        "name": {
-                            "wireValue": "profile",
-                            "name": {
-                                "originalName": "profile",
-                                "camelCase": {
-                                    "unsafeName": "profile",
-                                    "safeName": "profile"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "profile",
-                                    "safeName": "profile"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "PROFILE",
-                                    "safeName": "PROFILE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Profile",
-                                    "safeName": "Profile"
-                                }
-                            }
-                        },
-                        "typeReference": {
-                            "type": "named",
-                            "value": "type_:UserProfile"
-                        },
-                        "propertyAccess": null,
-                        "variable": null
-                    },
-                    {
-                        "name": {
-                            "wireValue": "type",
-                            "name": {
-                                "originalName": "type",
-                                "camelCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TYPE",
-                                    "safeName": "TYPE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Type",
-                                    "safeName": "Type"
-                                }
-                            }
-                        },
-                        "typeReference": {
-                            "type": "named",
-                            "value": "type_:UserOrAdminDiscriminatedZeroType"
-                        },
-                        "propertyAccess": null,
-                        "variable": null
-                    }
-                ],
-                "extends": [
-                    "type_:User"
-                ],
-                "additionalProperties": false
-            },
-            "type_:UserOrAdminDiscriminatedAdminType": {
-                "type": "enum",
-                "declaration": {
-                    "name": {
-                        "originalName": "UserOrAdminDiscriminatedAdminType",
-                        "camelCase": {
-                            "unsafeName": "userOrAdminDiscriminatedAdminType",
-                            "safeName": "userOrAdminDiscriminatedAdminType"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "user_or_admin_discriminated_admin_type",
-                            "safeName": "user_or_admin_discriminated_admin_type"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "USER_OR_ADMIN_DISCRIMINATED_ADMIN_TYPE",
-                            "safeName": "USER_OR_ADMIN_DISCRIMINATED_ADMIN_TYPE"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "UserOrAdminDiscriminatedAdminType",
-                            "safeName": "UserOrAdminDiscriminatedAdminType"
-                        }
-                    },
-                    "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": [],
-                        "file": null
-                    }
-                },
-                "values": [
-                    {
-                        "wireValue": "admin",
-                        "name": {
-                            "originalName": "admin",
-                            "camelCase": {
-                                "unsafeName": "admin",
-                                "safeName": "admin"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "admin",
-                                "safeName": "admin"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "ADMIN",
-                                "safeName": "ADMIN"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Admin",
-                                "safeName": "Admin"
-                            }
-                        }
-                    }
-                ]
-            },
-            "type_:UserOrAdminDiscriminatedAdmin": {
-                "type": "object",
-                "declaration": {
-                    "name": {
-                        "originalName": "UserOrAdminDiscriminatedAdmin",
-                        "camelCase": {
-                            "unsafeName": "userOrAdminDiscriminatedAdmin",
-                            "safeName": "userOrAdminDiscriminatedAdmin"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "user_or_admin_discriminated_admin",
-                            "safeName": "user_or_admin_discriminated_admin"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "USER_OR_ADMIN_DISCRIMINATED_ADMIN",
-                            "safeName": "USER_OR_ADMIN_DISCRIMINATED_ADMIN"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "UserOrAdminDiscriminatedAdmin",
-                            "safeName": "UserOrAdminDiscriminatedAdmin"
-                        }
-                    },
-                    "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": [],
-                        "file": null
-                    }
-                },
-                "properties": [
-                    {
-                        "name": {
-                            "wireValue": "type",
-                            "name": {
-                                "originalName": "type",
-                                "camelCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TYPE",
-                                    "safeName": "TYPE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Type",
-                                    "safeName": "Type"
-                                }
-                            }
-                        },
-                        "typeReference": {
-                            "type": "named",
-                            "value": "type_:UserOrAdminDiscriminatedAdminType"
-                        },
-                        "propertyAccess": null,
-                        "variable": null
-                    },
-                    {
-                        "name": {
-                            "wireValue": "admin",
-                            "name": {
-                                "originalName": "admin",
-                                "camelCase": {
-                                    "unsafeName": "admin",
-                                    "safeName": "admin"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "admin",
-                                    "safeName": "admin"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "ADMIN",
-                                    "safeName": "ADMIN"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Admin",
-                                    "safeName": "Admin"
-                                }
-                            }
-                        },
-                        "typeReference": {
-                            "type": "optional",
-                            "value": {
-                                "type": "named",
-                                "value": "type_:Admin"
-                            }
-                        },
-                        "propertyAccess": null,
-                        "variable": null
-                    }
-                ],
-                "extends": null,
-                "additionalProperties": false
-            },
-            "type_:UserOrAdminDiscriminatedTwoType": {
-                "type": "enum",
-                "declaration": {
-                    "name": {
-                        "originalName": "UserOrAdminDiscriminatedTwoType",
-                        "camelCase": {
-                            "unsafeName": "userOrAdminDiscriminatedTwoType",
-                            "safeName": "userOrAdminDiscriminatedTwoType"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "user_or_admin_discriminated_two_type",
-                            "safeName": "user_or_admin_discriminated_two_type"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "USER_OR_ADMIN_DISCRIMINATED_TWO_TYPE",
-                            "safeName": "USER_OR_ADMIN_DISCRIMINATED_TWO_TYPE"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "UserOrAdminDiscriminatedTwoType",
-                            "safeName": "UserOrAdminDiscriminatedTwoType"
-                        }
-                    },
-                    "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": [],
-                        "file": null
-                    }
-                },
-                "values": [
-                    {
-                        "wireValue": "empty",
-                        "name": {
-                            "originalName": "empty",
-                            "camelCase": {
-                                "unsafeName": "empty",
-                                "safeName": "empty"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "empty",
-                                "safeName": "empty"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "EMPTY",
-                                "safeName": "EMPTY"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Empty",
-                                "safeName": "Empty"
-                            }
-                        }
-                    }
-                ]
-            },
-            "type_:UserOrAdminDiscriminatedTwo": {
-                "type": "object",
-                "declaration": {
-                    "name": {
-                        "originalName": "UserOrAdminDiscriminatedTwo",
-                        "camelCase": {
-                            "unsafeName": "userOrAdminDiscriminatedTwo",
-                            "safeName": "userOrAdminDiscriminatedTwo"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "user_or_admin_discriminated_two",
-                            "safeName": "user_or_admin_discriminated_two"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "USER_OR_ADMIN_DISCRIMINATED_TWO",
-                            "safeName": "USER_OR_ADMIN_DISCRIMINATED_TWO"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "UserOrAdminDiscriminatedTwo",
-                            "safeName": "UserOrAdminDiscriminatedTwo"
-                        }
-                    },
-                    "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": [],
-                        "file": null
-                    }
-                },
-                "properties": [
-                    {
-                        "name": {
-                            "wireValue": "type",
-                            "name": {
-                                "originalName": "type",
-                                "camelCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TYPE",
-                                    "safeName": "TYPE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Type",
-                                    "safeName": "Type"
-                                }
-                            }
-                        },
-                        "typeReference": {
-                            "type": "named",
-                            "value": "type_:UserOrAdminDiscriminatedTwoType"
-                        },
-                        "propertyAccess": null,
-                        "variable": null
-                    }
-                ],
-                "extends": null,
-                "additionalProperties": false
-            },
             "type_:UserOrAdminDiscriminated": {
-                "type": "undiscriminatedUnion",
+                "type": "discriminatedUnion",
                 "declaration": {
                     "name": {
                         "originalName": "UserOrAdminDiscriminated",
@@ -3616,20 +2072,566 @@
                         "file": null
                     }
                 },
-                "types": [
-                    {
-                        "type": "named",
-                        "value": "type_:UserOrAdminDiscriminatedZero"
-                    },
-                    {
-                        "type": "named",
-                        "value": "type_:UserOrAdminDiscriminatedAdmin"
-                    },
-                    {
-                        "type": "named",
-                        "value": "type_:UserOrAdminDiscriminatedTwo"
+                "discriminant": {
+                    "wireValue": "type",
+                    "name": {
+                        "originalName": "type",
+                        "camelCase": {
+                            "unsafeName": "type",
+                            "safeName": "type"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "type",
+                            "safeName": "type"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "TYPE",
+                            "safeName": "TYPE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Type",
+                            "safeName": "Type"
+                        }
                     }
-                ]
+                },
+                "types": {
+                    "user": {
+                        "type": "samePropertiesAsObject",
+                        "typeId": "type_:User",
+                        "discriminantValue": {
+                            "wireValue": "user",
+                            "name": {
+                                "originalName": "user",
+                                "camelCase": {
+                                    "unsafeName": "user",
+                                    "safeName": "user"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "user",
+                                    "safeName": "user"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "USER",
+                                    "safeName": "USER"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "User",
+                                    "safeName": "User"
+                                }
+                            }
+                        },
+                        "properties": [
+                            {
+                                "name": {
+                                    "wireValue": "normal",
+                                    "name": {
+                                        "originalName": "normal",
+                                        "camelCase": {
+                                            "unsafeName": "normal",
+                                            "safeName": "normal"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "normal",
+                                            "safeName": "normal"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "NORMAL",
+                                            "safeName": "NORMAL"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Normal",
+                                            "safeName": "Normal"
+                                        }
+                                    }
+                                },
+                                "typeReference": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                },
+                                "propertyAccess": null,
+                                "variable": null
+                            },
+                            {
+                                "name": {
+                                    "wireValue": "read",
+                                    "name": {
+                                        "originalName": "read",
+                                        "camelCase": {
+                                            "unsafeName": "read",
+                                            "safeName": "read"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "read",
+                                            "safeName": "read"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "READ",
+                                            "safeName": "READ"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Read",
+                                            "safeName": "Read"
+                                        }
+                                    }
+                                },
+                                "typeReference": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                },
+                                "propertyAccess": "READ_ONLY",
+                                "variable": null
+                            },
+                            {
+                                "name": {
+                                    "wireValue": "write",
+                                    "name": {
+                                        "originalName": "write",
+                                        "camelCase": {
+                                            "unsafeName": "write",
+                                            "safeName": "write"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "write",
+                                            "safeName": "write"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "WRITE",
+                                            "safeName": "WRITE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Write",
+                                            "safeName": "Write"
+                                        }
+                                    }
+                                },
+                                "typeReference": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                },
+                                "propertyAccess": "WRITE_ONLY",
+                                "variable": null
+                            },
+                            {
+                                "name": {
+                                    "wireValue": "normal",
+                                    "name": {
+                                        "originalName": "normal",
+                                        "camelCase": {
+                                            "unsafeName": "normal",
+                                            "safeName": "normal"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "normal",
+                                            "safeName": "normal"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "NORMAL",
+                                            "safeName": "NORMAL"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Normal",
+                                            "safeName": "Normal"
+                                        }
+                                    }
+                                },
+                                "typeReference": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                },
+                                "propertyAccess": null,
+                                "variable": null
+                            },
+                            {
+                                "name": {
+                                    "wireValue": "foo",
+                                    "name": {
+                                        "originalName": "foo",
+                                        "camelCase": {
+                                            "unsafeName": "foo",
+                                            "safeName": "foo"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "foo",
+                                            "safeName": "foo"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "FOO",
+                                            "safeName": "FOO"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Foo",
+                                            "safeName": "Foo"
+                                        }
+                                    }
+                                },
+                                "typeReference": {
+                                    "type": "named",
+                                    "value": "type_:Foo"
+                                },
+                                "propertyAccess": null,
+                                "variable": null
+                            }
+                        ]
+                    },
+                    "admin": {
+                        "type": "singleProperty",
+                        "typeReference": {
+                            "type": "named",
+                            "value": "type_:Admin"
+                        },
+                        "discriminantValue": {
+                            "wireValue": "admin",
+                            "name": {
+                                "originalName": "admin",
+                                "camelCase": {
+                                    "unsafeName": "admin",
+                                    "safeName": "admin"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "admin",
+                                    "safeName": "admin"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ADMIN",
+                                    "safeName": "ADMIN"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Admin",
+                                    "safeName": "Admin"
+                                }
+                            }
+                        },
+                        "properties": [
+                            {
+                                "name": {
+                                    "wireValue": "normal",
+                                    "name": {
+                                        "originalName": "normal",
+                                        "camelCase": {
+                                            "unsafeName": "normal",
+                                            "safeName": "normal"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "normal",
+                                            "safeName": "normal"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "NORMAL",
+                                            "safeName": "NORMAL"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Normal",
+                                            "safeName": "Normal"
+                                        }
+                                    }
+                                },
+                                "typeReference": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                },
+                                "propertyAccess": null,
+                                "variable": null
+                            },
+                            {
+                                "name": {
+                                    "wireValue": "read",
+                                    "name": {
+                                        "originalName": "read",
+                                        "camelCase": {
+                                            "unsafeName": "read",
+                                            "safeName": "read"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "read",
+                                            "safeName": "read"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "READ",
+                                            "safeName": "READ"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Read",
+                                            "safeName": "Read"
+                                        }
+                                    }
+                                },
+                                "typeReference": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                },
+                                "propertyAccess": "READ_ONLY",
+                                "variable": null
+                            },
+                            {
+                                "name": {
+                                    "wireValue": "write",
+                                    "name": {
+                                        "originalName": "write",
+                                        "camelCase": {
+                                            "unsafeName": "write",
+                                            "safeName": "write"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "write",
+                                            "safeName": "write"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "WRITE",
+                                            "safeName": "WRITE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Write",
+                                            "safeName": "Write"
+                                        }
+                                    }
+                                },
+                                "typeReference": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                },
+                                "propertyAccess": "WRITE_ONLY",
+                                "variable": null
+                            },
+                            {
+                                "name": {
+                                    "wireValue": "normal",
+                                    "name": {
+                                        "originalName": "normal",
+                                        "camelCase": {
+                                            "unsafeName": "normal",
+                                            "safeName": "normal"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "normal",
+                                            "safeName": "normal"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "NORMAL",
+                                            "safeName": "NORMAL"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Normal",
+                                            "safeName": "Normal"
+                                        }
+                                    }
+                                },
+                                "typeReference": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                },
+                                "propertyAccess": null,
+                                "variable": null
+                            },
+                            {
+                                "name": {
+                                    "wireValue": "foo",
+                                    "name": {
+                                        "originalName": "foo",
+                                        "camelCase": {
+                                            "unsafeName": "foo",
+                                            "safeName": "foo"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "foo",
+                                            "safeName": "foo"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "FOO",
+                                            "safeName": "FOO"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Foo",
+                                            "safeName": "Foo"
+                                        }
+                                    }
+                                },
+                                "typeReference": {
+                                    "type": "named",
+                                    "value": "type_:Foo"
+                                },
+                                "propertyAccess": null,
+                                "variable": null
+                            }
+                        ]
+                    },
+                    "empty": {
+                        "type": "noProperties",
+                        "discriminantValue": {
+                            "wireValue": "empty",
+                            "name": {
+                                "originalName": "empty",
+                                "camelCase": {
+                                    "unsafeName": "empty",
+                                    "safeName": "empty"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "empty",
+                                    "safeName": "empty"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "EMPTY",
+                                    "safeName": "EMPTY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Empty",
+                                    "safeName": "Empty"
+                                }
+                            }
+                        },
+                        "properties": [
+                            {
+                                "name": {
+                                    "wireValue": "normal",
+                                    "name": {
+                                        "originalName": "normal",
+                                        "camelCase": {
+                                            "unsafeName": "normal",
+                                            "safeName": "normal"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "normal",
+                                            "safeName": "normal"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "NORMAL",
+                                            "safeName": "NORMAL"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Normal",
+                                            "safeName": "Normal"
+                                        }
+                                    }
+                                },
+                                "typeReference": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                },
+                                "propertyAccess": null,
+                                "variable": null
+                            },
+                            {
+                                "name": {
+                                    "wireValue": "read",
+                                    "name": {
+                                        "originalName": "read",
+                                        "camelCase": {
+                                            "unsafeName": "read",
+                                            "safeName": "read"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "read",
+                                            "safeName": "read"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "READ",
+                                            "safeName": "READ"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Read",
+                                            "safeName": "Read"
+                                        }
+                                    }
+                                },
+                                "typeReference": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                },
+                                "propertyAccess": "READ_ONLY",
+                                "variable": null
+                            },
+                            {
+                                "name": {
+                                    "wireValue": "write",
+                                    "name": {
+                                        "originalName": "write",
+                                        "camelCase": {
+                                            "unsafeName": "write",
+                                            "safeName": "write"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "write",
+                                            "safeName": "write"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "WRITE",
+                                            "safeName": "WRITE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Write",
+                                            "safeName": "Write"
+                                        }
+                                    }
+                                },
+                                "typeReference": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                },
+                                "propertyAccess": "WRITE_ONLY",
+                                "variable": null
+                            },
+                            {
+                                "name": {
+                                    "wireValue": "normal",
+                                    "name": {
+                                        "originalName": "normal",
+                                        "camelCase": {
+                                            "unsafeName": "normal",
+                                            "safeName": "normal"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "normal",
+                                            "safeName": "normal"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "NORMAL",
+                                            "safeName": "NORMAL"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Normal",
+                                            "safeName": "Normal"
+                                        }
+                                    }
+                                },
+                                "typeReference": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                },
+                                "propertyAccess": null,
+                                "variable": null
+                            },
+                            {
+                                "name": {
+                                    "wireValue": "foo",
+                                    "name": {
+                                        "originalName": "foo",
+                                        "camelCase": {
+                                            "unsafeName": "foo",
+                                            "safeName": "foo"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "foo",
+                                            "safeName": "foo"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "FOO",
+                                            "safeName": "FOO"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Foo",
+                                            "safeName": "Foo"
+                                        }
+                                    }
+                                },
+                                "typeReference": {
+                                    "type": "named",
+                                    "value": "type_:Foo"
+                                },
+                                "propertyAccess": null,
+                                "variable": null
+                            }
+                        ]
+                    }
+                }
             },
             "type_:Foo": {
                 "type": "object",
@@ -3714,11 +2716,8 @@
                             }
                         },
                         "typeReference": {
-                            "type": "optional",
-                            "value": {
-                                "type": "primitive",
-                                "value": "STRING"
-                            }
+                            "type": "primitive",
+                            "value": "STRING"
                         },
                         "propertyAccess": "READ_ONLY",
                         "variable": null
@@ -3837,12 +2836,6 @@
             "type_:UserProfileVerification",
             "type_:UserOrAdmin",
             "type_:Admin",
-            "type_:UserOrAdminDiscriminatedZeroType",
-            "type_:UserOrAdminDiscriminatedZero",
-            "type_:UserOrAdminDiscriminatedAdminType",
-            "type_:UserOrAdminDiscriminatedAdmin",
-            "type_:UserOrAdminDiscriminatedTwoType",
-            "type_:UserOrAdminDiscriminatedTwo",
             "type_:UserOrAdminDiscriminated",
             "type_:Foo"
         ],

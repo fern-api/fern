@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_:StreamResponse": {
+        "type_dummy:StreamResponse": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -24,9 +24,47 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        {
+                            "originalName": "dummy",
+                            "camelCase": {
+                                "unsafeName": "dummy",
+                                "safeName": "dummy"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "dummy",
+                                "safeName": "dummy"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DUMMY",
+                                "safeName": "DUMMY"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Dummy",
+                                "safeName": "Dummy"
+                            }
+                        }
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": {
+                        "originalName": "dummy",
+                        "camelCase": {
+                            "unsafeName": "dummy",
+                            "safeName": "dummy"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "dummy",
+                            "safeName": "dummy"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "DUMMY",
+                            "safeName": "DUMMY"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Dummy",
+                            "safeName": "Dummy"
+                        }
+                    }
                 }
             },
             "properties": [
@@ -86,11 +124,8 @@
                     "typeReference": {
                         "type": "optional",
                         "value": {
-                            "type": "nullable",
-                            "value": {
-                                "type": "primitive",
-                                "value": "STRING"
-                            }
+                            "type": "primitive",
+                            "value": "STRING"
                         }
                     },
                     "propertyAccess": null,
@@ -103,11 +138,11 @@
     },
     "headers": [],
     "endpoints": {
-        "endpoint_dummy.generateStream": {
+        "endpoint_dummy.generate-stream": {
             "auth": null,
             "declaration": {
                 "name": {
-                    "originalName": "generateStream",
+                    "originalName": "generate-stream",
                     "camelCase": {
                         "unsafeName": "generateStream",
                         "safeName": "generateStream"
@@ -177,22 +212,22 @@
                 "type": "inlined",
                 "declaration": {
                     "name": {
-                        "originalName": "DummyGenerateStreamRequest",
+                        "originalName": "GenerateStreamRequest",
                         "camelCase": {
-                            "unsafeName": "dummyGenerateStreamRequest",
-                            "safeName": "dummyGenerateStreamRequest"
+                            "unsafeName": "generateStreamRequest",
+                            "safeName": "generateStreamRequest"
                         },
                         "snakeCase": {
-                            "unsafeName": "dummy_generate_stream_request",
-                            "safeName": "dummy_generate_stream_request"
+                            "unsafeName": "generate_stream_request",
+                            "safeName": "generate_stream_request"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "DUMMY_GENERATE_STREAM_REQUEST",
-                            "safeName": "DUMMY_GENERATE_STREAM_REQUEST"
+                            "unsafeName": "GENERATE_STREAM_REQUEST",
+                            "safeName": "GENERATE_STREAM_REQUEST"
                         },
                         "pascalCase": {
-                            "unsafeName": "DummyGenerateStreamRequest",
-                            "safeName": "DummyGenerateStreamRequest"
+                            "unsafeName": "GenerateStreamRequest",
+                            "safeName": "GenerateStreamRequest"
                         }
                     },
                     "fernFilepath": {
@@ -269,8 +304,11 @@
                                 }
                             },
                             "typeReference": {
-                                "type": "primitive",
-                                "value": "BOOLEAN"
+                                "type": "literal",
+                                "value": {
+                                    "type": "boolean",
+                                    "value": true
+                                }
                             },
                             "propertyAccess": null,
                             "variable": null
@@ -313,7 +351,7 @@
                 }
             },
             "response": {
-                "type": "fileDownload"
+                "type": "streaming"
             },
             "examples": null
         },
@@ -391,22 +429,22 @@
                 "type": "inlined",
                 "declaration": {
                     "name": {
-                        "originalName": "DummyGenerateRequest",
+                        "originalName": "Generateequest",
                         "camelCase": {
-                            "unsafeName": "dummyGenerateRequest",
-                            "safeName": "dummyGenerateRequest"
+                            "unsafeName": "generateequest",
+                            "safeName": "generateequest"
                         },
                         "snakeCase": {
-                            "unsafeName": "dummy_generate_request",
-                            "safeName": "dummy_generate_request"
+                            "unsafeName": "generateequest",
+                            "safeName": "generateequest"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "DUMMY_GENERATE_REQUEST",
-                            "safeName": "DUMMY_GENERATE_REQUEST"
+                            "unsafeName": "GENERATEEQUEST",
+                            "safeName": "GENERATEEQUEST"
                         },
                         "pascalCase": {
-                            "unsafeName": "DummyGenerateRequest",
-                            "safeName": "DummyGenerateRequest"
+                            "unsafeName": "Generateequest",
+                            "safeName": "Generateequest"
                         }
                     },
                     "fernFilepath": {
@@ -483,8 +521,11 @@
                                 }
                             },
                             "typeReference": {
-                                "type": "primitive",
-                                "value": "BOOLEAN"
+                                "type": "literal",
+                                "value": {
+                                    "type": "boolean",
+                                    "value": false
+                                }
                             },
                             "propertyAccess": null,
                             "variable": null

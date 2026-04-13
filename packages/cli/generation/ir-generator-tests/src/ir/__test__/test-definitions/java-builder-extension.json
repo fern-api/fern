@@ -2,8 +2,8 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": "api",
-    "apiDisplayName": "java-builder-extension",
+    "apiName": "builder-extension",
+    "apiDisplayName": null,
     "apiDocs": null,
     "auth": {
         "requirement": "ALL",
@@ -12,7 +12,7 @@
                 "_type": "bearer",
                 "token": "token",
                 "tokenEnvVar": null,
-                "key": "BearerAuth",
+                "key": "bearer",
                 "docs": null
             }
         ],
@@ -21,17 +21,19 @@
     "headers": [],
     "idempotencyHeaders": [],
     "types": {
-        "type_:HelloResponse": {
+        "type_service:HelloResponse": {
             "inline": null,
             "name": {
                 "name": "HelloResponse",
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        "service"
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": "service"
                 },
                 "displayName": null,
-                "typeId": "type_:HelloResponse"
+                "typeId": "type_service:HelloResponse"
             },
             "shape": {
                 "_type": "object",
@@ -90,7 +92,7 @@
             },
             "displayName": null,
             "basePath": {
-                "head": "",
+                "head": "/api",
                 "parts": []
             },
             "headers": [],
@@ -110,7 +112,7 @@
                     "auth": true,
                     "security": [
                         {
-                            "BearerAuth": []
+                            "bearer": []
                         }
                     ],
                     "idempotent": false,
@@ -119,11 +121,11 @@
                     "method": "GET",
                     "basePath": null,
                     "path": {
-                        "head": "/api/hello",
+                        "head": "/hello",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "api/hello",
+                        "head": "/api/hello",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -142,103 +144,32 @@
                                     "_type": "named",
                                     "name": "HelloResponse",
                                     "fernFilepath": {
-                                        "allParts": [],
+                                        "allParts": [
+                                            "service"
+                                        ],
                                         "packagePath": [],
-                                        "file": null
+                                        "file": "service"
                                     },
                                     "displayName": null,
-                                    "typeId": "type_:HelloResponse",
+                                    "typeId": "type_service:HelloResponse",
                                     "default": null,
                                     "inline": null
                                 },
-                                "docs": "",
+                                "docs": null,
                                 "v2Examples": null
                             }
                         },
-                        "status-code": 200,
+                        "status-code": null,
                         "isWildcardStatusCode": null,
-                        "docs": ""
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [],
-                    "userSpecifiedExamples": [
-                        {
-                            "example": {
-                                "id": "60aa1882",
-                                "name": null,
-                                "url": "/api/hello",
-                                "rootPathParameters": [],
-                                "endpointPathParameters": [],
-                                "servicePathParameters": [],
-                                "endpointHeaders": [],
-                                "serviceHeaders": [],
-                                "queryParameters": [],
-                                "request": null,
-                                "response": {
-                                    "type": "ok",
-                                    "value": {
-                                        "type": "body",
-                                        "value": {
-                                            "shape": {
-                                                "type": "named",
-                                                "typeName": {
-                                                    "typeId": "type_:HelloResponse",
-                                                    "fernFilepath": {
-                                                        "allParts": [],
-                                                        "packagePath": [],
-                                                        "file": null
-                                                    },
-                                                    "name": "HelloResponse",
-                                                    "displayName": null
-                                                },
-                                                "shape": {
-                                                    "type": "object",
-                                                    "properties": [
-                                                        {
-                                                            "name": "message",
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "primitive",
-                                                                    "primitive": {
-                                                                        "type": "string",
-                                                                        "string": {
-                                                                            "original": "message"
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "jsonExample": "message"
-                                                            },
-                                                            "originalTypeDeclaration": {
-                                                                "typeId": "type_:HelloResponse",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "name": "HelloResponse",
-                                                                "displayName": null
-                                                            },
-                                                            "propertyAccess": null
-                                                        }
-                                                    ],
-                                                    "extraProperties": null
-                                                }
-                                            },
-                                            "jsonExample": {
-                                                "message": "message"
-                                            }
-                                        }
-                                    }
-                                },
-                                "docs": null
-                            },
-                            "codeSamples": null
-                        }
-                    ],
+                    "userSpecifiedExamples": [],
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "f233930e",
+                                "id": "e0a1680",
                                 "url": "/api/hello",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -263,12 +194,14 @@
                                                             "originalTypeDeclaration": {
                                                                 "name": "HelloResponse",
                                                                 "fernFilepath": {
-                                                                    "allParts": [],
+                                                                    "allParts": [
+                                                                        "service"
+                                                                    ],
                                                                     "packagePath": [],
-                                                                    "file": null
+                                                                    "file": "service"
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_:HelloResponse"
+                                                                "typeId": "type_service:HelloResponse"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -290,12 +223,14 @@
                                                 "typeName": {
                                                     "name": "HelloResponse",
                                                     "fernFilepath": {
-                                                        "allParts": [],
+                                                        "allParts": [
+                                                            "service"
+                                                        ],
                                                         "packagePath": [],
-                                                        "file": null
+                                                        "file": "service"
                                                     },
                                                     "displayName": null,
-                                                    "typeId": "type_:HelloResponse"
+                                                    "typeId": "type_service:HelloResponse"
                                                 }
                                             },
                                             "jsonExample": {
@@ -340,6 +275,26 @@
                     "urlTemplate": null,
                     "urlVariables": null,
                     "docs": null
+                },
+                {
+                    "id": "Development",
+                    "name": "Development",
+                    "url": "https://api.${DEV_NAMESPACE}.example.com",
+                    "audiences": null,
+                    "defaultUrl": null,
+                    "urlTemplate": null,
+                    "urlVariables": null,
+                    "docs": null
+                },
+                {
+                    "id": "Staging",
+                    "name": "Staging",
+                    "url": "https://api.${STAGE_ENV}.example.com",
+                    "audiences": null,
+                    "defaultUrl": null,
+                    "urlTemplate": null,
+                    "urlVariables": null,
+                    "docs": null
                 }
             ]
         }
@@ -353,7 +308,7 @@
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_service": [
-                "type_:HelloResponse"
+                "type_service:HelloResponse"
             ]
         },
         "sharedTypes": []
@@ -366,7 +321,7 @@
     "dynamic": {
         "version": "1.0.0",
         "types": {
-            "type_:HelloResponse": {
+            "type_service:HelloResponse": {
                 "type": "object",
                 "declaration": {
                     "name": {
@@ -389,9 +344,47 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [],
+                        "allParts": [
+                            {
+                                "originalName": "service",
+                                "camelCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SERVICE",
+                                    "safeName": "SERVICE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Service",
+                                    "safeName": "Service"
+                                }
+                            }
+                        ],
                         "packagePath": [],
-                        "file": null
+                        "file": {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
                     }
                 },
                 "properties": [
@@ -563,6 +556,54 @@
                         },
                         "url": "https://api.example.com",
                         "docs": null
+                    },
+                    {
+                        "id": "Development",
+                        "name": {
+                            "originalName": "Development",
+                            "camelCase": {
+                                "unsafeName": "development",
+                                "safeName": "development"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "development",
+                                "safeName": "development"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DEVELOPMENT",
+                                "safeName": "DEVELOPMENT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Development",
+                                "safeName": "Development"
+                            }
+                        },
+                        "url": "https://api.${DEV_NAMESPACE}.example.com",
+                        "docs": null
+                    },
+                    {
+                        "id": "Staging",
+                        "name": {
+                            "originalName": "Staging",
+                            "camelCase": {
+                                "unsafeName": "staging",
+                                "safeName": "staging"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "staging",
+                                "safeName": "staging"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "STAGING",
+                                "safeName": "STAGING"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Staging",
+                                "safeName": "Staging"
+                            }
+                        },
+                        "url": "https://api.${STAGE_ENV}.example.com",
+                        "docs": null
                     }
                 ]
             }
@@ -590,7 +631,9 @@
                 "file": "service"
             },
             "service": "service_service",
-            "types": [],
+            "types": [
+                "type_service:HelloResponse"
+            ],
             "errors": [],
             "subpackages": [],
             "navigationConfig": null,
@@ -608,9 +651,7 @@
         },
         "websocket": null,
         "service": null,
-        "types": [
-            "type_:HelloResponse"
-        ],
+        "types": [],
         "errors": [],
         "subpackages": [
             "subpackage_service"

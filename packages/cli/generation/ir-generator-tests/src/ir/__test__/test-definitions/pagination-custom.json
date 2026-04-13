@@ -2,8 +2,8 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": "api",
-    "apiDisplayName": "pagination-custom",
+    "apiName": "pagination",
+    "apiDisplayName": null,
     "apiDocs": null,
     "auth": {
         "requirement": "ALL",
@@ -12,7 +12,7 @@
                 "_type": "bearer",
                 "token": "token",
                 "tokenEnvVar": null,
-                "key": "BearerAuth",
+                "key": "bearer",
                 "docs": null
             }
         ],
@@ -44,19 +44,13 @@
                             "container": {
                                 "_type": "optional",
                                 "optional": {
-                                    "_type": "container",
-                                    "container": {
-                                        "_type": "nullable",
-                                        "nullable": {
-                                            "_type": "primitive",
-                                            "primitive": {
-                                                "v1": "INTEGER",
-                                                "v2": {
-                                                    "type": "integer",
-                                                    "default": null,
-                                                    "validation": null
-                                                }
-                                            }
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "INTEGER",
+                                        "v2": {
+                                            "type": "integer",
+                                            "default": null,
+                                            "validation": null
                                         }
                                     }
                                 }
@@ -77,19 +71,13 @@
                             "container": {
                                 "_type": "optional",
                                 "optional": {
-                                    "_type": "container",
-                                    "container": {
-                                        "_type": "nullable",
-                                        "nullable": {
-                                            "_type": "primitive",
-                                            "primitive": {
-                                                "v1": "INTEGER",
-                                                "v2": {
-                                                    "type": "integer",
-                                                    "default": null,
-                                                    "validation": null
-                                                }
-                                            }
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "INTEGER",
+                                        "v2": {
+                                            "type": "integer",
+                                            "default": null,
+                                            "validation": null
                                         }
                                     }
                                 }
@@ -110,18 +98,12 @@
                             "container": {
                                 "_type": "optional",
                                 "optional": {
-                                    "_type": "container",
-                                    "container": {
-                                        "_type": "nullable",
-                                        "nullable": {
-                                            "_type": "primitive",
-                                            "primitive": {
-                                                "v1": "BOOLEAN",
-                                                "v2": {
-                                                    "type": "boolean",
-                                                    "default": null
-                                                }
-                                            }
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "BOOLEAN",
+                                        "v2": {
+                                            "type": "boolean",
+                                            "default": null
                                         }
                                     }
                                 }
@@ -320,7 +302,7 @@
             },
             "displayName": null,
             "basePath": {
-                "head": "",
+                "head": "/users",
                 "parts": []
             },
             "headers": [],
@@ -334,8 +316,8 @@
             },
             "endpoints": [
                 {
-                    "id": "endpoint_users.listwithcustompager",
-                    "name": "listwithcustompager",
+                    "id": "endpoint_users.listWithCustomPager",
+                    "name": "listWithCustomPager",
                     "displayName": null,
                     "auth": false,
                     "security": null,
@@ -345,11 +327,11 @@
                     "method": "GET",
                     "basePath": null,
                     "path": {
-                        "head": "/users",
+                        "head": "",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "users",
+                        "head": "/users",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -362,19 +344,13 @@
                                 "container": {
                                     "_type": "optional",
                                     "optional": {
-                                        "_type": "container",
-                                        "container": {
-                                            "_type": "nullable",
-                                            "nullable": {
-                                                "_type": "primitive",
-                                                "primitive": {
-                                                    "v1": "INTEGER",
-                                                    "v2": {
-                                                        "type": "integer",
-                                                        "default": null,
-                                                        "validation": null
-                                                    }
-                                                }
+                                        "_type": "primitive",
+                                        "primitive": {
+                                            "v1": "INTEGER",
+                                            "v2": {
+                                                "type": "integer",
+                                                "default": null,
+                                                "validation": null
                                             }
                                         }
                                     }
@@ -397,19 +373,13 @@
                                 "container": {
                                     "_type": "optional",
                                     "optional": {
-                                        "_type": "container",
-                                        "container": {
-                                            "_type": "nullable",
-                                            "nullable": {
-                                                "_type": "primitive",
-                                                "primitive": {
-                                                    "v1": "STRING",
-                                                    "v2": {
-                                                        "type": "string",
-                                                        "default": null,
-                                                        "validation": null
-                                                    }
-                                                }
+                                        "_type": "primitive",
+                                        "primitive": {
+                                            "v1": "STRING",
+                                            "v2": {
+                                                "type": "string",
+                                                "default": null,
+                                                "validation": null
                                             }
                                         }
                                     }
@@ -432,7 +402,7 @@
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",
-                            "wrapperName": "UsersListWithCustomPagerRequest",
+                            "wrapperName": "ListWithCustomPagerRequest",
                             "bodyKey": "body",
                             "includePathParameters": false,
                             "onlyPathParameters": false
@@ -458,28 +428,29 @@
                                     "default": null,
                                     "inline": null
                                 },
-                                "docs": "",
+                                "docs": null,
                                 "v2Examples": null
                             }
                         },
-                        "status-code": 200,
+                        "status-code": null,
                         "isWildcardStatusCode": null,
-                        "docs": ""
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [],
-                    "userSpecifiedExamples": [
+                    "userSpecifiedExamples": [],
+                    "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "407a853",
-                                "name": null,
+                                "id": "562b74a9",
                                 "url": "/users",
-                                "rootPathParameters": [],
-                                "endpointPathParameters": [],
-                                "servicePathParameters": [],
+                                "name": null,
                                 "endpointHeaders": [],
-                                "serviceHeaders": [],
+                                "endpointPathParameters": [],
                                 "queryParameters": [],
+                                "servicePathParameters": [],
+                                "serviceHeaders": [],
+                                "rootPathParameters": [],
                                 "request": null,
                                 "response": {
                                     "type": "ok",
@@ -488,21 +459,21 @@
                                         "value": {
                                             "shape": {
                                                 "type": "named",
-                                                "typeName": {
-                                                    "typeId": "type_:UsersListResponse",
-                                                    "fernFilepath": {
-                                                        "allParts": [],
-                                                        "packagePath": [],
-                                                        "file": null
-                                                    },
-                                                    "name": "UsersListResponse",
-                                                    "displayName": null
-                                                },
                                                 "shape": {
                                                     "type": "object",
                                                     "properties": [
                                                         {
                                                             "name": "limit",
+                                                            "originalTypeDeclaration": {
+                                                                "name": "UsersListResponse",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "displayName": null,
+                                                                "typeId": "type_:UsersListResponse"
+                                                            },
                                                             "value": {
                                                                 "shape": {
                                                                     "type": "container",
@@ -510,380 +481,20 @@
                                                                         "type": "optional",
                                                                         "optional": {
                                                                             "shape": {
-                                                                                "type": "container",
-                                                                                "container": {
-                                                                                    "type": "nullable",
-                                                                                    "nullable": {
-                                                                                        "shape": {
-                                                                                            "type": "primitive",
-                                                                                            "primitive": {
-                                                                                                "type": "integer",
-                                                                                                "integer": 1
-                                                                                            }
-                                                                                        },
-                                                                                        "jsonExample": 1
-                                                                                    },
-                                                                                    "valueType": {
-                                                                                        "_type": "primitive",
-                                                                                        "primitive": {
-                                                                                            "v1": "INTEGER",
-                                                                                            "v2": {
-                                                                                                "type": "integer",
-                                                                                                "default": null,
-                                                                                                "validation": null
-                                                                                            }
-                                                                                        }
-                                                                                    }
+                                                                                "type": "primitive",
+                                                                                "primitive": {
+                                                                                    "type": "integer",
+                                                                                    "integer": 1
                                                                                 }
                                                                             },
                                                                             "jsonExample": 1
                                                                         },
                                                                         "valueType": {
-                                                                            "_type": "container",
-                                                                            "container": {
-                                                                                "_type": "nullable",
-                                                                                "nullable": {
-                                                                                    "_type": "primitive",
-                                                                                    "primitive": {
-                                                                                        "v1": "INTEGER",
-                                                                                        "v2": {
-                                                                                            "type": "integer",
-                                                                                            "default": null,
-                                                                                            "validation": null
-                                                                                        }
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "jsonExample": 1
-                                                            },
-                                                            "originalTypeDeclaration": {
-                                                                "typeId": "type_:UsersListResponse",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "name": "UsersListResponse",
-                                                                "displayName": null
-                                                            },
-                                                            "propertyAccess": null
-                                                        },
-                                                        {
-                                                            "name": "count",
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "container",
-                                                                    "container": {
-                                                                        "type": "optional",
-                                                                        "optional": {
-                                                                            "shape": {
-                                                                                "type": "container",
-                                                                                "container": {
-                                                                                    "type": "nullable",
-                                                                                    "nullable": {
-                                                                                        "shape": {
-                                                                                            "type": "primitive",
-                                                                                            "primitive": {
-                                                                                                "type": "integer",
-                                                                                                "integer": 1
-                                                                                            }
-                                                                                        },
-                                                                                        "jsonExample": 1
-                                                                                    },
-                                                                                    "valueType": {
-                                                                                        "_type": "primitive",
-                                                                                        "primitive": {
-                                                                                            "v1": "INTEGER",
-                                                                                            "v2": {
-                                                                                                "type": "integer",
-                                                                                                "default": null,
-                                                                                                "validation": null
-                                                                                            }
-                                                                                        }
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            "jsonExample": 1
-                                                                        },
-                                                                        "valueType": {
-                                                                            "_type": "container",
-                                                                            "container": {
-                                                                                "_type": "nullable",
-                                                                                "nullable": {
-                                                                                    "_type": "primitive",
-                                                                                    "primitive": {
-                                                                                        "v1": "INTEGER",
-                                                                                        "v2": {
-                                                                                            "type": "integer",
-                                                                                            "default": null,
-                                                                                            "validation": null
-                                                                                        }
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "jsonExample": 1
-                                                            },
-                                                            "originalTypeDeclaration": {
-                                                                "typeId": "type_:UsersListResponse",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "name": "UsersListResponse",
-                                                                "displayName": null
-                                                            },
-                                                            "propertyAccess": null
-                                                        },
-                                                        {
-                                                            "name": "has_more",
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "container",
-                                                                    "container": {
-                                                                        "type": "optional",
-                                                                        "optional": {
-                                                                            "shape": {
-                                                                                "type": "container",
-                                                                                "container": {
-                                                                                    "type": "nullable",
-                                                                                    "nullable": {
-                                                                                        "shape": {
-                                                                                            "type": "primitive",
-                                                                                            "primitive": {
-                                                                                                "type": "boolean",
-                                                                                                "boolean": true
-                                                                                            }
-                                                                                        },
-                                                                                        "jsonExample": true
-                                                                                    },
-                                                                                    "valueType": {
-                                                                                        "_type": "primitive",
-                                                                                        "primitive": {
-                                                                                            "v1": "BOOLEAN",
-                                                                                            "v2": {
-                                                                                                "type": "boolean",
-                                                                                                "default": null
-                                                                                            }
-                                                                                        }
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            "jsonExample": true
-                                                                        },
-                                                                        "valueType": {
-                                                                            "_type": "container",
-                                                                            "container": {
-                                                                                "_type": "nullable",
-                                                                                "nullable": {
-                                                                                    "_type": "primitive",
-                                                                                    "primitive": {
-                                                                                        "v1": "BOOLEAN",
-                                                                                        "v2": {
-                                                                                            "type": "boolean",
-                                                                                            "default": null
-                                                                                        }
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "jsonExample": true
-                                                            },
-                                                            "originalTypeDeclaration": {
-                                                                "typeId": "type_:UsersListResponse",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "name": "UsersListResponse",
-                                                                "displayName": null
-                                                            },
-                                                            "propertyAccess": null
-                                                        },
-                                                        {
-                                                            "name": "links",
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "container",
-                                                                    "container": {
-                                                                        "type": "list",
-                                                                        "list": [
-                                                                            {
-                                                                                "shape": {
-                                                                                    "type": "named",
-                                                                                    "typeName": {
-                                                                                        "typeId": "type_:Link",
-                                                                                        "fernFilepath": {
-                                                                                            "allParts": [],
-                                                                                            "packagePath": [],
-                                                                                            "file": null
-                                                                                        },
-                                                                                        "name": "Link",
-                                                                                        "displayName": null
-                                                                                    },
-                                                                                    "shape": {
-                                                                                        "type": "object",
-                                                                                        "properties": [
-                                                                                            {
-                                                                                                "name": "rel",
-                                                                                                "value": {
-                                                                                                    "shape": {
-                                                                                                        "type": "primitive",
-                                                                                                        "primitive": {
-                                                                                                            "type": "string",
-                                                                                                            "string": {
-                                                                                                                "original": "rel"
-                                                                                                            }
-                                                                                                        }
-                                                                                                    },
-                                                                                                    "jsonExample": "rel"
-                                                                                                },
-                                                                                                "originalTypeDeclaration": {
-                                                                                                    "typeId": "type_:Link",
-                                                                                                    "fernFilepath": {
-                                                                                                        "allParts": [],
-                                                                                                        "packagePath": [],
-                                                                                                        "file": null
-                                                                                                    },
-                                                                                                    "name": "Link",
-                                                                                                    "displayName": null
-                                                                                                },
-                                                                                                "propertyAccess": null
-                                                                                            },
-                                                                                            {
-                                                                                                "name": "method",
-                                                                                                "value": {
-                                                                                                    "shape": {
-                                                                                                        "type": "primitive",
-                                                                                                        "primitive": {
-                                                                                                            "type": "string",
-                                                                                                            "string": {
-                                                                                                                "original": "method"
-                                                                                                            }
-                                                                                                        }
-                                                                                                    },
-                                                                                                    "jsonExample": "method"
-                                                                                                },
-                                                                                                "originalTypeDeclaration": {
-                                                                                                    "typeId": "type_:Link",
-                                                                                                    "fernFilepath": {
-                                                                                                        "allParts": [],
-                                                                                                        "packagePath": [],
-                                                                                                        "file": null
-                                                                                                    },
-                                                                                                    "name": "Link",
-                                                                                                    "displayName": null
-                                                                                                },
-                                                                                                "propertyAccess": null
-                                                                                            },
-                                                                                            {
-                                                                                                "name": "href",
-                                                                                                "value": {
-                                                                                                    "shape": {
-                                                                                                        "type": "primitive",
-                                                                                                        "primitive": {
-                                                                                                            "type": "string",
-                                                                                                            "string": {
-                                                                                                                "original": "href"
-                                                                                                            }
-                                                                                                        }
-                                                                                                    },
-                                                                                                    "jsonExample": "href"
-                                                                                                },
-                                                                                                "originalTypeDeclaration": {
-                                                                                                    "typeId": "type_:Link",
-                                                                                                    "fernFilepath": {
-                                                                                                        "allParts": [],
-                                                                                                        "packagePath": [],
-                                                                                                        "file": null
-                                                                                                    },
-                                                                                                    "name": "Link",
-                                                                                                    "displayName": null
-                                                                                                },
-                                                                                                "propertyAccess": null
-                                                                                            }
-                                                                                        ],
-                                                                                        "extraProperties": null
-                                                                                    }
-                                                                                },
-                                                                                "jsonExample": {
-                                                                                    "rel": "rel",
-                                                                                    "method": "method",
-                                                                                    "href": "href"
-                                                                                }
-                                                                            }
-                                                                        ],
-                                                                        "itemType": {
-                                                                            "_type": "named",
-                                                                            "name": "Link",
-                                                                            "fernFilepath": {
-                                                                                "allParts": [],
-                                                                                "packagePath": [],
-                                                                                "file": null
-                                                                            },
-                                                                            "displayName": null,
-                                                                            "typeId": "type_:Link",
-                                                                            "default": null,
-                                                                            "inline": null
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "jsonExample": [
-                                                                    {
-                                                                        "rel": "rel",
-                                                                        "method": "method",
-                                                                        "href": "href"
-                                                                    }
-                                                                ]
-                                                            },
-                                                            "originalTypeDeclaration": {
-                                                                "typeId": "type_:UsersListResponse",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "name": "UsersListResponse",
-                                                                "displayName": null
-                                                            },
-                                                            "propertyAccess": null
-                                                        },
-                                                        {
-                                                            "name": "data",
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "container",
-                                                                    "container": {
-                                                                        "type": "list",
-                                                                        "list": [
-                                                                            {
-                                                                                "shape": {
-                                                                                    "type": "primitive",
-                                                                                    "primitive": {
-                                                                                        "type": "string",
-                                                                                        "string": {
-                                                                                            "original": "data"
-                                                                                        }
-                                                                                    }
-                                                                                },
-                                                                                "jsonExample": "data"
-                                                                            }
-                                                                        ],
-                                                                        "itemType": {
                                                                             "_type": "primitive",
                                                                             "primitive": {
-                                                                                "v1": "STRING",
+                                                                                "v1": "INTEGER",
                                                                                 "v2": {
-                                                                                    "type": "string",
+                                                                                    "type": "integer",
                                                                                     "default": null,
                                                                                     "validation": null
                                                                                 }
@@ -891,138 +502,6 @@
                                                                         }
                                                                     }
                                                                 },
-                                                                "jsonExample": [
-                                                                    "data"
-                                                                ]
-                                                            },
-                                                            "originalTypeDeclaration": {
-                                                                "typeId": "type_:UsersListResponse",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "name": "UsersListResponse",
-                                                                "displayName": null
-                                                            },
-                                                            "propertyAccess": null
-                                                        }
-                                                    ],
-                                                    "extraProperties": null
-                                                }
-                                            },
-                                            "jsonExample": {
-                                                "limit": 1,
-                                                "count": 1,
-                                                "has_more": true,
-                                                "links": [
-                                                    {
-                                                        "rel": "rel",
-                                                        "method": "method",
-                                                        "href": "href"
-                                                    }
-                                                ],
-                                                "data": [
-                                                    "data"
-                                                ]
-                                            }
-                                        }
-                                    }
-                                },
-                                "docs": null
-                            },
-                            "codeSamples": null
-                        }
-                    ],
-                    "autogeneratedExamples": [
-                        {
-                            "example": {
-                                "id": "fbe49d6e",
-                                "url": "/users",
-                                "name": null,
-                                "endpointHeaders": [],
-                                "endpointPathParameters": [],
-                                "queryParameters": [],
-                                "servicePathParameters": [],
-                                "serviceHeaders": [],
-                                "rootPathParameters": [],
-                                "request": null,
-                                "response": {
-                                    "type": "ok",
-                                    "value": {
-                                        "type": "body",
-                                        "value": {
-                                            "shape": {
-                                                "type": "named",
-                                                "shape": {
-                                                    "type": "object",
-                                                    "properties": [
-                                                        {
-                                                            "name": "limit",
-                                                            "originalTypeDeclaration": {
-                                                                "name": "UsersListResponse",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "displayName": null,
-                                                                "typeId": "type_:UsersListResponse"
-                                                            },
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "container",
-                                                                    "container": {
-                                                                        "type": "optional",
-                                                                        "optional": {
-                                                                            "shape": {
-                                                                                "type": "container",
-                                                                                "container": {
-                                                                                    "type": "nullable",
-                                                                                    "nullable": {
-                                                                                        "shape": {
-                                                                                            "type": "primitive",
-                                                                                            "primitive": {
-                                                                                                "type": "integer",
-                                                                                                "integer": 1
-                                                                                            }
-                                                                                        },
-                                                                                        "jsonExample": 1
-                                                                                    },
-                                                                                    "valueType": {
-                                                                                        "_type": "primitive",
-                                                                                        "primitive": {
-                                                                                            "v1": "INTEGER",
-                                                                                            "v2": {
-                                                                                                "type": "integer",
-                                                                                                "default": null,
-                                                                                                "validation": null
-                                                                                            }
-                                                                                        }
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            "jsonExample": 1
-                                                                        },
-                                                                        "valueType": {
-                                                                            "_type": "container",
-                                                                            "container": {
-                                                                                "_type": "nullable",
-                                                                                "nullable": {
-                                                                                    "_type": "primitive",
-                                                                                    "primitive": {
-                                                                                        "v1": "INTEGER",
-                                                                                        "v2": {
-                                                                                            "type": "integer",
-                                                                                            "default": null,
-                                                                                            "validation": null
-                                                                                        }
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                },
                                                                 "jsonExample": 1
                                                             },
                                                             "propertyAccess": null
@@ -1046,48 +525,22 @@
                                                                         "type": "optional",
                                                                         "optional": {
                                                                             "shape": {
-                                                                                "type": "container",
-                                                                                "container": {
-                                                                                    "type": "nullable",
-                                                                                    "nullable": {
-                                                                                        "shape": {
-                                                                                            "type": "primitive",
-                                                                                            "primitive": {
-                                                                                                "type": "integer",
-                                                                                                "integer": 1
-                                                                                            }
-                                                                                        },
-                                                                                        "jsonExample": 1
-                                                                                    },
-                                                                                    "valueType": {
-                                                                                        "_type": "primitive",
-                                                                                        "primitive": {
-                                                                                            "v1": "INTEGER",
-                                                                                            "v2": {
-                                                                                                "type": "integer",
-                                                                                                "default": null,
-                                                                                                "validation": null
-                                                                                            }
-                                                                                        }
-                                                                                    }
+                                                                                "type": "primitive",
+                                                                                "primitive": {
+                                                                                    "type": "integer",
+                                                                                    "integer": 1
                                                                                 }
                                                                             },
                                                                             "jsonExample": 1
                                                                         },
                                                                         "valueType": {
-                                                                            "_type": "container",
-                                                                            "container": {
-                                                                                "_type": "nullable",
-                                                                                "nullable": {
-                                                                                    "_type": "primitive",
-                                                                                    "primitive": {
-                                                                                        "v1": "INTEGER",
-                                                                                        "v2": {
-                                                                                            "type": "integer",
-                                                                                            "default": null,
-                                                                                            "validation": null
-                                                                                        }
-                                                                                    }
+                                                                            "_type": "primitive",
+                                                                            "primitive": {
+                                                                                "v1": "INTEGER",
+                                                                                "v2": {
+                                                                                    "type": "integer",
+                                                                                    "default": null,
+                                                                                    "validation": null
                                                                                 }
                                                                             }
                                                                         }
@@ -1116,46 +569,21 @@
                                                                         "type": "optional",
                                                                         "optional": {
                                                                             "shape": {
-                                                                                "type": "container",
-                                                                                "container": {
-                                                                                    "type": "nullable",
-                                                                                    "nullable": {
-                                                                                        "shape": {
-                                                                                            "type": "primitive",
-                                                                                            "primitive": {
-                                                                                                "type": "boolean",
-                                                                                                "boolean": true
-                                                                                            }
-                                                                                        },
-                                                                                        "jsonExample": true
-                                                                                    },
-                                                                                    "valueType": {
-                                                                                        "_type": "primitive",
-                                                                                        "primitive": {
-                                                                                            "v1": "BOOLEAN",
-                                                                                            "v2": {
-                                                                                                "type": "boolean",
-                                                                                                "default": null
-                                                                                            }
-                                                                                        }
-                                                                                    }
+                                                                                "type": "primitive",
+                                                                                "primitive": {
+                                                                                    "type": "boolean",
+                                                                                    "boolean": true
                                                                                 }
                                                                             },
                                                                             "jsonExample": true
                                                                         },
                                                                         "valueType": {
-                                                                            "_type": "container",
-                                                                            "container": {
-                                                                                "_type": "nullable",
-                                                                                "nullable": {
-                                                                                    "_type": "primitive",
-                                                                                    "primitive": {
-                                                                                        "v1": "BOOLEAN",
-                                                                                        "v2": {
-                                                                                            "type": "boolean",
-                                                                                            "default": null
-                                                                                        }
-                                                                                    }
+                                                                            "_type": "primitive",
+                                                                            "primitive": {
+                                                                                "v1": "BOOLEAN",
+                                                                                "v2": {
+                                                                                    "type": "boolean",
+                                                                                    "default": null
                                                                                 }
                                                                             }
                                                                         }
@@ -1527,7 +955,39 @@
                             }
                         }
                     ],
-                    "pagination": null,
+                    "pagination": {
+                        "type": "custom",
+                        "results": {
+                            "propertyPath": [],
+                            "property": {
+                                "name": "data",
+                                "valueType": {
+                                    "_type": "container",
+                                    "container": {
+                                        "_type": "list",
+                                        "list": {
+                                            "_type": "primitive",
+                                            "primitive": {
+                                                "v1": "STRING",
+                                                "v2": {
+                                                    "type": "string",
+                                                    "default": null,
+                                                    "validation": null
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "propertyAccess": null,
+                                "v2Examples": {
+                                    "userSpecifiedExamples": {},
+                                    "autogeneratedExamples": {}
+                                },
+                                "availability": null,
+                                "docs": null
+                            }
+                        }
+                    },
                     "transport": null,
                     "v2Examples": null,
                     "source": null,
@@ -1624,11 +1084,8 @@
                         "typeReference": {
                             "type": "optional",
                             "value": {
-                                "type": "nullable",
-                                "value": {
-                                    "type": "primitive",
-                                    "value": "INTEGER"
-                                }
+                                "type": "primitive",
+                                "value": "INTEGER"
                             }
                         },
                         "propertyAccess": null,
@@ -1660,11 +1117,8 @@
                         "typeReference": {
                             "type": "optional",
                             "value": {
-                                "type": "nullable",
-                                "value": {
-                                    "type": "primitive",
-                                    "value": "INTEGER"
-                                }
+                                "type": "primitive",
+                                "value": "INTEGER"
                             }
                         },
                         "propertyAccess": null,
@@ -1696,11 +1150,8 @@
                         "typeReference": {
                             "type": "optional",
                             "value": {
-                                "type": "nullable",
-                                "value": {
-                                    "type": "primitive",
-                                    "value": "BOOLEAN"
-                                }
+                                "type": "primitive",
+                                "value": "BOOLEAN"
                             }
                         },
                         "propertyAccess": null,
@@ -1902,7 +1353,7 @@
         },
         "headers": [],
         "endpoints": {
-            "endpoint_users.listwithcustompager": {
+            "endpoint_users.listWithCustomPager": {
                 "auth": {
                     "type": "bearer",
                     "token": {
@@ -1927,22 +1378,22 @@
                 },
                 "declaration": {
                     "name": {
-                        "originalName": "listwithcustompager",
+                        "originalName": "listWithCustomPager",
                         "camelCase": {
-                            "unsafeName": "listwithcustompager",
-                            "safeName": "listwithcustompager"
+                            "unsafeName": "listWithCustomPager",
+                            "safeName": "listWithCustomPager"
                         },
                         "snakeCase": {
-                            "unsafeName": "listwithcustompager",
-                            "safeName": "listwithcustompager"
+                            "unsafeName": "list_with_custom_pager",
+                            "safeName": "list_with_custom_pager"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "LISTWITHCUSTOMPAGER",
-                            "safeName": "LISTWITHCUSTOMPAGER"
+                            "unsafeName": "LIST_WITH_CUSTOM_PAGER",
+                            "safeName": "LIST_WITH_CUSTOM_PAGER"
                         },
                         "pascalCase": {
-                            "unsafeName": "Listwithcustompager",
-                            "safeName": "Listwithcustompager"
+                            "unsafeName": "ListWithCustomPager",
+                            "safeName": "ListWithCustomPager"
                         }
                     },
                     "fernFilepath": {
@@ -1997,22 +1448,22 @@
                     "type": "inlined",
                     "declaration": {
                         "name": {
-                            "originalName": "UsersListWithCustomPagerRequest",
+                            "originalName": "ListWithCustomPagerRequest",
                             "camelCase": {
-                                "unsafeName": "usersListWithCustomPagerRequest",
-                                "safeName": "usersListWithCustomPagerRequest"
+                                "unsafeName": "listWithCustomPagerRequest",
+                                "safeName": "listWithCustomPagerRequest"
                             },
                             "snakeCase": {
-                                "unsafeName": "users_list_with_custom_pager_request",
-                                "safeName": "users_list_with_custom_pager_request"
+                                "unsafeName": "list_with_custom_pager_request",
+                                "safeName": "list_with_custom_pager_request"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "USERS_LIST_WITH_CUSTOM_PAGER_REQUEST",
-                                "safeName": "USERS_LIST_WITH_CUSTOM_PAGER_REQUEST"
+                                "unsafeName": "LIST_WITH_CUSTOM_PAGER_REQUEST",
+                                "safeName": "LIST_WITH_CUSTOM_PAGER_REQUEST"
                             },
                             "pascalCase": {
-                                "unsafeName": "UsersListWithCustomPagerRequest",
-                                "safeName": "UsersListWithCustomPagerRequest"
+                                "unsafeName": "ListWithCustomPagerRequest",
+                                "safeName": "ListWithCustomPagerRequest"
                             }
                         },
                         "fernFilepath": {
@@ -2087,11 +1538,8 @@
                             "typeReference": {
                                 "type": "optional",
                                 "value": {
-                                    "type": "nullable",
-                                    "value": {
-                                        "type": "primitive",
-                                        "value": "INTEGER"
-                                    }
+                                    "type": "primitive",
+                                    "value": "INTEGER"
                                 }
                             },
                             "propertyAccess": null,
@@ -2123,11 +1571,8 @@
                             "typeReference": {
                                 "type": "optional",
                                 "value": {
-                                    "type": "nullable",
-                                    "value": {
-                                        "type": "primitive",
-                                        "value": "STRING"
-                                    }
+                                    "type": "primitive",
+                                    "value": "STRING"
                                 }
                             },
                             "propertyAccess": null,
@@ -2206,7 +1651,7 @@
     "sdkConfig": {
         "isAuthMandatory": false,
         "hasStreamingEndpoints": false,
-        "hasPaginatedEndpoints": false,
+        "hasPaginatedEndpoints": true,
         "hasFileDownloadEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",

@@ -3,7 +3,7 @@
     "types": {},
     "headers": [],
     "endpoints": {
-        "endpoint_dummy.getdummy": {
+        "endpoint_dummy.getDummy": {
             "auth": {
                 "type": "bearer",
                 "token": {
@@ -28,22 +28,22 @@
             },
             "declaration": {
                 "name": {
-                    "originalName": "getdummy",
+                    "originalName": "getDummy",
                     "camelCase": {
-                        "unsafeName": "getdummy",
-                        "safeName": "getdummy"
+                        "unsafeName": "getDummy",
+                        "safeName": "getDummy"
                     },
                     "snakeCase": {
-                        "unsafeName": "getdummy",
-                        "safeName": "getdummy"
+                        "unsafeName": "get_dummy",
+                        "safeName": "get_dummy"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "GETDUMMY",
-                        "safeName": "GETDUMMY"
+                        "unsafeName": "GET_DUMMY",
+                        "safeName": "GET_DUMMY"
                     },
                     "pascalCase": {
-                        "unsafeName": "Getdummy",
-                        "safeName": "Getdummy"
+                        "unsafeName": "GetDummy",
+                        "safeName": "GetDummy"
                     }
                 },
                 "fernFilepath": {

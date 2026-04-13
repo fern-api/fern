@@ -3,29 +3,29 @@
     "types": {},
     "headers": [],
     "endpoints": {
-        "endpoint_service.getwithbearertoken": {
+        "endpoint_service.getWithBearerToken": {
             "auth": {
                 "type": "header",
                 "header": {
                     "name": {
                         "wireValue": "x-api-key",
                         "name": {
-                            "originalName": "apiKey",
+                            "originalName": "Header Token Auth",
                             "camelCase": {
-                                "unsafeName": "apiKey",
-                                "safeName": "apiKey"
+                                "unsafeName": "headerTokenAuth",
+                                "safeName": "headerTokenAuth"
                             },
                             "snakeCase": {
-                                "unsafeName": "api_key",
-                                "safeName": "api_key"
+                                "unsafeName": "header_token_auth",
+                                "safeName": "header_token_auth"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "API_KEY",
-                                "safeName": "API_KEY"
+                                "unsafeName": "HEADER_TOKEN_AUTH",
+                                "safeName": "HEADER_TOKEN_AUTH"
                             },
                             "pascalCase": {
-                                "unsafeName": "APIKey",
-                                "safeName": "APIKey"
+                                "unsafeName": "HeaderTokenAuth",
+                                "safeName": "HeaderTokenAuth"
                             }
                         }
                     },
@@ -39,22 +39,22 @@
             },
             "declaration": {
                 "name": {
-                    "originalName": "getwithbearertoken",
+                    "originalName": "getWithBearerToken",
                     "camelCase": {
-                        "unsafeName": "getwithbearertoken",
-                        "safeName": "getwithbearertoken"
+                        "unsafeName": "getWithBearerToken",
+                        "safeName": "getWithBearerToken"
                     },
                     "snakeCase": {
-                        "unsafeName": "getwithbearertoken",
-                        "safeName": "getwithbearertoken"
+                        "unsafeName": "get_with_bearer_token",
+                        "safeName": "get_with_bearer_token"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "GETWITHBEARERTOKEN",
-                        "safeName": "GETWITHBEARERTOKEN"
+                        "unsafeName": "GET_WITH_BEARER_TOKEN",
+                        "safeName": "GET_WITH_BEARER_TOKEN"
                     },
                     "pascalCase": {
-                        "unsafeName": "Getwithbearertoken",
-                        "safeName": "Getwithbearertoken"
+                        "unsafeName": "GetWithBearerToken",
+                        "safeName": "GetWithBearerToken"
                     }
                 },
                 "fernFilepath": {

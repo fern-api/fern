@@ -302,8 +302,11 @@
                     "typeReference": {
                         "type": "optional",
                         "value": {
-                            "type": "named",
-                            "value": "type_:SortOrder"
+                            "type": "nullable",
+                            "value": {
+                                "type": "named",
+                                "value": "type_:SortOrder"
+                            }
                         }
                     },
                     "propertyAccess": null,
@@ -339,47 +342,9 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "",
-                            "camelCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "snakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "pascalCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            }
-                        }
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "",
-                        "camelCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        },
-                        "snakeCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        },
-                        "pascalCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        }
-                    }
+                    "file": null
                 }
             },
             "location": {
@@ -409,47 +374,9 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [
-                            {
-                                "originalName": "",
-                                "camelCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                }
-                            }
-                        ],
+                        "allParts": [],
                         "packagePath": [],
-                        "file": {
-                            "originalName": "",
-                            "camelCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "snakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "pascalCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            }
-                        }
+                        "file": null
                     }
                 },
                 "pathParameters": [],
@@ -588,8 +515,11 @@
                         "typeReference": {
                             "type": "optional",
                             "value": {
-                                "type": "named",
-                                "value": "type_:SortOrder"
+                                "type": "nullable",
+                                "value": {
+                                    "type": "named",
+                                    "value": "type_:SortOrder"
+                                }
                             }
                         },
                         "propertyAccess": null,

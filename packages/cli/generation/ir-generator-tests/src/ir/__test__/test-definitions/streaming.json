@@ -2,8 +2,8 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": "api",
-    "apiDisplayName": "streaming",
+    "apiName": "streaming",
+    "apiDisplayName": null,
     "apiDocs": null,
     "auth": {
         "requirement": "ALL",
@@ -13,17 +13,19 @@
     "headers": [],
     "idempotencyHeaders": [],
     "types": {
-        "type_:StreamResponse": {
+        "type_dummy:StreamResponse": {
             "inline": null,
             "name": {
                 "name": "StreamResponse",
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        "dummy"
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": "dummy"
                 },
                 "displayName": null,
-                "typeId": "type_:StreamResponse"
+                "typeId": "type_dummy:StreamResponse"
             },
             "shape": {
                 "_type": "object",
@@ -57,19 +59,13 @@
                             "container": {
                                 "_type": "optional",
                                 "optional": {
-                                    "_type": "container",
-                                    "container": {
-                                        "_type": "nullable",
-                                        "nullable": {
-                                            "_type": "primitive",
-                                            "primitive": {
-                                                "v1": "STRING",
-                                                "v2": {
-                                                    "type": "string",
-                                                    "default": null,
-                                                    "validation": null
-                                                }
-                                            }
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
                                         }
                                     }
                                 }
@@ -129,8 +125,8 @@
             },
             "endpoints": [
                 {
-                    "id": "endpoint_dummy.generateStream",
-                    "name": "generateStream",
+                    "id": "endpoint_dummy.generate-stream",
+                    "name": "generate-stream",
                     "displayName": null,
                     "auth": false,
                     "security": null,
@@ -153,18 +149,18 @@
                     "headers": [],
                     "requestBody": {
                         "type": "inlinedRequestBody",
-                        "name": "DummyGenerateStreamRequest",
+                        "name": "GenerateStreamRequest",
                         "extends": [],
                         "properties": [
                             {
                                 "name": "stream",
                                 "valueType": {
-                                    "_type": "primitive",
-                                    "primitive": {
-                                        "v1": "BOOLEAN",
-                                        "v2": {
+                                    "_type": "container",
+                                    "container": {
+                                        "_type": "literal",
+                                        "literal": {
                                             "type": "boolean",
-                                            "default": null
+                                            "boolean": true
                                         }
                                     }
                                 },
@@ -202,13 +198,13 @@
                         "extendedProperties": [],
                         "docs": null,
                         "v2Examples": null,
-                        "contentType": "application/json"
+                        "contentType": null
                     },
                     "v2RequestBodies": null,
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",
-                            "wrapperName": "DummyGenerateStreamRequest",
+                            "wrapperName": "GenerateStreamRequest",
                             "bodyKey": "body",
                             "includePathParameters": false,
                             "onlyPathParameters": false
@@ -218,18 +214,204 @@
                     },
                     "response": {
                         "body": {
-                            "type": "fileDownload",
-                            "docs": "",
-                            "v2Examples": null
+                            "type": "streaming",
+                            "value": {
+                                "type": "json",
+                                "payload": {
+                                    "_type": "named",
+                                    "name": "StreamResponse",
+                                    "fernFilepath": {
+                                        "allParts": [
+                                            "dummy"
+                                        ],
+                                        "packagePath": [],
+                                        "file": "dummy"
+                                    },
+                                    "displayName": null,
+                                    "typeId": "type_dummy:StreamResponse",
+                                    "default": null,
+                                    "inline": null
+                                },
+                                "terminator": null,
+                                "docs": null,
+                                "v2Examples": null
+                            }
                         },
-                        "status-code": 200,
+                        "status-code": null,
                         "isWildcardStatusCode": null,
-                        "docs": ""
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [],
                     "userSpecifiedExamples": [],
-                    "autogeneratedExamples": [],
+                    "autogeneratedExamples": [
+                        {
+                            "example": {
+                                "id": "77825d1a",
+                                "url": "/generate-stream",
+                                "name": null,
+                                "endpointHeaders": [],
+                                "endpointPathParameters": [],
+                                "queryParameters": [],
+                                "servicePathParameters": [],
+                                "serviceHeaders": [],
+                                "rootPathParameters": [],
+                                "request": {
+                                    "type": "inlinedRequestBody",
+                                    "properties": [
+                                        {
+                                            "name": "stream",
+                                            "originalTypeDeclaration": null,
+                                            "value": {
+                                                "shape": {
+                                                    "type": "container",
+                                                    "container": {
+                                                        "type": "literal",
+                                                        "literal": {
+                                                            "type": "boolean",
+                                                            "boolean": true
+                                                        }
+                                                    }
+                                                },
+                                                "jsonExample": true
+                                            }
+                                        },
+                                        {
+                                            "name": "num_events",
+                                            "originalTypeDeclaration": null,
+                                            "value": {
+                                                "shape": {
+                                                    "type": "primitive",
+                                                    "primitive": {
+                                                        "type": "integer",
+                                                        "integer": 1
+                                                    }
+                                                },
+                                                "jsonExample": 1
+                                            }
+                                        }
+                                    ],
+                                    "extraProperties": null,
+                                    "jsonExample": {
+                                        "stream": true,
+                                        "num_events": 1
+                                    }
+                                },
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "stream",
+                                        "value": [
+                                            {
+                                                "shape": {
+                                                    "type": "named",
+                                                    "shape": {
+                                                        "type": "object",
+                                                        "properties": [
+                                                            {
+                                                                "name": "id",
+                                                                "originalTypeDeclaration": {
+                                                                    "name": "StreamResponse",
+                                                                    "fernFilepath": {
+                                                                        "allParts": [
+                                                                            "dummy"
+                                                                        ],
+                                                                        "packagePath": [],
+                                                                        "file": "dummy"
+                                                                    },
+                                                                    "displayName": null,
+                                                                    "typeId": "type_dummy:StreamResponse"
+                                                                },
+                                                                "value": {
+                                                                    "shape": {
+                                                                        "type": "primitive",
+                                                                        "primitive": {
+                                                                            "type": "string",
+                                                                            "string": {
+                                                                                "original": "id"
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    "jsonExample": "id"
+                                                                },
+                                                                "propertyAccess": null
+                                                            },
+                                                            {
+                                                                "name": "name",
+                                                                "originalTypeDeclaration": {
+                                                                    "name": "StreamResponse",
+                                                                    "fernFilepath": {
+                                                                        "allParts": [
+                                                                            "dummy"
+                                                                        ],
+                                                                        "packagePath": [],
+                                                                        "file": "dummy"
+                                                                    },
+                                                                    "displayName": null,
+                                                                    "typeId": "type_dummy:StreamResponse"
+                                                                },
+                                                                "value": {
+                                                                    "shape": {
+                                                                        "type": "container",
+                                                                        "container": {
+                                                                            "type": "optional",
+                                                                            "optional": {
+                                                                                "shape": {
+                                                                                    "type": "primitive",
+                                                                                    "primitive": {
+                                                                                        "type": "string",
+                                                                                        "string": {
+                                                                                            "original": "name"
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                "jsonExample": "name"
+                                                                            },
+                                                                            "valueType": {
+                                                                                "_type": "primitive",
+                                                                                "primitive": {
+                                                                                    "v1": "STRING",
+                                                                                    "v2": {
+                                                                                        "type": "string",
+                                                                                        "default": null,
+                                                                                        "validation": null
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    "jsonExample": "name"
+                                                                },
+                                                                "propertyAccess": null
+                                                            }
+                                                        ],
+                                                        "extraProperties": null
+                                                    },
+                                                    "typeName": {
+                                                        "name": "StreamResponse",
+                                                        "fernFilepath": {
+                                                            "allParts": [
+                                                                "dummy"
+                                                            ],
+                                                            "packagePath": [],
+                                                            "file": "dummy"
+                                                        },
+                                                        "displayName": null,
+                                                        "typeId": "type_dummy:StreamResponse"
+                                                    }
+                                                },
+                                                "jsonExample": {
+                                                    "id": "id",
+                                                    "name": "name"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                "docs": null
+                            }
+                        }
+                    ],
                     "pagination": null,
                     "transport": null,
                     "v2Examples": null,
@@ -266,18 +448,18 @@
                     "headers": [],
                     "requestBody": {
                         "type": "inlinedRequestBody",
-                        "name": "DummyGenerateRequest",
+                        "name": "Generateequest",
                         "extends": [],
                         "properties": [
                             {
                                 "name": "stream",
                                 "valueType": {
-                                    "_type": "primitive",
-                                    "primitive": {
-                                        "v1": "BOOLEAN",
-                                        "v2": {
+                                    "_type": "container",
+                                    "container": {
+                                        "_type": "literal",
+                                        "literal": {
                                             "type": "boolean",
-                                            "default": null
+                                            "boolean": false
                                         }
                                     }
                                 },
@@ -315,13 +497,13 @@
                         "extendedProperties": [],
                         "docs": null,
                         "v2Examples": null,
-                        "contentType": "application/json"
+                        "contentType": null
                     },
                     "v2RequestBodies": null,
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",
-                            "wrapperName": "DummyGenerateRequest",
+                            "wrapperName": "Generateequest",
                             "bodyKey": "body",
                             "includePathParameters": false,
                             "onlyPathParameters": false
@@ -338,30 +520,32 @@
                                     "_type": "named",
                                     "name": "StreamResponse",
                                     "fernFilepath": {
-                                        "allParts": [],
+                                        "allParts": [
+                                            "dummy"
+                                        ],
                                         "packagePath": [],
-                                        "file": null
+                                        "file": "dummy"
                                     },
                                     "displayName": null,
-                                    "typeId": "type_:StreamResponse",
+                                    "typeId": "type_dummy:StreamResponse",
                                     "default": null,
                                     "inline": null
                                 },
-                                "docs": "",
+                                "docs": null,
                                 "v2Examples": null
                             }
                         },
-                        "status-code": 200,
+                        "status-code": null,
                         "isWildcardStatusCode": null,
-                        "docs": ""
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [],
                     "userSpecifiedExamples": [
                         {
                             "example": {
-                                "id": "1bb85d68",
-                                "name": null,
+                                "id": "Default",
+                                "name": "Default",
                                 "url": "/generate",
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [],
@@ -376,13 +560,16 @@
                                             "name": "stream",
                                             "value": {
                                                 "shape": {
-                                                    "type": "primitive",
-                                                    "primitive": {
-                                                        "type": "boolean",
-                                                        "boolean": true
+                                                    "type": "container",
+                                                    "container": {
+                                                        "type": "literal",
+                                                        "literal": {
+                                                            "type": "boolean",
+                                                            "boolean": false
+                                                        }
                                                     }
                                                 },
-                                                "jsonExample": true
+                                                "jsonExample": false
                                             },
                                             "originalTypeDeclaration": null
                                         },
@@ -393,18 +580,18 @@
                                                     "type": "primitive",
                                                     "primitive": {
                                                         "type": "integer",
-                                                        "integer": 1
+                                                        "integer": 5
                                                     }
                                                 },
-                                                "jsonExample": 1
+                                                "jsonExample": 5
                                             },
                                             "originalTypeDeclaration": null
                                         }
                                     ],
                                     "extraProperties": null,
                                     "jsonExample": {
-                                        "stream": true,
-                                        "num_events": 1
+                                        "stream": false,
+                                        "num_events": 5
                                     }
                                 },
                                 "response": {
@@ -415,11 +602,13 @@
                                             "shape": {
                                                 "type": "named",
                                                 "typeName": {
-                                                    "typeId": "type_:StreamResponse",
+                                                    "typeId": "type_dummy:StreamResponse",
                                                     "fernFilepath": {
-                                                        "allParts": [],
+                                                        "allParts": [
+                                                            "dummy"
+                                                        ],
                                                         "packagePath": [],
-                                                        "file": null
+                                                        "file": "dummy"
                                                     },
                                                     "name": "StreamResponse",
                                                     "displayName": null
@@ -442,11 +631,13 @@
                                                                 "jsonExample": "id"
                                                             },
                                                             "originalTypeDeclaration": {
-                                                                "typeId": "type_:StreamResponse",
+                                                                "typeId": "type_dummy:StreamResponse",
                                                                 "fernFilepath": {
-                                                                    "allParts": [],
+                                                                    "allParts": [
+                                                                        "dummy"
+                                                                    ],
                                                                     "packagePath": [],
-                                                                    "file": null
+                                                                    "file": "dummy"
                                                                 },
                                                                 "name": "StreamResponse",
                                                                 "displayName": null
@@ -462,50 +653,24 @@
                                                                         "type": "optional",
                                                                         "optional": {
                                                                             "shape": {
-                                                                                "type": "container",
-                                                                                "container": {
-                                                                                    "type": "nullable",
-                                                                                    "nullable": {
-                                                                                        "shape": {
-                                                                                            "type": "primitive",
-                                                                                            "primitive": {
-                                                                                                "type": "string",
-                                                                                                "string": {
-                                                                                                    "original": "name"
-                                                                                                }
-                                                                                            }
-                                                                                        },
-                                                                                        "jsonExample": "name"
-                                                                                    },
-                                                                                    "valueType": {
-                                                                                        "_type": "primitive",
-                                                                                        "primitive": {
-                                                                                            "v1": "STRING",
-                                                                                            "v2": {
-                                                                                                "type": "string",
-                                                                                                "default": null,
-                                                                                                "validation": null
-                                                                                            }
-                                                                                        }
+                                                                                "type": "primitive",
+                                                                                "primitive": {
+                                                                                    "type": "string",
+                                                                                    "string": {
+                                                                                        "original": "name"
                                                                                     }
                                                                                 }
                                                                             },
                                                                             "jsonExample": "name"
                                                                         },
                                                                         "valueType": {
-                                                                            "_type": "container",
-                                                                            "container": {
-                                                                                "_type": "nullable",
-                                                                                "nullable": {
-                                                                                    "_type": "primitive",
-                                                                                    "primitive": {
-                                                                                        "v1": "STRING",
-                                                                                        "v2": {
-                                                                                            "type": "string",
-                                                                                            "default": null,
-                                                                                            "validation": null
-                                                                                        }
-                                                                                    }
+                                                                            "_type": "primitive",
+                                                                            "primitive": {
+                                                                                "v1": "STRING",
+                                                                                "v2": {
+                                                                                    "type": "string",
+                                                                                    "default": null,
+                                                                                    "validation": null
                                                                                 }
                                                                             }
                                                                         }
@@ -514,11 +679,13 @@
                                                                 "jsonExample": "name"
                                                             },
                                                             "originalTypeDeclaration": {
-                                                                "typeId": "type_:StreamResponse",
+                                                                "typeId": "type_dummy:StreamResponse",
                                                                 "fernFilepath": {
-                                                                    "allParts": [],
+                                                                    "allParts": [
+                                                                        "dummy"
+                                                                    ],
                                                                     "packagePath": [],
-                                                                    "file": null
+                                                                    "file": "dummy"
                                                                 },
                                                                 "name": "StreamResponse",
                                                                 "displayName": null
@@ -544,7 +711,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "f1a9cb33",
+                                "id": "c80d2b87",
                                 "url": "/generate",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -561,13 +728,16 @@
                                             "originalTypeDeclaration": null,
                                             "value": {
                                                 "shape": {
-                                                    "type": "primitive",
-                                                    "primitive": {
-                                                        "type": "boolean",
-                                                        "boolean": true
+                                                    "type": "container",
+                                                    "container": {
+                                                        "type": "literal",
+                                                        "literal": {
+                                                            "type": "boolean",
+                                                            "boolean": false
+                                                        }
                                                     }
                                                 },
-                                                "jsonExample": true
+                                                "jsonExample": false
                                             }
                                         },
                                         {
@@ -587,7 +757,7 @@
                                     ],
                                     "extraProperties": null,
                                     "jsonExample": {
-                                        "stream": true,
+                                        "stream": false,
                                         "num_events": 1
                                     }
                                 },
@@ -606,12 +776,14 @@
                                                             "originalTypeDeclaration": {
                                                                 "name": "StreamResponse",
                                                                 "fernFilepath": {
-                                                                    "allParts": [],
+                                                                    "allParts": [
+                                                                        "dummy"
+                                                                    ],
                                                                     "packagePath": [],
-                                                                    "file": null
+                                                                    "file": "dummy"
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_:StreamResponse"
+                                                                "typeId": "type_dummy:StreamResponse"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -632,12 +804,14 @@
                                                             "originalTypeDeclaration": {
                                                                 "name": "StreamResponse",
                                                                 "fernFilepath": {
-                                                                    "allParts": [],
+                                                                    "allParts": [
+                                                                        "dummy"
+                                                                    ],
                                                                     "packagePath": [],
-                                                                    "file": null
+                                                                    "file": "dummy"
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_:StreamResponse"
+                                                                "typeId": "type_dummy:StreamResponse"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -646,50 +820,24 @@
                                                                         "type": "optional",
                                                                         "optional": {
                                                                             "shape": {
-                                                                                "type": "container",
-                                                                                "container": {
-                                                                                    "type": "nullable",
-                                                                                    "nullable": {
-                                                                                        "shape": {
-                                                                                            "type": "primitive",
-                                                                                            "primitive": {
-                                                                                                "type": "string",
-                                                                                                "string": {
-                                                                                                    "original": "name"
-                                                                                                }
-                                                                                            }
-                                                                                        },
-                                                                                        "jsonExample": "name"
-                                                                                    },
-                                                                                    "valueType": {
-                                                                                        "_type": "primitive",
-                                                                                        "primitive": {
-                                                                                            "v1": "STRING",
-                                                                                            "v2": {
-                                                                                                "type": "string",
-                                                                                                "default": null,
-                                                                                                "validation": null
-                                                                                            }
-                                                                                        }
+                                                                                "type": "primitive",
+                                                                                "primitive": {
+                                                                                    "type": "string",
+                                                                                    "string": {
+                                                                                        "original": "name"
                                                                                     }
                                                                                 }
                                                                             },
                                                                             "jsonExample": "name"
                                                                         },
                                                                         "valueType": {
-                                                                            "_type": "container",
-                                                                            "container": {
-                                                                                "_type": "nullable",
-                                                                                "nullable": {
-                                                                                    "_type": "primitive",
-                                                                                    "primitive": {
-                                                                                        "v1": "STRING",
-                                                                                        "v2": {
-                                                                                            "type": "string",
-                                                                                            "default": null,
-                                                                                            "validation": null
-                                                                                        }
-                                                                                    }
+                                                                            "_type": "primitive",
+                                                                            "primitive": {
+                                                                                "v1": "STRING",
+                                                                                "v2": {
+                                                                                    "type": "string",
+                                                                                    "default": null,
+                                                                                    "validation": null
                                                                                 }
                                                                             }
                                                                         }
@@ -705,12 +853,14 @@
                                                 "typeName": {
                                                     "name": "StreamResponse",
                                                     "fernFilepath": {
-                                                        "allParts": [],
+                                                        "allParts": [
+                                                            "dummy"
+                                                        ],
                                                         "packagePath": [],
-                                                        "file": null
+                                                        "file": "dummy"
                                                     },
                                                     "displayName": null,
-                                                    "typeId": "type_:StreamResponse"
+                                                    "typeId": "type_dummy:StreamResponse"
                                                 }
                                             },
                                             "jsonExample": {
@@ -752,7 +902,7 @@
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_dummy": [
-                "type_:StreamResponse"
+                "type_dummy:StreamResponse"
             ]
         },
         "sharedTypes": []
@@ -765,7 +915,7 @@
     "dynamic": {
         "version": "1.0.0",
         "types": {
-            "type_:StreamResponse": {
+            "type_dummy:StreamResponse": {
                 "type": "object",
                 "declaration": {
                     "name": {
@@ -788,9 +938,47 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [],
+                        "allParts": [
+                            {
+                                "originalName": "dummy",
+                                "camelCase": {
+                                    "unsafeName": "dummy",
+                                    "safeName": "dummy"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "dummy",
+                                    "safeName": "dummy"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "DUMMY",
+                                    "safeName": "DUMMY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Dummy",
+                                    "safeName": "Dummy"
+                                }
+                            }
+                        ],
                         "packagePath": [],
-                        "file": null
+                        "file": {
+                            "originalName": "dummy",
+                            "camelCase": {
+                                "unsafeName": "dummy",
+                                "safeName": "dummy"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "dummy",
+                                "safeName": "dummy"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DUMMY",
+                                "safeName": "DUMMY"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Dummy",
+                                "safeName": "Dummy"
+                            }
+                        }
                     }
                 },
                 "properties": [
@@ -850,11 +1038,8 @@
                         "typeReference": {
                             "type": "optional",
                             "value": {
-                                "type": "nullable",
-                                "value": {
-                                    "type": "primitive",
-                                    "value": "STRING"
-                                }
+                                "type": "primitive",
+                                "value": "STRING"
                             }
                         },
                         "propertyAccess": null,
@@ -867,11 +1052,11 @@
         },
         "headers": [],
         "endpoints": {
-            "endpoint_dummy.generateStream": {
+            "endpoint_dummy.generate-stream": {
                 "auth": null,
                 "declaration": {
                     "name": {
-                        "originalName": "generateStream",
+                        "originalName": "generate-stream",
                         "camelCase": {
                             "unsafeName": "generateStream",
                             "safeName": "generateStream"
@@ -941,22 +1126,22 @@
                     "type": "inlined",
                     "declaration": {
                         "name": {
-                            "originalName": "DummyGenerateStreamRequest",
+                            "originalName": "GenerateStreamRequest",
                             "camelCase": {
-                                "unsafeName": "dummyGenerateStreamRequest",
-                                "safeName": "dummyGenerateStreamRequest"
+                                "unsafeName": "generateStreamRequest",
+                                "safeName": "generateStreamRequest"
                             },
                             "snakeCase": {
-                                "unsafeName": "dummy_generate_stream_request",
-                                "safeName": "dummy_generate_stream_request"
+                                "unsafeName": "generate_stream_request",
+                                "safeName": "generate_stream_request"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "DUMMY_GENERATE_STREAM_REQUEST",
-                                "safeName": "DUMMY_GENERATE_STREAM_REQUEST"
+                                "unsafeName": "GENERATE_STREAM_REQUEST",
+                                "safeName": "GENERATE_STREAM_REQUEST"
                             },
                             "pascalCase": {
-                                "unsafeName": "DummyGenerateStreamRequest",
-                                "safeName": "DummyGenerateStreamRequest"
+                                "unsafeName": "GenerateStreamRequest",
+                                "safeName": "GenerateStreamRequest"
                             }
                         },
                         "fernFilepath": {
@@ -1033,8 +1218,11 @@
                                     }
                                 },
                                 "typeReference": {
-                                    "type": "primitive",
-                                    "value": "BOOLEAN"
+                                    "type": "literal",
+                                    "value": {
+                                        "type": "boolean",
+                                        "value": true
+                                    }
                                 },
                                 "propertyAccess": null,
                                 "variable": null
@@ -1077,7 +1265,7 @@
                     }
                 },
                 "response": {
-                    "type": "fileDownload"
+                    "type": "streaming"
                 },
                 "examples": null
             },
@@ -1155,22 +1343,22 @@
                     "type": "inlined",
                     "declaration": {
                         "name": {
-                            "originalName": "DummyGenerateRequest",
+                            "originalName": "Generateequest",
                             "camelCase": {
-                                "unsafeName": "dummyGenerateRequest",
-                                "safeName": "dummyGenerateRequest"
+                                "unsafeName": "generateequest",
+                                "safeName": "generateequest"
                             },
                             "snakeCase": {
-                                "unsafeName": "dummy_generate_request",
-                                "safeName": "dummy_generate_request"
+                                "unsafeName": "generateequest",
+                                "safeName": "generateequest"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "DUMMY_GENERATE_REQUEST",
-                                "safeName": "DUMMY_GENERATE_REQUEST"
+                                "unsafeName": "GENERATEEQUEST",
+                                "safeName": "GENERATEEQUEST"
                             },
                             "pascalCase": {
-                                "unsafeName": "DummyGenerateRequest",
-                                "safeName": "DummyGenerateRequest"
+                                "unsafeName": "Generateequest",
+                                "safeName": "Generateequest"
                             }
                         },
                         "fernFilepath": {
@@ -1247,8 +1435,11 @@
                                     }
                                 },
                                 "typeReference": {
-                                    "type": "primitive",
-                                    "value": "BOOLEAN"
+                                    "type": "literal",
+                                    "value": {
+                                        "type": "boolean",
+                                        "value": false
+                                    }
                                 },
                                 "propertyAccess": null,
                                 "variable": null
@@ -1321,7 +1512,9 @@
                 "file": "dummy"
             },
             "service": "service_dummy",
-            "types": [],
+            "types": [
+                "type_dummy:StreamResponse"
+            ],
             "errors": [],
             "subpackages": [],
             "navigationConfig": null,
@@ -1339,9 +1532,7 @@
         },
         "websocket": null,
         "service": null,
-        "types": [
-            "type_:StreamResponse"
-        ],
+        "types": [],
         "errors": [],
         "subpackages": [
             "subpackage_dummy"
@@ -1353,9 +1544,9 @@
     },
     "sdkConfig": {
         "isAuthMandatory": false,
-        "hasStreamingEndpoints": false,
+        "hasStreamingEndpoints": true,
         "hasPaginatedEndpoints": false,
-        "hasFileDownloadEndpoints": true,
+        "hasFileDownloadEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",
