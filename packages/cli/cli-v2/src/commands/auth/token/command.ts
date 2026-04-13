@@ -1,6 +1,5 @@
 import { createOrganizationIfDoesNotExist } from "@fern-api/auth";
 import { createVenusService } from "@fern-api/core";
-import { FernVenusApi } from "@fern-api/venus-api-sdk";
 import type { Argv } from "yargs";
 
 import { TaskContextAdapter } from "../../../context/adapter/TaskContextAdapter.js";
@@ -32,7 +31,7 @@ export class TokenCommand {
 
         const venus = createVenusService({ token: token.value });
         const response = await venus.registry.generateRegistryTokens({
-            organizationId: FernVenusApi.OrganizationId(orgId)
+            organizationId: orgId
         });
         if (response.ok) {
             // Output raw token (no newline for piping compatibility).
@@ -47,6 +46,12 @@ export class TokenCommand {
             },
             unauthorizedError: () => {
                 process.stderr.write(`${Icons.error} You do not have access to organization "${orgId}".\n`);
+                throw CliError.exit();
+            },
+            missingOrgPermissionsError: () => {
+                process.stderr.write(
+                    `${Icons.error} You do not have the required permissions in organization "${orgId}".\n`
+                );
                 throw CliError.exit();
             },
             _other: () => {

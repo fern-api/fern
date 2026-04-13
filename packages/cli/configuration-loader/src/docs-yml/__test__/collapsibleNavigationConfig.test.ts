@@ -1,7 +1,7 @@
 import { docsYml } from "@fern-api/configuration";
 import { validateAgainstJsonSchema } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { createMockTaskContext, FernCliError } from "@fern-api/task-context";
+import { createMockTaskContext, TaskAbortSignal } from "@fern-api/task-context";
 import fs from "fs";
 import os from "os";
 import path from "path";
@@ -38,7 +38,7 @@ describe("docs.yml navigation collapsible config", () => {
                 absoluteFilepathToDocsConfig: AbsoluteFilePath.of("/tmp/docs.yml"),
                 context
             })
-        ).rejects.toBeInstanceOf(FernCliError);
+        ).rejects.toBeInstanceOf(TaskAbortSignal);
     });
 
     it("should throw if collapsible is used alongside deprecated collapsed", async () => {
@@ -64,7 +64,7 @@ describe("docs.yml navigation collapsible config", () => {
                 absoluteFilepathToDocsConfig: AbsoluteFilePath.of("/tmp/docs.yml"),
                 context
             })
-        ).rejects.toBeInstanceOf(FernCliError);
+        ).rejects.toBeInstanceOf(TaskAbortSignal);
     });
 
     it("should throw if collapsible is used alongside deprecated collapsed: open-by-default", async () => {
@@ -90,7 +90,7 @@ describe("docs.yml navigation collapsible config", () => {
                 absoluteFilepathToDocsConfig: AbsoluteFilePath.of("/tmp/docs.yml"),
                 context
             })
-        ).rejects.toBeInstanceOf(FernCliError);
+        ).rejects.toBeInstanceOf(TaskAbortSignal);
     });
 
     it("should accept open-by-default as a collapsed value on sections", async () => {
@@ -246,7 +246,7 @@ describe("docs.yml navigation collapsible config", () => {
                 absoluteFilepathToDocsConfig: AbsoluteFilePath.of(docsConfigPath),
                 context
             })
-        ).rejects.toBeInstanceOf(FernCliError);
+        ).rejects.toBeInstanceOf(TaskAbortSignal);
     });
 });
 

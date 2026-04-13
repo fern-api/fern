@@ -1,5 +1,5 @@
 import { Logger, LogLevel } from "@fern-api/logger";
-import { FernCliError } from "@fern-api/task-context";
+import { TaskAbortSignal } from "@fern-api/task-context";
 import chalk from "chalk";
 
 export function logErrorMessage({
@@ -20,7 +20,7 @@ export function logErrorMessage({
     }
 
     // thrower is responsible for logging, so we don't need to log the error's message too
-    if (error instanceof FernCliError) {
+    if (error instanceof TaskAbortSignal) {
         return;
     }
 

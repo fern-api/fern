@@ -368,22 +368,32 @@ export class WireTestGenerator {
             if (isErrorResponse) {
                 // For streaming endpoints, we need to consume the iterator inside pytest.raises
                 if (this.isStreamingEndpoint(endpoint)) {
-                    statements.push(
-                        python.codeBlock(
-                            `with pytest.raises(ApiError):\n        for _ in ${apiCallAst.toString()}:\n            pass`
-                        )
+                    const block = python.codeBlock(
+                        `with pytest.raises(ApiError):\n        for _ in ${apiCallAst.toString()}:\n            pass`
                     );
+                    // Preserve import references from the AST that are lost during toString()
+                    for (const ref of apiCallAst.getReferences()) {
+                        block.addReference(ref);
+                    }
+                    statements.push(block);
                 } else {
-                    statements.push(
-                        python.codeBlock(`with pytest.raises(ApiError):\n        ${apiCallAst.toString()}`)
-                    );
+                    const block = python.codeBlock(`with pytest.raises(ApiError):\n        ${apiCallAst.toString()}`);
+                    for (const ref of apiCallAst.getReferences()) {
+                        block.addReference(ref);
+                    }
+                    statements.push(block);
                 }
             } else {
                 // For streaming endpoints, wrap the call in a for loop to consume the iterator
                 // This is necessary because streaming methods return lazy generators that don't
                 // execute the HTTP request until iterated
                 if (this.isStreamingEndpoint(endpoint)) {
-                    statements.push(python.codeBlock(`for _ in ${apiCallAst.toString()}:`));
+                    const block = python.codeBlock(`for _ in ${apiCallAst.toString()}:`);
+                    // Preserve import references from the AST that are lost during toString()
+                    for (const ref of apiCallAst.getReferences()) {
+                        block.addReference(ref);
+                    }
+                    statements.push(block);
                     statements.push(python.codeBlock("    pass"));
                 } else {
                     statements.push(apiCallAst);

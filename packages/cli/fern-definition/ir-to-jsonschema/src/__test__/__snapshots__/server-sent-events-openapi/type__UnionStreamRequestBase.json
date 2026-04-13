@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {
+    "stream_response": {
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "prompt": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "prompt"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

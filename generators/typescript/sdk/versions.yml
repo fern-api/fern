@@ -1,4 +1,29 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.63.3
+  changelogEntry:
+    - summary: |
+        Fix undiscriminated union variant matching in dynamic snippets selecting
+        incorrect variants when errors are added during conversion. The matcher
+        now checks whether errors were added (via `errors.size() > errorsBefore`)
+        alongside the existing `isNop` check, preventing empty objects from being
+        returned for union fields like `options` in generated code snippets.
+      type: fix
+  createdAt: "2026-04-09"
+  irVersion: 66
+
+- version: 3.63.2
+  changelogEntry:
+    - summary: |
+        Support alphabetical body parameter sorting in webhook signature verification.
+        When the IR specifies `bodySort: ALPHABETICAL` on the payload format, the generated
+        `verifySignature` method now accepts `string | Record<string, string>` for the
+        `requestBody` parameter. When a `Record` is provided, keys are sorted alphabetically
+        and concatenated as key-value pairs before signing. This is required by providers
+        whose signing algorithm sorts POST body parameters alphabetically.
+      type: fix
+  createdAt: "2026-03-30"
+  irVersion: 66
+
 - version: 3.63.1
   changelogEntry:
     - summary: |
@@ -102,7 +127,6 @@
       type: fix
   createdAt: "2026-03-31"
   irVersion: 65
-
 - version: 3.60.6
   changelogEntry:
     - summary: |
@@ -127,7 +151,6 @@
       type: fix
   createdAt: "2026-03-31"
   irVersion: 65
-
 - version: 3.60.4
   changelogEntry:
     - summary: |
@@ -138,7 +161,6 @@
       type: chore
   createdAt: "2026-03-31"
   irVersion: 65
-
 - version: 3.60.3
   changelogEntry:
     - summary: |
@@ -146,7 +168,6 @@
       type: chore
   createdAt: "2026-03-30"
   irVersion: 65
-
 - version: 3.60.2
   changelogEntry:
     - summary: |

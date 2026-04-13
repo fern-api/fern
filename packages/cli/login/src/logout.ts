@@ -5,7 +5,7 @@ import open from "open";
 import { AUTH0_CLIENT_ID, AUTH0_DOMAIN } from "./constants.js";
 
 export async function logout(context: TaskContext): Promise<void> {
-    await context.instrumentPostHogEvent({
+    context.instrumentPostHogEvent({
         command: "Logout initiated"
     });
 
@@ -35,7 +35,7 @@ export async function logout(context: TaskContext): Promise<void> {
         );
     }
 
-    await context.instrumentPostHogEvent({
+    context.instrumentPostHogEvent({
         command: "Logout successful"
     });
 }
