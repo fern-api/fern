@@ -45,10 +45,11 @@ export async function collectDocsWorkspaceViolations({
     );
     const elapsedMillis = performance.now() - startTime;
 
-    // Downgrade broken-link violations to warnings unless errorOnBrokenLinks is set,
-    // so that `fern check` reports them as warnings by default.
+    // Downgrade broken-link violations to warnings unless the user has explicitly
+    // configured severity via --error-on-broken-links or docs.yml check.rules.brokenLinks.
+    const userConfiguredBrokenLinkSeverity = workspace.config.check?.rules?.brokenLinks != null;
     const violations = rawViolations.map((v) => {
-        if (v.name === "valid-markdown-links" && !errorOnBrokenLinks) {
+        if (v.name === "valid-markdown-links" && !errorOnBrokenLinks && !userConfiguredBrokenLinkSeverity) {
             return { ...v, severity: "warning" as const };
         }
         return v;
