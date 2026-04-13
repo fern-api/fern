@@ -43,6 +43,7 @@ export async function validateWorkspaces({
                 context,
                 apiWorkspaces: project.apiWorkspaces,
                 ossWorkspaces,
+                brokenLinks,
                 errorOnBrokenLinks,
                 excludeRules
             });

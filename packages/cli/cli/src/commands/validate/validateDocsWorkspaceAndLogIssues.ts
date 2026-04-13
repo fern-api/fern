@@ -17,6 +17,7 @@ export async function collectDocsWorkspaceViolations({
     apiWorkspaces,
     ossWorkspaces,
     context,
+    brokenLinks,
     errorOnBrokenLinks,
     excludeRules
 }: {
@@ -24,6 +25,7 @@ export async function collectDocsWorkspaceViolations({
     apiWorkspaces: AbstractAPIWorkspace<unknown>[];
     ossWorkspaces: OSSWorkspace[];
     context: TaskContext;
+    brokenLinks?: boolean;
     errorOnBrokenLinks?: boolean;
     excludeRules?: string[];
 }): Promise<CollectedDocsViolations> {
@@ -46,10 +48,15 @@ export async function collectDocsWorkspaceViolations({
     const elapsedMillis = performance.now() - startTime;
 
     // Downgrade broken-link violations to warnings unless the user has explicitly
-    // configured severity via --error-on-broken-links or docs.yml check.rules.brokenLinks.
+    // configured severity via --broken-links, --error-on-broken-links, or docs.yml check.rules.brokenLinks.
     const userConfiguredBrokenLinkSeverity = workspace.config.check?.rules?.brokenLinks != null;
     const violations = rawViolations.map((v) => {
-        if (v.name === "valid-markdown-links" && !errorOnBrokenLinks && !userConfiguredBrokenLinkSeverity) {
+        if (
+            v.name === "valid-markdown-links" &&
+            !brokenLinks &&
+            !errorOnBrokenLinks &&
+            !userConfiguredBrokenLinkSeverity
+        ) {
             return { ...v, severity: "warning" as const };
         }
         return v;
