@@ -14,14 +14,30 @@ runs:
       run: |
         PAGE_COUNT=37
         bash benchmarks/fern/generate-fixture-pages.sh "$PAGE_COUNT"
+        echo "Generated ${PAGE_COUNT} fixture pages"
 
-        # Cross-check: docs.yml must reference exactly PAGE_COUNT pages.
-        YAML_PAGES=$(grep -c 'path: pages/page-' benchmarks/fern/docs.yml)
-        if [ "$YAML_PAGES" -ne "$PAGE_COUNT" ]; then
-          echo "::error::Page count mismatch: generate-fixture-pages.sh produced ${PAGE_COUNT} pages but docs.yml references ${YAML_PAGES}. Update docs.yml to match."
-          exit 1
+    - name: Generate fixture versions
+      shell: bash
+      run: |
+        PAGE_COUNT=37
+        bash benchmarks/fern/generate-fixture-versions.sh "$PAGE_COUNT"
+
+        # Validate: each version file should reference exactly PAGE_COUNT pages
+        VERSIONS_DIR="benchmarks/fern/versions"
+        if [ -d "$VERSIONS_DIR" ]; then
+          for vfile in "$VERSIONS_DIR"/v*.yml; do
+            [ -f "$vfile" ] || continue
+            VPAGE_COUNT=$(grep -c 'path: ../pages/page-' "$vfile")
+            if [ "$VPAGE_COUNT" -ne "$PAGE_COUNT" ]; then
+              echo "::error::Page count mismatch in $(basename "$vfile"): expected ${PAGE_COUNT}, found ${VPAGE_COUNT}"
+              exit 1
+            fi
+          done
+          VERSION_COUNT=$(ls -1 "$VERSIONS_DIR"/v*.yml 2>/dev/null | wc -l)
+          echo "Validated: ${VERSION_COUNT} versions, each with ${PAGE_COUNT} pages"
+        else
+          echo "No versions generated (unversioned mode)"
         fi
-        echo "Validated: ${PAGE_COUNT} pages generated, ${YAML_PAGES} referenced in docs.yml"
 
     - name: Build Fern CLI
       shell: bash
@@ -35,69 +51,49 @@ runs:
         RESULTS_DIR="${GITHUB_WORKSPACE}/benchmark-results"
         mkdir -p "$RESULTS_DIR"
 
-        # Check that at least one OpenAPI spec was fetched
-        SPECS_FOUND=0
-        for spec_dir in benchmarks/fern/apis/*/; do
+        # Count versioned specs (square-YYYY-MM-DD directories)
+        VERSIONS_FOUND=0
+        for spec_dir in benchmarks/fern/apis/square-*/; do
           if [ -f "${spec_dir}openapi.json" ]; then
-            SPECS_FOUND=$((SPECS_FOUND + 1))
-            echo "Found spec: ${spec_dir}openapi.json"
+            VERSIONS_FOUND=$((VERSIONS_FOUND + 1))
           fi
         done
 
-        if [ "$SPECS_FOUND" -eq 0 ]; then
-          echo "::warning::Skipping docs benchmark — no OpenAPI specs available"
+        if [ "$VERSIONS_FOUND" -eq 0 ]; then
+          echo "::warning::Skipping docs benchmark — no versioned OpenAPI specs available"
           echo "{\"type\":\"docs\",\"spec\":\"none\",\"duration_seconds\":0,\"exit_code\":-1,\"skipped\":true}" \
             >> "${RESULTS_DIR}/docs.jsonl"
           exit 0
         fi
 
-        ITERATIONS=3
-        echo "::group::Benchmarking docs generation (${SPECS_FOUND} API spec(s), ${ITERATIONS} iterations → median)"
+        echo "::group::Benchmarking docs generation (${VERSIONS_FOUND} API versions)"
 
-        DURATIONS=()
-        LAST_EXIT_CODE=0
+        # Use sub-second precision timing (date +%s.%N) since the benchmark
+        # may run several minutes and we want accurate measurements.
+        START_TIME=$(date +%s.%N)
+        EXIT_CODE=0
 
-        for ITER in $(seq 1 "$ITERATIONS"); do
-          echo "--- Iteration ${ITER}/${ITERATIONS} ---"
+        # Run the actual docs generation command with --preview for safety.
+        # --preview creates an ephemeral preview deployment, never touches production.
+        # --id ensures repeated runs overwrite the same preview URL.
+        # --no-prompt skips interactive confirmation prompts in CI.
+        # FERN_CWD tells the CLI which project directory to use (avoids fragile `cd`).
+        FERN_CWD="${GITHUB_WORKSPACE}/benchmarks/fern" \
+        node --enable-source-maps "${GITHUB_WORKSPACE}/packages/cli/cli/dist/prod/cli.cjs" \
+          generate --docs --preview --id benchmark-run --no-prompt \
+          2>&1 || EXIT_CODE=$?
 
-          # Use sub-second precision timing (date +%s.%N) since the benchmark
-          # runs ~20-40s and 1-second granularity adds ~5% noise floor.
-          START_TIME=$(date +%s.%N)
-          EXIT_CODE=0
+        END_TIME=$(date +%s.%N)
+        DURATION=$(awk "BEGIN {printf \"%.1f\", ${END_TIME} - ${START_TIME}}")
 
-          # Run the actual docs generation command with --preview for safety.
-          # --preview creates an ephemeral preview deployment, never touches production.
-          # --id ensures repeated runs overwrite the same preview URL.
-          # --no-prompt skips interactive confirmation prompts in CI.
-          # FERN_CWD tells the CLI which project directory to use (avoids fragile `cd`).
-          FERN_CWD="${GITHUB_WORKSPACE}/benchmarks/fern" \
-          node --enable-source-maps "${GITHUB_WORKSPACE}/packages/cli/cli/dist/prod/cli.cjs" \
-            generate --docs --preview --id benchmark-run --no-prompt \
-            2>&1 || EXIT_CODE=$?
+        if [ "$EXIT_CODE" -ne 0 ]; then
+          echo "::warning::Docs benchmark exited with code ${EXIT_CODE} after ${DURATION}s"
+        fi
 
-          END_TIME=$(date +%s.%N)
-          DURATION=$(awk "BEGIN {printf \"%.1f\", ${END_TIME} - ${START_TIME}}")
+        echo "Duration: ${DURATION}s (exit ${EXIT_CODE}, ${VERSIONS_FOUND} versions)"
 
-          if [ "$EXIT_CODE" -ne 0 ]; then
-            echo "::warning::Iteration ${ITER}: exited with code ${EXIT_CODE} after ${DURATION}s"
-            LAST_EXIT_CODE=$EXIT_CODE
-          fi
-
-          echo "Iteration ${ITER}: ${DURATION}s (exit ${EXIT_CODE})"
-          DURATIONS+=("$DURATION")
-        done
-
-        # Compute median of all iterations
-        MEDIAN=$(printf '%s\n' "${DURATIONS[@]}" | sort -n | awk '{a[NR]=$1} END {
-          if (NR%2==1) { printf "%.1f\n", a[(NR+1)/2] }
-          else { printf "%.1f\n", (a[NR/2] + a[NR/2+1]) / 2 }
-        }')
-
-        ALL_DURATIONS=$(printf '%s, ' "${DURATIONS[@]}" | sed 's/, $//')
-        echo "All durations: [${ALL_DURATIONS}] → median: ${MEDIAN}s"
-
-        # Write result as JSON. duration_seconds is the median across iterations.
-        echo "{\"type\":\"docs\",\"spec\":\"combined\",\"specs_count\":${SPECS_FOUND},\"duration_seconds\":${MEDIAN},\"iterations\":${ITERATIONS},\"all_durations\":[${ALL_DURATIONS}],\"exit_code\":${LAST_EXIT_CODE}}" \
+        # Write result as JSON.
+        echo "{\"type\":\"docs\",\"spec\":\"combined\",\"versions_count\":${VERSIONS_FOUND},\"duration_seconds\":${DURATION},\"exit_code\":${EXIT_CODE}}" \
           >> "${RESULTS_DIR}/docs.jsonl"
 
         echo "::endgroup::"

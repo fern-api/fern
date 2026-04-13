@@ -1,99 +1,15 @@
-# Benchmark fixture for docs generation performance testing.
-# Uses --preview flag at CI runtime to create ephemeral preview deployments
-# without affecting any production docs site.
+# This file is overwritten at CI time by generate-fixture-versions.sh.
+# The committed version is a placeholder — the benchmark action generates
+# the real versioned docs.yml with ~30 API versions at runtime.
 #
-# Pages are generated at CI time by generate-fixture-pages.sh from a template.
-# The page-NN.md references below correspond to generated files.
+# See generate-fixture-versions.sh for the generation logic.
 instances:
   - url: fern.docs.buildwithfern.com
 
+# Placeholder navigation — replaced with versions: block at CI time.
 navigation:
-  - section: Getting Started
-    contents:
-      - page: Page 01
-        path: pages/page-01.md
-      - page: Page 02
-        path: pages/page-02.md
-      - page: Page 03
-        path: pages/page-03.md
-      - page: Page 04
-        path: pages/page-04.md
-      - page: Page 05
-        path: pages/page-05.md
-  - section: Core Concepts
-    contents:
-      - page: Page 06
-        path: pages/page-06.md
-      - page: Page 07
-        path: pages/page-07.md
-      - page: Page 08
-        path: pages/page-08.md
-      - page: Page 09
-        path: pages/page-09.md
-      - page: Page 10
-        path: pages/page-10.md
-      - page: Page 11
-        path: pages/page-11.md
-      - page: Page 12
-        path: pages/page-12.md
-      - page: Page 13
-        path: pages/page-13.md
-      - page: Page 14
-        path: pages/page-14.md
-  - section: Guides
-    contents:
-      - page: Page 15
-        path: pages/page-15.md
-      - page: Page 16
-        path: pages/page-16.md
-      - page: Page 17
-        path: pages/page-17.md
-      - page: Page 18
-        path: pages/page-18.md
-      - page: Page 19
-        path: pages/page-19.md
-      - page: Page 20
-        path: pages/page-20.md
-      - page: Page 21
-        path: pages/page-21.md
-      - page: Page 22
-        path: pages/page-22.md
-      - page: Page 23
-        path: pages/page-23.md
-      - page: Page 24
-        path: pages/page-24.md
-  - section: Platform
-    contents:
-      - page: Page 25
-        path: pages/page-25.md
-      - page: Page 26
-        path: pages/page-26.md
-      - page: Page 27
-        path: pages/page-27.md
-      - page: Page 28
-        path: pages/page-28.md
-      - page: Page 29
-        path: pages/page-29.md
-      - page: Page 30
-        path: pages/page-30.md
-      - page: Page 31
-        path: pages/page-31.md
-      - page: Page 32
-        path: pages/page-32.md
-  - section: Resources
-    contents:
-      - page: Page 33
-        path: pages/page-33.md
-      - page: Page 34
-        path: pages/page-34.md
-      - page: Page 35
-        path: pages/page-35.md
-      - page: Page 36
-        path: pages/page-36.md
-      - page: Page 37
-        path: pages/page-37.md
-  - api: Square API Reference
-    api-name: square
+  - page: Placeholder
+    path: pages/template.md
 
 colors:
   accentPrimary: "#818CF8"
