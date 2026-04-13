@@ -5,7 +5,7 @@
       "type": "number"
     },
     "type": {
-      "$ref": "#/definitions/QuantityType"
+      "const": "QUANTITY"
     }
   },
   "required": [
@@ -13,12 +13,5 @@
     "type"
   ],
   "additionalProperties": false,
-  "definitions": {
-    "QuantityType": {
-      "type": "string",
-      "enum": [
-        "QUANTITY"
-      ]
-    }
-  }
+  "definitions": {}
 }

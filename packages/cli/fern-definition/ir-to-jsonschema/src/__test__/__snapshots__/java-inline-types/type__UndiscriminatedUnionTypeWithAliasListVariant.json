@@ -1,8 +1,12 @@
 {
-  "type": "array",
-  "items": {
-    "$ref": "#/definitions/AliasVariant"
-  },
+  "anyOf": [
+    {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/AliasVariant"
+      }
+    }
+  ],
   "definitions": {
     "AliasVariantType": {
       "type": "object",

@@ -5,10 +5,10 @@
       "type": "string"
     },
     "type": {
-      "$ref": "#/definitions/MultipleDiscriminatorsType"
+      "const": "TYPE_A"
     },
     "version": {
-      "$ref": "#/definitions/MultipleDiscriminatorsVersion"
+      "const": "v1"
     }
   },
   "required": [
@@ -17,18 +17,5 @@
     "version"
   ],
   "additionalProperties": false,
-  "definitions": {
-    "MultipleDiscriminatorsType": {
-      "type": "string",
-      "enum": [
-        "TYPE_A"
-      ]
-    },
-    "MultipleDiscriminatorsVersion": {
-      "type": "string",
-      "enum": [
-        "v1"
-      ]
-    }
-  }
+  "definitions": {}
 }

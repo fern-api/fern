@@ -5,7 +5,8 @@
       "type": "array",
       "items": {
         "$ref": "#/definitions/AliasProperty"
-      }
+      },
+      "uniqueItems": true
     }
   },
   "required": [

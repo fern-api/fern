@@ -14,12 +14,6 @@
   ],
   "additionalProperties": false,
   "definitions": {
-    "UserCountry": {
-      "type": "string",
-      "enum": [
-        "USA"
-      ]
-    },
     "User": {
       "type": "object",
       "properties": {
@@ -46,7 +40,7 @@
           "type": "string"
         },
         "country": {
-          "$ref": "#/definitions/UserCountry"
+          "const": "USA"
         }
       },
       "required": [

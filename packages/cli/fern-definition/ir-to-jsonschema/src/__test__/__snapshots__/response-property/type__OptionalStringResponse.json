@@ -1,5 +1,12 @@
 {
-  "$ref": "#/definitions/StringResponse",
+  "oneOf": [
+    {
+      "$ref": "#/definitions/StringResponse"
+    },
+    {
+      "type": "null"
+    }
+  ],
   "definitions": {
     "StringResponse": {
       "type": "object",

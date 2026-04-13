@@ -1,8 +1,12 @@
 {
-  "type": "object",
-  "additionalProperties": {
-    "$ref": "#/definitions/OtherAliasVariant"
-  },
+  "anyOf": [
+    {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/OtherAliasVariant"
+      }
+    }
+  ],
   "definitions": {
     "OtherAliasVariantType": {
       "type": "object",

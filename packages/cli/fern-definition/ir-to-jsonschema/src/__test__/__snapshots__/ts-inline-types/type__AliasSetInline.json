@@ -3,6 +3,7 @@
   "items": {
     "$ref": "#/definitions/AliasInlineValue"
   },
+  "uniqueItems": true,
   "definitions": {
     "AliasInlineValue": {
       "type": "object",

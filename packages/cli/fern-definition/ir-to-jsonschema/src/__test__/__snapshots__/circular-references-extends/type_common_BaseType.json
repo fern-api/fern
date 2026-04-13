@@ -1,10 +1,10 @@
 {
   "type": "object",
   "properties": {
-    "a": {
+    "child_ref": {
       "oneOf": [
         {
-          "$ref": "#/definitions/a.A"
+          "$ref": "#/definitions/common.ChildType"
         },
         {
           "type": "null"
@@ -14,15 +14,25 @@
   },
   "additionalProperties": false,
   "definitions": {
-    "a.A": {
+    "common.ChildType": {
       "type": "object",
       "properties": {
-        "s": {
+        "child_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/common.ChildType"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "child_name": {
           "type": "string"
         }
       },
       "required": [
-        "s"
+        "child_name"
       ],
       "additionalProperties": false
     }

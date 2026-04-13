@@ -23,7 +23,8 @@
       "type": "array",
       "items": {
         "$ref": "#/definitions/RootType1FooSetItem"
-      }
+      },
+      "uniqueItems": true
     },
     "ref": {
       "$ref": "#/definitions/ReferenceType"

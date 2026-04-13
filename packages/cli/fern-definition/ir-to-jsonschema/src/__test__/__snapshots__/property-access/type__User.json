@@ -2,24 +2,10 @@
   "type": "object",
   "properties": {
     "id": {
-      "oneOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "null"
-        }
-      ]
+      "type": "string"
     },
     "email": {
-      "oneOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "null"
-        }
-      ]
+      "type": "string"
     },
     "password": {
       "type": "string"
@@ -29,6 +15,8 @@
     }
   },
   "required": [
+    "id",
+    "email",
     "password",
     "profile"
   ],
@@ -38,16 +26,12 @@
       "type": "object",
       "properties": {
         "verified": {
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ]
+          "type": "string"
         }
       },
+      "required": [
+        "verified"
+      ],
       "additionalProperties": false
     },
     "UserProfile": {

@@ -1,8 +1,9 @@
 {
   "type": "string",
   "enum": [
-    "known",
-    "unknown"
+    "complete",
+    "length",
+    "error"
   ],
   "definitions": {}
 }

@@ -5,7 +5,7 @@
       "type": "string"
     },
     "type": {
-      "$ref": "#/definitions/IsinWithDiscriminatorType"
+      "const": "ISIN"
     }
   },
   "required": [
@@ -13,12 +13,5 @@
     "type"
   ],
   "additionalProperties": false,
-  "definitions": {
-    "IsinWithDiscriminatorType": {
-      "type": "string",
-      "enum": [
-        "ISIN"
-      ]
-    }
-  }
+  "definitions": {}
 }

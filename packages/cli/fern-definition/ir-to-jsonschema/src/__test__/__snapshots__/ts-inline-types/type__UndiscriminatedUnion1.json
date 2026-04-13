@@ -32,6 +32,7 @@
       "items": {
         "$ref": "#/definitions/UndiscriminatedUnion1InlineSetItem1"
       },
+      "uniqueItems": true,
       "description": "lorem ipsum"
     },
     {
@@ -127,94 +128,72 @@
       ],
       "additionalProperties": false
     },
-    "UndiscriminatedUnion1DiscriminatedUnion1ZeroType": {
-      "type": "string",
-      "enum": [
-        "type1"
-      ]
-    },
-    "UndiscriminatedUnion1DiscriminatedUnion1Zero": {
-      "type": "object",
-      "properties": {
-        "foo": {
-          "type": "string"
-        },
-        "bar": {
-          "$ref": "#/definitions/UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1"
-        },
-        "ref": {
-          "$ref": "#/definitions/ReferenceType"
-        },
-        "type": {
-          "$ref": "#/definitions/UndiscriminatedUnion1DiscriminatedUnion1ZeroType"
-        }
-      },
-      "required": [
-        "foo",
-        "bar",
-        "ref",
-        "type"
-      ],
-      "additionalProperties": false
-    },
-    "UndiscriminatedUnion1DiscriminatedUnion1OneType": {
-      "type": "string",
-      "enum": [
-        "type2"
-      ]
-    },
-    "UndiscriminatedUnion1DiscriminatedUnion1One": {
-      "type": "object",
-      "properties": {
-        "baz": {
-          "type": "string"
-        },
-        "ref": {
-          "$ref": "#/definitions/ReferenceType"
-        },
-        "type": {
-          "$ref": "#/definitions/UndiscriminatedUnion1DiscriminatedUnion1OneType"
-        }
-      },
-      "required": [
-        "baz",
-        "ref",
-        "type"
-      ],
-      "additionalProperties": false
-    },
-    "UndiscriminatedUnion1DiscriminatedUnion1TwoType": {
-      "type": "string",
-      "enum": [
-        "ref"
-      ]
-    },
-    "UndiscriminatedUnion1DiscriminatedUnion1Two": {
-      "type": "object",
-      "properties": {
-        "foo": {
-          "type": "string"
-        },
-        "type": {
-          "$ref": "#/definitions/UndiscriminatedUnion1DiscriminatedUnion1TwoType"
-        }
-      },
-      "required": [
-        "foo",
-        "type"
-      ],
-      "additionalProperties": false
-    },
     "UndiscriminatedUnion1DiscriminatedUnion1": {
-      "anyOf": [
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "type1",
+            "type2",
+            "ref"
+          ]
+        }
+      },
+      "oneOf": [
         {
-          "$ref": "#/definitions/UndiscriminatedUnion1DiscriminatedUnion1Zero"
+          "properties": {
+            "type": {
+              "const": "type1"
+            },
+            "foo": {
+              "type": "string"
+            },
+            "bar": {
+              "$ref": "#/definitions/UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1"
+            },
+            "ref": {
+              "$ref": "#/definitions/ReferenceType"
+            }
+          },
+          "required": [
+            "type",
+            "foo",
+            "bar",
+            "ref"
+          ]
         },
         {
-          "$ref": "#/definitions/UndiscriminatedUnion1DiscriminatedUnion1One"
+          "properties": {
+            "type": {
+              "const": "type2"
+            },
+            "baz": {
+              "type": "string"
+            },
+            "ref": {
+              "$ref": "#/definitions/ReferenceType"
+            }
+          },
+          "required": [
+            "type",
+            "baz",
+            "ref"
+          ]
         },
         {
-          "$ref": "#/definitions/UndiscriminatedUnion1DiscriminatedUnion1Two"
+          "properties": {
+            "type": {
+              "const": "ref"
+            },
+            "foo": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type",
+            "foo"
+          ]
         }
       ]
     },

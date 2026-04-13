@@ -22,16 +22,12 @@
       "type": "object",
       "properties": {
         "verified": {
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ]
+          "type": "string"
         }
       },
+      "required": [
+        "verified"
+      ],
       "additionalProperties": false
     }
   }
