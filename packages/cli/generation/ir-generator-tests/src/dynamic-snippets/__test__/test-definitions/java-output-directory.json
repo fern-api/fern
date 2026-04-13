@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_service:User": {
+        "type_:User": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -24,47 +24,9 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "service",
-                            "camelCase": {
-                                "unsafeName": "service",
-                                "safeName": "service"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "service",
-                                "safeName": "service"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "SERVICE",
-                                "safeName": "SERVICE"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Service",
-                                "safeName": "Service"
-                            }
-                        }
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "service",
-                        "camelCase": {
-                            "unsafeName": "service",
-                            "safeName": "service"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "service",
-                            "safeName": "service"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "SERVICE",
-                            "safeName": "SERVICE"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Service",
-                            "safeName": "Service"
-                        }
-                    }
+                    "file": null
                 }
             },
             "properties": [
@@ -135,26 +97,26 @@
     },
     "headers": [],
     "endpoints": {
-        "endpoint_service.getUser": {
+        "endpoint_service.getuser": {
             "auth": null,
             "declaration": {
                 "name": {
-                    "originalName": "getUser",
+                    "originalName": "getuser",
                     "camelCase": {
-                        "unsafeName": "getUser",
-                        "safeName": "getUser"
+                        "unsafeName": "getuser",
+                        "safeName": "getuser"
                     },
                     "snakeCase": {
-                        "unsafeName": "get_user",
-                        "safeName": "get_user"
+                        "unsafeName": "getuser",
+                        "safeName": "getuser"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "GET_USER",
-                        "safeName": "GET_USER"
+                        "unsafeName": "GETUSER",
+                        "safeName": "GETUSER"
                     },
                     "pascalCase": {
-                        "unsafeName": "GetUser",
-                        "safeName": "GetUser"
+                        "unsafeName": "Getuser",
+                        "safeName": "Getuser"
                     }
                 },
                 "fernFilepath": {
@@ -206,7 +168,71 @@
                 "path": "/users/{userId}"
             },
             "request": {
-                "type": "body",
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "ServiceGetUserRequest",
+                        "camelCase": {
+                            "unsafeName": "serviceGetUserRequest",
+                            "safeName": "serviceGetUserRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service_get_user_request",
+                            "safeName": "service_get_user_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE_GET_USER_REQUEST",
+                            "safeName": "SERVICE_GET_USER_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "ServiceGetUserRequest",
+                            "safeName": "ServiceGetUserRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "service",
+                                "camelCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SERVICE",
+                                    "safeName": "SERVICE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Service",
+                                    "safeName": "Service"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    }
+                },
                 "pathParameters": [
                     {
                         "name": {
@@ -239,7 +265,13 @@
                         "variable": null
                     }
                 ],
-                "body": null
+                "queryParameters": [],
+                "headers": [],
+                "body": null,
+                "metadata": {
+                    "includePathParameters": true,
+                    "onlyPathParameters": true
+                }
             },
             "response": {
                 "type": "json"

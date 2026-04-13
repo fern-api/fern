@@ -1,0 +1,38 @@
+{
+  "type": "object",
+  "properties": {
+    "userName": {
+      "type": "string"
+    },
+    "metadata_tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "EXTRA_PROPERTIES": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "resource_type": {
+      "$ref": "#/definitions/ResourceZeroResourceType"
+    }
+  },
+  "required": [
+    "userName",
+    "metadata_tags",
+    "EXTRA_PROPERTIES",
+    "resource_type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "ResourceZeroResourceType": {
+      "type": "string",
+      "enum": [
+        "user"
+      ]
+    }
+  }
+}

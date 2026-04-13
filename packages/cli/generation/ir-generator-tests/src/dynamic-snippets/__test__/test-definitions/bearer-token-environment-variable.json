@@ -1,83 +1,49 @@
 {
     "version": "1.0.0",
     "types": {},
-    "headers": [
-        {
-            "name": {
-                "wireValue": "X-API-Version",
-                "name": {
-                    "originalName": "version",
-                    "camelCase": {
-                        "unsafeName": "version",
-                        "safeName": "version"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "version",
-                        "safeName": "version"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "VERSION",
-                        "safeName": "VERSION"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "Version",
-                        "safeName": "Version"
-                    }
-                }
-            },
-            "typeReference": {
-                "type": "literal",
-                "value": {
-                    "type": "string",
-                    "value": "1.0.0"
-                }
-            },
-            "propertyAccess": null,
-            "variable": null
-        }
-    ],
+    "headers": [],
     "endpoints": {
-        "endpoint_service.getWithBearerToken": {
+        "endpoint_service.getwithbearertoken": {
             "auth": {
                 "type": "bearer",
                 "token": {
-                    "originalName": "apiKey",
+                    "originalName": "token",
                     "camelCase": {
-                        "unsafeName": "apiKey",
-                        "safeName": "apiKey"
+                        "unsafeName": "token",
+                        "safeName": "token"
                     },
                     "snakeCase": {
-                        "unsafeName": "api_key",
-                        "safeName": "api_key"
+                        "unsafeName": "token",
+                        "safeName": "token"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "API_KEY",
-                        "safeName": "API_KEY"
+                        "unsafeName": "TOKEN",
+                        "safeName": "TOKEN"
                     },
                     "pascalCase": {
-                        "unsafeName": "APIKey",
-                        "safeName": "APIKey"
+                        "unsafeName": "Token",
+                        "safeName": "Token"
                     }
                 }
             },
             "declaration": {
                 "name": {
-                    "originalName": "getWithBearerToken",
+                    "originalName": "getwithbearertoken",
                     "camelCase": {
-                        "unsafeName": "getWithBearerToken",
-                        "safeName": "getWithBearerToken"
+                        "unsafeName": "getwithbearertoken",
+                        "safeName": "getwithbearertoken"
                     },
                     "snakeCase": {
-                        "unsafeName": "get_with_bearer_token",
-                        "safeName": "get_with_bearer_token"
+                        "unsafeName": "getwithbearertoken",
+                        "safeName": "getwithbearertoken"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "GET_WITH_BEARER_TOKEN",
-                        "safeName": "GET_WITH_BEARER_TOKEN"
+                        "unsafeName": "GETWITHBEARERTOKEN",
+                        "safeName": "GETWITHBEARERTOKEN"
                     },
                     "pascalCase": {
-                        "unsafeName": "GetWithBearerToken",
-                        "safeName": "GetWithBearerToken"
+                        "unsafeName": "Getwithbearertoken",
+                        "safeName": "Getwithbearertoken"
                     }
                 },
                 "fernFilepath": {

@@ -24,7 +24,7 @@
       "type": "string"
     },
     "country": {
-      "const": "USA"
+      "$ref": "#/definitions/UserCountry"
     }
   },
   "required": [
@@ -35,5 +35,12 @@
     "country"
   ],
   "additionalProperties": false,
-  "definitions": {}
+  "definitions": {
+    "UserCountry": {
+      "type": "string",
+      "enum": [
+        "USA"
+      ]
+    }
+  }
 }

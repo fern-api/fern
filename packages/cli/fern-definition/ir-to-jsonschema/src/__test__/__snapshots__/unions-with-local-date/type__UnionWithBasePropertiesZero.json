@@ -1,0 +1,30 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "$ref": "#/definitions/UnionWithBasePropertiesZeroType"
+    },
+    "value": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "UnionWithBasePropertiesZeroType": {
+      "type": "string",
+      "enum": [
+        "integer"
+      ]
+    }
+  }
+}

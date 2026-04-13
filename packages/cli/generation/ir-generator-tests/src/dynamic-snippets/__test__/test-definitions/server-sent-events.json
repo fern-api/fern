@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_completions:StreamedCompletion": {
+        "type_:StreamedCompletion": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -24,47 +24,9 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "completions",
-                            "camelCase": {
-                                "unsafeName": "completions",
-                                "safeName": "completions"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "completions",
-                                "safeName": "completions"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "COMPLETIONS",
-                                "safeName": "COMPLETIONS"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Completions",
-                                "safeName": "Completions"
-                            }
-                        }
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "completions",
-                        "camelCase": {
-                            "unsafeName": "completions",
-                            "safeName": "completions"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "completions",
-                            "safeName": "completions"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "COMPLETIONS",
-                            "safeName": "COMPLETIONS"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Completions",
-                            "safeName": "Completions"
-                        }
-                    }
+                    "file": null
                 }
             },
             "properties": [
@@ -124,8 +86,11 @@
                     "typeReference": {
                         "type": "optional",
                         "value": {
-                            "type": "primitive",
-                            "value": "INTEGER"
+                            "type": "nullable",
+                            "value": {
+                                "type": "primitive",
+                                "value": "INTEGER"
+                            }
                         }
                     },
                     "propertyAccess": null,
@@ -212,22 +177,22 @@
                 "type": "inlined",
                 "declaration": {
                     "name": {
-                        "originalName": "StreamCompletionRequest",
+                        "originalName": "CompletionsStreamRequest",
                         "camelCase": {
-                            "unsafeName": "streamCompletionRequest",
-                            "safeName": "streamCompletionRequest"
+                            "unsafeName": "completionsStreamRequest",
+                            "safeName": "completionsStreamRequest"
                         },
                         "snakeCase": {
-                            "unsafeName": "stream_completion_request",
-                            "safeName": "stream_completion_request"
+                            "unsafeName": "completions_stream_request",
+                            "safeName": "completions_stream_request"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "STREAM_COMPLETION_REQUEST",
-                            "safeName": "STREAM_COMPLETION_REQUEST"
+                            "unsafeName": "COMPLETIONS_STREAM_REQUEST",
+                            "safeName": "COMPLETIONS_STREAM_REQUEST"
                         },
                         "pascalCase": {
-                            "unsafeName": "StreamCompletionRequest",
-                            "safeName": "StreamCompletionRequest"
+                            "unsafeName": "CompletionsStreamRequest",
+                            "safeName": "CompletionsStreamRequest"
                         }
                     },
                     "fernFilepath": {
@@ -318,30 +283,30 @@
                 }
             },
             "response": {
-                "type": "streaming"
+                "type": "fileDownload"
             },
             "examples": null
         },
-        "endpoint_completions.streamWithoutTerminator": {
+        "endpoint_completions.streamwithoutterminator": {
             "auth": null,
             "declaration": {
                 "name": {
-                    "originalName": "streamWithoutTerminator",
+                    "originalName": "streamwithoutterminator",
                     "camelCase": {
-                        "unsafeName": "streamWithoutTerminator",
-                        "safeName": "streamWithoutTerminator"
+                        "unsafeName": "streamwithoutterminator",
+                        "safeName": "streamwithoutterminator"
                     },
                     "snakeCase": {
-                        "unsafeName": "stream_without_terminator",
-                        "safeName": "stream_without_terminator"
+                        "unsafeName": "streamwithoutterminator",
+                        "safeName": "streamwithoutterminator"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "STREAM_WITHOUT_TERMINATOR",
-                        "safeName": "STREAM_WITHOUT_TERMINATOR"
+                        "unsafeName": "STREAMWITHOUTTERMINATOR",
+                        "safeName": "STREAMWITHOUTTERMINATOR"
                     },
                     "pascalCase": {
-                        "unsafeName": "StreamWithoutTerminator",
-                        "safeName": "StreamWithoutTerminator"
+                        "unsafeName": "Streamwithoutterminator",
+                        "safeName": "Streamwithoutterminator"
                     }
                 },
                 "fernFilepath": {
@@ -396,22 +361,22 @@
                 "type": "inlined",
                 "declaration": {
                     "name": {
-                        "originalName": "StreamCompletionRequestWithoutTerminator",
+                        "originalName": "CompletionsStreamWithoutTerminatorRequest",
                         "camelCase": {
-                            "unsafeName": "streamCompletionRequestWithoutTerminator",
-                            "safeName": "streamCompletionRequestWithoutTerminator"
+                            "unsafeName": "completionsStreamWithoutTerminatorRequest",
+                            "safeName": "completionsStreamWithoutTerminatorRequest"
                         },
                         "snakeCase": {
-                            "unsafeName": "stream_completion_request_without_terminator",
-                            "safeName": "stream_completion_request_without_terminator"
+                            "unsafeName": "completions_stream_without_terminator_request",
+                            "safeName": "completions_stream_without_terminator_request"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "STREAM_COMPLETION_REQUEST_WITHOUT_TERMINATOR",
-                            "safeName": "STREAM_COMPLETION_REQUEST_WITHOUT_TERMINATOR"
+                            "unsafeName": "COMPLETIONS_STREAM_WITHOUT_TERMINATOR_REQUEST",
+                            "safeName": "COMPLETIONS_STREAM_WITHOUT_TERMINATOR_REQUEST"
                         },
                         "pascalCase": {
-                            "unsafeName": "StreamCompletionRequestWithoutTerminator",
-                            "safeName": "StreamCompletionRequestWithoutTerminator"
+                            "unsafeName": "CompletionsStreamWithoutTerminatorRequest",
+                            "safeName": "CompletionsStreamWithoutTerminatorRequest"
                         }
                     },
                     "fernFilepath": {
@@ -502,7 +467,7 @@
                 }
             },
             "response": {
-                "type": "streaming"
+                "type": "fileDownload"
             },
             "examples": null
         }

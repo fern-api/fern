@@ -1,0 +1,20 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "$ref": "#/definitions/FieldValueOneType"
+    }
+  },
+  "required": [
+    "type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "FieldValueOneType": {
+      "type": "string",
+      "enum": [
+        "object_value"
+      ]
+    }
+  }
+}

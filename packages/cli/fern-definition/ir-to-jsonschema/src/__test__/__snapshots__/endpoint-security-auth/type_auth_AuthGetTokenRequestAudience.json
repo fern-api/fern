@@ -1,0 +1,7 @@
+{
+  "type": "string",
+  "enum": [
+    "https://api.example.com"
+  ],
+  "definitions": {}
+}

@@ -1,0 +1,46 @@
+{
+  "type": "object",
+  "properties": {
+    "c": {
+      "$ref": "#/definitions/C"
+    }
+  },
+  "required": [
+    "c"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "D": {
+      "type": "object",
+      "properties": {
+        "starting_after": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "C": {
+      "type": "object",
+      "properties": {
+        "d": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/D"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

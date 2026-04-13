@@ -85,26 +85,26 @@
             },
             "examples": null
         },
-        "endpoint_service.uploadWithQueryParams": {
+        "endpoint_service.uploadwithqueryparams": {
             "auth": null,
             "declaration": {
                 "name": {
-                    "originalName": "uploadWithQueryParams",
+                    "originalName": "uploadwithqueryparams",
                     "camelCase": {
-                        "unsafeName": "uploadWithQueryParams",
-                        "safeName": "uploadWithQueryParams"
+                        "unsafeName": "uploadwithqueryparams",
+                        "safeName": "uploadwithqueryparams"
                     },
                     "snakeCase": {
-                        "unsafeName": "upload_with_query_params",
-                        "safeName": "upload_with_query_params"
+                        "unsafeName": "uploadwithqueryparams",
+                        "safeName": "uploadwithqueryparams"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "UPLOAD_WITH_QUERY_PARAMS",
-                        "safeName": "UPLOAD_WITH_QUERY_PARAMS"
+                        "unsafeName": "UPLOADWITHQUERYPARAMS",
+                        "safeName": "UPLOADWITHQUERYPARAMS"
                     },
                     "pascalCase": {
-                        "unsafeName": "UploadWithQueryParams",
-                        "safeName": "UploadWithQueryParams"
+                        "unsafeName": "Uploadwithqueryparams",
+                        "safeName": "Uploadwithqueryparams"
                     }
                 },
                 "fernFilepath": {
@@ -159,22 +159,22 @@
                 "type": "inlined",
                 "declaration": {
                     "name": {
-                        "originalName": "UploadWithQueryParamsRequest",
+                        "originalName": "ServiceUploadWithQueryParamsRequest",
                         "camelCase": {
-                            "unsafeName": "uploadWithQueryParamsRequest",
-                            "safeName": "uploadWithQueryParamsRequest"
+                            "unsafeName": "serviceUploadWithQueryParamsRequest",
+                            "safeName": "serviceUploadWithQueryParamsRequest"
                         },
                         "snakeCase": {
-                            "unsafeName": "upload_with_query_params_request",
-                            "safeName": "upload_with_query_params_request"
+                            "unsafeName": "service_upload_with_query_params_request",
+                            "safeName": "service_upload_with_query_params_request"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "UPLOAD_WITH_QUERY_PARAMS_REQUEST",
-                            "safeName": "UPLOAD_WITH_QUERY_PARAMS_REQUEST"
+                            "unsafeName": "SERVICE_UPLOAD_WITH_QUERY_PARAMS_REQUEST",
+                            "safeName": "SERVICE_UPLOAD_WITH_QUERY_PARAMS_REQUEST"
                         },
                         "pascalCase": {
-                            "unsafeName": "UploadWithQueryParamsRequest",
-                            "safeName": "UploadWithQueryParamsRequest"
+                            "unsafeName": "ServiceUploadWithQueryParamsRequest",
+                            "safeName": "ServiceUploadWithQueryParamsRequest"
                         }
                     },
                     "fernFilepath": {
@@ -279,8 +279,11 @@
                         "typeReference": {
                             "type": "optional",
                             "value": {
-                                "type": "primitive",
-                                "value": "STRING"
+                                "type": "nullable",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                }
                             }
                         },
                         "propertyAccess": null,

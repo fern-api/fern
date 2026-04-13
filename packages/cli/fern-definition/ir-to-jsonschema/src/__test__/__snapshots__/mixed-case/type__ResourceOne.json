@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "resource_type": {
+      "$ref": "#/definitions/ResourceOneResourceType"
+    }
+  },
+  "required": [
+    "name",
+    "resource_type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "ResourceOneResourceType": {
+      "type": "string",
+      "enum": [
+        "Organization"
+      ]
+    }
+  }
+}

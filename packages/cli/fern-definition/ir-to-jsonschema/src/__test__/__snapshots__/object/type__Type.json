@@ -25,12 +25,10 @@
       "format": "date"
     },
     "eight": {
-      "type": "string",
-      "format": "uuid"
+      "type": "string"
     },
     "nine": {
-      "type": "string",
-      "contentEncoding": "base64"
+      "type": "string"
     },
     "ten": {
       "type": "array",
@@ -42,8 +40,7 @@
       "type": "array",
       "items": {
         "type": "number"
-      },
-      "uniqueItems": true
+      }
     },
     "twelve": {
       "type": "object",
@@ -94,8 +91,7 @@
       "items": {
         "oneOf": [
           {
-            "type": "string",
-            "format": "uuid"
+            "type": "string"
           },
           {
             "type": "null"
@@ -104,25 +100,22 @@
       }
     },
     "eighteen": {
-      "const": "eighteen"
+      "$ref": "#/definitions/TypeEighteen"
     },
     "nineteen": {
       "$ref": "#/definitions/Name"
     },
     "twenty": {
-      "type": "integer",
-      "minimum": 0
+      "type": "integer"
     },
     "twentyone": {
-      "type": "integer",
-      "minimum": 0
+      "type": "integer"
     },
     "twentytwo": {
       "type": "number"
     },
     "twentythree": {
-      "type": "string",
-      "pattern": "^-?[0-9]+$"
+      "type": "integer"
     },
     "twentyfour": {
       "oneOf": [
@@ -173,6 +166,12 @@
   ],
   "additionalProperties": false,
   "definitions": {
+    "TypeEighteen": {
+      "type": "string",
+      "enum": [
+        "eighteen"
+      ]
+    },
     "Name": {
       "type": "object",
       "properties": {

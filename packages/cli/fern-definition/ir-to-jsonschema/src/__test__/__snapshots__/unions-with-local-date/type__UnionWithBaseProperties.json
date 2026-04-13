@@ -1,0 +1,93 @@
+{
+  "anyOf": [
+    {
+      "$ref": "#/definitions/UnionWithBasePropertiesZero"
+    },
+    {
+      "$ref": "#/definitions/UnionWithBasePropertiesOne"
+    },
+    {
+      "$ref": "#/definitions/UnionWithBasePropertiesTwo"
+    }
+  ],
+  "definitions": {
+    "UnionWithBasePropertiesZeroType": {
+      "type": "string",
+      "enum": [
+        "integer"
+      ]
+    },
+    "UnionWithBasePropertiesZero": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/UnionWithBasePropertiesZeroType"
+        },
+        "value": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "UnionWithBasePropertiesOneType": {
+      "type": "string",
+      "enum": [
+        "string"
+      ]
+    },
+    "UnionWithBasePropertiesOne": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/UnionWithBasePropertiesOneType"
+        },
+        "value": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "UnionWithBasePropertiesTwoType": {
+      "type": "string",
+      "enum": [
+        "foo"
+      ]
+    },
+    "UnionWithBasePropertiesTwo": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/definitions/UnionWithBasePropertiesTwoType"
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

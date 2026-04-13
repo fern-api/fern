@@ -74,7 +74,71 @@
                 "path": "/{endpointParam}"
             },
             "request": {
-                "type": "body",
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "ServicePostRequest",
+                        "camelCase": {
+                            "unsafeName": "servicePostRequest",
+                            "safeName": "servicePostRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service_post_request",
+                            "safeName": "service_post_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE_POST_REQUEST",
+                            "safeName": "SERVICE_POST_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "ServicePostRequest",
+                            "safeName": "ServicePostRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "service",
+                                "camelCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SERVICE",
+                                    "safeName": "SERVICE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Service",
+                                    "safeName": "Service"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    }
+                },
                 "pathParameters": [
                     {
                         "name": {
@@ -104,10 +168,16 @@
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": "rootVariable"
+                        "variable": null
                     }
                 ],
-                "body": null
+                "queryParameters": [],
+                "headers": [],
+                "body": null,
+                "metadata": {
+                    "includePathParameters": true,
+                    "onlyPathParameters": true
+                }
             },
             "response": {
                 "type": "json"
@@ -117,33 +187,6 @@
     },
     "pathParameters": [],
     "environments": null,
-    "variables": [
-        {
-            "id": "rootVariable",
-            "name": {
-                "originalName": "rootVariable",
-                "camelCase": {
-                    "unsafeName": "rootVariable",
-                    "safeName": "rootVariable"
-                },
-                "snakeCase": {
-                    "unsafeName": "root_variable",
-                    "safeName": "root_variable"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "ROOT_VARIABLE",
-                    "safeName": "ROOT_VARIABLE"
-                },
-                "pascalCase": {
-                    "unsafeName": "RootVariable",
-                    "safeName": "RootVariable"
-                }
-            },
-            "typeReference": {
-                "type": "primitive",
-                "value": "STRING"
-            }
-        }
-    ],
+    "variables": null,
     "generatorConfig": null
 }

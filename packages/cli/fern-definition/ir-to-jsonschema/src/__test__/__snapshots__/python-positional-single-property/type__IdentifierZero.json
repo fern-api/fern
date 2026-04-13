@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "isin": {
+      "type": "string"
+    },
+    "identifier_type": {
+      "$ref": "#/definitions/IdentifierZeroIdentifierType"
+    }
+  },
+  "required": [
+    "isin",
+    "identifier_type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "IdentifierZeroIdentifierType": {
+      "type": "string",
+      "enum": [
+        "isin"
+      ]
+    }
+  }
+}

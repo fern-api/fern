@@ -1,0 +1,48 @@
+{
+  "type": "object",
+  "properties": {
+    "child": {
+      "$ref": "#/definitions/TorU"
+    }
+  },
+  "required": [
+    "child"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "T": {
+      "type": "object",
+      "properties": {
+        "child": {
+          "$ref": "#/definitions/TorU"
+        }
+      },
+      "required": [
+        "child"
+      ],
+      "additionalProperties": false
+    },
+    "U": {
+      "type": "object",
+      "properties": {
+        "child": {
+          "$ref": "#/definitions/T"
+        }
+      },
+      "required": [
+        "child"
+      ],
+      "additionalProperties": false
+    },
+    "TorU": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/T"
+        },
+        {
+          "$ref": "#/definitions/U"
+        }
+      ]
+    }
+  }
+}

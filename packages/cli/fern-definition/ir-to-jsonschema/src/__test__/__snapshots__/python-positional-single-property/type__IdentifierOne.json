@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "cusip": {
+      "type": "string"
+    },
+    "identifier_type": {
+      "$ref": "#/definitions/IdentifierOneIdentifierType"
+    }
+  },
+  "required": [
+    "cusip",
+    "identifier_type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "IdentifierOneIdentifierType": {
+      "type": "string",
+      "enum": [
+        "cusip"
+      ]
+    }
+  }
+}

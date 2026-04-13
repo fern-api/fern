@@ -17,7 +17,7 @@
   },
   "additionalProperties": false,
   "definitions": {
-    "commons.metadata.Metadata": {
+    "CommonsMetadata": {
       "type": "object",
       "properties": {
         "id": {
@@ -28,7 +28,14 @@
             {
               "type": "object",
               "additionalProperties": {
-                "type": "string"
+                "oneOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
               }
             },
             {
@@ -61,7 +68,7 @@
         "metadata": {
           "oneOf": [
             {
-              "$ref": "#/definitions/commons.metadata.Metadata"
+              "$ref": "#/definitions/CommonsMetadata"
             },
             {
               "type": "null"

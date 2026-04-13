@@ -1,0 +1,30 @@
+{
+  "type": "object",
+  "properties": {
+    "foo": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Foo"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "Foo": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

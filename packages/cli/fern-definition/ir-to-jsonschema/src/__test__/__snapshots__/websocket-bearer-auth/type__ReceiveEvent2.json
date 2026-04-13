@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "gamma": {
+      "type": "string"
+    },
+    "delta": {
+      "type": "integer"
+    },
+    "epsilon": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "gamma",
+    "delta",
+    "epsilon"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

@@ -2,12 +2,19 @@
   "type": "object",
   "properties": {
     "status": {
-      "const": "failure"
+      "$ref": "#/definitions/FailureStatus"
     }
   },
   "required": [
     "status"
   ],
-  "additionalProperties": true,
-  "definitions": {}
+  "additionalProperties": false,
+  "definitions": {
+    "FailureStatus": {
+      "type": "string",
+      "enum": [
+        "failure"
+      ]
+    }
+  }
 }

@@ -26,6 +26,12 @@
       ],
       "additionalProperties": false
     },
+    "QuantityType": {
+      "type": "string",
+      "enum": [
+        "QUANTITY"
+      ]
+    },
     "Quantity": {
       "type": "object",
       "properties": {
@@ -33,7 +39,7 @@
           "type": "number"
         },
         "type": {
-          "const": "QUANTITY"
+          "$ref": "#/definitions/QuantityType"
         }
       },
       "required": [

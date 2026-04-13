@@ -1,0 +1,33 @@
+{
+  "type": "object",
+  "properties": {
+    "users": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/InlineUsersUser"
+      }
+    }
+  },
+  "required": [
+    "users"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "InlineUsersUser": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "id"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

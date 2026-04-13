@@ -1,0 +1,24 @@
+{
+  "anyOf": [
+    {
+      "type": "string"
+    },
+    {
+      "$ref": "#/definitions/DocumentObject"
+    }
+  ],
+  "definitions": {
+    "DocumentObject": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "text"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

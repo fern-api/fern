@@ -1,0 +1,8 @@
+{
+  "type": "string",
+  "enum": [
+    "USD",
+    "YEN"
+  ],
+  "definitions": {}
+}

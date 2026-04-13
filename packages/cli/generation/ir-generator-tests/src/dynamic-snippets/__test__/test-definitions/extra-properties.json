@@ -1,6 +1,241 @@
 {
     "version": "1.0.0",
     "types": {
+        "type_user:UserCreateUserRequestType": {
+            "type": "enum",
+            "declaration": {
+                "name": {
+                    "originalName": "UserCreateUserRequestType",
+                    "camelCase": {
+                        "unsafeName": "userCreateUserRequestType",
+                        "safeName": "userCreateUserRequestType"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "user_create_user_request_type",
+                        "safeName": "user_create_user_request_type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "USER_CREATE_USER_REQUEST_TYPE",
+                        "safeName": "USER_CREATE_USER_REQUEST_TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UserCreateUserRequestType",
+                        "safeName": "UserCreateUserRequestType"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "user",
+                            "camelCase": {
+                                "unsafeName": "user",
+                                "safeName": "user"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "user",
+                                "safeName": "user"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "USER",
+                                "safeName": "USER"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "User",
+                                "safeName": "User"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "user",
+                        "camelCase": {
+                            "unsafeName": "user",
+                            "safeName": "user"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "user",
+                            "safeName": "user"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "USER",
+                            "safeName": "USER"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "User",
+                            "safeName": "User"
+                        }
+                    }
+                }
+            },
+            "values": [
+                {
+                    "wireValue": "CreateUserRequest",
+                    "name": {
+                        "originalName": "CreateUserRequest",
+                        "camelCase": {
+                            "unsafeName": "createUserRequest",
+                            "safeName": "createUserRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "create_user_request",
+                            "safeName": "create_user_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "CREATE_USER_REQUEST",
+                            "safeName": "CREATE_USER_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "CreateUserRequest",
+                            "safeName": "CreateUserRequest"
+                        }
+                    }
+                }
+            ]
+        },
+        "type_user:UserCreateUserRequestVersion": {
+            "type": "enum",
+            "declaration": {
+                "name": {
+                    "originalName": "UserCreateUserRequestVersion",
+                    "camelCase": {
+                        "unsafeName": "userCreateUserRequestVersion",
+                        "safeName": "userCreateUserRequestVersion"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "user_create_user_request_version",
+                        "safeName": "user_create_user_request_version"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "USER_CREATE_USER_REQUEST_VERSION",
+                        "safeName": "USER_CREATE_USER_REQUEST_VERSION"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UserCreateUserRequestVersion",
+                        "safeName": "UserCreateUserRequestVersion"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "user",
+                            "camelCase": {
+                                "unsafeName": "user",
+                                "safeName": "user"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "user",
+                                "safeName": "user"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "USER",
+                                "safeName": "USER"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "User",
+                                "safeName": "User"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "user",
+                        "camelCase": {
+                            "unsafeName": "user",
+                            "safeName": "user"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "user",
+                            "safeName": "user"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "USER",
+                            "safeName": "USER"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "User",
+                            "safeName": "User"
+                        }
+                    }
+                }
+            },
+            "values": [
+                {
+                    "wireValue": "v1",
+                    "name": {
+                        "originalName": "v1",
+                        "camelCase": {
+                            "unsafeName": "v1",
+                            "safeName": "v1"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "v1",
+                            "safeName": "v1"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "V1",
+                            "safeName": "V1"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "V1",
+                            "safeName": "V1"
+                        }
+                    }
+                }
+            ]
+        },
+        "type_:FailureStatus": {
+            "type": "enum",
+            "declaration": {
+                "name": {
+                    "originalName": "FailureStatus",
+                    "camelCase": {
+                        "unsafeName": "failureStatus",
+                        "safeName": "failureStatus"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "failure_status",
+                        "safeName": "failure_status"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "FAILURE_STATUS",
+                        "safeName": "FAILURE_STATUS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "FailureStatus",
+                        "safeName": "FailureStatus"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "values": [
+                {
+                    "wireValue": "failure",
+                    "name": {
+                        "originalName": "failure",
+                        "camelCase": {
+                            "unsafeName": "failure",
+                            "safeName": "failure"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "failure",
+                            "safeName": "failure"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "FAILURE",
+                            "safeName": "FAILURE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Failure",
+                            "safeName": "Failure"
+                        }
+                    }
+                }
+            ]
+        },
         "type_:Failure": {
             "type": "object",
             "declaration": {
@@ -54,20 +289,17 @@
                         }
                     },
                     "typeReference": {
-                        "type": "literal",
-                        "value": {
-                            "type": "string",
-                            "value": "failure"
-                        }
+                        "type": "named",
+                        "value": "type_:FailureStatus"
                     },
                     "propertyAccess": null,
                     "variable": null
                 }
             ],
             "extends": null,
-            "additionalProperties": true
+            "additionalProperties": false
         },
-        "type_user:User": {
+        "type_:User": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -90,47 +322,9 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "user",
-                            "camelCase": {
-                                "unsafeName": "user",
-                                "safeName": "user"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "user",
-                                "safeName": "user"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "USER",
-                                "safeName": "USER"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "User",
-                                "safeName": "User"
-                            }
-                        }
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "user",
-                        "camelCase": {
-                            "unsafeName": "user",
-                            "safeName": "user"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "user",
-                            "safeName": "user"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "USER",
-                            "safeName": "USER"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "User",
-                            "safeName": "User"
-                        }
-                    }
+                    "file": null
                 }
             },
             "properties": [
@@ -166,31 +360,31 @@
                 }
             ],
             "extends": null,
-            "additionalProperties": true
+            "additionalProperties": false
         }
     },
     "headers": [],
     "endpoints": {
-        "endpoint_user.createUser": {
+        "endpoint_user.createuser": {
             "auth": null,
             "declaration": {
                 "name": {
-                    "originalName": "createUser",
+                    "originalName": "createuser",
                     "camelCase": {
-                        "unsafeName": "createUser",
-                        "safeName": "createUser"
+                        "unsafeName": "createuser",
+                        "safeName": "createuser"
                     },
                     "snakeCase": {
-                        "unsafeName": "create_user",
-                        "safeName": "create_user"
+                        "unsafeName": "createuser",
+                        "safeName": "createuser"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "CREATE_USER",
-                        "safeName": "CREATE_USER"
+                        "unsafeName": "CREATEUSER",
+                        "safeName": "CREATEUSER"
                     },
                     "pascalCase": {
-                        "unsafeName": "CreateUser",
-                        "safeName": "CreateUser"
+                        "unsafeName": "Createuser",
+                        "safeName": "Createuser"
                     }
                 },
                 "fernFilepath": {
@@ -245,22 +439,22 @@
                 "type": "inlined",
                 "declaration": {
                     "name": {
-                        "originalName": "CreateUserRequest",
+                        "originalName": "UserCreateUserRequest",
                         "camelCase": {
-                            "unsafeName": "createUserRequest",
-                            "safeName": "createUserRequest"
+                            "unsafeName": "userCreateUserRequest",
+                            "safeName": "userCreateUserRequest"
                         },
                         "snakeCase": {
-                            "unsafeName": "create_user_request",
-                            "safeName": "create_user_request"
+                            "unsafeName": "user_create_user_request",
+                            "safeName": "user_create_user_request"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "CREATE_USER_REQUEST",
-                            "safeName": "CREATE_USER_REQUEST"
+                            "unsafeName": "USER_CREATE_USER_REQUEST",
+                            "safeName": "USER_CREATE_USER_REQUEST"
                         },
                         "pascalCase": {
-                            "unsafeName": "CreateUserRequest",
-                            "safeName": "CreateUserRequest"
+                            "unsafeName": "UserCreateUserRequest",
+                            "safeName": "UserCreateUserRequest"
                         }
                     },
                     "fernFilepath": {
@@ -337,11 +531,8 @@
                                 }
                             },
                             "typeReference": {
-                                "type": "literal",
-                                "value": {
-                                    "type": "string",
-                                    "value": "CreateUserRequest"
-                                }
+                                "type": "named",
+                                "value": "type_user:UserCreateUserRequestType"
                             },
                             "propertyAccess": null,
                             "variable": null
@@ -370,11 +561,8 @@
                                 }
                             },
                             "typeReference": {
-                                "type": "literal",
-                                "value": {
-                                    "type": "string",
-                                    "value": "v1"
-                                }
+                                "type": "named",
+                                "value": "type_user:UserCreateUserRequestVersion"
                             },
                             "propertyAccess": null,
                             "variable": null

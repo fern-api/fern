@@ -1,0 +1,105 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "files": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/File"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "directories": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FileDirectory"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "name"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "FileInfo": {
+      "type": "string",
+      "enum": [
+        "REGULAR",
+        "DIRECTORY"
+      ]
+    },
+    "File": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "contents": {
+          "type": "string"
+        },
+        "info": {
+          "$ref": "#/definitions/FileInfo"
+        }
+      },
+      "required": [
+        "name",
+        "contents",
+        "info"
+      ],
+      "additionalProperties": false
+    },
+    "FileDirectory": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "files": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/File"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "directories": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/FileDirectory"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

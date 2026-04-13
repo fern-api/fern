@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "imported": {
+      "$ref": "#/definitions/Imported"
+    }
+  },
+  "required": [
+    "imported"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "Imported": {
+      "type": "string"
+    }
+  }
+}

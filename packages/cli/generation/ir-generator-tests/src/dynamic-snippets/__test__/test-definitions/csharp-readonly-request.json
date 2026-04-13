@@ -117,7 +117,7 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": "READ_ONLY",
+                    "propertyAccess": null,
                     "variable": null
                 },
                 {
@@ -146,76 +146,6 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    },
-                    "propertyAccess": "READ_ONLY",
-                    "variable": null
-                }
-            ],
-            "extends": null,
-            "additionalProperties": false
-        },
-        "type_:CreateVendorRequest": {
-            "type": "object",
-            "declaration": {
-                "name": {
-                    "originalName": "CreateVendorRequest",
-                    "camelCase": {
-                        "unsafeName": "createVendorRequest",
-                        "safeName": "createVendorRequest"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "create_vendor_request",
-                        "safeName": "create_vendor_request"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "CREATE_VENDOR_REQUEST",
-                        "safeName": "CREATE_VENDOR_REQUEST"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "CreateVendorRequest",
-                        "safeName": "CreateVendorRequest"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": [],
-                    "file": null
-                }
-            },
-            "properties": [
-                {
-                    "name": {
-                        "wireValue": "vendors",
-                        "name": {
-                            "originalName": "vendors",
-                            "camelCase": {
-                                "unsafeName": "vendors",
-                                "safeName": "vendors"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "vendors",
-                                "safeName": "vendors"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "VENDORS",
-                                "safeName": "VENDORS"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Vendors",
-                                "safeName": "Vendors"
-                            }
-                        }
-                    },
-                    "typeReference": {
-                        "type": "map",
-                        "key": {
-                            "type": "primitive",
-                            "value": "STRING"
-                        },
-                        "value": {
-                            "type": "named",
-                            "value": "type_:Vendor"
-                        }
                     },
                     "propertyAccess": null,
                     "variable": null
@@ -320,9 +250,47 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        {
+                            "originalName": "",
+                            "camelCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "snakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "pascalCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            }
+                        }
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": {
+                        "originalName": "",
+                        "camelCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        },
+                        "snakeCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        },
+                        "pascalCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        }
+                    }
                 }
             },
             "location": {
@@ -330,14 +298,119 @@
                 "path": "/vendors/batch"
             },
             "request": {
-                "type": "body",
-                "pathParameters": [],
-                "body": {
-                    "type": "typeReference",
-                    "value": {
-                        "type": "named",
-                        "value": "type_:CreateVendorRequest"
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "CreateVendorRequest",
+                        "camelCase": {
+                            "unsafeName": "createVendorRequest",
+                            "safeName": "createVendorRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "create_vendor_request",
+                            "safeName": "create_vendor_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "CREATE_VENDOR_REQUEST",
+                            "safeName": "CREATE_VENDOR_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "CreateVendorRequest",
+                            "safeName": "CreateVendorRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "",
+                                "camelCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "",
+                            "camelCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "snakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "pascalCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            }
+                        }
                     }
+                },
+                "pathParameters": [],
+                "queryParameters": [],
+                "headers": [],
+                "body": {
+                    "type": "properties",
+                    "value": [
+                        {
+                            "name": {
+                                "wireValue": "vendors",
+                                "name": {
+                                    "originalName": "vendors",
+                                    "camelCase": {
+                                        "unsafeName": "vendors",
+                                        "safeName": "vendors"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "vendors",
+                                        "safeName": "vendors"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "VENDORS",
+                                        "safeName": "VENDORS"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Vendors",
+                                        "safeName": "Vendors"
+                                    }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "map",
+                                "key": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                },
+                                "value": {
+                                    "type": "named",
+                                    "value": "type_:Vendor"
+                                }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        }
+                    ]
+                },
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
                 }
             },
             "response": {

@@ -1,0 +1,18 @@
+{
+  "anyOf": [
+    {
+      "type": "string"
+    },
+    {
+      "$ref": "#/definitions/LiteralString"
+    }
+  ],
+  "definitions": {
+    "LiteralString": {
+      "type": "string",
+      "enum": [
+        "literally"
+      ]
+    }
+  }
+}

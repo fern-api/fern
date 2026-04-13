@@ -64,6 +64,59 @@
             "extends": null,
             "additionalProperties": false
         },
+        "type_:IsinWithDiscriminatorType": {
+            "type": "enum",
+            "declaration": {
+                "name": {
+                    "originalName": "IsinWithDiscriminatorType",
+                    "camelCase": {
+                        "unsafeName": "isinWithDiscriminatorType",
+                        "safeName": "isinWithDiscriminatorType"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "isin_with_discriminator_type",
+                        "safeName": "isin_with_discriminator_type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "ISIN_WITH_DISCRIMINATOR_TYPE",
+                        "safeName": "ISIN_WITH_DISCRIMINATOR_TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "IsinWithDiscriminatorType",
+                        "safeName": "IsinWithDiscriminatorType"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "values": [
+                {
+                    "wireValue": "ISIN",
+                    "name": {
+                        "originalName": "ISIN",
+                        "camelCase": {
+                            "unsafeName": "isin",
+                            "safeName": "isin"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "isin",
+                            "safeName": "isin"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "ISIN",
+                            "safeName": "ISIN"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Isin",
+                            "safeName": "Isin"
+                        }
+                    }
+                }
+            ]
+        },
         "type_:IsinWithDiscriminator": {
             "type": "object",
             "declaration": {
@@ -147,11 +200,8 @@
                         }
                     },
                     "typeReference": {
-                        "type": "literal",
-                        "value": {
-                            "type": "string",
-                            "value": "ISIN"
-                        }
+                        "type": "named",
+                        "value": "type_:IsinWithDiscriminatorType"
                     },
                     "propertyAccess": null,
                     "variable": null
@@ -159,6 +209,59 @@
             ],
             "extends": null,
             "additionalProperties": false
+        },
+        "type_:QuantityType": {
+            "type": "enum",
+            "declaration": {
+                "name": {
+                    "originalName": "QuantityType",
+                    "camelCase": {
+                        "unsafeName": "quantityType",
+                        "safeName": "quantityType"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "quantity_type",
+                        "safeName": "quantity_type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "QUANTITY_TYPE",
+                        "safeName": "QUANTITY_TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "QuantityType",
+                        "safeName": "QuantityType"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "values": [
+                {
+                    "wireValue": "QUANTITY",
+                    "name": {
+                        "originalName": "QUANTITY",
+                        "camelCase": {
+                            "unsafeName": "quantity",
+                            "safeName": "quantity"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "quantity",
+                            "safeName": "quantity"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "QUANTITY",
+                            "safeName": "QUANTITY"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Quantity",
+                            "safeName": "Quantity"
+                        }
+                    }
+                }
+            ]
         },
         "type_:Quantity": {
             "type": "object",
@@ -243,11 +346,8 @@
                         }
                     },
                     "typeReference": {
-                        "type": "literal",
-                        "value": {
-                            "type": "string",
-                            "value": "QUANTITY"
-                        }
+                        "type": "named",
+                        "value": "type_:QuantityType"
                     },
                     "propertyAccess": null,
                     "variable": null
@@ -434,8 +534,11 @@
                     "typeReference": {
                         "type": "optional",
                         "value": {
-                            "type": "primitive",
-                            "value": "STRING"
+                            "type": "nullable",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
                         }
                     },
                     "propertyAccess": null,
@@ -444,6 +547,112 @@
             ],
             "extends": null,
             "additionalProperties": false
+        },
+        "type_:MultipleDiscriminatorsType": {
+            "type": "enum",
+            "declaration": {
+                "name": {
+                    "originalName": "MultipleDiscriminatorsType",
+                    "camelCase": {
+                        "unsafeName": "multipleDiscriminatorsType",
+                        "safeName": "multipleDiscriminatorsType"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "multiple_discriminators_type",
+                        "safeName": "multiple_discriminators_type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "MULTIPLE_DISCRIMINATORS_TYPE",
+                        "safeName": "MULTIPLE_DISCRIMINATORS_TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "MultipleDiscriminatorsType",
+                        "safeName": "MultipleDiscriminatorsType"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "values": [
+                {
+                    "wireValue": "TYPE_A",
+                    "name": {
+                        "originalName": "TYPE_A",
+                        "camelCase": {
+                            "unsafeName": "typeA",
+                            "safeName": "typeA"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "type_a",
+                            "safeName": "type_a"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "TYPE_A",
+                            "safeName": "TYPE_A"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "TypeA",
+                            "safeName": "TypeA"
+                        }
+                    }
+                }
+            ]
+        },
+        "type_:MultipleDiscriminatorsVersion": {
+            "type": "enum",
+            "declaration": {
+                "name": {
+                    "originalName": "MultipleDiscriminatorsVersion",
+                    "camelCase": {
+                        "unsafeName": "multipleDiscriminatorsVersion",
+                        "safeName": "multipleDiscriminatorsVersion"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "multiple_discriminators_version",
+                        "safeName": "multiple_discriminators_version"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "MULTIPLE_DISCRIMINATORS_VERSION",
+                        "safeName": "MULTIPLE_DISCRIMINATORS_VERSION"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "MultipleDiscriminatorsVersion",
+                        "safeName": "MultipleDiscriminatorsVersion"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "values": [
+                {
+                    "wireValue": "v1",
+                    "name": {
+                        "originalName": "v1",
+                        "camelCase": {
+                            "unsafeName": "v1",
+                            "safeName": "v1"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "v1",
+                            "safeName": "v1"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "V1",
+                            "safeName": "V1"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "V1",
+                            "safeName": "V1"
+                        }
+                    }
+                }
+            ]
         },
         "type_:MultipleDiscriminators": {
             "type": "object",
@@ -528,11 +737,8 @@
                         }
                     },
                     "typeReference": {
-                        "type": "literal",
-                        "value": {
-                            "type": "string",
-                            "value": "TYPE_A"
-                        }
+                        "type": "named",
+                        "value": "type_:MultipleDiscriminatorsType"
                     },
                     "propertyAccess": null,
                     "variable": null
@@ -561,11 +767,8 @@
                         }
                     },
                     "typeReference": {
-                        "type": "literal",
-                        "value": {
-                            "type": "string",
-                            "value": "v1"
-                        }
+                        "type": "named",
+                        "value": "type_:MultipleDiscriminatorsVersion"
                     },
                     "propertyAccess": null,
                     "variable": null
@@ -793,8 +996,304 @@
             "extends": null,
             "additionalProperties": false
         },
+        "type_:IdentifierZeroIdentifierType": {
+            "type": "enum",
+            "declaration": {
+                "name": {
+                    "originalName": "IdentifierZeroIdentifierType",
+                    "camelCase": {
+                        "unsafeName": "identifierZeroIdentifierType",
+                        "safeName": "identifierZeroIdentifierType"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "identifier_zero_identifier_type",
+                        "safeName": "identifier_zero_identifier_type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "IDENTIFIER_ZERO_IDENTIFIER_TYPE",
+                        "safeName": "IDENTIFIER_ZERO_IDENTIFIER_TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "IdentifierZeroIdentifierType",
+                        "safeName": "IdentifierZeroIdentifierType"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "values": [
+                {
+                    "wireValue": "isin",
+                    "name": {
+                        "originalName": "isin",
+                        "camelCase": {
+                            "unsafeName": "isin",
+                            "safeName": "isin"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "isin",
+                            "safeName": "isin"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "ISIN",
+                            "safeName": "ISIN"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Isin",
+                            "safeName": "Isin"
+                        }
+                    }
+                }
+            ]
+        },
+        "type_:IdentifierZero": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "IdentifierZero",
+                    "camelCase": {
+                        "unsafeName": "identifierZero",
+                        "safeName": "identifierZero"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "identifier_zero",
+                        "safeName": "identifier_zero"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "IDENTIFIER_ZERO",
+                        "safeName": "IDENTIFIER_ZERO"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "IdentifierZero",
+                        "safeName": "IdentifierZero"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "isin",
+                        "name": {
+                            "originalName": "isin",
+                            "camelCase": {
+                                "unsafeName": "isin",
+                                "safeName": "isin"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "isin",
+                                "safeName": "isin"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ISIN",
+                                "safeName": "ISIN"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Isin",
+                                "safeName": "Isin"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "identifier_type",
+                        "name": {
+                            "originalName": "identifier_type",
+                            "camelCase": {
+                                "unsafeName": "identifierType",
+                                "safeName": "identifierType"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "identifier_type",
+                                "safeName": "identifier_type"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "IDENTIFIER_TYPE",
+                                "safeName": "IDENTIFIER_TYPE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "IdentifierType",
+                                "safeName": "IdentifierType"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "named",
+                        "value": "type_:IdentifierZeroIdentifierType"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": [
+                "type_:Isin"
+            ],
+            "additionalProperties": false
+        },
+        "type_:IdentifierOneIdentifierType": {
+            "type": "enum",
+            "declaration": {
+                "name": {
+                    "originalName": "IdentifierOneIdentifierType",
+                    "camelCase": {
+                        "unsafeName": "identifierOneIdentifierType",
+                        "safeName": "identifierOneIdentifierType"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "identifier_one_identifier_type",
+                        "safeName": "identifier_one_identifier_type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "IDENTIFIER_ONE_IDENTIFIER_TYPE",
+                        "safeName": "IDENTIFIER_ONE_IDENTIFIER_TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "IdentifierOneIdentifierType",
+                        "safeName": "IdentifierOneIdentifierType"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "values": [
+                {
+                    "wireValue": "cusip",
+                    "name": {
+                        "originalName": "cusip",
+                        "camelCase": {
+                            "unsafeName": "cusip",
+                            "safeName": "cusip"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "cusip",
+                            "safeName": "cusip"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "CUSIP",
+                            "safeName": "CUSIP"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Cusip",
+                            "safeName": "Cusip"
+                        }
+                    }
+                }
+            ]
+        },
+        "type_:IdentifierOne": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "IdentifierOne",
+                    "camelCase": {
+                        "unsafeName": "identifierOne",
+                        "safeName": "identifierOne"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "identifier_one",
+                        "safeName": "identifier_one"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "IDENTIFIER_ONE",
+                        "safeName": "IDENTIFIER_ONE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "IdentifierOne",
+                        "safeName": "IdentifierOne"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "cusip",
+                        "name": {
+                            "originalName": "cusip",
+                            "camelCase": {
+                                "unsafeName": "cusip",
+                                "safeName": "cusip"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "cusip",
+                                "safeName": "cusip"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "CUSIP",
+                                "safeName": "CUSIP"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Cusip",
+                                "safeName": "Cusip"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "identifier_type",
+                        "name": {
+                            "originalName": "identifier_type",
+                            "camelCase": {
+                                "unsafeName": "identifierType",
+                                "safeName": "identifierType"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "identifier_type",
+                                "safeName": "identifier_type"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "IDENTIFIER_TYPE",
+                                "safeName": "IDENTIFIER_TYPE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "IdentifierType",
+                                "safeName": "IdentifierType"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "named",
+                        "value": "type_:IdentifierOneIdentifierType"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": [
+                "type_:Cusip"
+            ],
+            "additionalProperties": false
+        },
         "type_:Identifier": {
-            "type": "discriminatedUnion",
+            "type": "undiscriminatedUnion",
             "declaration": {
                 "name": {
                     "originalName": "Identifier",
@@ -821,84 +1320,16 @@
                     "file": null
                 }
             },
-            "discriminant": {
-                "wireValue": "identifier_type",
-                "name": {
-                    "originalName": "identifier_type",
-                    "camelCase": {
-                        "unsafeName": "identifierType",
-                        "safeName": "identifierType"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "identifier_type",
-                        "safeName": "identifier_type"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "IDENTIFIER_TYPE",
-                        "safeName": "IDENTIFIER_TYPE"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "IdentifierType",
-                        "safeName": "IdentifierType"
-                    }
-                }
-            },
-            "types": {
-                "isin": {
-                    "type": "samePropertiesAsObject",
-                    "typeId": "type_:Isin",
-                    "discriminantValue": {
-                        "wireValue": "isin",
-                        "name": {
-                            "originalName": "isin",
-                            "camelCase": {
-                                "unsafeName": "isin",
-                                "safeName": "isin"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "isin",
-                                "safeName": "isin"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "ISIN",
-                                "safeName": "ISIN"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Isin",
-                                "safeName": "Isin"
-                            }
-                        }
-                    },
-                    "properties": []
+            "types": [
+                {
+                    "type": "named",
+                    "value": "type_:IdentifierZero"
                 },
-                "cusip": {
-                    "type": "samePropertiesAsObject",
-                    "typeId": "type_:Cusip",
-                    "discriminantValue": {
-                        "wireValue": "cusip",
-                        "name": {
-                            "originalName": "cusip",
-                            "camelCase": {
-                                "unsafeName": "cusip",
-                                "safeName": "cusip"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "cusip",
-                                "safeName": "cusip"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "CUSIP",
-                                "safeName": "CUSIP"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Cusip",
-                                "safeName": "Cusip"
-                            }
-                        }
-                    },
-                    "properties": []
+                {
+                    "type": "named",
+                    "value": "type_:IdentifierOne"
                 }
-            }
+            ]
         },
         "type_:Cusip": {
             "type": "object",
@@ -989,9 +1420,47 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        {
+                            "originalName": "",
+                            "camelCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "snakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "pascalCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            }
+                        }
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": {
+                        "originalName": "",
+                        "camelCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        },
+                        "snakeCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        },
+                        "pascalCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        }
+                    }
                 }
             },
             "location": {
@@ -1021,9 +1490,47 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [],
+                        "allParts": [
+                            {
+                                "originalName": "",
+                                "camelCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                }
+                            }
+                        ],
                         "packagePath": [],
-                        "file": null
+                        "file": {
+                            "originalName": "",
+                            "camelCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "snakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "pascalCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            }
+                        }
                     }
                 },
                 "pathParameters": [],

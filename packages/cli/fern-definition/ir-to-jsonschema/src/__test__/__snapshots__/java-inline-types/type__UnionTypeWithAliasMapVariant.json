@@ -2,31 +2,33 @@
   "type": "object",
   "properties": {
     "type": {
-      "type": "string",
-      "enum": [
-        "aliasVariant"
-      ]
-    }
-  },
-  "oneOf": [
-    {
-      "properties": {
-        "type": {
-          "const": "aliasVariant"
-        },
-        "value": {
+      "$ref": "#/definitions/UnionTypeWithAliasMapVariantType"
+    },
+    "value": {
+      "oneOf": [
+        {
           "type": "object",
           "additionalProperties": {
             "$ref": "#/definitions/OtherAliasVariant"
           }
+        },
+        {
+          "type": "null"
         }
-      },
-      "required": [
-        "type"
       ]
     }
+  },
+  "required": [
+    "type"
   ],
+  "additionalProperties": false,
   "definitions": {
+    "UnionTypeWithAliasMapVariantType": {
+      "type": "string",
+      "enum": [
+        "aliasVariant"
+      ]
+    },
     "OtherAliasVariantType": {
       "type": "object",
       "properties": {

@@ -1,0 +1,38 @@
+{
+  "type": "object",
+  "properties": {
+    "emailAddress": {
+      "type": "string"
+    },
+    "subject": {
+      "type": "string"
+    },
+    "htmlContent": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "type": {
+      "$ref": "#/definitions/NotificationMethodZeroType"
+    }
+  },
+  "required": [
+    "emailAddress",
+    "subject",
+    "type"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "NotificationMethodZeroType": {
+      "type": "string",
+      "enum": [
+        "email"
+      ]
+    }
+  }
+}

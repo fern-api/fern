@@ -1,0 +1,112 @@
+{
+  "anyOf": [
+    {
+      "$ref": "#/definitions/SingleFilterSearchRequest"
+    },
+    {
+      "$ref": "#/definitions/MultipleFilterSearchRequest"
+    }
+  ],
+  "definitions": {
+    "SingleFilterSearchRequestOperator": {
+      "type": "string",
+      "enum": [
+        "=",
+        "!=",
+        "IN",
+        "NIN",
+        "<",
+        ">",
+        "~",
+        "!~",
+        "^",
+        "$"
+      ]
+    },
+    "SingleFilterSearchRequest": {
+      "type": "object",
+      "properties": {
+        "field": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "operator": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/SingleFilterSearchRequestOperator"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "value": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "MultipleFilterSearchRequestOperator": {
+      "type": "string",
+      "enum": [
+        "AND",
+        "OR"
+      ]
+    },
+    "MultipleFilterSearchRequestValue": {
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MultipleFilterSearchRequest"
+          }
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SingleFilterSearchRequest"
+          }
+        }
+      ]
+    },
+    "MultipleFilterSearchRequest": {
+      "type": "object",
+      "properties": {
+        "operator": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/MultipleFilterSearchRequestOperator"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "value": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/MultipleFilterSearchRequestValue"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

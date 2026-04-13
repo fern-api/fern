@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "actorOrActressId": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "actorOrActressId"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

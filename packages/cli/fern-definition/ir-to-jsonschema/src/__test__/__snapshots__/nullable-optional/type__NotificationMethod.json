@@ -1,0 +1,127 @@
+{
+  "anyOf": [
+    {
+      "$ref": "#/definitions/NotificationMethodZero"
+    },
+    {
+      "$ref": "#/definitions/NotificationMethodOne"
+    },
+    {
+      "$ref": "#/definitions/NotificationMethodTwo"
+    }
+  ],
+  "definitions": {
+    "NotificationMethodZeroType": {
+      "type": "string",
+      "enum": [
+        "email"
+      ]
+    },
+    "NotificationMethodZero": {
+      "type": "object",
+      "properties": {
+        "emailAddress": {
+          "type": "string"
+        },
+        "subject": {
+          "type": "string"
+        },
+        "htmlContent": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "type": {
+          "$ref": "#/definitions/NotificationMethodZeroType"
+        }
+      },
+      "required": [
+        "emailAddress",
+        "subject",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "NotificationMethodOneType": {
+      "type": "string",
+      "enum": [
+        "sms"
+      ]
+    },
+    "NotificationMethodOne": {
+      "type": "object",
+      "properties": {
+        "phoneNumber": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "shortCode": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "type": {
+          "$ref": "#/definitions/NotificationMethodOneType"
+        }
+      },
+      "required": [
+        "phoneNumber",
+        "message",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "NotificationMethodTwoType": {
+      "type": "string",
+      "enum": [
+        "push"
+      ]
+    },
+    "NotificationMethodTwo": {
+      "type": "object",
+      "properties": {
+        "deviceToken": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        },
+        "badge": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "type": {
+          "$ref": "#/definitions/NotificationMethodTwoType"
+        }
+      },
+      "required": [
+        "deviceToken",
+        "title",
+        "body",
+        "type"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

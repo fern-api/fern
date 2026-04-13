@@ -1,0 +1,8 @@
+{
+  "type": "string",
+  "enum": [
+    "STRING",
+    "NUMBER"
+  ],
+  "definitions": {}
+}

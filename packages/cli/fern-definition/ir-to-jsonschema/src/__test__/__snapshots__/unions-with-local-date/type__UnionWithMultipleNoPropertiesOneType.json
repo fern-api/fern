@@ -1,0 +1,7 @@
+{
+  "type": "string",
+  "enum": [
+    "empty1"
+  ],
+  "definitions": {}
+}

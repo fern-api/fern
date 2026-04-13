@@ -3,7 +3,7 @@
     "types": {},
     "headers": [],
     "endpoints": {
-        "endpoint_dummy.getDummy": {
+        "endpoint_dummy.getdummy": {
             "auth": {
                 "type": "bearer",
                 "token": {
@@ -28,22 +28,22 @@
             },
             "declaration": {
                 "name": {
-                    "originalName": "getDummy",
+                    "originalName": "getdummy",
                     "camelCase": {
-                        "unsafeName": "getDummy",
-                        "safeName": "getDummy"
+                        "unsafeName": "getdummy",
+                        "safeName": "getdummy"
                     },
                     "snakeCase": {
-                        "unsafeName": "get_dummy",
-                        "safeName": "get_dummy"
+                        "unsafeName": "getdummy",
+                        "safeName": "getdummy"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "GET_DUMMY",
-                        "safeName": "GET_DUMMY"
+                        "unsafeName": "GETDUMMY",
+                        "safeName": "GETDUMMY"
                     },
                     "pascalCase": {
-                        "unsafeName": "GetDummy",
-                        "safeName": "GetDummy"
+                        "unsafeName": "Getdummy",
+                        "safeName": "Getdummy"
                     }
                 },
                 "fernFilepath": {
@@ -107,7 +107,7 @@
     },
     "pathParameters": [],
     "environments": {
-        "defaultEnvironment": null,
+        "defaultEnvironment": "Production",
         "environments": {
             "type": "singleBaseUrl",
             "environments": [
@@ -133,30 +133,6 @@
                         }
                     },
                     "url": "https://production.com/api",
-                    "docs": null
-                },
-                {
-                    "id": "Staging",
-                    "name": {
-                        "originalName": "Staging",
-                        "camelCase": {
-                            "unsafeName": "staging",
-                            "safeName": "staging"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "staging",
-                            "safeName": "staging"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "STAGING",
-                            "safeName": "STAGING"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Staging",
-                            "safeName": "Staging"
-                        }
-                    },
-                    "url": "https://staging.com/api",
                     "docs": null
                 }
             ]
