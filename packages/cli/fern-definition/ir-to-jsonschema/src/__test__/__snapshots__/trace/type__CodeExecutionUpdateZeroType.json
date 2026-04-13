@@ -1,7 +1,0 @@
-{
-  "type": "string",
-  "enum": [
-    "buildingExecutor"
-  ],
-  "definitions": {}
-}

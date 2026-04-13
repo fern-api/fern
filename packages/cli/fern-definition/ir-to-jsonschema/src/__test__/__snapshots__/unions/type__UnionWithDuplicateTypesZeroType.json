@@ -1,7 +1,0 @@
-{
-  "type": "string",
-  "enum": [
-    "foo1"
-  ],
-  "definitions": {}
-}
