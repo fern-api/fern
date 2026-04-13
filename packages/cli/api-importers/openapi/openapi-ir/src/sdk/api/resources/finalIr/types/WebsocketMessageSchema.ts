@@ -4,6 +4,7 @@ import type * as FernOpenapiIr from "../../../index.js";
 
 export interface WebsocketMessageSchema {
     name: string;
+    displayName: string | undefined;
     origin: FernOpenapiIr.WebsocketMessageOrigin;
     body: FernOpenapiIr.Schema;
     methodName: string | undefined;
