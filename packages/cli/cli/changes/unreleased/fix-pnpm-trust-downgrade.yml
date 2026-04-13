@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix `fern docs dev` failing on Windows with pnpm 10+ `ERR_PNPM_TRUST_DOWNGRADE` error.
+    Strip inherited pnpm supply-chain security env vars before running `pnpm install`
+    in the standalone bundle folder, and retry after removing `trustPolicy` from the
+    workspace config if the error persists.
+  type: fix

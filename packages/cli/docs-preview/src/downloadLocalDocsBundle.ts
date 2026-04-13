@@ -29,6 +29,7 @@ const NPMRC_NAME = ".npmrc";
 const PNPMFILE_CJS_NAME = ".pnpmfile.cjs";
 const PNPM_WORKSPACE_YAML_NAME = "pnpm-workspace.yaml";
 const COREPACK_MISSING_KEYID_ERROR_MESSAGE = 'Cannot find matching keyid: {"signatures":';
+const PNPM_TRUST_DOWNGRADE_ERROR_MESSAGE = "ERR_PNPM_TRUST_DOWNGRADE";
 
 export function getLocalStorageFolder(): AbsoluteFilePath {
     return join(AbsoluteFilePath.of(homedir()), RelativeFilePath.of(LOCAL_STORAGE_FOLDER));
@@ -105,6 +106,26 @@ const PNPMFILE_CJS_CONTENTS = `module.exports = {
 `;
 
 const NPMRC_CONTENTS = "@fern-fern:registry=https://npm.buildwithfern.com\n";
+
+/**
+ * Returns a copy of process.env with pnpm supply-chain security env vars removed.
+ * pnpm 10+ propagates workspace settings (e.g. trustPolicy) as npm_config_*
+ * env vars to child processes. These can cause ERR_PNPM_TRUST_DOWNGRADE failures
+ * when running pnpm install in the standalone preview bundle folder.
+ */
+function getCleanPnpmEnv(): NodeJS.ProcessEnv {
+    const env = { ...process.env };
+    const supplyChainKeys = [
+        "npm_config_trust_policy",
+        "npm_config_strict_dep_builds",
+        "npm_config_minimum_release_age",
+        "npm_config_block_exotic_subdeps"
+    ];
+    for (const key of supplyChainKeys) {
+        delete env[key];
+    }
+    return env;
+}
 
 export async function downloadBundle({
     bucketUrl,
@@ -313,7 +334,9 @@ export async function downloadBundle({
                 logger.debug("Installing esbuild");
                 await loggingExeca(logger, "pnpm", ["i", "esbuild"], {
                     cwd: absolutePathToBundleFolder,
-                    doNotPipeOutput: true
+                    doNotPipeOutput: true,
+                    env: getCleanPnpmEnv(),
+                    extendEnv: false
                 });
             } catch (error) {
                 if (error instanceof Error) {
@@ -335,7 +358,9 @@ export async function downloadBundle({
                             logger.debug("Installing esbuild after upgrading corepack");
                             await loggingExeca(logger, "pnpm", ["i", "esbuild"], {
                                 cwd: absolutePathToBundleFolder,
-                                doNotPipeOutput: true
+                                doNotPipeOutput: true,
+                                env: getCleanPnpmEnv(),
+                                extendEnv: false
                             });
                         } catch (installError) {
                             throw contactFernSupportError(
@@ -404,10 +429,42 @@ export async function downloadBundle({
                     logger.debug("Running pnpm install within standalone");
                     await loggingExeca(logger, "pnpm", ["install"], {
                         cwd: absPathToStandalone,
-                        doNotPipeOutput: true
+                        doNotPipeOutput: true,
+                        env: getCleanPnpmEnv(),
+                        extendEnv: false
                     });
                 } catch (error) {
-                    throw contactFernSupportError(`Failed to install required package due to error: ${error}`);
+                    // pnpm 10+ trust policy can block installs when a package loses
+                    // provenance attestation between versions (e.g. undici-types).
+                    // If detected, strip trustPolicy from the workspace yaml and retry.
+                    if (
+                        error instanceof Error &&
+                        typeof error.message === "string" &&
+                        error.message.includes(PNPM_TRUST_DOWNGRADE_ERROR_MESSAGE)
+                    ) {
+                        logger.debug(
+                            "Detected pnpm trust policy error. Removing trustPolicy from workspace config and retrying"
+                        );
+                        if (pnpmWorkspaceExists) {
+                            const content = (await readFile(pnpmWorkspacePath)).toString();
+                            const updatedContent = content.replace(/^trustPolicy:.*$/gm, "");
+                            await writeFile(pnpmWorkspacePath, updatedContent);
+                        }
+                        try {
+                            await loggingExeca(logger, "pnpm", ["install"], {
+                                cwd: absPathToStandalone,
+                                doNotPipeOutput: true,
+                                env: getCleanPnpmEnv(),
+                                extendEnv: false
+                            });
+                        } catch (retryError) {
+                            throw contactFernSupportError(
+                                `Failed to install required package due to error: ${retryError}`
+                            );
+                        }
+                    } else {
+                        throw contactFernSupportError(`Failed to install required package due to error: ${error}`);
+                    }
                 }
             }
         }
