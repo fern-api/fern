@@ -4680,220 +4680,6 @@
     },
     "headers": [],
     "endpoints": {
-        "endpoint_.echo": {
-            "auth": {
-                "type": "bearer",
-                "token": {
-                    "originalName": "token",
-                    "camelCase": {
-                        "unsafeName": "token",
-                        "safeName": "token"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "token",
-                        "safeName": "token"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "TOKEN",
-                        "safeName": "TOKEN"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "Token",
-                        "safeName": "Token"
-                    }
-                }
-            },
-            "declaration": {
-                "name": {
-                    "originalName": "echo",
-                    "camelCase": {
-                        "unsafeName": "echo",
-                        "safeName": "echo"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "echo",
-                        "safeName": "echo"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "ECHO",
-                        "safeName": "ECHO"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "Echo",
-                        "safeName": "Echo"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "",
-                            "camelCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "snakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "pascalCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            }
-                        }
-                    ],
-                    "packagePath": [],
-                    "file": {
-                        "originalName": "",
-                        "camelCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        },
-                        "snakeCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        },
-                        "pascalCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        }
-                    }
-                }
-            },
-            "location": {
-                "method": "POST",
-                "path": "/echo"
-            },
-            "request": {
-                "type": "body",
-                "pathParameters": [],
-                "body": {
-                    "type": "typeReference",
-                    "value": {
-                        "type": "primitive",
-                        "value": "STRING"
-                    }
-                }
-            },
-            "response": {
-                "type": "json"
-            },
-            "examples": null
-        },
-        "endpoint_.createType": {
-            "auth": {
-                "type": "bearer",
-                "token": {
-                    "originalName": "token",
-                    "camelCase": {
-                        "unsafeName": "token",
-                        "safeName": "token"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "token",
-                        "safeName": "token"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "TOKEN",
-                        "safeName": "TOKEN"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "Token",
-                        "safeName": "Token"
-                    }
-                }
-            },
-            "declaration": {
-                "name": {
-                    "originalName": "createType",
-                    "camelCase": {
-                        "unsafeName": "createType",
-                        "safeName": "createType"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "create_type",
-                        "safeName": "create_type"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "CREATE_TYPE",
-                        "safeName": "CREATE_TYPE"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "CreateType",
-                        "safeName": "CreateType"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "",
-                            "camelCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "snakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "pascalCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            }
-                        }
-                    ],
-                    "packagePath": [],
-                    "file": {
-                        "originalName": "",
-                        "camelCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        },
-                        "snakeCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        },
-                        "pascalCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        }
-                    }
-                }
-            },
-            "location": {
-                "method": "POST",
-                "path": "/type"
-            },
-            "request": {
-                "type": "body",
-                "pathParameters": [],
-                "body": {
-                    "type": "typeReference",
-                    "value": {
-                        "type": "named",
-                        "value": "type_:Type"
-                    }
-                }
-            },
-            "response": {
-                "type": "json"
-            },
-            "examples": null
-        },
         "endpoint_fileNotificationService.file_notification_service_getException": {
             "auth": {
                 "type": "bearer",
@@ -6990,6 +6776,144 @@
                 "metadata": {
                     "includePathParameters": false,
                     "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_.echo": {
+            "auth": {
+                "type": "bearer",
+                "token": {
+                    "originalName": "token",
+                    "camelCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TOKEN",
+                        "safeName": "TOKEN"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Token",
+                        "safeName": "Token"
+                    }
+                }
+            },
+            "declaration": {
+                "name": {
+                    "originalName": "echo",
+                    "camelCase": {
+                        "unsafeName": "echo",
+                        "safeName": "echo"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "echo",
+                        "safeName": "echo"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "ECHO",
+                        "safeName": "ECHO"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Echo",
+                        "safeName": "Echo"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/echo"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": {
+                    "type": "typeReference",
+                    "value": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    }
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_.createType": {
+            "auth": {
+                "type": "bearer",
+                "token": {
+                    "originalName": "token",
+                    "camelCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TOKEN",
+                        "safeName": "TOKEN"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Token",
+                        "safeName": "Token"
+                    }
+                }
+            },
+            "declaration": {
+                "name": {
+                    "originalName": "createType",
+                    "camelCase": {
+                        "unsafeName": "createType",
+                        "safeName": "createType"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "create_type",
+                        "safeName": "create_type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CREATE_TYPE",
+                        "safeName": "CREATE_TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "CreateType",
+                        "safeName": "CreateType"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/type"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": {
+                    "type": "typeReference",
+                    "value": {
+                        "type": "named",
+                        "value": "type_:Type"
+                    }
                 }
             },
             "response": {

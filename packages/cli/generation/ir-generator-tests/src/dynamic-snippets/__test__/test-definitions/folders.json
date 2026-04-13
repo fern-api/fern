@@ -37,86 +37,6 @@
     },
     "headers": [],
     "endpoints": {
-        "endpoint_.foo": {
-            "auth": null,
-            "declaration": {
-                "name": {
-                    "originalName": "foo",
-                    "camelCase": {
-                        "unsafeName": "foo",
-                        "safeName": "foo"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "foo",
-                        "safeName": "foo"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "FOO",
-                        "safeName": "FOO"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "Foo",
-                        "safeName": "Foo"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "",
-                            "camelCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "snakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "pascalCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            }
-                        }
-                    ],
-                    "packagePath": [],
-                    "file": {
-                        "originalName": "",
-                        "camelCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        },
-                        "snakeCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        },
-                        "pascalCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        }
-                    }
-                }
-            },
-            "location": {
-                "method": "POST",
-                "path": "/"
-            },
-            "request": {
-                "type": "body",
-                "pathParameters": [],
-                "body": null
-            },
-            "response": {
-                "type": "json"
-            },
-            "examples": null
-        },
         "endpoint_ab.a_b_foo": {
             "auth": null,
             "declaration": {
@@ -516,6 +436,48 @@
                         "type": "unknown"
                     }
                 }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_.foo": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "foo",
+                    "camelCase": {
+                        "unsafeName": "foo",
+                        "safeName": "foo"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "foo",
+                        "safeName": "foo"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "FOO",
+                        "safeName": "FOO"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Foo",
+                        "safeName": "Foo"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null
             },
             "response": {
                 "type": "json"

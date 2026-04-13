@@ -4054,731 +4054,6 @@
         }
     },
     "services": {
-        "service_": {
-            "availability": null,
-            "name": {
-                "fernFilepath": {
-                    "allParts": [
-                        ""
-                    ],
-                    "packagePath": [],
-                    "file": ""
-                }
-            },
-            "displayName": null,
-            "basePath": {
-                "head": "",
-                "parts": []
-            },
-            "headers": [],
-            "pathParameters": [],
-            "encoding": {
-                "json": {},
-                "proto": null
-            },
-            "transport": {
-                "type": "http"
-            },
-            "endpoints": [
-                {
-                    "id": "endpoint_.echo",
-                    "name": "echo",
-                    "displayName": null,
-                    "auth": false,
-                    "security": null,
-                    "idempotent": false,
-                    "baseUrl": null,
-                    "v2BaseUrls": null,
-                    "method": "POST",
-                    "basePath": null,
-                    "path": {
-                        "head": "/echo",
-                        "parts": []
-                    },
-                    "fullPath": {
-                        "head": "echo",
-                        "parts": []
-                    },
-                    "pathParameters": [],
-                    "allPathParameters": [],
-                    "queryParameters": [],
-                    "headers": [],
-                    "requestBody": {
-                        "type": "reference",
-                        "requestBodyType": {
-                            "_type": "primitive",
-                            "primitive": {
-                                "v1": "STRING",
-                                "v2": {
-                                    "type": "string",
-                                    "default": null,
-                                    "validation": null
-                                }
-                            }
-                        },
-                        "docs": null,
-                        "contentType": "application/json",
-                        "v2Examples": null
-                    },
-                    "v2RequestBodies": null,
-                    "sdkRequest": {
-                        "shape": {
-                            "type": "justRequestBody",
-                            "value": {
-                                "type": "typeReference",
-                                "requestBodyType": {
-                                    "_type": "primitive",
-                                    "primitive": {
-                                        "v1": "STRING",
-                                        "v2": {
-                                            "type": "string",
-                                            "default": null,
-                                            "validation": null
-                                        }
-                                    }
-                                },
-                                "docs": null,
-                                "contentType": null,
-                                "v2Examples": null
-                            }
-                        },
-                        "requestParameterName": "request",
-                        "streamParameter": null
-                    },
-                    "response": {
-                        "body": {
-                            "type": "json",
-                            "value": {
-                                "type": "response",
-                                "responseBodyType": {
-                                    "_type": "primitive",
-                                    "primitive": {
-                                        "v1": "STRING",
-                                        "v2": {
-                                            "type": "string",
-                                            "default": null,
-                                            "validation": null
-                                        }
-                                    }
-                                },
-                                "docs": "",
-                                "v2Examples": null
-                            }
-                        },
-                        "status-code": 200,
-                        "isWildcardStatusCode": null,
-                        "docs": ""
-                    },
-                    "v2Responses": null,
-                    "errors": [],
-                    "userSpecifiedExamples": [
-                        {
-                            "example": {
-                                "id": "9b31d397",
-                                "name": null,
-                                "url": "/echo",
-                                "rootPathParameters": [],
-                                "endpointPathParameters": [],
-                                "servicePathParameters": [],
-                                "endpointHeaders": [],
-                                "serviceHeaders": [],
-                                "queryParameters": [],
-                                "request": {
-                                    "type": "reference",
-                                    "shape": {
-                                        "type": "primitive",
-                                        "primitive": {
-                                            "type": "string",
-                                            "string": {
-                                                "original": "string"
-                                            }
-                                        }
-                                    },
-                                    "jsonExample": "string"
-                                },
-                                "response": {
-                                    "type": "ok",
-                                    "value": {
-                                        "type": "body",
-                                        "value": {
-                                            "shape": {
-                                                "type": "primitive",
-                                                "primitive": {
-                                                    "type": "string",
-                                                    "string": {
-                                                        "original": "string"
-                                                    }
-                                                }
-                                            },
-                                            "jsonExample": "string"
-                                        }
-                                    }
-                                },
-                                "docs": null
-                            },
-                            "codeSamples": null
-                        }
-                    ],
-                    "autogeneratedExamples": [
-                        {
-                            "example": {
-                                "id": "63248c43",
-                                "url": "/echo",
-                                "name": null,
-                                "endpointHeaders": [],
-                                "endpointPathParameters": [],
-                                "queryParameters": [],
-                                "servicePathParameters": [],
-                                "serviceHeaders": [],
-                                "rootPathParameters": [],
-                                "request": {
-                                    "type": "reference",
-                                    "shape": {
-                                        "type": "primitive",
-                                        "primitive": {
-                                            "type": "string",
-                                            "string": {
-                                                "original": "string"
-                                            }
-                                        }
-                                    },
-                                    "jsonExample": "string"
-                                },
-                                "response": {
-                                    "type": "ok",
-                                    "value": {
-                                        "type": "body",
-                                        "value": {
-                                            "shape": {
-                                                "type": "primitive",
-                                                "primitive": {
-                                                    "type": "string",
-                                                    "string": {
-                                                        "original": "string"
-                                                    }
-                                                }
-                                            },
-                                            "jsonExample": "string"
-                                        }
-                                    }
-                                },
-                                "docs": null
-                            }
-                        }
-                    ],
-                    "pagination": null,
-                    "transport": null,
-                    "v2Examples": null,
-                    "source": null,
-                    "audiences": null,
-                    "retries": null,
-                    "apiPlayground": null,
-                    "responseHeaders": [],
-                    "availability": null,
-                    "docs": null
-                },
-                {
-                    "id": "endpoint_.createType",
-                    "name": "createType",
-                    "displayName": null,
-                    "auth": false,
-                    "security": null,
-                    "idempotent": false,
-                    "baseUrl": null,
-                    "v2BaseUrls": null,
-                    "method": "POST",
-                    "basePath": null,
-                    "path": {
-                        "head": "/type",
-                        "parts": []
-                    },
-                    "fullPath": {
-                        "head": "type",
-                        "parts": []
-                    },
-                    "pathParameters": [],
-                    "allPathParameters": [],
-                    "queryParameters": [],
-                    "headers": [],
-                    "requestBody": {
-                        "type": "reference",
-                        "requestBodyType": {
-                            "_type": "named",
-                            "name": "Type",
-                            "fernFilepath": {
-                                "allParts": [],
-                                "packagePath": [],
-                                "file": null
-                            },
-                            "displayName": null,
-                            "typeId": "type_:Type",
-                            "default": null,
-                            "inline": null
-                        },
-                        "docs": null,
-                        "contentType": "application/json",
-                        "v2Examples": null
-                    },
-                    "v2RequestBodies": null,
-                    "sdkRequest": {
-                        "shape": {
-                            "type": "justRequestBody",
-                            "value": {
-                                "type": "typeReference",
-                                "requestBodyType": {
-                                    "_type": "named",
-                                    "name": "Type",
-                                    "fernFilepath": {
-                                        "allParts": [],
-                                        "packagePath": [],
-                                        "file": null
-                                    },
-                                    "displayName": null,
-                                    "typeId": "type_:Type",
-                                    "default": null,
-                                    "inline": null
-                                },
-                                "docs": null,
-                                "contentType": null,
-                                "v2Examples": null
-                            }
-                        },
-                        "requestParameterName": "request",
-                        "streamParameter": null
-                    },
-                    "response": {
-                        "body": {
-                            "type": "json",
-                            "value": {
-                                "type": "response",
-                                "responseBodyType": {
-                                    "_type": "named",
-                                    "name": "Identifier",
-                                    "fernFilepath": {
-                                        "allParts": [],
-                                        "packagePath": [],
-                                        "file": null
-                                    },
-                                    "displayName": null,
-                                    "typeId": "type_:Identifier",
-                                    "default": null,
-                                    "inline": null
-                                },
-                                "docs": "",
-                                "v2Examples": null
-                            }
-                        },
-                        "status-code": 200,
-                        "isWildcardStatusCode": null,
-                        "docs": ""
-                    },
-                    "v2Responses": null,
-                    "errors": [],
-                    "userSpecifiedExamples": [
-                        {
-                            "example": {
-                                "id": "320c3171",
-                                "name": null,
-                                "url": "/type",
-                                "rootPathParameters": [],
-                                "endpointPathParameters": [],
-                                "servicePathParameters": [],
-                                "endpointHeaders": [],
-                                "serviceHeaders": [],
-                                "queryParameters": [],
-                                "request": {
-                                    "type": "reference",
-                                    "shape": {
-                                        "type": "named",
-                                        "typeName": {
-                                            "typeId": "type_:Type",
-                                            "fernFilepath": {
-                                                "allParts": [],
-                                                "packagePath": [],
-                                                "file": null
-                                            },
-                                            "name": "Type",
-                                            "displayName": null
-                                        },
-                                        "shape": {
-                                            "type": "undiscriminatedUnion",
-                                            "index": 0,
-                                            "singleUnionType": {
-                                                "shape": {
-                                                    "type": "named",
-                                                    "typeName": {
-                                                        "typeId": "type_:BasicType",
-                                                        "fernFilepath": {
-                                                            "allParts": [],
-                                                            "packagePath": [],
-                                                            "file": null
-                                                        },
-                                                        "name": "BasicType",
-                                                        "displayName": null
-                                                    },
-                                                    "shape": {
-                                                        "type": "enum",
-                                                        "value": "primitive"
-                                                    }
-                                                },
-                                                "jsonExample": "primitive"
-                                            }
-                                        }
-                                    },
-                                    "jsonExample": "primitive"
-                                },
-                                "response": {
-                                    "type": "ok",
-                                    "value": {
-                                        "type": "body",
-                                        "value": {
-                                            "shape": {
-                                                "type": "named",
-                                                "typeName": {
-                                                    "typeId": "type_:Identifier",
-                                                    "fernFilepath": {
-                                                        "allParts": [],
-                                                        "packagePath": [],
-                                                        "file": null
-                                                    },
-                                                    "name": "Identifier",
-                                                    "displayName": null
-                                                },
-                                                "shape": {
-                                                    "type": "object",
-                                                    "properties": [
-                                                        {
-                                                            "name": "type",
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "named",
-                                                                    "typeName": {
-                                                                        "typeId": "type_:Type",
-                                                                        "fernFilepath": {
-                                                                            "allParts": [],
-                                                                            "packagePath": [],
-                                                                            "file": null
-                                                                        },
-                                                                        "name": "Type",
-                                                                        "displayName": null
-                                                                    },
-                                                                    "shape": {
-                                                                        "type": "undiscriminatedUnion",
-                                                                        "index": 0,
-                                                                        "singleUnionType": {
-                                                                            "shape": {
-                                                                                "type": "named",
-                                                                                "typeName": {
-                                                                                    "typeId": "type_:BasicType",
-                                                                                    "fernFilepath": {
-                                                                                        "allParts": [],
-                                                                                        "packagePath": [],
-                                                                                        "file": null
-                                                                                    },
-                                                                                    "name": "BasicType",
-                                                                                    "displayName": null
-                                                                                },
-                                                                                "shape": {
-                                                                                    "type": "enum",
-                                                                                    "value": "primitive"
-                                                                                }
-                                                                            },
-                                                                            "jsonExample": "primitive"
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "jsonExample": "primitive"
-                                                            },
-                                                            "originalTypeDeclaration": {
-                                                                "typeId": "type_:Identifier",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "name": "Identifier",
-                                                                "displayName": null
-                                                            },
-                                                            "propertyAccess": null
-                                                        },
-                                                        {
-                                                            "name": "value",
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "primitive",
-                                                                    "primitive": {
-                                                                        "type": "string",
-                                                                        "string": {
-                                                                            "original": "value"
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "jsonExample": "value"
-                                                            },
-                                                            "originalTypeDeclaration": {
-                                                                "typeId": "type_:Identifier",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "name": "Identifier",
-                                                                "displayName": null
-                                                            },
-                                                            "propertyAccess": null
-                                                        },
-                                                        {
-                                                            "name": "label",
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "primitive",
-                                                                    "primitive": {
-                                                                        "type": "string",
-                                                                        "string": {
-                                                                            "original": "label"
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "jsonExample": "label"
-                                                            },
-                                                            "originalTypeDeclaration": {
-                                                                "typeId": "type_:Identifier",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "name": "Identifier",
-                                                                "displayName": null
-                                                            },
-                                                            "propertyAccess": null
-                                                        }
-                                                    ],
-                                                    "extraProperties": null
-                                                }
-                                            },
-                                            "jsonExample": {
-                                                "type": "primitive",
-                                                "value": "value",
-                                                "label": "label"
-                                            }
-                                        }
-                                    }
-                                },
-                                "docs": null
-                            },
-                            "codeSamples": null
-                        }
-                    ],
-                    "autogeneratedExamples": [
-                        {
-                            "example": {
-                                "id": "d0218dd5",
-                                "url": "/type",
-                                "name": null,
-                                "endpointHeaders": [],
-                                "endpointPathParameters": [],
-                                "queryParameters": [],
-                                "servicePathParameters": [],
-                                "serviceHeaders": [],
-                                "rootPathParameters": [],
-                                "request": {
-                                    "type": "reference",
-                                    "shape": {
-                                        "type": "named",
-                                        "shape": {
-                                            "type": "undiscriminatedUnion",
-                                            "index": 0,
-                                            "singleUnionType": {
-                                                "shape": {
-                                                    "type": "named",
-                                                    "shape": {
-                                                        "type": "enum",
-                                                        "value": "primitive"
-                                                    },
-                                                    "typeName": {
-                                                        "name": "BasicType",
-                                                        "fernFilepath": {
-                                                            "allParts": [],
-                                                            "packagePath": [],
-                                                            "file": null
-                                                        },
-                                                        "displayName": null,
-                                                        "typeId": "type_:BasicType"
-                                                    }
-                                                },
-                                                "jsonExample": "primitive"
-                                            }
-                                        },
-                                        "typeName": {
-                                            "name": "Type",
-                                            "fernFilepath": {
-                                                "allParts": [],
-                                                "packagePath": [],
-                                                "file": null
-                                            },
-                                            "displayName": null,
-                                            "typeId": "type_:Type"
-                                        }
-                                    },
-                                    "jsonExample": "primitive"
-                                },
-                                "response": {
-                                    "type": "ok",
-                                    "value": {
-                                        "type": "body",
-                                        "value": {
-                                            "shape": {
-                                                "type": "named",
-                                                "shape": {
-                                                    "type": "object",
-                                                    "properties": [
-                                                        {
-                                                            "name": "type",
-                                                            "originalTypeDeclaration": {
-                                                                "name": "Identifier",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "displayName": null,
-                                                                "typeId": "type_:Identifier"
-                                                            },
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "named",
-                                                                    "shape": {
-                                                                        "type": "undiscriminatedUnion",
-                                                                        "index": 0,
-                                                                        "singleUnionType": {
-                                                                            "shape": {
-                                                                                "type": "named",
-                                                                                "shape": {
-                                                                                    "type": "enum",
-                                                                                    "value": "primitive"
-                                                                                },
-                                                                                "typeName": {
-                                                                                    "name": "BasicType",
-                                                                                    "fernFilepath": {
-                                                                                        "allParts": [],
-                                                                                        "packagePath": [],
-                                                                                        "file": null
-                                                                                    },
-                                                                                    "displayName": null,
-                                                                                    "typeId": "type_:BasicType"
-                                                                                }
-                                                                            },
-                                                                            "jsonExample": "primitive"
-                                                                        }
-                                                                    },
-                                                                    "typeName": {
-                                                                        "name": "Type",
-                                                                        "fernFilepath": {
-                                                                            "allParts": [],
-                                                                            "packagePath": [],
-                                                                            "file": null
-                                                                        },
-                                                                        "displayName": null,
-                                                                        "typeId": "type_:Type"
-                                                                    }
-                                                                },
-                                                                "jsonExample": "primitive"
-                                                            },
-                                                            "propertyAccess": null
-                                                        },
-                                                        {
-                                                            "name": "value",
-                                                            "originalTypeDeclaration": {
-                                                                "name": "Identifier",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "displayName": null,
-                                                                "typeId": "type_:Identifier"
-                                                            },
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "primitive",
-                                                                    "primitive": {
-                                                                        "type": "string",
-                                                                        "string": {
-                                                                            "original": "value"
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "jsonExample": "value"
-                                                            },
-                                                            "propertyAccess": null
-                                                        },
-                                                        {
-                                                            "name": "label",
-                                                            "originalTypeDeclaration": {
-                                                                "name": "Identifier",
-                                                                "fernFilepath": {
-                                                                    "allParts": [],
-                                                                    "packagePath": [],
-                                                                    "file": null
-                                                                },
-                                                                "displayName": null,
-                                                                "typeId": "type_:Identifier"
-                                                            },
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "primitive",
-                                                                    "primitive": {
-                                                                        "type": "string",
-                                                                        "string": {
-                                                                            "original": "label"
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "jsonExample": "label"
-                                                            },
-                                                            "propertyAccess": null
-                                                        }
-                                                    ],
-                                                    "extraProperties": null
-                                                },
-                                                "typeName": {
-                                                    "name": "Identifier",
-                                                    "fernFilepath": {
-                                                        "allParts": [],
-                                                        "packagePath": [],
-                                                        "file": null
-                                                    },
-                                                    "displayName": null,
-                                                    "typeId": "type_:Identifier"
-                                                }
-                                            },
-                                            "jsonExample": {
-                                                "type": "primitive",
-                                                "value": "value",
-                                                "label": "label"
-                                            }
-                                        }
-                                    }
-                                },
-                                "docs": null
-                            }
-                        }
-                    ],
-                    "pagination": null,
-                    "transport": null,
-                    "v2Examples": null,
-                    "source": null,
-                    "audiences": null,
-                    "retries": null,
-                    "apiPlayground": null,
-                    "responseHeaders": [],
-                    "availability": null,
-                    "docs": null
-                }
-            ],
-            "audiences": null
-        },
         "service_fileNotificationService": {
             "availability": null,
             "name": {
@@ -10633,6 +9908,729 @@
                 }
             ],
             "audiences": null
+        },
+        "service_": {
+            "availability": null,
+            "name": {
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "displayName": null,
+            "basePath": {
+                "head": "",
+                "parts": []
+            },
+            "headers": [],
+            "pathParameters": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "transport": {
+                "type": "http"
+            },
+            "endpoints": [
+                {
+                    "id": "endpoint_.echo",
+                    "name": "echo",
+                    "displayName": null,
+                    "auth": false,
+                    "security": null,
+                    "idempotent": false,
+                    "baseUrl": null,
+                    "v2BaseUrls": null,
+                    "method": "POST",
+                    "basePath": null,
+                    "path": {
+                        "head": "/echo",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "echo",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "requestBody": {
+                        "type": "reference",
+                        "requestBodyType": {
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
+                        },
+                        "docs": null,
+                        "contentType": "application/json",
+                        "v2Examples": null
+                    },
+                    "v2RequestBodies": null,
+                    "sdkRequest": {
+                        "shape": {
+                            "type": "justRequestBody",
+                            "value": {
+                                "type": "typeReference",
+                                "requestBodyType": {
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
+                                },
+                                "docs": null,
+                                "contentType": null,
+                                "v2Examples": null
+                            }
+                        },
+                        "requestParameterName": "request",
+                        "streamParameter": null
+                    },
+                    "response": {
+                        "body": {
+                            "type": "json",
+                            "value": {
+                                "type": "response",
+                                "responseBodyType": {
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
+                                },
+                                "docs": "",
+                                "v2Examples": null
+                            }
+                        },
+                        "status-code": 200,
+                        "isWildcardStatusCode": null,
+                        "docs": ""
+                    },
+                    "v2Responses": null,
+                    "errors": [],
+                    "userSpecifiedExamples": [
+                        {
+                            "example": {
+                                "id": "9b31d397",
+                                "name": null,
+                                "url": "/echo",
+                                "rootPathParameters": [],
+                                "endpointPathParameters": [],
+                                "servicePathParameters": [],
+                                "endpointHeaders": [],
+                                "serviceHeaders": [],
+                                "queryParameters": [],
+                                "request": {
+                                    "type": "reference",
+                                    "shape": {
+                                        "type": "primitive",
+                                        "primitive": {
+                                            "type": "string",
+                                            "string": {
+                                                "original": "string"
+                                            }
+                                        }
+                                    },
+                                    "jsonExample": "string"
+                                },
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "string",
+                                                    "string": {
+                                                        "original": "string"
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "string"
+                                        }
+                                    }
+                                },
+                                "docs": null
+                            },
+                            "codeSamples": null
+                        }
+                    ],
+                    "autogeneratedExamples": [
+                        {
+                            "example": {
+                                "id": "63248c43",
+                                "url": "/echo",
+                                "name": null,
+                                "endpointHeaders": [],
+                                "endpointPathParameters": [],
+                                "queryParameters": [],
+                                "servicePathParameters": [],
+                                "serviceHeaders": [],
+                                "rootPathParameters": [],
+                                "request": {
+                                    "type": "reference",
+                                    "shape": {
+                                        "type": "primitive",
+                                        "primitive": {
+                                            "type": "string",
+                                            "string": {
+                                                "original": "string"
+                                            }
+                                        }
+                                    },
+                                    "jsonExample": "string"
+                                },
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "string",
+                                                    "string": {
+                                                        "original": "string"
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "string"
+                                        }
+                                    }
+                                },
+                                "docs": null
+                            }
+                        }
+                    ],
+                    "pagination": null,
+                    "transport": null,
+                    "v2Examples": null,
+                    "source": null,
+                    "audiences": null,
+                    "retries": null,
+                    "apiPlayground": null,
+                    "responseHeaders": [],
+                    "availability": null,
+                    "docs": null
+                },
+                {
+                    "id": "endpoint_.createType",
+                    "name": "createType",
+                    "displayName": null,
+                    "auth": false,
+                    "security": null,
+                    "idempotent": false,
+                    "baseUrl": null,
+                    "v2BaseUrls": null,
+                    "method": "POST",
+                    "basePath": null,
+                    "path": {
+                        "head": "/type",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "type",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "requestBody": {
+                        "type": "reference",
+                        "requestBodyType": {
+                            "_type": "named",
+                            "name": "Type",
+                            "fernFilepath": {
+                                "allParts": [],
+                                "packagePath": [],
+                                "file": null
+                            },
+                            "displayName": null,
+                            "typeId": "type_:Type",
+                            "default": null,
+                            "inline": null
+                        },
+                        "docs": null,
+                        "contentType": "application/json",
+                        "v2Examples": null
+                    },
+                    "v2RequestBodies": null,
+                    "sdkRequest": {
+                        "shape": {
+                            "type": "justRequestBody",
+                            "value": {
+                                "type": "typeReference",
+                                "requestBodyType": {
+                                    "_type": "named",
+                                    "name": "Type",
+                                    "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": [],
+                                        "file": null
+                                    },
+                                    "displayName": null,
+                                    "typeId": "type_:Type",
+                                    "default": null,
+                                    "inline": null
+                                },
+                                "docs": null,
+                                "contentType": null,
+                                "v2Examples": null
+                            }
+                        },
+                        "requestParameterName": "request",
+                        "streamParameter": null
+                    },
+                    "response": {
+                        "body": {
+                            "type": "json",
+                            "value": {
+                                "type": "response",
+                                "responseBodyType": {
+                                    "_type": "named",
+                                    "name": "Identifier",
+                                    "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": [],
+                                        "file": null
+                                    },
+                                    "displayName": null,
+                                    "typeId": "type_:Identifier",
+                                    "default": null,
+                                    "inline": null
+                                },
+                                "docs": "",
+                                "v2Examples": null
+                            }
+                        },
+                        "status-code": 200,
+                        "isWildcardStatusCode": null,
+                        "docs": ""
+                    },
+                    "v2Responses": null,
+                    "errors": [],
+                    "userSpecifiedExamples": [
+                        {
+                            "example": {
+                                "id": "320c3171",
+                                "name": null,
+                                "url": "/type",
+                                "rootPathParameters": [],
+                                "endpointPathParameters": [],
+                                "servicePathParameters": [],
+                                "endpointHeaders": [],
+                                "serviceHeaders": [],
+                                "queryParameters": [],
+                                "request": {
+                                    "type": "reference",
+                                    "shape": {
+                                        "type": "named",
+                                        "typeName": {
+                                            "typeId": "type_:Type",
+                                            "fernFilepath": {
+                                                "allParts": [],
+                                                "packagePath": [],
+                                                "file": null
+                                            },
+                                            "name": "Type",
+                                            "displayName": null
+                                        },
+                                        "shape": {
+                                            "type": "undiscriminatedUnion",
+                                            "index": 0,
+                                            "singleUnionType": {
+                                                "shape": {
+                                                    "type": "named",
+                                                    "typeName": {
+                                                        "typeId": "type_:BasicType",
+                                                        "fernFilepath": {
+                                                            "allParts": [],
+                                                            "packagePath": [],
+                                                            "file": null
+                                                        },
+                                                        "name": "BasicType",
+                                                        "displayName": null
+                                                    },
+                                                    "shape": {
+                                                        "type": "enum",
+                                                        "value": "primitive"
+                                                    }
+                                                },
+                                                "jsonExample": "primitive"
+                                            }
+                                        }
+                                    },
+                                    "jsonExample": "primitive"
+                                },
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": {
+                                            "shape": {
+                                                "type": "named",
+                                                "typeName": {
+                                                    "typeId": "type_:Identifier",
+                                                    "fernFilepath": {
+                                                        "allParts": [],
+                                                        "packagePath": [],
+                                                        "file": null
+                                                    },
+                                                    "name": "Identifier",
+                                                    "displayName": null
+                                                },
+                                                "shape": {
+                                                    "type": "object",
+                                                    "properties": [
+                                                        {
+                                                            "name": "type",
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "named",
+                                                                    "typeName": {
+                                                                        "typeId": "type_:Type",
+                                                                        "fernFilepath": {
+                                                                            "allParts": [],
+                                                                            "packagePath": [],
+                                                                            "file": null
+                                                                        },
+                                                                        "name": "Type",
+                                                                        "displayName": null
+                                                                    },
+                                                                    "shape": {
+                                                                        "type": "undiscriminatedUnion",
+                                                                        "index": 0,
+                                                                        "singleUnionType": {
+                                                                            "shape": {
+                                                                                "type": "named",
+                                                                                "typeName": {
+                                                                                    "typeId": "type_:BasicType",
+                                                                                    "fernFilepath": {
+                                                                                        "allParts": [],
+                                                                                        "packagePath": [],
+                                                                                        "file": null
+                                                                                    },
+                                                                                    "name": "BasicType",
+                                                                                    "displayName": null
+                                                                                },
+                                                                                "shape": {
+                                                                                    "type": "enum",
+                                                                                    "value": "primitive"
+                                                                                }
+                                                                            },
+                                                                            "jsonExample": "primitive"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "primitive"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_:Identifier",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "name": "Identifier",
+                                                                "displayName": null
+                                                            },
+                                                            "propertyAccess": null
+                                                        },
+                                                        {
+                                                            "name": "value",
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "value"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "value"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_:Identifier",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "name": "Identifier",
+                                                                "displayName": null
+                                                            },
+                                                            "propertyAccess": null
+                                                        },
+                                                        {
+                                                            "name": "label",
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "label"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "label"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_:Identifier",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "name": "Identifier",
+                                                                "displayName": null
+                                                            },
+                                                            "propertyAccess": null
+                                                        }
+                                                    ],
+                                                    "extraProperties": null
+                                                }
+                                            },
+                                            "jsonExample": {
+                                                "type": "primitive",
+                                                "value": "value",
+                                                "label": "label"
+                                            }
+                                        }
+                                    }
+                                },
+                                "docs": null
+                            },
+                            "codeSamples": null
+                        }
+                    ],
+                    "autogeneratedExamples": [
+                        {
+                            "example": {
+                                "id": "d0218dd5",
+                                "url": "/type",
+                                "name": null,
+                                "endpointHeaders": [],
+                                "endpointPathParameters": [],
+                                "queryParameters": [],
+                                "servicePathParameters": [],
+                                "serviceHeaders": [],
+                                "rootPathParameters": [],
+                                "request": {
+                                    "type": "reference",
+                                    "shape": {
+                                        "type": "named",
+                                        "shape": {
+                                            "type": "undiscriminatedUnion",
+                                            "index": 0,
+                                            "singleUnionType": {
+                                                "shape": {
+                                                    "type": "named",
+                                                    "shape": {
+                                                        "type": "enum",
+                                                        "value": "primitive"
+                                                    },
+                                                    "typeName": {
+                                                        "name": "BasicType",
+                                                        "fernFilepath": {
+                                                            "allParts": [],
+                                                            "packagePath": [],
+                                                            "file": null
+                                                        },
+                                                        "displayName": null,
+                                                        "typeId": "type_:BasicType"
+                                                    }
+                                                },
+                                                "jsonExample": "primitive"
+                                            }
+                                        },
+                                        "typeName": {
+                                            "name": "Type",
+                                            "fernFilepath": {
+                                                "allParts": [],
+                                                "packagePath": [],
+                                                "file": null
+                                            },
+                                            "displayName": null,
+                                            "typeId": "type_:Type"
+                                        }
+                                    },
+                                    "jsonExample": "primitive"
+                                },
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": {
+                                            "shape": {
+                                                "type": "named",
+                                                "shape": {
+                                                    "type": "object",
+                                                    "properties": [
+                                                        {
+                                                            "name": "type",
+                                                            "originalTypeDeclaration": {
+                                                                "name": "Identifier",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "displayName": null,
+                                                                "typeId": "type_:Identifier"
+                                                            },
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "named",
+                                                                    "shape": {
+                                                                        "type": "undiscriminatedUnion",
+                                                                        "index": 0,
+                                                                        "singleUnionType": {
+                                                                            "shape": {
+                                                                                "type": "named",
+                                                                                "shape": {
+                                                                                    "type": "enum",
+                                                                                    "value": "primitive"
+                                                                                },
+                                                                                "typeName": {
+                                                                                    "name": "BasicType",
+                                                                                    "fernFilepath": {
+                                                                                        "allParts": [],
+                                                                                        "packagePath": [],
+                                                                                        "file": null
+                                                                                    },
+                                                                                    "displayName": null,
+                                                                                    "typeId": "type_:BasicType"
+                                                                                }
+                                                                            },
+                                                                            "jsonExample": "primitive"
+                                                                        }
+                                                                    },
+                                                                    "typeName": {
+                                                                        "name": "Type",
+                                                                        "fernFilepath": {
+                                                                            "allParts": [],
+                                                                            "packagePath": [],
+                                                                            "file": null
+                                                                        },
+                                                                        "displayName": null,
+                                                                        "typeId": "type_:Type"
+                                                                    }
+                                                                },
+                                                                "jsonExample": "primitive"
+                                                            },
+                                                            "propertyAccess": null
+                                                        },
+                                                        {
+                                                            "name": "value",
+                                                            "originalTypeDeclaration": {
+                                                                "name": "Identifier",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "displayName": null,
+                                                                "typeId": "type_:Identifier"
+                                                            },
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "value"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "value"
+                                                            },
+                                                            "propertyAccess": null
+                                                        },
+                                                        {
+                                                            "name": "label",
+                                                            "originalTypeDeclaration": {
+                                                                "name": "Identifier",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "displayName": null,
+                                                                "typeId": "type_:Identifier"
+                                                            },
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "label"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "label"
+                                                            },
+                                                            "propertyAccess": null
+                                                        }
+                                                    ],
+                                                    "extraProperties": null
+                                                },
+                                                "typeName": {
+                                                    "name": "Identifier",
+                                                    "fernFilepath": {
+                                                        "allParts": [],
+                                                        "packagePath": [],
+                                                        "file": null
+                                                    },
+                                                    "displayName": null,
+                                                    "typeId": "type_:Identifier"
+                                                }
+                                            },
+                                            "jsonExample": {
+                                                "type": "primitive",
+                                                "value": "value",
+                                                "label": "label"
+                                            }
+                                        }
+                                    }
+                                },
+                                "docs": null
+                            }
+                        }
+                    ],
+                    "pagination": null,
+                    "transport": null,
+                    "v2Examples": null,
+                    "source": null,
+                    "audiences": null,
+                    "retries": null,
+                    "apiPlayground": null,
+                    "responseHeaders": [],
+                    "availability": null,
+                    "docs": null
+                }
+            ],
+            "audiences": null
         }
     },
     "constants": {
@@ -15405,220 +15403,6 @@
         },
         "headers": [],
         "endpoints": {
-            "endpoint_.echo": {
-                "auth": {
-                    "type": "bearer",
-                    "token": {
-                        "originalName": "token",
-                        "camelCase": {
-                            "unsafeName": "token",
-                            "safeName": "token"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "token",
-                            "safeName": "token"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "TOKEN",
-                            "safeName": "TOKEN"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Token",
-                            "safeName": "Token"
-                        }
-                    }
-                },
-                "declaration": {
-                    "name": {
-                        "originalName": "echo",
-                        "camelCase": {
-                            "unsafeName": "echo",
-                            "safeName": "echo"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "echo",
-                            "safeName": "echo"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "ECHO",
-                            "safeName": "ECHO"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Echo",
-                            "safeName": "Echo"
-                        }
-                    },
-                    "fernFilepath": {
-                        "allParts": [
-                            {
-                                "originalName": "",
-                                "camelCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                }
-                            }
-                        ],
-                        "packagePath": [],
-                        "file": {
-                            "originalName": "",
-                            "camelCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "snakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "pascalCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            }
-                        }
-                    }
-                },
-                "location": {
-                    "method": "POST",
-                    "path": "/echo"
-                },
-                "request": {
-                    "type": "body",
-                    "pathParameters": [],
-                    "body": {
-                        "type": "typeReference",
-                        "value": {
-                            "type": "primitive",
-                            "value": "STRING"
-                        }
-                    }
-                },
-                "response": {
-                    "type": "json"
-                },
-                "examples": null
-            },
-            "endpoint_.createType": {
-                "auth": {
-                    "type": "bearer",
-                    "token": {
-                        "originalName": "token",
-                        "camelCase": {
-                            "unsafeName": "token",
-                            "safeName": "token"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "token",
-                            "safeName": "token"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "TOKEN",
-                            "safeName": "TOKEN"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Token",
-                            "safeName": "Token"
-                        }
-                    }
-                },
-                "declaration": {
-                    "name": {
-                        "originalName": "createType",
-                        "camelCase": {
-                            "unsafeName": "createType",
-                            "safeName": "createType"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "create_type",
-                            "safeName": "create_type"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "CREATE_TYPE",
-                            "safeName": "CREATE_TYPE"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "CreateType",
-                            "safeName": "CreateType"
-                        }
-                    },
-                    "fernFilepath": {
-                        "allParts": [
-                            {
-                                "originalName": "",
-                                "camelCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                }
-                            }
-                        ],
-                        "packagePath": [],
-                        "file": {
-                            "originalName": "",
-                            "camelCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "snakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "pascalCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            }
-                        }
-                    }
-                },
-                "location": {
-                    "method": "POST",
-                    "path": "/type"
-                },
-                "request": {
-                    "type": "body",
-                    "pathParameters": [],
-                    "body": {
-                        "type": "typeReference",
-                        "value": {
-                            "type": "named",
-                            "value": "type_:Type"
-                        }
-                    }
-                },
-                "response": {
-                    "type": "json"
-                },
-                "examples": null
-            },
             "endpoint_fileNotificationService.file_notification_service_getException": {
                 "auth": {
                     "type": "bearer",
@@ -17721,6 +17505,144 @@
                     "type": "json"
                 },
                 "examples": null
+            },
+            "endpoint_.echo": {
+                "auth": {
+                    "type": "bearer",
+                    "token": {
+                        "originalName": "token",
+                        "camelCase": {
+                            "unsafeName": "token",
+                            "safeName": "token"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "token",
+                            "safeName": "token"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "TOKEN",
+                            "safeName": "TOKEN"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Token",
+                            "safeName": "Token"
+                        }
+                    }
+                },
+                "declaration": {
+                    "name": {
+                        "originalName": "echo",
+                        "camelCase": {
+                            "unsafeName": "echo",
+                            "safeName": "echo"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "echo",
+                            "safeName": "echo"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "ECHO",
+                            "safeName": "ECHO"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Echo",
+                            "safeName": "Echo"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "location": {
+                    "method": "POST",
+                    "path": "/echo"
+                },
+                "request": {
+                    "type": "body",
+                    "pathParameters": [],
+                    "body": {
+                        "type": "typeReference",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    }
+                },
+                "response": {
+                    "type": "json"
+                },
+                "examples": null
+            },
+            "endpoint_.createType": {
+                "auth": {
+                    "type": "bearer",
+                    "token": {
+                        "originalName": "token",
+                        "camelCase": {
+                            "unsafeName": "token",
+                            "safeName": "token"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "token",
+                            "safeName": "token"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "TOKEN",
+                            "safeName": "TOKEN"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Token",
+                            "safeName": "Token"
+                        }
+                    }
+                },
+                "declaration": {
+                    "name": {
+                        "originalName": "createType",
+                        "camelCase": {
+                            "unsafeName": "createType",
+                            "safeName": "createType"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "create_type",
+                            "safeName": "create_type"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "CREATE_TYPE",
+                            "safeName": "CREATE_TYPE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "CreateType",
+                            "safeName": "CreateType"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "location": {
+                    "method": "POST",
+                    "path": "/type"
+                },
+                "request": {
+                    "type": "body",
+                    "pathParameters": [],
+                    "body": {
+                        "type": "typeReference",
+                        "value": {
+                            "type": "named",
+                            "value": "type_:Type"
+                        }
+                    }
+                },
+                "response": {
+                    "type": "json"
+                },
+                "examples": null
             }
         },
         "pathParameters": [],
@@ -17768,26 +17690,6 @@
         "smartCasing": true
     },
     "subpackages": {
-        "subpackage_": {
-            "name": "",
-            "displayName": null,
-            "fernFilepath": {
-                "allParts": [
-                    ""
-                ],
-                "packagePath": [],
-                "file": ""
-            },
-            "service": "service_",
-            "types": [],
-            "errors": [],
-            "subpackages": [],
-            "navigationConfig": null,
-            "webhooks": null,
-            "websocket": null,
-            "hasEndpointsInTree": true,
-            "docs": null
-        },
         "subpackage_fileNotificationService": {
             "name": "fileNotificationService",
             "displayName": null,
@@ -17876,7 +17778,7 @@
             "file": null
         },
         "websocket": null,
-        "service": null,
+        "service": "service_",
         "types": [
             "type_:Type",
             "type_:Identifier",
@@ -17931,7 +17833,6 @@
             "error_:NotFoundError"
         ],
         "subpackages": [
-            "subpackage_",
             "subpackage_fileNotificationService",
             "subpackage_fileService",
             "subpackage_healthService",

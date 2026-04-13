@@ -793,7 +793,7 @@
                             }
                         },
                         {
-                            "type": "file",
+                            "type": "fileArray",
                             "wireValue": "file_list",
                             "name": {
                                 "originalName": "file_list",
@@ -839,7 +839,7 @@
                             }
                         },
                         {
-                            "type": "file",
+                            "type": "fileArray",
                             "wireValue": "maybe_file_list",
                             "name": {
                                 "originalName": "maybe_file_list",
@@ -2739,7 +2739,7 @@
                             }
                         },
                         {
-                            "type": "file",
+                            "type": "fileArray",
                             "wireValue": "file_list",
                             "name": {
                                 "originalName": "file_list",
@@ -2785,7 +2785,7 @@
                             }
                         },
                         {
-                            "type": "file",
+                            "type": "fileArray",
                             "wireValue": "maybe_file_list",
                             "name": {
                                 "originalName": "maybe_file_list",

@@ -224,7 +224,7 @@
             "additionalProperties": false
         },
         "type_:ResourceList": {
-            "type": "discriminatedUnion",
+            "type": "undiscriminatedUnion",
             "declaration": {
                 "name": {
                     "originalName": "ResourceList",
@@ -251,138 +251,24 @@
                     "file": null
                 }
             },
-            "discriminant": {
-                "wireValue": "resource_type",
-                "name": {
-                    "originalName": "resource_type",
-                    "camelCase": {
-                        "unsafeName": "resourceType",
-                        "safeName": "resourceType"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "resource_type",
-                        "safeName": "resource_type"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "RESOURCE_TYPE",
-                        "safeName": "RESOURCE_TYPE"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "ResourceType",
-                        "safeName": "ResourceType"
-                    }
+            "types": [
+                {
+                    "type": "named",
+                    "value": "type_:Account"
+                },
+                {
+                    "type": "named",
+                    "value": "type_:Patient"
+                },
+                {
+                    "type": "named",
+                    "value": "type_:Practitioner"
+                },
+                {
+                    "type": "named",
+                    "value": "type_:Script"
                 }
-            },
-            "types": {
-                "Account": {
-                    "type": "samePropertiesAsObject",
-                    "typeId": "type_:Account",
-                    "discriminantValue": {
-                        "wireValue": "Account",
-                        "name": {
-                            "originalName": "Account",
-                            "camelCase": {
-                                "unsafeName": "account",
-                                "safeName": "account"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "account",
-                                "safeName": "account"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "ACCOUNT",
-                                "safeName": "ACCOUNT"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Account",
-                                "safeName": "Account"
-                            }
-                        }
-                    },
-                    "properties": []
-                },
-                "Patient": {
-                    "type": "samePropertiesAsObject",
-                    "typeId": "type_:Patient",
-                    "discriminantValue": {
-                        "wireValue": "Patient",
-                        "name": {
-                            "originalName": "Patient",
-                            "camelCase": {
-                                "unsafeName": "patient",
-                                "safeName": "patient"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "patient",
-                                "safeName": "patient"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "PATIENT",
-                                "safeName": "PATIENT"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Patient",
-                                "safeName": "Patient"
-                            }
-                        }
-                    },
-                    "properties": []
-                },
-                "Practitioner": {
-                    "type": "samePropertiesAsObject",
-                    "typeId": "type_:Practitioner",
-                    "discriminantValue": {
-                        "wireValue": "Practitioner",
-                        "name": {
-                            "originalName": "Practitioner",
-                            "camelCase": {
-                                "unsafeName": "practitioner",
-                                "safeName": "practitioner"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "practitioner",
-                                "safeName": "practitioner"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "PRACTITIONER",
-                                "safeName": "PRACTITIONER"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Practitioner",
-                                "safeName": "Practitioner"
-                            }
-                        }
-                    },
-                    "properties": []
-                },
-                "Script": {
-                    "type": "samePropertiesAsObject",
-                    "typeId": "type_:Script",
-                    "discriminantValue": {
-                        "wireValue": "Script",
-                        "name": {
-                            "originalName": "Script",
-                            "camelCase": {
-                                "unsafeName": "script",
-                                "safeName": "script"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "script",
-                                "safeName": "script"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "SCRIPT",
-                                "safeName": "SCRIPT"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Script",
-                                "safeName": "Script"
-                            }
-                        }
-                    },
-                    "properties": []
-                }
-            }
+            ]
         },
         "type_:AccountResourceType": {
             "type": "enum",

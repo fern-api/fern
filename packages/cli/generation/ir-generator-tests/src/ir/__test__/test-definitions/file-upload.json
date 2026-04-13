@@ -635,7 +635,7 @@
                             {
                                 "type": "file",
                                 "value": {
-                                    "type": "file",
+                                    "type": "fileArray",
                                     "key": "file_list",
                                     "isOptional": true,
                                     "contentType": null,
@@ -655,7 +655,7 @@
                             {
                                 "type": "file",
                                 "value": {
-                                    "type": "file",
+                                    "type": "fileArray",
                                     "key": "maybe_file_list",
                                     "isOptional": true,
                                     "contentType": null,
@@ -2021,7 +2021,7 @@
                             {
                                 "type": "file",
                                 "value": {
-                                    "type": "file",
+                                    "type": "fileArray",
                                     "key": "file_list",
                                     "isOptional": true,
                                     "contentType": null,
@@ -2041,7 +2041,7 @@
                             {
                                 "type": "file",
                                 "value": {
-                                    "type": "file",
+                                    "type": "fileArray",
                                     "key": "maybe_file_list",
                                     "isOptional": true,
                                     "contentType": null,
@@ -4111,7 +4111,7 @@
                                 }
                             },
                             {
-                                "type": "file",
+                                "type": "fileArray",
                                 "wireValue": "file_list",
                                 "name": {
                                     "originalName": "file_list",
@@ -4157,7 +4157,7 @@
                                 }
                             },
                             {
-                                "type": "file",
+                                "type": "fileArray",
                                 "wireValue": "maybe_file_list",
                                 "name": {
                                     "originalName": "maybe_file_list",
@@ -6057,7 +6057,7 @@
                                 }
                             },
                             {
-                                "type": "file",
+                                "type": "fileArray",
                                 "wireValue": "file_list",
                                 "name": {
                                     "originalName": "file_list",
@@ -6103,7 +6103,7 @@
                                 }
                             },
                             {
-                                "type": "file",
+                                "type": "fileArray",
                                 "wireValue": "maybe_file_list",
                                 "name": {
                                     "originalName": "maybe_file_list",
