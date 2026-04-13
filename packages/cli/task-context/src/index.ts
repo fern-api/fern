@@ -1,6 +1,6 @@
-export { FernCliError } from "./FernCliError.js";
 export { LoggableFernCliError } from "./LoggableFernCliError.js";
 export { createMockTaskContext } from "./MockTaskContext.js";
+export { TaskAbortSignal } from "./TaskAbortSignal.js";
 export {
     type CreateInteractiveTaskParams,
     type Finishable,

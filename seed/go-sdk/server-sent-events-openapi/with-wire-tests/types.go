@@ -11,6 +11,690 @@ import (
 )
 
 var (
+	streamXfernStreamingConditionRequestFieldQuery = big.NewInt(1 << 0)
+)
+
+type StreamXfernStreamingConditionRequest struct {
+	// The prompt or query to complete.
+	Query  string `json:"query" url:"-"`
+	stream bool
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (s *StreamXfernStreamingConditionRequest) Stream() bool {
+	return s.stream
+}
+
+func (s *StreamXfernStreamingConditionRequest) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetQuery sets the Query field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *StreamXfernStreamingConditionRequest) SetQuery(query string) {
+	s.Query = query
+	s.require(streamXfernStreamingConditionRequestFieldQuery)
+}
+
+func (s *StreamXfernStreamingConditionRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler StreamXfernStreamingConditionRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*s = StreamXfernStreamingConditionRequest(body)
+	s.stream = false
+	return nil
+}
+
+func (s *StreamXfernStreamingConditionRequest) MarshalJSON() ([]byte, error) {
+	type embed StreamXfernStreamingConditionRequest
+	var marshaler = struct {
+		embed
+		Stream bool `json:"stream"`
+	}{
+		embed:  embed(*s),
+		Stream: false,
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	streamXfernStreamingConditionStreamRequestFieldQuery = big.NewInt(1 << 0)
+)
+
+type StreamXfernStreamingConditionStreamRequest struct {
+	// The prompt or query to complete.
+	Query  string `json:"query" url:"-"`
+	stream bool
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (s *StreamXfernStreamingConditionStreamRequest) Stream() bool {
+	return s.stream
+}
+
+func (s *StreamXfernStreamingConditionStreamRequest) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetQuery sets the Query field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *StreamXfernStreamingConditionStreamRequest) SetQuery(query string) {
+	s.Query = query
+	s.require(streamXfernStreamingConditionStreamRequestFieldQuery)
+}
+
+func (s *StreamXfernStreamingConditionStreamRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler StreamXfernStreamingConditionStreamRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*s = StreamXfernStreamingConditionStreamRequest(body)
+	s.stream = true
+	return nil
+}
+
+func (s *StreamXfernStreamingConditionStreamRequest) MarshalJSON() ([]byte, error) {
+	type embed StreamXfernStreamingConditionStreamRequest
+	var marshaler = struct {
+		embed
+		Stream bool `json:"stream"`
+	}{
+		embed:  embed(*s),
+		Stream: true,
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	streamXfernStreamingNullableConditionRequestFieldQuery = big.NewInt(1 << 0)
+)
+
+type StreamXfernStreamingNullableConditionRequest struct {
+	// The prompt or query to complete.
+	Query  string `json:"query" url:"-"`
+	stream bool
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (s *StreamXfernStreamingNullableConditionRequest) Stream() bool {
+	return s.stream
+}
+
+func (s *StreamXfernStreamingNullableConditionRequest) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetQuery sets the Query field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *StreamXfernStreamingNullableConditionRequest) SetQuery(query string) {
+	s.Query = query
+	s.require(streamXfernStreamingNullableConditionRequestFieldQuery)
+}
+
+func (s *StreamXfernStreamingNullableConditionRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler StreamXfernStreamingNullableConditionRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*s = StreamXfernStreamingNullableConditionRequest(body)
+	s.stream = false
+	return nil
+}
+
+func (s *StreamXfernStreamingNullableConditionRequest) MarshalJSON() ([]byte, error) {
+	type embed StreamXfernStreamingNullableConditionRequest
+	var marshaler = struct {
+		embed
+		Stream bool `json:"stream"`
+	}{
+		embed:  embed(*s),
+		Stream: false,
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	streamXfernStreamingNullableConditionStreamRequestFieldQuery = big.NewInt(1 << 0)
+)
+
+type StreamXfernStreamingNullableConditionStreamRequest struct {
+	// The prompt or query to complete.
+	Query  string `json:"query" url:"-"`
+	stream bool
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (s *StreamXfernStreamingNullableConditionStreamRequest) Stream() bool {
+	return s.stream
+}
+
+func (s *StreamXfernStreamingNullableConditionStreamRequest) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetQuery sets the Query field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *StreamXfernStreamingNullableConditionStreamRequest) SetQuery(query string) {
+	s.Query = query
+	s.require(streamXfernStreamingNullableConditionStreamRequestFieldQuery)
+}
+
+func (s *StreamXfernStreamingNullableConditionStreamRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler StreamXfernStreamingNullableConditionStreamRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*s = StreamXfernStreamingNullableConditionStreamRequest(body)
+	s.stream = true
+	return nil
+}
+
+func (s *StreamXfernStreamingNullableConditionStreamRequest) MarshalJSON() ([]byte, error) {
+	type embed StreamXfernStreamingNullableConditionStreamRequest
+	var marshaler = struct {
+		embed
+		Stream bool `json:"stream"`
+	}{
+		embed:  embed(*s),
+		Stream: true,
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	streamXfernStreamingSharedSchemaRequestFieldPrompt = big.NewInt(1 << 0)
+	streamXfernStreamingSharedSchemaRequestFieldModel  = big.NewInt(1 << 1)
+)
+
+type StreamXfernStreamingSharedSchemaRequest struct {
+	// The prompt to complete.
+	Prompt string `json:"prompt" url:"-"`
+	// The model to use.
+	Model  string `json:"model" url:"-"`
+	stream bool
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (s *StreamXfernStreamingSharedSchemaRequest) Stream() bool {
+	return s.stream
+}
+
+func (s *StreamXfernStreamingSharedSchemaRequest) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetPrompt sets the Prompt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *StreamXfernStreamingSharedSchemaRequest) SetPrompt(prompt string) {
+	s.Prompt = prompt
+	s.require(streamXfernStreamingSharedSchemaRequestFieldPrompt)
+}
+
+// SetModel sets the Model field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *StreamXfernStreamingSharedSchemaRequest) SetModel(model string) {
+	s.Model = model
+	s.require(streamXfernStreamingSharedSchemaRequestFieldModel)
+}
+
+func (s *StreamXfernStreamingSharedSchemaRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler StreamXfernStreamingSharedSchemaRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*s = StreamXfernStreamingSharedSchemaRequest(body)
+	s.stream = false
+	return nil
+}
+
+func (s *StreamXfernStreamingSharedSchemaRequest) MarshalJSON() ([]byte, error) {
+	type embed StreamXfernStreamingSharedSchemaRequest
+	var marshaler = struct {
+		embed
+		Stream bool `json:"stream"`
+	}{
+		embed:  embed(*s),
+		Stream: false,
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	streamXfernStreamingSharedSchemaStreamRequestFieldPrompt = big.NewInt(1 << 0)
+	streamXfernStreamingSharedSchemaStreamRequestFieldModel  = big.NewInt(1 << 1)
+)
+
+type StreamXfernStreamingSharedSchemaStreamRequest struct {
+	// The prompt to complete.
+	Prompt string `json:"prompt" url:"-"`
+	// The model to use.
+	Model  string `json:"model" url:"-"`
+	stream bool
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (s *StreamXfernStreamingSharedSchemaStreamRequest) Stream() bool {
+	return s.stream
+}
+
+func (s *StreamXfernStreamingSharedSchemaStreamRequest) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetPrompt sets the Prompt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *StreamXfernStreamingSharedSchemaStreamRequest) SetPrompt(prompt string) {
+	s.Prompt = prompt
+	s.require(streamXfernStreamingSharedSchemaStreamRequestFieldPrompt)
+}
+
+// SetModel sets the Model field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *StreamXfernStreamingSharedSchemaStreamRequest) SetModel(model string) {
+	s.Model = model
+	s.require(streamXfernStreamingSharedSchemaStreamRequestFieldModel)
+}
+
+func (s *StreamXfernStreamingSharedSchemaStreamRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler StreamXfernStreamingSharedSchemaStreamRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*s = StreamXfernStreamingSharedSchemaStreamRequest(body)
+	s.stream = true
+	return nil
+}
+
+func (s *StreamXfernStreamingSharedSchemaStreamRequest) MarshalJSON() ([]byte, error) {
+	type embed StreamXfernStreamingSharedSchemaStreamRequest
+	var marshaler = struct {
+		embed
+		Stream bool `json:"stream"`
+	}{
+		embed:  embed(*s),
+		Stream: true,
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+// Full response returned when streaming is disabled.
+var (
+	completionFullResponseFieldAnswer       = big.NewInt(1 << 0)
+	completionFullResponseFieldFinishReason = big.NewInt(1 << 1)
+)
+
+type CompletionFullResponse struct {
+	// The complete generated answer.
+	Answer *string `json:"answer,omitempty" url:"answer,omitempty"`
+	// Why generation stopped.
+	FinishReason *CompletionFullResponseFinishReason `json:"finishReason,omitempty" url:"finishReason,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CompletionFullResponse) GetAnswer() *string {
+	if c == nil {
+		return nil
+	}
+	return c.Answer
+}
+
+func (c *CompletionFullResponse) GetFinishReason() *CompletionFullResponseFinishReason {
+	if c == nil {
+		return nil
+	}
+	return c.FinishReason
+}
+
+func (c *CompletionFullResponse) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CompletionFullResponse) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetAnswer sets the Answer field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CompletionFullResponse) SetAnswer(answer *string) {
+	c.Answer = answer
+	c.require(completionFullResponseFieldAnswer)
+}
+
+// SetFinishReason sets the FinishReason field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CompletionFullResponse) SetFinishReason(finishReason *CompletionFullResponseFinishReason) {
+	c.FinishReason = finishReason
+	c.require(completionFullResponseFieldFinishReason)
+}
+
+func (c *CompletionFullResponse) UnmarshalJSON(data []byte) error {
+	type unmarshaler CompletionFullResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CompletionFullResponse(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CompletionFullResponse) MarshalJSON() ([]byte, error) {
+	type embed CompletionFullResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CompletionFullResponse) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Why generation stopped.
+type CompletionFullResponseFinishReason string
+
+const (
+	CompletionFullResponseFinishReasonComplete CompletionFullResponseFinishReason = "complete"
+	CompletionFullResponseFinishReasonLength   CompletionFullResponseFinishReason = "length"
+	CompletionFullResponseFinishReasonError    CompletionFullResponseFinishReason = "error"
+)
+
+func NewCompletionFullResponseFinishReasonFromString(s string) (CompletionFullResponseFinishReason, error) {
+	switch s {
+	case "complete":
+		return CompletionFullResponseFinishReasonComplete, nil
+	case "length":
+		return CompletionFullResponseFinishReasonLength, nil
+	case "error":
+		return CompletionFullResponseFinishReasonError, nil
+	}
+	var t CompletionFullResponseFinishReason
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c CompletionFullResponseFinishReason) Ptr() *CompletionFullResponseFinishReason {
+	return &c
+}
+
+var (
+	completionRequestFieldQuery  = big.NewInt(1 << 0)
+	completionRequestFieldStream = big.NewInt(1 << 1)
+)
+
+type CompletionRequest struct {
+	// The prompt or query to complete.
+	Query string `json:"query" url:"query"`
+	// Whether to stream the response.
+	Stream *bool `json:"stream,omitempty" url:"stream,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CompletionRequest) GetQuery() string {
+	if c == nil {
+		return ""
+	}
+	return c.Query
+}
+
+func (c *CompletionRequest) GetStream() *bool {
+	if c == nil {
+		return nil
+	}
+	return c.Stream
+}
+
+func (c *CompletionRequest) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CompletionRequest) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetQuery sets the Query field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CompletionRequest) SetQuery(query string) {
+	c.Query = query
+	c.require(completionRequestFieldQuery)
+}
+
+// SetStream sets the Stream field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CompletionRequest) SetStream(stream *bool) {
+	c.Stream = stream
+	c.require(completionRequestFieldStream)
+}
+
+func (c *CompletionRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler CompletionRequest
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CompletionRequest(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CompletionRequest) MarshalJSON() ([]byte, error) {
+	type embed CompletionRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CompletionRequest) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// A single chunk in a streamed completion response.
+var (
+	completionStreamChunkFieldDelta  = big.NewInt(1 << 0)
+	completionStreamChunkFieldTokens = big.NewInt(1 << 1)
+)
+
+type CompletionStreamChunk struct {
+	// The incremental text chunk.
+	Delta *string `json:"delta,omitempty" url:"delta,omitempty"`
+	// Number of tokens in this chunk.
+	Tokens *int `json:"tokens,omitempty" url:"tokens,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CompletionStreamChunk) GetDelta() *string {
+	if c == nil {
+		return nil
+	}
+	return c.Delta
+}
+
+func (c *CompletionStreamChunk) GetTokens() *int {
+	if c == nil {
+		return nil
+	}
+	return c.Tokens
+}
+
+func (c *CompletionStreamChunk) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CompletionStreamChunk) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetDelta sets the Delta field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CompletionStreamChunk) SetDelta(delta *string) {
+	c.Delta = delta
+	c.require(completionStreamChunkFieldDelta)
+}
+
+// SetTokens sets the Tokens field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CompletionStreamChunk) SetTokens(tokens *int) {
+	c.Tokens = tokens
+	c.require(completionStreamChunkFieldTokens)
+}
+
+func (c *CompletionStreamChunk) UnmarshalJSON(data []byte) error {
+	type unmarshaler CompletionStreamChunk
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CompletionStreamChunk(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CompletionStreamChunk) MarshalJSON() ([]byte, error) {
+	type embed CompletionStreamChunk
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CompletionStreamChunk) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
 	dataContextEntityEventFieldEntityID    = big.NewInt(1 << 0)
 	dataContextEntityEventFieldEventType   = big.NewInt(1 << 1)
 	dataContextEntityEventFieldUpdatedTime = big.NewInt(1 << 2)
@@ -600,6 +1284,108 @@ func (h *HeartbeatPayload) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", h)
+}
+
+var (
+	nullableStreamRequestFieldQuery  = big.NewInt(1 << 0)
+	nullableStreamRequestFieldStream = big.NewInt(1 << 1)
+)
+
+type NullableStreamRequest struct {
+	// The prompt or query to complete.
+	Query string `json:"query" url:"query"`
+	// Whether to stream the response. This field is nullable (OAS 3.1 type array), which previously caused the const literal to be overwritten by the nullable type during spread in the importer.
+	Stream *bool `json:"stream,omitempty" url:"stream,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (n *NullableStreamRequest) GetQuery() string {
+	if n == nil {
+		return ""
+	}
+	return n.Query
+}
+
+func (n *NullableStreamRequest) GetStream() *bool {
+	if n == nil {
+		return nil
+	}
+	return n.Stream
+}
+
+func (n *NullableStreamRequest) GetExtraProperties() map[string]interface{} {
+	if n == nil {
+		return nil
+	}
+	return n.extraProperties
+}
+
+func (n *NullableStreamRequest) require(field *big.Int) {
+	if n.explicitFields == nil {
+		n.explicitFields = big.NewInt(0)
+	}
+	n.explicitFields.Or(n.explicitFields, field)
+}
+
+// SetQuery sets the Query field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NullableStreamRequest) SetQuery(query string) {
+	n.Query = query
+	n.require(nullableStreamRequestFieldQuery)
+}
+
+// SetStream sets the Stream field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NullableStreamRequest) SetStream(stream *bool) {
+	n.Stream = stream
+	n.require(nullableStreamRequestFieldStream)
+}
+
+func (n *NullableStreamRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler NullableStreamRequest
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*n = NullableStreamRequest(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *n)
+	if err != nil {
+		return err
+	}
+	n.extraProperties = extraProperties
+	n.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (n *NullableStreamRequest) MarshalJSON() ([]byte, error) {
+	type embed NullableStreamRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*n),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, n.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (n *NullableStreamRequest) String() string {
+	if n == nil {
+		return "<nil>"
+	}
+	if len(n.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(n); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", n)
 }
 
 var (
@@ -2156,4 +2942,1053 @@ func (s *StreamRequest) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", s)
+}
+
+// A discriminated union request matching the Vectara pattern (FER-9556). Each variant inherits stream_response from UnionStreamRequestBase via allOf. The importer pins stream_response to Literal[True/False] at this union level, but the allOf inheritance re-introduces it as boolean in each variant, causing the type conflict.
+type StreamXfernStreamingUnionRequest struct {
+	Type           string
+	Message        *UnionStreamMessageVariant
+	Interrupt      *UnionStreamInterruptVariant
+	Compact        *UnionStreamCompactVariant
+	streamResponse bool
+}
+
+func (s *StreamXfernStreamingUnionRequest) GetType() string {
+	if s == nil {
+		return ""
+	}
+	return s.Type
+}
+
+func (s *StreamXfernStreamingUnionRequest) GetMessage() *UnionStreamMessageVariant {
+	if s == nil {
+		return nil
+	}
+	return s.Message
+}
+
+func (s *StreamXfernStreamingUnionRequest) GetInterrupt() *UnionStreamInterruptVariant {
+	if s == nil {
+		return nil
+	}
+	return s.Interrupt
+}
+
+func (s *StreamXfernStreamingUnionRequest) GetCompact() *UnionStreamCompactVariant {
+	if s == nil {
+		return nil
+	}
+	return s.Compact
+}
+
+func (s *StreamXfernStreamingUnionRequest) StreamResponse() bool {
+	if s == nil {
+		return false
+	}
+	return s.streamResponse
+}
+
+func (s *StreamXfernStreamingUnionRequest) UnmarshalJSON(data []byte) error {
+	var unmarshaler struct {
+		Type           string `json:"type"`
+		StreamResponse bool   `json:"stream_response"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	s.Type = unmarshaler.Type
+	if unmarshaler.StreamResponse != false {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", s, false, unmarshaler.StreamResponse)
+	}
+	s.streamResponse = unmarshaler.StreamResponse
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", s)
+	}
+	switch unmarshaler.Type {
+	case "message":
+		value := new(UnionStreamMessageVariant)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		s.Message = value
+	case "interrupt":
+		value := new(UnionStreamInterruptVariant)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		s.Interrupt = value
+	case "compact":
+		value := new(UnionStreamCompactVariant)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		s.Compact = value
+	}
+	return nil
+}
+
+func (s StreamXfernStreamingUnionRequest) MarshalJSON() ([]byte, error) {
+	if err := s.validate(); err != nil {
+		return nil, err
+	}
+	if s.Message != nil {
+		return internal.MarshalJSONWithExtraProperty(s.Message, "type", "message")
+	}
+	if s.Interrupt != nil {
+		return internal.MarshalJSONWithExtraProperty(s.Interrupt, "type", "interrupt")
+	}
+	if s.Compact != nil {
+		return internal.MarshalJSONWithExtraProperty(s.Compact, "type", "compact")
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", s)
+}
+
+type StreamXfernStreamingUnionRequestVisitor interface {
+	VisitMessage(*UnionStreamMessageVariant) error
+	VisitInterrupt(*UnionStreamInterruptVariant) error
+	VisitCompact(*UnionStreamCompactVariant) error
+}
+
+func (s *StreamXfernStreamingUnionRequest) Accept(visitor StreamXfernStreamingUnionRequestVisitor) error {
+	if s.Message != nil {
+		return visitor.VisitMessage(s.Message)
+	}
+	if s.Interrupt != nil {
+		return visitor.VisitInterrupt(s.Interrupt)
+	}
+	if s.Compact != nil {
+		return visitor.VisitCompact(s.Compact)
+	}
+	return fmt.Errorf("type %T does not define a non-empty union type", s)
+}
+
+func (s *StreamXfernStreamingUnionRequest) validate() error {
+	if s == nil {
+		return fmt.Errorf("type %T is nil", s)
+	}
+	var fields []string
+	if s.Message != nil {
+		fields = append(fields, "message")
+	}
+	if s.Interrupt != nil {
+		fields = append(fields, "interrupt")
+	}
+	if s.Compact != nil {
+		fields = append(fields, "compact")
+	}
+	if len(fields) == 0 {
+		if s.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", s, s.Type)
+		}
+		return fmt.Errorf("type %T is empty", s)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", s, fields)
+	}
+	if s.Type != "" {
+		field := fields[0]
+		if s.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				s,
+				s.Type,
+				s,
+			)
+		}
+	}
+	return nil
+}
+
+// A discriminated union request matching the Vectara pattern (FER-9556). Each variant inherits stream_response from UnionStreamRequestBase via allOf. The importer pins stream_response to Literal[True/False] at this union level, but the allOf inheritance re-introduces it as boolean in each variant, causing the type conflict.
+type StreamXfernStreamingUnionStreamRequest struct {
+	Type           string
+	Message        *UnionStreamMessageVariant
+	Interrupt      *UnionStreamInterruptVariant
+	Compact        *UnionStreamCompactVariant
+	streamResponse bool
+}
+
+func (s *StreamXfernStreamingUnionStreamRequest) GetType() string {
+	if s == nil {
+		return ""
+	}
+	return s.Type
+}
+
+func (s *StreamXfernStreamingUnionStreamRequest) GetMessage() *UnionStreamMessageVariant {
+	if s == nil {
+		return nil
+	}
+	return s.Message
+}
+
+func (s *StreamXfernStreamingUnionStreamRequest) GetInterrupt() *UnionStreamInterruptVariant {
+	if s == nil {
+		return nil
+	}
+	return s.Interrupt
+}
+
+func (s *StreamXfernStreamingUnionStreamRequest) GetCompact() *UnionStreamCompactVariant {
+	if s == nil {
+		return nil
+	}
+	return s.Compact
+}
+
+func (s *StreamXfernStreamingUnionStreamRequest) StreamResponse() bool {
+	if s == nil {
+		return false
+	}
+	return s.streamResponse
+}
+
+func (s *StreamXfernStreamingUnionStreamRequest) UnmarshalJSON(data []byte) error {
+	var unmarshaler struct {
+		Type           string `json:"type"`
+		StreamResponse bool   `json:"stream_response"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	s.Type = unmarshaler.Type
+	if unmarshaler.StreamResponse != true {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", s, true, unmarshaler.StreamResponse)
+	}
+	s.streamResponse = unmarshaler.StreamResponse
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", s)
+	}
+	switch unmarshaler.Type {
+	case "message":
+		value := new(UnionStreamMessageVariant)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		s.Message = value
+	case "interrupt":
+		value := new(UnionStreamInterruptVariant)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		s.Interrupt = value
+	case "compact":
+		value := new(UnionStreamCompactVariant)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		s.Compact = value
+	}
+	return nil
+}
+
+func (s StreamXfernStreamingUnionStreamRequest) MarshalJSON() ([]byte, error) {
+	if err := s.validate(); err != nil {
+		return nil, err
+	}
+	if s.Message != nil {
+		return internal.MarshalJSONWithExtraProperty(s.Message, "type", "message")
+	}
+	if s.Interrupt != nil {
+		return internal.MarshalJSONWithExtraProperty(s.Interrupt, "type", "interrupt")
+	}
+	if s.Compact != nil {
+		return internal.MarshalJSONWithExtraProperty(s.Compact, "type", "compact")
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", s)
+}
+
+type StreamXfernStreamingUnionStreamRequestVisitor interface {
+	VisitMessage(*UnionStreamMessageVariant) error
+	VisitInterrupt(*UnionStreamInterruptVariant) error
+	VisitCompact(*UnionStreamCompactVariant) error
+}
+
+func (s *StreamXfernStreamingUnionStreamRequest) Accept(visitor StreamXfernStreamingUnionStreamRequestVisitor) error {
+	if s.Message != nil {
+		return visitor.VisitMessage(s.Message)
+	}
+	if s.Interrupt != nil {
+		return visitor.VisitInterrupt(s.Interrupt)
+	}
+	if s.Compact != nil {
+		return visitor.VisitCompact(s.Compact)
+	}
+	return fmt.Errorf("type %T does not define a non-empty union type", s)
+}
+
+func (s *StreamXfernStreamingUnionStreamRequest) validate() error {
+	if s == nil {
+		return fmt.Errorf("type %T is nil", s)
+	}
+	var fields []string
+	if s.Message != nil {
+		fields = append(fields, "message")
+	}
+	if s.Interrupt != nil {
+		fields = append(fields, "interrupt")
+	}
+	if s.Compact != nil {
+		fields = append(fields, "compact")
+	}
+	if len(fields) == 0 {
+		if s.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", s, s.Type)
+		}
+		return fmt.Errorf("type %T is empty", s)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", s, fields)
+	}
+	if s.Type != "" {
+		field := fields[0]
+		if s.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				s,
+				s.Type,
+				s,
+			)
+		}
+	}
+	return nil
+}
+
+// Requests compaction of history. Inherits stream_response from base and adds compact-specific fields.
+var (
+	unionStreamCompactVariantFieldStreamResponse = big.NewInt(1 << 0)
+	unionStreamCompactVariantFieldPrompt         = big.NewInt(1 << 1)
+	unionStreamCompactVariantFieldData           = big.NewInt(1 << 2)
+)
+
+type UnionStreamCompactVariant struct {
+	// Whether to stream the response.
+	StreamResponse *bool `json:"stream_response,omitempty" url:"stream_response,omitempty"`
+	// The input prompt.
+	Prompt string `json:"prompt" url:"prompt"`
+	// Compact data payload.
+	Data string `json:"data" url:"data"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UnionStreamCompactVariant) GetStreamResponse() *bool {
+	if u == nil {
+		return nil
+	}
+	return u.StreamResponse
+}
+
+func (u *UnionStreamCompactVariant) GetPrompt() string {
+	if u == nil {
+		return ""
+	}
+	return u.Prompt
+}
+
+func (u *UnionStreamCompactVariant) GetData() string {
+	if u == nil {
+		return ""
+	}
+	return u.Data
+}
+
+func (u *UnionStreamCompactVariant) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UnionStreamCompactVariant) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetStreamResponse sets the StreamResponse field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UnionStreamCompactVariant) SetStreamResponse(streamResponse *bool) {
+	u.StreamResponse = streamResponse
+	u.require(unionStreamCompactVariantFieldStreamResponse)
+}
+
+// SetPrompt sets the Prompt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UnionStreamCompactVariant) SetPrompt(prompt string) {
+	u.Prompt = prompt
+	u.require(unionStreamCompactVariantFieldPrompt)
+}
+
+// SetData sets the Data field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UnionStreamCompactVariant) SetData(data string) {
+	u.Data = data
+	u.require(unionStreamCompactVariantFieldData)
+}
+
+func (u *UnionStreamCompactVariant) UnmarshalJSON(data []byte) error {
+	type unmarshaler UnionStreamCompactVariant
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UnionStreamCompactVariant(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UnionStreamCompactVariant) MarshalJSON() ([]byte, error) {
+	type embed UnionStreamCompactVariant
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (u *UnionStreamCompactVariant) String() string {
+	if u == nil {
+		return "<nil>"
+	}
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+// Cancels the current operation. Inherits stream_response from base.
+var (
+	unionStreamInterruptVariantFieldStreamResponse = big.NewInt(1 << 0)
+	unionStreamInterruptVariantFieldPrompt         = big.NewInt(1 << 1)
+)
+
+type UnionStreamInterruptVariant struct {
+	// Whether to stream the response.
+	StreamResponse *bool `json:"stream_response,omitempty" url:"stream_response,omitempty"`
+	// The input prompt.
+	Prompt string `json:"prompt" url:"prompt"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UnionStreamInterruptVariant) GetStreamResponse() *bool {
+	if u == nil {
+		return nil
+	}
+	return u.StreamResponse
+}
+
+func (u *UnionStreamInterruptVariant) GetPrompt() string {
+	if u == nil {
+		return ""
+	}
+	return u.Prompt
+}
+
+func (u *UnionStreamInterruptVariant) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UnionStreamInterruptVariant) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetStreamResponse sets the StreamResponse field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UnionStreamInterruptVariant) SetStreamResponse(streamResponse *bool) {
+	u.StreamResponse = streamResponse
+	u.require(unionStreamInterruptVariantFieldStreamResponse)
+}
+
+// SetPrompt sets the Prompt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UnionStreamInterruptVariant) SetPrompt(prompt string) {
+	u.Prompt = prompt
+	u.require(unionStreamInterruptVariantFieldPrompt)
+}
+
+func (u *UnionStreamInterruptVariant) UnmarshalJSON(data []byte) error {
+	type unmarshaler UnionStreamInterruptVariant
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UnionStreamInterruptVariant(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UnionStreamInterruptVariant) MarshalJSON() ([]byte, error) {
+	type embed UnionStreamInterruptVariant
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (u *UnionStreamInterruptVariant) String() string {
+	if u == nil {
+		return "<nil>"
+	}
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+// A user input message. Inherits stream_response from base via allOf.
+var (
+	unionStreamMessageVariantFieldStreamResponse = big.NewInt(1 << 0)
+	unionStreamMessageVariantFieldPrompt         = big.NewInt(1 << 1)
+	unionStreamMessageVariantFieldMessage        = big.NewInt(1 << 2)
+)
+
+type UnionStreamMessageVariant struct {
+	// Whether to stream the response.
+	StreamResponse *bool `json:"stream_response,omitempty" url:"stream_response,omitempty"`
+	// The input prompt.
+	Prompt string `json:"prompt" url:"prompt"`
+	// The message content.
+	Message string `json:"message" url:"message"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UnionStreamMessageVariant) GetStreamResponse() *bool {
+	if u == nil {
+		return nil
+	}
+	return u.StreamResponse
+}
+
+func (u *UnionStreamMessageVariant) GetPrompt() string {
+	if u == nil {
+		return ""
+	}
+	return u.Prompt
+}
+
+func (u *UnionStreamMessageVariant) GetMessage() string {
+	if u == nil {
+		return ""
+	}
+	return u.Message
+}
+
+func (u *UnionStreamMessageVariant) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UnionStreamMessageVariant) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetStreamResponse sets the StreamResponse field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UnionStreamMessageVariant) SetStreamResponse(streamResponse *bool) {
+	u.StreamResponse = streamResponse
+	u.require(unionStreamMessageVariantFieldStreamResponse)
+}
+
+// SetPrompt sets the Prompt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UnionStreamMessageVariant) SetPrompt(prompt string) {
+	u.Prompt = prompt
+	u.require(unionStreamMessageVariantFieldPrompt)
+}
+
+// SetMessage sets the Message field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UnionStreamMessageVariant) SetMessage(message string) {
+	u.Message = message
+	u.require(unionStreamMessageVariantFieldMessage)
+}
+
+func (u *UnionStreamMessageVariant) UnmarshalJSON(data []byte) error {
+	type unmarshaler UnionStreamMessageVariant
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UnionStreamMessageVariant(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UnionStreamMessageVariant) MarshalJSON() ([]byte, error) {
+	type embed UnionStreamMessageVariant
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (u *UnionStreamMessageVariant) String() string {
+	if u == nil {
+		return "<nil>"
+	}
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+// A discriminated union request matching the Vectara pattern (FER-9556). Each variant inherits stream_response from UnionStreamRequestBase via allOf. The importer pins stream_response to Literal[True/False] at this union level, but the allOf inheritance re-introduces it as boolean in each variant, causing the type conflict.
+type UnionStreamRequest struct {
+	Type      string
+	Message   *UnionStreamMessageVariant
+	Interrupt *UnionStreamInterruptVariant
+	Compact   *UnionStreamCompactVariant
+}
+
+func (u *UnionStreamRequest) GetType() string {
+	if u == nil {
+		return ""
+	}
+	return u.Type
+}
+
+func (u *UnionStreamRequest) GetMessage() *UnionStreamMessageVariant {
+	if u == nil {
+		return nil
+	}
+	return u.Message
+}
+
+func (u *UnionStreamRequest) GetInterrupt() *UnionStreamInterruptVariant {
+	if u == nil {
+		return nil
+	}
+	return u.Interrupt
+}
+
+func (u *UnionStreamRequest) GetCompact() *UnionStreamCompactVariant {
+	if u == nil {
+		return nil
+	}
+	return u.Compact
+}
+
+func (u *UnionStreamRequest) UnmarshalJSON(data []byte) error {
+	var unmarshaler struct {
+		Type string `json:"type"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	u.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", u)
+	}
+	switch unmarshaler.Type {
+	case "message":
+		value := new(UnionStreamMessageVariant)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		u.Message = value
+	case "interrupt":
+		value := new(UnionStreamInterruptVariant)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		u.Interrupt = value
+	case "compact":
+		value := new(UnionStreamCompactVariant)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		u.Compact = value
+	}
+	return nil
+}
+
+func (u UnionStreamRequest) MarshalJSON() ([]byte, error) {
+	if err := u.validate(); err != nil {
+		return nil, err
+	}
+	if u.Message != nil {
+		return internal.MarshalJSONWithExtraProperty(u.Message, "type", "message")
+	}
+	if u.Interrupt != nil {
+		return internal.MarshalJSONWithExtraProperty(u.Interrupt, "type", "interrupt")
+	}
+	if u.Compact != nil {
+		return internal.MarshalJSONWithExtraProperty(u.Compact, "type", "compact")
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
+}
+
+type UnionStreamRequestVisitor interface {
+	VisitMessage(*UnionStreamMessageVariant) error
+	VisitInterrupt(*UnionStreamInterruptVariant) error
+	VisitCompact(*UnionStreamCompactVariant) error
+}
+
+func (u *UnionStreamRequest) Accept(visitor UnionStreamRequestVisitor) error {
+	if u.Message != nil {
+		return visitor.VisitMessage(u.Message)
+	}
+	if u.Interrupt != nil {
+		return visitor.VisitInterrupt(u.Interrupt)
+	}
+	if u.Compact != nil {
+		return visitor.VisitCompact(u.Compact)
+	}
+	return fmt.Errorf("type %T does not define a non-empty union type", u)
+}
+
+func (u *UnionStreamRequest) validate() error {
+	if u == nil {
+		return fmt.Errorf("type %T is nil", u)
+	}
+	var fields []string
+	if u.Message != nil {
+		fields = append(fields, "message")
+	}
+	if u.Interrupt != nil {
+		fields = append(fields, "interrupt")
+	}
+	if u.Compact != nil {
+		fields = append(fields, "compact")
+	}
+	if len(fields) == 0 {
+		if u.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", u, u.Type)
+		}
+		return fmt.Errorf("type %T is empty", u)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", u, fields)
+	}
+	if u.Type != "" {
+		field := fields[0]
+		if u.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				u,
+				u.Type,
+				u,
+			)
+		}
+	}
+	return nil
+}
+
+// Base schema for union stream requests. Contains the stream_response field that is inherited by all oneOf variants via allOf. This schema is also referenced directly by a non-streaming endpoint to ensure it is not excluded from the context.
+var (
+	unionStreamRequestBaseFieldStreamResponse = big.NewInt(1 << 0)
+	unionStreamRequestBaseFieldPrompt         = big.NewInt(1 << 1)
+)
+
+type UnionStreamRequestBase struct {
+	// Whether to stream the response.
+	StreamResponse *bool `json:"stream_response,omitempty" url:"stream_response,omitempty"`
+	// The input prompt.
+	Prompt string `json:"prompt" url:"prompt"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UnionStreamRequestBase) GetStreamResponse() *bool {
+	if u == nil {
+		return nil
+	}
+	return u.StreamResponse
+}
+
+func (u *UnionStreamRequestBase) GetPrompt() string {
+	if u == nil {
+		return ""
+	}
+	return u.Prompt
+}
+
+func (u *UnionStreamRequestBase) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UnionStreamRequestBase) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetStreamResponse sets the StreamResponse field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UnionStreamRequestBase) SetStreamResponse(streamResponse *bool) {
+	u.StreamResponse = streamResponse
+	u.require(unionStreamRequestBaseFieldStreamResponse)
+}
+
+// SetPrompt sets the Prompt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UnionStreamRequestBase) SetPrompt(prompt string) {
+	u.Prompt = prompt
+	u.require(unionStreamRequestBaseFieldPrompt)
+}
+
+func (u *UnionStreamRequestBase) UnmarshalJSON(data []byte) error {
+	type unmarshaler UnionStreamRequestBase
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UnionStreamRequestBase(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UnionStreamRequestBase) MarshalJSON() ([]byte, error) {
+	type embed UnionStreamRequestBase
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (u *UnionStreamRequestBase) String() string {
+	if u == nil {
+		return "<nil>"
+	}
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+var (
+	validateUnionRequestResponseFieldValid = big.NewInt(1 << 0)
+)
+
+type ValidateUnionRequestResponse struct {
+	Valid *bool `json:"valid,omitempty" url:"valid,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (v *ValidateUnionRequestResponse) GetValid() *bool {
+	if v == nil {
+		return nil
+	}
+	return v.Valid
+}
+
+func (v *ValidateUnionRequestResponse) GetExtraProperties() map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+	return v.extraProperties
+}
+
+func (v *ValidateUnionRequestResponse) require(field *big.Int) {
+	if v.explicitFields == nil {
+		v.explicitFields = big.NewInt(0)
+	}
+	v.explicitFields.Or(v.explicitFields, field)
+}
+
+// SetValid sets the Valid field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (v *ValidateUnionRequestResponse) SetValid(valid *bool) {
+	v.Valid = valid
+	v.require(validateUnionRequestResponseFieldValid)
+}
+
+func (v *ValidateUnionRequestResponse) UnmarshalJSON(data []byte) error {
+	type unmarshaler ValidateUnionRequestResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*v = ValidateUnionRequestResponse(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *v)
+	if err != nil {
+		return err
+	}
+	v.extraProperties = extraProperties
+	v.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (v *ValidateUnionRequestResponse) MarshalJSON() ([]byte, error) {
+	type embed ValidateUnionRequestResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*v),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, v.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (v *ValidateUnionRequestResponse) String() string {
+	if v == nil {
+		return "<nil>"
+	}
+	if len(v.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(v.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(v); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", v)
+}
+
+var (
+	sharedCompletionRequestFieldPrompt = big.NewInt(1 << 0)
+	sharedCompletionRequestFieldModel  = big.NewInt(1 << 1)
+	sharedCompletionRequestFieldStream = big.NewInt(1 << 2)
+)
+
+type SharedCompletionRequest struct {
+	// The prompt to complete.
+	Prompt string `json:"prompt" url:"-"`
+	// The model to use.
+	Model string `json:"model" url:"-"`
+	// Whether to stream the response.
+	Stream *bool `json:"stream,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (s *SharedCompletionRequest) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetPrompt sets the Prompt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SharedCompletionRequest) SetPrompt(prompt string) {
+	s.Prompt = prompt
+	s.require(sharedCompletionRequestFieldPrompt)
+}
+
+// SetModel sets the Model field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SharedCompletionRequest) SetModel(model string) {
+	s.Model = model
+	s.require(sharedCompletionRequestFieldModel)
+}
+
+// SetStream sets the Stream field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SharedCompletionRequest) SetStream(stream *bool) {
+	s.Stream = stream
+	s.require(sharedCompletionRequestFieldStream)
+}
+
+func (s *SharedCompletionRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler SharedCompletionRequest
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*s = SharedCompletionRequest(body)
+	return nil
+}
+
+func (s *SharedCompletionRequest) MarshalJSON() ([]byte, error) {
+	type embed SharedCompletionRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }

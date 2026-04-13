@@ -91,6 +91,149 @@
                 "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    response = await client.stream_oas_spec_native()\n    async for chunk in response.data:\n        yield chunk\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/stream/x-fern-streaming-condition",
+                "method": "POST",
+                "identifier_override": "endpoint_.streamXFernStreamingCondition_stream"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nresponse = client.stream_x_fern_streaming_condition_stream(\n    query=\"query\",\n)\nfor chunk in response.data:\n    yield chunk\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    response = await client.stream_x_fern_streaming_condition_stream(\n        query=\"query\",\n    )\n    async for chunk in response.data:\n        yield chunk\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/stream/x-fern-streaming-condition",
+                "method": "POST",
+                "identifier_override": "endpoint_.streamXFernStreamingCondition"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.stream_x_fern_streaming_condition(\n    query=\"query\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.stream_x_fern_streaming_condition(\n        query=\"query\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/stream/x-fern-streaming-shared-schema",
+                "method": "POST",
+                "identifier_override": "endpoint_.streamXFernStreamingSharedSchema_stream"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nresponse = client.stream_x_fern_streaming_shared_schema_stream(\n    prompt=\"prompt\",\n    model=\"model\",\n)\nfor chunk in response.data:\n    yield chunk\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    response = await client.stream_x_fern_streaming_shared_schema_stream(\n        prompt=\"prompt\",\n        model=\"model\",\n    )\n    async for chunk in response.data:\n        yield chunk\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/stream/x-fern-streaming-shared-schema",
+                "method": "POST",
+                "identifier_override": "endpoint_.streamXFernStreamingSharedSchema"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.stream_x_fern_streaming_shared_schema(\n    prompt=\"prompt\",\n    model=\"model\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.stream_x_fern_streaming_shared_schema(\n        prompt=\"prompt\",\n        model=\"model\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/validate-completion",
+                "method": "POST",
+                "identifier_override": "endpoint_.validateCompletion"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.validate_completion(\n    prompt=\"prompt\",\n    model=\"model\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.validate_completion(\n        prompt=\"prompt\",\n        model=\"model\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/stream/x-fern-streaming-union",
+                "method": "POST",
+                "identifier_override": "endpoint_.streamXFernStreamingUnion_stream"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi, StreamXFernStreamingUnionStreamRequest_Message\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nresponse = client.stream_x_fern_streaming_union_stream(\n    request=StreamXFernStreamingUnionStreamRequest_Message(\n        prompt=\"prompt\",\n        message=\"message\",\n        stream_response=True,\n    ),\n)\nfor chunk in response.data:\n    yield chunk\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi, StreamXFernStreamingUnionStreamRequest_Message\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    response = await client.stream_x_fern_streaming_union_stream(\n        request=StreamXFernStreamingUnionStreamRequest_Message(\n            prompt=\"prompt\",\n            message=\"message\",\n            stream_response=True,\n        ),\n    )\n    async for chunk in response.data:\n        yield chunk\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/stream/x-fern-streaming-union",
+                "method": "POST",
+                "identifier_override": "endpoint_.streamXFernStreamingUnion"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi, StreamXFernStreamingUnionRequest_Message\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.stream_x_fern_streaming_union(\n    request=StreamXFernStreamingUnionRequest_Message(\n        prompt=\"prompt\",\n        message=\"message\",\n        stream_response=False,\n    ),\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi, StreamXFernStreamingUnionRequest_Message\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.stream_x_fern_streaming_union(\n        request=StreamXFernStreamingUnionRequest_Message(\n            prompt=\"prompt\",\n            message=\"message\",\n            stream_response=False,\n        ),\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/validate-union-request",
+                "method": "POST",
+                "identifier_override": "endpoint_.validateUnionRequest"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.validate_union_request(\n    prompt=\"prompt\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.validate_union_request(\n        prompt=\"prompt\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/stream/x-fern-streaming-nullable-condition",
+                "method": "POST",
+                "identifier_override": "endpoint_.streamXFernStreamingNullableCondition_stream"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nresponse = client.stream_x_fern_streaming_nullable_condition_stream(\n    query=\"query\",\n)\nfor chunk in response.data:\n    yield chunk\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    response = await client.stream_x_fern_streaming_nullable_condition_stream(\n        query=\"query\",\n    )\n    async for chunk in response.data:\n        yield chunk\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/stream/x-fern-streaming-nullable-condition",
+                "method": "POST",
+                "identifier_override": "endpoint_.streamXFernStreamingNullableCondition"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.stream_x_fern_streaming_nullable_condition(\n    query=\"query\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.stream_x_fern_streaming_nullable_condition(\n        query=\"query\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/stream/x-fern-streaming-sse-only",
+                "method": "POST",
+                "identifier_override": "endpoint_.streamXFernStreamingSseOnly"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nresponse = client.stream_x_fern_streaming_sse_only()\nfor chunk in response.data:\n    yield chunk\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    response = await client.stream_x_fern_streaming_sse_only()\n    async for chunk in response.data:\n        yield chunk\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
         }
     ]
 }

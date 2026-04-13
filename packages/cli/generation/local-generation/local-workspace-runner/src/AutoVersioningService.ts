@@ -3,17 +3,27 @@ import { TaskContext } from "@fern-api/task-context";
 import { existsSync } from "fs";
 import { readdir, readFile, stat, writeFile } from "fs/promises";
 import { extname, join } from "path";
+import semver from "semver";
 
 /**
  * Exception thrown when automatic semantic versioning fails due to inability
  * to extract or process version information.
  */
 export class AutoVersioningException extends Error {
-    constructor(message: string, cause?: Error) {
+    /**
+     * True when the magic version was not found at all in the diff,
+     * indicating a generator that doesn't embed versions in source files
+     * (e.g., Swift uses git tags via SPM). Only this case should fall back
+     * to reading git tags.
+     */
+    public readonly magicVersionAbsent: boolean;
+
+    constructor(message: string, options?: { cause?: Error; magicVersionAbsent?: boolean }) {
         super(message);
         this.name = "AutoVersioningException";
-        if (cause) {
-            this.cause = cause;
+        this.magicVersionAbsent = options?.magicVersionAbsent ?? false;
+        if (options?.cause) {
+            this.cause = options.cause;
         }
     }
 }
@@ -242,7 +252,8 @@ export class AutoVersioningService {
 
         throw new AutoVersioningException(
             "Failed to extract version from diff. This may indicate the version file format is not supported for" +
-                " auto-versioning, or the placeholder version was not found in any added lines."
+                " auto-versioning, or the placeholder version was not found in any added lines.",
+            { magicVersionAbsent: true }
         );
     }
 
@@ -747,6 +758,58 @@ export class AutoVersioningService {
 
         // At least one line must actually contain a /vN suffix for this to be a suffix change
         return /\/v\d+(?=\/|"\s*$|$)/.test(minusContent) || /\/v\d+(?=\/|"\s*$|$)/.test(plusContent);
+    }
+
+    /**
+     * Gets the latest semantic version from git tags in the given repository.
+     * Used as a fallback when the magic version is not embedded in any generated file
+     * (e.g., Swift SDKs which use git tags for versioning via SPM, not a version file).
+     *
+     * @param workingDirectory The git repository directory
+     * @return The latest semver version from git tags, or undefined if no valid tags found
+     */
+    public async getLatestVersionFromGitTags(workingDirectory: string): Promise<string | undefined> {
+        try {
+            // Use ls-remote to query tags from the remote directly.
+            // This works even with shallow clones (--depth 1) which don't fetch
+            // tags pointing to commits outside the shallow boundary.
+            const result = await loggingExeca(this.logger, "git", ["ls-remote", "--tags", "origin"], {
+                cwd: workingDirectory,
+                doNotPipeOutput: true
+            });
+            const output = result.stdout;
+            if (!output || output.trim().length === 0) {
+                this.logger.info("No git tags found in repository");
+                return undefined;
+            }
+            // ls-remote output format: "<sha>\trefs/tags/<tagname>"
+            // Some tags have ^{} suffix for annotated tag dereferences — skip those.
+            const tags: string[] = [];
+            for (const line of output.split("\n")) {
+                const trimmed = line.trim();
+                if (trimmed.length === 0 || trimmed.includes("^{}")) {
+                    continue;
+                }
+                const match = trimmed.match(/refs\/tags\/(.+)$/);
+                if (match?.[1]) {
+                    tags.push(match[1]);
+                }
+            }
+            // Use semver library for sorting instead of git's versioncmp,
+            // which disagrees with semver for pre-release tags (git sorts
+            // v1.0.0-beta after v1.0.0, but semver says v1.0.0 > v1.0.0-beta).
+            const validTags = tags.filter((tag) => semver.valid(tag) != null).sort((a, b) => semver.rcompare(a, b));
+            if (validTags.length > 0) {
+                const latest = validTags[0];
+                this.logger.info(`Found latest version from git tags: ${latest}`);
+                return latest;
+            }
+            this.logger.info("No valid semver tags found in repository");
+            return undefined;
+        } catch (e) {
+            this.logger.warn(`Failed to read git tags: ${e}`);
+            return undefined;
+        }
     }
 
     /**
