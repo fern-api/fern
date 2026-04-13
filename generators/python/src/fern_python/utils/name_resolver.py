@@ -10,11 +10,9 @@ import keyword
 import re
 from typing import Union
 
+import fern.ir.resources as ir_types
 from .pascal_case import pascal_case as to_pascal
 from .snake_case import snake_case as to_snake
-
-import fern.ir.resources as ir_types
-
 
 _DIGIT_SPLIT = re.compile(r"(\d+)")
 
@@ -35,9 +33,7 @@ def _smart_snake(s: str) -> str:
 
         n.split(" ").map(part => part.split(/(\\d+)/).map(snakeCase).join("")).join("_")
     """
-    return "_".join(
-        "".join(to_snake(sub) for sub in _DIGIT_SPLIT.split(part)) for part in s.split(" ")
-    )
+    return "_".join("".join(to_snake(sub) for sub in _DIGIT_SPLIT.split(part)) for part in s.split(" "))
 
 
 def _to_screaming_snake(s: str) -> str:
