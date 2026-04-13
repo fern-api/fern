@@ -6,8 +6,7 @@ paths:
   /:
     post:
       operationId: foo
-      tags:
-        - ''
+      tags: []
       parameters: []
       responses:
         '204':

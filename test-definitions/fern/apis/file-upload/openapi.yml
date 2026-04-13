@@ -28,14 +28,20 @@ paths:
                   type: string
                   format: binary
                 file_list:
-                  type: string
-                  format: binary
+                  type: array
+                  items:
+                    type: string
+                    format: binary
                 maybe_file:
                   type: string
                   format: binary
+                  nullable: true
                 maybe_file_list:
-                  type: string
-                  format: binary
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+                  nullable: true
                 maybe_integer:
                   type: integer
                   nullable: true
@@ -239,14 +245,20 @@ paths:
                   type: string
                   format: binary
                 file_list:
-                  type: string
-                  format: binary
+                  type: array
+                  items:
+                    type: string
+                    format: binary
                 maybe_file:
                   type: string
                   format: binary
+                  nullable: true
                 maybe_file_list:
-                  type: string
-                  format: binary
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+                  nullable: true
                 maybe_integer:
                   type: integer
                   nullable: true

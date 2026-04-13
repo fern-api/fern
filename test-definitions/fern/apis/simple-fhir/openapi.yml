@@ -46,10 +46,6 @@ components:
             $ref: '#/components/schemas/ResourceList'
         memo:
           $ref: '#/components/schemas/Memo'
-      required:
-        - id
-        - related_resources
-        - memo
     ResourceList:
       title: ResourceList
       oneOf:
@@ -75,6 +71,9 @@ components:
       required:
         - resource_type
         - name
+        - id
+        - related_resources
+        - memo
       allOf:
         - $ref: '#/components/schemas/BaseResource'
     Patient:
@@ -94,6 +93,9 @@ components:
         - resource_type
         - name
         - scripts
+        - id
+        - related_resources
+        - memo
       allOf:
         - $ref: '#/components/schemas/BaseResource'
     Practitioner:
@@ -108,6 +110,9 @@ components:
       required:
         - resource_type
         - name
+        - id
+        - related_resources
+        - memo
       allOf:
         - $ref: '#/components/schemas/BaseResource'
     Script:
@@ -122,6 +127,9 @@ components:
       required:
         - resource_type
         - name
+        - id
+        - related_resources
+        - memo
       allOf:
         - $ref: '#/components/schemas/BaseResource'
   securitySchemes: {}

@@ -6,8 +6,7 @@ paths:
   /echo:
     post:
       operationId: echo
-      tags:
-        - ''
+      tags: []
       parameters: []
       responses:
         '200':
@@ -25,8 +24,7 @@ paths:
   /type:
     post:
       operationId: createType
-      tags:
-        - ''
+      tags: []
       parameters: []
       responses:
         '200':
