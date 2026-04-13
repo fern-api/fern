@@ -860,6 +860,7 @@ jobs:
           sparse-checkout: |
             .github/actions/fetch-benchmark-specs
             benchmarks/fern/apis
+            benchmarks/fern/square-versions.txt
 
       - name: Fetch benchmark OpenAPI specs
         uses: ./.github/actions/fetch-benchmark-specs
@@ -1139,7 +1140,7 @@ jobs:
   # fixture and measures wall-clock time, same philosophy as SDK benchmarks.
   docs-benchmark:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     needs: [get-all-test-matrices, benchmark-setup]
     if: >-
       ${{
