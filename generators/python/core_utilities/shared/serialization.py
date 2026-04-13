@@ -2,9 +2,8 @@ import collections
 import inspect
 import typing
 
-import typing_extensions
-
 import pydantic
+import typing_extensions
 
 
 class FieldMetadata:

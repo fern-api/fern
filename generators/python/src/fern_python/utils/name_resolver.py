@@ -9,9 +9,10 @@ These helpers safely access properties regardless of whether the value is compre
 import keyword
 from typing import Union
 
-import fern.ir.resources as ir_types
 from .pascal_case import pascal_case as to_pascal
 from .snake_case import snake_case as to_snake
+
+import fern.ir.resources as ir_types
 
 
 def _to_camel(s: str) -> str:

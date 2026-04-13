@@ -1,5 +1,4 @@
 from .sdk_declaration_referencer import SdkDeclarationReferencer
-
 from fern_python.codegen import Filepath
 
 

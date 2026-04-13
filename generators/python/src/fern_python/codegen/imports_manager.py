@@ -5,9 +5,8 @@ from . import AST
 from .reference_resolver import ReferenceResolver
 from .reference_resolver_impl import ReferenceResolverImpl
 from .top_level_statement import StatementId
-from ordered_set import OrderedSet
-
 from fern_python.codegen.ast.nodes.type_hint.type_hint import TYPING_REFERENCE_IMPORT
+from ordered_set import OrderedSet
 
 
 class ImportsManager:

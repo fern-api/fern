@@ -2,11 +2,9 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import List, Optional, Set, Union
 
-import fern.ir.resources as ir_types
 from ....context.pydantic_generator_context import PydanticGeneratorContext
 from ...custom_config import PydanticModelCustomConfig, UnionNamingVersions
 from ..abc.abstract_type_generator import AbstractTypeGenerator
-
 from fern_python.codegen import AST, LocalClassReference, SourceFile
 from fern_python.codegen.ast.references.class_reference import ClassReference
 from fern_python.generators.pydantic_model.type_declaration_handler.abc.abstract_type_snippet_generator import (
@@ -16,6 +14,8 @@ from fern_python.pydantic_codegen import PydanticField
 from fern_python.pydantic_codegen.pydantic_field import FernAwarePydanticField
 from fern_python.snippet import SnippetWriter
 from fern_python.utils import get_name_from_wire_value, get_wire_value, resolve_name
+
+import fern.ir.resources as ir_types
 
 
 @dataclass(frozen=True)

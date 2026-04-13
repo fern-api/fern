@@ -8,6 +8,13 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import List, Optional, Set, cast
 
+from fern_python.codegen.ast.dependency.dependency import (
+    Dependency,
+    DependencyCompatibility,
+)
+from fern_python.codegen.dependency_manager import DependencyManager
+from fern_python.codegen.pypi_classifier_creator import PyPIClassifierMetadataGenerator
+
 from fern.generator_exec import (
     BasicLicense,
     GithubOutputMode,
@@ -15,13 +22,6 @@ from fern.generator_exec import (
     LicenseId,
     PypiMetadata,
 )
-
-from fern_python.codegen.ast.dependency.dependency import (
-    Dependency,
-    DependencyCompatibility,
-)
-from fern_python.codegen.dependency_manager import DependencyManager
-from fern_python.codegen.pypi_classifier_creator import PyPIClassifierMetadataGenerator
 
 
 @dataclass(frozen=True)

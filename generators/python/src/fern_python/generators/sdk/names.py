@@ -1,6 +1,6 @@
-import fern.ir.resources as ir_types
-
 from fern_python.utils import get_name_from_wire_value, resolve_name
+
+import fern.ir.resources as ir_types
 
 
 def get_username_constructor_parameter_name(basic_auth_scheme: ir_types.BasicAuthScheme) -> str:

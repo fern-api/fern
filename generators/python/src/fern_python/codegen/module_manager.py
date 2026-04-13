@@ -4,11 +4,10 @@ from dataclasses import dataclass
 from functools import cmp_to_key
 from typing import DefaultDict, Dict, List, Optional, Sequence, Set, Tuple
 
+import pydantic
 from . import AST
 from .filepath import ExportStrategy, Filepath
 from .writer_impl import WriterImpl
-
-import pydantic
 
 RelativeModulePath = Tuple[str, ...]
 

@@ -1,11 +1,11 @@
 from typing import Dict, List, Optional, Union
 
-import fern.ir.resources as ir_types
 from ...context.sdk_generator_context import SdkGeneratorContext
 from .abstract_request_body_parameters import AbstractRequestBodyParameters
-
 from fern_python.codegen import AST
 from fern_python.utils.name_resolver import resolve_name
+
+import fern.ir.resources as ir_types
 
 
 class BytesRequestBodyParameters(AbstractRequestBodyParameters):

@@ -1,11 +1,11 @@
 from typing import Any, Dict, List, Optional, Union
 
-import fern.ir.resources as ir_types
 from .type_declaration_snippet_generator import TypeDeclarationSnippetGenerator
-
 from fern_python.codegen import AST
 from fern_python.generators.context.pydantic_generator_context import PydanticGeneratorContext
 from fern_python.utils import get_name_from_wire_value, resolve_name
+
+import fern.ir.resources as ir_types
 
 
 class SnippetWriter:

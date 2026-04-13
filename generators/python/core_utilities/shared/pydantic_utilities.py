@@ -22,9 +22,8 @@ from typing import (
     cast,
 )
 
-import typing_extensions
-
 import pydantic
+import typing_extensions
 from pydantic.fields import FieldInfo as _FieldInfo
 
 _logger = logging.getLogger(__name__)

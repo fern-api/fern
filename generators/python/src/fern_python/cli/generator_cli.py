@@ -1,7 +1,9 @@
 import sys
 
-import fern.ir.resources as ir_types
 from .abstract_generator import AbstractGenerator
+from fern_python.generator_exec_wrapper import GeneratorExecWrapper
+
+import fern.ir.resources as ir_types
 from fern.generator_exec.config import GeneratorConfig
 from fern.generator_exec.logging import (
     ErrorExitStatusUpdate,
@@ -11,8 +13,6 @@ from fern.generator_exec.logging import (
     RegistryType,
     SuccessfulStatusUpdate,
 )
-
-from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 
 # TODO(abelardo): iterate on the example logic to trim back IR complexity
 sys.setrecursionlimit(2000)

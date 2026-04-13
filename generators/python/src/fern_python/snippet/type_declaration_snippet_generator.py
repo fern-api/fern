@@ -1,8 +1,8 @@
 from typing import Callable, Optional
 
-import fern.ir.resources as ir_types
-
 from fern_python.codegen import AST
+
+import fern.ir.resources as ir_types
 
 AliasSnippetGenerator = Callable[[ir_types.ExampleAliasType], Optional[AST.Expression]]
 EnumSnippetGenerator = Callable[[ir_types.DeclaredTypeName, ir_types.ExampleEnumType], AST.Expression]

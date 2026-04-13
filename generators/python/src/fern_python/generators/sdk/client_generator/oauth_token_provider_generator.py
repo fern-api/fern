@@ -1,12 +1,12 @@
 from typing import List, Optional, Tuple, Union
 
-import fern.ir.resources as ir_types
 from ..context.sdk_generator_context import SdkGeneratorContext
 from .base_client_generator import ConstructorParameter
-
 from fern_python.codegen import AST, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
 from fern_python.utils.name_resolver import get_name_from_wire_value, resolve_name
+
+import fern.ir.resources as ir_types
 
 DEFAULT_EXPIRES_IN_SECONDS = 3600  # 1 hour
 

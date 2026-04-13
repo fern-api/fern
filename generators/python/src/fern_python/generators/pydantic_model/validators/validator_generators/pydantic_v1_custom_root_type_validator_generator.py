@@ -1,7 +1,6 @@
 from typing import Tuple
 
 from .validator_generator import ValidatorGenerator
-
 from fern_python.codegen import AST
 from fern_python.pydantic_codegen import PydanticModel
 

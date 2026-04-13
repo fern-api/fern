@@ -4,9 +4,9 @@ from __future__ import annotations
 
 from typing import Dict, List, Optional, cast
 
-from fern.generator_exec import BasicLicense, LicenseConfig, LicenseId
-
 from fern_python.version import get_matching_python_versions
+
+from fern.generator_exec import BasicLicense, LicenseConfig, LicenseId
 
 
 class PyPIClassifierMetadataGenerator:

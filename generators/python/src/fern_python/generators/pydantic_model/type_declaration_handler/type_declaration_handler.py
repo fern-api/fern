@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 from typing import Callable, Optional, Tuple
 
-import fern.ir.resources as ir_types
 from ...context.pydantic_generator_context import PydanticGeneratorContext
 from ..custom_config import PydanticModelCustomConfig
 from .abc.abstract_type_generator import AbstractTypeGenerator
@@ -26,9 +25,10 @@ from .typeddicts.typeddict_simple_discriminated_union_generator import (
 from .typeddicts.typeddict_undiscriminated_union_generator import (
     TypeddictUndiscriminatedUnionGenerator,
 )
-
 from fern_python.codegen import AST, SourceFile
 from fern_python.snippet import SnippetWriter
+
+import fern.ir.resources as ir_types
 
 
 @dataclass

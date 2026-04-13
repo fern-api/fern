@@ -1,6 +1,5 @@
 from typing import List, Optional
 
-import fern.ir.resources as ir_types
 from ....context.pydantic_generator_context import PydanticGeneratorContext
 from ...custom_config import PydanticModelCustomConfig
 from ...fern_aware_pydantic_model import FernAwarePydanticModel
@@ -9,10 +8,11 @@ from ..object_generator import (
     AbstractObjectSnippetGenerator,
     ObjectProperty,
 )
-
 from fern_python.codegen import AST, SourceFile
 from fern_python.snippet import SnippetWriter
 from fern_python.utils import get_name_from_wire_value, get_wire_value, resolve_name
+
+import fern.ir.resources as ir_types
 
 
 class PydanticModelObjectGenerator(AbstractObjectGenerator):
