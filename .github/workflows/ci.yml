@@ -233,6 +233,9 @@ jobs:
         run: |
           ./scripts/turbo-retry.sh pnpm turbo run dist:cli:dev dist:cli --filter=@fern-api/cli --filter=@fern-api/cli-v2 --filter=@fern-api/seed-cli
 
+      - name: Pre-pull Docker images used by ETE tests
+        run: docker compose -f packages/cli/ete-tests/docker-compose.yml pull
+
       - name: Run ETE tests
         if: ${{ !github.event.inputs.update_snapshots }}
         timeout-minutes: 20
