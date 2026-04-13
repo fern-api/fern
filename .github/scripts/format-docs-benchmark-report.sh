@@ -122,6 +122,8 @@ for PR_FILE in "${PR_DIR}"/*.jsonl; do
 
     VERSIONS_COUNT=$(echo "$LINE" | jq -r '.versions_count // "?"')
 
+    PR_ERROR=$(echo "$LINE" | jq -r '.error // empty')
+
     PR_DISPLAY="${PR_DURATION}s"
     if [ "$VERSIONS_COUNT" != "?" ] && [ "$VERSIONS_COUNT" != "null" ]; then
       PR_DISPLAY="${PR_DURATION}s (${VERSIONS_COUNT} versions)"
@@ -131,6 +133,18 @@ for PR_FILE in "${PR_DIR}"/*.jsonl; do
     fi
 
     echo "| docs | ${MAIN_DISPLAY} | ${PR_DISPLAY} | ${DELTA} |"
+
+    # Show error details if the CLI failed
+    if [ -n "$PR_ERROR" ]; then
+      echo ""
+      echo "<details><summary>CLI error output</summary>"
+      echo ""
+      echo '```'
+      echo "$PR_ERROR"
+      echo '```'
+      echo "</details>"
+      echo ""
+    fi
   done < "$PR_FILE"
 done
 
