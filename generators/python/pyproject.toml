@@ -32,6 +32,7 @@ snapshottest = "^0.6.0"
 setuptools = "^80.9.0"
 fastapi = "^0.124.0"
 httpx = "^0.27.0"
+pytest-asyncio = "^1.0.0"
 
 [[tool.poetry.source]]
 name = "fern-prod"
@@ -41,6 +42,7 @@ priority = "supplemental"
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "--ignore-glob=tests/**/generated --ignore-glob=tests/**/snapshots"
+asyncio_mode = "auto"
 
 [tool.ruff]
 line-length = 120
