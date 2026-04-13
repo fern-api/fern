@@ -37,10 +37,17 @@ export const ValidMarkdownLinks: Rule = {
             targetAudiences: undefined // not applicable for validation
         });
 
-        const resolvedDocsDefinition = await docsDefinitionResolver.resolve();
+        let resolvedDocsDefinition;
+        try {
+            resolvedDocsDefinition = await docsDefinitionResolver.resolve();
+        } catch {
+            // Docs workspace may lack navigation/versions (e.g. minimal docs.yml).
+            // Nothing to validate in that case, so return an empty visitor.
+            return {};
+        }
 
         if (!resolvedDocsDefinition.config.root) {
-            throw new Error("Root node not found");
+            return {};
         }
 
         // TODO: this is a bit of a hack to get the navigation tree. We should probably just use the navigation tree
