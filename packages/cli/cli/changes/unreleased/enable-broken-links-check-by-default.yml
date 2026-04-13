@@ -1,0 +1,4 @@
+- summary: |
+    `fern check` now validates broken links (including Card component hrefs) by default as warnings.
+    Previously, broken link checking required the `--broken-links` flag.
+  type: feat

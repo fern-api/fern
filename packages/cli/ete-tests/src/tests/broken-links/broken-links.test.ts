@@ -75,6 +75,20 @@ describe("fern docs broken-links", () => {
         expect(stripAnsi(stdout)).toContain("All checks passed");
     }, 20_000);
 
+    it("broken Card component hrefs should be detected", async ({ signal }) => {
+        const { stdout } = await runFernCli(["docs", "broken-links"], {
+            cwd: join(fixturesDir, RelativeFilePath.of("card-href")),
+            reject: false,
+            signal
+        });
+        // Card components with href attributes pointing to non-existent pages should be flagged
+        expect(stripAnsi(stdout)).toContain("/does-not-exist");
+        expect(stripAnsi(stdout)).toContain("/plants/reference/missing");
+        // Valid Card hrefs should not be flagged
+        expect(stripAnsi(stdout)).not.toContain("/about");
+        expect(stripAnsi(stdout)).not.toContain("/api-reference/imdb/create-movie");
+    }, 20_000);
+
     it("broken links in sections with path property should be detected", async ({ signal }) => {
         const { stdout } = await runFernCli(["docs", "broken-links"], {
             cwd: join(fixturesDir, RelativeFilePath.of("section-with-path")),

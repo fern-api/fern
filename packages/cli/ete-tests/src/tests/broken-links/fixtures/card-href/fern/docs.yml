@@ -1,0 +1,9 @@
+instances:
+  - url: ferndevtest.docs.dev.buildwithfern.com
+
+navigation:
+  - page: Plants
+    path: plants.mdx
+  - page: About
+    path: about.mdx
+  - api: API Reference

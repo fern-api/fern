@@ -35,7 +35,7 @@ export async function collectDocsWorkspaceViolations({
     }
 
     const startTime = performance.now();
-    const violations = await validateDocsWorkspace(
+    const rawViolations = await validateDocsWorkspace(
         workspace,
         context,
         apiWorkspaces,
@@ -44,6 +44,15 @@ export async function collectDocsWorkspaceViolations({
         excludeRules
     );
     const elapsedMillis = performance.now() - startTime;
+
+    // Downgrade broken-link violations to warnings unless errorOnBrokenLinks is set,
+    // so that `fern check` reports them as warnings by default.
+    const violations = rawViolations.map((v) => {
+        if (v.name === "valid-markdown-links" && !errorOnBrokenLinks) {
+            return { ...v, severity: "warning" as const };
+        }
+        return v;
+    });
 
     let hasErrors = violations.some((v) => v.severity === "fatal" || v.severity === "error");
     if (errorOnBrokenLinks) {

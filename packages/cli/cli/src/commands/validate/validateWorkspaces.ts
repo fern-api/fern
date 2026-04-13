@@ -33,7 +33,7 @@ export async function validateWorkspaces({
     // Collect docs violations first (using runTaskForWorkspace to preserve [docs]: prefix for fatal errors)
     const docsWorkspace = project.docsWorkspaces;
     if (docsWorkspace != null) {
-        const excludeRules = brokenLinks || errorOnBrokenLinks ? [] : ["valid-markdown-links"];
+        const excludeRules: string[] = [];
         const ossWorkspaces = await filterOssWorkspaces(project);
 
         let collected: Awaited<ReturnType<typeof collectDocsWorkspaceViolations>> | undefined;
