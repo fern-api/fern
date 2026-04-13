@@ -93,9 +93,8 @@ export async function runRulesOnDocsWorkspace({
     const rules = [...selectedRules];
     const severityOverrides = buildSeverityOverrides(workspace.config.check);
     const validMarkdownLinksOverride = severityOverrides.get(ValidMarkdownLinks.name);
-    // Some CLI paths still exclude `valid-markdown-links` unless broken-link checking is enabled.
-    // Include it here when docs.yml configures `check.rules.broken-links` so that config takes effect
-    // until those CLI args are removed.
+    // Safety net: ensure valid-markdown-links is always present when docs.yml
+    // configures check.rules.broken-links, even if a caller excludes it.
     if (validMarkdownLinksOverride != null && rules.find((r) => r.name === ValidMarkdownLinks.name) == null) {
         rules.push(ValidMarkdownLinks);
     }

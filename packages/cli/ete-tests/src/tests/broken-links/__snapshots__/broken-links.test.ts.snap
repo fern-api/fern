@@ -16,6 +16,10 @@ exports[`fern docs broken-links > simple broken links 1`] = `
        	fix here: foo.md:11:21
        [error] broken link to /bar/baz.md
        	fix here: foo.md:12:21
+       [error] broken link to /nonexistent/card-page
+       	fix here: foo.md:32:1
+       [error] broken link to /bad/group-link
+       	fix here: foo.md:40:3
        
 [docs]:bar.mdx
        [error] broken link to ../hello (resolved path: section/hello)
@@ -23,5 +27,5 @@ exports[`fern docs broken-links > simple broken links 1`] = `
        [error] broken link to ../hello.md (resolved path: section/hello.md)
        	fix here: bar.mdx:7:30
        
-[docs]:Found 4 errors and 0 warnings in"
+[docs]:Found 6 errors and 0 warnings in"
 `;
