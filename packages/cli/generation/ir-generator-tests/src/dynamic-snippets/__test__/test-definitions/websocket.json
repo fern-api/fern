@@ -1293,6 +1293,5 @@
     "pathParameters": [],
     "environments": null,
     "variables": null,
-    "generatorConfig": null,
-    "inlineTypes": null
+    "generatorConfig": null
 }

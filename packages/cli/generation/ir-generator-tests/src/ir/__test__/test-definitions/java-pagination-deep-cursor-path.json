@@ -3883,13 +3883,7 @@
         "pathParameters": [],
         "environments": null,
         "variables": null,
-        "generatorConfig": null,
-        "inlineTypes": [
-            "type_deep-cursor-path:InlineD",
-            "type_deep-cursor-path:InlineC",
-            "type_deep-cursor-path:InlineB",
-            "type_deep-cursor-path:InlineA"
-        ]
+        "generatorConfig": null
     },
     "audiences": null,
     "generationMetadata": null,

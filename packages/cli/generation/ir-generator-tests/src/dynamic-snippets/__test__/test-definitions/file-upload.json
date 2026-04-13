@@ -4406,8 +4406,5 @@
     "pathParameters": [],
     "environments": null,
     "variables": null,
-    "generatorConfig": null,
-    "inlineTypes": [
-        "type_service:MyInlineType"
-    ]
+    "generatorConfig": null
 }

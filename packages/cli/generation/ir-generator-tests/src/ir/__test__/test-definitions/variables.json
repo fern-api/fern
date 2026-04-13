@@ -412,8 +412,7 @@
                 }
             }
         ],
-        "generatorConfig": null,
-        "inlineTypes": null
+        "generatorConfig": null
     },
     "audiences": null,
     "generationMetadata": null,

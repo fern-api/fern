@@ -4904,22 +4904,7 @@
         "pathParameters": [],
         "environments": null,
         "variables": null,
-        "generatorConfig": null,
-        "inlineTypes": [
-            "type_:PostRootRequestBarInnerBar",
-            "type_:PostRootRequestBar",
-            "type_:PostRootResponseBarInnerBar",
-            "type_:PostRootResponseBar",
-            "type_:Schema1InlineUnionMapValue",
-            "type_:Schema2TestEnum",
-            "type_:Schema2TestDiscriminatedUnionZero",
-            "type_:Schema2TestDiscriminatedUnionOne",
-            "type_:Schema2TestDiscriminatedUnion",
-            "type_:Schema2TestUnionA",
-            "type_:Schema2TestUnionB",
-            "type_:Schema2TestUnion",
-            "type_:RootUnionMapValue"
-        ]
+        "generatorConfig": null
     },
     "audiences": null,
     "generationMetadata": null,

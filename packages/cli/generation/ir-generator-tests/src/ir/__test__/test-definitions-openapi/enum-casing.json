@@ -1233,10 +1233,7 @@
         "pathParameters": [],
         "environments": null,
         "variables": null,
-        "generatorConfig": null,
-        "inlineTypes": [
-            "type_:ExampleResponseStatus"
-        ]
+        "generatorConfig": null
     },
     "audiences": null,
     "generationMetadata": null,
