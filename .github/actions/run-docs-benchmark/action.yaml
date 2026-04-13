@@ -16,15 +16,20 @@ runs:
         bash benchmarks/fern/generate-fixture-pages.sh "$PAGE_COUNT"
         echo "Generated ${PAGE_COUNT} fixture pages"
 
-    - name: Fetch versioned specs (fallback)
+    - name: Create versioned spec copies (fallback)
       shell: bash
       run: |
-        # If the shared artifact didn't include versioned specs, fetch them directly.
-        # This handles cases where the benchmark-setup job's sparse-checkout or
-        # artifact upload didn't include the versioned spec directories.
+        # If the shared artifact didn't include versioned spec directories,
+        # create them by copying the base Square spec.  All versions use the
+        # same (latest) spec to avoid broken $ref issues in older releases.
         VERSIONS_FILE="benchmarks/fern/square-versions.txt"
+        BASE_SPEC="benchmarks/fern/apis/square/openapi.json"
         if [ ! -f "$VERSIONS_FILE" ]; then
-          echo "No square-versions.txt found, skipping versioned fetch"
+          echo "No square-versions.txt found, skipping versioned setup"
+          exit 0
+        fi
+        if [ ! -f "$BASE_SPEC" ]; then
+          echo "::warning::Base Square spec not found — cannot create versioned copies"
           exit 0
         fi
 
@@ -34,42 +39,20 @@ runs:
         done
 
         if [ "$EXISTING" -gt 0 ]; then
-          echo "Found ${EXISTING} versioned specs from artifact, skipping fallback fetch"
+          echo "Found ${EXISTING} versioned specs from artifact, skipping fallback"
           exit 0
         fi
 
-        echo "No versioned specs from artifact — fetching directly..."
-        FETCHED=0
-        FAILED=0
-        PIDS=()
-        VERSIONS=()
+        echo "No versioned specs from artifact — copying base spec..."
+        CREATED=0
         while IFS='|' read -r SHA VERSION; do
           [[ "$SHA" =~ ^#.*$ || -z "$SHA" ]] && continue
           DIR="benchmarks/fern/apis/square-${VERSION}"
           mkdir -p "$DIR"
-          ( curl -sSfL --retry 2 --retry-delay 3 \
-              "https://raw.githubusercontent.com/square/connect-api-specification/${SHA}/api.json" \
-              -o "${DIR}/openapi.json" 2>/dev/null ) &
-          PIDS+=($!)
-          VERSIONS+=("$VERSION")
+          cp "$BASE_SPEC" "${DIR}/openapi.json"
+          CREATED=$((CREATED + 1))
         done < "$VERSIONS_FILE"
-
-        echo "Launched ${#PIDS[@]} parallel downloads..."
-        for i in "${!PIDS[@]}"; do
-          if wait "${PIDS[$i]}"; then
-            FILE="benchmarks/fern/apis/square-${VERSIONS[$i]}/openapi.json"
-            if [ -f "$FILE" ] && [ "$(wc -c < "$FILE")" -ge 100000 ]; then
-              FETCHED=$((FETCHED + 1))
-            else
-              rm -f "$FILE"
-              FAILED=$((FAILED + 1))
-            fi
-          else
-            rm -f "benchmarks/fern/apis/square-${VERSIONS[$i]}/openapi.json"
-            FAILED=$((FAILED + 1))
-          fi
-        done
-        echo "Fallback fetch: ${FETCHED}/${#PIDS[@]} succeeded, ${FAILED} failed"
+        echo "Created ${CREATED} versioned spec copies from base Square spec"
 
     - name: Generate fixture versions
       shell: bash

@@ -41,73 +41,38 @@ runs:
           echo "square-ok=false" >> $GITHUB_OUTPUT
         fi
 
-    # Fetch historical versions of the Square spec for multi-version docs benchmarking.
-    # Each version is a real API release from the Square connect-api-specification repo.
-    # Downloads run in parallel (background curl jobs) to minimize fetch time.
-    - name: Fetch Square historical versions
+    # Create versioned copies of the Square spec for multi-version docs benchmarking.
+    # All versions use the same (latest) spec to avoid broken $ref issues in older
+    # historical releases.  The version labels from square-versions.txt are used for
+    # directory naming so each version is processed as a separate API workspace.
+    - name: Create versioned spec copies
       id: fetch-versions
       shell: bash
       run: |
         VERSIONS_FILE="benchmarks/fern/square-versions.txt"
+        BASE_SPEC="benchmarks/fern/apis/square/openapi.json"
         if [ ! -f "$VERSIONS_FILE" ]; then
           echo "::warning::No square-versions.txt found. Skipping versioned docs benchmark."
           echo "versions-fetched=0" >> $GITHUB_OUTPUT
           exit 0
         fi
+        if [ ! -f "$BASE_SPEC" ]; then
+          echo "::warning::Base Square spec not available yet. Versioned copies will be created at benchmark time."
+          echo "versions-fetched=0" >> $GITHUB_OUTPUT
+          exit 0
+        fi
 
-        FETCHED=0
-        FAILED=0
-        PIDS=()
-        VERSIONS=()
-
-        # Read manifest and launch parallel downloads
+        CREATED=0
         while IFS='|' read -r SHA VERSION; do
-          # Skip comments and empty lines
           [[ "$SHA" =~ ^#.*$ || -z "$SHA" ]] && continue
-
           DIR="benchmarks/fern/apis/square-${VERSION}"
           mkdir -p "$DIR"
-          OUTPUT="${DIR}/openapi.json"
-          VERSIONS+=("$VERSION")
-
-          # Download in background
-          (
-            curl -sSfL --retry 2 --retry-delay 3 \
-              "https://raw.githubusercontent.com/square/connect-api-specification/${SHA}/api.json" \
-              -o "$OUTPUT" 2>/dev/null
-          ) &
-          PIDS+=($!)
+          cp "$BASE_SPEC" "${DIR}/openapi.json"
+          CREATED=$((CREATED + 1))
         done < "$VERSIONS_FILE"
 
-        echo "Launched ${#PIDS[@]} parallel downloads..."
-
-        # Wait for all downloads and check results
-        for i in "${!PIDS[@]}"; do
-          if wait "${PIDS[$i]}"; then
-            VERSION="${VERSIONS[$i]}"
-            FILE="benchmarks/fern/apis/square-${VERSION}/openapi.json"
-            if [ -f "$FILE" ]; then
-              BYTES=$(wc -c < "$FILE")
-              if [ "$BYTES" -ge 100000 ]; then
-                FETCHED=$((FETCHED + 1))
-              else
-                echo "::warning::square-${VERSION} spec too small (${BYTES} bytes), removing"
-                rm -f "$FILE"
-                FAILED=$((FAILED + 1))
-              fi
-            else
-              FAILED=$((FAILED + 1))
-            fi
-          else
-            VERSION="${VERSIONS[$i]}"
-            echo "::warning::Failed to fetch square-${VERSION}"
-            rm -f "benchmarks/fern/apis/square-${VERSION}/openapi.json"
-            FAILED=$((FAILED + 1))
-          fi
-        done
-
-        echo "Fetched ${FETCHED}/${#PIDS[@]} historical Square spec versions (${FAILED} failed)"
-        echo "versions-fetched=${FETCHED}" >> $GITHUB_OUTPUT
+        echo "Created ${CREATED} versioned spec copies from base Square spec"
+        echo "versions-fetched=${CREATED}" >> $GITHUB_OUTPUT
 
     - name: Summarize fetched specs
       id: summary
