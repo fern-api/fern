@@ -495,7 +495,6 @@ exports[`migrateFromV61ToV60 > streaming 1`] = `
     "environments": null,
     "generatorConfig": null,
     "headers": [],
-    "inlineTypes": undefined,
     "pathParameters": [],
     "types": {
       "type_service:StreamResponse": {
