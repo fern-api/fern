@@ -7,12 +7,16 @@ These helpers safely access properties regardless of whether the value is compre
 """
 
 import keyword
+import re
 from typing import Union
 
 from .pascal_case import pascal_case as to_pascal
 from .snake_case import snake_case as to_snake
 
 import fern.ir.resources as ir_types
+
+
+_DIGIT_SPLIT = re.compile(r"(\d+)")
 
 
 def _to_camel(s: str) -> str:
@@ -23,13 +27,31 @@ def _to_camel(s: str) -> str:
     return parts[0] + "".join(p.capitalize() for p in parts[1:])
 
 
+def _smart_snake(s: str) -> str:
+    """Smart-casing snake_case matching @fern-api/casings-generator.
+
+    Treats digits adjacent to letters as part of the same word so
+    ``3d`` stays ``3d`` instead of becoming ``3_d``. Mirrors:
+
+        n.split(" ").map(part => part.split(/(\\d+)/).map(snakeCase).join("")).join("_")
+    """
+    return "_".join(
+        "".join(to_snake(sub) for sub in _DIGIT_SPLIT.split(part)) for part in s.split(" ")
+    )
+
+
 def _to_screaming_snake(s: str) -> str:
-    return to_snake(s).upper()
+    return _smart_snake(s).upper()
 
 
 def _make_safe(name: str) -> str:
     if keyword.iskeyword(name) or name in ("list", "set", "dict", "type", "id", "hash", "input", "object", "property"):
         return name + "_"
+    # Python identifiers cannot start with a digit. Prefix with "_" to match
+    # the canonical sanitizeName behavior in @fern-api/casings-generator;
+    # downstream pydantic_model code rewrites leading "_" to "f_".
+    if name and name[0].isdigit():
+        return "_" + name
     return name
 
 
@@ -38,7 +60,7 @@ def resolve_name(name_or_str: Union[str, ir_types.Name]) -> ir_types.Name:
     if isinstance(name_or_str, ir_types.Name):
         return name_or_str
     s = name_or_str
-    snake = to_snake(s)
+    snake = _smart_snake(s)
     pascal = to_pascal(s)
     camel = _to_camel(s)
     screaming = _to_screaming_snake(s)
