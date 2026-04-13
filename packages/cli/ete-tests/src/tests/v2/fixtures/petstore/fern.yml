@@ -16,7 +16,7 @@ sdks:
         - prod
 
     python:
-      version: 5.3.13
+      version: 4.64.1
       output:
         path: ./sdks/python
       group:
