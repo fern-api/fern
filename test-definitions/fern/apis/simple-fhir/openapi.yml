@@ -46,6 +46,10 @@ components:
             $ref: '#/components/schemas/ResourceList'
         memo:
           $ref: '#/components/schemas/Memo'
+      required:
+        - id
+        - related_resources
+        - memo
     ResourceList:
       title: ResourceList
       oneOf:
@@ -55,81 +59,69 @@ components:
         - $ref: '#/components/schemas/Script'
     Account:
       title: Account
-      type: object
-      properties:
-        resource_type:
-          type: string
-          const: Account
-        name:
-          type: string
-        patient:
-          $ref: '#/components/schemas/Patient'
-          nullable: true
-        practitioner:
-          $ref: '#/components/schemas/Practitioner'
-          nullable: true
-      required:
-        - resource_type
-        - name
-        - id
-        - related_resources
-        - memo
       allOf:
         - $ref: '#/components/schemas/BaseResource'
+        - type: object
+          properties:
+            resource_type:
+              type: string
+              const: Account
+            name:
+              type: string
+            patient:
+              $ref: '#/components/schemas/Patient'
+              nullable: true
+            practitioner:
+              $ref: '#/components/schemas/Practitioner'
+              nullable: true
+          required:
+            - resource_type
+            - name
     Patient:
       title: Patient
-      type: object
-      properties:
-        resource_type:
-          type: string
-          const: Patient
-        name:
-          type: string
-        scripts:
-          type: array
-          items:
-            $ref: '#/components/schemas/Script'
-      required:
-        - resource_type
-        - name
-        - scripts
-        - id
-        - related_resources
-        - memo
       allOf:
         - $ref: '#/components/schemas/BaseResource'
+        - type: object
+          properties:
+            resource_type:
+              type: string
+              const: Patient
+            name:
+              type: string
+            scripts:
+              type: array
+              items:
+                $ref: '#/components/schemas/Script'
+          required:
+            - resource_type
+            - name
+            - scripts
     Practitioner:
       title: Practitioner
-      type: object
-      properties:
-        resource_type:
-          type: string
-          const: Practitioner
-        name:
-          type: string
-      required:
-        - resource_type
-        - name
-        - id
-        - related_resources
-        - memo
       allOf:
         - $ref: '#/components/schemas/BaseResource'
+        - type: object
+          properties:
+            resource_type:
+              type: string
+              const: Practitioner
+            name:
+              type: string
+          required:
+            - resource_type
+            - name
     Script:
       title: Script
-      type: object
-      properties:
-        resource_type:
-          type: string
-          const: Script
-        name:
-          type: string
-      required:
-        - resource_type
-        - name
-        - id
-        - related_resources
-        - memo
       allOf:
         - $ref: '#/components/schemas/BaseResource'
+        - type: object
+          properties:
+            resource_type:
+              type: string
+              const: Script
+            name:
+              type: string
+          required:
+            - resource_type
+            - name
   securitySchemes: {}

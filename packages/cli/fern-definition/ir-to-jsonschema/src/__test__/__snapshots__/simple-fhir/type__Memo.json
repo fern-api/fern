@@ -42,6 +42,18 @@
       ],
       "additionalProperties": false
     },
+    "PatientResourceType": {
+      "type": "string",
+      "enum": [
+        "Patient"
+      ]
+    },
+    "ScriptResourceType": {
+      "type": "string",
+      "enum": [
+        "Script"
+      ]
+    },
     "Script": {
       "type": "object",
       "properties": {
@@ -58,7 +70,7 @@
           "$ref": "#/definitions/Memo"
         },
         "resource_type": {
-          "const": "Script"
+          "$ref": "#/definitions/ScriptResourceType"
         },
         "name": {
           "type": "string"
@@ -89,7 +101,7 @@
           "$ref": "#/definitions/Memo"
         },
         "resource_type": {
-          "const": "Patient"
+          "$ref": "#/definitions/PatientResourceType"
         },
         "name": {
           "type": "string"
@@ -111,6 +123,12 @@
       ],
       "additionalProperties": false
     },
+    "PractitionerResourceType": {
+      "type": "string",
+      "enum": [
+        "Practitioner"
+      ]
+    },
     "Practitioner": {
       "type": "object",
       "properties": {
@@ -127,7 +145,7 @@
           "$ref": "#/definitions/Memo"
         },
         "resource_type": {
-          "const": "Practitioner"
+          "$ref": "#/definitions/PractitionerResourceType"
         },
         "name": {
           "type": "string"
@@ -158,6 +176,12 @@
         }
       ]
     },
+    "AccountResourceType": {
+      "type": "string",
+      "enum": [
+        "Account"
+      ]
+    },
     "Account": {
       "type": "object",
       "properties": {
@@ -174,7 +198,7 @@
           "$ref": "#/definitions/Memo"
         },
         "resource_type": {
-          "const": "Account"
+          "$ref": "#/definitions/AccountResourceType"
         },
         "name": {
           "type": "string"
