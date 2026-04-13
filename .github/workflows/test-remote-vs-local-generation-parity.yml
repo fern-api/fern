@@ -55,11 +55,8 @@ jobs:
               "Publish TypeScript SDK Generator")
                 echo 'generators=["ts-sdk"]' >> $GITHUB_OUTPUT
                 ;;
-              # NOTE: go-sdk is temporarily disabled because the go-v2 subprocess
-              # crashes during generation (unhandled execa error in go mod tidy).
-              # Re-enable once the go-sdk generator ships the fix for this issue.
               "Publish Go SDK Generator")
-                echo 'generators=[]' >> $GITHUB_OUTPUT
+                echo 'generators=["go-sdk"]' >> $GITHUB_OUTPUT
                 ;;
               "Publish Java SDK Generator")
                 echo 'generators=["java-sdk"]' >> $GITHUB_OUTPUT
@@ -74,10 +71,7 @@ jobs:
             esac
           else
             # For push and workflow_dispatch, test all generators
-            # NOTE: go-sdk is temporarily disabled because the go-v2 subprocess
-            # crashes during generation (unhandled execa error in go mod tidy).
-            # Re-enable once the go-sdk generator ships the fix for this issue.
-            echo 'generators=["ts-sdk", "java-sdk", "python-sdk"]' >> $GITHUB_OUTPUT
+            echo 'generators=["ts-sdk", "java-sdk", "go-sdk", "python-sdk"]' >> $GITHUB_OUTPUT
           fi
 
   compile-and-build:

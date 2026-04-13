@@ -1,5 +1,7 @@
 - summary: |
-    Add error handling for 'go mod tidy' in the go-v2 generator to prevent
-    crashes when module tidying fails. The generator now logs a warning and
-    continues instead of crashing with an unhandled execa error.
+    Remove unused wiremock and containerd dependencies from the default go.mod
+    imports. These packages were never imported by generated Go code, but
+    go mod tidy had to download hundreds of transitive dependencies to discover
+    they were unused, causing failures in CI environments. Also add error
+    handling for go mod tidy to prevent crashes if module tidying fails.
   type: fix
