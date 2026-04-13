@@ -204,7 +204,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                     breadcrumbs: [...this.breadcrumbs, "allOf", "0"],
                     schema: allOfSchema,
                     id: this.id,
-                    inlined: true,
+                    inlined: this.inlined,
                     visitedRefs: visitedRefsForChild
                 });
 

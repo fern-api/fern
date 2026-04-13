@@ -1,7 +1,7 @@
 /**
  * Assertion-based tests for allOf composition edge cases.
  * These tests validate the IR output against expected behavior per the OpenAPI spec,
- * rather than snapshot-matching. They should FAIL until the allOf bugs are fixed.
+ * rather than snapshot-matching.
  *
  * Uses the V3 importer (OSSWorkspace) which is the code path for docs customers.
  *
@@ -200,7 +200,6 @@ describe("allOf edge cases", () => {
             } else if (outerType === "container") {
                 // Could be optional<named:RuleExecutionContext> since the enum
                 // doesn't have a default — but the inner type must still reference it
-                // biome-ignore lint/style/noNonNullAssertion: verified by prior expect
                 // biome-ignore lint/style/noNonNullAssertion: verified by prior expect
                 const container = prop!.valueType.container!;
                 if (container._type === "optional") {
