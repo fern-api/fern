@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.3.13
+  changelogEntry:
+    - summary: |
+        Fix `NameError` when a type uses `extends` to inherit from a base type in a different
+        file and that base type is part of a circular reference cycle. The generator was
+        incorrectly deferring the base class import to the bottom of the file via ghost
+        references, but Python requires base class imports before the class definition.
+        Ghost references for extended (base class) types are now skipped so their imports
+        remain at the top of the file.
+      type: fix
+  createdAt: "2026-04-13"
+  irVersion: 65
 # For unreleased changes, use unreleased.yml
 - version: 5.4.0-rc.0
   changelogEntry:
@@ -7,6 +19,35 @@
       type: feat
   createdAt: "2026-04-10"
   irVersion: 66
+
+- version: 5.3.12
+  changelogEntry:
+    - summary: |
+        Bump generator-cli to 0.9.7 which upgrades @fern-api/replay to 0.10.4.
+      type: chore
+  createdAt: "2026-04-12"
+  irVersion: 65
+
+- version: 5.3.11
+  changelogEntry:
+    - summary: |
+        Fix duplicate keyword arguments in generated code for discriminated union
+        request bodies with stream condition properties. When a union variant inherits
+        the stream condition field from a base schema via extends, the property was
+        emitted twice — once from the union's base properties and once from the
+        variant's extended properties — causing SyntaxError in generated Python code.
+      type: fix
+    - summary: |
+        Escape triple quotes in docstrings to prevent premature docstring termination
+        when OpenAPI descriptions contain Python code examples with triple-quoted strings.
+      type: fix
+    - summary: |
+        Fix mypy call-overload errors in exported client wrapper by mirroring the
+        base client's @overload signatures and using **kwargs pass-through, instead
+        of suppressing the error with a type: ignore comment.
+      type: fix
+  createdAt: "2026-04-10"
+  irVersion: 65
 
 - version: 5.3.10
   changelogEntry:

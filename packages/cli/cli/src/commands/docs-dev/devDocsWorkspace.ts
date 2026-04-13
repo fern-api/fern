@@ -31,7 +31,7 @@ export async function previewDocsWorkspace({
     }
 
     if (legacyPreview) {
-        await cliContext.instrumentPostHogEvent({
+        cliContext.instrumentPostHogEvent({
             orgId: project.config.organization,
             command: "fern docs dev --legacy"
         });
@@ -79,7 +79,7 @@ export async function previewDocsWorkspace({
         });
     }
 
-    await cliContext.instrumentPostHogEvent({
+    cliContext.instrumentPostHogEvent({
         orgId: project.config.organization,
         command: "fern docs dev --beta"
     });

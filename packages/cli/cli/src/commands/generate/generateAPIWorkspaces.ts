@@ -114,7 +114,7 @@ export async function generateAPIWorkspaces({
         }
     }
 
-    await cliContext.instrumentPostHogEvent({
+    cliContext.instrumentPostHogEvent({
         orgId: project.config.organization,
         command: "fern generate",
         properties: {

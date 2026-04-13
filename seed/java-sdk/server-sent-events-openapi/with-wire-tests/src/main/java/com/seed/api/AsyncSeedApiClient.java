@@ -5,6 +5,15 @@ package com.seed.api;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
+import com.seed.api.requests.SharedCompletionRequest;
+import com.seed.api.requests.StreamXFernStreamingConditionRequest;
+import com.seed.api.requests.StreamXFernStreamingConditionStreamRequest;
+import com.seed.api.requests.StreamXFernStreamingNullableConditionRequest;
+import com.seed.api.requests.StreamXFernStreamingNullableConditionStreamRequest;
+import com.seed.api.requests.StreamXFernStreamingSharedSchemaRequest;
+import com.seed.api.requests.StreamXFernStreamingSharedSchemaStreamRequest;
+import com.seed.api.types.CompletionFullResponse;
+import com.seed.api.types.CompletionStreamChunk;
 import com.seed.api.types.Event;
 import com.seed.api.types.StreamDataContextResponse;
 import com.seed.api.types.StreamDataContextWithEnvelopeSchemaResponse;
@@ -13,6 +22,10 @@ import com.seed.api.types.StreamProtocolCollisionResponse;
 import com.seed.api.types.StreamProtocolNoCollisionResponse;
 import com.seed.api.types.StreamProtocolWithFlatSchemaResponse;
 import com.seed.api.types.StreamRequest;
+import com.seed.api.types.StreamXFernStreamingUnionRequest;
+import com.seed.api.types.StreamXFernStreamingUnionStreamRequest;
+import com.seed.api.types.UnionStreamRequestBase;
+import com.seed.api.types.ValidateUnionRequestResponse;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncSeedApiClient {
@@ -247,6 +260,211 @@ public class AsyncSeedApiClient {
     public CompletableFuture<Iterable<Event>> streamOasSpecNative(
             StreamRequest request, RequestOptions requestOptions) {
         return this.rawClient.streamOasSpecNative(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Uses x-fern-streaming extension with stream-condition to split into streaming and non-streaming variants based on a request body field. The request body is a $ref to a named schema. The response and response-stream point to different schemas.
+     */
+    public CompletableFuture<Iterable<CompletionStreamChunk>> streamXFernStreamingConditionStream(
+            StreamXFernStreamingConditionStreamRequest request) {
+        return this.rawClient.streamXFernStreamingConditionStream(request).thenApply(response -> response.body());
+    }
+
+    /**
+     * Uses x-fern-streaming extension with stream-condition to split into streaming and non-streaming variants based on a request body field. The request body is a $ref to a named schema. The response and response-stream point to different schemas.
+     */
+    public CompletableFuture<Iterable<CompletionStreamChunk>> streamXFernStreamingConditionStream(
+            StreamXFernStreamingConditionStreamRequest request, RequestOptions requestOptions) {
+        return this.rawClient
+                .streamXFernStreamingConditionStream(request, requestOptions)
+                .thenApply(response -> response.body());
+    }
+
+    /**
+     * Uses x-fern-streaming extension with stream-condition to split into streaming and non-streaming variants based on a request body field. The request body is a $ref to a named schema. The response and response-stream point to different schemas.
+     */
+    public CompletableFuture<CompletionFullResponse> streamXFernStreamingCondition(
+            StreamXFernStreamingConditionRequest request) {
+        return this.rawClient.streamXFernStreamingCondition(request).thenApply(response -> response.body());
+    }
+
+    /**
+     * Uses x-fern-streaming extension with stream-condition to split into streaming and non-streaming variants based on a request body field. The request body is a $ref to a named schema. The response and response-stream point to different schemas.
+     */
+    public CompletableFuture<CompletionFullResponse> streamXFernStreamingCondition(
+            StreamXFernStreamingConditionRequest request, RequestOptions requestOptions) {
+        return this.rawClient
+                .streamXFernStreamingCondition(request, requestOptions)
+                .thenApply(response -> response.body());
+    }
+
+    /**
+     * Uses x-fern-streaming with stream-condition. The request body $ref (SharedCompletionRequest) is also referenced by a separate non-streaming endpoint (/validate-completion). This tests that the shared request schema is not excluded from the context during streaming processing.
+     */
+    public CompletableFuture<Iterable<CompletionStreamChunk>> streamXFernStreamingSharedSchemaStream(
+            StreamXFernStreamingSharedSchemaStreamRequest request) {
+        return this.rawClient.streamXFernStreamingSharedSchemaStream(request).thenApply(response -> response.body());
+    }
+
+    /**
+     * Uses x-fern-streaming with stream-condition. The request body $ref (SharedCompletionRequest) is also referenced by a separate non-streaming endpoint (/validate-completion). This tests that the shared request schema is not excluded from the context during streaming processing.
+     */
+    public CompletableFuture<Iterable<CompletionStreamChunk>> streamXFernStreamingSharedSchemaStream(
+            StreamXFernStreamingSharedSchemaStreamRequest request, RequestOptions requestOptions) {
+        return this.rawClient
+                .streamXFernStreamingSharedSchemaStream(request, requestOptions)
+                .thenApply(response -> response.body());
+    }
+
+    /**
+     * Uses x-fern-streaming with stream-condition. The request body $ref (SharedCompletionRequest) is also referenced by a separate non-streaming endpoint (/validate-completion). This tests that the shared request schema is not excluded from the context during streaming processing.
+     */
+    public CompletableFuture<CompletionFullResponse> streamXFernStreamingSharedSchema(
+            StreamXFernStreamingSharedSchemaRequest request) {
+        return this.rawClient.streamXFernStreamingSharedSchema(request).thenApply(response -> response.body());
+    }
+
+    /**
+     * Uses x-fern-streaming with stream-condition. The request body $ref (SharedCompletionRequest) is also referenced by a separate non-streaming endpoint (/validate-completion). This tests that the shared request schema is not excluded from the context during streaming processing.
+     */
+    public CompletableFuture<CompletionFullResponse> streamXFernStreamingSharedSchema(
+            StreamXFernStreamingSharedSchemaRequest request, RequestOptions requestOptions) {
+        return this.rawClient
+                .streamXFernStreamingSharedSchema(request, requestOptions)
+                .thenApply(response -> response.body());
+    }
+
+    /**
+     * A non-streaming endpoint that references the same SharedCompletionRequest schema as endpoint 10. Ensures the shared $ref schema remains available and is not excluded during the streaming endpoint's processing.
+     */
+    public CompletableFuture<CompletionFullResponse> validateCompletion(SharedCompletionRequest request) {
+        return this.rawClient.validateCompletion(request).thenApply(response -> response.body());
+    }
+
+    /**
+     * A non-streaming endpoint that references the same SharedCompletionRequest schema as endpoint 10. Ensures the shared $ref schema remains available and is not excluded during the streaming endpoint's processing.
+     */
+    public CompletableFuture<CompletionFullResponse> validateCompletion(
+            SharedCompletionRequest request, RequestOptions requestOptions) {
+        return this.rawClient.validateCompletion(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Uses x-fern-streaming with stream-condition where the request body is a discriminated union (oneOf) whose variants inherit the stream condition field (stream_response) from a shared base schema via allOf. Tests that the stream condition property is not duplicated in the generated output when the base schema is expanded into each variant.
+     */
+    public CompletableFuture<Iterable<CompletionStreamChunk>> streamXFernStreamingUnionStream(
+            StreamXFernStreamingUnionStreamRequest request) {
+        return this.rawClient.streamXFernStreamingUnionStream(request).thenApply(response -> response.body());
+    }
+
+    /**
+     * Uses x-fern-streaming with stream-condition where the request body is a discriminated union (oneOf) whose variants inherit the stream condition field (stream_response) from a shared base schema via allOf. Tests that the stream condition property is not duplicated in the generated output when the base schema is expanded into each variant.
+     */
+    public CompletableFuture<Iterable<CompletionStreamChunk>> streamXFernStreamingUnionStream(
+            StreamXFernStreamingUnionStreamRequest request, RequestOptions requestOptions) {
+        return this.rawClient
+                .streamXFernStreamingUnionStream(request, requestOptions)
+                .thenApply(response -> response.body());
+    }
+
+    /**
+     * Uses x-fern-streaming with stream-condition where the request body is a discriminated union (oneOf) whose variants inherit the stream condition field (stream_response) from a shared base schema via allOf. Tests that the stream condition property is not duplicated in the generated output when the base schema is expanded into each variant.
+     */
+    public CompletableFuture<CompletionFullResponse> streamXFernStreamingUnion(
+            StreamXFernStreamingUnionRequest request) {
+        return this.rawClient.streamXFernStreamingUnion(request).thenApply(response -> response.body());
+    }
+
+    /**
+     * Uses x-fern-streaming with stream-condition where the request body is a discriminated union (oneOf) whose variants inherit the stream condition field (stream_response) from a shared base schema via allOf. Tests that the stream condition property is not duplicated in the generated output when the base schema is expanded into each variant.
+     */
+    public CompletableFuture<CompletionFullResponse> streamXFernStreamingUnion(
+            StreamXFernStreamingUnionRequest request, RequestOptions requestOptions) {
+        return this.rawClient.streamXFernStreamingUnion(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * References UnionStreamRequestBase directly, ensuring the base schema cannot be excluded from the context. This endpoint exists to verify that shared base schemas used in discriminated union variants with stream-condition remain available.
+     */
+    public CompletableFuture<ValidateUnionRequestResponse> validateUnionRequest(UnionStreamRequestBase request) {
+        return this.rawClient.validateUnionRequest(request).thenApply(response -> response.body());
+    }
+
+    /**
+     * References UnionStreamRequestBase directly, ensuring the base schema cannot be excluded from the context. This endpoint exists to verify that shared base schemas used in discriminated union variants with stream-condition remain available.
+     */
+    public CompletableFuture<ValidateUnionRequestResponse> validateUnionRequest(
+            UnionStreamRequestBase request, RequestOptions requestOptions) {
+        return this.rawClient.validateUnionRequest(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Uses x-fern-streaming with stream-condition where the stream field is nullable (type: [&quot;boolean&quot;, &quot;null&quot;] in OAS 3.1). Previously, the spread order in the importer caused the nullable type array to overwrite the const literal, producing stream?: true | null instead of stream: true. The const/type override must be spread after the original property.
+     */
+    public CompletableFuture<Iterable<CompletionStreamChunk>> streamXFernStreamingNullableConditionStream(
+            StreamXFernStreamingNullableConditionStreamRequest request) {
+        return this.rawClient
+                .streamXFernStreamingNullableConditionStream(request)
+                .thenApply(response -> response.body());
+    }
+
+    /**
+     * Uses x-fern-streaming with stream-condition where the stream field is nullable (type: [&quot;boolean&quot;, &quot;null&quot;] in OAS 3.1). Previously, the spread order in the importer caused the nullable type array to overwrite the const literal, producing stream?: true | null instead of stream: true. The const/type override must be spread after the original property.
+     */
+    public CompletableFuture<Iterable<CompletionStreamChunk>> streamXFernStreamingNullableConditionStream(
+            StreamXFernStreamingNullableConditionStreamRequest request, RequestOptions requestOptions) {
+        return this.rawClient
+                .streamXFernStreamingNullableConditionStream(request, requestOptions)
+                .thenApply(response -> response.body());
+    }
+
+    /**
+     * Uses x-fern-streaming with stream-condition where the stream field is nullable (type: [&quot;boolean&quot;, &quot;null&quot;] in OAS 3.1). Previously, the spread order in the importer caused the nullable type array to overwrite the const literal, producing stream?: true | null instead of stream: true. The const/type override must be spread after the original property.
+     */
+    public CompletableFuture<CompletionFullResponse> streamXFernStreamingNullableCondition(
+            StreamXFernStreamingNullableConditionRequest request) {
+        return this.rawClient.streamXFernStreamingNullableCondition(request).thenApply(response -> response.body());
+    }
+
+    /**
+     * Uses x-fern-streaming with stream-condition where the stream field is nullable (type: [&quot;boolean&quot;, &quot;null&quot;] in OAS 3.1). Previously, the spread order in the importer caused the nullable type array to overwrite the const literal, producing stream?: true | null instead of stream: true. The const/type override must be spread after the original property.
+     */
+    public CompletableFuture<CompletionFullResponse> streamXFernStreamingNullableCondition(
+            StreamXFernStreamingNullableConditionRequest request, RequestOptions requestOptions) {
+        return this.rawClient
+                .streamXFernStreamingNullableCondition(request, requestOptions)
+                .thenApply(response -> response.body());
+    }
+
+    /**
+     * Uses x-fern-streaming with format: sse but no stream-condition. This represents a stream-only endpoint that always returns SSE. There is no non-streaming variant, and the response is always a stream of chunks.
+     */
+    public CompletableFuture<Iterable<String>> streamXFernStreamingSseOnly() {
+        return this.rawClient.streamXFernStreamingSseOnly().thenApply(response -> response.body());
+    }
+
+    /**
+     * Uses x-fern-streaming with format: sse but no stream-condition. This represents a stream-only endpoint that always returns SSE. There is no non-streaming variant, and the response is always a stream of chunks.
+     */
+    public CompletableFuture<Iterable<String>> streamXFernStreamingSseOnly(RequestOptions requestOptions) {
+        return this.rawClient.streamXFernStreamingSseOnly(requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Uses x-fern-streaming with format: sse but no stream-condition. This represents a stream-only endpoint that always returns SSE. There is no non-streaming variant, and the response is always a stream of chunks.
+     */
+    public CompletableFuture<Iterable<String>> streamXFernStreamingSseOnly(StreamRequest request) {
+        return this.rawClient.streamXFernStreamingSseOnly(request).thenApply(response -> response.body());
+    }
+
+    /**
+     * Uses x-fern-streaming with format: sse but no stream-condition. This represents a stream-only endpoint that always returns SSE. There is no non-streaming variant, and the response is always a stream of chunks.
+     */
+    public CompletableFuture<Iterable<String>> streamXFernStreamingSseOnly(
+            StreamRequest request, RequestOptions requestOptions) {
+        return this.rawClient
+                .streamXFernStreamingSseOnly(request, requestOptions)
+                .thenApply(response -> response.body());
     }
 
     public static AsyncSeedApiClientBuilder builder() {

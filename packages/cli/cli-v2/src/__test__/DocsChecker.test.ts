@@ -29,7 +29,7 @@ describe("DocsChecker", () => {
             const cwd = AbsoluteFilePath.of(join(__dirname, "fixtures/simple-api"));
 
             const checker = new DocsChecker({
-                context: createTestContext({ cwd })
+                context: await createTestContext({ cwd })
             });
 
             const result = await checker.check({ workspace });
@@ -49,7 +49,7 @@ describe("DocsChecker", () => {
 
             const workspace = await loadTempWorkspace(testDir);
             const checker = new DocsChecker({
-                context: createTestContext({ cwd: testDir })
+                context: await createTestContext({ cwd: testDir })
             });
 
             const result = await checker.check({ workspace });
@@ -69,7 +69,7 @@ describe("DocsChecker", () => {
 
             const workspace = await loadTempWorkspace(testDir);
             const checker = new DocsChecker({
-                context: createTestContext({ cwd: testDir })
+                context: await createTestContext({ cwd: testDir })
             });
 
             const result = await checker.check({ workspace });
@@ -84,7 +84,7 @@ describe("DocsChecker", () => {
 
             const workspace = await loadTempWorkspace(testDir);
             const checker = new DocsChecker({
-                context: createTestContext({ cwd: testDir })
+                context: await createTestContext({ cwd: testDir })
             });
 
             const resultStrict = await checker.check({ workspace, strict: true });
@@ -133,7 +133,7 @@ docs:
 
             const workspace = await loadTempWorkspace(testDir);
             const checker = new DocsChecker({
-                context: createTestContext({ cwd: testDir })
+                context: await createTestContext({ cwd: testDir })
             });
 
             const result = await checker.check({ workspace, strict: true });

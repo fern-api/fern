@@ -76,6 +76,127 @@
                 "type": "go",
                 "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/server-sent-events-openapi/fern\"\n\tfernclient \"github.com/server-sent-events-openapi/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.StreamProtocolWithFlatSchema(\n\tcontext.TODO(),\n\t\u0026fern.StreamRequest{},\n)\n"
             }
+        },
+        {
+            "id": {
+                "path": "/stream/x-fern-streaming-condition",
+                "method": "POST",
+                "identifier_override": "endpoint_.streamXFernStreamingCondition"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/server-sent-events-openapi/fern\"\n\tfernclient \"github.com/server-sent-events-openapi/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.StreamXfernStreamingCondition(\n\tcontext.TODO(),\n\t\u0026fern.StreamXfernStreamingConditionRequest{\n\t\tQuery: \"query\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/stream/x-fern-streaming-condition",
+                "method": "POST",
+                "identifier_override": "endpoint_.streamXFernStreamingCondition_stream"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/server-sent-events-openapi/fern\"\n\tfernclient \"github.com/server-sent-events-openapi/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.StreamXfernStreamingConditionStream(\n\tcontext.TODO(),\n\t\u0026fern.StreamXfernStreamingConditionStreamRequest{\n\t\tQuery: \"query\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/stream/x-fern-streaming-nullable-condition",
+                "method": "POST",
+                "identifier_override": "endpoint_.streamXFernStreamingNullableCondition"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/server-sent-events-openapi/fern\"\n\tfernclient \"github.com/server-sent-events-openapi/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.StreamXfernStreamingNullableCondition(\n\tcontext.TODO(),\n\t\u0026fern.StreamXfernStreamingNullableConditionRequest{\n\t\tQuery: \"query\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/stream/x-fern-streaming-nullable-condition",
+                "method": "POST",
+                "identifier_override": "endpoint_.streamXFernStreamingNullableCondition_stream"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/server-sent-events-openapi/fern\"\n\tfernclient \"github.com/server-sent-events-openapi/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.StreamXfernStreamingNullableConditionStream(\n\tcontext.TODO(),\n\t\u0026fern.StreamXfernStreamingNullableConditionStreamRequest{\n\t\tQuery: \"query\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/stream/x-fern-streaming-shared-schema",
+                "method": "POST",
+                "identifier_override": "endpoint_.streamXFernStreamingSharedSchema"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/server-sent-events-openapi/fern\"\n\tfernclient \"github.com/server-sent-events-openapi/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.StreamXfernStreamingSharedSchema(\n\tcontext.TODO(),\n\t\u0026fern.StreamXfernStreamingSharedSchemaRequest{\n\t\tPrompt: \"prompt\",\n\t\tModel:  \"model\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/stream/x-fern-streaming-shared-schema",
+                "method": "POST",
+                "identifier_override": "endpoint_.streamXFernStreamingSharedSchema_stream"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/server-sent-events-openapi/fern\"\n\tfernclient \"github.com/server-sent-events-openapi/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.StreamXfernStreamingSharedSchemaStream(\n\tcontext.TODO(),\n\t\u0026fern.StreamXfernStreamingSharedSchemaStreamRequest{\n\t\tPrompt: \"prompt\",\n\t\tModel:  \"model\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/stream/x-fern-streaming-sse-only",
+                "method": "POST",
+                "identifier_override": "endpoint_.streamXFernStreamingSseOnly"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/server-sent-events-openapi/fern\"\n\tfernclient \"github.com/server-sent-events-openapi/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.StreamXfernStreamingSseOnly(\n\tcontext.TODO(),\n\t\u0026fern.StreamRequest{},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/stream/x-fern-streaming-union",
+                "method": "POST",
+                "identifier_override": "endpoint_.streamXFernStreamingUnion"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/server-sent-events-openapi/fern\"\n\tfernclient \"github.com/server-sent-events-openapi/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.StreamXfernStreamingUnion(\n\tcontext.TODO(),\n\t\u0026fern.StreamXfernStreamingUnionRequest{\n\t\tMessage: \u0026fern.UnionStreamMessageVariant{\n\t\t\tPrompt:  \"prompt\",\n\t\t\tMessage: \"message\",\n\t\t\tStreamResponse: fern.Bool(\n\t\t\t\tfalse,\n\t\t\t),\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/stream/x-fern-streaming-union",
+                "method": "POST",
+                "identifier_override": "endpoint_.streamXFernStreamingUnion_stream"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/server-sent-events-openapi/fern\"\n\tfernclient \"github.com/server-sent-events-openapi/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.StreamXfernStreamingUnionStream(\n\tcontext.TODO(),\n\t\u0026fern.StreamXfernStreamingUnionStreamRequest{\n\t\tMessage: \u0026fern.UnionStreamMessageVariant{\n\t\t\tPrompt:  \"prompt\",\n\t\t\tMessage: \"message\",\n\t\t\tStreamResponse: fern.Bool(\n\t\t\t\ttrue,\n\t\t\t),\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/validate-completion",
+                "method": "POST",
+                "identifier_override": "endpoint_.validateCompletion"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/server-sent-events-openapi/fern\"\n\tfernclient \"github.com/server-sent-events-openapi/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.ValidateCompletion(\n\tcontext.TODO(),\n\t\u0026fern.SharedCompletionRequest{\n\t\tPrompt: \"prompt\",\n\t\tModel:  \"model\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/validate-union-request",
+                "method": "POST",
+                "identifier_override": "endpoint_.validateUnionRequest"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/server-sent-events-openapi/fern\"\n\tfernclient \"github.com/server-sent-events-openapi/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.ValidateUnionRequest(\n\tcontext.TODO(),\n\t\u0026fern.UnionStreamRequestBase{\n\t\tPrompt: \"prompt\",\n\t},\n)\n"
+            }
         }
     ]
 }

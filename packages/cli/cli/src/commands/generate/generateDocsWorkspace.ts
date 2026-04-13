@@ -149,7 +149,7 @@ export async function generateDocsWorkspace({
         }
     }
 
-    await cliContext.instrumentPostHogEvent({
+    cliContext.instrumentPostHogEvent({
         orgId: project.config.organization,
         command: "fern generate --docs"
     });

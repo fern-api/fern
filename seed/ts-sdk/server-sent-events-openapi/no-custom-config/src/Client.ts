@@ -455,6 +455,700 @@ export class SeedApiClient {
     }
 
     /**
+     * Uses x-fern-streaming extension with stream-condition to split into streaming and non-streaming variants based on a request body field. The request body is a $ref to a named schema. The response and response-stream point to different schemas.
+     */
+    public streamXFernStreamingConditionStream(
+        request: SeedApi.StreamXFernStreamingConditionStreamRequest,
+        requestOptions?: SeedApiClient.RequestOptions,
+    ): core.HttpResponsePromise<core.Stream<SeedApi.CompletionStreamChunk>> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__streamXFernStreamingConditionStream(request, requestOptions),
+        );
+    }
+
+    private async __streamXFernStreamingConditionStream(
+        request: SeedApi.StreamXFernStreamingConditionStreamRequest,
+        requestOptions?: SeedApiClient.RequestOptions,
+    ): Promise<core.WithRawResponse<core.Stream<SeedApi.CompletionStreamChunk>>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher<ReadableStream>({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "stream/x-fern-streaming-condition",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: { ...request, stream: true },
+            responseType: "streaming",
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: new core.Stream({
+                    stream: _response.body,
+                    parse: (data) => data as any,
+                    signal: requestOptions?.abortSignal,
+                    eventShape: {
+                        type: "json",
+                        messageTerminator: "\n",
+                    },
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedApiError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "POST",
+            "/stream/x-fern-streaming-condition",
+        );
+    }
+
+    /**
+     * Uses x-fern-streaming extension with stream-condition to split into streaming and non-streaming variants based on a request body field. The request body is a $ref to a named schema. The response and response-stream point to different schemas.
+     *
+     * @param {SeedApi.StreamXFernStreamingConditionRequest} request
+     * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.streamXFernStreamingCondition({
+     *         query: "query"
+     *     })
+     */
+    public streamXFernStreamingCondition(
+        request: SeedApi.StreamXFernStreamingConditionRequest,
+        requestOptions?: SeedApiClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedApi.CompletionFullResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__streamXFernStreamingCondition(request, requestOptions));
+    }
+
+    private async __streamXFernStreamingCondition(
+        request: SeedApi.StreamXFernStreamingConditionRequest,
+        requestOptions?: SeedApiClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedApi.CompletionFullResponse>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "stream/x-fern-streaming-condition",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: { ...request, stream: false },
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as SeedApi.CompletionFullResponse, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedApiError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "POST",
+            "/stream/x-fern-streaming-condition",
+        );
+    }
+
+    /**
+     * Uses x-fern-streaming with stream-condition. The request body $ref (SharedCompletionRequest) is also referenced by a separate non-streaming endpoint (/validate-completion). This tests that the shared request schema is not excluded from the context during streaming processing.
+     */
+    public streamXFernStreamingSharedSchemaStream(
+        request: SeedApi.StreamXFernStreamingSharedSchemaStreamRequest,
+        requestOptions?: SeedApiClient.RequestOptions,
+    ): core.HttpResponsePromise<core.Stream<SeedApi.CompletionStreamChunk>> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__streamXFernStreamingSharedSchemaStream(request, requestOptions),
+        );
+    }
+
+    private async __streamXFernStreamingSharedSchemaStream(
+        request: SeedApi.StreamXFernStreamingSharedSchemaStreamRequest,
+        requestOptions?: SeedApiClient.RequestOptions,
+    ): Promise<core.WithRawResponse<core.Stream<SeedApi.CompletionStreamChunk>>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher<ReadableStream>({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "stream/x-fern-streaming-shared-schema",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: { ...request, stream: true },
+            responseType: "streaming",
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: new core.Stream({
+                    stream: _response.body,
+                    parse: (data) => data as any,
+                    signal: requestOptions?.abortSignal,
+                    eventShape: {
+                        type: "json",
+                        messageTerminator: "\n",
+                    },
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedApiError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "POST",
+            "/stream/x-fern-streaming-shared-schema",
+        );
+    }
+
+    /**
+     * Uses x-fern-streaming with stream-condition. The request body $ref (SharedCompletionRequest) is also referenced by a separate non-streaming endpoint (/validate-completion). This tests that the shared request schema is not excluded from the context during streaming processing.
+     *
+     * @param {SeedApi.StreamXFernStreamingSharedSchemaRequest} request
+     * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.streamXFernStreamingSharedSchema({
+     *         prompt: "prompt",
+     *         model: "model"
+     *     })
+     */
+    public streamXFernStreamingSharedSchema(
+        request: SeedApi.StreamXFernStreamingSharedSchemaRequest,
+        requestOptions?: SeedApiClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedApi.CompletionFullResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__streamXFernStreamingSharedSchema(request, requestOptions));
+    }
+
+    private async __streamXFernStreamingSharedSchema(
+        request: SeedApi.StreamXFernStreamingSharedSchemaRequest,
+        requestOptions?: SeedApiClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedApi.CompletionFullResponse>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "stream/x-fern-streaming-shared-schema",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: { ...request, stream: false },
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as SeedApi.CompletionFullResponse, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedApiError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "POST",
+            "/stream/x-fern-streaming-shared-schema",
+        );
+    }
+
+    /**
+     * A non-streaming endpoint that references the same SharedCompletionRequest schema as endpoint 10. Ensures the shared $ref schema remains available and is not excluded during the streaming endpoint's processing.
+     *
+     * @param {SeedApi.SharedCompletionRequest} request
+     * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.validateCompletion({
+     *         prompt: "prompt",
+     *         model: "model"
+     *     })
+     */
+    public validateCompletion(
+        request: SeedApi.SharedCompletionRequest,
+        requestOptions?: SeedApiClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedApi.CompletionFullResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__validateCompletion(request, requestOptions));
+    }
+
+    private async __validateCompletion(
+        request: SeedApi.SharedCompletionRequest,
+        requestOptions?: SeedApiClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedApi.CompletionFullResponse>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "validate-completion",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: request,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as SeedApi.CompletionFullResponse, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedApiError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/validate-completion");
+    }
+
+    /**
+     * Uses x-fern-streaming with stream-condition where the request body is a discriminated union (oneOf) whose variants inherit the stream condition field (stream_response) from a shared base schema via allOf. Tests that the stream condition property is not duplicated in the generated output when the base schema is expanded into each variant.
+     */
+    public streamXFernStreamingUnionStream(
+        request: SeedApi.StreamXFernStreamingUnionStreamRequest,
+        requestOptions?: SeedApiClient.RequestOptions,
+    ): core.HttpResponsePromise<core.Stream<SeedApi.CompletionStreamChunk>> {
+        return core.HttpResponsePromise.fromPromise(this.__streamXFernStreamingUnionStream(request, requestOptions));
+    }
+
+    private async __streamXFernStreamingUnionStream(
+        request: SeedApi.StreamXFernStreamingUnionStreamRequest,
+        requestOptions?: SeedApiClient.RequestOptions,
+    ): Promise<core.WithRawResponse<core.Stream<SeedApi.CompletionStreamChunk>>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher<ReadableStream>({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "stream/x-fern-streaming-union",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: request,
+            responseType: "streaming",
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: new core.Stream({
+                    stream: _response.body,
+                    parse: (data) => data as any,
+                    signal: requestOptions?.abortSignal,
+                    eventShape: {
+                        type: "json",
+                        messageTerminator: "\n",
+                    },
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedApiError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "POST",
+            "/stream/x-fern-streaming-union",
+        );
+    }
+
+    /**
+     * Uses x-fern-streaming with stream-condition where the request body is a discriminated union (oneOf) whose variants inherit the stream condition field (stream_response) from a shared base schema via allOf. Tests that the stream condition property is not duplicated in the generated output when the base schema is expanded into each variant.
+     *
+     * @param {SeedApi.StreamXFernStreamingUnionRequest} request
+     * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.streamXFernStreamingUnion({
+     *         type: "message",
+     *         stream_response: false,
+     *         prompt: "prompt",
+     *         message: "message",
+     *         stream_response: false
+     *     })
+     */
+    public streamXFernStreamingUnion(
+        request: SeedApi.StreamXFernStreamingUnionRequest,
+        requestOptions?: SeedApiClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedApi.CompletionFullResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__streamXFernStreamingUnion(request, requestOptions));
+    }
+
+    private async __streamXFernStreamingUnion(
+        request: SeedApi.StreamXFernStreamingUnionRequest,
+        requestOptions?: SeedApiClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedApi.CompletionFullResponse>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "stream/x-fern-streaming-union",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: request,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as SeedApi.CompletionFullResponse, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedApiError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "POST",
+            "/stream/x-fern-streaming-union",
+        );
+    }
+
+    /**
+     * References UnionStreamRequestBase directly, ensuring the base schema cannot be excluded from the context. This endpoint exists to verify that shared base schemas used in discriminated union variants with stream-condition remain available.
+     *
+     * @param {SeedApi.UnionStreamRequestBase} request
+     * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.validateUnionRequest({
+     *         prompt: "prompt"
+     *     })
+     */
+    public validateUnionRequest(
+        request: SeedApi.UnionStreamRequestBase,
+        requestOptions?: SeedApiClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedApi.ValidateUnionRequestResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__validateUnionRequest(request, requestOptions));
+    }
+
+    private async __validateUnionRequest(
+        request: SeedApi.UnionStreamRequestBase,
+        requestOptions?: SeedApiClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedApi.ValidateUnionRequestResponse>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "validate-union-request",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: request,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as SeedApi.ValidateUnionRequestResponse, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedApiError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/validate-union-request");
+    }
+
+    /**
+     * Uses x-fern-streaming with stream-condition where the stream field is nullable (type: ["boolean", "null"] in OAS 3.1). Previously, the spread order in the importer caused the nullable type array to overwrite the const literal, producing stream?: true | null instead of stream: true. The const/type override must be spread after the original property.
+     */
+    public streamXFernStreamingNullableConditionStream(
+        request: SeedApi.StreamXFernStreamingNullableConditionStreamRequest,
+        requestOptions?: SeedApiClient.RequestOptions,
+    ): core.HttpResponsePromise<core.Stream<SeedApi.CompletionStreamChunk>> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__streamXFernStreamingNullableConditionStream(request, requestOptions),
+        );
+    }
+
+    private async __streamXFernStreamingNullableConditionStream(
+        request: SeedApi.StreamXFernStreamingNullableConditionStreamRequest,
+        requestOptions?: SeedApiClient.RequestOptions,
+    ): Promise<core.WithRawResponse<core.Stream<SeedApi.CompletionStreamChunk>>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher<ReadableStream>({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "stream/x-fern-streaming-nullable-condition",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: { ...request, stream: true },
+            responseType: "streaming",
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: new core.Stream({
+                    stream: _response.body,
+                    parse: (data) => data as any,
+                    signal: requestOptions?.abortSignal,
+                    eventShape: {
+                        type: "json",
+                        messageTerminator: "\n",
+                    },
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedApiError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "POST",
+            "/stream/x-fern-streaming-nullable-condition",
+        );
+    }
+
+    /**
+     * Uses x-fern-streaming with stream-condition where the stream field is nullable (type: ["boolean", "null"] in OAS 3.1). Previously, the spread order in the importer caused the nullable type array to overwrite the const literal, producing stream?: true | null instead of stream: true. The const/type override must be spread after the original property.
+     *
+     * @param {SeedApi.StreamXFernStreamingNullableConditionRequest} request
+     * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.streamXFernStreamingNullableCondition({
+     *         query: "query"
+     *     })
+     */
+    public streamXFernStreamingNullableCondition(
+        request: SeedApi.StreamXFernStreamingNullableConditionRequest,
+        requestOptions?: SeedApiClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedApi.CompletionFullResponse> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__streamXFernStreamingNullableCondition(request, requestOptions),
+        );
+    }
+
+    private async __streamXFernStreamingNullableCondition(
+        request: SeedApi.StreamXFernStreamingNullableConditionRequest,
+        requestOptions?: SeedApiClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedApi.CompletionFullResponse>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "stream/x-fern-streaming-nullable-condition",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: { ...request, stream: false },
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as SeedApi.CompletionFullResponse, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedApiError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "POST",
+            "/stream/x-fern-streaming-nullable-condition",
+        );
+    }
+
+    /**
+     * Uses x-fern-streaming with format: sse but no stream-condition. This represents a stream-only endpoint that always returns SSE. There is no non-streaming variant, and the response is always a stream of chunks.
+     */
+    public streamXFernStreamingSseOnly(
+        request: SeedApi.StreamRequest,
+        requestOptions?: SeedApiClient.RequestOptions,
+    ): core.HttpResponsePromise<core.Stream<string>> {
+        return core.HttpResponsePromise.fromPromise(this.__streamXFernStreamingSseOnly(request, requestOptions));
+    }
+
+    private async __streamXFernStreamingSseOnly(
+        request: SeedApi.StreamRequest,
+        requestOptions?: SeedApiClient.RequestOptions,
+    ): Promise<core.WithRawResponse<core.Stream<string>>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher<ReadableStream>({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "stream/x-fern-streaming-sse-only",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: request,
+            responseType: "sse",
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: new core.Stream({
+                    stream: _response.body,
+                    parse: (data) => data as any,
+                    signal: requestOptions?.abortSignal,
+                    eventShape: {
+                        type: "sse",
+                    },
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedApiError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "POST",
+            "/stream/x-fern-streaming-sse-only",
+        );
+    }
+
+    /**
      * Make a passthrough request using the SDK's configured auth, retry, logging, etc.
      * This is useful for making requests to endpoints not yet supported in the SDK.
      * The input can be a URL string, URL object, or Request object. Relative paths are resolved against the configured base URL.
