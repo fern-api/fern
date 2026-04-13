@@ -1011,7 +1011,14 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         const orphanedParents = new Set<TypeId>();
         for (const [inlineTypeId, parentTypeId] of parentMap) {
             let currentParent: TypeId | undefined = parentTypeId;
+            const visitedInChain = new Set<TypeId>();
             while (currentParent != null) {
+                if (visitedInChain.has(currentParent)) {
+                    // Cycle detected — treat as orphaned since no non-inline root exists
+                    orphanedParents.add(currentParent);
+                    break;
+                }
+                visitedInChain.add(currentParent);
                 const currentParentDeclaration = this.ir.types[currentParent];
                 if (currentParentDeclaration?.inline === true && !parentMap.has(currentParent)) {
                     // This parent is inline but has no parent itself — it's orphaned
