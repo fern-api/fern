@@ -172,8 +172,10 @@ runs:
           echo "========================================"
           tail -30 "$LOG_FILE"
           echo "========================================"
-          # Extract error lines for the JSONL record
-          ERROR_MSG=$(grep -i '\[error\]\|Error:\|Failed\|error' "$LOG_FILE" | tail -3 | tr '\n' ' ' | head -c 200)
+          # Capture the last few lines of output — these typically contain the
+          # real failure reason.  The previous grep-based approach was too noisy
+          # (it matched summary lines like "Found 0 errors and 26 warnings").
+          ERROR_MSG=$(tail -5 "$LOG_FILE" | tr '\n' ' | ' | head -c 300)
         fi
 
         echo "Duration: ${DURATION}s (exit ${EXIT_CODE}, ${VERSIONS_FOUND} versions)"
