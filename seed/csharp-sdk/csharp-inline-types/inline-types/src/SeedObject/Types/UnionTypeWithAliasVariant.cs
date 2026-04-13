@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedObject.Core;
 
 namespace SeedObject;
@@ -64,7 +64,9 @@ public record UnionTypeWithAliasVariant
     public SeedObject.AliasVariantType AsAliasVariant() =>
         IsAliasVariant
             ? (SeedObject.AliasVariantType)Value!
-            : throw new System.Exception("UnionTypeWithAliasVariant.Type is not 'aliasVariant'");
+            : throw new global::System.Exception(
+                "UnionTypeWithAliasVariant.Type is not 'aliasVariant'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="SeedObject.NonAliasVariant"/> if <see cref="Type"/> is 'nonAliasVariant', otherwise throws an exception.
@@ -73,7 +75,9 @@ public record UnionTypeWithAliasVariant
     public SeedObject.NonAliasVariant AsNonAliasVariant() =>
         IsNonAliasVariant
             ? (SeedObject.NonAliasVariant)Value!
-            : throw new System.Exception("UnionTypeWithAliasVariant.Type is not 'nonAliasVariant'");
+            : throw new global::System.Exception(
+                "UnionTypeWithAliasVariant.Type is not 'nonAliasVariant'"
+            );
 
     public T Match<T>(
         Func<SeedObject.AliasVariantType, T> onAliasVariant,
@@ -150,12 +154,12 @@ public record UnionTypeWithAliasVariant
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<UnionTypeWithAliasVariant>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(UnionTypeWithAliasVariant).IsAssignableFrom(typeToConvert);
 
         public override UnionTypeWithAliasVariant Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -218,6 +222,27 @@ public record UnionTypeWithAliasVariant
                 } ?? new JsonObject();
             json["type"] = value.Type;
             json.WriteTo(writer, options);
+        }
+
+        public override UnionTypeWithAliasVariant ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new JsonException("The JSON property name could not be read as a string.");
+            return new UnionTypeWithAliasVariant(stringValue, stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            UnionTypeWithAliasVariant value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Type);
         }
     }
 
