@@ -26,7 +26,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
     }): Promise<string> {
         const code = this.buildCodeBlock({ endpoint, snippet: request, options });
         return code.toString({
-            namespace: "Usage",
+            namespace: "Examples",
             generation: this.generation,
             allNamespaceSegments: new Set(),
             allTypeClassReferences: new Map(),
@@ -49,7 +49,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
     }): string {
         const code = this.buildCodeBlock({ endpoint, snippet: request, options });
         return code.toString({
-            namespace: "Usage",
+            namespace: "Examples",
             generation: this.generation,
             allNamespaceSegments: new Set(),
             allTypeClassReferences: new Map(),
@@ -109,9 +109,12 @@ export class EndpointSnippetGenerator extends WithGeneration {
 
     private buildFullCodeBlock({ body, options }: { body: ast.CodeBlock; options: Options }): ast.AstNode {
         const config = this.getConfig(options);
+        const methodName = config.fullStyleMethodName ?? config.fullStyleClassName ?? "Example";
         const class_ = this.csharp.class_({
-            name: config.fullStyleClassName ?? "Example",
-            namespace: "Usage",
+            name: "Examples",
+            namespace: "Examples",
+            partial: true,
+            skipNamespaceDeclaration: true,
             access: ast.Access.Public
         });
 
@@ -120,7 +123,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
         class_.addNamespaceReference(this.Types.RootClientForSnippets.namespace);
 
         class_.addMethod({
-            name: "Do",
+            name: methodName,
             access: ast.Access.Public,
             isAsync: true,
             parameters: [],

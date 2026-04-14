@@ -35,12 +35,12 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
         const queryParameters: QueryParameter[] = [];
         const headers: HttpHeader[] = [];
 
-        const displayNameExtension = new DisplayNameExtension({
+        const channelDisplayNameExtension = new DisplayNameExtension({
             breadcrumbs: this.breadcrumbs,
-            channel: this.channel,
+            node: this.channel,
             context: this.context
         });
-        const displayName = displayNameExtension.convert() ?? this.websocketGroup?.join(".");
+        const displayName = channelDisplayNameExtension.convert() ?? this.websocketGroup?.join(".");
 
         if (this.channel.parameters) {
             this.convertPathParameters({
@@ -240,9 +240,15 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
             });
 
             const messageType = origin === "server" ? "subscribe" : "publish";
+            const operationDisplayNameExtension = new DisplayNameExtension({
+                breadcrumbs: [...this.breadcrumbs, messageType],
+                node: operation,
+                context: this.context
+            });
+            const operationDisplayName = operationDisplayNameExtension.convert() ?? messageType;
             return {
                 type: messageType,
-                displayName: messageType,
+                displayName: operationDisplayName,
                 origin,
                 body,
                 availability: context.getAvailability({

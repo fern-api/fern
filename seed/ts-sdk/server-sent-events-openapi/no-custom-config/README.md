@@ -10,6 +10,7 @@ The Seed TypeScript library provides convenient access to the Seed APIs from Typ
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
+- [Request and Response Types](#request-and-response-types)
 - [Exception Handling](#exception-handling)
 - [Streaming Response](#streaming-response)
 - [Advanced](#advanced)
@@ -46,6 +47,19 @@ const response = await client.streamProtocolNoCollision({});
 for await (const item of response) {
     console.log(item);
 }
+```
+
+## Request and Response Types
+
+The SDK exports all request and response types as TypeScript interfaces. Simply import them with the
+following namespace:
+
+```typescript
+import { SeedApi } from "@fern/server-sent-events-openapi";
+
+const request: SeedApi.StreamXFernStreamingConditionStreamRequest = {
+    ...
+};
 ```
 
 ## Exception Handling

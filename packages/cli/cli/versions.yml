@@ -1,4 +1,49 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.68.5
+  changelogEntry:
+    - summary: |
+        Migrate CLI to a unified error system using a shared CliError class with typed error codes.
+        Error codes drive Sentry reporting eligibility; unclassified errors are temporarily suppressed
+        from Sentry until all call sites are migrated.
+      type: chore
+  createdAt: "2026-04-14"
+  irVersion: 66
+- version: 4.68.4
+  changelogEntry:
+    - summary: |
+        Deduplicate global headers when merging IRs from multiple OpenAPI specs. Previously, if multiple specs shared the same `globalHeaderOverrides` from `generators.yml`, the same header would appear once per spec in the merged IR.
+      type: fix
+  createdAt: "2026-04-14"
+  irVersion: 66
+- version: 4.68.3
+  changelogEntry:
+    - summary: |
+        Fix global headers from `generators.yml` not appearing in documentation endpoints. The new OpenAPI v3 parser (`openapi-to-ir`) had a TODO placeholder but never converted `globalHeaderOverrides` into IR headers.
+      type: fix
+  createdAt: "2026-04-14"
+  irVersion: 66
+- version: 4.68.2
+  changelogEntry:
+    - summary: |
+        Fix an issue where `api:<apiName>:METHOD/path` links worked on published docs sites but did not resolve in `fern docs dev`.
+      type: fix
+  createdAt: "2026-04-14"
+  irVersion: 66
+- version: 4.68.1
+  changelogEntry:
+    - summary: |
+        Fix CLI blocking when PostHog is unreachable by adding a 3-second timeout
+        and error handling to analytics flush calls.
+      type: fix
+  createdAt: "2026-04-13"
+  irVersion: 66
+- version: 4.68.0
+  changelogEntry:
+    - summary: |
+        Add support for `x-fern-display-name` on AsyncAPI operations. This allows setting friendly display names on AsyncAPI v2 publish/subscribe operations and v3 operations, which is useful when operation keys need to be normalized (e.g. for versioned endpoints) but you still want readable names in docs.
+      type: feat
+  createdAt: "2026-04-13"
+  irVersion: 66
 - version: 4.67.1
   changelogEntry:
     - summary: |

@@ -606,6 +606,23 @@ class SdkGenerator(AbstractGenerator):
     ) -> AST.ClassDeclaration:
         params = root_client.init_parameters if root_client.init_parameters is not None else root_client.parameters
 
+        if root_client.constructor_overloads is not None:
+            # When the base class has overloaded __init__ (e.g. OAuth + token),
+            # mirror the overloads on the wrapper and use **kwargs pass-through
+            # so the call to super().__init__() satisfies mypy without type: ignore.
+            def write_kwargs_super_init(writer: AST.NodeWriter) -> None:
+                writer.write_line("super().__init__(**kwargs)")
+
+            return AST.ClassDeclaration(
+                name=class_name,
+                extends=[base_class_ref],
+                constructor=AST.ClassConstructor(
+                    signature=AST.FunctionSignature(include_kwargs=True),
+                    body=AST.CodeWriter(write_kwargs_super_init),
+                    overloads=root_client.constructor_overloads,
+                ),
+            )
+
         named_params = [
             AST.NamedFunctionParameter(
                 name=param.constructor_parameter_name,

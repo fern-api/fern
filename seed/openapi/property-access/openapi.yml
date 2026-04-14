@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: property-access
-  version: ''
+  version: 0.0.0
 paths:
   /users:
     post:
@@ -11,7 +11,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -101,8 +101,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - user
+                  const: user
             - $ref: '#/components/schemas/User'
           required:
             - type
@@ -110,8 +109,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - admin
+              const: admin
             admin:
               $ref: '#/components/schemas/Admin'
           required:
@@ -120,8 +118,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - empty
+              const: empty
           required:
             - type
       description: Example of an discriminated union

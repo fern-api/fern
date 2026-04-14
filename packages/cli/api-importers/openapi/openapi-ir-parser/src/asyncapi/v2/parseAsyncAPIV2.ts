@@ -326,6 +326,10 @@ export function parseAsyncAPIV2({
                 messages.push({
                     origin: "client",
                     name: "publish",
+                    displayName:
+                        channel.publish != null
+                            ? getExtension<string>(channel.publish, FernAsyncAPIExtension.FERN_DISPLAY_NAME)
+                            : undefined,
                     body: convertSchemaWithExampleToSchema(publishSchema),
                     methodName:
                         channel.publish != null
@@ -337,6 +341,10 @@ export function parseAsyncAPIV2({
                 messages.push({
                     origin: "server",
                     name: "subscribe",
+                    displayName:
+                        channel.subscribe != null
+                            ? getExtension<string>(channel.subscribe, FernAsyncAPIExtension.FERN_DISPLAY_NAME)
+                            : undefined,
                     body: convertSchemaWithExampleToSchema(subscribeSchema),
                     methodName:
                         channel.subscribe != null

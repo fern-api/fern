@@ -2,6 +2,7 @@ import { Log, logErrorMessage } from "@fern-api/cli-logger";
 import { addPrefixToString } from "@fern-api/core-utils";
 import { createLogger, LogLevel } from "@fern-api/logger";
 import {
+    CliError,
     CreateInteractiveTaskParams,
     Finishable,
     InteractiveTaskContext,
@@ -11,7 +12,10 @@ import {
     TaskContext,
     TaskResult
 } from "@fern-api/task-context";
+
 import chalk from "chalk";
+
+import { reportError } from "../telemetry/reportError.js";
 
 export declare namespace TaskContextImpl {
     export interface Init {
@@ -23,7 +27,8 @@ export declare namespace TaskContextImpl {
          */
         onResult?: (result: TaskResult) => void;
         shouldBufferLogs: boolean;
-        instrumentPostHogEvent: (event: PosthogEvent) => Promise<void>;
+        instrumentPostHogEvent: (event: PosthogEvent) => void;
+        captureException?: (error: unknown, code?: CliError.Code) => void;
     }
 }
 
@@ -36,14 +41,16 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
     private bufferedLogs: Log[] = [];
     protected status: "notStarted" | "running" | "finished" = "notStarted";
     private onResult: ((result: TaskResult) => void) | undefined;
-    private instrumentPostHogEventImpl: (event: PosthogEvent) => Promise<void>;
+    private instrumentPostHogEventImpl: (event: PosthogEvent) => void;
+    private captureExceptionImpl?: (error: unknown, code?: CliError.Code) => void;
     public constructor({
         logImmediately,
         logPrefix,
         takeOverTerminal,
         onResult,
         shouldBufferLogs,
-        instrumentPostHogEvent
+        instrumentPostHogEvent,
+        captureException
     }: TaskContextImpl.Init) {
         this.logImmediately = logImmediately;
         this.logPrefix = logPrefix ?? "";
@@ -51,6 +58,7 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
         this.onResult = onResult;
         this.shouldBufferLogs = shouldBufferLogs;
         this.instrumentPostHogEventImpl = instrumentPostHogEvent;
+        this.captureExceptionImpl = captureException;
     }
 
     public start(): Finishable & TaskContext {
@@ -74,23 +82,31 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
 
     public takeOverTerminal: (run: () => void | Promise<void>) => Promise<void>;
 
-    public failAndThrow(message?: string, error?: unknown): never {
-        this.failWithoutThrowing(message, error);
+    public failAndThrow(message?: string, error?: unknown, options?: { code?: CliError.Code }): never {
+        this.failWithoutThrowing(message, error, options);
         this.finish();
         throw new TaskAbortSignal();
     }
 
-    public failWithoutThrowing(message?: string, error?: unknown): void {
-        logErrorMessage({ message, error, logger: this.logger });
+    public failWithoutThrowing(message?: string, error?: unknown, options?: { code?: CliError.Code }): void {
         this.result = TaskResult.Failure;
+        if (error instanceof TaskAbortSignal) {
+            return;
+        }
+        logErrorMessage({ message, error, logger: this.logger });
+        reportError(this, error, { ...options, message });
+    }
+
+    public captureException(error: unknown, code?: CliError.Code): void {
+        this.captureExceptionImpl?.(error, code);
     }
 
     public getResult(): TaskResult {
         return this.result;
     }
 
-    public async instrumentPostHogEvent(event: PosthogEvent): Promise<void> {
-        await this.instrumentPostHogEventImpl(event);
+    public instrumentPostHogEvent(event: PosthogEvent): void {
+        this.instrumentPostHogEventImpl(event);
     }
 
     protected logAtLevel(level: LogLevel, ...parts: string[]): void {
@@ -132,7 +148,8 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
             takeOverTerminal: this.takeOverTerminal,
             onResult: this.onResult,
             shouldBufferLogs: this.shouldBufferLogs,
-            instrumentPostHogEvent: async (event) => await this.instrumentPostHogEventImpl(event)
+            instrumentPostHogEvent: (event) => this.instrumentPostHogEventImpl(event),
+            captureException: this.captureExceptionImpl
         });
         this.subtasks.push(subtask);
         return subtask;

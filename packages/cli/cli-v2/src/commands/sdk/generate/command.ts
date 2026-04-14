@@ -3,6 +3,7 @@ import type { Audiences } from "@fern-api/configuration";
 import type { ContainerRunner } from "@fern-api/core-utils";
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, resolve } from "@fern-api/fs-utils";
+import { CliError } from "@fern-api/task-context";
 import { ValidationIssue } from "@fern-api/yaml-loader";
 import chalk from "chalk";
 import { readdir } from "fs/promises";
@@ -15,7 +16,6 @@ import { ApiSpecResolver } from "../../../api/resolver/ApiSpecResolver.js";
 import { GENERATE_COMMAND_TIMEOUT_MS } from "../../../constants.js";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
-import { CliError } from "../../../errors/CliError.js";
 import { SourcedValidationError } from "../../../errors/SourcedValidationError.js";
 import { SdkChecker } from "../../../sdk/checker/SdkChecker.js";
 import { LANGUAGES, type Language } from "../../../sdk/config/Language.js";
@@ -150,7 +150,8 @@ export class GenerateCommand {
             throw new CliError({
                 message:
                     `No fern.yml found, either run 'fern init' or specify all of the required flags:\n\n` +
-                    missingFlags.map((flag) => `  ${flag}`).join("\n")
+                    missingFlags.map((flag) => `  ${flag}`).join("\n"),
+                code: CliError.Code.ConfigError
             });
         }
 
@@ -225,13 +226,13 @@ export class GenerateCommand {
                 }
             }
             if (sdkCheckResult.errorCount > 0) {
-                throw CliError.exit();
+                throw new CliError({ code: CliError.Code.ValidationError });
             }
         }
 
         const validTargets = targets.filter((t) => checkResult.validApis.has(t.api));
         if (validTargets.length === 0) {
-            throw CliError.exit();
+            throw new CliError({ code: CliError.Code.ValidationError });
         }
 
         const pipeline = new GeneratorPipeline({
@@ -277,7 +278,7 @@ export class GenerateCommand {
             if (outputPath != null) {
                 const { shouldProceed } = await this.checkOutputDirectory({ context, args, outputPath });
                 if (!shouldProceed) {
-                    throw new CliError({ message: "Generation cancelled." });
+                    throw new CliError({ message: "Generation cancelled.", code: CliError.Code.ConfigError });
                 }
             }
         }
@@ -301,7 +302,10 @@ export class GenerateCommand {
                 const task = taskGroup.getTask(target.name);
                 if (task == null) {
                     // This should be unreachable.
-                    throw new CliError({ message: `Internal error; task '${target.name}' not found` });
+                    throw new CliError({
+                        message: `Internal error; task '${target.name}' not found`,
+                        code: CliError.Code.InternalError
+                    });
                 }
 
                 task.start();
@@ -353,7 +357,7 @@ export class GenerateCommand {
         });
 
         if (summary.failedCount > 0) {
-            throw CliError.exit();
+            throw new CliError({ code: CliError.Code.ContainerError });
         }
     }
 
@@ -367,17 +371,27 @@ export class GenerateCommand {
         targets: Target[];
     }): void {
         if (args["container-engine"] != null && !args.local) {
-            throw new CliError({ message: "The --container-engine flag can only be used with --local" });
+            throw new CliError({
+                message: "The --container-engine flag can only be used with --local",
+                code: CliError.Code.ConfigError
+            });
         }
         if (args.group != null && args.target != null) {
-            throw new CliError({ message: "The --group and --target flags cannot be used together" });
+            throw new CliError({
+                message: "The --group and --target flags cannot be used together",
+                code: CliError.Code.ConfigError
+            });
         }
         if (targets.length > 1 && args.output != null) {
-            throw new CliError({ message: "The --output flag can only be used when generating a single target" });
+            throw new CliError({
+                message: "The --output flag can only be used when generating a single target",
+                code: CliError.Code.ConfigError
+            });
         }
         if (args["skip-fernignore"] && args.fernignore != null) {
             throw new CliError({
-                message: "The --skip-fernignore and --fernignore flags cannot be used together."
+                message: "The --skip-fernignore and --fernignore flags cannot be used together.",
+                code: CliError.Code.ConfigError
             });
         }
         const issues: ValidationIssue[] = [];
@@ -440,7 +454,8 @@ export class GenerateCommand {
                 throw new CliError({
                     message:
                         `Remote generation is not supported with a git URL for --output\n\n` +
-                        `  Use --local or specify a local filesystem path for --output`
+                        `  Use --local or specify a local filesystem path for --output`,
+                    code: CliError.Code.ConfigError
                 });
             }
             const token = process.env.GITHUB_TOKEN ?? process.env.GIT_TOKEN;
@@ -451,7 +466,8 @@ export class GenerateCommand {
                         `  Set GITHUB_TOKEN or GIT_TOKEN:\n` +
                         `    export GITHUB_TOKEN=ghp_xxx\n\n` +
                         `  Or use a local path:\n` +
-                        `    --output ./my-sdk`
+                        `    --output ./my-sdk`,
+                    code: CliError.Code.AuthError
                 });
             }
             return {
@@ -609,7 +625,13 @@ export function addGenerateCommand(cli: Argv<GlobalArgs>): void {
         async (context, args) => {
             const timeout = new Promise<never>((_, reject) => {
                 setTimeout(
-                    () => reject(new CliError({ message: "Generation timed out after 10 minutes." })),
+                    () =>
+                        reject(
+                            new CliError({
+                                message: "Generation timed out after 10 minutes.",
+                                code: CliError.Code.NetworkError
+                            })
+                        ),
                     GENERATE_COMMAND_TIMEOUT_MS
                 ).unref();
             });

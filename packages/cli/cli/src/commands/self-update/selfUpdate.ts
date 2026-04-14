@@ -1,5 +1,6 @@
 import { Logger } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
+import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
 import { realpath } from "fs/promises";
 import { dirname, normalize, sep } from "path";
@@ -274,7 +275,7 @@ export async function selfUpdate({
         }
         errorMessage += "\n\nPlease manually update using your package manager (npm, pnpm, yarn, bun, or brew).";
         errorMessage += "\nFor more diagnostic information, run with: FERN_LOG_LEVEL=debug fern self-update";
-        return cliContext.failAndThrow(errorMessage);
+        return cliContext.failAndThrow(errorMessage, undefined, { code: CliError.Code.EnvironmentError });
     }
 
     cliContext.logger.info(`Detected installation method: ${chalk.cyan(installationMethod.type)}`);
@@ -292,7 +293,9 @@ export async function selfUpdate({
 
     if (updateCommand.length === 0) {
         return cliContext.failAndThrow(
-            `Unable to construct update command for installation method: ${installationMethod.type}`
+            `Unable to construct update command for installation method: ${installationMethod.type}`,
+            undefined,
+            { code: CliError.Code.EnvironmentError }
         );
     }
 
@@ -316,7 +319,7 @@ export async function selfUpdate({
 
     const [command, ...args] = updateCommand;
     if (command == null) {
-        return cliContext.failAndThrow("Invalid update command");
+        return cliContext.failAndThrow("Invalid update command", undefined, { code: CliError.Code.InternalError });
     }
 
     const { failed, stderr } = await loggingExeca(cliContext.logger, command, args, {
@@ -326,7 +329,9 @@ export async function selfUpdate({
 
     if (failed) {
         cliContext.logger.error(`Failed to update Fern CLI: ${stderr}`);
-        return cliContext.failAndThrow("Update failed. Please try updating manually.");
+        return cliContext.failAndThrow("Update failed. Please try updating manually.", undefined, {
+            code: CliError.Code.EnvironmentError
+        });
     }
 
     cliContext.logger.info(chalk.green("✓ Fern CLI updated successfully!"));

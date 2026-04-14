@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: OAuth Client Credentials OpenAPI
-  version: ''
+  version: 0.0.0
 paths:
   /identity/token:
     post:
@@ -32,10 +32,12 @@ paths:
               properties:
                 username:
                   type: string
-                  example: username
+                  examples:
+                    - username
                 password:
                   type: string
-                  example: password
+                  examples:
+                    - password
               required:
                 - username
                 - password
@@ -79,7 +81,6 @@ paths:
           required: true
           schema:
             type: string
-          example: plantId
           examples:
             Example1:
               value: plantId
@@ -107,13 +108,16 @@ components:
       properties:
         access_token:
           type: string
-          example: access_token
+          examples:
+            - access_token
         expires_in:
           type: integer
-          example: 1
+          examples:
+            - 1
         refresh_token:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
       required:
         - access_token
         - expires_in
@@ -123,13 +127,16 @@ components:
       properties:
         id:
           type: string
-          example: id
+          examples:
+            - id
         name:
           type: string
-          example: name
+          examples:
+            - name
         species:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
       required:
         - id
         - name

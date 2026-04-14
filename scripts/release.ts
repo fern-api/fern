@@ -229,9 +229,13 @@ function updateVersionsFile(
         irVersion
     };
 
-    // Use yaml.stringify() for the new entry
-    // Note: We wrap in array to get the "- version:" format, then add extra newline
-    const newEntryYaml = stringifyYaml([newVersionEntry]);
+    // Use yaml.stringify() for the new entry with literal block style (|) for multi-line summaries.
+    // Without blockQuote: "literal", the yaml library defaults to folded style (>) which
+    // re-wraps lines and inserts blank lines, breaking the formatting of versions.yml.
+    const rawYaml = stringifyYaml([newVersionEntry], { blockQuote: "literal", lineWidth: 120 });
+
+    // Quote the createdAt date string to match existing versions.yml style (e.g., "2026-04-13")
+    const newEntryYaml = rawYaml.replace(/createdAt: (\d{4}-\d{2}-\d{2})/, 'createdAt: "$1"');
 
     // Find where to insert (after the yaml-language-server comment if present)
     const lines = existingContent.split("\n");

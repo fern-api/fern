@@ -33,8 +33,9 @@ fixtures:
       outputFolder: override
     - customConfig:
         customOverrides:
-          info: 
-            license: MIT
+          info:
+            license:
+              name: MIT
       outputFolder: custom-overrides
     - customConfig:
         filename: imdb.yaml

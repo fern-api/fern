@@ -19,6 +19,8 @@ import {
     UnionTypeDeclaration
 } from "@fern-api/ir-sdk";
 import { getOriginalName, getWireValue } from "@fern-api/ir-utils";
+import { CliError } from "@fern-api/task-context";
+
 import isEqual from "lodash-es/isEqual";
 import { OpenAPIV3 } from "openapi-types";
 import { convertObject } from "./convertObject.js";
@@ -99,7 +101,10 @@ export function convertType(typeDeclaration: TypeDeclaration, ir: IntermediateRe
             return convertUndiscriminatedUnion({ undiscriminatedUnionDeclaration, docs });
         },
         _other: () => {
-            throw new Error("Encountered unknown type: " + shape.type);
+            throw new CliError({
+                message: "Encountered unknown type: " + shape.type,
+                code: CliError.Code.InternalError
+            });
         }
     });
     return {
@@ -180,7 +185,10 @@ export function convertUnion({
                 required: [getWireValue(unionTypeDeclaration.discriminant)]
             }),
             _other: () => {
-                throw new Error("Unknown SingleUnionTypeProperties: " + singleUnionType.shape.propertiesType);
+                throw new CliError({
+                    message: "Unknown SingleUnionTypeProperties: " + singleUnionType.shape.propertiesType,
+                    code: CliError.Code.InternalError
+                });
             }
         });
     });
@@ -241,7 +249,10 @@ export function convertTypeReference(typeReference: TypeReference): OpenApiCompo
             return {};
         },
         _other: () => {
-            throw new Error("Encountered unknown typeReference: " + typeReference.type);
+            throw new CliError({
+                message: "Encountered unknown typeReference: " + typeReference.type,
+                code: CliError.Code.InternalError
+            });
         }
     });
 }
@@ -328,7 +339,10 @@ function convertPrimitiveType(primitiveType: PrimitiveType): OpenAPIV3.NonArrayS
                     };
                 },
                 _other: () => {
-                    throw new Error("Encountered unknown primitiveType: " + primitiveType.v1);
+                    throw new CliError({
+                        message: "Encountered unknown primitiveType: " + primitiveType.v1,
+                        code: CliError.Code.InternalError
+                    });
                 }
             }) ?? {}
         );
@@ -419,7 +433,10 @@ function convertPrimitiveType(primitiveType: PrimitiveType): OpenAPIV3.NonArrayS
             };
         },
         _other: () => {
-            throw new Error("Encountered unknown primitiveType: " + primitiveType.v2);
+            throw new CliError({
+                message: "Encountered unknown primitiveType: " + primitiveType.v2,
+                code: CliError.Code.InternalError
+            });
         }
     });
 }
@@ -484,7 +501,10 @@ function convertContainerType(containerType: ContainerType): OpenApiComponentSch
             });
         },
         _other: () => {
-            throw new Error("Encountered unknown containerType: " + containerType.type);
+            throw new CliError({
+                message: "Encountered unknown containerType: " + containerType.type,
+                code: CliError.Code.InternalError
+            });
         }
     });
 }

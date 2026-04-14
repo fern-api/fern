@@ -223,3 +223,291 @@ func TestStreamOasSpecNativeWithWireMock(
 	require.NoError(t, invocationErr, "Client method call should succeed")
 	VerifyRequestCount(t, "TestStreamOasSpecNativeWithWireMock", "POST", "/stream/oas-spec-native", nil, 1)
 }
+
+func TestStreamXFernStreamingConditionStreamWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewClient(
+		option.WithBaseURL(WireMockBaseURL),
+	)
+	request := &fern.StreamXFernStreamingConditionStreamRequest{
+		Query: "query",
+	}
+	_, invocationErr := client.StreamXFernStreamingConditionStream(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestStreamXFernStreamingConditionStreamWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestStreamXFernStreamingConditionStreamWithWireMock", "POST", "/stream/x-fern-streaming-condition", nil, 1)
+}
+
+func TestStreamXFernStreamingConditionStreamWithWireMock2(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewClient(
+		option.WithBaseURL(WireMockBaseURL),
+	)
+	request := &fern.StreamXFernStreamingConditionStreamRequest{
+		Query: "query",
+	}
+	_, invocationErr := client.StreamXFernStreamingConditionStream(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestStreamXFernStreamingConditionStreamWithWireMock2"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestStreamXFernStreamingConditionStreamWithWireMock2", "POST", "/stream/x-fern-streaming-condition", nil, 1)
+}
+
+func TestStreamXFernStreamingSharedSchemaStreamWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewClient(
+		option.WithBaseURL(WireMockBaseURL),
+	)
+	request := &fern.StreamXFernStreamingSharedSchemaStreamRequest{
+		Prompt: "prompt",
+		Model:  "model",
+	}
+	_, invocationErr := client.StreamXFernStreamingSharedSchemaStream(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestStreamXFernStreamingSharedSchemaStreamWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestStreamXFernStreamingSharedSchemaStreamWithWireMock", "POST", "/stream/x-fern-streaming-shared-schema", nil, 1)
+}
+
+func TestStreamXFernStreamingSharedSchemaStreamWithWireMock2(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewClient(
+		option.WithBaseURL(WireMockBaseURL),
+	)
+	request := &fern.StreamXFernStreamingSharedSchemaStreamRequest{
+		Prompt: "prompt",
+		Model:  "model",
+	}
+	_, invocationErr := client.StreamXFernStreamingSharedSchemaStream(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestStreamXFernStreamingSharedSchemaStreamWithWireMock2"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestStreamXFernStreamingSharedSchemaStreamWithWireMock2", "POST", "/stream/x-fern-streaming-shared-schema", nil, 1)
+}
+
+func TestValidateCompletionWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewClient(
+		option.WithBaseURL(WireMockBaseURL),
+	)
+	request := &fern.SharedCompletionRequest{
+		Prompt: "prompt",
+		Model:  "model",
+	}
+	_, invocationErr := client.ValidateCompletion(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestValidateCompletionWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestValidateCompletionWithWireMock", "POST", "/validate-completion", nil, 1)
+}
+
+func TestStreamXFernStreamingUnionStreamWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewClient(
+		option.WithBaseURL(WireMockBaseURL),
+	)
+	request := &fern.StreamXFernStreamingUnionStreamRequest{
+		Message: &fern.UnionStreamMessageVariant{
+			Prompt:  "prompt",
+			Message: "message",
+			StreamResponse: fern.Bool(
+				true,
+			),
+		},
+	}
+	_, invocationErr := client.StreamXFernStreamingUnionStream(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestStreamXFernStreamingUnionStreamWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestStreamXFernStreamingUnionStreamWithWireMock", "POST", "/stream/x-fern-streaming-union", nil, 1)
+}
+
+func TestStreamXFernStreamingUnionStreamWithWireMock2(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewClient(
+		option.WithBaseURL(WireMockBaseURL),
+	)
+	request := &fern.StreamXFernStreamingUnionStreamRequest{
+		Message: &fern.UnionStreamMessageVariant{
+			Prompt:  "prompt",
+			Message: "message",
+			StreamResponse: fern.Bool(
+				false,
+			),
+		},
+	}
+	_, invocationErr := client.StreamXFernStreamingUnionStream(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestStreamXFernStreamingUnionStreamWithWireMock2"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestStreamXFernStreamingUnionStreamWithWireMock2", "POST", "/stream/x-fern-streaming-union", nil, 1)
+}
+
+func TestValidateUnionRequestWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewClient(
+		option.WithBaseURL(WireMockBaseURL),
+	)
+	request := &fern.UnionStreamRequestBase{
+		Prompt: "prompt",
+	}
+	_, invocationErr := client.ValidateUnionRequest(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestValidateUnionRequestWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestValidateUnionRequestWithWireMock", "POST", "/validate-union-request", nil, 1)
+}
+
+func TestStreamXFernStreamingNullableConditionStreamWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewClient(
+		option.WithBaseURL(WireMockBaseURL),
+	)
+	request := &fern.StreamXFernStreamingNullableConditionStreamRequest{
+		Query: "query",
+	}
+	_, invocationErr := client.StreamXFernStreamingNullableConditionStream(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestStreamXFernStreamingNullableConditionStreamWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestStreamXFernStreamingNullableConditionStreamWithWireMock", "POST", "/stream/x-fern-streaming-nullable-condition", nil, 1)
+}
+
+func TestStreamXFernStreamingNullableConditionStreamWithWireMock2(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewClient(
+		option.WithBaseURL(WireMockBaseURL),
+	)
+	request := &fern.StreamXFernStreamingNullableConditionStreamRequest{
+		Query: "query",
+	}
+	_, invocationErr := client.StreamXFernStreamingNullableConditionStream(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestStreamXFernStreamingNullableConditionStreamWithWireMock2"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestStreamXFernStreamingNullableConditionStreamWithWireMock2", "POST", "/stream/x-fern-streaming-nullable-condition", nil, 1)
+}
+
+func TestStreamXFernStreamingSseOnlyWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewClient(
+		option.WithBaseURL(WireMockBaseURL),
+	)
+	request := &fern.StreamRequest{}
+	_, invocationErr := client.StreamXFernStreamingSseOnly(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestStreamXFernStreamingSseOnlyWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestStreamXFernStreamingSseOnlyWithWireMock", "POST", "/stream/x-fern-streaming-sse-only", nil, 1)
+}

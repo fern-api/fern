@@ -541,6 +541,33 @@ test_e2e_flat_layout() {
 }
 
 test_e2e_flat_layout
+
+# Test 23: Report includes sentinel marker for comment upsert
+test_sentinel_marker() {
+  echo "Test: Report includes sentinel HTML comment for upsert"
+  setup_dirs
+  echo '{"generator":"ts-sdk","spec":"square","duration_seconds":200,"exit_code":0}' > "$PR_DIR/ts-sdk.jsonl"
+
+  OUTPUT=$(bash "$REPORT_SCRIPT" "$PR_DIR" "$MAIN_DIR")
+
+  assert_contains "$OUTPUT" "<!-- fern-sdk-benchmark-results -->" "Has sentinel marker"
+}
+
+test_sentinel_marker
+
+# Test 24: Report includes "Last updated" timestamp
+test_last_updated_timestamp() {
+  echo "Test: Report includes last updated timestamp"
+  setup_dirs
+  echo '{"generator":"ts-sdk","spec":"square","duration_seconds":200,"exit_code":0}' > "$PR_DIR/ts-sdk.jsonl"
+
+  OUTPUT=$(bash "$REPORT_SCRIPT" "$PR_DIR" "$MAIN_DIR")
+
+  assert_contains "$OUTPUT" "Last updated:" "Has last updated timestamp"
+  assert_contains "$OUTPUT" "UTC" "Timestamp includes UTC"
+}
+
+test_last_updated_timestamp
 echo ""
 echo "=== PostHog JSON validation tests ==="
 echo ""
