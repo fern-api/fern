@@ -111,7 +111,8 @@ runs:
         echo "Duration: ${DURATION}s (exit ${EXIT_CODE}, ${VERSIONS_FOUND} versions)"
 
         # Write result as JSON using jq for safe escaping.
-        jq -n \
+        # -c produces compact single-line output required for JSONL format.
+        jq -cn \
           --arg type "docs" \
           --arg spec "combined" \
           --argjson vc "$VERSIONS_FOUND" \
