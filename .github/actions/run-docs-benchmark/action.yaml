@@ -21,15 +21,6 @@ runs:
       run: |
         PAGE_COUNT=37
 
-        # Diagnostic: show what's in the apis directory
-        echo "=== APIs directory contents ==="
-        ls -la benchmarks/fern/apis/ 2>/dev/null || echo "apis/ directory not found"
-        SPEC_COUNT=0
-        for d in benchmarks/fern/apis/square-*/; do
-          [ -f "${d}openapi.json" ] && SPEC_COUNT=$((SPEC_COUNT + 1))
-        done
-        echo "Versioned spec directories with openapi.json: ${SPEC_COUNT}"
-
         bash benchmarks/fern/generate-fixture-versions.sh "$PAGE_COUNT"
 
         # Validate: each version file should reference exactly PAGE_COUNT pages
@@ -80,12 +71,6 @@ runs:
 
         echo "Benchmarking docs generation (${VERSIONS_FOUND} API versions)"
 
-        # Diagnostic: show the generated docs.yml structure
-        echo "=== docs.yml (first 30 lines) ==="
-        head -30 benchmarks/fern/docs.yml
-        echo "=== API workspace directories ==="
-        ls -d benchmarks/fern/apis/*/ 2>/dev/null | head -35
-
         # Use sub-second precision timing (date +%s.%N) since the benchmark
         # may run several minutes and we want accurate measurements.
         START_TIME=$(date +%s.%N)
@@ -120,18 +105,18 @@ runs:
           # Capture the last few lines of output — these typically contain the
           # real failure reason.  The previous grep-based approach was too noisy
           # (it matched summary lines like "Found 0 errors and 26 warnings").
-          ERROR_MSG=$(tail -5 "$LOG_FILE" | tr '\n' ' | ' | head -c 300)
+          ERROR_MSG=$(tail -5 "$LOG_FILE" | sed ':a;N;$!ba;s/\n/ | /g' | head -c 300)
         fi
 
         echo "Duration: ${DURATION}s (exit ${EXIT_CODE}, ${VERSIONS_FOUND} versions)"
 
-        # Write result as JSON (include error message if failed).
-        if [ -n "${ERROR_MSG:-}" ]; then
-          # Escape quotes for JSON
-          ERROR_JSON=$(echo "$ERROR_MSG" | sed 's/"/\\"/g')
-          echo "{\"type\":\"docs\",\"spec\":\"combined\",\"versions_count\":${VERSIONS_FOUND},\"duration_seconds\":${DURATION},\"exit_code\":${EXIT_CODE},\"error\":\"${ERROR_JSON}\"}" \
-            >> "${RESULTS_DIR}/docs.jsonl"
-        else
-          echo "{\"type\":\"docs\",\"spec\":\"combined\",\"versions_count\":${VERSIONS_FOUND},\"duration_seconds\":${DURATION},\"exit_code\":${EXIT_CODE}}" \
-            >> "${RESULTS_DIR}/docs.jsonl"
-        fi
+        # Write result as JSON using jq for safe escaping.
+        jq -n \
+          --arg type "docs" \
+          --arg spec "combined" \
+          --argjson vc "$VERSIONS_FOUND" \
+          --argjson dur "$DURATION" \
+          --argjson ec "$EXIT_CODE" \
+          --arg err "${ERROR_MSG:-}" \
+          '{type:$type, spec:$spec, versions_count:$vc, duration_seconds:$dur, exit_code:$ec} + (if $err != "" then {error:$err} else {} end)' \
+          >> "${RESULTS_DIR}/docs.jsonl"

@@ -27,21 +27,24 @@ def collect_defined_schemas(spec):
     return set(), ""
 
 
-def strip_dangling_refs(obj, defined, prefix):
+def strip_dangling_refs(obj, defined, prefix, counter):
     """Recursively walk the spec and replace dangling $ref objects with
-    an empty object so the surrounding structure stays valid."""
+    an empty object so the surrounding structure stays valid.
+
+    *counter* is a single-element list used to track how many refs were
+    stripped (mutated in place to avoid a global)."""
     if isinstance(obj, dict):
         if "$ref" in obj:
             ref = obj["$ref"]
             if ref.startswith(prefix):
                 name = ref[len(prefix):]
                 if name not in defined:
-                    # Replace the dangling ref with a permissive empty schema
+                    counter[0] += 1
                     return {"type": "object", "description": f"[stripped dangling ref: {name}]"}
             return obj
-        return {k: strip_dangling_refs(v, defined, prefix) for k, v in obj.items()}
+        return {k: strip_dangling_refs(v, defined, prefix, counter) for k, v in obj.items()}
     elif isinstance(obj, list):
-        return [strip_dangling_refs(item, defined, prefix) for item in obj]
+        return [strip_dangling_refs(item, defined, prefix, counter) for item in obj]
     return obj
 
 
@@ -66,14 +69,13 @@ def main():
             json.dump(spec, sys.stdout, indent=2, ensure_ascii=False)
         return
 
-    fixed = strip_dangling_refs(spec, defined, prefix)
+    counter = [0]
+    fixed = strip_dangling_refs(spec, defined, prefix, counter)
 
-    # Count how many refs were stripped
-    original_json = json.dumps(spec)
+    if counter[0] > 0:
+        print(f"Stripped {counter[0]} dangling $ref entries from {path}", file=sys.stderr)
+
     fixed_json = json.dumps(fixed, indent=2, ensure_ascii=False)
-    stripped = fixed_json.count("[stripped dangling ref:")
-    if stripped > 0:
-        print(f"Stripped {stripped} dangling $ref entries from {path}", file=sys.stderr)
 
     if in_place:
         with open(path, "w", encoding="utf-8") as f:

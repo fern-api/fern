@@ -84,6 +84,8 @@ echo ""
 echo "| Fixture | main | PR | Delta |"
 echo "|---------|------|----|-------|"
 
+VERSIONS_COUNT=""
+
 for PR_FILE in "${PR_DIR}"/*.jsonl; do
   [ -f "$PR_FILE" ] || continue
 
