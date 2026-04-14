@@ -88,7 +88,7 @@ describe("CreateTokenCommand", () => {
         const mockGet = vi.fn().mockResolvedValue({
             ok: false,
             error: {
-                _visit: (visitor: any) => visitor._other()
+                _visit: (visitor: { _other: () => void }) => visitor._other()
             }
         });
         vi.mocked(createVenusService).mockReturnValue({
@@ -107,7 +107,7 @@ describe("CreateTokenCommand", () => {
         const mockCreate = vi.fn().mockResolvedValue({
             ok: false,
             error: {
-                _visit: (visitor: any) => visitor.unauthorizedError()
+                _visit: (visitor: { unauthorizedError: () => void }) => visitor.unauthorizedError()
             }
         });
         vi.mocked(createVenusService).mockReturnValue({
@@ -129,7 +129,7 @@ describe("CreateTokenCommand", () => {
         const mockCreate = vi.fn().mockResolvedValue({
             ok: false,
             error: {
-                _visit: (visitor: any) => visitor.organizationNotFoundError()
+                _visit: (visitor: { organizationNotFoundError: () => void }) => visitor.organizationNotFoundError()
             }
         });
         vi.mocked(createVenusService).mockReturnValue({
@@ -149,7 +149,7 @@ describe("CreateTokenCommand", () => {
         const mockCreate = vi.fn().mockResolvedValue({
             ok: false,
             error: {
-                _visit: (visitor: any) => visitor._other()
+                _visit: (visitor: { _other: () => void }) => visitor._other()
             }
         });
         vi.mocked(createVenusService).mockReturnValue({

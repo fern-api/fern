@@ -84,7 +84,7 @@ describe("InviteMemberCommand", () => {
         const mockGet = vi.fn().mockResolvedValue({
             ok: false,
             error: {
-                _visit: (visitor: any) => visitor.unauthorizedError()
+                _visit: (visitor: { unauthorizedError: () => void }) => visitor.unauthorizedError()
             }
         });
         vi.mocked(createVenusService).mockReturnValue({
@@ -107,7 +107,7 @@ describe("InviteMemberCommand", () => {
         const mockInviteUser = vi.fn().mockResolvedValue({
             ok: false,
             error: {
-                _visit: (visitor: any) => visitor.unauthorizedError()
+                _visit: (visitor: { unauthorizedError: () => void }) => visitor.unauthorizedError()
             }
         });
         vi.mocked(createVenusService).mockReturnValue({
@@ -128,7 +128,7 @@ describe("InviteMemberCommand", () => {
         const mockInviteUser = vi.fn().mockResolvedValue({
             ok: false,
             error: {
-                _visit: (visitor: any) => visitor.userIdDoesNotExistError()
+                _visit: (visitor: { userIdDoesNotExistError: () => void }) => visitor.userIdDoesNotExistError()
             }
         });
         vi.mocked(createVenusService).mockReturnValue({
@@ -149,7 +149,7 @@ describe("InviteMemberCommand", () => {
         const mockInviteUser = vi.fn().mockResolvedValue({
             ok: false,
             error: {
-                _visit: (visitor: any) => visitor._other()
+                _visit: (visitor: { _other: () => void }) => visitor._other()
             }
         });
         vi.mocked(createVenusService).mockReturnValue({
