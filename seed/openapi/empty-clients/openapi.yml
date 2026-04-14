@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: empty-clients
-  version: ''
+  version: 0.0.0
 paths: {}
 components:
   schemas:
@@ -23,8 +23,9 @@ components:
         line1:
           type: string
         line2:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         city:
           type: string
         state:
@@ -58,8 +59,9 @@ components:
         line1:
           type: string
         line2:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         city:
           type: string
         state:

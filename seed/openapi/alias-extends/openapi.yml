@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: alias-extends
-  version: ''
+  version: 0.0.0
   description: A Test Definition for extending an alias
 paths:
   /extends/extended-inline-request-body:
@@ -12,7 +12,7 @@ paths:
       parameters: []
       responses:
         '204':
-          description: ''
+          description: No content
       requestBody:
         required: true
         content:
@@ -37,7 +37,8 @@ components:
       properties:
         parent:
           type: string
-          example: Property from the parent
+          examples:
+            - Property from the parent
       required:
         - parent
     Child:
@@ -46,7 +47,8 @@ components:
       properties:
         child:
           type: string
-          example: Property from the child
+          examples:
+            - Property from the child
       required:
         - child
       allOf:

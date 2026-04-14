@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: api
-  version: ''
+  version: 0.0.0
 paths: {}
 components:
   schemas:
@@ -10,8 +10,9 @@ components:
       type: object
       properties:
         child_ref:
-          $ref: '#/components/schemas/ChildType'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/ChildType'
+            - type: 'null'
     ChildType:
       title: ChildType
       type: object
