@@ -46,7 +46,7 @@ describe("RevokeTokenCommand", () => {
         const mockRevoke = vi.fn().mockResolvedValue({ ok: true });
         vi.mocked(createVenusService).mockReturnValue({
             apiKeys: { revokeTokenById: mockRevoke }
-        } as ReturnType<typeof createVenusService>);
+        } as unknown as ReturnType<typeof createVenusService>);
 
         const context = createMockContext();
         await cmd.handle(context, { tokenId: "tok_123" } as RevokeTokenCommand.Args);
@@ -70,12 +70,12 @@ describe("RevokeTokenCommand", () => {
         const mockRevoke = vi.fn().mockResolvedValue({
             ok: false,
             error: {
-                _visit: (visitor: Record<string, () => void>) => visitor.unauthorizedError()
+                _visit: (visitor: any) => visitor.unauthorizedError()
             }
         });
         vi.mocked(createVenusService).mockReturnValue({
             apiKeys: { revokeTokenById: mockRevoke }
-        } as ReturnType<typeof createVenusService>);
+        } as unknown as ReturnType<typeof createVenusService>);
 
         const context = createMockContext();
         await expect(cmd.handle(context, { tokenId: "tok_123" } as RevokeTokenCommand.Args)).rejects.toThrow(CliError);
@@ -88,12 +88,12 @@ describe("RevokeTokenCommand", () => {
         const mockRevoke = vi.fn().mockResolvedValue({
             ok: false,
             error: {
-                _visit: (visitor: Record<string, () => void>) => visitor.tokenNotFoundError()
+                _visit: (visitor: any) => visitor.tokenNotFoundError()
             }
         });
         vi.mocked(createVenusService).mockReturnValue({
             apiKeys: { revokeTokenById: mockRevoke }
-        } as ReturnType<typeof createVenusService>);
+        } as unknown as ReturnType<typeof createVenusService>);
 
         const context = createMockContext();
         await expect(cmd.handle(context, { tokenId: "tok_123" } as RevokeTokenCommand.Args)).rejects.toThrow(CliError);
@@ -106,12 +106,12 @@ describe("RevokeTokenCommand", () => {
         const mockRevoke = vi.fn().mockResolvedValue({
             ok: false,
             error: {
-                _visit: (visitor: Record<string, () => void>) => visitor._other()
+                _visit: (visitor: any) => visitor._other()
             }
         });
         vi.mocked(createVenusService).mockReturnValue({
             apiKeys: { revokeTokenById: mockRevoke }
-        } as ReturnType<typeof createVenusService>);
+        } as unknown as ReturnType<typeof createVenusService>);
 
         const context = createMockContext();
         await expect(cmd.handle(context, { tokenId: "tok_123" } as RevokeTokenCommand.Args)).rejects.toThrow(CliError);

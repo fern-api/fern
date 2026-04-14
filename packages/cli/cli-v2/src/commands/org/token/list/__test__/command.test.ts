@@ -71,7 +71,7 @@ describe("ListTokensCommand", () => {
         vi.mocked(createVenusService).mockReturnValue({
             organization: { get: mockGet },
             apiKeys: { getTokensForOrganization: mockGetTokens }
-        } as ReturnType<typeof createVenusService>);
+        } as unknown as ReturnType<typeof createVenusService>);
 
         const context = createMockContext();
         await cmd.handle(context, { org: "acme" } as ListTokensCommand.Args);
@@ -91,7 +91,7 @@ describe("ListTokensCommand", () => {
         vi.mocked(createVenusService).mockReturnValue({
             organization: { get: mockGet },
             apiKeys: { getTokensForOrganization: mockGetTokens }
-        } as ReturnType<typeof createVenusService>);
+        } as unknown as ReturnType<typeof createVenusService>);
 
         const context = createMockContext();
         await cmd.handle(context, { org: "acme" } as ListTokensCommand.Args);
@@ -114,12 +114,12 @@ describe("ListTokensCommand", () => {
         const mockGet = vi.fn().mockResolvedValue({
             ok: false,
             error: {
-                _visit: (visitor: Record<string, () => void>) => visitor.unauthorizedError()
+                _visit: (visitor: any) => visitor.unauthorizedError()
             }
         });
         vi.mocked(createVenusService).mockReturnValue({
             organization: { get: mockGet }
-        } as ReturnType<typeof createVenusService>);
+        } as unknown as ReturnType<typeof createVenusService>);
 
         const context = createMockContext();
         await expect(cmd.handle(context, { org: "acme" } as ListTokensCommand.Args)).rejects.toThrow(CliError);
@@ -135,13 +135,13 @@ describe("ListTokensCommand", () => {
         const mockGetTokens = vi.fn().mockResolvedValue({
             ok: false,
             error: {
-                _visit: (visitor: Record<string, () => void>) => visitor.unauthorizedError()
+                _visit: (visitor: any) => visitor.unauthorizedError()
             }
         });
         vi.mocked(createVenusService).mockReturnValue({
             organization: { get: mockGet },
             apiKeys: { getTokensForOrganization: mockGetTokens }
-        } as ReturnType<typeof createVenusService>);
+        } as unknown as ReturnType<typeof createVenusService>);
 
         const context = createMockContext();
         await expect(cmd.handle(context, { org: "acme" } as ListTokensCommand.Args)).rejects.toThrow(CliError);
@@ -157,13 +157,13 @@ describe("ListTokensCommand", () => {
         const mockGetTokens = vi.fn().mockResolvedValue({
             ok: false,
             error: {
-                _visit: (visitor: Record<string, () => void>) => visitor.organizationNotFoundError()
+                _visit: (visitor: any) => visitor.organizationNotFoundError()
             }
         });
         vi.mocked(createVenusService).mockReturnValue({
             organization: { get: mockGet },
             apiKeys: { getTokensForOrganization: mockGetTokens }
-        } as ReturnType<typeof createVenusService>);
+        } as unknown as ReturnType<typeof createVenusService>);
 
         const context = createMockContext();
         await expect(cmd.handle(context, { org: "acme" } as ListTokensCommand.Args)).rejects.toThrow(CliError);
@@ -177,13 +177,13 @@ describe("ListTokensCommand", () => {
         const mockGetTokens = vi.fn().mockResolvedValue({
             ok: false,
             error: {
-                _visit: (visitor: Record<string, () => void>) => visitor._other()
+                _visit: (visitor: any) => visitor._other()
             }
         });
         vi.mocked(createVenusService).mockReturnValue({
             organization: { get: mockGet },
             apiKeys: { getTokensForOrganization: mockGetTokens }
-        } as ReturnType<typeof createVenusService>);
+        } as unknown as ReturnType<typeof createVenusService>);
 
         const context = createMockContext();
         await expect(cmd.handle(context, { org: "acme" } as ListTokensCommand.Args)).rejects.toThrow(CliError);

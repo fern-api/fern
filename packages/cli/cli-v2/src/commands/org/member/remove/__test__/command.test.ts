@@ -54,7 +54,7 @@ describe("RemoveMemberCommand", () => {
         const mockRemoveUser = vi.fn().mockResolvedValue({ ok: true });
         vi.mocked(createVenusService).mockReturnValue({
             organization: { get: mockGet, removeUser: mockRemoveUser }
-        } as ReturnType<typeof createVenusService>);
+        } as unknown as ReturnType<typeof createVenusService>);
 
         const context = createMockContext();
         await cmd.handle(context, { userId: "user123", org: "acme" } as RemoveMemberCommand.Args);
@@ -84,12 +84,12 @@ describe("RemoveMemberCommand", () => {
         const mockGet = vi.fn().mockResolvedValue({
             ok: false,
             error: {
-                _visit: (visitor: Record<string, () => void>) => visitor._other()
+                _visit: (visitor: any) => visitor._other()
             }
         });
         vi.mocked(createVenusService).mockReturnValue({
             organization: { get: mockGet }
-        } as ReturnType<typeof createVenusService>);
+        } as unknown as ReturnType<typeof createVenusService>);
 
         const context = createMockContext();
         await expect(
@@ -105,12 +105,12 @@ describe("RemoveMemberCommand", () => {
         const mockRemoveUser = vi.fn().mockResolvedValue({
             ok: false,
             error: {
-                _visit: (visitor: Record<string, () => void>) => visitor.unauthorizedError()
+                _visit: (visitor: any) => visitor.unauthorizedError()
             }
         });
         vi.mocked(createVenusService).mockReturnValue({
             organization: { get: mockGet, removeUser: mockRemoveUser }
-        } as ReturnType<typeof createVenusService>);
+        } as unknown as ReturnType<typeof createVenusService>);
 
         const context = createMockContext();
         await expect(
@@ -128,12 +128,12 @@ describe("RemoveMemberCommand", () => {
         const mockRemoveUser = vi.fn().mockResolvedValue({
             ok: false,
             error: {
-                _visit: (visitor: Record<string, () => void>) => visitor.userIdDoesNotExistError()
+                _visit: (visitor: any) => visitor.userIdDoesNotExistError()
             }
         });
         vi.mocked(createVenusService).mockReturnValue({
             organization: { get: mockGet, removeUser: mockRemoveUser }
-        } as ReturnType<typeof createVenusService>);
+        } as unknown as ReturnType<typeof createVenusService>);
 
         const context = createMockContext();
         await expect(
@@ -149,12 +149,12 @@ describe("RemoveMemberCommand", () => {
         const mockRemoveUser = vi.fn().mockResolvedValue({
             ok: false,
             error: {
-                _visit: (visitor: Record<string, () => void>) => visitor._other()
+                _visit: (visitor: any) => visitor._other()
             }
         });
         vi.mocked(createVenusService).mockReturnValue({
             organization: { get: mockGet, removeUser: mockRemoveUser }
-        } as ReturnType<typeof createVenusService>);
+        } as unknown as ReturnType<typeof createVenusService>);
 
         const context = createMockContext();
         await expect(
