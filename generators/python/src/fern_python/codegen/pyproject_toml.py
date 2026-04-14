@@ -226,23 +226,23 @@ packages = [
             if self.enable_wire_tests:
                 wire_test_deps = 'requests = "^2.31.0"\ntypes-requests = "^2.31.0"\n'
 
-            # pytest-asyncio ^1.0.0 fixes Python 3.14+ deprecation warnings but
-            # requires pytest >= 8.2 and Python >= 3.9.  Fall back to the older
-            # pair when the project still supports Python 3.8.
-            #
-            # Extract the minimum minor version from the constraint string
-            # (e.g. "^3.8" -> 8, "^3.8.1" -> 8, "^3.10" -> 10, ">=3.9" -> 9).
+            # pytest >= 9.0.3 fixes CVE-2025-71176 (insecure /tmp/pytest-of-{user}
+            # temporary directories).  pytest 9.x requires Python >= 3.10, so when
+            # the project still supports older Pythons we gate the dev-only test
+            # tooling behind a version marker.
             min_minor = 0
             match = re.search(r"(\d+)\.(\d+)", self.python_version)
             if match:
                 min_minor = int(match.group(2))
 
-            if min_minor >= 9:
-                pytest_version = "^8.2.0"
-                pytest_asyncio_version = "^1.0.0"
+            if min_minor >= 10:
+                pytest_dep = '"^9.0.3"'
+                pytest_asyncio_dep = '"^1.3.0"'
+                pytest_xdist_dep = '"^3.6.1"'
             else:
-                pytest_version = "^7.4.0"
-                pytest_asyncio_version = "^0.23.5"
+                pytest_dep = '{version = "^9.0.3", python = ">=3.10"}'
+                pytest_asyncio_dep = '{version = "^1.3.0", python = ">=3.10"}'
+                pytest_xdist_dep = '{version = "^3.6.1", python = ">=3.10"}'
 
             return f"""
 [tool.poetry.dependencies]
@@ -250,9 +250,9 @@ python = "{self.python_version}"
 {deps}
 [tool.poetry.group.dev.dependencies]
 mypy = "==1.13.0"
-pytest = "{pytest_version}"
-pytest-asyncio = "{pytest_asyncio_version}"
-pytest-xdist = "^3.6.1"
+pytest = {pytest_dep}
+pytest-asyncio = {pytest_asyncio_dep}
+pytest-xdist = {pytest_xdist_dep}
 python-dateutil = "^2.9.0"
 types-python-dateutil = "^2.9.0.20240316"
 {wire_test_deps}{dev_deps}"""

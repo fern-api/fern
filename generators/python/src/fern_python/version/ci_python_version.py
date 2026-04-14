@@ -21,7 +21,7 @@ class GithubCIPythonVersionResolver:
         PythonVersion.PY3_14,
     }
 
-    DEFAULT_VERSION: ClassVar[PythonVersion] = PythonVersion.PY3_9
+    DEFAULT_VERSION: ClassVar[PythonVersion] = PythonVersion.PY3_10
 
     @staticmethod
     def resolve(python_version_constraint: str) -> PythonVersion:
