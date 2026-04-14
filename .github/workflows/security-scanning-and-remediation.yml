@@ -51,7 +51,7 @@ jobs:
         id: fetch-alerts
         uses: actions/github-script@v8
         with:
-          github-token: ${{ secrets.PR_BOT_GH_PAT }}
+          github-token: ${{ secrets.FERN_GITHUB_TOKEN }}
           script: |
             const owner = context.repo.owner;
             const repo = context.repo.repo;
