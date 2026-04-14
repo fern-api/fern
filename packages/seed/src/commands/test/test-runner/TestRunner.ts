@@ -120,6 +120,10 @@ const extractLicenseInfo = (license: unknown, absolutePathToApiDefinition: Absol
                 : path.join(absolutePathToApiDefinition.toString(), licensePath)
         };
     }
+    // Pass through basic string licenses (e.g. "MIT", "Apache-2.0")
+    if (license != null && typeof license === "string") {
+        return license;
+    }
     return undefined;
 };
 

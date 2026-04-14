@@ -402,6 +402,7 @@ fixtures:
         bundle: true
         extraDependencies:
           lodash-es: '^4.17.21'
+      license: MIT
     - outputFolder: custom-package-json
       customConfig:
         private: true
