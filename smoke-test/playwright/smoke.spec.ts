@@ -22,7 +22,7 @@ test.describe("Smoke test: all pages load", () => {
             });
 
             expect(response, `Expected a response for ${pagePath}`).not.toBeNull();
-            expect(response!.status(), `Expected 200 for ${pagePath} but got ${response!.status()}`).toBe(200);
+            expect(response?.status(), `Expected 200 for ${pagePath} but got ${response?.status()}`).toBe(200);
 
             expect(pageErrors, `Unexpected page errors on ${pagePath}: ${pageErrors.join(", ")}`).toHaveLength(0);
 
