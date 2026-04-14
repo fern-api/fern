@@ -1,6 +1,6 @@
 import { loggingExeca } from "@fern-api/logging-execa";
+import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
-
 import { CliContext } from "./cli-context/CliContext.js";
 import { FERN_CWD_ENV_VAR } from "./cwd.js";
 
@@ -70,6 +70,6 @@ export async function rerunFernCliAtVersion({
         if (throwOnError) {
             throw new RerunCliError({ version, stdout, stderr });
         }
-        cliContext.failWithoutThrowing();
+        cliContext.failWithoutThrowing(undefined, undefined, { code: CliError.Code.InternalError });
     }
 }

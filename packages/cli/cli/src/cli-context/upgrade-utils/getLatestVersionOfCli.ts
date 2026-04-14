@@ -1,3 +1,4 @@
+import { CliError } from "@fern-api/task-context";
 import latestVersion from "latest-version";
 
 import { CliEnvironment } from "../CliEnvironment.js";
@@ -14,7 +15,14 @@ export async function getLatestVersionOfCli({
     if (cliEnvironment.packageName !== "fern-api" || cliEnvironment.packageVersion === "0.0.0") {
         return cliEnvironment.packageVersion;
     }
-    return latestVersion(cliEnvironment.packageName, {
-        version: includePreReleases ? "prerelease" : "latest"
-    });
+    try {
+        return await latestVersion(cliEnvironment.packageName, {
+            version: includePreReleases ? "prerelease" : "latest"
+        });
+    } catch (error) {
+        throw new CliError({
+            message: `Failed to resolve latest CLI version: ${error instanceof Error ? error.message : String(error)}`,
+            code: CliError.Code.NetworkError
+        });
+    }
 }

@@ -1,10 +1,11 @@
 import { LogLevel } from "@fern-api/logger";
+import { CliError } from "@fern-api/task-context";
+
 import getPort from "get-port";
 import type { Argv } from "yargs";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
 import { LegacyDevServer } from "../../../docs/server/LegacyDevServer.js";
-import { CliError } from "../../../errors/CliError.js";
 import { command } from "../../_internal/command.js";
 
 export declare namespace DevCommand {
@@ -24,7 +25,8 @@ export class DevCommand {
             throw new CliError({
                 message:
                     "No docs configuration found in fern.yml.\n\n" +
-                    "  Add a 'docs:' section to your fern.yml to get started."
+                    "  Add a 'docs:' section to your fern.yml to get started.",
+                code: CliError.Code.ConfigError
             });
         }
 

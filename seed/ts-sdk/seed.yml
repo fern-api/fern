@@ -398,6 +398,7 @@ fixtures:
     - outputFolder: no-custom-config
       customConfig: null
     - outputFolder: bundle
+      license: MIT
       customConfig:
         bundle: true
         extraDependencies:

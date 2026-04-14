@@ -1,6 +1,8 @@
 import type { FernToken } from "@fern-api/auth";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { filterOssWorkspaces } from "@fern-api/docs-resolver";
+import { CliError } from "@fern-api/task-context";
+
 import chalk from "chalk";
 import inquirer from "inquirer";
 import type { Argv } from "yargs";
@@ -12,7 +14,6 @@ import { DocsChecker } from "../../../docs/checker/DocsChecker.js";
 import { LegacyDocsPublisher } from "../../../docs/publisher/LegacyDocsPublisher.js";
 import type { DocsStageOverrides } from "../../../docs/task/DocsTaskGroup.js";
 import { DocsTaskGroup } from "../../../docs/task/DocsTaskGroup.js";
-import { CliError } from "../../../errors/CliError.js";
 import { ValidationError } from "../../../errors/ValidationError.js";
 import { command } from "../../_internal/command.js";
 export declare namespace PublishCommand {
@@ -58,7 +59,8 @@ export class PublishCommand {
             throw new CliError({
                 message:
                     "No docs configuration found in fern.yml.\n\n" +
-                    "  Add a 'docs:' section to your fern.yml to get started."
+                    "  Add a 'docs:' section to your fern.yml to get started.",
+                code: CliError.Code.ConfigError
             });
         }
 
@@ -85,7 +87,8 @@ export class PublishCommand {
             throw new CliError({
                 message:
                     "No docs configuration found in fern.yml.\n\n" +
-                    "  Add a 'docs:' section to your fern.yml to get started."
+                    "  Add a 'docs:' section to your fern.yml to get started.",
+                code: CliError.Code.ConfigError
             });
         }
 
@@ -102,7 +105,10 @@ export class PublishCommand {
         });
         const docsTask = taskGroup.getTask("publish");
         if (docsTask == null) {
-            throw new CliError({ message: "Internal error; task 'publish' not found" });
+            throw new CliError({
+                message: "Internal error; task 'publish' not found",
+                code: CliError.Code.InternalError
+            });
         }
 
         docsTask.start();
@@ -155,7 +161,7 @@ export class PublishCommand {
         });
 
         if (summary.failedCount > 0) {
-            throw CliError.exit();
+            throw new CliError({ code: CliError.Code.ContainerError });
         }
     }
 
@@ -168,7 +174,8 @@ export class PublishCommand {
     }): string {
         if (instances.length === 0) {
             throw new CliError({
-                message: "No docs instances configured.\n\n  Add an instance to the 'docs:' section of your fern.yml."
+                message: "No docs instances configured.\n\n  Add an instance to the 'docs:' section of your fern.yml.",
+                code: CliError.Code.ConfigError
             });
         }
 
@@ -180,7 +187,8 @@ export class PublishCommand {
                     message:
                         `No docs instance found with URL '${instance}'.\n\n` +
                         `Available instances:\n${available}\n\n` +
-                        `  Use --instance <url> with one of the URLs above.`
+                        `  Use --instance <url> with one of the URLs above.`,
+                    code: CliError.Code.ConfigError
                 });
             }
             return match.url;
@@ -192,14 +200,16 @@ export class PublishCommand {
                 message:
                     `Multiple docs instances configured. Please specify which instance to publish.\n\n` +
                     `Available instances:\n${available}\n\n` +
-                    `  Use --instance <url> to select one.`
+                    `  Use --instance <url> to select one.`,
+                code: CliError.Code.ConfigError
             });
         }
 
         const first = instances[0];
         if (first == null) {
             throw new CliError({
-                message: "No docs instances configured.\n\n  Add an instance to the 'docs:' section of your fern.yml."
+                message: "No docs instances configured.\n\n  Add an instance to the 'docs:' section of your fern.yml.",
+                code: CliError.Code.ConfigError
             });
         }
         return first.url;
@@ -248,7 +258,8 @@ export class PublishCommand {
             const fernToken = process.env["FERN_TOKEN"];
             if (fernToken == null) {
                 throw new CliError({
-                    message: "No organization token found. Please set the FERN_TOKEN environment variable."
+                    message: "No organization token found. Please set the FERN_TOKEN environment variable.",
+                    code: CliError.Code.AuthError
                 });
             }
             return Promise.resolve({ type: "organization", value: fernToken });
@@ -266,7 +277,13 @@ export function addPublishCommand(cli: Argv<GlobalArgs>): void {
         async (context, args) => {
             const timeout = new Promise<never>((_, reject) => {
                 setTimeout(
-                    () => reject(new CliError({ message: "Docs publish timed out after 10 minutes." })),
+                    () =>
+                        reject(
+                            new CliError({
+                                message: "Docs publish timed out after 10 minutes.",
+                                code: CliError.Code.NetworkError
+                            })
+                        ),
                     GENERATE_COMMAND_TIMEOUT_MS
                 ).unref();
             });

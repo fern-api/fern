@@ -4,7 +4,7 @@ import { ContainerRunner, Values } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
-
+import { CliError } from "@fern-api/task-context";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { PREVIEW_DIRECTORY } from "../../constants.js";
 import { checkOutputDirectory } from "./checkOutputDirectory.js";
@@ -108,7 +108,7 @@ export async function generateAPIWorkspaces({
                     force
                 );
                 if (!shouldProceed) {
-                    cliContext.failAndThrow("Generation cancelled");
+                    cliContext.failAndThrow("Generation cancelled", undefined, { code: CliError.Code.ConfigError });
                 }
             }
         }

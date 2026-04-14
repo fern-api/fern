@@ -2,6 +2,7 @@ import type { generatorsYml } from "@fern-api/configuration";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import type { Logger } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
+import { CliError } from "@fern-api/task-context";
 import { readFileSync, unlinkSync } from "fs";
 import { mkdir, open, readFile, stat, unlink } from "fs/promises";
 import { homedir } from "os";
@@ -196,7 +197,10 @@ async function ensureMigrationsInstalled(logger: Logger): Promise<Record<string,
             const packageJson = JSON.parse(packageJsonContent) as { main?: string };
 
             if (packageJson.main == null) {
-                throw new Error(`No main field found in package.json for ${MIGRATION_PACKAGE_NAME}`);
+                throw new CliError({
+                    message: `No main field found in package.json for ${MIGRATION_PACKAGE_NAME}`,
+                    code: CliError.Code.InternalError
+                });
             }
 
             const packageEntryPoint = join(packageDir, packageJson.main);
@@ -343,11 +347,13 @@ function filterMigrations(params: { migrations: Migration[]; from: string; to: s
 
             // After filtering, all versions should be valid. This is a sanity check.
             if (aVersion == null || bVersion == null) {
-                throw new Error(
-                    `Internal error: Invalid migration version found during sort. ` +
+                throw new CliError({
+                    message:
+                        `Internal error: Invalid migration version found during sort. ` +
                         `Version A: ${a.version}, Version B: ${b.version}. ` +
-                        `This should not happen as invalid versions are filtered out.`
-                );
+                        `This should not happen as invalid versions are filtered out.`,
+                    code: CliError.Code.InternalError
+                });
             }
 
             return semver.compare(aVersion, bVersion);
@@ -395,13 +401,15 @@ export function runMigrations(params: {
             appliedVersions.push(migration.version);
         } catch (error) {
             const errorMessage = extractErrorMessage(error);
-            throw new Error(
-                `Failed to apply migration for version ${migration.version}.\n\n` +
+            throw new CliError({
+                message:
+                    `Failed to apply migration for version ${migration.version}.\n\n` +
                     `Reason: ${errorMessage}\n\n` +
                     `This migration was attempting to update your generator configuration. ` +
                     `The upgrade has been halted to prevent partial or invalid changes.\n\n` +
-                    `Please report this issue at: https://github.com/fern-api/fern/issues`
-            );
+                    `Please report this issue at: https://github.com/fern-api/fern/issues`,
+                code: CliError.Code.InternalError
+            });
         }
     }
 
@@ -475,12 +483,14 @@ export async function loadAndRunMigrations(params: {
     const { generatorName, from, to, config, logger } = params;
     // Validate config structure before proceeding
     if (!isValidGeneratorConfig(config)) {
-        throw new Error(
-            `Invalid generator configuration for ${generatorName}.\n\n` +
+        throw new CliError({
+            message:
+                `Invalid generator configuration for ${generatorName}.\n\n` +
                 `The generator configuration must be an object with either a 'name' property or an 'image' property, ` +
                 `but the current configuration does not match this structure. This may indicate a malformed generators.yml file.\n\n` +
-                `Please check your generators.yml file and ensure the generator is properly configured.`
-        );
+                `Please check your generators.yml file and ensure the generator is properly configured.`,
+            code: CliError.Code.InternalError
+        });
     }
 
     const typedConfig = config;
