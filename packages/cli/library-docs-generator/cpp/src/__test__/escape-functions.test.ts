@@ -52,9 +52,7 @@ describe("escapeMdxText", () => {
     });
 
     it("escapes both angle brackets and curly braces", () => {
-        expect(escapeMdxText("std::array<T, N>{1, 2, 3}")).toBe(
-            "std::array&lt;T, N&gt;&#123;1, 2, 3&#125;"
-        );
+        expect(escapeMdxText("std::array<T, N>{1, 2, 3}")).toBe("std::array&lt;T, N&gt;&#123;1, 2, 3&#125;");
     });
 
     it("passes plain text through unchanged", () => {
@@ -66,9 +64,7 @@ describe("escapeMdxText", () => {
     });
 
     it("escapes multiple angle bracket pairs", () => {
-        expect(escapeMdxText("map<string, vector<int>>")).toBe(
-            "map&lt;string, vector&lt;int&gt;&gt;"
-        );
+        expect(escapeMdxText("map<string, vector<int>>")).toBe("map&lt;string, vector&lt;int&gt;&gt;");
     });
 
     it("escapes standalone curly braces", () => {
@@ -101,9 +97,7 @@ describe("escapeTableCell", () => {
         });
 
         it("escapes multiple hazards together", () => {
-            expect(escapeTableCell("vector<int> | {value}\nnext")).toBe(
-                "vector&lt;int&gt; \\| &#123;value&#125; next"
-            );
+            expect(escapeTableCell("vector<int> | {value}\nnext")).toBe("vector&lt;int&gt; \\| &#123;value&#125; next");
         });
     });
 
@@ -131,33 +125,25 @@ describe("escapeTableCell", () => {
 
     describe("mixed content", () => {
         it("preserves backtick content while escaping prose", () => {
-            expect(escapeTableCell("`vector<int>` | description<T>")).toBe(
-                "`vector<int>` \\| description&lt;T&gt;"
-            );
+            expect(escapeTableCell("`vector<int>` | description<T>")).toBe("`vector<int>` \\| description&lt;T&gt;");
         });
 
         it("handles multiple backtick spans interleaved with prose", () => {
-            expect(
-                escapeTableCell("see `array<int>` and `map<K,V>` for <details>")
-            ).toBe("see `array<int>` and `map<K,V>` for &lt;details&gt;");
+            expect(escapeTableCell("see `array<int>` and `map<K,V>` for <details>")).toBe(
+                "see `array<int>` and `map<K,V>` for &lt;details&gt;"
+            );
         });
 
         it("handles backtick span at start with prose after", () => {
-            expect(escapeTableCell("`code<T>` description<U>")).toBe(
-                "`code<T>` description&lt;U&gt;"
-            );
+            expect(escapeTableCell("`code<T>` description<U>")).toBe("`code<T>` description&lt;U&gt;");
         });
 
         it("handles prose before backtick span", () => {
-            expect(escapeTableCell("type<T> `code<U>`")).toBe(
-                "type&lt;T&gt; `code<U>`"
-            );
+            expect(escapeTableCell("type<T> `code<U>`")).toBe("type&lt;T&gt; `code<U>`");
         });
 
         it("handles curly braces mixed with backticks", () => {
-            expect(escapeTableCell("`{init}` then {value}")).toBe(
-                "`{init}` then &#123;value&#125;"
-            );
+            expect(escapeTableCell("`{init}` then {value}")).toBe("`{init}` then &#123;value&#125;");
         });
     });
 
@@ -220,15 +206,11 @@ describe("heading escaping patterns", () => {
 
     describe("titled section heading", () => {
         it("escapes angle brackets in titled section at H2 level", () => {
-            expect(titledSectionHeading("Usage with vector<int>", 2)).toBe(
-                "## Usage with vector&lt;int&gt;"
-            );
+            expect(titledSectionHeading("Usage with vector<int>", 2)).toBe("## Usage with vector&lt;int&gt;");
         });
 
         it("escapes angle brackets in titled section at H3 level", () => {
-            expect(titledSectionHeading("Details for array<T, N>", 3)).toBe(
-                "### Details for array&lt;T, N&gt;"
-            );
+            expect(titledSectionHeading("Details for array<T, N>", 3)).toBe("### Details for array&lt;T, N&gt;");
         });
 
         it("passes plain titled section through unchanged", () => {
@@ -236,17 +218,13 @@ describe("heading escaping patterns", () => {
         });
 
         it("escapes curly braces in titled section", () => {
-            expect(titledSectionHeading("Initializer {list}", 3)).toBe(
-                "### Initializer &#123;list&#125;"
-            );
+            expect(titledSectionHeading("Initializer {list}", 3)).toBe("### Initializer &#123;list&#125;");
         });
     });
 
     describe("method section heading (## Label)", () => {
         it("escapes template name in method section label", () => {
-            expect(methodSectionHeading("Constructors<T>")).toBe(
-                "## Constructors&lt;T&gt;"
-            );
+            expect(methodSectionHeading("Constructors<T>")).toBe("## Constructors&lt;T&gt;");
         });
 
         it("passes plain section label through unchanged", () => {

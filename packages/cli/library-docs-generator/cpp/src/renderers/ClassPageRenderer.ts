@@ -36,7 +36,12 @@ import {
 } from "./MethodRenderer.js";
 import { renderClassTemplateParams } from "./ParamRenderer.js";
 import { renderBareCodeBlock, renderClassTemplateSignature } from "./SignatureRenderer.js";
-import { escapeMdxText, renderCallout, renderFrontmatter as renderFrontmatterLines, trimTrailingBlankLines } from "./shared.js";
+import {
+    escapeMdxText,
+    renderCallout,
+    renderFrontmatter as renderFrontmatterLines,
+    trimTrailingBlankLines
+} from "./shared.js";
 import { renderEnum, renderInnerClass, renderMemberVariableTable, renderTypedefTable } from "./TableRenderer.js";
 
 // ---------------------------------------------------------------------------
