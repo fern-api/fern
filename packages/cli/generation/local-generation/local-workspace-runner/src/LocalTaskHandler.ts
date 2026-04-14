@@ -95,6 +95,8 @@ export class LocalTaskHandler {
         autoVersioningPrDescription?: string;
         autoVersioningVersionBumpReason?: string;
         autoVersioningVersionBump?: string;
+        autoVersioningNewVersion?: string;
+        autoVersioningPreviousVersion?: string;
     }> {
         const isFernIgnorePresent = this.skipFernignore ? false : await this.isFernIgnorePresent();
         const isExistingGitRepo = await this.isGitRepository();
@@ -173,7 +175,9 @@ export class LocalTaskHandler {
                 autoVersioningChangelogEntry: autoVersionResult.changelogEntry,
                 autoVersioningPrDescription: autoVersionResult.prDescription,
                 autoVersioningVersionBumpReason: autoVersionResult.versionBumpReason,
-                autoVersioningVersionBump: autoVersionResult.versionBump
+                autoVersioningVersionBump: autoVersionResult.versionBump,
+                autoVersioningNewVersion: autoVersionResult.version,
+                autoVersioningPreviousVersion: autoVersionResult.previousVersion
             };
         }
         return { shouldCommit: true, autoVersioningCommitMessage: undefined };
@@ -496,7 +500,8 @@ export class LocalTaskHandler {
                 changelogEntry,
                 prDescription,
                 versionBumpReason,
-                versionBump: finalBump
+                versionBump: finalBump,
+                previousVersion
             };
         } catch (error) {
             if (error instanceof AutoVersioningException) {

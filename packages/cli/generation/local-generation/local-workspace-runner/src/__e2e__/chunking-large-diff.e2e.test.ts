@@ -648,9 +648,7 @@ describe("E2E: Full pipeline — clean + chunk + analyze (mocked AI)", () => {
         }
 
         const aggregatedChangelog =
-            allChangelogEntries.length > 1
-                ? allChangelogEntries.join("\n\n")
-                : (allChangelogEntries[0] ?? "");
+            allChangelogEntries.length > 1 ? allChangelogEntries.join("\n\n") : (allChangelogEntries[0] ?? "");
         const pipelineElapsed = performance.now() - pipelineStart;
 
         console.log("\n=== Full Pipeline Results ===");

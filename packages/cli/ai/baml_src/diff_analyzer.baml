@@ -648,6 +648,9 @@ function AnalyzeSdkDiff(
     - Write in third person present tense
     - Prefer fewer, richer entries over many thin ones. Aim for 3-5 entries per chunk by grouping related changes.
     - IMPORTANT: Wrap type references containing angle brackets in backticks (e.g., `Optional<String>`)
+    - **5-line limit per section**: Each section (### Breaking Changes, ### Added, ### Changed, ### Fixed)
+      MUST have at most 5 bullet points. If a section would have more than 5 bullets, keep the 5 most
+      important ones and add a final line: "- See full changelog for all changes"
 
     Remember again that YOU MUST return a structured JSON response with these four fields:
     - message: A git commit message formatted like the example previously provided
@@ -742,18 +745,13 @@ function ConsolidateChangelog(
     - Aim for 5-15 total bullets. Every *category* of change must be represented, but individual
       values/classes within a category can be summarized (e.g., "new enum values across several types").
     - One line per change, no multi-line bullets
+    - **5-line limit per section**: Each section (### Breaking Changes, ### Added, ### Changed, ### Fixed)
+      MUST have at most 5 bullet points. If a section would have more than 5 bullets, keep the 5 most
+      important ones and add a final line: "- See full changelog for all changes"
 
     ## Output 2: pr_description (PR body)
 
-    {% if previous_version and new_version %}
-    The PR description MUST start with a version summary block:
-
-    ## {{previous_version}} → {{new_version}} ({{version_bump}})
-
-    **Reason:** {version_bump_reason}
-
-    Then the breaking changes / what's new sections follow.
-    {% endif %}
+    Do NOT include a version header — the version header is added separately by the build system.
 
     If version_bump is MAJOR, start with:
 
