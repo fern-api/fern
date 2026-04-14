@@ -1,8 +1,9 @@
+import { CliError } from "@fern-api/task-context";
+
 import type { Argv } from "yargs";
 import { GENERATE_COMMAND_TIMEOUT_MS } from "../../../constants.js";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
-import { CliError } from "../../../errors/CliError.js";
 import { commandWithSubcommands } from "../../_internal/commandWithSubcommands.js";
 import { PublishCommand } from "../publish/command.js";
 import { addDeleteCommand } from "./delete/index.js";
@@ -38,7 +39,13 @@ export function addPreviewCommand(cli: Argv<GlobalArgs>): void {
         async (context, args) => {
             const timeout = new Promise<never>((_, reject) => {
                 setTimeout(
-                    () => reject(new CliError({ message: "Docs preview timed out after 10 minutes." })),
+                    () =>
+                        reject(
+                            new CliError({
+                                message: "Docs preview timed out after 10 minutes.",
+                                code: CliError.Code.NetworkError
+                            })
+                        ),
                     GENERATE_COMMAND_TIMEOUT_MS
                 ).unref();
             });

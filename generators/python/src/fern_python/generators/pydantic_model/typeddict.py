@@ -13,6 +13,7 @@ from fern_python.external_dependencies.typing_extensions import (
 )
 from fern_python.generators.pydantic_model.model_utilities import can_be_fern_model
 from fern_python.snippet.snippet_writer import SnippetWriter
+from fern_python.utils import get_name_from_wire_value, resolve_name
 
 import fern.ir.resources as ir_types
 
@@ -231,7 +232,7 @@ class FernTypedDict:
     ) -> AST.Expression:
         example_properties = [
             SimpleObjectProperty(
-                name=property.name.name.snake_case.safe_name,
+                name=resolve_name(get_name_from_wire_value(property.name)).snake_case.safe_name,
                 value=property.value,
             )
             for property in example.properties

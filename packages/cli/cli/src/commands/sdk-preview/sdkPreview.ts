@@ -9,13 +9,12 @@ import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-ap
 import { getGeneratorOutputSubfolder, runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
 import { askToLogin } from "@fern-api/login";
 import { runRemoteGenerationForAPIWorkspace } from "@fern-api/remote-workspace-runner";
+import { CliError } from "@fern-api/task-context";
 import fs from "fs/promises";
-
 import { CliContext } from "../../cli-context/CliContext.js";
 import { loadProjectAndRegisterWorkspacesWithContext } from "../../cliCommons.js";
 import { GROUP_CLI_OPTION } from "../../constants.js";
 import { computePreviewVersion } from "./computePreviewVersion.js";
-
 import { getPreviewId } from "./getPreviewId.js";
 import {
     getGithubOwnerRepo,
@@ -103,7 +102,9 @@ export async function sdkPreview({
             return askToLogin(context);
         });
         if (token == null) {
-            return cliContext.failAndThrow("Authentication required. Run 'fern login' or set FERN_TOKEN.");
+            return cliContext.failAndThrow("Authentication required. Run 'fern login' or set FERN_TOKEN.", undefined, {
+                code: CliError.Code.AuthError
+            });
         }
 
         // 2. Load project
@@ -185,14 +186,18 @@ export async function sdkPreview({
             const groupNameOrDefault = groupName ?? workspace.generatorsConfiguration.defaultGroup;
             if (groupNameOrDefault == null) {
                 return cliContext.failAndThrow(
-                    `No group specified. Use the --${GROUP_CLI_OPTION} option, or set "${DEFAULT_GROUP_GENERATORS_CONFIG_KEY}" in ${GENERATORS_CONFIGURATION_FILENAME}`
+                    `No group specified. Use the --${GROUP_CLI_OPTION} option, or set "${DEFAULT_GROUP_GENERATORS_CONFIG_KEY}" in ${GENERATORS_CONFIGURATION_FILENAME}`,
+                    undefined,
+                    { code: CliError.Code.ConfigError }
                 );
             }
 
             const group = workspace.generatorsConfiguration.groups.find((g) => g.groupName === groupNameOrDefault);
             if (group == null) {
                 return cliContext.failAndThrow(
-                    `Group '${groupNameOrDefault}' does not exist in ${GENERATORS_CONFIGURATION_FILENAME}`
+                    `Group '${groupNameOrDefault}' does not exist in ${GENERATORS_CONFIGURATION_FILENAME}`,
+                    undefined,
+                    { code: CliError.Code.ConfigError }
                 );
             }
 
@@ -202,7 +207,9 @@ export async function sdkPreview({
 
             if (generatorFilter != null && generators.length === 0) {
                 return cliContext.failAndThrow(
-                    `Generator '${generatorFilter}' not found in group '${groupNameOrDefault}' in ${GENERATORS_CONFIGURATION_FILENAME}`
+                    `Generator '${generatorFilter}' not found in group '${groupNameOrDefault}' in ${GENERATORS_CONFIGURATION_FILENAME}`,
+                    undefined,
+                    { code: CliError.Code.ConfigError }
                 );
             }
 
@@ -218,7 +225,9 @@ export async function sdkPreview({
             if (npmGenerators.length === 0) {
                 return cliContext.failAndThrow(
                     `No supported generators found in group '${groupNameOrDefault}'. ` +
-                        `SDK preview currently only supports TypeScript/npm generators.`
+                        `SDK preview currently only supports TypeScript/npm generators.`,
+                    undefined,
+                    { code: CliError.Code.ConfigError }
                 );
             }
 
@@ -227,7 +236,9 @@ export async function sdkPreview({
                 if (originalPackageName == null) {
                     return cliContext.failAndThrow(
                         `Could not determine package name for generator '${generator.name}'. ` +
-                            `Ensure 'output.package-name' is set in ${GENERATORS_CONFIGURATION_FILENAME}.`
+                            `Ensure 'output.package-name' is set in ${GENERATORS_CONFIGURATION_FILENAME}.`,
+                        undefined,
+                        { code: CliError.Code.ConfigError }
                     );
                 }
 

@@ -3,10 +3,10 @@ import {
     GENERATORS_CONFIGURATION_FILENAME,
     INCORRECT_DOCKER_ORG
 } from "@fern-api/configuration-loader";
+import { CliError } from "@fern-api/task-context";
 import { FernRegistry } from "@fern-fern/generators-sdk";
 import { writeFile } from "fs/promises";
 import { Argv } from "yargs";
-
 import { CliContext } from "./cli-context/CliContext.js";
 import { getGeneratorUpgradeMessage } from "./cli-context/upgrade-utils/getFernUpgradeMessage.js";
 import { getProjectGeneratorUpgrades } from "./cli-context/upgrade-utils/getGeneratorVersions.js";
@@ -312,7 +312,9 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                     if (generator == null) {
                         const maybeApiFilter = argv.api ? ` for API ${argv.api}` : "";
                         cliContext.failAndThrow(
-                            `Generator ${argv.generator}, in group ${argv.group}${maybeApiFilter} was not found.`
+                            `Generator ${argv.generator}, in group ${argv.group}${maybeApiFilter} was not found.`,
+                            undefined,
+                            { code: CliError.Code.ConfigError }
                         );
                     }
 
@@ -365,7 +367,8 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                         } catch (error) {
                             cliContext.failAndThrow(
                                 `Could not write file to the specified location: ${argv.output}`,
-                                error
+                                error,
+                                { code: CliError.Code.ConfigError }
                             );
                         }
                     }

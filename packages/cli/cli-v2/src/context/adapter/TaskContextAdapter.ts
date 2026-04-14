@@ -1,15 +1,20 @@
 import { createLogger, LOG_LEVELS, Logger, LogLevel } from "@fern-api/logger";
-import type {
-    CreateInteractiveTaskParams,
-    Finishable,
-    InteractiveTaskContext,
-    PosthogEvent,
-    Startable,
-    TaskContext
+import {
+    type CliError,
+    type CreateInteractiveTaskParams,
+    type Finishable,
+    type InteractiveTaskContext,
+    type PosthogEvent,
+    resolveErrorCode,
+    type Startable,
+    TaskAbortSignal,
+    type TaskContext,
+    TaskResult
 } from "@fern-api/task-context";
-import { TaskAbortSignal, TaskResult } from "@fern-api/task-context";
+
 import type { Task } from "../../ui/Task.js";
 import type { Context } from "../Context.js";
+import { reportError } from "../withContext.js";
 import { TaskContextLogger } from "./TaskContextLogger.js";
 
 /**
@@ -28,10 +33,12 @@ import { TaskContextLogger } from "./TaskContextLogger.js";
  */
 export class TaskContextAdapter implements TaskContext {
     private result: TaskResult = TaskResult.Success;
+    private readonly context: Context;
 
     public readonly logger: Logger;
 
     constructor({ context, task, logLevel = LogLevel.Warn }: { context: Context; task?: Task; logLevel?: LogLevel }) {
+        this.context = context;
         if (task != null) {
             this.logger = new TaskContextLogger({ context, task, logLevel });
         } else {
@@ -48,17 +55,27 @@ export class TaskContextAdapter implements TaskContext {
         await run();
     }
 
-    public failAndThrow(message?: string, error?: unknown): never {
-        this.failWithoutThrowing(message, error);
+    public failAndThrow(message?: string, error?: unknown, options?: { code?: CliError.Code }): never {
+        this.failWithoutThrowing(message, error, options);
         throw new TaskAbortSignal();
     }
 
-    public failWithoutThrowing(message?: string, error?: unknown): void {
+    public failWithoutThrowing(message?: string, error?: unknown, options?: { code?: CliError.Code }): void {
+        this.result = TaskResult.Failure;
+        if (error instanceof TaskAbortSignal) {
+            return;
+        }
         const fullMessage = this.getFullErrorMessage(message, error);
         if (fullMessage != null) {
             this.logger.error(fullMessage);
         }
-        this.result = TaskResult.Failure;
+
+        reportError(this.context, error, { ...options, message });
+    }
+
+    public captureException(error: unknown, code?: CliError.Code): void {
+        const errorCode = resolveErrorCode(error, code);
+        this.context.telemetry.captureException(error, { errorCode });
     }
 
     private getFullErrorMessage(message?: string, error?: unknown): string | undefined {
@@ -82,6 +99,7 @@ export class TaskContextAdapter implements TaskContext {
             takeOverTerminal: this.takeOverTerminal.bind(this),
             failAndThrow: this.failAndThrow.bind(this),
             failWithoutThrowing: this.failWithoutThrowing.bind(this),
+            captureException: this.captureException.bind(this),
             getResult: () => this.result,
             addInteractiveTask: this.addInteractiveTask.bind(this),
             runInteractiveTask: this.runInteractiveTask.bind(this),

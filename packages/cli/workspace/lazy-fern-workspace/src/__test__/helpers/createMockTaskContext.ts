@@ -20,6 +20,7 @@ export function createMockTaskContext(): TaskContext {
             throw new Error(message ?? "Task failed");
         },
         failWithoutThrowing: noop,
+        captureException: noop,
         getResult: () => TaskResult.Success,
         addInteractiveTask: () => {
             throw new Error("Not implemented in mock");

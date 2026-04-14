@@ -1,8 +1,9 @@
 from __future__ import annotations
 
-from core_utilities.shared.unchecked_base_model import UncheckedBaseModel
 import typing
+
 import pydantic
+from core_utilities.shared.unchecked_base_model import UncheckedBaseModel
 
 
 class TextDetails(UncheckedBaseModel):

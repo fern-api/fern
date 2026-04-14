@@ -1654,8 +1654,8 @@ importers:
         specifier: workspace:*
         version: link:../browser-compatible-base
       '@fern-fern/ir-sdk':
-        specifier: ^62.6.0
-        version: 62.6.0
+        specifier: ^66.0.0
+        version: 66.0.0
       lodash-es:
         specifier: 'catalog:'
         version: 4.18.1
@@ -1781,8 +1781,8 @@ importers:
         specifier: 'catalog:'
         version: 0.0.1167
       '@fern-fern/ir-sdk':
-        specifier: ^62.6.0
-        version: 62.6.0
+        specifier: ^66.0.0
+        version: 66.0.0
       '@types/node':
         specifier: 'catalog:'
         version: 22.19.17
@@ -1838,8 +1838,8 @@ importers:
         specifier: 'catalog:'
         version: 0.0.1167
       '@fern-fern/ir-sdk':
-        specifier: ^62.6.0
-        version: 62.6.0
+        specifier: ^66.0.0
+        version: 66.0.0
       '@types/node':
         specifier: 'catalog:'
         version: 22.19.17
@@ -7686,8 +7686,8 @@ importers:
         specifier: workspace:*
         version: link:../ir-utils
       '@fern-fern/ir-sdk':
-        specifier: ^61.7.0
-        version: 61.7.0
+        specifier: ^66.0.0
+        version: 66.0.0
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
@@ -12190,8 +12190,8 @@ packages:
   flatted@3.4.2:
     resolution: {integrity: sha512-PjDse7RzhcPkIJwy5t7KPWQSZ9cAbzQXcafsetQoD7sOJRQlGikNbx7yZp2OotDnJyrDcbyRq3Ttb18iYOqkxA==}
 
-  follow-redirects@1.15.11:
-    resolution: {integrity: sha512-deG2P0JfjrTxl50XGCDyfI97ZGVCxIpfKYmfyrQ54n5FO/0gfIES8C/Psl6kWVDolizcaaxZJnTS0QSMxvnsBQ==}
+  follow-redirects@1.16.0:
+    resolution: {integrity: sha512-y5rN/uOsadFT/JfYwhxRS5R7Qce+g3zG97+JrtFZlC9klX/W5hD7iiLzScI4nZqUS7DNUdhPgw4xI8W2LuXlUw==}
     engines: {node: '>=4.0'}
     peerDependencies:
       debug: '*'
@@ -18222,7 +18222,7 @@ snapshots:
 
   axios@1.15.0:
     dependencies:
-      follow-redirects: 1.15.11
+      follow-redirects: 1.16.0
       form-data: 4.0.5
       proxy-from-env: 2.1.0
     transitivePeerDependencies:
@@ -19362,7 +19362,7 @@ snapshots:
 
   flatted@3.4.2: {}
 
-  follow-redirects@1.15.11: {}
+  follow-redirects@1.16.0: {}
 
   for-each@0.3.5:
     dependencies:

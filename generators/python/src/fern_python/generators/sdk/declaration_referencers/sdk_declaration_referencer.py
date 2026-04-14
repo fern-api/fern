@@ -1,7 +1,8 @@
-from typing import Generic, Tuple, TypeVar
+from typing import Generic, Tuple, TypeVar, Union
 
 from fern_python.codegen import ExportStrategy, Filepath
 from fern_python.declaration_referencer import AbstractDeclarationReferencer
+from fern_python.utils import resolve_name
 
 import fern.ir.resources as ir_types
 
@@ -15,13 +16,13 @@ class SdkDeclarationReferencer(AbstractDeclarationReferencer[T], Generic[T]):
     def _get_directories_for_fern_filepath_part(
         self,
         *,
-        fern_filepath_part: ir_types.Name,
+        fern_filepath_part: Union[str, ir_types.Name],
         export_strategy: ExportStrategy,
     ) -> Tuple[Filepath.DirectoryFilepathPart, ...]:
         if self.skip_resources_module:
             return (
                 Filepath.DirectoryFilepathPart(
-                    module_name=fern_filepath_part.snake_case.safe_name,
+                    module_name=resolve_name(fern_filepath_part).snake_case.unsafe_name,
                     export_strategy=export_strategy,
                 ),
             )
@@ -31,7 +32,7 @@ class SdkDeclarationReferencer(AbstractDeclarationReferencer[T], Generic[T]):
                 export_strategy=ExportStrategy(export_all=True),
             ),
             Filepath.DirectoryFilepathPart(
-                module_name=fern_filepath_part.snake_case.safe_name,
+                module_name=resolve_name(fern_filepath_part).snake_case.unsafe_name,
                 export_strategy=export_strategy,
             ),
         )

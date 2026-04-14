@@ -17,6 +17,7 @@ vi.mock("@sentry/node", () => ({
     setTag: vi.fn()
 }));
 
+import { CliError } from "@fern-api/task-context";
 import { SentryClient } from "../SentryClient.js";
 
 describe("SentryClient (cli-v1)", () => {
@@ -51,6 +52,18 @@ describe("SentryClient (cli-v1)", () => {
 
         expect(mockSentryInit).toHaveBeenCalledOnce();
         expect(mockSentryCaptureException).toHaveBeenCalledOnce();
+        expect(mockSentryCaptureException).toHaveBeenCalledWith(expect.any(Error), undefined);
+    });
+
+    it("passes error.code tag via captureContext when code is provided", () => {
+        const client = new SentryClient({ release: "cli@1.2.3" });
+        const error = new Error("something broke");
+
+        client.captureException(error, CliError.Code.InternalError);
+
+        expect(mockSentryCaptureException).toHaveBeenCalledWith(error, {
+            captureContext: { tags: { "error.code": CliError.Code.InternalError } }
+        });
     });
 
     it("flushes the Sentry client", async () => {

@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: x-fern-default test
-  version: ''
+  version: 0.0.0
 paths:
   /test/{region}/resource:
     get:
@@ -14,7 +14,6 @@ paths:
           required: true
           schema:
             type: string
-          example: region
           examples:
             Example1:
               value: region
@@ -22,8 +21,9 @@ paths:
           in: query
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
       responses:
         '200':
           description: Success
@@ -42,6 +42,7 @@ components:
       type: object
       properties:
         message:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
   securitySchemes: {}

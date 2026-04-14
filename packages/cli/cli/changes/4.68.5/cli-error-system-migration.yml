@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Migrate CLI to a unified error system using a shared CliError class with typed error codes.
+    Error codes drive Sentry reporting eligibility; unclassified errors are temporarily suppressed
+    from Sentry until all call sites are migrated.
+  type: chore

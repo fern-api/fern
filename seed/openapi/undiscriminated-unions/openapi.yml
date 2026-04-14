@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: undiscriminated-unions
-  version: ''
+  version: 0.0.0
 paths:
   /:
     post:
@@ -11,7 +11,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -30,7 +30,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -48,7 +48,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -75,7 +75,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -103,7 +103,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -122,7 +122,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -141,7 +141,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -173,15 +173,17 @@ components:
       type: object
       properties:
         union:
-          $ref: '#/components/schemas/MetadataUnion'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/MetadataUnion'
+            - type: 'null'
     TypeWithOptionalUnion:
       title: TypeWithOptionalUnion
       type: object
       properties:
         myUnion:
-          $ref: '#/components/schemas/MyUnion'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/MyUnion'
+            - type: 'null'
     MyUnion:
       title: MyUnion
       oneOf:
@@ -259,15 +261,14 @@ components:
           type: string
         value:
           type: object
-          additionalProperties: true
       required:
         - name
         - value
     OptionalMetadata:
       title: OptionalMetadata
-      type: object
-      additionalProperties: true
-      nullable: true
+      type:
+        - object
+        - 'null'
     Metadata:
       title: Metadata
       type: object

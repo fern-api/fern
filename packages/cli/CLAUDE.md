@@ -131,6 +131,25 @@ pnpm format:fix                # Fix formatting issues
 pnpm check:fix                 # Run all checks with fixes
 ```
 
+### Changelog & Versioning
+
+Every CLI change (`packages/cli/` tree) **must** include an unreleased changelog entry. Do **not** hand-edit `versions.yml`; versioning and releases are handled by automation.
+
+1. Create a new YAML file under `packages/cli/cli/changes/unreleased/` with a descriptive filename (e.g., `fix-global-headers.yml`). Copy `.template.yml` from that folder as a starting point.
+2. Each file is a YAML array of objects with two fields:
+   - `summary`: description of the change (multi-line `|` allowed)
+   - `type`: one of `fix`, `chore`, `feat`, `internal`, `break`
+3. These types drive semver bumps automatically: `fix`/`chore` → patch, `feat`/`internal` → minor, `break` → major.
+
+```yaml
+# Example: packages/cli/cli/changes/unreleased/fix-global-headers.yml
+- summary: |
+    Fix global headers from generators.yml not appearing in documentation.
+  type: fix
+```
+
+See `.claude/release-versioning.md` and `release-config.json` for full details.
+
 ## Generation Pipeline Flow
 
 ### 1. Workspace Discovery

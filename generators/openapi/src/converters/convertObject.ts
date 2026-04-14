@@ -27,22 +27,24 @@ export function convertObject({
     properties.forEach((objectProperty) => {
         const convertedObjectProperty = convertTypeReference(objectProperty.valueType);
 
-        let example: unknown = undefined;
+        // OAS 3.1 (JSON Schema 2020-12) deprecates the singular `example` keyword on schemas
+        // in favour of `examples` (an array of example values).
+        let examples: unknown[] | undefined = undefined;
         if (objectProperty.example != null && objectProperty.valueType.type === "primitive") {
-            example = objectProperty.example.value.jsonExample;
+            examples = [objectProperty.example.value.jsonExample];
         } else if (
             objectProperty.example != null &&
             objectProperty.valueType.type === "container" &&
             objectProperty.valueType.container.type === "list" &&
             objectProperty.valueType.container.list.type === "primitive"
         ) {
-            example = objectProperty.example.value.jsonExample;
+            examples = [objectProperty.example.value.jsonExample];
         }
 
         const propertySchema: Record<string, unknown> = {
             ...convertedObjectProperty,
             description: objectProperty.docs ?? undefined,
-            example
+            examples
         };
 
         if (objectProperty.availability != null) {

@@ -5,6 +5,7 @@ from ..context.sdk_generator_context import SdkGeneratorContext
 from .base_client_generator import ConstructorParameter
 from fern_python.codegen import AST, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
+from fern_python.utils.name_resolver import get_name_from_wire_value, resolve_name
 
 import fern.ir.resources as ir_types
 
@@ -466,7 +467,7 @@ class InferredAuthTokenProviderGenerator:
                 )
             )
 
-        endpoint_name = http_endpoint.name.snake_case.safe_name
+        endpoint_name = resolve_name(http_endpoint.name).snake_case.safe_name
 
         return AST.FunctionInvocation(
             function_definition=AST.Reference(
@@ -521,7 +522,7 @@ class InferredAuthTokenProviderGenerator:
         properties: List[CredentialProperty] = []
 
         for header in http_endpoint.headers:
-            field_name = header.name.name.snake_case.safe_name
+            field_name = resolve_name(get_name_from_wire_value(header.name)).snake_case.safe_name
             is_literal = self._is_literal_type(header.value_type)
             literal_value = self._extract_literal_value(header.value_type) if is_literal else None
             is_optional = self._is_optional_type(header.value_type)
@@ -539,7 +540,7 @@ class InferredAuthTokenProviderGenerator:
             request_body = http_endpoint.request_body.get_as_union()
             if request_body.type == "inlinedRequestBody":
                 for prop in request_body.properties:
-                    field_name = prop.name.name.snake_case.safe_name
+                    field_name = resolve_name(get_name_from_wire_value(prop.name)).snake_case.safe_name
                     is_literal = self._is_literal_type(prop.value_type)
                     literal_value = self._extract_literal_value(prop.value_type) if is_literal else None
                     is_optional = self._is_optional_type(prop.value_type)
@@ -559,7 +560,7 @@ class InferredAuthTokenProviderGenerator:
                         self._context.pydantic_generator_context.get_all_properties_including_extensions(type_id)
                     )
                     for object_prop in object_properties:
-                        field_name = object_prop.name.name.snake_case.safe_name
+                        field_name = resolve_name(get_name_from_wire_value(object_prop.name)).snake_case.safe_name
                         is_literal = self._is_literal_type(object_prop.value_type)
                         literal_value = self._extract_literal_value(object_prop.value_type) if is_literal else None
                         is_optional = self._is_optional_type(object_prop.value_type)
@@ -622,10 +623,12 @@ class InferredAuthTokenProviderGenerator:
 
         if response_property.property_path is not None:
             for path_element in response_property.property_path:
-                property_name = path_element.name.snake_case.safe_name
+                property_name = resolve_name(path_element.name).snake_case.safe_name
                 accessor = f"{accessor}.{property_name}"
 
-        final_property_name = response_property.property.name.name.snake_case.safe_name
+        final_property_name = resolve_name(
+            get_name_from_wire_value(response_property.property.name)
+        ).snake_case.safe_name
         accessor = f"{accessor}.{final_property_name}"
 
         return accessor

@@ -1,9 +1,10 @@
 import { createFdrService } from "@fern-api/core";
+import { CliError } from "@fern-api/task-context";
+
 import chalk from "chalk";
 import type { Argv } from "yargs";
 import type { Context } from "../../../../context/Context.js";
 import type { GlobalArgs } from "../../../../context/GlobalArgs.js";
-import { CliError } from "../../../../errors/CliError.js";
 import { command } from "../../../_internal/command.js";
 
 /**
@@ -23,7 +24,8 @@ export class DeleteCommand {
             throw new CliError({
                 message:
                     `Invalid preview URL: ${args.url}\n` +
-                    `  Preview URLs follow the pattern: {org}-preview-{hash}.docs.buildwithfern.com`
+                    `  Preview URLs follow the pattern: {org}-preview-{hash}.docs.buildwithfern.com`,
+                code: CliError.Code.ConfigError
             });
         }
 
@@ -45,7 +47,8 @@ export class DeleteCommand {
                     throw CliError.notFound(`Preview site not found: ${args.url}`);
                 default:
                     throw new CliError({
-                        message: `Failed to delete preview site: ${args.url}`
+                        message: `Failed to delete preview site: ${args.url}`,
+                        code: CliError.Code.InternalError
                     });
             }
         }

@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: nullable-optional
-  version: ''
+  version: 0.0.0
 paths:
   /api/users/{userId}:
     get:
@@ -17,7 +17,7 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -35,7 +35,7 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -55,7 +55,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -76,29 +76,33 @@ paths:
           in: query
           required: false
           schema:
-            type: integer
-            nullable: true
+            type:
+              - integer
+              - 'null'
         - name: offset
           in: query
           required: false
           schema:
-            type: integer
-            nullable: true
+            type:
+              - integer
+              - 'null'
         - name: includeDeleted
           in: query
           required: false
           schema:
-            type: boolean
-            nullable: true
+            type:
+              - boolean
+              - 'null'
         - name: sortBy
           in: query
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -121,23 +125,26 @@ paths:
           in: query
           required: true
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
         - name: role
           in: query
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
         - name: isActive
           in: query
           required: false
           schema:
-            type: boolean
-            nullable: true
+            type:
+              - boolean
+              - 'null'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -153,7 +160,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -178,7 +185,7 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -196,7 +203,7 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -209,22 +216,27 @@ paths:
               type: object
               properties:
                 nullableRole:
-                  $ref: '#/components/schemas/UserRole'
-                  nullable: true
+                  anyOf:
+                    - $ref: '#/components/schemas/UserRole'
+                    - type: 'null'
                 nullableStatus:
-                  $ref: '#/components/schemas/UserStatus'
-                  nullable: true
+                  anyOf:
+                    - $ref: '#/components/schemas/UserStatus'
+                    - type: 'null'
                 nullableNotification:
-                  $ref: '#/components/schemas/NotificationMethod'
-                  nullable: true
+                  anyOf:
+                    - $ref: '#/components/schemas/NotificationMethod'
+                    - type: 'null'
                 nullableSearchResult:
-                  $ref: '#/components/schemas/SearchResult'
-                  nullable: true
+                  anyOf:
+                    - $ref: '#/components/schemas/SearchResult'
+                    - type: 'null'
                 nullableArray:
-                  type: array
+                  type:
+                    - array
+                    - 'null'
                   items:
                     type: string
-                  nullable: true
   /api/test/deserialization:
     post:
       description: Test endpoint for validating null deserialization
@@ -234,7 +246,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -256,23 +268,26 @@ paths:
           in: query
           required: true
           schema:
-            $ref: '#/components/schemas/UserRole'
-            nullable: true
+            anyOf:
+              - $ref: '#/components/schemas/UserRole'
+              - type: 'null'
         - name: status
           in: query
           required: false
           schema:
-            $ref: '#/components/schemas/UserStatus'
-            nullable: true
+            anyOf:
+              - $ref: '#/components/schemas/UserStatus'
+              - type: 'null'
         - name: secondaryRole
           in: query
           required: false
           schema:
-            $ref: '#/components/schemas/UserRole'
-            nullable: true
+            anyOf:
+              - $ref: '#/components/schemas/UserRole'
+              - type: 'null'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -297,8 +312,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NotificationMethod'
-                nullable: true
+                anyOf:
+                  - $ref: '#/components/schemas/NotificationMethod'
+                  - type: 'null'
   /api/users/{userId}/tags:
     put:
       description: Update tags to test array handling
@@ -328,20 +344,23 @@ paths:
               type: object
               properties:
                 tags:
-                  type: array
+                  type:
+                    - array
+                    - 'null'
                   items:
                     type: string
-                  nullable: true
                 categories:
-                  type: array
+                  type:
+                    - array
+                    - 'null'
                   items:
                     type: string
-                  nullable: true
                 labels:
-                  type: array
+                  type:
+                    - array
+                    - 'null'
                   items:
                     type: string
-                  nullable: true
               required:
                 - tags
   /api/search:
@@ -357,10 +376,11 @@ paths:
           content:
             application/json:
               schema:
-                type: array
+                type:
+                  - array
+                  - 'null'
                 items:
                   $ref: '#/components/schemas/SearchResult'
-                nullable: true
       requestBody:
         required: true
         content:
@@ -371,16 +391,19 @@ paths:
                 query:
                   type: string
                 filters:
-                  type: object
+                  type:
+                    - object
+                    - 'null'
                   additionalProperties:
-                    type: string
-                    nullable: true
-                  nullable: true
+                    type:
+                      - string
+                      - 'null'
                 includeTypes:
-                  type: array
+                  type:
+                    - array
+                    - 'null'
                   items:
                     type: string
-                  nullable: true
               required:
                 - query
                 - includeTypes
@@ -388,13 +411,15 @@ components:
   schemas:
     NullableUserId:
       title: NullableUserId
-      type: string
-      nullable: true
+      type:
+        - string
+        - 'null'
       description: An alias for a nullable user ID
     OptionalUserId:
       title: OptionalUserId
-      type: string
-      nullable: true
+      type:
+        - string
+        - 'null'
       description: An alias for an optional user ID
     UserProfile:
       title: UserProfile
@@ -406,63 +431,79 @@ components:
         username:
           type: string
         nullableString:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         nullableInteger:
-          type: integer
-          nullable: true
+          type:
+            - integer
+            - 'null'
         nullableBoolean:
-          type: boolean
-          nullable: true
+          type:
+            - boolean
+            - 'null'
         nullableDate:
-          type: string
+          type:
+            - string
+            - 'null'
           format: date-time
-          nullable: true
         nullableObject:
-          $ref: '#/components/schemas/Address'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/Address'
+            - type: 'null'
         nullableList:
-          type: array
+          type:
+            - array
+            - 'null'
           items:
             type: string
-          nullable: true
         nullableMap:
-          type: object
+          type:
+            - object
+            - 'null'
           additionalProperties:
             type: string
-          nullable: true
         optionalString:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         optionalInteger:
-          type: integer
-          nullable: true
+          type:
+            - integer
+            - 'null'
         optionalBoolean:
-          type: boolean
-          nullable: true
+          type:
+            - boolean
+            - 'null'
         optionalDate:
-          type: string
+          type:
+            - string
+            - 'null'
           format: date-time
-          nullable: true
         optionalObject:
-          $ref: '#/components/schemas/Address'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/Address'
+            - type: 'null'
         optionalList:
-          type: array
+          type:
+            - array
+            - 'null'
           items:
             type: string
-          nullable: true
         optionalMap:
-          type: object
+          type:
+            - object
+            - 'null'
           additionalProperties:
             type: string
-          nullable: true
         optionalNullableString:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         optionalNullableObject:
-          $ref: '#/components/schemas/Address'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/Address'
+            - type: 'null'
       required:
         - id
         - username
@@ -481,16 +522,19 @@ components:
         street:
           type: string
         city:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         state:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         zipCode:
           type: string
         country:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         buildingId:
           $ref: '#/components/schemas/NullableUserId'
         tenantId:
@@ -508,14 +552,17 @@ components:
         username:
           type: string
         email:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         phone:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         address:
-          $ref: '#/components/schemas/Address'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/Address'
+            - type: 'null'
       required:
         - username
         - email
@@ -525,17 +572,21 @@ components:
       description: For testing PATCH operations
       properties:
         username:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         email:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         phone:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         address:
-          $ref: '#/components/schemas/Address'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/Address'
+            - type: 'null'
     UserRole:
       title: UserRole
       type: string
@@ -563,8 +614,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - email
+                  const: email
             - $ref: '#/components/schemas/EmailNotification'
           required:
             - type
@@ -574,8 +624,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - sms
+                  const: sms
             - $ref: '#/components/schemas/SmsNotification'
           required:
             - type
@@ -585,8 +634,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - push
+                  const: push
             - $ref: '#/components/schemas/PushNotification'
           required:
             - type
@@ -600,8 +648,9 @@ components:
         subject:
           type: string
         htmlContent:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
       required:
         - emailAddress
         - subject
@@ -614,8 +663,9 @@ components:
         message:
           type: string
         shortCode:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
       required:
         - phoneNumber
         - message
@@ -630,8 +680,9 @@ components:
         body:
           type: string
         badge:
-          type: integer
-          nullable: true
+          type:
+            - integer
+            - 'null'
       required:
         - deviceToken
         - title
@@ -645,8 +696,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - user
+                  const: user
             - $ref: '#/components/schemas/UserResponse'
           required:
             - type
@@ -656,8 +706,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - organization
+                  const: organization
             - $ref: '#/components/schemas/Organization'
           required:
             - type
@@ -667,8 +716,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - document
+                  const: document
             - $ref: '#/components/schemas/Document'
           required:
             - type
@@ -682,11 +730,13 @@ components:
         name:
           type: string
         domain:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         employeeCount:
-          type: integer
-          nullable: true
+          type:
+            - integer
+            - 'null'
       required:
         - id
         - name
@@ -702,13 +752,15 @@ components:
         content:
           type: string
         author:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         tags:
-          type: array
+          type:
+            - array
+            - 'null'
           items:
             type: string
-          nullable: true
       required:
         - id
         - title
@@ -722,75 +774,95 @@ components:
         id:
           type: string
         nullableRole:
-          $ref: '#/components/schemas/UserRole'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/UserRole'
+            - type: 'null'
         optionalRole:
-          $ref: '#/components/schemas/UserRole'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/UserRole'
+            - type: 'null'
         optionalNullableRole:
-          $ref: '#/components/schemas/UserRole'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/UserRole'
+            - type: 'null'
         nullableStatus:
-          $ref: '#/components/schemas/UserStatus'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/UserStatus'
+            - type: 'null'
         optionalStatus:
-          $ref: '#/components/schemas/UserStatus'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/UserStatus'
+            - type: 'null'
         optionalNullableStatus:
-          $ref: '#/components/schemas/UserStatus'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/UserStatus'
+            - type: 'null'
         nullableNotification:
-          $ref: '#/components/schemas/NotificationMethod'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/NotificationMethod'
+            - type: 'null'
         optionalNotification:
-          $ref: '#/components/schemas/NotificationMethod'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/NotificationMethod'
+            - type: 'null'
         optionalNullableNotification:
-          $ref: '#/components/schemas/NotificationMethod'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/NotificationMethod'
+            - type: 'null'
         nullableSearchResult:
-          $ref: '#/components/schemas/SearchResult'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/SearchResult'
+            - type: 'null'
         optionalSearchResult:
-          $ref: '#/components/schemas/SearchResult'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/SearchResult'
+            - type: 'null'
         nullableArray:
-          type: array
+          type:
+            - array
+            - 'null'
           items:
             type: string
-          nullable: true
         optionalArray:
-          type: array
+          type:
+            - array
+            - 'null'
           items:
             type: string
-          nullable: true
         optionalNullableArray:
-          type: array
+          type:
+            - array
+            - 'null'
           items:
             type: string
-          nullable: true
         nullableListOfNullables:
-          type: array
+          type:
+            - array
+            - 'null'
           items:
-            type: string
-            nullable: true
-          nullable: true
+            type:
+              - string
+              - 'null'
         nullableMapOfNullables:
-          type: object
+          type:
+            - object
+            - 'null'
           additionalProperties:
-            $ref: '#/components/schemas/Address'
-            nullable: true
-          nullable: true
+            anyOf:
+              - $ref: '#/components/schemas/Address'
+              - type: 'null'
         nullableListOfUnions:
-          type: array
+          type:
+            - array
+            - 'null'
           items:
             $ref: '#/components/schemas/NotificationMethod'
-          nullable: true
         optionalMapOfEnums:
-          type: object
+          type:
+            - object
+            - 'null'
           additionalProperties:
             $ref: '#/components/schemas/UserRole'
-          nullable: true
       required:
         - id
         - nullableRole
@@ -809,42 +881,53 @@ components:
         requiredString:
           type: string
         nullableString:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         optionalString:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         optionalNullableString:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         nullableEnum:
-          $ref: '#/components/schemas/UserRole'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/UserRole'
+            - type: 'null'
         optionalEnum:
-          $ref: '#/components/schemas/UserStatus'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/UserStatus'
+            - type: 'null'
         nullableUnion:
-          $ref: '#/components/schemas/NotificationMethod'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/NotificationMethod'
+            - type: 'null'
         optionalUnion:
-          $ref: '#/components/schemas/SearchResult'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/SearchResult'
+            - type: 'null'
         nullableList:
-          type: array
+          type:
+            - array
+            - 'null'
           items:
             type: string
-          nullable: true
         nullableMap:
-          type: object
+          type:
+            - object
+            - 'null'
           additionalProperties:
             type: integer
-          nullable: true
         nullableObject:
-          $ref: '#/components/schemas/Address'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/Address'
+            - type: 'null'
         optionalObject:
-          $ref: '#/components/schemas/Organization'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/Organization'
+            - type: 'null'
       required:
         - requiredString
         - nullableString
@@ -881,21 +964,25 @@ components:
         username:
           type: string
         email:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         phone:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         createdAt:
           type: string
           format: date-time
         updatedAt:
-          type: string
+          type:
+            - string
+            - 'null'
           format: date-time
-          nullable: true
         address:
-          $ref: '#/components/schemas/Address'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/Address'
+            - type: 'null'
       required:
         - id
         - username

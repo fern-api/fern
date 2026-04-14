@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: api
-  version: ''
+  version: 0.0.0
 paths:
   /movies/create-movie:
     post:
@@ -12,7 +12,7 @@ paths:
       parameters: []
       responses:
         '201':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -37,13 +37,13 @@ paths:
             $ref: '#/components/schemas/MovieId'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Movie'
         '404':
-          description: ''
+          description: MovieDoesNotExistError
           content:
             application/json:
               schema:

@@ -1145,5 +1145,5 @@ jobs:
         if: steps.cpr.outputs.pull-request-operation == 'created'
         uses: ./.github/actions/auto-approve
         with:
-          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
+          approver-gh-token: ${{ secrets.FERN_GITHUB_TOKEN }}
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}

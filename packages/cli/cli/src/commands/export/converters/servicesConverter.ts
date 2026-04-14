@@ -25,6 +25,8 @@ import {
     TypeReference
 } from "@fern-api/ir-sdk";
 import { getCamelCaseUnsafe, getOriginalName, getPascalCaseUnsafe, getWireValue } from "@fern-api/ir-utils";
+import { CliError } from "@fern-api/task-context";
+
 import { isEqual, size } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import urlJoin from "url-join";
@@ -67,7 +69,10 @@ export function convertServices({
             });
             const pathsObject = (paths[fullPath] ??= {});
             if (pathsObject[convertedHttpMethod] != null) {
-                throw new Error(`Duplicate ${convertedHttpMethod} endpoint at ${fullPath}`);
+                throw new CliError({
+                    message: `Duplicate ${convertedHttpMethod} endpoint at ${fullPath}`,
+                    code: CliError.Code.ConfigError
+                });
             }
             pathsObject[convertedHttpMethod] = operationObject;
         });
@@ -175,12 +180,15 @@ function convertHttpEndpoint({
     if (httpEndpoint.baseUrl != null) {
         const baseUrlId = httpEndpoint.baseUrl;
         if (environments?.environments.type !== "multipleBaseUrls") {
-            throw new Error("baseUrl is defined environments are not multipleBaseUrls");
+            throw new CliError({
+                message: "baseUrl is defined environments are not multipleBaseUrls",
+                code: CliError.Code.InternalError
+            });
         }
         operationObject.servers = environments.environments.environments.map((environment) => {
             const url = environment.urls[baseUrlId];
             if (url == null) {
-                throw new Error("No URL defined for " + baseUrlId);
+                throw new CliError({ message: "No URL defined for " + baseUrlId, code: CliError.Code.InternalError });
             }
             const server: OpenAPIV3.ServerObject = { url };
             if (environment.docs != null) {
@@ -229,7 +237,10 @@ function convertHttpMethod(httpMethod: HttpMethod): OpenAPIV3.HttpMethods {
             return OpenAPIV3.HttpMethods.HEAD;
         },
         _other: () => {
-            throw new Error("Encountered unknown http method: " + httpMethod);
+            throw new CliError({
+                message: "Encountered unknown http method: " + httpMethod,
+                code: CliError.Code.InternalError
+            });
         }
     });
 }
@@ -331,7 +342,10 @@ function convertRequestBody({
                                         };
                                     },
                                     _other: () => {
-                                        throw new Error("Unknown FileUploadRequestProperty: " + property.type);
+                                        throw new CliError({
+                                            message: "Unknown FileUploadRequestProperty: " + property.type,
+                                            code: CliError.Code.InternalError
+                                        });
                                     }
                                 });
                                 return {
@@ -359,7 +373,10 @@ function convertRequestBody({
             };
         },
         _other: () => {
-            throw new Error("Unknown HttpRequestBody type: " + httpRequest.type);
+            throw new CliError({
+                message: "Unknown HttpRequestBody type: " + httpRequest.type,
+                code: CliError.Code.InternalError
+            });
         }
     });
 }
@@ -473,9 +490,11 @@ function convertResponse({
             for (const responseError of responseErrors) {
                 const errorDeclaration = errorsByName[getErrorTypeNameKey(responseError.error)];
                 if (errorDeclaration == null) {
-                    throw new Error(
-                        "Encountered undefined error declaration: " + getOriginalName(responseError.error.name)
-                    );
+                    throw new CliError({
+                        message:
+                            "Encountered undefined error declaration: " + getOriginalName(responseError.error.name),
+                        code: CliError.Code.ResolutionError
+                    });
                 }
                 const responseForStatusCode: OpenAPIV3.ResponseObject = {
                     description: responseError.docs ?? ""
@@ -566,7 +585,10 @@ function convertResponse({
             }
         },
         _other: () => {
-            throw new Error("Unknown error discrimination strategy: " + errorDiscriminationStrategy.type);
+            throw new CliError({
+                message: "Unknown error discrimination strategy: " + errorDiscriminationStrategy.type,
+                code: CliError.Code.InternalError
+            });
         }
     });
     return responseByStatusCode;
@@ -637,7 +659,10 @@ function getErrorInfoByStatusCode({
     for (const responseError of responseErrors) {
         const errorDeclaration = errorsByName[getErrorTypeNameKey(responseError.error)];
         if (errorDeclaration == null) {
-            throw new Error("Encountered undefined error declaration: " + getOriginalName(responseError.error.name));
+            throw new CliError({
+                message: "Encountered undefined error declaration: " + getOriginalName(responseError.error.name),
+                code: CliError.Code.ResolutionError
+            });
         }
         const statusCode = errorDeclaration.statusCode;
         const statusCodeErrorInfo = errorInfoByStatusCode[statusCode];
@@ -808,7 +833,10 @@ function isTypeReferenceRequired({
         const key = getDeclaredTypeNameKey(typeReference);
         const typeDeclaration = typesByName[key];
         if (typeDeclaration == null) {
-            throw new Error("Encountered non-existent type: " + getOriginalName(typeReference.name));
+            throw new CliError({
+                message: "Encountered non-existent type: " + getOriginalName(typeReference.name),
+                code: CliError.Code.ResolutionError
+            });
         }
         if (typeDeclaration.shape.type === "alias") {
             return isTypeReferenceRequired({ typeReference: typeDeclaration.shape.aliasOf, typesByName });

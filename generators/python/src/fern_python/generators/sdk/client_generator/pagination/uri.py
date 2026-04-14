@@ -3,6 +3,7 @@ from typing import Optional
 from .abstract_paginator import PaginationSnippetConfig, Paginator
 from fern_python.codegen import AST
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
+from fern_python.utils.name_resolver import resolve_name
 
 import fern.ir.resources as ir_types
 
@@ -155,6 +156,6 @@ class UriPagination(Paginator):
             if idx > 0:
                 built_path += "."
                 condition += " and "
-            built_path += f"{prop.name.snake_case.safe_name}"
+            built_path += f"{resolve_name(prop.name).snake_case.safe_name}"
             condition += f"{built_path} is not None"
         return condition

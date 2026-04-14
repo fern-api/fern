@@ -3,11 +3,21 @@ import { createLogger, LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { getPosthogManager, PosthogManager } from "@fern-api/posthog-manager";
 import { Project } from "@fern-api/project-loader";
 import { isVersionAhead } from "@fern-api/semver-utils";
-import { Finishable, PosthogEvent, Startable, TaskAbortSignal, TaskContext, TaskResult } from "@fern-api/task-context";
+import {
+    CliError,
+    Finishable,
+    PosthogEvent,
+    Startable,
+    TaskAbortSignal,
+    TaskContext,
+    TaskResult
+} from "@fern-api/task-context";
+
 import { Workspace } from "@fern-api/workspace-loader";
 import { input, select } from "@inquirer/prompts";
 import chalk from "chalk";
 import { maxBy } from "lodash-es";
+import { reportError } from "../telemetry/reportError.js";
 import { SentryClient } from "../telemetry/SentryClient.js";
 import { CliEnvironment } from "./CliEnvironment.js";
 import { StdoutRedirector } from "./StdoutRedirector.js";
@@ -108,14 +118,18 @@ export class CliContext {
         );
     }
 
-    public failAndThrow(message?: string, error?: unknown): never {
-        this.failWithoutThrowing(message, error);
+    public failAndThrow(message?: string, error?: unknown, options?: { code?: CliError.Code }): never {
+        this.failWithoutThrowing(message, error, options);
         throw new TaskAbortSignal();
     }
 
-    public failWithoutThrowing(message?: string, error?: unknown): void {
+    public failWithoutThrowing(message?: string, error?: unknown, options?: { code?: CliError.Code }): void {
         this.didSucceed = false;
+        if (error instanceof TaskAbortSignal) {
+            return;
+        }
         logErrorMessage({ message, error, logger: this.logger });
+        reportError(this, error, { ...options, message });
     }
 
     /**
@@ -241,16 +255,9 @@ export class CliContext {
         try {
             result = await run(context);
         } catch (error) {
-            if (error instanceof TaskAbortSignal) {
-                // thrower is responsible for logging, so we generally don't need to log here.
-                throw error;
-            }
-            if ((error as Error).message.includes("globalThis")) {
-                context.logger.error(this.USE_NODE_18_OR_ABOVE_MESSAGE);
-                context.failWithoutThrowing();
-            } else {
-                context.failWithoutThrowing(undefined, error);
-            }
+            context.failWithoutThrowing(undefined, error);
+
+            // We need to throw a TaskAbortSignal to stop execution.
             throw new TaskAbortSignal();
         } finally {
             context.finish();
@@ -264,8 +271,8 @@ export class CliContext {
         }
     }
 
-    public async captureException(error: unknown): Promise<void> {
-        await this.sentryClient.captureException(error);
+    public captureException(error: unknown, code?: CliError.Code): void {
+        this.sentryClient.captureException(error, code);
     }
 
     public readonly logger = createLogger((level, ...args) => this.log(level, ...args));
@@ -308,7 +315,10 @@ export class CliContext {
             instrumentPostHogEvent: (event) => {
                 this.instrumentPostHogEvent(event);
             },
-            shouldBufferLogs: false
+            shouldBufferLogs: false,
+            captureException: (error, code) => {
+                this.sentryClient.captureException(error, code);
+            }
         };
     }
 
@@ -433,7 +443,15 @@ export class CliContext {
      * @returns Promise<string> representing the user's input
      */
     public async getInput(config: { message: string; default?: string }): Promise<string> {
-        return await input({ message: config.message, default: config.default });
+        try {
+            return await input({ message: config.message, default: config.default });
+        } catch (error) {
+            if ((error as Error)?.name === "ExitPromptError") {
+                this.logger.info("\nCancelled by user.");
+                throw new TaskAbortSignal();
+            }
+            throw error;
+        }
     }
 }
 

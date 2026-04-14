@@ -1,3 +1,4 @@
+import { getNameFromWireValue, getWireValue } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { python } from "@fern-api/python-ast";
 import { core, dt, pydantic, WriteablePythonFile } from "@fern-api/python-base";
@@ -41,7 +42,8 @@ export class ObjectGenerator {
                 ? python.codeBlock("None")
                 : undefined;
 
-            const wireValue = propertyName === property.name.wireValue ? undefined : property.name.wireValue;
+            const propertyWireValue = getWireValue(property.name);
+            const wireValue = propertyName === propertyWireValue ? undefined : propertyWireValue;
 
             let initializer = undefined;
 
@@ -108,9 +110,9 @@ export class ObjectGenerator {
         objectProperty
     }: {
         className: string;
-        objectProperty: FernIr.NameAndWireValue;
+        objectProperty: FernIr.NameAndWireValueOrString;
     }): string {
-        return this.context.getSnakeCaseSafeName(objectProperty.name);
+        return this.context.getSnakeCaseSafeName(getNameFromWireValue(objectProperty));
     }
 
     private getConfigClass(): python.Class {
