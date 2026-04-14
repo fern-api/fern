@@ -17,6 +17,12 @@ import { getInstanceUrls, removeLeadingSlash, toBaseUrl } from "./url-utils.js";
 
 const NOOP_CONTEXT = createMockTaskContext({ logger: createLogger(noop) });
 
+// The FDR SDK types config.root as {} via zod inference, but at runtime it is FernNavigation.V1.RootNode.
+// This type guard checks the "type" discriminant to safely narrow the type without a blind cast.
+function isV1RootNode(value: object): value is FernNavigation.V1.RootNode {
+    return "type" in value && (value as { type: unknown }).type === "root";
+}
+
 export const ValidMarkdownLinks: Rule = {
     name: "valid-markdown-links",
     create: async ({ workspace, apiWorkspaces, ossWorkspaces }) => {
@@ -39,13 +45,14 @@ export const ValidMarkdownLinks: Rule = {
 
         const resolvedDocsDefinition = await docsDefinitionResolver.resolve();
 
-        if (!resolvedDocsDefinition.config.root) {
+        const configRoot = resolvedDocsDefinition.config.root;
+        if (!configRoot || !isV1RootNode(configRoot)) {
             throw new Error("Root node not found");
         }
 
         // TODO: this is a bit of a hack to get the navigation tree. We should probably just use the navigation tree
         // from the docs definition resolver, once there's a light way to retrieve it.
-        const root = FernNavigation.migrate.FernNavigationV1ToLatest.create().root(resolvedDocsDefinition.config.root);
+        const root = FernNavigation.migrate.FernNavigationV1ToLatest.create().root(configRoot);
 
         // all the page slugs in the docs:
         const collector = FernNavigation.NodeCollector.collect(root);

@@ -86,7 +86,7 @@ export async function registerApi({
     try {
         const response = await fdrService.api.register.registerApiDefinition({
             orgId: FdrCjsSdk.OrgId(organization),
-            apiId: FdrCjsSdk.ApiId(ir.apiName.originalName),
+            apiId: FdrCjsSdk.ApiId(getOriginalName(ir.apiName)),
             definition: apiDefinition
         });
 

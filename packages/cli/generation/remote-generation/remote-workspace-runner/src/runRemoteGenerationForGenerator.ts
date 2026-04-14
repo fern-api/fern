@@ -178,7 +178,7 @@ export async function runRemoteGenerationForGenerator({
     try {
         const response = await fdr.api.register.registerApiDefinition({
             orgId: FdrAPI.OrgId(organization),
-            apiId: FdrAPI.ApiId(ir.apiName.originalName),
+            apiId: FdrAPI.ApiId(getOriginalName(ir.apiName)),
             definition: apiDefinition,
             sources: sources.length > 0 ? convertToFdrApiDefinitionSources(sources) : undefined
         });

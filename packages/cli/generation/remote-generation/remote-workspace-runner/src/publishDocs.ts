@@ -177,7 +177,7 @@ export async function publishDocs({
         token: token.value,
         ...(Object.keys(headers).length > 0 && { headers })
     });
-    const authConfig: DocsV2Write.AuthConfig = { type: "public" };
+    const authConfig = { type: "public" as const };
 
     if (excludeApis) {
         context.logger.debug(
@@ -511,9 +511,7 @@ export async function publishDocs({
                         orgId: CjsFdrSdk.OrgId(organization),
                         apiId: CjsFdrSdk.ApiId(apiName ?? getOriginalName(ir.apiName)),
                         definition: apiDefinition,
-                        definitionV2: undefined,
-                        dynamicIRs: dynamicIRsByLanguage,
-                        docsUrl
+                        dynamicIRs: dynamicIRsByLanguage
                     });
                 } catch (error) {
                     const errorDetails = extractErrorDetails(error);
@@ -934,50 +932,50 @@ async function buildSnippetConfigurationWithVersions({
     }> = [
         {
             language: "typescript",
-            snippetName: snippetsConfig.typescriptSdk?.package,
-            explicitVersion: snippetsConfig.typescriptSdk?.version
+            snippetName: snippetsConfig.typescriptSdk?.package ?? undefined,
+            explicitVersion: snippetsConfig.typescriptSdk?.version ?? undefined
         },
         {
             language: "python",
-            snippetName: snippetsConfig.pythonSdk?.package,
-            explicitVersion: snippetsConfig.pythonSdk?.version
+            snippetName: snippetsConfig.pythonSdk?.package ?? undefined,
+            explicitVersion: snippetsConfig.pythonSdk?.version ?? undefined
         },
         {
             language: "java",
-            snippetName: snippetsConfig.javaSdk?.coordinate,
-            explicitVersion: snippetsConfig.javaSdk?.version
+            snippetName: snippetsConfig.javaSdk?.coordinate ?? undefined,
+            explicitVersion: snippetsConfig.javaSdk?.version ?? undefined
         },
         {
             language: "go",
             // Normalize to match S3 upload key format (github.com/owner/repo vs https://github.com/owner/repo)
             snippetName:
                 snippetsConfig.goSdk?.githubRepo && normalizeGoPackageForLookup(snippetsConfig.goSdk?.githubRepo),
-            explicitVersion: snippetsConfig.goSdk?.version
+            explicitVersion: snippetsConfig.goSdk?.version ?? undefined
         },
         {
             language: "csharp",
-            snippetName: snippetsConfig.csharpSdk?.package,
-            explicitVersion: snippetsConfig.csharpSdk?.version
+            snippetName: snippetsConfig.csharpSdk?.package ?? undefined,
+            explicitVersion: snippetsConfig.csharpSdk?.version ?? undefined
         },
         {
             language: "ruby",
-            snippetName: snippetsConfig.rubySdk?.gem,
-            explicitVersion: snippetsConfig.rubySdk?.version
+            snippetName: snippetsConfig.rubySdk?.gem ?? undefined,
+            explicitVersion: snippetsConfig.rubySdk?.version ?? undefined
         },
         {
             language: "php",
-            snippetName: snippetsConfig.phpSdk?.package,
-            explicitVersion: snippetsConfig.phpSdk?.version
+            snippetName: snippetsConfig.phpSdk?.package ?? undefined,
+            explicitVersion: snippetsConfig.phpSdk?.version ?? undefined
         },
         {
             language: "swift",
-            snippetName: snippetsConfig.swiftSdk?.package,
-            explicitVersion: snippetsConfig.swiftSdk?.version
+            snippetName: snippetsConfig.swiftSdk?.package ?? undefined,
+            explicitVersion: snippetsConfig.swiftSdk?.version ?? undefined
         },
         {
             language: "rust",
-            snippetName: snippetsConfig.rustSdk?.package,
-            explicitVersion: snippetsConfig.rustSdk?.version
+            snippetName: snippetsConfig.rustSdk?.package ?? undefined,
+            explicitVersion: snippetsConfig.rustSdk?.version ?? undefined
         }
     ];
 

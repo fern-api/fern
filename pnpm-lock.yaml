@@ -4286,8 +4286,8 @@ importers:
   packages/cli/api-importers/graphql:
     dependencies:
       '@fern-api/fdr-sdk':
-        specifier: 1.1.13-31b7d20b66
-        version: 1.1.13-31b7d20b66(@opentelemetry/api@1.9.0)(typescript@5.9.3)
+        specifier: 1.1.13-c1ad12a2b8
+        version: 1.1.13-c1ad12a2b8(@opentelemetry/api@1.9.0)(typescript@5.9.3)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../commons/fs-utils
@@ -4771,8 +4771,8 @@ importers:
         specifier: workspace:*
         version: link:../yaml/docs-validator
       '@fern-api/fdr-sdk':
-        specifier: 1.1.13-31b7d20b66
-        version: 1.1.13-31b7d20b66(@opentelemetry/api@1.9.0)(typescript@5.9.3)
+        specifier: 1.1.13-c1ad12a2b8
+        version: 1.1.13-c1ad12a2b8(@opentelemetry/api@1.9.0)(typescript@5.9.3)
       '@fern-api/fern-definition-formatter':
         specifier: workspace:*
         version: link:../fern-definition/formatter
@@ -5384,8 +5384,8 @@ importers:
         specifier: workspace:*
         version: link:../../commons/core-utils
       '@fern-api/fdr-sdk':
-        specifier: 1.1.13-31b7d20b66
-        version: 1.1.13-31b7d20b66(@opentelemetry/api@1.9.0)(typescript@5.9.3)
+        specifier: 1.1.13-c1ad12a2b8
+        version: 1.1.13-c1ad12a2b8(@opentelemetry/api@1.9.0)(typescript@5.9.3)
       '@fern-api/fern-definition-schema':
         specifier: workspace:*
         version: link:../fern-definition/schema
@@ -5421,8 +5421,8 @@ importers:
         specifier: workspace:*
         version: link:../../commons/core-utils
       '@fern-api/fdr-sdk':
-        specifier: 1.1.13-31b7d20b66
-        version: 1.1.13-31b7d20b66(@opentelemetry/api@1.9.0)(typescript@5.9.3)
+        specifier: 1.1.13-c1ad12a2b8
+        version: 1.1.13-c1ad12a2b8(@opentelemetry/api@1.9.0)(typescript@5.9.3)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -5500,8 +5500,8 @@ importers:
         specifier: workspace:*
         version: link:../../configuration
       '@fern-api/fdr-sdk':
-        specifier: 1.1.13-31b7d20b66
-        version: 1.1.13-31b7d20b66(@opentelemetry/api@1.9.0)(typescript@5.9.3)
+        specifier: 1.1.13-c1ad12a2b8
+        version: 1.1.13-c1ad12a2b8(@opentelemetry/api@1.9.0)(typescript@5.9.3)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../commons/fs-utils
@@ -5540,8 +5540,8 @@ importers:
         specifier: workspace:*
         version: link:../commons
       '@fern-api/fdr-sdk':
-        specifier: 1.1.13-31b7d20b66
-        version: 1.1.13-31b7d20b66(@opentelemetry/api@1.9.0)(typescript@5.9.3)
+        specifier: 1.1.13-c1ad12a2b8
+        version: 1.1.13-c1ad12a2b8(@opentelemetry/api@1.9.0)(typescript@5.9.3)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../commons/fs-utils
@@ -5580,8 +5580,8 @@ importers:
         specifier: workspace:*
         version: link:../commons
       '@fern-api/fdr-sdk':
-        specifier: 1.1.13-31b7d20b66
-        version: 1.1.13-31b7d20b66(@opentelemetry/api@1.9.0)(typescript@5.9.3)
+        specifier: 1.1.13-c1ad12a2b8
+        version: 1.1.13-c1ad12a2b8(@opentelemetry/api@1.9.0)(typescript@5.9.3)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../commons/fs-utils
@@ -5647,8 +5647,8 @@ importers:
   packages/cli/docs-markdown-utils:
     dependencies:
       '@fern-api/fdr-sdk':
-        specifier: 1.1.13-31b7d20b66
-        version: 1.1.13-31b7d20b66(@opentelemetry/api@1.9.0)(typescript@5.9.3)
+        specifier: 1.1.13-c1ad12a2b8
+        version: 1.1.13-c1ad12a2b8(@opentelemetry/api@1.9.0)(typescript@5.9.3)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -5735,8 +5735,8 @@ importers:
         specifier: workspace:*
         version: link:../docs-resolver
       '@fern-api/fdr-sdk':
-        specifier: 1.1.13-31b7d20b66
-        version: 1.1.13-31b7d20b66(@opentelemetry/api@1.9.0)(typescript@5.9.3)
+        specifier: 1.1.13-c1ad12a2b8
+        version: 1.1.13-c1ad12a2b8(@opentelemetry/api@1.9.0)(typescript@5.9.3)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -5850,8 +5850,8 @@ importers:
         specifier: 'catalog:'
         version: 0.0.65(typescript@5.9.3)
       '@fern-api/fdr-sdk':
-        specifier: 1.1.13-31b7d20b66
-        version: 1.1.13-31b7d20b66(@opentelemetry/api@1.9.0)(typescript@5.9.3)
+        specifier: 1.1.13-c1ad12a2b8
+        version: 1.1.13-c1ad12a2b8(@opentelemetry/api@1.9.0)(typescript@5.9.3)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -5944,8 +5944,8 @@ importers:
         specifier: workspace:*
         version: link:../configuration
       '@fern-api/fdr-sdk':
-        specifier: 1.1.13-31b7d20b66
-        version: 1.1.13-31b7d20b66(@opentelemetry/api@1.9.0)(typescript@5.9.3)
+        specifier: 1.1.13-c1ad12a2b8
+        version: 1.1.13-c1ad12a2b8(@opentelemetry/api@1.9.0)(typescript@5.9.3)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -6646,8 +6646,8 @@ importers:
         specifier: 'catalog:'
         version: 0.0.6-2ee1b7e28
       '@fern-api/fdr-sdk':
-        specifier: 1.1.13-31b7d20b66
-        version: 1.1.13-31b7d20b66(@opentelemetry/api@1.9.0)(typescript@5.9.3)
+        specifier: 1.1.13-c1ad12a2b8
+        version: 1.1.13-c1ad12a2b8(@opentelemetry/api@1.9.0)(typescript@5.9.3)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../../commons/fs-utils
@@ -6862,8 +6862,8 @@ importers:
   packages/cli/library-docs-generator:
     dependencies:
       '@fern-api/fdr-sdk':
-        specifier: 1.1.13-31b7d20b66
-        version: 1.1.13-31b7d20b66(@opentelemetry/api@1.9.0)(typescript@5.9.3)
+        specifier: 1.1.13-c1ad12a2b8
+        version: 1.1.13-c1ad12a2b8(@opentelemetry/api@1.9.0)(typescript@5.9.3)
       js-yaml:
         specifier: 'catalog:'
         version: 4.1.1
@@ -7096,8 +7096,8 @@ importers:
         specifier: workspace:*
         version: link:../../commons/core-utils
       '@fern-api/fdr-sdk':
-        specifier: 1.1.13-31b7d20b66
-        version: 1.1.13-31b7d20b66(@opentelemetry/api@1.9.0)(typescript@5.9.3)
+        specifier: 1.1.13-c1ad12a2b8
+        version: 1.1.13-c1ad12a2b8(@opentelemetry/api@1.9.0)(typescript@5.9.3)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -7292,8 +7292,8 @@ importers:
         specifier: workspace:*
         version: link:../../../commons/core-utils
       '@fern-api/fdr-sdk':
-        specifier: 1.1.13-31b7d20b66
-        version: 1.1.13-31b7d20b66(@opentelemetry/api@1.9.0)(typescript@5.9.3)
+        specifier: 1.1.13-c1ad12a2b8
+        version: 1.1.13-c1ad12a2b8(@opentelemetry/api@1.9.0)(typescript@5.9.3)
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../../ir-sdk
@@ -7377,8 +7377,8 @@ importers:
         specifier: workspace:*
         version: link:../../../commons/core-utils
       '@fern-api/fdr-sdk':
-        specifier: 1.1.13-31b7d20b66
-        version: 1.1.13-31b7d20b66(@opentelemetry/api@1.9.0)(typescript@5.9.3)
+        specifier: 1.1.13-c1ad12a2b8
+        version: 1.1.13-c1ad12a2b8(@opentelemetry/api@1.9.0)(typescript@5.9.3)
       '@fern-api/fern-definition-schema':
         specifier: workspace:*
         version: link:../../fern-definition/schema
@@ -7614,8 +7614,8 @@ importers:
         specifier: workspace:*
         version: link:../../docs-resolver
       '@fern-api/fdr-sdk':
-        specifier: 1.1.13-31b7d20b66
-        version: 1.1.13-31b7d20b66(@opentelemetry/api@1.9.0)(typescript@5.9.3)
+        specifier: 1.1.13-c1ad12a2b8
+        version: 1.1.13-c1ad12a2b8(@opentelemetry/api@1.9.0)(typescript@5.9.3)
       '@fern-api/fern-definition-schema':
         specifier: workspace:*
         version: link:../../fern-definition/schema
@@ -8243,8 +8243,8 @@ importers:
   packages/core:
     dependencies:
       '@fern-api/fdr-sdk':
-        specifier: 1.1.13-31b7d20b66
-        version: 1.1.13-31b7d20b66(@opentelemetry/api@1.9.0)(typescript@5.9.3)
+        specifier: 1.1.13-c1ad12a2b8
+        version: 1.1.13-c1ad12a2b8(@opentelemetry/api@1.9.0)(typescript@5.9.3)
       '@fern-api/venus-api-sdk':
         specifier: 'catalog:'
         version: 0.17.3-3-gf696595
@@ -9784,8 +9784,8 @@ packages:
     resolution: {integrity: sha512-3qhAAuc4ZJWLaFtyZzaYXfF9OQ5iviNrvLDXtjKScKUNS134fR3v3c3xedCidTq5KedapuBECziUaOmmd6KXVA==}
     engines: {node: '>=18.0.0'}
 
-  '@fern-api/fdr-sdk@1.1.13-31b7d20b66':
-    resolution: {integrity: sha512-rwq4nBQIHLUzRpx5A0gnZSZ7RGhVpp3gUctplkfNAdG6Dk9U/DjgCDSz8l5Ux7BwVzJe84qQC2wWWNdxaDJ8ug==}
+  '@fern-api/fdr-sdk@1.1.13-c1ad12a2b8':
+    resolution: {integrity: sha512-5qGDcejIPq/jTLBj2IpN+0wpKsZMbpNiW/Isw3SsUJBjMKujU7ecdro0P+LISVjmCSktvYQf3g6f8nr5MJSJZw==}
 
   '@fern-api/generator-cli@0.8.0':
     resolution: {integrity: sha512-DYivWqVlEKazoJ4gqpiOs4Aq3r+s+E9krtjovp4r/JBDOphxaVip0mRR//KVeO7nsV1En3VYKKfUXVr4KYFKVQ==}
@@ -12088,9 +12088,6 @@ packages:
 
   date-fns@4.1.0:
     resolution: {integrity: sha512-Ukq0owbQXxa/U3EGtsdVBkR1w7KOQ5gIBqdH2hkvknzZPYvBxb/aa6E8L7tmjFtkwZBu3UXBbjIgPo/Ez4xaNg==}
-
-  dayjs@1.11.19:
-    resolution: {integrity: sha512-t5EcLVS6QPBNqM2z8fakk/NKel+Xzshgt8FFKAn+qwlD1pzZWxh0nVCrvFK7ZDb6XucZeF9z8C7CBWTRIVApAw==}
 
   dayjs@1.11.20:
     resolution: {integrity: sha512-YbwwqR/uYpeoP4pu043q+LTDLFBLApUP6VxRihdfNTqu4ubqMlGDLd6ErXhEgsyvY0K6nCs7nggYumAN+9uEuQ==}
@@ -16776,7 +16773,7 @@ snapshots:
 
   '@fern-api/fai-sdk@0.0.6-2ee1b7e28': {}
 
-  '@fern-api/fdr-sdk@1.1.13-31b7d20b66(@opentelemetry/api@1.9.0)(typescript@5.9.3)':
+  '@fern-api/fdr-sdk@1.1.13-c1ad12a2b8(@opentelemetry/api@1.9.0)(typescript@5.9.3)':
     dependencies:
       '@fern-api/ui-core-utils': 0.145.12-b50d999d1
       '@orpc/client': 1.13.9(@opentelemetry/api@1.9.0)
@@ -16784,7 +16781,7 @@ snapshots:
       '@orpc/openapi-client': 1.13.9(@opentelemetry/api@1.9.0)
       '@types/readable-stream': 4.0.23
       '@ungap/structured-clone': 1.3.0
-      dayjs: 1.11.19
+      dayjs: 1.11.20
       es-toolkit: 1.45.1
       escape-string-regexp: 5.0.0
       fast-deep-equal: 3.1.3
@@ -19291,8 +19288,6 @@ snapshots:
       date-fns: 4.1.0
 
   date-fns@4.1.0: {}
-
-  dayjs@1.11.19: {}
 
   dayjs@1.11.20: {}
 

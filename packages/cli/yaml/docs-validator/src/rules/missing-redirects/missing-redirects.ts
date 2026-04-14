@@ -12,6 +12,12 @@ import { checkMissingRedirects, findRemovedSlugs, type MarkdownEntry } from "./m
 
 const NOOP_CONTEXT = createMockTaskContext({ logger: createLogger(noop) });
 
+// The FDR SDK types config.root as {} via zod inference, but at runtime it is FernNavigation.V1.RootNode.
+// This type guard checks the "type" discriminant to safely narrow the type without a blind cast.
+function isV1RootNode(value: object): value is FernNavigation.V1.RootNode {
+    return "type" in value && (value as { type: unknown }).type === "root";
+}
+
 type FetchResult =
     | { type: "success"; entries: MarkdownEntry[] }
     | { type: "no-token" }
@@ -108,11 +114,12 @@ export const MissingRedirectsRule: Rule = {
         });
 
         const resolvedDocsDefinition = await docsDefinitionResolver.resolve();
-        if (!resolvedDocsDefinition.config.root) {
+        const configRoot = resolvedDocsDefinition.config.root;
+        if (!configRoot || !isV1RootNode(configRoot)) {
             return {};
         }
 
-        const root = FernNavigation.migrate.FernNavigationV1ToLatest.create().root(resolvedDocsDefinition.config.root);
+        const root = FernNavigation.migrate.FernNavigationV1ToLatest.create().root(configRoot);
         const localPageIdToSlug = buildPageIdToSlugMap(root);
         const removedSlugs = findRemovedSlugs(result.entries, localPageIdToSlug);
 
