@@ -399,6 +399,9 @@ export async function sdkPreview({
             for (const preview of previews) {
                 cliContext.logger.info("");
                 cliContext.logger.info(`  ${preview.package_name}@${preview.version}`);
+                if (preview.diff_url) {
+                    cliContext.logger.info(`  Diff: ${preview.diff_url}`);
+                }
                 cliContext.logger.info(`  Output: ${preview.output_path}`);
             }
         }
