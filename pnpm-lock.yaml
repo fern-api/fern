@@ -7814,8 +7814,8 @@ importers:
         specifier: workspace:*
         version: link:../commons/core-utils
       '@fern-api/replay':
-        specifier: 0.10.3
-        version: 0.10.3
+        specifier: 0.10.4
+        version: 0.10.4
       '@octokit/rest':
         specifier: 'catalog:'
         version: 22.0.1
@@ -9337,8 +9337,8 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
-  '@fern-api/replay@0.10.3':
-    resolution: {integrity: sha512-iR+AwoO6EK+kx/MeO1mudSOXVgFTweME2pAjKFioByiVkTR8ukBIPNOGPCIbjnrvQvVrBXJoglMR13fihTaTfA==}
+  '@fern-api/replay@0.10.4':
+    resolution: {integrity: sha512-j/stjn9QMrFPnuLy0KNCwb4rM8ruq7nPtem1ZD5d8E+T7q+yxx1R3QsIaKZcKwFp/LFoyf8PPLhOAa6H8il8WQ==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -12190,8 +12190,8 @@ packages:
   flatted@3.4.2:
     resolution: {integrity: sha512-PjDse7RzhcPkIJwy5t7KPWQSZ9cAbzQXcafsetQoD7sOJRQlGikNbx7yZp2OotDnJyrDcbyRq3Ttb18iYOqkxA==}
 
-  follow-redirects@1.15.11:
-    resolution: {integrity: sha512-deG2P0JfjrTxl50XGCDyfI97ZGVCxIpfKYmfyrQ54n5FO/0gfIES8C/Psl6kWVDolizcaaxZJnTS0QSMxvnsBQ==}
+  follow-redirects@1.16.0:
+    resolution: {integrity: sha512-y5rN/uOsadFT/JfYwhxRS5R7Qce+g3zG97+JrtFZlC9klX/W5hD7iiLzScI4nZqUS7DNUdhPgw4xI8W2LuXlUw==}
     engines: {node: '>=4.0'}
     peerDependencies:
       debug: '*'
@@ -16373,7 +16373,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@fern-api/replay@0.10.3':
+  '@fern-api/replay@0.10.4':
     dependencies:
       minimatch: 10.2.5
       node-diff3: 3.2.0
@@ -18222,7 +18222,7 @@ snapshots:
 
   axios@1.15.0:
     dependencies:
-      follow-redirects: 1.15.11
+      follow-redirects: 1.16.0
       form-data: 4.0.5
       proxy-from-env: 2.1.0
     transitivePeerDependencies:
@@ -19362,7 +19362,7 @@ snapshots:
 
   flatted@3.4.2: {}
 
-  follow-redirects@1.15.11: {}
+  follow-redirects@1.16.0: {}
 
   for-each@0.3.5:
     dependencies:

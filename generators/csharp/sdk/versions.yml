@@ -1,4 +1,46 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.60.0
+  changelogEntry:
+    - summary: |
+        Add opt-in `enable-inline-types` configuration option. When enabled, types
+        marked as inline in the API definition are generated as nested classes inside
+        a static `Types` class on the parent type, instead of as separate top-level files.
+
+        For example, given a `User` type with an inline `Address` property, the
+        generated C# looks like:
+
+        ```csharp
+        public record User
+        {
+            public required Types.Address Address { get; set; }
+
+            public static class Types
+            {
+                public record Address
+                {
+                    public required string Street { get; set; }
+                    public required string City { get; set; }
+                }
+            }
+        }
+        ```
+
+        All type shapes are supported: objects, enums, discriminated unions, and
+        undiscriminated unions. Recursive nesting works
+        (e.g. `User.Types.Address.Types.Coordinate`), and collision avoidance
+        renames the nested class to `InnerTypes` if the parent already has a
+        `Types` property.
+
+        ```yaml
+        generators:
+          - name: fernapi/fern-csharp-sdk
+            config:
+              enable-inline-types: true
+        ```
+      type: feat
+  createdAt: "2026-03-16"
+  irVersion: 66
+
 - version: 2.59.6
   changelogEntry:
     - summary: |
