@@ -201,6 +201,46 @@ export function renderDocstringExamples(
 }
 
 // ---------------------------------------------------------------------------
+// Safe HTML tag protection (shared by escapeTableCell and DescriptionRenderer)
+// ---------------------------------------------------------------------------
+
+/**
+ * Regex matching known safe HTML tags that should pass through MDX escaping
+ * untouched. Covers opening, closing, and self-closing forms.
+ */
+export const SAFE_TAG_PATTERN = /<(\/?)(?:sub|sup|br|em|strong|code)(\s[^>]*)?\/?>/gi;
+
+/**
+ * Replace safe HTML tags with null-byte placeholders so that subsequent
+ * escaping does not mangle them.
+ *
+ * Returns the modified text and the list of original tags (in order).
+ */
+export function protectSafeTags(text: string): { text: string; tags: string[] } {
+    const tags: string[] = [];
+    const replaced = text.replace(SAFE_TAG_PATTERN, (match) => {
+        const placeholder = `\x00SAFE${tags.length}\x00`;
+        tags.push(match);
+        return placeholder;
+    });
+    return { text: replaced, tags };
+}
+
+/**
+ * Restore null-byte placeholders back to the original safe HTML tags.
+ */
+export function restoreSafeTags(text: string, tags: string[]): string {
+    let result = text;
+    for (let i = 0; i < tags.length; i++) {
+        const tag = tags[i];
+        if (tag != null) {
+            result = result.replace(`\x00SAFE${i}\x00`, tag);
+        }
+    }
+    return result;
+}
+
+// ---------------------------------------------------------------------------
 // MDX text escaping (angle brackets)
 // ---------------------------------------------------------------------------
 
@@ -235,14 +275,20 @@ export function escapeTableCell(content: string): string {
             if (i % 2 === 1) {
                 return part.replace(/\|/g, "\\|").replace(/\n/g, " ");
             }
-            // Even-indexed parts are outside backticks -- escape all hazards
-            return part
+            // Even-indexed parts are outside backticks -- escape all hazards.
+            // Preserve known safe HTML tags (sub, sup, br, em, strong, code)
+            // by temporarily replacing them, escaping everything else, then restoring.
+            const protected_ = protectSafeTags(part);
+
+            const escaped = protected_.text
                 .replace(/</g, "&lt;")
                 .replace(/>/g, "&gt;")
                 .replace(/\{/g, "&#123;")
                 .replace(/\}/g, "&#125;")
                 .replace(/\|/g, "\\|")
                 .replace(/\n/g, " ");
+
+            return restoreSafeTags(escaped, protected_.tags);
         })
         .join("");
 }

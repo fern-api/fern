@@ -147,6 +147,36 @@ describe("escapeTableCell", () => {
         });
     });
 
+    describe("safe HTML tag preservation", () => {
+        it("preserves <sub> tags", () => {
+            expect(escapeTableCell("<sub>text</sub>")).toBe("<sub>text</sub>");
+        });
+
+        it("preserves <sup> tags", () => {
+            expect(escapeTableCell("<sup>2</sup>")).toBe("<sup>2</sup>");
+        });
+
+        it("preserves safe tags mixed with prose", () => {
+            expect(escapeTableCell("O(n<sup>2</sup>)")).toBe("O(n<sup>2</sup>)");
+        });
+
+        it("preserves safe tags with pipe escaping", () => {
+            expect(escapeTableCell("<sub>x</sub> | <sup>y</sup>")).toBe("<sub>x</sub> \\| <sup>y</sup>");
+        });
+
+        it("preserves safe tags alongside backtick spans", () => {
+            expect(escapeTableCell("`code` <sub>note</sub>")).toBe("`code` <sub>note</sub>");
+        });
+
+        it("escapes non-safe HTML tags", () => {
+            expect(escapeTableCell("<div>bad</div>")).toBe("&lt;div&gt;bad&lt;/div&gt;");
+        });
+
+        it("escapes C++ template angle brackets (regression check)", () => {
+            expect(escapeTableCell("<T>value</T>")).toBe("&lt;T&gt;value&lt;/T&gt;");
+        });
+    });
+
     describe("edge cases", () => {
         it("handles empty string", () => {
             expect(escapeTableCell("")).toBe("");
