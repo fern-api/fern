@@ -234,12 +234,7 @@ jobs:
           ./scripts/turbo-retry.sh pnpm turbo run dist:cli:dev dist:cli --filter=@fern-api/cli --filter=@fern-api/cli-v2 --filter=@fern-api/seed-cli
 
       - name: Pre-pull Docker images used by ETE tests
-        run: |
-          # Pull images in parallel to warm the Docker cache before tests run.
-          # This prevents Docker pull time from eating into individual test timeouts.
-          docker pull fernapi/fern-pydantic-model:1.11.2 &
-          docker pull fernapi/fern-typescript-sdk:2.3.2 &
-          wait
+        run: docker compose -f packages/cli/ete-tests/docker-compose.yml pull
 
       - name: Run ETE tests
         if: ${{ !github.event.inputs.update_snapshots }}

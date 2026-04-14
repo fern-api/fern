@@ -38,12 +38,12 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
         const queryParameters: QueryParameter[] = [];
         const headers: HttpHeader[] = [];
 
-        const displayNameExtension = new DisplayNameExtension({
+        const channelDisplayNameExtension = new DisplayNameExtension({
             breadcrumbs: this.breadcrumbs,
-            channel: this.channel,
+            node: this.channel,
             context: this.context
         });
-        const displayName = displayNameExtension.convert() ?? this.websocketGroup?.join(".") ?? this.channelPath;
+        const displayName = channelDisplayNameExtension.convert() ?? this.websocketGroup?.join(".") ?? this.channelPath;
 
         if (this.channel.parameters) {
             this.convertChannelParameters({
@@ -70,6 +70,13 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
         const messages: WebSocketMessage[] = [];
 
         for (const [operationId, operation] of Object.entries(channelOperations)) {
+            const operationDisplayNameExtension = new DisplayNameExtension({
+                breadcrumbs: [...this.breadcrumbs, operationId],
+                node: operation,
+                context: this.context
+            });
+            const operationDisplayName = operationDisplayNameExtension.convert() ?? operationId;
+
             for (const message of operation.messages) {
                 const resolved = this.context.convertReferenceToTypeReference({ reference: message });
                 if (resolved.ok) {
@@ -79,7 +86,7 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
                     });
                     messages.push({
                         type: operationId,
-                        displayName: operationId,
+                        displayName: operationDisplayName,
                         origin: operation.action === "send" ? "client" : "server",
                         body: messageBody,
                         availability: this.context.getAvailability({

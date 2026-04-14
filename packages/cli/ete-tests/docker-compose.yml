@@ -1,0 +1,22 @@
+# Docker Compose file for pre-pulling all images used by ETE tests.
+# Run `docker compose pull` before tests to warm the Docker cache in parallel.
+#
+# When updating generator versions in ETE test fixtures, update the
+# corresponding image tags here as well so pre-pulling stays in sync.
+#
+# Images resolved dynamically at runtime (e.g. via `fern init`) cannot be
+# listed here and are excluded.
+
+services:
+  fern-typescript-sdk:
+    image: fernapi/fern-typescript-sdk:3.63.3
+    entrypoint: ["true"]
+  fern-pydantic-model:
+    image: fernapi/fern-pydantic-model:1.11.2
+    entrypoint: ["true"]
+  fern-python-sdk:
+    image: fernapi/fern-python-sdk:4.64.1
+    entrypoint: ["true"]
+  fern-go-sdk:
+    image: fernapi/fern-go-sdk:1.34.3
+    entrypoint: ["true"]

@@ -52,6 +52,7 @@ export const CsharpConfigSchema = z.object({
     "experimental-explicit-nullable-optional": z.boolean().optional(),
     "use-default-request-parameter-values": z.boolean().optional(),
     "redact-response-body-on-error": z.boolean().optional(),
+    "enable-inline-types": z.boolean().optional(),
 
     // temporary options to unblock websocket URIs generation
     //

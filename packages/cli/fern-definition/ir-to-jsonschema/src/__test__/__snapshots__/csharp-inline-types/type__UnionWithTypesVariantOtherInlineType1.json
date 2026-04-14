@@ -1,0 +1,30 @@
+{
+  "type": "object",
+  "properties": {
+    "bar": {
+      "type": "string"
+    },
+    "ref": {
+      "$ref": "#/definitions/ReferenceType"
+    }
+  },
+  "required": [
+    "bar",
+    "ref"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "ReferenceType": {
+      "type": "object",
+      "properties": {
+        "foo": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "foo"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

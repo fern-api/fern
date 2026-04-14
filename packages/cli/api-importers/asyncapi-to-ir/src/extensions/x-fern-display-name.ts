@@ -5,21 +5,31 @@ import { AsyncAPIV3 } from "../3.0/index.js";
 
 export declare namespace DisplayNameExtension {
     export interface Args extends AbstractExtension.Args {
-        channel: AsyncAPIV2.ChannelV2 | AsyncAPIV3.ChannelV3;
+        node:
+            | AsyncAPIV2.ChannelV2
+            | AsyncAPIV3.ChannelV3
+            | AsyncAPIV2.PublishEvent
+            | AsyncAPIV2.SubscribeEvent
+            | AsyncAPIV3.Operation;
     }
 }
 
 export class DisplayNameExtension extends AbstractExtension<string> {
-    private readonly channel: AsyncAPIV3.ChannelV3 | AsyncAPIV2.ChannelV2;
+    private readonly node:
+        | AsyncAPIV3.ChannelV3
+        | AsyncAPIV2.ChannelV2
+        | AsyncAPIV2.PublishEvent
+        | AsyncAPIV2.SubscribeEvent
+        | AsyncAPIV3.Operation;
     public readonly key = "x-fern-display-name";
 
-    constructor({ breadcrumbs, channel, context }: DisplayNameExtension.Args) {
+    constructor({ breadcrumbs, node, context }: DisplayNameExtension.Args) {
         super({ breadcrumbs, context });
-        this.channel = channel;
+        this.node = node;
     }
 
     public convert(): string | undefined {
-        const extensionValue = this.getExtensionValue(this.channel);
+        const extensionValue = this.getExtensionValue(this.node);
         if (extensionValue == null || typeof extensionValue !== "string") {
             return undefined;
         }
