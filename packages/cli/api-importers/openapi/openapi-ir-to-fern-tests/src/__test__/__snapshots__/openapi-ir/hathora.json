@@ -951,6 +951,14 @@
       "queryParameters": [],
       "headers": [],
       "generatedRequestName": "DeleteAppRequest",
+      "response": {
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "statusCode": 204,
+        "type": "text"
+      },
       "errors": {
         "404": {
           "generatedName": "NotFoundError",
@@ -1016,26 +1024,7 @@
       ],
       "method": "DELETE",
       "path": "/apps/v1/delete/{appId}",
-      "examples": [
-        {
-          "pathParameters": [
-            {
-              "name": "appId",
-              "value": {
-                "value": {
-                  "value": "appId",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
-          "queryParameters": [],
-          "headers": [],
-          "codeSamples": [],
-          "type": "full"
-        }
-      ],
+      "examples": [],
       "source": {
         "file": "../openapi.json",
         "type": "openapi"
@@ -2454,6 +2443,14 @@
       "queryParameters": [],
       "headers": [],
       "generatedRequestName": "DeleteBuildRequest",
+      "response": {
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "statusCode": 204,
+        "type": "text"
+      },
       "errors": {
         "404": {
           "generatedName": "NotFoundError",
@@ -2546,36 +2543,7 @@
       ],
       "method": "DELETE",
       "path": "/builds/v1/{appId}/delete/{buildId}",
-      "examples": [
-        {
-          "pathParameters": [
-            {
-              "name": "appId",
-              "value": {
-                "value": {
-                  "value": "appId",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "buildId",
-              "value": {
-                "value": {
-                  "value": 1.1,
-                  "type": "double"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
-          "queryParameters": [],
-          "headers": [],
-          "codeSamples": [],
-          "type": "full"
-        }
-      ],
+      "examples": [],
       "source": {
         "file": "../openapi.json",
         "type": "openapi"
@@ -9219,6 +9187,14 @@
       "queryParameters": [],
       "headers": [],
       "generatedRequestName": "DestroyRoomRequest",
+      "response": {
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "statusCode": 204,
+        "type": "text"
+      },
       "errors": {
         "404": {
           "generatedName": "NotFoundError",
@@ -9284,36 +9260,7 @@
       ],
       "method": "POST",
       "path": "/rooms/v1/{appId}/destroy/{roomId}",
-      "examples": [
-        {
-          "pathParameters": [
-            {
-              "name": "appId",
-              "value": {
-                "value": {
-                  "value": "appId",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "roomId",
-              "value": {
-                "value": {
-                  "value": "roomId",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
-          "queryParameters": [],
-          "headers": [],
-          "codeSamples": [],
-          "type": "full"
-        }
-      ],
+      "examples": [],
       "source": {
         "file": "../openapi.json",
         "type": "openapi"
@@ -9362,6 +9309,14 @@
       "queryParameters": [],
       "headers": [],
       "generatedRequestName": "SuspendRoomRequest",
+      "response": {
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "statusCode": 204,
+        "type": "text"
+      },
       "errors": {
         "404": {
           "generatedName": "NotFoundError",
@@ -9427,36 +9382,7 @@
       ],
       "method": "POST",
       "path": "/rooms/v1/{appId}/suspend/{roomId}",
-      "examples": [
-        {
-          "pathParameters": [
-            {
-              "name": "appId",
-              "value": {
-                "value": {
-                  "value": "appId",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "roomId",
-              "value": {
-                "value": {
-                  "value": "roomId",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
-          "queryParameters": [],
-          "headers": [],
-          "codeSamples": [],
-          "type": "full"
-        }
-      ],
+      "examples": [],
       "source": {
         "file": "../openapi.json",
         "type": "openapi"

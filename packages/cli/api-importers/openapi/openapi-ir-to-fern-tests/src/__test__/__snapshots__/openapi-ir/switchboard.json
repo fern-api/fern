@@ -70,21 +70,21 @@
         }
       ],
       "generatedRequestName": "AuthAndRedirectRequest",
+      "response": {
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 204,
+        "type": "text"
+      },
       "errors": {},
       "servers": [],
       "description": "Auth and redirect sessions by ID",
       "authed": false,
       "method": "GET",
       "path": "/auth",
-      "examples": [
-        {
-          "pathParameters": [],
-          "queryParameters": [],
-          "headers": [],
-          "codeSamples": [],
-          "type": "full"
-        }
-      ],
+      "examples": [],
       "source": {
         "file": "../openapi.yml",
         "type": "openapi"
@@ -593,32 +593,21 @@
       ],
       "headers": [],
       "generatedRequestName": "ExtensionsDeleteRequest",
+      "response": {
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 204,
+        "type": "text"
+      },
       "errors": {},
       "servers": [],
       "description": "Delete an extension by ID",
       "authed": false,
       "method": "DELETE",
       "path": "/extensions",
-      "examples": [
-        {
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "name",
-              "value": {
-                "value": {
-                  "value": "Widget",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
-          "headers": [],
-          "codeSamples": [],
-          "type": "full"
-        }
-      ],
+      "examples": [],
       "source": {
         "file": "../openapi.yml",
         "type": "openapi"
@@ -1503,32 +1492,21 @@
       ],
       "headers": [],
       "generatedRequestName": "ProfilesDeleteRequest",
+      "response": {
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 204,
+        "type": "text"
+      },
       "errors": {},
       "servers": [],
       "description": "Delete profiles matching query",
       "authed": false,
       "method": "DELETE",
       "path": "/profiles",
-      "examples": [
-        {
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "name",
-              "value": {
-                "value": {
-                  "value": "^Acme.*",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
-          "headers": [],
-          "codeSamples": [],
-          "type": "full"
-        }
-      ],
+      "examples": [],
       "source": {
         "file": "../openapi.yml",
         "type": "openapi"
@@ -3055,32 +3033,21 @@
       "queryParameters": [],
       "headers": [],
       "generatedRequestName": "SessionsTerminateRequest",
+      "response": {
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 204,
+        "type": "text"
+      },
       "errors": {},
       "servers": [],
       "description": "Ends a session by ID. If a given session id does not exist within the organization, it is ignored.",
       "authed": false,
       "method": "DELETE",
       "path": "/sessions/{id}",
-      "examples": [
-        {
-          "pathParameters": [
-            {
-              "name": "id",
-              "value": {
-                "value": {
-                  "value": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
-          "queryParameters": [],
-          "headers": [],
-          "codeSamples": [],
-          "type": "full"
-        }
-      ],
+      "examples": [],
       "source": {
         "file": "../openapi.yml",
         "type": "openapi"

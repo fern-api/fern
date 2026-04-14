@@ -495,6 +495,14 @@
       "queryParameters": [],
       "headers": [],
       "generatedRequestName": "DeleteItemRequest",
+      "response": {
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 204,
+        "type": "text"
+      },
       "errors": {
         "404": {
           "generatedName": "NotFoundError",
@@ -514,15 +522,7 @@
       "authed": false,
       "method": "DELETE",
       "path": "/delete",
-      "examples": [
-        {
-          "pathParameters": [],
-          "queryParameters": [],
-          "headers": [],
-          "codeSamples": [],
-          "type": "full"
-        }
-      ],
+      "examples": [],
       "source": {
         "file": "../openapi.yml",
         "type": "openapi"

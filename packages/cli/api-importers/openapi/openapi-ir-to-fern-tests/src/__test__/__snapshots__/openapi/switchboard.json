@@ -1046,9 +1046,6 @@ types:
               "auth": undefined,
               "display-name": "Auth and redirect sessions",
               "docs": "Auth and redirect sessions by ID",
-              "examples": [
-                {},
-              ],
               "method": "GET",
               "pagination": undefined,
               "path": "/auth",
@@ -1066,6 +1063,10 @@ types:
                   },
                 },
                 "name": "AuthAndRedirectRequest",
+              },
+              "response": {
+                "docs": undefined,
+                "status-code": 204,
               },
               "source": {
                 "openapi": "../openapi.yml",
@@ -1099,8 +1100,8 @@ types:
             type: optional<string>
             name: callType
             docs: call type, e.g. CHROMEDRIVER_EXTERNAL
-      examples:
-        - {}
+      response:
+        status-code: 204
   source:
     openapi: ../openapi.yml
 ",
@@ -1122,13 +1123,6 @@ types:
               "auth": undefined,
               "display-name": "Delete extensions matching name query",
               "docs": "Delete an extension by ID",
-              "examples": [
-                {
-                  "query-parameters": {
-                    "name": "Widget",
-                  },
-                },
-              ],
               "method": "DELETE",
               "pagination": undefined,
               "path": "/extensions",
@@ -1141,6 +1135,10 @@ types:
                     "type": "optional<string>",
                   },
                 },
+              },
+              "response": {
+                "docs": undefined,
+                "status-code": 204,
               },
               "source": {
                 "openapi": "../openapi.yml",
@@ -1468,9 +1466,8 @@ service:
             type: optional<string>
             explode: false
             docs: Name to search for, supports regex, case insensitive
-      examples:
-        - query-parameters:
-            name: Widget
+      response:
+        status-code: 204
       audiences:
         - beta
     getById:
@@ -1539,13 +1536,6 @@ service:
               "auth": undefined,
               "display-name": "Delete profiles matching query",
               "docs": "Delete profiles matching query",
-              "examples": [
-                {
-                  "query-parameters": {
-                    "name": "^Acme.*",
-                  },
-                },
-              ],
               "method": "DELETE",
               "pagination": undefined,
               "path": "/profiles",
@@ -1563,6 +1553,10 @@ service:
                     "type": "optional<nullable<list<string>>>",
                   },
                 },
+              },
+              "response": {
+                "docs": undefined,
+                "status-code": 204,
               },
               "source": {
                 "openapi": "../openapi.yml",
@@ -1936,9 +1930,8 @@ service:
             docs: >-
               a comma separated list of tags to filter by (joined by OR, e.g.
               tag is red OR blue)
-      examples:
-        - query-parameters:
-            name: ^Acme.*
+      response:
+        status-code: 204
       audiences:
         - public
     getById:
@@ -2353,13 +2346,6 @@ service:
               "auth": undefined,
               "display-name": "Ends a session",
               "docs": "Ends a session by ID. If a given session id does not exist within the organization, it is ignored.",
-              "examples": [
-                {
-                  "path-parameters": {
-                    "id": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
-                  },
-                },
-              ],
               "method": "DELETE",
               "pagination": undefined,
               "path": "/sessions/{id}",
@@ -2371,6 +2357,10 @@ service:
                     "type": "string",
                   },
                 },
+              },
+              "response": {
+                "docs": undefined,
+                "status-code": 204,
               },
               "source": {
                 "openapi": "../openapi.yml",
@@ -2716,9 +2706,8 @@ service:
           id:
             type: string
             docs: UUID of the session to delete
-      examples:
-        - path-parameters:
-            id: 6aac6f73-bd89-4a76-ab32-5a6c422e8b0b
+      response:
+        status-code: 204
       audiences:
         - public
     events:

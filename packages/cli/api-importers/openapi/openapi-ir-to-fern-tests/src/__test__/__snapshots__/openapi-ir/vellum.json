@@ -3395,6 +3395,14 @@
       "queryParameters": [],
       "headers": [],
       "generatedRequestName": "DeleteSandboxScenarioRequest",
+      "response": {
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 204,
+        "type": "text"
+      },
       "errors": {},
       "servers": [],
       "description": "<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nDeletes an existing scenario from a sandbox, keying off of the provided scenario id.",
@@ -3406,36 +3414,7 @@
       ],
       "method": "DELETE",
       "path": "/v1/sandboxes/{id}/scenarios/{scenario_id}",
-      "examples": [
-        {
-          "pathParameters": [
-            {
-              "name": "id",
-              "value": {
-                "value": {
-                  "value": "id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "scenario_id",
-              "value": {
-                "value": {
-                  "value": "scenario_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
-          "queryParameters": [],
-          "headers": [],
-          "codeSamples": [],
-          "type": "full"
-        }
-      ],
+      "examples": [],
       "source": {
         "file": "../openapi.yml",
         "type": "openapi"
@@ -4091,6 +4070,14 @@
       "queryParameters": [],
       "headers": [],
       "generatedRequestName": "DeleteTestSuiteTestCaseRequest",
+      "response": {
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 204,
+        "type": "text"
+      },
       "errors": {},
       "servers": [],
       "description": "<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nDeletes an existing test case for a test suite, keying off of the test case id.",
@@ -4102,36 +4089,7 @@
       ],
       "method": "DELETE",
       "path": "/v1/test-suites/{id}/test-cases/{test_case_id}",
-      "examples": [
-        {
-          "pathParameters": [
-            {
-              "name": "id",
-              "value": {
-                "value": {
-                  "value": "id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "test_case_id",
-              "value": {
-                "value": {
-                  "value": "test_case_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
-          "queryParameters": [],
-          "headers": [],
-          "codeSamples": [],
-          "type": "full"
-        }
-      ],
+      "examples": [],
       "source": {
         "file": "../openapi.yml",
         "type": "openapi"

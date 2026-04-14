@@ -29,12 +29,13 @@
               "errors": [
                 "NotFoundError",
               ],
-              "examples": [
-                {},
-              ],
               "method": "DELETE",
               "pagination": undefined,
               "path": "/delete",
+              "response": {
+                "docs": undefined,
+                "status-code": 204,
+              },
               "source": {
                 "openapi": "../openapi.yml",
               },
@@ -339,10 +340,10 @@ service:
       method: DELETE
       source:
         openapi: ../openapi.yml
+      response:
+        status-code: 204
       errors:
         - NotFoundError
-      examples:
-        - {}
     getRateLimited:
       path: /rate-limited
       method: GET

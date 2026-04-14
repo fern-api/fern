@@ -3117,6 +3117,14 @@
         },
         "type": "json"
       },
+      "response": {
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 201,
+        "type": "text"
+      },
       "errors": {},
       "servers": [],
       "description": "Store data in blob storage",
@@ -3128,33 +3136,7 @@
       ],
       "method": "POST",
       "path": "/v1/blob/{key}",
-      "examples": [
-        {
-          "pathParameters": [
-            {
-              "name": "key",
-              "value": {
-                "value": {
-                  "value": "key",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
-          "queryParameters": [],
-          "headers": [],
-          "request": {
-            "value": {
-              "value": "string",
-              "type": "string"
-            },
-            "type": "primitive"
-          },
-          "codeSamples": [],
-          "type": "full"
-        }
-      ],
+      "examples": [],
       "source": {
         "file": "../openapi.yml",
         "type": "openapi"
@@ -3189,6 +3171,14 @@
       "queryParameters": [],
       "headers": [],
       "generatedRequestName": "BlobsDeleteRequest",
+      "response": {
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 204,
+        "type": "text"
+      },
       "errors": {},
       "servers": [],
       "description": "Delete a blob",
@@ -3200,26 +3190,7 @@
       ],
       "method": "DELETE",
       "path": "/v1/blob/{key}",
-      "examples": [
-        {
-          "pathParameters": [
-            {
-              "name": "key",
-              "value": {
-                "value": {
-                  "value": "key",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
-          "queryParameters": [],
-          "headers": [],
-          "codeSamples": [],
-          "type": "full"
-        }
-      ],
+      "examples": [],
       "source": {
         "file": "../openapi.yml",
         "type": "openapi"
@@ -7460,6 +7431,14 @@
         },
         "type": "json"
       },
+      "response": {
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 204,
+        "type": "text"
+      },
       "errors": {},
       "servers": [],
       "description": "Update an existing val",
@@ -7471,74 +7450,7 @@
       ],
       "method": "PUT",
       "path": "/v1/vals/{val_id}",
-      "examples": [
-        {
-          "name": "example1",
-          "pathParameters": [
-            {
-              "name": "val_id",
-              "value": {
-                "value": {
-                  "value": "val_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
-          "queryParameters": [],
-          "headers": [],
-          "request": {
-            "properties": {
-              "name": {
-                "value": {
-                  "value": "myVal",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "readme": {
-                "value": {
-                  "value": "# Updated readme",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            "type": "object"
-          },
-          "codeSamples": [],
-          "type": "full"
-        },
-        {
-          "name": "example2",
-          "pathParameters": [
-            {
-              "name": "val_id",
-              "value": {
-                "value": {
-                  "value": "val_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
-          "queryParameters": [],
-          "headers": [],
-          "request": {
-            "properties": {
-              "type": {
-                "value": "http",
-                "type": "enum"
-              }
-            },
-            "type": "object"
-          },
-          "codeSamples": [],
-          "type": "full"
-        }
-      ],
+      "examples": [],
       "source": {
         "file": "../openapi.yml",
         "type": "openapi"
@@ -7572,6 +7484,14 @@
       "queryParameters": [],
       "headers": [],
       "generatedRequestName": "ValsDeleteRequest",
+      "response": {
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 204,
+        "type": "text"
+      },
       "errors": {
         "404": {
           "generatedName": "NotFoundError",
@@ -7597,26 +7517,7 @@
       ],
       "method": "DELETE",
       "path": "/v1/vals/{val_id}",
-      "examples": [
-        {
-          "pathParameters": [
-            {
-              "name": "val_id",
-              "value": {
-                "value": {
-                  "value": "val_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
-          "queryParameters": [],
-          "headers": [],
-          "codeSamples": [],
-          "type": "full"
-        }
-      ],
+      "examples": [],
       "source": {
         "file": "../openapi.yml",
         "type": "openapi"
@@ -8684,6 +8585,14 @@
       "queryParameters": [],
       "headers": [],
       "generatedRequestName": "ValsDeleteVersionRequest",
+      "response": {
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 204,
+        "type": "text"
+      },
       "errors": {
         "404": {
           "generatedName": "NotFoundError",
@@ -8709,36 +8618,7 @@
       ],
       "method": "DELETE",
       "path": "/v1/vals/{val_id}/versions/{version}",
-      "examples": [
-        {
-          "pathParameters": [
-            {
-              "name": "val_id",
-              "value": {
-                "value": {
-                  "value": "val_id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "version",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
-          "queryParameters": [],
-          "headers": [],
-          "codeSamples": [],
-          "type": "full"
-        }
-      ],
+      "examples": [],
       "source": {
         "file": "../openapi.yml",
         "type": "openapi"

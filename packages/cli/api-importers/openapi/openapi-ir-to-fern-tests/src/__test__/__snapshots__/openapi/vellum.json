@@ -5754,14 +5754,6 @@ service:
               "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Deletes an existing scenario from a sandbox, keying off of the provided scenario id.",
-              "examples": [
-                {
-                  "path-parameters": {
-                    "id": "id",
-                    "scenario_id": "scenario_id",
-                  },
-                },
-              ],
               "method": "DELETE",
               "pagination": undefined,
               "path": "/v1/sandboxes/{id}/scenarios/{scenario_id}",
@@ -5777,6 +5769,10 @@ Deletes an existing scenario from a sandbox, keying off of the provided scenario
                     "type": "string",
                   },
                 },
+              },
+              "response": {
+                "docs": undefined,
+                "status-code": 204,
               },
               "source": {
                 "openapi": "../openapi.yml",
@@ -6082,10 +6078,8 @@ service:
           scenario_id:
             type: string
             docs: An id identifying the scenario that you'd like to delete
-      examples:
-        - path-parameters:
-            id: id
-            scenario_id: scenario_id
+      response:
+        status-code: 204
   source:
     openapi: ../openapi.yml
 ",
@@ -6109,14 +6103,6 @@ service:
               "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Deletes an existing test case for a test suite, keying off of the test case id.",
-              "examples": [
-                {
-                  "path-parameters": {
-                    "id": "id",
-                    "test_case_id": "test_case_id",
-                  },
-                },
-              ],
               "method": "DELETE",
               "pagination": undefined,
               "path": "/v1/test-suites/{id}/test-cases/{test_case_id}",
@@ -6132,6 +6118,10 @@ Deletes an existing test case for a test suite, keying off of the test case id."
                     "type": "string",
                   },
                 },
+              },
+              "response": {
+                "docs": undefined,
+                "status-code": 204,
               },
               "source": {
                 "openapi": "../openapi.yml",
@@ -6336,10 +6326,8 @@ service:
           test_case_id:
             type: string
             docs: An id identifying the test case that you'd like to delete
-      examples:
-        - path-parameters:
-            id: id
-            test_case_id: test_case_id
+      response:
+        status-code: 204
   source:
     openapi: ../openapi.yml
 ",

@@ -2123,16 +2123,6 @@ This should include the fullName and email of the consenting individual.",
                 "root.NotFoundError",
                 "root.InternalServerError",
               ],
-              "examples": [
-                {
-                  "headers": {
-                    "Authorization": "Authorization",
-                  },
-                  "path-parameters": {
-                    "id": "id",
-                  },
-                },
-              ],
               "method": "DELETE",
               "pagination": undefined,
               "path": "/v1/voices/{id}",
@@ -2144,6 +2134,10 @@ This should include the fullName and email of the consenting individual.",
                     "type": "string",
                   },
                 },
+              },
+              "response": {
+                "docs": undefined,
+                "status-code": 204,
               },
               "source": {
                 "openapi": "../openapi.json",
@@ -2308,15 +2302,12 @@ service:
           id:
             type: string
             docs: The ID of the voice to delete
+      response:
+        status-code: 204
       errors:
         - root.BadRequestError
         - root.NotFoundError
         - root.InternalServerError
-      examples:
-        - path-parameters:
-            id: id
-          headers:
-            Authorization: Authorization
   source:
     openapi: ../openapi.json
 ",

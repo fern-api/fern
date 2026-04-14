@@ -1494,13 +1494,6 @@ types:
                 },
               ],
               "docs": "Delete a blob",
-              "examples": [
-                {
-                  "path-parameters": {
-                    "key": "key",
-                  },
-                },
-              ],
               "method": "DELETE",
               "pagination": undefined,
               "path": "/v1/blob/{key}",
@@ -1512,6 +1505,10 @@ types:
                     "type": "string",
                   },
                 },
+              },
+              "response": {
+                "docs": undefined,
+                "status-code": 204,
               },
               "source": {
                 "openapi": "../openapi.yml",
@@ -1585,14 +1582,6 @@ types:
                 },
               ],
               "docs": "Store data in blob storage",
-              "examples": [
-                {
-                  "path-parameters": {
-                    "key": "key",
-                  },
-                  "request": "string",
-                },
-              ],
               "method": "POST",
               "pagination": undefined,
               "path": "/v1/blob/{key}",
@@ -1615,6 +1604,11 @@ types:
                     "type": "string",
                   },
                 },
+              },
+              "response": {
+                "docs": undefined,
+                "status-code": 201,
+                "type": "text",
               },
               "source": {
                 "openapi": "../openapi.yml",
@@ -1720,10 +1714,9 @@ service:
             docs: Key that uniquely identifies this blob
         name: BlobsStoreRequest
         content-type: application/json
-      examples:
-        - path-parameters:
-            key: key
-          request: string
+      response:
+        type: text
+        status-code: 201
     delete:
       path: /v1/blob/{key}
       method: DELETE
@@ -1738,9 +1731,8 @@ service:
           key:
             type: string
             docs: Key that uniquely identifies this blob
-      examples:
-        - path-parameters:
-            key: key
+      response:
+        status-code: 204
   source:
     openapi: ../openapi.yml
   display-name: blobs
@@ -4805,13 +4797,6 @@ let you get, create, and run vals.",
               "errors": [
                 "root.NotFoundError",
               ],
-              "examples": [
-                {
-                  "path-parameters": {
-                    "val_id": "val_id",
-                  },
-                },
-              ],
               "method": "DELETE",
               "pagination": undefined,
               "path": "/v1/vals/{val_id}",
@@ -4823,6 +4808,10 @@ let you get, create, and run vals.",
                     "type": "string",
                   },
                 },
+              },
+              "response": {
+                "docs": undefined,
+                "status-code": 204,
               },
               "source": {
                 "openapi": "../openapi.yml",
@@ -4837,14 +4826,6 @@ let you get, create, and run vals.",
               "docs": "Delete a specific version of a val",
               "errors": [
                 "root.NotFoundError",
-              ],
-              "examples": [
-                {
-                  "path-parameters": {
-                    "val_id": "val_id",
-                    "version": 1,
-                  },
-                },
               ],
               "method": "DELETE",
               "pagination": undefined,
@@ -4861,6 +4842,10 @@ let you get, create, and run vals.",
                     "type": "integer",
                   },
                 },
+              },
+              "response": {
+                "docs": undefined,
+                "status-code": 204,
               },
               "source": {
                 "openapi": "../openapi.yml",
@@ -5329,27 +5314,6 @@ let you get, create, and run vals.",
                 },
               ],
               "docs": "Update an existing val",
-              "examples": [
-                {
-                  "name": "example1",
-                  "path-parameters": {
-                    "val_id": "val_id",
-                  },
-                  "request": {
-                    "name": "myVal",
-                    "readme": "# Updated readme",
-                  },
-                },
-                {
-                  "name": "example2",
-                  "path-parameters": {
-                    "val_id": "val_id",
-                  },
-                  "request": {
-                    "type": "http",
-                  },
-                },
-              ],
               "method": "PUT",
               "pagination": undefined,
               "path": "/v1/vals/{val_id}",
@@ -5396,6 +5360,10 @@ let you get, create, and run vals.",
                   },
                 },
                 "query-parameters": undefined,
+              },
+              "response": {
+                "docs": undefined,
+                "status-code": 204,
               },
               "source": {
                 "openapi": "../openapi.yml",
@@ -5994,18 +5962,8 @@ service:
                 include interval vals, because they cannot be created through
                 the API yet.
         content-type: application/json
-      examples:
-        - name: example1
-          path-parameters:
-            val_id: val_id
-          request:
-            name: myVal
-            readme: '# Updated readme'
-        - name: example2
-          path-parameters:
-            val_id: val_id
-          request:
-            type: http
+      response:
+        status-code: 204
     delete:
       path: /v1/vals/{val_id}
       method: DELETE
@@ -6020,11 +5978,10 @@ service:
           val_id:
             type: string
             docs: Id of a val
+      response:
+        status-code: 204
       errors:
         - root.NotFoundError
-      examples:
-        - path-parameters:
-            val_id: val_id
     list:
       path: /v1/vals/{val_id}/versions
       method: GET
@@ -6229,12 +6186,10 @@ service:
           version:
             type: integer
             docs: The val version
+      response:
+        status-code: 204
       errors:
         - root.NotFoundError
-      examples:
-        - path-parameters:
-            val_id: val_id
-            version: 1
     cancel:
       path: /v1/vals/{val_id}/evaluations/{evaluation_id}/cancel
       method: POST

@@ -13,11 +13,6 @@
               "auth": undefined,
               "display-name": "Create conversation and upload files",
               "docs": "Create a new conversation and upload files to it.",
-              "examples": [
-                {
-                  "request": {},
-                },
-              ],
               "method": "POST",
               "pagination": undefined,
               "path": "/conversations",
@@ -43,6 +38,11 @@
                 "name": "CreateConversationRequest",
                 "path-parameters": undefined,
                 "query-parameters": undefined,
+              },
+              "response": {
+                "docs": undefined,
+                "status-code": 201,
+                "type": "text",
               },
               "source": {
                 "openapi": "../openapi.yml",
@@ -273,8 +273,9 @@
               type: optional<file>
               docs: An optional file to attach.
         content-type: multipart/form-data
-      examples:
-        - request: {}
+      response:
+        type: text
+        status-code: 201
   source:
     openapi: ../openapi.yml
 types:

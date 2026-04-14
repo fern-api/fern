@@ -1591,6 +1591,14 @@
       "queryParameters": [],
       "headers": [],
       "generatedRequestName": "DeleteVoiceRequest",
+      "response": {
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "statusCode": 204,
+        "type": "text"
+      },
       "errors": {
         "400": {
           "generatedName": "BadRequestError",
@@ -1642,26 +1650,7 @@
       ],
       "method": "DELETE",
       "path": "/v1/voices/{id}",
-      "examples": [
-        {
-          "pathParameters": [
-            {
-              "name": "id",
-              "value": {
-                "value": {
-                  "value": "id",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
-          "queryParameters": [],
-          "headers": [],
-          "codeSamples": [],
-          "type": "full"
-        }
-      ],
+      "examples": [],
       "source": {
         "file": "../openapi.json",
         "type": "openapi"

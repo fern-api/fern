@@ -1012,13 +1012,6 @@ types:
                 "root.NotFoundError",
                 "root.InternalServerError",
               ],
-              "examples": [
-                {
-                  "path-parameters": {
-                    "appId": "appId",
-                  },
-                },
-              ],
               "method": "DELETE",
               "pagination": undefined,
               "path": "/apps/v1/delete/{appId}",
@@ -1027,6 +1020,10 @@ types:
                 "path-parameters": {
                   "appId": "root.AppId",
                 },
+              },
+              "response": {
+                "docs": undefined,
+                "status-code": 204,
               },
               "source": {
                 "openapi": "../openapi.json",
@@ -1373,12 +1370,11 @@ service:
         name: DeleteAppRequest
         path-parameters:
           appId: root.AppId
+      response:
+        status-code: 204
       errors:
         - root.NotFoundError
         - root.InternalServerError
-      examples:
-        - path-parameters:
-            appId: appId
   source:
     openapi: ../openapi.json
 ",
@@ -1745,14 +1741,6 @@ service:
                 "root.UnprocessableEntityError",
                 "root.InternalServerError",
               ],
-              "examples": [
-                {
-                  "path-parameters": {
-                    "appId": "appId",
-                    "buildId": 1.1,
-                  },
-                },
-              ],
               "method": "DELETE",
               "pagination": undefined,
               "path": "/builds/v1/{appId}/delete/{buildId}",
@@ -1762,6 +1750,10 @@ service:
                   "appId": "root.AppId",
                   "buildId": "root.BuildId",
                 },
+              },
+              "response": {
+                "docs": undefined,
+                "status-code": 204,
               },
               "source": {
                 "openapi": "../openapi.json",
@@ -2070,14 +2062,12 @@ service:
         path-parameters:
           appId: root.AppId
           buildId: root.BuildId
+      response:
+        status-code: 204
       errors:
         - root.NotFoundError
         - root.UnprocessableEntityError
         - root.InternalServerError
-      examples:
-        - path-parameters:
-            appId: appId
-            buildId: 1.1
   source:
     openapi: ../openapi.json
 ",
@@ -4331,14 +4321,6 @@ service:
                 "root.NotFoundError",
                 "root.InternalServerError",
               ],
-              "examples": [
-                {
-                  "path-parameters": {
-                    "appId": "appId",
-                    "roomId": "roomId",
-                  },
-                },
-              ],
               "method": "POST",
               "pagination": undefined,
               "path": "/rooms/v1/{appId}/destroy/{roomId}",
@@ -4348,6 +4330,10 @@ service:
                   "appId": "root.AppId",
                   "roomId": "root.RoomId",
                 },
+              },
+              "response": {
+                "docs": undefined,
+                "status-code": 204,
               },
               "source": {
                 "openapi": "../openapi.json",
@@ -4567,14 +4553,6 @@ service:
                 "root.NotFoundError",
                 "root.InternalServerError",
               ],
-              "examples": [
-                {
-                  "path-parameters": {
-                    "appId": "appId",
-                    "roomId": "roomId",
-                  },
-                },
-              ],
               "method": "POST",
               "pagination": undefined,
               "path": "/rooms/v1/{appId}/suspend/{roomId}",
@@ -4584,6 +4562,10 @@ service:
                   "appId": "root.AppId",
                   "roomId": "root.RoomId",
                 },
+              },
+              "response": {
+                "docs": undefined,
+                "status-code": 204,
               },
               "source": {
                 "openapi": "../openapi.json",
@@ -4743,13 +4725,11 @@ service:
         path-parameters:
           appId: root.AppId
           roomId: root.RoomId
+      response:
+        status-code: 204
       errors:
         - root.NotFoundError
         - root.InternalServerError
-      examples:
-        - path-parameters:
-            appId: appId
-            roomId: roomId
     SuspendRoom:
       path: /rooms/v1/{appId}/suspend/{roomId}
       method: POST
@@ -4762,13 +4742,11 @@ service:
         path-parameters:
           appId: root.AppId
           roomId: root.RoomId
+      response:
+        status-code: 204
       errors:
         - root.NotFoundError
         - root.InternalServerError
-      examples:
-        - path-parameters:
-            appId: appId
-            roomId: roomId
     GetConnectionInfo:
       path: /rooms/v1/{appId}/connectioninfo/{roomId}
       method: GET

@@ -350,25 +350,21 @@
         "fullExamples": [],
         "type": "multipart"
       },
+      "response": {
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 201,
+        "type": "text"
+      },
       "errors": {},
       "servers": [],
       "description": "Create a new conversation and upload files to it.",
       "authed": false,
       "method": "POST",
       "path": "/conversations",
-      "examples": [
-        {
-          "pathParameters": [],
-          "queryParameters": [],
-          "headers": [],
-          "request": {
-            "properties": {},
-            "type": "object"
-          },
-          "codeSamples": [],
-          "type": "full"
-        }
-      ],
+      "examples": [],
       "source": {
         "file": "../openapi.yml",
         "type": "openapi"
