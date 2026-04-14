@@ -221,9 +221,7 @@ export async function downloadBundle({
         }
 
         try {
-            await decompress(outputZipPath, absolutePathToBundleFolder, {
-                filter: (file) => !(PLATFORM_IS_WINDOWS && file.type === "symlink")
-            });
+            await decompress(outputZipPath, absolutePathToBundleFolder);
         } finally {
             if (unzipInterval) {
                 clearInterval(unzipInterval);
