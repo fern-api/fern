@@ -12,6 +12,7 @@ export declare namespace CreateTokenCommand {
     export interface Args extends GlobalArgs {
         org: string;
         description?: string;
+        json: boolean;
     }
 }
 
@@ -54,12 +55,18 @@ export class CreateTokenCommand {
         });
 
         if (response.ok) {
-            context.stderr.info(`${Icons.success} Token created successfully`);
-            context.stderr.info("");
-            context.stderr.info(`  Token ID: ${response.body.tokenId}`);
-            context.stderr.info("  Save this token now. You won't be able to see it again.");
-            context.stderr.info("");
-            context.stdout.info(response.body.token);
+            if (args.json) {
+                context.stdout.info(
+                    JSON.stringify({ tokenId: response.body.tokenId, token: response.body.token }, null, 2)
+                );
+            } else {
+                context.stderr.info(`${Icons.success} Token created successfully`);
+                context.stderr.info("");
+                context.stderr.info(`  Token ID: ${response.body.tokenId}`);
+                context.stderr.info("  Save this token now. You won't be able to see it again.");
+                context.stderr.info("");
+                context.stdout.info(response.body.token);
+            }
             return;
         }
 
@@ -101,6 +108,11 @@ export function addCreateTokenCommand(cli: Argv<GlobalArgs>): void {
                 .option("description", {
                     type: "string",
                     description: "Description for the token"
+                })
+                .option("json", {
+                    type: "boolean",
+                    default: false,
+                    description: "Output as JSON"
                 })
                 .example("$0 org token create acme", "# Create a token for the 'acme' organization")
                 .example('$0 org token create acme --description "CI token"', "# Create a token with a description")

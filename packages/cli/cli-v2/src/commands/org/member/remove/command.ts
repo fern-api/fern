@@ -12,6 +12,7 @@ export declare namespace RemoveMemberCommand {
     export interface Args extends GlobalArgs {
         userId: string;
         org: string;
+        json: boolean;
     }
 }
 
@@ -55,7 +56,11 @@ export class RemoveMemberCommand {
         });
 
         if (response.ok) {
-            context.stderr.info(`${Icons.success} Removed user "${userId}" from organization "${args.org}".`);
+            if (args.json) {
+                context.stdout.info(JSON.stringify({ success: true, userId, org: args.org }, null, 2));
+            } else {
+                context.stderr.info(`${Icons.success} Removed user "${userId}" from organization "${args.org}".`);
+            }
             return;
         }
 
@@ -100,6 +105,11 @@ export function addRemoveMemberCommand(cli: Argv<GlobalArgs>): void {
                     type: "string",
                     demandOption: true,
                     description: "Organization name (e.g. acme)"
+                })
+                .option("json", {
+                    type: "boolean",
+                    default: false,
+                    description: "Output as JSON"
                 })
                 .example("$0 org member remove user123 acme", "# Remove user 'user123' from the 'acme' organization")
     );

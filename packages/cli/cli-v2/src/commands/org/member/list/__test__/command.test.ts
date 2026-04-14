@@ -63,6 +63,36 @@ describe("ListMembersCommand", () => {
         expect(context.stdout.info).toHaveBeenCalledTimes(2);
     });
 
+    it("should output JSON when --json flag is set", async () => {
+        const { createVenusService } = await import("@fern-api/core");
+        const mockGet = vi.fn().mockResolvedValue({
+            ok: true,
+            body: {
+                users: [
+                    { userId: "user1", displayName: "Alice", emailAddress: "alice@example.com" },
+                    { userId: "user2", displayName: "Bob", emailAddress: null }
+                ]
+            }
+        });
+        vi.mocked(createVenusService).mockReturnValue({
+            organization: { get: mockGet }
+        } as unknown as ReturnType<typeof createVenusService>);
+
+        const context = createMockContext();
+        await cmd.handle(context, { org: "acme", json: true } as ListMembersCommand.Args);
+
+        expect(context.stdout.info).toHaveBeenCalledWith(
+            JSON.stringify(
+                [
+                    { userId: "user1", displayName: "Alice", email: "alice@example.com" },
+                    { userId: "user2", displayName: "Bob", email: null }
+                ],
+                null,
+                2
+            )
+        );
+    });
+
     it("should show empty message when no members", async () => {
         const { createVenusService } = await import("@fern-api/core");
         const mockGet = vi.fn().mockResolvedValue({

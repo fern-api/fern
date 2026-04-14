@@ -11,6 +11,7 @@ import { command } from "../../../_internal/command.js";
 export declare namespace RevokeTokenCommand {
     export interface Args extends GlobalArgs {
         tokenId: string;
+        json: boolean;
     }
 }
 
@@ -35,7 +36,11 @@ export class RevokeTokenCommand {
         });
 
         if (response.ok) {
-            context.stderr.info(`${Icons.success} Token "${tokenId}" has been revoked.`);
+            if (args.json) {
+                context.stdout.info(JSON.stringify({ success: true, tokenId }, null, 2));
+            } else {
+                context.stderr.info(`${Icons.success} Token "${tokenId}" has been revoked.`);
+            }
             return;
         }
 
@@ -73,6 +78,11 @@ export function addRevokeTokenCommand(cli: Argv<GlobalArgs>): void {
                     type: "string",
                     demandOption: true,
                     description: "Token ID to revoke"
+                })
+                .option("json", {
+                    type: "boolean",
+                    default: false,
+                    description: "Output as JSON"
                 })
                 .example("$0 org token revoke abc123", "# Revoke the token with ID 'abc123'")
     );

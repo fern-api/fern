@@ -11,6 +11,7 @@ import { command } from "../../../_internal/command.js";
 export declare namespace ListMembersCommand {
     export interface Args extends GlobalArgs {
         org: string;
+        json: boolean;
     }
 }
 
@@ -51,6 +52,21 @@ export class ListMembersCommand {
 
         const members = response.body.users;
 
+        if (args.json) {
+            context.stdout.info(
+                JSON.stringify(
+                    members.map((m) => ({
+                        userId: m.userId,
+                        displayName: m.displayName,
+                        email: m.emailAddress ?? null
+                    })),
+                    null,
+                    2
+                )
+            );
+            return;
+        }
+
         if (members.length === 0) {
             context.stderr.info(`${Icons.info} No members found in organization "${args.org}".`);
             context.stderr.info("");
@@ -79,6 +95,11 @@ export function addListMembersCommand(cli: Argv<GlobalArgs>): void {
                     type: "string",
                     demandOption: true,
                     description: "Organization name (e.g. acme)"
+                })
+                .option("json", {
+                    type: "boolean",
+                    default: false,
+                    description: "Output as JSON"
                 })
                 .example("$0 org member list acme", "# List all members of the 'acme' organization")
     );

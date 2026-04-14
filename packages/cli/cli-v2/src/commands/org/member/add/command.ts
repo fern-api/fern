@@ -12,6 +12,7 @@ export declare namespace InviteMemberCommand {
     export interface Args extends GlobalArgs {
         email: string;
         org: string;
+        json: boolean;
     }
 }
 
@@ -54,7 +55,11 @@ export class InviteMemberCommand {
         });
 
         if (response.ok) {
-            context.stderr.info(`${Icons.success} Invited "${args.email}" to organization "${args.org}".`);
+            if (args.json) {
+                context.stdout.info(JSON.stringify({ success: true, email: args.email, org: args.org }, null, 2));
+            } else {
+                context.stderr.info(`${Icons.success} Invited "${args.email}" to organization "${args.org}".`);
+            }
             return;
         }
 
@@ -99,6 +104,11 @@ export function addInviteMemberCommand(cli: Argv<GlobalArgs>): void {
                     type: "string",
                     demandOption: true,
                     description: "Organization name (e.g. acme)"
+                })
+                .option("json", {
+                    type: "boolean",
+                    default: false,
+                    description: "Output as JSON"
                 })
                 .example(
                     "$0 org member invite user@example.com acme",

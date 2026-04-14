@@ -12,6 +12,7 @@ import { command } from "../../../_internal/command.js";
 export declare namespace ListTokensCommand {
     export interface Args extends GlobalArgs {
         org: string;
+        json: boolean;
     }
 }
 
@@ -72,6 +73,22 @@ export class ListTokensCommand {
 
         const tokens = response.body;
 
+        if (args.json) {
+            context.stdout.info(
+                JSON.stringify(
+                    tokens.map((t) => ({
+                        tokenId: t.tokenId,
+                        status: t.status.type,
+                        createdTime: t.createdTime.toISOString(),
+                        description: t.description ?? null
+                    })),
+                    null,
+                    2
+                )
+            );
+            return;
+        }
+
         if (tokens.length === 0) {
             context.stderr.info(`${Icons.info} No tokens found for organization "${args.org}".`);
             context.stderr.info("");
@@ -115,6 +132,11 @@ export function addListTokensCommand(cli: Argv<GlobalArgs>): void {
                     type: "string",
                     demandOption: true,
                     description: "Organization name (e.g. acme)"
+                })
+                .option("json", {
+                    type: "boolean",
+                    default: false,
+                    description: "Output as JSON"
                 })
                 .example("$0 org token list acme", "# List all tokens for the 'acme' organization")
     );

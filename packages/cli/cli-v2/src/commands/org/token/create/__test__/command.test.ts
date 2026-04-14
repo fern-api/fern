@@ -73,6 +73,27 @@ describe("CreateTokenCommand", () => {
         expect(context.stdout.info).toHaveBeenCalledWith("fern_abc123");
     });
 
+    it("should output JSON when --json flag is set", async () => {
+        const { createVenusService } = await import("@fern-api/core");
+        const mockGet = mockOrgLookupSuccess();
+        const mockCreate = vi.fn().mockResolvedValue({
+            ok: true,
+            body: { tokenId: "tok_123", token: "fern_abc123" }
+        });
+        vi.mocked(createVenusService).mockReturnValue({
+            organization: { get: mockGet },
+            apiKeys: { create: mockCreate }
+        } as unknown as ReturnType<typeof createVenusService>);
+
+        const context = createMockContext();
+        await cmd.handle(context, { org: "acme", description: "CI token", json: true } as CreateTokenCommand.Args);
+
+        expect(context.stdout.info).toHaveBeenCalledWith(
+            JSON.stringify({ tokenId: "tok_123", token: "fern_abc123" }, null, 2)
+        );
+        expect(context.stderr.info).not.toHaveBeenCalled();
+    });
+
     it("should reject organization tokens", async () => {
         const context = createMockContext("organization");
 

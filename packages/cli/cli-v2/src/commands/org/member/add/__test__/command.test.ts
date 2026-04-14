@@ -67,6 +67,27 @@ describe("InviteMemberCommand", () => {
         expect(context.stderr.info).toHaveBeenCalledWith(expect.stringContaining("Invited"));
     });
 
+    it("should output JSON when --json flag is set", async () => {
+        const { createVenusService } = await import("@fern-api/core");
+        const mockGet = mockOrgLookupSuccess();
+        const mockInviteUser = vi.fn().mockResolvedValue({ ok: true });
+        vi.mocked(createVenusService).mockReturnValue({
+            organization: { get: mockGet, inviteUser: mockInviteUser }
+        } as unknown as ReturnType<typeof createVenusService>);
+
+        const context = createMockContext();
+        await cmd.handle(context, {
+            email: "user@example.com",
+            org: "acme",
+            json: true
+        } as InviteMemberCommand.Args);
+
+        expect(context.stdout.info).toHaveBeenCalledWith(
+            JSON.stringify({ success: true, email: "user@example.com", org: "acme" }, null, 2)
+        );
+        expect(context.stderr.info).not.toHaveBeenCalled();
+    });
+
     it("should reject organization tokens", async () => {
         const context = createMockContext("organization");
 

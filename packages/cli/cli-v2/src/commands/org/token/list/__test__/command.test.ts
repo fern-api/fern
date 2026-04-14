@@ -81,6 +81,44 @@ describe("ListTokensCommand", () => {
         expect(context.stdout.info).toHaveBeenCalledTimes(2);
     });
 
+    it("should output JSON when --json flag is set", async () => {
+        const { createVenusService } = await import("@fern-api/core");
+        const mockGet = mockOrgLookupSuccess();
+        const mockGetTokens = vi.fn().mockResolvedValue({
+            ok: true,
+            body: [
+                {
+                    tokenId: "tok_1",
+                    status: { type: "active" },
+                    createdTime: new Date("2026-01-01T00:00:00.000Z"),
+                    description: "CI token"
+                }
+            ]
+        });
+        vi.mocked(createVenusService).mockReturnValue({
+            organization: { get: mockGet },
+            apiKeys: { getTokensForOrganization: mockGetTokens }
+        } as unknown as ReturnType<typeof createVenusService>);
+
+        const context = createMockContext();
+        await cmd.handle(context, { org: "acme", json: true } as ListTokensCommand.Args);
+
+        expect(context.stdout.info).toHaveBeenCalledWith(
+            JSON.stringify(
+                [
+                    {
+                        tokenId: "tok_1",
+                        status: "active",
+                        createdTime: "2026-01-01T00:00:00.000Z",
+                        description: "CI token"
+                    }
+                ],
+                null,
+                2
+            )
+        );
+    });
+
     it("should show empty message when no tokens", async () => {
         const { createVenusService } = await import("@fern-api/core");
         const mockGet = mockOrgLookupSuccess();

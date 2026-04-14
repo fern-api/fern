@@ -55,6 +55,22 @@ describe("RevokeTokenCommand", () => {
         expect(context.stderr.info).toHaveBeenCalledWith(expect.stringContaining("has been revoked"));
     });
 
+    it("should output JSON when --json flag is set", async () => {
+        const { createVenusService } = await import("@fern-api/core");
+        const mockRevoke = vi.fn().mockResolvedValue({ ok: true });
+        vi.mocked(createVenusService).mockReturnValue({
+            apiKeys: { revokeTokenById: mockRevoke }
+        } as unknown as ReturnType<typeof createVenusService>);
+
+        const context = createMockContext();
+        await cmd.handle(context, { tokenId: "tok_123", json: true } as RevokeTokenCommand.Args);
+
+        expect(context.stdout.info).toHaveBeenCalledWith(
+            JSON.stringify({ success: true, tokenId: "tok_123" }, null, 2)
+        );
+        expect(context.stderr.info).not.toHaveBeenCalled();
+    });
+
     it("should reject organization tokens", async () => {
         const context = createMockContext("organization");
 
