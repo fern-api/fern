@@ -270,7 +270,7 @@ export class WireMock {
 
         // Build descriptive name
         const endpointName = endpoint.displayName || getOriginalName(endpoint.name);
-        const exampleName = typeof example?.name === "string" ? example.name : "default";
+        const exampleName = example?.name != null ? getOriginalName(example.name) : "default";
         const name = `${endpointName} - ${exampleName}`;
         const uuid = this.deterministicUUIDv4(`${name}-${endpoint.id}-${urlPathTemplate}-${endpoint.method}`);
 
