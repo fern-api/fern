@@ -404,9 +404,7 @@ export class LocalTaskHandler {
                         let versionBumpReason: string | undefined = bestVersionBumpReason;
                         if (allChangelogEntries.length > 1) {
                             // Consolidate repetitive multi-chunk entries via AI rollup
-                            const rawEntries = allChangelogEntries
-                                .map((e) => (e.startsWith("- ") ? e : `- ${e}`))
-                                .join("\n");
+                            const rawEntries = allChangelogEntries.join("\n\n");
                             try {
                                 this.context.logger.debug(
                                     `Consolidating ${allChangelogEntries.length} changelog entries via AI rollup`
