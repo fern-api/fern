@@ -91,19 +91,13 @@ def _resolve_string_name(s: str) -> ir_types.Name:
 
 
 def resolve_name(name_or_str: Union[str, ir_types.Name]) -> ir_types.Name:
-    """Resolve a NameOrString to a full Name object with all casings.
-
-    Hot path in generators: property names ("id", "name", etc.) repeat many
-    times across an API, so cache string-input results — Name is frozen and
-    safe to share.
-    """
+    """String inputs are cached (lru_cache); Name objects pass through as-is."""
     if isinstance(name_or_str, ir_types.Name):
         return name_or_str
     return _resolve_string_name(name_or_str)
 
 
 def get_wire_value(name_and_wire_value_or_str: Union[str, ir_types.NameAndWireValue]) -> str:
-    """Extract the wire value from a NameAndWireValueOrString."""
     if isinstance(name_and_wire_value_or_str, str):
         return name_and_wire_value_or_str
     return name_and_wire_value_or_str.wire_value
@@ -112,14 +106,17 @@ def get_wire_value(name_and_wire_value_or_str: Union[str, ir_types.NameAndWireVa
 def get_name_from_wire_value(
     name_and_wire_value_or_str: Union[str, ir_types.NameAndWireValue],
 ) -> Union[str, ir_types.Name]:
-    """Extract the inner Name (or string) from a NameAndWireValueOrString."""
     if isinstance(name_and_wire_value_or_str, str):
         return name_and_wire_value_or_str
     return name_and_wire_value_or_str.name
 
 
+def resolve_wire_name(name_and_wire_value_or_str: Union[str, ir_types.NameAndWireValue]) -> ir_types.Name:
+    """Shorthand for resolve_name(get_name_from_wire_value(x)) — the most common accessor pattern."""
+    return resolve_name(get_name_from_wire_value(name_and_wire_value_or_str))
+
+
 def get_original_name(name_or_str: Union[str, ir_types.Name]) -> str:
-    """Extract the original name from a NameOrString."""
     if isinstance(name_or_str, str):
         return name_or_str
     return name_or_str.original_name

@@ -1,4 +1,4 @@
-from .name_resolver import get_name_from_wire_value, get_original_name, get_wire_value, resolve_name
+from .name_resolver import get_name_from_wire_value, get_original_name, get_wire_value, resolve_name, resolve_wire_name
 from .pascal_case import pascal_case
 from .snake_case import snake_case
 
@@ -18,5 +18,6 @@ __all__ = [
     "get_wire_value",
     "pascal_case",
     "resolve_name",
+    "resolve_wire_name",
     "snake_case",
 ]
