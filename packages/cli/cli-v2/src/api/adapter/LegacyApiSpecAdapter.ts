@@ -8,6 +8,7 @@ import type {
 import type { schemas } from "@fern-api/config";
 import { generatorsYml } from "@fern-api/configuration";
 import { relativize } from "@fern-api/fs-utils";
+import { CliError } from "@fern-api/task-context";
 import type { Context } from "../../context/Context.js";
 import type { ApiSpec } from "../config/ApiSpec.js";
 import type { AsyncApiSpec } from "../config/AsyncApiSpec.js";
@@ -49,7 +50,10 @@ export class LegacyApiSpecAdapter {
         if (isOpenRpcSpec(spec)) {
             return this.adaptOpenRpcSpec(spec);
         }
-        throw new Error(`Unsupported spec type: ${JSON.stringify(spec)}`);
+        throw new CliError({
+            message: `Unsupported spec type: ${JSON.stringify(spec)}`,
+            code: CliError.Code.InternalError
+        });
     }
 
     public convertAll(specs: ApiSpec[]): Spec[] {

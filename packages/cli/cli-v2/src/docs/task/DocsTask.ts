@@ -1,3 +1,4 @@
+import { CliError } from "@fern-api/task-context";
 import type { Task } from "../../ui/Task.js";
 import type { TaskGroup } from "../../ui/TaskGroup.js";
 import { TaskStageController } from "../../ui/TaskStageController.js";
@@ -30,7 +31,10 @@ export class DocsTask {
     public getTask(): Task {
         const task = this.taskGroup.getTask(this.id);
         if (task == null) {
-            throw new Error(`Internal error; task '${this.id}' does not exist`);
+            throw new CliError({
+                message: `Internal error; task '${this.id}' does not exist`,
+                code: CliError.Code.InternalError
+            });
         }
         return task;
     }
