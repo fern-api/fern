@@ -1,13 +1,12 @@
 import * as FernIr from "@fern-api/ir-sdk";
-import { mergeWith } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
-
 import { AbstractConverter, AbstractConverterContext, Extensions } from "../../index.js";
 import { createTypeReferenceFromFernType } from "../../utils/CreateTypeReferenceFromFernType.js";
 import { ExampleConverter } from "../ExampleConverter.js";
 import { ArraySchemaConverter } from "./ArraySchemaConverter.js";
 import { EnumSchemaConverter } from "./EnumSchemaConverter.js";
 import { MapSchemaConverter } from "./MapSchemaConverter.js";
+import { mergeAllOfSchemas } from "./mergeAllOfSchemas.js";
 import { ObjectSchemaConverter } from "./ObjectSchemaConverter.js";
 import { OneOfSchemaConverter } from "./OneOfSchemaConverter.js";
 import { PrimitiveSchemaConverter } from "./PrimitiveSchemaConverter.js";
@@ -222,11 +221,10 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             this.schema.allOf.length >= 1;
 
         if (shouldMergeAllOf) {
-            let mergedSchema: Record<string, unknown> = {};
-            // Track refs resolved in THIS allOf array (for dedup only).
-            // Ancestor cycle detection uses the separate `this.visitedRefs` set.
             const localResolvedRefs = new Set<string>();
+            const resolvedElements: OpenAPIV3_1.SchemaObject[] = [];
             let hasCycle = false;
+
             for (const allOfSchema of this.schema.allOf ?? []) {
                 let schemaToMerge: OpenAPIV3_1.SchemaObject;
 
@@ -293,23 +291,12 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                         }
                     }
                     if (Object.keys(flattenedProperties).length > 0) {
-                        // Add flattened properties as optional on the merged schema
-                        const existingProperties = (mergedSchema.properties as Record<string, unknown>) ?? {};
-                        mergedSchema.properties = { ...existingProperties, ...flattenedProperties };
-                        // Do not add to required — variant properties are optional on the parent
+                        resolvedElements.push({ properties: flattenedProperties } as OpenAPIV3_1.SchemaObject);
                     }
                     continue;
                 }
 
-                mergedSchema = mergeWith(mergedSchema, schemaToMerge, (objValue, srcValue) => {
-                    if (srcValue === schemaToMerge) {
-                        return objValue;
-                    }
-                    if (Array.isArray(objValue) && Array.isArray(srcValue)) {
-                        return [...objValue, ...srcValue];
-                    }
-                    return undefined;
-                });
+                resolvedElements.push(schemaToMerge);
             }
 
             // If a circular reference was detected, fall back to the ObjectSchemaConverter path
@@ -317,34 +304,9 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                 return undefined;
             }
 
-            // Deduplicate $ref entries in the merged allOf array to avoid false-positive
-            // cycle detection in diamond inheritance patterns (A → B, C; B, C → D).
-            // The mergeWith array-concatenation can produce duplicate $ref entries when
-            // two sibling allOf elements both reference the same base schema.
+            const mergedSchema = mergeAllOfSchemas(this.schema, resolvedElements);
+
             const allResolvedRefs = new Set<string>([...this.visitedRefs, ...localResolvedRefs]);
-            if (Array.isArray(mergedSchema.allOf)) {
-                const seenRefs = new Set<string>(allResolvedRefs);
-                mergedSchema.allOf = (
-                    mergedSchema.allOf as (OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject)[]
-                ).filter((element) => {
-                    if (this.context.isReferenceObject(element)) {
-                        if (seenRefs.has(element.$ref)) {
-                            return false;
-                        }
-                        seenRefs.add(element.$ref);
-                    }
-                    return true;
-                });
-            }
-
-            // Preserve outer schema metadata on the merged result so that
-            // description, deprecated, example, default, etc. are not silently dropped.
-            for (const key of TYPE_INVARIANT_KEYS) {
-                if (this.schema[key as keyof typeof this.schema] != null && mergedSchema[key] == null) {
-                    mergedSchema[key] = this.schema[key as keyof typeof this.schema];
-                }
-            }
-
             const mergedConverter = new SchemaConverter({
                 context: this.context,
                 breadcrumbs: this.breadcrumbs,
