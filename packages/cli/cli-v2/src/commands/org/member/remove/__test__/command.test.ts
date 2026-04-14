@@ -1,7 +1,6 @@
 import type { Logger } from "@fern-api/logger";
-import { beforeEach, describe, expect, it, vi } from "vitest";
-
 import { CliError } from "@fern-api/task-context";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { RemoveMemberCommand } from "../command.js";
 
 vi.mock("@fern-api/core", () => ({
