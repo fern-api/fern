@@ -356,6 +356,11 @@
           "id": {
             "equalTo": "id"
           }
+        },
+        "queryParameters": {
+          "filter": {
+            "equalTo": "filter"
+          }
         }
       },
       "response": {
@@ -386,6 +391,14 @@
         "headers": {
           "Authorization": {
             "matches": "Bearer .+"
+          }
+        },
+        "queryParameters": {
+          "page": {
+            "equalTo": "1"
+          },
+          "limit": {
+            "equalTo": "1"
           }
         }
       },
@@ -455,6 +468,11 @@
           "id": {
             "equalTo": "id"
           }
+        },
+        "queryParameters": {
+          "expand": {
+            "equalTo": "true"
+          }
         }
       },
       "response": {
@@ -485,6 +503,14 @@
         "headers": {
           "Authorization": {
             "matches": "Bearer .+"
+          }
+        },
+        "queryParameters": {
+          "cursor": {
+            "equalTo": "cursor"
+          },
+          "size": {
+            "equalTo": "1"
           }
         }
       },
@@ -554,6 +580,11 @@
           "id": {
             "equalTo": "id"
           }
+        },
+        "queryParameters": {
+          "verbose": {
+            "equalTo": "true"
+          }
         }
       },
       "response": {
@@ -584,6 +615,14 @@
         "headers": {
           "Authorization": {
             "matches": "Bearer .+"
+          }
+        },
+        "queryParameters": {
+          "offset": {
+            "equalTo": "1"
+          },
+          "count": {
+            "equalTo": "1"
           }
         }
       },
@@ -1076,6 +1115,14 @@
           "Authorization": {
             "matches": "Bearer .+"
           }
+        },
+        "queryParameters": {
+          "cursor": {
+            "equalTo": "cursor"
+          },
+          "limit": {
+            "equalTo": "1"
+          }
         }
       },
       "response": {
@@ -1180,6 +1227,14 @@
           "Authorization": {
             "matches": "Bearer .+"
           }
+        },
+        "queryParameters": {
+          "query": {
+            "equalTo": "query"
+          },
+          "number": {
+            "equalTo": "1"
+          }
         }
       },
       "response": {
@@ -1211,6 +1266,14 @@
         "headers": {
           "Authorization": {
             "matches": "Bearer .+"
+          }
+        },
+        "queryParameters": {
+          "query": {
+            "equalTo": "query"
+          },
+          "number": {
+            "equalTo": "1"
           }
         }
       },
@@ -1249,6 +1312,11 @@
           "param": {
             "equalTo": "param"
           }
+        },
+        "queryParameters": {
+          "query": {
+            "equalTo": "query"
+          }
         }
       },
       "response": {
@@ -1284,6 +1352,11 @@
         "pathParameters": {
           "param": {
             "equalTo": "param"
+          }
+        },
+        "queryParameters": {
+          "query": {
+            "equalTo": "query"
           }
         }
       },
