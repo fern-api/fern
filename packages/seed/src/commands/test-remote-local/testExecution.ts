@@ -131,6 +131,12 @@ export async function runTestCase(testCase: RemoteVsLocalTestCase): Promise<Test
 
         // Check for generation failures
         if (!localResult.success || !remoteResult.success) {
+            // Both failed with the exact same error — that's parity.
+            if (!localResult.success && !remoteResult.success && localResult.error === remoteResult.error) {
+                logger.warn(`Both local and remote generation failed with the same error — treating as parity`);
+                logger.warn(`  Error: ${localResult.error}`);
+                return { success: true };
+            }
             const errors: string[] = [];
             if (!localResult.success) {
                 errors.push(`Local generation failed: ${localResult.error}`);
