@@ -331,7 +331,7 @@ export async function sdkPreview({
                 const previewBranch = `fern-preview-${previewVersion}`;
                 const diffUrl =
                     pushDiff && githubInfo != null
-                        ? `https://github.com/${githubInfo.owner}/${githubInfo.repo}/compare/main...${previewBranch}`
+                        ? `https://github.com/${githubInfo.owner}/${githubInfo.repo}/compare/${previewBranch}`
                         : undefined;
 
                 if (publishToRegistry && registryUrl != null) {

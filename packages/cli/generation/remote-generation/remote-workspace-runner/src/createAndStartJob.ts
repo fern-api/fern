@@ -238,6 +238,8 @@ async function createJob({
                 );
             },
             rateLimitExceeded: () => {
+                // Rate limits are normally caught by the raw 429 status code check above (line 191).
+                // This handler satisfies the exhaustive visitor type and acts as a fallback.
                 throw new TooManyRequestsError();
             },
             _other: (content) => {
