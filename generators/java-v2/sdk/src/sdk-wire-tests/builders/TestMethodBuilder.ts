@@ -83,12 +83,15 @@ export class TestMethodBuilder {
             const rawResponseJson = testExample.response.body;
             const responseStatusCode = testExample.response.statusCode;
 
-            // Convert RFC 2822 dates to ISO 8601 in the response JSON BEFORE using it for both
-            // the mock response body (served by MockWebServer) and the expected response assertion.
-            // Jackson's JavaTimeModule expects ISO 8601 for OffsetDateTime fields typed as "dateTime";
-            // RFC 2822 dates would cause DateTimeParseException during deserialization.
+            // Normalize dates in the response JSON to match Jackson's round-trip output:
+            // - Convert RFC 2822 dates to ISO 8601 (Jackson expects ISO for OffsetDateTime)
+            // - Append "Z" to timezone-less datetimes (DateTimeDeserializer defaults to UTC)
             const expectedResponseJson = rawResponseJson
-                ? (this.convertRfc2822DatesToIso8601(rawResponseJson) as typeof rawResponseJson)
+                ? (this.transformJsonStrings(rawResponseJson, (s) => {
+                      const converted = this.tryConvertRfc2822Date(s);
+                      // Append Z to timezone-less ISO 8601 datetimes
+                      return converted.replace(/^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?)$/, "$1Z");
+                  }) as typeof rawResponseJson)
                 : rawResponseJson;
 
             const mockResponseBody = expectedResponseJson
@@ -309,22 +312,19 @@ export class TestMethodBuilder {
     }
 
     /**
-     * Recursively converts RFC 2822 date strings to ISO 8601 format with Z suffix
-     * in JSON data. This is needed because Jackson's JavaTimeModule serializes
-     * OffsetDateTime as ISO 8601 (e.g. "2015-07-30T20:00:00Z"), but the IR example
-     * data may contain RFC 2822 dates (e.g. "Thu, 30 Jul 2015 20:00:00 +0000").
+     * Recursively applies a string transform to all string values in a JSON structure.
      */
-    private convertRfc2822DatesToIso8601(data: unknown): unknown {
+    private transformJsonStrings(data: unknown, transform: (s: string) => string): unknown {
         if (typeof data === "string") {
-            return this.tryConvertRfc2822Date(data);
+            return transform(data);
         }
         if (Array.isArray(data)) {
-            return data.map((item) => this.convertRfc2822DatesToIso8601(item));
+            return data.map((item) => this.transformJsonStrings(item, transform));
         }
         if (typeof data === "object" && data !== null) {
             const result: Record<string, unknown> = {};
             for (const [key, value] of Object.entries(data)) {
-                result[key] = this.convertRfc2822DatesToIso8601(value);
+                result[key] = this.transformJsonStrings(value, transform);
             }
             return result;
         }
