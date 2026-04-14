@@ -1,9 +1,11 @@
 # Square API spec version labels for multi-version docs benchmarking.
 # Each line: COMMIT_SHA|VERSION_LABEL
-# The SHA column is kept for reference but all versions use the latest spec
-# (older historical specs have broken $ref references).
-# Source: https://developer.squareup.com/docs/api/artifacts
-# Full list of 89 Square API versions, ordered newest-first.
+# Matches the 35 dated versions used by the real Square docs
+# (fern-demo/square-docs fern/docs.yml).
+# All versions use the latest spec — older historical specs have broken $ref
+# references so we cannot use them directly.
+# Ordered newest-first.
+_|2026-01-22
 1b6956b9f5424b10ecb44085d4d7842796e4a06a|2025-10-16
 e69b4e2935df2ec2e33e59e482673e84a2471f4d|2025-09-24
 e83ac55f53288e4f527eb335c2080418dc7def27|2025-08-20
@@ -38,58 +40,3 @@ aeed8d43a37da118046ecc974deb606ac77571ce|2023-06-08
 0eb65464f97fd8b669638f0767af915c50e2b544|2023-04-19
 _|2023-03-15
 _|2023-01-19
-_|2022-12-14
-_|2022-11-16
-_|2022-10-19
-_|2022-09-21
-_|2022-08-23
-_|2022-08-17
-_|2022-07-20
-_|2022-06-16
-_|2022-05-12
-_|2022-04-20
-_|2022-03-16
-_|2022-02-16
-_|2022-01-20
-_|2021-12-15
-_|2021-11-17
-_|2021-10-20
-_|2021-09-15
-_|2021-08-18
-_|2021-07-21
-_|2021-06-16
-_|2021-05-13
-_|2021-04-21
-_|2021-03-17
-_|2021-02-26
-_|2021-01-21
-_|2020-12-16
-_|2020-11-18
-_|2020-10-28
-_|2020-09-23
-_|2020-08-26
-_|2020-08-12
-_|2020-07-22
-_|2020-06-25
-_|2020-05-28
-_|2020-04-22
-_|2020-03-25
-_|2020-02-26
-_|2020-01-22
-_|2019-12-17
-_|2019-11-20
-_|2019-10-23
-_|2019-09-25
-_|2019-08-14
-_|2019-07-24
-_|2019-07-10
-_|2019-06-12
-_|2019-05-08
-_|2019-04-10
-_|2019-03-27
-_|2019-03-13
-_|2019-02-13
-_|2018-12-12
-_|2018-12-05
-_|2018-09-18
-_|2018-07-12
