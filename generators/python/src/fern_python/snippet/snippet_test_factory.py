@@ -229,12 +229,12 @@ class SnippetTestFactory:
         for pathpart in fern_filepath.package_path:
             directories += (
                 Filepath.DirectoryFilepathPart(
-                    module_name=resolve_name(pathpart).snake_case.safe_name,
+                    module_name=resolve_name(pathpart).snake_case.unsafe_name,
                 ),
             )
 
         module_name = (
-            resolve_name(fern_filepath.file).snake_case.safe_name if fern_filepath.file is not None else "root"
+            resolve_name(fern_filepath.file).snake_case.unsafe_name if fern_filepath.file is not None else "root"
         )
         return Filepath(
             directories=directories,
@@ -465,7 +465,7 @@ class SnippetTestFactory:
             components += [fern_filepath.file]
         if len(components) == 0:
             return ""
-        return ".".join([resolve_name(component).snake_case.safe_name for component in components]) + "."
+        return ".".join([resolve_name(component).snake_case.unsafe_name for component in components]) + "."
 
     def _generate_service_test(self, service: ir_types.HttpService, snippet_writer: SnippetWriter) -> None:
         fern_filepath = service.name.fern_filepath

@@ -44,7 +44,10 @@ def _to_screaming_snake(s: str) -> str:
 
 _PYTHON_RESERVED_BUILTINS = frozenset(
     {
-        # From @fern-api/casings-generator reserved.ts (Python section)
+        # Must match @fern-api/casings-generator reserved.ts (Python section) exactly.
+        # Do NOT add extras — the IR server computes safe_names using this same set,
+        # so any divergence produces different names for v66 compressed strings vs v65
+        # pre-computed Names.
         "float",
         "int",
         "complex",
@@ -57,14 +60,6 @@ _PYTHON_RESERVED_BUILTINS = frozenset(
         "self",
         "all",
         "kwargs",
-        # Additional Python builtins worth protecting
-        "dict",
-        "type",
-        "id",
-        "hash",
-        "input",
-        "object",
-        "property",
     }
 )
 
