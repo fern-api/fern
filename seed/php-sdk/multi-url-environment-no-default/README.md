@@ -10,6 +10,7 @@ The Seed PHP library provides convenient access to the Seed APIs from PHP.
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Environments](#environments)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
   - [Custom Client](#custom-client)
@@ -50,6 +51,46 @@ $client->ec2->bootInstance(
     ]),
 );
 
+```
+
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```php
+This API uses multiple base URLs for different services. The SDK defaults to the `Production` environment.
+
+Available environments:
+- `Environments::Production()`
+- `Environments::Staging()`
+
+Each environment provides multiple base URLs:
+  - `ec2`: The ec2 base URL
+  - `s3`: The s3 base URL
+
+To use a different environment, pass it to the client constructor:
+
+```php
+use Seed\SeedClient;
+use Seed\Environments;
+
+$client = new SeedClient(
+    token: '<YOUR_TOKEN>',
+    environment: Environments::Staging()
+);
+```
+
+You can also create a custom environment with your own URLs:
+
+```php
+$client = new SeedClient(
+    token: '<YOUR_TOKEN>',
+    environment: Environments::custom(
+        ec2: 'https://your-ec2-url.com',
+    s3: 'https://your-s3-url.com'
+    )
+);
+```
 ```
 
 ## Exception Handling

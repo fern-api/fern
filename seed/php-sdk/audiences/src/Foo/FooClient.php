@@ -59,11 +59,11 @@ class FooClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ImportingType
+     * @return ?ImportingType
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function find(FindRequest $request = new FindRequest(), ?array $options = null): ImportingType
+    public function find(FindRequest $request = new FindRequest(), ?array $options = null): ?ImportingType
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -84,6 +84,9 @@ class FooClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return ImportingType::fromJson($json);
             }
         } catch (JsonException $e) {

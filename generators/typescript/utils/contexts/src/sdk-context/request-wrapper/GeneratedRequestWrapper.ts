@@ -2,7 +2,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { ts } from "ts-morph";
 
 import { GeneratedFile } from "../../commons/GeneratedFile.js";
-import { SdkContext } from "../SdkContext.js";
+import { FileContext } from "../file-context/FileContext.js";
 import { GeneratedRequestWrapperExample } from "./GeneratedRequestWrapperExample.js";
 import {
     RequestWrapperBodyProperty,
@@ -20,32 +20,32 @@ export namespace GeneratedRequestWrapper {
     }
 }
 
-export interface GeneratedRequestWrapper extends GeneratedFile<SdkContext> {
-    areAllPropertiesOptional: (context: SdkContext) => boolean;
+export interface GeneratedRequestWrapper extends GeneratedFile<FileContext> {
+    areAllPropertiesOptional: (context: FileContext) => boolean;
     areBodyPropertiesInlined: () => boolean;
     getReferencedBodyPropertyName: () => string;
-    hasBodyProperty(context: SdkContext): boolean;
+    hasBodyProperty(context: FileContext): boolean;
     getAllQueryParameters: () => FernIr.QueryParameter[];
-    getNonBodyKeys: (context: SdkContext) => RequestWrapperNonBodyProperty[];
-    getNonBodyKeysWithData: (context: SdkContext) => RequestWrapperNonBodyPropertyWithData[];
+    getNonBodyKeys: (context: FileContext) => RequestWrapperNonBodyProperty[];
+    getNonBodyKeysWithData: (context: FileContext) => RequestWrapperNonBodyPropertyWithData[];
     getInlinedRequestBodyPropertyKey: (property: FernIr.InlinedRequestBodyProperty) => RequestWrapperBodyProperty;
-    getInlinedRequestBodyPropertyKeyFromName: (name: FernIr.NameAndWireValue) => RequestWrapperBodyProperty;
-    shouldInlinePathParameters: (context: SdkContext) => boolean;
+    getInlinedRequestBodyPropertyKeyFromName: (name: FernIr.NameAndWireValueOrString) => RequestWrapperBodyProperty;
+    shouldInlinePathParameters: (context: FileContext) => boolean;
     getPropertyNameOfFileParameter: (fileProperty: FernIr.FileProperty) => RequestWrapperNonBodyProperty;
-    getPropertyNameOfFileParameterFromName: (name: FernIr.NameAndWireValue) => RequestWrapperNonBodyProperty;
+    getPropertyNameOfFileParameterFromName: (name: FernIr.NameAndWireValueOrString) => RequestWrapperNonBodyProperty;
     getPropertyNameOfQueryParameter: (queryParameter: FernIr.QueryParameter) => RequestWrapperNonBodyProperty;
-    getPropertyNameOfQueryParameterFromName: (name: FernIr.NameAndWireValue) => RequestWrapperNonBodyProperty;
+    getPropertyNameOfQueryParameterFromName: (name: FernIr.NameAndWireValueOrString) => RequestWrapperNonBodyProperty;
     getPropertyNameOfPathParameter: (pathParameter: FernIr.PathParameter) => RequestWrapperNonBodyProperty;
-    getPropertyNameOfPathParameterFromName: (name: FernIr.Name) => RequestWrapperNonBodyProperty;
+    getPropertyNameOfPathParameterFromName: (name: FernIr.NameOrString) => RequestWrapperNonBodyProperty;
     getPropertyNameOfNonLiteralHeader: (header: FernIr.HttpHeader) => RequestWrapperNonBodyProperty;
-    getPropertyNameOfNonLiteralHeaderFromName: (name: FernIr.NameAndWireValue) => RequestWrapperNonBodyProperty;
+    getPropertyNameOfNonLiteralHeaderFromName: (name: FernIr.NameAndWireValueOrString) => RequestWrapperNonBodyProperty;
     withQueryParameter: (args: {
         queryParameter: FernIr.QueryParameter;
         referenceToQueryParameterProperty: ts.Expression;
-        context: SdkContext;
+        context: FileContext;
         queryParamSetter: (referenceToQueryParameter: ts.Expression) => ts.Statement[];
         queryParamItemSetter: (referenceToQueryParameter: ts.Expression) => ts.Statement[];
     }) => ts.Statement[];
     generateExample: (example: FernIr.ExampleEndpointCall) => GeneratedRequestWrapperExample | undefined;
-    getRequestProperties(context: SdkContext): GeneratedRequestWrapper.Property[];
+    getRequestProperties(context: FileContext): GeneratedRequestWrapper.Property[];
 }

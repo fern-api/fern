@@ -11,7 +11,10 @@ async fn main() {
         .union_
         .update(
             &Shape::Circle {
-                data: Circle { radius: 1.1 },
+                data: Circle {
+                    radius: 1.1,
+                    ..Default::default()
+                },
             },
             None,
         )

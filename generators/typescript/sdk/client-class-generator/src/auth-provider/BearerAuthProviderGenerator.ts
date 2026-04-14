@@ -1,6 +1,6 @@
 import type { FernIr } from "@fern-fern/ir-sdk";
 import { type ExportedFilePath, getPropertyKey, getTextOfTsNode, toCamelCase } from "@fern-typescript/commons";
-import type { SdkContext } from "@fern-typescript/contexts";
+import type { FileContext } from "@fern-typescript/contexts";
 import {
     type OptionalKind,
     type PropertySignatureStructure,
@@ -90,7 +90,7 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
         return ts.factory.createTypeReferenceNode(`${CLASS_NAME}.${AUTH_OPTIONS_TYPE_NAME}`);
     }
 
-    public getAuthOptionsProperties(context: SdkContext): OptionalKind<PropertySignatureStructure>[] | undefined {
+    public getAuthOptionsProperties(context: FileContext): OptionalKind<PropertySignatureStructure>[] | undefined {
         const hasTokenEnv = this.authScheme.tokenEnvVar != null;
         const isTokenOptional = !this.isAuthMandatory || hasTokenEnv;
         // When there's an env var fallback, use Supplier<T> | undefined because the supplier itself can be undefined
@@ -109,7 +109,7 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
         return [
             {
                 kind: StructureKind.PropertySignature,
-                name: getPropertyKey(this.authScheme.token.camelCase.safeName),
+                name: getPropertyKey(context.case.camelSafe(this.authScheme.token)),
                 hasQuestionToken: isTokenOptional,
                 type: getTextOfTsNode(propertyType),
                 docs: this.authScheme.docs ? [this.authScheme.docs] : undefined
@@ -125,14 +125,14 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
         );
     }
 
-    public writeToFile(context: SdkContext): void {
+    public writeToFile(context: FileContext): void {
         this.writeConstants(context);
         this.writeClass(context);
         this.writeOptions(context);
     }
 
-    private writeConstants(context: SdkContext): void {
-        const tokenFieldName = this.authScheme.token.camelCase.safeName;
+    private writeConstants(context: FileContext): void {
+        const tokenFieldName = context.case.camelSafe(this.authScheme.token);
         const tokenEnvVar = this.authScheme.tokenEnvVar;
         const wrapperPropertyName = this.getWrapperPropertyName();
 
@@ -151,7 +151,7 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
         context.sourceFile.addStatements(""); // blank line
     }
 
-    private writeClass(context: SdkContext): void {
+    private writeClass(context: FileContext): void {
         context.sourceFile.addClass({
             name: CLASS_NAME,
             isExported: true,
@@ -231,8 +231,8 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
         return `return options?.${wrapperAccess}[TOKEN_PARAM] != null${envCheck};`;
     }
 
-    private generateGetAuthRequestStatements(context: SdkContext): string {
-        const tokenVar = this.authScheme.token.camelCase.unsafeName;
+    private generateGetAuthRequestStatements(context: FileContext): string {
+        const tokenVar = context.case.camelUnsafe(this.authScheme.token);
         const tokenEnvVar = this.authScheme.tokenEnvVar;
 
         // Build property access chain based on shouldUseWrapper
@@ -302,7 +302,7 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
         }
     }
 
-    private writeOptions(context: SdkContext): void {
+    private writeOptions(context: FileContext): void {
         const authOptionsProperties = this.getAuthOptionsProperties(context) ?? [];
         const authSchemeKey =
             this.ir.auth.schemes.find((scheme) => scheme.type === "bearer" && scheme === this.authScheme)?.key ??

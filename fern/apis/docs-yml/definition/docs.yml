@@ -145,6 +145,61 @@ types:
         docs: |
           Custom styling instructions for AI-generated examples. When provided, these instructions will guide the AI in generating examples that match your preferred style, naming conventions, or domain-specific terminology. Limited to 500 characters.
 
+  PageDescriptionSource:
+    enum:
+      - description
+      - subtitle
+
+  AgentsConfig:
+    properties:
+      page-directive:
+        type: optional<string>
+        docs: |
+          Text to prepend to each page when it is served through agent endpoints.
+      page-description-source:
+        type: optional<PageDescriptionSource>
+        docs: |
+          Controls which frontmatter field is preferred for one-line page descriptions
+          in llms.txt. Defaults to "description". If the preferred field is not present
+          in a page's frontmatter, falls back to other fields (description, subtitle,
+          og:description, headline, excerpt).
+
+  CheckRuleSeverity:
+    enum:
+      - warn
+      - error
+
+  CheckRulesConfig:
+    properties:
+      example-validation:
+        type: optional<CheckRuleSeverity>
+        docs: Severity for OpenAPI example validation. Default is warn.
+      broken-links:
+        type: optional<CheckRuleSeverity>
+        docs: Severity for broken link detection. Defaults to error for broken internal links and warn for malformed URLs.
+      no-non-component-refs:
+        type: optional<CheckRuleSeverity>
+        docs: Severity for non-component OpenAPI reference validation. Default is error.
+      valid-local-references:
+        type: optional<CheckRuleSeverity>
+        docs: Severity for local OpenAPI reference validation. Default is warn.
+      no-circular-redirects:
+        type: optional<CheckRuleSeverity>
+        docs: Severity for circular redirect validation. Default is error.
+      valid-docs-endpoints:
+        type: optional<CheckRuleSeverity>
+        docs: Severity for docs endpoint URL validation. Default is warn.
+      missing-redirects:
+        type: optional<CheckRuleSeverity>
+        docs: Severity for detecting previously published URLs that disappeared without an explicit redirect. Default is warn.
+
+  CheckConfig:
+    docs: |
+      Configure the severity of validation rules run by `fern check`.
+      Each rule can be set to `warn` (non-blocking) or `error` (blocking).
+    properties:
+      rules: optional<CheckRulesConfig>
+
   DocsConfiguration:
     properties:
       instances: list<DocsInstance>
@@ -213,9 +268,17 @@ types:
         docs: |
           Configure AI-powered example enhancement for API documentation. When enabled, API examples will be enhanced with AI-generated content to provide more comprehensive and realistic examples.
 
+      agents:
+        type: optional<AgentsConfig>
+        docs: |
+          Configuration for agent-serving endpoints.
+
       # seo
       metadata: optional<MetadataConfig>
       redirects: optional<list<RedirectConfig>>
+
+      # validation
+      check: optional<CheckConfig>
 
       # please note: some of the following options represent files provided by the user, which require validation. if someone adds another file record to the spec, please ensure that file is visited in packages/cli/yaml/yaml-schema/src/docsAst/visitDocsConfigFileAst.ts
 
@@ -432,10 +495,6 @@ types:
       "custom-domain":
         type: optional<CustomDomain>
         docs: The custom domain where your documentation is hosted. Learn more about setting up a custom domain.
-      private:
-        type: optional<boolean>
-        docs: This config option is no longer used. Please reach out to the Fern Team if you want to enable private docs.
-        availability: deprecated
       "edit-this-page":
         type: optional<EditThisPageConfig>
         docs: |
@@ -853,10 +912,27 @@ types:
       - default
       - minimal
 
-  TabsThemeConfig:
+  TabsAlignment:
+    enum:
+      - left
+      - center
+
+  TabsThemeStyle:
     enum:
       - default
       - bubble
+
+  TabsThemeObjectConfig:
+    properties:
+      style: optional<TabsThemeStyle>
+      alignment: optional<TabsAlignment>
+      placement: optional<TabsPlacement>
+
+  TabsThemeConfig:
+    discriminated: false
+    union:
+      - TabsThemeStyle
+      - TabsThemeObjectConfig
 
   BodyThemeConfig:
     enum:
@@ -1899,6 +1975,11 @@ types:
   IntegrationsConfig:
     properties:
       intercom: optional<string>
+      context7:
+        type: optional<string>
+        docs: |
+          Relative filepath to a `context7.json` file that Fern should host at `/context7.json`.
+          Fern only checks that the file exists and is valid JSON, then passes it through as-is.
 
   ExperimentalConfig:
     properties:

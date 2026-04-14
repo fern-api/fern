@@ -42,6 +42,12 @@ jobs:
       - name: Test
         run: fern test --command "poetry run pytest -rP -n auto ."
 
+      - name: Install aiohttp extra
+        run: poetry install --extras aiohttp
+
+      - name: Test (aiohttp)
+        run: poetry run pytest -rP -n auto -m aiohttp .
+
   publish:
     needs: [compile, test]
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')

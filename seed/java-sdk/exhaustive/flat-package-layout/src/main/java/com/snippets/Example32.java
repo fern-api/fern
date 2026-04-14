@@ -1,7 +1,8 @@
 package com.snippets;
 
 import com.seed.exhaustive.SeedExhaustiveClient;
-import com.seed.exhaustive.endpoints.types.GetWithQuery;
+import com.seed.exhaustive.endpoints.types.GetWithMultipleQuery;
+import java.util.Arrays;
 
 public class Example32 {
     public static void main(String[] args) {
@@ -12,6 +13,9 @@ public class Example32 {
 
         client.endpoints()
                 .params()
-                .getWithQuery(GetWithQuery.builder().query("query").number(1).build());
+                .getWithAllowMultipleQuery(GetWithMultipleQuery.builder()
+                        .query(Arrays.asList("query"))
+                        .number(Arrays.asList(1))
+                        .build());
     }
 }

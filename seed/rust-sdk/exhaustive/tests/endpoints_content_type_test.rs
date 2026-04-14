@@ -15,6 +15,7 @@ async fn test_endpoints_content_type_post_json_patch_content_type_with_wiremock(
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -39,6 +40,7 @@ async fn test_endpoints_content_type_post_json_patch_content_type_with_wiremock(
                 set: Some(HashSet::from(["set".to_string()])),
                 map: Some(HashMap::from([(1, "map".to_string())])),
                 bigint: Some(BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap()),
+                ..Default::default()
             },
             None,
         )
@@ -62,6 +64,7 @@ async fn test_endpoints_content_type_post_json_patch_content_with_charset_type_w
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -86,6 +89,7 @@ async fn test_endpoints_content_type_post_json_patch_content_with_charset_type_w
                 set: Some(HashSet::from(["set".to_string()])),
                 map: Some(HashMap::from([(1, "map".to_string())])),
                 bigint: Some(BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap()),
+                ..Default::default()
             },
             None,
         )

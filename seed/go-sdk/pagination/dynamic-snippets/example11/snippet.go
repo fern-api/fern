@@ -2,6 +2,7 @@ package example
 
 import (
     context "context"
+
     fern "github.com/pagination/fern"
     client "github.com/pagination/fern/client"
     inlineusers "github.com/pagination/fern/inlineusers"
@@ -17,12 +18,12 @@ func do() {
             "<token>",
         ),
     )
-    request := &inlineusers.ListUsersCursorPaginationRequest{
+    request := &inlineusers.ListUsernamesRequest{
         StartingAfter: fern.String(
             "starting_after",
         ),
     }
-    client.InlineUsers.InlineUsers.ListWithCursorPagination(
+    client.InlineUsers.InlineUsers.ListUsernames(
         context.TODO(),
         request,
     )

@@ -1,0 +1,83 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "f5ff71ea",
+            "id": {
+                "method": "POST",
+                "path": "/plants",
+                "identifier_override": "endpoint_.createPlant"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport java.util.ArrayList;\nimport java.util.Arrays;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.createPlant(new \n        HashMap<String, Object>() {{put(\"name\", \"Venus Flytrap\");\n            put(\"species\", \"Dionaea muscipula\");\n            put(\"care\", new \n            HashMap<String, Object>() {{put(\"light\", \"full sun\");\n                put(\"water\", \"distilled only\");\n                put(\"humidity\", \"high\");\n            }});\n            put(\"tags\", new ArrayList<Object>(Arrays.asList(\"carnivorous\", \"tropical\")));\n        }});\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport java.util.ArrayList;\nimport java.util.Arrays;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.createPlant(new \n        HashMap<String, Object>() {{put(\"name\", \"Venus Flytrap\");\n            put(\"species\", \"Dionaea muscipula\");\n            put(\"care\", new \n            HashMap<String, Object>() {{put(\"light\", \"full sun\");\n                put(\"water\", \"distilled only\");\n                put(\"humidity\", \"high\");\n            }});\n            put(\"tags\", new ArrayList<Object>(Arrays.asList(\"carnivorous\", \"tropical\")));\n        }});\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "c9eec2f1",
+            "id": {
+                "method": "POST",
+                "path": "/plants",
+                "identifier_override": "endpoint_.createPlant"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.createPlant(new \n        HashMap<String, Object>() {{put(\"key\", \"value\");\n        }});\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.createPlant(new \n        HashMap<String, Object>() {{put(\"key\", \"value\");\n        }});\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "c089721",
+            "id": {
+                "method": "PUT",
+                "path": "/plants/{plantId}",
+                "identifier_override": "endpoint_.updatePlant"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.UpdatePlantRequest;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.updatePlant(\n            \"plantId\",\n            UpdatePlantRequest\n                .builder()\n                .body(new \n                    HashMap<String, Object>() {{put(\"name\", \"Updated Venus Flytrap\");\n                        put(\"care\", new \n                        HashMap<String, Object>() {{put(\"light\", \"partial shade\");\n                        }});\n                    }})\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.UpdatePlantRequest;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.updatePlant(\n            \"plantId\",\n            UpdatePlantRequest\n                .builder()\n                .body(new \n                    HashMap<String, Object>() {{put(\"name\", \"Updated Venus Flytrap\");\n                        put(\"care\", new \n                        HashMap<String, Object>() {{put(\"light\", \"partial shade\");\n                        }});\n                    }})\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "b41ace68",
+            "id": {
+                "method": "PUT",
+                "path": "/plants/{plantId}",
+                "identifier_override": "endpoint_.updatePlant"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.UpdatePlantRequest;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.updatePlant(\n            \"plantId\",\n            UpdatePlantRequest\n                .builder()\n                .body(new \n                    HashMap<String, Object>() {{put(\"key\", \"value\");\n                    }})\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.UpdatePlantRequest;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.updatePlant(\n            \"plantId\",\n            UpdatePlantRequest\n                .builder()\n                .body(new \n                    HashMap<String, Object>() {{put(\"key\", \"value\");\n                    }})\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "5c357582",
+            "id": {
+                "method": "POST",
+                "path": "/plants/with-schema",
+                "identifier_override": "endpoint_.createPlantWithSchema"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.CreatePlantWithSchemaRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.createPlantWithSchema(\n            CreatePlantWithSchemaRequest\n                .builder()\n                .name(\"Sundew\")\n                .species(\"Drosera capensis\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.CreatePlantWithSchemaRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.createPlantWithSchema(\n            CreatePlantWithSchemaRequest\n                .builder()\n                .name(\"Sundew\")\n                .species(\"Drosera capensis\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "2442fc8a",
+            "id": {
+                "method": "POST",
+                "path": "/plants/with-schema",
+                "identifier_override": "endpoint_.createPlantWithSchema"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.CreatePlantWithSchemaRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.createPlantWithSchema(\n            CreatePlantWithSchemaRequest\n                .builder()\n                .name(\"name\")\n                .species(\"species\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.CreatePlantWithSchemaRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.createPlantWithSchema(\n            CreatePlantWithSchemaRequest\n                .builder()\n                .name(\"name\")\n                .species(\"species\")\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

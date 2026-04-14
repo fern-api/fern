@@ -1,6 +1,7 @@
+import { getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode } from "@fern-typescript/commons";
-import { SdkContext } from "@fern-typescript/contexts";
+import { FileContext } from "@fern-typescript/contexts";
 import { Scope, ts } from "ts-morph";
 
 interface MethodBodyResult {
@@ -17,7 +18,7 @@ export class WebhooksHelperGenerator {
         this.className = className;
     }
 
-    public writeToFile(context: SdkContext): void {
+    public writeToFile(context: FileContext): void {
         switch (this.verification.type) {
             case "hmac":
                 this.writeHmacClass(context, this.verification);
@@ -30,20 +31,20 @@ export class WebhooksHelperGenerator {
         }
     }
 
-    private writeHmacClass(context: SdkContext, config: FernIr.HmacSignatureVerification): void {
+    private writeHmacClass(context: FileContext, config: FernIr.HmacSignatureVerification): void {
         const parameters = this.buildHmacParameters(config);
         const result = this.buildHmacMethodBody(context, config);
         this.writeClass(context, parameters, result, this.buildJsDoc(config));
     }
 
-    private writeAsymmetricClass(context: SdkContext, config: FernIr.AsymmetricKeySignatureVerification): void {
+    private writeAsymmetricClass(context: FileContext, config: FernIr.AsymmetricKeySignatureVerification): void {
         const parameters = this.buildAsymmetricParameters(config);
         const result = this.buildAsymmetricMethodBody(context, config);
         this.writeClass(context, parameters, result, this.buildAsymmetricJsDoc(config));
     }
 
     private writeClass(
-        context: SdkContext,
+        context: FileContext,
         parameters: Array<{ name: string; type: string }>,
         result: MethodBodyResult,
         jsDoc: string
@@ -134,7 +135,7 @@ export class WebhooksHelperGenerator {
         }
     }
 
-    private buildHmacMethodBody(context: SdkContext, config: FernIr.HmacSignatureVerification): MethodBodyResult {
+    private buildHmacMethodBody(context: FileContext, config: FernIr.HmacSignatureVerification): MethodBodyResult {
         const fileConstants: string[] = [];
         const lines: string[] = [];
 
@@ -187,7 +188,7 @@ export class WebhooksHelperGenerator {
     }
 
     private buildAsymmetricMethodBody(
-        context: SdkContext,
+        context: FileContext,
         config: FernIr.AsymmetricKeySignatureVerification
     ): MethodBodyResult {
         const fileConstants: string[] = [];
@@ -284,7 +285,7 @@ export class WebhooksHelperGenerator {
         timestamp: FernIr.WebhookTimestampConfig
     ): void {
         const toleranceSeconds = timestamp.tolerance ?? 300;
-        const headerName = timestamp.headerName.wireValue;
+        const headerName = getWireValue(timestamp.headerName);
 
         fileConstants.push(`const TIMESTAMP_TOLERANCE_SECONDS = ${toleranceSeconds};`);
 
@@ -418,11 +419,11 @@ export class WebhooksHelperGenerator {
         const lines: string[] = [
             "Verify an HMAC webhook signature.",
             "",
-            `Extract the signature from the "${config.signatureHeaderName.wireValue}" header and pass it as the signatureHeader parameter.`
+            `Extract the signature from the "${getWireValue(config.signatureHeaderName)}" header and pass it as the signatureHeader parameter.`
         ];
         if (config.timestamp != null) {
             lines.push(
-                `Extract the timestamp from the "${config.timestamp.headerName.wireValue}" header and pass it as the timestampHeader parameter.`
+                `Extract the timestamp from the "${getWireValue(config.timestamp.headerName)}" header and pass it as the timestampHeader parameter.`
             );
         }
         return lines.join("\n");
@@ -432,19 +433,19 @@ export class WebhooksHelperGenerator {
         const lines: string[] = [
             "Verify an asymmetric webhook signature.",
             "",
-            `Extract the signature from the "${config.signatureHeaderName.wireValue}" header and pass it as the signatureHeader parameter.`
+            `Extract the signature from the "${getWireValue(config.signatureHeaderName)}" header and pass it as the signatureHeader parameter.`
         ];
         if (config.keySource.type === "jwks") {
             lines.push(`Public keys are fetched from the JWKS endpoint at ${config.keySource.url}.`);
             if (config.keySource.keyIdHeader != null) {
                 lines.push(
-                    `Extract the key ID from the "${config.keySource.keyIdHeader.wireValue}" header and pass it as the keyIdHeader parameter.`
+                    `Extract the key ID from the "${getWireValue(config.keySource.keyIdHeader)}" header and pass it as the keyIdHeader parameter.`
                 );
             }
         }
         if (config.timestamp != null) {
             lines.push(
-                `Extract the timestamp from the "${config.timestamp.headerName.wireValue}" header and pass it as the timestampHeader parameter.`
+                `Extract the timestamp from the "${getWireValue(config.timestamp.headerName)}" header and pass it as the timestampHeader parameter.`
             );
         }
         return lines.join("\n");

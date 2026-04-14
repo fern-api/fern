@@ -3,6 +3,8 @@ import { FdrAPI as FdrCjsSdk } from "@fern-api/fdr-sdk";
 import { FernIr as Ir } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 
+import { getInnerName, getOriginalName, getWireValue } from "./nameUtils.js";
+
 export interface PlaygroundConfig {
     oauth?: boolean;
 }
@@ -36,29 +38,29 @@ function convertAuthScheme({
         case "basic":
             return {
                 type: "basicAuth",
-                passwordName: scheme.password.originalName,
-                usernameName: scheme.username.originalName,
+                passwordName: getOriginalName(scheme.password),
+                usernameName: getOriginalName(scheme.username),
                 description: scheme.docs,
                 passwordAlwaysEmpty: scheme.passwordOmit
             };
         case "bearer":
             return {
                 type: "bearerAuth",
-                tokenName: scheme.token.originalName,
+                tokenName: getOriginalName(scheme.token),
                 description: scheme.docs
             };
         case "header":
             return {
                 type: "header",
-                headerWireValue: scheme.name.wireValue,
-                nameOverride: scheme.name.name.originalName,
+                headerWireValue: getWireValue(scheme.name),
+                nameOverride: getOriginalName(getInnerName(scheme.name)),
                 prefix: scheme.prefix,
                 description: scheme.docs
             };
         case "oauth": {
             const tokenPath =
                 scheme.configuration.tokenEndpoint.responseProperties.accessToken.propertyPath
-                    ?.map((p) => p.name.originalName)
+                    ?.map((p) => getOriginalName(p.name))
                     .join(".") || "$.body.access_token";
 
             return playgroundConfig?.oauth
@@ -104,7 +106,7 @@ function convertAuthScheme({
                 }
                 return {
                     type: "bearerAuth",
-                    tokenName: authHeader.responseProperty.property.name.wireValue,
+                    tokenName: getWireValue(authHeader.responseProperty.property.name),
                     description: scheme.docs
                 };
             }

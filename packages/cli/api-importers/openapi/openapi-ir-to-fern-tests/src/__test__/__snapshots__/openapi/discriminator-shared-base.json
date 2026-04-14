@@ -1,0 +1,311 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "errors": {
+          "BadRequestError": {
+            "docs": "Bad request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "code": "BAD_REQUEST",
+                  "message": "message",
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "BadRequestErrorBody",
+          },
+          "ForbiddenError": {
+            "docs": "Forbidden",
+            "status-code": 403,
+            "type": "ForbiddenErrorBody",
+          },
+          "UnauthorizedError": {
+            "docs": "Unauthorized",
+            "status-code": 401,
+            "type": "UnauthorizedErrorBody",
+          },
+        },
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "listItems": {
+              "auth": undefined,
+              "docs": undefined,
+              "errors": [
+                "BadRequestError",
+                "UnauthorizedError",
+                "ForbiddenError",
+              ],
+              "examples": [
+                {
+                  "response": {
+                    "body": {
+                      "items": [
+                        "items",
+                      ],
+                    },
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/items",
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "ItemsResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "BadRequestErrorBody": {
+            "docs": "The request was malformed",
+            "extends": [
+              "Error",
+            ],
+            "inline": undefined,
+            "properties": {},
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "Error": {
+            "docs": "Base error schema",
+            "inline": undefined,
+            "properties": {
+              "code": {
+                "docs": "Machine-readable error code",
+                "type": "string",
+              },
+              "message": {
+                "docs": "Human-readable error message",
+                "type": "string",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ForbiddenErrorBody": {
+            "docs": "Access denied",
+            "inline": undefined,
+            "properties": {
+              "code": {
+                "docs": "Machine-readable error code",
+                "type": "optional<ForbiddenErrorCode>",
+              },
+              "message": {
+                "docs": "Human-readable error message",
+                "type": "string",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ForbiddenErrorCode": {
+            "docs": "Machine-readable error code",
+            "enum": [
+              "ACCESS_DENIED",
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "InvalidInputError": {
+            "docs": "The request contained invalid input",
+            "extends": [
+              "Error",
+            ],
+            "inline": undefined,
+            "properties": {
+              "invalidFields": "optional<list<string>>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ItemsResponse": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "items": "list<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "UnauthorizedErrorBody": {
+            "docs": "Authentication failed",
+            "inline": undefined,
+            "properties": {
+              "code": {
+                "docs": "Machine-readable error code",
+                "type": "optional<UnauthorizedErrorCode>",
+              },
+              "message": {
+                "docs": "Human-readable error message",
+                "type": "string",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "UnauthorizedErrorCode": {
+            "docs": "Machine-readable error code",
+            "enum": [
+              "UNABLE_TO_AUTHENTICATE",
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "types:
+  BadRequestErrorBody:
+    docs: The request was malformed
+    properties: {}
+    extends:
+      - Error
+    source:
+      openapi: ../openapi.yml
+  ItemsResponse:
+    properties:
+      items: list<string>
+    source:
+      openapi: ../openapi.yml
+  Error:
+    docs: Base error schema
+    properties:
+      code:
+        type: string
+        docs: Machine-readable error code
+      message:
+        type: string
+        docs: Human-readable error message
+    source:
+      openapi: ../openapi.yml
+  InvalidInputError:
+    docs: The request contained invalid input
+    properties:
+      invalidFields: optional<list<string>>
+    extends:
+      - Error
+    source:
+      openapi: ../openapi.yml
+  UnauthorizedErrorCode:
+    enum:
+      - UNABLE_TO_AUTHENTICATE
+    docs: Machine-readable error code
+    inline: true
+    source:
+      openapi: ../openapi.yml
+  UnauthorizedErrorBody:
+    docs: Authentication failed
+    properties:
+      code:
+        type: optional<UnauthorizedErrorCode>
+        docs: Machine-readable error code
+      message:
+        type: string
+        docs: Human-readable error message
+    source:
+      openapi: ../openapi.yml
+  ForbiddenErrorCode:
+    enum:
+      - ACCESS_DENIED
+    docs: Machine-readable error code
+    inline: true
+    source:
+      openapi: ../openapi.yml
+  ForbiddenErrorBody:
+    docs: Access denied
+    properties:
+      code:
+        type: optional<ForbiddenErrorCode>
+        docs: Machine-readable error code
+      message:
+        type: string
+        docs: Human-readable error message
+    source:
+      openapi: ../openapi.yml
+errors:
+  BadRequestError:
+    status-code: 400
+    type: BadRequestErrorBody
+    docs: Bad request
+    examples:
+      - value:
+          code: BAD_REQUEST
+          message: message
+  UnauthorizedError:
+    status-code: 401
+    type: UnauthorizedErrorBody
+    docs: Unauthorized
+  ForbiddenError:
+    status-code: 403
+    type: ForbiddenErrorBody
+    docs: Forbidden
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    listItems:
+      path: /items
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      response:
+        docs: Success
+        type: ItemsResponse
+        status-code: 200
+      errors:
+        - BadRequestError
+        - UnauthorizedError
+        - ForbiddenError
+      examples:
+        - response:
+            body:
+              items:
+                - items
+  source:
+    openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Discriminator Shared Base Test",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Discriminator Shared Base Test
+",
+  },
+}

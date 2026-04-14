@@ -4,6 +4,7 @@ package imdb
 
 import (
 	context "context"
+
 	fern "github.com/imdb/fern"
 	core "github.com/imdb/fern/core"
 	internal "github.com/imdb/fern/internal"

@@ -2,6 +2,7 @@ package example
 
 import (
     context "context"
+
     client "github.com/cross-package-type-names/fern/client"
     option "github.com/cross-package-type-names/fern/option"
 )
@@ -12,7 +13,7 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    client.FolderA.Service.GetDirectThread(
+    client.FolderD.Service.GetDirectThread(
         context.TODO(),
     )
 }

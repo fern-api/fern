@@ -15,7 +15,7 @@ pub struct SendEnumInlinedRequest {
 
 impl SendEnumInlinedRequest {
     pub fn builder() -> SendEnumInlinedRequestBuilder {
-        SendEnumInlinedRequestBuilder::default()
+        <SendEnumInlinedRequestBuilder as Default>::default()
     }
 }
 

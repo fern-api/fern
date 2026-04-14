@@ -7,11 +7,14 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from . import user
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncSeedHttpHead, SeedHttpHead
     from .user import User
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedHttpHead": ".client",
+    "DefaultAioHttpClient": "._default_clients",
+    "DefaultAsyncHttpxClient": "._default_clients",
     "SeedHttpHead": ".client",
     "User": ".user",
     "__version__": ".version",
@@ -40,4 +43,12 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["AsyncSeedHttpHead", "SeedHttpHead", "User", "__version__", "user"]
+__all__ = [
+    "AsyncSeedHttpHead",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
+    "SeedHttpHead",
+    "User",
+    "__version__",
+    "user",
+]

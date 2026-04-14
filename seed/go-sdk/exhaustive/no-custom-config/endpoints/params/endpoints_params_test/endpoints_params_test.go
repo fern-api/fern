@@ -6,13 +6,14 @@ import (
 	bytes "bytes"
 	context "context"
 	json "encoding/json"
+	http "net/http"
+	os "os"
+	testing "testing"
+
 	client "github.com/exhaustive/fern/client"
 	endpoints "github.com/exhaustive/fern/endpoints"
 	option "github.com/exhaustive/fern/option"
 	require "github.com/stretchr/testify/require"
-	http "net/http"
-	os "os"
-	testing "testing"
 )
 
 func VerifyRequestCount(
@@ -256,4 +257,26 @@ func TestEndpointsParamsModifyWithPathWithWireMock2(
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
 	VerifyRequestCount(t, "TestEndpointsParamsModifyWithPathWithWireMock2", "PUT", "/params/path/param", nil, 1)
+}
+
+func TestEndpointsParamsGetWithPathWithWireMock3(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewClient(
+		option.WithBaseURL(WireMockBaseURL),
+	)
+	_, invocationErr := client.Endpoints.Params.GetWithPath(
+		context.TODO(),
+		"param",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestEndpointsParamsGetWithPathWithWireMock3"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestEndpointsParamsGetWithPathWithWireMock3", "GET", "/params/path/param", nil, 1)
 }

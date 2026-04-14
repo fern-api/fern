@@ -1,4 +1,175 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.33.1
+  changelogEntry:
+    - summary: |
+        Fix `module.imports` to merge with bundled default dependencies instead
+        of replacing them. Previously, specifying any custom module imports would
+        discard all default dependencies (uuid, testify, yaml). Now user-specified
+        versions correctly override individual bundled defaults while preserving
+        the rest, matching the v2 generator behavior.
+      type: fix
+  createdAt: "2026-04-03"
+  irVersion: 61
+
+- version: 1.33.0
+  changelogEntry:
+    - summary: |
+        Add `maxRetries` custom config option to override the default maximum
+        number of retries for failed requests. The default remains 1 retry
+        (2 total attempts) when not specified.
+      type: feat
+  createdAt: "2026-04-02"
+  irVersion: 61
+
+- version: 1.32.2
+  changelogEntry:
+    - summary: |
+        Fix doubled major version suffix in import paths when module.path
+        already contains a /vN suffix and packagePath is configured. The
+        /vN suffix is now applied to the module path before appending the
+        packagePath, preventing paths like github.com/owner/repo/v2/pkg/v2.
+      type: fix
+  createdAt: "2026-04-01"
+  irVersion: 61
+- version: 1.32.1
+  changelogEntry:
+    - summary: |
+        Include internal in reserved words so that top level packages named internal
+        are not attempted to be exported which violates go's rules.
+      type: fix
+  createdAt: "2026-03-31"
+  irVersion: 61
+
+- version: 1.32.0-rc1
+  changelogEntry:
+    - summary: |
+        Fix SSE event discriminator injection skipping when the discriminator key
+        exists in a nested object. Previously, `injectDiscriminator` used a naive
+        substring check that matched the key at any nesting depth, causing
+        deserialization failures for payloads like
+        `{"event":{"type":"user.created"}}` where `"type"` only appears nested.
+        The check now only considers top-level JSON keys.
+      type: fix
+  createdAt: "2026-03-31"
+  irVersion: 61
+
+- version: 1.32.0-rc0
+  changelogEntry:
+    - summary: |
+        Add context cancellation support to streams. `NewStream` now accepts a
+        `context.Context` so that blocking `Recv()` calls unblock when the context
+        is cancelled or times out.
+      type: feat
+    - summary: |
+        Add `RecvEvent()` and `RecvEventRaw()` methods that return SSE metadata
+        (id, event type, retry) alongside the data payload. Also add `LastEventID()`
+        for tracking the most recent event ID across reconnections.
+      type: feat
+    - summary: |
+        Fix SSE comment lines (`: heartbeat`) crashing the stream. Comment-only
+        events are now silently skipped per the WHATWG SSE specification.
+      type: fix
+    - summary: |
+        Fix SSE streams to handle all spec-compliant line endings (LF, CR, CRLF).
+        Previously only LF was supported, causing parse failures with servers that
+        use Windows-style or bare CR line endings.
+      type: fix
+    - summary: |
+        Fix SSE `id:` and `retry:` fields being parsed but discarded. The `id:`
+        field now persists across events per spec, and `retry:` is parsed as an
+        integer milliseconds value.
+      type: fix
+    - summary: |
+        Ship `core/stream_test.go` into generated SDKs so that streaming logic
+        is verified by user CI alongside the rest of the SDK.
+      type: feat
+  createdAt: "2026-03-30"
+  irVersion: 61
+
+- version: 1.31.5
+  changelogEntry:
+    - summary: |
+        Pretty-print generated wiremock-mappings.json with 2-space indentation
+        to reduce diff sizes on subsequent SDK generations.
+      type: chore
+  createdAt: "2026-03-27"
+  irVersion: 61
+
+- version: 1.31.4
+  changelogEntry:
+    - summary: |
+        Fix sub-package ErrorCodes maps being empty when errors are declared in a
+        different namespace than the endpoints that reference them. The generator now
+        groups errors by the service namespace that uses them (via endpoint error
+        references) instead of by where they are declared. This ensures that
+        sub-packages like `audio/` correctly get populated ErrorCodes with typed
+        errors (e.g. BadRequestError, UnauthorizedError) instead of an empty map
+        that would cause API errors to be returned as generic `*core.APIError`.
+      type: fix
+  createdAt: "2026-03-26"
+  irVersion: 61
+
+- version: 1.31.3
+  changelogEntry:
+    - summary: |
+        Fix inferred auth wire test generation for endpoints that require a request
+        parameter. The generator now correctly passes an empty request struct when the
+        test endpoint has query parameters, headers, or a request body.
+      type: fix
+  createdAt: "2026-03-25"
+  irVersion: 61
+
+- version: 1.31.2
+  changelogEntry:
+    - summary: |
+        Thread endpoint ID through dynamic snippet generator to differentiate
+        generated snippets by endpoint.
+      type: fix
+  createdAt: "2026-03-25"
+  irVersion: 61
+- version: 1.31.1
+  changelogEntry:
+    - summary: |
+        Sort generated Go imports following goimports conventions. Standard library
+        imports are now grouped separately from third-party imports with a blank line
+        separator between them, matching the canonical Go import style.
+      type: fix
+  createdAt: "2026-03-24"
+  irVersion: 61
+
+- version: 1.31.0
+  changelogEntry:
+    - summary: |
+        Add support for inferred auth. When an API definition includes an inferred auth
+        scheme, the generated Go SDK will automatically fetch tokens from the designated
+        token endpoint and inject `Authorization: Bearer <token>` headers on all
+        authenticated requests. Tokens are cached with automatic refresh based on
+        `expires_in` from the token response (defaults to 1 hour when omitted).
+
+        The generator produces `WithXxx()` client options for each credential parameter
+        defined on the token endpoint (e.g., `WithClientId`, `WithClientSecret`,
+        `WithXApiKey`), environment variable fallbacks when configured, and a
+        `core/token_provider.go` with thread-safe caching.
+
+        To use inferred auth, define an inferred auth scheme in your Fern API definition:
+
+        ```yaml
+        auth:
+          scheme: inferred
+          token-endpoint:
+            endpoint: auth.getToken
+            response-properties:
+              access-token: access_token
+              expires-in: expires_in
+        ```
+
+        Wire tests are also generated when `enableWireTests: true` is set in
+        custom config, validating automatic token fetch, caching, and custom
+        header passthrough.
+      type: feat
+  createdAt: "2026-03-11"
+  irVersion: 61
+
 - version: 1.30.3
   changelogEntry:
     - summary: |
@@ -41,7 +212,6 @@
       type: feat
   createdAt: "2026-03-12"
   irVersion: 61
-
 - version: 1.29.3
   changelogEntry:
     - summary: |

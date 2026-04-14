@@ -71,11 +71,11 @@ class SeedClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return Account
+     * @return ?Account
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAccount(string $accountId, ?array $options = null): Account
+    public function getAccount(string $accountId, ?array $options = null): ?Account
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -90,6 +90,9 @@ class SeedClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return Account::fromJson($json);
             }
         } catch (JsonException $e) {

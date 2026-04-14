@@ -43,6 +43,7 @@
     "@fern-api/api-workspace-commons": "workspace:*",
     "@fern-api/api-workspace-validator": "workspace:*",
     "@fern-api/auth": "workspace:*",
+    "@fern-api/casings-generator": "workspace:*",
     "@fern-api/cli-logger": "workspace:*",
     "@fern-api/cli-source-resolver": "workspace:*",
     "@fern-api/config": "workspace:*",
@@ -96,7 +97,7 @@
     "json-stream-stringify": "catalog:",
     "jsonwebtoken": "catalog:",
     "ora": "catalog:",
-    "posthog-node": "^5.14.0",
+    "posthog-node": "^5.28.6",
     "semver": "^7.6.2",
     "tsup": "catalog:",
     "typescript": "catalog:",
@@ -104,5 +105,8 @@
     "vitest": "catalog:",
     "yaml": "catalog:",
     "yargs": "^17.4.1"
+  },
+  "dependencies": {
+    "tmp-promise": "catalog:"
   }
 }

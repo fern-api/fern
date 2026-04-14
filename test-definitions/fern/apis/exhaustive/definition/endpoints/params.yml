@@ -1,5 +1,6 @@
 imports:
   objects: ../types/object.yml
+  generalErrors: ../general-errors.yml
 
 service:
   auth: true
@@ -108,3 +109,13 @@ service:
           response:
             body:
               string: "uploaded"
+
+    getWithPathAndErrors:
+      docs: GET with path param that can throw errors
+      path: /path/{param}
+      path-parameters:
+        param: string
+      method: GET
+      response: string
+      errors:
+        - generalErrors.BadRequestBody

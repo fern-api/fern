@@ -284,14 +284,6 @@ void yargs(hideBin(process.argv))
                                 type: "number",
                                 description: "Max commits to scan for generation history"
                             })
-                            .option("pr-title", {
-                                type: "string",
-                                description: "Custom title for the PR"
-                            })
-                            .option("pr-body", {
-                                type: "string",
-                                description: "Custom body for the PR"
-                            })
                             .option("force", {
                                 type: "boolean",
                                 default: false,
@@ -304,11 +296,15 @@ void yargs(hideBin(process.argv))
                             });
                     },
                     async (argv) => {
-                        if (argv.github == null || argv.token == null) {
-                            process.stderr.write(
-                                "missing required arguments; please specify --github and --token flags\n"
-                            );
+                        if (argv.github == null) {
+                            process.stderr.write("missing required argument; please specify --github flag\n");
                             process.exit(1);
+                        }
+
+                        if (argv.token == null) {
+                            process.stderr.write(
+                                "warning: no GitHub token provided. Clone may fail for private repos. Pass --token or set GITHUB_TOKEN.\n"
+                            );
                         }
 
                         try {
@@ -317,8 +313,6 @@ void yargs(hideBin(process.argv))
                                 token: argv.token,
                                 dryRun: argv["dry-run"],
                                 maxCommitsToScan: argv["max-commits"],
-                                prTitle: argv["pr-title"],
-                                prBody: argv["pr-body"],
                                 force: argv.force,
                                 importHistory: argv["import-history"]
                             });

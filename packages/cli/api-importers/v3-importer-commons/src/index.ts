@@ -16,6 +16,7 @@ export {
     type SpecExampleValidationResult
 } from "./ExampleValidator.js";
 export * as Extensions from "./extensions/index.js";
+export { validateDescription, validateOpenApiSpec, validateTagNames } from "./OpenApiSpecValidations.js";
 export type { FernEnumConfig } from "./types/FernEnumConfig.js";
 export { convertNumberToSnakeCase } from "./utils/ConvertNumberToSnakeCase.js";
 export { ERROR_NAMES, ERROR_NAMES_BY_STATUS_CODE } from "./utils/ErrorNames.js";

@@ -75,9 +75,9 @@ class PaginationClient
                 $request->cursor = $cursor;
             },
             /* @phpstan-ignore-next-line */
-            getNextCursor: fn (PaginatedResponse $response) => $response?->next ?? null,
+            getNextCursor: fn (?PaginatedResponse $response) => $response?->next ?? null,
             /* @phpstan-ignore-next-line */
-            getItems: fn (PaginatedResponse $response) => $response?->items ?? [],
+            getItems: fn (?PaginatedResponse $response) => $response?->items ?? [],
         );
     }
 
@@ -93,11 +93,11 @@ class PaginationClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return PaginatedResponse
+     * @return ?PaginatedResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function _listItems(ListItemsRequest $request = new ListItemsRequest(), ?array $options = null): PaginatedResponse
+    private function _listItems(ListItemsRequest $request = new ListItemsRequest(), ?array $options = null): ?PaginatedResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -120,6 +120,9 @@ class PaginationClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return PaginatedResponse::fromJson($json);
             }
         } catch (JsonException $e) {

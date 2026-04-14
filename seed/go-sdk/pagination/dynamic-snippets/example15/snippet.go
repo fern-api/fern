@@ -2,6 +2,7 @@ package example
 
 import (
     context "context"
+
     fern "github.com/pagination/fern"
     client "github.com/pagination/fern/client"
     option "github.com/pagination/fern/option"
@@ -16,8 +17,14 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.ListUsersMixedTypeCursorPaginationRequest{}
-    client.Users.ListWithMixedTypeCursorPagination(
+    request := &fern.ListUsersBodyCursorPaginationRequest{
+        Pagination: &fern.WithCursor{
+            Cursor: fern.String(
+                "cursor",
+            ),
+        },
+    }
+    client.Users.ListWithBodyCursorPagination(
         context.TODO(),
         request,
     )

@@ -243,10 +243,35 @@ impl ParamsClient {
         options: Option<RequestOptions>,
     ) -> Result<ObjectWithRequiredField, ApiError> {
         self.http_client
-            .execute_request(
+            .execute_bytes_request(
                 Method::POST,
                 &format!("/params/path/{}", param),
-                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                Some(request.to_vec()),
+                None,
+                options,
+            )
+            .await
+    }
+
+    /// GET with path param that can throw errors
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
+    pub async fn get_with_path_and_errors(
+        &self,
+        param: &str,
+        options: Option<RequestOptions>,
+    ) -> Result<String, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::GET,
+                &format!("/params/path/{}", param),
+                None,
                 None,
                 options,
             )

@@ -60,11 +60,11 @@ class ServiceClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return Response
+     * @return ?Response
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getMovie(string $request, ?array $options = null): Response
+    public function getMovie(string $request, ?array $options = null): ?Response
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -80,6 +80,9 @@ class ServiceClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return Response::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -104,11 +107,11 @@ class ServiceClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return Response
+     * @return ?Response
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getMovieDocs(string $request, ?array $options = null): Response
+    public function getMovieDocs(string $request, ?array $options = null): ?Response
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -124,6 +127,9 @@ class ServiceClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return Response::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -148,11 +154,11 @@ class ServiceClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return StringResponse
+     * @return ?StringResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getMovieName(string $request, ?array $options = null): StringResponse
+    public function getMovieName(string $request, ?array $options = null): ?StringResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -168,6 +174,9 @@ class ServiceClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return StringResponse::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -192,11 +201,11 @@ class ServiceClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return Response
+     * @return ?Response
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getMovieMetadata(string $request, ?array $options = null): Response
+    public function getMovieMetadata(string $request, ?array $options = null): ?Response
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -212,6 +221,9 @@ class ServiceClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return Response::fromJson($json);
             }
         } catch (JsonException $e) {

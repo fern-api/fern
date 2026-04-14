@@ -4,11 +4,12 @@ package client
 
 import (
 	context "context"
+	http "net/http"
+
 	fern "github.com/required-nullable/fern"
 	core "github.com/required-nullable/fern/core"
 	internal "github.com/required-nullable/fern/internal"
 	option "github.com/required-nullable/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {

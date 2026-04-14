@@ -8,7 +8,7 @@ pub struct GetTraceResponsesPageRequest {
 
 impl GetTraceResponsesPageRequest {
     pub fn builder() -> GetTraceResponsesPageRequestBuilder {
-        GetTraceResponsesPageRequestBuilder::default()
+        <GetTraceResponsesPageRequestBuilder as Default>::default()
     }
 }
 

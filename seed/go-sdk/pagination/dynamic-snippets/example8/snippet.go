@@ -2,6 +2,7 @@ package example
 
 import (
     context "context"
+
     fern "github.com/pagination/fern"
     client "github.com/pagination/fern/client"
     inlineusers "github.com/pagination/fern/inlineusers"
@@ -17,7 +18,7 @@ func do() {
             "<token>",
         ),
     )
-    request := &inlineusers.ListUsersOffsetStepPaginationRequest{
+    request := &inlineusers.ListWithOffsetPaginationHasNextPageRequest{
         Page: fern.Int(
             1,
         ),
@@ -26,7 +27,7 @@ func do() {
         ),
         Order: inlineusers.OrderAsc.Ptr(),
     }
-    client.InlineUsers.InlineUsers.ListWithOffsetStepPagination(
+    client.InlineUsers.InlineUsers.ListWithOffsetPaginationHasNextPage(
         context.TODO(),
         request,
     )

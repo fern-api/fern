@@ -52,8 +52,11 @@ export interface DocsConfiguration {
     aiSearch?: FernDocsConfig.AiChatConfig;
     /** Configure AI-powered example enhancement for API documentation. When enabled, API examples will be enhanced with AI-generated content to provide more comprehensive and realistic examples. */
     aiExamples?: FernDocsConfig.AiExamplesConfig;
+    /** Configuration for agent-serving endpoints. */
+    agents?: FernDocsConfig.AgentsConfig;
     metadata?: FernDocsConfig.MetadataConfig;
     redirects?: FernDocsConfig.RedirectConfig[];
+    check?: FernDocsConfig.CheckConfig;
     logo?: FernDocsConfig.LogoConfiguration;
     /** Relative filepath to the favicon. */
     favicon?: string;

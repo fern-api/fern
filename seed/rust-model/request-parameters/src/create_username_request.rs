@@ -8,13 +8,14 @@ pub struct CreateUsernameRequest {
     pub password: String,
     #[serde(default)]
     pub name: String,
+    #[serde(skip_serializing)]
     #[serde(default)]
     pub tags: Vec<String>,
 }
 
 impl CreateUsernameRequest {
     pub fn builder() -> CreateUsernameRequestBuilder {
-        CreateUsernameRequestBuilder::default()
+        <CreateUsernameRequestBuilder as Default>::default()
     }
 }
 

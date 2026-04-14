@@ -20,6 +20,8 @@ import com.fern.sdk.resources.endpoints.params.requests.GetWithMultipleQuery;
 import com.fern.sdk.resources.endpoints.params.requests.GetWithPathAndQuery;
 import com.fern.sdk.resources.endpoints.params.requests.GetWithQuery;
 import com.fern.sdk.resources.endpoints.params.requests.ModifyResourceAtInlinedPath;
+import com.fern.sdk.resources.generalerrors.errors.BadRequestBody;
+import com.fern.sdk.resources.generalerrors.types.BadObjectRequestInfo;
 import com.fern.sdk.resources.types.object.types.ObjectWithRequiredField;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -492,4 +494,56 @@ public class RawParamsClient {
                         String param, byte[] request, RequestOptions requestOptions) {
                       return uploadWithPath(param, new ByteArrayInputStream(request), requestOptions);
                     }
-                  }
+
+                    /**
+                     * GET with path param that can throw errors
+                     */
+                    public SeedExhaustiveHttpResponse<String> getWithPathAndErrors(String param) {
+                      return getWithPathAndErrors(param,null);
+                    }
+
+                    /**
+                     * GET with path param that can throw errors
+                     */
+                    public SeedExhaustiveHttpResponse<String> getWithPathAndErrors(String param,
+                        RequestOptions requestOptions) {
+                      HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
+                        .addPathSegments("params")
+                        .addPathSegments("path")
+                        .addPathSegment(param);if (requestOptions != null) {
+                          requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                            httpUrl.addQueryParameter(_key, _value);
+                          } );
+                        }
+                        Request okhttpRequest = new Request.Builder()
+                          .url(httpUrl.build())
+                          .method("GET", null)
+                          .headers(Headers.of(clientOptions.headers(requestOptions)))
+                          .addHeader("Accept", "application/json")
+                          .build();
+                        OkHttpClient client = clientOptions.httpClient();
+                        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+                          client = clientOptions.httpClientWithTimeout(requestOptions);
+                        }
+                        try (Response response = client.newCall(okhttpRequest).execute()) {
+                          ResponseBody responseBody = response.body();
+                          String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                          if (response.isSuccessful()) {
+                            return new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response);
+                          }
+                          try {
+                            if (response.code() == 400) {
+                              throw new BadRequestBody(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, BadObjectRequestInfo.class), response);
+                            }
+                          }
+                          catch (JsonProcessingException ignored) {
+                            // unable to map error response, throwing generic error
+                          }
+                          Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+                          throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
+                        }
+                        catch (IOException e) {
+                          throw new SeedExhaustiveException("Network error executing HTTP request", e);
+                        }
+                      }
+                    }

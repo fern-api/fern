@@ -22,7 +22,8 @@ export async function runWithCustomFixture({
     outputPath,
     inspect,
     local,
-    keepContainer
+    keepContainer,
+    skipAutogenerationIfManualExamplesExist
 }: {
     pathToFixture: AbsoluteFilePath;
     workspace: GeneratorWorkspace;
@@ -32,6 +33,7 @@ export async function runWithCustomFixture({
     inspect: boolean;
     local: boolean;
     keepContainer: boolean;
+    skipAutogenerationIfManualExamplesExist?: boolean;
 }): Promise<void> {
     const lock = new Semaphore(1);
     const absolutePathToOutput = outputPath ?? AbsoluteFilePath.of((await tmp.dir()).path);
@@ -143,7 +145,8 @@ export async function runWithCustomFixture({
             generatorInvocation: generatorGroup.invocation,
             organization: projectConfig?.organization,
             absolutePathToFernConfig: projectConfig?.absolutePathToFernConfig,
-            lenient: true
+            lenient: true,
+            skipAutogenerationIfManualExamplesExist
         });
 
         printTestCases([result]);

@@ -13,4 +13,10 @@ public partial interface ICompletionsClient
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
+
+    IAsyncEnumerable<StreamEventContextProtocol> StreamEventsContextProtocolAsync(
+        StreamEventsContextProtocolRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
 }

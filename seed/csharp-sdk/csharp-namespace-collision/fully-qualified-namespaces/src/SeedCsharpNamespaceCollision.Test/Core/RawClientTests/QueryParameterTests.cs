@@ -27,7 +27,7 @@ public class QueryParameterTests
             .Add("space test", "hello world")
             .Build();
 
-        Assert.That(queryString, Does.Contain("email=bob%2Btest%40example.com"));
+        Assert.That(queryString, Does.Contain("email=bob%2Btest@example.com"));
         Assert.That(queryString, Does.Contain("%25Complete=100"));
         Assert.That(queryString, Does.Contain("space%20test=hello%20world"));
     }

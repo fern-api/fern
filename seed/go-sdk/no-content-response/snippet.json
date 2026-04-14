@@ -1,0 +1,26 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/contacts",
+                "method": "POST",
+                "identifier_override": "endpoint_contacts.create"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/no-content-response/fern\"\n\tfernclient \"github.com/no-content-response/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Contacts.Create(\n\tcontext.TODO(),\n\t\u0026fern.CreateContactRequest{\n\t\tName: \"name\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/contacts/{id}",
+                "method": "GET",
+                "identifier_override": "endpoint_contacts.get"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/no-content-response/fern\"\n\tfernclient \"github.com/no-content-response/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Contacts.Get(\n\tcontext.TODO(),\n\t\u0026fern.GetContactsRequest{\n\t\tId: \"id\",\n\t},\n)\n"
+            }
+        }
+    ]
+}

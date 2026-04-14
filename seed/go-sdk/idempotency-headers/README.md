@@ -31,6 +31,7 @@ package example
 
 import (
     context "context"
+
     fern "github.com/idempotency-headers/fern"
     client "github.com/idempotency-headers/fern/client"
     option "github.com/idempotency-headers/fern/option"

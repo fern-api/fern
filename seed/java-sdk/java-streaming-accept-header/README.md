@@ -28,7 +28,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:java-streaming-accept-header'
+  implementation 'com.fern:java-streaming-accept-header:0.0.1'
 }
 ```
 

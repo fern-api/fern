@@ -10,7 +10,7 @@ pub struct TracedFile {
 
 impl TracedFile {
     pub fn builder() -> TracedFileBuilder {
-        TracedFileBuilder::default()
+        <TracedFileBuilder as Default>::default()
     }
 }
 

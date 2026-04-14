@@ -2,6 +2,7 @@ package example
 
 import (
     context "context"
+
     client "github.com/endpoint-security-auth/fern/client"
     option "github.com/endpoint-security-auth/fern/option"
 )
@@ -15,7 +16,7 @@ func do() {
             "<token>",
         ),
     )
-    client.User.GetWithBearer(
+    client.User.GetWithApiKey(
         context.TODO(),
     )
 }

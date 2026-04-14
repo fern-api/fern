@@ -31,6 +31,7 @@ package example
 
 import (
     context "context"
+
     client "github.com/simple-api/fern/client"
     option "github.com/simple-api/fern/option"
 )

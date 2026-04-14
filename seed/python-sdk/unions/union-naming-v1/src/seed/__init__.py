@@ -54,6 +54,7 @@ if typing.TYPE_CHECKING:
         String2UnionWithDuplicatePrimitive,
         StringUnionWithBaseProperties,
         StringUnionWithPrimitive,
+        TypeWithOptionalMap,
         Union,
         UnionWithBaseProperties,
         UnionWithDiscriminant,
@@ -76,6 +77,7 @@ if typing.TYPE_CHECKING:
         ValueUnionWithTime,
     )
     from . import bigunion, types, union
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .bigunion import (
         ActiveDiamond,
         ActiveDiamondBigUnion,
@@ -165,6 +167,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DateUnionWithTime": ".types",
     "DatetimeUnionWithOptionalTime": ".types",
     "DatetimeUnionWithTime": ".types",
+    "DefaultAioHttpClient": "._default_clients",
+    "DefaultAsyncHttpxClient": "._default_clients",
     "DiligentDeal": ".bigunion",
     "DiligentDealBigUnion": ".bigunion",
     "DisloyalValue": ".bigunion",
@@ -249,6 +253,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TotalWorkBigUnion": ".bigunion",
     "TriangularRepair": ".bigunion",
     "TriangularRepairBigUnion": ".bigunion",
+    "TypeWithOptionalMap": ".types",
     "Union": ".types",
     "UnionWithBaseProperties": ".types",
     "UnionWithDiscriminant": ".types",
@@ -329,6 +334,8 @@ __all__ = [
     "DateUnionWithTime",
     "DatetimeUnionWithOptionalTime",
     "DatetimeUnionWithTime",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
     "DiligentDeal",
     "DiligentDealBigUnion",
     "DisloyalValue",
@@ -413,6 +420,7 @@ __all__ = [
     "TotalWorkBigUnion",
     "TriangularRepair",
     "TriangularRepairBigUnion",
+    "TypeWithOptionalMap",
     "Union",
     "UnionWithBaseProperties",
     "UnionWithDiscriminant",

@@ -8,7 +8,7 @@ pub struct UsernameCursor {
 
 impl UsernameCursor {
     pub fn builder() -> UsernameCursorBuilder {
-        UsernameCursorBuilder::default()
+        <UsernameCursorBuilder as Default>::default()
     }
 }
 

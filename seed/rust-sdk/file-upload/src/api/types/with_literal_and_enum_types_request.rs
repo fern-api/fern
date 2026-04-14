@@ -48,7 +48,7 @@ impl WithLiteralAndEnumTypesRequest {
 
 impl WithLiteralAndEnumTypesRequest {
     pub fn builder() -> WithLiteralAndEnumTypesRequestBuilder {
-        WithLiteralAndEnumTypesRequestBuilder::default()
+        <WithLiteralAndEnumTypesRequestBuilder as Default>::default()
     }
 }
 

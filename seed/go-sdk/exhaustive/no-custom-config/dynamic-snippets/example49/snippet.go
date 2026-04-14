@@ -2,7 +2,9 @@ package example
 
 import (
     context "context"
+
     client "github.com/exhaustive/fern/client"
+    endpoints "github.com/exhaustive/fern/endpoints"
     option "github.com/exhaustive/fern/option"
 )
 
@@ -15,7 +17,11 @@ func do() {
             "<token>",
         ),
     )
-    client.Endpoints.Urls.WithMixedCase(
+    request := &endpoints.PutRequest{
+        Id: "id",
+    }
+    client.Endpoints.Put.Add(
         context.TODO(),
+        request,
     )
 }

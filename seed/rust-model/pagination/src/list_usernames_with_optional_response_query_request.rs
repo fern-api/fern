@@ -11,7 +11,7 @@ pub struct ListUsernamesWithOptionalResponseQueryRequest {
 
 impl ListUsernamesWithOptionalResponseQueryRequest {
     pub fn builder() -> ListUsernamesWithOptionalResponseQueryRequestBuilder {
-        ListUsernamesWithOptionalResponseQueryRequestBuilder::default()
+        <ListUsernamesWithOptionalResponseQueryRequestBuilder as Default>::default()
     }
 }
 

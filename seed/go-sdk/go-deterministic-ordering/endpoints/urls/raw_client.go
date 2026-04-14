@@ -4,10 +4,11 @@ package urls
 
 import (
 	context "context"
+	http "net/http"
+
 	core "github.com/go-deterministic-ordering/fern/core"
 	internal "github.com/go-deterministic-ordering/fern/internal"
 	option "github.com/go-deterministic-ordering/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {

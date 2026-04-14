@@ -2,6 +2,7 @@ package example
 
 import (
     context "context"
+
     client "github.com/fern-api/file-upload-go/client"
     option "github.com/fern-api/file-upload-go/option"
 )

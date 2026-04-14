@@ -14,7 +14,7 @@
             }
         },
         {
-            "example_identifier": "87b9975",
+            "example_identifier": "7d9a42e4",
             "id": {
                 "method": "GET",
                 "path": "/users",
@@ -40,7 +40,7 @@
             }
         },
         {
-            "example_identifier": "38bf0905",
+            "example_identifier": "9df5f2ee",
             "id": {
                 "method": "GET",
                 "path": "/users/{userId}",
@@ -66,7 +66,7 @@
             }
         },
         {
-            "example_identifier": "508b5f43",
+            "example_identifier": "df1d1483",
             "id": {
                 "method": "POST",
                 "path": "/auth/token",

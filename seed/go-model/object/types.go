@@ -5,9 +5,10 @@ package object
 import (
 	json "encoding/json"
 	fmt "fmt"
+	time "time"
+
 	uuid "github.com/google/uuid"
 	internal "github.com/object/fern/internal"
-	time "time"
 )
 
 // Exercises all of the built-in types.

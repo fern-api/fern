@@ -34,7 +34,7 @@ pub struct Connection {
 
 impl Connection {
     pub fn builder() -> ConnectionBuilder {
-        ConnectionBuilder::default()
+        <ConnectionBuilder as Default>::default()
     }
 }
 

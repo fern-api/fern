@@ -10,7 +10,7 @@ pub struct ReceiveEvent {
 
 impl ReceiveEvent {
     pub fn builder() -> ReceiveEventBuilder {
-        ReceiveEventBuilder::default()
+        <ReceiveEventBuilder as Default>::default()
     }
 }
 

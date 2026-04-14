@@ -11,7 +11,7 @@ pub struct GetDirectThreadQueryRequest {
 
 impl GetDirectThreadQueryRequest {
     pub fn builder() -> GetDirectThreadQueryRequestBuilder {
-        GetDirectThreadQueryRequestBuilder::default()
+        <GetDirectThreadQueryRequestBuilder as Default>::default()
     }
 }
 

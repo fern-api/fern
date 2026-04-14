@@ -4,7 +4,7 @@ import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { PublishInfo } from "@fern-api/typescript-base";
 import { execFile } from "child_process";
 import decompress from "decompress";
-import { cp, readdir, rm } from "fs/promises";
+import { cp, readdir, rm, writeFile } from "fs/promises";
 import tmp from "tmp-promise";
 import { promisify } from "util";
 
@@ -214,13 +214,27 @@ export class PersistedTypescriptProject {
 
         const pm = createLoggingExecutable(this.packageManager, {
             cwd: this.directory,
-            logger
+            logger,
+            doNotPipeOutput: true
         });
         try {
             const startTime = Date.now();
-            await pm(this.formatCommand);
+            const result = await pm(this.formatCommand);
+            await this.writeToolOutputToLogFile({
+                step: "format",
+                stdout: result.stdout,
+                stderr: result.stderr,
+                logger
+            });
             logger.debug(`[TIMING] format took ${Date.now() - startTime}ms`);
         } catch (e) {
+            const error = e as { stdout?: string; stderr?: string };
+            await this.writeToolOutputToLogFile({
+                step: "format",
+                stdout: error.stdout ?? "",
+                stderr: error.stderr ?? "",
+                logger
+            });
             logger.error(`Failed to format the generated project: ${e}`);
         }
     }
@@ -233,13 +247,27 @@ export class PersistedTypescriptProject {
         const pm = createLoggingExecutable(this.packageManager, {
             cwd: this.directory,
             logger,
-            reject: false
+            reject: false,
+            doNotPipeOutput: true
         });
         try {
             const startTime = Date.now();
-            await pm(this.checkFixCommand);
+            const result = await pm(this.checkFixCommand);
+            await this.writeToolOutputToLogFile({
+                step: "checkFix",
+                stdout: result.stdout,
+                stderr: result.stderr,
+                logger
+            });
             logger.debug(`[TIMING] checkFix took ${Date.now() - startTime}ms`);
         } catch (e) {
+            const error = e as { stdout?: string; stderr?: string };
+            await this.writeToolOutputToLogFile({
+                step: "checkFix",
+                stdout: error.stdout ?? "",
+                stderr: error.stderr ?? "",
+                logger
+            });
             logger.error(`Failed to format the generated project: ${e}`);
         }
     }
@@ -428,12 +456,14 @@ export class PersistedTypescriptProject {
         logger,
         publishInfo,
         dryRun,
-        shouldTolerateRepublish
+        shouldTolerateRepublish,
+        version
     }: {
         logger: Logger;
         publishInfo: PublishInfo;
         dryRun: boolean;
         shouldTolerateRepublish: boolean;
+        version?: string;
     }): Promise<void> {
         const npm = createLoggingExecutable("npm", {
             cwd: this.directory,
@@ -448,6 +478,12 @@ export class PersistedTypescriptProject {
         });
 
         const publishCommand = ["publish", "--registry", publishInfo.registryUrl];
+
+        // npm 10.9+ requires --tag when publishing prerelease versions (e.g. 0.0.1-preview.123)
+        if (version != null && version.includes("-")) {
+            publishCommand.push("--tag", "preview");
+        }
+
         if (dryRun) {
             publishCommand.push("--dry-run");
         }
@@ -467,6 +503,9 @@ export class PersistedTypescriptProject {
             logger
         });
         await git(["init"]);
+        // Disable auto-gc so that no background pack processes run during
+        // the subsequent add/commit/clean, which would race with the rm(.git) below.
+        await git(["config", "gc.auto", "0"]);
         await git(["add", "."]);
         await git([
             "-c",
@@ -482,7 +521,35 @@ export class PersistedTypescriptProject {
         ]);
         await git(["clean", "-fdx"]);
 
-        await rm(join(this.directory, RelativeFilePath.of(".git")), { recursive: true });
+        await rm(join(this.directory, RelativeFilePath.of(".git")), {
+            recursive: true,
+            force: true,
+            maxRetries: 3,
+            retryDelay: 100
+        });
+    }
+
+    private async writeToolOutputToLogFile({
+        step,
+        stdout,
+        stderr,
+        logger
+    }: {
+        step: string;
+        stdout: string;
+        stderr: string;
+        logger: Logger;
+    }): Promise<void> {
+        const logFilePath = `/tmp/fern-${step}.log`;
+        const content = [stdout, stderr].filter(Boolean).join("\n");
+        if (content.length > 0) {
+            try {
+                await writeFile(logFilePath, content);
+                logger.debug(`${step} output written to ${logFilePath}`);
+            } catch (error) {
+                logger.debug(`Failed to write ${step} output to ${logFilePath}: ${error}`);
+            }
+        }
     }
 
     public async writeArbitraryFiles(run: (pathToProject: AbsoluteFilePath) => Promise<void>): Promise<void> {

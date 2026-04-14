@@ -31,6 +31,7 @@ async fn main() {
                 set: Some(HashSet::from(["set".to_string()])),
                 map: Some(HashMap::from([(1, "map".to_string())])),
                 bigint: Some(BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap()),
+                ..Default::default()
             },
             None,
         )

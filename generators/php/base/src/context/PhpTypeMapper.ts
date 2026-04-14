@@ -50,7 +50,10 @@ export class PhpTypeMapper {
         }
     }
 
-    public convertToClassReference(declaredTypeName: { typeId: FernIr.TypeId; name: FernIr.Name }): php.ClassReference {
+    public convertToClassReference(declaredTypeName: {
+        typeId: FernIr.TypeId;
+        name: FernIr.NameOrString;
+    }): php.ClassReference {
         return new php.ClassReference({
             name: this.context.getClassName(declaredTypeName.name),
             namespace: this.context.getLocationForTypeId(declaredTypeName.typeId).namespace
@@ -59,7 +62,7 @@ export class PhpTypeMapper {
 
     public convertToTraitClassReference(declaredTypeName: {
         typeId: FernIr.TypeId;
-        name: FernIr.Name;
+        name: FernIr.NameOrString;
     }): php.ClassReference {
         return new php.ClassReference({
             name: this.context.getClassName(declaredTypeName.name),
@@ -107,6 +110,7 @@ export class PhpTypeMapper {
             string: () => php.Type.string(),
             date: () => php.Type.date(),
             dateTime: () => php.Type.dateTime(),
+            dateTimeRfc2822: () => php.Type.dateTime(),
             uuid: () => php.Type.string(),
             base64: () => php.Type.string(),
             bigInteger: () => php.Type.string(),

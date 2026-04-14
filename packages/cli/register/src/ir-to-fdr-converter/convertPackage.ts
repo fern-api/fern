@@ -12,6 +12,7 @@ import { generateEndpointV1Example as generateEndpointExample } from "@fern-api/
 import { noop, startCase } from "lodash-es";
 
 import { convertTypeReference } from "./convertTypeShape.js";
+import { getInnerName, getOriginalName, getOriginalNameOptional, getWireValue } from "./nameUtils.js";
 
 export function convertPackage(
     irPackage: Ir.ir.Package,
@@ -65,21 +66,21 @@ function convertWebhookGroup(webhookGroup: Ir.webhooks.WebhookGroup): FdrCjsSdk.
         } else {
             webhookExamples.push(
                 ...(webhook.examples?.map((example) => {
-                    return { name: example.name?.originalName, payload: example.payload.jsonExample };
+                    return { name: getOriginalNameOptional(example.name), payload: example.payload.jsonExample };
                 }) ?? [])
             );
         }
         return {
             description: webhook.docs ?? undefined,
             availability: convertIrAvailability(webhook.availability),
-            id: FdrCjsSdk.WebhookId(webhook.name.originalName),
+            id: FdrCjsSdk.WebhookId(getOriginalName(webhook.name)),
             path: [],
             method: webhook.method,
-            name: webhook.displayName ?? startCase(webhook.name.originalName),
+            name: webhook.displayName ?? startCase(getOriginalName(webhook.name)),
             headers: webhook.headers.map(
                 (header): FdrCjsSdk.api.v1.register.Header => ({
                     description: header.docs ?? undefined,
-                    key: header.name.wireValue,
+                    key: getWireValue(header.name),
                     type: convertTypeReference(header.valueType),
                     availability: convertIrAvailability(header.availability)
                 })
@@ -205,16 +206,16 @@ function convertService(
                 ir.environments != null
                     ? convertIrEnvironments({ environmentsConfig: ir.environments, endpoint: irEndpoint })
                     : undefined,
-            id: FdrCjsSdk.EndpointId(irEndpoint.name.originalName),
+            id: FdrCjsSdk.EndpointId(getOriginalName(irEndpoint.name)),
             originalEndpointId: irEndpoint.id,
-            name: irEndpoint.displayName ?? startCase(irEndpoint.name.originalName),
+            name: irEndpoint.displayName ?? startCase(getOriginalName(irEndpoint.name)),
             path:
                 irEndpoint.basePath != null
                     ? {
                           pathParameters: irEndpoint.pathParameters.map(
                               (pathParameter): FdrCjsSdk.api.v1.register.PathParameter => ({
                                   description: pathParameter.docs ?? undefined,
-                                  key: FdrCjsSdk.PropertyKey(pathParameter.name.originalName),
+                                  key: FdrCjsSdk.PropertyKey(getOriginalName(pathParameter.name)),
                                   type: convertTypeReference(pathParameter.valueType),
                                   availability: undefined,
                                   explode: pathParameter.explode
@@ -230,7 +231,7 @@ function convertService(
                           ].map(
                               (pathParameter): FdrCjsSdk.api.v1.register.PathParameter => ({
                                   description: pathParameter.docs ?? undefined,
-                                  key: FdrCjsSdk.PropertyKey(pathParameter.name.originalName),
+                                  key: FdrCjsSdk.PropertyKey(getOriginalName(pathParameter.name)),
                                   type: convertTypeReference(pathParameter.valueType),
                                   availability: undefined,
                                   explode: pathParameter.explode
@@ -245,7 +246,7 @@ function convertService(
             queryParameters: irEndpoint.queryParameters.map(
                 (queryParameter): FdrCjsSdk.api.v1.register.QueryParameter => ({
                     description: queryParameter.docs ?? undefined,
-                    key: queryParameter.name.wireValue,
+                    key: getWireValue(queryParameter.name),
                     type: convertTypeReference(queryParameter.valueType),
                     availability: convertIrAvailability(queryParameter.availability),
                     explode: queryParameter.explode
@@ -254,7 +255,7 @@ function convertService(
             headers: [...irService.headers, ...irEndpoint.headers].map(
                 (header): FdrCjsSdk.api.v1.register.Header => ({
                     description: header.docs ?? undefined,
-                    key: header.name.wireValue,
+                    key: getWireValue(header.name),
                     type: convertTypeReference(header.valueType),
                     availability: convertIrAvailability(header.availability)
                 })
@@ -262,7 +263,7 @@ function convertService(
             responseHeaders: irEndpoint.responseHeaders?.map(
                 (header): FdrCjsSdk.api.v1.register.Header => ({
                     description: header.docs ?? undefined,
-                    key: header.name.wireValue,
+                    key: getWireValue(header.name),
                     type: convertTypeReference(header.valueType),
                     availability: convertIrAvailability(header.availability)
                 })
@@ -329,25 +330,26 @@ function convertWebSocketChannel(
     } else {
         examples = channel.examples.map(
             (example): FdrCjsSdk.api.v1.register.ExampleWebSocketSession => ({
-                name: example.name?.originalName,
+                name: getOriginalNameOptional(example.name),
                 description: example.docs,
                 path: example.url,
                 pathParameters: example.pathParameters.reduce<
                     FdrCjsSdk.api.v1.register.ExampleWebSocketSession["pathParameters"]
                 >((pathParameters, irPathParameterExample) => {
-                    pathParameters[FdrCjsSdk.PropertyKey(irPathParameterExample.name.originalName)] =
+                    pathParameters[FdrCjsSdk.PropertyKey(getOriginalName(irPathParameterExample.name))] =
                         irPathParameterExample.value.jsonExample;
                     return pathParameters;
                 }, {}),
                 queryParameters: example.queryParameters.reduce<
                     FdrCjsSdk.api.v1.register.ExampleWebSocketSession["queryParameters"]
                 >((queryParameters, irQueryParameterExample) => {
-                    queryParameters[irQueryParameterExample.name.wireValue] = irQueryParameterExample.value.jsonExample;
+                    queryParameters[getWireValue(irQueryParameterExample.name)] =
+                        irQueryParameterExample.value.jsonExample;
                     return queryParameters;
                 }, {}),
                 headers: example.headers.reduce<FdrCjsSdk.api.v1.register.ExampleWebSocketSession["headers"]>(
                     (headers, irHeaderExample) => {
-                        headers[irHeaderExample.name.wireValue] = irHeaderExample.value.jsonExample;
+                        headers[getWireValue(irHeaderExample.name)] = irHeaderExample.value.jsonExample;
                         return headers;
                     },
                     {}
@@ -373,13 +375,13 @@ function convertWebSocketChannel(
             ir.environments != null
                 ? convertIrWebSocketEnvironments({ environmentsConfig: ir.environments, channel })
                 : [],
-        id: FdrCjsSdk.WebSocketId(channel.name.originalName),
-        name: channel.displayName ?? startCase(channel.name.originalName),
+        id: FdrCjsSdk.WebSocketId(getOriginalName(channel.name)),
+        name: channel.displayName ?? startCase(getOriginalName(channel.name)),
         path: {
             pathParameters: channel.pathParameters.map(
                 (pathParameter): FdrCjsSdk.api.v1.register.PathParameter => ({
                     description: pathParameter.docs ?? undefined,
-                    key: FdrCjsSdk.PropertyKey(pathParameter.name.originalName),
+                    key: FdrCjsSdk.PropertyKey(getOriginalName(pathParameter.name)),
                     type: convertTypeReference(pathParameter.valueType),
                     availability: undefined,
                     explode: pathParameter.explode
@@ -389,7 +391,7 @@ function convertWebSocketChannel(
         },
         headers: channel.headers.map(
             (header): FdrCjsSdk.api.v1.register.Header => ({
-                key: header.name.wireValue,
+                key: getWireValue(header.name),
                 type: convertTypeReference(header.valueType),
                 description: header.docs,
                 availability: convertIrAvailability(header.availability)
@@ -398,7 +400,7 @@ function convertWebSocketChannel(
         queryParameters: channel.queryParameters.map(
             (queryParameter): FdrCjsSdk.api.v1.register.QueryParameter => ({
                 description: queryParameter.docs ?? undefined,
-                key: queryParameter.name.wireValue,
+                key: getWireValue(queryParameter.name),
                 type: convertTypeReference(queryParameter.valueType),
                 availability: convertIrAvailability(queryParameter.availability),
                 explode: queryParameter.explode
@@ -516,7 +518,7 @@ function convertIrEnvironments({
                 );
             }
             if (endpointBaseUrlId == null) {
-                throw new Error(`Expected endpoint ${endpoint.name.originalName} to have base url.`);
+                throw new Error(`Expected endpoint ${getOriginalName(endpoint.name)} to have base url.`);
             }
             return environmentsConfigValue.environments.map((singleBaseUrlEnvironment) => {
                 const endpointBaseUrl = singleBaseUrlEnvironment.urls[endpointBaseUrlId];
@@ -556,13 +558,13 @@ function convertIrWebSocketEnvironments({
             });
         case "multipleBaseUrls":
             if (channelBaseUrlId == null) {
-                throw new Error(`Expected channel ${channel.name.originalName} to have base url.`);
+                throw new Error(`Expected channel ${getOriginalName(channel.name)} to have base url.`);
             }
             return environmentsConfigValue.environments.map((singleBaseUrlEnvironment) => {
                 const channelBaseUrl = singleBaseUrlEnvironment.urls[channelBaseUrlId];
                 if (channelBaseUrl == null) {
                     throw new Error(
-                        `Encountered undefined server name ${channelBaseUrl} at channel ${channel.name.originalName} ${channel.path.head}. Expected environment ${singleBaseUrlEnvironment.id} to contain url for ${channelBaseUrlId}`
+                        `Encountered undefined server name ${channelBaseUrl} at channel ${getOriginalName(channel.name)} ${channel.path.head}. Expected environment ${singleBaseUrlEnvironment.id} to contain url for ${channelBaseUrlId}`
                     );
                 }
                 return {
@@ -628,7 +630,7 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FdrCjsSdk.api.v
                         properties: inlinedRequestBody.properties.map(
                             (property): FdrCjsSdk.api.v1.register.ObjectProperty => ({
                                 description: property.docs ?? undefined,
-                                key: FdrCjsSdk.PropertyKey(property.name.wireValue),
+                                key: FdrCjsSdk.PropertyKey(getWireValue(property.name)),
                                 valueType: convertTypeReference(property.valueType),
                                 availability: convertIrAvailability(property.availability),
                                 propertyAccess: property.propertyAccess
@@ -655,7 +657,7 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FdrCjsSdk.api.v
             fileUpload: (fileUpload) => ({
                 type: "fileUpload",
                 value: {
-                    name: fileUpload.name.originalName,
+                    name: getOriginalName(fileUpload.name),
                     // TODO: support description and availability
                     description: undefined,
                     availability: undefined,
@@ -668,7 +670,7 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FdrCjsSdk.api.v
                                     >({
                                         file: (singleFile) => ({
                                             type: "file",
-                                            key: FdrCjsSdk.PropertyKey(singleFile.key.wireValue),
+                                            key: FdrCjsSdk.PropertyKey(getWireValue(singleFile.key)),
                                             isOptional: singleFile.isOptional,
                                             contentType: singleFile.contentType,
                                             description: singleFile.docs ?? undefined,
@@ -676,7 +678,7 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FdrCjsSdk.api.v
                                         }),
                                         fileArray: (multipleFiles) => ({
                                             type: "fileArray",
-                                            key: FdrCjsSdk.PropertyKey(multipleFiles.key.wireValue),
+                                            key: FdrCjsSdk.PropertyKey(getWireValue(multipleFiles.key)),
                                             isOptional: multipleFiles.isOptional,
                                             contentType: multipleFiles.contentType,
                                             description: multipleFiles.docs ?? undefined,
@@ -691,7 +693,7 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FdrCjsSdk.api.v
                                 },
                                 bodyProperty: (bodyProperty) => ({
                                     type: "bodyProperty",
-                                    key: FdrCjsSdk.PropertyKey(bodyProperty.name.wireValue),
+                                    key: FdrCjsSdk.PropertyKey(getWireValue(bodyProperty.name)),
                                     valueType: convertTypeReference(bodyProperty.valueType),
                                     contentType: bodyProperty.contentType,
                                     description: bodyProperty.docs ?? undefined,
@@ -820,7 +822,7 @@ function convertResponseErrorsV2(
                     statusCode: errorDeclaration.statusCode,
                     isWildcard: errorDeclaration.isWildcardStatusCode === true ? true : undefined,
                     description: errorDeclaration.docs ?? undefined,
-                    name: errorDeclaration.displayName ?? errorDeclaration.name.name.originalName,
+                    name: errorDeclaration.displayName ?? getOriginalName(errorDeclaration.name.name),
                     availability: undefined,
                     examples: getErrorExamplesFromDeclaration(errorDeclaration, ir),
                     headers:
@@ -828,7 +830,7 @@ function convertResponseErrorsV2(
                             ? errorDeclaration.headers.map(
                                   (header): FdrCjsSdk.api.v1.register.Header => ({
                                       description: header.docs ?? undefined,
-                                      key: header.name.wireValue,
+                                      key: getWireValue(header.name),
                                       type: convertTypeReference(header.valueType),
                                       availability: convertIrAvailability(header.availability)
                                   })
@@ -843,12 +845,12 @@ function convertResponseErrorsV2(
             if (errorDeclaration) {
                 const properties: FdrCjsSdk.api.v1.register.ObjectProperty[] = [
                     {
-                        key: FdrCjsSdk.PropertyKey(ir.errorDiscriminationStrategy.discriminant.wireValue),
+                        key: FdrCjsSdk.PropertyKey(getWireValue(ir.errorDiscriminationStrategy.discriminant)),
                         valueType: {
                             type: "literal",
                             value: {
                                 type: "stringLiteral",
-                                value: errorDeclaration.discriminantValue.name.originalName
+                                value: getOriginalName(getInnerName(errorDeclaration.discriminantValue))
                             }
                         },
                         description: errorDeclaration.docs,
@@ -859,7 +861,7 @@ function convertResponseErrorsV2(
 
                 if (errorDeclaration.type != null) {
                     properties.push({
-                        key: FdrCjsSdk.PropertyKey(ir.errorDiscriminationStrategy.contentProperty.wireValue),
+                        key: FdrCjsSdk.PropertyKey(getWireValue(ir.errorDiscriminationStrategy.contentProperty)),
                         valueType: convertTypeReference(errorDeclaration.type),
                         description: errorDeclaration.docs,
                         availability: undefined,
@@ -881,10 +883,10 @@ function convertResponseErrorsV2(
                     isWildcard: errorDeclaration.isWildcardStatusCode === true ? true : undefined,
                     description: errorDeclaration.docs ?? undefined,
                     availability: undefined,
-                    name: errorDeclaration.displayName ?? errorDeclaration.name.name.originalName,
+                    name: errorDeclaration.displayName ?? getOriginalName(errorDeclaration.name.name),
                     examples: errorDeclaration.examples.map((irExample) => {
                         return {
-                            name: irExample.name?.originalName,
+                            name: getOriginalNameOptional(irExample.name),
                             responseBody: { type: "json", value: irExample.jsonExample },
                             description: irExample.docs
                         };
@@ -894,7 +896,7 @@ function convertResponseErrorsV2(
                             ? errorDeclaration.headers.map(
                                   (header): FdrCjsSdk.api.v1.register.Header => ({
                                       description: header.docs ?? undefined,
-                                      key: header.name.wireValue,
+                                      key: getWireValue(header.name),
                                       type: convertTypeReference(header.valueType),
                                       availability: convertIrAvailability(header.availability)
                                   })
@@ -960,7 +962,7 @@ function convertV2HttpEndpointExample({
     ir.headers.forEach((header) => {
         const value = extractLiteralHeaderValue(header);
         if (value != null) {
-            requiredHeaders[header.name.wireValue] = value;
+            requiredHeaders[getWireValue(header.name)] = value;
         }
     });
 
@@ -968,7 +970,7 @@ function convertV2HttpEndpointExample({
     irService.headers.forEach((header) => {
         const value = extractLiteralHeaderValue(header);
         if (value != null) {
-            requiredHeaders[header.name.wireValue] = value;
+            requiredHeaders[getWireValue(header.name)] = value;
         }
     });
 
@@ -976,7 +978,7 @@ function convertV2HttpEndpointExample({
     irEndpoint.headers.forEach((header) => {
         const value = extractLiteralHeaderValue(header);
         if (value != null) {
-            requiredHeaders[header.name.wireValue] = value;
+            requiredHeaders[getWireValue(header.name)] = value;
         }
     });
 
@@ -1018,10 +1020,10 @@ function convertV2HttpEndpointExample({
                     for (const property of fileUploadSchema.properties) {
                         property._visit({
                             file: (file) => {
-                                const maybeFile = fullExample[file.key.wireValue];
+                                const maybeFile = fullExample[getWireValue(file.key)];
                                 // TODO: support filename with data in examples
                                 if (file.type === "file") {
-                                    value[file.key.wireValue] = {
+                                    value[getWireValue(file.key)] = {
                                         type: "filename",
                                         value: typeof maybeFile === "string" ? maybeFile : "<file1>"
                                     };
@@ -1029,7 +1031,7 @@ function convertV2HttpEndpointExample({
                                     const filenames = (Array.isArray(maybeFile) ? maybeFile : [maybeFile]).filter(
                                         (filename) => typeof filename === "string"
                                     ) as string[];
-                                    value[file.key.wireValue] = {
+                                    value[getWireValue(file.key)] = {
                                         type: "filenames",
                                         value: filenames
                                     };
@@ -1037,15 +1039,15 @@ function convertV2HttpEndpointExample({
                             },
                             bodyProperty: (bodyProperty) => {
                                 if (bodyProperty.style === "exploded") {
-                                    const example = fullExample[bodyProperty.name.wireValue];
-                                    value[bodyProperty.name.wireValue] = {
+                                    const example = fullExample[getWireValue(bodyProperty.name)];
+                                    value[getWireValue(bodyProperty.name)] = {
                                         type: "exploded",
                                         value: Array.isArray(example) ? example : [example]
                                     };
                                 } else {
-                                    value[bodyProperty.name.wireValue] = {
+                                    value[getWireValue(bodyProperty.name)] = {
                                         type: "json",
-                                        value: fullExample[bodyProperty.name.wireValue]
+                                        value: fullExample[getWireValue(bodyProperty.name)]
                                     };
                                 }
                             },
@@ -1169,7 +1171,7 @@ function convertHttpEndpointExample({
     }
     const { codeSamples } = userSpecifiedExample ?? { codeSamples: [] };
     return {
-        name: example.name?.originalName,
+        name: getOriginalNameOptional(example.name),
         description: example.docs,
         path: example.url,
         pathParameters: [
@@ -1178,7 +1180,7 @@ function convertHttpEndpointExample({
             ...example.endpointPathParameters
         ].reduce<FdrCjsSdk.api.v1.register.ExampleEndpointCall["pathParameters"]>(
             (pathParameters, irPathParameterExample) => {
-                pathParameters[FdrCjsSdk.PropertyKey(irPathParameterExample.name.originalName)] =
+                pathParameters[FdrCjsSdk.PropertyKey(getOriginalName(irPathParameterExample.name))] =
                     irPathParameterExample.value.jsonExample;
                 return pathParameters;
             },
@@ -1187,13 +1189,13 @@ function convertHttpEndpointExample({
         queryParameters: example.queryParameters.reduce<
             FdrCjsSdk.api.v1.register.ExampleEndpointCall["queryParameters"]
         >((queryParameters, irQueryParameterExample) => {
-            queryParameters[irQueryParameterExample.name.wireValue] = irQueryParameterExample.value.jsonExample;
+            queryParameters[getWireValue(irQueryParameterExample.name)] = irQueryParameterExample.value.jsonExample;
             return queryParameters;
         }, {}),
         headers: [...requiredGlobalHeaders, ...example.serviceHeaders, ...example.endpointHeaders].reduce<
             FdrCjsSdk.api.v1.register.ExampleEndpointCall["headers"]
         >((headers, irHeaderExample) => {
-            headers[irHeaderExample.name.wireValue] = irHeaderExample.value.jsonExample;
+            headers[getWireValue(irHeaderExample.name)] = irHeaderExample.value.jsonExample;
             return headers;
         }, {}),
         requestBody: example.request?.jsonExample,
@@ -1214,10 +1216,10 @@ function convertHttpEndpointExample({
                     for (const property of fileUploadSchema.properties) {
                         property._visit({
                             file: (file) => {
-                                const maybeFile = fullExample[file.key.wireValue];
+                                const maybeFile = fullExample[getWireValue(file.key)];
                                 // TODO: support filename with data in examples
                                 if (file.type === "file") {
-                                    value[file.key.wireValue] = {
+                                    value[getWireValue(file.key)] = {
                                         type: "filename",
                                         value: typeof maybeFile === "string" ? maybeFile : "<file1>"
                                     };
@@ -1225,7 +1227,7 @@ function convertHttpEndpointExample({
                                     const filenames = (Array.isArray(maybeFile) ? maybeFile : [maybeFile]).filter(
                                         (filename) => typeof filename === "string"
                                     ) as string[];
-                                    value[file.key.wireValue] = {
+                                    value[getWireValue(file.key)] = {
                                         type: "filenames",
                                         value: filenames
                                     };
@@ -1233,15 +1235,15 @@ function convertHttpEndpointExample({
                             },
                             bodyProperty: (bodyProperty) => {
                                 if (bodyProperty.style === "exploded") {
-                                    const example = fullExample[bodyProperty.name.wireValue];
-                                    value[bodyProperty.name.wireValue] = {
+                                    const example = fullExample[getWireValue(bodyProperty.name)];
+                                    value[getWireValue(bodyProperty.name)] = {
                                         type: "exploded",
                                         value: Array.isArray(example) ? example : [example]
                                     };
                                 } else {
-                                    value[bodyProperty.name.wireValue] = {
+                                    value[getWireValue(bodyProperty.name)] = {
                                         type: "json",
-                                        value: fullExample[bodyProperty.name.wireValue]
+                                        value: fullExample[getWireValue(bodyProperty.name)]
                                     };
                                 }
                             },
@@ -1315,7 +1317,7 @@ function convertHttpEndpointExample({
                     language: (value) => ({
                         language: value.language,
                         code: value.code,
-                        name: value.name?.originalName,
+                        name: getOriginalNameOptional(value.name),
                         description: value.docs ?? undefined,
                         install: value.install
                     }),
@@ -1323,7 +1325,7 @@ function convertHttpEndpointExample({
                         // TODO: switch to storing as SDK
                         language: value.sdk,
                         code: value.code,
-                        name: value.name?.originalName,
+                        name: getOriginalNameOptional(value.name),
                         description: value.docs ?? undefined,
                         install: undefined
                     }),
@@ -1342,7 +1344,7 @@ function convertWebhookPayloadWithFileUpload(
         return {
             type: {
                 type: "formData",
-                name: fileUploadPayload.name.originalName,
+                name: getOriginalName(fileUploadPayload.name),
                 description: fileUploadPayload.docs ?? undefined,
                 availability: undefined,
                 properties: fileUploadPayload.properties
@@ -1354,7 +1356,7 @@ function convertWebhookPayloadWithFileUpload(
                                 >({
                                     file: (singleFile) => ({
                                         type: "file",
-                                        key: FdrCjsSdk.PropertyKey(singleFile.key.wireValue),
+                                        key: FdrCjsSdk.PropertyKey(getWireValue(singleFile.key)),
                                         isOptional: singleFile.isOptional,
                                         contentType: singleFile.contentType,
                                         description: singleFile.docs ?? undefined,
@@ -1362,7 +1364,7 @@ function convertWebhookPayloadWithFileUpload(
                                     }),
                                     fileArray: (multipleFiles) => ({
                                         type: "fileArray",
-                                        key: FdrCjsSdk.PropertyKey(multipleFiles.key.wireValue),
+                                        key: FdrCjsSdk.PropertyKey(getWireValue(multipleFiles.key)),
                                         isOptional: multipleFiles.isOptional,
                                         contentType: multipleFiles.contentType,
                                         description: multipleFiles.docs ?? undefined,
@@ -1377,7 +1379,7 @@ function convertWebhookPayloadWithFileUpload(
                             },
                             bodyProperty: (bodyProperty) => ({
                                 type: "bodyProperty",
-                                key: FdrCjsSdk.PropertyKey(bodyProperty.name.wireValue),
+                                key: FdrCjsSdk.PropertyKey(getWireValue(bodyProperty.name)),
                                 valueType: convertTypeReference(bodyProperty.valueType),
                                 contentType: bodyProperty.contentType,
                                 description: bodyProperty.docs ?? undefined,
@@ -1406,7 +1408,7 @@ function convertWebhookPayload(irWebhookPayload: Ir.webhooks.WebhookPayload): Fd
                     properties: irWebhookPayload.properties.map(
                         (property): FdrCjsSdk.api.v1.register.ObjectProperty => ({
                             description: property.docs ?? undefined,
-                            key: FdrCjsSdk.PropertyKey(property.name.wireValue),
+                            key: FdrCjsSdk.PropertyKey(getWireValue(property.name)),
                             valueType: convertTypeReference(property.valueType),
                             availability: convertIrAvailability(property.availability),
                             propertyAccess: undefined
@@ -1441,7 +1443,7 @@ function convertMessageBody(
                 properties: irWebSocketBody.properties.map(
                     (property): FdrCjsSdk.api.v1.register.ObjectProperty => ({
                         description: property.docs ?? undefined,
-                        key: FdrCjsSdk.PropertyKey(property.name.wireValue),
+                        key: FdrCjsSdk.PropertyKey(getWireValue(property.name)),
                         valueType: convertTypeReference(property.valueType),
                         availability: convertIrAvailability(property.availability),
                         propertyAccess: undefined
@@ -1482,7 +1484,7 @@ function getErrorExamplesFromDeclaration(
         }));
     } else if (v1Examples.length > 0) {
         return v1Examples.map((irExample) => ({
-            name: irExample.name?.originalName,
+            name: getOriginalNameOptional(irExample.name),
             responseBody: { type: "json" as const, value: irExample.jsonExample },
             description: irExample.docs
         }));
@@ -1521,7 +1523,7 @@ function buildExampleFromErrorType(
     let hasUserSpecifiedExample = false;
 
     for (const property of typeDeclaration.shape.properties) {
-        const wireValue = property.name.wireValue;
+        const wireValue = getWireValue(property.name);
         const v2Examples = property.v2Examples;
 
         // Prefer user-specified examples over autogenerated ones

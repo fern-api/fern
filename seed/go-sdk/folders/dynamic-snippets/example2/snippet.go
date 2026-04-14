@@ -2,6 +2,7 @@ package example
 
 import (
     context "context"
+
     client "github.com/folders/fern/client"
     option "github.com/folders/fern/option"
 )
@@ -12,7 +13,7 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    client.Foo(
+    client.A.C.Foo(
         context.TODO(),
     )
 }

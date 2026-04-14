@@ -5,6 +5,7 @@ package errors
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/errors/fern/internal"
 )
 

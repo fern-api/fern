@@ -12,6 +12,7 @@ pub struct Movie {
     pub from: String,
     /// The rating scale is one to five stars
     #[serde(default)]
+    #[serde(with = "crate::core::number_serializers")]
     pub rating: f64,
     pub r#type: String,
     #[serde(default)]
@@ -26,7 +27,7 @@ pub struct Movie {
 
 impl Movie {
     pub fn builder() -> MovieBuilder {
-        MovieBuilder::default()
+        <MovieBuilder as Default>::default()
     }
 }
 

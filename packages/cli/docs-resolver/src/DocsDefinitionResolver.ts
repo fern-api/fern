@@ -23,6 +23,7 @@ import { AbsoluteFilePath, join, listFiles, RelativeFilePath, relative, resolve 
 import { GraphQLConverter } from "@fern-api/graphql-to-fdr";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { getSnakeCaseUnsafe } from "@fern-api/ir-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
@@ -98,7 +99,8 @@ const defaultUploadFiles: UploadFilesFn = (files) => {
 let apiCounter = 0;
 const defaultRegisterApi: RegisterApiFn = async ({ ir }) => {
     apiCounter++;
-    return `${ir.apiName.snakeCase.unsafeName}-${apiCounter}`;
+    const apiName = getSnakeCaseUnsafe(ir.apiName);
+    return `${apiName}-${apiCounter}`;
 };
 
 export interface DocsDefinitionResolverArgs {
@@ -742,6 +744,13 @@ export class DocsDefinitionResolver {
     }
 
     private async convertDocsConfiguration(root: FernNavigation.V1.RootNode): Promise<DocsV1Write.DocsConfig> {
+        const integrations =
+            this.parsedDocsConfig.integrations != null || this.parsedDocsConfig.context7File != null
+                ? ({
+                      ...this.parsedDocsConfig.integrations,
+                      context7: this.getFileId(this.parsedDocsConfig.context7File)
+                  } as DocsV1Write.DocsConfig["integrations"])
+                : undefined;
         const config: DocsV1Write.DocsConfig = {
             aiChatConfig:
                 this.parsedDocsConfig.aiChatConfig != null
@@ -798,9 +807,11 @@ export class DocsDefinitionResolver {
             settings: this.parsedDocsConfig.settings,
             css: this.parsedDocsConfig.css,
             js: this.convertJavascriptConfiguration(),
+            // @ts-expect-error - Remove this when the fdr-sdk upgraded to the latest version
+            agents: this.parsedDocsConfig.agents,
             metadata: this.convertMetadata(),
             redirects: this.parsedDocsConfig.redirects,
-            integrations: this.parsedDocsConfig.integrations,
+            integrations,
             footerLinks: this.parsedDocsConfig.footerLinks?.map((footerLink) => ({
                 ...footerLink,
                 value: DocsV1Write.Url(footerLink.value)
@@ -848,14 +859,14 @@ export class DocsDefinitionResolver {
                 this.parsedDocsConfig.announcement != null
                     ? { text: this.parsedDocsConfig.announcement.message }
                     : undefined,
-            editThisPageLaunch: (this.editThisPage?.launch ?? "github") as DocsV1Write.EditThisPageLaunch,
+            editThisPageLaunch: (this.editThisPage?.launch ?? "dashboard") as DocsV1Write.EditThisPageLaunch,
             pageActions: this.convertPageActions(),
             theme:
                 this.parsedDocsConfig.theme != null
                     ? {
                           sidebar: this.parsedDocsConfig.theme.sidebar,
                           body: this.parsedDocsConfig.theme.body,
-                          tabs: this.parsedDocsConfig.theme.tabs,
+                          tabs: this.parsedDocsConfig.theme.tabs as DocsV1Write.DocsThemeConfig["tabs"],
                           "page-actions": this.parsedDocsConfig.theme.pageActions,
                           footerNav: this.parsedDocsConfig.theme.footerNav,
                           "language-switcher": this.parsedDocsConfig.theme.languageSwitcher,
@@ -2287,7 +2298,7 @@ function createEditThisPageUrl(
     editThisPage: docsYml.RawSchemas.FernDocsConfig.EditThisPageConfig | undefined,
     pageFilepath: string
 ): { url: string | undefined; launch: string } {
-    const launch = editThisPage?.launch ?? "github";
+    const launch = editThisPage?.launch ?? "dashboard";
 
     if (editThisPage?.github == null) {
         return { url: undefined, launch };

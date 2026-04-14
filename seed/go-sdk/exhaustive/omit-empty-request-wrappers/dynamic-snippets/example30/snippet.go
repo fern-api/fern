@@ -2,7 +2,9 @@ package example
 
 import (
     context "context"
+
     client "github.com/exhaustive/fern/client"
+    endpoints "github.com/exhaustive/fern/endpoints"
     option "github.com/exhaustive/fern/option"
 )
 
@@ -15,8 +17,11 @@ func do() {
             "<token>",
         ),
     )
-    client.Endpoints.Params.GetWithPath(
+    request := &endpoints.GetWithInlinePath{
+        Param: "param",
+    }
+    client.Endpoints.Params.GetWithInlinePath(
         context.TODO(),
-        "param",
+        request,
     )
 }

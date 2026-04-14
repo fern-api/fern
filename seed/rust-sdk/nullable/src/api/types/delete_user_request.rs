@@ -9,7 +9,7 @@ pub struct DeleteUserRequest {
 
 impl DeleteUserRequest {
     pub fn builder() -> DeleteUserRequestBuilder {
-        DeleteUserRequestBuilder::default()
+        <DeleteUserRequestBuilder as Default>::default()
     }
 }
 

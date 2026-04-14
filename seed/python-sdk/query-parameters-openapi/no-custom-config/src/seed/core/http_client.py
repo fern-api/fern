@@ -118,6 +118,12 @@ def _retry_timeout(response: httpx.Response, retries: int) -> float:
     return _add_symmetric_jitter(backoff)
 
 
+def _retry_timeout_from_retries(retries: int) -> float:
+    """Determine retry timeout using exponential backoff when no response is available."""
+    backoff = min(INITIAL_RETRY_DELAY_SECONDS * pow(2.0, retries), MAX_RETRY_DELAY_SECONDS)
+    return _add_symmetric_jitter(backoff)
+
+
 def _should_retry(response: httpx.Response) -> bool:
     retryable_400s = [429, 408, 409]
     return response.status_code >= 500 or response.status_code in retryable_400s
@@ -265,11 +271,13 @@ class HttpClient:
         base_timeout: typing.Callable[[], typing.Optional[float]],
         base_headers: typing.Callable[[], typing.Dict[str, str]],
         base_url: typing.Optional[typing.Callable[[], str]] = None,
+        base_max_retries: int = 2,
         logging_config: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
         self.base_url = base_url
         self.base_timeout = base_timeout
         self.base_headers = base_headers
+        self.base_max_retries = base_max_retries
         self.httpx_client = httpx_client
         self.logger = create_logger(logging_config)
 
@@ -364,19 +372,44 @@ class HttpClient:
                 has_body=json_body is not None or data_body is not None,
             )
 
-        response = self.httpx_client.request(
-            method=method,
-            url=_request_url,
-            headers=_request_headers,
-            params=_encoded_params if _encoded_params else None,
-            json=json_body,
-            data=data_body,
-            content=content,
-            files=request_files,
-            timeout=timeout,
+        max_retries: int = (
+            request_options.get("max_retries", self.base_max_retries)
+            if request_options is not None
+            else self.base_max_retries
         )
 
-        max_retries: int = request_options.get("max_retries", 2) if request_options is not None else 2
+        try:
+            response = self.httpx_client.request(
+                method=method,
+                url=_request_url,
+                headers=_request_headers,
+                params=_encoded_params if _encoded_params else None,
+                json=json_body,
+                data=data_body,
+                content=content,
+                files=request_files,
+                timeout=timeout,
+            )
+        except (httpx.ConnectError, httpx.RemoteProtocolError):
+            if retries < max_retries:
+                time.sleep(_retry_timeout_from_retries(retries=retries))
+                return self.request(
+                    path=path,
+                    method=method,
+                    base_url=base_url,
+                    params=params,
+                    json=json,
+                    data=data,
+                    content=content,
+                    files=files,
+                    headers=headers,
+                    request_options=request_options,
+                    retries=retries + 1,
+                    omit=omit,
+                    force_multipart=force_multipart,
+                )
+            raise
+
         if _should_retry(response=response):
             if retries < max_retries:
                 time.sleep(_retry_timeout(response=response, retries=retries))
@@ -386,12 +419,14 @@ class HttpClient:
                     base_url=base_url,
                     params=params,
                     json=json,
+                    data=data,
                     content=content,
                     files=files,
                     headers=headers,
                     request_options=request_options,
                     retries=retries + 1,
                     omit=omit,
+                    force_multipart=force_multipart,
                 )
 
         if self.logger.is_debug():
@@ -518,12 +553,14 @@ class AsyncHttpClient:
         base_timeout: typing.Callable[[], typing.Optional[float]],
         base_headers: typing.Callable[[], typing.Dict[str, str]],
         base_url: typing.Optional[typing.Callable[[], str]] = None,
+        base_max_retries: int = 2,
         async_base_headers: typing.Optional[typing.Callable[[], typing.Awaitable[typing.Dict[str, str]]]] = None,
         logging_config: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
         self.base_url = base_url
         self.base_timeout = base_timeout
         self.base_headers = base_headers
+        self.base_max_retries = base_max_retries
         self.async_base_headers = async_base_headers
         self.httpx_client = httpx_client
         self.logger = create_logger(logging_config)
@@ -627,19 +664,44 @@ class AsyncHttpClient:
                 has_body=json_body is not None or data_body is not None,
             )
 
-        response = await self.httpx_client.request(
-            method=method,
-            url=_request_url,
-            headers=_request_headers,
-            params=_encoded_params if _encoded_params else None,
-            json=json_body,
-            data=data_body,
-            content=content,
-            files=request_files,
-            timeout=timeout,
+        max_retries: int = (
+            request_options.get("max_retries", self.base_max_retries)
+            if request_options is not None
+            else self.base_max_retries
         )
 
-        max_retries: int = request_options.get("max_retries", 2) if request_options is not None else 2
+        try:
+            response = await self.httpx_client.request(
+                method=method,
+                url=_request_url,
+                headers=_request_headers,
+                params=_encoded_params if _encoded_params else None,
+                json=json_body,
+                data=data_body,
+                content=content,
+                files=request_files,
+                timeout=timeout,
+            )
+        except (httpx.ConnectError, httpx.RemoteProtocolError):
+            if retries < max_retries:
+                await asyncio.sleep(_retry_timeout_from_retries(retries=retries))
+                return await self.request(
+                    path=path,
+                    method=method,
+                    base_url=base_url,
+                    params=params,
+                    json=json,
+                    data=data,
+                    content=content,
+                    files=files,
+                    headers=headers,
+                    request_options=request_options,
+                    retries=retries + 1,
+                    omit=omit,
+                    force_multipart=force_multipart,
+                )
+            raise
+
         if _should_retry(response=response):
             if retries < max_retries:
                 await asyncio.sleep(_retry_timeout(response=response, retries=retries))
@@ -649,12 +711,14 @@ class AsyncHttpClient:
                     base_url=base_url,
                     params=params,
                     json=json,
+                    data=data,
                     content=content,
                     files=files,
                     headers=headers,
                     request_options=request_options,
                     retries=retries + 1,
                     omit=omit,
+                    force_multipart=force_multipart,
                 )
 
         if self.logger.is_debug():

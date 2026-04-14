@@ -5,8 +5,8 @@
 //!
 //! ## Type Categories
 //!
-//! - **Request/Response Types**: 45 types for API operations
-//! - **Model Types**: 28 types for data representation
+//! - **Request/Response Types**: 47 types for API operations
+//! - **Model Types**: 29 types for data representation
 
 pub mod username_cursor;
 pub mod username_page;
@@ -51,6 +51,8 @@ pub mod users_list_users_pagination_response;
 pub mod users_list_users_optional_data_pagination_response;
 pub mod users_list_users_mixed_type_pagination_response;
 pub mod users_list_users_top_level_cursor_pagination_response;
+pub mod users_user_list;
+pub mod users_list_users_aliased_data_pagination_response;
 pub mod users_page;
 pub mod users_next_page;
 pub mod users_user;
@@ -81,6 +83,7 @@ pub mod users_list_usernames_query_request;
 pub mod list_usernames_with_optional_response_query_request;
 pub mod users_list_with_global_config_query_request;
 pub mod list_with_optional_data_query_request;
+pub mod list_with_aliased_data_query_request;
 
 pub use username_cursor::UsernameCursor;
 pub use username_page::UsernamePage;
@@ -125,6 +128,8 @@ pub use users_list_users_pagination_response::ListUsersPaginationResponse2;
 pub use users_list_users_optional_data_pagination_response::ListUsersOptionalDataPaginationResponse;
 pub use users_list_users_mixed_type_pagination_response::ListUsersMixedTypePaginationResponse2;
 pub use users_list_users_top_level_cursor_pagination_response::ListUsersTopLevelCursorPaginationResponse;
+pub use users_user_list::UserList;
+pub use users_list_users_aliased_data_pagination_response::ListUsersAliasedDataPaginationResponse;
 pub use users_page::Page2;
 pub use users_next_page::NextPage2;
 pub use users_user::User2;
@@ -155,4 +160,5 @@ pub use users_list_usernames_query_request::UsersListUsernamesQueryRequest;
 pub use list_usernames_with_optional_response_query_request::ListUsernamesWithOptionalResponseQueryRequest;
 pub use users_list_with_global_config_query_request::UsersListWithGlobalConfigQueryRequest;
 pub use list_with_optional_data_query_request::ListWithOptionalDataQueryRequest;
+pub use list_with_aliased_data_query_request::ListWithAliasedDataQueryRequest;
 

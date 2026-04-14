@@ -1,0 +1,46 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+# Benchmark fixture for a large e-commerce public OpenAPI spec (Square).
+# The openapi.json file is fetched at CI runtime by the fetch-benchmark-specs action.
+# The "version: latest" field is effectively a no-op for benchmarks — seed:local builds
+# generators from local source, so both main baseline and PR benchmarks use the same
+# locally-compiled generator code. This is acceptable because benchmarking is informational.
+api:
+  specs:
+    - openapi: ./openapi.json
+groups:
+  ts-sdk:
+    generators:
+      - name: fernapi/fern-typescript-sdk
+        version: latest
+  python-sdk:
+    generators:
+      - name: fernapi/fern-python-sdk
+        version: latest
+  java-sdk:
+    generators:
+      - name: fernapi/fern-java-sdk
+        version: latest
+  go-sdk:
+    generators:
+      - name: fernapi/fern-go-sdk
+        version: latest
+  csharp-sdk:
+    generators:
+      - name: fernapi/fern-csharp-sdk
+        version: latest
+  ruby-sdk-v2:
+    generators:
+      - name: fernapi/fern-ruby-sdk-v2
+        version: latest
+  php-sdk:
+    generators:
+      - name: fernapi/fern-php-sdk
+        version: latest
+  swift-sdk:
+    generators:
+      - name: fernapi/fern-swift-sdk
+        version: latest
+  rust-sdk:
+    generators:
+      - name: fernapi/fern-rust-sdk
+        version: latest

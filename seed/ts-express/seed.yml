@@ -1,4 +1,4 @@
-irVersion: v65
+irVersion: v66
 displayName: TypeScript Express
 changelogLocation: ../../generators/typescript/express/versions.yml
 image: fernapi/fern-typescript-express
@@ -114,6 +114,7 @@ allowedFailures:
   - public-object
   - server-sent-event-examples
   - server-sent-events
+  - server-sent-events-openapi
   - streaming
   - streaming-parameter
   - enum

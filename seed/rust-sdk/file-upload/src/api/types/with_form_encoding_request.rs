@@ -36,7 +36,7 @@ impl WithFormEncodingRequest {
 
 impl WithFormEncodingRequest {
     pub fn builder() -> WithFormEncodingRequestBuilder {
-        WithFormEncodingRequestBuilder::default()
+        <WithFormEncodingRequestBuilder as Default>::default()
     }
 }
 

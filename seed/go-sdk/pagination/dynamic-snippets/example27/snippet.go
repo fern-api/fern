@@ -2,6 +2,7 @@ package example
 
 import (
     context "context"
+
     fern "github.com/pagination/fern"
     client "github.com/pagination/fern/client"
     option "github.com/pagination/fern/option"
@@ -16,12 +17,12 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.ListWithGlobalConfigRequest{
-        Offset: fern.Int(
-            1,
+    request := &fern.ListUsernamesRequest{
+        StartingAfter: fern.String(
+            "starting_after",
         ),
     }
-    client.Users.ListWithGlobalConfig(
+    client.Users.ListUsernames(
         context.TODO(),
         request,
     )

@@ -12,6 +12,7 @@ import {
     loadProjectConfig,
     PROJECT_CONFIG_FILENAME
 } from "@fern-api/configuration-loader";
+import { getFiddleOrigin } from "@fern-api/core";
 import {
     ContainerRunner,
     extractErrorMessage,
@@ -67,6 +68,7 @@ import { mockServer } from "./commands/mock/mockServer.js";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1.js";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2.js";
 import { sdkDiffCommand } from "./commands/sdk-diff/sdkDiffCommand.js";
+import { sdkPreview } from "./commands/sdk-preview/sdkPreview.js";
 import { selfUpdate } from "./commands/self-update/selfUpdate.js";
 import { testOutput } from "./commands/test/testOutput.js";
 import { generateToken } from "./commands/token/token.js";
@@ -145,6 +147,10 @@ async function runCli() {
         } else if (error instanceof LoggableFernCliError) {
             cliContext.logger.error(`Failed. ${error.log}`);
         } else {
+            // TODO: This is intentionally broad for initial rollout.
+            // We likely capture more than intended; narrow reporting with
+            // explicit error classification once we collect real-world signal.
+            await cliContext.captureException(error);
             cliContext.failWithoutThrowing("Failed.", error);
         }
     }
@@ -240,6 +246,8 @@ async function tryRunCli(cliContext: CliContext) {
     addExportCommand(cli, cliContext);
     addReplayCommand(cli, cliContext);
     addBetaCommand(cli, cliContext);
+
+    addSdkCommand(cli, cliContext);
 
     // CLI V2 Sanctioned Commands
     addGetOrganizationCommand(cli, cliContext);
@@ -1198,13 +1206,15 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 .option("broken-links", {
                     boolean: true,
                     description: "Log a warning if there are broken links in the docs.",
-                    default: false
+                    default: false,
+                    deprecated: "Use docs.yml `check.rules.broken-links: warn` instead."
                 })
                 .option("strict-broken-links", {
                     boolean: true,
                     description:
                         "Throw an error (rather than logging a warning) if there are broken links in the docs.",
-                    default: false
+                    default: false,
+                    deprecated: "Use docs.yml `check.rules.broken-links: error` instead."
                 })
                 .option("local", {
                     boolean: true,
@@ -1385,17 +1395,22 @@ function addLoginCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         "login",
         "Log in to Fern via GitHub",
         (yargs) =>
-            yargs.option("device-code", {
-                boolean: true,
-                default: false,
-                description: "Use device code authorization"
-            }),
+            yargs
+                .option("device-code", {
+                    boolean: true,
+                    default: false,
+                    description: "Use device code authorization"
+                })
+                .option("email", {
+                    string: true,
+                    description: "Log in via enterprise SSO using your email address"
+                }),
         async (argv) => {
             await cliContext.runTask(async (context) => {
                 await cliContext.instrumentPostHogEvent({
                     command: "fern login"
                 });
-                await login(context, { useDeviceCodeFlow: argv.deviceCode });
+                await login(context, { useDeviceCodeFlow: argv.deviceCode, email: argv.email });
             });
         }
     );
@@ -1956,7 +1971,7 @@ function addDocsMdCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
             });
 
             if (hasErrors) {
-                cliContext.failAndThrow("MDX validation failed");
+                cliContext.failWithoutThrowing();
             }
         }
     );
@@ -2104,7 +2119,7 @@ function addExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 function addEnrichCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "enrich <openapi>",
-        false, // Hidden from --help
+        "Merge an AI examples overrides file into an OpenAPI spec",
         (yargs) =>
             yargs
                 .positional("openapi", {
@@ -2136,6 +2151,53 @@ function addEnrichCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 overridesPath: AbsoluteFilePath.of(overridesPath),
                 outputPath: AbsoluteFilePath.of(outputPath),
                 cliContext
+            });
+        }
+    );
+}
+
+function addSdkCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command("sdk", false, (yargs) => {
+        addSdkPreviewCommand(yargs, cliContext);
+        return yargs.demandCommand();
+    });
+}
+
+function addSdkPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "preview",
+        false, // hidden
+        (yargs) =>
+            yargs
+                .option("group", {
+                    type: "string",
+                    description: "The generator group to preview"
+                })
+                .option("generator", {
+                    type: "string",
+                    description: "The name of a specific generator to run"
+                })
+                .option("api", {
+                    type: "string",
+                    description: "Only run the command on the provided API"
+                })
+                .option("json", {
+                    boolean: true,
+                    default: false,
+                    description: "Output result as JSON"
+                }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern sdk preview"
+            });
+            const generatorFilter =
+                argv.generator != null ? warnAndCorrectIncorrectDockerOrg(argv.generator, cliContext) : undefined;
+            await sdkPreview({
+                cliContext,
+                groupName: argv.group,
+                generatorFilter,
+                apiName: argv.api,
+                json: argv.json
             });
         }
     );
@@ -2297,12 +2359,16 @@ function addReplayInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                 token = token ?? resolved.token;
             }
 
-            if (githubRepo == null || token == null) {
-                const hint =
-                    githubRepo != null
-                        ? "Repository found but no token. Pass --token or set GITHUB_TOKEN environment variable."
-                        : "Either use --group to read from generators.yml, or provide --github and --token directly.";
-                return cliContext.failAndThrow(`Missing required github config. ${hint}`);
+            if (githubRepo == null) {
+                return cliContext.failAndThrow(
+                    "Missing required github config. Either use --group to read from generators.yml, or provide --github directly."
+                );
+            }
+
+            if (token == null) {
+                cliContext.logger.warn(
+                    "No GitHub token found. Clone may fail for private repos. Set GITHUB_TOKEN or pass --token."
+                );
             }
 
             cliContext.logger.info(`Initializing Replay for: ${githubRepo}`);
@@ -2334,7 +2400,48 @@ function addReplayInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
 
                 if (argv.dryRun) {
                     cliContext.logger.info("\nDry run complete. No changes made.");
+                    return;
                 }
+
+                if (result.lockfileContent == null) {
+                    return cliContext.failAndThrow("Bootstrap succeeded but lockfile content is missing.");
+                }
+
+                // Send lockfile to Fiddle for server-side PR creation
+                const fernToken = await cliContext.runTask((context) => askToLogin(context));
+
+                const { owner, repo } = parseOwnerRepo(githubRepo);
+                const fiddleOrigin = getFiddleOrigin();
+
+                const response = await fetch(`${fiddleOrigin}/api/remote-gen/replay/init`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${fernToken.value}`
+                    },
+                    body: JSON.stringify({
+                        owner,
+                        repo,
+                        lockfileContents: result.lockfileContent,
+                        fernignoreEntries: result.fernignoreEntries,
+                        prBody: result.prBody
+                    })
+                });
+
+                if (!response.ok) {
+                    if (response.status === 404) {
+                        return cliContext.failAndThrow(
+                            "The Fern GitHub App is not installed on this repository. " +
+                                "Install it at https://github.com/apps/fern-api to enable server-side PR creation."
+                        );
+                    }
+                    const body = await response.text();
+                    return cliContext.failAndThrow(`Failed to create PR via Fern: ${body}`);
+                }
+
+                const data = (await response.json()) as { prUrl: string };
+                cliContext.logger.info(`\nPR created: ${data.prUrl}`);
+                cliContext.logger.info("Merge the PR to enable Replay for this repository.");
             } catch (error) {
                 cliContext.failAndThrow(`Failed to initialize Replay: ${extractErrorMessage(error)}`);
             }
@@ -2412,4 +2519,18 @@ function addReplayResolveCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
             }
         }
     );
+}
+
+function parseOwnerRepo(githubRepo: string): { owner: string; repo: string } {
+    const cleaned = githubRepo
+        .replace(/^https?:\/\//, "")
+        .replace(/\.git$/, "")
+        .replace(/^github\.com\//, "");
+    const parts = cleaned.split("/");
+    const owner = parts[parts.length - 2];
+    const repo = parts[parts.length - 1];
+    if (owner == null || repo == null) {
+        throw new Error(`Could not parse owner/repo from: ${githubRepo}`);
+    }
+    return { owner, repo };
 }

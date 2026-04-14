@@ -5,6 +5,7 @@ package folderc
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/cross-package-type-names/fern/internal"
 	uuid "github.com/google/uuid"
 )

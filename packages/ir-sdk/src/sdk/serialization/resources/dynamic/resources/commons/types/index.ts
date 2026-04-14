@@ -2,6 +2,8 @@ export * from "./EndpointId.js";
 export * from "./FernFilepath.js";
 export * from "./Name.js";
 export * from "./NameAndWireValue.js";
+export * from "./NameAndWireValueOrString.js";
+export * from "./NameOrString.js";
 export * from "./SafeAndUnsafeString.js";
 export * from "./TypeId.js";
 export * from "./WithDocs.js";

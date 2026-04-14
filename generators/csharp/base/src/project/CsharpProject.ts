@@ -47,6 +47,9 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
     protected get generation(): Generation {
         return this.context.generation;
     }
+    protected get case(): Generation["case"] {
+        return this.generation.case;
+    }
     protected get namespaces(): Generation["namespaces"] {
         return this.generation.namespaces;
     }
@@ -665,12 +668,12 @@ dotnet_diagnostic.IDE0005.severity = error
         if (!isOptional) {
             for (const scheme of this.context.ir.auth.schemes) {
                 if (scheme.type === "bearer") {
-                    parts.push(`${scheme.token.pascalCase.safeName} = "test"`);
+                    parts.push(`${this.context.case.pascalSafe(scheme.token)} = "test"`);
                 } else if (scheme.type === "basic") {
-                    parts.push(`${scheme.username.pascalCase.safeName} = "test"`);
-                    parts.push(`${scheme.password.pascalCase.safeName} = "test"`);
+                    parts.push(`${this.context.case.pascalSafe(scheme.username)} = "test"`);
+                    parts.push(`${this.context.case.pascalSafe(scheme.password)} = "test"`);
                 } else if (scheme.type === "header") {
-                    parts.push(`${scheme.name.name.pascalCase.safeName} = "test"`);
+                    parts.push(`${this.context.case.pascalSafe(scheme.name)} = "test"`);
                 } else if (scheme.type === "oauth") {
                     parts.push(`ClientId = "test"`);
                     parts.push(`ClientSecret = "test"`);
@@ -879,7 +882,7 @@ ${projectGroup.join("\n")}
       <Using Include="System.Threading.Tasks" />
     </ItemGroup>
     <ItemGroup Condition="'$(UsePortableDateOnly)' == 'true'">
-        <PackageReference Include="Portable.System.DateTimeOnly" Version="8.0.2" />
+        <PackageReference Include="Portable.System.DateTimeOnly" Version="9.0.1" />
     </ItemGroup>
     <ItemGroup Condition="'$(UsePortableDateOnly)' == 'false'">
         <Compile Remove="Core\\DateOnlyConverter.cs" />
@@ -936,13 +939,13 @@ ${this.getAdditionalItemGroups().join(`\n${indent}`)}
         }
         if (this.context.hasWebSocketEndpoints) {
             result.push('<PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="3.0.1" />');
-            result.push('<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.2" />');
-            result.push('<PackageReference Include="System.Threading.Channels" Version="8.0.0" />');
+            result.push('<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.13" />');
+            result.push('<PackageReference Include="System.Threading.Channels" Version="9.0.13" />');
         }
         // SSE package — only in-box starting with net9.0, so keep unconditional for
         // multi-targeted projects that include net8.0
         if (this.context.hasSseEndpoints) {
-            result.push('<PackageReference Include="System.Net.ServerSentEvents" Version="9.0.9" />');
+            result.push('<PackageReference Include="System.Net.ServerSentEvents" Version="9.0.14" />');
         }
         return result;
     }
@@ -1113,5 +1116,5 @@ const LEGACY_FRAMEWORK_CONDITION = `!${NET8_COMPATIBLE_CONDITION}`;
  * Extend this list as more packages become in-box in future .NET versions.
  */
 const NET8_INBOX_PACKAGES: ReadonlyArray<{ name: string; version: string }> = [
-    { name: "System.Text.Json", version: "8.0.5" }
+    { name: "System.Text.Json", version: "9.0.9" }
 ];

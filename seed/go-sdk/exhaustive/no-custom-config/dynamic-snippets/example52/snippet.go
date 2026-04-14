@@ -2,6 +2,7 @@ package example
 
 import (
     context "context"
+
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
 )
@@ -15,7 +16,7 @@ func do() {
             "<token>",
         ),
     )
-    client.Endpoints.Urls.WithUnderscores(
+    client.Endpoints.Urls.NoEndingSlash(
         context.TODO(),
     )
 }

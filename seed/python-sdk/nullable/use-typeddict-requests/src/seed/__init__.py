@@ -7,6 +7,7 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from . import nullable
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncSeedNullable, SeedNullable
     from .nullable import (
         Email,
@@ -29,6 +30,8 @@ if typing.TYPE_CHECKING:
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedNullable": ".client",
+    "DefaultAioHttpClient": "._default_clients",
+    "DefaultAsyncHttpxClient": "._default_clients",
     "Email": ".nullable",
     "Metadata": ".nullable",
     "MetadataParams": ".nullable",
@@ -74,6 +77,8 @@ def __dir__():
 
 __all__ = [
     "AsyncSeedNullable",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
     "Email",
     "Metadata",
     "MetadataParams",

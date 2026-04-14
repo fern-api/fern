@@ -29,7 +29,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:server-url-templating'
+  implementation 'com.fern:server-url-templating:0.0.1'
 }
 ```
 

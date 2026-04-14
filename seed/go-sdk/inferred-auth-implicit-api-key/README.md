@@ -31,13 +31,17 @@ package example
 
 import (
     context "context"
+
     fern "github.com/inferred-auth-implicit-api-key/fern"
     client "github.com/inferred-auth-implicit-api-key/fern/client"
+    option "github.com/inferred-auth-implicit-api-key/fern/option"
 )
 
 func do() {
     client := client.NewClient(
-        nil,
+        option.WithApiKey(
+            "X-Api-Key",
+        ),
     )
     request := &fern.GetTokenRequest{
         ApiKey: "api_key",

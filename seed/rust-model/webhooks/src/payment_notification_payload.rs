@@ -6,6 +6,7 @@ pub struct PaymentNotificationPayload {
     #[serde(default)]
     pub payment_id: String,
     #[serde(default)]
+    #[serde(with = "crate::core::number_serializers")]
     pub amount: f64,
     #[serde(default)]
     pub status: String,
@@ -13,7 +14,7 @@ pub struct PaymentNotificationPayload {
 
 impl PaymentNotificationPayload {
     pub fn builder() -> PaymentNotificationPayloadBuilder {
-        PaymentNotificationPayloadBuilder::default()
+        <PaymentNotificationPayloadBuilder as Default>::default()
     }
 }
 

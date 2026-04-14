@@ -62,11 +62,11 @@ class ImdbClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return string
+     * @return ?string
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function createMovie(CreateMovieRequest $request, ?array $options = null): string
+    public function createMovie(CreateMovieRequest $request, ?array $options = null): ?string
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -82,6 +82,9 @@ class ImdbClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return JsonDecoder::decodeString($json);
             }
         } catch (JsonException $e) {
@@ -106,11 +109,11 @@ class ImdbClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return Movie
+     * @return ?Movie
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getMovie(string $movieId, ?array $options = null): Movie
+    public function getMovie(string $movieId, ?array $options = null): ?Movie
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -125,6 +128,9 @@ class ImdbClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return Movie::fromJson($json);
             }
         } catch (JsonException $e) {
