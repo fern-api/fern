@@ -222,17 +222,10 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
     }
 
     private async runGoModTidy(): Promise<void> {
-        try {
-            await loggingExeca(this.context.logger, "go", ["mod", "tidy"], {
-                doNotPipeOutput: true,
-                cwd: this.absolutePathToOutputDirectory
-            });
-        } catch (error) {
-            this.context.logger.warn(
-                `Failed to tidy Go modules with 'go mod tidy': ${extractErrorMessage(error)}. ` +
-                    "The generated files have been written but the go.mod may contain unused dependencies."
-            );
-        }
+        await loggingExeca(this.context.logger, "go", ["mod", "tidy"], {
+            doNotPipeOutput: true,
+            cwd: this.absolutePathToOutputDirectory
+        });
     }
 
     private async writeLicenseFile(): Promise<void> {
