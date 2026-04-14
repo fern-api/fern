@@ -9,8 +9,8 @@ import {
 import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 import { FernBasePathExtension } from "../extensions/x-fern-base-path.js";
 import { FernGlobalHeadersExtension } from "../extensions/x-fern-global-headers.js";
-import { convertGlobalHeadersExtension } from "../utils/convertGlobalHeadersExtension.js";
 import { convertGlobalHeaderOverrides } from "../utils/convertGlobalHeaderOverrides.js";
+import { convertGlobalHeadersExtension } from "../utils/convertGlobalHeadersExtension.js";
 import { OpenAPIConverterContext3_1 } from "./OpenAPIConverterContext3_1.js";
 import { WebhookConverter } from "./paths/operations/WebhookConverter.js";
 import { PathConverter } from "./paths/PathConverter.js";
