@@ -1120,7 +1120,9 @@ function getGithubLicenseSchema(
     return generator.github?.license;
 }
 
-function getOutputMetadata(metadata: generatorsYml.OutputMetadataSchema | undefined): FernFiddle.OutputMetadata | undefined {
+function getOutputMetadata(
+    metadata: generatorsYml.OutputMetadataSchema | undefined
+): FernFiddle.OutputMetadata | undefined {
     return metadata != null
         ? {
               description: metadata.description,
@@ -1129,7 +1131,9 @@ function getOutputMetadata(metadata: generatorsYml.OutputMetadataSchema | undefi
         : undefined;
 }
 
-function getPyPiMetadata(metadata: generatorsYml.PypiOutputMetadataSchema | undefined): FernFiddle.PypiMetadata | undefined {
+function getPyPiMetadata(
+    metadata: generatorsYml.PypiOutputMetadataSchema | undefined
+): FernFiddle.PypiMetadata | undefined {
     return metadata != null
         ? {
               description: metadata.description,

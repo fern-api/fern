@@ -106,7 +106,8 @@ async function getOutputMode({
             if (language == null) {
                 throw new Error("Seed requires a language to be specified to test in publish mode");
             }
-            const publishOutputModeConfig = publishConfig != null ? (publishConfig as FernFiddle.PublishOutputModeV2) : undefined;
+            const publishOutputModeConfig =
+                publishConfig != null ? (publishConfig as FernFiddle.PublishOutputModeV2) : undefined;
             return FernFiddle.remoteGen.OutputMode.publishV2(
                 publishOutputModeConfig ?? getPublishInfo({ language, fixtureName })
             );
