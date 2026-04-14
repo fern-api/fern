@@ -42,8 +42,35 @@ def _to_screaming_snake(s: str) -> str:
     return _smart_snake(s).upper()
 
 
+_PYTHON_RESERVED_BUILTINS = frozenset(
+    {
+        # From @fern-api/casings-generator reserved.ts (Python section)
+        "float",
+        "int",
+        "complex",
+        "bool",
+        "uuid",
+        "list",
+        "set",
+        "map",
+        "long",
+        "self",
+        "all",
+        "kwargs",
+        # Additional Python builtins worth protecting
+        "dict",
+        "type",
+        "id",
+        "hash",
+        "input",
+        "object",
+        "property",
+    }
+)
+
+
 def _make_safe(name: str) -> str:
-    if keyword.iskeyword(name) or name in ("list", "set", "dict", "type", "id", "hash", "input", "object", "property"):
+    if keyword.iskeyword(name) or name in _PYTHON_RESERVED_BUILTINS:
         return name + "_"
     # Python identifiers cannot start with a digit. Prefix with "_" to match
     # the canonical sanitizeName behavior in @fern-api/casings-generator;
