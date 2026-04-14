@@ -54,7 +54,7 @@ export class ListMembersCommand {
         if (members.length === 0) {
             context.stderr.info(`${Icons.info} No members found in organization "${args.org}".`);
             context.stderr.info("");
-            context.stderr.info("  To invite someone, run: fern org member add <email> <org>");
+            context.stderr.info("  To invite someone, run: fern org member invite <email> <org>");
             return;
         }
 

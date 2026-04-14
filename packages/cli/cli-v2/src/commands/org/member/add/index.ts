@@ -1,1 +1,1 @@
-export { addAddMemberCommand } from "./command.js";
+export { addInviteMemberCommand } from "./command.js";

@@ -8,15 +8,15 @@ import { Icons } from "../../../../ui/format.js";
 import { withSpinner } from "../../../../ui/withSpinner.js";
 import { command } from "../../../_internal/command.js";
 
-export declare namespace AddMemberCommand {
+export declare namespace InviteMemberCommand {
     export interface Args extends GlobalArgs {
         email: string;
         org: string;
     }
 }
 
-export class AddMemberCommand {
-    public async handle(context: Context, args: AddMemberCommand.Args): Promise<void> {
+export class InviteMemberCommand {
+    public async handle(context: Context, args: InviteMemberCommand.Args): Promise<void> {
         const token = await context.getTokenOrPrompt();
 
         if (token.type === "organization") {
@@ -80,16 +80,16 @@ export class AddMemberCommand {
     }
 }
 
-export function addAddMemberCommand(cli: Argv<GlobalArgs>): void {
-    const cmd = new AddMemberCommand();
+export function addInviteMemberCommand(cli: Argv<GlobalArgs>): void {
+    const cmd = new InviteMemberCommand();
     command(
         cli,
-        "add <email> <org>",
+        "invite <email> <org>",
         "Invite a user to an organization",
-        (context, args) => cmd.handle(context, args as AddMemberCommand.Args),
+        (context, args) => cmd.handle(context, args as InviteMemberCommand.Args),
         (yargs) =>
             yargs
-                .usage("\nUsage:\n  $0 org member add <email> <org>")
+                .usage("\nUsage:\n  $0 org member invite <email> <org>")
                 .positional("email", {
                     type: "string",
                     demandOption: true,
@@ -101,7 +101,7 @@ export function addAddMemberCommand(cli: Argv<GlobalArgs>): void {
                     description: "Organization name (e.g. acme)"
                 })
                 .example(
-                    "$0 org member add user@example.com acme",
+                    "$0 org member invite user@example.com acme",
                     "# Invite user@example.com to the 'acme' organization"
                 )
     );
