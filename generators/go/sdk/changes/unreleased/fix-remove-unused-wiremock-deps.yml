@@ -1,0 +1,6 @@
+- summary: |
+    Remove unused wiremock and containerd dependencies from the default go.mod
+    imports. These packages were never imported by generated Go code, but
+    go mod tidy had to download hundreds of transitive dependencies to discover
+    they were unused, causing failures in CI environments.
+  type: fix
