@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-## [1.0.0] - 2026-04-14
+## [0.5.0] - 2026-04-14
 
 - Break: The generator now emits OpenAPI 3.1.0 specifications (previously 3.0.1).
   - Nullability: `nullable: true` is no longer emitted. Optional/nullable primitives
