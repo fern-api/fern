@@ -153,7 +153,11 @@ export class CliContext {
             await this.nudgeUpgradeIfAvailable();
         }
         this.ttyAwareLogger.finish();
-        await this.posthogManager.flush();
+        try {
+            await this.posthogManager.flush();
+        } catch {
+            // Silently swallow – analytics should never block the CLI
+        }
         await this.sentryClient.flush();
         this.exitProgram({ code });
     }
