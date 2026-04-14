@@ -7,6 +7,7 @@ import {
     PathParameterWithExample,
     PrimitiveSchemaValueWithExample,
     RequestWithExample,
+    ResponseWithExample,
     SchemaWithExample,
     Source
 } from "@fern-api/openapi-ir";
@@ -342,7 +343,15 @@ export function convertHttpOperation({
             context.options.preserveSchemaIds
         ),
         request,
-        response: convertedResponse.value,
+        response:
+            convertedResponse.value ??
+            (convertedResponse.successStatusCode != null && convertedResponse.successStatusCode !== 200
+                ? ResponseWithExample.text({
+                      description: undefined,
+                      source,
+                      statusCode: convertedResponse.successStatusCode
+                  })
+                : undefined),
         errors: convertedResponse.errors,
         servers:
             serverName != null

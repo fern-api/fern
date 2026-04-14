@@ -276,11 +276,19 @@ export function buildEndpoint({
                 };
             },
             text: (textResponse) => {
-                convertedEndpoint.response = {
-                    docs: textResponse.description ?? undefined,
-                    type: "text",
-                    "status-code": textResponse.statusCode
-                };
+                if (textResponse.statusCode === 204) {
+                    // 204 No Content: preserve status code without setting a response body type
+                    convertedEndpoint.response = {
+                        docs: textResponse.description ?? undefined,
+                        "status-code": 204
+                    };
+                } else {
+                    convertedEndpoint.response = {
+                        docs: textResponse.description ?? undefined,
+                        type: "text",
+                        "status-code": textResponse.statusCode
+                    };
+                }
             },
             _other: () => {
                 throw new Error("Unrecognized Response type: " + endpoint.response?.type);

@@ -1,0 +1,4 @@
+- summary: |
+    Fix 204 No Content responses being displayed as 200 in docs. The status code
+    is now correctly preserved through the OpenAPI to Fern conversion pipeline.
+  type: fix

@@ -22,6 +22,12 @@ const SUCCESSFUL_STATUS_CODES = ["200", "201", "202", "204"];
 export interface ConvertedResponse {
     value: ResponseWithExample | undefined;
     errors: Record<FernOpenapiIr.StatusCode, FernOpenapiIr.HttpErrorWithExample>;
+    /**
+     * The first successful status code found in the OpenAPI responses.
+     * Preserved separately so that no-content responses (e.g. 204) still
+     * carry their status code even when `value` is undefined.
+     */
+    successStatusCode: number | undefined;
 }
 
 export function convertResponse({
@@ -45,12 +51,13 @@ export function convertResponse({
 }): ConvertedResponse {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (responses == null) {
-        return { value: undefined, errors: {} };
+        return { value: undefined, errors: {}, successStatusCode: undefined };
     }
     const errors = markErrorSchemas({ responses, context, source, namespace: context.namespace });
 
     let successStatusCodePresent = false;
     let hasNoContentResponse = false;
+    let firstSuccessStatusCode: number | undefined = undefined;
     let convertedResponse: FernOpenapiIr.ResponseWithExample | undefined = undefined;
     for (const statusCode of responseStatusCode != null ? [responseStatusCode] : SUCCESSFUL_STATUS_CODES) {
         const response = responses[statusCode];
@@ -59,6 +66,9 @@ export function convertResponse({
         }
         successStatusCodePresent = true;
         const statusCodeNum = typeof statusCode === "string" ? parseInt(statusCode) : statusCode;
+        if (firstSuccessStatusCode == null) {
+            firstSuccessStatusCode = statusCodeNum;
+        }
         if (convertedResponse == null) {
             const converted = convertResolvedResponse({
                 operationContext,
@@ -134,13 +144,15 @@ export function convertResponse({
             case "json":
                 return {
                     value: convertedResponse,
-                    errors
+                    errors,
+                    successStatusCode: firstSuccessStatusCode
                 };
             case "streamingJson":
             case "streamingSse":
                 return {
                     value: convertedResponse,
-                    errors
+                    errors,
+                    successStatusCode: firstSuccessStatusCode
                 };
             case "bytes":
             case "file":
@@ -148,7 +160,8 @@ export function convertResponse({
             case "streamingText":
                 return {
                     value: convertedResponse,
-                    errors
+                    errors,
+                    successStatusCode: firstSuccessStatusCode
                 };
             default:
                 assertNever(convertedResponse);
@@ -157,7 +170,8 @@ export function convertResponse({
 
     return {
         value: undefined,
-        errors
+        errors,
+        successStatusCode: firstSuccessStatusCode
     };
 }
 

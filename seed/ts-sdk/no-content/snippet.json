@@ -1,0 +1,27 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/plants/{plantId}",
+                "method": "GET",
+                "identifier_override": "endpoint_.plants_get"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/no-content\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.plantsGet({\n    plantId: \"plantId\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/plants/{plantId}",
+                "method": "DELETE",
+                "identifier_override": "endpoint_.plants_delete"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/no-content\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.plantsDelete({\n    plantId: \"plantId\"\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}

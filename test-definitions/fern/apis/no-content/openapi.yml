@@ -1,0 +1,69 @@
+openapi: 3.0.3
+info:
+  title: No Content API
+  version: 1.0.0
+paths:
+  /plants/{plantId}:
+    delete:
+      operationId: plants_delete
+      summary: Delete a plant
+      description: Delete a plant by its ID. Returns 204 No Content on success.
+      parameters:
+        - name: plantId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: No Content
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    get:
+      operationId: plants_get
+      summary: Get a plant
+      description: Get a plant by its ID. Returns 200 with the plant data.
+      parameters:
+        - name: plantId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Plant"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    Plant:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        species:
+          type: string
+      required:
+        - id
+        - name
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
