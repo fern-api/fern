@@ -1,7 +1,7 @@
+import { CliError } from "@fern-api/task-context";
 import { FernRegistryClient } from "@fern-fern/generators-sdk";
 import boxen from "boxen";
 import chalk from "chalk";
-
 import { FernUpgradeInfo } from "../CliContext.js";
 import { CliEnvironment } from "../CliEnvironment.js";
 import { FernGeneratorUpgradeInfo } from "./getGeneratorVersions.js";
@@ -127,7 +127,7 @@ async function normalizeGeneratorName(generatorImage: string): Promise<string> {
     });
     const generatorResponse = await client.generators.getGeneratorByImage({ dockerImage: generatorImage });
     if (!generatorResponse.ok || generatorResponse.body == null) {
-        throw new Error(`Generator ${generatorImage} not found`);
+        throw new CliError({ message: `Generator ${generatorImage} not found`, code: CliError.Code.InternalError });
     }
     return generatorResponse.body.displayName;
 }

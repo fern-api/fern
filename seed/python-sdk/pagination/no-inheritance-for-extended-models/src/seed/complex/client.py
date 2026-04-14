@@ -55,7 +55,8 @@ class ComplexClient:
 
         Examples
         --------
-        from seed import SeedApi, SingleFilterSearchRequest
+        from seed import SeedPagination
+        from seed.complex import SingleFilterSearchRequest, StartingAfterPaging
 
         client = SeedApi(
             token="YOUR_TOKEN",
@@ -114,7 +115,8 @@ class AsyncComplexClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedApi, SingleFilterSearchRequest
+        from seed import AsyncSeedPagination
+        from seed.complex import SingleFilterSearchRequest, StartingAfterPaging
 
         client = AsyncSeedApi(
             token="YOUR_TOKEN",

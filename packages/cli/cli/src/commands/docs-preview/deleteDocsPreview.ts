@@ -1,8 +1,8 @@
 import { FernToken } from "@fern-api/auth";
 import { createFdrService } from "@fern-api/core";
 import { askToLogin } from "@fern-api/login";
+import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
-
 import { CliContext } from "../../cli-context/CliContext.js";
 
 /**
@@ -45,7 +45,9 @@ export async function deleteDocsPreview({
             `Invalid preview URL: ${previewUrl}\n` +
                 "Only preview sites can be deleted with this command.\n" +
                 "Preview URLs follow the pattern: {org}-preview-{hash}.docs.buildwithfern.com\n" +
-                "Example: acme-preview-abc123.docs.buildwithfern.com"
+                "Example: acme-preview-abc123.docs.buildwithfern.com",
+            undefined,
+            { code: CliError.Code.ConfigError }
         );
         return;
     }
@@ -55,7 +57,9 @@ export async function deleteDocsPreview({
     });
 
     if (token == null) {
-        cliContext.failAndThrow("Failed to authenticate. Please run 'fern login' first.");
+        cliContext.failAndThrow("Failed to authenticate. Please run 'fern login' first.", undefined, {
+            code: CliError.Code.AuthError
+        });
         return;
     }
 
@@ -74,12 +78,18 @@ export async function deleteDocsPreview({
             switch (deleteResponse.error.error) {
                 case "UnauthorizedError":
                     return context.failAndThrow(
-                        "You do not have permissions to delete this preview site. Reach out to support@buildwithfern.com"
+                        "You do not have permissions to delete this preview site. Reach out to support@buildwithfern.com",
+                        undefined,
+                        { code: CliError.Code.NetworkError }
                     );
                 case "DocsNotFoundError":
-                    return context.failAndThrow(`Preview site not found: ${previewUrl}`);
+                    return context.failAndThrow(`Preview site not found: ${previewUrl}`, undefined, {
+                        code: CliError.Code.ConfigError
+                    });
                 default:
-                    return context.failAndThrow(`Failed to delete preview site: ${previewUrl}`, deleteResponse.error);
+                    return context.failAndThrow(`Failed to delete preview site: ${previewUrl}`, deleteResponse.error, {
+                        code: CliError.Code.NetworkError
+                    });
             }
         }
     });

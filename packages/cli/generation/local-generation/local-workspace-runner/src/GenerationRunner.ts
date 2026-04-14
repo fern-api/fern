@@ -4,7 +4,7 @@ import { generatorsYml, SNIPPET_JSON_FILENAME } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
-import { LoggableFernCliError, TaskAbortSignal, TaskContext } from "@fern-api/task-context";
+import { TaskAbortSignal, TaskContext } from "@fern-api/task-context";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import chalk from "chalk";
 import { generateDynamicSnippetTests } from "./dynamic-snippets/generateDynamicSnippetTests.js";
@@ -101,8 +101,6 @@ export class GenerationRunner {
                         } catch (error) {
                             if (error instanceof TaskAbortSignal) {
                                 // already logged by failAndThrow, nothing to do
-                            } else if (error instanceof LoggableFernCliError) {
-                                interactiveTaskContext.failWithoutThrowing(`Generation failed: ${error.log}`, error);
                             } else {
                                 interactiveTaskContext.failWithoutThrowing(
                                     `Generation failed: ${error instanceof Error ? error.message : "Unknown error"}`,

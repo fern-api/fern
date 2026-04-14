@@ -3,6 +3,7 @@
 import { addPrefixToString } from "@fern-api/core-utils";
 import { createLogger, LogLevel } from "@fern-api/logger";
 import {
+    CliError,
     CreateInteractiveTaskParams,
     Finishable,
     InteractiveTaskContext,
@@ -78,15 +79,19 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
 
     public takeOverTerminal: (run: () => void | Promise<void>) => Promise<void>;
 
-    public failAndThrow(message?: string, error?: unknown): never {
+    public failAndThrow(message?: string, error?: unknown, _options?: { code?: CliError.Code }): never {
         this.failWithoutThrowing(message, error);
         this.finish();
         throw new TaskAbortSignal();
     }
 
-    public failWithoutThrowing(message?: string, error?: unknown): void {
+    public failWithoutThrowing(message?: string, error?: unknown, _options?: { code?: CliError.Code }): void {
         logErrorMessage({ message, error, logger: this.logger });
         this.result = TaskResult.Failure;
+    }
+
+    public captureException(_error: unknown, _code?: CliError.Code): void {
+        // no-op in seed context
     }
 
     public getResult(): TaskResult {

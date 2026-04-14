@@ -1,9 +1,10 @@
+import { CliError } from "@fern-api/task-context";
+
 import chalk from "chalk";
 import type { Argv } from "yargs";
 import { ApiChecker } from "../../../api/checker/ApiChecker.js";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
-import { CliError } from "../../../errors/CliError.js";
 import { Icons } from "../../../ui/format.js";
 import { command } from "../../_internal/command.js";
 import { type JsonOutput, toJsonViolation } from "../../_internal/toJsonViolation.js";
@@ -26,7 +27,8 @@ export class CheckCommand {
         if (args.api != null && workspace.apis[args.api] == null) {
             const availableApis = Object.keys(workspace.apis).join(", ");
             throw new CliError({
-                message: `API '${args.api}' not found. Available APIs: ${availableApis}`
+                message: `API '${args.api}' not found. Available APIs: ${availableApis}`,
+                code: CliError.Code.ConfigError
             });
         }
 
@@ -43,7 +45,7 @@ export class CheckCommand {
             const response = this.buildJsonResponse({ apiCheckResult: result, hasErrors });
             context.stdout.info(JSON.stringify(response, null, 2));
             if (hasErrors) {
-                throw CliError.exit();
+                throw CliError.validationError();
             }
             return;
         }
@@ -56,7 +58,7 @@ export class CheckCommand {
         }
 
         if (hasErrors) {
-            throw CliError.exit();
+            throw CliError.validationError();
         }
 
         if (result.warningCount > 0) {

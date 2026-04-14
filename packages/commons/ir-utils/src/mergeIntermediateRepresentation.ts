@@ -1,5 +1,6 @@
 import { CasingsGenerator } from "@fern-api/casings-generator";
 import * as FernIr from "@fern-api/ir-sdk";
+import { getWireValue } from "./utils/namesUtils.js";
 
 export function mergeIntermediateRepresentation(
     ir1: FernIr.IntermediateRepresentation,
@@ -27,7 +28,7 @@ export function mergeIntermediateRepresentation(
                     : (ir1.auth?.schemes ?? []),
             docs: ir1.auth?.docs ?? ir2.auth?.docs
         },
-        headers: [...(ir1.headers ?? []), ...(ir2.headers ?? [])],
+        headers: deduplicateHeaders([...(ir1.headers ?? []), ...(ir2.headers ?? [])]),
         environments,
         types: {
             ...(ir1.types ?? {}),
@@ -67,7 +68,7 @@ export function mergeIntermediateRepresentation(
         },
         fdrApiDefinitionId: ir1.fdrApiDefinitionId ?? ir2.fdrApiDefinitionId,
         apiVersion: ir1.apiVersion ?? ir2.apiVersion,
-        idempotencyHeaders: [...(ir1.idempotencyHeaders ?? []), ...(ir2.idempotencyHeaders ?? [])],
+        idempotencyHeaders: deduplicateHeaders([...(ir1.idempotencyHeaders ?? []), ...(ir2.idempotencyHeaders ?? [])]),
         pathParameters: [...(ir1.pathParameters ?? []), ...(ir2.pathParameters ?? [])],
         errorDiscriminationStrategy: ir1.errorDiscriminationStrategy ?? ir2.errorDiscriminationStrategy,
         variables: [...(ir1.variables ?? []), ...(ir2.variables ?? [])],
@@ -523,6 +524,23 @@ function isWebsocketEnvironment(environment: FernIr.EnvironmentsConfig): boolean
         );
     }
     return false;
+}
+
+/**
+ * Deduplicates headers by wire value (case-insensitive), keeping the first occurrence.
+ * This prevents the same global header from appearing multiple times when merging
+ * IRs from multiple specs that share the same globalHeaderOverrides.
+ */
+function deduplicateHeaders(headers: FernIr.HttpHeader[]): FernIr.HttpHeader[] {
+    const seen = new Set<string>();
+    return headers.filter((header) => {
+        const wireValue = getWireValue(header.name).toLowerCase();
+        if (seen.has(wireValue)) {
+            return false;
+        }
+        seen.add(wireValue);
+        return true;
+    });
 }
 
 function generateUniqueName(id: string, existingIds: Set<string>): string {

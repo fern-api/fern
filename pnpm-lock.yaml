@@ -1654,8 +1654,8 @@ importers:
         specifier: workspace:*
         version: link:../browser-compatible-base
       '@fern-fern/ir-sdk':
-        specifier: ^62.6.0
-        version: 62.6.0
+        specifier: ^66.0.0
+        version: 66.0.0
       lodash-es:
         specifier: 'catalog:'
         version: 4.18.1
@@ -1781,8 +1781,8 @@ importers:
         specifier: 'catalog:'
         version: 0.0.1167
       '@fern-fern/ir-sdk':
-        specifier: ^62.6.0
-        version: 62.6.0
+        specifier: ^66.0.0
+        version: 66.0.0
       '@types/node':
         specifier: 'catalog:'
         version: 22.19.17
@@ -1838,8 +1838,8 @@ importers:
         specifier: 'catalog:'
         version: 0.0.1167
       '@fern-fern/ir-sdk':
-        specifier: ^62.6.0
-        version: 62.6.0
+        specifier: ^66.0.0
+        version: 66.0.0
       '@types/node':
         specifier: 'catalog:'
         version: 22.19.17
@@ -7686,8 +7686,8 @@ importers:
         specifier: workspace:*
         version: link:../ir-utils
       '@fern-fern/ir-sdk':
-        specifier: ^61.7.0
-        version: 61.7.0
+        specifier: ^66.0.0
+        version: 66.0.0
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*

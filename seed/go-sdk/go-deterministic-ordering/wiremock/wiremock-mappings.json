@@ -388,6 +388,11 @@
           "id": {
             "equalTo": "id"
           }
+        },
+        "queryParameters": {
+          "filter": {
+            "equalTo": "filter"
+          }
         }
       },
       "response": {
@@ -418,6 +423,14 @@
         "headers": {
           "Authorization": {
             "matches": "Bearer .+"
+          }
+        },
+        "queryParameters": {
+          "page": {
+            "equalTo": "1"
+          },
+          "limit": {
+            "equalTo": "1"
           }
         }
       },
@@ -487,6 +500,11 @@
           "id": {
             "equalTo": "id"
           }
+        },
+        "queryParameters": {
+          "expand": {
+            "equalTo": "true"
+          }
         }
       },
       "response": {
@@ -517,6 +535,14 @@
         "headers": {
           "Authorization": {
             "matches": "Bearer .+"
+          }
+        },
+        "queryParameters": {
+          "cursor": {
+            "equalTo": "cursor"
+          },
+          "size": {
+            "equalTo": "1"
           }
         }
       },
@@ -586,6 +612,11 @@
           "id": {
             "equalTo": "id"
           }
+        },
+        "queryParameters": {
+          "verbose": {
+            "equalTo": "true"
+          }
         }
       },
       "response": {
@@ -608,8 +639,48 @@
       }
     },
     {
-      "id": "a4f13dad-a65b-459a-b309-c09fd30d93a2",
-      "name": "endpoints_enum_getAndReturnEnum - default",
+      "id": "f33a9912-4b32-408d-b578-ba557f6e0399",
+      "name": "list - default",
+      "request": {
+        "urlPathTemplate": "/duplicate-names-c",
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
+        "queryParameters": {
+          "offset": {
+            "equalTo": "1"
+          },
+          "count": {
+            "equalTo": "1"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "f33a9912-4b32-408d-b578-ba557f6e0399",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    },
+    {
+      "id": "60fd3c8a-3983-41b9-8178-f42997388900",
+      "name": "getAndReturnEnum - default",
       "request": {
         "urlPathTemplate": "/enum",
         "method": "POST",
@@ -1076,6 +1147,14 @@
           "Authorization": {
             "matches": "Bearer .+"
           }
+        },
+        "queryParameters": {
+          "cursor": {
+            "equalTo": "cursor"
+          },
+          "limit": {
+            "equalTo": "1"
+          }
         }
       },
       "response": {
@@ -1135,8 +1214,206 @@
       }
     },
     {
-      "id": "96945e52-f3f2-4c0c-ada5-14a133a6f81d",
-      "name": "endpoints_params_modifyWithPath - default",
+      "id": "711fc64f-4af9-4084-8c29-1e7a9e58be70",
+      "name": "getWithInlinePath - default",
+      "request": {
+        "urlPathTemplate": "/params/path/{param}",
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
+        "pathParameters": {
+          "param": {
+            "equalTo": "param"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"string\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "711fc64f-4af9-4084-8c29-1e7a9e58be70",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "8e5739b3-d75f-47d7-b6b8-a663d91a66b5",
+      "name": "getWithQuery - default",
+      "request": {
+        "urlPathTemplate": "/params",
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
+        "queryParameters": {
+          "query": {
+            "equalTo": "query"
+          },
+          "number": {
+            "equalTo": "1"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "8e5739b3-d75f-47d7-b6b8-a663d91a66b5",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    },
+    {
+      "id": "4125d349-732b-4ff7-948d-1eeb977ed13b",
+      "name": "getWithAllowMultipleQuery - default",
+      "request": {
+        "urlPathTemplate": "/params",
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
+        "queryParameters": {
+          "query": {
+            "equalTo": "query"
+          },
+          "number": {
+            "equalTo": "1"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "4125d349-732b-4ff7-948d-1eeb977ed13b",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    },
+    {
+      "id": "1933d96a-a1b9-4cf1-85ba-c1e8eff5bd56",
+      "name": "getWithPathAndQuery - default",
+      "request": {
+        "urlPathTemplate": "/params/path-query/{param}",
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
+        "pathParameters": {
+          "param": {
+            "equalTo": "param"
+          }
+        },
+        "queryParameters": {
+          "query": {
+            "equalTo": "query"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "1933d96a-a1b9-4cf1-85ba-c1e8eff5bd56",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "c4f5012a-fb3f-45ac-b695-beedc3353ad8",
+      "name": "getWithInlinePathAndQuery - default",
+      "request": {
+        "urlPathTemplate": "/params/path-query/{param}",
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
+        "pathParameters": {
+          "param": {
+            "equalTo": "param"
+          }
+        },
+        "queryParameters": {
+          "query": {
+            "equalTo": "query"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "c4f5012a-fb3f-45ac-b695-beedc3353ad8",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "046bf7d6-751b-48e9-bfc6-ff74a17e88e1",
+      "name": "modifyWithPath - default",
       "request": {
         "urlPathTemplate": "/params/path/{param}",
         "method": "PUT",

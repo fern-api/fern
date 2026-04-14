@@ -8,9 +8,9 @@ from .requests import (
     CircleParams,
     ObjectWithDefaultsParams,
     ObjectWithOptionalFieldParams,
-    ShapeParams,
     Shape_CircleParams,
     Shape_SquareParams,
+    ShapeParams,
     SquareParams,
     UndiscriminatedShapeParams,
 )

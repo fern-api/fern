@@ -54,8 +54,8 @@
         }
       },
       "response": {
-        "status": 200,
-        "body": "{\n  \"name\": \"name\",\n  \"contents\": \"contents\"\n}",
+        "status": 404,
+        "body": "\"A file with that name was not found!\"",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -202,7 +202,15 @@
       "name": "getmetadata - default",
       "request": {
         "urlPathTemplate": "/metadata",
-        "method": "GET"
+        "method": "GET",
+        "queryParameters": {
+          "shallow": {
+            "equalTo": "false"
+          },
+          "tag": {
+            "equalTo": "development"
+          }
+        }
       },
       "response": {
         "status": 200,

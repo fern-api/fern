@@ -9,8 +9,8 @@ from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.logging import LogConfig, Logger
 
 if typing.TYPE_CHECKING:
-    from .complex_.client import AsyncComplexClient, ComplexClient
-    from .inline_users_inline_users.client import AsyncInlineUsersInlineUsersClient, InlineUsersInlineUsersClient
+    from .complex.client import AsyncComplexClient, ComplexClient
+    from .inline_users.client import AsyncInlineUsersClient, InlineUsersClient
     from .users.client import AsyncUsersClient, UsersClient
 
 
@@ -82,7 +82,7 @@ class SeedApi:
     @property
     def complex_(self):
         if self._complex_ is None:
-            from .complex_.client import ComplexClient  # noqa: E402
+            from .complex.client import ComplexClient  # noqa: E402
 
             self._complex_ = ComplexClient(client_wrapper=self._client_wrapper)
         return self._complex_
@@ -193,7 +193,7 @@ class AsyncSeedApi:
     @property
     def complex_(self):
         if self._complex_ is None:
-            from .complex_.client import AsyncComplexClient  # noqa: E402
+            from .complex.client import AsyncComplexClient  # noqa: E402
 
             self._complex_ = AsyncComplexClient(client_wrapper=self._client_wrapper)
         return self._complex_

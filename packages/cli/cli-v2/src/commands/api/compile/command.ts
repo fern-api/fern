@@ -1,5 +1,7 @@
 import { Audiences } from "@fern-api/configuration";
 import { streamObjectToFile } from "@fern-api/fs-utils";
+import { CliError } from "@fern-api/task-context";
+
 import chalk from "chalk";
 import { JsonStreamStringify } from "json-stream-stringify";
 import type { Argv } from "yargs";
@@ -8,7 +10,6 @@ import { IrCompiler } from "../../../api/compiler/IrCompiler.js";
 import type { ApiDefinition } from "../../../api/config/ApiDefinition.js";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
-import { CliError } from "../../../errors/CliError.js";
 import { LANGUAGES } from "../../../sdk/config/Language.js";
 import type { Workspace } from "../../../workspace/Workspace.js";
 import { command } from "../../_internal/command.js";
@@ -67,7 +68,8 @@ export class CompileCommand {
             if (definition == null) {
                 const available = apiNames.join(", ");
                 throw new CliError({
-                    message: `API '${args.api}' not found. Available APIs: ${available}`
+                    message: `API '${args.api}' not found. Available APIs: ${available}`,
+                    code: CliError.Code.ConfigError
                 });
             }
             return { apiName: args.api, definition };
@@ -77,13 +79,15 @@ export class CompileCommand {
             const apiName = apiNames[0];
             if (apiName == null) {
                 throw new CliError({
-                    message: "Internal error; no APIs found in workspace"
+                    message: "Internal error; no APIs found in workspace",
+                    code: CliError.Code.InternalError
                 });
             }
             const definition = workspace.apis[apiName];
             if (definition == null) {
                 throw new CliError({
-                    message: `Internal error; API '${apiName}' not found in workspace`
+                    message: `Internal error; API '${apiName}' not found in workspace`,
+                    code: CliError.Code.InternalError
                 });
             }
             return { apiName, definition };
@@ -91,7 +95,8 @@ export class CompileCommand {
 
         const available = apiNames.join(", ");
         throw new CliError({
-            message: `Multiple APIs found: ${available}. Use --api to select one.`
+            message: `Multiple APIs found: ${available}. Use --api to select one.`,
+            code: CliError.Code.ConfigError
         });
     }
 
@@ -112,7 +117,7 @@ export class CompileCommand {
                     `${violation.displayRelativeFilepath}:${violation.line}:${violation.column}: ${violation.message}`
                 );
             }
-            throw CliError.exit();
+            throw CliError.validationError(`API '${apiName}' has ${result.violations.length} validation errors`);
         }
     }
 
