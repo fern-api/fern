@@ -1,0 +1,90 @@
+name: Release Software
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      # Auto-updated by scripts/release-setup.ts — do not edit manually
+      - "packages/cli/cli/changes/**"
+      - "generators/csharp/sdk/changes/**"
+      - "generators/go/sdk/changes/**"
+      - "generators/java/sdk/changes/**"
+      - "generators/php/sdk/changes/**"
+      - "generators/python/sdk/changes/**"
+      - "generators/ruby/sdk/changes/**"
+      - "generators/ruby-v2/sdk/changes/**"
+      - "generators/rust/sdk/changes/**"
+      - "generators/swift/sdk/changes/**"
+      - "generators/typescript/sdk/changes/**"
+  workflow_dispatch:
+    inputs:
+      software:
+        description: "Which software to release"
+        required: false
+        default: "all"
+        type: choice
+        options:
+          # Auto-updated by scripts/release-setup.ts — do not edit manually
+          - all
+          - cli
+          - csharp
+          - go
+          - java
+          - php
+          - python
+          - ruby
+          - ruby-v2
+          - rust
+          - swift
+          - typescript
+
+# Prevent concurrent release runs to avoid git conflicts
+concurrency:
+  group: release-software
+  cancel-in-progress: false
+
+# ACTIONS_PAT must belong to a user with bypass access for the main branch
+# protection rule, scoped only to allow changelog/versions file commits.
+permissions:
+  contents: write
+
+jobs:
+  release-software:
+    if: github.repository == 'fern-api/fern'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.ACTIONS_PAT }}
+          ref: main
+          fetch-depth: 0
+
+      - name: Skip if triggered by own release commit
+        id: skip-release-loop
+        run: |
+          SUBJECT=$(git log -1 --format='%s')
+          echo "Last commit subject: $SUBJECT"
+          if [[ "$SUBJECT" =~ ^chore\(.+\):\ release\ .+ ]]; then
+            echo "Triggered by automated release commit — skipping to avoid loop."
+            echo "skip=true" >> $GITHUB_OUTPUT
+          else
+            echo "skip=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Configure git
+        if: steps.skip-release-loop.outputs.skip != 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Install
+        if: steps.skip-release-loop.outputs.skip != 'true'
+        uses: ./.github/actions/install
+
+      - name: Run releases for all configured software
+        if: steps.skip-release-loop.outputs.skip != 'true'
+        env:
+          SOFTWARE: ${{ inputs.software || 'all' }}
+        run: npx tsx scripts/release-workflow.ts "$SOFTWARE"

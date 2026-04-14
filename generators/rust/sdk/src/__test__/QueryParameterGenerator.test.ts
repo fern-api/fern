@@ -1,7 +1,10 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { describe, expect, it } from "vitest";
 import { SubClientGenerator } from "../generators/SubClientGenerator.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "rust", keywords: undefined, smartCasing: true });
 
 // Mock function to create basic IR structure
 function createMockIR(services: Record<string, unknown> = {}): FernIr.IntermediateRepresentation {
@@ -117,6 +120,7 @@ function createHttpEndpoint(name: string, queryParams: FernIr.QueryParameter[] =
 function createMockContext(ir: FernIr.IntermediateRepresentation): SdkGeneratorContext {
     return {
         ir,
+        case: caseConverter,
         getClientName: () => "TestClient",
         customConfig: { generateExamples: false },
         getHttpServiceOrThrow: () => ({ endpoints: [] }) as unknown as FernIr.HttpService,
@@ -130,22 +134,22 @@ function createMockContext(ir: FernIr.IntermediateRepresentation): SdkGeneratorC
             );
         },
         getUniqueFilenameForSubpackage: (subpackage: {
-            fernFilepath: { allParts: Array<{ snakeCase: { safeName: string } }> };
+            fernFilepath: FernIr.FernFilepath;
         }) => {
-            const pathParts = subpackage.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
+            const pathParts = subpackage.fernFilepath.allParts.map((part) => caseConverter.snakeSafe(part));
             return `${pathParts.join("_")}.rs`;
         },
         getUniqueClientNameForSubpackage: (subpackage: {
-            fernFilepath: { allParts: Array<{ pascalCase: { safeName: string } }> };
+            fernFilepath: FernIr.FernFilepath;
         }) => {
-            const pathParts = subpackage.fernFilepath.allParts.map((part) => part.pascalCase.safeName);
+            const pathParts = subpackage.fernFilepath.allParts.map((part) => caseConverter.pascalSafe(part));
             return pathParts.join("") + "Client";
         },
-        getDirectoryForFernFilepath: (fernFilepath: { allParts: Array<{ snakeCase: { safeName: string } }> }) => {
-            return fernFilepath.allParts.map((part) => part.snakeCase.safeName).join("/");
+        getDirectoryForFernFilepath: (fernFilepath: FernIr.FernFilepath) => {
+            return fernFilepath.allParts.map((part) => caseConverter.snakeSafe(part)).join("/");
         },
         getQueryRequestTypeName: (endpoint: FernIr.HttpEndpoint) => {
-            const methodName = endpoint.name.pascalCase.safeName;
+            const methodName = caseConverter.pascalSafe(endpoint.name);
             return `${methodName}QueryRequest`;
         },
         getModuleNameForQueryRequest: (queryRequestTypeName: string) => {

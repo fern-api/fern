@@ -647,6 +647,7 @@
                         "docs": null
                     }
                 ],
+                "default": null,
                 "discriminatorContext": "data"
             },
             "referencedTypes": [
@@ -2957,6 +2958,7 @@
                         "docs": null
                     }
                 ],
+                "default": null,
                 "discriminatorContext": "data"
             },
             "referencedTypes": [
@@ -3057,6 +3059,7 @@
                         "docs": null
                     }
                 ],
+                "default": null,
                 "discriminatorContext": "data"
             },
             "referencedTypes": [
@@ -3157,6 +3160,7 @@
                         "docs": null
                     }
                 ],
+                "default": null,
                 "discriminatorContext": "data"
             },
             "referencedTypes": [
@@ -3248,6 +3252,7 @@
                         "docs": null
                     }
                 ],
+                "default": null,
                 "discriminatorContext": "data"
             },
             "referencedTypes": [
@@ -3328,6 +3333,7 @@
                         "docs": null
                     }
                 ],
+                "default": null,
                 "discriminatorContext": "data"
             },
             "referencedTypes": [],
@@ -3506,6 +3512,7 @@
                         "docs": null
                     }
                 ],
+                "default": null,
                 "discriminatorContext": "data"
             },
             "referencedTypes": [],
@@ -3696,6 +3703,7 @@
                         "docs": "This is a bar field."
                     }
                 ],
+                "default": null,
                 "discriminatorContext": "data"
             },
             "referencedTypes": [
@@ -3871,6 +3879,7 @@
                         "docs": null
                     }
                 ],
+                "default": null,
                 "discriminatorContext": "data"
             },
             "referencedTypes": [
@@ -4019,6 +4028,7 @@
                         "docs": null
                     }
                 ],
+                "default": null,
                 "discriminatorContext": "data"
             },
             "referencedTypes": [
@@ -4190,6 +4200,7 @@
                         "docs": null
                     }
                 ],
+                "default": null,
                 "discriminatorContext": "data"
             },
             "referencedTypes": [],
@@ -4361,6 +4372,7 @@
                         "docs": null
                     }
                 ],
+                "default": null,
                 "discriminatorContext": "data"
             },
             "referencedTypes": [
@@ -4617,6 +4629,7 @@
                         "docs": null
                     }
                 ],
+                "default": null,
                 "discriminatorContext": "data"
             },
             "referencedTypes": [],
@@ -4784,6 +4797,7 @@
                         "docs": null
                     }
                 ],
+                "default": null,
                 "discriminatorContext": "data"
             },
             "referencedTypes": [],
@@ -4998,6 +5012,7 @@
                         "docs": null
                     }
                 ],
+                "default": null,
                 "discriminatorContext": "data"
             },
             "referencedTypes": [
@@ -5128,6 +5143,7 @@
                         "docs": null
                     }
                 ],
+                "default": null,
                 "discriminatorContext": "data"
             },
             "referencedTypes": [
@@ -5312,6 +5328,7 @@
                         "docs": null
                     }
                 ],
+                "default": null,
                 "discriminatorContext": "data"
             },
             "referencedTypes": [
@@ -5524,6 +5541,7 @@
                         "docs": null
                     }
                 ],
+                "default": null,
                 "discriminatorContext": "data"
             },
             "referencedTypes": [
@@ -6391,6 +6409,7 @@
                         "docs": null
                     }
                 ],
+                "default": null,
                 "discriminatorContext": "data"
             },
             "referencedTypes": [],
@@ -6580,6 +6599,7 @@
                         "docs": null
                     }
                 ],
+                "default": null,
                 "discriminatorContext": "data"
             },
             "referencedTypes": [],
@@ -6925,6 +6945,7 @@
                         "docs": null
                     }
                 ],
+                "default": null,
                 "discriminatorContext": "data"
             },
             "referencedTypes": [

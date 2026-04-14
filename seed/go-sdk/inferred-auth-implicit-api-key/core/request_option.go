@@ -28,7 +28,7 @@ type RequestOptions struct {
 	MaxAttempts     uint
 	MaxBufSize      int
 	tokenGetter     TokenGetter
-	ApiKey          string
+	APIKey          string
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
@@ -131,13 +131,13 @@ func (m *MaxBufSizeOption) applyRequestOptions(opts *RequestOptions) {
 	opts.MaxBufSize = m.MaxBufSize
 }
 
-// ApiKeyOption implements the RequestOption interface.
-type ApiKeyOption struct {
-	ApiKey string
+// APIKeyOption implements the RequestOption interface.
+type APIKeyOption struct {
+	APIKey string
 }
 
-func (a *ApiKeyOption) applyRequestOptions(opts *RequestOptions) {
-	opts.ApiKey = a.ApiKey
+func (a *APIKeyOption) applyRequestOptions(opts *RequestOptions) {
+	opts.APIKey = a.APIKey
 }
 
 // SetTokenGetter sets the token getter function for inferred auth.

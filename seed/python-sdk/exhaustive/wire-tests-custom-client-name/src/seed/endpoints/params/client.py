@@ -340,6 +340,36 @@ class ParamsClient:
         _response = self._raw_client.upload_with_path(param, request=request, request_options=request_options)
         return _response.data
 
+    def get_with_boolean_path(self, param: bool, *, request_options: typing.Optional[RequestOptions] = None) -> str:
+        """
+        GET with boolean path param
+
+        Parameters
+        ----------
+        param : bool
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+
+        Examples
+        --------
+        from seed import Exhaustive
+
+        client = Exhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.params.get_with_boolean_path(
+            param=True,
+        )
+        """
+        _response = self._raw_client.get_with_boolean_path(param, request_options=request_options)
+        return _response.data
+
     def get_with_path_and_errors(self, param: str, *, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         GET with path param that can throw errors
@@ -774,6 +804,46 @@ class AsyncParamsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.upload_with_path(param, request=request, request_options=request_options)
+        return _response.data
+
+    async def get_with_boolean_path(
+        self, param: bool, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> str:
+        """
+        GET with boolean path param
+
+        Parameters
+        ----------
+        param : bool
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncExhaustive
+
+        client = AsyncExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.endpoints.params.get_with_boolean_path(
+                param=True,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_with_boolean_path(param, request_options=request_options)
         return _response.data
 
     async def get_with_path_and_errors(

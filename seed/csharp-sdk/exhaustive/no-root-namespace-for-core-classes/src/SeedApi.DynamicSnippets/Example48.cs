@@ -13,8 +13,8 @@ public class Example48
             }
         );
 
-        await client.Endpoints.Primitive.GetAndReturnBase64Async(
-            "SGVsbG8gd29ybGQh"
+        await client.Endpoints.Primitive.GetAndReturnDoubleAsync(
+            1.1
         );
     }
 

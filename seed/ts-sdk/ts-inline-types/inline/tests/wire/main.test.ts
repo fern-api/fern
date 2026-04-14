@@ -39,56 +39,7 @@ describe("SeedObjectClient", () => {
             },
             foo: "foo",
         });
-        expect(response).toEqual({
-            foo: "foo",
-            bar: {
-                foo: "foo",
-                bar: {
-                    foo: "foo",
-                    bar: "bar",
-                    myEnum: "SUNNY",
-                    ref: {
-                        foo: "foo",
-                    },
-                },
-                ref: {
-                    foo: "foo",
-                },
-            },
-            fooMap: {
-                fooMap: {
-                    foo: "foo",
-                    ref: {
-                        foo: "foo",
-                    },
-                },
-            },
-            fooList: [
-                {
-                    foo: "foo",
-                    ref: {
-                        foo: "foo",
-                    },
-                },
-                {
-                    foo: "foo",
-                    ref: {
-                        foo: "foo",
-                    },
-                },
-            ],
-            fooSet: [
-                {
-                    foo: "foo",
-                    ref: {
-                        foo: "foo",
-                    },
-                },
-            ],
-            ref: {
-                foo: "foo",
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getDiscriminatedUnion", async () => {

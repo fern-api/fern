@@ -142,7 +142,7 @@ impl PrimitiveClient {
             .await
     }
 
-    pub async fn get_and_return_base_64(
+    pub async fn get_and_return_base64(
         &self,
         request: &Vec<u8>,
         options: Option<RequestOptions>,

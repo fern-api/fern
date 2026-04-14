@@ -14,14 +14,14 @@ class OutboundCallConversationsResponse extends JsonSerializableType
     public mixed $conversationId;
 
     /**
-     * @var true $dryRun Always true for this response.
+     * @var bool $dryRun Always true for this response.
      */
     #[JsonProperty('dry_run')]
     public bool $dryRun;
 
     /**
      * @param array{
-     *   dryRun: true,
+     *   dryRun: bool,
      *   conversationId?: mixed,
      * } $values
      */

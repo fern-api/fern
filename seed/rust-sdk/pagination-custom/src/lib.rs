@@ -16,8 +16,9 @@
 //!     let client = PaginationClient::new(config).expect("Failed to build client");
 //!     client
 //!         .users
-//!         .list_usernames_custom(
-//!             &ListUsernamesCustomQueryRequest {
+//!         .list_with_custom_pager(
+//!             &ListWithCustomPagerQueryRequest {
+//!                 limit: Some(1),
 //!                 starting_after: Some("starting_after".to_string()),
 //!                 ..Default::default()
 //!             },

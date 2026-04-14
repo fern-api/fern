@@ -13,9 +13,9 @@ type Environment struct {
 // RequestOption to override the client's default environment,
 // if any.
 var Environments = struct {
-	RegionalApiServer Environment
+	RegionalAPIServer Environment
 }{
-	RegionalApiServer: Environment{
+	RegionalAPIServer: Environment{
 		Auth: "https://auth.example.com",
 		Base: "https://api.example.com/v1",
 	},

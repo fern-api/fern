@@ -110,12 +110,13 @@ class SdkGenerator(AbstractGenerator):
 
         for dep, value in custom_config.extra_dependencies.items():
             if type(value) is str:
-                project.add_dependency(dependency=AST.Dependency(name=dep, version=value))
+                project.add_dependency(dependency=AST.Dependency(name=dep, version=value), is_user_override=True)
             elif isinstance(value, DependencyCustomConfig):
                 project.add_dependency(
                     dependency=AST.Dependency(
                         name=dep, version=value.version, optional=value.optional, python=value.python
-                    )
+                    ),
+                    is_user_override=True,
                 )
 
         # Merge user-defined extras with the built-in aiohttp extra
@@ -131,14 +132,17 @@ class SdkGenerator(AbstractGenerator):
 
         for dep, bas_dep_value in custom_config.extra_dev_dependencies.items():
             if type(bas_dep_value) is str:
-                project.add_dev_dependency(dependency=AST.Dependency(name=dep, version=bas_dep_value))
+                project.add_dev_dependency(
+                    dependency=AST.Dependency(name=dep, version=bas_dep_value), is_user_override=True
+                )
             elif isinstance(bas_dep_value, BaseDependencyCustomConfig):
                 project.add_dev_dependency(
                     dependency=AST.Dependency(
                         name=dep,
                         version=bas_dep_value.version,
                         extras=tuple(bas_dep_value.extras) if bas_dep_value.extras is not None else None,
-                    )
+                    ),
+                    is_user_override=True,
                 )
 
         # Export from root init
@@ -601,6 +605,23 @@ class SdkGenerator(AbstractGenerator):
         root_client: "RootClient",
     ) -> AST.ClassDeclaration:
         params = root_client.init_parameters if root_client.init_parameters is not None else root_client.parameters
+
+        if root_client.constructor_overloads is not None:
+            # When the base class has overloaded __init__ (e.g. OAuth + token),
+            # mirror the overloads on the wrapper and use **kwargs pass-through
+            # so the call to super().__init__() satisfies mypy without type: ignore.
+            def write_kwargs_super_init(writer: AST.NodeWriter) -> None:
+                writer.write_line("super().__init__(**kwargs)")
+
+            return AST.ClassDeclaration(
+                name=class_name,
+                extends=[base_class_ref],
+                constructor=AST.ClassConstructor(
+                    signature=AST.FunctionSignature(include_kwargs=True),
+                    body=AST.CodeWriter(write_kwargs_super_init),
+                    overloads=root_client.constructor_overloads,
+                ),
+            )
 
         named_params = [
             AST.NamedFunctionParameter(

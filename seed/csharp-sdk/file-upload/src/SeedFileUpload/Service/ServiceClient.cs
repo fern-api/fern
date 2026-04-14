@@ -300,9 +300,9 @@ public partial class ServiceClient : IServiceClient
         multipartFormRequest_.AddStringPart("maybe_string", request.MaybeString);
         multipartFormRequest_.AddStringPart("integer", request.Integer);
         multipartFormRequest_.AddFileParameterPart("file", request.File);
-        multipartFormRequest_.AddFileParameterPart("file_list", request.FileList);
+        multipartFormRequest_.AddFileParameterParts("file_list", request.FileList);
         multipartFormRequest_.AddFileParameterPart("maybe_file", request.MaybeFile);
-        multipartFormRequest_.AddFileParameterPart("maybe_file_list", request.MaybeFileList);
+        multipartFormRequest_.AddFileParameterParts("maybe_file_list", request.MaybeFileList);
         multipartFormRequest_.AddStringPart("maybe_integer", request.MaybeInteger);
         multipartFormRequest_.AddStringParts(
             "optional_list_of_strings",
@@ -582,9 +582,9 @@ public partial class ServiceClient : IServiceClient
         multipartFormRequest_.AddFormEncodedPart("maybe_string", request.MaybeString);
         multipartFormRequest_.AddFormEncodedPart("integer", request.Integer);
         multipartFormRequest_.AddFileParameterPart("file", request.File);
-        multipartFormRequest_.AddFileParameterPart("file_list", request.FileList);
+        multipartFormRequest_.AddFileParameterParts("file_list", request.FileList);
         multipartFormRequest_.AddFileParameterPart("maybe_file", request.MaybeFile);
-        multipartFormRequest_.AddFileParameterPart("maybe_file_list", request.MaybeFileList);
+        multipartFormRequest_.AddFileParameterParts("maybe_file_list", request.MaybeFileList);
         multipartFormRequest_.AddFormEncodedPart("maybe_integer", request.MaybeInteger);
         multipartFormRequest_.AddFormEncodedParts(
             "optional_list_of_strings",

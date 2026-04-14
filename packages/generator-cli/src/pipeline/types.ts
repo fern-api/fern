@@ -59,6 +59,16 @@ export interface GithubStepConfig {
         previousGenerationSha: string;
         currentGenerationSha: string;
     };
+    /** When true: separate PRs per generation, no-diff skip, automerge support, run_id in body */
+    automationMode?: boolean;
+    /** Enable GitHub automerge on the PR (only effective when automationMode && !hasBreakingChanges) */
+    autoMerge?: boolean;
+    /** Pre-computed: version bump is MAJOR (from --version AUTO AI analysis) */
+    hasBreakingChanges?: boolean;
+    /** Human-readable breaking changes summary for PR body (from autoVersioningPrDescription on MAJOR) */
+    breakingChangesSummary?: string;
+    /** FERN_RUN_ID for cross-repo correlation (set by GitHub Action) */
+    runId?: string;
 }
 
 export interface PipelineResult {
@@ -107,6 +117,10 @@ export interface GithubStepResult extends StepResult {
     prNumber?: number;
     updatedExistingPr?: boolean;
     generationBaseTagSha?: string;
+    /** True when generation produced no changes vs base branch — PR skipped */
+    skippedNoDiff?: boolean;
+    /** True when automerge was enabled on the PR */
+    autoMergeEnabled?: boolean;
 }
 
 export interface StepResult {

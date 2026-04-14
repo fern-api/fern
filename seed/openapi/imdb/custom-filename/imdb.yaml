@@ -85,6 +85,6 @@ components:
         - title
         - rating
   securitySchemes:
-    BearerAuth:
+    Bearer:
       type: http
       scheme: bearer

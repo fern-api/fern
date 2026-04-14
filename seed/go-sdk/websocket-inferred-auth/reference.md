@@ -14,8 +14,8 @@
 
 ```go
 request := &fern.GetTokenRequest{
-        XApiKey: "X-Api-Key",
-        ClientId: "client_id",
+        XAPIKey: "X-Api-Key",
+        ClientID: "client_id",
         ClientSecret: "client_secret",
         Scope: fern.String(
             "scope",
@@ -40,7 +40,7 @@ client.Auth.GetTokenWithClientCredentials(
 <dl>
 <dd>
 
-**xApiKey:** `string` 
+**xAPIKey:** `string` 
     
 </dd>
 </dl>
@@ -48,7 +48,7 @@ client.Auth.GetTokenWithClientCredentials(
 <dl>
 <dd>
 
-**clientId:** `string` 
+**clientID:** `string` 
     
 </dd>
 </dl>
@@ -106,8 +106,8 @@ client.Auth.GetTokenWithClientCredentials(
 
 ```go
 request := &fern.RefreshTokenRequest{
-        XApiKey: "X-Api-Key",
-        ClientId: "client_id",
+        XAPIKey: "X-Api-Key",
+        ClientID: "client_id",
         ClientSecret: "client_secret",
         RefreshToken: "refresh_token",
         Scope: fern.String(
@@ -133,7 +133,7 @@ client.Auth.RefreshToken(
 <dl>
 <dd>
 
-**xApiKey:** `string` 
+**xAPIKey:** `string` 
     
 </dd>
 </dl>
@@ -141,7 +141,7 @@ client.Auth.RefreshToken(
 <dl>
 <dd>
 
-**clientId:** `string` 
+**clientID:** `string` 
     
 </dd>
 </dl>

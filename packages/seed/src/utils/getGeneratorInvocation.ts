@@ -58,7 +58,7 @@ export async function getGeneratorInvocation({
         absolutePathToLocalSnippets: undefined,
         language,
         keywords: undefined,
-        smartCasing: smartCasing ?? false,
+        smartCasing: smartCasing ?? true,
         disableExamples: false,
         irVersionOverride: irVersion,
         publishMetadata:
@@ -67,7 +67,13 @@ export async function getGeneratorInvocation({
                 : undefined,
         readme,
         settings: undefined,
-        raw
+        raw,
+        automation: {
+            generate: true,
+            upgrade: true,
+            preview: true,
+            verify: true
+        }
     };
 }
 

@@ -70,8 +70,10 @@ func (r *RawClient) Post(
 			return nil, err
 		}
 	}
-	if err := writer.WriteFile("maybe_file", maybeFile); err != nil {
-		return nil, err
+	if maybeFile != nil {
+		if err := writer.WriteFile("maybe_file", maybeFile); err != nil {
+			return nil, err
+		}
 	}
 	for _, f := range maybeFileList {
 		if err := writer.WriteFile("maybe_file_list", f); err != nil {
@@ -103,8 +105,8 @@ func (r *RawClient) Post(
 			return nil, err
 		}
 	}
-	if request.OptionalId != nil {
-		if err := writer.WriteField("optional_id", *request.OptionalId); err != nil {
+	if request.OptionalID != nil {
+		if err := writer.WriteField("optional_id", *request.OptionalID); err != nil {
 			return nil, err
 		}
 	}
@@ -460,8 +462,10 @@ func (r *RawClient) WithFormEncodedContainers(
 			return nil, err
 		}
 	}
-	if err := writer.WriteFile("maybe_file", maybeFile); err != nil {
-		return nil, err
+	if maybeFile != nil {
+		if err := writer.WriteFile("maybe_file", maybeFile); err != nil {
+			return nil, err
+		}
 	}
 	for _, f := range maybeFileList {
 		if err := writer.WriteFile("maybe_file_list", f); err != nil {
@@ -493,8 +497,8 @@ func (r *RawClient) WithFormEncodedContainers(
 			return nil, err
 		}
 	}
-	if request.OptionalId != nil {
-		if err := writer.WriteField("optional_id", *request.OptionalId); err != nil {
+	if request.OptionalID != nil {
+		if err := writer.WriteField("optional_id", *request.OptionalID); err != nil {
 			return nil, err
 		}
 	}
@@ -562,8 +566,10 @@ func (r *RawClient) OptionalArgs(
 		options.ToHeader(),
 	)
 	writer := internal.NewMultipartWriter()
-	if err := writer.WriteFile("image_file", imageFile, internal.WithDefaultContentType("image/jpeg")); err != nil {
-		return nil, err
+	if imageFile != nil {
+		if err := writer.WriteFile("image_file", imageFile, internal.WithDefaultContentType("image/jpeg")); err != nil {
+			return nil, err
+		}
 	}
 	if request.Request != nil {
 		if err := writer.WriteJSON("request", request.Request, internal.WithDefaultContentType("application/json; charset=utf-8")); err != nil {
@@ -654,10 +660,10 @@ func (r *RawClient) WithInlineType(
 	}, nil
 }
 
-func (r *RawClient) WithJsonProperty(
+func (r *RawClient) WithJSONProperty(
 	ctx context.Context,
 	file io.Reader,
-	request *fern.WithJsonPropertyRequest,
+	request *fern.WithJSONPropertyRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[string], error) {
 	options := core.NewRequestOptions(opts...)
@@ -675,8 +681,8 @@ func (r *RawClient) WithJsonProperty(
 	if err := writer.WriteFile("file", file); err != nil {
 		return nil, err
 	}
-	if request.Json != nil {
-		if err := writer.WriteJSON("json", request.Json); err != nil {
+	if request.JSON != nil {
+		if err := writer.WriteJSON("json", request.JSON); err != nil {
 			return nil, err
 		}
 	}

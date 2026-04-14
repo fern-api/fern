@@ -1,7 +1,9 @@
 package com.snippets;
 
 import com.fern.sdk.SeedExhaustiveClient;
-import com.fern.sdk.resources.endpoints.pagination.requests.ListItemsRequest;
+import com.fern.sdk.resources.types.object.types.NestedObjectWithRequiredField;
+import com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;
+import com.fern.sdk.resources.types.object.types.ObjectWithRequiredNestedObject;
 
 public class Example28 {
     public static void main(String[] args) {
@@ -11,11 +13,21 @@ public class Example28 {
             .url("https://api.fern.com")
             .build();
 
-        client.endpoints().pagination().listItems(
-            ListItemsRequest
+        client.endpoints().object().getAndReturnWithRequiredNestedObject(
+            ObjectWithRequiredNestedObject
                 .builder()
-                .cursor("cursor")
-                .limit(1)
+                .requiredString("hello")
+                .requiredObject(
+                    NestedObjectWithRequiredField
+                        .builder()
+                        .string("nested")
+                        .nestedObject(
+                            ObjectWithOptionalField
+                                .builder()
+                                .build()
+                        )
+                        .build()
+                )
                 .build()
         );
     }

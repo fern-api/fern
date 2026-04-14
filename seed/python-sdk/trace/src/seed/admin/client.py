@@ -10,11 +10,11 @@ from ..submission.types.test_case_result_with_stdout import TestCaseResultWithSt
 from ..submission.types.test_submission_status import TestSubmissionStatus
 from ..submission.types.test_submission_update_info import TestSubmissionUpdateInfo
 from ..submission.types.trace_response import TraceResponse
-from ..submission.types.trace_response_v_2 import TraceResponseV2
+from ..submission.types.trace_response_v2 import TraceResponseV2
 from ..submission.types.workspace_run_details import WorkspaceRunDetails
 from ..submission.types.workspace_submission_status import WorkspaceSubmissionStatus
 from ..submission.types.workspace_submission_update_info import WorkspaceSubmissionUpdateInfo
-from ..v_2.problem.types.test_case_id import TestCaseId
+from ..v2.problem.types.test_case_id import TestCaseId
 from .raw_client import AsyncRawAdminClient, RawAdminClient
 
 # this is used as the default value for optional parameters
@@ -373,7 +373,7 @@ class AdminClient:
         )
         return _response.data
 
-    def store_traced_test_case_v_2(
+    def store_traced_test_case_v2(
         self,
         submission_id: SubmissionId,
         test_case_id: TestCaseId,
@@ -416,7 +416,7 @@ class AdminClient:
             x_random_header="YOUR_X_RANDOM_HEADER",
             token="YOUR_TOKEN",
         )
-        client.admin.store_traced_test_case_v_2(
+        client.admin.store_traced_test_case_v2(
             submission_id=uuid.UUID(
                 "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             ),
@@ -503,7 +503,7 @@ class AdminClient:
             ],
         )
         """
-        _response = self._raw_client.store_traced_test_case_v_2(
+        _response = self._raw_client.store_traced_test_case_v2(
             submission_id, test_case_id, request=request, request_options=request_options
         )
         return _response.data
@@ -558,7 +558,7 @@ class AdminClient:
                 "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             ),
             workspace_run_details=WorkspaceRunDetails(
-                exception_v_2=ExceptionV2_Generic(
+                exception_v2=ExceptionV2_Generic(
                     exception_type="exceptionType",
                     exception_message="exceptionMessage",
                     exception_stacktrace="exceptionStacktrace",
@@ -652,7 +652,7 @@ class AdminClient:
         )
         return _response.data
 
-    def store_traced_workspace_v_2(
+    def store_traced_workspace_v2(
         self,
         submission_id: SubmissionId,
         *,
@@ -692,7 +692,7 @@ class AdminClient:
             x_random_header="YOUR_X_RANDOM_HEADER",
             token="YOUR_TOKEN",
         )
-        client.admin.store_traced_workspace_v_2(
+        client.admin.store_traced_workspace_v2(
             submission_id=uuid.UUID(
                 "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             ),
@@ -778,7 +778,7 @@ class AdminClient:
             ],
         )
         """
-        _response = self._raw_client.store_traced_workspace_v_2(
+        _response = self._raw_client.store_traced_workspace_v2(
             submission_id, request=request, request_options=request_options
         )
         return _response.data
@@ -1173,7 +1173,7 @@ class AsyncAdminClient:
         )
         return _response.data
 
-    async def store_traced_test_case_v_2(
+    async def store_traced_test_case_v2(
         self,
         submission_id: SubmissionId,
         test_case_id: TestCaseId,
@@ -1220,7 +1220,7 @@ class AsyncAdminClient:
 
 
         async def main() -> None:
-            await client.admin.store_traced_test_case_v_2(
+            await client.admin.store_traced_test_case_v2(
                 submission_id=uuid.UUID(
                     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 ),
@@ -1310,7 +1310,7 @@ class AsyncAdminClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.store_traced_test_case_v_2(
+        _response = await self._raw_client.store_traced_test_case_v2(
             submission_id, test_case_id, request=request, request_options=request_options
         )
         return _response.data
@@ -1369,7 +1369,7 @@ class AsyncAdminClient:
                     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 ),
                 workspace_run_details=WorkspaceRunDetails(
-                    exception_v_2=ExceptionV2_Generic(
+                    exception_v2=ExceptionV2_Generic(
                         exception_type="exceptionType",
                         exception_message="exceptionMessage",
                         exception_stacktrace="exceptionStacktrace",
@@ -1466,7 +1466,7 @@ class AsyncAdminClient:
         )
         return _response.data
 
-    async def store_traced_workspace_v_2(
+    async def store_traced_workspace_v2(
         self,
         submission_id: SubmissionId,
         *,
@@ -1510,7 +1510,7 @@ class AsyncAdminClient:
 
 
         async def main() -> None:
-            await client.admin.store_traced_workspace_v_2(
+            await client.admin.store_traced_workspace_v2(
                 submission_id=uuid.UUID(
                     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 ),
@@ -1599,7 +1599,7 @@ class AsyncAdminClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.store_traced_workspace_v_2(
+        _response = await self._raw_client.store_traced_workspace_v2(
             submission_id, request=request, request_options=request_options
         )
         return _response.data

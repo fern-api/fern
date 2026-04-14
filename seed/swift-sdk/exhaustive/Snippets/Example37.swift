@@ -7,9 +7,9 @@ private func main() async throws {
         token: "<token>"
     )
 
-    _ = try await client.endpoints.params.uploadWithPath(
-        param: "upload-path",
-        request: Data("data".utf8)
+    _ = try await client.endpoints.params.getWithPathAndQuery(
+        param: "param",
+        query: "query"
     )
 }
 

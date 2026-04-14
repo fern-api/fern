@@ -19,6 +19,71 @@ const RUBOCOP_FILENAME = ".rubocop.yml";
 const CUSTOM_TEST_FILENAME = "custom.test.rb";
 const CUSTOM_GEMSPEC_FILENAME = "custom.gemspec.rb";
 
+interface Dependency {
+    name: string;
+    versionConstraint?: string;
+}
+
+function depToGemfileString(dep: Dependency): string {
+    return dep.versionConstraint != null ? `gem "${dep.name}", "${dep.versionConstraint}"` : `gem "${dep.name}"`;
+}
+
+function depToGemspecString(dep: Dependency): string {
+    return dep.versionConstraint != null
+        ? `spec.add_dependency "${dep.name}", "${dep.versionConstraint}"`
+        : `spec.add_dependency "${dep.name}"`;
+}
+
+function sanitizeRubyStringValue(value: string, field: string): string {
+    if (/["\r\n\\]/.test(value)) {
+        throw new Error(
+            `Invalid character in ${field} "${value}": values used in Ruby string ` +
+                `literals cannot contain unescaped quotes, backslashes, or newlines.`
+        );
+    }
+    return value;
+}
+
+function depsFromRecord(record: Record<string, string | undefined> | undefined): Dependency[] {
+    const deps = Object.entries(record ?? {});
+    if (deps == null || deps.length === 0) {
+        return [];
+    }
+
+    return deps.map(([packageName, versionConstraint]) => ({
+        name: sanitizeRubyStringValue(packageName, "package name"),
+        versionConstraint:
+            versionConstraint != null ? sanitizeRubyStringValue(versionConstraint, "version constraint") : undefined
+    }));
+}
+
+function mergedDependencies(baseDeps: Dependency[], overrideDeps: Dependency[]): Dependency[] {
+    const mergedDeps: Record<string, string | undefined> = {};
+    baseDeps.forEach((dep) => {
+        mergedDeps[dep.name] = dep.versionConstraint;
+    });
+    overrideDeps.forEach((dep) => {
+        mergedDeps[dep.name] = dep.versionConstraint;
+    });
+    return depsFromRecord(mergedDeps);
+}
+
+const BASE_DEV_DEPENDENCIES: Dependency[] = [
+    { name: "minitest", versionConstraint: "~> 5.16" },
+    { name: "minitest-rg" },
+    { name: "pry" },
+    { name: "rake", versionConstraint: "~> 13.0" },
+    { name: "rubocop", versionConstraint: "~> 1.21" },
+    { name: "rubocop-minitest" },
+    { name: "webmock" }
+];
+
+function hasBasicAuth(ir: FernIr.IntermediateRepresentation): boolean {
+    return ir.auth.schemes.some((s) => s.type === "basic");
+}
+
+const BASE_DEPENDENCIES: Dependency[] = [];
+
 /**
  * In memory representation of a Ruby project.
  */
@@ -261,38 +326,24 @@ declare namespace GemspecFile {
 
 class GemspecFile {
     private context: AbstractRubyGeneratorContext<BaseRubyCustomConfigSchema>;
+    private readonly baseDependencies: Dependency[];
 
     public constructor({ context, project }: GemspecFile.Args) {
         this.context = context;
-    }
-
-    private getExtraDependenciesString(): string {
-        const extraDependencies = this.context.customConfig.extraDependencies;
-        if (extraDependencies == null || Object.keys(extraDependencies).length === 0) {
-            return "";
-        }
-
-        const dependencyLines = Object.entries(extraDependencies).map(
-            ([packageName, versionConstraint]) => `spec.add_dependency "${packageName}", "${versionConstraint}"`
-        );
-
-        return "\n" + dependencyLines.join("\n");
-    }
-
-    private getBase64DependencyString(): string {
-        const hasBasicAuth = this.context.ir.auth.schemes.some((s) => s.type === "basic");
-        if (!hasBasicAuth) {
-            return "";
-        }
-        return '\nspec.add_dependency "base64"';
+        this.baseDependencies = hasBasicAuth(context.ir)
+            ? [...BASE_DEPENDENCIES, { name: "base64" }]
+            : BASE_DEPENDENCIES;
     }
 
     public async toString(): Promise<string> {
         const moduleFolderName = this.context.getRootFolderName();
         const moduleName = this.context.getRootModuleName();
         const gemName = this.context.getGemName();
-        const extraDependenciesString = this.getExtraDependenciesString();
-        const base64DependencyString = this.getBase64DependencyString();
+
+        const dependencies = mergedDependencies(
+            this.baseDependencies,
+            depsFromRecord(this.context.customConfig.extraDependencies)
+        );
 
         return dedent`
             # frozen_string_literal: true
@@ -323,7 +374,7 @@ class GemspecFile {
             spec.bindir = "exe"
             spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
             spec.require_paths = ["lib"]
-${base64DependencyString}${extraDependenciesString}
+            ${dependencies.map(depToGemspecString).join("\n            ")}
             # For more information and examples about making a new gem, check out our
             # guide at: https://bundler.io/guides/creating_gem.html
             
@@ -386,21 +437,11 @@ class Gemfile {
         this.context = context;
     }
 
-    private getExtraDevDependenciesString(): string {
-        const extraDevDependencies = this.context.customConfig.extraDevDependencies;
-        if (extraDevDependencies == null || Object.keys(extraDevDependencies).length === 0) {
-            return "";
-        }
-
-        const dependencyLines = Object.entries(extraDevDependencies).map(
-            ([packageName, versionConstraint]) => `gem "${packageName}", "${versionConstraint}"`
-        );
-
-        return "\n" + dependencyLines.join("\n");
-    }
-
     public async toString(): Promise<string> {
-        const extraDevDependenciesString = this.getExtraDevDependenciesString();
+        const devDependencies = mergedDependencies(
+            BASE_DEV_DEPENDENCIES,
+            depsFromRecord(this.context.customConfig.extraDevDependencies)
+        );
 
         return dedent`
             # frozen_string_literal: true
@@ -410,18 +451,8 @@ class Gemfile {
                 gemspec
 
                 group :test, :development do
-                gem "rake", "~> 13.0"
 
-                gem "minitest", "~> 5.16"
-                gem "minitest-rg"
-
-                gem "rubocop", "~> 1.21"
-                gem "rubocop-minitest"
-
-                gem "pry"
-
-                gem "webmock"
-${extraDevDependenciesString}
+                ${devDependencies.map(depToGemfileString).join("\n                ")}
             end
 
             # Load custom Gemfile configuration if it exists
@@ -695,7 +726,9 @@ class ModuleFile {
         const requirePaths = this.context.customConfig?.requirePaths;
         if (requirePaths != null && requirePaths.length > 0) {
             const rootFolder = this.context.getRootFolderName();
-            const pathsArray = requirePaths.map((p) => `"${rootFolder}/${p}"`).join(", ");
+            const pathsArray = requirePaths
+                .map((p) => `"${rootFolder}/${sanitizeRubyStringValue(p, "require path")}"`)
+                .join(", ");
             const requirePathsHook = `
 
 # Load user-defined files if present (e.g., for Sentry integration)

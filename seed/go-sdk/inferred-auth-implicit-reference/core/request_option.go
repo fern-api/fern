@@ -28,7 +28,7 @@ type RequestOptions struct {
 	MaxAttempts     uint
 	MaxBufSize      int
 	tokenGetter     TokenGetter
-	ClientId        string
+	ClientID        string
 	ClientSecret    string
 }
 
@@ -132,13 +132,13 @@ func (m *MaxBufSizeOption) applyRequestOptions(opts *RequestOptions) {
 	opts.MaxBufSize = m.MaxBufSize
 }
 
-// ClientIdOption implements the RequestOption interface.
-type ClientIdOption struct {
-	ClientId string
+// ClientIDOption implements the RequestOption interface.
+type ClientIDOption struct {
+	ClientID string
 }
 
-func (c *ClientIdOption) applyRequestOptions(opts *RequestOptions) {
-	opts.ClientId = c.ClientId
+func (c *ClientIDOption) applyRequestOptions(opts *RequestOptions) {
+	opts.ClientID = c.ClientID
 }
 
 // ClientSecretOption implements the RequestOption interface.

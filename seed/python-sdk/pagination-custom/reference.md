@@ -1,6 +1,6 @@
 # Reference
 ## Users
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_usernames_custom</a>(...) -> UsernameCursor</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_custom_pager</a>(...) -> UsersListResponse</code></summary>
 <dl>
 <dd>
 
@@ -20,7 +20,8 @@ client = SeedPagination(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.users.list_usernames_custom(
+client.users.list_with_custom_pager(
+    limit=1,
     starting_after="starting_after",
 )
 
@@ -38,10 +39,15 @@ client.users.list_usernames_custom(
 <dl>
 <dd>
 
-**starting_after:** `typing.Optional[str]` 
+**limit:** `typing.Optional[int]` — The maximum number of results to return.
+    
+</dd>
+</dl>
 
-The cursor used for pagination in order to fetch
-the next page of results.
+<dl>
+<dd>
+
+**starting_after:** `typing.Optional[str]` — The cursor used for pagination.
     
 </dd>
 </dl>

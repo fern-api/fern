@@ -44,7 +44,13 @@ export class LegacyGeneratorInvocationAdapter {
             irVersionOverride: undefined,
             keywords: undefined,
             publishMetadata: undefined,
-            settings: undefined
+            settings: undefined,
+            automation: {
+                generate: true,
+                upgrade: true,
+                preview: true,
+                verify: true
+            }
         };
     }
 

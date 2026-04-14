@@ -8,7 +8,7 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.http_response import AsyncHttpResponse, HttpResponse
-from ...core.jsonable_encoder import jsonable_encoder
+from ...core.jsonable_encoder import encode_path_param
 from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
@@ -37,7 +37,7 @@ class RawHttpMethodsClient:
         HttpResponse[str]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"http-methods/{jsonable_encoder(id)}",
+            f"http-methods/{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -121,7 +121,7 @@ class RawHttpMethodsClient:
         HttpResponse[ObjectWithOptionalField]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"http-methods/{jsonable_encoder(id)}",
+            f"http-methods/{encode_path_param(id)}",
             method="PUT",
             json={
                 "string": string,
@@ -160,7 +160,7 @@ class RawHttpMethodsClient:
         datetime: typing.Optional[dt.datetime] = OMIT,
         date: typing.Optional[dt.date] = OMIT,
         uuid_: typing.Optional[uuid.UUID] = OMIT,
-        base_64: typing.Optional[str] = OMIT,
+        base64: typing.Optional[str] = OMIT,
         list_: typing.Optional[typing.Sequence[str]] = OMIT,
         set_: typing.Optional[typing.Set[str]] = OMIT,
         map_: typing.Optional[typing.Dict[int, str]] = OMIT,
@@ -189,7 +189,7 @@ class RawHttpMethodsClient:
 
         uuid_ : typing.Optional[uuid.UUID]
 
-        base_64 : typing.Optional[str]
+        base64 : typing.Optional[str]
 
         list_ : typing.Optional[typing.Sequence[str]]
 
@@ -207,7 +207,7 @@ class RawHttpMethodsClient:
         HttpResponse[ObjectWithOptionalField]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"http-methods/{jsonable_encoder(id)}",
+            f"http-methods/{encode_path_param(id)}",
             method="PATCH",
             json={
                 "string": string,
@@ -218,7 +218,7 @@ class RawHttpMethodsClient:
                 "datetime": datetime,
                 "date": date,
                 "uuid": uuid_,
-                "base64": base_64,
+                "base64": base64,
                 "list": list_,
                 "set": set_,
                 "map": map_,
@@ -260,7 +260,7 @@ class RawHttpMethodsClient:
         HttpResponse[bool]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"http-methods/{jsonable_encoder(id)}",
+            f"http-methods/{encode_path_param(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -304,7 +304,7 @@ class AsyncRawHttpMethodsClient:
         AsyncHttpResponse[str]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"http-methods/{jsonable_encoder(id)}",
+            f"http-methods/{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -388,7 +388,7 @@ class AsyncRawHttpMethodsClient:
         AsyncHttpResponse[ObjectWithOptionalField]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"http-methods/{jsonable_encoder(id)}",
+            f"http-methods/{encode_path_param(id)}",
             method="PUT",
             json={
                 "string": string,
@@ -427,7 +427,7 @@ class AsyncRawHttpMethodsClient:
         datetime: typing.Optional[dt.datetime] = OMIT,
         date: typing.Optional[dt.date] = OMIT,
         uuid_: typing.Optional[uuid.UUID] = OMIT,
-        base_64: typing.Optional[str] = OMIT,
+        base64: typing.Optional[str] = OMIT,
         list_: typing.Optional[typing.Sequence[str]] = OMIT,
         set_: typing.Optional[typing.Set[str]] = OMIT,
         map_: typing.Optional[typing.Dict[int, str]] = OMIT,
@@ -456,7 +456,7 @@ class AsyncRawHttpMethodsClient:
 
         uuid_ : typing.Optional[uuid.UUID]
 
-        base_64 : typing.Optional[str]
+        base64 : typing.Optional[str]
 
         list_ : typing.Optional[typing.Sequence[str]]
 
@@ -474,7 +474,7 @@ class AsyncRawHttpMethodsClient:
         AsyncHttpResponse[ObjectWithOptionalField]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"http-methods/{jsonable_encoder(id)}",
+            f"http-methods/{encode_path_param(id)}",
             method="PATCH",
             json={
                 "string": string,
@@ -485,7 +485,7 @@ class AsyncRawHttpMethodsClient:
                 "datetime": datetime,
                 "date": date,
                 "uuid": uuid_,
-                "base64": base_64,
+                "base64": base64,
                 "list": list_,
                 "set": set_,
                 "map": map_,
@@ -529,7 +529,7 @@ class AsyncRawHttpMethodsClient:
         AsyncHttpResponse[bool]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"http-methods/{jsonable_encoder(id)}",
+            f"http-methods/{encode_path_param(id)}",
             method="DELETE",
             request_options=request_options,
         )

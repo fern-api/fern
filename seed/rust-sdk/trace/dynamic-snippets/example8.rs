@@ -10,7 +10,7 @@ async fn main() {
     let client = TraceClient::new(config).expect("Failed to build client");
     client
         .admin
-        .store_traced_workspace_v_2(
+        .store_traced_workspace_v2(
             &SubmissionId(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
             &vec![
                 TraceResponseV2 {

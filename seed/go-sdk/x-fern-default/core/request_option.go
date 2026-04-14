@@ -25,7 +25,7 @@ type RequestOptions struct {
 	QueryParameters url.Values
 	MaxAttempts     uint
 	MaxBufSize      int
-	ApiVersion      *string
+	APIVersion      *string
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
@@ -48,8 +48,8 @@ func NewRequestOptions(opts ...RequestOption) *RequestOptions {
 // for the request(s).
 func (r *RequestOptions) ToHeader() http.Header {
 	header := r.cloneHeader()
-	if r.ApiVersion != nil {
-		header.Set("X-API-Version", fmt.Sprintf("%v", *r.ApiVersion))
+	if r.APIVersion != nil {
+		header.Set("X-API-Version", fmt.Sprintf("%v", *r.APIVersion))
 	}
 	return header
 }
@@ -126,11 +126,11 @@ func (m *MaxBufSizeOption) applyRequestOptions(opts *RequestOptions) {
 	opts.MaxBufSize = m.MaxBufSize
 }
 
-// ApiVersionOption implements the RequestOption interface.
-type ApiVersionOption struct {
-	ApiVersion *string
+// APIVersionOption implements the RequestOption interface.
+type APIVersionOption struct {
+	APIVersion *string
 }
 
-func (a *ApiVersionOption) applyRequestOptions(opts *RequestOptions) {
-	opts.ApiVersion = a.ApiVersion
+func (a *APIVersionOption) applyRequestOptions(opts *RequestOptions) {
+	opts.APIVersion = a.APIVersion
 }

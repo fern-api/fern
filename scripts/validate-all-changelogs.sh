@@ -10,14 +10,10 @@ generators=(
     ruby-sdk-v2
     pydantic
     python-sdk
-    fastapi
     openapi
-    postman
     java-sdk
     java-model
-    java-spring
     ts-sdk
-    ts-express
     go-model
     go-sdk
     csharp-model

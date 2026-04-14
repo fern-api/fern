@@ -1277,4 +1277,172 @@ describe("convertGeneratorsConfiguration", () => {
         const expectedDockerImage = `${generator?.containerImage}:${generator?.version}`;
         expect(expectedDockerImage).toBe("localhost:5000/fern-typescript-sdk:1.2.3");
     });
+
+    describe("automation", () => {
+        it("defaults all automation features to true when not specified", async () => {
+            const context = createMockTaskContext();
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    groups: {
+                        sdk: {
+                            generators: [
+                                {
+                                    name: "fernapi/fern-typescript-sdk",
+                                    version: "1.0.0"
+                                }
+                            ]
+                        }
+                    }
+                },
+                context
+            });
+
+            expect(converted.groups[0]?.generators[0]?.automation).toEqual({
+                generate: true,
+                upgrade: true,
+                preview: true,
+                verify: true
+            });
+        });
+
+        it("applies root-level automation overrides", async () => {
+            const context = createMockTaskContext();
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    automation: {
+                        generate: true,
+                        upgrade: false,
+                        preview: false
+                    },
+                    groups: {
+                        sdk: {
+                            generators: [
+                                {
+                                    name: "fernapi/fern-typescript-sdk",
+                                    version: "1.0.0"
+                                }
+                            ]
+                        }
+                    }
+                },
+                context
+            });
+
+            expect(converted.groups[0]?.generators[0]?.automation).toEqual({
+                generate: true,
+                upgrade: false,
+                preview: false,
+                verify: true
+            });
+        });
+
+        it("group-level automation overrides root-level", async () => {
+            const context = createMockTaskContext();
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    automation: {
+                        preview: false,
+                        verify: false
+                    },
+                    groups: {
+                        sdk: {
+                            automation: {
+                                preview: true
+                            },
+                            generators: [
+                                {
+                                    name: "fernapi/fern-typescript-sdk",
+                                    version: "1.0.0"
+                                }
+                            ]
+                        }
+                    }
+                },
+                context
+            });
+
+            expect(converted.groups[0]?.generators[0]?.automation).toEqual({
+                generate: true,
+                upgrade: true,
+                preview: true,
+                verify: false
+            });
+        });
+
+        it("generator-level automation overrides group and root", async () => {
+            const context = createMockTaskContext();
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    automation: {
+                        generate: false,
+                        upgrade: false,
+                        preview: false,
+                        verify: false
+                    },
+                    groups: {
+                        sdk: {
+                            automation: {
+                                preview: true
+                            },
+                            generators: [
+                                {
+                                    name: "fernapi/fern-typescript-sdk",
+                                    version: "1.0.0",
+                                    automation: {
+                                        generate: true,
+                                        verify: true
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                context
+            });
+
+            expect(converted.groups[0]?.generators[0]?.automation).toEqual({
+                generate: true,
+                upgrade: false,
+                preview: true,
+                verify: true
+            });
+        });
+
+        it("different generators in the same group can have different automation configs", async () => {
+            const context = createMockTaskContext();
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    automation: {
+                        upgrade: false
+                    },
+                    groups: {
+                        sdk: {
+                            generators: [
+                                {
+                                    name: "fernapi/fern-typescript-sdk",
+                                    version: "1.0.0",
+                                    automation: {
+                                        upgrade: true
+                                    }
+                                },
+                                {
+                                    name: "fernapi/fern-python-sdk",
+                                    version: "1.0.0"
+                                }
+                            ]
+                        }
+                    }
+                },
+                context
+            });
+
+            expect(converted.groups[0]?.generators[0]?.automation.upgrade).toBe(true);
+            expect(converted.groups[0]?.generators[1]?.automation.upgrade).toBe(false);
+        });
+    });
 });

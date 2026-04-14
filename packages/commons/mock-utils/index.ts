@@ -15,7 +15,7 @@ export interface WireMockMapping {
     request: {
         urlPathTemplate: string;
         method: string;
-        headers?: Record<string, { matches: string }>;
+        headers?: Record<string, { matches?: string; equalTo?: string }>;
         pathParameters?: Record<string, { equalTo: string }>;
         queryParameters?: Record<string, { equalTo: string }>;
         formParameters?: Record<string, unknown>;
@@ -71,12 +71,17 @@ export class WireMock {
         }
 
         // Determine which URL paths have both SSE and non-SSE endpoints (need body pattern matching)
-        const pathsNeedingBodyPatterns = new Set<string>();
+        // Also extract the stream condition property name from the SSE endpoint's example request body
+        const pathsNeedingBodyPatterns = new Map<string, string>();
         for (const [key, endpoints] of endpointsByPathAndMethod) {
             const hasSse = endpoints.some((e) => e.isSse);
             const hasNonSse = endpoints.some((e) => !e.isSse);
             if (hasSse && hasNonSse) {
-                pathsNeedingBodyPatterns.add(key);
+                const sseEndpoint = endpoints.find((e) => e.isSse);
+                const streamConditionProperty = sseEndpoint
+                    ? this.findStreamConditionProperty(sseEndpoint.endpoint)
+                    : undefined;
+                pathsNeedingBodyPatterns.set(key, streamConditionProperty ?? "stream");
             }
         }
 
@@ -95,8 +100,14 @@ export class WireMock {
                     const example = exampleWrapper.example;
                     const urlPath = this.buildUrlPathTemplate(endpoint);
                     const key = `${endpoint.method}:${urlPath}`;
-                    const needsBodyPattern = pathsNeedingBodyPatterns.has(key);
-                    const mapping = this.convertExampleToMapping(ir, service, endpoint, example, needsBodyPattern);
+                    const streamConditionProperty = pathsNeedingBodyPatterns.get(key);
+                    const mapping = this.convertExampleToMapping(
+                        ir,
+                        service,
+                        endpoint,
+                        example,
+                        streamConditionProperty
+                    );
                     if (mapping) {
                         mappings.push(mapping);
                     }
@@ -149,7 +160,7 @@ export class WireMock {
         service: FernIr.HttpService,
         endpoint: FernIr.HttpEndpoint,
         example: FernIr.ExampleEndpointCall | undefined,
-        needsBodyPattern: boolean
+        streamConditionProperty: string | undefined
     ): WireMockMapping | null {
         // Build URL path template
         const urlPathTemplate = this.buildUrlPathTemplate(endpoint);
@@ -264,19 +275,30 @@ export class WireMock {
 
         // Only add body patterns when there are both SSE and non-SSE endpoints for the same URL path
         // This allows WireMock to differentiate between streaming and non-streaming requests
-        const shouldAddBodyPattern = needsBodyPattern && isSseResponse;
+        const shouldAddBodyPattern = streamConditionProperty != null && isSseResponse;
 
         // Build auth header matchers for endpoints that require authentication.
-        // Skip auth header matching when endpoint has per-endpoint security because
-        // the client configures all auth schemes globally and header overwriting
-        // (e.g., multiple schemes writing to "Authorization") makes the exact value unpredictable.
-        const authHeaders: Record<string, { matches: string }> = {};
-        if (endpoint.auth && !(endpoint.security != null && endpoint.security.length > 0)) {
+        const authHeaders: Record<string, { matches?: string; equalTo?: string }> = {};
+        if (endpoint.auth) {
             for (const scheme of ir.auth.schemes) {
                 switch (scheme.type) {
-                    case "basic":
-                        authHeaders["Authorization"] = { matches: "Basic .+" };
+                    case "basic": {
+                        // Compute exact Authorization header using test credentials.
+                        // Access usernameOmit/passwordOmit via runtime property check
+                        // (available in IR v63+ but @fern-fern/ir-sdk types may lag).
+                        const schemeRecord = scheme as unknown as Record<string, unknown>;
+                        const usernameOmit = schemeRecord.usernameOmit === true;
+                        const passwordOmit = schemeRecord.passwordOmit === true;
+                        if (usernameOmit && passwordOmit) {
+                            // Both omitted — SDK skips the Authorization header entirely.
+                            break;
+                        }
+                        const username = usernameOmit ? "" : "test-username";
+                        const password = passwordOmit ? "" : "test-password";
+                        const encoded = Buffer.from(`${username}:${password}`).toString("base64");
+                        authHeaders["Authorization"] = { equalTo: `Basic ${encoded}` };
                         break;
+                    }
                     case "bearer":
                         authHeaders["Authorization"] = { matches: "Bearer .+" };
                         break;
@@ -302,8 +324,10 @@ export class WireMock {
                 queryParameters: Object.keys(queryParameters).length > 0 ? queryParameters : undefined,
                 formParameters: {},
                 // For SSE endpoints that share a URL path with non-SSE endpoints,
-                // add body pattern to match stream: true
-                bodyPatterns: shouldAddBodyPattern ? [{ matchesJsonPath: "$[?(@.stream == true)]" }] : undefined
+                // add body pattern to match the stream condition property
+                bodyPatterns: shouldAddBodyPattern
+                    ? [{ matchesJsonPath: `$[?(@.${streamConditionProperty} == true)]` }]
+                    : undefined
             },
             response: {
                 status,
@@ -395,6 +419,36 @@ export class WireMock {
             case "unknown":
                 return undefined;
         }
+    }
+
+    private findStreamConditionProperty(endpoint: FernIr.HttpEndpoint): string | undefined {
+        const exampleWrapper = endpoint.userSpecifiedExamples[0] ?? endpoint.autogeneratedExamples[0];
+        const example = exampleWrapper?.example;
+        if (example?.request?.type === "inlinedRequestBody") {
+            // Look for a boolean property set to true in the request body
+            for (const prop of example.request.properties) {
+                if (prop.value.jsonExample === true) {
+                    const wireValue = typeof prop.name === "string" ? prop.name : prop.name?.wireValue;
+                    if (wireValue) {
+                        return wireValue;
+                    }
+                }
+            }
+        }
+        // Fall back to checking jsonExample at the top level
+        if (
+            example?.request?.type === "reference" &&
+            typeof example.request.jsonExample === "object" &&
+            example.request.jsonExample !== null
+        ) {
+            const json = example.request.jsonExample as Record<string, unknown>;
+            for (const [key, value] of Object.entries(json)) {
+                if (value === true) {
+                    return key;
+                }
+            }
+        }
+        return undefined;
     }
 
     private extractExampleValue(

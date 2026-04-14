@@ -25,7 +25,6 @@ env:
   DO_NOT_TRACK: "1"
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: "buildwithfern"
-  TURBO_REMOTE_CACHE_TIMEOUT: 10
   TURBO_NO_UPDATE_NOTIFIER: "1"
   TURBO_DAEMON: "false"
 
@@ -97,14 +96,10 @@ jobs:
       ruby-sdk-v2: ${{ steps.create-dynamic-matrix.outputs.ruby-sdk-v2-test-matrix }}
       pydantic: ${{ steps.create-dynamic-matrix.outputs.pydantic-test-matrix }}
       python-sdk: ${{ steps.create-dynamic-matrix.outputs.python-sdk-test-matrix }}
-      fastapi: ${{ steps.create-dynamic-matrix.outputs.fastapi-test-matrix }}
       openapi: ${{ steps.create-dynamic-matrix.outputs.openapi-test-matrix }}
-      postman: ${{ steps.create-dynamic-matrix.outputs.postman-test-matrix }}
       java-sdk: ${{ steps.create-dynamic-matrix.outputs.java-sdk-test-matrix }}
       java-model: ${{ steps.create-dynamic-matrix.outputs.java-model-test-matrix }}
-      java-spring: ${{ steps.create-dynamic-matrix.outputs.java-spring-test-matrix }}
       ts-sdk: ${{ steps.create-dynamic-matrix.outputs.ts-sdk-test-matrix }}
-      ts-express: ${{ steps.create-dynamic-matrix.outputs.ts-express-test-matrix }}
       go-model: ${{ steps.create-dynamic-matrix.outputs.go-model-test-matrix }}
       go-sdk: ${{ steps.create-dynamic-matrix.outputs.go-sdk-test-matrix }}
       csharp-model: ${{ steps.create-dynamic-matrix.outputs.csharp-model-test-matrix }}
@@ -208,7 +203,7 @@ jobs:
         shell: bash
         run: |
           # List of all generators
-          GENERATORS="ruby-sdk-v2 pydantic python-sdk fastapi openapi postman java-sdk java-model java-spring ts-sdk ts-express go-model go-sdk csharp-model csharp-sdk php-model php-sdk swift-sdk rust-model rust-sdk"
+          GENERATORS="ruby-sdk-v2 pydantic python-sdk openapi java-sdk java-model ts-sdk go-model go-sdk csharp-model csharp-sdk php-model php-sdk swift-sdk rust-model rust-sdk"
 
           # Read affected detection result
           AFFECTED_JSON=$(cat /tmp/affected.json)
@@ -331,6 +326,8 @@ jobs:
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
           determinism-exclude-paths: '["seed/*/.mock/*", "seed/**/Gemfile.lock"]'
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   pydantic:
     runs-on: ubuntu-latest
@@ -361,6 +358,8 @@ jobs:
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   python-sdk:
     runs-on: ubuntu-latest
@@ -392,36 +391,8 @@ jobs:
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
           determinism-exclude-paths: '["seed/*/.mock/*", "seed/**/poetry.lock"]'
-
-  fastapi:
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    needs: [setup, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.get-all-test-matrices.outputs.fastapi != ''
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
-    strategy:
-      fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 15 # Limit the number of runners for this job
-      matrix:
-        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.fastapi) }}
-    steps:
-      - name: Checkout action file
-        uses: actions/checkout@v6
-        with:
-          sparse-checkout: |
-            .github/actions/run-seed-process
-
-      - name: Run All Seed Tests
-        uses: ./.github/actions/run-seed-process
-        with:
-          sdk-name: fastapi
-          generator-path: generators/python generators/python-v2
-          fixtures-to-run: ${{toJson(matrix.fixtures)}}
-          job-index: ${{ strategy.job-index }}
-          collect-metrics: ${{ needs.setup.outputs.post-metrics }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   openapi:
     runs-on: ubuntu-latest
@@ -452,36 +423,8 @@ jobs:
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
-
-  postman:
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    needs: [setup, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.get-all-test-matrices.outputs.postman != ''
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
-    strategy:
-      fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 15 # Limit the number of runners for this job
-      matrix:
-        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.postman) }}
-    steps:
-      - name: Checkout action file
-        uses: actions/checkout@v6
-        with:
-          sparse-checkout: |
-            .github/actions/run-seed-process
-
-      - name: Run All Seed Tests
-        uses: ./.github/actions/run-seed-process
-        with:
-          sdk-name: postman
-          generator-path: generators/postman
-          fixtures-to-run: ${{toJson(matrix.fixtures)}}
-          job-index: ${{ strategy.job-index }}
-          collect-metrics: ${{ needs.setup.outputs.post-metrics }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   java-sdk:
     runs-on: ubuntu-latest
@@ -512,6 +455,8 @@ jobs:
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   java-model:
     runs-on: ubuntu-latest
@@ -542,36 +487,8 @@ jobs:
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
-
-  java-spring:
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    needs: [setup, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.get-all-test-matrices.outputs.java-spring != ''
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
-    strategy:
-      fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 15 # Limit the number of runners for this job
-      matrix:
-        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-spring) }}
-    steps:
-      - name: Checkout action file
-        uses: actions/checkout@v6
-        with:
-          sparse-checkout: |
-            .github/actions/run-seed-process
-
-      - name: Run All Seed Tests
-        uses: ./.github/actions/run-seed-process
-        with:
-          sdk-name: java-spring
-          generator-path: generators/java generators/java-v2
-          fixtures-to-run: ${{toJson(matrix.fixtures)}}
-          job-index: ${{ strategy.job-index }}
-          collect-metrics: ${{ needs.setup.outputs.post-metrics }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   ts-sdk:
     runs-on: ubuntu-latest
@@ -603,37 +520,8 @@ jobs:
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
           determinism-exclude-paths: '["seed/*/.mock/*", "seed/ts-sdk/**/pnpm-lock.yaml"]'
-
-  ts-express:
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    needs: [setup, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.get-all-test-matrices.outputs.ts-express != ''
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
-    strategy:
-      fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 15 # Limit the number of runners for this job
-      matrix:
-        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ts-express) }}
-    steps:
-      - name: Checkout action file
-        uses: actions/checkout@v6
-        with:
-          sparse-checkout: |
-            .github/actions/run-seed-process
-
-      - name: Run All Seed Tests
-        uses: ./.github/actions/run-seed-process
-        with:
-          sdk-name: ts-express
-          generator-path: generators/typescript generators/typescript-v2
-          fixtures-to-run: ${{toJson(matrix.fixtures)}}
-          job-index: ${{ strategy.job-index }}
-          collect-metrics: ${{ needs.setup.outputs.post-metrics }}
-
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   go-model:
     runs-on: ubuntu-latest
@@ -664,6 +552,8 @@ jobs:
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   go-sdk:
     runs-on: ubuntu-latest
@@ -694,6 +584,8 @@ jobs:
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   csharp-model:
     runs-on: ubuntu-latest
@@ -724,6 +616,8 @@ jobs:
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   csharp-sdk:
     runs-on: ubuntu-latest
@@ -754,6 +648,8 @@ jobs:
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   php-model:
     runs-on: ubuntu-latest
@@ -784,6 +680,8 @@ jobs:
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   php-sdk:
     runs-on: ubuntu-latest
@@ -814,6 +712,8 @@ jobs:
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   swift-sdk:
     runs-on: ubuntu-latest
@@ -844,6 +744,8 @@ jobs:
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   rust-model:
     runs-on: ubuntu-latest
@@ -874,6 +776,8 @@ jobs:
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   rust-sdk:
     runs-on: ubuntu-latest
@@ -904,10 +808,12 @@ jobs:
           fixtures-to-run: ${{toJson(matrix.fixtures)}}
           job-index: ${{ strategy.job-index }}
           collect-metrics: ${{ needs.setup.outputs.post-metrics }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   # SDK Generation Benchmarks — runs affected SDK generators against large public OAS specs.
   # Uses --skip-scripts to measure generator-only time (no npm install/build/test noise).
-  # Baseline timings come from the nightly benchmark-baseline.yml workflow (cached).
+  # Baseline timings come from the nightly benchmark-baseline.yml workflow (via artifacts API).
   #
   # Specs are fetched once in benchmark-setup and shared via artifact to avoid redundant downloads.
   benchmark-setup:
@@ -959,6 +865,36 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
+      - name: Log in to Docker Hub
+        if: ${{ env.DOCKERHUB_USERNAME != '' }}
+        uses: docker/login-action@v3
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+        with:
+          username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          password: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
+
+      - name: Clear stale Docker image cache
+        run: rm -rf /tmp/docker-cache
+
+      - name: Cache Docker images
+        id: docker-cache
+        uses: actions/cache@v4
+        with:
+          path: /tmp/docker-cache
+          key: ${{ runner.os }}-docker-${{ matrix.generator }}-${{ hashFiles('**/Dockerfile*') }}
+          restore-keys: |
+            ${{ runner.os }}-docker-${{ matrix.generator }}-
+
+      - name: Load cached Docker images
+        run: |
+          for f in /tmp/docker-cache/*.tar; do
+            [ -f "$f" ] && docker load -i "$f" || true
+          done
+
+      - name: Record pre-existing Docker images
+        run: docker images -q | sort -u > /tmp/docker-images-before.txt
+
       - name: Download shared specs
         uses: actions/download-artifact@v4
         with:
@@ -970,6 +906,21 @@ jobs:
         with:
           generator: ${{ matrix.generator }}
           skip-scripts: "true"
+
+      - name: Save Docker images for cache
+        if: always()
+        run: |
+          if [ ! -f /tmp/docker-images-before.txt ]; then
+            echo "Skipping cache save: docker-images-before.txt not found"
+            exit 0
+          fi
+          mkdir -p /tmp/docker-cache
+          comm -13 /tmp/docker-images-before.txt <(docker images -q | sort -u) | while read -r id; do
+            img=$(docker inspect --format '{{index .RepoTags 0}}' "$id" 2>/dev/null || true)
+            [ -z "$img" ] && continue
+            fname=$(echo "$img" | tr '/:' '_')
+            docker save "$img" -o "/tmp/docker-cache/${fname}.tar" 2>/dev/null || true
+          done
 
       - name: Upload PR results
         uses: actions/upload-artifact@v4
@@ -990,6 +941,7 @@ jobs:
       }}
     permissions:
       pull-requests: write
+      actions: read
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6
@@ -1003,30 +955,56 @@ jobs:
           path: benchmark-pr-results
           merge-multiple: true
 
-      - name: Restore baseline from nightly cache
-        id: baseline-cache
-        uses: actions/cache/restore@v4
-        with:
-          path: benchmark-baseline-results
-          # Intentionally non-matching key forces prefix fallback via restore-keys,
-          # which returns the most recently saved nightly baseline cache entry.
-          key: benchmark-baseline-never-matches
-          restore-keys: benchmark-baseline-
-
-      - name: Check baseline availability
+      - name: Download baseline from latest nightly artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
-          if [ "${{ steps.baseline-cache.outputs.cache-hit }}" != "true" ] && [ ! -d benchmark-baseline-results ]; then
-            echo "::warning::No cached baseline found. Report will show N/A for main timings."
-            echo "Run the benchmark-baseline workflow manually to generate initial baselines."
-            mkdir -p benchmark-baseline-results
+          mkdir -p benchmark-baseline-results
+
+          # Find the latest successful run of benchmark-baseline.yml on main
+          LATEST_RUN=$(gh api "repos/${{ github.repository }}/actions/workflows/benchmark-baseline.yml/runs?status=success&per_page=1&branch=main" \
+            --jq '.workflow_runs[0]' 2>/dev/null || true)
+
+          if [ -z "$LATEST_RUN" ] || [ "$LATEST_RUN" = "null" ]; then
+            echo "::warning::No successful nightly baseline run found. Report will show N/A for main timings."
+            echo "Trigger the benchmark-baseline workflow manually to generate initial baselines."
+            exit 0
+          fi
+
+          RUN_ID=$(echo "$LATEST_RUN" | jq -r '.id')
+          RUN_DATE=$(echo "$LATEST_RUN" | jq -r '.created_at')
+          RUN_SHA=$(echo "$LATEST_RUN" | jq -r '.head_sha')
+          echo "Using baseline from nightly run ${RUN_ID} (${RUN_DATE}, sha: ${RUN_SHA})"
+
+          # Save metadata for the report footer
+          echo "{\"latest_timestamp\":\"${RUN_DATE}\",\"sha\":\"${RUN_SHA}\",\"run_id\":\"${RUN_ID}\"}" \
+            > benchmark-baseline-results/_metadata.json
+
+          # Download generator-only baseline artifacts
+          echo "Downloading generator-only baseline artifacts..."
+          gh run download "$RUN_ID" --repo "${{ github.repository }}" --pattern "benchmark-baseline-*" --dir /tmp/baseline-gen/ 2>/dev/null || true
+          for f in /tmp/baseline-gen/*/*.jsonl; do
+            [ -f "$f" ] && cp "$f" benchmark-baseline-results/
+          done
+
+          # Download E2E baseline artifacts
+          echo "Downloading E2E baseline artifacts..."
+          mkdir -p benchmark-baseline-results/e2e
+          gh run download "$RUN_ID" --repo "${{ github.repository }}" --pattern "benchmark-e2e-*" --dir /tmp/baseline-e2e/ 2>/dev/null || true
+          for f in /tmp/baseline-e2e/*/*.jsonl; do
+            [ -f "$f" ] && cp "$f" benchmark-baseline-results/e2e/
+          done
+
+          # Check if we got any results
+          if ! ls benchmark-baseline-results/*.jsonl 1>/dev/null 2>&1; then
+            echo "::warning::No baseline artifacts found in run ${RUN_ID}. Artifacts may have expired."
+            echo "Trigger the benchmark-baseline workflow to generate fresh baselines."
+            rm -f benchmark-baseline-results/_metadata.json
           else
-            echo "Baseline cache restored successfully"
-            if [ -f benchmark-baseline-results/_metadata.json ]; then
-              echo "Baseline metadata:"
-              cat benchmark-baseline-results/_metadata.json
-            fi
+            echo "Baseline artifacts downloaded successfully:"
             ls -la benchmark-baseline-results/
+            ls -la benchmark-baseline-results/e2e/ 2>/dev/null || echo "(no E2E results)"
           fi
 
       - name: Generate benchmark report
@@ -1048,11 +1026,31 @@ jobs:
           echo "Generated benchmark report"
 
       - name: Post or update PR comment
-        uses: peter-evans/create-or-update-comment@71345be0265236311c031f5c7866368bd1eff043 # v4
-        with:
-          issue-number: ${{ github.event.pull_request.number }}
-          body-path: benchmark-comment.md
-          comment-tag: sdk-benchmark-results
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          SENTINEL="<!-- fern-sdk-benchmark-results -->"
+          BODY=$(cat benchmark-comment.md)
+
+          # Search existing comments for the sentinel marker
+          COMMENT_ID=$(gh api "repos/${REPO}/issues/${PR_NUMBER}/comments" \
+            --paginate --jq '.[] | select(.body | contains("'"${SENTINEL}"'")) | .id' \
+            | head -n1)
+
+          if [ -n "$COMMENT_ID" ]; then
+            echo "Updating existing benchmark comment ${COMMENT_ID}"
+            gh api "repos/${REPO}/issues/comments/${COMMENT_ID}" \
+              --method PATCH \
+              --input <(jq -n --arg body "$BODY" '{"body": $body}')
+          else
+            echo "Creating new benchmark comment"
+            gh api "repos/${REPO}/issues/${PR_NUMBER}/comments" \
+              --method POST \
+              --input <(jq -n --arg body "$BODY" '{"body": $body}')
+          fi
 
       # PostHog step runs after the PR comment is posted so that comment generation
       # is never affected by PostHog failures. Fire-and-forget: all errors suppressed.
@@ -1136,14 +1134,10 @@ jobs:
         ruby-sdk-v2,
         pydantic,
         python-sdk,
-        fastapi,
         openapi,
-        postman,
         java-sdk,
         java-model,
-        java-spring,
         ts-sdk,
-        ts-express,
         go-model,
         go-sdk,
         csharp-model,
@@ -1166,14 +1160,10 @@ jobs:
             ruby-sdk-v2,
             pydantic,
             python-sdk,
-            fastapi,
             openapi,
-            postman,
             java-sdk,
             java-model,
-            java-spring,
             ts-sdk,
-            ts-express,
                 go-model,
             go-sdk,
             csharp-model,
@@ -1188,14 +1178,10 @@ jobs:
       ruby-sdk-v2-passing: ${{ steps.report-results.outputs.ruby-sdk-v2-passing }}
       pydantic-passing: ${{ steps.report-results.outputs.pydantic-passing }}
       python-sdk-passing: ${{ steps.report-results.outputs.python-sdk-passing }}
-      fastapi-passing: ${{ steps.report-results.outputs.fastapi-passing }}
       openapi-passing: ${{ steps.report-results.outputs.openapi-passing }}
-      postman-passing: ${{ steps.report-results.outputs.postman-passing }}
       java-sdk-passing: ${{ steps.report-results.outputs.java-sdk-passing }}
       java-model-passing: ${{ steps.report-results.outputs.java-model-passing }}
-      java-spring-passing: ${{ steps.report-results.outputs.java-spring-passing }}
       ts-sdk-passing: ${{ steps.report-results.outputs.ts-sdk-passing }}
-      ts-express-passing: ${{ steps.report-results.outputs.ts-express-passing }}
       go-model-passing: ${{ steps.report-results.outputs.go-model-passing }}
       go-sdk-passing: ${{ steps.report-results.outputs.go-sdk-passing }}
       csharp-model-passing: ${{ steps.report-results.outputs.csharp-model-passing }}
@@ -1245,14 +1231,10 @@ jobs:
             ruby-sdk-v2,
             pydantic,
             python-sdk,
-            fastapi,
             openapi,
-            postman,
             java-sdk,
             java-model,
-            java-spring,
             ts-sdk,
-            ts-express,
                 go-model,
             go-sdk,
             csharp-model,
@@ -1276,17 +1258,9 @@ jobs:
       python-sdk-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.python-sdk-allowed-failures }}
       python-sdk-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.python-sdk-allowed-failures-count }}
 
-      fastapi-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.fastapi-total-fixtures-count }}
-      fastapi-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.fastapi-allowed-failures }}
-      fastapi-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.fastapi-allowed-failures-count }}
-
       openapi-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.openapi-total-fixtures-count }}
       openapi-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.openapi-allowed-failures }}
       openapi-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.openapi-allowed-failures-count }}
-
-      postman-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.postman-total-fixtures-count }}
-      postman-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.postman-allowed-failures }}
-      postman-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.postman-allowed-failures-count }}
 
       java-sdk-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.java-sdk-total-fixtures-count }}
       java-sdk-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.java-sdk-allowed-failures }}
@@ -1296,17 +1270,9 @@ jobs:
       java-model-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.java-model-allowed-failures }}
       java-model-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.java-model-allowed-failures-count }}
 
-      java-spring-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.java-spring-total-fixtures-count }}
-      java-spring-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.java-spring-allowed-failures }}
-      java-spring-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.java-spring-allowed-failures-count }}
-
       ts-sdk-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.ts-sdk-total-fixtures-count }}
       ts-sdk-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.ts-sdk-allowed-failures }}
       ts-sdk-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.ts-sdk-allowed-failures-count }}
-
-      ts-express-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.ts-express-total-fixtures-count }}
-      ts-express-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.ts-express-allowed-failures }}
-      ts-express-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.ts-express-allowed-failures-count }}
 
 
       go-model-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.go-model-total-fixtures-count }}
@@ -1398,14 +1364,10 @@ jobs:
         ruby-sdk-v2,
         pydantic,
         python-sdk,
-        fastapi,
         openapi,
-        postman,
         java-sdk,
         java-model,
-        java-spring,
         ts-sdk,
-        ts-express,
         go-model,
         go-sdk,
         csharp-model,
@@ -1426,14 +1388,10 @@ jobs:
             ruby-sdk-v2,
             pydantic,
             python-sdk,
-            fastapi,
             openapi,
-            postman,
             java-sdk,
             java-model,
-            java-spring,
             ts-sdk,
-            ts-express,
                 go-model,
             go-sdk,
             csharp-model,

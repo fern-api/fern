@@ -28,14 +28,14 @@ type Client struct {
 	DuplicateNamesB *duplicatenamesb.Client
 	DuplicateNamesC *duplicatenamesc.Client
 	Enum            *enum.Client
-	HttpMethods     *httpmethods.Client
+	HTTPMethods     *httpmethods.Client
 	Object          *object.Client
 	Pagination      *pagination.Client
 	Params          *params.Client
 	Primitive       *primitive.Client
 	Put             *put.Client
 	Union           *union.Client
-	Urls            *urls.Client
+	URLs            *urls.Client
 
 	options *core.RequestOptions
 	baseURL string
@@ -50,14 +50,14 @@ func NewClient(options *core.RequestOptions) *Client {
 		DuplicateNamesB: duplicatenamesb.NewClient(options),
 		DuplicateNamesC: duplicatenamesc.NewClient(options),
 		Enum:            enum.NewClient(options),
-		HttpMethods:     httpmethods.NewClient(options),
+		HTTPMethods:     httpmethods.NewClient(options),
 		Object:          object.NewClient(options),
 		Pagination:      pagination.NewClient(options),
 		Params:          params.NewClient(options),
 		Primitive:       primitive.NewClient(options),
 		Put:             put.NewClient(options),
 		Union:           union.NewClient(options),
-		Urls:            urls.NewClient(options),
+		URLs:            urls.NewClient(options),
 		options:         options,
 		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(

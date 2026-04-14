@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v66.1.0] - 2026-04-08
+- Feature: Add optional `default` field to `UnionTypeDeclaration`. When set, specifies the default union
+  variant to fall back to when the discriminant field is missing from input. Populated from OpenAPI specs
+  where a variant's discriminant property has a `default` value matching its `const` value.
+
 ## [v66.0.0] - 2026-04-02
 - Feature: Add IR Name compression support via new `NameOrString` and `NameAndWireValueOrString` union types.
   Throughout the IR, fields previously typed as `Name` or `NameAndWireValue` are now typed as `NameOrString` or
