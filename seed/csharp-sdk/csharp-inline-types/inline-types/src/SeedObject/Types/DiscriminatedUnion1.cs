@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedObject.Core;
 
 namespace SeedObject;
@@ -81,7 +81,7 @@ public record DiscriminatedUnion1
     public SeedObject.DiscriminatedUnion1InlineType1 AsType1() =>
         IsType1
             ? (SeedObject.DiscriminatedUnion1InlineType1)Value!
-            : throw new System.Exception("DiscriminatedUnion1.Type is not 'type1'");
+            : throw new global::System.Exception("DiscriminatedUnion1.Type is not 'type1'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedObject.DiscriminatedUnion1InlineType2"/> if <see cref="Type"/> is 'type2', otherwise throws an exception.
@@ -90,7 +90,7 @@ public record DiscriminatedUnion1
     public SeedObject.DiscriminatedUnion1InlineType2 AsType2() =>
         IsType2
             ? (SeedObject.DiscriminatedUnion1InlineType2)Value!
-            : throw new System.Exception("DiscriminatedUnion1.Type is not 'type2'");
+            : throw new global::System.Exception("DiscriminatedUnion1.Type is not 'type2'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedObject.ReferenceType"/> if <see cref="Type"/> is 'ref', otherwise throws an exception.
@@ -99,7 +99,7 @@ public record DiscriminatedUnion1
     public SeedObject.ReferenceType AsRef() =>
         IsRef
             ? (SeedObject.ReferenceType)Value!
-            : throw new System.Exception("DiscriminatedUnion1.Type is not 'ref'");
+            : throw new global::System.Exception("DiscriminatedUnion1.Type is not 'ref'");
 
     public T Match<T>(
         Func<SeedObject.DiscriminatedUnion1InlineType1, T> onType1,
@@ -197,12 +197,12 @@ public record DiscriminatedUnion1
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<DiscriminatedUnion1>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(DiscriminatedUnion1).IsAssignableFrom(typeToConvert);
 
         public override DiscriminatedUnion1 Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -272,6 +272,27 @@ public record DiscriminatedUnion1
                 } ?? new JsonObject();
             json["type"] = value.Type;
             json.WriteTo(writer, options);
+        }
+
+        public override DiscriminatedUnion1 ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new JsonException("The JSON property name could not be read as a string.");
+            return new DiscriminatedUnion1(stringValue, stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            DiscriminatedUnion1 value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Type);
         }
     }
 
