@@ -739,7 +739,7 @@ function ConsolidateChangelog(
 
     If version_bump is MAJOR, start with:
 
-    ## ⚠️ Breaking Changes
+    ## Breaking Changes
 
     ### `symbolName` — short description
     **Before:**
