@@ -132,7 +132,15 @@ export async function runTestCase(testCase: RemoteVsLocalTestCase): Promise<Test
         // Check for generation failures
         if (!localResult.success || !remoteResult.success) {
             // Both failed with the exact same error — that's parity.
-            if (!localResult.success && !remoteResult.success && localResult.error === remoteResult.error) {
+            // Guard against false matches on generic fallback strings (e.g. "Unknown error"
+            // from generation.ts when stderr is empty).
+            const GENERIC_ERRORS = new Set(["Unknown error", ""]);
+            if (
+                !localResult.success &&
+                !remoteResult.success &&
+                localResult.error === remoteResult.error &&
+                !GENERIC_ERRORS.has(localResult.error)
+            ) {
                 logger.warn(`Both local and remote generation failed with the same error — treating as parity`);
                 logger.warn(`  Error: ${localResult.error}`);
                 return { success: true };
