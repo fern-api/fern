@@ -1,11 +1,13 @@
 import { FernToken } from "@fern-api/auth";
 import { getFernDirectory, loadProjectConfig } from "@fern-api/configuration-loader";
 import { createFdrService } from "@fern-api/core";
-import { buildPreviewDomain, isPreviewUrl } from "@fern-api/docs-preview";
+import { buildPreviewDomain, isPreviewUrl, PREVIEW_URL_PATTERN } from "@fern-api/docs-preview";
 import { askToLogin } from "@fern-api/login";
 import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
 import { CliContext } from "../../cli-context/CliContext.js";
+
+export { isPreviewUrl, PREVIEW_URL_PATTERN };
 
 async function resolvePreviewUrlFromId({
     cliContext,
