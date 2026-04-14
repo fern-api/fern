@@ -596,7 +596,6 @@ overrides:
   '@fern-api/ui-core-utils': 0.145.12-b50d999d1
   vite: ^7.3.2
   yauzl: ^3.2.1
-  follow-redirects: '>=1.16.0'
 
 importers:
 
