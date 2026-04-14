@@ -1,0 +1,4 @@
+- summary: |
+    **Breaking change**: The positional `url` argument in `fern docs preview delete` has been replaced by a named `--url` option. Scripts using `fern docs preview delete <url>` must be updated to `fern docs preview delete --url <url>`.
+    Add `--id` flag to `fern docs preview delete`, allowing deletion of preview deployments by their stable preview ID instead of the full URL. The org is resolved automatically from `fern.config.json`.
+  type: chore

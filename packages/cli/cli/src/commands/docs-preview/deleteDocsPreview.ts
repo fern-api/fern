@@ -1,48 +1,84 @@
 import { FernToken } from "@fern-api/auth";
+import { getFernDirectory, loadProjectConfig } from "@fern-api/configuration-loader";
 import { createFdrService } from "@fern-api/core";
+import { buildPreviewDomain, isPreviewUrl } from "@fern-api/docs-preview";
 import { askToLogin } from "@fern-api/login";
 import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
 import { CliContext } from "../../cli-context/CliContext.js";
 
-/**
- * Preview URLs follow the pattern: {org}-preview-{hash}.docs.buildwithfern.com
- * This regex validates that the hostname contains "-preview-" and ends with ".docs.buildwithfern.com"
- * The hash can be alphanumeric or a UUID with hyphens (e.g., 9b2b47f0-c44b-4338-b579-46872f33404a)
- */
-export const PREVIEW_URL_PATTERN = /^[a-z0-9-]+-preview-[a-z0-9-]+\.docs\.buildwithfern\.com$/i;
-
-export function isPreviewUrl(url: string): boolean {
-    // Normalize the URL to extract just the hostname
-    let hostname = url.toLowerCase().trim();
-
-    // Remove protocol if present
-    if (hostname.startsWith("https://")) {
-        hostname = hostname.slice(8);
-    } else if (hostname.startsWith("http://")) {
-        hostname = hostname.slice(7);
+async function resolvePreviewUrlFromId({
+    cliContext,
+    previewId
+}: {
+    cliContext: CliContext;
+    previewId: string;
+}): Promise<string> {
+    const fernDirectory = await getFernDirectory();
+    if (fernDirectory == null) {
+        return cliContext.failAndThrow(
+            "No fern directory found. The --id flag requires a Fern project to resolve the organization.\n" +
+                "Run this command from within a Fern project directory, or use the URL argument instead."
+        );
     }
 
-    // Remove path, query string, and fragment if present
-    const slashIndex = hostname.indexOf("/");
-    if (slashIndex !== -1) {
-        hostname = hostname.slice(0, slashIndex);
-    }
+    const projectConfig = await cliContext.runTask((context) =>
+        loadProjectConfig({ directory: fernDirectory, context })
+    );
 
-    return PREVIEW_URL_PATTERN.test(hostname);
+    return buildPreviewDomain({ orgId: projectConfig.organization, previewId });
+}
+
+function resolveTarget({
+    target,
+    url,
+    id
+}: {
+    target?: string;
+    url?: string;
+    id?: string;
+}): { type: "url"; value: string } | { type: "id"; value: string } {
+    if (url != null) {
+        return { type: "url", value: url };
+    }
+    if (id != null) {
+        return { type: "id", value: id };
+    }
+    if (target == null) {
+        throw new Error("Must provide a preview URL or --id.");
+    }
+    if (isPreviewUrl(target)) {
+        return { type: "url", value: target };
+    }
+    return { type: "id", value: target };
 }
 
 export async function deleteDocsPreview({
     cliContext,
-    previewUrl
+    target,
+    previewUrl,
+    previewId
 }: {
     cliContext: CliContext;
-    previewUrl: string;
+    target: string | undefined;
+    previewUrl: string | undefined;
+    previewId: string | undefined;
 }): Promise<void> {
+    const resolved = resolveTarget({ target, url: previewUrl, id: previewId });
+
+    let resolvedUrl: string;
+
+    if (resolved.type === "id") {
+        resolvedUrl = await resolvePreviewUrlFromId({ cliContext, previewId: resolved.value });
+        cliContext.logger.debug(`Resolved preview ID "${resolved.value}" to URL: ${resolvedUrl}`);
+    } else {
+        resolvedUrl = resolved.value;
+    }
+
     // Validate that the URL is a preview URL before proceeding
-    if (!isPreviewUrl(previewUrl)) {
+    if (!isPreviewUrl(resolvedUrl)) {
         cliContext.failAndThrow(
-            `Invalid preview URL: ${previewUrl}\n` +
+            `Invalid preview URL: ${resolvedUrl}\n` +
                 "Only preview sites can be deleted with this command.\n" +
                 "Preview URLs follow the pattern: {org}-preview-{hash}.docs.buildwithfern.com\n" +
                 "Example: acme-preview-abc123.docs.buildwithfern.com",
@@ -64,16 +100,16 @@ export async function deleteDocsPreview({
     }
 
     await cliContext.runTask(async (context) => {
-        context.logger.info(`Deleting preview site: ${previewUrl}`);
+        context.logger.info(`Deleting preview site: ${resolvedUrl}`);
 
         const fdr = createFdrService({ token: token.value });
 
         const deleteResponse = await fdr.docs.v2.write.deleteDocsSite({
-            url: previewUrl as Parameters<typeof fdr.docs.v2.write.deleteDocsSite>[0]["url"]
+            url: resolvedUrl as Parameters<typeof fdr.docs.v2.write.deleteDocsSite>[0]["url"]
         });
 
         if (deleteResponse.ok) {
-            context.logger.info(chalk.green(`Successfully deleted preview site: ${previewUrl}`));
+            context.logger.info(chalk.green(`Successfully deleted preview site: ${resolvedUrl}`));
         } else {
             switch (deleteResponse.error.error) {
                 case "UnauthorizedError":
@@ -83,11 +119,11 @@ export async function deleteDocsPreview({
                         { code: CliError.Code.NetworkError }
                     );
                 case "DocsNotFoundError":
-                    return context.failAndThrow(`Preview site not found: ${previewUrl}`, undefined, {
+                    return context.failAndThrow(`Preview site not found: ${resolvedUrl}`, undefined, {
                         code: CliError.Code.ConfigError
                     });
                 default:
-                    return context.failAndThrow(`Failed to delete preview site: ${previewUrl}`, deleteResponse.error, {
+                    return context.failAndThrow(`Failed to delete preview site: ${resolvedUrl}`, deleteResponse.error, {
                         code: CliError.Code.NetworkError
                     });
             }
