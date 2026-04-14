@@ -192,8 +192,7 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}.js";
             files: [
                 BundledTypescriptProject.DIST_DIRECTORY,
                 BundledTypescriptProject.TYPES_DIRECTORY,
-                ...this.getAllStubTypeFiles(),
-                BundledTypescriptProject.LICENSE_FILENAME
+                ...this.getAllStubTypeFiles()
             ],
             exports: {
                 ".": this.getExportsForBundle({

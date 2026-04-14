@@ -10,8 +10,7 @@
     "files": [
         "dist",
         "types",
-        "api/resources/user.d.ts",
-        "LICENSE"
+        "api/resources/user.d.ts"
     ],
     "exports": {
         ".": {
