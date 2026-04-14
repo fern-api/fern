@@ -4,10 +4,10 @@ namespace Seed\Users;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Users\Requests\ListUsernamesRequestCustom;
+use Seed\Users\Requests\ListWithCustomPagerRequest;
 use Seed\Core\Pagination\Pager;
 use Seed\Core\Pagination\CustomPager;
-use Seed\Types\UsernameCursor;
+use Seed\Types\UsersListResponse;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
@@ -52,7 +52,7 @@ class UsersClient
     }
 
     /**
-     * @param ListUsernamesRequestCustom $request
+     * @param ListWithCustomPagerRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -63,14 +63,14 @@ class UsersClient
      * } $options
      * @return Pager<string>
      */
-    public function listUsernamesCustom(ListUsernamesRequestCustom $request = new ListUsernamesRequestCustom(), ?array $options = null): Pager
+    public function listWithCustomPager(ListWithCustomPagerRequest $request = new ListWithCustomPagerRequest(), ?array $options = null): Pager
     {
-        $response = $this->_listUsernamesCustom($request, $options);
+        $response = $this->_listWithCustomPager($request, $options);
         return new CustomPager(response: $response, client: $this);
     }
 
     /**
-     * @param ListUsernamesRequestCustom $request
+     * @param ListWithCustomPagerRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -79,14 +79,17 @@ class UsersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?UsernameCursor
+     * @return ?UsersListResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function _listUsernamesCustom(ListUsernamesRequestCustom $request = new ListUsernamesRequestCustom(), ?array $options = null): ?UsernameCursor
+    private function _listWithCustomPager(ListWithCustomPagerRequest $request = new ListWithCustomPagerRequest(), ?array $options = null): ?UsersListResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
+        if ($request->limit != null) {
+            $query['limit'] = $request->limit;
+        }
         if ($request->startingAfter != null) {
             $query['starting_after'] = $request->startingAfter;
         }
@@ -106,7 +109,7 @@ class UsersClient
                 if (empty($json)) {
                     return null;
                 }
-                return UsernameCursor::fromJson($json);
+                return UsersListResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);

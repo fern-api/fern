@@ -1,5 +1,28 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.4.0
+  changelogEntry:
+    - summary: |
+        Support omitting username or password from basic auth when configured via
+        `usernameOmit` or `passwordOmit` in the IR. Omitted fields are removed from
+        the SDK's public API and treated as empty strings internally (e.g., omitting
+        password encodes `username:`, omitting username encodes `:password`). When
+        both are omitted, the Authorization header is skipped entirely.
+      type: feat
+  createdAt: "2026-04-02"
+  irVersion: 66
+
+- version: 1.3.0-rc.1
+  changelogEntry:
+    - summary: |
+        Ensure `extraDependencies` and `extraDevDependencies` override bundled dependency
+        versions instead of creating duplicates. Previously, specifying a bundled gem
+        (e.g., `base64`, `rake`) in extra dependencies would result in duplicate entries
+        in the gemspec or Gemfile. The user-specified version now takes precedence.
+      type: fix
+  createdAt: "2026-04-03"
+  irVersion: 66
+
 - version: 1.3.0-rc.0
   changelogEntry:
     - summary: |
@@ -7,6 +30,18 @@
       type: feat
   createdAt: "2026-04-01"
   irVersion: 66
+
+- version: 1.2.1
+  changelogEntry:
+    - summary: |
+        Fix rubocop not running in local mode by running `bundle install`
+        before `bundle exec rubocop -A` and clearing conflicting nix/devbox
+        Ruby environment variables. Previously, rubocop ran before dependencies
+        were installed and relied on a system-level rubocop that could be
+        broken or absent outside Docker.
+      type: fix
+  createdAt: "2026-04-04"
+  irVersion: 61
 
 - version: 1.2.0
   changelogEntry:
@@ -17,7 +52,6 @@
       type: feat
   createdAt: "2026-04-02"
   irVersion: 61
-
 - version: 1.1.13
   changelogEntry:
     - summary: |

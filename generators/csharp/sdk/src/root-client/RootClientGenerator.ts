@@ -454,6 +454,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                             (s): s is typeof s & { type: "basic" } => s.type === "basic"
                         );
                         const isAuthOptional = !this.context.ir.sdkConfig.isAuthMandatory;
+                        let isFirstBlock = true;
                         for (let i = 0; i < basicSchemes.length; i++) {
                             const basicScheme = basicSchemes[i];
                             if (basicScheme == null) {
@@ -467,15 +468,30 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                             const passwordAccess = unified
                                 ? `clientOptions.${this.toPascalCase(passwordName)}`
                                 : passwordName;
-                            if (isAuthOptional || basicSchemes.length > 1) {
-                                const controlFlowKeyword = i === 0 ? "if" : "else if";
-                                innerWriter.controlFlow(
-                                    controlFlowKeyword,
-                                    this.csharp.codeblock(`${usernameAccess} != null && ${passwordAccess} != null`)
-                                );
+                            const usernameOmitted = !!basicScheme.usernameOmit;
+                            const passwordOmitted = !!basicScheme.passwordOmit;
+                            // Condition: only require non-omitted fields to be present
+                            let condition: string;
+                            if (!usernameOmitted && !passwordOmitted) {
+                                condition = `${usernameAccess} != null && ${passwordAccess} != null`;
+                            } else if (usernameOmitted && !passwordOmitted) {
+                                condition = `${passwordAccess} != null`;
+                            } else if (!usernameOmitted && passwordOmitted) {
+                                condition = `${usernameAccess} != null`;
+                            } else {
+                                // Both fields omitted — skip auth header entirely when auth is non-mandatory
+                                continue;
                             }
+                            if (isAuthOptional || basicSchemes.length > 1) {
+                                const controlFlowKeyword = isFirstBlock ? "if" : "else if";
+                                innerWriter.controlFlow(controlFlowKeyword, this.csharp.codeblock(condition));
+                            }
+                            isFirstBlock = false;
+                            // Build credential string: omitted fields are empty, provided fields use interpolation
+                            const usernamePart = usernameOmitted ? "" : `{${usernameAccess}}`;
+                            const passwordPart = passwordOmitted ? "" : `{${passwordAccess}}`;
                             innerWriter.writeTextStatement(
-                                `clientOptionsWithAuth.Headers["Authorization"] = $"Basic {Convert.ToBase64String(global::System.Text.Encoding.UTF8.GetBytes($"{${usernameAccess}}:{${passwordAccess}}"))}"`
+                                `clientOptionsWithAuth.Headers["Authorization"] = $"Basic {Convert.ToBase64String(global::System.Text.Encoding.UTF8.GetBytes($"${usernamePart}:${passwordPart}"))}"`
                             );
                             if (isAuthOptional || basicSchemes.length > 1) {
                                 innerWriter.endControlFlow();
@@ -802,8 +818,12 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             {
                 const usernameName = this.case.camelSafe(scheme.username);
                 const passwordName = this.case.camelSafe(scheme.password);
-                return [
-                    {
+                const usernameOmitted = !!scheme.usernameOmit;
+                const passwordOmitted = !!scheme.passwordOmit;
+                // When omit is true, the field is completely removed from the end-user API.
+                const params: ConstructorParameter[] = [];
+                if (!usernameOmitted) {
+                    params.push({
                         name: usernameName,
                         docs: scheme.docs ?? `The ${usernameName} to use for authentication.`,
                         isOptional,
@@ -817,8 +837,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         type: this.Primitive.string,
                         environmentVariable: scheme.usernameEnvVar,
                         exampleValue: this.case.screamingSnakeSafe(scheme.username)
-                    },
-                    {
+                    });
+                }
+                if (!passwordOmitted) {
+                    params.push({
                         name: passwordName,
                         docs: scheme.docs ?? `The ${passwordName} to use for authentication.`,
                         isOptional,
@@ -832,8 +854,9 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         type: this.Primitive.string,
                         environmentVariable: scheme.passwordEnvVar,
                         exampleValue: this.case.screamingSnakeSafe(scheme.password)
-                    }
-                ];
+                    });
+                }
+                return params;
             }
         } else if (scheme.type === "oauth") {
             if (this.oauth !== null) {

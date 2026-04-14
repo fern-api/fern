@@ -14,10 +14,11 @@ import {
     resolveAffectedFixtures,
     resolveAffectedGenerators
 } from "./commands/affected/index.js";
-import { cleanOrphanedSeedFolders } from "./commands/clean/index.js";
+import { cleanEmptySeedDirectories, cleanOrphanedSeedFolders } from "./commands/clean/index.js";
 import { generateCliChangelog } from "./commands/generate/generateCliChangelog.js";
 import { generateGeneratorChangelog } from "./commands/generate/generateGeneratorChangelog.js";
 import { buildGeneratorImage } from "./commands/img/buildGeneratorImage.js";
+import { inspectFixture } from "./commands/inspect/inspectFixture.js";
 import { getLatestCli } from "./commands/latest/getLatestCli.js";
 import { getLatestGenerator } from "./commands/latest/getLatestGenerator.js";
 import { getLatestVersionsYml } from "./commands/latest/getLatestVersionsYml.js";
@@ -81,6 +82,7 @@ export async function tryRunCli(): Promise<void> {
     addValidateCommands(cli);
     addLatestCommands(cli);
     addGenerateCommands(cli);
+    addInspectCommand(cli);
 
     await cli.parse();
 }
@@ -109,11 +111,13 @@ function addTestCommand(cli: Argv) {
                     string: true,
                     // default: FIXTURES,
                     demandOption: false,
+                    alias: "f",
                     description: "Runs on all fixtures if not provided"
                 })
                 .option("outputFolder", {
                     string: true,
                     demandOption: false,
+                    alias: "o",
                     description: "Runs on a specific output folder. Only relevant if there are >1 folders configured."
                 })
                 .option("keepContainer", {
@@ -126,12 +130,14 @@ function addTestCommand(cli: Argv) {
                 .option("skip-scripts", {
                     type: "boolean",
                     demandOption: false,
-                    default: false
+                    default: false,
+                    alias: "ss"
                 })
                 .option("local", {
                     type: "boolean",
                     demandOption: false,
-                    default: false
+                    default: false,
+                    alias: "l"
                 })
                 .option("log-level", {
                     default: LogLevel.Info,
@@ -147,18 +153,21 @@ function addTestCommand(cli: Argv) {
                     type: "boolean",
                     demandOption: false,
                     default: false,
+                    alias: "i",
                     description: "Execute Node with --inspect flag for debugging"
                 })
                 .option("container-runtime", {
                     type: "string",
                     choices: ["docker", "podman"],
                     demandOption: false,
+                    alias: "cr",
                     description: "Explicitly specify which container runtime to use (docker or podman)"
                 })
                 .option("base-ref", {
                     type: "string",
                     demandOption: false,
                     default: "origin/main",
+                    alias: "br",
                     description: 'Git ref to diff against when using "affected" mode (default: origin/main)'
                 }),
         async (argv) => {
@@ -417,11 +426,13 @@ function addTestRemoteLocalCommand(cli: Argv) {
                     type: "array",
                     string: true,
                     demandOption: false,
+                    alias: "f",
                     description: "Runs on all fixtures if not provided"
                 })
                 .option("outputFolder", {
                     string: true,
                     demandOption: false,
+                    alias: "o",
                     description: "Runs on a specific output folder. Only relevant if there are >1 folders configured."
                 })
                 .option("output-mode", {
@@ -438,6 +449,7 @@ function addTestRemoteLocalCommand(cli: Argv) {
                 .option("fern-repo-directory", {
                     string: true,
                     demandOption: false,
+                    alias: "frd",
                     description:
                         "These tests must run with the fern repo path as their working directory. Defaults to the current working directory."
                 })
@@ -456,6 +468,7 @@ function addTestRemoteLocalCommand(cli: Argv) {
                     type: "boolean",
                     demandOption: false,
                     default: false,
+                    alias: "bg",
                     description:
                         "Build generator Docker images at version 99.99.99 for local generation mode. Uses 'pnpm seed img' internally."
                 }),
@@ -530,6 +543,7 @@ function addRunCommand(cli: Argv) {
                     type: "string",
                     string: true,
                     demandOption: false,
+                    alias: "op",
                     description: "Path to output the generated files (defaults to tmp dir)"
                 })
                 .option("log-level", {
@@ -539,28 +553,33 @@ function addRunCommand(cli: Argv) {
                 .option("skip-scripts", {
                     type: "boolean",
                     demandOption: false,
-                    default: false
+                    default: false,
+                    alias: "ss"
                 })
                 .option("audience", {
                     string: true,
-                    demandOption: false
+                    demandOption: false,
+                    alias: "a"
                 })
                 .option("local", {
                     type: "boolean",
                     demandOption: false,
                     default: false,
+                    alias: "l",
                     description: "Run the generator locally instead of using Docker"
                 })
                 .option("keepContainer", {
                     type: "boolean",
                     demandOption: false,
                     default: false,
+                    alias: "k",
                     description: "Keeps the docker container after the generator finishes (Docker mode only)"
                 })
                 .option("inspect", {
                     type: "boolean",
                     demandOption: false,
-                    default: false
+                    default: false,
+                    alias: "i"
                 })
                 .option("prefer-manual-examples", {
                     type: "boolean",
@@ -690,6 +709,7 @@ function addGetAvailableFixturesCommand(cli: Argv) {
                     type: "boolean",
                     demandOption: false,
                     default: false,
+                    alias: "iof",
                     description:
                         "Whether to separate by test subfolders or not (e.g., imdb:noScripts, imdb:no-custom-config, etc.)"
                 }),
@@ -730,6 +750,7 @@ function addListTestFixturesCommand(cli: Argv) {
                 .option("groups", {
                     type: "string",
                     demandOption: false,
+                    alias: "n",
                     description:
                         "Split fixtures into groups for parallel execution. Use 'auto' to automatically calculate based on fixture count, or a number for a specific group count."
                 }),
@@ -790,12 +811,14 @@ function addAffectedCommand(cli: Argv) {
                     type: "string",
                     demandOption: false,
                     default: "origin/main",
+                    alias: "br",
                     description: "Git ref to diff against (default: origin/main)"
                 })
                 .option("json", {
                     type: "boolean",
                     demandOption: false,
                     default: false,
+                    alias: "j",
                     description: "Output results as JSON"
                 }),
         async (argv) => {
@@ -864,6 +887,7 @@ function addCleanCommand(cli: Argv) {
                     type: "boolean",
                     demandOption: false,
                     default: false,
+                    alias: "dr",
                     description: "List orphaned folders without deleting them"
                 }),
         async (argv) => {
@@ -879,8 +903,9 @@ function addCleanCommand(cli: Argv) {
                     : generators;
 
             const result = await cleanOrphanedSeedFolders(targetGenerators, argv.dryRun);
+            const emptyResult = await cleanEmptySeedDirectories(argv.dryRun);
 
-            if (argv.dryRun && result.orphanedFolders.length > 0) {
+            if (argv.dryRun && (result.orphanedFolders.length > 0 || emptyResult.emptyDirectories.length > 0)) {
                 process.exit(1);
             }
         }
@@ -1544,6 +1569,51 @@ function throwIfGeneratorDoesNotExist({
             )} not found. Please make sure that there is a folder with those names in the seed directory.`
         );
     }
+}
+
+function addInspectCommand(cli: Argv) {
+    cli.command(
+        "inspect",
+        "Inspect a fixture by generating intermediary representations (OpenAPI IR, Fern definition, Fern IR) without running a generator",
+        (yargs) =>
+            yargs
+                .option("fixture", {
+                    type: "string",
+                    demandOption: true,
+                    alias: "f",
+                    description: "The fixture to inspect (e.g. server-sent-events-openapi)"
+                })
+                .option("output", {
+                    type: "string",
+                    demandOption: false,
+                    alias: "o",
+                    description: "Output directory for results (defaults to a temp directory)"
+                })
+                .option("direct", {
+                    type: "boolean",
+                    demandOption: false,
+                    default: false,
+                    alias: "d",
+                    description:
+                        "Use the direct OpenAPI → IR path (via @fern-api/openapi-to-ir), skipping OpenAPI IR and Fern definition stages"
+                })
+                .option("log-level", {
+                    default: LogLevel.Info,
+                    choices: LOG_LEVELS
+                }),
+        async (argv) => {
+            await inspectFixture({
+                fixture: argv.fixture,
+                outputPath: argv.output
+                    ? argv.output.startsWith("/")
+                        ? AbsoluteFilePath.of(argv.output)
+                        : join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of(argv.output))
+                    : undefined,
+                direct: argv.direct,
+                logLevel: argv["log-level"]
+            });
+        }
+    );
 }
 
 // Dummy clone of the function from @fern-api/core

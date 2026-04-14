@@ -52,7 +52,7 @@ func TestSettersSendLiteralsInlinedRequest(t *testing.T) {
 
 	t.Run("SetObjectWithLiteral", func(t *testing.T) {
 		obj := &SendLiteralsInlinedRequest{}
-		var fernTestValueObjectWithLiteral *ATopLevelLiteral
+		var fernTestValueObjectWithLiteral *AtopLevelLiteral
 		obj.SetObjectWithLiteral(fernTestValueObjectWithLiteral)
 		assert.Equal(t, fernTestValueObjectWithLiteral, obj.ObjectWithLiteral)
 		assert.NotNil(t, obj.explicitFields)
@@ -220,7 +220,7 @@ func TestSettersMarkExplicitSendLiteralsInlinedRequest(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &SendLiteralsInlinedRequest{}
-		var fernTestValueObjectWithLiteral *ATopLevelLiteral
+		var fernTestValueObjectWithLiteral *AtopLevelLiteral
 
 		// Act
 		obj.SetObjectWithLiteral(fernTestValueObjectWithLiteral)
@@ -249,10 +249,10 @@ func TestSettersMarkExplicitSendLiteralsInlinedRequest(t *testing.T) {
 
 }
 
-func TestSettersATopLevelLiteral(t *testing.T) {
+func TestSettersAtopLevelLiteral(t *testing.T) {
 	t.Run("SetNestedLiteral", func(t *testing.T) {
-		obj := &ATopLevelLiteral{}
-		var fernTestValueNestedLiteral *ANestedLiteral
+		obj := &AtopLevelLiteral{}
+		var fernTestValueNestedLiteral *AnestedLiteral
 		obj.SetNestedLiteral(fernTestValueNestedLiteral)
 		assert.Equal(t, fernTestValueNestedLiteral, obj.NestedLiteral)
 		assert.NotNil(t, obj.explicitFields)
@@ -260,12 +260,12 @@ func TestSettersATopLevelLiteral(t *testing.T) {
 
 }
 
-func TestGettersATopLevelLiteral(t *testing.T) {
+func TestGettersAtopLevelLiteral(t *testing.T) {
 	t.Run("GetNestedLiteral", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &ATopLevelLiteral{}
-		var expected *ANestedLiteral
+		obj := &AtopLevelLiteral{}
+		var expected *AnestedLiteral
 		obj.NestedLiteral = expected
 
 		// Act & Assert
@@ -275,7 +275,7 @@ func TestGettersATopLevelLiteral(t *testing.T) {
 	t.Run("GetNestedLiteral_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &ATopLevelLiteral{}
+		obj := &AtopLevelLiteral{}
 		obj.NestedLiteral = nil
 
 		// Act & Assert
@@ -284,7 +284,7 @@ func TestGettersATopLevelLiteral(t *testing.T) {
 
 	t.Run("GetNestedLiteral_NilReceiver", func(t *testing.T) {
 		t.Parallel()
-		var obj *ATopLevelLiteral
+		var obj *AtopLevelLiteral
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
@@ -296,12 +296,12 @@ func TestGettersATopLevelLiteral(t *testing.T) {
 
 }
 
-func TestSettersMarkExplicitATopLevelLiteral(t *testing.T) {
+func TestSettersMarkExplicitAtopLevelLiteral(t *testing.T) {
 	t.Run("SetNestedLiteral_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &ATopLevelLiteral{}
-		var fernTestValueNestedLiteral *ANestedLiteral
+		obj := &AtopLevelLiteral{}
+		var fernTestValueNestedLiteral *AnestedLiteral
 
 		// Act
 		obj.SetNestedLiteral(fernTestValueNestedLiteral)
@@ -451,11 +451,11 @@ func TestGettersUndiscriminatedLiteral(t *testing.T) {
 
 }
 
-func TestJSONMarshalingANestedLiteral(t *testing.T) {
+func TestJSONMarshalingAnestedLiteral(t *testing.T) {
 	t.Run("MarshalUnmarshal", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &ANestedLiteral{}
+		obj := &AnestedLiteral{}
 
 		// Act - Marshal to JSON
 		data, err := json.Marshal(obj)
@@ -464,25 +464,25 @@ func TestJSONMarshalingANestedLiteral(t *testing.T) {
 		assert.NotEmpty(t, data, "marshaled data should not be empty")
 
 		// Unmarshal back and verify round-trip
-		var unmarshaled ANestedLiteral
+		var unmarshaled AnestedLiteral
 		err = json.Unmarshal(data, &unmarshaled)
 		assert.NoError(t, err, "round-trip unmarshal should succeed")
 	})
 
 	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
 		t.Parallel()
-		var obj ANestedLiteral
+		var obj AnestedLiteral
 		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
 		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
 	})
 
 }
 
-func TestJSONMarshalingATopLevelLiteral(t *testing.T) {
+func TestJSONMarshalingAtopLevelLiteral(t *testing.T) {
 	t.Run("MarshalUnmarshal", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &ATopLevelLiteral{}
+		obj := &AtopLevelLiteral{}
 
 		// Act - Marshal to JSON
 		data, err := json.Marshal(obj)
@@ -491,62 +491,62 @@ func TestJSONMarshalingATopLevelLiteral(t *testing.T) {
 		assert.NotEmpty(t, data, "marshaled data should not be empty")
 
 		// Unmarshal back and verify round-trip
-		var unmarshaled ATopLevelLiteral
+		var unmarshaled AtopLevelLiteral
 		err = json.Unmarshal(data, &unmarshaled)
 		assert.NoError(t, err, "round-trip unmarshal should succeed")
 	})
 
 	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
 		t.Parallel()
-		var obj ATopLevelLiteral
+		var obj AtopLevelLiteral
 		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
 		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
 	})
 
 	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
 		t.Parallel()
-		var obj ATopLevelLiteral
+		var obj AtopLevelLiteral
 		err := json.Unmarshal([]byte(`{}`), &obj)
 		assert.NoError(t, err, "unmarshaling empty object should succeed")
 	})
 }
 
-func TestStringANestedLiteral(t *testing.T) {
+func TestStringAnestedLiteral(t *testing.T) {
 	t.Run("StringMethod", func(t *testing.T) {
 		t.Parallel()
-		obj := &ANestedLiteral{}
+		obj := &AnestedLiteral{}
 		result := obj.String()
 		assert.NotEmpty(t, result, "String() should return a non-empty representation")
 	})
 
 	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
 		t.Parallel()
-		var obj *ANestedLiteral
+		var obj *AnestedLiteral
 		result := obj.String()
 		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
 	})
 }
 
-func TestStringATopLevelLiteral(t *testing.T) {
+func TestStringAtopLevelLiteral(t *testing.T) {
 	t.Run("StringMethod", func(t *testing.T) {
 		t.Parallel()
-		obj := &ATopLevelLiteral{}
+		obj := &AtopLevelLiteral{}
 		result := obj.String()
 		assert.NotEmpty(t, result, "String() should return a non-empty representation")
 	})
 
 	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
 		t.Parallel()
-		var obj *ATopLevelLiteral
+		var obj *AtopLevelLiteral
 		result := obj.String()
 		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
 	})
 }
 
-func TestExtraPropertiesANestedLiteral(t *testing.T) {
+func TestExtraPropertiesAnestedLiteral(t *testing.T) {
 	t.Run("GetExtraProperties", func(t *testing.T) {
 		t.Parallel()
-		obj := &ANestedLiteral{}
+		obj := &AnestedLiteral{}
 		// Should not panic when calling GetExtraProperties()
 		defer func() {
 			if r := recover(); r != nil {
@@ -560,16 +560,16 @@ func TestExtraPropertiesANestedLiteral(t *testing.T) {
 
 	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
 		t.Parallel()
-		var obj *ANestedLiteral
+		var obj *AnestedLiteral
 		extraProps := obj.GetExtraProperties()
 		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
 	})
 }
 
-func TestExtraPropertiesATopLevelLiteral(t *testing.T) {
+func TestExtraPropertiesAtopLevelLiteral(t *testing.T) {
 	t.Run("GetExtraProperties", func(t *testing.T) {
 		t.Parallel()
-		obj := &ATopLevelLiteral{}
+		obj := &AtopLevelLiteral{}
 		// Should not panic when calling GetExtraProperties()
 		defer func() {
 			if r := recover(); r != nil {
@@ -583,7 +583,7 @@ func TestExtraPropertiesATopLevelLiteral(t *testing.T) {
 
 	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
 		t.Parallel()
-		var obj *ATopLevelLiteral
+		var obj *AtopLevelLiteral
 		extraProps := obj.GetExtraProperties()
 		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
 	})

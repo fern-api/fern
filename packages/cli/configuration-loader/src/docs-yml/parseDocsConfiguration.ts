@@ -137,15 +137,28 @@ export async function parseDocsConfiguration({
         context
     });
 
-    const [navigation, pages, typography, css, js, metadata, context7File] = await Promise.all([
-        convertedNavigationPromise,
-        pagesPromise,
-        typographyPromise,
-        cssPromise,
-        jsPromise,
-        metadataPromise,
-        context7FilePromise
-    ]);
+    const llmsTxtFilePromise = parseTextFile({
+        rawPath: agents?.llmsTxt,
+        absoluteFilepathToDocsConfig
+    });
+
+    const llmsFullTxtFilePromise = parseTextFile({
+        rawPath: agents?.llmsFullTxt,
+        absoluteFilepathToDocsConfig
+    });
+
+    const [navigation, pages, typography, css, js, metadata, context7File, llmsTxtFile, llmsFullTxtFile] =
+        await Promise.all([
+            convertedNavigationPromise,
+            pagesPromise,
+            typographyPromise,
+            cssPromise,
+            jsPromise,
+            metadataPromise,
+            context7FilePromise,
+            llmsTxtFilePromise,
+            llmsFullTxtFilePromise
+        ]);
 
     // Validate incompatible tabs configuration: sidebar placement + center alignment
     const resolvedTheme = convertThemeConfig(rawDocsConfiguration.theme);
@@ -196,6 +209,8 @@ export async function parseDocsConfiguration({
         layout: convertLayoutConfig(layout, tabsObj?.alignment, tabsObj?.placement),
         settings: convertSettingsConfig(rawDocsConfiguration.settings),
         context7File,
+        llmsTxtFile,
+        llmsFullTxtFile,
         theme: resolvedTheme,
         analyticsConfig: {
             ...rawDocsConfiguration.analytics,
@@ -462,6 +477,23 @@ function convertSettingsConfig(
         disableExplorerProxy: settings.disableExplorerProxy ?? false,
         disableAnalytics: settings.disableAnalytics ?? false
     };
+}
+
+async function parseTextFile({
+    rawPath,
+    absoluteFilepathToDocsConfig
+}: {
+    rawPath: string | undefined;
+    absoluteFilepathToDocsConfig: AbsoluteFilePath;
+}): Promise<AbsoluteFilePath | undefined> {
+    if (rawPath == null) {
+        return undefined;
+    }
+
+    const absolutePath = resolveFilepath(rawPath, absoluteFilepathToDocsConfig);
+    await readFile(absolutePath, "utf8");
+
+    return absolutePath;
 }
 
 async function parseContext7File({

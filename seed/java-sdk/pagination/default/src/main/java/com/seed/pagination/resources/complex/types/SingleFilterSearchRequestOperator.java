@@ -7,34 +7,34 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public final class SingleFilterSearchRequestOperator {
+    public static final SingleFilterSearchRequestOperator LESS_THAN =
+            new SingleFilterSearchRequestOperator(Value.LESS_THAN, "<");
+
     public static final SingleFilterSearchRequestOperator GREATER_THAN =
             new SingleFilterSearchRequestOperator(Value.GREATER_THAN, ">");
 
     public static final SingleFilterSearchRequestOperator DOES_NOT_CONTAIN =
             new SingleFilterSearchRequestOperator(Value.DOES_NOT_CONTAIN, "!~");
 
-    public static final SingleFilterSearchRequestOperator IN = new SingleFilterSearchRequestOperator(Value.IN, "IN");
-
-    public static final SingleFilterSearchRequestOperator CONTAINS =
-            new SingleFilterSearchRequestOperator(Value.CONTAINS, "~");
-
-    public static final SingleFilterSearchRequestOperator LESS_THAN =
-            new SingleFilterSearchRequestOperator(Value.LESS_THAN, "<");
+    public static final SingleFilterSearchRequestOperator STARTS_WITH =
+            new SingleFilterSearchRequestOperator(Value.STARTS_WITH, "^");
 
     public static final SingleFilterSearchRequestOperator EQUALS =
             new SingleFilterSearchRequestOperator(Value.EQUALS, "=");
 
-    public static final SingleFilterSearchRequestOperator NOT_EQUALS =
-            new SingleFilterSearchRequestOperator(Value.NOT_EQUALS, "!=");
+    public static final SingleFilterSearchRequestOperator IN = new SingleFilterSearchRequestOperator(Value.IN, "IN");
 
     public static final SingleFilterSearchRequestOperator ENDS_WITH =
             new SingleFilterSearchRequestOperator(Value.ENDS_WITH, "$");
 
-    public static final SingleFilterSearchRequestOperator STARTS_WITH =
-            new SingleFilterSearchRequestOperator(Value.STARTS_WITH, "^");
-
     public static final SingleFilterSearchRequestOperator NOT_IN =
             new SingleFilterSearchRequestOperator(Value.NOT_IN, "NIN");
+
+    public static final SingleFilterSearchRequestOperator CONTAINS =
+            new SingleFilterSearchRequestOperator(Value.CONTAINS, "~");
+
+    public static final SingleFilterSearchRequestOperator NOT_EQUALS =
+            new SingleFilterSearchRequestOperator(Value.NOT_EQUALS, "!=");
 
     private final Value value;
 
@@ -69,26 +69,26 @@ public final class SingleFilterSearchRequestOperator {
 
     public <T> T visit(Visitor<T> visitor) {
         switch (value) {
+            case LESS_THAN:
+                return visitor.visitLessThan();
             case GREATER_THAN:
                 return visitor.visitGreaterThan();
             case DOES_NOT_CONTAIN:
                 return visitor.visitDoesNotContain();
-            case IN:
-                return visitor.visitIn();
-            case CONTAINS:
-                return visitor.visitContains();
-            case LESS_THAN:
-                return visitor.visitLessThan();
-            case EQUALS:
-                return visitor.visitEquals();
-            case NOT_EQUALS:
-                return visitor.visitNotEquals();
-            case ENDS_WITH:
-                return visitor.visitEndsWith();
             case STARTS_WITH:
                 return visitor.visitStartsWith();
+            case EQUALS:
+                return visitor.visitEquals();
+            case IN:
+                return visitor.visitIn();
+            case ENDS_WITH:
+                return visitor.visitEndsWith();
             case NOT_IN:
                 return visitor.visitNotIn();
+            case CONTAINS:
+                return visitor.visitContains();
+            case NOT_EQUALS:
+                return visitor.visitNotEquals();
             case UNKNOWN:
             default:
                 return visitor.visitUnknown(string);
@@ -98,26 +98,26 @@ public final class SingleFilterSearchRequestOperator {
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public static SingleFilterSearchRequestOperator valueOf(String value) {
         switch (value) {
+            case "<":
+                return LESS_THAN;
             case ">":
                 return GREATER_THAN;
             case "!~":
                 return DOES_NOT_CONTAIN;
-            case "IN":
-                return IN;
-            case "~":
-                return CONTAINS;
-            case "<":
-                return LESS_THAN;
-            case "=":
-                return EQUALS;
-            case "!=":
-                return NOT_EQUALS;
-            case "$":
-                return ENDS_WITH;
             case "^":
                 return STARTS_WITH;
+            case "=":
+                return EQUALS;
+            case "IN":
+                return IN;
+            case "$":
+                return ENDS_WITH;
             case "NIN":
                 return NOT_IN;
+            case "~":
+                return CONTAINS;
+            case "!=":
+                return NOT_EQUALS;
             default:
                 return new SingleFilterSearchRequestOperator(Value.UNKNOWN, value);
         }

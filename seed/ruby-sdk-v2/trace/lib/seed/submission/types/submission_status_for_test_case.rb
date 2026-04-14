@@ -9,7 +9,7 @@ module Seed
         discriminant :type
 
         member -> { Seed::Submission::Types::TestCaseResultWithStdout }, key: "GRADED"
-        member -> { Seed::Submission::Types::TestCaseGrade }, key: "GRADED_V_2"
+        member -> { Seed::Submission::Types::TestCaseGrade }, key: "GRADED_V2"
         member -> { Seed::Submission::Types::TracedTestCase }, key: "TRACED"
       end
     end

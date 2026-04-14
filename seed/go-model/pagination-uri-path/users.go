@@ -11,7 +11,7 @@ import (
 
 type User struct {
 	Name string `json:"name" url:"name"`
-	Id   int    `json:"id" url:"id"`
+	ID   int    `json:"id" url:"id"`
 
 	extraProperties map[string]any
 	rawJSON         json.RawMessage
@@ -24,11 +24,11 @@ func (u *User) GetName() string {
 	return u.Name
 }
 
-func (u *User) GetId() int {
+func (u *User) GetID() int {
 	if u == nil {
 		return 0
 	}
-	return u.Id
+	return u.ID
 }
 
 func (u *User) GetExtraProperties() map[string]any {
@@ -68,7 +68,7 @@ func (u *User) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
-type ListUsersUriPaginationResponse struct {
+type ListUsersURIPaginationResponse struct {
 	Data []*User `json:"data" url:"data"`
 	Next *string `json:"next,omitempty" url:"next,omitempty"`
 
@@ -76,36 +76,36 @@ type ListUsersUriPaginationResponse struct {
 	rawJSON         json.RawMessage
 }
 
-func (l *ListUsersUriPaginationResponse) GetData() []*User {
+func (l *ListUsersURIPaginationResponse) GetData() []*User {
 	if l == nil {
 		return nil
 	}
 	return l.Data
 }
 
-func (l *ListUsersUriPaginationResponse) GetNext() *string {
+func (l *ListUsersURIPaginationResponse) GetNext() *string {
 	if l == nil {
 		return nil
 	}
 	return l.Next
 }
 
-func (l *ListUsersUriPaginationResponse) GetExtraProperties() map[string]any {
+func (l *ListUsersURIPaginationResponse) GetExtraProperties() map[string]any {
 	if l == nil {
 		return nil
 	}
 	return l.extraProperties
 }
 
-func (l *ListUsersUriPaginationResponse) UnmarshalJSON(
+func (l *ListUsersURIPaginationResponse) UnmarshalJSON(
 	data []byte,
 ) error {
-	type unmarshaler ListUsersUriPaginationResponse
+	type unmarshaler ListUsersURIPaginationResponse
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*l = ListUsersUriPaginationResponse(value)
+	*l = ListUsersURIPaginationResponse(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *l)
 	if err != nil {
 		return err
@@ -115,7 +115,7 @@ func (l *ListUsersUriPaginationResponse) UnmarshalJSON(
 	return nil
 }
 
-func (l *ListUsersUriPaginationResponse) String() string {
+func (l *ListUsersURIPaginationResponse) String() string {
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value

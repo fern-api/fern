@@ -88,7 +88,7 @@ client.Echo(
 </details>
 
 ## File Notification Service
-<details><summary><code>client.File.Notification.Service.GetException(NotificationId) -> *pleaseinhere.Exception</code></summary>
+<details><summary><code>client.File.Notification.Service.GetException(NotificationID) -> *pleaseinhere.Exception</code></summary>
 <dl>
 <dd>
 
@@ -120,7 +120,7 @@ client.File.Notification.Service.GetException(
 <dl>
 <dd>
 
-**notificationId:** `string` 
+**notificationID:** `string` 
     
 </dd>
 </dl>
@@ -161,7 +161,7 @@ This endpoint returns a file by its name.
 
 ```go
 request := &file.GetFileRequest{
-        XFileApiVersion: "0.0.2",
+        XFileAPIVersion: "0.0.2",
     }
 client.File.Service.GetFile(
         context.TODO(),
@@ -196,7 +196,7 @@ client.File.Service.GetFile(
 </details>
 
 ## Health Service
-<details><summary><code>client.Health.Service.Check(Id) -> error</code></summary>
+<details><summary><code>client.Health.Service.Check(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -297,7 +297,7 @@ client.Health.Service.Ping(
 </details>
 
 ## Service
-<details><summary><code>client.Service.GetMovie(MovieId) -> *pleaseinhere.Movie</code></summary>
+<details><summary><code>client.Service.GetMovie(MovieID) -> *pleaseinhere.Movie</code></summary>
 <dl>
 <dd>
 
@@ -329,7 +329,7 @@ client.Service.GetMovie(
 <dl>
 <dd>
 
-**movieId:** `pleaseinhere.MovieId` 
+**movieID:** `pleaseinhere.MovieID` 
     
 </dd>
 </dl>
@@ -341,7 +341,7 @@ client.Service.GetMovie(
 </dl>
 </details>
 
-<details><summary><code>client.Service.CreateMovie(request) -> pleaseinhere.MovieId</code></summary>
+<details><summary><code>client.Service.CreateMovie(request) -> pleaseinhere.MovieID</code></summary>
 <dl>
 <dd>
 
@@ -355,7 +355,7 @@ client.Service.GetMovie(
 
 ```go
 request := &pleaseinhere.Movie{
-        Id: "movie-c06a4ad7",
+        ID: "movie-c06a4ad7",
         Prequel: pleaseinhere.String(
             "movie-cv9b914f",
         ),
@@ -430,7 +430,7 @@ request := &pleaseinhere.GetMetadataRequest{
                 "development",
             ),
         },
-        XApiVersion: "0.0.1",
+        XAPIVersion: "0.0.1",
     }
 client.Service.GetMetadata(
         context.TODO(),
@@ -467,7 +467,7 @@ client.Service.GetMetadata(
 <dl>
 <dd>
 
-**xApiVersion:** `string` 
+**xAPIVersion:** `string` 
     
 </dd>
 </dl>
@@ -496,7 +496,7 @@ request := &pleaseinhere.BigEntity{
         CastMember: &pleaseinhere.CastMember{
             Actor: &pleaseinhere.Actor{
                 Name: "name",
-                Id: "id",
+                ID: "id",
             },
         },
         ExtendedMovie: &pleaseinhere.ExtendedMovie{
@@ -504,7 +504,7 @@ request := &pleaseinhere.BigEntity{
                 "cast",
                 "cast",
             },
-            Id: "id",
+            ID: "id",
             Prequel: pleaseinhere.String(
                 "prequel",
             ),
@@ -537,21 +537,21 @@ request := &pleaseinhere.BigEntity{
             },
         },
         CommonMetadata: &commons.Metadata{
-            Id: "id",
+            ID: "id",
             Data: map[string]string{
                 "data": "data",
             },
-            JsonString: pleaseinhere.String(
+            JSONString: pleaseinhere.String(
                 "jsonString",
             ),
         },
         EventInfo: &commons.EventInfo{
             Metadata: &commons.Metadata{
-                Id: "id",
+                ID: "id",
                 Data: map[string]string{
                     "data": "data",
                 },
-                JsonString: pleaseinhere.String(
+                JSONString: pleaseinhere.String(
                     "jsonString",
                 ),
             },
@@ -700,7 +700,7 @@ request := &pleaseinhere.BigEntity{
             },
         },
         Moment: &pleaseinhere.Moment{
-            Id: uuid.MustParse(
+            ID: uuid.MustParse(
                 "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             ),
             Date: pleaseinhere.MustParseDate(

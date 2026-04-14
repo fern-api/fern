@@ -28,8 +28,8 @@ type RequestOptions struct {
 	MaxAttempts     uint
 	MaxBufSize      int
 	tokenGetter     TokenGetter
-	XApiKey         string
-	ClientId        string
+	XAPIKey         string
+	ClientID        string
 	ClientSecret    string
 }
 
@@ -133,22 +133,22 @@ func (m *MaxBufSizeOption) applyRequestOptions(opts *RequestOptions) {
 	opts.MaxBufSize = m.MaxBufSize
 }
 
-// XApiKeyOption implements the RequestOption interface.
-type XApiKeyOption struct {
-	XApiKey string
+// XAPIKeyOption implements the RequestOption interface.
+type XAPIKeyOption struct {
+	XAPIKey string
 }
 
-func (x *XApiKeyOption) applyRequestOptions(opts *RequestOptions) {
-	opts.XApiKey = x.XApiKey
+func (x *XAPIKeyOption) applyRequestOptions(opts *RequestOptions) {
+	opts.XAPIKey = x.XAPIKey
 }
 
-// ClientIdOption implements the RequestOption interface.
-type ClientIdOption struct {
-	ClientId string
+// ClientIDOption implements the RequestOption interface.
+type ClientIDOption struct {
+	ClientID string
 }
 
-func (c *ClientIdOption) applyRequestOptions(opts *RequestOptions) {
-	opts.ClientId = c.ClientId
+func (c *ClientIDOption) applyRequestOptions(opts *RequestOptions) {
+	opts.ClientID = c.ClientID
 }
 
 // ClientSecretOption implements the RequestOption interface.

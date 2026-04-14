@@ -7,6 +7,6 @@ public class Example39 {
         Best client =
                 Best.builder().token("<token>").url("https://api.fern.com").build();
 
-        client.endpoints().params().getWithPathAndErrors("param");
+        client.endpoints().params().modifyWithPath("param", "string");
     }
 }

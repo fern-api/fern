@@ -1,3 +1,4 @@
+import { getOriginalName, getWireValue } from "@fern-api/base-generator";
 import { assertDefined } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 export class CycleDetector {
@@ -171,10 +172,7 @@ export class CycleDetector {
         const prettyPath = cycle
             .map((typeId) => {
                 const typeDeclaration = this.ir.types[typeId];
-                const typeName =
-                    typeDeclaration?.name?.name?.originalName ??
-                    typeDeclaration?.name?.name?.pascalCase?.unsafeName ??
-                    typeId;
+                const typeName = typeDeclaration?.name?.name ? getOriginalName(typeDeclaration.name.name) : typeId;
                 return typeName;
             })
             .join(" -> ");
@@ -263,7 +261,7 @@ export class CycleDetector {
                     from: typeId,
                     to: targetTypeId,
                     isOptionalLike,
-                    propertyWireValue: property.name.wireValue
+                    propertyWireValue: getWireValue(property.name)
                 };
                 const list = edgesByFrom.get(typeId) ?? [];
                 list.push(edge);

@@ -35,12 +35,12 @@ func NewClient(options *core.RequestOptions) *Client {
 
 func (c *Client) GetMovie(
 	ctx context.Context,
-	movieId pleaseinhere.MovieId,
+	movieID pleaseinhere.MovieID,
 	opts ...option.RequestOption,
 ) (*pleaseinhere.Movie, error) {
 	response, err := c.WithRawResponse.GetMovie(
 		ctx,
-		movieId,
+		movieID,
 		opts...,
 	)
 	if err != nil {
@@ -53,7 +53,7 @@ func (c *Client) CreateMovie(
 	ctx context.Context,
 	request *pleaseinhere.Movie,
 	opts ...option.RequestOption,
-) (pleaseinhere.MovieId, error) {
+) (pleaseinhere.MovieID, error) {
 	response, err := c.WithRawResponse.CreateMovie(
 		ctx,
 		request,

@@ -641,7 +641,7 @@
             "type": {
               "_visit": [Function],
               "default": undefined,
-              "displayName": undefined,
+              "displayName": "ErrorVariantA",
               "fernFilepath": {
                 "allParts": [],
                 "file": undefined,
@@ -658,7 +658,7 @@
             "type": {
               "_visit": [Function],
               "default": undefined,
-              "displayName": undefined,
+              "displayName": "ErrorVariantB",
               "fernFilepath": {
                 "allParts": [],
                 "file": undefined,
@@ -847,7 +847,7 @@
             "type": {
               "_visit": [Function],
               "default": undefined,
-              "displayName": undefined,
+              "displayName": "OneOfVariantA",
               "fernFilepath": {
                 "allParts": [],
                 "file": undefined,
@@ -864,7 +864,7 @@
             "type": {
               "_visit": [Function],
               "default": undefined,
-              "displayName": undefined,
+              "displayName": "OneOfVariantB",
               "fernFilepath": {
                 "allParts": [],
                 "file": undefined,

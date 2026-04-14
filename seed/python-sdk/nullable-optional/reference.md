@@ -470,8 +470,8 @@ Create a complex profile to test nullable enums and unions
 
 ```python
 from seed import SeedNullableOptional
+from seed.nullable_optional import NotificationMethod_Email, SearchResult_User, Address
 import datetime
-from seed.nullable_optional import Address
 
 client = SeedNullableOptional(
     base_url="https://yourhost.com/path/to/api",
@@ -485,33 +485,29 @@ client.nullable_optional.create_complex_profile(
     nullable_status="active",
     optional_status="active",
     optional_nullable_status="active",
-    nullable_notification={
-        "type": "email",
-        "email_address": "emailAddress",
-        "subject": "subject",
-        "html_content": "htmlContent"
-    },
-    optional_notification={
-        "type": "email",
-        "email_address": "emailAddress",
-        "subject": "subject",
-        "html_content": "htmlContent"
-    },
-    optional_nullable_notification={
-        "type": "email",
-        "email_address": "emailAddress",
-        "subject": "subject",
-        "html_content": "htmlContent"
-    },
-    nullable_search_result={
-        "type": "user",
-        "id": "id",
-        "username": "username",
-        "email": "email",
-        "phone": "phone",
-        "created_at": datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-        "updated_at": datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-        "address": Address(
+    nullable_notification=NotificationMethod_Email(
+        email_address="emailAddress",
+        subject="subject",
+        html_content="htmlContent",
+    ),
+    optional_notification=NotificationMethod_Email(
+        email_address="emailAddress",
+        subject="subject",
+        html_content="htmlContent",
+    ),
+    optional_nullable_notification=NotificationMethod_Email(
+        email_address="emailAddress",
+        subject="subject",
+        html_content="htmlContent",
+    ),
+    nullable_search_result=SearchResult_User(
+        id="id",
+        username="username",
+        email="email",
+        phone="phone",
+        created_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        updated_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        address=Address(
             street="street",
             city="city",
             state="state",
@@ -519,17 +515,16 @@ client.nullable_optional.create_complex_profile(
             country="country",
             building_id="buildingId",
             tenant_id="tenantId",
-        )
-    },
-    optional_search_result={
-        "type": "user",
-        "id": "id",
-        "username": "username",
-        "email": "email",
-        "phone": "phone",
-        "created_at": datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-        "updated_at": datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-        "address": Address(
+        ),
+    ),
+    optional_search_result=SearchResult_User(
+        id="id",
+        username="username",
+        email="email",
+        phone="phone",
+        created_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        updated_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        address=Address(
             street="street",
             city="city",
             state="state",
@@ -537,8 +532,8 @@ client.nullable_optional.create_complex_profile(
             country="country",
             building_id="buildingId",
             tenant_id="tenantId",
-        )
-    },
+        ),
+    ),
     nullable_array=[
         "nullableArray",
         "nullableArray"
@@ -567,18 +562,16 @@ client.nullable_optional.create_complex_profile(
         )
     },
     nullable_list_of_unions=[
-        {
-            "type": "email",
-            "email_address": "emailAddress",
-            "subject": "subject",
-            "html_content": "htmlContent"
-        },
-        {
-            "type": "email",
-            "email_address": "emailAddress",
-            "subject": "subject",
-            "html_content": "htmlContent"
-        }
+        NotificationMethod_Email(
+            email_address="emailAddress",
+            subject="subject",
+            html_content="htmlContent",
+        ),
+        NotificationMethod_Email(
+            email_address="emailAddress",
+            subject="subject",
+            html_content="htmlContent",
+        )
     ],
     optional_map_of_enums={
         "optionalMapOfEnums": "ADMIN"
@@ -718,8 +711,8 @@ Update complex profile to test nullable field updates
 
 ```python
 from seed import SeedNullableOptional
+from seed.nullable_optional import NotificationMethod_Email, SearchResult_User, Address
 import datetime
-from seed.nullable_optional import Address
 
 client = SeedNullableOptional(
     base_url="https://yourhost.com/path/to/api",
@@ -729,21 +722,19 @@ client.nullable_optional.update_complex_profile(
     profile_id="profileId",
     nullable_role="ADMIN",
     nullable_status="active",
-    nullable_notification={
-        "type": "email",
-        "email_address": "emailAddress",
-        "subject": "subject",
-        "html_content": "htmlContent"
-    },
-    nullable_search_result={
-        "type": "user",
-        "id": "id",
-        "username": "username",
-        "email": "email",
-        "phone": "phone",
-        "created_at": datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-        "updated_at": datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-        "address": Address(
+    nullable_notification=NotificationMethod_Email(
+        email_address="emailAddress",
+        subject="subject",
+        html_content="htmlContent",
+    ),
+    nullable_search_result=SearchResult_User(
+        id="id",
+        username="username",
+        email="email",
+        phone="phone",
+        created_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        updated_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        address=Address(
             street="street",
             city="city",
             state="state",
@@ -751,8 +742,8 @@ client.nullable_optional.update_complex_profile(
             country="country",
             building_id="buildingId",
             tenant_id="tenantId",
-        )
-    },
+        ),
+    ),
     nullable_array=[
         "nullableArray",
         "nullableArray"
@@ -861,8 +852,8 @@ Test endpoint for validating null deserialization
 
 ```python
 from seed import SeedNullableOptional
+from seed.nullable_optional import NotificationMethod_Email, SearchResult_User, Address, Organization
 import datetime
-from seed.nullable_optional import Address, Organization
 
 client = SeedNullableOptional(
     base_url="https://yourhost.com/path/to/api",
@@ -875,21 +866,19 @@ client.nullable_optional.test_deserialization(
     optional_nullable_string="optionalNullableString",
     nullable_enum="ADMIN",
     optional_enum="active",
-    nullable_union={
-        "type": "email",
-        "email_address": "emailAddress",
-        "subject": "subject",
-        "html_content": "htmlContent"
-    },
-    optional_union={
-        "type": "user",
-        "id": "id",
-        "username": "username",
-        "email": "email",
-        "phone": "phone",
-        "created_at": datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-        "updated_at": datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-        "address": Address(
+    nullable_union=NotificationMethod_Email(
+        email_address="emailAddress",
+        subject="subject",
+        html_content="htmlContent",
+    ),
+    optional_union=SearchResult_User(
+        id="id",
+        username="username",
+        email="email",
+        phone="phone",
+        created_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        updated_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        address=Address(
             street="street",
             city="city",
             state="state",
@@ -897,8 +886,8 @@ client.nullable_optional.test_deserialization(
             country="country",
             building_id="buildingId",
             tenant_id="tenantId",
-        )
-    },
+        ),
+    ),
     nullable_list=[
         "nullableList",
         "nullableList"

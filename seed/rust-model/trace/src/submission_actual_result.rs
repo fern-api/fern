@@ -32,7 +32,7 @@ impl ActualResult {
         Self::Exception { data }
     }
 
-    pub fn exception_v_2(value: ExceptionV2) -> Self {
+    pub fn exception_v2(value: ExceptionV2) -> Self {
         Self::ExceptionV2 { value }
     }
 }

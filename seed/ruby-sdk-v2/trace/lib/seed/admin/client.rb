@@ -17,7 +17,7 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
-      # @option params [Seed::Submission::Types::SubmissionId] :submission_id
+      # @option params [Seed::Submission::Types::SubmissionID] :submission_id
       #
       # @return [untyped]
       def update_test_submission_status(request_options: {}, **params)
@@ -48,7 +48,7 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
-      # @option params [Seed::Submission::Types::SubmissionId] :submission_id
+      # @option params [Seed::Submission::Types::SubmissionID] :submission_id
       #
       # @return [untyped]
       def send_test_submission_update(request_options: {}, **params)
@@ -79,7 +79,7 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
-      # @option params [Seed::Submission::Types::SubmissionId] :submission_id
+      # @option params [Seed::Submission::Types::SubmissionID] :submission_id
       #
       # @return [untyped]
       def update_workspace_submission_status(request_options: {}, **params)
@@ -110,7 +110,7 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
-      # @option params [Seed::Submission::Types::SubmissionId] :submission_id
+      # @option params [Seed::Submission::Types::SubmissionID] :submission_id
       #
       # @return [untyped]
       def send_workspace_submission_update(request_options: {}, **params)
@@ -141,7 +141,7 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
-      # @option params [Seed::Submission::Types::SubmissionId] :submission_id
+      # @option params [Seed::Submission::Types::SubmissionID] :submission_id
       # @option params [String] :test_case_id
       #
       # @return [untyped]
@@ -177,11 +177,11 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
-      # @option params [Seed::Submission::Types::SubmissionId] :submission_id
-      # @option params [Seed::V2::Problem::Types::TestCaseId] :test_case_id
+      # @option params [Seed::Submission::Types::SubmissionID] :submission_id
+      # @option params [Seed::V2::Problem::Types::TestCaseID] :test_case_id
       #
       # @return [untyped]
-      def store_traced_test_case_v_2(request_options: {}, **params)
+      def store_traced_test_case_v2(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
@@ -209,7 +209,7 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
-      # @option params [Seed::Submission::Types::SubmissionId] :submission_id
+      # @option params [Seed::Submission::Types::SubmissionID] :submission_id
       #
       # @return [untyped]
       def store_traced_workspace(request_options: {}, **params)
@@ -244,10 +244,10 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
-      # @option params [Seed::Submission::Types::SubmissionId] :submission_id
+      # @option params [Seed::Submission::Types::SubmissionID] :submission_id
       #
       # @return [untyped]
-      def store_traced_workspace_v_2(request_options: {}, **params)
+      def store_traced_workspace_v2(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],

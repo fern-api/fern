@@ -4,11 +4,11 @@ import { addPrefixToString } from "@fern-api/core-utils";
 import { createLogger, LogLevel } from "@fern-api/logger";
 import {
     CreateInteractiveTaskParams,
-    FernCliError,
     Finishable,
     InteractiveTaskContext,
     PosthogEvent,
     Startable,
+    TaskAbortSignal,
     TaskContext,
     TaskResult
 } from "@fern-api/task-context";
@@ -27,7 +27,7 @@ export declare namespace TaskContextImpl {
          */
         onResult?: (result: TaskResult) => void;
         shouldBufferLogs: boolean;
-        instrumentPostHogEvent: (event: PosthogEvent) => Promise<void>;
+        instrumentPostHogEvent: (event: PosthogEvent) => void;
     }
 }
 
@@ -40,7 +40,7 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
     private bufferedLogs: Log[] = [];
     protected status: "notStarted" | "running" | "finished" = "notStarted";
     private onResult: ((result: TaskResult) => void) | undefined;
-    private instrumentPostHogEventImpl: (event: PosthogEvent) => Promise<void>;
+    private instrumentPostHogEventImpl: (event: PosthogEvent) => void;
     public constructor({
         logImmediately,
         logPrefix,
@@ -81,7 +81,7 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
     public failAndThrow(message?: string, error?: unknown): never {
         this.failWithoutThrowing(message, error);
         this.finish();
-        throw new FernCliError();
+        throw new TaskAbortSignal();
     }
 
     public failWithoutThrowing(message?: string, error?: unknown): void {
@@ -101,7 +101,7 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
         return TaskResult.Success;
     }
 
-    public async instrumentPostHogEvent(event: PosthogEvent): Promise<void> {
+    public instrumentPostHogEvent(event: PosthogEvent): void {
         this.instrumentPostHogEventImpl(event);
     }
 
@@ -144,7 +144,7 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
             takeOverTerminal: this.takeOverTerminal,
             onResult: this.onResult,
             shouldBufferLogs: this.shouldBufferLogs,
-            instrumentPostHogEvent: async (event) => await this.instrumentPostHogEventImpl(event)
+            instrumentPostHogEvent: (event) => this.instrumentPostHogEventImpl(event)
         });
         this.subtasks.push(subtask);
         return subtask;

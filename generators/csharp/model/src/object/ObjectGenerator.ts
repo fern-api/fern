@@ -9,6 +9,7 @@ type NameAndWireValueOrString = FernIr.NameAndWireValueOrString;
 type ObjectProperty = FernIr.ObjectProperty;
 type ObjectTypeDeclaration = FernIr.ObjectTypeDeclaration;
 type TypeDeclaration = FernIr.TypeDeclaration;
+type TypeReference = FernIr.TypeReference;
 
 import { generateFields } from "../generateFields.js";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
@@ -172,19 +173,64 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
         exampleObject: ExampleObjectType;
         parseDatetimes: boolean;
     }): ast.CodeBlock {
-        const args = exampleObject.properties.map((exampleProperty) => {
-            const propertyName = this.getPropertyName({
-                className: this.classReference.name,
-                objectProperty: exampleProperty.name
+        // When generateLiterals is enabled, collect wire values of literal properties so we
+        // can skip them in the object initializer. Their default `= new()` already sets the
+        // correct value and assigning a plain string would cause a CS0029 compilation error.
+        const literalPropertyWireValues = new Set<string>();
+        if (this.generation.settings.generateLiterals) {
+            const allProps = [
+                ...this.objectDeclaration.properties,
+                ...(this.objectDeclaration.extendedProperties ?? [])
+            ];
+            for (const prop of allProps) {
+                if (this.context.isLiteralValue(prop.valueType)) {
+                    literalPropertyWireValues.add(getWireValue(prop.name));
+                }
+            }
+        }
+
+        const args = exampleObject.properties
+            .filter((exampleProperty) => !literalPropertyWireValues.has(getWireValue(exampleProperty.name)))
+            .map((exampleProperty) => {
+                const propertyName = this.getPropertyName({
+                    className: this.classReference.name,
+                    objectProperty: exampleProperty.name
+                });
+                const assignment = this.exampleGenerator.getSnippetForTypeReference({
+                    exampleTypeReference: exampleProperty.value,
+                    parseDatetimes
+                });
+                // todo: considering filtering out "assignments" are are actually just null so that null properties
+                // are completely excluded from object initializers
+                return { name: propertyName, assignment };
             });
-            const assignment = this.exampleGenerator.getSnippetForTypeReference({
-                exampleTypeReference: exampleProperty.value,
-                parseDatetimes
-            });
-            // todo: considering filtering out "assignments" are are actually just null so that null properties
-            // are completely excluded from object initializers
-            return { name: propertyName, assignment };
-        });
+
+        // Include default values for required properties missing from the example
+        // so the generated object initializer compiles without CS9035 errors.
+        const providedWireValues = new Set(exampleObject.properties.map((p) => getWireValue(p.name)));
+        const allProperties = [
+            ...this.objectDeclaration.properties,
+            ...(this.objectDeclaration.extendedProperties ?? [])
+        ];
+        for (const property of allProperties) {
+            if (providedWireValues.has(getWireValue(property.name))) {
+                continue;
+            }
+            // Skip literal properties when generateLiterals is enabled; they have correct defaults.
+            if (literalPropertyWireValues.has(getWireValue(property.name))) {
+                continue;
+            }
+            if (this.isRequiredProperty(property.valueType)) {
+                const propertyName = this.getPropertyName({
+                    className: this.classReference.name,
+                    objectProperty: property.name
+                });
+                const defaultValue = this.getDefaultSnippetForType(property.valueType);
+                if (defaultValue != null) {
+                    args.push({ name: propertyName, assignment: defaultValue });
+                }
+            }
+        }
 
         if (
             this.objectDeclaration.extraProperties &&
@@ -256,6 +302,98 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
             protobufClassReference,
             properties: protoProperties
         });
+    }
+
+    /**
+     * Returns true if a property's type will be marked as `required` in C#.
+     * A property is required when it is not optional, not nullable, and not a collection.
+     */
+    private isRequiredProperty(typeReference: TypeReference): boolean {
+        if (this.context.isOptional(typeReference) || this.context.isNullable(typeReference)) {
+            return false;
+        }
+        if (typeReference.type === "container") {
+            const ct = typeReference.container.type;
+            if (ct === "list" || ct === "set" || ct === "map") {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Returns a CodeBlock with the C# default value for a type reference.
+     * Used when a required property is missing from an example.
+     */
+    private getDefaultSnippetForType(
+        typeReference: TypeReference,
+        visitedTypeIds?: Set<string>
+    ): ast.CodeBlock | undefined {
+        switch (typeReference.type) {
+            case "primitive":
+                return this.context.getDefaultValueForPrimitive({ primitive: typeReference.primitive });
+            case "named": {
+                const typeDeclaration = this.context.model.dereferenceType(typeReference.typeId).typeDeclaration;
+                if (typeDeclaration.shape.type === "alias") {
+                    return this.getDefaultSnippetForType(typeDeclaration.shape.aliasOf, visitedTypeIds);
+                }
+                if (typeDeclaration.shape.type === "enum" && typeDeclaration.shape.values.length > 0) {
+                    const firstEnumValue = typeDeclaration.shape.values[0];
+                    if (firstEnumValue != null) {
+                        const classRef = this.context.csharpTypeMapper.convertToClassReference(typeDeclaration);
+                        const firstValue = this.case.pascalSafe(firstEnumValue.name);
+                        return this.csharp.codeblock(`${classRef.name}.${firstValue}`);
+                    }
+                }
+                if (typeDeclaration.shape.type === "object") {
+                    return this.getDefaultSnippetForObject(typeDeclaration, typeDeclaration.shape, visitedTypeIds);
+                }
+                return undefined;
+            }
+            default:
+                return undefined;
+        }
+    }
+
+    /**
+     * Returns a CodeBlock that constructs a default object initializer for a required nested object.
+     * Recursively fills in required properties with defaults.
+     */
+    private getDefaultSnippetForObject(
+        typeDeclaration: TypeDeclaration,
+        objectShape: ObjectTypeDeclaration,
+        visitedTypeIds?: Set<string>
+    ): ast.CodeBlock | undefined {
+        const visited = visitedTypeIds ?? new Set<string>();
+        const typeId = typeDeclaration.name.typeId;
+        if (visited.has(typeId)) {
+            return undefined;
+        }
+        visited.add(typeId);
+
+        const classRef = this.context.csharpTypeMapper.convertToClassReference(typeDeclaration);
+        const allProperties = [...objectShape.properties, ...(objectShape.extendedProperties ?? [])];
+        const args: { name: string; assignment: ast.CodeBlock }[] = [];
+        for (const property of allProperties) {
+            if (this.isRequiredProperty(property.valueType)) {
+                const propertyName = this.getPropertyName({
+                    className: classRef.name,
+                    objectProperty: property.name
+                });
+                const defaultValue = this.getDefaultSnippetForType(property.valueType, visited);
+                if (defaultValue != null) {
+                    args.push({ name: propertyName, assignment: defaultValue });
+                }
+            }
+        }
+
+        visited.delete(typeId);
+
+        const instantiateClass = this.csharp.instantiateClass({
+            classReference: classRef,
+            arguments_: args
+        });
+        return this.csharp.codeblock((writer) => writer.writeNode(instantiateClass));
     }
 
     /**

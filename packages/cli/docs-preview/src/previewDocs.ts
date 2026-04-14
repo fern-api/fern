@@ -344,12 +344,14 @@ class ReferencedAPICollector {
         ir,
         snippetsConfig,
         playgroundConfig,
+        apiName,
         graphqlOperations = {},
         graphqlTypes = {}
     }: {
         ir: IntermediateRepresentation;
         snippetsConfig: APIV1Write.SnippetsConfig;
         playgroundConfig?: { oauth?: boolean };
+        apiName?: string;
         graphqlOperations?: Record<APIV1Write.GraphQlOperationId, APIV1Write.GraphQlOperation>;
         graphqlTypes?: Record<APIV1Write.TypeId, APIV1Write.TypeDefinition>;
     }): APIDefinitionID {
@@ -363,7 +365,8 @@ class ReferencedAPICollector {
                     playgroundConfig,
                     graphqlOperations,
                     graphqlTypes,
-                    context: this.context
+                    context: this.context,
+                    apiNameOverride: apiName
                 }),
                 FdrAPI.ApiDefinitionId(id),
                 new SDKSnippetHolder({

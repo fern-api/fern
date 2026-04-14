@@ -34,7 +34,6 @@ env:
   DO_NOT_TRACK: "1"
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: "buildwithfern"
-  TURBO_REMOTE_CACHE_TIMEOUT: 10
   TURBO_NO_UPDATE_NOTIFIER: "1"
   TURBO_DAEMON: "false"
 
@@ -52,7 +51,7 @@ jobs:
         id: fetch-alerts
         uses: actions/github-script@v8
         with:
-          github-token: ${{ secrets.PR_BOT_GH_PAT }}
+          github-token: ${{ secrets.FERN_GITHUB_TOKEN }}
           script: |
             const owner = context.repo.owner;
             const repo = context.repo.repo;

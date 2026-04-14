@@ -36,12 +36,12 @@ func NewClient(options *core.RequestOptions) *Client {
 // Get a user by ID
 func (c *Client) GetUser(
 	ctx context.Context,
-	userId string,
+	userID string,
 	opts ...option.RequestOption,
 ) (*fern.UserResponse, error) {
 	response, err := c.WithRawResponse.GetUser(
 		ctx,
-		userId,
+		userID,
 		opts...,
 	)
 	if err != nil {
@@ -70,13 +70,13 @@ func (c *Client) CreateUser(
 // Update a user (partial update)
 func (c *Client) UpdateUser(
 	ctx context.Context,
-	userId string,
+	userID string,
 	request *fern.UpdateUserRequest,
 	opts ...option.RequestOption,
 ) (*fern.UserResponse, error) {
 	response, err := c.WithRawResponse.UpdateUser(
 		ctx,
-		userId,
+		userID,
 		request,
 		opts...,
 	)
@@ -140,12 +140,12 @@ func (c *Client) CreateComplexProfile(
 // Get a complex profile by ID
 func (c *Client) GetComplexProfile(
 	ctx context.Context,
-	profileId string,
+	profileID string,
 	opts ...option.RequestOption,
 ) (*fern.ComplexProfile, error) {
 	response, err := c.WithRawResponse.GetComplexProfile(
 		ctx,
-		profileId,
+		profileID,
 		opts...,
 	)
 	if err != nil {
@@ -157,13 +157,13 @@ func (c *Client) GetComplexProfile(
 // Update complex profile to test nullable field updates
 func (c *Client) UpdateComplexProfile(
 	ctx context.Context,
-	profileId string,
+	profileID string,
 	request *fern.UpdateComplexProfileRequest,
 	opts ...option.RequestOption,
 ) (*fern.ComplexProfile, error) {
 	response, err := c.WithRawResponse.UpdateComplexProfile(
 		ctx,
-		profileId,
+		profileID,
 		request,
 		opts...,
 	)
@@ -210,12 +210,12 @@ func (c *Client) FilterByRole(
 // Get notification settings which may be null
 func (c *Client) GetNotificationSettings(
 	ctx context.Context,
-	userId string,
+	userID string,
 	opts ...option.RequestOption,
 ) (*fern.NotificationMethod, error) {
 	response, err := c.WithRawResponse.GetNotificationSettings(
 		ctx,
-		userId,
+		userID,
 		opts...,
 	)
 	if err != nil {
@@ -227,13 +227,13 @@ func (c *Client) GetNotificationSettings(
 // Update tags to test array handling
 func (c *Client) UpdateTags(
 	ctx context.Context,
-	userId string,
+	userID string,
 	request *fern.UpdateTagsRequest,
 	opts ...option.RequestOption,
 ) ([]string, error) {
 	response, err := c.WithRawResponse.UpdateTags(
 		ctx,
-		userId,
+		userID,
 		request,
 		opts...,
 	)

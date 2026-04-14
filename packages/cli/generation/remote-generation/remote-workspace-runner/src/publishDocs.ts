@@ -685,7 +685,7 @@ async function startDocsRegisterFailed(
     organization: string,
     domain: string
 ): Promise<never> {
-    await context.instrumentPostHogEvent({
+    context.instrumentPostHogEvent({
         command: "docs-generation",
         properties: {
             error: JSON.stringify(error)
@@ -1169,6 +1169,12 @@ async function generateLanguageSpecificDynamicIRs({
                     "packageName" in generatorInvocation.config
                 ) {
                     packageName = (generatorInvocation.config as { packageName?: string }).packageName ?? "";
+                }
+
+                // Normalize Go package names to strip https:// prefix,
+                // matching how snippetConfiguration values are normalized
+                if (generatorInvocation.language === "go" && packageName) {
+                    packageName = normalizeGoPackageForLookup(packageName);
                 }
 
                 if (!generatorInvocation.language) {

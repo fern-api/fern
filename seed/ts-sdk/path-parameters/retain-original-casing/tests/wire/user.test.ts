@@ -25,10 +25,7 @@ describe("UserClient", () => {
         const response = await client.user.getUser({
             user_id: "user_id",
         });
-        expect(response).toEqual({
-            name: "name",
-            tags: ["tags", "tags"],
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("createUser", async () => {
@@ -54,10 +51,7 @@ describe("UserClient", () => {
             name: "name",
             tags: ["tags", "tags"],
         });
-        expect(response).toEqual({
-            name: "name",
-            tags: ["tags", "tags"],
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("updateUser", async () => {
@@ -86,10 +80,7 @@ describe("UserClient", () => {
                 tags: ["tags", "tags"],
             },
         });
-        expect(response).toEqual({
-            name: "name",
-            tags: ["tags", "tags"],
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("searchUsers", async () => {
@@ -117,16 +108,7 @@ describe("UserClient", () => {
             user_id: "user_id",
             limit: 1,
         });
-        expect(response).toEqual([
-            {
-                name: "name",
-                tags: ["tags", "tags"],
-            },
-            {
-                name: "name",
-                tags: ["tags", "tags"],
-            },
-        ]);
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getUserMetadata", async () => {
@@ -151,10 +133,7 @@ describe("UserClient", () => {
             user_id: "user_id",
             version: 1,
         });
-        expect(response).toEqual({
-            name: "name",
-            tags: ["tags", "tags"],
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getUserSpecifics", async () => {
@@ -180,9 +159,6 @@ describe("UserClient", () => {
             version: 1,
             thought: "thought",
         });
-        expect(response).toEqual({
-            name: "name",
-            tags: ["tags", "tags"],
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

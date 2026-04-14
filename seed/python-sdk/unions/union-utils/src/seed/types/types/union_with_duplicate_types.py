@@ -13,7 +13,7 @@ T_Result = typing.TypeVar("T_Result")
 
 
 class _Factory:
-    def foo_1(self, value: Foo) -> UnionWithDuplicateTypes:
+    def foo1(self, value: Foo) -> UnionWithDuplicateTypes:
         if IS_PYDANTIC_V2:
             return UnionWithDuplicateTypes(
                 root=_UnionWithDuplicateTypes.Foo1(**value.dict(exclude_unset=True), type="foo1")
@@ -23,7 +23,7 @@ class _Factory:
                 __root__=_UnionWithDuplicateTypes.Foo1(**value.dict(exclude_unset=True), type="foo1")
             )  # type: ignore
 
-    def foo_2(self, value: Foo) -> UnionWithDuplicateTypes:
+    def foo2(self, value: Foo) -> UnionWithDuplicateTypes:
         if IS_PYDANTIC_V2:
             return UnionWithDuplicateTypes(
                 root=_UnionWithDuplicateTypes.Foo2(**value.dict(exclude_unset=True), type="foo2")
@@ -70,12 +70,12 @@ class UnionWithDuplicateTypes(UniversalRootModel):
         else:
             return self.__root__.dict(**kwargs)
 
-    def visit(self, foo_1: typing.Callable[[Foo], T_Result], foo_2: typing.Callable[[Foo], T_Result]) -> T_Result:
+    def visit(self, foo1: typing.Callable[[Foo], T_Result], foo2: typing.Callable[[Foo], T_Result]) -> T_Result:
         unioned_value = self.get_as_union()
         if unioned_value.type == "foo1":
-            return foo_1(Foo(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
+            return foo1(Foo(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
         if unioned_value.type == "foo2":
-            return foo_2(Foo(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
+            return foo2(Foo(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2

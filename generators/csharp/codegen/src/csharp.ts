@@ -148,7 +148,7 @@ export class CSharp {
         }
 
         if (args.enclosingType) {
-            if (args.namespace) {
+            if (args.namespace && args.namespace !== args.enclosingType.namespace) {
                 throw new Error(`ClassReference: Both enclosingType and namespace cannot be provided`);
             }
             args.namespace = args.enclosingType.namespace;

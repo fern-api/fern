@@ -4,6 +4,10 @@ export function titleCase(name: string): string {
     // regex match pascalCase or CamelCase and add spaces between words
     name = name.replace(/([a-z])([A-Z])/g, "$1 $2");
 
+    // regex match single uppercase letter(s) followed by an uppercase letter and lowercase letter
+    // e.g. "AShopperProfile" -> "A Shopper Profile", "HTMLParser" -> "HTML Parser"
+    name = name.replace(/([A-Z]+)([A-Z][a-z])/g, "$1 $2");
+
     // regex match snake_case and replace "_" with " "
     name = name.replace(/_/g, " ");
 

@@ -12,6 +12,7 @@ class RootClient:
     class_reference: AST.ClassReference
     parameters: List[ConstructorParameter]
     init_parameters: Optional[List[ConstructorParameter]] = field(default=None)
+    constructor_overloads: Optional[List[AST.FunctionSignature]] = field(default=None)
 
 
 @dataclass

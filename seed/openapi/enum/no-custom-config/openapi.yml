@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: enum
-  version: ''
+  version: 0.0.0
 paths:
   /headers:
     post:
@@ -18,8 +18,9 @@ paths:
           in: header
           required: false
           schema:
-            $ref: '#/components/schemas/Operand'
-            nullable: true
+            anyOf:
+              - $ref: '#/components/schemas/Operand'
+              - type: 'null'
         - name: operandOrColor
           in: header
           required: true
@@ -29,11 +30,12 @@ paths:
           in: header
           required: false
           schema:
-            $ref: '#/components/schemas/ColorOrOperand'
-            nullable: true
+            anyOf:
+              - $ref: '#/components/schemas/ColorOrOperand'
+              - type: 'null'
       responses:
         '204':
-          description: ''
+          description: No content
   /inlined:
     post:
       operationId: inlinedRequest_send
@@ -42,7 +44,7 @@ paths:
       parameters: []
       responses:
         '204':
-          description: ''
+          description: No content
       requestBody:
         required: true
         content:
@@ -53,13 +55,15 @@ paths:
                 operand:
                   $ref: '#/components/schemas/Operand'
                 maybeOperand:
-                  $ref: '#/components/schemas/Operand'
-                  nullable: true
+                  anyOf:
+                    - $ref: '#/components/schemas/Operand'
+                    - type: 'null'
                 operandOrColor:
                   $ref: '#/components/schemas/ColorOrOperand'
                 maybeOperandOrColor:
-                  $ref: '#/components/schemas/ColorOrOperand'
-                  nullable: true
+                  anyOf:
+                    - $ref: '#/components/schemas/ColorOrOperand'
+                    - type: 'null'
               required:
                 - operand
                 - operandOrColor
@@ -76,7 +80,7 @@ paths:
       parameters: []
       responses:
         '204':
-          description: ''
+          description: No content
       requestBody:
         required: true
         content:
@@ -87,17 +91,19 @@ paths:
                 color:
                   $ref: '#/components/schemas/Color'
                 maybeColor:
-                  $ref: '#/components/schemas/Color'
-                  nullable: true
+                  anyOf:
+                    - $ref: '#/components/schemas/Color'
+                    - type: 'null'
                 colorList:
                   type: array
                   items:
                     $ref: '#/components/schemas/Color'
                 maybeColorList:
-                  type: array
+                  type:
+                    - array
+                    - 'null'
                   items:
                     $ref: '#/components/schemas/Color'
-                  nullable: true
   /path/{operand}/{operandOrColor}:
     post:
       operationId: pathParam_send
@@ -109,7 +115,6 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/Operand'
-          example: '>'
           examples:
             Example1:
               value: '>'
@@ -118,13 +123,12 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/ColorOrOperand'
-          example: red
           examples:
             Example1:
               value: red
       responses:
         '204':
-          description: ''
+          description: No content
   /query:
     post:
       operationId: queryParam_send
@@ -136,7 +140,6 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/Operand'
-          example: '>'
           examples:
             Example1:
               value: '>'
@@ -144,14 +147,14 @@ paths:
           in: query
           required: false
           schema:
-            $ref: '#/components/schemas/Operand'
-            nullable: true
+            anyOf:
+              - $ref: '#/components/schemas/Operand'
+              - type: 'null'
         - name: operandOrColor
           in: query
           required: true
           schema:
             $ref: '#/components/schemas/ColorOrOperand'
-          example: red
           examples:
             Example1:
               value: red
@@ -159,11 +162,12 @@ paths:
           in: query
           required: false
           schema:
-            $ref: '#/components/schemas/ColorOrOperand'
-            nullable: true
+            anyOf:
+              - $ref: '#/components/schemas/ColorOrOperand'
+              - type: 'null'
       responses:
         '204':
-          description: ''
+          description: No content
   /query-list:
     post:
       operationId: queryParam_sendList
@@ -183,8 +187,9 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/components/schemas/Operand'
-              nullable: true
+              anyOf:
+                - $ref: '#/components/schemas/Operand'
+                - type: 'null'
         - name: operandOrColor
           in: query
           required: true
@@ -198,11 +203,12 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/components/schemas/ColorOrOperand'
-              nullable: true
+              anyOf:
+                - $ref: '#/components/schemas/ColorOrOperand'
+                - type: 'null'
       responses:
         '204':
-          description: ''
+          description: No content
 components:
   schemas:
     Operand:

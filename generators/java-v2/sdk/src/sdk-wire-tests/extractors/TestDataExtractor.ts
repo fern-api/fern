@@ -1,3 +1,4 @@
+import { getOriginalName, getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 
@@ -43,7 +44,7 @@ export class WireTestDataExtractor {
 
         return {
             id: example.id || `${endpoint.id}-example`,
-            name: example.name?.originalName,
+            name: example.name != null ? getOriginalName(example.name) : undefined,
             request: {
                 body: requestBody,
                 headers: this.extractHeaders(example),
@@ -80,7 +81,7 @@ export class WireTestDataExtractor {
                 inlinedRequestBody: (value) => {
                     const result: Record<string, unknown> = {};
                     value.properties.forEach((p) => {
-                        result[p.name.wireValue] = this.createRawJsonExample(p.value);
+                        result[getWireValue(p.name)] = this.createRawJsonExample(p.value);
                     });
                     return result;
                 },
@@ -189,7 +190,7 @@ export class WireTestDataExtractor {
 
         const basePropertyWireNames = new Set<string>();
         unionShape.baseProperties.forEach((prop) => {
-            basePropertyWireNames.add(prop.name.wireValue);
+            basePropertyWireNames.add(getWireValue(prop.name));
         });
 
         const prunedBody: Record<string, unknown> = {};
@@ -250,7 +251,7 @@ export class WireTestDataExtractor {
         const headers: Record<string, string> = {};
 
         [...(example.serviceHeaders ?? []), ...(example.endpointHeaders ?? [])].forEach((header) => {
-            headers[header.name.wireValue] = String(header.value.jsonExample);
+            headers[getWireValue(header.name)] = String(header.value.jsonExample);
         });
 
         return headers;
@@ -260,7 +261,7 @@ export class WireTestDataExtractor {
         const params: Record<string, string> = {};
 
         (example.queryParameters ?? []).forEach((param) => {
-            params[param.name.wireValue] = String(param.value.jsonExample);
+            params[getWireValue(param.name)] = String(param.value.jsonExample);
         });
 
         return params;
@@ -274,7 +275,7 @@ export class WireTestDataExtractor {
             ...(example.servicePathParameters ?? []),
             ...(example.endpointPathParameters ?? [])
         ].forEach((param) => {
-            params[param.name.originalName] = String(param.value.jsonExample);
+            params[getOriginalName(param.name)] = String(param.value.jsonExample);
         });
 
         return params;

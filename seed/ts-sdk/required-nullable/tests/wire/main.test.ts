@@ -21,12 +21,7 @@ describe("SeedApiClient", () => {
             required_baz: "required_baz",
             required_nullable_baz: "required_nullable_baz",
         });
-        expect(response).toEqual({
-            bar: "bar",
-            nullable_bar: "nullable_bar",
-            nullable_required_bar: "nullable_required_bar",
-            required_bar: "required_bar",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("updateFoo", async () => {
@@ -60,11 +55,6 @@ describe("SeedApiClient", () => {
             nullable_number: 1.1,
             non_nullable_text: "non_nullable_text",
         });
-        expect(response).toEqual({
-            bar: "bar",
-            nullable_bar: "nullable_bar",
-            nullable_required_bar: "nullable_required_bar",
-            required_bar: "required_bar",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

@@ -16,7 +16,7 @@ func do() {
             "<token>",
         ),
     )
-    client.User.GetWithApiKey(
+    client.User.GetWithAPIKey(
         context.TODO(),
     )
 }

@@ -6,7 +6,7 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import UsernameCursor, UsernamePage
+    from .types import Link, UsersListResponse
     from . import users
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncSeedPagination, SeedPagination
@@ -15,9 +15,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedPagination": ".client",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
+    "Link": ".types",
     "SeedPagination": ".client",
-    "UsernameCursor": ".types",
-    "UsernamePage": ".types",
+    "UsersListResponse": ".types",
     "__version__": ".version",
     "users": ".users",
 }
@@ -48,9 +48,9 @@ __all__ = [
     "AsyncSeedPagination",
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
+    "Link",
     "SeedPagination",
-    "UsernameCursor",
-    "UsernamePage",
+    "UsersListResponse",
     "__version__",
     "users",
 ]

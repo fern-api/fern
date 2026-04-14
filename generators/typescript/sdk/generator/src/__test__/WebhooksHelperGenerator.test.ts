@@ -332,6 +332,76 @@ describe("WebhooksHelperGenerator", () => {
             const text = context.sourceFile.getFullText();
             expect(text).toContain("class MyWebhookVerifier");
         });
+
+        it("writes HMAC class with ALPHABETICAL bodySort and BODY-only payload", () => {
+            const verification: FernIr.WebhookSignatureVerification = FernIr.WebhookSignatureVerification.hmac({
+                algorithm: "SHA1",
+                encoding: "BASE64",
+                signatureHeaderName: createWireValue("X-Webhook-Signature"),
+                signaturePrefix: undefined,
+                timestamp: undefined,
+                payloadFormat: {
+                    components: ["BODY"],
+                    delimiter: "",
+                    bodySort: "ALPHABETICAL"
+                }
+            });
+            const generator = new WebhooksHelperGenerator(verification);
+            const context = createMockFileContext();
+            generator.writeToFile(context);
+            const text = context.sourceFile.getFullText();
+            expect(text).toContain("string | Record<string, string>");
+            expect(text).toContain('typeof requestBody === "string"');
+            expect(text).toContain("Object.keys(requestBody).sort()");
+            expect(text).toContain("const payload = bodyString;");
+            expect(text).toMatchSnapshot();
+        });
+
+        it("writes HMAC class with ALPHABETICAL bodySort and NOTIFICATION_URL + BODY payload", () => {
+            const verification: FernIr.WebhookSignatureVerification = FernIr.WebhookSignatureVerification.hmac({
+                algorithm: "SHA1",
+                encoding: "BASE64",
+                signatureHeaderName: createWireValue("X-Webhook-Signature"),
+                signaturePrefix: undefined,
+                timestamp: undefined,
+                payloadFormat: {
+                    components: ["NOTIFICATION_URL", "BODY"],
+                    delimiter: "",
+                    bodySort: "ALPHABETICAL"
+                }
+            });
+            const generator = new WebhooksHelperGenerator(verification);
+            const context = createMockFileContext();
+            generator.writeToFile(context);
+            const text = context.sourceFile.getFullText();
+            expect(text).toContain("string | Record<string, string>");
+            expect(text).toContain("notificationUrl: string");
+            expect(text).toContain('typeof requestBody === "string"');
+            expect(text).toContain("Object.keys(requestBody).sort()");
+            expect(text).toContain('[notificationUrl, bodyString].join("")');
+            expect(text).toMatchSnapshot();
+        });
+
+        it("generates JSDoc with bodySort documentation", () => {
+            const verification: FernIr.WebhookSignatureVerification = FernIr.WebhookSignatureVerification.hmac({
+                algorithm: "SHA1",
+                encoding: "BASE64",
+                signatureHeaderName: createWireValue("X-Webhook-Signature"),
+                signaturePrefix: undefined,
+                timestamp: undefined,
+                payloadFormat: {
+                    components: ["NOTIFICATION_URL", "BODY"],
+                    delimiter: "",
+                    bodySort: "ALPHABETICAL"
+                }
+            });
+            const generator = new WebhooksHelperGenerator(verification);
+            const context = createMockFileContext();
+            generator.writeToFile(context);
+            const text = context.sourceFile.getFullText();
+            expect(text).toContain("Record<string, string> of POST body parameters");
+            expect(text).toContain("sorted alphabetically by key");
+        });
     });
 
     // ────────────────────────────────────────────────────────────────────────

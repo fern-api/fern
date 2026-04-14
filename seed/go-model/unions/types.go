@@ -77,7 +77,7 @@ type UnionWithLiteral struct {
 
 type UnionWithBaseProperties struct {
 	Type        string
-	Id          string
+	ID          string
 	Integer     int
 	FieldString string
 	Foo         Foo

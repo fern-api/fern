@@ -10,18 +10,18 @@ import (
 )
 
 type CreatePlantResponse struct {
-	Id   *string `json:"id,omitempty" url:"id,omitempty"`
+	ID   *string `json:"id,omitempty" url:"id,omitempty"`
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 
 	extraProperties map[string]any
 	rawJSON         json.RawMessage
 }
 
-func (c *CreatePlantResponse) GetId() *string {
+func (c *CreatePlantResponse) GetID() *string {
 	if c == nil {
 		return nil
 	}
-	return c.Id
+	return c.ID
 }
 
 func (c *CreatePlantResponse) GetName() *string {
@@ -69,18 +69,18 @@ func (c *CreatePlantResponse) String() string {
 }
 
 type UpdatePlantResponse struct {
-	Id   *string `json:"id,omitempty" url:"id,omitempty"`
+	ID   *string `json:"id,omitempty" url:"id,omitempty"`
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 
 	extraProperties map[string]any
 	rawJSON         json.RawMessage
 }
 
-func (u *UpdatePlantResponse) GetId() *string {
+func (u *UpdatePlantResponse) GetID() *string {
 	if u == nil {
 		return nil
 	}
-	return u.Id
+	return u.ID
 }
 
 func (u *UpdatePlantResponse) GetName() *string {
@@ -128,18 +128,18 @@ func (u *UpdatePlantResponse) String() string {
 }
 
 type CreatePlantWithSchemaResponse struct {
-	Id   *string `json:"id,omitempty" url:"id,omitempty"`
+	ID   *string `json:"id,omitempty" url:"id,omitempty"`
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 
 	extraProperties map[string]any
 	rawJSON         json.RawMessage
 }
 
-func (c *CreatePlantWithSchemaResponse) GetId() *string {
+func (c *CreatePlantWithSchemaResponse) GetID() *string {
 	if c == nil {
 		return nil
 	}
-	return c.Id
+	return c.ID
 }
 
 func (c *CreatePlantWithSchemaResponse) GetName() *string {

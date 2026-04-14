@@ -111,6 +111,7 @@ seed/**/.pytest_cache/
 seed/**/.mypy_cache/
 seed/**/.ruff_cache/
 seed/**/*.egg-info/
+seed/**/.golangci.yml
 
 # Seed remote-local test outputs, except for seed.yml files
 seed-remote-local/*
@@ -118,6 +119,10 @@ seed-remote-local/*
 
 # Test logs from test-remote-local.sh
 test-remote-local-logs-*/
+
+# macOS system dirs leaked by local Poetry/Python execution
+seed/**/Library/Application Support/
+seed/**/Library/Caches/
 
 # Devbox gradle properties
 /gradle.properties

@@ -27,4 +27,9 @@ export interface BaseGeneratorInvocationSchema {
      * Overrides the top-level autorelease setting if specified.
      */
     autorelease?: boolean;
+    /**
+     * Controls which automation features are enabled for this generator.
+     * Overrides group-level and root-level automation settings.
+     */
+    automation?: GeneratorsYml.AutomationSchema;
 }

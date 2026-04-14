@@ -10,25 +10,25 @@ import (
 )
 
 func TestSettersGetPlantsRequest(t *testing.T) {
-	t.Run("SetPlantId", func(t *testing.T) {
+	t.Run("SetPlantID", func(t *testing.T) {
 		obj := &GetPlantsRequest{}
-		var fernTestValuePlantId string
-		obj.SetPlantId(fernTestValuePlantId)
-		assert.Equal(t, fernTestValuePlantId, obj.PlantId)
+		var fernTestValuePlantID string
+		obj.SetPlantID(fernTestValuePlantID)
+		assert.Equal(t, fernTestValuePlantID, obj.PlantID)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
 }
 
 func TestSettersMarkExplicitGetPlantsRequest(t *testing.T) {
-	t.Run("SetPlantId_MarksExplicit", func(t *testing.T) {
+	t.Run("SetPlantID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetPlantsRequest{}
-		var fernTestValuePlantId string
+		var fernTestValuePlantID string
 
 		// Act
-		obj.SetPlantId(fernTestValuePlantId)
+		obj.SetPlantID(fernTestValuePlantID)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -55,11 +55,11 @@ func TestSettersMarkExplicitGetPlantsRequest(t *testing.T) {
 }
 
 func TestSettersPlant(t *testing.T) {
-	t.Run("SetId", func(t *testing.T) {
+	t.Run("SetID", func(t *testing.T) {
 		obj := &Plant{}
-		var fernTestValueId string
-		obj.SetId(fernTestValueId)
-		assert.Equal(t, fernTestValueId, obj.Id)
+		var fernTestValueID string
+		obj.SetID(fernTestValueID)
+		assert.Equal(t, fernTestValueID, obj.ID)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -82,18 +82,18 @@ func TestSettersPlant(t *testing.T) {
 }
 
 func TestGettersPlant(t *testing.T) {
-	t.Run("GetId", func(t *testing.T) {
+	t.Run("GetID", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &Plant{}
 		var expected string
-		obj.Id = expected
+		obj.ID = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetId(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetID(), "getter should return the property value")
 	})
 
-	t.Run("GetId_NilReceiver", func(t *testing.T) {
+	t.Run("GetID_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *Plant
 		// Should not panic - getters should handle nil receiver gracefully
@@ -102,7 +102,7 @@ func TestGettersPlant(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetId() // Should return zero value
+		_ = obj.GetID() // Should return zero value
 	})
 
 	t.Run("GetName", func(t *testing.T) {
@@ -164,14 +164,14 @@ func TestGettersPlant(t *testing.T) {
 }
 
 func TestSettersMarkExplicitPlant(t *testing.T) {
-	t.Run("SetId_MarksExplicit", func(t *testing.T) {
+	t.Run("SetID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &Plant{}
-		var fernTestValueId string
+		var fernTestValueID string
 
 		// Act
-		obj.SetId(fernTestValueId)
+		obj.SetID(fernTestValueID)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)

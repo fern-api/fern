@@ -634,36 +634,6 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
         return content;
     }
 
-    private generateExtraDependencies(): string {
-        const extraDeps = this.context.customConfig.extraDependencies || {};
-        if (Object.keys(extraDeps).length === 0) {
-            return "";
-        }
-
-        let result = "";
-        for (const [name, config] of Object.entries(extraDeps)) {
-            if (typeof config === "string") {
-                result += `${name} = "${config}"\n`;
-            } else {
-                result += `${name} = ${this.objectToToml(config)}\n`;
-            }
-        }
-        return result;
-    }
-
-    private generateExtraDevDependencies(): string {
-        const extraDevDeps = this.context.customConfig.extraDevDependencies || {};
-        if (Object.keys(extraDevDeps).length === 0) {
-            return "";
-        }
-
-        let result = "";
-        for (const [name, version] of Object.entries(extraDevDeps)) {
-            result += `${name} = "${version}"\n`;
-        }
-        return result;
-    }
-
     private generatePublishWorkflow(): string {
         // Only include publish workflow when publishConfig is set
         if (this.context.publishConfig == null) {

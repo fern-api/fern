@@ -19,7 +19,7 @@ func do() {
         ),
     )
     request := &fern.GetPlantsRequest{
-        PlantId: "plantId",
+        PlantID: "plantId",
     }
     client.Plants.Get(
         context.TODO(),

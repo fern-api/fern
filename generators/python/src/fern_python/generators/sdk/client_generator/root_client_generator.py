@@ -184,6 +184,8 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             base_url_example_value=base_url_example_value,
             sync_init_parameters=self._get_constructor_parameters(is_async=False),
             async_init_parameters=self._get_constructor_parameters(is_async=True),
+            sync_constructor_overloads=self._get_constructor_overloads(is_async=False),
+            async_constructor_overloads=self._get_constructor_overloads(is_async=True),
         )
         self._generated_root_client = root_client_builder.build()
 
@@ -1650,6 +1652,8 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             base_url_example_value: Optional[AST.Expression] = None,
             sync_init_parameters: Optional[Sequence[ConstructorParameter]] = None,
             async_init_parameters: Optional[Sequence[ConstructorParameter]] = None,
+            sync_constructor_overloads: Optional[List[AST.FunctionSignature]] = None,
+            async_constructor_overloads: Optional[List[AST.FunctionSignature]] = None,
         ):
             self._module_path = module_path
             self._class_name = class_name
@@ -1664,6 +1668,8 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             self._oauth_token_override = oauth_token_override
             self._use_kwargs_snippets = use_kwargs_snippets
             self._base_url_example_value = base_url_example_value
+            self._sync_constructor_overloads = sync_constructor_overloads
+            self._async_constructor_overloads = async_constructor_overloads
 
         def build(self) -> GeneratedRootClient:
             def create_class_reference(class_name: str) -> AST.ClassReference:
@@ -1704,6 +1710,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 - Use kwargs (many root client params are keyword-only).
                 - Include required parameters (those without defaults) with reasonable placeholders.
                 - Prefer inferred-auth credentials (e.g. api_key) when present.
+                - Include client_id/client_secret for OAuth client credentials flows.
                 """
 
                 required_params = [
@@ -1736,6 +1743,15 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                         continue
 
                     kwargs.append((name, AST.Expression(f'"YOUR_{name.upper()}"')))
+
+                # For OAuth client credentials, explicitly include client_id and client_secret
+                # even though they have os.getenv() defaults.
+                if self._oauth_token_override:
+                    oauth_param_names_in_kwargs = {name for name, _ in kwargs}
+                    if "client_id" not in oauth_param_names_in_kwargs:
+                        kwargs.append(("client_id", AST.Expression('"YOUR_CLIENT_ID"')))
+                    if "client_secret" not in oauth_param_names_in_kwargs:
+                        kwargs.append(("client_secret", AST.Expression('"YOUR_CLIENT_SECRET"')))
 
                 return kwargs
 
@@ -1821,11 +1837,13 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     class_reference=async_class_reference,
                     parameters=self._constructor_parameters,
                     init_parameters=self._async_init_parameters,
+                    constructor_overloads=self._async_constructor_overloads,
                 ),
                 sync_instantiations=sync_instantiations,
                 sync_client=RootClient(
                     class_reference=sync_class_reference,
                     parameters=self._constructor_parameters,
                     init_parameters=self._sync_init_parameters,
+                    constructor_overloads=self._sync_constructor_overloads,
                 ),
             )

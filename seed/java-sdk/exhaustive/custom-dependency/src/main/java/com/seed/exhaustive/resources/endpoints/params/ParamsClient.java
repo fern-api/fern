@@ -172,6 +172,20 @@ public class ParamsClient {
     }
 
     /**
+     * GET with boolean path param
+     */
+    public String getWithBooleanPath(boolean param) {
+        return this.rawClient.getWithBooleanPath(param).body();
+    }
+
+    /**
+     * GET with boolean path param
+     */
+    public String getWithBooleanPath(boolean param, RequestOptions requestOptions) {
+        return this.rawClient.getWithBooleanPath(param, requestOptions).body();
+    }
+
+    /**
      * GET with path param that can throw errors
      */
     public String getWithPathAndErrors(String param) {

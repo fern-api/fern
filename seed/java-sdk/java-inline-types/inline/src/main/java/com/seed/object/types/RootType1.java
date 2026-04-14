@@ -930,11 +930,11 @@ public final class RootType1 {
             public static final class MyEnum {
                 public static final MyEnum SUNNY = new MyEnum(Value.SUNNY, "SUNNY");
 
+                public static final MyEnum CLOUDY = new MyEnum(Value.CLOUDY, "CLOUDY");
+
                 public static final MyEnum RAINING = new MyEnum(Value.RAINING, "RAINING");
 
                 public static final MyEnum SNOWING = new MyEnum(Value.SNOWING, "SNOWING");
-
-                public static final MyEnum CLOUDY = new MyEnum(Value.CLOUDY, "CLOUDY");
 
                 private final Value value;
 
@@ -969,12 +969,12 @@ public final class RootType1 {
                     switch (value) {
                         case SUNNY:
                             return visitor.visitSunny();
+                        case CLOUDY:
+                            return visitor.visitCloudy();
                         case RAINING:
                             return visitor.visitRaining();
                         case SNOWING:
                             return visitor.visitSnowing();
-                        case CLOUDY:
-                            return visitor.visitCloudy();
                         case UNKNOWN:
                         default:
                             return visitor.visitUnknown(string);
@@ -986,12 +986,12 @@ public final class RootType1 {
                     switch (value) {
                         case "SUNNY":
                             return SUNNY;
+                        case "CLOUDY":
+                            return CLOUDY;
                         case "RAINING":
                             return RAINING;
                         case "SNOWING":
                             return SNOWING;
-                        case "CLOUDY":
-                            return CLOUDY;
                         default:
                             return new MyEnum(Value.UNKNOWN, value);
                     }

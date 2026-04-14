@@ -1,3 +1,4 @@
+import { getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 
@@ -7,7 +8,7 @@ import { convertTypeReference, getReferenceFromDeclaredTypeName, OpenApiComponen
 export interface ObjectProperty {
     docs: string | undefined;
     availability?: FernIr.Availability;
-    name: FernIr.NameAndWireValue;
+    name: FernIr.NameAndWireValue | FernIr.NameAndWireValueOrString;
     valueType: FernIr.TypeReference;
     example?: FernIr.ExampleObjectProperty | FernIr.ExampleInlinedRequestBodyProperty;
 }
@@ -26,22 +27,24 @@ export function convertObject({
     properties.forEach((objectProperty) => {
         const convertedObjectProperty = convertTypeReference(objectProperty.valueType);
 
-        let example: unknown = undefined;
+        // OAS 3.1 (JSON Schema 2020-12) deprecates the singular `example` keyword on schemas
+        // in favour of `examples` (an array of example values).
+        let examples: unknown[] | undefined = undefined;
         if (objectProperty.example != null && objectProperty.valueType.type === "primitive") {
-            example = objectProperty.example.value.jsonExample;
+            examples = [objectProperty.example.value.jsonExample];
         } else if (
             objectProperty.example != null &&
             objectProperty.valueType.type === "container" &&
             objectProperty.valueType.container.type === "list" &&
             objectProperty.valueType.container.list.type === "primitive"
         ) {
-            example = objectProperty.example.value.jsonExample;
+            examples = [objectProperty.example.value.jsonExample];
         }
 
         const propertySchema: Record<string, unknown> = {
             ...convertedObjectProperty,
             description: objectProperty.docs ?? undefined,
-            example
+            examples
         };
 
         if (objectProperty.availability != null) {
@@ -51,11 +54,11 @@ export function convertObject({
             }
         }
 
-        convertedProperties[objectProperty.name.wireValue] = propertySchema as OpenApiComponentSchema;
+        convertedProperties[getWireValue(objectProperty.name)] = propertySchema as OpenApiComponentSchema;
         const isOptionalProperty =
             objectProperty.valueType.type === "container" && objectProperty.valueType.container.type === "optional";
         if (!isOptionalProperty) {
-            required.push(objectProperty.name.wireValue);
+            required.push(getWireValue(objectProperty.name));
         }
     });
     const convertedSchemaObject: OpenAPIV3.SchemaObject = {
