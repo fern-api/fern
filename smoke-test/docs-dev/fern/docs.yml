@@ -1,0 +1,8 @@
+instances:
+  - url: smoke-test.docs.buildwithfern.com
+
+title: Smoke Test
+
+navigation:
+  - page: Welcome
+    path: ./docs/pages/welcome.mdx

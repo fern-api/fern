@@ -20,7 +20,6 @@ buildCli({
         DOCS_DOMAIN_SUFFIX: "docs.buildwithfern.com",
         DOCS_PREVIEW_BUCKET: "http://localhost:9090/fdr/",
         APP_DOCS_TAR_PREVIEW_BUCKET: "http://localhost:9090/fdr/",
-        APP_DOCS_TAR_PREVIEW_BUCKET_WINDOWS: "http://localhost:9090/fdr/",
         APP_DOCS_PREVIEW_BUCKET: "http://localhost:9090/fdr/",
         CLI_NAME: "fern-local",
         CLI_PACKAGE_NAME: "fern-api"

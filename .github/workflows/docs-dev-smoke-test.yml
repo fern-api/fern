@@ -1,0 +1,257 @@
+name: Docs Dev Smoke Test
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/docs-dev-smoke-test.yml"
+      - "packages/cli/docs-preview/**"
+      - "smoke-test/docs-dev/**"
+  pull_request:
+    paths:
+      - ".github/workflows/docs-dev-smoke-test.yml"
+      - "packages/cli/docs-preview/**"
+      - "smoke-test/docs-dev/**"
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+env:
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: "buildwithfern"
+
+jobs:
+  build-cli:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Install dependencies
+        uses: ./.github/actions/install
+
+      - name: Build CLI
+        run: pnpm turbo run dist:cli:dev --filter=@fern-api/cli
+
+      - name: Upload CLI artifact
+        uses: actions/upload-artifact@v6
+        with:
+          name: fern-cli
+          path: packages/cli/cli/dist/dev/
+          retention-days: 1
+
+  smoke-test:
+    needs: [build-cli]
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        node-version: [20, 22, 24]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Setup Go for protoc-gen-openapi
+        uses: actions/setup-go@v6
+        with:
+          go-version: "1.22"
+
+      - name: Enable Developer Mode (Windows)
+        if: runner.os == 'Windows'
+        shell: powershell
+        run: |
+          reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock" /t REG_DWORD /f /v AllowDevelopmentWithoutDevLicense /d 1
+
+      - name: Download CLI artifact
+        uses: actions/download-artifact@v7
+        with:
+          name: fern-cli
+          path: cli-dist/
+
+      - name: Install proto toolchain (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update && sudo apt-get install -y protobuf-compiler
+          BUF_VERSION=1.35.1
+          curl -sSL "https://github.com/bufbuild/buf/releases/download/v${BUF_VERSION}/buf-Linux-x86_64.tar.gz" | sudo tar -xzC /usr/local --strip-components=1
+          go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@v0.1.12
+          echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
+
+      - name: Install proto toolchain (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          brew install protobuf buf
+          go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@v0.1.12
+          echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
+
+      - name: Install proto toolchain (Windows)
+        if: runner.os == 'Windows'
+        shell: bash
+        run: |
+          choco install protoc -y
+          BUF_VERSION=1.35.1
+          TOOLS_DIR="$RUNNER_TEMP/tools"
+          mkdir -p "$TOOLS_DIR"
+          curl -sSL -o "$TOOLS_DIR/buf.exe" "https://github.com/bufbuild/buf/releases/download/v${BUF_VERSION}/buf-Windows-x86_64.exe"
+          echo "$TOOLS_DIR" >> $GITHUB_PATH
+          go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@v0.1.12
+          echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
+
+      - name: Install Playwright
+        working-directory: smoke-test/docs-dev/playwright
+        run: |
+          npm install
+          npx playwright install chromium
+
+      - name: Start server and run tests (Unix)
+        if: runner.os != 'Windows'
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_ORG_TOKEN_DEV }}
+        shell: bash
+        run: |
+          cd smoke-test/docs-dev/fern
+          FERN_NO_VERSION_REDIRECTION=true node "$GITHUB_WORKSPACE/cli-dist/cli.cjs" docs dev > /tmp/fern-docs-dev.log 2>&1 &
+          FERN_PID=$!
+
+          echo "Waiting for fern docs dev server to start (PID: $FERN_PID)..."
+          for i in $(seq 1 180); do
+            if grep -q "Docs preview server ready" /tmp/fern-docs-dev.log 2>/dev/null; then
+              echo "Server is ready after ${i}s!"
+              cat /tmp/fern-docs-dev.log
+              break
+            fi
+
+            if ! kill -0 $FERN_PID 2>/dev/null; then
+              echo "fern docs dev process exited unexpectedly"
+              cat /tmp/fern-docs-dev.log
+              exit 1
+            fi
+
+            if [ $i -eq 180 ]; then
+              echo "Timeout waiting for server after 180s"
+              cat /tmp/fern-docs-dev.log
+              exit 1
+            fi
+
+            if [ $((i % 30)) -eq 0 ]; then
+              echo "Still waiting... (${i}s)"
+              tail -5 /tmp/fern-docs-dev.log
+            fi
+
+            sleep 1
+          done
+
+          echo "Running Playwright smoke tests..."
+          cd "$GITHUB_WORKSPACE/smoke-test/docs-dev/playwright"
+          npx playwright test smoke.spec.ts --config playwright.config.ts
+
+          kill $FERN_PID 2>/dev/null || true
+
+      - name: Start server and run tests (Windows)
+        if: runner.os == 'Windows'
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_ORG_TOKEN_DEV }}
+        shell: bash
+        run: |
+          cd smoke-test/docs-dev/fern
+          FERN_NO_VERSION_REDIRECTION=true node "$GITHUB_WORKSPACE/cli-dist/cli.cjs" docs dev > /tmp/fern-docs-dev.log 2>&1 &
+          FERN_PID=$!
+
+          echo "Waiting for fern docs dev server to start (PID: $FERN_PID)..."
+          SERVER_READY=false
+          for i in $(seq 1 180); do
+            if grep -q "Docs preview server ready" /tmp/fern-docs-dev.log 2>/dev/null; then
+              echo "Server is ready after ${i}s!"
+              cat /tmp/fern-docs-dev.log
+              SERVER_READY=true
+              break
+            fi
+
+            if ! kill -0 $FERN_PID 2>/dev/null; then
+              echo "fern docs dev process exited unexpectedly"
+              cat /tmp/fern-docs-dev.log
+              exit 1
+            fi
+
+            if [ $i -eq 180 ]; then
+              echo "Timeout waiting for server after 180s"
+              cat /tmp/fern-docs-dev.log
+              exit 1
+            fi
+
+            if [ $((i % 30)) -eq 0 ]; then
+              echo "Still waiting... (${i}s)"
+              tail -5 /tmp/fern-docs-dev.log
+            fi
+
+            sleep 1
+          done
+
+          if [ "$SERVER_READY" = true ]; then
+            # On Windows the server may not have bound to the port yet after
+            # printing "Ready in". Poll until port 3000 accepts connections.
+            echo "Waiting for port 3000 to accept connections..."
+            PORT_READY=false
+            for j in $(seq 1 60); do
+              if curl -sf -o /dev/null http://localhost:3000/ 2>/dev/null; then
+                echo "Port 3000 is accepting connections after ${j}s"
+                PORT_READY=true
+                break
+              fi
+              if [ $((j % 10)) -eq 0 ]; then
+                echo "Still waiting for port 3000... (${j}s)"
+                netstat -ano | grep -E ":3000\s" || echo "  (not listening yet)"
+              fi
+              sleep 1
+            done
+
+            if [ "$PORT_READY" != true ]; then
+              echo "Port 3000 never became ready after 60s"
+              cat /tmp/fern-docs-dev.log
+              netstat -ano | grep -E ":(3000|3001)\s" || echo "No listeners on 3000/3001"
+              exit 1
+            fi
+
+            echo "Running Playwright smoke tests..."
+            cd "$GITHUB_WORKSPACE/smoke-test/docs-dev/playwright"
+            npx playwright test smoke.spec.ts --config playwright.config.ts
+          fi
+
+      - name: Upload Playwright report
+        uses: actions/upload-artifact@v6
+        if: always()
+        with:
+          name: playwright-report-${{ matrix.os }}-node${{ matrix.node-version }}
+          path: smoke-test/docs-dev/playwright/playwright-report/
+          retention-days: 7
+
+      - name: Print server logs
+        if: always()
+        shell: bash
+        run: cat /tmp/fern-docs-dev.log 2>/dev/null || echo "No server logs found"
+
+      - name: Print debug logs
+        if: always()
+        shell: bash
+        run: |
+          echo "=== Fern debug logs ==="
+          for f in ~/.fern/logs/*.debug.log; do
+            if [ -f "$f" ]; then
+              echo "--- $f ---"
+              tail -50 "$f"
+              echo "--- end $f ---"
+            fi
+          done
+          echo "=== Bundle directory ==="
+          ls -la ~/.fern/app-preview/.next/standalone/ 2>/dev/null | head -20 || echo "standalone dir not found"
