@@ -1,7 +1,6 @@
 # yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
 
 - summary: |
-    Ensure generated package.json files reference the LICENSE file in the
-    `files` array for bundled TypeScript projects and set the `license`
-    field when publishing to npm registries.
+    Propagate license config to the `license` field in generated
+    package.json when publishing to npm registries.
   type: fix
