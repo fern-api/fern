@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: path-parameters
-  version: ''
+  version: 0.0.0
 paths:
   /{tenant_id}/organizations/{organization_id}/:
     get:
@@ -29,7 +29,7 @@ paths:
               value: organization_id
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -75,7 +75,7 @@ paths:
               value: user_id
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -114,11 +114,12 @@ paths:
           in: query
           required: false
           schema:
-            type: integer
-            nullable: true
+            type:
+              - integer
+              - 'null'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -157,7 +158,7 @@ paths:
               value: user_id
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -193,7 +194,7 @@ paths:
               value: user_id
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -233,7 +234,7 @@ paths:
               value: tenant_id
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -284,11 +285,12 @@ paths:
           in: query
           required: false
           schema:
-            type: integer
-            nullable: true
+            type:
+              - integer
+              - 'null'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -337,7 +339,7 @@ paths:
               value: 1
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -395,7 +397,7 @@ paths:
               value: thought
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:

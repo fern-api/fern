@@ -1,0 +1,30 @@
+{
+  "type": "object",
+  "properties": {
+    "types": {
+      "type": "string"
+    },
+    "child": {
+      "$ref": "#/definitions/TypesPropertyCollisionChild"
+    }
+  },
+  "required": [
+    "types",
+    "child"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "TypesPropertyCollisionChild": {
+      "type": "object",
+      "properties": {
+        "foo": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "foo"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: inferred-auth-implicit-no-expiry
-  version: ''
+  version: 0.0.0
 paths:
   /token:
     post:
@@ -20,7 +20,7 @@ paths:
               value: X-Api-Key
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -50,8 +50,9 @@ paths:
                   $ref: >-
                     #/components/schemas/AuthGetTokenWithClientCredentialsRequestGrantType
                 scope:
-                  type: string
-                  nullable: true
+                  type:
+                    - string
+                    - 'null'
               required:
                 - client_id
                 - client_secret
@@ -81,7 +82,7 @@ paths:
               value: X-Api-Key
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -112,8 +113,9 @@ paths:
                 grant_type:
                   $ref: '#/components/schemas/AuthRefreshTokenRequestGrantType'
                 scope:
-                  type: string
-                  nullable: true
+                  type:
+                    - string
+                    - 'null'
               required:
                 - client_id
                 - client_secret
@@ -136,7 +138,7 @@ paths:
       parameters: []
       responses:
         '204':
-          description: ''
+          description: No content
   /nested/get-something:
     get:
       operationId: nestedAPI_nested_api_getSomething
@@ -145,7 +147,7 @@ paths:
       parameters: []
       responses:
         '204':
-          description: ''
+          description: No content
       security:
         - InferredAuth: []
   /get-something:
@@ -156,7 +158,7 @@ paths:
       parameters: []
       responses:
         '204':
-          description: ''
+          description: No content
       security:
         - InferredAuth: []
 components:
@@ -190,8 +192,9 @@ components:
           type: string
           example: access_token
         refresh_token:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
       required:
         - access_token
   securitySchemes:

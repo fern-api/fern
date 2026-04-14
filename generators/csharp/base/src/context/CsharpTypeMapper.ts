@@ -73,6 +73,31 @@ export class CsharpTypeMapper extends WithGeneration {
     ): ast.ClassReference {
         const { typeId, typeDeclaration } = this.model.dereferenceType(typeDeclarationOrNamedType);
         const objectNamespace = this.context.getNamespaceForTypeId(typeId);
+
+        // When inline types are enabled and this type is inline, nest it inside
+        // the parent type's `Types` static class: ParentType.Types.InlineTypeName
+        if (this.context.isInlineType(typeId)) {
+            const parentTypeId = this.context.getInlineTypeParent(typeId);
+            if (parentTypeId != null) {
+                const parentTypeDeclaration = this.context.ir.types[parentTypeId];
+                if (parentTypeDeclaration != null) {
+                    const parentClassRef = this.convertToClassReference(parentTypeDeclaration, {
+                        fullyQualified
+                    });
+                    const typesClassName = this.context.getInlineTypesClassName(parentTypeId);
+                    const typesClassRef = this.csharp.classReference({
+                        name: typesClassName,
+                        enclosingType: parentClassRef
+                    });
+                    return this.csharp.classReference({
+                        origin: typeDeclaration,
+                        enclosingType: typesClassRef,
+                        fullyQualified
+                    });
+                }
+            }
+        }
+
         return this.csharp.classReference({
             namespace: objectNamespace,
             origin: typeDeclaration,

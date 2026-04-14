@@ -395,6 +395,11 @@ fixtures:
     - customConfig:
         use-undiscriminated-unions: true
       outputFolder: with-undiscriminated-unions
+  csharp-inline-types:
+    - customConfig:
+        enable-inline-types: true
+      outputFolder: inline-types
+      disableDynamicSnippetTests: true
   streaming:
     - customConfig: null
       outputFolder: no-custom-config

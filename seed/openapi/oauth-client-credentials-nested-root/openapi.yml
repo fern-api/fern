@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
-  title: oauth-client-credentials-nested-root
-  version: ''
+  title: oauth-client-credentials
+  version: 0.0.0
 paths:
   /token:
     post:
@@ -11,7 +11,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -40,8 +40,9 @@ paths:
                 grant_type:
                   $ref: '#/components/schemas/AuthGetTokenRequestGrantType'
                 scope:
-                  type: string
-                  nullable: true
+                  type:
+                    - string
+                    - 'null'
               required:
                 - client_id
                 - client_secret
@@ -62,7 +63,7 @@ paths:
       parameters: []
       responses:
         '204':
-          description: ''
+          description: No content
   /nested/get-something:
     get:
       operationId: nestedAPI_nested_api_getSomething
@@ -71,7 +72,7 @@ paths:
       parameters: []
       responses:
         '204':
-          description: ''
+          description: No content
       security:
         - BearerAuth: []
   /get-something:
@@ -82,7 +83,7 @@ paths:
       parameters: []
       responses:
         '204':
-          description: ''
+          description: No content
       security:
         - BearerAuth: []
 components:
@@ -109,8 +110,9 @@ components:
           type: integer
           example: 1
         refresh_token:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
       required:
         - access_token
         - expires_in

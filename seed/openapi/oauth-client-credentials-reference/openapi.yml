@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: oauth-client-credentials-reference
-  version: ''
+  version: 0.0.0
 paths:
   /token:
     post:
@@ -11,7 +11,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -50,7 +50,7 @@ paths:
       parameters: []
       responses:
         '204':
-          description: ''
+          description: No content
       security:
         - BearerAuth: []
 components:
@@ -62,13 +62,31 @@ components:
       properties:
         access_token:
           type: string
-          example: access_token
+          examples:
+            - access_token
         expires_in:
           type: integer
-          example: 1
+          examples:
+            - 3600
       required:
         - access_token
         - expires_in
+    GetTokenRequest:
+      title: GetTokenRequest
+      type: object
+      description: The request body for getting an OAuth token.
+      properties:
+        client_id:
+          type: string
+          examples:
+            - client_id
+        client_secret:
+          type: string
+          examples:
+            - client_secret
+      required:
+        - client_id
+        - client_secret
   securitySchemes:
     BearerAuth:
       type: http

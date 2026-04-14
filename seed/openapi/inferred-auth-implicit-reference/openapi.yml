@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
-  title: inferred-auth-implicit-reference
-  version: ''
+  title: inferred-auth-implicit
+  version: 0.0.0
 paths:
   /token:
     post:
@@ -11,7 +11,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -62,7 +62,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -118,7 +118,7 @@ paths:
       parameters: []
       responses:
         '204':
-          description: ''
+          description: No content
   /nested/get-something:
     get:
       operationId: nestedAPI_nested_api_getSomething
@@ -127,7 +127,7 @@ paths:
       parameters: []
       responses:
         '204':
-          description: ''
+          description: No content
       security:
         - InferredAuth: []
   /get-something:
@@ -138,30 +138,59 @@ paths:
       parameters: []
       responses:
         '204':
-          description: ''
+          description: No content
       security:
         - InferredAuth: []
 components:
   schemas:
-    GetTokenRequestAudience:
-      title: GetTokenRequestAudience
-      type: string
-      enum:
-        - https://api.example.com
-    GetTokenRequestGrantType:
-      title: GetTokenRequestGrantType
-      type: string
-      enum:
-        - client_credentials
-    RefreshTokenRequestAudience:
-      title: RefreshTokenRequestAudience
-      type: string
-      enum:
-        - https://api.example.com
-    RefreshTokenRequestGrantType:
-      title: RefreshTokenRequestGrantType
-      type: string
-      enum:
+    GetTokenRequest:
+      title: GetTokenRequest
+      type: object
+      description: A request to obtain an OAuth token.
+      properties:
+        client_id:
+          type: string
+        client_secret:
+          type: string
+        audience:
+          type: string
+          const: https://api.example.com
+        grant_type:
+          type: string
+          const: client_credentials
+        scope:
+          type:
+            - string
+            - 'null'
+      required:
+        - client_id
+        - client_secret
+        - audience
+        - grant_type
+    RefreshTokenRequest:
+      title: RefreshTokenRequest
+      type: object
+      description: A request to refresh an OAuth token.
+      properties:
+        client_id:
+          type: string
+        client_secret:
+          type: string
+        refresh_token:
+          type: string
+        audience:
+          type: string
+          const: https://api.example.com
+        grant_type:
+          type: string
+          const: refresh_token
+        scope:
+          type:
+            - string
+            - 'null'
+      required:
+        - client_id
+        - client_secret
         - refresh_token
     TokenResponse:
       title: TokenResponse
@@ -175,8 +204,9 @@ components:
           type: integer
           example: 1
         refresh_token:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
       required:
         - access_token
         - expires_in

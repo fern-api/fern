@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: property-access
-  version: ''
+  version: 0.0.0
 paths:
   /users:
     post:
@@ -11,7 +11,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -158,9 +158,32 @@ components:
     UserOrAdminDiscriminated:
       title: UserOrAdminDiscriminated
       oneOf:
-        - $ref: '#/components/schemas/UserOrAdminDiscriminatedZero'
-        - $ref: '#/components/schemas/UserOrAdminDiscriminatedAdmin'
-        - $ref: '#/components/schemas/UserOrAdminDiscriminatedTwo'
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: user
+            - $ref: '#/components/schemas/User'
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              const: admin
+            admin:
+              $ref: '#/components/schemas/Admin'
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              const: empty
+          required:
+            - type
       description: Example of an discriminated union
     Foo:
       title: Foo

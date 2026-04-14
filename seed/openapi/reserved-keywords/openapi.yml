@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
-  title: reserved-keywords
-  version: ''
+  title: nursery-api
+  version: 0.0.0
 paths:
   /:
     post:
@@ -20,7 +20,7 @@ paths:
               value: for
       responses:
         '204':
-          description: ''
+          description: No content
 components:
   schemas:
     Package:

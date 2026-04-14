@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: URL Form Encoded API
-  version: ''
+  version: 0.0.0
 paths:
   /submit:
     post:
@@ -32,12 +32,14 @@ paths:
                 username:
                   type: string
                   description: The user's username
-                  example: johndoe
+                  examples:
+                    - johndoe
                 email:
                   type: string
                   format: email
                   description: The user's email address
-                  example: john@example.com
+                  examples:
+                    - john@example.com
               required:
                 - username
                 - email
@@ -83,11 +85,13 @@ components:
       type: object
       properties:
         status:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         message:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
     TokenRequest:
       title: TokenRequest
       type: object
@@ -95,11 +99,13 @@ components:
         client_id:
           type: string
           description: Client identifier
-          example: client_id
+          examples:
+            - client_id
         client_secret:
           type: string
           description: Client secret
-          example: client_secret
+          examples:
+            - client_secret
       required:
         - client_id
         - client_secret
@@ -108,9 +114,11 @@ components:
       type: object
       properties:
         access_token:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         expires_in:
-          type: integer
-          nullable: true
+          type:
+            - integer
+            - 'null'
   securitySchemes: {}

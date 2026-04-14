@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: mixed-file-directory
-  version: ''
+  version: 0.0.0
 paths:
   /organizations/:
     post:
@@ -12,7 +12,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -54,11 +54,12 @@ paths:
           description: The maximum number of results to return.
           required: false
           schema:
-            type: integer
-            nullable: true
+            type:
+              - integer
+              - 'null'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -83,11 +84,12 @@ paths:
           description: The maximum number of results to return.
           required: false
           schema:
-            type: integer
-            nullable: true
+            type:
+              - integer
+              - 'null'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -117,7 +119,7 @@ paths:
               value: id
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:

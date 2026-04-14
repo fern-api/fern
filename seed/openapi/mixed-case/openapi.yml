@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: mixed-case
-  version: ''
+  version: 0.0.0
 paths:
   /resource/{ResourceID}:
     get:
@@ -14,13 +14,12 @@ paths:
           required: true
           schema:
             type: string
-          example: ResourceID
           examples:
             Example1:
               value: ResourceID
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -45,7 +44,6 @@ paths:
           required: true
           schema:
             type: integer
-          example: 1
           examples:
             Example1:
               value: 1
@@ -55,13 +53,12 @@ paths:
           schema:
             type: string
             format: date
-          example: '2023-01-15'
           examples:
             Example1:
               value: '2023-01-15'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -85,6 +82,8 @@ components:
       properties:
         name:
           type: string
+          examples:
+            - orgName
       required:
         - name
     User:
@@ -93,10 +92,15 @@ components:
       properties:
         userName:
           type: string
+          examples:
+            - username
         metadata_tags:
           type: array
           items:
             type: string
+          examples:
+            - - tag1
+              - tag2
         EXTRA_PROPERTIES:
           type: object
           additionalProperties:
@@ -111,6 +115,8 @@ components:
       properties:
         Name:
           type: string
+          examples:
+            - username
         NestedUser:
           $ref: '#/components/schemas/User'
       required:
@@ -155,6 +161,29 @@ components:
     Resource:
       title: Resource
       oneOf:
-        - $ref: '#/components/schemas/ResourceZero'
-        - $ref: '#/components/schemas/ResourceOne'
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                resource_type:
+                  type: string
+                  const: user
+            - $ref: '#/components/schemas/User'
+          required:
+            - resource_type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                resource_type:
+                  type: string
+                  const: Organization
+            - $ref: '#/components/schemas/Organization'
+          required:
+            - resource_type
+      required:
+        - status
+      properties:
+        status:
+          $ref: '#/components/schemas/ResourceStatus'
   securitySchemes: {}

@@ -53,6 +53,10 @@ fixtures:
     - customConfig:
         experimental-enable-forward-compatible-enums: false
       outputFolder: plain-enums
+  csharp-inline-types:
+    - customConfig:
+        enable-inline-types: true
+      outputFolder: inline-types
 scripts:
   - image: fernapi/csharp-seed
     commands:

@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.3.14
+  changelogEntry:
+    - summary: |
+        Bump pytest from 7.4.4 to 9.0.3 and add pytest-asyncio for async test support.
+      type: chore
+  createdAt: "2026-04-14"
+  irVersion: 65
 - version: 5.3.13
   changelogEntry:
     - summary: |

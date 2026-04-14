@@ -6,6 +6,6 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\\**\\*.csproj" Exclude="..\\**\\*.Test.csproj;..\\Snippets\\*.csproj" />
+    <ProjectReference Include="..\**\*.csproj" Exclude="..\**\*.Test.csproj;..\Snippets\*.csproj" />
   </ItemGroup>
 </Project>

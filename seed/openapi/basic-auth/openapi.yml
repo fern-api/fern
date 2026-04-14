@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: basic-auth
-  version: ''
+  version: 0.0.0
 paths:
   /basic-auth:
     get:
@@ -12,7 +12,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -21,7 +21,7 @@ paths:
                 Example1:
                   value: true
         '401':
-          description: ''
+          description: UnauthorizedRequest
           content:
             application/json:
               schema:
@@ -36,18 +36,15 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 type: boolean
         '400':
-          description: ''
-          content:
-            application/json:
-              schema: {}
+          description: BadRequest
         '401':
-          description: ''
+          description: UnauthorizedRequest
           content:
             application/json:
               schema:

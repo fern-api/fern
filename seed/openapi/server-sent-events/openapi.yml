@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: server-sent-events
-  version: ''
+  version: 0.0.0
 paths:
   /stream:
     post:
@@ -11,7 +11,7 @@ paths:
       parameters: []
       responses:
         '204':
-          description: ''
+          description: No content
       requestBody:
         required: true
         content:
@@ -21,6 +21,8 @@ paths:
               properties:
                 query:
                   type: string
+                  examples:
+                    - foo
               required:
                 - query
   /stream-no-terminator:
@@ -31,7 +33,7 @@ paths:
       parameters: []
       responses:
         '204':
-          description: ''
+          description: No content
       requestBody:
         required: true
         content:
@@ -41,6 +43,8 @@ paths:
               properties:
                 query:
                   type: string
+                  examples:
+                    - query
               required:
                 - query
 components:
@@ -52,8 +56,9 @@ components:
         delta:
           type: string
         tokens:
-          type: integer
-          nullable: true
+          type:
+            - integer
+            - 'null'
       required:
         - delta
   securitySchemes: {}

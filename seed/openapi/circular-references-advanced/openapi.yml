@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: api
-  version: ''
+  version: 0.0.0
 paths: {}
 components:
   schemas:
@@ -10,8 +10,9 @@ components:
       type: object
       properties:
         a:
-          $ref: '#/components/schemas/A'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/A'
+            - type: 'null'
     RootType:
       title: RootType
       type: object
@@ -112,8 +113,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - list
+              const: list
             value:
               type: array
               items:
@@ -124,11 +124,11 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - optional
+              const: optional
             value:
-              $ref: '#/components/schemas/FieldValue'
-              nullable: true
+              anyOf:
+                - $ref: '#/components/schemas/FieldValue'
+                - type: 'null'
           required:
             - type
     PrimitiveValue:
@@ -151,8 +151,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - primitive_value
+              const: primitive_value
             value:
               $ref: '#/components/schemas/PrimitiveValue'
           required:
@@ -163,8 +162,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - object_value
+                  const: object_value
             - $ref: '#/components/schemas/ObjectValue'
           required:
             - type
@@ -172,8 +170,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - container_value
+              const: container_value
             value:
               $ref: '#/components/schemas/ContainerValue'
           required:

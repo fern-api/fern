@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: request-parameters
-  version: ''
+  version: 0.0.0
 paths:
   /user/username:
     post:
@@ -19,7 +19,7 @@ paths:
               nullable: true
       responses:
         '204':
-          description: ''
+          description: No content
       requestBody:
         required: true
         content:
@@ -53,7 +53,7 @@ paths:
               nullable: true
       responses:
         '204':
-          description: ''
+          description: No content
       requestBody:
         required: true
         content:
@@ -79,23 +79,15 @@ paths:
       parameters: []
       responses:
         '204':
-          description: ''
+          description: No content
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                username:
-                  type: string
-                  nullable: true
-                password:
-                  type: string
-                  nullable: true
-                name:
-                  type: string
-                  nullable: true
+              anyOf:
+                - $ref: '#/components/schemas/CreateUsernameBodyOptionalProperties'
+                - type: 'null'
             examples:
               Example1:
                 value: {}
@@ -151,9 +143,10 @@ paths:
           in: query
           required: false
           schema:
-            type: string
+            type:
+              - string
+              - 'null'
             format: date-time
-            nullable: true
         - name: keyValue
           in: query
           required: true
@@ -165,8 +158,9 @@ paths:
           in: query
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
         - name: nestedUser
           in: query
           required: true
@@ -176,8 +170,9 @@ paths:
           in: query
           required: false
           schema:
-            $ref: '#/components/schemas/User'
-            nullable: true
+            anyOf:
+              - $ref: '#/components/schemas/User'
+              - type: 'null'
         - name: excludeUser
           in: query
           required: false
@@ -207,7 +202,7 @@ paths:
             type: integer
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -238,4 +233,34 @@ components:
       required:
         - name
         - user
+    CreateUsernameBody:
+      title: CreateUsernameBody
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        name:
+          type: string
+      required:
+        - username
+        - password
+        - name
+    CreateUsernameBodyOptionalProperties:
+      title: CreateUsernameBodyOptionalProperties
+      type: object
+      properties:
+        username:
+          type:
+            - string
+            - 'null'
+        password:
+          type:
+            - string
+            - 'null'
+        name:
+          type:
+            - string
+            - 'null'
   securitySchemes: {}

@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: streaming
-  version: ''
+  version: 0.0.0
 paths:
   /generate-stream:
     post:
@@ -11,7 +11,7 @@ paths:
       parameters: []
       responses:
         '204':
-          description: ''
+          description: No content
       requestBody:
         required: true
         content:
@@ -34,7 +34,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -56,7 +56,8 @@ paths:
                   example: true
                 num_events:
                   type: integer
-                  example: 1
+                  examples:
+                    - 5
               required:
                 - stream
                 - num_events
@@ -73,10 +74,12 @@ components:
       properties:
         id:
           type: string
-          example: id
+          examples:
+            - id
         name:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
       required:
         - id
   securitySchemes: {}

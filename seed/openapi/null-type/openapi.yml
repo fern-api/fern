@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: null-type
-  version: ''
+  version: 0.0.0
 paths:
   /conversations/outbound-call:
     post:
@@ -34,10 +34,12 @@ paths:
                 to_phone_number:
                   type: string
                   description: The phone number to call in E.164 format.
-                  example: to_phone_number
+                  examples:
+                    - to_phone_number
                 dry_run:
-                  type: boolean
-                  nullable: true
+                  type:
+                    - boolean
+                    - 'null'
                   description: >-
                     If true, validates the outbound call setup without placing a
                     call.
@@ -59,7 +61,6 @@ paths:
           required: true
           schema:
             type: string
-          example: id
           examples:
             Example1:
               value: id
@@ -85,12 +86,12 @@ components:
       type: object
       properties:
         conversation_id:
-          nullable: true
           description: Always null when dry_run is true.
         dry_run:
           type: boolean
           description: Always true for this response.
-          example: true
+          examples:
+            - true
       required:
         - conversation_id
         - dry_run
@@ -100,12 +101,13 @@ components:
       properties:
         id:
           type: string
-          example: id
+          examples:
+            - id
         name:
           type: string
-          example: name
+          examples:
+            - name
         deleted_at:
-          nullable: true
           description: Always null for active users.
       required:
         - id

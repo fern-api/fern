@@ -1,17 +1,97 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: errors
-  version: ''
+  version: 0.0.0
 paths:
   /foo1:
     post:
-      operationId: simple_foowithoutendpointerror
+      operationId: simple_fooWithoutEndpointError
       tags:
         - Simple
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FooResponse'
+        '400':
+          description: BadRequestError
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: NotFoundError
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '500':
+          description: InternalServerError
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FooRequest'
+  /foo2:
+    post:
+      operationId: simple_foo
+      tags:
+        - Simple
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FooResponse'
+        '400':
+          description: BadRequestError
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: NotFoundError
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: FooTooMuch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '500':
+          description: InternalServerError
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FooRequest'
+  /foo3:
+    post:
+      operationId: simple_fooWithExamples
+      tags:
+        - Simple
+      parameters: []
+      responses:
+        '200':
+          description: Success
           content:
             application/json:
               schema:
@@ -21,19 +101,30 @@ paths:
                   value:
                     bar: bar
         '400':
-          description: ''
+          description: BadRequestError
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
         '404':
-          description: ''
+          description: NotFoundError
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: FooTooMuch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+              examples:
+                Example1:
+                  value:
+                    message: Too much foo
+                    code: 1
         '500':
-          description: ''
+          description: InternalServerError
           content:
             application/json:
               schema:
@@ -169,7 +260,8 @@ components:
       properties:
         bar:
           type: string
-          example: bar
+          examples:
+            - hello
       required:
         - bar
     FooResponse:
@@ -178,7 +270,8 @@ components:
       properties:
         bar:
           type: string
-          example: bar
+          examples:
+            - hello
       required:
         - bar
   securitySchemes: {}
