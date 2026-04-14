@@ -3,7 +3,7 @@ import type { Argv } from "yargs";
 
 import type { Context } from "../../../../context/Context.js";
 import type { GlobalArgs } from "../../../../context/GlobalArgs.js";
-import { CliError } from "../../../../errors/CliError.js";
+import { CliError } from "@fern-api/task-context";
 import { Colors, Icons } from "../../../../ui/format.js";
 import { withSpinner } from "../../../../ui/withSpinner.js";
 import { command } from "../../../_internal/command.js";
@@ -23,7 +23,7 @@ export class ListMembersCommand {
             context.stderr.error(
                 `${Icons.error} Organization tokens cannot list members. Unset the FERN_TOKEN environment variable and run 'fern auth login' to list members.`
             );
-            throw CliError.exit();
+            throw new CliError({ code: CliError.Code.AuthError });
         }
 
         const venus = createVenusService({ token: token.value });
@@ -37,14 +37,14 @@ export class ListMembersCommand {
             response.error._visit({
                 unauthorizedError: () => {
                     context.stderr.error(`${Icons.error} You do not have access to organization "${args.org}".`);
-                    throw CliError.exit();
+                    throw new CliError({ code: CliError.Code.AuthError });
                 },
                 _other: () => {
                     context.stderr.error(
                         `${Icons.error} Failed to list members.\n` +
                             `\n  Please contact support@buildwithfern.com for assistance.`
                     );
-                    throw CliError.exit();
+                    throw CliError.internalError();
                 }
             });
             return;

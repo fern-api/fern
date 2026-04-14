@@ -1,7 +1,7 @@
 import type { Logger } from "@fern-api/logger";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { CliError } from "../../../../../errors/CliError.js";
+import { CliError } from "@fern-api/task-context";
 import { RevokeTokenCommand } from "../command.js";
 
 vi.mock("@fern-api/core", () => ({

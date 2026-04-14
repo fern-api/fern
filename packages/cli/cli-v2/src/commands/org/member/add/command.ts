@@ -3,7 +3,7 @@ import type { Argv } from "yargs";
 
 import type { Context } from "../../../../context/Context.js";
 import type { GlobalArgs } from "../../../../context/GlobalArgs.js";
-import { CliError } from "../../../../errors/CliError.js";
+import { CliError } from "@fern-api/task-context";
 import { Icons } from "../../../../ui/format.js";
 import { withSpinner } from "../../../../ui/withSpinner.js";
 import { command } from "../../../_internal/command.js";
@@ -24,7 +24,7 @@ export class InviteMemberCommand {
             context.stderr.error(
                 `${Icons.error} Organization tokens cannot manage members. Unset the FERN_TOKEN environment variable and run 'fern auth login' to manage members.`
             );
-            throw CliError.exit();
+            throw new CliError({ code: CliError.Code.AuthError });
         }
 
         const venus = createVenusService({ token: token.value });
@@ -34,11 +34,11 @@ export class InviteMemberCommand {
             orgLookup.error._visit({
                 unauthorizedError: () => {
                     context.stderr.error(`${Icons.error} You do not have access to organization "${args.org}".`);
-                    throw CliError.exit();
+                    throw new CliError({ code: CliError.Code.AuthError });
                 },
                 _other: () => {
                     context.stderr.error(`${Icons.error} Organization "${args.org}" was not found.`);
-                    throw CliError.exit();
+                    throw CliError.notFound();
                 }
             });
             return;
@@ -68,18 +68,18 @@ export class InviteMemberCommand {
                 context.stderr.error(
                     `${Icons.error} You do not have permission to invite members to organization "${args.org}".`
                 );
-                throw CliError.exit();
+                throw new CliError({ code: CliError.Code.AuthError });
             },
             userIdDoesNotExistError: () => {
                 context.stderr.error(`${Icons.error} No user found with email "${args.email}".`);
-                throw CliError.exit();
+                throw CliError.notFound();
             },
             _other: () => {
                 context.stderr.error(
                     `${Icons.error} Failed to invite member.\n` +
                         `\n  Please contact support@buildwithfern.com for assistance.`
                 );
-                throw CliError.exit();
+                throw CliError.internalError();
             }
         });
     }

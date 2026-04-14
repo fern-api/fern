@@ -3,7 +3,7 @@ import type { Argv } from "yargs";
 
 import type { Context } from "../../../../context/Context.js";
 import type { GlobalArgs } from "../../../../context/GlobalArgs.js";
-import { CliError } from "../../../../errors/CliError.js";
+import { CliError } from "@fern-api/task-context";
 import { Icons } from "../../../../ui/format.js";
 import { withSpinner } from "../../../../ui/withSpinner.js";
 import { command } from "../../../_internal/command.js";
@@ -23,7 +23,7 @@ export class RevokeTokenCommand {
             context.stderr.error(
                 `${Icons.error} Organization tokens cannot revoke API tokens. Unset the FERN_TOKEN environment variable and run 'fern auth login' to revoke tokens.`
             );
-            throw CliError.exit();
+            throw new CliError({ code: CliError.Code.AuthError });
         }
 
         const venus = createVenusService({ token: token.value });
@@ -47,18 +47,18 @@ export class RevokeTokenCommand {
         response.error._visit({
             unauthorizedError: () => {
                 context.stderr.error(`${Icons.error} You are not authorized to revoke this token.`);
-                throw CliError.exit();
+                throw new CliError({ code: CliError.Code.AuthError });
             },
             tokenNotFoundError: () => {
                 context.stderr.error(`${Icons.error} Token "${tokenId}" was not found.`);
-                throw CliError.exit();
+                throw CliError.notFound();
             },
             _other: () => {
                 context.stderr.error(
                     `${Icons.error} Failed to revoke token.\n` +
                         `\n  Please contact support@buildwithfern.com for assistance.`
                 );
-                throw CliError.exit();
+                throw CliError.internalError();
             }
         });
     }
