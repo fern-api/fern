@@ -7,11 +7,11 @@ import Acme
 private func main() async throws {
     let client = AcmeClient(token: "<YOUR_API_KEY>")
 
-    _ = try await client.service.getMetadata(
-        shallow: false,
+    _ = try await client.service.getmetadata(
+        shallow: .value(false),
         tag: [
-            "development",
-            "public"
+            .value("development"),
+            .value("public")
         ]
     )
 }
@@ -39,7 +39,7 @@ import Acme
 private func main() async throws {
     let client = AcmeClient(token: "<YOUR_API_KEY>")
 
-    _ = try await client.service.createBigEntity(request: BigEntity(
+    _ = try await client.service.createbigentity(request: .init(
         castMember: CastMember.actor(
             Actor(
                 name: "John Doe",
@@ -69,14 +69,15 @@ private func main() async throws {
                 "Bruce Willis"
             ]
         ),
-        eventInfo: EventInfo.metadata(
-            Metadata(
+        eventInfo: CommonsEventInfo.commonsEventInfoZero(
+            CommonsEventInfoZero(
                 id: "event-12345",
-                data: [
-                    "key1": "val1", 
-                    "key2": "val2"
-                ],
-                jsonString: "abc"
+                data: .value([
+                    "key1": .value("val1"), 
+                    "key2": .value("val2")
+                ]),
+                jsonString: .value("abc"),
+                type: .metadata
             )
         ),
         migration: Migration(
@@ -109,7 +110,7 @@ import Acme
 private func main() async throws {
     let client = AcmeClient(token: "<YOUR_API_KEY>")
 
-    _ = try await client.service.createMovie(request: Movie(
+    _ = try await client.service.createmovie(request: Movie(
         id: "movie-c06a4ad7",
         prequel: "movie-cv9b914f",
         title: "The Boy and the Heron",
@@ -319,7 +320,7 @@ import Acme
 private func main() async throws {
     let client = AcmeClient(token: "<YOUR_API_KEY>")
 
-    _ = try await client.imdb.getMovie(movieID: "movie_xyz")
+    _ = try await client.imdb.getmovie(movieID: "movie_xyz")
 }
 
 try await main()
@@ -333,7 +334,7 @@ import Acme
 private func main() async throws {
     let client = AcmeClient(token: "<YOUR_API_KEY>")
 
-    _ = try await client.imdb.createMovie(request: CreateMovieRequest(
+    _ = try await client.imdb.createmovie(request: .init(
         title: "The Matrix",
         rating: 8.2
     ))
@@ -350,7 +351,7 @@ import Acme
 private func main() async throws {
     let client = AcmeClient(token: "<YOUR_API_KEY>")
 
-    _ = try await client.s3.getPresignedURL(request: .init(s3Key: "xyz"))
+    _ = try await client.s3.getpresignedurl(request: .init(s3Key: "xyz"))
 }
 
 try await main()
@@ -364,7 +365,7 @@ import Acme
 private func main() async throws {
     let client = AcmeClient(token: "<YOUR_API_KEY>")
 
-    _ = try await client.s3.getPresignedURL(request: .init(s3Key: "xyz"))
+    _ = try await client.s3.getpresignedurl(request: .init(s3Key: "xyz"))
 }
 
 try await main()
@@ -378,7 +379,7 @@ import Acme
 private func main() async throws {
     let client = AcmeClient(token: "<YOUR_API_KEY>")
 
-    _ = try await client.s3.getPresignedURL(request: .init(s3Key: "xyz"))
+    _ = try await client.s3.getpresignedurl(request: .init(s3Key: "xyz"))
 }
 
 try await main()
@@ -392,7 +393,7 @@ import Acme
 private func main() async throws {
     let client = AcmeClient(token: "<YOUR_API_KEY>")
 
-    _ = try await client.s3.getPresignedURL(request: .init(s3Key: "xyz"))
+    _ = try await client.s3.getpresignedurl(request: .init(s3Key: "xyz"))
 }
 
 try await main()
@@ -406,7 +407,7 @@ import Acme
 private func main() async throws {
     let client = AcmeClient(token: "<YOUR_API_KEY>")
 
-    _ = try await client.s3.getPresignedURL(request: .init(s3Key: "xyz"))
+    _ = try await client.s3.getpresignedurl(request: .init(s3Key: "xyz"))
 }
 
 try await main()
@@ -420,11 +421,11 @@ import Acme
 private func main() async throws {
     let client = AcmeClient(baseURL: "https://api.example.com")
 
-    _ = try await client.nullable.createUser(request: .init(
+    _ = try await client.nullable.createuser(request: .init(
         username: "john.doe",
-        tags: [
+        tags: .value([
             "admin"
-        ],
+        ]),
         metadata: Metadata(
             createdAt: try! Date("1980-01-01T00:00:00Z", strategy: .iso8601),
             updatedAt: try! Date("1980-01-01T00:00:00Z", strategy: .iso8601),
@@ -444,7 +445,7 @@ import Acme
 private func main() async throws {
     let client = AcmeClient(baseURL: "https://api.example.com")
 
-    _ = try await client.nullable.createUser(request: .init())
+    _ = try await client.nullable.createuser(request: .init())
 }
 
 try await main()
@@ -458,10 +459,10 @@ import Acme
 private func main() async throws {
     let client = AcmeClient(baseURL: "https://api.example.com")
 
-    _ = try await client.nullable.getUsers(
+    _ = try await client.nullable.getusers(
         usernames: [
-            "john.doe",
-            "jane.doe"
+            .value("john.doe"),
+            .value("jane.doe")
         ],
         tags: [
             .null
@@ -564,7 +565,7 @@ import Acme
 private func main() async throws {
     let client = AcmeClient(token: "<YOUR_API_KEY>")
 
-    _ = try await client.dummy.getDummy()
+    _ = try await client.dummy.getdummy()
 }
 
 try await main()
@@ -578,7 +579,7 @@ import Acme
 private func main() async throws {
     let client = AcmeClient(token: "<YOUR_API_KEY>")
 
-    _ = try await client.dummy.getDummy()
+    _ = try await client.dummy.getdummy()
 }
 
 try await main()
@@ -595,7 +596,7 @@ private func main() async throws {
         token: "<YOUR_API_KEY>"
     )
 
-    _ = try await client.dummy.getDummy()
+    _ = try await client.dummy.getdummy()
 }
 
 try await main()
@@ -619,7 +620,7 @@ import Acme
 private func main() async throws {
     let client = AcmeClient(token: "<YOUR_API_KEY>")
 
-    _ = try await client.dummy.getDummy()
+    _ = try await client.dummy.getdummy()
 }
 
 try await main()

@@ -7,13 +7,13 @@ client = Acme(
     token="<YOUR_API_KEY>",
 )
 
-client.service.get_metadata(
+client.service.getmetadata(
     shallow=False,
     tag=[
         "development",
         "public"
     ],
-    x_api_version="0.0.1",
+    api_version="0.0.1",
 )
 "
 `;
@@ -25,26 +25,24 @@ client = Acme(
     token="<YOUR_API_KEY>",
 )
 
-client.service.get_metadata(
+client.service.getmetadata(
     shallow=False,
     tag=[
         "development"
     ],
-    x_api_version="0.0.1",
+    api_version="0.0.1",
 )
 "
 `;
 
 exports[`snippets > examples > 'POST /big-entity (simple)' 1`] = `
-"from acme import Acme
-from acme.types import Actor, ExtendedMovie, Migration
-from acme.commons.types import EventInfo_Metadata
+"from acme import Acme, Actor, ExtendedMovie, CommonsEventInfoZero, Migration
 
 client = Acme(
     token="<YOUR_API_KEY>",
 )
 
-client.service.create_big_entity(
+client.service.createbigentity(
     cast_member=Actor(
         id="john.doe",
         name="John Doe",
@@ -69,7 +67,8 @@ client.service.create_big_entity(
         },
         revenue=1000000,
     ),
-    event_info=EventInfo_Metadata(
+    event_info=CommonsEventInfoZero(
+        type="metadata",
         id="event-12345",
         data={
             "key1": "val1",
@@ -111,12 +110,13 @@ client = Acme(
     token="<YOUR_API_KEY>",
 )
 
-client.service.create_movie(
+client.service.createmovie(
     id="movie-c06a4ad7",
     prequel="movie-cv9b914f",
     title="The Boy and the Heron",
     from="Hayao Miyazaki",
     rating=8,
+    type="movie",
     tag="development",
     metadata={
         "actors": ["Christian Bale", "Florence Pugh", "Willem Dafoe"],
@@ -324,7 +324,7 @@ client = Acme(
     token="<YOUR_API_KEY>",
 )
 
-client.imdb.get_movie(
+client.imdb.getmovie(
     movie_id="movie_xyz",
 )
 "
@@ -337,7 +337,7 @@ client = Acme(
     token="<YOUR_API_KEY>",
 )
 
-client.imdb.create_movie(
+client.imdb.createmovie(
     title="The Matrix",
     rating=8.2,
 )
@@ -345,21 +345,13 @@ client.imdb.create_movie(
 `;
 
 exports[`snippets > multi-url-environment > 'Custom environment' 1`] = `
-"from acme import Acme
-from acme.environment import AcmeEnvironment
-
-client = Acme(
-    environment=AcmeEnvironment(
-        ec2="https://custom.ec2.aws.com",
-        s3="https://custom.s3.aws.com",
-    ),
-    token="<YOUR_API_KEY>",
-)
-
-client.s3.get_presigned_url(
-    s3key="xyz",
-)
-"
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [],
+    "message": "Multiple environments are not supported for single base URL environments; use the baseUrl option instead"
+  }
+]"
 `;
 
 exports[`snippets > multi-url-environment > 'Invalid multi url environment' 1`] = `
@@ -367,39 +359,29 @@ exports[`snippets > multi-url-environment > 'Invalid multi url environment' 1`] 
   {
     "severity": "CRITICAL",
     "path": [],
-    "message": "The provided environments are invalid; got: [ec2], expected: [ec2, s3]"
+    "message": "Multiple environments are not supported for single base URL environments; use the baseUrl option instead"
   }
 ]"
 `;
 
 exports[`snippets > multi-url-environment > 'Production environment' 1`] = `
-"from acme import Acme
-from acme.environment import AcmeEnvironment
-
-client = Acme(
-    environment=AcmeEnvironment.PRODUCTION,
-    token="<YOUR_API_KEY>",
-)
-
-client.s3.get_presigned_url(
-    s3key="xyz",
-)
-"
+"[
+  {
+    "severity": "WARNING",
+    "path": [],
+    "message": "Environment \\"Production\\" was not found"
+  }
+]"
 `;
 
 exports[`snippets > multi-url-environment > 'Staging environment' 1`] = `
-"from acme import Acme
-from acme.environment import AcmeEnvironment
-
-client = Acme(
-    environment=AcmeEnvironment.STAGING,
-    token="<YOUR_API_KEY>",
-)
-
-client.s3.get_presigned_url(
-    s3key="xyz",
-)
-"
+"[
+  {
+    "severity": "WARNING",
+    "path": [],
+    "message": "Environment \\"Staging\\" was not found"
+  }
+]"
 `;
 
 exports[`snippets > multi-url-environment > 'Unrecognized environment' 1`] = `
@@ -413,15 +395,14 @@ exports[`snippets > multi-url-environment > 'Unrecognized environment' 1`] = `
 `;
 
 exports[`snippets > nullable > 'Body properties' 1`] = `
-"from acme import Acme
-from acme.nullable import Metadata
+"from acme import Acme, Metadata
 import datetime
 
 client = Acme(
     base_url="https://api.example.com",
 )
 
-client.nullable.create_user(
+client.nullable.createuser(
     username="john.doe",
     tags=[
         "admin"
@@ -456,7 +437,7 @@ client = Acme(
     base_url="https://api.example.com",
 )
 
-client.nullable.get_users(
+client.nullable.getusers(
     usernames=[
         "john.doe",
         "jane.doe"
@@ -480,9 +461,7 @@ client.create_user(
     password="password",
     profile=UserProfile(
         name="name",
-        verification=UserProfileVerification(
-            verified="string",
-        ),
+        verification=UserProfileVerification(),
         ssn="ssn",
     ),
 )
@@ -501,9 +480,7 @@ client.create_user(
     password="password",
     profile=UserProfile(
         name="name",
-        verification=UserProfileVerification(
-            verified="string",
-        ),
+        verification=UserProfileVerification(),
         ssn="ssn",
     ),
 )
@@ -546,21 +523,18 @@ client = Acme(
     token="<YOUR_API_KEY>",
 )
 
-client.dummy.get_dummy()
+client.dummy.getdummy()
 "
 `;
 
 exports[`snippets > single-url-environment-default > 'Staging environment' 1`] = `
-"from acme import Acme
-from acme.environment import AcmeEnvironment
-
-client = Acme(
-    environment=AcmeEnvironment.STAGING,
-    token="<YOUR_API_KEY>",
-)
-
-client.dummy.get_dummy()
-"
+"[
+  {
+    "severity": "WARNING",
+    "path": [],
+    "message": "Environment \\"Staging\\" was not found"
+  }
+]"
 `;
 
 exports[`snippets > single-url-environment-default > 'custom baseURL' 1`] = `
@@ -571,7 +545,7 @@ client = Acme(
     token="<YOUR_API_KEY>",
 )
 
-client.dummy.get_dummy()
+client.dummy.getdummy()
 "
 `;
 
