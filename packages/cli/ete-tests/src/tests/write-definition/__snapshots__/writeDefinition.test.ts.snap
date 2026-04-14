@@ -45,11 +45,11 @@ service:
   endpoints:
     createPets:
       display-name: Create a pet
-      examples:
-        - headers:
-            X-Dummy-Header: X-Dummy-Header
       method: POST
       path: /pets
+      response:
+        status-code: 201
+        type: text
       source:
         openapi: openapi/openapi.yml
     listPets:
@@ -452,10 +452,11 @@ service:
   endpoints:
     createPets:
       display-name: Create a pet
-      examples:
-        - {}
       method: POST
       path: /pets
+      response:
+        status-code: 201
+        type: text
       source:
         openapi: openapi/petstore/openapi.yml
     listPets:
@@ -1277,9 +1278,6 @@ service:
         - trainsRoot.NotFoundError
         - trainsRoot.TooManyRequestsError
         - trainsRoot.InternalServerError
-      examples:
-        - path-parameters:
-            bookingId: 1725ff48-ab45-4bb5-9d02-88745177dedb
       method: DELETE
       path: /bookings/{bookingId}
       request:
@@ -1288,6 +1286,8 @@ service:
           bookingId:
             docs: The ID of the booking to retrieve.
             type: string
+      response:
+        status-code: 204
       source:
         openapi: openapi/trains/openapi.yml
     get-booking:
@@ -1859,10 +1859,11 @@ service:
   endpoints:
     createPets:
       display-name: Create a pet
-      examples:
-        - {}
       method: POST
       path: /pets
+      response:
+        status-code: 201
+        type: text
       source:
         openapi: alpha_one.yml
     listPets:
@@ -2844,10 +2845,11 @@ service:
   endpoints:
     createPets:
       display-name: Create a pet
-      examples:
-        - {}
       method: POST
       path: /pets
+      response:
+        status-code: 201
+        type: text
       source:
         openapi: openapi/openapi.yml
     listPets:

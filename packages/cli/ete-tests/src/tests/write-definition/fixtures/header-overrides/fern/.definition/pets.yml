@@ -6,11 +6,11 @@ service:
   endpoints:
     createPets:
       display-name: Create a pet
-      examples:
-        - headers:
-            X-Dummy-Header: X-Dummy-Header
       method: POST
       path: /pets
+      response:
+        status-code: 201
+        type: text
       source:
         openapi: openapi/openapi.yml
     listPets:
