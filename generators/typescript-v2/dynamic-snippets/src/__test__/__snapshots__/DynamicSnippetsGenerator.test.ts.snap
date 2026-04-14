@@ -7,13 +7,13 @@ async function main() {
     const client = new AcmeClient({
         token: "<YOUR_API_KEY>",
     });
-    await client.service.getMetadata({
+    await client.service.getmetadata({
         shallow: false,
         tag: [
             "development",
             "public",
         ],
-        xAPIVersion: "0.0.1",
+        apiVersion: "0.0.1",
     });
 }
 main();
@@ -27,12 +27,12 @@ async function main() {
     const client = new AcmeClient({
         token: "<YOUR_API_KEY>",
     });
-    await client.service.getMetadata({
+    await client.service.getmetadata({
         shallow: false,
         tag: [
             "development",
         ],
-        xAPIVersion: "0.0.1",
+        apiVersion: "0.0.1",
     });
 }
 main();
@@ -46,7 +46,7 @@ async function main() {
     const client = new AcmeClient({
         token: "<YOUR_API_KEY>",
     });
-    await client.service.createBigEntity({
+    await client.service.createbigentity({
         castMember: {
             id: "john.doe",
             name: "John Doe",
@@ -113,7 +113,7 @@ async function main() {
     const client = new AcmeClient({
         token: "<YOUR_API_KEY>",
     });
-    await client.service.createMovie({
+    await client.service.createmovie({
         id: "movie-c06a4ad7",
         prequel: "movie-cv9b914f",
         title: "The Boy and the Heron",
@@ -318,7 +318,9 @@ async function main() {
     const client = new AcmeClient({
         token: "<YOUR_API_KEY>",
     });
-    await client.imdb.getMovie("movie_xyz");
+    await client.imdb.getmovie({
+        movieID: "movie_xyz",
+    });
 }
 main();
 "
@@ -331,7 +333,7 @@ async function main() {
     const client = new AcmeClient({
         token: "<YOUR_API_KEY>",
     });
-    await client.imdb.createMovie({
+    await client.imdb.createmovie({
         title: "The Matrix",
         rating: 8.2,
     });
@@ -341,22 +343,13 @@ main();
 `;
 
 exports[`snippets > multi-url-environment > 'Custom environment' 1`] = `
-"import { AcmeClient } from "acme";
-
-async function main() {
-    const client = new AcmeClient({
-        environment: {
-            ec2: "https://custom.ec2.aws.com",
-            s3: "https://custom.s3.aws.com",
-        },
-        token: "<YOUR_API_KEY>",
-    });
-    await client.s3.getPresignedURL({
-        s3Key: "xyz",
-    });
-}
-main();
-"
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [],
+    "message": "Multiple environments are not supported for single base URL environments; use the baseUrl option instead"
+  }
+]"
 `;
 
 exports[`snippets > multi-url-environment > 'Invalid multi url environment' 1`] = `
@@ -364,41 +357,29 @@ exports[`snippets > multi-url-environment > 'Invalid multi url environment' 1`] 
   {
     "severity": "CRITICAL",
     "path": [],
-    "message": "The provided environments are invalid; got: [ec2], expected: [ec2, s3]"
+    "message": "Multiple environments are not supported for single base URL environments; use the baseUrl option instead"
   }
 ]"
 `;
 
 exports[`snippets > multi-url-environment > 'Production environment' 1`] = `
-"import { AcmeClient, AcmeEnvironment } from "acme";
-
-async function main() {
-    const client = new AcmeClient({
-        environment: AcmeEnvironment.Production,
-        token: "<YOUR_API_KEY>",
-    });
-    await client.s3.getPresignedURL({
-        s3Key: "xyz",
-    });
-}
-main();
-"
+"[
+  {
+    "severity": "WARNING",
+    "path": [],
+    "message": "Environment \\"Production\\" was not found"
+  }
+]"
 `;
 
 exports[`snippets > multi-url-environment > 'Staging environment' 1`] = `
-"import { AcmeClient, AcmeEnvironment } from "acme";
-
-async function main() {
-    const client = new AcmeClient({
-        environment: AcmeEnvironment.Staging,
-        token: "<YOUR_API_KEY>",
-    });
-    await client.s3.getPresignedURL({
-        s3Key: "xyz",
-    });
-}
-main();
-"
+"[
+  {
+    "severity": "WARNING",
+    "path": [],
+    "message": "Environment \\"Staging\\" was not found"
+  }
+]"
 `;
 
 exports[`snippets > multi-url-environment > 'Unrecognized environment' 1`] = `
@@ -418,7 +399,7 @@ async function main() {
     const client = new AcmeClient({
         environment: "https://api.example.com",
     });
-    await client.nullable.createUser({
+    await client.nullable.createuser({
         username: "john.doe",
         tags: [
             "admin",
@@ -455,7 +436,7 @@ async function main() {
     const client = new AcmeClient({
         environment: "https://api.example.com",
     });
-    await client.nullable.getUsers({
+    await client.nullable.getusers({
         usernames: [
             "john.doe",
             "jane.doe",
@@ -542,24 +523,20 @@ async function main() {
         environment: AcmeEnvironment.Production,
         token: "<YOUR_API_KEY>",
     });
-    await client.dummy.getDummy();
+    await client.dummy.getdummy();
 }
 main();
 "
 `;
 
 exports[`snippets > single-url-environment-default > 'Staging environment' 1`] = `
-"import { AcmeClient, AcmeEnvironment } from "acme";
-
-async function main() {
-    const client = new AcmeClient({
-        environment: AcmeEnvironment.Staging,
-        token: "<YOUR_API_KEY>",
-    });
-    await client.dummy.getDummy();
-}
-main();
-"
+"[
+  {
+    "severity": "WARNING",
+    "path": [],
+    "message": "Environment \\"Staging\\" was not found"
+  }
+]"
 `;
 
 exports[`snippets > single-url-environment-default > 'custom baseURL' 1`] = `
@@ -570,7 +547,7 @@ async function main() {
         environment: "http://localhost:8080",
         token: "<YOUR_API_KEY>",
     });
-    await client.dummy.getDummy();
+    await client.dummy.getdummy();
 }
 main();
 "
