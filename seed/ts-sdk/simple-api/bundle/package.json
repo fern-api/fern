@@ -6,7 +6,6 @@
         "type": "git",
         "url": "git+https://github.com/simple-api/fern.git"
     },
-    "license": "MIT",
     "files": [
         "dist",
         "types",
