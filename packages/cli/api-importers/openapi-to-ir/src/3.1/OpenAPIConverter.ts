@@ -10,6 +10,7 @@ import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 import { FernBasePathExtension } from "../extensions/x-fern-base-path.js";
 import { FernGlobalHeadersExtension } from "../extensions/x-fern-global-headers.js";
 import { convertGlobalHeadersExtension } from "../utils/convertGlobalHeadersExtension.js";
+import { convertGlobalHeaderOverrides } from "../utils/convertGlobalHeaderOverrides.js";
 import { OpenAPIConverterContext3_1 } from "./OpenAPIConverterContext3_1.js";
 import { WebhookConverter } from "./paths/operations/WebhookConverter.js";
 import { PathConverter } from "./paths/PathConverter.js";
@@ -71,7 +72,13 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
 
     private convertGlobalHeaders(): void {
         if (this.context.globalHeaderOverrides) {
-            // TODO: Convert global headers to IR
+            const globalHeaders = convertGlobalHeaderOverrides({
+                globalHeaderOverrides: this.context.globalHeaderOverrides,
+                context: this.context
+            });
+            this.addGlobalHeadersToIr(globalHeaders);
+            this.context.setGlobalHeaders(globalHeaders);
+            return;
         }
 
         const globalHeadersExtension = new FernGlobalHeadersExtension({
