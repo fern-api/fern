@@ -486,7 +486,7 @@ class WebsocketConnectMethodGenerator:
             components += [package.fern_filepath.file]
         if len(components) == 0:
             return ""
-        return ".".join([resolve_name(component).snake_case.unsafe_name for component in components]) + "."
+        return ".".join([resolve_name(component).snake_case.safe_name for component in components]) + "."
 
     def _named_parameters_have_docs(self, named_parameters: List[AST.NamedFunctionParameter]) -> bool:
         return named_parameters is not None and any(param.docs is not None for param in named_parameters)
