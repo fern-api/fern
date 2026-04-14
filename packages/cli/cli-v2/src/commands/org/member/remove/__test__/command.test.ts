@@ -33,6 +33,13 @@ function createMockContext(tokenType: "user" | "organization" = "user") {
     } as unknown as import("../../../../../context/Context.js").Context;
 }
 
+function mockOrgLookupSuccess() {
+    return vi.fn().mockResolvedValue({
+        ok: true,
+        body: { auth0Id: "org_abc123" }
+    });
+}
+
 describe("RemoveMemberCommand", () => {
     let cmd: RemoveMemberCommand;
 
@@ -43,17 +50,19 @@ describe("RemoveMemberCommand", () => {
 
     it("should remove a member successfully", async () => {
         const { createVenusService } = await import("@fern-api/core");
+        const mockGet = mockOrgLookupSuccess();
         const mockRemoveUser = vi.fn().mockResolvedValue({ ok: true });
         vi.mocked(createVenusService).mockReturnValue({
-            organization: { removeUser: mockRemoveUser }
+            organization: { get: mockGet, removeUser: mockRemoveUser }
         } as ReturnType<typeof createVenusService>);
 
         const context = createMockContext();
-        await cmd.handle(context, { "user-id": "user123", org: "acme" } as RemoveMemberCommand.Args);
+        await cmd.handle(context, { userId: "user123", org: "acme" } as RemoveMemberCommand.Args);
 
+        expect(mockGet).toHaveBeenCalledWith("acme");
         expect(mockRemoveUser).toHaveBeenCalledWith({
             userId: "user123",
-            auth0OrgId: "acme"
+            auth0OrgId: "org_abc123"
         });
         expect(context.stderr.info).toHaveBeenCalledWith(expect.stringContaining("Removed user"));
     });
@@ -62,7 +71,7 @@ describe("RemoveMemberCommand", () => {
         const context = createMockContext("organization");
 
         await expect(
-            cmd.handle(context, { "user-id": "user123", org: "acme" } as RemoveMemberCommand.Args)
+            cmd.handle(context, { userId: "user123", org: "acme" } as RemoveMemberCommand.Args)
         ).rejects.toThrow(CliError);
 
         expect(context.stderr.error).toHaveBeenCalledWith(
@@ -70,8 +79,29 @@ describe("RemoveMemberCommand", () => {
         );
     });
 
-    it("should handle UnauthorizedError", async () => {
+    it("should handle org lookup failure", async () => {
         const { createVenusService } = await import("@fern-api/core");
+        const mockGet = vi.fn().mockResolvedValue({
+            ok: false,
+            error: {
+                _visit: (visitor: Record<string, () => void>) => visitor._other()
+            }
+        });
+        vi.mocked(createVenusService).mockReturnValue({
+            organization: { get: mockGet }
+        } as ReturnType<typeof createVenusService>);
+
+        const context = createMockContext();
+        await expect(
+            cmd.handle(context, { userId: "user123", org: "acme" } as RemoveMemberCommand.Args)
+        ).rejects.toThrow(CliError);
+
+        expect(context.stderr.error).toHaveBeenCalledWith(expect.stringContaining("was not found"));
+    });
+
+    it("should handle UnauthorizedError from removeUser", async () => {
+        const { createVenusService } = await import("@fern-api/core");
+        const mockGet = mockOrgLookupSuccess();
         const mockRemoveUser = vi.fn().mockResolvedValue({
             ok: false,
             error: {
@@ -79,12 +109,12 @@ describe("RemoveMemberCommand", () => {
             }
         });
         vi.mocked(createVenusService).mockReturnValue({
-            organization: { removeUser: mockRemoveUser }
+            organization: { get: mockGet, removeUser: mockRemoveUser }
         } as ReturnType<typeof createVenusService>);
 
         const context = createMockContext();
         await expect(
-            cmd.handle(context, { "user-id": "user123", org: "acme" } as RemoveMemberCommand.Args)
+            cmd.handle(context, { userId: "user123", org: "acme" } as RemoveMemberCommand.Args)
         ).rejects.toThrow(CliError);
 
         expect(context.stderr.error).toHaveBeenCalledWith(
@@ -94,6 +124,7 @@ describe("RemoveMemberCommand", () => {
 
     it("should handle UserIdDoesNotExistError", async () => {
         const { createVenusService } = await import("@fern-api/core");
+        const mockGet = mockOrgLookupSuccess();
         const mockRemoveUser = vi.fn().mockResolvedValue({
             ok: false,
             error: {
@@ -101,12 +132,12 @@ describe("RemoveMemberCommand", () => {
             }
         });
         vi.mocked(createVenusService).mockReturnValue({
-            organization: { removeUser: mockRemoveUser }
+            organization: { get: mockGet, removeUser: mockRemoveUser }
         } as ReturnType<typeof createVenusService>);
 
         const context = createMockContext();
         await expect(
-            cmd.handle(context, { "user-id": "user123", org: "acme" } as RemoveMemberCommand.Args)
+            cmd.handle(context, { userId: "user123", org: "acme" } as RemoveMemberCommand.Args)
         ).rejects.toThrow(CliError);
 
         expect(context.stderr.error).toHaveBeenCalledWith(expect.stringContaining("was not found"));
@@ -114,6 +145,7 @@ describe("RemoveMemberCommand", () => {
 
     it("should handle unknown errors", async () => {
         const { createVenusService } = await import("@fern-api/core");
+        const mockGet = mockOrgLookupSuccess();
         const mockRemoveUser = vi.fn().mockResolvedValue({
             ok: false,
             error: {
@@ -121,12 +153,12 @@ describe("RemoveMemberCommand", () => {
             }
         });
         vi.mocked(createVenusService).mockReturnValue({
-            organization: { removeUser: mockRemoveUser }
+            organization: { get: mockGet, removeUser: mockRemoveUser }
         } as ReturnType<typeof createVenusService>);
 
         const context = createMockContext();
         await expect(
-            cmd.handle(context, { "user-id": "user123", org: "acme" } as RemoveMemberCommand.Args)
+            cmd.handle(context, { userId: "user123", org: "acme" } as RemoveMemberCommand.Args)
         ).rejects.toThrow(CliError);
 
         expect(context.stderr.error).toHaveBeenCalledWith(expect.stringContaining("Failed to remove member"));

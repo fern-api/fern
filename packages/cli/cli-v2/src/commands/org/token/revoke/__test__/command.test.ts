@@ -49,7 +49,7 @@ describe("RevokeTokenCommand", () => {
         } as ReturnType<typeof createVenusService>);
 
         const context = createMockContext();
-        await cmd.handle(context, { "token-id": "tok_123" } as RevokeTokenCommand.Args);
+        await cmd.handle(context, { tokenId: "tok_123" } as RevokeTokenCommand.Args);
 
         expect(mockRevoke).toHaveBeenCalledWith("tok_123");
         expect(context.stderr.info).toHaveBeenCalledWith(expect.stringContaining("has been revoked"));
@@ -58,9 +58,7 @@ describe("RevokeTokenCommand", () => {
     it("should reject organization tokens", async () => {
         const context = createMockContext("organization");
 
-        await expect(cmd.handle(context, { "token-id": "tok_123" } as RevokeTokenCommand.Args)).rejects.toThrow(
-            CliError
-        );
+        await expect(cmd.handle(context, { tokenId: "tok_123" } as RevokeTokenCommand.Args)).rejects.toThrow(CliError);
 
         expect(context.stderr.error).toHaveBeenCalledWith(
             expect.stringContaining("Organization tokens cannot revoke API tokens")
@@ -80,9 +78,7 @@ describe("RevokeTokenCommand", () => {
         } as ReturnType<typeof createVenusService>);
 
         const context = createMockContext();
-        await expect(cmd.handle(context, { "token-id": "tok_123" } as RevokeTokenCommand.Args)).rejects.toThrow(
-            CliError
-        );
+        await expect(cmd.handle(context, { tokenId: "tok_123" } as RevokeTokenCommand.Args)).rejects.toThrow(CliError);
 
         expect(context.stderr.error).toHaveBeenCalledWith(expect.stringContaining("not authorized to revoke"));
     });
@@ -100,9 +96,7 @@ describe("RevokeTokenCommand", () => {
         } as ReturnType<typeof createVenusService>);
 
         const context = createMockContext();
-        await expect(cmd.handle(context, { "token-id": "tok_123" } as RevokeTokenCommand.Args)).rejects.toThrow(
-            CliError
-        );
+        await expect(cmd.handle(context, { tokenId: "tok_123" } as RevokeTokenCommand.Args)).rejects.toThrow(CliError);
 
         expect(context.stderr.error).toHaveBeenCalledWith(expect.stringContaining("was not found"));
     });
@@ -120,9 +114,7 @@ describe("RevokeTokenCommand", () => {
         } as ReturnType<typeof createVenusService>);
 
         const context = createMockContext();
-        await expect(cmd.handle(context, { "token-id": "tok_123" } as RevokeTokenCommand.Args)).rejects.toThrow(
-            CliError
-        );
+        await expect(cmd.handle(context, { tokenId: "tok_123" } as RevokeTokenCommand.Args)).rejects.toThrow(CliError);
 
         expect(context.stderr.error).toHaveBeenCalledWith(expect.stringContaining("Failed to revoke token"));
     });

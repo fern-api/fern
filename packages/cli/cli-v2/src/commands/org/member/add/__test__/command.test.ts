@@ -33,6 +33,13 @@ function createMockContext(tokenType: "user" | "organization" = "user") {
     } as unknown as import("../../../../../context/Context.js").Context;
 }
 
+function mockOrgLookupSuccess() {
+    return vi.fn().mockResolvedValue({
+        ok: true,
+        body: { auth0Id: "org_abc123" }
+    });
+}
+
 describe("InviteMemberCommand", () => {
     let cmd: InviteMemberCommand;
 
@@ -43,17 +50,19 @@ describe("InviteMemberCommand", () => {
 
     it("should invite a member successfully", async () => {
         const { createVenusService } = await import("@fern-api/core");
+        const mockGet = mockOrgLookupSuccess();
         const mockInviteUser = vi.fn().mockResolvedValue({ ok: true });
         vi.mocked(createVenusService).mockReturnValue({
-            organization: { inviteUser: mockInviteUser }
+            organization: { get: mockGet, inviteUser: mockInviteUser }
         } as ReturnType<typeof createVenusService>);
 
         const context = createMockContext();
         await cmd.handle(context, { email: "user@example.com", org: "acme" } as InviteMemberCommand.Args);
 
+        expect(mockGet).toHaveBeenCalledWith("acme");
         expect(mockInviteUser).toHaveBeenCalledWith({
             emailAddress: "user@example.com",
-            auth0OrgId: "acme"
+            auth0OrgId: "org_abc123"
         });
         expect(context.stderr.info).toHaveBeenCalledWith(expect.stringContaining("Invited"));
     });
@@ -70,8 +79,31 @@ describe("InviteMemberCommand", () => {
         );
     });
 
-    it("should handle UnauthorizedError", async () => {
+    it("should handle org lookup failure", async () => {
         const { createVenusService } = await import("@fern-api/core");
+        const mockGet = vi.fn().mockResolvedValue({
+            ok: false,
+            error: {
+                _visit: (visitor: Record<string, () => void>) => visitor.unauthorizedError()
+            }
+        });
+        vi.mocked(createVenusService).mockReturnValue({
+            organization: { get: mockGet }
+        } as ReturnType<typeof createVenusService>);
+
+        const context = createMockContext();
+        await expect(
+            cmd.handle(context, { email: "user@example.com", org: "acme" } as InviteMemberCommand.Args)
+        ).rejects.toThrow(CliError);
+
+        expect(context.stderr.error).toHaveBeenCalledWith(
+            expect.stringContaining("do not have access to organization")
+        );
+    });
+
+    it("should handle UnauthorizedError from inviteUser", async () => {
+        const { createVenusService } = await import("@fern-api/core");
+        const mockGet = mockOrgLookupSuccess();
         const mockInviteUser = vi.fn().mockResolvedValue({
             ok: false,
             error: {
@@ -79,7 +111,7 @@ describe("InviteMemberCommand", () => {
             }
         });
         vi.mocked(createVenusService).mockReturnValue({
-            organization: { inviteUser: mockInviteUser }
+            organization: { get: mockGet, inviteUser: mockInviteUser }
         } as ReturnType<typeof createVenusService>);
 
         const context = createMockContext();
@@ -92,6 +124,7 @@ describe("InviteMemberCommand", () => {
 
     it("should handle UserIdDoesNotExistError", async () => {
         const { createVenusService } = await import("@fern-api/core");
+        const mockGet = mockOrgLookupSuccess();
         const mockInviteUser = vi.fn().mockResolvedValue({
             ok: false,
             error: {
@@ -99,7 +132,7 @@ describe("InviteMemberCommand", () => {
             }
         });
         vi.mocked(createVenusService).mockReturnValue({
-            organization: { inviteUser: mockInviteUser }
+            organization: { get: mockGet, inviteUser: mockInviteUser }
         } as ReturnType<typeof createVenusService>);
 
         const context = createMockContext();
@@ -112,6 +145,7 @@ describe("InviteMemberCommand", () => {
 
     it("should handle unknown errors", async () => {
         const { createVenusService } = await import("@fern-api/core");
+        const mockGet = mockOrgLookupSuccess();
         const mockInviteUser = vi.fn().mockResolvedValue({
             ok: false,
             error: {
@@ -119,7 +153,7 @@ describe("InviteMemberCommand", () => {
             }
         });
         vi.mocked(createVenusService).mockReturnValue({
-            organization: { inviteUser: mockInviteUser }
+            organization: { get: mockGet, inviteUser: mockInviteUser }
         } as ReturnType<typeof createVenusService>);
 
         const context = createMockContext();
