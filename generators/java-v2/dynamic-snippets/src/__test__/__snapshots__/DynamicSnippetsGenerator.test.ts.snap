@@ -4,20 +4,21 @@ exports[`snippets (default) > examples > 'GET /metadata (allow-multiple)' 1`] = 
 "package com.example.usage;
 
 import com.acme.acme.AcmeAcmeClient;
-import com.acme.acme.types.GetMetadataRequest;
+import com.acme.acme.types.ServiceGetMetadataRequest;
 import java.util.Arrays;
+import java.util.Optional;
 
 AcmeAcmeClient client = AcmeAcmeClient
     .builder()
     .token("<YOUR_API_KEY>")
     .build();
 
-client.service().getMetadata(
-    GetMetadataRequest
+client.service().getmetadata(
+    ServiceGetMetadataRequest
         .builder()
-        .xAPIVersion("0.0.1")
+        .apiVersion("0.0.1")
         .tag(
-            Arrays.asList("development", "public")
+            Arrays.asList(Optional.of("development"), Optional.of("public"))
         )
         .shallow(false)
         .build()
@@ -29,20 +30,21 @@ exports[`snippets (default) > examples > 'GET /metadata (simple)' 1`] = `
 "package com.example.usage;
 
 import com.acme.acme.AcmeAcmeClient;
-import com.acme.acme.types.GetMetadataRequest;
+import com.acme.acme.types.ServiceGetMetadataRequest;
 import java.util.Arrays;
+import java.util.Optional;
 
 AcmeAcmeClient client = AcmeAcmeClient
     .builder()
     .token("<YOUR_API_KEY>")
     .build();
 
-client.service().getMetadata(
-    GetMetadataRequest
+client.service().getmetadata(
+    ServiceGetMetadataRequest
         .builder()
-        .xAPIVersion("0.0.1")
+        .apiVersion("0.0.1")
         .tag(
-            Arrays.asList("development")
+            Arrays.asList(Optional.of("development"))
         )
         .shallow(false)
         .build()
@@ -54,23 +56,26 @@ exports[`snippets (default) > examples > 'POST /big-entity (simple)' 1`] = `
 "package com.example.usage;
 
 import com.acme.acme.AcmeAcmeClient;
-import com.acme.acme.commons.types.EventInfo;
-import com.acme.acme.commons.types.Metadata;
 import com.acme.acme.types.Actor;
 import com.acme.acme.types.BigEntity;
 import com.acme.acme.types.CastMember;
+import com.acme.acme.types.CommonsEventInfo;
+import com.acme.acme.types.CommonsEventInfoZero;
+import com.acme.acme.types.CommonsEventInfoZeroType;
 import com.acme.acme.types.ExtendedMovie;
 import com.acme.acme.types.Migration;
 import com.acme.acme.types.MigrationStatus;
+import com.acme.acme.types.MovieType;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Optional;
 
 AcmeAcmeClient client = AcmeAcmeClient
     .builder()
     .token("<YOUR_API_KEY>")
     .build();
 
-client.service().createBigEntity(
+client.service().createbigentity(
     BigEntity
         .builder()
         .castMember(
@@ -89,6 +94,7 @@ client.service().createBigEntity(
                 .title("Pulp Fiction")
                 .from("Quentin Tarantino")
                 .rating(8.5)
+                .type(MovieType.MOVIE)
                 .tag("tag-12efs9dv")
                 .revenue(1000000L)
                 .metadata(
@@ -107,17 +113,20 @@ client.service().createBigEntity(
                 .build()
         )
         .eventInfo(
-            EventInfo.metadata(
-                Metadata
+            CommonsEventInfo.of(
+                CommonsEventInfoZero
                     .builder()
                     .id("event-12345")
+                    .type(CommonsEventInfoZeroType.METADATA)
                     .data(
-                        new HashMap<String, String>() {{
-                            put("key1", "val1");
-                            put("key2", "val2");
-                        }}
+                        Optional.of(
+                            new HashMap<String, Optional<String>>() {{
+                                put("key1", Optional.of("val1"));
+                                put("key2", Optional.of("val2"));
+                            }}
+                        )
                     )
-                    .jsonString("abc")
+                    .jsonString(Optional.of("abc"))
                     .build()
             )
         )
@@ -151,6 +160,7 @@ exports[`snippets (default) > examples > 'POST /movie (simple)' 1`] = `
 
 import com.acme.acme.AcmeAcmeClient;
 import com.acme.acme.types.Movie;
+import com.acme.acme.types.MovieType;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -160,13 +170,14 @@ AcmeAcmeClient client = AcmeAcmeClient
     .token("<YOUR_API_KEY>")
     .build();
 
-client.service().createMovie(
+client.service().createmovie(
     Movie
         .builder()
         .id("movie-c06a4ad7")
         .title("The Boy and the Heron")
         .from("Hayao Miyazaki")
         .rating(8.0)
+        .type(MovieType.MOVIE)
         .tag("development")
         .revenue(1000000L)
         .prequel("movie-cv9b914f")
@@ -420,13 +431,19 @@ exports[`snippets (default) > imdb > 'GET /movies/{movieId} (simple)' 1`] = `
 "package com.example.usage;
 
 import com.acme.acme.AcmeAcmeClient;
+import com.acme.acme.types.ImdbGetMovieRequest;
 
 AcmeAcmeClient client = AcmeAcmeClient
     .builder()
     .token("<YOUR_API_KEY>")
     .build();
 
-client.imdb().getMovie("movie_xyz");
+client.imdb().getmovie(
+    "movie_xyz",
+    ImdbGetMovieRequest
+        .builder()
+        .build()
+);
 "
 `;
 
@@ -441,7 +458,7 @@ AcmeAcmeClient client = AcmeAcmeClient
     .token("<YOUR_API_KEY>")
     .build();
 
-client.imdb().createMovie(
+client.imdb().createmovie(
     CreateMovieRequest
         .builder()
         .title("The Matrix")
@@ -452,27 +469,13 @@ client.imdb().createMovie(
 `;
 
 exports[`snippets (default) > multi-url-environment > 'Custom environment' 1`] = `
-"package com.example.usage;
-
-import com.acme.acme.AcmeAcmeClient;
-import com.acme.acme.core.Environment;
-import com.acme.acme.types.GetPresignedURLRequest;
-
-AcmeAcmeClient client = AcmeAcmeClient
-    .builder()
-    .token("<YOUR_API_KEY>")
-    .environment(
-        Environment("https://custom.ec2.aws.com", "https://custom.s3.aws.com")
-    )
-    .build();
-
-client.s3().getPresignedURL(
-    GetPresignedURLRequest
-        .builder()
-        .s3Key("xyz")
-        .build()
-);
-"
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [],
+    "message": "Multiple environments are not supported for single base URL environments; use the baseUrl option instead"
+  }
+]"
 `;
 
 exports[`snippets (default) > multi-url-environment > 'Invalid multi url environment' 1`] = `
@@ -480,57 +483,29 @@ exports[`snippets (default) > multi-url-environment > 'Invalid multi url environ
   {
     "severity": "CRITICAL",
     "path": [],
-    "message": "The provided environments are invalid; got: [ec2], expected: [ec2, s3]"
+    "message": "Multiple environments are not supported for single base URL environments; use the baseUrl option instead"
   }
 ]"
 `;
 
 exports[`snippets (default) > multi-url-environment > 'Production environment' 1`] = `
-"package com.example.usage;
-
-import com.acme.acme.AcmeAcmeClient;
-import com.acme.acme.core.Environment;
-import com.acme.acme.types.GetPresignedURLRequest;
-
-AcmeAcmeClient client = AcmeAcmeClient
-    .builder()
-    .token("<YOUR_API_KEY>")
-    .environment(
-        Environment.PRODUCTION
-    )
-    .build();
-
-client.s3().getPresignedURL(
-    GetPresignedURLRequest
-        .builder()
-        .s3Key("xyz")
-        .build()
-);
-"
+"[
+  {
+    "severity": "WARNING",
+    "path": [],
+    "message": "Environment \\"Production\\" was not found"
+  }
+]"
 `;
 
 exports[`snippets (default) > multi-url-environment > 'Staging environment' 1`] = `
-"package com.example.usage;
-
-import com.acme.acme.AcmeAcmeClient;
-import com.acme.acme.core.Environment;
-import com.acme.acme.types.GetPresignedURLRequest;
-
-AcmeAcmeClient client = AcmeAcmeClient
-    .builder()
-    .token("<YOUR_API_KEY>")
-    .environment(
-        Environment.STAGING
-    )
-    .build();
-
-client.s3().getPresignedURL(
-    GetPresignedURLRequest
-        .builder()
-        .s3Key("xyz")
-        .build()
-);
-"
+"[
+  {
+    "severity": "WARNING",
+    "path": [],
+    "message": "Environment \\"Staging\\" was not found"
+  }
+]"
 `;
 
 exports[`snippets (default) > multi-url-environment > 'Unrecognized environment' 1`] = `
@@ -548,8 +523,8 @@ exports[`snippets (default) > nullable > 'Body properties' 1`] = `
 
 import com.acme.acme.AcmeAcmeClient;
 import com.acme.acme.core.Nullable;
-import com.acme.acme.types.CreateUserRequest;
 import com.acme.acme.types.Metadata;
+import com.acme.acme.types.NullableCreateUserRequest;
 import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.Optional;
@@ -559,8 +534,8 @@ AcmeAcmeClient client = AcmeAcmeClient
     .url("https://api.example.com")
     .build();
 
-client.nullable().createUser(
-    CreateUserRequest
+client.nullable().createuser(
+    NullableCreateUserRequest
         .builder()
         .username("john.doe")
         .avatar(
@@ -629,8 +604,6 @@ AcmeAcmeClient client = AcmeAcmeClient
 client.createUser(
     User
         .builder()
-        .id("string")
-        .email("string")
         .password("password")
         .profile(
             UserProfile
@@ -639,7 +612,6 @@ client.createUser(
                 .verification(
                     UserProfileVerification
                         .builder()
-                        .verified("string")
                         .build()
                 )
                 .ssn("ssn")
@@ -666,8 +638,6 @@ AcmeAcmeClient client = AcmeAcmeClient
 client.createUser(
     User
         .builder()
-        .id("id")
-        .email("string")
         .password("password")
         .profile(
             UserProfile
@@ -676,12 +646,12 @@ client.createUser(
                 .verification(
                     UserProfileVerification
                         .builder()
-                        .verified("string")
                         .build()
                 )
                 .ssn("ssn")
                 .build()
         )
+        .id("id")
         .build()
 );
 "
@@ -738,26 +708,18 @@ AcmeAcmeClient client = AcmeAcmeClient
     )
     .build();
 
-client.dummy().getDummy();
+client.dummy().getdummy();
 "
 `;
 
 exports[`snippets (default) > single-url-environment-default > 'Staging environment' 1`] = `
-"package com.example.usage;
-
-import com.acme.acme.AcmeAcmeClient;
-import com.acme.acme.core.Environment;
-
-AcmeAcmeClient client = AcmeAcmeClient
-    .builder()
-    .token("<YOUR_API_KEY>")
-    .environment(
-        Environment.STAGING
-    )
-    .build();
-
-client.dummy().getDummy();
-"
+"[
+  {
+    "severity": "WARNING",
+    "path": [],
+    "message": "Environment \\"Staging\\" was not found"
+  }
+]"
 `;
 
 exports[`snippets (default) > single-url-environment-default > 'custom baseURL' 1`] = `
@@ -771,7 +733,7 @@ AcmeAcmeClient client = AcmeAcmeClient
     .url("http://localhost:8080")
     .build();
 
-client.dummy().getDummy();
+client.dummy().getdummy();
 "
 `;
 
