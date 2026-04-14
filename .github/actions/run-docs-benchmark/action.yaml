@@ -16,44 +16,6 @@ runs:
         bash benchmarks/fern/generate-fixture-pages.sh "$PAGE_COUNT"
         echo "Generated ${PAGE_COUNT} fixture pages"
 
-    - name: Create versioned spec copies (fallback)
-      shell: bash
-      run: |
-        # If the shared artifact didn't include versioned spec directories,
-        # create them by copying the base Square spec.  All versions use the
-        # same (latest) spec to avoid broken $ref issues in older releases.
-        VERSIONS_FILE="benchmarks/fern/square-versions.txt"
-        BASE_SPEC="benchmarks/fern/apis/square/openapi.json"
-        if [ ! -f "$VERSIONS_FILE" ]; then
-          echo "No square-versions.txt found, skipping versioned setup"
-          exit 0
-        fi
-        if [ ! -f "$BASE_SPEC" ]; then
-          echo "::warning::Base Square spec not found — cannot create versioned copies"
-          exit 0
-        fi
-
-        EXISTING=0
-        for d in benchmarks/fern/apis/square-*/; do
-          [ -f "${d}openapi.json" ] && EXISTING=$((EXISTING + 1))
-        done
-
-        if [ "$EXISTING" -gt 0 ]; then
-          echo "Found ${EXISTING} versioned specs from artifact, skipping fallback"
-          exit 0
-        fi
-
-        echo "No versioned specs from artifact — copying base spec..."
-        CREATED=0
-        while IFS='|' read -r SHA VERSION; do
-          [[ "$SHA" =~ ^#.*$ || -z "$SHA" ]] && continue
-          DIR="benchmarks/fern/apis/square-${VERSION}"
-          mkdir -p "$DIR"
-          cp "$BASE_SPEC" "${DIR}/openapi.json"
-          CREATED=$((CREATED + 1))
-        done < "$VERSIONS_FILE"
-        echo "Created ${CREATED} versioned spec copies from base Square spec"
-
     - name: Generate fixture versions
       shell: bash
       run: |

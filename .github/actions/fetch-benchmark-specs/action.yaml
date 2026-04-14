@@ -41,38 +41,79 @@ runs:
           echo "square-ok=false" >> $GITHUB_OUTPUT
         fi
 
-    # Create versioned copies of the Square spec for multi-version docs benchmarking.
-    # All versions use the same (latest) spec to avoid broken $ref issues in older
-    # historical releases.  The version labels from square-versions.txt are used for
-    # directory naming so each version is processed as a separate API workspace.
-    - name: Create versioned spec copies
+    # Fetch real historical versions of the Square spec for multi-version docs
+    # benchmarking.  Each version is downloaded from its release commit in
+    # square/connect-api-specification, then a lightweight Python script strips
+    # any dangling $ref entries (schemas referenced but never defined) so the
+    # spec can be processed by Fern without errors.
+    - name: Fetch Square historical versions
       id: fetch-versions
       shell: bash
       run: |
         VERSIONS_FILE="benchmarks/fern/square-versions.txt"
-        BASE_SPEC="benchmarks/fern/apis/square/openapi.json"
+        FIX_SCRIPT="benchmarks/fern/fix-spec-refs.py"
         if [ ! -f "$VERSIONS_FILE" ]; then
           echo "::warning::No square-versions.txt found. Skipping versioned docs benchmark."
           echo "versions-fetched=0" >> $GITHUB_OUTPUT
           exit 0
         fi
-        if [ ! -f "$BASE_SPEC" ]; then
-          echo "::warning::Base Square spec not available yet. Versioned copies will be created at benchmark time."
-          echo "versions-fetched=0" >> $GITHUB_OUTPUT
-          exit 0
-        fi
 
-        CREATED=0
+        FETCHED=0
+        FAILED=0
+        PIDS=()
+        VERSIONS=()
+
+        # Launch parallel downloads — one curl per version
         while IFS='|' read -r SHA VERSION; do
           [[ "$SHA" =~ ^#.*$ || -z "$SHA" ]] && continue
           DIR="benchmarks/fern/apis/square-${VERSION}"
           mkdir -p "$DIR"
-          cp "$BASE_SPEC" "${DIR}/openapi.json"
-          CREATED=$((CREATED + 1))
+          OUTPUT="${DIR}/openapi.json"
+          VERSIONS+=("$VERSION")
+
+          (
+            curl -sSfL --retry 2 --retry-delay 3 \
+              "https://raw.githubusercontent.com/square/connect-api-specification/${SHA}/api.json" \
+              -o "$OUTPUT" 2>/dev/null
+          ) &
+          PIDS+=($!)
         done < "$VERSIONS_FILE"
 
-        echo "Created ${CREATED} versioned spec copies from base Square spec"
-        echo "versions-fetched=${CREATED}" >> $GITHUB_OUTPUT
+        echo "Launched ${#PIDS[@]} parallel downloads..."
+
+        # Wait for all downloads and validate
+        for i in "${!PIDS[@]}"; do
+          VERSION="${VERSIONS[$i]}"
+          FILE="benchmarks/fern/apis/square-${VERSION}/openapi.json"
+          if wait "${PIDS[$i]}" && [ -f "$FILE" ]; then
+            BYTES=$(wc -c < "$FILE")
+            if [ "$BYTES" -ge 100000 ]; then
+              FETCHED=$((FETCHED + 1))
+            else
+              echo "::warning::square-${VERSION} spec too small (${BYTES} bytes), removing"
+              rm -f "$FILE"
+              FAILED=$((FAILED + 1))
+            fi
+          else
+            echo "::warning::Failed to fetch square-${VERSION}"
+            rm -f "$FILE"
+            FAILED=$((FAILED + 1))
+          fi
+        done
+
+        echo "Fetched ${FETCHED}/${#PIDS[@]} historical specs (${FAILED} failed)"
+
+        # Strip dangling $ref entries from all fetched specs
+        if [ -f "$FIX_SCRIPT" ]; then
+          FIXED=0
+          for spec_file in benchmarks/fern/apis/square-*/openapi.json; do
+            [ -f "$spec_file" ] || continue
+            python3 "$FIX_SCRIPT" "$spec_file" --in-place 2>&1 && FIXED=$((FIXED + 1))
+          done
+          echo "Ran $ref fix on ${FIXED} specs"
+        fi
+
+        echo "versions-fetched=${FETCHED}" >> $GITHUB_OUTPUT
 
     - name: Summarize fetched specs
       id: summary
