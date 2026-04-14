@@ -1,6 +1,5 @@
+import { isPreviewUrl, PREVIEW_URL_PATTERN } from "@fern-api/docs-preview";
 import { describe, expect, it } from "vitest";
-
-import { isPreviewUrl, PREVIEW_URL_PATTERN } from "../deleteDocsPreview.js";
 
 describe("Preview URL Validation", () => {
     describe("PREVIEW_URL_PATTERN regex", () => {
