@@ -316,6 +316,12 @@ describe("Test qs toQueryString", () => {
                 options: { arrayFormat: "comma" },
                 expected: "items=a,,c",
             },
+            {
+                description: "should encode commas within values while keeping separator commas literal",
+                input: { items: ["a,b", "c"] },
+                options: { arrayFormat: "comma" },
+                expected: "items=a%2Cb,c",
+            },
         ];
 
         commaTests.forEach(({ description, input, options, expected }) => {

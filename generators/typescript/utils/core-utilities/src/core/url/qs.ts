@@ -35,10 +35,10 @@ function stringifyObject(obj: Record<string, unknown>, prefix = "", options: Req
             }
             if (options.arrayFormat === "comma") {
                 const encodedKey = options.encode ? encodeURIComponent(fullKey) : fullKey;
-                const joined = value
-                    .map((item) => (item === undefined || item === null ? "" : String(item)))
-                    .join(",");
-                parts.push(`${encodedKey}=${options.encode ? joined.split(",").map(encodeURIComponent).join(",") : joined}`);
+                const encodedValues = value.map((item) =>
+                    item === undefined || item === null ? "" : encodeValue(item, options.encode)
+                );
+                parts.push(`${encodedKey}=${encodedValues.join(",")}`);
             } else {
                 for (let i = 0; i < value.length; i++) {
                     const item = value[i];
