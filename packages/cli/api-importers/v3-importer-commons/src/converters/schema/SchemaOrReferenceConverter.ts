@@ -117,7 +117,7 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
         if (
             singleRef != null &&
             inlineElements.every(
-                (s) => !s.properties && !s.enum && !s.oneOf && !s.anyOf && !s.allOf && !s.format && !s.items
+                (s) => !s.properties && !s.enum && !s.oneOf && !s.anyOf && !s.allOf && !s.format && !("items" in s)
             ) &&
             !inlineElements.some((s) => s.type === "null" || (Array.isArray(s.type) && s.type.includes("null")))
         ) {
