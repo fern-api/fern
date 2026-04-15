@@ -1,7 +1,8 @@
 - summary: |
-    Add full "comma" array format support for OpenAPI parameters with `explode: false`.
-    The runtime query string serializer (`qs.ts`) now supports `{ arrayFormat: "comma" }`,
-    serializing arrays as comma-separated values (e.g., `key=a,b,c`).
-    The generator now emits `queryParameterArrayFormat: "comma"` in fetcher calls
+    Add per-parameter "comma" array format support for OpenAPI query parameters with `explode: false`.
+    The runtime query string serializer (`qs.ts`) now supports per-key array format overrides
+    via `arrayFormats` map, serializing specified arrays as comma-separated values (e.g., `key=a,b,c`)
+    while other arrays use the default repeat format.
+    The generator now emits `queryParameterArrayFormats: { paramName: "comma" }` in fetcher calls
     for endpoints with non-exploded query parameters.
   type: feat
