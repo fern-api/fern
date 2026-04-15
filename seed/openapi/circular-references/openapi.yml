@@ -23,7 +23,10 @@ components:
         - s
     A:
       title: A
-      $ref: '#/components/schemas/RootType'
+      type: object
+      properties: {}
+      allOf:
+        - $ref: '#/components/schemas/RootType'
     TorU:
       title: TorU
       oneOf:
@@ -45,87 +48,16 @@ components:
           $ref: '#/components/schemas/T'
       required:
         - child
-    FieldValueZeroType:
-      title: FieldValueZeroType
-      type: string
-      const: primitive_value
-    FieldValueZero:
-      title: FieldValueZero
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/FieldValueZeroType'
-        value:
-          anyOf:
-            - $ref: '#/components/schemas/PrimitiveValue'
-            - type: 'null'
-      required:
-        - type
-    FieldValueOneType:
-      title: FieldValueOneType
-      type: string
-      const: object_value
-    FieldValueOne:
-      title: FieldValueOne
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/FieldValueOneType'
-      required:
-        - type
-      allOf:
-        - $ref: '#/components/schemas/ObjectValue'
-    FieldValueTwoType:
-      title: FieldValueTwoType
-      type: string
-      const: container_value
-    FieldValueTwo:
-      title: FieldValueTwo
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/FieldValueTwoType'
-        value:
-          anyOf:
-            - $ref: '#/components/schemas/ContainerValue'
-            - type: 'null'
-      required:
-        - type
     FieldValue:
       title: FieldValue
       oneOf:
-        - $ref: '#/components/schemas/FieldValueZero'
-        - $ref: '#/components/schemas/FieldValueOne'
-        - $ref: '#/components/schemas/FieldValueTwo'
-    ContainerValueList:
-      title: ContainerValueList
-      type: object
-      properties:
-        value:
-          type:
-            - array
-            - 'null'
-          items:
-            $ref: '#/components/schemas/FieldValue'
-    ContainerValueOptional:
-      title: ContainerValueOptional
-      type: object
-      properties:
-        value:
-          anyOf:
-            - $ref: '#/components/schemas/FieldValue'
-            - type: 'null'
-    ContainerValue:
-      title: ContainerValue
-      oneOf:
         - type: object
-          allOf:
-            - type: object
-              properties:
-                type:
-                  type: string
-                  const: list
-            - $ref: '#/components/schemas/ContainerValueList'
+          properties:
+            type:
+              type: string
+              const: primitive_value
+            value:
+              $ref: '#/components/schemas/PrimitiveValue'
           required:
             - type
         - type: object
@@ -134,8 +66,42 @@ components:
               properties:
                 type:
                   type: string
-                  const: optional
-            - $ref: '#/components/schemas/ContainerValueOptional'
+                  const: object_value
+            - $ref: '#/components/schemas/ObjectValue'
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              const: container_value
+            value:
+              $ref: '#/components/schemas/ContainerValue'
+          required:
+            - type
+    ContainerValue:
+      title: ContainerValue
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              const: list
+            value:
+              type: array
+              items:
+                $ref: '#/components/schemas/FieldValue'
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              const: optional
+            value:
+              anyOf:
+                - $ref: '#/components/schemas/FieldValue'
+                - type: 'null'
           required:
             - type
     PrimitiveValue:

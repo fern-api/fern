@@ -14,9 +14,6 @@ paths:
           required: true
           schema:
             type: string
-          examples:
-            Example1:
-              value: id
       responses:
         '200':
           description: Success
@@ -24,12 +21,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-              examples:
-                Example1:
-                  value:
-                    id: id
-                    name: name
-                    email: email
       security:
         - Bearer: []
 components:
@@ -40,16 +31,10 @@ components:
       properties:
         id:
           type: string
-          examples:
-            - id
         name:
           type: string
-          examples:
-            - name
         email:
           type: string
-          examples:
-            - email
       required:
         - id
         - name
@@ -61,3 +46,5 @@ components:
 servers:
   - url: https://api.example.com
     description: Production
+  - url: https://staging-api.example.com
+    description: Staging

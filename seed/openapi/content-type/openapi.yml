@@ -30,9 +30,6 @@ paths:
               required:
                 - application
                 - require_auth
-            examples:
-              Example1:
-                value: {}
   /complex/{id}:
     patch:
       description: |-
@@ -40,7 +37,7 @@ paths:
         This endpoint demonstrates the distinction between:
         - optional<T> fields (can be present or absent, but not null)
         - optional<nullable<T>> fields (can be present, absent, or null)
-      operationId: service_patchcomplex
+      operationId: service_patchComplex
       tags:
         - Service
       parameters:
@@ -49,9 +46,6 @@ paths:
           required: true
           schema:
             type: string
-          examples:
-            Example1:
-              value: id
       responses:
         '204':
           description: No content
@@ -104,9 +98,6 @@ paths:
                   type:
                     - object
                     - 'null'
-            examples:
-              Example1:
-                value: {}
   /named-mixed/{id}:
     patch:
       description: >-
@@ -115,7 +106,7 @@ paths:
 
         This should trigger the NPE issue when optional fields aren't
         initialized.
-      operationId: service_namedpatchwithmixed
+      operationId: service_namedPatchWithMixed
       tags:
         - Service
       parameters:
@@ -124,9 +115,6 @@ paths:
           required: true
           schema:
             type: string
-          examples:
-            Example1:
-              value: id
       responses:
         '204':
           description: No content
@@ -152,9 +140,6 @@ paths:
               required:
                 - instructions
                 - active
-            examples:
-              Example1:
-                value: {}
   /optional-merge-patch-test:
     patch:
       description: >-
@@ -166,7 +151,7 @@ paths:
         1. Not NPE when fields are not provided (tests initialization)
 
         2. Not NPE when fields are explicitly null in JSON (tests Nulls.SKIP)
-      operationId: service_optionalmergepatchtest
+      operationId: service_optionalMergePatchTest
       tags:
         - Service
       parameters: []
@@ -182,8 +167,6 @@ paths:
               properties:
                 requiredField:
                   type: string
-                  examples:
-                    - requiredField
                 optionalString:
                   type:
                     - string
@@ -203,14 +186,10 @@ paths:
               required:
                 - requiredField
                 - nullableString
-            examples:
-              Example1:
-                value:
-                  requiredField: requiredField
   /regular/{id}:
     patch:
       description: Regular PATCH endpoint without merge-patch semantics
-      operationId: service_regularpatch
+      operationId: service_regularPatch
       tags:
         - Service
       parameters:
@@ -219,9 +198,6 @@ paths:
           required: true
           schema:
             type: string
-          examples:
-            Example1:
-              value: id
       responses:
         '204':
           description: No content
@@ -240,9 +216,6 @@ paths:
                   type:
                     - integer
                     - 'null'
-            examples:
-              Example1:
-                value: {}
 components:
   schemas: {}
   securitySchemes: {}

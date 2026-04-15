@@ -5,7 +5,7 @@ info:
 paths:
   /generate-stream:
     post:
-      operationId: dummy_generateStream
+      operationId: dummy_generate-stream
       tags:
         - Dummy
       parameters: []
@@ -21,20 +21,12 @@ paths:
               properties:
                 stream:
                   type: boolean
-                  examples:
-                    - true
+                  const: true
                 num_events:
                   type: integer
-                  examples:
-                    - 1
               required:
                 - stream
                 - num_events
-            examples:
-              Example1:
-                value:
-                  stream: true
-                  num_events: 1
   /generate:
     post:
       operationId: dummy_generate
@@ -62,8 +54,7 @@ paths:
               properties:
                 stream:
                   type: boolean
-                  examples:
-                    - false
+                  const: false
                 num_events:
                   type: integer
                   examples:

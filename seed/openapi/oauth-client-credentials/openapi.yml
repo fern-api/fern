@@ -5,7 +5,7 @@ info:
 paths:
   /token:
     post:
-      operationId: auth_gettokenwithclientcredentials
+      operationId: auth_getTokenWithClientCredentials
       tags:
         - Auth
       parameters: []
@@ -38,11 +38,11 @@ paths:
                   examples:
                     - sk_live_abcdef123456789
                 audience:
-                  $ref: >-
-                    #/components/schemas/AuthGetTokenWithClientCredentialsRequestAudience
+                  type: string
+                  const: https://api.example.com
                 grant_type:
-                  $ref: >-
-                    #/components/schemas/AuthGetTokenWithClientCredentialsRequestGrantType
+                  type: string
+                  const: client_credentials
                 scope:
                   type:
                     - string
@@ -62,7 +62,7 @@ paths:
                   scope: read:users
   /token/refresh:
     post:
-      operationId: auth_refreshtoken
+      operationId: auth_refreshToken
       tags:
         - Auth
       parameters: []
@@ -99,9 +99,11 @@ paths:
                   examples:
                     - refresh_token
                 audience:
-                  $ref: '#/components/schemas/AuthRefreshTokenRequestAudience'
+                  type: string
+                  const: https://api.example.com
                 grant_type:
-                  $ref: '#/components/schemas/AuthRefreshTokenRequestGrantType'
+                  type: string
+                  const: refresh_token
                 scope:
                   type:
                     - string
@@ -123,7 +125,7 @@ paths:
                   scope: read:users
   /nested-no-auth/get-something:
     get:
-      operationId: nestedNoAuthAPI_nestedNoAuth_api_getSomething
+      operationId: nestedNoAuth_api_getSomething
       tags:
         - NestedNoAuthAPI
       parameters: []
@@ -132,7 +134,7 @@ paths:
           description: No content
   /nested/get-something:
     get:
-      operationId: nestedAPI_nested_api_getSomething
+      operationId: nested_api_getSomething
       tags:
         - NestedAPI
       parameters: []
@@ -143,7 +145,7 @@ paths:
         - OAuthScheme: []
   /get-something:
     get:
-      operationId: simple_getsomething
+      operationId: simple_getSomething
       tags:
         - Simple
       parameters: []
@@ -154,22 +156,6 @@ paths:
         - OAuthScheme: []
 components:
   schemas:
-    AuthGetTokenWithClientCredentialsRequestAudience:
-      title: AuthGetTokenWithClientCredentialsRequestAudience
-      type: string
-      const: https://api.example.com
-    AuthGetTokenWithClientCredentialsRequestGrantType:
-      title: AuthGetTokenWithClientCredentialsRequestGrantType
-      type: string
-      const: client_credentials
-    AuthRefreshTokenRequestAudience:
-      title: AuthRefreshTokenRequestAudience
-      type: string
-      const: https://api.example.com
-    AuthRefreshTokenRequestGrantType:
-      title: AuthRefreshTokenRequestGrantType
-      type: string
-      const: refresh_token
     TokenResponse:
       title: TokenResponse
       type: object

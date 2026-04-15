@@ -24,9 +24,7 @@ paths:
                     - string
                     - 'null'
                 integer:
-                  type:
-                    - integer
-                    - 'null'
+                  type: integer
                 file:
                   type: string
                   format: binary
@@ -50,9 +48,7 @@ paths:
                   items:
                     type: string
                 list_of_objects:
-                  type:
-                    - array
-                    - 'null'
+                  type: array
                   items:
                     $ref: '#/components/schemas/MyObject'
                 optional_metadata: {}
@@ -65,22 +61,16 @@ paths:
                     - $ref: '#/components/schemas/Id'
                     - type: 'null'
                 alias_object:
-                  anyOf:
-                    - $ref: '#/components/schemas/MyAliasObject'
-                    - type: 'null'
+                  $ref: '#/components/schemas/MyAliasObject'
                 list_of_alias_object:
-                  type:
-                    - array
-                    - 'null'
+                  type: array
                   items:
                     $ref: '#/components/schemas/MyAliasObject'
                 alias_list_of_object:
-                  anyOf:
-                    - $ref: '#/components/schemas/MyCollectionAliasObject'
-                    - type: 'null'
+                  $ref: '#/components/schemas/MyCollectionAliasObject'
   /just-file:
     post:
-      operationId: service_justfile
+      operationId: service_justFile
       tags:
         - Service
       parameters: []
@@ -99,7 +89,7 @@ paths:
                   format: binary
   /just-file-with-query-params:
     post:
-      operationId: service_justfilewithqueryparams
+      operationId: service_justFileWithQueryParams
       tags:
         - Service
       parameters:
@@ -124,13 +114,11 @@ paths:
               - 'null'
         - name: listOfStrings
           in: query
-          required: false
+          required: true
           schema:
             type: array
             items:
-              type:
-                - string
-                - 'null'
+              type: string
         - name: optionalListOfStrings
           in: query
           required: false
@@ -155,7 +143,7 @@ paths:
                   format: binary
   /just-file-with-optional-query-params:
     post:
-      operationId: service_justfilewithoptionalqueryparams
+      operationId: service_justFileWithOptionalQueryParams
       tags:
         - Service
       parameters:
@@ -188,7 +176,7 @@ paths:
                   format: binary
   /with-content-type:
     post:
-      operationId: service_withcontenttype
+      operationId: service_withContentType
       tags:
         - Service
       parameters: []
@@ -206,20 +194,16 @@ paths:
                   type: string
                   format: binary
                 foo:
-                  type:
-                    - string
-                    - 'null'
+                  type: string
                 bar:
-                  anyOf:
-                    - $ref: '#/components/schemas/MyObject'
-                    - type: 'null'
+                  $ref: '#/components/schemas/MyObject'
                 foo_bar:
                   anyOf:
                     - $ref: '#/components/schemas/MyObject'
                     - type: 'null'
   /with-form-encoding:
     post:
-      operationId: service_withformencoding
+      operationId: service_withFormEncoding
       tags:
         - Service
       parameters: []
@@ -237,16 +221,12 @@ paths:
                   type: string
                   format: binary
                 foo:
-                  type:
-                    - string
-                    - 'null'
+                  type: string
                 bar:
-                  anyOf:
-                    - $ref: '#/components/schemas/MyObject'
-                    - type: 'null'
+                  $ref: '#/components/schemas/MyObject'
   /form-encoded-containers:
     post:
-      operationId: service_withformencodedcontainers
+      operationId: service_withFormEncodedContainers
       tags:
         - Service
       parameters: []
@@ -265,9 +245,7 @@ paths:
                     - string
                     - 'null'
                 integer:
-                  type:
-                    - integer
-                    - 'null'
+                  type: integer
                 file:
                   type: string
                   format: binary
@@ -291,9 +269,7 @@ paths:
                   items:
                     type: string
                 list_of_objects:
-                  type:
-                    - array
-                    - 'null'
+                  type: array
                   items:
                     $ref: '#/components/schemas/MyObject'
                 optional_metadata: {}
@@ -306,28 +282,20 @@ paths:
                     - $ref: '#/components/schemas/Id'
                     - type: 'null'
                 list_of_objects_with_optionals:
-                  type:
-                    - array
-                    - 'null'
+                  type: array
                   items:
                     $ref: '#/components/schemas/MyObjectWithOptional'
                 alias_object:
-                  anyOf:
-                    - $ref: '#/components/schemas/MyAliasObject'
-                    - type: 'null'
+                  $ref: '#/components/schemas/MyAliasObject'
                 list_of_alias_object:
-                  type:
-                    - array
-                    - 'null'
+                  type: array
                   items:
                     $ref: '#/components/schemas/MyAliasObject'
                 alias_list_of_object:
-                  anyOf:
-                    - $ref: '#/components/schemas/MyCollectionAliasObject'
-                    - type: 'null'
+                  $ref: '#/components/schemas/MyCollectionAliasObject'
   /optional-args:
     post:
-      operationId: service_optionalargs
+      operationId: service_optionalArgs
       tags:
         - Service
       parameters: []
@@ -354,7 +322,7 @@ paths:
                 request: {}
   /inline-type:
     post:
-      operationId: service_withinlinetype
+      operationId: service_withInlineType
       tags:
         - Service
       parameters: []
@@ -365,9 +333,6 @@ paths:
             application/json:
               schema:
                 type: string
-              examples:
-                Example1:
-                  value: string
       requestBody:
         required: true
         content:
@@ -379,12 +344,10 @@ paths:
                   type: string
                   format: binary
                 request:
-                  anyOf:
-                    - $ref: '#/components/schemas/MyInlineType'
-                    - type: 'null'
+                  $ref: '#/components/schemas/MyInlineType'
   /with-json-property:
     post:
-      operationId: service_withjsonproperty
+      operationId: service_withJsonProperty
       tags:
         - Service
       parameters: []
@@ -395,9 +358,6 @@ paths:
             application/json:
               schema:
                 type: string
-              examples:
-                Example1:
-                  value: string
       requestBody:
         required: true
         content:
@@ -423,7 +383,7 @@ paths:
           description: No content
   /with-literal-enum:
     post:
-      operationId: service_withliteralandenumtypes
+      operationId: service_withLiteralAndEnumTypes
       tags:
         - Service
       parameters: []
@@ -434,9 +394,6 @@ paths:
             application/json:
               schema:
                 type: string
-              examples:
-                Example1:
-                  value: string
       requestBody:
         required: true
         content:

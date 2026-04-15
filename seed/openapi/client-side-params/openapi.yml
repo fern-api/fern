@@ -6,7 +6,7 @@ paths:
   /api/resources:
     get:
       description: List resources with pagination
-      operationId: service_listresources
+      operationId: service_listResources
       tags:
         - Service
       parameters:
@@ -16,45 +16,30 @@ paths:
           required: true
           schema:
             type: integer
-          examples:
-            Example1:
-              value: 1
         - name: per_page
           in: query
           description: Number of items per page
           required: true
           schema:
             type: integer
-          examples:
-            Example1:
-              value: 1
         - name: sort
           in: query
           description: Sort field
           required: true
           schema:
             type: string
-          examples:
-            Example1:
-              value: sort
         - name: order
           in: query
           description: Sort order (asc or desc)
           required: true
           schema:
             type: string
-          examples:
-            Example1:
-              value: order
         - name: include_totals
           in: query
           description: Whether to include total count
           required: true
           schema:
             type: boolean
-          examples:
-            Example1:
-              value: true
         - name: fields
           in: query
           description: Comma-separated list of fields to include
@@ -80,20 +65,10 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Resource'
-              examples:
-                Example1:
-                  value:
-                    - id: id
-                      name: name
-                      description: description
-                      created_at: '2024-01-15T09:30:00Z'
-                      updated_at: '2024-01-15T09:30:00Z'
-                      metadata:
-                        key: value
   /api/resources/{resourceId}:
     get:
       description: Get a single resource
-      operationId: service_getresource
+      operationId: service_getResource
       tags:
         - Service
       parameters:
@@ -102,27 +77,18 @@ paths:
           required: true
           schema:
             type: string
-          examples:
-            Example1:
-              value: resourceId
         - name: include_metadata
           in: query
           description: Include metadata in response
           required: true
           schema:
             type: boolean
-          examples:
-            Example1:
-              value: true
         - name: format
           in: query
           description: Response format
           required: true
           schema:
             type: string
-          examples:
-            Example1:
-              value: format
       responses:
         '200':
           description: Success
@@ -130,20 +96,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Resource'
-              examples:
-                Example1:
-                  value:
-                    id: id
-                    name: name
-                    description: description
-                    created_at: '2024-01-15T09:30:00Z'
-                    updated_at: '2024-01-15T09:30:00Z'
-                    metadata:
-                      key: value
   /api/resources/search:
     post:
       description: Search resources with complex parameters
-      operationId: service_searchresources
+      operationId: service_searchResources
       tags:
         - Service
       parameters:
@@ -153,18 +109,12 @@ paths:
           required: true
           schema:
             type: integer
-          examples:
-            Example1:
-              value: 1
         - name: offset
           in: query
           description: Offset for pagination
           required: true
           schema:
             type: integer
-          examples:
-            Example1:
-              value: 1
       responses:
         '200':
           description: Success
@@ -172,19 +122,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SearchResponse'
-              examples:
-                Example1:
-                  value:
-                    results:
-                      - id: id
-                        name: name
-                        description: description
-                        created_at: '2024-01-15T09:30:00Z'
-                        updated_at: '2024-01-15T09:30:00Z'
-                        metadata:
-                          key: value
-                    total: 1
-                    next_offset: 1
       requestBody:
         required: true
         content:
@@ -201,13 +138,10 @@ paths:
                   type:
                     - object
                     - 'null'
-            examples:
-              Example1:
-                value: {}
   /api/users:
     get:
       description: List or search for users
-      operationId: service_listusers
+      operationId: service_listUsers
       tags:
         - Service
       parameters:
@@ -288,45 +222,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PaginatedUserResponse'
-              examples:
-                Example1:
-                  value:
-                    users:
-                      - user_id: user_id
-                        email: email
-                        email_verified: true
-                        username: username
-                        phone_number: phone_number
-                        phone_verified: true
-                        created_at: '2024-01-15T09:30:00Z'
-                        updated_at: '2024-01-15T09:30:00Z'
-                        identities:
-                          - connection: connection
-                            user_id: user_id
-                            provider: provider
-                            is_social: true
-                        app_metadata:
-                          key: value
-                        user_metadata:
-                          key: value
-                        picture: picture
-                        name: name
-                        nickname: nickname
-                        multifactor:
-                          - multifactor
-                        last_ip: last_ip
-                        last_login: '2024-01-15T09:30:00Z'
-                        logins_count: 1
-                        blocked: true
-                        given_name: given_name
-                        family_name: family_name
-                    start: 1
-                    limit: 1
-                    length: 1
-                    total: 1
     post:
       description: Create a new user
-      operationId: service_createuser
+      operationId: service_createUser
       tags:
         - Service
       parameters: []
@@ -337,94 +235,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-              examples:
-                Example1:
-                  value:
-                    user_id: user_id
-                    email: email
-                    email_verified: true
-                    username: username
-                    phone_number: phone_number
-                    phone_verified: true
-                    created_at: '2024-01-15T09:30:00Z'
-                    updated_at: '2024-01-15T09:30:00Z'
-                    identities:
-                      - connection: connection
-                        user_id: user_id
-                        provider: provider
-                        is_social: true
-                        access_token: access_token
-                        expires_in: 1
-                    app_metadata:
-                      key: value
-                    user_metadata:
-                      key: value
-                    picture: picture
-                    name: name
-                    nickname: nickname
-                    multifactor:
-                      - multifactor
-                    last_ip: last_ip
-                    last_login: '2024-01-15T09:30:00Z'
-                    logins_count: 1
-                    blocked: true
-                    given_name: given_name
-                    family_name: family_name
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                email:
-                  type: string
-                  examples:
-                    - email
-                email_verified:
-                  type:
-                    - boolean
-                    - 'null'
-                username:
-                  type:
-                    - string
-                    - 'null'
-                password:
-                  type:
-                    - string
-                    - 'null'
-                phone_number:
-                  type:
-                    - string
-                    - 'null'
-                phone_verified:
-                  type:
-                    - boolean
-                    - 'null'
-                user_metadata:
-                  type:
-                    - object
-                    - 'null'
-                app_metadata:
-                  type:
-                    - object
-                    - 'null'
-                connection:
-                  type: string
-                  examples:
-                    - connection
-              required:
-                - email
-                - connection
-            examples:
-              Example1:
-                value:
-                  email: email
-                  connection: connection
+              $ref: '#/components/schemas/CreateUserRequest'
   /api/users/{userId}:
     get:
       description: Get a user by ID
-      operationId: service_getuserbyid
+      operationId: service_getUserById
       tags:
         - Service
       parameters:
@@ -433,9 +253,6 @@ paths:
           required: true
           schema:
             type: string
-          examples:
-            Example1:
-              value: userId
         - name: fields
           in: query
           description: Comma-separated list of fields to include or exclude
@@ -459,59 +276,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-              examples:
-                Example1:
-                  value:
-                    user_id: user_id
-                    email: email
-                    email_verified: true
-                    username: username
-                    phone_number: phone_number
-                    phone_verified: true
-                    created_at: '2024-01-15T09:30:00Z'
-                    updated_at: '2024-01-15T09:30:00Z'
-                    identities:
-                      - connection: connection
-                        user_id: user_id
-                        provider: provider
-                        is_social: true
-                        access_token: access_token
-                        expires_in: 1
-                    app_metadata:
-                      key: value
-                    user_metadata:
-                      key: value
-                    picture: picture
-                    name: name
-                    nickname: nickname
-                    multifactor:
-                      - multifactor
-                    last_ip: last_ip
-                    last_login: '2024-01-15T09:30:00Z'
-                    logins_count: 1
-                    blocked: true
-                    given_name: given_name
-                    family_name: family_name
-    delete:
-      description: Delete a user
-      operationId: service_deleteuser
-      tags:
-        - Service
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          schema:
-            type: string
-          examples:
-            Example1:
-              value: userId
-      responses:
-        '204':
-          description: No content
     patch:
       description: Update a user
-      operationId: service_updateuser
+      operationId: service_updateUser
       tags:
         - Service
       parameters:
@@ -520,9 +287,6 @@ paths:
           required: true
           schema:
             type: string
-          examples:
-            Example1:
-              value: userId
       responses:
         '200':
           description: Success
@@ -530,89 +294,30 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-              examples:
-                Example1:
-                  value:
-                    user_id: user_id
-                    email: email
-                    email_verified: true
-                    username: username
-                    phone_number: phone_number
-                    phone_verified: true
-                    created_at: '2024-01-15T09:30:00Z'
-                    updated_at: '2024-01-15T09:30:00Z'
-                    identities:
-                      - connection: connection
-                        user_id: user_id
-                        provider: provider
-                        is_social: true
-                        access_token: access_token
-                        expires_in: 1
-                    app_metadata:
-                      key: value
-                    user_metadata:
-                      key: value
-                    picture: picture
-                    name: name
-                    nickname: nickname
-                    multifactor:
-                      - multifactor
-                    last_ip: last_ip
-                    last_login: '2024-01-15T09:30:00Z'
-                    logins_count: 1
-                    blocked: true
-                    given_name: given_name
-                    family_name: family_name
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                email:
-                  type:
-                    - string
-                    - 'null'
-                email_verified:
-                  type:
-                    - boolean
-                    - 'null'
-                username:
-                  type:
-                    - string
-                    - 'null'
-                phone_number:
-                  type:
-                    - string
-                    - 'null'
-                phone_verified:
-                  type:
-                    - boolean
-                    - 'null'
-                user_metadata:
-                  type:
-                    - object
-                    - 'null'
-                app_metadata:
-                  type:
-                    - object
-                    - 'null'
-                password:
-                  type:
-                    - string
-                    - 'null'
-                blocked:
-                  type:
-                    - boolean
-                    - 'null'
-            examples:
-              Example1:
-                value: {}
+              $ref: '#/components/schemas/UpdateUserRequest'
+    delete:
+      description: Delete a user
+      operationId: service_deleteUser
+      tags:
+        - Service
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No content
   /api/connections:
     get:
       description: List all connections
-      operationId: service_listconnections
+      operationId: service_listConnections
       tags:
         - Service
       parameters:
@@ -649,26 +354,10 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Connection'
-              examples:
-                Example1:
-                  value:
-                    - id: id
-                      name: name
-                      display_name: display_name
-                      strategy: strategy
-                      options:
-                        key: value
-                      enabled_clients:
-                        - enabled_clients
-                      realms:
-                        - realms
-                      is_domain_connection: true
-                      metadata:
-                        key: value
   /api/connections/{connectionId}:
     get:
       description: Get a connection by ID
-      operationId: service_getconnection
+      operationId: service_getConnection
       tags:
         - Service
       parameters:
@@ -677,9 +366,6 @@ paths:
           required: true
           schema:
             type: string
-          examples:
-            Example1:
-              value: connectionId
         - name: fields
           in: query
           description: Comma-separated list of fields to include
@@ -695,26 +381,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Connection'
-              examples:
-                Example1:
-                  value:
-                    id: id
-                    name: name
-                    display_name: display_name
-                    strategy: strategy
-                    options:
-                      key: value
-                    enabled_clients:
-                      - enabled_clients
-                    realms:
-                      - realms
-                    is_domain_connection: true
-                    metadata:
-                      key: value
   /api/clients:
     get:
       description: List all clients/applications
-      operationId: service_listclients
+      operationId: service_listClients
       tags:
         - Service
       parameters:
@@ -793,58 +463,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PaginatedClientResponse'
-              examples:
-                Example1:
-                  value:
-                    start: 1
-                    limit: 1
-                    length: 1
-                    total: 1
-                    clients:
-                      - client_id: client_id
-                        tenant: tenant
-                        name: name
-                        description: description
-                        global: true
-                        client_secret: client_secret
-                        app_type: app_type
-                        logo_uri: logo_uri
-                        is_first_party: true
-                        oidc_conformant: true
-                        callbacks:
-                          - callbacks
-                        allowed_origins:
-                          - allowed_origins
-                        web_origins:
-                          - web_origins
-                        grant_types:
-                          - grant_types
-                        jwt_configuration:
-                          key: value
-                        signing_keys:
-                          - key: value
-                        encryption_key:
-                          key: value
-                        sso: true
-                        sso_disabled: true
-                        cross_origin_auth: true
-                        cross_origin_loc: cross_origin_loc
-                        custom_login_page_on: true
-                        custom_login_page: custom_login_page
-                        custom_login_page_preview: custom_login_page_preview
-                        form_template: form_template
-                        is_heroku_app: true
-                        addons:
-                          key: value
-                        token_endpoint_auth_method: token_endpoint_auth_method
-                        client_metadata:
-                          key: value
-                        mobile:
-                          key: value
   /api/clients/{clientId}:
     get:
       description: Get a client by ID
-      operationId: service_getclient
+      operationId: service_getClient
       tags:
         - Service
       parameters:
@@ -853,9 +475,6 @@ paths:
           required: true
           schema:
             type: string
-          examples:
-            Example1:
-              value: clientId
         - name: fields
           in: query
           description: Comma-separated list of fields to include
@@ -879,49 +498,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Client'
-              examples:
-                Example1:
-                  value:
-                    client_id: client_id
-                    tenant: tenant
-                    name: name
-                    description: description
-                    global: true
-                    client_secret: client_secret
-                    app_type: app_type
-                    logo_uri: logo_uri
-                    is_first_party: true
-                    oidc_conformant: true
-                    callbacks:
-                      - callbacks
-                    allowed_origins:
-                      - allowed_origins
-                    web_origins:
-                      - web_origins
-                    grant_types:
-                      - grant_types
-                    jwt_configuration:
-                      key: value
-                    signing_keys:
-                      - key: value
-                    encryption_key:
-                      key: value
-                    sso: true
-                    sso_disabled: true
-                    cross_origin_auth: true
-                    cross_origin_loc: cross_origin_loc
-                    custom_login_page_on: true
-                    custom_login_page: custom_login_page
-                    custom_login_page_preview: custom_login_page_preview
-                    form_template: form_template
-                    is_heroku_app: true
-                    addons:
-                      key: value
-                    token_endpoint_auth_method: token_endpoint_auth_method
-                    client_metadata:
-                      key: value
-                    mobile:
-                      key: value
 components:
   schemas:
     Resource:
@@ -930,12 +506,8 @@ components:
       properties:
         id:
           type: string
-          examples:
-            - id
         name:
           type: string
-          examples:
-            - name
         description:
           type:
             - string
@@ -943,13 +515,9 @@ components:
         created_at:
           type: string
           format: date-time
-          examples:
-            - '2024-01-15T09:30:00Z'
         updated_at:
           type: string
           format: date-time
-          examples:
-            - '2024-01-15T09:30:00Z'
         metadata:
           type:
             - object
@@ -984,16 +552,10 @@ components:
       properties:
         user_id:
           type: string
-          examples:
-            - user_id
         email:
           type: string
-          examples:
-            - email
         email_verified:
           type: boolean
-          examples:
-            - true
         username:
           type:
             - string
@@ -1009,13 +571,9 @@ components:
         created_at:
           type: string
           format: date-time
-          examples:
-            - '2024-01-15T09:30:00Z'
         updated_at:
           type: string
           format: date-time
-          examples:
-            - '2024-01-15T09:30:00Z'
         identities:
           type:
             - array
@@ -1115,16 +673,10 @@ components:
             $ref: '#/components/schemas/User'
         start:
           type: integer
-          examples:
-            - 1
         limit:
           type: integer
-          examples:
-            - 1
         length:
           type: integer
-          examples:
-            - 1
         total:
           type:
             - integer
@@ -1134,6 +686,85 @@ components:
         - start
         - limit
         - length
+    CreateUserRequest:
+      title: CreateUserRequest
+      type: object
+      properties:
+        email:
+          type: string
+        email_verified:
+          type:
+            - boolean
+            - 'null'
+        username:
+          type:
+            - string
+            - 'null'
+        password:
+          type:
+            - string
+            - 'null'
+        phone_number:
+          type:
+            - string
+            - 'null'
+        phone_verified:
+          type:
+            - boolean
+            - 'null'
+        user_metadata:
+          type:
+            - object
+            - 'null'
+        app_metadata:
+          type:
+            - object
+            - 'null'
+        connection:
+          type: string
+      required:
+        - email
+        - connection
+    UpdateUserRequest:
+      title: UpdateUserRequest
+      type: object
+      properties:
+        email:
+          type:
+            - string
+            - 'null'
+        email_verified:
+          type:
+            - boolean
+            - 'null'
+        username:
+          type:
+            - string
+            - 'null'
+        phone_number:
+          type:
+            - string
+            - 'null'
+        phone_verified:
+          type:
+            - boolean
+            - 'null'
+        user_metadata:
+          type:
+            - object
+            - 'null'
+        app_metadata:
+          type:
+            - object
+            - 'null'
+        password:
+          type:
+            - string
+            - 'null'
+        blocked:
+          type:
+            - boolean
+            - 'null'
     Connection:
       title: Connection
       type: object
@@ -1142,13 +773,9 @@ components:
         id:
           type: string
           description: Connection identifier
-          examples:
-            - id
         name:
           type: string
           description: Connection name
-          examples:
-            - name
         display_name:
           type:
             - string
@@ -1159,8 +786,6 @@ components:
           description: >-
             The identity provider identifier (auth0, google-oauth2, facebook,
             etc.)
-          examples:
-            - strategy
         options:
           type:
             - object
@@ -1202,8 +827,6 @@ components:
         client_id:
           type: string
           description: The unique client identifier
-          examples:
-            - client_id
         tenant:
           type:
             - string
@@ -1212,8 +835,6 @@ components:
         name:
           type: string
           description: Name of the client
-          examples:
-            - name
         description:
           type:
             - string
@@ -1370,18 +991,12 @@ components:
         start:
           type: integer
           description: Starting index (zero-based)
-          examples:
-            - 1
         limit:
           type: integer
           description: Number of items requested
-          examples:
-            - 1
         length:
           type: integer
           description: Number of items returned
-          examples:
-            - 1
         total:
           type:
             - integer

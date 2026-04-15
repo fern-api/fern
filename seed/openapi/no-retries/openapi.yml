@@ -5,7 +5,7 @@ info:
 paths:
   /users:
     get:
-      operationId: retries_getusers
+      operationId: retries_getUsers
       tags:
         - Retries
       parameters: []
@@ -18,11 +18,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/User'
-              examples:
-                Example1:
-                  value:
-                    - id: id
-                      name: name
 components:
   schemas:
     User:

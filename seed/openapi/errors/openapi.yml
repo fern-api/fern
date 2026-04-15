@@ -5,7 +5,7 @@ info:
 paths:
   /foo1:
     post:
-      operationId: simple_foowithoutendpointerror
+      operationId: simple_fooWithoutEndpointError
       tags:
         - Simple
       parameters: []
@@ -16,10 +16,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/FooResponse'
-              examples:
-                Example1:
-                  value:
-                    bar: hello
         '400':
           description: BadRequestError
           content:
@@ -44,10 +40,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/FooRequest'
-            examples:
-              Example1:
-                value:
-                  bar: hello
   /foo2:
     post:
       operationId: simple_foo
@@ -61,10 +53,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/FooResponse'
-              examples:
-                Example1:
-                  value:
-                    bar: hello
         '400':
           description: BadRequestError
           content:
@@ -78,7 +66,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
         '429':
-          description: TooManyRequestsError
+          description: FooTooMuch
           content:
             application/json:
               schema:
@@ -95,13 +83,9 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/FooRequest'
-            examples:
-              Example1:
-                value:
-                  bar: hello
   /foo3:
     post:
-      operationId: simple_foowithexamples
+      operationId: simple_fooWithExamples
       tags:
         - Simple
       parameters: []
@@ -114,12 +98,6 @@ paths:
                 $ref: '#/components/schemas/FooResponse'
               examples:
                 Example1:
-                  value:
-                    bar: hello
-                Example2:
-                  value:
-                    bar: hello
-                Example3:
                   value:
                     bar: hello
         '400':
@@ -135,11 +113,16 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
         '429':
-          description: TooManyRequestsError
+          description: FooTooMuch
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
+              examples:
+                Example1:
+                  value:
+                    message: Too much foo
+                    code: 1
         '500':
           description: InternalServerError
           content:

@@ -17,32 +17,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Organization'
-              examples:
-                Example1:
-                  value:
-                    id: id
-                    name: name
-                    users:
-                      - id: id
-                        name: name
-                        age: 1
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  examples:
-                    - name
-              required:
-                - name
-            examples:
-              Example1:
-                value:
-                  name: name
+              $ref: '#/components/schemas/CreateOrganizationRequest'
   /users/:
     get:
       description: List all users.
@@ -67,16 +47,10 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/User'
-              examples:
-                Example1:
-                  value:
-                    - id: id
-                      name: name
-                      age: 1
   /users/events/:
     get:
       description: List all user events.
-      operationId: userEvents_user_events_listEvents
+      operationId: user_events_listEvents
       tags:
         - UserEvents
       parameters:
@@ -96,16 +70,11 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/UserEvent'
-              examples:
-                Example1:
-                  value:
-                    - id: id
-                      name: name
+                  $ref: '#/components/schemas/userEvent'
   /users/events/metadata/:
     get:
       description: Get event metadata.
-      operationId: userEventsMetadata_user_events_metadata_getMetadata
+      operationId: user_events_metadata_getMetadata
       tags:
         - UserEventsMetadata
       parameters:
@@ -114,22 +83,13 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/Id'
-          examples:
-            Example1:
-              value: id
       responses:
         '200':
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UsereventsMetadata'
-              examples:
-                Example1:
-                  value:
-                    id: id
-                    value:
-                      key: value
+                $ref: '#/components/schemas/usereventsMetadata'
 components:
   schemas:
     Id:
@@ -143,8 +103,6 @@ components:
           $ref: '#/components/schemas/Id'
         name:
           type: string
-          examples:
-            - name
         users:
           type: array
           items:
@@ -153,6 +111,14 @@ components:
         - id
         - name
         - users
+    CreateOrganizationRequest:
+      title: CreateOrganizationRequest
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+        - name
     User:
       title: User
       type: object
@@ -167,8 +133,8 @@ components:
         - id
         - name
         - age
-    UserEvent:
-      title: UserEvent
+    userEvent:
+      title: userEvent
       type: object
       properties:
         id:
@@ -178,8 +144,8 @@ components:
       required:
         - id
         - name
-    UsereventsMetadata:
-      title: UsereventsMetadata
+    usereventsMetadata:
+      title: usereventsMetadata
       type: object
       properties:
         id:

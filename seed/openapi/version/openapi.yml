@@ -5,7 +5,7 @@ info:
 paths:
   /users/{userId}:
     get:
-      operationId: user_getuser
+      operationId: user_getUser
       tags:
         - User
       parameters:
@@ -14,9 +14,6 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/UserId'
-          examples:
-            Example1:
-              value: userId
       responses:
         '200':
           description: Success
@@ -24,11 +21,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-              examples:
-                Example1:
-                  value:
-                    id: id
-                    name: name
 components:
   schemas:
     UserId:
@@ -42,8 +34,6 @@ components:
           $ref: '#/components/schemas/UserId'
         name:
           type: string
-          examples:
-            - name
       required:
         - id
         - name

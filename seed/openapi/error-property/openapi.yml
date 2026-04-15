@@ -6,9 +6,9 @@ paths:
   /property-based-error:
     get:
       description: GET request that always throws an error
-      operationId: propertybasederror_throwerror
+      operationId: propertyBasedError_ThrowError
       tags:
-        - Propertybasederror
+        - PropertyBasedError
       parameters: []
       responses:
         '200':
@@ -17,33 +17,22 @@ paths:
             application/json:
               schema:
                 type: string
-              examples:
-                Example1:
-                  value: string
         '400':
-          description: BadRequestError
+          description: PropertyBasedErrorTest
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BadRequestErrorBody'
+                oneOf:
+                  - type: object
+                    properties:
+                      errorName:
+                        type: string
+                        enum:
+                          - PropertyBasedErrorTest
+                      content:
+                        $ref: '#/components/schemas/PropertyBasedErrorTestBody'
 components:
   schemas:
-    BadRequestErrorBodyErrorName:
-      title: BadRequestErrorBodyErrorName
-      type: string
-      const: PropertyBasedErrorTest
-    BadRequestErrorBody:
-      title: BadRequestErrorBody
-      type: object
-      properties:
-        errorName:
-          anyOf:
-            - $ref: '#/components/schemas/BadRequestErrorBodyErrorName'
-            - type: 'null'
-        content:
-          anyOf:
-            - $ref: '#/components/schemas/PropertyBasedErrorTestBody'
-            - type: 'null'
     PropertyBasedErrorTestBody:
       title: PropertyBasedErrorTestBody
       type: object

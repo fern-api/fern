@@ -5,7 +5,7 @@ info:
 paths:
   /folder-a:
     get:
-      operationId: folderAService_folderA_service_getDirectThread
+      operationId: folderA_service_getDirectThread
       tags:
         - FolderAService
       parameters: []
@@ -15,16 +15,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FolderAResponse'
-              examples:
-                Example1:
-                  value:
-                    foo:
-                      foo:
-                        bar_property: bar_property
+                $ref: '#/components/schemas/folder-aResponse'
   /folder-d:
     get:
-      operationId: folderDService_folderD_service_getDirectThread
+      operationId: folderD_service_getDirectThread
       tags:
         - FolderDService
       parameters: []
@@ -34,13 +28,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FolderDResponse'
-              examples:
-                Example1:
-                  value:
-                    foo:
-                      foo:
-                        bar_property: bar_property
+                $ref: '#/components/schemas/folder-dResponse'
   /:
     post:
       operationId: foo_find
@@ -51,9 +39,7 @@ paths:
           in: query
           required: false
           schema:
-            anyOf:
-              - $ref: '#/components/schemas/OptionalString'
-              - type: 'null'
+            $ref: '#/components/schemas/OptionalString'
       responses:
         '200':
           description: Success
@@ -61,10 +47,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ImportingType'
-              examples:
-                Example1:
-                  value:
-                    imported: imported
       requestBody:
         required: true
         content:
@@ -80,32 +62,29 @@ paths:
                   type:
                     - integer
                     - 'null'
-            examples:
-              Example1:
-                value: {}
 components:
   schemas:
     Imported:
       title: Imported
       type: string
-    FolderAResponse:
-      title: FolderAResponse
+    folder-aResponse:
+      title: folder-aResponse
       type: object
       properties:
         foo:
           anyOf:
-            - $ref: '#/components/schemas/FolderBFoo'
+            - $ref: '#/components/schemas/folder-bFoo'
             - type: 'null'
-    FolderBFoo:
-      title: FolderBFoo
+    folder-bFoo:
+      title: folder-bFoo
       type: object
       properties:
         foo:
           anyOf:
-            - $ref: '#/components/schemas/FolderCFoo'
+            - $ref: '#/components/schemas/folder-cFoo'
             - type: 'null'
-    FolderCFoo:
-      title: FolderCFoo
+    folder-cFoo:
+      title: folder-cFoo
       type: object
       properties:
         bar_property:
@@ -113,13 +92,13 @@ components:
           format: uuid
       required:
         - bar_property
-    FolderDResponse:
-      title: FolderDResponse
+    folder-dResponse:
+      title: folder-dResponse
       type: object
       properties:
         foo:
           anyOf:
-            - $ref: '#/components/schemas/FolderBFoo'
+            - $ref: '#/components/schemas/folder-bFoo'
             - type: 'null'
     ImportingType:
       title: ImportingType

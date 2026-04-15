@@ -31,7 +31,7 @@ paths:
                   query: foo
   /stream-no-terminator:
     post:
-      operationId: completions_streamwithoutterminator
+      operationId: completions_streamWithoutTerminator
       tags:
         - Completions
       parameters: []

@@ -5,7 +5,7 @@ info:
 paths:
   /token:
     post:
-      operationId: auth_gettoken
+      operationId: auth_getToken
       tags:
         - Auth
       parameters:
@@ -14,9 +14,6 @@ paths:
           required: true
           schema:
             type: string
-          examples:
-            Example1:
-              value: X-Api-Key
       responses:
         '200':
           description: Success
@@ -24,16 +21,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TokenResponse'
-              examples:
-                Example1:
-                  value:
-                    access_token: access_token
-                    token_type: token_type
-                    expires_in: 1
-                    scope: scope
   /nested-no-auth/get-something:
     get:
-      operationId: nestedNoAuthAPI_nestedNoAuth_api_getSomething
+      operationId: nestedNoAuth_api_getSomething
       tags:
         - NestedNoAuthAPI
       parameters: []
@@ -42,7 +32,7 @@ paths:
           description: No content
   /nested/get-something:
     get:
-      operationId: nestedAPI_nested_api_getSomething
+      operationId: nested_api_getSomething
       tags:
         - NestedAPI
       parameters: []
@@ -53,7 +43,7 @@ paths:
         - InferredAuthScheme: []
   /get-something:
     get:
-      operationId: simple_getsomething
+      operationId: simple_getSomething
       tags:
         - Simple
       parameters: []
@@ -71,16 +61,10 @@ components:
       properties:
         access_token:
           type: string
-          examples:
-            - access_token
         token_type:
           type: string
-          examples:
-            - token_type
         expires_in:
           type: integer
-          examples:
-            - 1
         scope:
           type:
             - string
