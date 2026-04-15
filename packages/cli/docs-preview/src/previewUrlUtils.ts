@@ -6,11 +6,13 @@ export const PREVIEW_URL_PATTERN = /^[a-z0-9-]+-preview-[a-z0-9-]+\.docs\.buildw
 const DOMAIN_SUFFIX = "docs.buildwithfern.com";
 
 /**
- * Maximum length of the full preview FQDN (subdomain + "." + DOMAIN_SUFFIX).
- * Not a DNS label limit — this is an application-level cap that must match
- * the server-side truncateDomainName logic in FDR.
+ * Application-level cap used in two ways:
+ *   1. If the full domain fits within this length, return it unchanged.
+ *   2. Otherwise, truncate the ID portion so the resulting subdomain label
+ *      is at most this many characters (one under the DNS 63-char label limit).
+ * Must match the server-side truncateDomainName logic in FDR.
  */
-const PREVIEW_FQDN_LIMIT = 62;
+const SUBDOMAIN_LIMIT = 62;
 
 export function isPreviewUrl(url: string): boolean {
     let hostname = url.toLowerCase().trim();
@@ -52,12 +54,12 @@ export function sanitizePreviewId(id: string): string {
 export function buildPreviewDomain({ orgId, previewId }: { orgId: string; previewId: string }): string {
     const sanitizedId = sanitizePreviewId(previewId);
     const fullDomain = `${orgId}-preview-${sanitizedId}.${DOMAIN_SUFFIX}`;
-    if (fullDomain.length <= PREVIEW_FQDN_LIMIT) {
+    if (fullDomain.length <= SUBDOMAIN_LIMIT) {
         return fullDomain;
     }
 
     const prefix = `${orgId}-preview-`;
-    const availableSpace = PREVIEW_FQDN_LIMIT - prefix.length;
+    const availableSpace = SUBDOMAIN_LIMIT - prefix.length;
 
     const minIdLength = 8;
     if (availableSpace < minIdLength) {

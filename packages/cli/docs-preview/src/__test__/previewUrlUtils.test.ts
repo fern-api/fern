@@ -183,12 +183,13 @@ describe("buildPreviewDomain", () => {
     it("should truncate long preview IDs when full domain exceeds limit", () => {
         const longId = "a".repeat(100);
         const result = buildPreviewDomain({ orgId: "acme", previewId: longId });
-        // The truncation caps the ID portion, not the full FQDN
         expect(result).toMatch(/^acme-preview-a+\.docs\.buildwithfern\.com$/);
-        const shortId = "abc";
-        const shortResult = buildPreviewDomain({ orgId: "acme", previewId: shortId });
-        expect(result.length).toBeLessThan(`acme-preview-${"a".repeat(100)}.docs.buildwithfern.com`.length);
-        expect(shortResult.length).toBeLessThan(result.length);
+        // Subdomain label must not exceed the 62-char application cap
+        const subdomain = result.split(".")[0] ?? "";
+        expect(subdomain.length).toBeLessThanOrEqual(62);
+        // Shorter IDs that fit within the limit are returned unchanged
+        const shortResult = buildPreviewDomain({ orgId: "acme", previewId: "abc" });
+        expect(shortResult).toBe("acme-preview-abc.docs.buildwithfern.com");
     });
 
     it("should throw for an org name that is too long", () => {
