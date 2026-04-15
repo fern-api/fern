@@ -35,7 +35,13 @@ components:
 servers:
   - url: https://api.example.com
     description: Production
-  - url: https://api.${DEV_NAMESPACE}.example.com
+  - url: https://api.{DEV_NAMESPACE}.example.com
     description: Development
-  - url: https://api.${STAGE_ENV}.example.com
+    variables:
+      DEV_NAMESPACE:
+        default: ''
+  - url: https://api.{STAGE_ENV}.example.com
     description: Staging
+    variables:
+      STAGE_ENV:
+        default: ''

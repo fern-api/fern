@@ -1,0 +1,123 @@
+openapi: 3.1.0
+info:
+  title: websocket
+  version: 0.0.0
+paths: {}
+components:
+  schemas:
+    SendEvent:
+      title: SendEvent
+      type: object
+      properties:
+        sendText:
+          type: string
+        sendParam:
+          type: integer
+      required:
+        - sendText
+        - sendParam
+    SendSnakeCase:
+      title: SendSnakeCase
+      type: object
+      properties:
+        send_text:
+          type: string
+        send_param:
+          type: integer
+      required:
+        - send_text
+        - send_param
+    ReceiveEvent:
+      title: ReceiveEvent
+      type: object
+      properties:
+        alpha:
+          type: string
+        beta:
+          type: integer
+      required:
+        - alpha
+        - beta
+    ReceiveSnakeCase:
+      title: ReceiveSnakeCase
+      type: object
+      properties:
+        receive_text:
+          type: string
+        receive_int:
+          type: integer
+      required:
+        - receive_text
+        - receive_int
+    SendEvent2:
+      title: SendEvent2
+      type: object
+      properties:
+        sendText2:
+          type: string
+        sendParam2:
+          type: boolean
+      required:
+        - sendText2
+        - sendParam2
+    ReceiveEvent2:
+      title: ReceiveEvent2
+      type: object
+      properties:
+        gamma:
+          type: string
+        delta:
+          type: integer
+        epsilon:
+          type: boolean
+      required:
+        - gamma
+        - delta
+        - epsilon
+    ReceiveEvent3:
+      title: ReceiveEvent3
+      type: object
+      properties:
+        receiveText3:
+          type: string
+      required:
+        - receiveText3
+    TranscriptEventType:
+      title: TranscriptEventType
+      type: string
+      const: transcript
+    TranscriptEvent:
+      title: TranscriptEvent
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/TranscriptEventType'
+        data:
+          type: string
+      required:
+        - type
+        - data
+    FlushedEventType:
+      title: FlushedEventType
+      type: string
+      const: flushed
+    FlushedEvent:
+      title: FlushedEvent
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/FlushedEventType'
+      required:
+        - type
+    ErrorEvent:
+      title: ErrorEvent
+      type: object
+      properties:
+        errorCode:
+          type: integer
+        errorMessage:
+          type: string
+      required:
+        - errorCode
+        - errorMessage
+  securitySchemes: {}

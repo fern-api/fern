@@ -170,13 +170,26 @@ function convertHttpEndpoint({
             throw new Error("baseUrl is defined environments are not multipleBaseUrls");
         }
         operationObject.servers = environments.environments.environments.map((environment) => {
-            const url = environment.urls[baseUrlId];
-            if (url == null) {
+            const rawUrl = environment.urls[baseUrlId];
+            if (rawUrl == null) {
                 throw new Error("No URL defined for " + baseUrlId);
             }
+            // Normalize ${VAR} syntax to {VAR} for OAS compliance
+            const url = rawUrl.replace(/\$\{(\w+)\}/g, "{$1}");
             const server: OpenAPIV3.ServerObject = { url };
             if (environment.docs != null) {
                 server.description = environment.docs;
+            }
+            // Detect template variables and add OAS server variables
+            const variables: Record<string, OpenAPIV3.ServerVariableObject> = {};
+            for (const match of url.matchAll(/\{(\w+)\}/g)) {
+                const varName = match[1];
+                if (varName != null) {
+                    variables[varName] = { default: "" };
+                }
+            }
+            if (Object.keys(variables).length > 0) {
+                server.variables = variables;
             }
             return server;
         });
@@ -340,8 +353,20 @@ function convertRequestBody({
                 }
             };
         },
-        bytes: () => {
-            throw new Error("bytes is not supported");
+        bytes: (bytesRequest) => {
+            const contentType = bytesRequest.contentType ?? "application/octet-stream";
+            return {
+                description: bytesRequest.docs ?? undefined,
+                required: !bytesRequest.isOptional,
+                content: {
+                    [contentType]: {
+                        schema: {
+                            type: "string",
+                            format: "binary"
+                        }
+                    }
+                }
+            };
         },
         _other: () => {
             throw new Error("Unknown FernIr.HttpRequestBody type: " + httpRequest.type);

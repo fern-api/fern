@@ -1,0 +1,527 @@
+openapi: 3.1.0
+info:
+  title: literal
+  version: 0.0.0
+paths:
+  /headers:
+    post:
+      operationId: headers_send
+      tags:
+        - Headers
+      parameters:
+        - name: X-Endpoint-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/HeadersSendRequestXEndpointVersion'
+          examples:
+            Example1:
+              value: 02-12-2024
+        - name: X-Async
+          in: header
+          required: true
+          schema:
+            type: boolean
+          examples:
+            Example1:
+              value: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendResponse'
+              examples:
+                Example1:
+                  value:
+                    message: The weather is sunny
+                    status: 200
+                    success: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                  examples:
+                    - What is the weather today
+              required:
+                - query
+            examples:
+              Example1:
+                value:
+                  query: What is the weather today
+  /inlined:
+    post:
+      operationId: inlined_send
+      tags:
+        - Inlined
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendResponse'
+              examples:
+                Example1:
+                  value:
+                    message: The weather is sunny
+                    status: 200
+                    success: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                prompt:
+                  $ref: '#/components/schemas/InlinedSendRequestPrompt'
+                context:
+                  anyOf:
+                    - $ref: '#/components/schemas/InlinedSendRequestContext'
+                    - type: 'null'
+                query:
+                  type: string
+                  examples:
+                    - What is the weather today
+                temperature:
+                  type:
+                    - number
+                    - 'null'
+                  format: double
+                stream:
+                  type: boolean
+                  examples:
+                    - false
+                aliasedContext:
+                  $ref: '#/components/schemas/SomeAliasedLiteral'
+                maybeContext:
+                  anyOf:
+                    - $ref: '#/components/schemas/SomeAliasedLiteral'
+                    - type: 'null'
+                objectWithLiteral:
+                  $ref: '#/components/schemas/ATopLevelLiteral'
+              required:
+                - prompt
+                - query
+                - stream
+                - aliasedContext
+                - objectWithLiteral
+            examples:
+              Example1:
+                value:
+                  prompt: You are a helpful assistant
+                  context: You're super wise
+                  query: What is the weather today
+                  temperature: 10.1
+                  stream: false
+                  aliasedContext: You're super wise
+                  maybeContext: You're super wise
+                  objectWithLiteral:
+                    nestedLiteral:
+                      myLiteral: How super cool
+  /path/{id}:
+    post:
+      operationId: path_send
+      tags:
+        - Path
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/PathSendRequestId'
+          examples:
+            Example1:
+              value: '123'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendResponse'
+              examples:
+                Example1:
+                  value:
+                    message: The weather is sunny
+                    status: 200
+                    success: true
+  /query:
+    post:
+      operationId: query_send
+      tags:
+        - Query
+      parameters:
+        - name: prompt
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/QuerySendRequestPrompt'
+          examples:
+            Example1:
+              value: You are a helpful assistant
+        - name: optional_prompt
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - $ref: '#/components/schemas/QuerySendRequestOptionalPrompt'
+              - type: 'null'
+        - name: alias_prompt
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/AliasToPrompt'
+          examples:
+            Example1:
+              value: You are a helpful assistant
+        - name: alias_optional_prompt
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - $ref: '#/components/schemas/AliasToPrompt'
+              - type: 'null'
+        - name: query
+          in: query
+          required: true
+          schema:
+            type: string
+          examples:
+            Example1:
+              value: What is the weather today
+        - name: stream
+          in: query
+          required: true
+          schema:
+            type: boolean
+          examples:
+            Example1:
+              value: true
+        - name: optional_stream
+          in: query
+          required: false
+          schema:
+            type:
+              - boolean
+              - 'null'
+        - name: alias_stream
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/AliasToStream'
+          examples:
+            Example1:
+              value: true
+        - name: alias_optional_stream
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - $ref: '#/components/schemas/AliasToStream'
+              - type: 'null'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendResponse'
+              examples:
+                Example1:
+                  value:
+                    message: The weather is sunny
+                    status: 200
+                    success: true
+  /reference:
+    post:
+      operationId: reference_send
+      tags:
+        - Reference
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendResponse'
+              examples:
+                Example1:
+                  value:
+                    message: The weather is sunny
+                    status: 200
+                    success: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                prompt:
+                  $ref: '#/components/schemas/SendRequestPrompt'
+                query:
+                  type: string
+                  examples:
+                    - What is the weather today
+                stream:
+                  type: boolean
+                  examples:
+                    - false
+                ending:
+                  $ref: '#/components/schemas/SendRequestEnding'
+                context:
+                  $ref: '#/components/schemas/SomeLiteral'
+                maybeContext:
+                  anyOf:
+                    - $ref: '#/components/schemas/SomeLiteral'
+                    - type: 'null'
+                containerObject:
+                  $ref: '#/components/schemas/ContainerObject'
+              required:
+                - prompt
+                - query
+                - stream
+                - ending
+                - context
+                - containerObject
+            examples:
+              Example1:
+                value:
+                  prompt: You are a helpful assistant
+                  query: What is the weather today
+                  stream: false
+                  ending: $ending
+                  context: You're super wise
+                  containerObject:
+                    nestedObjects:
+                      - literal1: literal1
+                        literal2: literal2
+                        strProp: strProp
+components:
+  schemas:
+    HeadersSendRequestXEndpointVersion:
+      title: HeadersSendRequestXEndpointVersion
+      type: string
+      const: 02-12-2024
+    InlinedSendRequestPrompt:
+      title: InlinedSendRequestPrompt
+      type: string
+      const: You are a helpful assistant
+    InlinedSendRequestContext:
+      title: InlinedSendRequestContext
+      type: string
+      const: You're super wise
+    PathSendRequestId:
+      title: PathSendRequestId
+      type: string
+      const: '123'
+    QuerySendRequestPrompt:
+      title: QuerySendRequestPrompt
+      type: string
+      const: You are a helpful assistant
+    QuerySendRequestOptionalPrompt:
+      title: QuerySendRequestOptionalPrompt
+      type: string
+      const: You are a helpful assistant
+    SendRequestPrompt:
+      title: SendRequestPrompt
+      type: string
+      const: You are a helpful assistant
+    SendRequestEnding:
+      title: SendRequestEnding
+      type: string
+      const: $ending
+    SendResponse:
+      title: SendResponse
+      type: object
+      properties:
+        message:
+          type: string
+          examples:
+            - The weather is sunny
+        status:
+          type: integer
+          examples:
+            - 200
+        success:
+          type: boolean
+          examples:
+            - true
+      required:
+        - message
+        - status
+        - success
+    SomeAliasedLiteral:
+      title: SomeAliasedLiteral
+      type: string
+      const: You're super wise
+    ATopLevelLiteral:
+      title: ATopLevelLiteral
+      type: object
+      properties:
+        nestedLiteral:
+          $ref: '#/components/schemas/ANestedLiteral'
+      required:
+        - nestedLiteral
+    ANestedLiteralMyLiteral:
+      title: ANestedLiteralMyLiteral
+      type: string
+      const: How super cool
+    ANestedLiteral:
+      title: ANestedLiteral
+      type: object
+      properties:
+        myLiteral:
+          $ref: '#/components/schemas/ANestedLiteralMyLiteral'
+      required:
+        - myLiteral
+    DiscriminatedLiteralCustomName:
+      title: DiscriminatedLiteralCustomName
+      type: object
+      properties:
+        value:
+          type:
+            - string
+            - 'null'
+    DiscriminatedLiteralDefaultNameValue:
+      title: DiscriminatedLiteralDefaultNameValue
+      type: string
+      const: Bob
+    DiscriminatedLiteralDefaultName:
+      title: DiscriminatedLiteralDefaultName
+      type: object
+      properties:
+        value:
+          anyOf:
+            - $ref: '#/components/schemas/DiscriminatedLiteralDefaultNameValue'
+            - type: 'null'
+    DiscriminatedLiteralGeorge:
+      title: DiscriminatedLiteralGeorge
+      type: object
+      properties:
+        value:
+          type:
+            - boolean
+            - 'null'
+    DiscriminatedLiteralLiteralGeorge:
+      title: DiscriminatedLiteralLiteralGeorge
+      type: object
+      properties:
+        value:
+          type:
+            - boolean
+            - 'null'
+    DiscriminatedLiteral:
+      title: DiscriminatedLiteral
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: customName
+            - $ref: '#/components/schemas/DiscriminatedLiteralCustomName'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: defaultName
+            - $ref: '#/components/schemas/DiscriminatedLiteralDefaultName'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: george
+            - $ref: '#/components/schemas/DiscriminatedLiteralGeorge'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: literalGeorge
+            - $ref: '#/components/schemas/DiscriminatedLiteralLiteralGeorge'
+          required:
+            - type
+    UndiscriminatedLiteralOne:
+      title: UndiscriminatedLiteralOne
+      type: string
+      const: $ending
+    UndiscriminatedLiteralTwo:
+      title: UndiscriminatedLiteralTwo
+      type: string
+      const: >-
+        10 non-alphanumeric string literals you're going to love & why (number 8
+        will surprise you)
+    UndiscriminatedLiteral:
+      title: UndiscriminatedLiteral
+      oneOf:
+        - type: string
+        - $ref: '#/components/schemas/UndiscriminatedLiteralOne'
+        - $ref: '#/components/schemas/UndiscriminatedLiteralTwo'
+        - type: boolean
+    AliasToPrompt:
+      title: AliasToPrompt
+      type: string
+      const: You are a helpful assistant
+    AliasToStream:
+      title: AliasToStream
+      type: boolean
+    ContainerObject:
+      title: ContainerObject
+      type: object
+      properties:
+        nestedObjects:
+          type: array
+          items:
+            $ref: '#/components/schemas/NestedObjectWithLiterals'
+      required:
+        - nestedObjects
+    NestedObjectWithLiteralsLiteral1:
+      title: NestedObjectWithLiteralsLiteral1
+      type: string
+      const: literal1
+    NestedObjectWithLiteralsLiteral2:
+      title: NestedObjectWithLiteralsLiteral2
+      type: string
+      const: literal2
+    NestedObjectWithLiterals:
+      title: NestedObjectWithLiterals
+      type: object
+      properties:
+        literal1:
+          $ref: '#/components/schemas/NestedObjectWithLiteralsLiteral1'
+        literal2:
+          $ref: '#/components/schemas/NestedObjectWithLiteralsLiteral2'
+        strProp:
+          type: string
+      required:
+        - literal1
+        - literal2
+        - strProp
+    SomeLiteral:
+      title: SomeLiteral
+      type: string
+      const: You're super wise
+  securitySchemes: {}

@@ -305,7 +305,7 @@ function convertPrimitiveType(primitiveType: FernIr.PrimitiveType): OpenAPIV3.No
                 },
                 float: () => {
                     return {
-                        type: "integer",
+                        type: "number",
                         format: "float"
                     };
                 },

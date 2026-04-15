@@ -252,7 +252,7 @@ paths:
                     - array
                     - 'null'
                   items:
-                    type: integer
+                    type: number
                     format: float
                 id:
                   type:
@@ -447,7 +447,7 @@ paths:
                     - array
                     - 'null'
                   items:
-                    type: integer
+                    type: number
                     format: float
                 set_metadata:
                   anyOf:
@@ -548,7 +548,7 @@ components:
         values:
           type: array
           items:
-            type: integer
+            type: number
             format: float
         metadata:
           anyOf:
@@ -601,7 +601,7 @@ components:
           format: int64
         fullness:
           type:
-            - integer
+            - number
             - 'null'
           format: float
         total_count:
@@ -708,7 +708,7 @@ components:
         values:
           type: array
           items:
-            type: integer
+            type: number
             format: float
       required:
         - indices
@@ -767,7 +767,7 @@ components:
         values:
           type: array
           items:
-            type: integer
+            type: number
             format: float
         top_k:
           type:
@@ -834,7 +834,7 @@ components:
           type: string
         score:
           type:
-            - integer
+            - number
             - 'null'
           format: float
         values:
@@ -842,7 +842,7 @@ components:
             - array
             - 'null'
           items:
-            type: integer
+            type: number
             format: float
         metadata:
           anyOf:

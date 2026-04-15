@@ -48,7 +48,7 @@ paths:
                   format: int64
                 weight:
                   type:
-                    - integer
+                    - number
                     - 'null'
                   format: float
                 metadata:
@@ -87,7 +87,7 @@ components:
           format: int64
         weight:
           type:
-            - integer
+            - number
             - 'null'
           format: float
         metadata:

@@ -89,13 +89,27 @@ export function convertToOpenApi({
 
     if (ir.environments != null && ir.environments.environments.type === "singleBaseUrl") {
         openAPISpec.servers = ir.environments.environments.environments.map((environment) => {
-            return {
-                url: environment.url,
+            // Normalize ${VAR} syntax to {VAR} for OAS compliance
+            const url = environment.url.replace(/\$\{(\w+)\}/g, "{$1}");
+            const server: OpenAPIV3.ServerObject = {
+                url,
                 description:
                     environment.docs != null
                         ? `${getOriginalName(environment.name)} (${environment.docs})`
                         : getOriginalName(environment.name)
             };
+            // Detect template variables and add OAS server variables
+            const variables: Record<string, OpenAPIV3.ServerVariableObject> = {};
+            for (const match of url.matchAll(/\{(\w+)\}/g)) {
+                const varName = match[1];
+                if (varName != null) {
+                    variables[varName] = { default: "" };
+                }
+            }
+            if (Object.keys(variables).length > 0) {
+                server.variables = variables;
+            }
+            return server;
         });
     }
 

@@ -1,0 +1,53 @@
+openapi: 3.1.0
+info:
+  title: unknown-as-any
+  version: 0.0.0
+paths:
+  /:
+    post:
+      operationId: unknown_post
+      tags:
+        - Unknown
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {}
+  /with-object:
+    post:
+      operationId: unknown_postobject
+      tags:
+        - Unknown
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                unknown: {}
+              required:
+                - unknown
+components:
+  schemas:
+    MyAlias:
+      title: MyAlias
+  securitySchemes: {}
