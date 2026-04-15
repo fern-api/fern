@@ -56,6 +56,7 @@ import { formatWorkspaces } from "./commands/format/formatWorkspaces.js";
 import { parseGeneratorArg } from "./commands/generate/filterGenerators.js";
 import { GenerationMode, generateAPIWorkspaces } from "./commands/generate/generateAPIWorkspaces.js";
 import { generateDocsWorkspace } from "./commands/generate/generateDocsWorkspace.js";
+import { shouldSkipGenerator } from "./commands/generate/shouldSkipGenerator.js";
 import { generateDynamicIrForWorkspaces } from "./commands/generate-dynamic-ir/generateDynamicIrForWorkspaces.js";
 import { generateFdrApiDefinitionForWorkspaces } from "./commands/generate-fdr/generateFdrApiDefinitionForWorkspaces.js";
 import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces.js";
@@ -2335,20 +2336,7 @@ function addAutomationsListGenerateCommand(cli: Argv<GlobalCliOptions>, cliConte
                     }
                     for (let i = 0; i < group.generators.length; i++) {
                         const generator = group.generators[i];
-                        if (generator == null || !generator.automation.generate) {
-                            continue;
-                        }
-
-                        // Skip generators that output to local file system (cannot run remotely)
-                        if (generator.absolutePathToLocalOutput != null) {
-                            continue;
-                        }
-
-                        // Skip generators with autorelease disabled (generator-level overrides root-level)
-                        const autoreleaseDisabled =
-                            generator.raw?.autorelease === false ||
-                            (generator.raw?.autorelease == null && rootAutorelease === false);
-                        if (autoreleaseDisabled) {
+                        if (generator == null || shouldSkipGenerator({ generator, rootAutorelease })) {
                             continue;
                         }
 
