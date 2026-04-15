@@ -56,7 +56,7 @@ describe("QueryStringBuilder", () => {
     describe("addComma()", () => {
         it("joins array values with literal commas", () => {
             const qs = new QueryStringBuilder().addComma("tags", ["a", "b", "c"]).build();
-            expect(qs).toBe("tags=a%2Cb%2Cc");
+            expect(qs).toBe("tags=a,b,c");
         });
 
         it("handles single-element array", () => {
@@ -86,12 +86,12 @@ describe("QueryStringBuilder", () => {
 
         it("encodes commas within individual values as %2C", () => {
             const qs = new QueryStringBuilder().addComma("items", ["a,b", "c"]).build();
-            expect(qs).toBe("items=a%2Cb%2Cc");
+            expect(qs).toBe("items=a%2Cb,c");
         });
 
         it("encodes special characters in values", () => {
             const qs = new QueryStringBuilder().addComma("tags", ["hello world", "foo&bar"]).build();
-            expect(qs).toBe("tags=hello%20world%2Cfoo%26bar");
+            expect(qs).toBe("tags=hello%20world,foo%26bar");
         });
     });
 
@@ -107,7 +107,7 @@ describe("QueryStringBuilder", () => {
                 .addComma("tags", ["ACCESS_GRANTED", "COPY", "DELETE"])
                 .add("active", true)
                 .build();
-            expect(qs).toBe("limit=10&tags=ACCESS_GRANTED%2CCOPY%2CDELETE&active=true");
+            expect(qs).toBe("limit=10&tags=ACCESS_GRANTED,COPY,DELETE&active=true");
         });
 
         it("skips undefined params in chain without breaking", () => {
