@@ -19,7 +19,7 @@ export class UserPosthogManager implements PosthogManager {
     private token: FernUserToken | undefined;
 
     constructor({ token, posthogApiKey }: { token: FernUserToken | undefined; posthogApiKey: string }) {
-        this.posthog = new PostHog(posthogApiKey, { flushInterval: 0 });
+        this.posthog = new PostHog(posthogApiKey);
         this.posthog.on("error", () => {
             // Silently swallow – analytics errors should never surface to end users
         });
@@ -53,7 +53,7 @@ export class UserPosthogManager implements PosthogManager {
 
     public async flush(): Promise<void> {
         try {
-            await Promise.race([this.posthog.shutdown(), new Promise<void>((resolve) => setTimeout(resolve, 3000))]);
+            await Promise.race([this.posthog.flush(), new Promise<void>((resolve) => setTimeout(resolve, 3000))]);
         } catch {
             // Silently swallow – analytics should never block the CLI
         }

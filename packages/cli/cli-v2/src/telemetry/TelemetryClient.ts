@@ -37,10 +37,7 @@ export class TelemetryClient {
             tty: isTTY,
             usingAccessToken: process.env.FERN_TOKEN != null
         };
-        this.posthog =
-            apiKey != null && apiKey.length > 0 && isTelemetryEnabled
-                ? new PostHog(apiKey, { flushInterval: 0 })
-                : undefined;
+        this.posthog = apiKey != null && apiKey.length > 0 && isTelemetryEnabled ? new PostHog(apiKey) : undefined;
         this.posthog?.on("error", () => {
             // Silently swallow – analytics errors should never surface to end users
         });
