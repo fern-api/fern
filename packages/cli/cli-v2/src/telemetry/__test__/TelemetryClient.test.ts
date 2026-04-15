@@ -13,7 +13,7 @@ const { mockCapture, mockShutdown } = vi.hoisted(() => ({
 vi.mock("posthog-node", () => ({
     // eslint-disable-next-line func-style
     PostHog: vi.fn(function () {
-        return { capture: mockCapture, shutdown: mockShutdown };
+        return { capture: mockCapture, shutdown: mockShutdown, on: vi.fn() };
     })
 }));
 
