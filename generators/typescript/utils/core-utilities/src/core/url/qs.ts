@@ -2,13 +2,11 @@ type ArrayFormat = "indices" | "repeat" | "comma";
 
 interface QueryStringOptions {
     arrayFormat?: ArrayFormat;
-    arrayFormats?: Record<string, ArrayFormat>;
     encode?: boolean;
 }
 
 const defaultQsOptions: Required<QueryStringOptions> = {
     arrayFormat: "indices",
-    arrayFormats: {},
     encode: true,
 } as const;
 
@@ -37,7 +35,7 @@ function stringifyObject(obj: Record<string, unknown>, prefix = "", options: Req
             if (value.length === 0) {
                 continue;
             }
-            const effectiveFormat = options.arrayFormats?.[key] ?? options.arrayFormat;
+            const effectiveFormat = options.arrayFormat;
             if (effectiveFormat === "comma") {
                 const encodedKey = options.encode ? encodeURIComponent(fullKey) : fullKey;
                 const encodedValues = value.map((item) =>
