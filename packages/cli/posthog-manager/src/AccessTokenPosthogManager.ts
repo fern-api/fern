@@ -7,7 +7,10 @@ export class AccessTokenPosthogManager implements PosthogManager {
     private posthog: PostHog;
 
     constructor({ posthogApiKey }: { posthogApiKey: string }) {
-        this.posthog = new PostHog(posthogApiKey);
+        this.posthog = new PostHog(posthogApiKey, { flushInterval: 0 });
+        this.posthog.on("error", () => {
+            // Silently swallow – analytics errors should never surface to end users
+        });
     }
 
     public async identify(): Promise<void> {
@@ -31,7 +34,7 @@ export class AccessTokenPosthogManager implements PosthogManager {
 
     public async flush(): Promise<void> {
         try {
-            await Promise.race([this.posthog.flush(), new Promise<void>((resolve) => setTimeout(resolve, 3000))]);
+            await Promise.race([this.posthog.shutdown(), new Promise<void>((resolve) => setTimeout(resolve, 3000))]);
         } catch {
             // Silently swallow – analytics should never block the CLI
         }

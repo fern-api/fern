@@ -1,0 +1,3 @@
+- summary: |
+    Suppress PostHog network errors from being shown to end users during CLI execution.
+  type: fix
