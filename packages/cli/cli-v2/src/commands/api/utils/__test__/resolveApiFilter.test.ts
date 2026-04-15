@@ -1,7 +1,7 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { describe, expect, it } from "vitest";
 import { createTestContext } from "../../../../__test__/utils/createTestContext.js";
-import { CliError } from "../../../../errors/CliError.js";
+import { CliError } from "@fern-api/task-context";
 import type { Workspace } from "../../../../workspace/Workspace.js";
 import { resolveApiFilter } from "../resolveApiFilter.js";
 
@@ -19,7 +19,7 @@ function makeWorkspace(...apiNames: string[]): Workspace {
 
 /** Calls resolveApiFilter with isTTY forced to false. */
 async function resolveFilter(workspace: Workspace, api?: string): Promise<string | undefined> {
-    const context = createTestContext({ cwd: AbsoluteFilePath.of("/tmp") });
+    const context = await createTestContext({ cwd: AbsoluteFilePath.of("/tmp") });
     Object.defineProperty(context, "isTTY", { get: () => false });
     return resolveApiFilter({ context, args: { api }, workspace });
 }

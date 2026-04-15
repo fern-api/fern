@@ -1,7 +1,7 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { describe, expect, it } from "vitest";
 import { createTestContext } from "../../../../__test__/utils/createTestContext.js";
-import { CliError } from "../../../../errors/CliError.js";
+import { CliError } from "@fern-api/task-context";
 import { PublishCommand } from "../command.js";
 
 // ---------------------------------------------------------------------------

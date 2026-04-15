@@ -107,7 +107,8 @@ export class CompileCommand {
         const definition = workspace.apis[selectedApi];
         if (definition == null) {
             throw new CliError({
-                message: `Internal error; API '${selectedApi}' not found in workspace`
+                message: `Internal error; API '${selectedApi}' not found in workspace`,
+                code: CliError.Code.InternalError
             });
         }
         return { apiName: selectedApi, definition };

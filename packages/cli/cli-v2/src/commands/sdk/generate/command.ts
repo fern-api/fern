@@ -503,10 +503,11 @@ export class GenerateCommand {
                 const available = allTargets.map((t) => t.name);
                 if (available.length > 0) {
                     throw new CliError({
-                        message: `Target '${args.target}' not found. Available targets: ${available.join(", ")}`
+                        message: `Target '${args.target}' not found. Available targets: ${available.join(", ")}`,
+                        code: CliError.Code.ConfigError
                     });
                 } else {
-                    throw new CliError({ message: `Target '${args.target}' not found` });
+                    throw new CliError({ message: `Target '${args.target}' not found`, code: CliError.Code.ConfigError });
                 }
             }
         }

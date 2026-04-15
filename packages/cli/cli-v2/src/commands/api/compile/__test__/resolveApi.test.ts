@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { createTestContext } from "../../../../__test__/utils/createTestContext.js";
 import type { ApiDefinition } from "../../../../api/config/ApiDefinition.js";
 import type { Context } from "../../../../context/Context.js";
-import { CliError } from "../../../../errors/CliError.js";
+import { CliError } from "@fern-api/task-context";
 import type { Workspace } from "../../../../workspace/Workspace.js";
 import { CompileCommand } from "../command.js";
 
@@ -25,7 +25,7 @@ async function resolveApi(
     workspace: Workspace,
     api?: string
 ): Promise<{ apiName: string; definition: ApiDefinition }> {
-    const context = createTestContext({ cwd: AbsoluteFilePath.of("/tmp") });
+    const context = await createTestContext({ cwd: AbsoluteFilePath.of("/tmp") });
     Object.defineProperty(context, "isTTY", { get: () => false });
 
     return (

@@ -1,7 +1,6 @@
+import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
 import inquirer from "inquirer";
-
-import { CliError } from "@fern-api/task-context";
 
 export interface PromptSelectChoice<T> {
     /** Display name shown in the dropdown */
@@ -44,7 +43,7 @@ export async function promptSelect<T>({
     }
 
     if (!isTTY) {
-        throw new CliError({ message: nonInteractiveError });
+        throw new CliError({ message: nonInteractiveError, code: CliError.Code.ConfigError });
     }
 
     const maxNameLen = Math.max(...choices.map((c) => c.name.length));

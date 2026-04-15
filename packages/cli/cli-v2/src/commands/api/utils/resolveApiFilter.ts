@@ -1,5 +1,6 @@
+import { CliError } from "@fern-api/task-context";
+
 import type { Context } from "../../../context/Context.js";
-import { CliError } from "../../../errors/CliError.js";
 import { promptSelect } from "../../../ui/promptSelect.js";
 import type { Workspace } from "../../../workspace/Workspace.js";
 
@@ -29,7 +30,8 @@ export async function resolveApiFilter({
     if (args.api != null) {
         if (workspace.apis[args.api] == null) {
             throw new CliError({
-                message: `API '${args.api}' not found. Available APIs: ${apiNames.join(", ")}`
+                message: `API '${args.api}' not found. Available APIs: ${apiNames.join(", ")}`,
+                code: CliError.Code.ConfigError
             });
         }
         return args.api;
