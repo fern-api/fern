@@ -42,6 +42,30 @@ jobs:
       - name: Build CLI (prod)
         run: pnpm fern:build
 
+      # The build writes "catalog:" as the @boundaryml/baml version (pnpm-
+      # specific) and `npm pkg fix` strips it. Resolve the real version from
+      # the workspace catalog so `npm install` works in the smoke-test jobs.
+      - name: Patch runtime dependencies in artifact package.json
+        run: |
+          BAML_VERSION=$(node -e "
+            const fs = require('fs');
+            const yaml = require('js-yaml');
+            const ws = yaml.load(fs.readFileSync('pnpm-workspace.yaml', 'utf8'));
+            const catalog = ws.catalog || {};
+            console.log(catalog['@boundaryml/baml'] || '');
+          ")
+          echo "Resolved @boundaryml/baml version: $BAML_VERSION"
+
+          node -e "
+            const fs = require('fs');
+            const pkg = JSON.parse(fs.readFileSync('packages/cli/cli/dist/prod/package.json', 'utf8'));
+            pkg.dependencies = pkg.dependencies || {};
+            pkg.dependencies['@boundaryml/baml'] = process.argv[1];
+            fs.writeFileSync('packages/cli/cli/dist/prod/package.json', JSON.stringify(pkg, null, 2) + '\n');
+          " "$BAML_VERSION"
+          echo "Patched package.json:"
+          cat packages/cli/cli/dist/prod/package.json
+
       - name: Upload CLI artifact
         uses: actions/upload-artifact@v6
         with:
@@ -84,16 +108,22 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Setup pnpm
-        if: steps.node-check.outputs.available == 'true'
-        uses: pnpm/action-setup@v5
-
       - name: Download CLI artifact
         if: steps.node-check.outputs.available == 'true'
         uses: actions/download-artifact@v7
         with:
           name: fern-cli
           path: cli-dist/
+
+      # Simulate what a customer does: npm install -g fern-api
+      - name: Install CLI globally
+        if: steps.node-check.outputs.available == 'true'
+        shell: bash
+        run: |
+          echo "Installing CLI globally from artifact (simulating npm install -g fern-api)..."
+          npm install -g ./cli-dist/
+          echo "Installed fern CLI:"
+          fern --version || echo "fern --version exited with $?"
 
       - name: Install Playwright
         if: steps.node-check.outputs.available == 'true'
@@ -109,8 +139,7 @@ jobs:
           FERN_TOKEN: ${{ secrets.FERN_SMOKE_TEST_API_KEY }}
         run: |
           cd smoke-test/fern
-          FERN_NO_VERSION_REDIRECTION=true node --enable-source-maps \
-            "$GITHUB_WORKSPACE/cli-dist/cli.cjs" docs dev --force-download \
+          FERN_NO_VERSION_REDIRECTION=true fern docs dev --force-download \
             > /tmp/fern-docs-dev.log 2>&1 &
           FERN_PID=$!
           echo "FERN_PID=$FERN_PID" >> $GITHUB_ENV
@@ -166,8 +195,7 @@ jobs:
           FERN_TOKEN: ${{ secrets.FERN_SMOKE_TEST_API_KEY }}
         run: |
           cd smoke-test/fern
-          FERN_NO_VERSION_REDIRECTION=true node --enable-source-maps \
-            "$GITHUB_WORKSPACE/cli-dist/cli.cjs" docs dev --force-download \
+          FERN_NO_VERSION_REDIRECTION=true fern docs dev --force-download \
             > /tmp/fern-docs-dev.log 2>&1 &
           FERN_PID=$!
           echo "FERN_PID=$FERN_PID" >> $GITHUB_ENV
