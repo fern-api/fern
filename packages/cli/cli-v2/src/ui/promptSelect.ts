@@ -1,7 +1,7 @@
 import chalk from "chalk";
 import inquirer from "inquirer";
 
-import { CliError } from "../errors/CliError.js";
+import { CliError } from "@fern-api/task-context";
 
 export interface PromptSelectChoice<T> {
     /** Display name shown in the dropdown */
@@ -36,6 +36,13 @@ export async function promptSelect<T>({
      */
     flagHint?: (value: T) => string | undefined;
 }): Promise<T> {
+    if (choices.length === 0) {
+        throw new CliError({
+            message: "No options available to select from.",
+            code: CliError.Code.InternalError
+        });
+    }
+
     if (!isTTY) {
         throw new CliError({ message: nonInteractiveError });
     }
