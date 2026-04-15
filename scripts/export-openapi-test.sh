@@ -62,18 +62,12 @@ run_spectral() {
     local seed_spec
     seed_spec=$(find_seed_spec "$api_name")
 
-    if npx --yes @stoplight/spectral-cli lint "$seed_spec" > "$output_file.stdout" 2>&1; then
+    if npx --yes @stoplight/spectral-cli lint --fail-severity error "$seed_spec" > "$output_file.stdout" 2>&1; then
         echo "pass" > "$output_file.result"
         echo "✓ $api_name"
     else
-        # Spectral exits non-zero for warnings too; check if there are actual errors
-        if grep -q "error" "$output_file.stdout" 2>/dev/null; then
-            echo "fail" > "$output_file.result"
-            echo "✗ $api_name"
-        else
-            echo "pass" > "$output_file.result"
-            echo "✓ $api_name (warnings only)"
-        fi
+        echo "fail" > "$output_file.result"
+        echo "✗ $api_name"
     fi
 }
 
