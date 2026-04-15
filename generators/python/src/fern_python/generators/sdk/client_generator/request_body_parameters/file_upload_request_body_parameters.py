@@ -1,4 +1,4 @@
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Union
 
 from ...context.sdk_generator_context import SdkGeneratorContext
 from ..constants import DEFAULT_BODY_PARAMETER_VALUE
@@ -6,6 +6,7 @@ from ..type_utilities import is_type_primitive_for_multipart
 from .abstract_request_body_parameters import AbstractRequestBodyParameters
 from fern_python.codegen import AST
 from fern_python.external_dependencies.json import Json
+from fern_python.utils.name_resolver import get_name_from_wire_value, get_wire_value, resolve_name
 
 import fern.ir.resources as ir_types
 
@@ -91,10 +92,10 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
         )
 
     def _get_file_property_raw_name(self, property: ir_types.FileProperty) -> str:
-        return property.get_as_union().key.wire_value
+        return get_wire_value(property.get_as_union().key)
 
     def _get_body_property_raw_name(self, property: ir_types.InlinedRequestBodyProperty) -> str:
-        return property.name.wire_value
+        return get_wire_value(property.name)
 
     def _get_raw_property_name(self, property: ir_types.FileUploadRequestProperty) -> str:
         return property.visit(
@@ -115,10 +116,10 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
         )
 
     def _get_file_property_name(self, property: ir_types.FileProperty) -> str:
-        return property.get_as_union().key.name.snake_case.safe_name
+        return resolve_name(get_name_from_wire_value(property.get_as_union().key)).snake_case.safe_name
 
     def _get_body_property_name(self, property: ir_types.InlinedRequestBodyProperty) -> str:
-        return property.name.name.snake_case.safe_name
+        return resolve_name(get_name_from_wire_value(property.name)).snake_case.safe_name
 
     def _check_has_json_body_property(self) -> bool:
         for property in self._request.properties:
@@ -141,8 +142,9 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
                         continue
                     elif property_as_union.type == "bodyProperty":
                         prop_name = self._get_body_property_name(property_as_union)
+                        prop_wire = get_wire_value(property_as_union.name)
                         if self._is_primitive_type(property_as_union.value_type):
-                            writer.write_line(f'"{property_as_union.name.wire_value}": {prop_name},')
+                            writer.write_line(f'"{prop_wire}": {prop_name},')
                         else:
                             type_hint = self._get_property_type(property)
                             json_dumps_expr = AST.Expression(
@@ -153,11 +155,11 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
                                 )
                             )
                             if type_hint.is_optional:
-                                writer.write(f'"{property_as_union.name.wire_value}": ')
+                                writer.write(f'"{prop_wire}": ')
                                 writer.write_node(json_dumps_expr)
                                 writer.write_line(f" if {prop_name} is not OMIT else OMIT,")
                             else:
-                                writer.write(f'"{property_as_union.name.wire_value}": ')
+                                writer.write(f'"{prop_wire}": ')
                                 writer.write_node(json_dumps_expr)
                                 writer.write_line(",")
             writer.write_line("}")
@@ -182,32 +184,30 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
                     type_hint = self._get_property_type(property)
                     property_as_union = property.get_as_union()
                     if property_as_union.type == "bodyProperty" and property_as_union.content_type is not None:
+                        _prop_wire = get_wire_value(property_as_union.name)
+                        _prop_name = self._get_body_property_name(property_as_union)
                         if type_hint.is_optional:
                             writer.write_line("**(")
                             with writer.indent():
-                                writer.write(f'{{"{property_as_union.name.wire_value}": (None, ')
+                                writer.write(f'{{"{_prop_wire}": (None, ')
                                 expression = AST.Expression(
-                                    self._context.core_utilities.jsonable_encoder(
-                                        AST.Expression(property_as_union.name.wire_value)
-                                    )
+                                    self._context.core_utilities.jsonable_encoder(AST.Expression(_prop_name))
                                 )
                                 if property_as_union.content_type == "text/plain":
                                     writer.write_node(expression)
                                 else:
                                     writer.write_node(AST.Expression(self._get_json_dumps(expression)))
                                 writer.write_line(f', "{property_as_union.content_type}")}}')
-                                writer.write_line(f"if {property_as_union.name.wire_value} is not OMIT ")
+                                writer.write_line(f"if {_prop_name} is not OMIT ")
                                 writer.write_line("else {}")
                             writer.write_line("),")
                         else:
-                            writer.write(f'"{property_as_union.name.wire_value}": (None, ')
+                            writer.write(f'"{_prop_wire}": (None, ')
                             writer.write_node(
                                 AST.Expression(
                                     self._get_json_dumps(
                                         AST.Expression(
-                                            self._context.core_utilities.jsonable_encoder(
-                                                AST.Expression(property_as_union.name.wire_value)
-                                            )
+                                            self._context.core_utilities.jsonable_encoder(AST.Expression(_prop_name))
                                         )
                                     )
                                 )
@@ -217,19 +217,19 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
 
                         def write_file_property(writer: AST.NodeWriter, file_property: ir_types.FileProperty) -> None:
                             file_property_as_union = file_property.get_as_union()
+                            _key_wire = get_wire_value(file_property_as_union.key)
+                            _key_name = self._get_file_property_name(file_property)
                             if file_property_as_union.content_type is not None:
-                                writer.write(f'"{file_property_as_union.key.wire_value}": ')
+                                writer.write(f'"{_key_wire}": ')
                                 writer.write_node(
                                     self._context.core_utilities.with_content_type(
                                         AST.Expression(
-                                            f'file={file_property_as_union.key.wire_value}, default_content_type="{file_property_as_union.content_type}"'
+                                            f'file={_key_name}, default_content_type="{file_property_as_union.content_type}"'
                                         )
                                     )
                                 )
                             else:
-                                writer.write(
-                                    f'"{file_property_as_union.key.wire_value}": {self._get_file_property_name(file_property)}'
-                                )
+                                writer.write(f'"{_key_wire}": {_key_name}')
 
                         if type_hint.is_optional:
                             writer.write_line("**(")
@@ -256,5 +256,5 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
     def get_content(self) -> Optional[AST.Expression]:
         return None
 
-    def get_parameter_name_rewrites(self) -> Dict[ir_types.Name, str]:
+    def get_parameter_name_rewrites(self) -> Dict[Union[str, ir_types.Name], str]:
         return {}

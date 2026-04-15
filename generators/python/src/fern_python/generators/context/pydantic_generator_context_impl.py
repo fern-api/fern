@@ -9,6 +9,7 @@ from .type_reference_to_type_hint_converter import TypeReferenceToTypeHintConver
 from fern_python.codegen import AST, Filepath
 from fern_python.declaration_referencer import AbstractDeclarationReferencer
 from fern_python.generators.pydantic_model.custom_config import UnionNamingVersions
+from fern_python.utils import get_original_name
 from ordered_set import OrderedSet
 
 import fern.ir.resources as ir_types
@@ -233,13 +234,13 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
             resolved_type_union = shape.resolved_type.get_as_union()
             if resolved_type_union.type != "named":
                 raise RuntimeError(
-                    f"Cannot get properties because {declaration.name.name.original_name} is not an object, it's a {shape.type}"
+                    f"Cannot get properties because {get_original_name(declaration.name.name)} is not an object, it's a {shape.type}"
                 )
             else:
                 return self.get_all_properties_including_extensions(resolved_type_union.name.type_id)
         elif shape.type != "object":
             raise RuntimeError(
-                f"Cannot get properties because {declaration.name.name.original_name} is not an object, it's a {shape.type}"
+                f"Cannot get properties because {get_original_name(declaration.name.name)} is not an object, it's a {shape.type}"
             )
 
         properties = shape.properties.copy()

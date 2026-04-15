@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: Required nullable example
-  version: ''
+  version: 0.0.0
 paths:
   /foo:
     get:
@@ -14,22 +14,23 @@ paths:
           description: An optional baz
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
         - name: optional_nullable_baz
           in: query
           description: An optional baz
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
         - name: required_baz
           in: query
           description: A required baz
           required: true
           schema:
             type: string
-          example: required_baz
           examples:
             Example1:
               value: required_baz
@@ -38,9 +39,9 @@ paths:
           description: A required baz
           required: true
           schema:
-            type: string
-            nullable: true
-          example: required_nullable_baz
+            type:
+              - string
+              - 'null'
           examples:
             Example1:
               value: required_nullable_baz
@@ -91,17 +92,20 @@ paths:
               type: object
               properties:
                 nullable_text:
-                  type: string
-                  nullable: true
+                  type:
+                    - string
+                    - 'null'
                   description: Can be explicitly set to null to clear the value
                 nullable_number:
-                  type: number
+                  type:
+                    - number
+                    - 'null'
                   format: double
-                  nullable: true
                   description: Can be explicitly set to null to clear the value
                 non_nullable_text:
-                  type: string
-                  nullable: true
+                  type:
+                    - string
+                    - 'null'
                   description: Regular non-nullable field
 components:
   schemas:
@@ -110,17 +114,21 @@ components:
       type: object
       properties:
         bar:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         nullable_bar:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         nullable_required_bar:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         required_bar:
           type: string
-          example: required_bar
+          examples:
+            - required_bar
       required:
         - nullable_required_bar
         - required_bar

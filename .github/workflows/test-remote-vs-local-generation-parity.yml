@@ -1,10 +1,9 @@
 name: Test Remote vs Local Generation Parity
 
 on:
-  # Runs on every commit to main
-  push:
-    branches:
-      - main
+  # Runs on a daily schedule
+  schedule:
+    - cron: '0 6 * * *' # daily at 6:00 AM UTC
 
   # Runs when triggered manually (supports testing from any branch)
   workflow_dispatch:
@@ -70,7 +69,7 @@ jobs:
                 ;;
             esac
           else
-            # For push and workflow_dispatch, test all generators
+            # For schedule and workflow_dispatch, test all generators
             echo 'generators=["ts-sdk", "java-sdk", "go-sdk", "python-sdk"]' >> $GITHUB_OUTPUT
           fi
 

@@ -568,19 +568,21 @@ function AnalyzeSdkDiff(
     ```
 
     Message Guidelines:
-    - Use conventional commit types: feat, fix, refactor, docs, chore, test, style, perf
+    - The commit type MUST match the version bump:
+      - MAJOR → use "feat!:" prefix (the "!" signals a breaking change per Conventional Commits)
+      - MINOR → use "feat:" prefix
+      - PATCH → use "fix:" or "chore:" prefix (whichever fits the change)
+      - NO_CHANGE → use "chore:" prefix
     - Keep the summary line under 72 characters
     - Write in present tense imperative mood ("add" not "added" or "adds")
-    - For breaking changes: include migration instructions in the detailed description
-    - For new features: highlight new capabilities in the key changes
+    - For MAJOR: the summary MUST name the breaking change (e.g., "feat!: remove parserCreateJob InputStream overloads")
+    - For MINOR: the summary should name the new capability
     - For PATCH: describe the fix or improvement
-    - For NO_CHANGE: use type "chore" and state that no functional changes were made
-    - Be specific and action-oriented
-    - Do not use "Fern regeneration" in commit messages - use "SDK regeneration" instead
-    - NEVER include the literal version "0.0.0-fern-placeholder" in the commit message - if you see this placeholder
-    in the diff, describe changes generically (e.g., "added X-Fern-SDK-Version header")
-    - The previous version is provided for context only. Do not include it
-    literally in the commit message summary line.
+    - Be specific — do not use generic summaries like "update SDK" or "regenerate SDK"
+    - Do not use "Fern regeneration" in commit messages — use "SDK regeneration" instead
+    - NEVER include the literal version "0.0.0-fern-placeholder" in the commit message — if you see this placeholder
+      in the diff, describe changes generically (e.g., "added X-Fern-SDK-Version header")
+    - The previous version is provided for context only. Do not include it literally in the summary line.
 
     {% if prior_changelog %}
     Prior changelog entries (for style reference):
@@ -607,16 +609,27 @@ function AnalyzeSdkDiff(
 
     Changelog Entry Guidelines:
     - Write for SDK consumers, not engineers reading the source code
-    - MAJOR: explain what broke and how to migrate ("The `getUser` method has been
-      removed. Replace calls with `fetchUser(id)` which returns the same type.")
-    - MINOR: describe the new capability ("New `createPayment()` method available
-      on `PaymentsClient`.")
+    - Prefix each entry with a category tag: [BREAKING], [ADDED], [CHANGED], or [FIXED]
+      - MAJOR changes MUST use [BREAKING]
+      - MINOR additions use [ADDED]
+      - MINOR behavioral changes use [CHANGED]
+      - PATCH fixes use [FIXED] (or empty string if trivial)
+    - For [BREAKING]: name the exact symbol, explain what broke, and give a one-line migration
+      Example: "[BREAKING] **`parserCreateJob`** now accepts `File[]` instead of `File`. Wrap single files in an array: `parserCreateJob([file], request)`."
+    - For [ADDED]: name the new capability in one sentence
+      Example: "[ADDED] **`LabAccountClient`** for managing team lab accounts."
+    - Describe patterns once, not per-file. If the same method was added to 50 classes,
+      write ONE entry: "[ADDED] **`additionalProperty()`** and **`additionalProperties()`** builder methods on all request types."
+      Do NOT write 50 separate entries.
+    - NEVER silently drop a category of change. If new enum values were added, new clients were introduced,
+      or fields were removed, each *category* must appear — but you don't need to list every individual value.
+      GOOD: "[ADDED] New enum values added across several types including `ProviderType` and `OrderStatus`."
+      BAD:  listing every enum value
     - PATCH: leave empty string — patch changes don't warrant changelog entries
     - Do not use conventional commit prefixes (no "feat:", "fix:", etc.)
-    - Write in third person ("The SDK now supports..." not "Add support for...")
-    - IMPORTANT: Wrap any type references containing angle brackets in backticks
-      to prevent MDX parsing issues. For example, write `Optional<String>` not
-      Optional<String>, and `Map<String, Object>` not Map<String, Object>.
+    - Write in third person present tense
+    - Prefer fewer, richer entries over many thin ones. Aim for 3-5 entries per chunk by grouping related changes.
+    - IMPORTANT: Wrap type references containing angle brackets in backticks (e.g., `Optional<String>`)
 
     Remember again that YOU MUST return a structured JSON response with these four fields:
     - message: A git commit message formatted like the example previously provided
@@ -645,53 +658,126 @@ class ConsolidateChangelogResponse {
 function ConsolidateChangelog(
     raw_entries: string @description("Newline-separated raw changelog entries from chunked diff analysis"),
     version_bump: string @description("The overall version bump: MAJOR, MINOR, or PATCH"),
-    language: string @description("The SDK programming language, e.g. 'typescript', 'python', 'java'")
+    language: string @description("The SDK programming language, e.g. 'typescript', 'python', 'java'"),
+    previous_version: string @description("The previous SDK version before this change, e.g. '1.2.3'. Empty string if unknown."),
+    new_version: string @description("The new SDK version after this change, e.g. '1.3.0'. Empty string if unknown.")
 ) -> ConsolidateChangelogResponse {
   client DefaultClient
 
   prompt #"
-    You are a technical writer formatting release notes for a {{language}} SDK.
+    You are a technical writer producing release notes for a {{language}} SDK.
 
-    The raw change notes below are noisy and repetitive — many bullets describe the same
-    change across different packages. Deduplicate aggressively: if the same feature appears
-    multiple times, merge into one entry.
+    ## Input
 
-    Raw changelog entries:
+    Raw changelog entries from chunked diff analysis (noisy, repetitive):
     ---
     {{raw_entries}}
     ---
 
     Overall version bump: {{version_bump}}
+    {% if previous_version %}Previous version: {{previous_version}}{% endif %}
+    {% if new_version %}New version: {{new_version}}{% endif %}
 
-    Produce three outputs:
+    ## Deduplication Rules (CRITICAL)
 
-    ---
+    Before writing anything, apply these deduplication rules:
 
-    ## 1. CHANGELOG.md entry (Keep a Changelog format)
+    1. **Pattern collapse**: If the same method/field/type was added/changed/removed across
+       multiple classes or files, write ONE bullet summarizing the pattern.
+       BAD:  "- `additionalProperty()` added to UserRequest" + "- `additionalProperty()` added to OrderRequest" + ... (x15)
+       GOOD: "- **`additionalProperty()`** and **`additionalProperties()`** builder methods added to all request and response types"
 
-    - Group under: `### Breaking Changes`, `### Added`, `### Changed`, `### Fixed`
-    - Only include sections with entries
-    - **Bold the symbol name** first, then one tight sentence for SDK consumers
-    - No code fences — prose only
-    - For breaking changes, append the migration action inline
+    2. **Semantic merge**: If multiple entries describe aspects of the same feature, merge them.
+       BAD:  "- New LabAccountClient" + "- New getTeamLabAccounts method" + "- Lab account management support"
+       GOOD: "- **`LabAccountClient`** — new client for managing team lab accounts with `getTeamLabAccounts()` support"
 
-    ## 2. PR Description
+    3. **No silent drops**: Every *category* of change (new clients, new methods, removed methods,
+       new enum values, field type changes, etc.) must be represented in at least one bullet.
+       You don't need to list every individual value or class — just acknowledge the category.
+       GOOD: "- **New enum values** added across several types including `ProviderType` and `OrderStatus`"
+       BAD:  Silently omitting that enum values changed at all
+       ALSO BAD: Listing every value: `SamsungHealth`, `SonoraQuest`, `Cancelled`, `Processing`, ...
 
-    - `## Breaking Changes` section at top (if any)
-      - One `###` per breaking change with **Before/After** code fences and a **Migration:** line
-    - `## What's New` section summarizing added/changed features in prose paragraphs,
-      grouped by theme (e.g. logging, streaming, pagination, builder improvements)
-    - Do NOT list every class that got the same method — summarize as a single entry
+    4. **Prefer concise output**: Aim for 5-15 bullets total. Prioritize breaking changes and new
+       capabilities. Bulk additions (builder methods, enum values) get one summary bullet each.
 
-    ## 3. Version Bump Reason
+    ## Output 1: consolidated_changelog (CHANGELOG.md entry)
 
-    - One sentence explaining WHY the overall version bump ({{version_bump}}) was chosen
+    Structure it EXACTLY like this, omitting empty sections:
+
+    ### Breaking Changes
+    - **`symbolName`** — what broke and how to migrate. Example: replace `foo(file)` with `foo([file])`.
+
+    ### Added
+    - **`symbolName`** — what was added, one sentence.
+
+    ### Changed
+    - **`symbolName`** — what changed, one sentence.
+
+    ### Fixed
+    - **`symbolName`** — what was fixed, one sentence.
+
+    Rules:
+    - **Breaking Changes** section MUST come first when present
+    - Bold the symbol name, then a dash, then one tight sentence
+    - No code fences in the changelog — prose and backtick-wrapped symbols only
+    - Aim for 5-15 total bullets. Every *category* of change must be represented, but individual
+      values/classes within a category can be summarized (e.g., "new enum values across several types").
+    - One line per change, no multi-line bullets
+
+    ## Output 2: pr_description (PR body)
+
+    {% if previous_version and new_version %}
+    The PR description MUST start with a version summary block:
+
+    ## {{previous_version}} → {{new_version}} ({{version_bump}})
+
+    **Reason:** {version_bump_reason}
+
+    Then the breaking changes / what's new sections follow.
+    {% endif %}
+
+    If version_bump is MAJOR, start with:
+
+    ## Breaking Changes
+
+    ### `symbolName` — short description
+    **Before:**
+    ```{{language}}
+    // old usage
+    ```
+    **After:**
+    ```{{language}}
+    // new usage
+    ```
+    **Migration:** One sentence on how to update.
+
+    (repeat for each breaking change)
+
+    Then:
+
+    ## What's New
+    Brief prose paragraphs grouped by theme. Do NOT list every class — summarize patterns.
+
+    If version_bump is MINOR or PATCH, just use:
+
+    ## What's New
+    Brief prose paragraphs grouped by theme. Do NOT list every class — summarize patterns.
+
+    Rules:
+    - Breaking changes section at top with Before/After code examples
+    - What's New in prose paragraphs, not bullet lists — group by theme (e.g., "Lab account management", "Builder improvements")
+    - Do NOT list every class that got the same method — summarize as one theme
+    - Every *category* of change from the changelog must be mentioned somewhere in the PR description.
+      Don't enumerate every value — summarize bulk changes in a sentence.
+
+    ## Output 3: version_bump_reason
+
+    One sentence explaining WHY the overall version bump ({{version_bump}}) was chosen.
     - For MAJOR: name the specific breaking symbol(s) and explain why existing callers break
     - For MINOR: name the new capability added
     - For PATCH: describe what was fixed or improved
-    - Example: "MAJOR because `parserCreateJob` InputStream overloads were removed from `RawLabReportClient`, breaking existing callers."
-
-    ---
+    - Example: "MAJOR because `parserCreateJob` InputStream overloads were removed from `RawLabReportClient`, breaking existing callers that pass InputStream arguments."
 
     {{ ctx.output_format }}
   "#

@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: inferred-auth-implicit-api-key
-  version: ''
+  version: 0.0.0
 paths:
   /token:
     post:
@@ -16,7 +16,7 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -29,7 +29,7 @@ paths:
       parameters: []
       responses:
         '204':
-          description: ''
+          description: No content
   /nested/get-something:
     get:
       operationId: nested_api_getSomething
@@ -38,7 +38,7 @@ paths:
       parameters: []
       responses:
         '204':
-          description: ''
+          description: No content
       security:
         - InferredAuthScheme: []
   /get-something:
@@ -49,7 +49,7 @@ paths:
       parameters: []
       responses:
         '204':
-          description: ''
+          description: No content
       security:
         - InferredAuthScheme: []
 components:
@@ -66,8 +66,9 @@ components:
         expires_in:
           type: integer
         scope:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
       required:
         - access_token
         - token_type

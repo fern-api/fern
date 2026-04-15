@@ -411,9 +411,19 @@ export class LocalTaskHandler {
                                 this.context.logger.debug(
                                     `Consolidating ${allChangelogEntries.length} changelog entries via AI rollup`
                                 );
+                                const projectedVersion = this.incrementVersion(
+                                    previousVersion,
+                                    bestBump as VersionBump
+                                );
                                 const rollup = await BamlClient.withOptions({
                                     clientRegistry: await this.getClientRegistry()
-                                }).ConsolidateChangelog(rawEntries, bestBump, this.generatorLanguage ?? "unknown");
+                                }).ConsolidateChangelog(
+                                    rawEntries,
+                                    bestBump,
+                                    this.generatorLanguage ?? "unknown",
+                                    previousVersion,
+                                    projectedVersion
+                                );
                                 changelogEntry = rollup.consolidated_changelog?.trim() || rawEntries;
                                 prDescription = rollup.pr_description?.trim() || undefined;
                                 versionBumpReason = rollup.version_bump_reason?.trim() || undefined;

@@ -19,6 +19,9 @@ export function createTaskContext(): TaskContext {
         failWithoutThrowing: (_message?: string, _error?: unknown) => {
             // no-op
         },
+        captureException: (_error: unknown) => {
+            // no-op
+        },
         getResult: () => TaskResult.Success,
         addInteractiveTask: () => {
             throw new Error("unimplemented");

@@ -1,4 +1,4 @@
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Union
 
 from ...context.sdk_generator_context import SdkGeneratorContext
 from ..constants import DEFAULT_BODY_PARAMETER_VALUE
@@ -9,6 +9,7 @@ from fern_python.codegen.ast.nodes.declarations.function.named_function_paramete
     NamedFunctionParameter,
 )
 from fern_python.generators.pydantic_model.model_utilities import can_tr_be_fern_model
+from fern_python.utils.name_resolver import get_name_from_wire_value, get_wire_value, resolve_name
 
 import fern.ir.resources as ir_types
 
@@ -29,7 +30,7 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
             context.custom_config.inline_request_params and self._type_id is not None
         )
         self._are_any_properties_optional = self.should_inline_request_parameters
-        self.parameter_name_rewrites: Dict[ir_types.Name, str] = {}
+        self.parameter_name_rewrites: Dict[Union[str, ir_types.Name], str] = {}
 
     def _get_type_id_from_type_reference(self, type_reference: ir_types.TypeReference) -> Optional[ir_types.TypeId]:
         return type_reference.visit(
@@ -73,9 +74,9 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
                 property_name = self._get_property_name(property)
                 if names_to_deconflict is not None and property_name in names_to_deconflict:
                     maybe_body_name = self.get_body_name()
-                    property_name = f"{(maybe_body_name.snake_case.safe_name if maybe_body_name is not None else 'request')}_{property_name}"
+                    property_name = f"{(resolve_name(maybe_body_name).snake_case.safe_name if maybe_body_name is not None else 'request')}_{property_name}"
 
-                self.parameter_name_rewrites[property.name.name] = property_name
+                self.parameter_name_rewrites[get_name_from_wire_value(property.name)] = property_name
                 parameters.append(
                     AST.NamedFunctionParameter(
                         name=property_name,
@@ -83,7 +84,7 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
                         type_hint=type_hint,
                         initializer=AST.Expression(DEFAULT_BODY_PARAMETER_VALUE) if type_hint.is_optional else None,
                         raw_type=property.value_type,
-                        raw_name=property.name.wire_value,
+                        raw_name=get_wire_value(property.name),
                     ),
                 )
         return parameters
@@ -114,13 +115,13 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
                         if type_hint.is_optional
                         else None,
                         raw_type=property.value_type,
-                        raw_name=property.name.wire_value,
+                        raw_name=get_wire_value(property.name),
                     ),
                 )
         return non_param_properties
 
     def _get_property_name(self, property: ir_types.InlinedRequestBodyProperty) -> str:
-        return property.name.name.snake_case.safe_name
+        return resolve_name(get_name_from_wire_value(property.name)).snake_case.safe_name
 
     def _get_all_properties_for_inlined_request_body(self) -> List[ir_types.InlinedRequestBodyProperty]:
         if self._type_id is None:
@@ -188,7 +189,7 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
     def _get_request_parameter_name(self) -> str:
         if self._endpoint.sdk_request is None:
             raise RuntimeError("Request body is referenced by SDKRequestBody is not defined")
-        return self._endpoint.sdk_request.request_parameter_name.snake_case.safe_name
+        return resolve_name(self._endpoint.sdk_request.request_parameter_name).snake_case.safe_name
 
     def get_files(self) -> Optional[AST.Expression]:
         return None
@@ -202,7 +203,7 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
     # HACK: This is a bit of a hack to deconflict parameter names when inlining the request body
     # since these parameters can conflict with the query and header properties, we need the name
     # of the body to deconflict them.
-    def get_body_name(self) -> Optional[ir_types.Name]:
+    def get_body_name(self) -> Optional[Union[str, ir_types.Name]]:
         return self._request_body.request_body_type.visit(
             container=lambda _: None,
             named=lambda t: t.name,
@@ -210,5 +211,5 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
             unknown=lambda: None,
         )
 
-    def get_parameter_name_rewrites(self) -> Dict[ir_types.Name, str]:
+    def get_parameter_name_rewrites(self) -> Dict[Union[str, ir_types.Name], str]:
         return self.parameter_name_rewrites

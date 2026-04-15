@@ -172,9 +172,7 @@ async function createJob({
         // This is the only mechanism preventing dryRun for sdk preview jobs;
         // Fiddle's dryRun logic is intentionally unchanged.
         preview: fiddlePreview ?? absolutePathToPreview != null,
-        // TODO: Send pushPreviewBranch to Fiddle once @fern-fern/fiddle-sdk is bumped
-        // to include the pushPreviewBranch field on CreateJobRequestV2.
-        // pushPreviewBranch,
+        pushPreviewBranch,
         fernignoreContents
         // TODO(FER-9671): Pass automation flags to Fiddle once its API is updated:
         //   automationMode,
@@ -238,6 +236,11 @@ async function createJob({
                 return context.failAndThrow(
                     `Branch ${value.branch} does not exist in repository ${value.repositoryOwner}/${value.repositoryName}`
                 );
+            },
+            rateLimitExceeded: () => {
+                // Rate limits are normally caught by the raw 429 status code check above (line 191).
+                // This handler satisfies the exhaustive visitor type and acts as a fallback.
+                throw new TooManyRequestsError();
             },
             _other: (content) => {
                 context.logger.debug(`Failed to create job: ${JSON.stringify(content)}`);
