@@ -148,7 +148,7 @@ jobs:
           FERN_TOKEN: ${{ secrets.FERN_SMOKE_TEST_API_KEY }}
         run: |
           cd smoke-test/fern
-          FERN_NO_VERSION_REDIRECTION=true fern docs dev \
+          FERN_NO_VERSION_REDIRECTION=true fern --log-level debug docs dev \
             > /tmp/fern-docs-dev.log 2>&1 &
           FERN_PID=$!
           echo "FERN_PID=$FERN_PID" >> $GITHUB_ENV
@@ -157,24 +157,21 @@ jobs:
           for i in $(seq 1 180); do
             if grep -qi "ready on" /tmp/fern-docs-dev.log 2>/dev/null; then
               echo "Server reported ready after ${i}s!"
-              echo "--- Dev server logs ---"
-              cat /tmp/fern-docs-dev.log
-              echo "--- End dev server logs ---"
               break
             fi
 
             if ! kill -0 $FERN_PID 2>/dev/null; then
               echo "fern docs dev process (PID: $FERN_PID) exited unexpectedly"
-              echo "--- Dev server logs ---"
-              cat /tmp/fern-docs-dev.log
+              echo "--- Dev server logs (last 50 lines) ---"
+              tail -50 /tmp/fern-docs-dev.log
               echo "--- End dev server logs ---"
               exit 1
             fi
 
             if [ $i -eq 180 ]; then
               echo "Timeout waiting for server to start after 180s"
-              echo "--- Dev server logs ---"
-              cat /tmp/fern-docs-dev.log
+              echo "--- Dev server logs (last 50 lines) ---"
+              tail -50 /tmp/fern-docs-dev.log
               echo "--- End dev server logs ---"
               exit 1
             fi
@@ -187,20 +184,28 @@ jobs:
             sleep 1
           done
 
-          # Wait for SSR to be fully ready — the server may accept connections
-          # before Next.js has compiled its SSR pages. Poll /sitemap.xml (a
-          # lightweight, non-SSR route) first, then warm up /welcome (SSR).
-          echo "Waiting for server to return HTTP 200..."
-          for j in $(seq 1 120); do
+          # Diagnostic: check that the backend API on port 3001 is serving data
+          echo "=== Diagnostic: backend API check ==="
+          BACKEND_CODE=$(curl -s -o /tmp/backend-response.json -w "%{http_code}" --max-time 5 \
+            -X POST http://localhost:3001/v2/registry/docs/load-with-url \
+            -H 'Content-Type: application/json' -d '{}' 2>/dev/null || echo "000")
+          echo "Backend POST /v2/registry/docs/load-with-url -> HTTP $BACKEND_CODE"
+          echo "Backend response (first 1000 chars):"
+          head -c 1000 /tmp/backend-response.json 2>/dev/null || true
+          echo ""
+
+          # Wait for port 3000 to accept connections
+          echo "Waiting for server to return HTTP 200 on /sitemap.xml..."
+          for j in $(seq 1 30); do
             HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 5 http://localhost:3000/sitemap.xml 2>/dev/null || echo "000")
             if [ "$HTTP_CODE" = "200" ]; then
               echo "Server returning 200 on /sitemap.xml after ${j}s"
               break
             fi
-            if [ $j -eq 120 ]; then
-              echo "Server never returned 200 after 120s (last HTTP $HTTP_CODE)"
-              echo "--- Dev server logs ---"
-              cat /tmp/fern-docs-dev.log
+            if [ $j -eq 30 ]; then
+              echo "Server never returned 200 on /sitemap.xml after 30s (last HTTP $HTTP_CODE)"
+              echo "--- Dev server logs (last 100 lines) ---"
+              tail -100 /tmp/fern-docs-dev.log
               echo "--- End dev server logs ---"
               exit 1
             fi
@@ -212,16 +217,22 @@ jobs:
           for k in $(seq 1 60); do
             HTTP_CODE=$(curl -s -o /tmp/warmup-response.html -w "%{http_code}" --max-time 10 http://localhost:3000/welcome 2>/dev/null || echo "000")
             if [ "$HTTP_CODE" = "200" ]; then
-              echo "SSR warm-up succeeded after ${k}s"
+              echo "SSR warm-up succeeded after attempt ${k}"
               break
             fi
+            if [ $k -eq 1 ] || [ $k -eq 5 ] || [ $k -eq 10 ]; then
+              echo "  Attempt $k: HTTP $HTTP_CODE"
+              echo "  --- Next.js debug output (last 30 lines) ---"
+              tail -30 /tmp/fern-docs-dev.log 2>/dev/null || true
+              echo "  --- end ---"
+            fi
             if [ $k -eq 60 ]; then
-              echo "SSR warm-up failed after 60s (last HTTP $HTTP_CODE)"
+              echo "SSR warm-up failed after 60 attempts (last HTTP $HTTP_CODE)"
               echo "--- Response body ---"
               cat /tmp/warmup-response.html 2>/dev/null | head -c 2000
               echo ""
-              echo "--- Dev server logs ---"
-              cat /tmp/fern-docs-dev.log
+              echo "--- Dev server logs (last 200 lines) ---"
+              tail -200 /tmp/fern-docs-dev.log
               echo "--- End dev server logs ---"
               exit 1
             fi
@@ -244,7 +255,7 @@ jobs:
           FERN_TOKEN: ${{ secrets.FERN_SMOKE_TEST_API_KEY }}
         run: |
           cd smoke-test/fern
-          FERN_NO_VERSION_REDIRECTION=true fern docs dev \
+          FERN_NO_VERSION_REDIRECTION=true fern --log-level debug docs dev \
             > /tmp/fern-docs-dev.log 2>&1 &
           FERN_PID=$!
           echo "FERN_PID=$FERN_PID" >> $GITHUB_ENV
@@ -253,24 +264,21 @@ jobs:
           for i in $(seq 1 180); do
             if grep -qi "ready on" /tmp/fern-docs-dev.log 2>/dev/null; then
               echo "Server reported ready after ${i}s!"
-              echo "--- Dev server logs ---"
-              cat /tmp/fern-docs-dev.log
-              echo "--- End dev server logs ---"
               break
             fi
 
             if ! kill -0 $FERN_PID 2>/dev/null; then
               echo "fern docs dev process (PID: $FERN_PID) exited unexpectedly"
-              echo "--- Dev server logs ---"
-              cat /tmp/fern-docs-dev.log
+              echo "--- Dev server logs (last 50 lines) ---"
+              tail -50 /tmp/fern-docs-dev.log
               echo "--- End dev server logs ---"
               exit 1
             fi
 
             if [ $i -eq 180 ]; then
               echo "Timeout waiting for server to start after 180s"
-              echo "--- Dev server logs ---"
-              cat /tmp/fern-docs-dev.log
+              echo "--- Dev server logs (last 50 lines) ---"
+              tail -50 /tmp/fern-docs-dev.log
               echo "--- End dev server logs ---"
               exit 1
             fi
@@ -283,18 +291,28 @@ jobs:
             sleep 1
           done
 
-          # Wait for SSR to be fully ready — poll /sitemap.xml then warm up SSR.
-          echo "Waiting for server to return HTTP 200..."
-          for j in $(seq 1 120); do
+          # Diagnostic: check that the backend API on port 3001 is serving data
+          echo "=== Diagnostic: backend API check ==="
+          BACKEND_CODE=$(curl -s -o /tmp/backend-response.json -w "%{http_code}" --max-time 5 \
+            -X POST http://localhost:3001/v2/registry/docs/load-with-url \
+            -H 'Content-Type: application/json' -d '{}' 2>/dev/null || echo "000")
+          echo "Backend POST /v2/registry/docs/load-with-url -> HTTP $BACKEND_CODE"
+          echo "Backend response (first 1000 chars):"
+          head -c 1000 /tmp/backend-response.json 2>/dev/null || true
+          echo ""
+
+          # Wait for port 3000 to accept connections
+          echo "Waiting for server to return HTTP 200 on /sitemap.xml..."
+          for j in $(seq 1 30); do
             HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 5 http://localhost:3000/sitemap.xml 2>/dev/null || echo "000")
             if [ "$HTTP_CODE" = "200" ]; then
               echo "Server returning 200 on /sitemap.xml after ${j}s"
               break
             fi
-            if [ $j -eq 120 ]; then
-              echo "Server never returned 200 after 120s (last HTTP $HTTP_CODE)"
-              echo "--- Dev server logs ---"
-              cat /tmp/fern-docs-dev.log
+            if [ $j -eq 30 ]; then
+              echo "Server never returned 200 on /sitemap.xml after 30s (last HTTP $HTTP_CODE)"
+              echo "--- Dev server logs (last 100 lines) ---"
+              tail -100 /tmp/fern-docs-dev.log
               echo "--- End dev server logs ---"
               exit 1
             fi
@@ -305,16 +323,22 @@ jobs:
           for k in $(seq 1 60); do
             HTTP_CODE=$(curl -s -o /tmp/warmup-response.html -w "%{http_code}" --max-time 10 http://localhost:3000/welcome 2>/dev/null || echo "000")
             if [ "$HTTP_CODE" = "200" ]; then
-              echo "SSR warm-up succeeded after ${k}s"
+              echo "SSR warm-up succeeded after attempt ${k}"
               break
             fi
+            if [ $k -eq 1 ] || [ $k -eq 5 ] || [ $k -eq 10 ]; then
+              echo "  Attempt $k: HTTP $HTTP_CODE"
+              echo "  --- Next.js debug output (last 30 lines) ---"
+              tail -30 /tmp/fern-docs-dev.log 2>/dev/null || true
+              echo "  --- end ---"
+            fi
             if [ $k -eq 60 ]; then
-              echo "SSR warm-up failed after 60s (last HTTP $HTTP_CODE)"
+              echo "SSR warm-up failed after 60 attempts (last HTTP $HTTP_CODE)"
               echo "--- Response body ---"
               cat /tmp/warmup-response.html 2>/dev/null | head -c 2000
               echo ""
-              echo "--- Dev server logs ---"
-              cat /tmp/fern-docs-dev.log
+              echo "--- Dev server logs (last 200 lines) ---"
+              tail -200 /tmp/fern-docs-dev.log
               echo "--- End dev server logs ---"
               exit 1
             fi
