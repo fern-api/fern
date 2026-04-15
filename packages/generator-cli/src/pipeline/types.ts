@@ -46,8 +46,14 @@ export interface GithubStepConfig {
     changelogEntry?: string;
     /** Structured PR description with Before/After code fences for breaking changes. Takes priority over changelogEntry for PR body. */
     prDescription?: string;
-    /** One-sentence justification for WHY the version bump was chosen. Prepended to PR body when present. */
+    /** One-sentence justification for WHY the version bump was chosen. Shown only for breaking changes. */
     versionBumpReason?: string;
+    /** The previous SDK version before this change (e.g. "1.2.3"). Used for version header in PR body. */
+    previousVersion?: string;
+    /** The new SDK version after this change (e.g. "1.3.0"). Used for version header in PR body. */
+    newVersion?: string;
+    /** The version bump level: MAJOR, MINOR, or PATCH. Used for version header formatting. */
+    versionBump?: string;
     /** Skip push/PR creation, just prepare branches locally */
     previewMode?: boolean;
     /** Generator name for namespaced fern-generation-base tag */

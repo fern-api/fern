@@ -17,9 +17,11 @@ import { setupSoftware } from "./release-setup.js";
 interface ChangelogEntry {
     summary: string;
     type: "fix" | "chore" | "feat" | "internal" | "break";
+    "pre-release"?: string;
 }
 
 const VALID_CHANGELOG_TYPES = new Set(["fix", "chore", "feat", "internal", "break"]);
+const VALID_PRE_RELEASE_TAGS = new Set(["alpha", "beta", "rc"]);
 
 type Severity = "major" | "minor" | "patch";
 
@@ -68,12 +70,22 @@ function validateChangelogEntry(entry: unknown, filename: string, index: number)
         process.exit(1);
     }
 
-    const allowedKeys = new Set(["summary", "type"]);
+    if (obj["pre-release"] !== undefined) {
+        if (typeof obj["pre-release"] !== "string" || !VALID_PRE_RELEASE_TAGS.has(obj["pre-release"])) {
+            console.error(
+                `Error in ${filename}, entry ${index + 1}: Invalid "pre-release" field: ${JSON.stringify(obj["pre-release"])}. ` +
+                    `Expected one of: ${[...VALID_PRE_RELEASE_TAGS].join(", ")}`
+            );
+            process.exit(1);
+        }
+    }
+
+    const allowedKeys = new Set(["summary", "type", "pre-release"]);
     for (const key of Object.keys(obj)) {
         if (!allowedKeys.has(key)) {
             console.error(
                 `Error in ${filename}, entry ${index + 1}: Unknown field "${key}". ` +
-                    `Only "summary" and "type" are allowed.`
+                    `Only "summary", "type", and "pre-release" are allowed.`
             );
             process.exit(1);
         }
@@ -130,6 +142,35 @@ function readUnreleasedChanges(unreleasedDir: string): UnreleasedChange[] {
     return changes;
 }
 
+function getPreReleaseTag(changes: UnreleasedChange[]): string | undefined {
+    for (const change of changes) {
+        for (const entry of change.entries) {
+            if (entry["pre-release"]) {
+                return entry["pre-release"];
+            }
+        }
+    }
+    return undefined;
+}
+
+/**
+ * Parses the pre-release counter from a version string.
+ * E.g., "4.2.0-rc.1" with tag "rc" returns 1; "4.2.0-rc0" with tag "rc" returns 0.
+ * Returns undefined if the current version doesn't use the same pre-release tag.
+ */
+function getPreReleaseCounter(currentVersion: string, tag: string): number | undefined {
+    // Match formats like "-rc.1" or "-rc1"
+    const dotMatch = currentVersion.match(new RegExp(`-${tag}\\.(\\d+)$`));
+    if (dotMatch?.[1] !== undefined) {
+        return Number(dotMatch[1]);
+    }
+    const noDotMatch = currentVersion.match(new RegExp(`-${tag}(\\d+)$`));
+    if (noDotMatch?.[1] !== undefined) {
+        return Number(noDotMatch[1]);
+    }
+    return undefined;
+}
+
 function determineNextVersion(currentVersion: string, changes: UnreleasedChange[]): string {
     let highestSeverity: Severity = "patch";
 
@@ -144,7 +185,12 @@ function determineNextVersion(currentVersion: string, changes: UnreleasedChange[
         }
     }
 
-    const [major, minor, patch] = currentVersion.split(".").map(Number);
+    const preReleaseTag = getPreReleaseTag(changes);
+
+    // Strip pre-release suffix (e.g., "4.2.0-rc.1" -> "4.2.0")
+    const isCurrentPreRelease = currentVersion.includes("-");
+    const baseVersion = currentVersion.replace(/-.*$/, "");
+    const [major, minor, patch] = baseVersion.split(".").map(Number);
 
     if (
         major === undefined ||
@@ -158,14 +204,35 @@ function determineNextVersion(currentVersion: string, changes: UnreleasedChange[
         process.exit(1);
     }
 
+    // Compute the base next version from severity
+    let nextBase: string;
     switch (highestSeverity) {
         case "major":
-            return `${major + 1}.0.0`;
+            nextBase = `${major + 1}.0.0`;
+            break;
         case "minor":
-            return `${major}.${minor + 1}.0`;
+            nextBase = `${major}.${minor + 1}.0`;
+            break;
         case "patch":
-            return `${major}.${minor}.${patch + 1}`;
+            nextBase = isCurrentPreRelease ? `${major}.${minor}.${patch}` : `${major}.${minor}.${patch + 1}`;
+            break;
     }
+
+    // If no pre-release tag requested, return the stable version
+    if (!preReleaseTag) {
+        return nextBase;
+    }
+
+    // If the current version is already a pre-release with the same tag and same
+    // base version, increment the pre-release counter instead of resetting to 0.
+    if (isCurrentPreRelease) {
+        const counter = getPreReleaseCounter(currentVersion, preReleaseTag);
+        if (counter !== undefined && baseVersion === nextBase) {
+            return `${nextBase}-${preReleaseTag}.${counter + 1}`;
+        }
+    }
+
+    return `${nextBase}-${preReleaseTag}.0`;
 }
 
 function getCurrentVersion(versionsFile: string): string {

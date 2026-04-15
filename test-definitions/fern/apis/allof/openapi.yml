@@ -1,0 +1,350 @@
+openapi: 3.0.3
+info:
+  title: allOf Composition
+  version: 1.0.0
+  description: >
+    Exercises allOf schema composition patterns, covering array items narrowing,
+    primitive constraint narrowing, required propagation, metadata inheritance,
+    and multi-parent property merging.
+
+servers:
+  - url: https://api.example.com
+
+paths:
+  /rule-types:
+    get:
+      operationId: searchRuleTypes
+      summary: Search rule types with paginated results
+      parameters:
+        - name: query
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Paginated list of rule types
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RuleTypeSearchResponse"
+
+  /rules:
+    post:
+      operationId: createRule
+      summary: Create a rule with constrained execution context
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RuleCreateRequest"
+      responses:
+        "200":
+          description: Created rule
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RuleResponse"
+
+  /users:
+    get:
+      operationId: listUsers
+      summary: List users with paginated results
+      responses:
+        "200":
+          description: Paginated list of users
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserSearchResponse"
+
+  /entities:
+    get:
+      operationId: getEntity
+      summary: Get an entity that combines multiple parents
+      responses:
+        "200":
+          description: An entity with properties from multiple parents
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CombinedEntity"
+
+  /organizations:
+    get:
+      operationId: getOrganization
+      summary: Get an organization with merged object-typed properties
+      responses:
+        "200":
+          description: An organization whose metadata is merged from two parents
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Organization"
+
+components:
+  schemas:
+    # -----------------------------------------------------------------------
+    # Base schemas
+    # -----------------------------------------------------------------------
+    PaginatedResult:
+      type: object
+      required:
+        - paging
+        - results
+      properties:
+        paging:
+          $ref: "#/components/schemas/PagingCursors"
+        results:
+          type: array
+          maxItems: 100
+          description: Current page of results from the requested resource.
+          items: {}
+
+    PagingCursors:
+      type: object
+      required:
+        - next
+      properties:
+        next:
+          type: string
+          description: Cursor for the next page of results.
+        previous:
+          type: string
+          description: Cursor for the previous page of results.
+
+    RuleExecutionContext:
+      type: string
+      description: Execution environment for a rule.
+      enum:
+        - prod
+        - staging
+        - dev
+
+    AuditInfo:
+      type: object
+      description: Common audit metadata.
+      required:
+        - createdBy
+        - createdDateTime
+      properties:
+        createdBy:
+          type: string
+          description: The user who created this resource.
+          readOnly: true
+        createdDateTime:
+          type: string
+          format: date-time
+          description: When this resource was created.
+          readOnly: true
+        modifiedBy:
+          type: string
+          description: The user who last modified this resource.
+          readOnly: true
+        modifiedDateTime:
+          type: string
+          format: date-time
+          description: When this resource was last modified.
+          readOnly: true
+
+    # -----------------------------------------------------------------------
+    # Case 1: Array items narrowing without redeclaring type: array
+    #
+    # The child specifies only `items` to narrow the element type. Per the
+    # spec, the merged result should be type: array with items: RuleType.
+    # The parent's `required: [results]` must also propagate.
+    # -----------------------------------------------------------------------
+    RuleType:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+
+    RuleTypeSearchResponse:
+      allOf:
+        - $ref: "#/components/schemas/PaginatedResult"
+        - properties:
+            results:
+              items:
+                $ref: "#/components/schemas/RuleType"
+
+    # -----------------------------------------------------------------------
+    # Case 2: Array items narrowing WITH explicit type: array
+    #
+    # Same as Case 1, but the child redeclares type: array alongside items.
+    # This should produce identical output to Case 1.
+    # -----------------------------------------------------------------------
+    User:
+      type: object
+      required:
+        - id
+        - email
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+          format: email
+
+    UserSearchResponse:
+      allOf:
+        - $ref: "#/components/schemas/PaginatedResult"
+        - type: object
+          properties:
+            results:
+              type: array
+              items:
+                $ref: "#/components/schemas/User"
+
+    # -----------------------------------------------------------------------
+    # Case 3: Property-level allOf narrowing a primitive type
+    #
+    # allOf on a single property combines a $ref to an enum with inline
+    # constraints. The result should be a string with both the enum values
+    # and the pattern constraint — not an empty object.
+    # -----------------------------------------------------------------------
+    RuleCreateRequest:
+      type: object
+      required:
+        - name
+        - executionContext
+      properties:
+        name:
+          type: string
+        executionContext:
+          allOf:
+            - $ref: "#/components/schemas/RuleExecutionContext"
+            - type: string
+              pattern: "^(?!prod$)[a-z0-9_-]+$"
+              description: >
+                Execution context for the rule, excluding the prod environment.
+
+    # -----------------------------------------------------------------------
+    # Case 4: allOf with metadata inheritance (description, readOnly)
+    #
+    # Child schema should inherit readOnly and description from parent
+    # properties even when it only narrows part of the property definition.
+    # -----------------------------------------------------------------------
+    RuleResponse:
+      allOf:
+        - $ref: "#/components/schemas/AuditInfo"
+        - type: object
+          required:
+            - id
+            - name
+            - status
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+            status:
+              type: string
+              enum:
+                - active
+                - inactive
+                - draft
+            executionContext:
+              $ref: "#/components/schemas/RuleExecutionContext"
+
+    # -----------------------------------------------------------------------
+    # Case 5: allOf composing multiple parents with overlapping properties
+    #
+    # Two parents define the same property (`name`) with different
+    # descriptions. The composed schema also adds its own properties.
+    # -----------------------------------------------------------------------
+    Identifiable:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+          description: Unique identifier.
+        name:
+          type: string
+          description: Display name from Identifiable.
+
+    Describable:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Display name from Describable.
+        summary:
+          type: string
+          description: A short summary.
+
+    CombinedEntity:
+      allOf:
+        - $ref: "#/components/schemas/Identifiable"
+        - $ref: "#/components/schemas/Describable"
+        - type: object
+          required:
+            - status
+          properties:
+            status:
+              type: string
+              enum:
+                - active
+                - archived
+
+    # -----------------------------------------------------------------------
+    # Case 6: allOf merging object-typed properties with partial key overlap
+    #
+    # Two parents define the same property (`metadata`) as an object type.
+    # Each parent's `metadata` shares one common key (`region`, same type)
+    # but also contributes a unique key. The merged result should be an
+    # object with all three keys: region, tier, and domain.
+    # -----------------------------------------------------------------------
+    BaseOrg:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+        metadata:
+          type: object
+          required:
+            - region
+          properties:
+            region:
+              type: string
+              description: Deployment region from BaseOrg.
+            tier:
+              type: string
+              description: Subscription tier.
+
+    DetailedOrg:
+      type: object
+      properties:
+        metadata:
+          type: object
+          required:
+            - region
+          properties:
+            region:
+              type: string
+              description: Deployment region from DetailedOrg.
+            domain:
+              type: string
+              description: Custom domain name.
+
+    Organization:
+      allOf:
+        - $ref: "#/components/schemas/BaseOrg"
+        - $ref: "#/components/schemas/DetailedOrg"
+        - type: object
+          required:
+            - name
+          properties:
+            name:
+              type: string

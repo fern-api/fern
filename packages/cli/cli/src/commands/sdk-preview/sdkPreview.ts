@@ -35,6 +35,7 @@ interface SdkPreviewSuccess {
         package_name: string;
         registry_url: string;
         output_path?: string;
+        diff_url?: string;
     }>;
 }
 
@@ -84,16 +85,6 @@ export async function sdkPreview({
         if (pushDiff && local) {
             return cliContext.failAndThrow(
                 "--push-diff requires remote generation and cannot be combined with --local."
-            );
-        }
-
-        // --push-diff is gated until the fiddle-sdk is bumped to include the
-        // pushPreviewBranch field on CreateJobRequestV2. Without it, Fiddle would
-        // receive a githubV2(push) job without pushPreviewBranch=true and treat it
-        // as a normal push — writing to the default branch, which is dangerous.
-        if (pushDiff) {
-            return cliContext.failAndThrow(
-                "--push-diff is not yet available. It requires a server-side update that has not been deployed."
             );
         }
 
@@ -346,6 +337,14 @@ export async function sdkPreview({
                         ? join(absolutePathToOutput, RelativeFilePath.of(getGeneratorOutputSubfolder(generator.name)))
                         : undefined;
 
+                // Build the diff URL when --push-diff was used and the generator has GitHub config.
+                const githubInfo = getGithubOwnerRepo(generator.outputMode);
+                const previewBranch = `fern-preview-${previewVersion}`;
+                const diffUrl =
+                    pushDiff && githubInfo != null
+                        ? `https://github.com/${githubInfo.owner}/${githubInfo.repo}/compare/${previewBranch}`
+                        : undefined;
+
                 if (publishToRegistry && registryUrl != null) {
                     const installCommand = `npm install ${originalPackageName}@npm:${previewPackageName}@${previewVersion} --registry ${registryUrl}`;
                     previews.push({
@@ -354,7 +353,8 @@ export async function sdkPreview({
                         version: previewVersion,
                         package_name: previewPackageName,
                         registry_url: registryUrl,
-                        output_path: actualOutputPath
+                        output_path: actualOutputPath,
+                        diff_url: diffUrl
                     });
                 } else {
                     previews.push({
@@ -363,7 +363,8 @@ export async function sdkPreview({
                         version: previewVersion,
                         package_name: previewPackageName,
                         registry_url: "",
-                        output_path: actualOutputPath
+                        output_path: actualOutputPath,
+                        diff_url: diffUrl
                     });
                 }
             }
@@ -397,6 +398,9 @@ export async function sdkPreview({
                 cliContext.logger.info("");
                 cliContext.logger.info(`  ${preview.package_name}@${preview.version}`);
                 cliContext.logger.info(`  Install: ${preview.install}`);
+                if (preview.diff_url) {
+                    cliContext.logger.info(`  Diff: ${preview.diff_url}`);
+                }
                 if (preview.output_path) {
                     cliContext.logger.info(`  Output: ${preview.output_path}`);
                 }
@@ -406,6 +410,9 @@ export async function sdkPreview({
             for (const preview of previews) {
                 cliContext.logger.info("");
                 cliContext.logger.info(`  ${preview.package_name}@${preview.version}`);
+                if (preview.diff_url) {
+                    cliContext.logger.info(`  Diff: ${preview.diff_url}`);
+                }
                 cliContext.logger.info(`  Output: ${preview.output_path}`);
             }
         }

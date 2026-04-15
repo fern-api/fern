@@ -18,6 +18,10 @@
                 "type": {
                     "$ref": "#/definitions/ChangelogType",
                     "description": "Type of change determines version bump: fix/chore (patch), feat/internal (minor), break (major)"
+                },
+                "pre-release": {
+                    "$ref": "#/definitions/PreReleaseTag",
+                    "description": "Optional pre-release tag. When set, the release version includes this suffix (e.g., 1.2.0-rc.0)."
                 }
             },
             "required": [
@@ -37,6 +41,16 @@
             ],
             "title": "Changelog Type",
             "description": "The type of change: fix/chore → patch, feat/internal → minor, break → major"
+        },
+        "PreReleaseTag": {
+            "type": "string",
+            "enum": [
+                "alpha",
+                "beta",
+                "rc"
+            ],
+            "title": "Pre-Release Tag",
+            "description": "Pre-release identifier appended to the version (e.g., rc → 1.2.0-rc.0)"
         }
     }
 }
