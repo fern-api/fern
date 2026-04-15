@@ -145,6 +145,7 @@ function determineNextVersion(currentVersion: string, changes: UnreleasedChange[
     }
 
     // Strip pre-release suffix (e.g., "4.2.0-rc.1" -> "4.2.0")
+    const isPreRelease = currentVersion.includes("-");
     const baseVersion = currentVersion.replace(/-.*$/, "");
     const [major, minor, patch] = baseVersion.split(".").map(Number);
 
@@ -160,13 +161,16 @@ function determineNextVersion(currentVersion: string, changes: UnreleasedChange[
         process.exit(1);
     }
 
+    // For pre-release versions, graduate to the base version for patch-level
+    // changes (e.g., 4.2.0-rc.1 -> 4.2.0), and bump from the base version
+    // for higher-severity changes (e.g., 4.2.0-rc.1 + minor -> 4.3.0).
     switch (highestSeverity) {
         case "major":
             return `${major + 1}.0.0`;
         case "minor":
             return `${major}.${minor + 1}.0`;
         case "patch":
-            return `${major}.${minor}.${patch + 1}`;
+            return isPreRelease ? `${major}.${minor}.${patch}` : `${major}.${minor}.${patch + 1}`;
     }
 }
 
