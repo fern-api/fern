@@ -1,9 +1,10 @@
+import { getOriginalName, getWireValue } from "@fern-api/base-generator";
 import { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator";
 import { FernIr as DynamicFernIr } from "@fern-api/dynamic-ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMockMapping } from "@fern-api/mock-utils";
 import { python } from "@fern-api/python-ast";
-import { WriteablePythonFile } from "@fern-api/python-base";
+import { PYTHON_CASE_CONVERTER as caseConverter, WriteablePythonFile } from "@fern-api/python-base";
 import { DynamicSnippetsGenerator } from "@fern-api/python-dynamic-snippets";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
@@ -148,19 +149,19 @@ export class WireTestGenerator {
             ...(staticExample.servicePathParameters ?? []),
             ...(staticExample.endpointPathParameters ?? [])
         ]) {
-            pathParameters[param.name.originalName] = param.value.jsonExample;
+            pathParameters[getOriginalName(param.name)] = param.value.jsonExample;
         }
 
         // Extract query parameters
         const queryParameters: Record<string, unknown> = {};
         for (const param of staticExample.queryParameters ?? []) {
-            queryParameters[param.name.wireValue] = param.value.jsonExample;
+            queryParameters[getWireValue(param.name)] = param.value.jsonExample;
         }
 
         // Extract headers
         const headers: Record<string, unknown> = {};
         for (const header of [...(staticExample.serviceHeaders ?? []), ...(staticExample.endpointHeaders ?? [])]) {
-            headers[header.name.wireValue] = header.value.jsonExample;
+            headers[getWireValue(header.name)] = header.value.jsonExample;
         }
 
         // Extract request body
@@ -172,7 +173,7 @@ export class WireTestGenerator {
         }
 
         return {
-            name: staticExample.name?.originalName,
+            name: staticExample.name != null ? getOriginalName(staticExample.name) : undefined,
             pathParameters,
             queryParameters,
             headers,
@@ -347,12 +348,12 @@ export class WireTestGenerator {
 
             // Exclusions use definition-level identifiers in the form "<service_path>.<endpoint_name>"
             // or "<service_path>.*" to exclude an entire service.
-            const servicePathParts = service.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
+            const servicePathParts = service.name.fernFilepath.allParts.map((part) => caseConverter.snakeSafe(part));
             const servicePath = servicePathParts.join(".");
             const selector =
                 servicePath.length > 0
-                    ? `${servicePath}.${endpoint.name.snakeCase.safeName}`
-                    : endpoint.name.snakeCase.safeName;
+                    ? `${servicePath}.${caseConverter.snakeSafe(endpoint.name)}`
+                    : caseConverter.snakeSafe(endpoint.name);
             const excluded = this.context.customConfig.wire_tests?.exclusions ?? [];
             if (
                 excluded.includes(selector) ||
@@ -416,7 +417,7 @@ export class WireTestGenerator {
             const method = python.method({
                 name: testName,
                 return_: python.Type.none(),
-                docstring: `Test ${endpoint.name.originalName} endpoint with WireMock`
+                docstring: `Test ${getOriginalName(endpoint.name)} endpoint with WireMock`
             });
 
             statements.forEach((stmt) => method.addStatement(stmt));
@@ -510,8 +511,8 @@ export class WireTestGenerator {
         endpoint: FernIr.HttpEndpoint,
         exampleIndex: number
     ): string {
-        const servicePathParts = service.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
-        const endpointName = endpoint.name.snakeCase.safeName;
+        const servicePathParts = service.name.fernFilepath.allParts.map((part) => caseConverter.snakeSafe(part));
+        const endpointName = caseConverter.snakeSafe(endpoint.name);
 
         const segments: string[] = [];
         if (servicePathParts.length > 0) {
@@ -575,7 +576,7 @@ export class WireTestGenerator {
         } catch (error) {
             // Fallback: log error and generate a placeholder
             this.context.logger.error(
-                `Failed to generate API call for endpoint ${endpoint.name.originalName}: ${error}`
+                `Failed to generate API call for endpoint ${getOriginalName(endpoint.name)}: ${error}`
             );
             throw error;
         }
@@ -602,11 +603,12 @@ export class WireTestGenerator {
             }
             const fileValue = property.value;
             const key = fileValue.key;
-            if (key.wireValue == null || fileValue.isOptional || record[key.wireValue] != null) {
+            const wireValue = getWireValue(key);
+            if (wireValue == null || fileValue.isOptional || record[wireValue] != null) {
                 continue;
             }
-            const placeholder = `example_${key.wireValue}`;
-            record[key.wireValue] = fileValue.type === "fileArray" ? [placeholder] : placeholder;
+            const placeholder = `example_${wireValue}`;
+            record[wireValue] = fileValue.type === "fileArray" ? [placeholder] : placeholder;
         }
         snippetRequest.requestBody = record;
     }
@@ -634,7 +636,7 @@ export class WireTestGenerator {
      * String-typed parameters that happen to contain datetime-looking values return false.
      */
     private isDatetimeTypedQueryParam(endpoint: FernIr.HttpEndpoint, wireKey: string): boolean {
-        const queryParam = endpoint.queryParameters.find((qp) => qp.name.wireValue === wireKey);
+        const queryParam = endpoint.queryParameters.find((qp) => getWireValue(qp.name) === wireKey);
         if (!queryParam) {
             return false;
         }
@@ -705,7 +707,7 @@ export class WireTestGenerator {
     // =============================================================================
 
     private getTestFunctionName(serviceName: string, endpoint: FernIr.HttpEndpoint): string {
-        const endpointName = endpoint.name.snakeCase.safeName;
+        const endpointName = caseConverter.snakeSafe(endpoint.name);
         return `test_${serviceName}_${endpointName}`;
     }
 
@@ -814,6 +816,6 @@ export class WireTestGenerator {
     }
 
     private getFormattedServiceName(service: FernIr.HttpService): string {
-        return service.name.fernFilepath.allParts.map((part) => part.camelCase.unsafeName).join("_");
+        return service.name.fernFilepath.allParts.map((part) => caseConverter.camelUnsafe(part)).join("_");
     }
 }

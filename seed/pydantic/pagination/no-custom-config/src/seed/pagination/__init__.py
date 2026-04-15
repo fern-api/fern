@@ -33,7 +33,7 @@ from .resources import (
     UsernameContainer,
     WithCursor,
     WithPage,
-    complex_,
+    complex,
     inline_users,
     users,
 )
@@ -73,7 +73,7 @@ __all__ = [
     "UsernamePage",
     "WithCursor",
     "WithPage",
-    "complex_",
+    "complex",
     "inline_users",
     "users",
 ]

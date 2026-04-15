@@ -56,18 +56,30 @@ function isSlugCoveredByRedirect(oldSlug: string, redirects: Redirect[], basePat
 /**
  * Compares published slug table entries against the local pageId->slug map
  * and returns entries whose slug disappeared or changed.
+ *
+ * Skips entries whose old slug is still actively served by another page in
+ * the local config. This prevents false positives for changelog entries
+ * (which share their parent changelog page's slug) and other cases where
+ * the URL remains alive despite a specific pageId being removed or moved.
  */
 export function findRemovedSlugs(
     publishedEntries: MarkdownEntry[],
     localPageIdToSlug: Map<string, string>
 ): RemovedSlug[] {
+    const activeSlugs = new Set(localPageIdToSlug.values());
     const removed: RemovedSlug[] = [];
-    for (const entry of publishedEntries) {
-        const newSlug = localPageIdToSlug.get(entry.pageId);
+    for (const publishedEntry of publishedEntries) {
+        const newSlug = localPageIdToSlug.get(publishedEntry.pageId);
         if (newSlug === undefined) {
-            removed.push({ pageId: entry.pageId, oldSlug: entry.slug, newSlug: undefined });
-        } else if (newSlug !== entry.slug) {
-            removed.push({ pageId: entry.pageId, oldSlug: entry.slug, newSlug });
+            if (activeSlugs.has(publishedEntry.slug)) {
+                continue;
+            }
+            removed.push({ pageId: publishedEntry.pageId, oldSlug: publishedEntry.slug, newSlug: undefined });
+        } else if (newSlug !== publishedEntry.slug) {
+            if (activeSlugs.has(publishedEntry.slug)) {
+                continue;
+            }
+            removed.push({ pageId: publishedEntry.pageId, oldSlug: publishedEntry.slug, newSlug });
         }
     }
     return removed;

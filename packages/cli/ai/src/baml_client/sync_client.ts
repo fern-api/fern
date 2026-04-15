@@ -148,7 +148,7 @@ export class BamlSyncClient {
   }
   
   ConsolidateChangelog(
-      raw_entries: string,version_bump: string,language: string,
+      raw_entries: string,version_bump: string,language: string,previous_version: string,new_version: string,
       __baml_options__?: BamlCallOptions<never>
   ): types.ConsolidateChangelogResponse {
     try {
@@ -180,7 +180,7 @@ export class BamlSyncClient {
       const __raw__ = this.runtime.callFunctionSync(
         "ConsolidateChangelog",
         {
-          "raw_entries": raw_entries,"version_bump": version_bump,"language": language
+          "raw_entries": raw_entries,"version_bump": version_bump,"language": language,"previous_version": previous_version,"new_version": new_version
         },
         this.ctxManager.cloneContext(),
         __options__.tb?.__tb(),
