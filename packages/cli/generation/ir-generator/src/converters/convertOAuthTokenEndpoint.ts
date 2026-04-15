@@ -1,4 +1,3 @@
-import { HttpRequestBodySchema, isInlineRequestBody } from "@fern-api/fern-definition-schema";
 import { OAuthTokenEndpoint } from "@fern-api/ir-sdk";
 
 import { FernFileContext } from "../FernFileContext.js";
@@ -149,9 +148,12 @@ function getRequestBodyPropertyNames({
         return [];
     }
 
-    // Inline request body with explicit properties
-    if (typeof body === "object" && !Array.isArray(body) && isInlineRequestBody(body as HttpRequestBodySchema)) {
-        return Object.keys((body as { properties?: Record<string, unknown> }).properties ?? {});
+    // Inline request body with explicit properties (has `extends` or `properties`)
+    if (typeof body === "object" && !Array.isArray(body)) {
+        const bodyRecord = body as Record<string, unknown>;
+        if ("properties" in bodyRecord || "extends" in bodyRecord) {
+            return Object.keys((bodyRecord.properties as Record<string, unknown>) ?? {});
+        }
     }
 
     // Referenced request body with a type field
