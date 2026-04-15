@@ -144,11 +144,9 @@ jobs:
       # Playwright in a separate step.
       - name: Start fern docs dev server (Unix)
         if: steps.node-check.outputs.available == 'true' && runner.os != 'Windows'
-        env:
-          FERN_TOKEN: ${{ secrets.FERN_SMOKE_TEST_API_KEY }}
         run: |
           cd smoke-test/fern
-          FERN_NO_VERSION_REDIRECTION=true fern --log-level debug docs dev \
+          FERN_NO_VERSION_REDIRECTION=true fern docs dev \
             > /tmp/fern-docs-dev.log 2>&1 &
           FERN_PID=$!
           echo "FERN_PID=$FERN_PID" >> $GITHUB_ENV
@@ -183,16 +181,6 @@ jobs:
 
             sleep 1
           done
-
-          # Diagnostic: check that the backend API on port 3001 is serving data
-          echo "=== Diagnostic: backend API check ==="
-          BACKEND_CODE=$(curl -s -o /tmp/backend-response.json -w "%{http_code}" --max-time 5 \
-            -X POST http://localhost:3001/v2/registry/docs/load-with-url \
-            -H 'Content-Type: application/json' -d '{}' 2>/dev/null || echo "000")
-          echo "Backend POST /v2/registry/docs/load-with-url -> HTTP $BACKEND_CODE"
-          echo "Backend response (first 1000 chars):"
-          head -c 1000 /tmp/backend-response.json 2>/dev/null || true
-          echo ""
 
           # Wait for port 3000 to accept connections
           echo "Waiting for server to return HTTP 200 on /sitemap.xml..."
@@ -220,19 +208,13 @@ jobs:
               echo "SSR warm-up succeeded after attempt ${k}"
               break
             fi
-            if [ $k -eq 1 ] || [ $k -eq 5 ] || [ $k -eq 10 ]; then
-              echo "  Attempt $k: HTTP $HTTP_CODE"
-              echo "  --- Next.js debug output (last 30 lines) ---"
-              tail -30 /tmp/fern-docs-dev.log 2>/dev/null || true
-              echo "  --- end ---"
-            fi
             if [ $k -eq 60 ]; then
               echo "SSR warm-up failed after 60 attempts (last HTTP $HTTP_CODE)"
-              echo "--- Response body ---"
-              cat /tmp/warmup-response.html 2>/dev/null | head -c 2000
+              echo "--- Response body (first 2000 chars) ---"
+              head -c 2000 /tmp/warmup-response.html 2>/dev/null || true
               echo ""
-              echo "--- Dev server logs (last 200 lines) ---"
-              tail -200 /tmp/fern-docs-dev.log
+              echo "--- Dev server logs (last 100 lines) ---"
+              tail -100 /tmp/fern-docs-dev.log
               echo "--- End dev server logs ---"
               exit 1
             fi
@@ -251,11 +233,9 @@ jobs:
       - name: Start server and run Playwright smoke tests (Windows)
         if: steps.node-check.outputs.available == 'true' && runner.os == 'Windows'
         shell: bash
-        env:
-          FERN_TOKEN: ${{ secrets.FERN_SMOKE_TEST_API_KEY }}
         run: |
           cd smoke-test/fern
-          FERN_NO_VERSION_REDIRECTION=true fern --log-level debug docs dev \
+          FERN_NO_VERSION_REDIRECTION=true fern docs dev \
             > /tmp/fern-docs-dev.log 2>&1 &
           FERN_PID=$!
           echo "FERN_PID=$FERN_PID" >> $GITHUB_ENV
@@ -291,16 +271,6 @@ jobs:
             sleep 1
           done
 
-          # Diagnostic: check that the backend API on port 3001 is serving data
-          echo "=== Diagnostic: backend API check ==="
-          BACKEND_CODE=$(curl -s -o /tmp/backend-response.json -w "%{http_code}" --max-time 5 \
-            -X POST http://localhost:3001/v2/registry/docs/load-with-url \
-            -H 'Content-Type: application/json' -d '{}' 2>/dev/null || echo "000")
-          echo "Backend POST /v2/registry/docs/load-with-url -> HTTP $BACKEND_CODE"
-          echo "Backend response (first 1000 chars):"
-          head -c 1000 /tmp/backend-response.json 2>/dev/null || true
-          echo ""
-
           # Wait for port 3000 to accept connections
           echo "Waiting for server to return HTTP 200 on /sitemap.xml..."
           for j in $(seq 1 30); do
@@ -326,19 +296,13 @@ jobs:
               echo "SSR warm-up succeeded after attempt ${k}"
               break
             fi
-            if [ $k -eq 1 ] || [ $k -eq 5 ] || [ $k -eq 10 ]; then
-              echo "  Attempt $k: HTTP $HTTP_CODE"
-              echo "  --- Next.js debug output (last 30 lines) ---"
-              tail -30 /tmp/fern-docs-dev.log 2>/dev/null || true
-              echo "  --- end ---"
-            fi
             if [ $k -eq 60 ]; then
               echo "SSR warm-up failed after 60 attempts (last HTTP $HTTP_CODE)"
-              echo "--- Response body ---"
-              cat /tmp/warmup-response.html 2>/dev/null | head -c 2000
+              echo "--- Response body (first 2000 chars) ---"
+              head -c 2000 /tmp/warmup-response.html 2>/dev/null || true
               echo ""
-              echo "--- Dev server logs (last 200 lines) ---"
-              tail -200 /tmp/fern-docs-dev.log
+              echo "--- Dev server logs (last 100 lines) ---"
+              tail -100 /tmp/fern-docs-dev.log
               echo "--- End dev server logs ---"
               exit 1
             fi
