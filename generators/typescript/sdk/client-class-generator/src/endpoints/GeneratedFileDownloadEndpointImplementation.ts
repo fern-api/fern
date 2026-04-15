@@ -1,4 +1,4 @@
-import { getOriginalName } from "@fern-api/base-generator";
+import { getOriginalName, getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { Fetcher, GetReferenceOpts } from "@fern-typescript/commons";
@@ -300,7 +300,7 @@ function getQueryParameterArrayFormats(endpoint: FernIr.HttpEndpoint): ts.Expres
     return ts.factory.createObjectLiteralExpression(
         nonExplodedParams.map((param) =>
             ts.factory.createPropertyAssignment(
-                ts.factory.createIdentifier(param.name.wireValue),
+                ts.factory.createStringLiteral(getWireValue(param.name)),
                 ts.factory.createStringLiteral("comma")
             )
         ),
