@@ -252,6 +252,11 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
                 : undefined
         };
 
+        const queryParameterArrayFormat = getQueryParameterArrayFormat(this.endpoint);
+        if (queryParameterArrayFormat != null) {
+            fetcherArgs.queryParameterArrayFormat = queryParameterArrayFormat;
+        }
+
         return [
             ts.factory.createVariableStatement(
                 undefined,
@@ -285,4 +290,9 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
             )
         ];
     }
+}
+
+function getQueryParameterArrayFormat(endpoint: FernIr.HttpEndpoint): "comma" | undefined {
+    const hasNonExplodedParam = endpoint.queryParameters.some((param) => param.explode === false);
+    return hasNonExplodedParam ? "comma" : undefined;
 }

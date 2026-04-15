@@ -827,6 +827,11 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             fetcherArgs.responseType = ts.factory.createStringLiteral("text");
         }
 
+        const queryParameterArrayFormat = getQueryParameterArrayFormat(this.endpoint);
+        if (queryParameterArrayFormat != null) {
+            fetcherArgs.queryParameterArrayFormat = ts.factory.createStringLiteral(queryParameterArrayFormat);
+        }
+
         return ts.factory.createObjectLiteralExpression(
             Object.entries(fetcherArgs).map(([key, value]) =>
                 ts.factory.createPropertyAssignment(ts.factory.createIdentifier(key), value)
@@ -939,6 +944,11 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             fetcherArgs.responseType = "text";
         }
 
+        const queryParameterArrayFormat = getQueryParameterArrayFormat(this.endpoint);
+        if (queryParameterArrayFormat != null) {
+            fetcherArgs.queryParameterArrayFormat = queryParameterArrayFormat;
+        }
+
         return [
             ts.factory.createVariableStatement(
                 undefined,
@@ -959,4 +969,9 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             )
         ];
     }
+}
+
+function getQueryParameterArrayFormat(endpoint: FernIr.HttpEndpoint): "comma" | undefined {
+    const hasNonExplodedParam = endpoint.queryParameters.some((param) => param.explode === false);
+    return hasNonExplodedParam ? "comma" : undefined;
 }

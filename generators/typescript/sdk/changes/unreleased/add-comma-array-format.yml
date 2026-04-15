@@ -1,6 +1,7 @@
 - summary: |
-    Add "comma" array format support to the query string serializer (`qs.ts`),
-    matching the `qs` npm library behavior for `{ arrayFormat: "comma" }`.
-    Arrays are serialized as a single comma-separated value (e.g., `key=a,b,c`).
-    The `createRequestUrl` function now accepts an optional `arrayFormat` parameter.
+    Add full "comma" array format support for OpenAPI parameters with `explode: false`.
+    The runtime query string serializer (`qs.ts`) now supports `{ arrayFormat: "comma" }`,
+    serializing arrays as comma-separated values (e.g., `key=a,b,c`).
+    The generator now emits `queryParameterArrayFormat: "comma"` in fetcher calls
+    for endpoints with non-exploded query parameters.
   type: feat

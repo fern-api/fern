@@ -295,6 +295,11 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
                 : undefined
         };
 
+        const queryParameterArrayFormat = getQueryParameterArrayFormat(this.endpoint);
+        if (queryParameterArrayFormat != null) {
+            fetcherArgs.queryParameterArrayFormat = queryParameterArrayFormat;
+        }
+
         return [
             ts.factory.createVariableStatement(
                 undefined,
@@ -331,4 +336,9 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
     public getReferenceToQueryParameter(queryParameterKey: string, context: FileContext): ts.Expression {
         return this.request.getReferenceToQueryParameter(queryParameterKey, context);
     }
+}
+
+function getQueryParameterArrayFormat(endpoint: FernIr.HttpEndpoint): "comma" | undefined {
+    const hasNonExplodedParam = endpoint.queryParameters.some((param) => param.explode === false);
+    return hasNonExplodedParam ? "comma" : undefined;
 }
