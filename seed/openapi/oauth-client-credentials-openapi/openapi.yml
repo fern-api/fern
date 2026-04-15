@@ -5,7 +5,7 @@ info:
 paths:
   /identity/token:
     post:
-      operationId: identity_getToken
+      operationId: identity_gettoken
       tags:
         - Identity
       parameters: []
@@ -23,6 +23,8 @@ paths:
                     expires_in: 1
                     refresh_token: refresh_token
       summary: Get an access token
+      security:
+        - CustomAuth: []
       requestBody:
         required: true
         content:

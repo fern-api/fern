@@ -6,9 +6,9 @@ paths:
   /optional-request-body/{path_param}:
     post:
       description: Post a nullable request body
-      operationId: testGroup_test_method_name
+      operationId: testgroup_testMethodName
       tags:
-        - TestGroup
+        - Testgroup
       parameters:
         - name: path_param
           in: path

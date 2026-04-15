@@ -5,7 +5,7 @@ info:
 paths:
   /user/getUsername:
     get:
-      operationId: search
+      operationId: _search
       tags:
         - ''
       parameters:
@@ -66,7 +66,9 @@ paths:
               - object
               - 'null'
             additionalProperties:
-              type: string
+              type:
+                - string
+                - 'null'
         - name: optionalString
           in: query
           required: false
@@ -137,7 +139,7 @@ paths:
           in: query
           required: true
           schema:
-            $ref: '#/components/schemas/SearchRequestNeighborRequired'
+            $ref: '#/components/schemas/User'
       responses:
         '200':
           description: Successful response

@@ -6,7 +6,7 @@ paths:
   /conversations/outbound-call:
     post:
       description: Place an outbound call or validate call setup with dry_run.
-      operationId: conversations_outboundCall
+      operationId: conversations_outboundcall
       tags:
         - Conversations
       parameters: []
@@ -85,8 +85,7 @@ components:
       title: OutboundCallConversationsResponse
       type: object
       properties:
-        conversation_id:
-          description: Always null when dry_run is true.
+        conversation_id: {}
         dry_run:
           type: boolean
           description: Always true for this response.
@@ -107,8 +106,7 @@ components:
           type: string
           examples:
             - name
-        deleted_at:
-          description: Always null for active users.
+        deleted_at: {}
       required:
         - id
         - name

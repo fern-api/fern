@@ -5,7 +5,7 @@ info:
 paths:
   /postWithNullableNamedRequestBodyType/{id}:
     post:
-      operationId: postWithNullableNamedRequestBodyType
+      operationId: _postWithNullableNamedRequestBodyType
       tags:
         - ''
       parameters:
@@ -41,7 +41,7 @@ paths:
                 value: {}
   /postWithNonNullableNamedRequestBodyType/{id}:
     post:
-      operationId: postWithNonNullableNamedRequestBodyType
+      operationId: _postWithNonNullableNamedRequestBodyType
       tags:
         - ''
       parameters:

@@ -5,7 +5,7 @@ info:
 paths:
   /test/{region}/resource:
     get:
-      operationId: test_get
+      operationId: _testGet
       tags:
         - ''
       parameters:

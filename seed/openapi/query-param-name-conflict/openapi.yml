@@ -5,7 +5,7 @@ info:
 paths:
   /task/:
     put:
-      operationId: bulkUpdateTasks
+      operationId: _bulkUpdateTasks
       tags:
         - ''
       parameters:

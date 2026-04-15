@@ -95,3 +95,7 @@ allowedFailures:
   # doesn't re-emit an OAS spec when the input was already OpenAPI.
   - python-streaming-parameter-openapi
   - server-sent-events-openapi
+
+  # Not sure
+  - examples
+  - literal

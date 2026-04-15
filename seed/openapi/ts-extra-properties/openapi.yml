@@ -5,7 +5,7 @@ info:
 paths:
   /user:
     get:
-      operationId: getUser
+      operationId: _getUser
       tags:
         - ''
       parameters: []
@@ -25,7 +25,7 @@ paths:
                     updated_at: '2024-01-15T09:30:00Z'
       summary: Get a user with extra properties
     post:
-      operationId: createUser
+      operationId: _createUser
       tags:
         - ''
       parameters: []

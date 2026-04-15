@@ -5,7 +5,7 @@ info:
 paths:
   /submit:
     post:
-      operationId: submitFormData
+      operationId: _submitFormData
       tags:
         - ''
       parameters: []
@@ -50,7 +50,7 @@ paths:
                   email: john@example.com
   /token:
     post:
-      operationId: get_token
+      operationId: _getToken
       tags:
         - ''
       parameters: []
@@ -72,7 +72,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TokenRequest'
+              type: object
+              properties:
+                client_id:
+                  type: string
+                  description: Client identifier
+                  examples:
+                    - client_id
+                client_secret:
+                  type: string
+                  description: Client secret
+                  examples:
+                    - client_secret
+              required:
+                - client_id
+                - client_secret
             examples:
               Example1:
                 value:
@@ -92,23 +106,6 @@ components:
           type:
             - string
             - 'null'
-    TokenRequest:
-      title: TokenRequest
-      type: object
-      properties:
-        client_id:
-          type: string
-          description: Client identifier
-          examples:
-            - client_id
-        client_secret:
-          type: string
-          description: Client secret
-          examples:
-            - client_secret
-      required:
-        - client_id
-        - client_secret
     TokenResponse:
       title: TokenResponse
       type: object
