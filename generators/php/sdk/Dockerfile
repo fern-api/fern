@@ -2,6 +2,10 @@ FROM node:22.12-alpine3.20 AS node
 FROM composer:2.7.9
 
 ENV YARN_CACHE_FOLDER=/.yarn
+ARG GENERATOR_VERSION
+ARG GENERATOR_IMAGE
+ENV GENERATOR_VERSION=$GENERATOR_VERSION
+ENV GENERATOR_IMAGE=$GENERATOR_IMAGE
 
 RUN apk --no-cache add bash curl git zip
 RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \

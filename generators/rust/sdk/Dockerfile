@@ -7,6 +7,11 @@ RUN rustup component add rustfmt
 
 FROM node:22.12-alpine3.20
 
+ARG GENERATOR_VERSION
+ARG GENERATOR_IMAGE
+ENV GENERATOR_VERSION=$GENERATOR_VERSION
+ENV GENERATOR_IMAGE=$GENERATOR_IMAGE
+
 # Install system dependencies
 RUN apk --no-cache add bash curl git zip gcc musl-dev openssl-dev pkgconfig
 

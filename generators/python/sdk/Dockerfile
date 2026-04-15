@@ -4,6 +4,11 @@ FROM node:20.19.4-slim AS node
 # Stage 2: Base Python image with dependencies
 FROM python:3.13.7-slim AS python-base
 
+ARG GENERATOR_VERSION
+ARG GENERATOR_IMAGE
+ENV GENERATOR_VERSION=$GENERATOR_VERSION
+ENV GENERATOR_IMAGE=$GENERATOR_IMAGE
+
 # Copy Node.js and npm from the node stage
 COPY --from=node /usr/local/bin/node /usr/local/bin/node
 COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules

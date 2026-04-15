@@ -105,6 +105,10 @@ async function buildAndPushContainerImage(
     context.logger.debug(`Also tagging as latest: ${latestTags.join(", ")}`);
     const standardBuildOptions = [
         "build",
+        "--build-arg",
+        `GENERATOR_VERSION=${version}`,
+        "--build-arg",
+        `GENERATOR_IMAGE=${containerConfig.image}`,
         "--push",
         "--platform",
         "linux/amd64,linux/arm64",

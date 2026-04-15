@@ -6,6 +6,10 @@ ENV PATH="$PATH:/root/.dotnet/tools"
 ENV DOTNET_NOLOGO=1
 ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
 ENV DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
+ARG GENERATOR_VERSION
+ARG GENERATOR_IMAGE
+ENV GENERATOR_VERSION=$GENERATOR_VERSION
+ENV GENERATOR_IMAGE=$GENERATOR_IMAGE
 
 RUN apk --no-cache add bash curl git zip && \
     git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \

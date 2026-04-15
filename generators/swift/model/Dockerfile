@@ -1,5 +1,10 @@
 FROM node:22.12-alpine3.20
 
+ARG GENERATOR_VERSION
+ARG GENERATOR_IMAGE
+ENV GENERATOR_VERSION=$GENERATOR_VERSION
+ENV GENERATOR_IMAGE=$GENERATOR_IMAGE
+
 COPY generators/swift/model/dist /dist
 
 ENTRYPOINT ["node", "--enable-source-maps", "/dist/cli.cjs"]

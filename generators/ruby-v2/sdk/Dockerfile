@@ -14,6 +14,11 @@ RUN gem install 'rubocop:~> 1.21' rubocop-minitest
 RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \
     git config --global user.name "fern-api"
 
+ARG GENERATOR_VERSION
+ARG GENERATOR_IMAGE
+ENV GENERATOR_VERSION=$GENERATOR_VERSION
+ENV GENERATOR_IMAGE=$GENERATOR_IMAGE
+
 COPY generators/ruby-v2/sdk/features.yml /assets/features.yml
 COPY generators/ruby-v2/sdk/dist /dist
 

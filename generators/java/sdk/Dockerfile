@@ -86,6 +86,11 @@ RUN cd / \
     && tar -xvf sdk.tar \
     && rm -rf sdk.tar
 
+ARG GENERATOR_VERSION
+ARG GENERATOR_IMAGE
+ENV GENERATOR_VERSION=$GENERATOR_VERSION
+ENV GENERATOR_IMAGE=$GENERATOR_IMAGE
+
 ENV JAVA_TOOL_OPTIONS="-Xmx4g -Dfile.encoding=UTF8"
 
 # Copy over node contents to be able to run the compiled CLI

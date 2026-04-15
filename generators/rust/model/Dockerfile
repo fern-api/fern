@@ -10,6 +10,11 @@ RUN rustup component add rustfmt \
 
 FROM node:22.12-alpine3.20
 
+ARG GENERATOR_VERSION
+ARG GENERATOR_IMAGE
+ENV GENERATOR_VERSION=$GENERATOR_VERSION
+ENV GENERATOR_IMAGE=$GENERATOR_IMAGE
+
 COPY --from=rust /rustfmt /usr/local/lib/rustfmt
 ENV PATH=/usr/local/lib/rustfmt:$PATH \
     LD_LIBRARY_PATH=/usr/local/lib/rustfmt/lib

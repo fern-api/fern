@@ -13,4 +13,9 @@ RUN cd / \
     && tar -xvf model.tar \
     && rm -rf model.tar
 
+ARG GENERATOR_VERSION
+ARG GENERATOR_IMAGE
+ENV GENERATOR_VERSION=$GENERATOR_VERSION
+ENV GENERATOR_IMAGE=$GENERATOR_IMAGE
+
 ENTRYPOINT ["sh", "/init.sh"]

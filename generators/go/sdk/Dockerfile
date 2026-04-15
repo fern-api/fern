@@ -10,6 +10,11 @@ COPY generators/go-v2/sdk/dist/ /dist/
 # Stage 2: Final Go image
 FROM golang:1.23.8-alpine3.20
 
+ARG GENERATOR_VERSION
+ARG GENERATOR_IMAGE
+ENV GENERATOR_VERSION=$GENERATOR_VERSION
+ENV GENERATOR_IMAGE=$GENERATOR_IMAGE
+
 WORKDIR /workspace
 
 RUN apk add --no-cache ca-certificates git libstdc++

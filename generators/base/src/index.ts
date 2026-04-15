@@ -5,4 +5,5 @@ export * from "./project/index.js";
 export * from "./readme/index.js";
 export * from "./reference/index.js";
 export * from "./SourceFetcher.js";
+export * from "./telemetry/SentryClient.js";
 export * from "./utils/index.js";
