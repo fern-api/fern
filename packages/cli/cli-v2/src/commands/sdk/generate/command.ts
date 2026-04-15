@@ -507,7 +507,10 @@ export class GenerateCommand {
                         code: CliError.Code.ConfigError
                     });
                 } else {
-                    throw new CliError({ message: `Target '${args.target}' not found`, code: CliError.Code.ConfigError });
+                    throw new CliError({
+                        message: `Target '${args.target}' not found`,
+                        code: CliError.Code.ConfigError
+                    });
                 }
             }
         }

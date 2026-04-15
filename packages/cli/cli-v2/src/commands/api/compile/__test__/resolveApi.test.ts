@@ -1,9 +1,9 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { CliError } from "@fern-api/task-context";
 import { describe, expect, it } from "vitest";
 import { createTestContext } from "../../../../__test__/utils/createTestContext.js";
 import type { ApiDefinition } from "../../../../api/config/ApiDefinition.js";
 import type { Context } from "../../../../context/Context.js";
-import { CliError } from "@fern-api/task-context";
 import type { Workspace } from "../../../../workspace/Workspace.js";
 import { CompileCommand } from "../command.js";
 
