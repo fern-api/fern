@@ -1,4 +1,4 @@
-import { getOriginalName, getWireValue } from "@fern-api/base-generator";
+import { getOriginalName } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { Fetcher, GetReferenceOpts, PackageId } from "@fern-typescript/commons";
 import { EndpointSampleCode, FileContext, GeneratedEndpointImplementation } from "@fern-typescript/contexts";
@@ -295,11 +295,6 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
                 : undefined
         };
 
-        const queryParameterArrayFormats = getQueryParameterArrayFormats(this.endpoint);
-        if (queryParameterArrayFormats != null) {
-            fetcherArgs.queryParameterArrayFormats = queryParameterArrayFormats;
-        }
-
         return [
             ts.factory.createVariableStatement(
                 undefined,
@@ -336,20 +331,4 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
     public getReferenceToQueryParameter(queryParameterKey: string, context: FileContext): ts.Expression {
         return this.request.getReferenceToQueryParameter(queryParameterKey, context);
     }
-}
-
-function getQueryParameterArrayFormats(endpoint: FernIr.HttpEndpoint): ts.Expression | undefined {
-    const nonExplodedParams = endpoint.queryParameters.filter((param) => param.explode === false);
-    if (nonExplodedParams.length === 0) {
-        return undefined;
-    }
-    return ts.factory.createObjectLiteralExpression(
-        nonExplodedParams.map((param) =>
-            ts.factory.createPropertyAssignment(
-                ts.factory.createStringLiteral(getWireValue(param.name)),
-                ts.factory.createStringLiteral("comma")
-            )
-        ),
-        false
-    );
 }

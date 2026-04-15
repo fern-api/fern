@@ -269,6 +269,67 @@ export class GeneratedQueryParams {
         return mapExpression;
     }
 
+    /**
+     * Returns a ts.Expression that produces the final query string via the builder pattern.
+     *
+     * Emits:
+     *     new core.url.QueryStringBuilder()
+     *         .add("key", _queryParams["key"])
+     *         .addComma("tags", _queryParams["tags"])
+     *         .mergeAdditional(requestOptions?.queryParams)
+     *         .build()
+     */
+    public getQueryStringExpression(context: FileContext): ts.Expression | undefined {
+        if (this.queryParameters == null || this.queryParameters.length === 0) {
+            return undefined;
+        }
+
+        const additionalQueryParams = ts.factory.createPropertyAccessChain(
+            ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
+            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+            ts.factory.createIdentifier(REQUEST_OPTIONS_ADDITIONAL_QUERY_PARAMETERS_PROPERTY_NAME)
+        );
+
+        // new core.url.QueryStringBuilder()
+        const queryStringBuilderRef = context.coreUtilities.urlUtils.QueryStringBuilder._getExpression();
+        let chain: ts.Expression = ts.factory.createNewExpression(queryStringBuilderRef, undefined, []);
+
+        // Chain .add() / .addComma() for each declared query parameter
+        for (const queryParameter of this.queryParameters) {
+            const wireValue = getWireValue(queryParameter.name);
+            const isComma = queryParameter.explode === false;
+            const methodName = isComma ? "addComma" : "add";
+
+            // Reference _queryParams["key"]
+            const valueRef = ts.factory.createElementAccessExpression(
+                ts.factory.createIdentifier(GeneratedQueryParams.QUERY_PARAMS_VARIABLE_NAME),
+                ts.factory.createStringLiteral(wireValue)
+            );
+
+            chain = ts.factory.createCallExpression(
+                ts.factory.createPropertyAccessExpression(chain, ts.factory.createIdentifier(methodName)),
+                undefined,
+                [ts.factory.createStringLiteral(wireValue), valueRef]
+            );
+        }
+
+        // .mergeAdditional(requestOptions?.queryParams)
+        chain = ts.factory.createCallExpression(
+            ts.factory.createPropertyAccessExpression(chain, ts.factory.createIdentifier("mergeAdditional")),
+            undefined,
+            [additionalQueryParams]
+        );
+
+        // .build()
+        chain = ts.factory.createCallExpression(
+            ts.factory.createPropertyAccessExpression(chain, ts.factory.createIdentifier("build")),
+            undefined,
+            []
+        );
+
+        return chain;
+    }
+
     public getReferenceTo(): ts.Expression | undefined {
         const getRequestOptionsAdditionalQueryParameters = ts.factory.createPropertyAccessChain(
             ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),

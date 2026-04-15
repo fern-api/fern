@@ -167,19 +167,15 @@ describe("Test createRequestUrl", () => {
                 createRequestUrl(
                     BASE_URL,
                     { event_type: ["ACCESS_GRANTED", "COPY", "DELETE"] },
-                    { event_type: "comma" }
-                )
+                    { event_type: "comma" },
+                ),
             ).toBe("https://api.example.com?event_type=ACCESS_GRANTED,COPY,DELETE");
         });
 
         it("should only apply comma format to specified params, others use repeat", () => {
-            expect(
-                createRequestUrl(
-                    BASE_URL,
-                    { tags: ["a", "b"], ids: [1, 2, 3], limit: 10 },
-                    { tags: "comma" }
-                )
-            ).toBe("https://api.example.com?tags=a,b&ids=1&ids=2&ids=3&limit=10");
+            expect(createRequestUrl(BASE_URL, { tags: ["a", "b"], ids: [1, 2, 3], limit: 10 }, { tags: "comma" })).toBe(
+                "https://api.example.com?tags=a,b&ids=1&ids=2&ids=3&limit=10",
+            );
         });
 
         it("should handle multiple comma params alongside repeat params", () => {
@@ -187,15 +183,13 @@ describe("Test createRequestUrl", () => {
                 createRequestUrl(
                     BASE_URL,
                     { tags: ["a", "b"], optionalTags: ["c", "d"], ids: [1, 2] },
-                    { tags: "comma", optionalTags: "comma" }
-                )
+                    { tags: "comma", optionalTags: "comma" },
+                ),
             ).toBe("https://api.example.com?tags=a,b&optionalTags=c,d&ids=1&ids=2");
         });
 
         it("should default to repeat format when no arrayFormats is specified", () => {
-            expect(createRequestUrl(BASE_URL, { items: ["a", "b"] })).toBe(
-                "https://api.example.com?items=a&items=b"
-            );
+            expect(createRequestUrl(BASE_URL, { items: ["a", "b"] })).toBe("https://api.example.com?items=a&items=b");
         });
     });
 });

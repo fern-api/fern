@@ -47,8 +47,8 @@ describe("SeedApiClient", () => {
                 tags: ["tags", "tags"],
             },
             filter: "filter",
-            tags: ["ACCESS_GRANTED", "COPY"],
-            optionalTags: ["DELETE", "MOVE"],
+            tags: "tags",
+            optionalTags: "optionalTags",
             neighbor: {
                 name: "name",
                 tags: ["tags", "tags"],

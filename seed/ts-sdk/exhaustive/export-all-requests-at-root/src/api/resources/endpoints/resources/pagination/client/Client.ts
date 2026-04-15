@@ -61,6 +61,11 @@ export class PaginationClient {
                     method: "GET",
                     headers: _headers,
                     queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+                    queryString: new core.url.QueryStringBuilder()
+                        .add("cursor", _queryParams.cursor)
+                        .add("limit", _queryParams.limit)
+                        .mergeAdditional(requestOptions?.queryParams)
+                        .build(),
                     timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                     maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
                     abortSignal: requestOptions?.abortSignal,

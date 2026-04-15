@@ -1,4 +1,4 @@
-import { getOriginalName, getWireValue } from "@fern-api/base-generator";
+import { getOriginalName } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { Fetcher, GetReferenceOpts } from "@fern-typescript/commons";
@@ -252,11 +252,6 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
                 : undefined
         };
 
-        const queryParameterArrayFormats = getQueryParameterArrayFormats(this.endpoint);
-        if (queryParameterArrayFormats != null) {
-            fetcherArgs.queryParameterArrayFormats = queryParameterArrayFormats;
-        }
-
         return [
             ts.factory.createVariableStatement(
                 undefined,
@@ -290,20 +285,4 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
             )
         ];
     }
-}
-
-function getQueryParameterArrayFormats(endpoint: FernIr.HttpEndpoint): ts.Expression | undefined {
-    const nonExplodedParams = endpoint.queryParameters.filter((param) => param.explode === false);
-    if (nonExplodedParams.length === 0) {
-        return undefined;
-    }
-    return ts.factory.createObjectLiteralExpression(
-        nonExplodedParams.map((param) =>
-            ts.factory.createPropertyAssignment(
-                ts.factory.createStringLiteral(getWireValue(param.name)),
-                ts.factory.createStringLiteral("comma")
-            )
-        ),
-        false
-    );
 }

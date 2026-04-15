@@ -336,8 +336,8 @@ describe("Test qs toQueryString", () => {
             expect(
                 toQueryString(
                     { tags: ["a", "b"], ids: [1, 2], filter: "test" },
-                    { arrayFormat: "repeat", arrayFormats: { tags: "comma" } }
-                )
+                    { arrayFormat: "repeat", arrayFormats: { tags: "comma" } },
+                ),
             ).toBe("tags=a,b&ids=1&ids=2&filter=test");
         });
 
@@ -345,8 +345,8 @@ describe("Test qs toQueryString", () => {
             expect(
                 toQueryString(
                     { tags: ["a", "b"], optionalTags: ["c", "d"], ids: [1, 2] },
-                    { arrayFormat: "repeat", arrayFormats: { tags: "comma", optionalTags: "comma" } }
-                )
+                    { arrayFormat: "repeat", arrayFormats: { tags: "comma", optionalTags: "comma" } },
+                ),
             ).toBe("tags=a,b&optionalTags=c,d&ids=1&ids=2");
         });
 
@@ -354,8 +354,8 @@ describe("Test qs toQueryString", () => {
             expect(
                 toQueryString(
                     { tags: ["a", "b"], items: ["x", "y"] },
-                    { arrayFormat: "indices", arrayFormats: { tags: "comma" } }
-                )
+                    { arrayFormat: "indices", arrayFormats: { tags: "comma" } },
+                ),
             ).toBe("tags=a,b&items%5B0%5D=x&items%5B1%5D=y");
         });
     });

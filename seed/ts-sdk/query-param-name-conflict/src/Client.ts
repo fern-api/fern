@@ -57,6 +57,13 @@ export class SeedApiClient {
             headers: _headers,
             contentType: "application/json",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            queryString: new core.url.QueryStringBuilder()
+                .add("assigned_to", _queryParams.assigned_to)
+                .add("is_complete", _queryParams.is_complete)
+                .add("date", _queryParams.date)
+                .add("_fields", _queryParams._fields)
+                .mergeAdditional(requestOptions?.queryParams)
+                .build(),
             requestType: "json",
             body: _body,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,

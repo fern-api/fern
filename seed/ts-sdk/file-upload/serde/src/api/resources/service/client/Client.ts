@@ -273,6 +273,14 @@ export class ServiceClient {
             method: "POST",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            queryString: new core.url.QueryStringBuilder()
+                .add("maybeString", _queryParams.maybeString)
+                .add("integer", _queryParams.integer)
+                .add("maybeInteger", _queryParams.maybeInteger)
+                .add("listOfStrings", _queryParams.listOfStrings)
+                .add("optionalListOfStrings", _queryParams.optionalListOfStrings)
+                .mergeAdditional(requestOptions?.queryParams)
+                .build(),
             requestType: "file",
             duplex: _maybeEncodedRequest.duplex,
             body: _maybeEncodedRequest.body,
@@ -333,6 +341,11 @@ export class ServiceClient {
             method: "POST",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            queryString: new core.url.QueryStringBuilder()
+                .add("maybeString", _queryParams.maybeString)
+                .add("maybeInteger", _queryParams.maybeInteger)
+                .mergeAdditional(requestOptions?.queryParams)
+                .build(),
             requestType: "file",
             duplex: _maybeEncodedRequest.duplex,
             body: _maybeEncodedRequest.body,

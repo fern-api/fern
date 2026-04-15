@@ -1,4 +1,4 @@
-import { getOriginalName, getWireValue } from "@fern-api/base-generator";
+import { getOriginalName } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { deduplicateExamples, Fetcher, GetReferenceOpts, getExampleEndpointCalls } from "@fern-typescript/commons";
 import { EndpointSampleCode, FileContext, GeneratedEndpointImplementation } from "@fern-typescript/contexts";
@@ -827,9 +827,8 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             fetcherArgs.responseType = ts.factory.createStringLiteral("text");
         }
 
-        const queryParameterArrayFormats = getQueryParameterArrayFormats(this.endpoint);
-        if (queryParameterArrayFormats != null) {
-            fetcherArgs.queryParameterArrayFormats = queryParameterArrayFormats;
+        if (requestArgs.queryString != null) {
+            fetcherArgs.queryString = requestArgs.queryString;
         }
 
         return ts.factory.createObjectLiteralExpression(
@@ -944,11 +943,6 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             fetcherArgs.responseType = "text";
         }
 
-        const queryParameterArrayFormats = getQueryParameterArrayFormats(this.endpoint);
-        if (queryParameterArrayFormats != null) {
-            fetcherArgs.queryParameterArrayFormats = queryParameterArrayFormats;
-        }
-
         return [
             ts.factory.createVariableStatement(
                 undefined,
@@ -969,20 +963,4 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             )
         ];
     }
-}
-
-function getQueryParameterArrayFormats(endpoint: FernIr.HttpEndpoint): ts.Expression | undefined {
-    const nonExplodedParams = endpoint.queryParameters.filter((param) => param.explode === false);
-    if (nonExplodedParams.length === 0) {
-        return undefined;
-    }
-    return ts.factory.createObjectLiteralExpression(
-        nonExplodedParams.map((param) =>
-            ts.factory.createPropertyAssignment(
-                ts.factory.createStringLiteral(getWireValue(param.name)),
-                ts.factory.createStringLiteral("comma")
-            )
-        ),
-        false
-    );
 }

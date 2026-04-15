@@ -1,4 +1,4 @@
-import { toQueryString } from "../../../src/core/url/index";
+import { toQueryString } from "../../../core/url/index";
 
 describe("Test qs toQueryString", () => {
     interface BasicTestCase {
@@ -328,6 +328,35 @@ describe("Test qs toQueryString", () => {
             it(description, () => {
                 expect(toQueryString(input, options)).toBe(expected);
             });
+        });
+    });
+
+    describe("Per-parameter array format overrides", () => {
+        it("should apply comma format only to specified keys", () => {
+            expect(
+                toQueryString(
+                    { tags: ["a", "b"], ids: [1, 2], filter: "test" },
+                    { arrayFormat: "repeat", arrayFormats: { tags: "comma" } },
+                ),
+            ).toBe("tags=a,b&ids=1&ids=2&filter=test");
+        });
+
+        it("should apply comma format to multiple specified keys", () => {
+            expect(
+                toQueryString(
+                    { tags: ["a", "b"], optionalTags: ["c", "d"], ids: [1, 2] },
+                    { arrayFormat: "repeat", arrayFormats: { tags: "comma", optionalTags: "comma" } },
+                ),
+            ).toBe("tags=a,b&optionalTags=c,d&ids=1&ids=2");
+        });
+
+        it("should fall back to global arrayFormat for keys not in arrayFormats", () => {
+            expect(
+                toQueryString(
+                    { tags: ["a", "b"], items: ["x", "y"] },
+                    { arrayFormat: "indices", arrayFormats: { tags: "comma" } },
+                ),
+            ).toBe("tags=a,b&items%5B0%5D=x&items%5B1%5D=y");
         });
     });
 

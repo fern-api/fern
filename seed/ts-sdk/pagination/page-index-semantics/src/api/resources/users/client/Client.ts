@@ -61,6 +61,13 @@ export class UsersClient {
                     method: "GET",
                     headers: _headers,
                     queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+                    queryString: new core.url.QueryStringBuilder()
+                        .add("page", _queryParams.page)
+                        .add("per_page", _queryParams.per_page)
+                        .add("order", _queryParams.order)
+                        .add("starting_after", _queryParams.starting_after)
+                        .mergeAdditional(requestOptions?.queryParams)
+                        .build(),
                     timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                     maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
                     abortSignal: requestOptions?.abortSignal,
@@ -134,6 +141,10 @@ export class UsersClient {
                     method: "POST",
                     headers: _headers,
                     queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+                    queryString: new core.url.QueryStringBuilder()
+                        .add("cursor", _queryParams.cursor)
+                        .mergeAdditional(requestOptions?.queryParams)
+                        .build(),
                     timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                     maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
                     abortSignal: requestOptions?.abortSignal,
@@ -362,6 +373,13 @@ export class UsersClient {
                     method: "GET",
                     headers: _headers,
                     queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+                    queryString: new core.url.QueryStringBuilder()
+                        .add("page", _queryParams.page)
+                        .add("per_page", _queryParams.per_page)
+                        .add("order", _queryParams.order)
+                        .add("starting_after", _queryParams.starting_after)
+                        .mergeAdditional(requestOptions?.queryParams)
+                        .build(),
                     timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                     maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
                     abortSignal: requestOptions?.abortSignal,
@@ -438,6 +456,13 @@ export class UsersClient {
                     method: "GET",
                     headers: _headers,
                     queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+                    queryString: new core.url.QueryStringBuilder()
+                        .add("page", _queryParams.page)
+                        .add("per_page", _queryParams.per_page)
+                        .add("order", _queryParams.order)
+                        .add("starting_after", _queryParams.starting_after)
+                        .mergeAdditional(requestOptions?.queryParams)
+                        .build(),
                     timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                     maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
                     abortSignal: requestOptions?.abortSignal,
@@ -583,6 +608,12 @@ export class UsersClient {
                     method: "GET",
                     headers: _headers,
                     queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+                    queryString: new core.url.QueryStringBuilder()
+                        .add("page", _queryParams.page)
+                        .add("limit", _queryParams.limit)
+                        .add("order", _queryParams.order)
+                        .mergeAdditional(requestOptions?.queryParams)
+                        .build(),
                     timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                     maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
                     abortSignal: requestOptions?.abortSignal,
@@ -664,6 +695,12 @@ export class UsersClient {
                     method: "GET",
                     headers: _headers,
                     queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+                    queryString: new core.url.QueryStringBuilder()
+                        .add("page", _queryParams.page)
+                        .add("limit", _queryParams.limit)
+                        .add("order", _queryParams.order)
+                        .mergeAdditional(requestOptions?.queryParams)
+                        .build(),
                     timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                     maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
                     abortSignal: requestOptions?.abortSignal,
@@ -735,6 +772,10 @@ export class UsersClient {
                     method: "GET",
                     headers: _headers,
                     queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+                    queryString: new core.url.QueryStringBuilder()
+                        .add("cursor", _queryParams.cursor)
+                        .mergeAdditional(requestOptions?.queryParams)
+                        .build(),
                     timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                     maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
                     abortSignal: requestOptions?.abortSignal,
@@ -804,6 +845,10 @@ export class UsersClient {
                     method: "GET",
                     headers: _headers,
                     queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+                    queryString: new core.url.QueryStringBuilder()
+                        .add("cursor", _queryParams.cursor)
+                        .mergeAdditional(requestOptions?.queryParams)
+                        .build(),
                     timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                     maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
                     abortSignal: requestOptions?.abortSignal,
@@ -873,6 +918,10 @@ export class UsersClient {
                     method: "GET",
                     headers: _headers,
                     queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+                    queryString: new core.url.QueryStringBuilder()
+                        .add("starting_after", _queryParams.starting_after)
+                        .mergeAdditional(requestOptions?.queryParams)
+                        .build(),
                     timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                     maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
                     abortSignal: requestOptions?.abortSignal,
@@ -943,6 +992,10 @@ export class UsersClient {
                     method: "GET",
                     headers: _headers,
                     queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+                    queryString: new core.url.QueryStringBuilder()
+                        .add("starting_after", _queryParams.starting_after)
+                        .mergeAdditional(requestOptions?.queryParams)
+                        .build(),
                     timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                     maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
                     abortSignal: requestOptions?.abortSignal,
@@ -1013,6 +1066,10 @@ export class UsersClient {
                     method: "GET",
                     headers: _headers,
                     queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+                    queryString: new core.url.QueryStringBuilder()
+                        .add("offset", _queryParams.offset)
+                        .mergeAdditional(requestOptions?.queryParams)
+                        .build(),
                     timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                     maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
                     abortSignal: requestOptions?.abortSignal,
@@ -1083,6 +1140,10 @@ export class UsersClient {
                     method: "GET",
                     headers: _headers,
                     queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+                    queryString: new core.url.QueryStringBuilder()
+                        .add("page", _queryParams.page)
+                        .mergeAdditional(requestOptions?.queryParams)
+                        .build(),
                     timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                     maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
                     abortSignal: requestOptions?.abortSignal,
@@ -1157,6 +1218,12 @@ export class UsersClient {
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            queryString: new core.url.QueryStringBuilder()
+                .add("page", _queryParams.page)
+                .add("per_page", _queryParams.per_page)
+                .add("starting_after", _queryParams.starting_after)
+                .mergeAdditional(requestOptions?.queryParams)
+                .build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

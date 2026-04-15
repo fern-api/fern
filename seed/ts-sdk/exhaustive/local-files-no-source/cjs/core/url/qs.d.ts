@@ -1,5 +1,7 @@
+type ArrayFormat = "indices" | "repeat" | "comma";
 interface QueryStringOptions {
-    arrayFormat?: "indices" | "repeat";
+    arrayFormat?: ArrayFormat;
+    arrayFormats?: Record<string, ArrayFormat>;
     encode?: boolean;
 }
 export declare function toQueryString(obj: unknown, options?: QueryStringOptions): string;

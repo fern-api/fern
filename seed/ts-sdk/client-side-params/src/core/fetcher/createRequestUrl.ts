@@ -1,10 +1,6 @@
-import { toQueryString } from "../url/qs";
+import { toQueryString } from "../url/qs.js";
 
-export function createRequestUrl(
-    baseUrl: string,
-    queryParameters?: Record<string, unknown>,
-    arrayFormats?: Record<string, "indices" | "repeat" | "comma">
-): string {
-    const queryString = toQueryString(queryParameters, { arrayFormat: "repeat", arrayFormats });
+export function createRequestUrl(baseUrl: string, queryParameters?: Record<string, unknown>): string {
+    const queryString = toQueryString(queryParameters, { arrayFormat: "repeat" });
     return queryString ? `${baseUrl}?${queryString}` : baseUrl;
 }

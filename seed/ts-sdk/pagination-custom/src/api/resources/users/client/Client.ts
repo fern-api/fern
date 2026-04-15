@@ -55,6 +55,11 @@ export class UsersClient {
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
             logging: this._options.logging,
+            queryString: new core.url.QueryStringBuilder()
+                .add("limit", _queryParams.limit)
+                .add("starting_after", _queryParams.starting_after)
+                .mergeAdditional(requestOptions?.queryParams)
+                .build(),
         };
         const _sendRequest = async (request: core.Fetcher.Args) => {
             const _response = await core.fetcher<SeedPagination.UsersListResponse>(request);

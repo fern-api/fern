@@ -41,7 +41,7 @@ function stringifyObject(obj: Record<string, unknown>, prefix = "", options: Req
             if (effectiveFormat === "comma") {
                 const encodedKey = options.encode ? encodeURIComponent(fullKey) : fullKey;
                 const encodedValues = value.map((item) =>
-                    item === undefined || item === null ? "" : encodeValue(item, options.encode)
+                    item === undefined || item === null ? "" : encodeValue(item, options.encode),
                 );
                 parts.push(`${encodedKey}=${encodedValues.join(",")}`);
             } else {

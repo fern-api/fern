@@ -76,6 +76,11 @@ export class PlaylistClient {
             headers: _headers,
             contentType: "application/json",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            queryString: new core.url.QueryStringBuilder()
+                .add("datetime", _queryParams.datetime)
+                .add("optionalDatetime", _queryParams.optionalDatetime)
+                .mergeAdditional(requestOptions?.queryParams)
+                .build(),
             requestType: "json",
             body: serializers.PlaylistCreateRequest.jsonOrThrow(_body, {
                 unrecognizedObjectKeys: "strip",
@@ -171,6 +176,14 @@ export class PlaylistClient {
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            queryString: new core.url.QueryStringBuilder()
+                .add("limit", _queryParams.limit)
+                .add("otherField", _queryParams.otherField)
+                .add("multiLineDocs", _queryParams.multiLineDocs)
+                .add("optionalMultipleField", _queryParams.optionalMultipleField)
+                .add("multipleField", _queryParams.multipleField)
+                .mergeAdditional(requestOptions?.queryParams)
+                .build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

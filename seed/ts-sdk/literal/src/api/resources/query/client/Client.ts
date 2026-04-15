@@ -88,6 +88,18 @@ export class QueryClient {
             method: "POST",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            queryString: new core.url.QueryStringBuilder()
+                .add("prompt", _queryParams.prompt)
+                .add("optional_prompt", _queryParams.optional_prompt)
+                .add("alias_prompt", _queryParams.alias_prompt)
+                .add("alias_optional_prompt", _queryParams.alias_optional_prompt)
+                .add("query", _queryParams.query)
+                .add("stream", _queryParams.stream)
+                .add("optional_stream", _queryParams.optional_stream)
+                .add("alias_stream", _queryParams.alias_stream)
+                .add("alias_optional_stream", _queryParams.alias_optional_stream)
+                .mergeAdditional(requestOptions?.queryParams)
+                .build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

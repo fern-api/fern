@@ -63,6 +63,14 @@ export class NullableClient {
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            queryString: new core.url.QueryStringBuilder()
+                .add("usernames", _queryParams.usernames)
+                .add("avatar", _queryParams.avatar)
+                .add("activated", _queryParams.activated)
+                .add("tags", _queryParams.tags)
+                .add("extra", _queryParams.extra)
+                .mergeAdditional(requestOptions?.queryParams)
+                .build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

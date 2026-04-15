@@ -64,6 +64,13 @@ export class SeedApiClient {
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            queryString: new core.url.QueryStringBuilder()
+                .add("optional_baz", _queryParams.optional_baz)
+                .add("optional_nullable_baz", _queryParams.optional_nullable_baz)
+                .add("required_baz", _queryParams.required_baz)
+                .add("required_nullable_baz", _queryParams.required_nullable_baz)
+                .mergeAdditional(requestOptions?.queryParams)
+                .build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

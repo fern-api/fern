@@ -82,6 +82,13 @@ export class QueryParamClient {
             method: "POST",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            queryString: new core.url.QueryStringBuilder()
+                .add("operand", _queryParams.operand)
+                .add("maybeOperand", _queryParams.maybeOperand)
+                .add("operandOrColor", _queryParams.operandOrColor)
+                .add("maybeOperandOrColor", _queryParams.maybeOperandOrColor)
+                .mergeAdditional(requestOptions?.queryParams)
+                .build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -190,6 +197,13 @@ export class QueryParamClient {
             method: "POST",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            queryString: new core.url.QueryStringBuilder()
+                .add("operand", _queryParams.operand)
+                .add("maybeOperand", _queryParams.maybeOperand)
+                .add("operandOrColor", _queryParams.operandOrColor)
+                .add("maybeOperandOrColor", _queryParams.maybeOperandOrColor)
+                .mergeAdditional(requestOptions?.queryParams)
+                .build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
