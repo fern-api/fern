@@ -5,7 +5,7 @@ info:
 paths:
   /dummy:
     get:
-      operationId: dummy_getDummy
+      operationId: dummy_getdummy
       tags:
         - Dummy
       parameters: []
@@ -16,6 +16,9 @@ paths:
             application/json:
               schema:
                 type: string
+              examples:
+                Example1:
+                  value: string
       security:
         - Bearer: []
 components:
@@ -27,5 +30,3 @@ components:
 servers:
   - url: https://production.com/api
     description: Production
-  - url: https://staging.com/api
-    description: Staging

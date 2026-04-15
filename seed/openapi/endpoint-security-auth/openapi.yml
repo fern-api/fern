@@ -5,7 +5,7 @@ info:
 paths:
   /token:
     post:
-      operationId: auth_getToken
+      operationId: auth_gettoken
       tags:
         - Auth
       parameters: []
@@ -16,6 +16,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TokenResponse'
+              examples:
+                Example1:
+                  value:
+                    access_token: access_token
+                    expires_in: 1
+                    refresh_token: refresh_token
       requestBody:
         required: true
         content:
@@ -25,22 +31,31 @@ paths:
               properties:
                 client_id:
                   type: string
+                  examples:
+                    - client_id
                 client_secret:
                   type: string
+                  examples:
+                    - client_secret
                 audience:
-                  type: string
-                  const: https://api.example.com
+                  $ref: '#/components/schemas/AuthGetTokenRequestAudience'
                 grant_type:
-                  type: string
-                  const: client_credentials
+                  $ref: '#/components/schemas/AuthGetTokenRequestGrantType'
               required:
                 - client_id
                 - client_secret
                 - audience
                 - grant_type
+            examples:
+              Example1:
+                value:
+                  client_id: client_id
+                  client_secret: client_secret
+                  audience: https://api.example.com
+                  grant_type: client_credentials
   /users/bearer:
     get:
-      operationId: user_getWithBearer
+      operationId: user_getwithbearer
       tags:
         - User
       parameters: []
@@ -53,15 +68,16 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/User'
+              examples:
+                Example1:
+                  value:
+                    - id: id
+                      name: name
       security:
         - Bearer: []
-          APIKey: []
-          OAuth: []
-          Basic: []
-          InferredAuth: []
   /users/api-key:
     get:
-      operationId: user_getWithApiKey
+      operationId: user_getwithapikey
       tags:
         - User
       parameters: []
@@ -74,15 +90,16 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/User'
+              examples:
+                Example1:
+                  value:
+                    - id: id
+                      name: name
       security:
         - Bearer: []
-          APIKey: []
-          OAuth: []
-          Basic: []
-          InferredAuth: []
   /users/oauth:
     get:
-      operationId: user_getWithOAuth
+      operationId: user_getwithoauth
       tags:
         - User
       parameters: []
@@ -95,15 +112,16 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/User'
+              examples:
+                Example1:
+                  value:
+                    - id: id
+                      name: name
       security:
         - Bearer: []
-          APIKey: []
-          OAuth: []
-          Basic: []
-          InferredAuth: []
   /users/basic:
     get:
-      operationId: user_getWithBasic
+      operationId: user_getwithbasic
       tags:
         - User
       parameters: []
@@ -116,15 +134,16 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/User'
+              examples:
+                Example1:
+                  value:
+                    - id: id
+                      name: name
       security:
         - Bearer: []
-          APIKey: []
-          OAuth: []
-          Basic: []
-          InferredAuth: []
   /users/inferred:
     get:
-      operationId: user_getWithInferredAuth
+      operationId: user_getwithinferredauth
       tags:
         - User
       parameters: []
@@ -137,15 +156,16 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/User'
+              examples:
+                Example1:
+                  value:
+                    - id: id
+                      name: name
       security:
         - Bearer: []
-          APIKey: []
-          OAuth: []
-          Basic: []
-          InferredAuth: []
   /users/any-auth:
     get:
-      operationId: user_getWithAnyAuth
+      operationId: user_getwithanyauth
       tags:
         - User
       parameters: []
@@ -158,15 +178,16 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/User'
+              examples:
+                Example1:
+                  value:
+                    - id: id
+                      name: name
       security:
         - Bearer: []
-          APIKey: []
-          OAuth: []
-          Basic: []
-          InferredAuth: []
   /users/all-auth:
     get:
-      operationId: user_getWithAllAuth
+      operationId: user_getwithallauth
       tags:
         - User
       parameters: []
@@ -179,14 +200,23 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/User'
+              examples:
+                Example1:
+                  value:
+                    - id: id
+                      name: name
       security:
         - Bearer: []
-          APIKey: []
-          OAuth: []
-          Basic: []
-          InferredAuth: []
 components:
   schemas:
+    AuthGetTokenRequestAudience:
+      title: AuthGetTokenRequestAudience
+      type: string
+      const: https://api.example.com
+    AuthGetTokenRequestGrantType:
+      title: AuthGetTokenRequestGrantType
+      type: string
+      const: client_credentials
     TokenResponse:
       title: TokenResponse
       type: object
@@ -194,8 +224,12 @@ components:
       properties:
         access_token:
           type: string
+          examples:
+            - access_token
         expires_in:
           type: integer
+          examples:
+            - 1
         refresh_token:
           type:
             - string
@@ -216,18 +250,5 @@ components:
         - name
   securitySchemes:
     Bearer:
-      type: http
-      scheme: bearer
-    APIKey:
-      type: apiKey
-      in: header
-      name: X-API-Key
-    OAuth:
-      type: http
-      scheme: bearer
-    Basic:
-      type: http
-      scheme: basic
-    InferredAuth:
       type: http
       scheme: bearer

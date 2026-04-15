@@ -5,7 +5,7 @@ info:
 paths:
   /foo1:
     post:
-      operationId: simple_fooWithoutEndpointError
+      operationId: simple_foowithoutendpointerror
       tags:
         - Simple
       parameters: []
@@ -16,6 +16,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/FooResponse'
+              examples:
+                Example1:
+                  value:
+                    bar: hello
         '400':
           description: BadRequestError
           content:
@@ -40,52 +44,13 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/FooRequest'
+            examples:
+              Example1:
+                value:
+                  bar: hello
   /foo2:
     post:
       operationId: simple_foo
-      tags:
-        - Simple
-      parameters: []
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FooResponse'
-        '400':
-          description: BadRequestError
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '404':
-          description: NotFoundError
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '429':
-          description: FooTooMuch
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '500':
-          description: InternalServerError
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorBody'
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/FooRequest'
-  /foo3:
-    post:
-      operationId: simple_fooWithExamples
       tags:
         - Simple
       parameters: []
@@ -113,16 +78,68 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
         '429':
-          description: FooTooMuch
+          description: TooManyRequestsError
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
+        '500':
+          description: InternalServerError
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FooRequest'
+            examples:
+              Example1:
+                value:
+                  bar: hello
+  /foo3:
+    post:
+      operationId: simple_foowithexamples
+      tags:
+        - Simple
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FooResponse'
               examples:
                 Example1:
                   value:
-                    message: Too much foo
-                    code: 1
+                    bar: hello
+                Example2:
+                  value:
+                    bar: hello
+                Example3:
+                  value:
+                    bar: hello
+        '400':
+          description: BadRequestError
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: NotFoundError
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: TooManyRequestsError
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
         '500':
           description: InternalServerError
           content:

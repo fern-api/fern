@@ -5,7 +5,7 @@ info:
 paths:
   /text:
     post:
-      operationId: service_getText
+      operationId: service_gettext
       tags:
         - Service
       parameters: []

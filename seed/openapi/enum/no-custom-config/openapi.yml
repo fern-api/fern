@@ -14,6 +14,9 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/Operand'
+          examples:
+            Example1:
+              value: '>'
         - name: maybeOperand
           in: header
           required: false
@@ -26,6 +29,9 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/ColorOrOperand'
+          examples:
+            Example1:
+              value: red
         - name: maybeOperandOrColor
           in: header
           required: false
@@ -38,9 +44,9 @@ paths:
           description: No content
   /inlined:
     post:
-      operationId: inlinedRequest_send
+      operationId: inlinedrequest_send
       tags:
-        - InlinedRequest
+        - Inlinedrequest
       parameters: []
       responses:
         '204':
@@ -74,9 +80,9 @@ paths:
                   operandOrColor: red
   /multipart:
     post:
-      operationId: multipartForm_multipartForm
+      operationId: multipartform_multipartform
       tags:
-        - MultipartForm
+        - Multipartform
       parameters: []
       responses:
         '204':
@@ -89,13 +95,17 @@ paths:
               type: object
               properties:
                 color:
-                  $ref: '#/components/schemas/Color'
+                  anyOf:
+                    - $ref: '#/components/schemas/Color'
+                    - type: 'null'
                 maybeColor:
                   anyOf:
                     - $ref: '#/components/schemas/Color'
                     - type: 'null'
                 colorList:
-                  type: array
+                  type:
+                    - array
+                    - 'null'
                   items:
                     $ref: '#/components/schemas/Color'
                 maybeColorList:
@@ -106,9 +116,9 @@ paths:
                     $ref: '#/components/schemas/Color'
   /path/{operand}/{operandOrColor}:
     post:
-      operationId: pathParam_send
+      operationId: pathparam_send
       tags:
-        - PathParam
+        - Pathparam
       parameters:
         - name: operand
           in: path
@@ -131,9 +141,9 @@ paths:
           description: No content
   /query:
     post:
-      operationId: queryParam_send
+      operationId: queryparam_send
       tags:
-        - QueryParam
+        - Queryparam
       parameters:
         - name: operand
           in: query
@@ -154,7 +164,7 @@ paths:
           in: query
           required: true
           schema:
-            $ref: '#/components/schemas/ColorOrOperand'
+            $ref: '#/components/schemas/Color'
           examples:
             Example1:
               value: red
@@ -170,17 +180,19 @@ paths:
           description: No content
   /query-list:
     post:
-      operationId: queryParam_sendList
+      operationId: queryparam_sendlist
       tags:
-        - QueryParam
+        - Queryparam
       parameters:
         - name: operand
           in: query
-          required: true
+          required: false
           schema:
             type: array
             items:
-              $ref: '#/components/schemas/Operand'
+              anyOf:
+                - $ref: '#/components/schemas/Operand'
+                - type: 'null'
         - name: maybeOperand
           in: query
           required: false
@@ -192,11 +204,13 @@ paths:
                 - type: 'null'
         - name: operandOrColor
           in: query
-          required: true
+          required: false
           schema:
             type: array
             items:
-              $ref: '#/components/schemas/ColorOrOperand'
+              anyOf:
+                - $ref: '#/components/schemas/ColorOrOperand'
+                - type: 'null'
         - name: maybeOperandOrColor
           in: query
           required: false
@@ -259,8 +273,6 @@ components:
       enum:
         - ''
         - Hello \"World\"
-        - Hello 'World'
-        - Hello\\World
         - Hello\nWorld
         - Hello\rWorld
         - Hello\tWorld
@@ -288,7 +300,6 @@ components:
         - \\d{3}-\\d{2}-\\d{4}
         - '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}'
         - transcript[transcriptType="final"]
-        - transcript[transcriptType='final']
     Status:
       title: Status
       type: string

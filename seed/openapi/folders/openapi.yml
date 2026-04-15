@@ -5,7 +5,7 @@ info:
 paths:
   /:
     post:
-      operationId: foo
+      operationId: _foo
       tags:
         - ''
       parameters: []
@@ -14,18 +14,18 @@ paths:
           description: No content
   /a/b:
     post:
-      operationId: a_b_foo
+      operationId: ab_a_b_foo
       tags:
-        - AB
+        - Ab
       parameters: []
       responses:
         '204':
           description: No content
   /a/c:
     post:
-      operationId: a_c_foo
+      operationId: ac_a_c_foo
       tags:
-        - AC
+        - Ac
       parameters: []
       responses:
         '204':
@@ -41,7 +41,7 @@ paths:
           description: No content
   /service:
     get:
-      operationId: folder_service_endpoint
+      operationId: folderService_folder_service_endpoint
       tags:
         - FolderService
       parameters: []
@@ -49,7 +49,7 @@ paths:
         '204':
           description: No content
     post:
-      operationId: folder_service_unknownRequest
+      operationId: folderService_folder_service_unknownRequest
       tags:
         - FolderService
       parameters: []
@@ -69,7 +69,7 @@ paths:
             schema: {}
 components:
   schemas:
-    adFoo:
-      title: adFoo
+    AdFoo:
+      title: AdFoo
       type: string
   securitySchemes: {}

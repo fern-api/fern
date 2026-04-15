@@ -5,7 +5,7 @@ info:
 paths:
   /user:
     post:
-      operationId: user_createUser
+      operationId: user_createuser
       tags:
         - User
       parameters: []
@@ -20,8 +20,6 @@ paths:
                 Example1:
                   value:
                     name: Alice
-                    age: 30
-                    location: Wonderland
       requestBody:
         required: true
         content:
@@ -30,11 +28,9 @@ paths:
               type: object
               properties:
                 _type:
-                  type: string
-                  const: CreateUserRequest
+                  $ref: '#/components/schemas/UserCreateUserRequestType'
                 _version:
-                  type: string
-                  const: v1
+                  $ref: '#/components/schemas/UserCreateUserRequestVersion'
                 name:
                   type: string
                   examples:
@@ -46,20 +42,29 @@ paths:
             examples:
               Example1:
                 value:
-                  name: Alice
                   _type: CreateUserRequest
                   _version: v1
-                  age: 30
-                  location: Wonderland
+                  name: Alice
 components:
   schemas:
+    UserCreateUserRequestType:
+      title: UserCreateUserRequestType
+      type: string
+      const: CreateUserRequest
+    UserCreateUserRequestVersion:
+      title: UserCreateUserRequestVersion
+      type: string
+      const: v1
+    FailureStatus:
+      title: FailureStatus
+      type: string
+      const: failure
     Failure:
       title: Failure
       type: object
       properties:
         status:
-          type: string
-          const: failure
+          $ref: '#/components/schemas/FailureStatus'
       required:
         - status
     User:

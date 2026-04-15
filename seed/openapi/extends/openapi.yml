@@ -5,7 +5,7 @@ info:
 paths:
   /extends/extended-inline-request-body:
     post:
-      operationId: extendedInlineRequestBody
+      operationId: _extendedInlineRequestBody
       tags:
         - ''
       parameters: []
@@ -21,10 +21,18 @@ paths:
               properties:
                 unique:
                   type: string
+                  examples:
+                    - unique
               required:
                 - unique
               allOf:
                 - $ref: '#/components/schemas/ExampleType'
+            examples:
+              Example1:
+                value:
+                  docs: Types extend this type to include a docs property.
+                  name: Example
+                  unique: unique
 components:
   schemas:
     ExampleType:
@@ -33,8 +41,6 @@ components:
       properties:
         name:
           type: string
-          examples:
-            - Example
       required:
         - name
       allOf:
@@ -45,30 +51,24 @@ components:
       properties:
         name:
           type: string
-          examples:
-            - NestedExample
       required:
         - name
       allOf:
-        - $ref: '#/components/schemas/JSON'
+        - $ref: '#/components/schemas/Json'
     Docs:
       title: Docs
       type: object
       properties:
         docs:
           type: string
-          examples:
-            - Types extend this type to include a docs property.
       required:
         - docs
-    JSON:
-      title: JSON
+    Json:
+      title: Json
       type: object
       properties:
         raw:
           type: string
-          examples:
-            - '{"docs": true, "json": true}'
       required:
         - raw
       allOf:

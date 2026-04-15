@@ -5,7 +5,7 @@ info:
 paths:
   /send-optional-body:
     post:
-      operationId: optional_sendOptionalBody
+      operationId: optional_sendoptionalbody
       tags:
         - Optional
       parameters: []
@@ -16,17 +16,24 @@ paths:
             application/json:
               schema:
                 type: string
+              examples:
+                Example1:
+                  value: string
       requestBody:
-        required: false
+        required: true
         content:
           application/json:
             schema:
               type:
                 - object
                 - 'null'
+            examples:
+              Example1:
+                value:
+                  key: value
   /send-optional-typed-body:
     post:
-      operationId: optional_sendOptionalTypedBody
+      operationId: optional_sendoptionaltypedbody
       tags:
         - Optional
       parameters: []
@@ -37,14 +44,21 @@ paths:
             application/json:
               schema:
                 type: string
+              examples:
+                Example1:
+                  value: string
       requestBody:
-        required: false
+        required: true
         content:
           application/json:
             schema:
               anyOf:
                 - $ref: '#/components/schemas/SendOptionalBodyRequest'
                 - type: 'null'
+            examples:
+              Example1:
+                value:
+                  message: message
   /deploy/{actionId}/versions/{id}:
     post:
       description: >-
@@ -52,7 +66,7 @@ paths:
 
         This should not generate wire tests expecting {} when Optional.empty()
         is passed.
-      operationId: optional_sendOptionalNullableWithAllOptionalProperties
+      operationId: optional_sendoptionalnullablewithalloptionalproperties
       tags:
         - Optional
       parameters:
@@ -61,11 +75,17 @@ paths:
           required: true
           schema:
             type: string
+          examples:
+            Example1:
+              value: actionId
         - name: id
           in: path
           required: true
           schema:
             type: string
+          examples:
+            Example1:
+              value: id
       responses:
         '200':
           description: Success
@@ -73,14 +93,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DeployResponse'
+              examples:
+                Example1:
+                  value:
+                    success: true
       requestBody:
-        required: false
+        required: true
         content:
           application/json:
             schema:
               anyOf:
                 - $ref: '#/components/schemas/DeployParams'
                 - type: 'null'
+            examples:
+              Example1:
+                value: {}
 components:
   schemas:
     SendOptionalBodyRequest:
@@ -105,6 +132,8 @@ components:
       properties:
         success:
           type: boolean
+          examples:
+            - true
       required:
         - success
   securitySchemes: {}

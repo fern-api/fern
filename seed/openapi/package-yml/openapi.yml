@@ -5,7 +5,7 @@ info:
 paths:
   /{id}/:
     post:
-      operationId: echo
+      operationId: _echo
       tags:
         - ''
       parameters:
@@ -32,7 +32,19 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/EchoRequest'
+              type: object
+              properties:
+                name:
+                  type: string
+                  examples:
+                    - Hello world!
+                size:
+                  type: integer
+                  examples:
+                    - 20
+              required:
+                - name
+                - size
             examples:
               Example1:
                 value:
@@ -64,20 +76,5 @@ paths:
         '204':
           description: No content
 components:
-  schemas:
-    EchoRequest:
-      title: EchoRequest
-      type: object
-      properties:
-        name:
-          type: string
-          examples:
-            - Hello world!
-        size:
-          type: integer
-          examples:
-            - 20
-      required:
-        - name
-        - size
+  schemas: {}
   securitySchemes: {}

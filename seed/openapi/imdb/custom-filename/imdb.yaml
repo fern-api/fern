@@ -6,7 +6,7 @@ paths:
   /movies/create-movie:
     post:
       description: Add a movie to the database using the movies/* /... path.
-      operationId: imdb_createMovie
+      operationId: imdb_createmovie
       tags:
         - Imdb
       parameters: []
@@ -17,16 +17,37 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MovieId'
+              examples:
+                Example1:
+                  value: string
       x-fern-availability: pre-release
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateMovieRequest'
+              type: object
+              properties:
+                title:
+                  type: string
+                  examples:
+                    - title
+                rating:
+                  type: number
+                  format: double
+                  examples:
+                    - 1.1
+              required:
+                - title
+                - rating
+            examples:
+              Example1:
+                value:
+                  title: title
+                  rating: 1.1
   /movies/{movieId}:
     get:
-      operationId: imdb_getMovie
+      operationId: imdb_getmovie
       tags:
         - Imdb
       parameters:
@@ -35,6 +56,9 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/MovieId'
+          examples:
+            Example1:
+              value: movieId
       responses:
         '200':
           description: Success
@@ -42,8 +66,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Movie'
+              examples:
+                Example1:
+                  value:
+                    id: id
+                    title: title
+                    rating: 1.1
         '404':
-          description: MovieDoesNotExistError
+          description: NotFoundError
           content:
             application/json:
               schema:
@@ -62,28 +92,20 @@ components:
           $ref: '#/components/schemas/MovieId'
         title:
           type: string
+          examples:
+            - title
         rating:
           type: number
           format: double
           description: The rating scale is one to five stars
+          examples:
+            - 1.1
           x-fern-availability: deprecated
       required:
         - id
         - title
         - rating
       x-fern-availability: generally-available
-    CreateMovieRequest:
-      title: CreateMovieRequest
-      type: object
-      properties:
-        title:
-          type: string
-        rating:
-          type: number
-          format: double
-      required:
-        - title
-        - rating
   securitySchemes:
     Bearer:
       type: http

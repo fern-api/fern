@@ -5,31 +5,35 @@ info:
 paths:
   /:
     get:
-      operationId: folderA_service_getDirectThread
+      operationId: folderAService_folderA_service_getDirectThread
       tags:
         - FolderAService
       parameters:
         - name: ids
           in: query
-          required: true
+          required: false
           schema:
             type: array
             items:
-              type: string
+              type:
+                - string
+                - 'null'
         - name: tags
           in: query
-          required: true
+          required: false
           schema:
             type: array
             items:
-              type: string
+              type:
+                - string
+                - 'null'
       responses:
         '200':
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/folder-aResponse'
+                $ref: '#/components/schemas/FolderAResponse'
     post:
       operationId: foo_find
       tags:
@@ -39,7 +43,9 @@ paths:
           in: query
           required: false
           schema:
-            $ref: '#/components/schemas/OptionalString'
+            anyOf:
+              - $ref: '#/components/schemas/OptionalString'
+              - type: 'null'
       responses:
         '200':
           description: Success
@@ -47,6 +53,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ImportingType'
+              examples:
+                Example1:
+                  value:
+                    imported: imported
       requestBody:
         required: true
         content:
@@ -62,9 +72,12 @@ paths:
                   type:
                     - integer
                     - 'null'
+            examples:
+              Example1:
+                value: {}
   /partner-path:
     get:
-      operationId: folderD_service_getDirectThread
+      operationId: folderDService_folderD_service_getDirectThread
       tags:
         - FolderDService
       parameters: []
@@ -74,30 +87,34 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/folder-dResponse'
+                $ref: '#/components/schemas/FolderDResponse'
+              examples:
+                Example1:
+                  value:
+                    foo: foo
 components:
   schemas:
     Imported:
       title: Imported
       type: string
-    folder-aResponse:
-      title: folder-aResponse
+    FolderAResponse:
+      title: FolderAResponse
       type: object
       properties:
         foo:
           anyOf:
-            - $ref: '#/components/schemas/folder-bFoo'
+            - $ref: '#/components/schemas/FolderBFoo'
             - type: 'null'
-    folder-bFoo:
-      title: folder-bFoo
+    FolderBFoo:
+      title: FolderBFoo
       type: object
       properties:
         foo:
           anyOf:
-            - $ref: '#/components/schemas/folder-cFolderCFoo'
+            - $ref: '#/components/schemas/FolderCFolderCFoo'
             - type: 'null'
-    folder-cFolderCFoo:
-      title: folder-cFolderCFoo
+    FolderCFolderCFoo:
+      title: FolderCFolderCFoo
       type: object
       properties:
         bar_property:
@@ -105,12 +122,14 @@ components:
           format: uuid
       required:
         - bar_property
-    folder-dResponse:
-      title: folder-dResponse
+    FolderDResponse:
+      title: FolderDResponse
       type: object
       properties:
         foo:
           type: string
+          examples:
+            - foo
       required:
         - foo
     ImportingType:
@@ -141,6 +160,4 @@ components:
   securitySchemes: {}
 servers:
   - url: https://api.example.a.com
-    description: environment-a
-  - url: https://api.example.b.com
-    description: environment-b
+    description: Default

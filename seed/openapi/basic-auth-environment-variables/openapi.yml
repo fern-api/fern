@@ -6,9 +6,9 @@ paths:
   /basic-auth:
     get:
       description: GET request with basic auth scheme
-      operationId: basicAuth_getWithBasicAuth
+      operationId: basicauth_getwithbasicauth
       tags:
-        - BasicAuth
+        - Basicauth
       parameters: []
       responses:
         '200':
@@ -17,8 +17,11 @@ paths:
             application/json:
               schema:
                 type: boolean
+              examples:
+                Example1:
+                  value: true
         '401':
-          description: UnauthorizedRequest
+          description: UnauthorizedError
           content:
             application/json:
               schema:
@@ -27,9 +30,9 @@ paths:
         - Basic: []
     post:
       description: POST request with basic auth scheme
-      operationId: basicAuth_postWithBasicAuth
+      operationId: basicauth_postwithbasicauth
       tags:
-        - BasicAuth
+        - Basicauth
       parameters: []
       responses:
         '200':
@@ -39,9 +42,12 @@ paths:
               schema:
                 type: boolean
         '400':
-          description: BadRequest
+          description: BadRequestError
+          content:
+            application/json:
+              schema: {}
         '401':
-          description: UnauthorizedRequest
+          description: UnauthorizedError
           content:
             application/json:
               schema:

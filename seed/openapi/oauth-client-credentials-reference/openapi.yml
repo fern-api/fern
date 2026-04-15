@@ -5,7 +5,7 @@ info:
 paths:
   /token:
     post:
-      operationId: auth_getToken
+      operationId: auth_gettoken
       tags:
         - Auth
       parameters: []
@@ -26,7 +26,19 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/GetTokenRequest'
+              type: object
+              properties:
+                client_id:
+                  type: string
+                  examples:
+                    - client_id
+                client_secret:
+                  type: string
+                  examples:
+                    - client_secret
+              required:
+                - client_id
+                - client_secret
             examples:
               Example1:
                 value:
@@ -34,7 +46,7 @@ paths:
                   client_secret: client_secret
   /get-something:
     get:
-      operationId: simple_getSomething
+      operationId: simple_getsomething
       tags:
         - Simple
       parameters: []
@@ -61,22 +73,6 @@ components:
       required:
         - access_token
         - expires_in
-    GetTokenRequest:
-      title: GetTokenRequest
-      type: object
-      description: The request body for getting an OAuth token.
-      properties:
-        client_id:
-          type: string
-          examples:
-            - client_id
-        client_secret:
-          type: string
-          examples:
-            - client_secret
-      required:
-        - client_id
-        - client_secret
   securitySchemes:
     OAuthScheme:
       type: http

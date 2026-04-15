@@ -14,6 +14,9 @@ paths:
           required: true
           schema:
             type: string
+          examples:
+            Example1:
+              value: index
       responses:
         '200':
           description: Success
@@ -21,6 +24,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PaginatedConversationResponse'
+              examples:
+                Example1:
+                  value:
+                    conversations:
+                      - foo: foo
+                    pages:
+                      next:
+                        per_page: 1
+                        starting_after: starting_after
+                      page: 1
+                      per_page: 1
+                      total_pages: 1
+                      type: pages
+                    total_count: 1
+                    type: conversation.list
       summary: Search conversations
       security:
         - Bearer: []
@@ -29,10 +47,23 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SearchRequest'
+              type: object
+              properties:
+                pagination:
+                  anyOf:
+                    - $ref: '#/components/schemas/StartingAfterPaging'
+                    - type: 'null'
+                query:
+                  $ref: '#/components/schemas/SearchRequestQuery'
+              required:
+                - query
+            examples:
+              Example1:
+                value:
+                  query: {}
   /inline-users/cursor-pagination:
     get:
-      operationId: inlineUsers_inlineUsers_listWithCursorPagination
+      operationId: inlineUsersInlineUsers_inlineUsers_inlineUsers_listWithCursorPagination
       tags:
         - InlineUsersInlineUsers
       parameters:
@@ -57,7 +88,7 @@ paths:
           required: false
           schema:
             anyOf:
-              - $ref: '#/components/schemas/inline-usersOrder'
+              - $ref: '#/components/schemas/InlineUsersOrder'
               - type: 'null'
         - name: starting_after
           in: query
@@ -75,10 +106,27 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline-usersListUsersPaginationResponse'
+                $ref: '#/components/schemas/InlineUsersListUsersPaginationResponse'
+              examples:
+                Example1:
+                  value:
+                    hasNextPage: true
+                    page:
+                      page: 1
+                      next:
+                        page: 1
+                        starting_after: starting_after
+                      per_page: 1
+                      total_page: 1
+                    total_count: 1
+                    data:
+                      users:
+                        - name: name
+                          id: 1
   /inline-users/mixed-type-cursor-pagination:
     post:
-      operationId: inlineUsers_inlineUsers_listWithMixedTypeCursorPagination
+      operationId: >-
+        inlineUsersInlineUsers_inlineUsers_inlineUsers_listWithMixedTypeCursorPagination
       tags:
         - InlineUsersInlineUsers
       parameters:
@@ -96,10 +144,19 @@ paths:
             application/json:
               schema:
                 $ref: >-
-                  #/components/schemas/inline-usersListUsersMixedTypePaginationResponse
+                  #/components/schemas/InlineUsersListUsersMixedTypePaginationResponse
+              examples:
+                Example1:
+                  value:
+                    next: next
+                    data:
+                      users:
+                        - name: name
+                          id: 1
   /inline-users/body-cursor-pagination:
     post:
-      operationId: inlineUsers_inlineUsers_listWithBodyCursorPagination
+      operationId: >-
+        inlineUsersInlineUsers_inlineUsers_inlineUsers_listWithBodyCursorPagination
       tags:
         - InlineUsersInlineUsers
       parameters: []
@@ -109,7 +166,23 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline-usersListUsersPaginationResponse'
+                $ref: '#/components/schemas/InlineUsersListUsersPaginationResponse'
+              examples:
+                Example1:
+                  value:
+                    hasNextPage: true
+                    page:
+                      page: 1
+                      next:
+                        page: 1
+                        starting_after: starting_after
+                      per_page: 1
+                      total_page: 1
+                    total_count: 1
+                    data:
+                      users:
+                        - name: name
+                          id: 1
       requestBody:
         required: true
         content:
@@ -119,14 +192,17 @@ paths:
               properties:
                 pagination:
                   anyOf:
-                    - $ref: '#/components/schemas/inline-usersWithCursor'
+                    - $ref: '#/components/schemas/InlineUsersWithCursor'
                     - type: 'null'
                   description: |-
                     The object that contains the cursor used for pagination
                     in order to fetch the next page of results.
+            examples:
+              Example1:
+                value: {}
   /inline-users/offset-pagination:
     get:
-      operationId: inlineUsers_inlineUsers_listWithOffsetPagination
+      operationId: inlineUsersInlineUsers_inlineUsers_inlineUsers_listWithOffsetPagination
       tags:
         - InlineUsersInlineUsers
       parameters:
@@ -151,7 +227,7 @@ paths:
           required: false
           schema:
             anyOf:
-              - $ref: '#/components/schemas/inline-usersOrder'
+              - $ref: '#/components/schemas/InlineUsersOrder'
               - type: 'null'
         - name: starting_after
           in: query
@@ -169,10 +245,27 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline-usersListUsersPaginationResponse'
+                $ref: '#/components/schemas/InlineUsersListUsersPaginationResponse'
+              examples:
+                Example1:
+                  value:
+                    hasNextPage: true
+                    page:
+                      page: 1
+                      next:
+                        page: 1
+                        starting_after: starting_after
+                      per_page: 1
+                      total_page: 1
+                    total_count: 1
+                    data:
+                      users:
+                        - name: name
+                          id: 1
   /inline-users/double-offset-pagination:
     get:
-      operationId: inlineUsers_inlineUsers_listWithDoubleOffsetPagination
+      operationId: >-
+        inlineUsersInlineUsers_inlineUsers_inlineUsers_listWithDoubleOffsetPagination
       tags:
         - InlineUsersInlineUsers
       parameters:
@@ -199,7 +292,7 @@ paths:
           required: false
           schema:
             anyOf:
-              - $ref: '#/components/schemas/inline-usersOrder'
+              - $ref: '#/components/schemas/InlineUsersOrder'
               - type: 'null'
         - name: starting_after
           in: query
@@ -217,10 +310,27 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline-usersListUsersPaginationResponse'
+                $ref: '#/components/schemas/InlineUsersListUsersPaginationResponse'
+              examples:
+                Example1:
+                  value:
+                    hasNextPage: true
+                    page:
+                      page: 1
+                      next:
+                        page: 1
+                        starting_after: starting_after
+                      per_page: 1
+                      total_page: 1
+                    total_count: 1
+                    data:
+                      users:
+                        - name: name
+                          id: 1
   /inline-users/body-offset-pagination:
     post:
-      operationId: inlineUsers_inlineUsers_listWithBodyOffsetPagination
+      operationId: >-
+        inlineUsersInlineUsers_inlineUsers_inlineUsers_listWithBodyOffsetPagination
       tags:
         - InlineUsersInlineUsers
       parameters: []
@@ -230,7 +340,23 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline-usersListUsersPaginationResponse'
+                $ref: '#/components/schemas/InlineUsersListUsersPaginationResponse'
+              examples:
+                Example1:
+                  value:
+                    hasNextPage: true
+                    page:
+                      page: 1
+                      next:
+                        page: 1
+                        starting_after: starting_after
+                      per_page: 1
+                      total_page: 1
+                    total_count: 1
+                    data:
+                      users:
+                        - name: name
+                          id: 1
       requestBody:
         required: true
         content:
@@ -240,14 +366,18 @@ paths:
               properties:
                 pagination:
                   anyOf:
-                    - $ref: '#/components/schemas/inline-usersWithPage'
+                    - $ref: '#/components/schemas/InlineUsersWithPage'
                     - type: 'null'
                   description: |-
                     The object that contains the offset used for pagination
                     in order to fetch the next page of results.
+            examples:
+              Example1:
+                value: {}
   /inline-users/offset-step-pagination:
     get:
-      operationId: inlineUsers_inlineUsers_listWithOffsetStepPagination
+      operationId: >-
+        inlineUsersInlineUsers_inlineUsers_inlineUsers_listWithOffsetStepPagination
       tags:
         - InlineUsersInlineUsers
       parameters:
@@ -275,7 +405,7 @@ paths:
           required: false
           schema:
             anyOf:
-              - $ref: '#/components/schemas/inline-usersOrder'
+              - $ref: '#/components/schemas/InlineUsersOrder'
               - type: 'null'
       responses:
         '200':
@@ -283,10 +413,27 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline-usersListUsersPaginationResponse'
+                $ref: '#/components/schemas/InlineUsersListUsersPaginationResponse'
+              examples:
+                Example1:
+                  value:
+                    hasNextPage: true
+                    page:
+                      page: 1
+                      next:
+                        page: 1
+                        starting_after: starting_after
+                      per_page: 1
+                      total_page: 1
+                    total_count: 1
+                    data:
+                      users:
+                        - name: name
+                          id: 1
   /inline-users/offset-pagination-has-next-page:
     get:
-      operationId: inlineUsers_inlineUsers_listWithOffsetPaginationHasNextPage
+      operationId: >-
+        inlineUsersInlineUsers_inlineUsers_inlineUsers_listWithOffsetPaginationHasNextPage
       tags:
         - InlineUsersInlineUsers
       parameters:
@@ -314,7 +461,7 @@ paths:
           required: false
           schema:
             anyOf:
-              - $ref: '#/components/schemas/inline-usersOrder'
+              - $ref: '#/components/schemas/InlineUsersOrder'
               - type: 'null'
       responses:
         '200':
@@ -322,10 +469,26 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline-usersListUsersPaginationResponse'
+                $ref: '#/components/schemas/InlineUsersListUsersPaginationResponse'
+              examples:
+                Example1:
+                  value:
+                    hasNextPage: true
+                    page:
+                      page: 1
+                      next:
+                        page: 1
+                        starting_after: starting_after
+                      per_page: 1
+                      total_page: 1
+                    total_count: 1
+                    data:
+                      users:
+                        - name: name
+                          id: 1
   /inline-users/extended-results:
     get:
-      operationId: inlineUsers_inlineUsers_listWithExtendedResults
+      operationId: inlineUsersInlineUsers_inlineUsers_inlineUsers_listWithExtendedResults
       tags:
         - InlineUsersInlineUsers
       parameters:
@@ -343,10 +506,20 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline-usersListUsersExtendedResponse'
+                $ref: '#/components/schemas/InlineUsersListUsersExtendedResponse'
+              examples:
+                Example1:
+                  value:
+                    data:
+                      users:
+                        - name: name
+                          id: 1
+                    next: next
+                    total_count: 1
   /inline-users/extended-results-optional-data:
     get:
-      operationId: inlineUsers_inlineUsers_listWithExtendedResultsAndOptionalData
+      operationId: >-
+        inlineUsersInlineUsers_inlineUsers_inlineUsers_listWithExtendedResultsAndOptionalData
       tags:
         - InlineUsersInlineUsers
       parameters:
@@ -365,10 +538,19 @@ paths:
             application/json:
               schema:
                 $ref: >-
-                  #/components/schemas/inline-usersListUsersExtendedOptionalListResponse
+                  #/components/schemas/InlineUsersListUsersExtendedOptionalListResponse
+              examples:
+                Example1:
+                  value:
+                    data:
+                      users:
+                        - name: name
+                          id: 1
+                    next: next
+                    total_count: 1
   /inline-users/usernames:
     get:
-      operationId: inlineUsers_inlineUsers_listUsernames
+      operationId: inlineUsersInlineUsers_inlineUsers_inlineUsers_listUsernames
       tags:
         - InlineUsersInlineUsers
       parameters:
@@ -389,9 +571,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UsernameCursor'
+              examples:
+                Example1:
+                  value:
+                    cursor:
+                      after: after
+                      data:
+                        - data
   /inline-users/global-config:
     get:
-      operationId: inlineUsers_inlineUsers_listWithGlobalConfig
+      operationId: inlineUsersInlineUsers_inlineUsers_inlineUsers_listWithGlobalConfig
       tags:
         - InlineUsersInlineUsers
       parameters:
@@ -408,10 +597,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline-usersUsernameContainer'
+                $ref: '#/components/schemas/InlineUsersUsernameContainer'
+              examples:
+                Example1:
+                  value:
+                    results:
+                      - results
   /users/cursor-pagination:
     get:
-      operationId: users_listWithCursorPagination
+      operationId: users_listwithcursorpagination
       tags:
         - Users
       parameters:
@@ -455,9 +649,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListUsersPaginationResponse'
+              examples:
+                Example1:
+                  value:
+                    hasNextPage: true
+                    page:
+                      page: 1
+                      next:
+                        page: 1
+                        starting_after: starting_after
+                      per_page: 1
+                      total_page: 1
+                    total_count: 15
+                    data:
+                      - name: name
+                        id: 1
   /users/mixed-type-cursor-pagination:
     post:
-      operationId: users_listWithMixedTypeCursorPagination
+      operationId: users_listwithmixedtypecursorpagination
       tags:
         - Users
       parameters:
@@ -475,9 +684,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListUsersMixedTypePaginationResponse'
+              examples:
+                Example1:
+                  value:
+                    next: next
+                    data:
+                      - name: name
+                        id: 1
   /users/body-cursor-pagination:
     post:
-      operationId: users_listWithBodyCursorPagination
+      operationId: users_listwithbodycursorpagination
       tags:
         - Users
       parameters: []
@@ -488,6 +704,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListUsersPaginationResponse'
+              examples:
+                Example1:
+                  value:
+                    hasNextPage: true
+                    page:
+                      page: 1
+                      next:
+                        page: 1
+                        starting_after: starting_after
+                      per_page: 1
+                      total_page: 1
+                    total_count: 15
+                    data:
+                      - name: name
+                        id: 1
       requestBody:
         required: true
         content:
@@ -502,13 +733,16 @@ paths:
                   description: |-
                     The object that contains the cursor used for pagination
                     in order to fetch the next page of results.
+            examples:
+              Example1:
+                value: {}
   /users/top-level-cursor:
     post:
       description: |-
         Pagination endpoint with a top-level cursor field in the request body.
         This tests that the mock server correctly ignores cursor mismatches
         when getNextPage() is called with a different cursor value.
-      operationId: users_listWithTopLevelBodyCursorPagination
+      operationId: users_listwithtoplevelbodycursorpagination
       tags:
         - Users
       parameters: []
@@ -554,7 +788,7 @@ paths:
                   filter: active
   /users/offset-pagination:
     get:
-      operationId: users_listWithOffsetPagination
+      operationId: users_listwithoffsetpagination
       tags:
         - Users
       parameters:
@@ -598,9 +832,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListUsersPaginationResponse'
+              examples:
+                Example1:
+                  value:
+                    hasNextPage: true
+                    page:
+                      page: 1
+                      next:
+                        page: 1
+                        starting_after: starting_after
+                      per_page: 1
+                      total_page: 1
+                    total_count: 15
+                    data:
+                      - name: name
+                        id: 1
   /users/double-offset-pagination:
     get:
-      operationId: users_listWithDoubleOffsetPagination
+      operationId: users_listwithdoubleoffsetpagination
       tags:
         - Users
       parameters:
@@ -646,9 +895,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListUsersPaginationResponse'
+              examples:
+                Example1:
+                  value:
+                    hasNextPage: true
+                    page:
+                      page: 1
+                      next:
+                        page: 1
+                        starting_after: starting_after
+                      per_page: 1
+                      total_page: 1
+                    total_count: 15
+                    data:
+                      - name: name
+                        id: 1
   /users/body-offset-pagination:
     post:
-      operationId: users_listWithBodyOffsetPagination
+      operationId: users_listwithbodyoffsetpagination
       tags:
         - Users
       parameters: []
@@ -659,6 +923,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListUsersPaginationResponse'
+              examples:
+                Example1:
+                  value:
+                    hasNextPage: true
+                    page:
+                      page: 1
+                      next:
+                        page: 1
+                        starting_after: starting_after
+                      per_page: 1
+                      total_page: 1
+                    total_count: 15
+                    data:
+                      - name: name
+                        id: 1
       requestBody:
         required: true
         content:
@@ -673,9 +952,12 @@ paths:
                   description: |-
                     The object that contains the offset used for pagination
                     in order to fetch the next page of results.
+            examples:
+              Example1:
+                value: {}
   /users/offset-step-pagination:
     get:
-      operationId: users_listWithOffsetStepPagination
+      operationId: users_listwithoffsetsteppagination
       tags:
         - Users
       parameters:
@@ -712,9 +994,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListUsersPaginationResponse'
+              examples:
+                Example1:
+                  value:
+                    hasNextPage: true
+                    page:
+                      page: 1
+                      next:
+                        page: 1
+                        starting_after: starting_after
+                      per_page: 1
+                      total_page: 1
+                    total_count: 15
+                    data:
+                      - name: name
+                        id: 1
   /users/offset-pagination-has-next-page:
     get:
-      operationId: users_listWithOffsetPaginationHasNextPage
+      operationId: users_listwithoffsetpaginationhasnextpage
       tags:
         - Users
       parameters:
@@ -726,11 +1023,6 @@ paths:
             type:
               - integer
               - 'null'
-          examples:
-            HasNextPage:
-              value: 1
-            NoNextPage:
-              value: 1
         - name: limit
           in: query
           description: |-
@@ -742,11 +1034,6 @@ paths:
             type:
               - integer
               - 'null'
-          examples:
-            HasNextPage:
-              value: 3
-            NoNextPage:
-              value: 10
         - name: order
           in: query
           required: false
@@ -754,11 +1041,6 @@ paths:
             anyOf:
               - $ref: '#/components/schemas/Order'
               - type: 'null'
-          examples:
-            HasNextPage:
-              value: asc
-            NoNextPage:
-              value: asc
       responses:
         '200':
           description: Success
@@ -801,7 +1083,7 @@ paths:
                         id: 2
   /users/extended-results:
     get:
-      operationId: users_listWithExtendedResults
+      operationId: users_listwithextendedresults
       tags:
         - Users
       parameters:
@@ -820,9 +1102,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListUsersExtendedResponse'
+              examples:
+                Example1:
+                  value:
+                    data:
+                      users:
+                        - name: name
+                          id: 1
+                    next: next
+                    total_count: 1
   /users/extended-results-optional-data:
     get:
-      operationId: users_listWithExtendedResultsAndOptionalData
+      operationId: users_listwithextendedresultsandoptionaldata
       tags:
         - Users
       parameters:
@@ -841,9 +1132,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListUsersExtendedOptionalListResponse'
+              examples:
+                Example1:
+                  value:
+                    data:
+                      users:
+                        - name: name
+                          id: 1
+                    next: next
+                    total_count: 1
   /users/usernames:
     get:
-      operationId: users_listUsernames
+      operationId: users_listusernames
       tags:
         - Users
       parameters:
@@ -864,9 +1164,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UsernameCursor'
+              examples:
+                Example1:
+                  value:
+                    cursor:
+                      after: after
+                      data:
+                        - data
   /users/usernames-optional-response:
     get:
-      operationId: users_listUsernamesWithOptionalResponse
+      operationId: users_listusernameswithoptionalresponse
       tags:
         - Users
       parameters:
@@ -889,9 +1196,16 @@ paths:
                 anyOf:
                   - $ref: '#/components/schemas/UsernameCursor'
                   - type: 'null'
+              examples:
+                Example1:
+                  value:
+                    cursor:
+                      after: after
+                      data:
+                        - data
   /users/global-config:
     get:
-      operationId: users_listWithGlobalConfig
+      operationId: users_listwithglobalconfig
       tags:
         - Users
       parameters:
@@ -909,9 +1223,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UsernameContainer'
+              examples:
+                Example1:
+                  value:
+                    results:
+                      - results
   /users/optional-data:
     get:
-      operationId: users_listWithOptionalData
+      operationId: users_listwithoptionaldata
       tags:
         - Users
       parameters:
@@ -923,11 +1242,6 @@ paths:
             type:
               - integer
               - 'null'
-          examples:
-            WithData:
-              value: 1
-            WithoutData:
-              value: 1
       responses:
         '200':
           description: Success
@@ -963,9 +1277,12 @@ paths:
                       per_page: 10
                       total_page: 1
                     total_count: 0
+                    data:
+                      - name: name
+                        id: 1
   /users/aliased-data:
     get:
-      operationId: users_listWithAliasedData
+      operationId: users_listwithaliaseddata
       tags:
         - Users
       parameters:
@@ -1002,6 +1319,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListUsersAliasedDataPaginationResponse'
+              examples:
+                Example1:
+                  value:
+                    hasNextPage: true
+                    page:
+                      page: 1
+                      next:
+                        page: 1
+                        starting_after: starting_after
+                      per_page: 1
+                      total_page: 1
+                    total_count: 1
+                    data:
+                      - name: name
+                        id: 1
 components:
   schemas:
     UsernameCursor:
@@ -1085,21 +1417,10 @@ components:
         - <
         - '>'
         - '~'
-        - '!~'
-        - ^
-        - $
-    SearchRequest:
-      title: SearchRequest
-      type: object
-      properties:
-        pagination:
-          anyOf:
-            - $ref: '#/components/schemas/StartingAfterPaging'
-            - type: 'null'
-        query:
-          $ref: '#/components/schemas/SearchRequestQuery'
-      required:
-        - query
+    PaginatedConversationResponseType:
+      title: PaginatedConversationResponseType
+      type: string
+      const: conversation.list
     PaginatedConversationResponse:
       title: PaginatedConversationResponse
       type: object
@@ -1114,13 +1435,18 @@ components:
             - type: 'null'
         total_count:
           type: integer
+          examples:
+            - 1
         type:
-          type: string
-          const: conversation.list
+          $ref: '#/components/schemas/PaginatedConversationResponseType'
       required:
         - conversations
         - total_count
         - type
+    CursorPagesType:
+      title: CursorPagesType
+      type: string
+      const: pages
     CursorPages:
       title: CursorPages
       type: object
@@ -1142,8 +1468,7 @@ components:
             - integer
             - 'null'
         type:
-          type: string
-          const: pages
+          $ref: '#/components/schemas/CursorPagesType'
       required:
         - type
     StartingAfterPaging:
@@ -1166,44 +1491,44 @@ components:
           type: string
       required:
         - foo
-    inline-usersOrder:
-      title: inline-usersOrder
+    InlineUsersOrder:
+      title: InlineUsersOrder
       type: string
       enum:
         - asc
         - desc
-    inline-usersWithPage:
-      title: inline-usersWithPage
+    InlineUsersWithPage:
+      title: InlineUsersWithPage
       type: object
       properties:
         page:
           type:
             - integer
             - 'null'
-    inline-usersWithCursor:
-      title: inline-usersWithCursor
+    InlineUsersWithCursor:
+      title: InlineUsersWithCursor
       type: object
       properties:
         cursor:
           type:
             - string
             - 'null'
-    inline-usersUserListContainer:
-      title: inline-usersUserListContainer
+    InlineUsersUserListContainer:
+      title: InlineUsersUserListContainer
       type: object
       properties:
         users:
           type: array
           items:
-            $ref: '#/components/schemas/inline-usersUser'
+            $ref: '#/components/schemas/InlineUsersUser'
       required:
         - users
-    inline-usersUserPage:
-      title: inline-usersUserPage
+    InlineUsersUserPage:
+      title: InlineUsersUserPage
       type: object
       properties:
         data:
-          $ref: '#/components/schemas/inline-usersUserListContainer'
+          $ref: '#/components/schemas/InlineUsersUserListContainer'
         next:
           type:
             - string
@@ -1211,8 +1536,8 @@ components:
           format: uuid
       required:
         - data
-    inline-usersUserOptionalListContainer:
-      title: inline-usersUserOptionalListContainer
+    InlineUsersUserOptionalListContainer:
+      title: InlineUsersUserOptionalListContainer
       type: object
       properties:
         users:
@@ -1220,13 +1545,13 @@ components:
             - array
             - 'null'
           items:
-            $ref: '#/components/schemas/inline-usersUser'
-    inline-usersUserOptionalListPage:
-      title: inline-usersUserOptionalListPage
+            $ref: '#/components/schemas/InlineUsersUser'
+    InlineUsersUserOptionalListPage:
+      title: InlineUsersUserOptionalListPage
       type: object
       properties:
         data:
-          $ref: '#/components/schemas/inline-usersUserOptionalListContainer'
+          $ref: '#/components/schemas/InlineUsersUserOptionalListContainer'
         next:
           type:
             - string
@@ -1234,40 +1559,46 @@ components:
           format: uuid
       required:
         - data
-    inline-usersUsernameContainer:
-      title: inline-usersUsernameContainer
+    InlineUsersUsernameContainer:
+      title: InlineUsersUsernameContainer
       type: object
       properties:
         results:
           type: array
           items:
             type: string
+          examples:
+            - - results
       required:
         - results
-    inline-usersListUsersExtendedResponse:
-      title: inline-usersListUsersExtendedResponse
+    InlineUsersListUsersExtendedResponse:
+      title: InlineUsersListUsersExtendedResponse
       type: object
       properties:
         total_count:
           type: integer
           description: The totall number of /users
+          examples:
+            - 1
       required:
         - total_count
       allOf:
-        - $ref: '#/components/schemas/inline-usersUserPage'
-    inline-usersListUsersExtendedOptionalListResponse:
-      title: inline-usersListUsersExtendedOptionalListResponse
+        - $ref: '#/components/schemas/InlineUsersUserPage'
+    InlineUsersListUsersExtendedOptionalListResponse:
+      title: InlineUsersListUsersExtendedOptionalListResponse
       type: object
       properties:
         total_count:
           type: integer
           description: The totall number of /users
+          examples:
+            - 1
       required:
         - total_count
       allOf:
-        - $ref: '#/components/schemas/inline-usersUserOptionalListPage'
-    inline-usersListUsersPaginationResponse:
-      title: inline-usersListUsersPaginationResponse
+        - $ref: '#/components/schemas/InlineUsersUserOptionalListPage'
+    InlineUsersListUsersPaginationResponse:
+      title: InlineUsersListUsersPaginationResponse
       type: object
       properties:
         hasNextPage:
@@ -1276,29 +1607,33 @@ components:
             - 'null'
         page:
           anyOf:
-            - $ref: '#/components/schemas/inline-usersPage'
+            - $ref: '#/components/schemas/InlineUsersPage'
             - type: 'null'
         total_count:
           type: integer
           description: The totall number of /users
+          examples:
+            - 1
         data:
-          $ref: '#/components/schemas/inline-usersUsers'
+          $ref: '#/components/schemas/InlineUsersUsers'
       required:
         - total_count
         - data
-    inline-usersListUsersMixedTypePaginationResponse:
-      title: inline-usersListUsersMixedTypePaginationResponse
+    InlineUsersListUsersMixedTypePaginationResponse:
+      title: InlineUsersListUsersMixedTypePaginationResponse
       type: object
       properties:
         next:
           type: string
+          examples:
+            - next
         data:
-          $ref: '#/components/schemas/inline-usersUsers'
+          $ref: '#/components/schemas/InlineUsersUsers'
       required:
         - next
         - data
-    inline-usersPage:
-      title: inline-usersPage
+    InlineUsersPage:
+      title: InlineUsersPage
       type: object
       properties:
         page:
@@ -1306,7 +1641,7 @@ components:
           description: The current page
         next:
           anyOf:
-            - $ref: '#/components/schemas/inline-usersNextPage'
+            - $ref: '#/components/schemas/InlineUsersNextPage'
             - type: 'null'
         per_page:
           type: integer
@@ -1316,8 +1651,8 @@ components:
         - page
         - per_page
         - total_page
-    inline-usersNextPage:
-      title: inline-usersNextPage
+    InlineUsersNextPage:
+      title: InlineUsersNextPage
       type: object
       properties:
         page:
@@ -1327,18 +1662,18 @@ components:
       required:
         - page
         - starting_after
-    inline-usersUsers:
-      title: inline-usersUsers
+    InlineUsersUsers:
+      title: InlineUsersUsers
       type: object
       properties:
         users:
           type: array
           items:
-            $ref: '#/components/schemas/inline-usersUser'
+            $ref: '#/components/schemas/InlineUsersUser'
       required:
         - users
-    inline-usersUser:
-      title: inline-usersUser
+    InlineUsersUser:
+      title: InlineUsersUser
       type: object
       properties:
         name:
@@ -1424,6 +1759,8 @@ components:
           type: array
           items:
             type: string
+          examples:
+            - - results
       required:
         - results
     ListUsersExtendedResponse:
@@ -1433,6 +1770,8 @@ components:
         total_count:
           type: integer
           description: The totall number of /users
+          examples:
+            - 1
       required:
         - total_count
       allOf:
@@ -1444,6 +1783,8 @@ components:
         total_count:
           type: integer
           description: The totall number of /users
+          examples:
+            - 1
       required:
         - total_count
       allOf:
@@ -1503,6 +1844,8 @@ components:
       properties:
         next:
           type: string
+          examples:
+            - next
         data:
           type: array
           items:
@@ -1545,6 +1888,8 @@ components:
         total_count:
           type: integer
           description: The totall number of /users
+          examples:
+            - 1
         data:
           $ref: '#/components/schemas/UserList'
       required:

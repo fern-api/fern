@@ -23,10 +23,7 @@ components:
         - s
     A:
       title: A
-      type: object
-      properties: {}
-      allOf:
-        - $ref: '#/components/schemas/RootType'
+      $ref: '#/components/schemas/RootType'
     Animal:
       title: Animal
       oneOf:
@@ -60,10 +57,7 @@ components:
         - fruit
     Acai:
       title: Acai
-      type: object
-      properties: {}
-      allOf:
-        - $ref: '#/components/schemas/Berry'
+      $ref: '#/components/schemas/Berry'
     Fig:
       title: Fig
       type: object
@@ -106,29 +100,45 @@ components:
               $ref: '#/components/schemas/Node'
       required:
         - nodes
+    ContainerValueList:
+      title: ContainerValueList
+      type: object
+      properties:
+        value:
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/FieldValue'
+    ContainerValueOptional:
+      title: ContainerValueOptional
+      type: object
+      properties:
+        value:
+          anyOf:
+            - $ref: '#/components/schemas/FieldValue'
+            - type: 'null'
     ContainerValue:
       title: ContainerValue
       oneOf:
         - type: object
-          properties:
-            type:
-              type: string
-              const: list
-            value:
-              type: array
-              items:
-                $ref: '#/components/schemas/FieldValue'
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: list
+            - $ref: '#/components/schemas/ContainerValueList'
           required:
             - type
         - type: object
-          properties:
-            type:
-              type: string
-              const: optional
-            value:
-              anyOf:
-                - $ref: '#/components/schemas/FieldValue'
-                - type: 'null'
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: optional
+            - $ref: '#/components/schemas/ContainerValueOptional'
           required:
             - type
     PrimitiveValue:
@@ -144,37 +154,58 @@ components:
     FieldName:
       title: FieldName
       type: string
+    FieldValueZeroType:
+      title: FieldValueZeroType
+      type: string
+      const: primitive_value
+    FieldValueZero:
+      title: FieldValueZero
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/FieldValueZeroType'
+        value:
+          anyOf:
+            - $ref: '#/components/schemas/PrimitiveValue'
+            - type: 'null'
+      required:
+        - type
+    FieldValueOneType:
+      title: FieldValueOneType
+      type: string
+      const: object_value
+    FieldValueOne:
+      title: FieldValueOne
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/FieldValueOneType'
+      required:
+        - type
+      allOf:
+        - $ref: '#/components/schemas/ObjectValue'
+    FieldValueTwoType:
+      title: FieldValueTwoType
+      type: string
+      const: container_value
+    FieldValueTwo:
+      title: FieldValueTwo
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/FieldValueTwoType'
+        value:
+          anyOf:
+            - $ref: '#/components/schemas/ContainerValue'
+            - type: 'null'
+      required:
+        - type
     FieldValue:
       title: FieldValue
       oneOf:
-        - type: object
-          properties:
-            type:
-              type: string
-              const: primitive_value
-            value:
-              $ref: '#/components/schemas/PrimitiveValue'
-          required:
-            - type
-        - type: object
-          allOf:
-            - type: object
-              properties:
-                type:
-                  type: string
-                  const: object_value
-            - $ref: '#/components/schemas/ObjectValue'
-          required:
-            - type
-        - type: object
-          properties:
-            type:
-              type: string
-              const: container_value
-            value:
-              $ref: '#/components/schemas/ContainerValue'
-          required:
-            - type
+        - $ref: '#/components/schemas/FieldValueZero'
+        - $ref: '#/components/schemas/FieldValueOne'
+        - $ref: '#/components/schemas/FieldValueTwo'
     ObjectFieldValue:
       title: ObjectFieldValue
       type: object

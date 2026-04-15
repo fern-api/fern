@@ -5,7 +5,7 @@ info:
 paths:
   /{tenant_id}/organizations/{organization_id}/:
     get:
-      operationId: organizations_getOrganization
+      operationId: organizations_getorganization
       tags:
         - Organizations
       parameters:
@@ -14,11 +14,17 @@ paths:
           required: true
           schema:
             type: string
+          examples:
+            Example1:
+              value: tenant_id
         - name: organization_id
           in: path
           required: true
           schema:
             type: string
+          examples:
+            Example1:
+              value: organization_id
       responses:
         '200':
           description: Success
@@ -26,9 +32,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Organization'
+              examples:
+                Example1:
+                  value:
+                    name: name
+                    tags:
+                      - tags
   /{tenant_id}/organizations/{organization_id}/users/{user_id}:
     get:
-      operationId: organizations_getOrganizationUser
+      operationId: organizations_getorganizationuser
       tags:
         - Organizations
       parameters:
@@ -37,16 +49,25 @@ paths:
           required: true
           schema:
             type: string
+          examples:
+            Example1:
+              value: tenant_id
         - name: organization_id
           in: path
           required: true
           schema:
             type: string
+          examples:
+            Example1:
+              value: organization_id
         - name: user_id
           in: path
           required: true
           schema:
             type: string
+          examples:
+            Example1:
+              value: user_id
       responses:
         '200':
           description: Success
@@ -54,9 +75,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+              examples:
+                Example1:
+                  value:
+                    name: name
+                    tags:
+                      - tags
   /{tenant_id}/organizations/{organization_id}/search:
     get:
-      operationId: organizations_searchOrganizations
+      operationId: organizations_searchorganizations
       tags:
         - Organizations
       parameters:
@@ -65,11 +92,17 @@ paths:
           required: true
           schema:
             type: string
+          examples:
+            Example1:
+              value: tenant_id
         - name: organization_id
           in: path
           required: true
           schema:
             type: string
+          examples:
+            Example1:
+              value: organization_id
         - name: limit
           in: query
           required: false
@@ -86,9 +119,15 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Organization'
+              examples:
+                Example1:
+                  value:
+                    - name: name
+                      tags:
+                        - tags
   /{tenant_id}/user/{user_id}:
     get:
-      operationId: user_getUser
+      operationId: user_getuser
       tags:
         - User
       parameters:
@@ -97,11 +136,17 @@ paths:
           required: true
           schema:
             type: string
+          examples:
+            Example1:
+              value: tenant_id
         - name: user_id
           in: path
           required: true
           schema:
             type: string
+          examples:
+            Example1:
+              value: user_id
       responses:
         '200':
           description: Success
@@ -109,8 +154,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+              examples:
+                Example1:
+                  value:
+                    name: name
+                    tags:
+                      - tags
     patch:
-      operationId: user_updateUser
+      operationId: user_updateuser
       tags:
         - User
       parameters:
@@ -119,11 +170,17 @@ paths:
           required: true
           schema:
             type: string
+          examples:
+            Example1:
+              value: tenant_id
         - name: user_id
           in: path
           required: true
           schema:
             type: string
+          examples:
+            Example1:
+              value: user_id
       responses:
         '200':
           description: Success
@@ -131,15 +188,27 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+              examples:
+                Example1:
+                  value:
+                    name: name
+                    tags:
+                      - tags
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/User'
+            examples:
+              Example1:
+                value:
+                  name: name
+                  tags:
+                    - tags
   /{tenant_id}/user/:
     post:
-      operationId: user_createUser
+      operationId: user_createuser
       tags:
         - User
       parameters:
@@ -148,6 +217,9 @@ paths:
           required: true
           schema:
             type: string
+          examples:
+            Example1:
+              value: tenant_id
       responses:
         '200':
           description: Success
@@ -155,15 +227,27 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+              examples:
+                Example1:
+                  value:
+                    name: name
+                    tags:
+                      - tags
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/User'
+            examples:
+              Example1:
+                value:
+                  name: name
+                  tags:
+                    - tags
   /{tenant_id}/user/{user_id}/search:
     get:
-      operationId: user_searchUsers
+      operationId: user_searchusers
       tags:
         - User
       parameters:
@@ -172,11 +256,17 @@ paths:
           required: true
           schema:
             type: string
+          examples:
+            Example1:
+              value: tenant_id
         - name: user_id
           in: path
           required: true
           schema:
             type: string
+          examples:
+            Example1:
+              value: user_id
         - name: limit
           in: query
           required: false
@@ -193,10 +283,16 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/User'
+              examples:
+                Example1:
+                  value:
+                    - name: name
+                      tags:
+                        - tags
   /{tenant_id}/user/{user_id}/metadata/v{version}:
     get:
       description: Test endpoint with path parameter that has a text prefix (v{version})
-      operationId: user_getUserMetadata
+      operationId: user_getusermetadata
       tags:
         - User
       parameters:
@@ -205,16 +301,25 @@ paths:
           required: true
           schema:
             type: string
+          examples:
+            Example1:
+              value: tenant_id
         - name: user_id
           in: path
           required: true
           schema:
             type: string
+          examples:
+            Example1:
+              value: user_id
         - name: version
           in: path
           required: true
           schema:
             type: integer
+          examples:
+            Example1:
+              value: 1
       responses:
         '200':
           description: Success
@@ -222,12 +327,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+              examples:
+                Example1:
+                  value:
+                    name: name
+                    tags:
+                      - tags
   /{tenant_id}/user/{user_id}/specifics/{version}/{thought}:
     get:
       description: >-
         Test endpoint with path parameters listed in different order than found
         in path
-      operationId: user_getUserSpecifics
+      operationId: user_getuserspecifics
       tags:
         - User
       parameters:
@@ -236,21 +347,33 @@ paths:
           required: true
           schema:
             type: string
+          examples:
+            Example1:
+              value: tenant_id
         - name: user_id
           in: path
           required: true
           schema:
             type: string
+          examples:
+            Example1:
+              value: user_id
         - name: version
           in: path
           required: true
           schema:
             type: integer
+          examples:
+            Example1:
+              value: 1
         - name: thought
           in: path
           required: true
           schema:
             type: string
+          examples:
+            Example1:
+              value: thought
       responses:
         '200':
           description: Success
@@ -258,6 +381,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+              examples:
+                Example1:
+                  value:
+                    name: name
+                    tags:
+                      - tags
 components:
   schemas:
     Organization:
@@ -266,10 +395,14 @@ components:
       properties:
         name:
           type: string
+          examples:
+            - name
         tags:
           type: array
           items:
             type: string
+          examples:
+            - - tags
       required:
         - name
         - tags
@@ -279,10 +412,14 @@ components:
       properties:
         name:
           type: string
+          examples:
+            - name
         tags:
           type: array
           items:
             type: string
+          examples:
+            - - tags
       required:
         - name
         - tags

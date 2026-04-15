@@ -5,17 +5,19 @@ info:
 paths:
   /user/username:
     post:
-      operationId: user_createUsername
+      operationId: user_createusername
       tags:
         - User
       parameters:
         - name: tags
           in: query
-          required: true
+          required: false
           schema:
             type: array
             items:
-              type: string
+              type:
+                - string
+                - 'null'
       responses:
         '204':
           description: No content
@@ -38,17 +40,19 @@ paths:
                 - name
   /user/username-referenced:
     post:
-      operationId: user_createUsernameWithReferencedType
+      operationId: user_createusernamewithreferencedtype
       tags:
         - User
       parameters:
         - name: tags
           in: query
-          required: true
+          required: false
           schema:
             type: array
             items:
-              type: string
+              type:
+                - string
+                - 'null'
       responses:
         '204':
           description: No content
@@ -57,10 +61,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateUsernameBody'
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+                name:
+                  type: string
+              required:
+                - username
+                - password
+                - name
   /user/username-optional:
     post:
-      operationId: user_createUsernameOptional
+      operationId: user_createusernameoptional
       tags:
         - User
       parameters: []
@@ -68,7 +83,7 @@ paths:
         '204':
           description: No content
       requestBody:
-        required: false
+        required: true
         content:
           application/json:
             schema:
@@ -80,7 +95,7 @@ paths:
                 value: {}
   /user:
     get:
-      operationId: user_getUsername
+      operationId: user_getusername
       tags:
         - User
       parameters:
@@ -120,11 +135,13 @@ paths:
             $ref: '#/components/schemas/User'
         - name: userList
           in: query
-          required: true
+          required: false
           schema:
             type: array
             items:
-              $ref: '#/components/schemas/User'
+              anyOf:
+                - $ref: '#/components/schemas/User'
+                - type: 'null'
         - name: optionalDeadline
           in: query
           required: false
@@ -161,18 +178,22 @@ paths:
               - type: 'null'
         - name: excludeUser
           in: query
-          required: true
+          required: false
           schema:
             type: array
             items:
-              $ref: '#/components/schemas/User'
+              anyOf:
+                - $ref: '#/components/schemas/User'
+                - type: 'null'
         - name: filter
           in: query
-          required: true
+          required: false
           schema:
             type: array
             items:
-              type: string
+              type:
+                - string
+                - 'null'
         - name: longParam
           in: query
           required: true
@@ -184,7 +205,6 @@ paths:
           required: true
           schema:
             type: integer
-            format: bigint
       responses:
         '200':
           description: Success
@@ -218,20 +238,6 @@ components:
       required:
         - name
         - user
-    CreateUsernameBody:
-      title: CreateUsernameBody
-      type: object
-      properties:
-        username:
-          type: string
-        password:
-          type: string
-        name:
-          type: string
-      required:
-        - username
-        - password
-        - name
     CreateUsernameBodyOptionalProperties:
       title: CreateUsernameBodyOptionalProperties
       type: object

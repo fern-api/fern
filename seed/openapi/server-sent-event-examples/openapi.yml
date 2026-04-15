@@ -18,9 +18,6 @@ paths:
             application/json:
               schema:
                 type: string
-              examples:
-                Bad request:
-                  value: bad request
       requestBody:
         required: true
         content:
@@ -43,7 +40,7 @@ paths:
                   query: ''
   /stream-events:
     post:
-      operationId: completions_streamEvents
+      operationId: completions_streamevents
       tags:
         - Completions
       parameters: []
@@ -56,9 +53,6 @@ paths:
             application/json:
               schema:
                 type: string
-              examples:
-                Bad request:
-                  value: bad request
       requestBody:
         required: true
         content:
@@ -79,41 +73,9 @@ paths:
               Bad request:
                 value:
                   query: ''
-  /stream-events-discriminant-in-data:
-    post:
-      operationId: completions_streamEventsDiscriminantInData
-      tags:
-        - Completions
-      parameters: []
-      responses:
-        '204':
-          description: No content
-        '400':
-          description: BadRequestError
-          content:
-            application/json:
-              schema:
-                type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                query:
-                  type: string
-                  examples:
-                    - query
-              required:
-                - query
-            examples:
-              Stream events where discriminant is embedded in data and SSE event line is empty:
-                value:
-                  query: query
   /stream-events-context-protocol:
     post:
-      operationId: completions_streamEventsContextProtocol
+      operationId: completions_streameventscontextprotocol
       tags:
         - Completions
       parameters: []
@@ -126,9 +88,6 @@ paths:
             application/json:
               schema:
                 type: string
-              examples:
-                Bad request context protocol:
-                  value: bad request
       requestBody:
         required: true
         content:
@@ -194,105 +153,86 @@ components:
             - 'null'
       required:
         - error
+    StreamEventContextProtocolZeroEvent:
+      title: StreamEventContextProtocolZeroEvent
+      type: string
+      const: completion
+    StreamEventContextProtocolZero:
+      title: StreamEventContextProtocolZero
+      type: object
+      properties:
+        event:
+          $ref: '#/components/schemas/StreamEventContextProtocolZeroEvent'
+      required:
+        - event
+      allOf:
+        - $ref: '#/components/schemas/CompletionEvent'
+    StreamEventContextProtocolOneEvent:
+      title: StreamEventContextProtocolOneEvent
+      type: string
+      const: error
+    StreamEventContextProtocolOne:
+      title: StreamEventContextProtocolOne
+      type: object
+      properties:
+        event:
+          $ref: '#/components/schemas/StreamEventContextProtocolOneEvent'
+      required:
+        - event
+      allOf:
+        - $ref: '#/components/schemas/ErrorEvent'
+    StreamEventContextProtocolTwoEvent:
+      title: StreamEventContextProtocolTwoEvent
+      type: string
+      const: event
+    StreamEventContextProtocolTwo:
+      title: StreamEventContextProtocolTwo
+      type: object
+      properties:
+        event:
+          $ref: '#/components/schemas/StreamEventContextProtocolTwoEvent'
+        name:
+          type: string
+      required:
+        - event
+        - name
     StreamEventContextProtocol:
       title: StreamEventContextProtocol
       oneOf:
-        - type: object
-          allOf:
-            - type: object
-              properties:
-                event:
-                  type: string
-                  const: completion
-            - $ref: '#/components/schemas/CompletionEvent'
-          required:
-            - event
-        - type: object
-          allOf:
-            - type: object
-              properties:
-                event:
-                  type: string
-                  const: error
-            - $ref: '#/components/schemas/ErrorEvent'
-          required:
-            - event
-        - type: object
-          allOf:
-            - type: object
-              properties:
-                event:
-                  type: string
-                  const: event
-            - $ref: '#/components/schemas/EventEvent'
-          required:
-            - event
-    GroupCreatedEvent:
-      title: GroupCreatedEvent
+        - $ref: '#/components/schemas/StreamEventContextProtocolZero'
+        - $ref: '#/components/schemas/StreamEventContextProtocolOne'
+        - $ref: '#/components/schemas/StreamEventContextProtocolTwo'
+    StreamEventZeroEvent:
+      title: StreamEventZeroEvent
+      type: string
+      const: completion
+    StreamEventZero:
+      title: StreamEventZero
       type: object
       properties:
-        offset:
-          type: string
-        group_id:
-          type: string
+        event:
+          $ref: '#/components/schemas/StreamEventZeroEvent'
       required:
-        - offset
-        - group_id
-    GroupDeletedEvent:
-      title: GroupDeletedEvent
+        - event
+      allOf:
+        - $ref: '#/components/schemas/CompletionEvent'
+    StreamEventOneEvent:
+      title: StreamEventOneEvent
+      type: string
+      const: error
+    StreamEventOne:
+      title: StreamEventOne
       type: object
       properties:
-        offset:
-          type: string
-        group_id:
-          type: string
+        event:
+          $ref: '#/components/schemas/StreamEventOneEvent'
       required:
-        - offset
-        - group_id
-    StreamEventDiscriminantInData:
-      title: StreamEventDiscriminantInData
-      oneOf:
-        - type: object
-          allOf:
-            - type: object
-              properties:
-                type:
-                  type: string
-                  const: group.created
-            - $ref: '#/components/schemas/GroupCreatedEvent'
-          required:
-            - type
-        - type: object
-          allOf:
-            - type: object
-              properties:
-                type:
-                  type: string
-                  const: group.deleted
-            - $ref: '#/components/schemas/GroupDeletedEvent'
-          required:
-            - type
+        - event
+      allOf:
+        - $ref: '#/components/schemas/ErrorEvent'
     StreamEvent:
       title: StreamEvent
       oneOf:
-        - type: object
-          allOf:
-            - type: object
-              properties:
-                event:
-                  type: string
-                  const: completion
-            - $ref: '#/components/schemas/CompletionEvent'
-          required:
-            - event
-        - type: object
-          allOf:
-            - type: object
-              properties:
-                event:
-                  type: string
-                  const: error
-            - $ref: '#/components/schemas/ErrorEvent'
-          required:
-            - event
+        - $ref: '#/components/schemas/StreamEventZero'
+        - $ref: '#/components/schemas/StreamEventOne'
   securitySchemes: {}

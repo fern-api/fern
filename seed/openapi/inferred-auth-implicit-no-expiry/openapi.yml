@@ -5,7 +5,7 @@ info:
 paths:
   /token:
     post:
-      operationId: auth_getTokenWithClientCredentials
+      operationId: auth_gettokenwithclientcredentials
       tags:
         - Auth
       parameters:
@@ -14,6 +14,9 @@ paths:
           required: true
           schema:
             type: string
+          examples:
+            Example1:
+              value: X-Api-Key
       responses:
         '200':
           description: Success
@@ -21,6 +24,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TokenResponse'
+              examples:
+                Example1:
+                  value:
+                    access_token: access_token
+                    refresh_token: refresh_token
       requestBody:
         required: true
         content:
@@ -30,14 +38,18 @@ paths:
               properties:
                 client_id:
                   type: string
+                  examples:
+                    - client_id
                 client_secret:
                   type: string
+                  examples:
+                    - client_secret
                 audience:
-                  type: string
-                  const: https://api.example.com
+                  $ref: >-
+                    #/components/schemas/AuthGetTokenWithClientCredentialsRequestAudience
                 grant_type:
-                  type: string
-                  const: client_credentials
+                  $ref: >-
+                    #/components/schemas/AuthGetTokenWithClientCredentialsRequestGrantType
                 scope:
                   type:
                     - string
@@ -47,9 +59,16 @@ paths:
                 - client_secret
                 - audience
                 - grant_type
+            examples:
+              Example1:
+                value:
+                  client_id: client_id
+                  client_secret: client_secret
+                  audience: https://api.example.com
+                  grant_type: client_credentials
   /token/refresh:
     post:
-      operationId: auth_refreshToken
+      operationId: auth_refreshtoken
       tags:
         - Auth
       parameters:
@@ -58,6 +77,9 @@ paths:
           required: true
           schema:
             type: string
+          examples:
+            Example1:
+              value: X-Api-Key
       responses:
         '200':
           description: Success
@@ -65,6 +87,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TokenResponse'
+              examples:
+                Example1:
+                  value:
+                    access_token: access_token
+                    refresh_token: refresh_token
       requestBody:
         required: true
         content:
@@ -74,16 +101,20 @@ paths:
               properties:
                 client_id:
                   type: string
+                  examples:
+                    - client_id
                 client_secret:
                   type: string
+                  examples:
+                    - client_secret
                 refresh_token:
                   type: string
+                  examples:
+                    - refresh_token
                 audience:
-                  type: string
-                  const: https://api.example.com
+                  $ref: '#/components/schemas/AuthRefreshTokenRequestAudience'
                 grant_type:
-                  type: string
-                  const: refresh_token
+                  $ref: '#/components/schemas/AuthRefreshTokenRequestGrantType'
                 scope:
                   type:
                     - string
@@ -94,9 +125,17 @@ paths:
                 - refresh_token
                 - audience
                 - grant_type
+            examples:
+              Example1:
+                value:
+                  client_id: client_id
+                  client_secret: client_secret
+                  refresh_token: refresh_token
+                  audience: https://api.example.com
+                  grant_type: refresh_token
   /nested-no-auth/get-something:
     get:
-      operationId: nestedNoAuth_api_getSomething
+      operationId: nestedNoAuthAPI_nestedNoAuth_api_getSomething
       tags:
         - NestedNoAuthAPI
       parameters: []
@@ -105,7 +144,7 @@ paths:
           description: No content
   /nested/get-something:
     get:
-      operationId: nested_api_getSomething
+      operationId: nestedAPI_nested_api_getSomething
       tags:
         - NestedAPI
       parameters: []
@@ -116,7 +155,7 @@ paths:
         - InferredAuthScheme: []
   /get-something:
     get:
-      operationId: simple_getSomething
+      operationId: simple_getsomething
       tags:
         - Simple
       parameters: []
@@ -127,6 +166,22 @@ paths:
         - InferredAuthScheme: []
 components:
   schemas:
+    AuthGetTokenWithClientCredentialsRequestAudience:
+      title: AuthGetTokenWithClientCredentialsRequestAudience
+      type: string
+      const: https://api.example.com
+    AuthGetTokenWithClientCredentialsRequestGrantType:
+      title: AuthGetTokenWithClientCredentialsRequestGrantType
+      type: string
+      const: client_credentials
+    AuthRefreshTokenRequestAudience:
+      title: AuthRefreshTokenRequestAudience
+      type: string
+      const: https://api.example.com
+    AuthRefreshTokenRequestGrantType:
+      title: AuthRefreshTokenRequestGrantType
+      type: string
+      const: refresh_token
     TokenResponse:
       title: TokenResponse
       type: object
@@ -134,6 +189,8 @@ components:
       properties:
         access_token:
           type: string
+          examples:
+            - access_token
         refresh_token:
           type:
             - string
