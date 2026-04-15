@@ -124,7 +124,8 @@ export class ServiceClient {
             headers: _headers,
             contentType: "application/octet-stream",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            queryString: new core.url.QueryStringBuilder()
+            queryString: core.url
+                .queryBuilder()
                 .add("model", _queryParams.model)
                 .add("language", _queryParams.language)
                 .mergeAdditional(requestOptions?.queryParams)

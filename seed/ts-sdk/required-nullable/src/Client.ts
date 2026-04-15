@@ -64,7 +64,8 @@ export class SeedApiClient {
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            queryString: new core.url.QueryStringBuilder()
+            queryString: core.url
+                .queryBuilder()
                 .add("optional_baz", _queryParams.optional_baz)
                 .add("optional_nullable_baz", _queryParams.optional_nullable_baz)
                 .add("required_baz", _queryParams.required_baz)

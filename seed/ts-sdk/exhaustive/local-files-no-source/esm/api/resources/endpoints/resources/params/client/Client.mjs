@@ -133,7 +133,8 @@ export class ParamsClient {
                 method: "GET",
                 headers: _headers,
                 queryParameters: Object.assign(Object.assign({}, _queryParams), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams),
-                queryString: new core.url.QueryStringBuilder()
+                queryString: core.url
+                    .queryBuilder()
                     .add("query", _queryParams.query)
                     .add("number", _queryParams.number)
                     .mergeAdditional(requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams)
@@ -187,7 +188,8 @@ export class ParamsClient {
                 method: "GET",
                 headers: _headers,
                 queryParameters: Object.assign(Object.assign({}, _queryParams), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams),
-                queryString: new core.url.QueryStringBuilder()
+                queryString: core.url
+                    .queryBuilder()
                     .add("query", _queryParams.query)
                     .add("number", _queryParams.number)
                     .mergeAdditional(requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams)
@@ -240,7 +242,8 @@ export class ParamsClient {
                 method: "GET",
                 headers: _headers,
                 queryParameters: Object.assign(Object.assign({}, _queryParams), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams),
-                queryString: new core.url.QueryStringBuilder()
+                queryString: core.url
+                    .queryBuilder()
                     .add("query", _queryParams.query)
                     .mergeAdditional(requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams)
                     .build(),
@@ -292,7 +295,8 @@ export class ParamsClient {
                 method: "GET",
                 headers: _headers,
                 queryParameters: Object.assign(Object.assign({}, _queryParams), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams),
-                queryString: new core.url.QueryStringBuilder()
+                queryString: core.url
+                    .queryBuilder()
                     .add("query", _queryParams.query)
                     .mergeAdditional(requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams)
                     .build(),

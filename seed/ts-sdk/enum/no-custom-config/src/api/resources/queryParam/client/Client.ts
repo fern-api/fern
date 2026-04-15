@@ -65,7 +65,8 @@ export class QueryParamClient {
             method: "POST",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            queryString: new core.url.QueryStringBuilder()
+            queryString: core.url
+                .queryBuilder()
                 .add("operand", _queryParams.operand)
                 .add("maybeOperand", _queryParams.maybeOperand)
                 .add("operandOrColor", _queryParams.operandOrColor)
@@ -147,7 +148,8 @@ export class QueryParamClient {
             method: "POST",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            queryString: new core.url.QueryStringBuilder()
+            queryString: core.url
+                .queryBuilder()
                 .add("operand", _queryParams.operand)
                 .add("maybeOperand", _queryParams.maybeOperand)
                 .add("operandOrColor", _queryParams.operandOrColor)

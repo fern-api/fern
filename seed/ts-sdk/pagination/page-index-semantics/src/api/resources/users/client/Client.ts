@@ -61,7 +61,8 @@ export class UsersClient {
                     method: "GET",
                     headers: _headers,
                     queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    queryString: new core.url.QueryStringBuilder()
+                    queryString: core.url
+                        .queryBuilder()
                         .add("page", _queryParams.page)
                         .add("per_page", _queryParams.per_page)
                         .add("order", _queryParams.order)
@@ -141,7 +142,8 @@ export class UsersClient {
                     method: "POST",
                     headers: _headers,
                     queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    queryString: new core.url.QueryStringBuilder()
+                    queryString: core.url
+                        .queryBuilder()
                         .add("cursor", _queryParams.cursor)
                         .mergeAdditional(requestOptions?.queryParams)
                         .build(),
@@ -373,7 +375,8 @@ export class UsersClient {
                     method: "GET",
                     headers: _headers,
                     queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    queryString: new core.url.QueryStringBuilder()
+                    queryString: core.url
+                        .queryBuilder()
                         .add("page", _queryParams.page)
                         .add("per_page", _queryParams.per_page)
                         .add("order", _queryParams.order)
@@ -456,7 +459,8 @@ export class UsersClient {
                     method: "GET",
                     headers: _headers,
                     queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    queryString: new core.url.QueryStringBuilder()
+                    queryString: core.url
+                        .queryBuilder()
                         .add("page", _queryParams.page)
                         .add("per_page", _queryParams.per_page)
                         .add("order", _queryParams.order)
@@ -608,7 +612,8 @@ export class UsersClient {
                     method: "GET",
                     headers: _headers,
                     queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    queryString: new core.url.QueryStringBuilder()
+                    queryString: core.url
+                        .queryBuilder()
                         .add("page", _queryParams.page)
                         .add("limit", _queryParams.limit)
                         .add("order", _queryParams.order)
@@ -695,7 +700,8 @@ export class UsersClient {
                     method: "GET",
                     headers: _headers,
                     queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    queryString: new core.url.QueryStringBuilder()
+                    queryString: core.url
+                        .queryBuilder()
                         .add("page", _queryParams.page)
                         .add("limit", _queryParams.limit)
                         .add("order", _queryParams.order)
@@ -772,7 +778,8 @@ export class UsersClient {
                     method: "GET",
                     headers: _headers,
                     queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    queryString: new core.url.QueryStringBuilder()
+                    queryString: core.url
+                        .queryBuilder()
                         .add("cursor", _queryParams.cursor)
                         .mergeAdditional(requestOptions?.queryParams)
                         .build(),
@@ -845,7 +852,8 @@ export class UsersClient {
                     method: "GET",
                     headers: _headers,
                     queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    queryString: new core.url.QueryStringBuilder()
+                    queryString: core.url
+                        .queryBuilder()
                         .add("cursor", _queryParams.cursor)
                         .mergeAdditional(requestOptions?.queryParams)
                         .build(),
@@ -918,7 +926,8 @@ export class UsersClient {
                     method: "GET",
                     headers: _headers,
                     queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    queryString: new core.url.QueryStringBuilder()
+                    queryString: core.url
+                        .queryBuilder()
                         .add("starting_after", _queryParams.starting_after)
                         .mergeAdditional(requestOptions?.queryParams)
                         .build(),
@@ -992,7 +1001,8 @@ export class UsersClient {
                     method: "GET",
                     headers: _headers,
                     queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    queryString: new core.url.QueryStringBuilder()
+                    queryString: core.url
+                        .queryBuilder()
                         .add("starting_after", _queryParams.starting_after)
                         .mergeAdditional(requestOptions?.queryParams)
                         .build(),
@@ -1066,7 +1076,8 @@ export class UsersClient {
                     method: "GET",
                     headers: _headers,
                     queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    queryString: new core.url.QueryStringBuilder()
+                    queryString: core.url
+                        .queryBuilder()
                         .add("offset", _queryParams.offset)
                         .mergeAdditional(requestOptions?.queryParams)
                         .build(),
@@ -1140,7 +1151,8 @@ export class UsersClient {
                     method: "GET",
                     headers: _headers,
                     queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    queryString: new core.url.QueryStringBuilder()
+                    queryString: core.url
+                        .queryBuilder()
                         .add("page", _queryParams.page)
                         .mergeAdditional(requestOptions?.queryParams)
                         .build(),
@@ -1218,7 +1230,8 @@ export class UsersClient {
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            queryString: new core.url.QueryStringBuilder()
+            queryString: core.url
+                .queryBuilder()
                 .add("page", _queryParams.page)
                 .add("per_page", _queryParams.per_page)
                 .add("starting_after", _queryParams.starting_after)

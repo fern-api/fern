@@ -63,7 +63,8 @@ export class NullableClient {
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            queryString: new core.url.QueryStringBuilder()
+            queryString: core.url
+                .queryBuilder()
                 .add("usernames", _queryParams.usernames)
                 .add("avatar", _queryParams.avatar)
                 .add("activated", _queryParams.activated)

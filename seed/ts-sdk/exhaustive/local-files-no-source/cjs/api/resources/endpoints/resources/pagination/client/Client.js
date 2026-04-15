@@ -81,7 +81,8 @@ class PaginationClient {
                     method: "GET",
                     headers: _headers,
                     queryParameters: Object.assign(Object.assign({}, _queryParams), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams),
-                    queryString: new core.url.QueryStringBuilder()
+                    queryString: core.url
+                        .queryBuilder()
                         .add("cursor", _queryParams.cursor)
                         .add("limit", _queryParams.limit)
                         .mergeAdditional(requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams)

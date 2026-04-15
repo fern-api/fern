@@ -57,7 +57,8 @@ export class MetadataClient {
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            queryString: new core.url.QueryStringBuilder()
+            queryString: core.url
+                .queryBuilder()
                 .add("id", _queryParams.id)
                 .mergeAdditional(requestOptions?.queryParams)
                 .build(),

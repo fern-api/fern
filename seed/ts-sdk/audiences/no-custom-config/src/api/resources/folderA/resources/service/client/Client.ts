@@ -55,7 +55,8 @@ export class ServiceClient {
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            queryString: new core.url.QueryStringBuilder()
+            queryString: core.url
+                .queryBuilder()
                 .add("ids", _queryParams.ids)
                 .add("tags", _queryParams.tags)
                 .mergeAdditional(requestOptions?.queryParams)

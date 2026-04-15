@@ -234,7 +234,8 @@ export class ServiceClient {
             method: "POST",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            queryString: new core.url.QueryStringBuilder()
+            queryString: core.url
+                .queryBuilder()
                 .add("maybeString", _queryParams.maybeString)
                 .add("integer", _queryParams.integer)
                 .add("maybeInteger", _queryParams.maybeInteger)
@@ -302,7 +303,8 @@ export class ServiceClient {
             method: "POST",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            queryString: new core.url.QueryStringBuilder()
+            queryString: core.url
+                .queryBuilder()
                 .add("maybeString", _queryParams.maybeString)
                 .add("maybeInteger", _queryParams.maybeInteger)
                 .mergeAdditional(requestOptions?.queryParams)

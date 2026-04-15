@@ -77,7 +77,8 @@ export class PlaylistClient {
             headers: _headers,
             contentType: "application/json",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            queryString: new core.url.QueryStringBuilder()
+            queryString: core.url
+                .queryBuilder()
                 .add("datetime", _queryParams.datetime)
                 .add("optionalDatetime", _queryParams.optionalDatetime)
                 .mergeAdditional(requestOptions?.queryParams)
@@ -166,7 +167,8 @@ export class PlaylistClient {
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            queryString: new core.url.QueryStringBuilder()
+            queryString: core.url
+                .queryBuilder()
                 .add("limit", _queryParams.limit)
                 .add("otherField", _queryParams.otherField)
                 .add("multiLineDocs", _queryParams.multiLineDocs)

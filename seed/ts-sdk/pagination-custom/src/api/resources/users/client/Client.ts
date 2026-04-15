@@ -55,7 +55,8 @@ export class UsersClient {
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
             logging: this._options.logging,
-            queryString: new core.url.QueryStringBuilder()
+            queryString: core.url
+                .queryBuilder()
                 .add("limit", _queryParams.limit)
                 .add("starting_after", _queryParams.starting_after)
                 .mergeAdditional(requestOptions?.queryParams)

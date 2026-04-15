@@ -88,7 +88,8 @@ export class QueryClient {
             method: "POST",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            queryString: new core.url.QueryStringBuilder()
+            queryString: core.url
+                .queryBuilder()
                 .add("prompt", _queryParams.prompt)
                 .add("optional_prompt", _queryParams.optional_prompt)
                 .add("alias_prompt", _queryParams.alias_prompt)

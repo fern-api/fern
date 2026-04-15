@@ -67,7 +67,8 @@ export class TestGroupClient {
             headers: _headers,
             contentType: "application/json",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            queryString: new core.url.QueryStringBuilder()
+            queryString: core.url
+                .queryBuilder()
                 .add("query_param_object", _queryParams.query_param_object)
                 .add("query_param_integer", _queryParams.query_param_integer)
                 .mergeAdditional(requestOptions?.queryParams)

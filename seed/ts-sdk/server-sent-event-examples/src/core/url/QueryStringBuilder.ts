@@ -1,101 +1,55 @@
+import { toQueryString } from "./qs.js";
+
 /**
- * A fluent builder for constructing URL query strings.
+ * Creates a fluent builder for constructing URL query strings.
  *
- * The generator emits chained `.add()` / `.addComma()` calls so that
- * each parameter's serialization format is decided at code-gen time
- * rather than at runtime via a config map.
+ * Thin wrapper over `toQueryString()` — collects parameters via chained
+ * `.add()` calls and delegates all serialization to `qs.ts` at build time.
  *
  * Usage (generated code):
  *
- *     const qs = new QueryStringBuilder()
+ *     const qs = core.url.queryBuilder()
  *         .add("limit", limit)
- *         .addComma("tags", tags)          // explode: false
+ *         .add("tags", tags, { style: "comma" })   // explode: false
  *         .mergeAdditional(requestOptions?.queryParams)
  *         .build();
  */
-export class QueryStringBuilder {
-    private parts: string[] = [];
+export function queryBuilder(): QueryStringBuilder {
+    return new QueryStringBuilder();
+}
+
+class QueryStringBuilder {
+    private params: Record<string, unknown> = {};
+    private arrayFormats: Record<string, "comma"> = {};
 
     /**
-     * Adds a query parameter using the "repeat" format for arrays.
-     * Each array element produces a separate `key=value` pair.
-     * Null / undefined values (and undefined array items) are skipped.
+     * Adds a query parameter.
+     *
+     * By default arrays use "repeat" format (`key=a&key=b`).
+     * Pass `{ style: "comma" }` for OpenAPI `explode: false` parameters
+     * to get comma-separated values (`key=a,b,c`).
+     *
+     * Null / undefined values are silently skipped.
      */
-    add(key: string, value: unknown): this {
+    add(key: string, value: unknown, options?: { style?: "comma" }): this {
         if (value === undefined || value === null) {
             return this;
         }
-
-        if (Array.isArray(value)) {
-            for (const item of value) {
-                if (item === undefined || item === null) {
-                    continue;
-                }
-                if (typeof item === "object" && !Array.isArray(item)) {
-                    this.addNestedObject(key, item as Record<string, unknown>);
-                } else {
-                    this.parts.push(`${encodeURIComponent(key)}=${encodeURIComponent(String(item))}`);
-                }
-            }
-            return this;
+        this.params[key] = value;
+        if (options?.style === "comma") {
+            this.arrayFormats[key] = "comma";
         }
-
-        if (typeof value === "object") {
-            this.addNestedObject(key, value as Record<string, unknown>);
-            return this;
-        }
-
-        this.parts.push(`${encodeURIComponent(key)}=${encodeURIComponent(String(value))}`);
-        return this;
-    }
-
-    /**
-     * Adds a query parameter using the "comma" format for arrays
-     * (OpenAPI `explode: false`, `style: form`).
-     * Array elements are joined with literal commas: `key=a,b,c`.
-     * Commas *within* individual values are percent-encoded (`%2C`),
-     * keeping the output unambiguous.
-     */
-    addComma(key: string, value: unknown): this {
-        if (value === undefined || value === null) {
-            return this;
-        }
-
-        if (Array.isArray(value)) {
-            if (value.length === 0) {
-                return this;
-            }
-            const encodedValues = value.map((item) =>
-                item === undefined || item === null ? "" : encodeURIComponent(String(item)),
-            );
-            this.parts.push(`${encodeURIComponent(key)}=${encodedValues.join(",")}`);
-            return this;
-        }
-
-        // Scalar — same as add()
-        this.parts.push(`${encodeURIComponent(key)}=${encodeURIComponent(String(value))}`);
         return this;
     }
 
     /**
      * Merges additional query parameters supplied at call-time via
      * `requestOptions.queryParams`. Later values for the same key
-     * replace earlier ones (last-write-wins), matching the C# builder
-     * semantics.
+     * replace earlier ones (last-write-wins).
      */
     mergeAdditional(additionalParams?: Record<string, unknown>): this {
-        if (additionalParams == null) {
-            return this;
-        }
-        for (const [key, value] of Object.entries(additionalParams)) {
-            if (value === undefined) {
-                continue;
-            }
-            // Remove any existing entries for this key
-            const prefix = `${encodeURIComponent(key)}=`;
-            this.parts = this.parts.filter((part) => !part.startsWith(prefix));
-            // Re-add with the new value (uses "repeat" format for arrays)
-            this.add(key, value);
+        if (additionalParams != null) {
+            Object.assign(this.params, additionalParams);
         }
         return this;
     }
@@ -105,30 +59,9 @@ export class QueryStringBuilder {
      * Returns an empty string when no parameters were added.
      */
     build(): string {
-        return this.parts.join("&");
-    }
-
-    /* ------------------------------------------------------------------ */
-    /*  Private helpers                                                     */
-    /* ------------------------------------------------------------------ */
-
-    private addNestedObject(prefix: string, obj: Record<string, unknown>): void {
-        for (const [key, value] of Object.entries(obj)) {
-            const nestedKey = `${prefix}[${key}]`;
-            if (value === undefined) {
-                continue;
-            }
-            if (Array.isArray(value)) {
-                for (const item of value) {
-                    if (item !== undefined && item !== null) {
-                        this.parts.push(`${encodeURIComponent(nestedKey)}=${encodeURIComponent(String(item))}`);
-                    }
-                }
-            } else if (typeof value === "object" && value !== null) {
-                this.addNestedObject(nestedKey, value as Record<string, unknown>);
-            } else {
-                this.parts.push(`${encodeURIComponent(nestedKey)}=${encodeURIComponent(String(value))}`);
-            }
-        }
+        return toQueryString(this.params, {
+            arrayFormat: "repeat",
+            arrayFormats: this.arrayFormats,
+        });
     }
 }

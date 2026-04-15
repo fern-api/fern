@@ -273,9 +273,9 @@ export class GeneratedQueryParams {
      * Returns a ts.Expression that produces the final query string via the builder pattern.
      *
      * Emits:
-     *     new core.url.QueryStringBuilder()
+     *     core.url.queryBuilder()
      *         .add("key", _queryParams["key"])
-     *         .addComma("tags", _queryParams["tags"])
+     *         .add("tags", _queryParams["tags"], { style: "comma" })
      *         .mergeAdditional(requestOptions?.queryParams)
      *         .build()
      */
@@ -290,15 +290,13 @@ export class GeneratedQueryParams {
             ts.factory.createIdentifier(REQUEST_OPTIONS_ADDITIONAL_QUERY_PARAMETERS_PROPERTY_NAME)
         );
 
-        // new core.url.QueryStringBuilder()
-        const queryStringBuilderRef = context.coreUtilities.urlUtils.QueryStringBuilder._getExpression();
-        let chain: ts.Expression = ts.factory.createNewExpression(queryStringBuilderRef, undefined, []);
+        // core.url.queryBuilder()
+        let chain: ts.Expression = context.coreUtilities.urlUtils.queryBuilder._invoke();
 
-        // Chain .add() / .addComma() for each declared query parameter
+        // Chain .add() for each declared query parameter
         for (const queryParameter of this.queryParameters) {
             const wireValue = getWireValue(queryParameter.name);
             const isComma = queryParameter.explode === false;
-            const methodName = isComma ? "addComma" : "add";
 
             // Reference _queryParams["key"]
             const valueRef = ts.factory.createElementAccessExpression(
@@ -306,10 +304,24 @@ export class GeneratedQueryParams {
                 ts.factory.createStringLiteral(wireValue)
             );
 
+            const args: ts.Expression[] = [ts.factory.createStringLiteral(wireValue), valueRef];
+
+            // Pass { style: "comma" } for explode: false parameters
+            if (isComma) {
+                args.push(
+                    ts.factory.createObjectLiteralExpression([
+                        ts.factory.createPropertyAssignment(
+                            ts.factory.createIdentifier("style"),
+                            ts.factory.createStringLiteral("comma")
+                        )
+                    ])
+                );
+            }
+
             chain = ts.factory.createCallExpression(
-                ts.factory.createPropertyAccessExpression(chain, ts.factory.createIdentifier(methodName)),
+                ts.factory.createPropertyAccessExpression(chain, ts.factory.createIdentifier("add")),
                 undefined,
-                [ts.factory.createStringLiteral(wireValue), valueRef]
+                args
             );
         }
 

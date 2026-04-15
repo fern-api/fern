@@ -70,7 +70,8 @@ export class ServiceClient {
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            queryString: new core.url.QueryStringBuilder()
+            queryString: core.url
+                .queryBuilder()
                 .add("page", _queryParams.page)
                 .add("per_page", _queryParams.per_page)
                 .add("sort", _queryParams.sort)
@@ -142,7 +143,8 @@ export class ServiceClient {
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            queryString: new core.url.QueryStringBuilder()
+            queryString: core.url
+                .queryBuilder()
                 .add("include_metadata", _queryParams.include_metadata)
                 .add("format", _queryParams.format)
                 .mergeAdditional(requestOptions?.queryParams)
@@ -213,7 +215,8 @@ export class ServiceClient {
             headers: _headers,
             contentType: "application/json",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            queryString: new core.url.QueryStringBuilder()
+            queryString: core.url
+                .queryBuilder()
                 .add("limit", _queryParams.limit)
                 .add("offset", _queryParams.offset)
                 .mergeAdditional(requestOptions?.queryParams)
@@ -300,7 +303,8 @@ export class ServiceClient {
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            queryString: new core.url.QueryStringBuilder()
+            queryString: core.url
+                .queryBuilder()
                 .add("page", _queryParams.page)
                 .add("per_page", _queryParams.per_page)
                 .add("include_totals", _queryParams.include_totals)
@@ -376,7 +380,8 @@ export class ServiceClient {
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            queryString: new core.url.QueryStringBuilder()
+            queryString: core.url
+                .queryBuilder()
                 .add("fields", _queryParams.fields)
                 .add("include_fields", _queryParams.include_fields)
                 .mergeAdditional(requestOptions?.queryParams)
@@ -637,7 +642,8 @@ export class ServiceClient {
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            queryString: new core.url.QueryStringBuilder()
+            queryString: core.url
+                .queryBuilder()
                 .add("strategy", _queryParams.strategy)
                 .add("name", _queryParams.name)
                 .add("fields", _queryParams.fields)
@@ -703,7 +709,8 @@ export class ServiceClient {
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            queryString: new core.url.QueryStringBuilder()
+            queryString: core.url
+                .queryBuilder()
                 .add("fields", _queryParams.fields)
                 .mergeAdditional(requestOptions?.queryParams)
                 .build(),
@@ -792,7 +799,8 @@ export class ServiceClient {
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            queryString: new core.url.QueryStringBuilder()
+            queryString: core.url
+                .queryBuilder()
                 .add("fields", _queryParams.fields)
                 .add("include_fields", _queryParams.include_fields)
                 .add("page", _queryParams.page)
@@ -868,7 +876,8 @@ export class ServiceClient {
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            queryString: new core.url.QueryStringBuilder()
+            queryString: core.url
+                .queryBuilder()
                 .add("fields", _queryParams.fields)
                 .add("include_fields", _queryParams.include_fields)
                 .mergeAdditional(requestOptions?.queryParams)

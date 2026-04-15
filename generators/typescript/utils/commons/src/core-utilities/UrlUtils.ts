@@ -12,8 +12,8 @@ export interface UrlUtils {
     encodePathParam: {
         _invoke: (arg: ts.Expression) => ts.CallExpression;
     };
-    QueryStringBuilder: {
-        _getExpression: () => ts.Expression;
+    queryBuilder: {
+        _invoke: () => ts.CallExpression;
     };
 }
 
@@ -47,10 +47,10 @@ export class UrlUtilsImpl extends CoreUtility implements UrlUtils {
                 ts.factory.createCallExpression(encodePathParam.getExpression(), undefined, [arg])
         )
     };
-    public readonly QueryStringBuilder = {
-        _getExpression: this.withExportedName(
-            "QueryStringBuilder",
-            (QueryStringBuilder) => () => QueryStringBuilder.getExpression()
+    public readonly queryBuilder = {
+        _invoke: this.withExportedName(
+            "queryBuilder",
+            (queryBuilder) => () => ts.factory.createCallExpression(queryBuilder.getExpression(), undefined, [])
         )
     };
 }

@@ -114,7 +114,8 @@ export class SeedValidationClient {
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            queryString: new core.url.QueryStringBuilder()
+            queryString: core.url
+                .queryBuilder()
                 .add("decimal", _queryParams.decimal)
                 .add("even", _queryParams.even)
                 .add("name", _queryParams.name)

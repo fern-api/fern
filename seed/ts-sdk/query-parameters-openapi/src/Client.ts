@@ -135,7 +135,8 @@ export class SeedApiClient {
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            queryString: new core.url.QueryStringBuilder()
+            queryString: core.url
+                .queryBuilder()
                 .add("limit", _queryParams.limit)
                 .add("id", _queryParams.id)
                 .add("date", _queryParams.date)
@@ -150,8 +151,8 @@ export class SeedApiClient {
                 .add("optionalUser", _queryParams.optionalUser)
                 .add("excludeUser", _queryParams.excludeUser)
                 .add("filter", _queryParams.filter)
-                .addComma("tags", _queryParams.tags)
-                .addComma("optionalTags", _queryParams.optionalTags)
+                .add("tags", _queryParams.tags, { style: "comma" })
+                .add("optionalTags", _queryParams.optionalTags, { style: "comma" })
                 .add("neighbor", _queryParams.neighbor)
                 .add("neighborRequired", _queryParams.neighborRequired)
                 .mergeAdditional(requestOptions?.queryParams)

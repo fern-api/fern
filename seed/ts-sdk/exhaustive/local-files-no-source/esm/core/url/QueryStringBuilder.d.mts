@@ -1,39 +1,37 @@
 /**
- * A fluent builder for constructing URL query strings.
+ * Creates a fluent builder for constructing URL query strings.
  *
- * The generator emits chained `.add()` / `.addComma()` calls so that
- * each parameter's serialization format is decided at code-gen time
- * rather than at runtime via a config map.
+ * Thin wrapper over `toQueryString()` — collects parameters via chained
+ * `.add()` calls and delegates all serialization to `qs.ts` at build time.
  *
  * Usage (generated code):
  *
- *     const qs = new QueryStringBuilder()
+ *     const qs = core.url.queryBuilder()
  *         .add("limit", limit)
- *         .addComma("tags", tags)          // explode: false
+ *         .add("tags", tags, { style: "comma" })   // explode: false
  *         .mergeAdditional(requestOptions?.queryParams)
  *         .build();
  */
-export declare class QueryStringBuilder {
-    private parts;
+export declare function queryBuilder(): QueryStringBuilder;
+declare class QueryStringBuilder {
+    private params;
+    private arrayFormats;
     /**
-     * Adds a query parameter using the "repeat" format for arrays.
-     * Each array element produces a separate `key=value` pair.
-     * Null / undefined values (and undefined array items) are skipped.
+     * Adds a query parameter.
+     *
+     * By default arrays use "repeat" format (`key=a&key=b`).
+     * Pass `{ style: "comma" }` for OpenAPI `explode: false` parameters
+     * to get comma-separated values (`key=a,b,c`).
+     *
+     * Null / undefined values are silently skipped.
      */
-    add(key: string, value: unknown): this;
-    /**
-     * Adds a query parameter using the "comma" format for arrays
-     * (OpenAPI `explode: false`, `style: form`).
-     * Array elements are joined with literal commas: `key=a,b,c`.
-     * Commas *within* individual values are percent-encoded (`%2C`),
-     * keeping the output unambiguous.
-     */
-    addComma(key: string, value: unknown): this;
+    add(key: string, value: unknown, options?: {
+        style?: "comma";
+    }): this;
     /**
      * Merges additional query parameters supplied at call-time via
      * `requestOptions.queryParams`. Later values for the same key
-     * replace earlier ones (last-write-wins), matching the C# builder
-     * semantics.
+     * replace earlier ones (last-write-wins).
      */
     mergeAdditional(additionalParams?: Record<string, unknown>): this;
     /**
@@ -41,5 +39,5 @@ export declare class QueryStringBuilder {
      * Returns an empty string when no parameters were added.
      */
     build(): string;
-    private addNestedObject;
 }
+export {};

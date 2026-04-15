@@ -251,7 +251,8 @@ export class NullableOptionalClient {
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            queryString: new core.url.QueryStringBuilder()
+            queryString: core.url
+                .queryBuilder()
                 .add("limit", _queryParams.limit)
                 .add("offset", _queryParams.offset)
                 .add("includeDeleted", _queryParams.includeDeleted)
@@ -321,7 +322,8 @@ export class NullableOptionalClient {
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            queryString: new core.url.QueryStringBuilder()
+            queryString: core.url
+                .queryBuilder()
                 .add("query", _queryParams.query)
                 .add("department", _queryParams.department)
                 .add("role", _queryParams.role)
@@ -787,7 +789,8 @@ export class NullableOptionalClient {
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            queryString: new core.url.QueryStringBuilder()
+            queryString: core.url
+                .queryBuilder()
                 .add("role", _queryParams.role)
                 .add("status", _queryParams.status)
                 .add("secondaryRole", _queryParams.secondaryRole)

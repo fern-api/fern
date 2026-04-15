@@ -106,7 +106,8 @@ export class ServiceClient {
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            queryString: new core.url.QueryStringBuilder()
+            queryString: core.url
+                .queryBuilder()
                 .add("page_limit", _queryParams.page_limit)
                 .add("beforeDate", _queryParams.beforeDate)
                 .mergeAdditional(requestOptions?.queryParams)

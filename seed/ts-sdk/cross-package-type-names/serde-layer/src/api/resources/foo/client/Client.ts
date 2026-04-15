@@ -57,7 +57,8 @@ export class FooClient {
             headers: _headers,
             contentType: "application/json",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            queryString: new core.url.QueryStringBuilder()
+            queryString: core.url
+                .queryBuilder()
                 .add("optionalString", _queryParams.optionalString)
                 .mergeAdditional(requestOptions?.queryParams)
                 .build(),

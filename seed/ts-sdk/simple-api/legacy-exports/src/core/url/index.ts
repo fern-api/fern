@@ -1,4 +1,4 @@
 export { encodePathParam } from "./encodePathParam";
 export { join } from "./join";
-export { QueryStringBuilder } from "./QueryStringBuilder";
+export { queryBuilder } from "./QueryStringBuilder";
 export { toQueryString } from "./qs";

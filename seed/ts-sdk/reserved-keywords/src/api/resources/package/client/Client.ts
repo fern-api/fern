@@ -53,7 +53,8 @@ export class PackageClient {
             method: "POST",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            queryString: new core.url.QueryStringBuilder()
+            queryString: core.url
+                .queryBuilder()
                 .add("for", _queryParams.for)
                 .mergeAdditional(requestOptions?.queryParams)
                 .build(),

@@ -176,7 +176,8 @@ export class ParamsClient {
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            queryString: new core.url.QueryStringBuilder()
+            queryString: core.url
+                .queryBuilder()
                 .add("query", _queryParams.query)
                 .add("number", _queryParams.number)
                 .mergeAdditional(requestOptions?.queryParams)
@@ -245,7 +246,8 @@ export class ParamsClient {
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            queryString: new core.url.QueryStringBuilder()
+            queryString: core.url
+                .queryBuilder()
                 .add("query", _queryParams.query)
                 .add("number", _queryParams.number)
                 .mergeAdditional(requestOptions?.queryParams)
@@ -315,7 +317,8 @@ export class ParamsClient {
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            queryString: new core.url.QueryStringBuilder()
+            queryString: core.url
+                .queryBuilder()
                 .add("query", _queryParams.query)
                 .mergeAdditional(requestOptions?.queryParams)
                 .build(),
@@ -382,7 +385,8 @@ export class ParamsClient {
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            queryString: new core.url.QueryStringBuilder()
+            queryString: core.url
+                .queryBuilder()
                 .add("query", _queryParams.query)
                 .mergeAdditional(requestOptions?.queryParams)
                 .build(),
