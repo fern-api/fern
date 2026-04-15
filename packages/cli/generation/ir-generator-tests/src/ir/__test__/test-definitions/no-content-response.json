@@ -80,13 +80,19 @@
                             "container": {
                                 "_type": "optional",
                                 "optional": {
-                                    "_type": "primitive",
-                                    "primitive": {
-                                        "v1": "STRING",
-                                        "v2": {
-                                            "type": "string",
-                                            "default": null,
-                                            "validation": null
+                                    "_type": "container",
+                                    "container": {
+                                        "_type": "nullable",
+                                        "nullable": {
+                                            "_type": "primitive",
+                                            "primitive": {
+                                                "v1": "STRING",
+                                                "v2": {
+                                                    "type": "string",
+                                                    "default": null,
+                                                    "validation": null
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -171,7 +177,7 @@
                     "headers": [],
                     "requestBody": {
                         "type": "inlinedRequestBody",
-                        "name": "CreateContactRequest",
+                        "name": "ContactsCreateRequest",
                         "extends": [],
                         "properties": [
                             {
@@ -203,13 +209,19 @@
                                     "container": {
                                         "_type": "optional",
                                         "optional": {
-                                            "_type": "primitive",
-                                            "primitive": {
-                                                "v1": "STRING",
-                                                "v2": {
-                                                    "type": "string",
-                                                    "default": null,
-                                                    "validation": null
+                                            "_type": "container",
+                                            "container": {
+                                                "_type": "nullable",
+                                                "nullable": {
+                                                    "_type": "primitive",
+                                                    "primitive": {
+                                                        "v1": "STRING",
+                                                        "v2": {
+                                                            "type": "string",
+                                                            "default": null,
+                                                            "validation": null
+                                                        }
+                                                    }
                                                 }
                                             }
                                         }
@@ -235,7 +247,7 @@
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",
-                            "wrapperName": "CreateContactRequest",
+                            "wrapperName": "ContactsCreateRequest",
                             "bodyKey": "body",
                             "includePathParameters": false,
                             "onlyPathParameters": false
@@ -251,8 +263,8 @@
                                 "responseBodyType": {
                                     "_type": "container",
                                     "container": {
-                                        "_type": "optional",
-                                        "optional": {
+                                        "_type": "nullable",
+                                        "nullable": {
                                             "_type": "named",
                                             "name": "Contact",
                                             "fernFilepath": {
@@ -280,8 +292,8 @@
                     "userSpecifiedExamples": [
                         {
                             "example": {
-                                "id": "fe904485",
-                                "name": null,
+                                "id": "Example1",
+                                "name": "Example1",
                                 "url": "/contacts",
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [],
@@ -322,8 +334,8 @@
                                             "shape": {
                                                 "type": "container",
                                                 "container": {
-                                                    "type": "optional",
-                                                    "optional": {
+                                                    "type": "nullable",
+                                                    "nullable": {
                                                         "shape": {
                                                             "type": "named",
                                                             "typeName": {
@@ -400,24 +412,50 @@
                                                                                     "type": "optional",
                                                                                     "optional": {
                                                                                         "shape": {
-                                                                                            "type": "primitive",
-                                                                                            "primitive": {
-                                                                                                "type": "string",
-                                                                                                "string": {
-                                                                                                    "original": "email"
+                                                                                            "type": "container",
+                                                                                            "container": {
+                                                                                                "type": "nullable",
+                                                                                                "nullable": {
+                                                                                                    "shape": {
+                                                                                                        "type": "primitive",
+                                                                                                        "primitive": {
+                                                                                                            "type": "string",
+                                                                                                            "string": {
+                                                                                                                "original": "email"
+                                                                                                            }
+                                                                                                        }
+                                                                                                    },
+                                                                                                    "jsonExample": "email"
+                                                                                                },
+                                                                                                "valueType": {
+                                                                                                    "_type": "primitive",
+                                                                                                    "primitive": {
+                                                                                                        "v1": "STRING",
+                                                                                                        "v2": {
+                                                                                                            "type": "string",
+                                                                                                            "default": null,
+                                                                                                            "validation": null
+                                                                                                        }
+                                                                                                    }
                                                                                                 }
                                                                                             }
                                                                                         },
                                                                                         "jsonExample": "email"
                                                                                     },
                                                                                     "valueType": {
-                                                                                        "_type": "primitive",
-                                                                                        "primitive": {
-                                                                                            "v1": "STRING",
-                                                                                            "v2": {
-                                                                                                "type": "string",
-                                                                                                "default": null,
-                                                                                                "validation": null
+                                                                                        "_type": "container",
+                                                                                        "container": {
+                                                                                            "_type": "nullable",
+                                                                                            "nullable": {
+                                                                                                "_type": "primitive",
+                                                                                                "primitive": {
+                                                                                                    "v1": "STRING",
+                                                                                                    "v2": {
+                                                                                                        "type": "string",
+                                                                                                        "default": null,
+                                                                                                        "validation": null
+                                                                                                    }
+                                                                                                }
                                                                                             }
                                                                                         }
                                                                                     }
@@ -478,7 +516,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "9e966d",
+                                "id": "bacdde49",
                                 "url": "/contacts",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -516,13 +554,19 @@
                                                         "type": "optional",
                                                         "optional": null,
                                                         "valueType": {
-                                                            "_type": "primitive",
-                                                            "primitive": {
-                                                                "v1": "STRING",
-                                                                "v2": {
-                                                                    "type": "string",
-                                                                    "default": null,
-                                                                    "validation": null
+                                                            "_type": "container",
+                                                            "container": {
+                                                                "_type": "nullable",
+                                                                "nullable": {
+                                                                    "_type": "primitive",
+                                                                    "primitive": {
+                                                                        "v1": "STRING",
+                                                                        "v2": {
+                                                                            "type": "string",
+                                                                            "default": null,
+                                                                            "validation": null
+                                                                        }
+                                                                    }
                                                                 }
                                                             }
                                                         }
@@ -544,8 +588,8 @@
                                             "shape": {
                                                 "type": "container",
                                                 "container": {
-                                                    "type": "optional",
-                                                    "optional": {
+                                                    "type": "nullable",
+                                                    "nullable": {
                                                         "shape": {
                                                             "type": "named",
                                                             "shape": {
@@ -622,24 +666,50 @@
                                                                                     "type": "optional",
                                                                                     "optional": {
                                                                                         "shape": {
-                                                                                            "type": "primitive",
-                                                                                            "primitive": {
-                                                                                                "type": "string",
-                                                                                                "string": {
-                                                                                                    "original": "email"
+                                                                                            "type": "container",
+                                                                                            "container": {
+                                                                                                "type": "nullable",
+                                                                                                "nullable": {
+                                                                                                    "shape": {
+                                                                                                        "type": "primitive",
+                                                                                                        "primitive": {
+                                                                                                            "type": "string",
+                                                                                                            "string": {
+                                                                                                                "original": "email"
+                                                                                                            }
+                                                                                                        }
+                                                                                                    },
+                                                                                                    "jsonExample": "email"
+                                                                                                },
+                                                                                                "valueType": {
+                                                                                                    "_type": "primitive",
+                                                                                                    "primitive": {
+                                                                                                        "v1": "STRING",
+                                                                                                        "v2": {
+                                                                                                            "type": "string",
+                                                                                                            "default": null,
+                                                                                                            "validation": null
+                                                                                                        }
+                                                                                                    }
                                                                                                 }
                                                                                             }
                                                                                         },
                                                                                         "jsonExample": "email"
                                                                                     },
                                                                                     "valueType": {
-                                                                                        "_type": "primitive",
-                                                                                        "primitive": {
-                                                                                            "v1": "STRING",
-                                                                                            "v2": {
-                                                                                                "type": "string",
-                                                                                                "default": null,
-                                                                                                "validation": null
+                                                                                        "_type": "container",
+                                                                                        "container": {
+                                                                                            "_type": "nullable",
+                                                                                            "nullable": {
+                                                                                                "_type": "primitive",
+                                                                                                "primitive": {
+                                                                                                    "v1": "STRING",
+                                                                                                    "v2": {
+                                                                                                        "type": "string",
+                                                                                                        "default": null,
+                                                                                                        "validation": null
+                                                                                                    }
+                                                                                                }
                                                                                             }
                                                                                         }
                                                                                     }
@@ -793,7 +863,7 @@
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",
-                            "wrapperName": "GetContactsRequest",
+                            "wrapperName": "ContactsGetRequest",
                             "bodyKey": "body",
                             "includePathParameters": true,
                             "onlyPathParameters": true
@@ -832,8 +902,8 @@
                     "userSpecifiedExamples": [
                         {
                             "example": {
-                                "id": "ad06a3a4",
-                                "name": null,
+                                "id": "Example1",
+                                "name": "Example1",
                                 "url": "/contacts/id",
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [
@@ -939,24 +1009,50 @@
                                                                         "type": "optional",
                                                                         "optional": {
                                                                             "shape": {
-                                                                                "type": "primitive",
-                                                                                "primitive": {
-                                                                                    "type": "string",
-                                                                                    "string": {
-                                                                                        "original": "email"
+                                                                                "type": "container",
+                                                                                "container": {
+                                                                                    "type": "nullable",
+                                                                                    "nullable": {
+                                                                                        "shape": {
+                                                                                            "type": "primitive",
+                                                                                            "primitive": {
+                                                                                                "type": "string",
+                                                                                                "string": {
+                                                                                                    "original": "email"
+                                                                                                }
+                                                                                            }
+                                                                                        },
+                                                                                        "jsonExample": "email"
+                                                                                    },
+                                                                                    "valueType": {
+                                                                                        "_type": "primitive",
+                                                                                        "primitive": {
+                                                                                            "v1": "STRING",
+                                                                                            "v2": {
+                                                                                                "type": "string",
+                                                                                                "default": null,
+                                                                                                "validation": null
+                                                                                            }
+                                                                                        }
                                                                                     }
                                                                                 }
                                                                             },
                                                                             "jsonExample": "email"
                                                                         },
                                                                         "valueType": {
-                                                                            "_type": "primitive",
-                                                                            "primitive": {
-                                                                                "v1": "STRING",
-                                                                                "v2": {
-                                                                                    "type": "string",
-                                                                                    "default": null,
-                                                                                    "validation": null
+                                                                            "_type": "container",
+                                                                            "container": {
+                                                                                "_type": "nullable",
+                                                                                "nullable": {
+                                                                                    "_type": "primitive",
+                                                                                    "primitive": {
+                                                                                        "v1": "STRING",
+                                                                                        "v2": {
+                                                                                            "type": "string",
+                                                                                            "default": null,
+                                                                                            "validation": null
+                                                                                        }
+                                                                                    }
                                                                                 }
                                                                             }
                                                                         }
@@ -996,7 +1092,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "5f82f655",
+                                "id": "aa8bf1c3",
                                 "url": "/contacts/id",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -1103,24 +1199,50 @@
                                                                         "type": "optional",
                                                                         "optional": {
                                                                             "shape": {
-                                                                                "type": "primitive",
-                                                                                "primitive": {
-                                                                                    "type": "string",
-                                                                                    "string": {
-                                                                                        "original": "email"
+                                                                                "type": "container",
+                                                                                "container": {
+                                                                                    "type": "nullable",
+                                                                                    "nullable": {
+                                                                                        "shape": {
+                                                                                            "type": "primitive",
+                                                                                            "primitive": {
+                                                                                                "type": "string",
+                                                                                                "string": {
+                                                                                                    "original": "email"
+                                                                                                }
+                                                                                            }
+                                                                                        },
+                                                                                        "jsonExample": "email"
+                                                                                    },
+                                                                                    "valueType": {
+                                                                                        "_type": "primitive",
+                                                                                        "primitive": {
+                                                                                            "v1": "STRING",
+                                                                                            "v2": {
+                                                                                                "type": "string",
+                                                                                                "default": null,
+                                                                                                "validation": null
+                                                                                            }
+                                                                                        }
                                                                                     }
                                                                                 }
                                                                             },
                                                                             "jsonExample": "email"
                                                                         },
                                                                         "valueType": {
-                                                                            "_type": "primitive",
-                                                                            "primitive": {
-                                                                                "v1": "STRING",
-                                                                                "v2": {
-                                                                                    "type": "string",
-                                                                                    "default": null,
-                                                                                    "validation": null
+                                                                            "_type": "container",
+                                                                            "container": {
+                                                                                "_type": "nullable",
+                                                                                "nullable": {
+                                                                                    "_type": "primitive",
+                                                                                    "primitive": {
+                                                                                        "v1": "STRING",
+                                                                                        "v2": {
+                                                                                            "type": "string",
+                                                                                            "default": null,
+                                                                                            "validation": null
+                                                                                        }
+                                                                                    }
                                                                                 }
                                                                             }
                                                                         }
@@ -1312,8 +1434,11 @@
                         "typeReference": {
                             "type": "optional",
                             "value": {
-                                "type": "primitive",
-                                "value": "STRING"
+                                "type": "nullable",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                }
                             }
                         },
                         "propertyAccess": null,
@@ -1400,22 +1525,22 @@
                     "type": "inlined",
                     "declaration": {
                         "name": {
-                            "originalName": "CreateContactRequest",
+                            "originalName": "ContactsCreateRequest",
                             "camelCase": {
-                                "unsafeName": "createContactRequest",
-                                "safeName": "createContactRequest"
+                                "unsafeName": "contactsCreateRequest",
+                                "safeName": "contactsCreateRequest"
                             },
                             "snakeCase": {
-                                "unsafeName": "create_contact_request",
-                                "safeName": "create_contact_request"
+                                "unsafeName": "contacts_create_request",
+                                "safeName": "contacts_create_request"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "CREATE_CONTACT_REQUEST",
-                                "safeName": "CREATE_CONTACT_REQUEST"
+                                "unsafeName": "CONTACTS_CREATE_REQUEST",
+                                "safeName": "CONTACTS_CREATE_REQUEST"
                             },
                             "pascalCase": {
-                                "unsafeName": "CreateContactRequest",
-                                "safeName": "CreateContactRequest"
+                                "unsafeName": "ContactsCreateRequest",
+                                "safeName": "ContactsCreateRequest"
                             }
                         },
                         "fernFilepath": {
@@ -1524,8 +1649,11 @@
                                 "typeReference": {
                                     "type": "optional",
                                     "value": {
-                                        "type": "primitive",
-                                        "value": "STRING"
+                                        "type": "nullable",
+                                        "value": {
+                                            "type": "primitive",
+                                            "value": "STRING"
+                                        }
                                     }
                                 },
                                 "propertyAccess": null,
@@ -1617,22 +1745,22 @@
                     "type": "inlined",
                     "declaration": {
                         "name": {
-                            "originalName": "GetContactsRequest",
+                            "originalName": "ContactsGetRequest",
                             "camelCase": {
-                                "unsafeName": "getContactsRequest",
-                                "safeName": "getContactsRequest"
+                                "unsafeName": "contactsGetRequest",
+                                "safeName": "contactsGetRequest"
                             },
                             "snakeCase": {
-                                "unsafeName": "get_contacts_request",
-                                "safeName": "get_contacts_request"
+                                "unsafeName": "contacts_get_request",
+                                "safeName": "contacts_get_request"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "GET_CONTACTS_REQUEST",
-                                "safeName": "GET_CONTACTS_REQUEST"
+                                "unsafeName": "CONTACTS_GET_REQUEST",
+                                "safeName": "CONTACTS_GET_REQUEST"
                             },
                             "pascalCase": {
-                                "unsafeName": "GetContactsRequest",
-                                "safeName": "GetContactsRequest"
+                                "unsafeName": "ContactsGetRequest",
+                                "safeName": "ContactsGetRequest"
                             }
                         },
                         "fernFilepath": {

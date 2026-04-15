@@ -1,13 +1,7 @@
 {
   "type": "object",
   "properties": {
-    "id": {
-      "type": "string"
-    },
-    "name": {
-      "type": "string"
-    },
-    "deleted_at": {
+    "conversation_id": {
       "type": [
         "string",
         "number",
@@ -16,12 +10,14 @@
         "array",
         "null"
       ]
+    },
+    "dry_run": {
+      "type": "boolean"
     }
   },
   "required": [
-    "id",
-    "name",
-    "deleted_at"
+    "conversation_id",
+    "dry_run"
   ],
   "additionalProperties": false,
   "definitions": {}

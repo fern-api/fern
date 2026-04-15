@@ -224,15 +224,21 @@
                                 "optional": {
                                     "_type": "container",
                                     "container": {
-                                        "_type": "list",
-                                        "list": {
-                                            "_type": "primitive",
-                                            "primitive": {
-                                                "v1": "STRING",
-                                                "v2": {
-                                                    "type": "string",
-                                                    "default": null,
-                                                    "validation": null
+                                        "_type": "nullable",
+                                        "nullable": {
+                                            "_type": "container",
+                                            "container": {
+                                                "_type": "list",
+                                                "list": {
+                                                    "_type": "primitive",
+                                                    "primitive": {
+                                                        "v1": "STRING",
+                                                        "v2": {
+                                                            "type": "string",
+                                                            "default": null,
+                                                            "validation": null
+                                                        }
+                                                    }
                                                 }
                                             }
                                         }
@@ -288,13 +294,19 @@
                             "container": {
                                 "_type": "optional",
                                 "optional": {
-                                    "_type": "primitive",
-                                    "primitive": {
-                                        "v1": "STRING",
-                                        "v2": {
-                                            "type": "string",
-                                            "default": null,
-                                            "validation": null
+                                    "_type": "container",
+                                    "container": {
+                                        "_type": "nullable",
+                                        "nullable": {
+                                            "_type": "primitive",
+                                            "primitive": {
+                                                "v1": "STRING",
+                                                "v2": {
+                                                    "type": "string",
+                                                    "default": null,
+                                                    "validation": null
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -318,15 +330,21 @@
                                 "optional": {
                                     "_type": "container",
                                     "container": {
-                                        "_type": "list",
-                                        "list": {
-                                            "_type": "primitive",
-                                            "primitive": {
-                                                "v1": "STRING",
-                                                "v2": {
-                                                    "type": "string",
-                                                    "default": null,
-                                                    "validation": null
+                                        "_type": "nullable",
+                                        "nullable": {
+                                            "_type": "container",
+                                            "container": {
+                                                "_type": "list",
+                                                "list": {
+                                                    "_type": "primitive",
+                                                    "primitive": {
+                                                        "v1": "STRING",
+                                                        "v2": {
+                                                            "type": "string",
+                                                            "default": null,
+                                                            "validation": null
+                                                        }
+                                                    }
                                                 }
                                             }
                                         }
@@ -382,13 +400,19 @@
                             "container": {
                                 "_type": "optional",
                                 "optional": {
-                                    "_type": "primitive",
-                                    "primitive": {
-                                        "v1": "STRING",
-                                        "v2": {
-                                            "type": "string",
-                                            "default": null,
-                                            "validation": null
+                                    "_type": "container",
+                                    "container": {
+                                        "_type": "nullable",
+                                        "nullable": {
+                                            "_type": "primitive",
+                                            "primitive": {
+                                                "v1": "STRING",
+                                                "v2": {
+                                                    "type": "string",
+                                                    "default": null,
+                                                    "validation": null
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -410,17 +434,23 @@
                             "container": {
                                 "_type": "optional",
                                 "optional": {
-                                    "_type": "named",
-                                    "name": "User",
-                                    "fernFilepath": {
-                                        "allParts": [],
-                                        "packagePath": [],
-                                        "file": null
-                                    },
-                                    "displayName": null,
-                                    "typeId": "type_:User",
-                                    "default": null,
-                                    "inline": null
+                                    "_type": "container",
+                                    "container": {
+                                        "_type": "nullable",
+                                        "nullable": {
+                                            "_type": "named",
+                                            "name": "User",
+                                            "fernFilepath": {
+                                                "allParts": [],
+                                                "packagePath": [],
+                                                "file": null
+                                            },
+                                            "displayName": null,
+                                            "typeId": "type_:User",
+                                            "default": null,
+                                            "inline": null
+                                        }
+                                    }
                                 }
                             }
                         },
@@ -458,9 +488,11 @@
             "availability": null,
             "name": {
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        ""
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": ""
                 }
             },
             "displayName": null,
@@ -645,17 +677,23 @@
                                 "container": {
                                     "_type": "optional",
                                     "optional": {
-                                        "_type": "named",
-                                        "name": "User",
-                                        "fernFilepath": {
-                                            "allParts": [],
-                                            "packagePath": [],
-                                            "file": null
-                                        },
-                                        "displayName": null,
-                                        "typeId": "type_:User",
-                                        "default": null,
-                                        "inline": null
+                                        "_type": "container",
+                                        "container": {
+                                            "_type": "nullable",
+                                            "nullable": {
+                                                "_type": "named",
+                                                "name": "User",
+                                                "fernFilepath": {
+                                                    "allParts": [],
+                                                    "packagePath": [],
+                                                    "file": null
+                                                },
+                                                "displayName": null,
+                                                "typeId": "type_:User",
+                                                "default": null,
+                                                "inline": null
+                                            }
+                                        }
                                     }
                                 }
                             },
@@ -677,10 +715,16 @@
                                 "container": {
                                     "_type": "optional",
                                     "optional": {
-                                        "_type": "primitive",
-                                        "primitive": {
-                                            "v1": "DATE_TIME",
-                                            "v2": null
+                                        "_type": "container",
+                                        "container": {
+                                            "_type": "nullable",
+                                            "nullable": {
+                                                "_type": "primitive",
+                                                "primitive": {
+                                                    "v1": "DATE_TIME",
+                                                    "v2": null
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -705,26 +749,38 @@
                                     "optional": {
                                         "_type": "container",
                                         "container": {
-                                            "_type": "map",
-                                            "keyType": {
-                                                "_type": "primitive",
-                                                "primitive": {
-                                                    "v1": "STRING",
-                                                    "v2": {
-                                                        "type": "string",
-                                                        "default": null,
-                                                        "validation": null
-                                                    }
-                                                }
-                                            },
-                                            "valueType": {
-                                                "_type": "primitive",
-                                                "primitive": {
-                                                    "v1": "STRING",
-                                                    "v2": {
-                                                        "type": "string",
-                                                        "default": null,
-                                                        "validation": null
+                                            "_type": "nullable",
+                                            "nullable": {
+                                                "_type": "container",
+                                                "container": {
+                                                    "_type": "map",
+                                                    "keyType": {
+                                                        "_type": "primitive",
+                                                        "primitive": {
+                                                            "v1": "STRING",
+                                                            "v2": {
+                                                                "type": "string",
+                                                                "default": null,
+                                                                "validation": null
+                                                            }
+                                                        }
+                                                    },
+                                                    "valueType": {
+                                                        "_type": "container",
+                                                        "container": {
+                                                            "_type": "nullable",
+                                                            "nullable": {
+                                                                "_type": "primitive",
+                                                                "primitive": {
+                                                                    "v1": "STRING",
+                                                                    "v2": {
+                                                                        "type": "string",
+                                                                        "default": null,
+                                                                        "validation": null
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
                                                     }
                                                 }
                                             }
@@ -750,13 +806,19 @@
                                 "container": {
                                     "_type": "optional",
                                     "optional": {
-                                        "_type": "primitive",
-                                        "primitive": {
-                                            "v1": "STRING",
-                                            "v2": {
-                                                "type": "string",
-                                                "default": null,
-                                                "validation": null
+                                        "_type": "container",
+                                        "container": {
+                                            "_type": "nullable",
+                                            "nullable": {
+                                                "_type": "primitive",
+                                                "primitive": {
+                                                    "v1": "STRING",
+                                                    "v2": {
+                                                        "type": "string",
+                                                        "default": null,
+                                                        "validation": null
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -780,17 +842,23 @@
                                 "container": {
                                     "_type": "optional",
                                     "optional": {
-                                        "_type": "named",
-                                        "name": "NestedUser",
-                                        "fernFilepath": {
-                                            "allParts": [],
-                                            "packagePath": [],
-                                            "file": null
-                                        },
-                                        "displayName": null,
-                                        "typeId": "type_:NestedUser",
-                                        "default": null,
-                                        "inline": null
+                                        "_type": "container",
+                                        "container": {
+                                            "_type": "nullable",
+                                            "nullable": {
+                                                "_type": "named",
+                                                "name": "NestedUser",
+                                                "fernFilepath": {
+                                                    "allParts": [],
+                                                    "packagePath": [],
+                                                    "file": null
+                                                },
+                                                "displayName": null,
+                                                "typeId": "type_:NestedUser",
+                                                "default": null,
+                                                "inline": null
+                                            }
+                                        }
                                     }
                                 }
                             },
@@ -812,17 +880,23 @@
                                 "container": {
                                     "_type": "optional",
                                     "optional": {
-                                        "_type": "named",
-                                        "name": "User",
-                                        "fernFilepath": {
-                                            "allParts": [],
-                                            "packagePath": [],
-                                            "file": null
-                                        },
-                                        "displayName": null,
-                                        "typeId": "type_:User",
-                                        "default": null,
-                                        "inline": null
+                                        "_type": "container",
+                                        "container": {
+                                            "_type": "nullable",
+                                            "nullable": {
+                                                "_type": "named",
+                                                "name": "User",
+                                                "fernFilepath": {
+                                                    "allParts": [],
+                                                    "packagePath": [],
+                                                    "file": null
+                                                },
+                                                "displayName": null,
+                                                "typeId": "type_:User",
+                                                "default": null,
+                                                "inline": null
+                                            }
+                                        }
                                     }
                                 }
                             },
@@ -844,17 +918,23 @@
                                 "container": {
                                     "_type": "optional",
                                     "optional": {
-                                        "_type": "named",
-                                        "name": "User",
-                                        "fernFilepath": {
-                                            "allParts": [],
-                                            "packagePath": [],
-                                            "file": null
-                                        },
-                                        "displayName": null,
-                                        "typeId": "type_:User",
-                                        "default": null,
-                                        "inline": null
+                                        "_type": "container",
+                                        "container": {
+                                            "_type": "nullable",
+                                            "nullable": {
+                                                "_type": "named",
+                                                "name": "User",
+                                                "fernFilepath": {
+                                                    "allParts": [],
+                                                    "packagePath": [],
+                                                    "file": null
+                                                },
+                                                "displayName": null,
+                                                "typeId": "type_:User",
+                                                "default": null,
+                                                "inline": null
+                                            }
+                                        }
                                     }
                                 }
                             },
@@ -876,13 +956,19 @@
                                 "container": {
                                     "_type": "optional",
                                     "optional": {
-                                        "_type": "primitive",
-                                        "primitive": {
-                                            "v1": "STRING",
-                                            "v2": {
-                                                "type": "string",
-                                                "default": null,
-                                                "validation": null
+                                        "_type": "container",
+                                        "container": {
+                                            "_type": "nullable",
+                                            "nullable": {
+                                                "_type": "primitive",
+                                                "primitive": {
+                                                    "v1": "STRING",
+                                                    "v2": {
+                                                        "type": "string",
+                                                        "default": null,
+                                                        "validation": null
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -906,13 +992,19 @@
                                 "container": {
                                     "_type": "optional",
                                     "optional": {
-                                        "_type": "primitive",
-                                        "primitive": {
-                                            "v1": "STRING",
-                                            "v2": {
-                                                "type": "string",
-                                                "default": null,
-                                                "validation": null
+                                        "_type": "container",
+                                        "container": {
+                                            "_type": "nullable",
+                                            "nullable": {
+                                                "_type": "primitive",
+                                                "primitive": {
+                                                    "v1": "STRING",
+                                                    "v2": {
+                                                        "type": "string",
+                                                        "default": null,
+                                                        "validation": null
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -925,7 +1017,7 @@
                                 "userSpecifiedExamples": {},
                                 "autogeneratedExamples": {}
                             },
-                            "explode": false,
+                            "explode": null,
                             "availability": null,
                             "docs": "List of tags. Serialized as a comma-separated list."
                         },
@@ -936,13 +1028,19 @@
                                 "container": {
                                     "_type": "optional",
                                     "optional": {
-                                        "_type": "primitive",
-                                        "primitive": {
-                                            "v1": "STRING",
-                                            "v2": {
-                                                "type": "string",
-                                                "default": null,
-                                                "validation": null
+                                        "_type": "container",
+                                        "container": {
+                                            "_type": "nullable",
+                                            "nullable": {
+                                                "_type": "primitive",
+                                                "primitive": {
+                                                    "v1": "STRING",
+                                                    "v2": {
+                                                        "type": "string",
+                                                        "default": null,
+                                                        "validation": null
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -955,7 +1053,7 @@
                                 "userSpecifiedExamples": {},
                                 "autogeneratedExamples": {}
                             },
-                            "explode": false,
+                            "explode": null,
                             "availability": null,
                             "docs": "Optional list of tags. Serialized as a comma-separated list."
                         },
@@ -966,17 +1064,23 @@
                                 "container": {
                                     "_type": "optional",
                                     "optional": {
-                                        "_type": "named",
-                                        "name": "SearchRequestNeighbor",
-                                        "fernFilepath": {
-                                            "allParts": [],
-                                            "packagePath": [],
-                                            "file": null
-                                        },
-                                        "displayName": null,
-                                        "typeId": "type_:SearchRequestNeighbor",
-                                        "default": null,
-                                        "inline": null
+                                        "_type": "container",
+                                        "container": {
+                                            "_type": "nullable",
+                                            "nullable": {
+                                                "_type": "named",
+                                                "name": "SearchRequestNeighbor",
+                                                "fernFilepath": {
+                                                    "allParts": [],
+                                                    "packagePath": [],
+                                                    "file": null
+                                                },
+                                                "displayName": null,
+                                                "typeId": "type_:SearchRequestNeighbor",
+                                                "default": null,
+                                                "inline": null
+                                            }
+                                        }
                                     }
                                 }
                             },
@@ -995,14 +1099,14 @@
                             "name": "neighborRequired",
                             "valueType": {
                                 "_type": "named",
-                                "name": "SearchRequestNeighborRequired",
+                                "name": "User",
                                 "fernFilepath": {
                                     "allParts": [],
                                     "packagePath": [],
                                     "file": null
                                 },
                                 "displayName": null,
-                                "typeId": "type_:SearchRequestNeighborRequired",
+                                "typeId": "type_:User",
                                 "default": null,
                                 "inline": null
                             },
@@ -1064,7 +1168,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "db767f6b",
+                                "id": "5c78a463",
                                 "url": "/user/getUsername",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -1185,13 +1289,19 @@
                                                                         "type": "optional",
                                                                         "optional": null,
                                                                         "valueType": {
-                                                                            "_type": "primitive",
-                                                                            "primitive": {
-                                                                                "v1": "STRING",
-                                                                                "v2": {
-                                                                                    "type": "string",
-                                                                                    "default": null,
-                                                                                    "validation": null
+                                                                            "_type": "container",
+                                                                            "container": {
+                                                                                "_type": "nullable",
+                                                                                "nullable": {
+                                                                                    "_type": "primitive",
+                                                                                    "primitive": {
+                                                                                        "v1": "STRING",
+                                                                                        "v2": {
+                                                                                            "type": "string",
+                                                                                            "default": null,
+                                                                                            "validation": null
+                                                                                        }
+                                                                                    }
                                                                                 }
                                                                             }
                                                                         }
@@ -1221,15 +1331,21 @@
                                                                         "valueType": {
                                                                             "_type": "container",
                                                                             "container": {
-                                                                                "_type": "list",
-                                                                                "list": {
-                                                                                    "_type": "primitive",
-                                                                                    "primitive": {
-                                                                                        "v1": "STRING",
-                                                                                        "v2": {
-                                                                                            "type": "string",
-                                                                                            "default": null,
-                                                                                            "validation": null
+                                                                                "_type": "nullable",
+                                                                                "nullable": {
+                                                                                    "_type": "container",
+                                                                                    "container": {
+                                                                                        "_type": "list",
+                                                                                        "list": {
+                                                                                            "_type": "primitive",
+                                                                                            "primitive": {
+                                                                                                "v1": "STRING",
+                                                                                                "v2": {
+                                                                                                    "type": "string",
+                                                                                                    "default": null,
+                                                                                                    "validation": null
+                                                                                                }
+                                                                                            }
                                                                                         }
                                                                                     }
                                                                                 }
@@ -1266,92 +1382,11 @@
                                             "shape": {
                                                 "type": "named",
                                                 "shape": {
-                                                    "type": "undiscriminatedUnion",
-                                                    "index": 0,
-                                                    "singleUnionType": {
-                                                        "shape": {
-                                                            "type": "named",
-                                                            "shape": {
-                                                                "type": "object",
-                                                                "properties": [
-                                                                    {
-                                                                        "name": "name",
-                                                                        "originalTypeDeclaration": {
-                                                                            "name": "User",
-                                                                            "fernFilepath": {
-                                                                                "allParts": [],
-                                                                                "packagePath": [],
-                                                                                "file": null
-                                                                            },
-                                                                            "displayName": null,
-                                                                            "typeId": "type_:User"
-                                                                        },
-                                                                        "value": {
-                                                                            "shape": {
-                                                                                "type": "container",
-                                                                                "container": {
-                                                                                    "type": "optional",
-                                                                                    "optional": null,
-                                                                                    "valueType": {
-                                                                                        "_type": "primitive",
-                                                                                        "primitive": {
-                                                                                            "v1": "STRING",
-                                                                                            "v2": {
-                                                                                                "type": "string",
-                                                                                                "default": null,
-                                                                                                "validation": null
-                                                                                            }
-                                                                                        }
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                        },
-                                                                        "propertyAccess": null
-                                                                    },
-                                                                    {
-                                                                        "name": "tags",
-                                                                        "originalTypeDeclaration": {
-                                                                            "name": "User",
-                                                                            "fernFilepath": {
-                                                                                "allParts": [],
-                                                                                "packagePath": [],
-                                                                                "file": null
-                                                                            },
-                                                                            "displayName": null,
-                                                                            "typeId": "type_:User"
-                                                                        },
-                                                                        "value": {
-                                                                            "shape": {
-                                                                                "type": "container",
-                                                                                "container": {
-                                                                                    "type": "optional",
-                                                                                    "optional": null,
-                                                                                    "valueType": {
-                                                                                        "_type": "container",
-                                                                                        "container": {
-                                                                                            "_type": "list",
-                                                                                            "list": {
-                                                                                                "_type": "primitive",
-                                                                                                "primitive": {
-                                                                                                    "v1": "STRING",
-                                                                                                    "v2": {
-                                                                                                        "type": "string",
-                                                                                                        "default": null,
-                                                                                                        "validation": null
-                                                                                                    }
-                                                                                                }
-                                                                                            }
-                                                                                        }
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                        },
-                                                                        "propertyAccess": null
-                                                                    }
-                                                                ],
-                                                                "extraProperties": null
-                                                            },
-                                                            "typeName": {
+                                                    "type": "object",
+                                                    "properties": [
+                                                        {
+                                                            "name": "name",
+                                                            "originalTypeDeclaration": {
                                                                 "name": "User",
                                                                 "fernFilepath": {
                                                                     "allParts": [],
@@ -1360,20 +1395,93 @@
                                                                 },
                                                                 "displayName": null,
                                                                 "typeId": "type_:User"
-                                                            }
+                                                            },
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "container",
+                                                                    "container": {
+                                                                        "type": "optional",
+                                                                        "optional": null,
+                                                                        "valueType": {
+                                                                            "_type": "container",
+                                                                            "container": {
+                                                                                "_type": "nullable",
+                                                                                "nullable": {
+                                                                                    "_type": "primitive",
+                                                                                    "primitive": {
+                                                                                        "v1": "STRING",
+                                                                                        "v2": {
+                                                                                            "type": "string",
+                                                                                            "default": null,
+                                                                                            "validation": null
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            },
+                                                            "propertyAccess": null
                                                         },
-                                                        "jsonExample": {}
-                                                    }
+                                                        {
+                                                            "name": "tags",
+                                                            "originalTypeDeclaration": {
+                                                                "name": "User",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "displayName": null,
+                                                                "typeId": "type_:User"
+                                                            },
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "container",
+                                                                    "container": {
+                                                                        "type": "optional",
+                                                                        "optional": null,
+                                                                        "valueType": {
+                                                                            "_type": "container",
+                                                                            "container": {
+                                                                                "_type": "nullable",
+                                                                                "nullable": {
+                                                                                    "_type": "container",
+                                                                                    "container": {
+                                                                                        "_type": "list",
+                                                                                        "list": {
+                                                                                            "_type": "primitive",
+                                                                                            "primitive": {
+                                                                                                "v1": "STRING",
+                                                                                                "v2": {
+                                                                                                    "type": "string",
+                                                                                                    "default": null,
+                                                                                                    "validation": null
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            },
+                                                            "propertyAccess": null
+                                                        }
+                                                    ],
+                                                    "extraProperties": null
                                                 },
                                                 "typeName": {
-                                                    "name": "SearchRequestNeighborRequired",
+                                                    "name": "User",
                                                     "fernFilepath": {
                                                         "allParts": [],
                                                         "packagePath": [],
                                                         "file": null
                                                     },
                                                     "displayName": null,
-                                                    "typeId": "type_:SearchRequestNeighborRequired"
+                                                    "typeId": "type_:User"
                                                 }
                                             },
                                             "jsonExample": {}
@@ -1415,41 +1523,70 @@
                                                                             "shape": {
                                                                                 "type": "container",
                                                                                 "container": {
-                                                                                    "type": "list",
-                                                                                    "list": [
-                                                                                        {
-                                                                                            "shape": {
-                                                                                                "type": "primitive",
-                                                                                                "primitive": {
-                                                                                                    "type": "string",
-                                                                                                    "string": {
-                                                                                                        "original": "results"
+                                                                                    "type": "nullable",
+                                                                                    "nullable": {
+                                                                                        "shape": {
+                                                                                            "type": "container",
+                                                                                            "container": {
+                                                                                                "type": "list",
+                                                                                                "list": [
+                                                                                                    {
+                                                                                                        "shape": {
+                                                                                                            "type": "primitive",
+                                                                                                            "primitive": {
+                                                                                                                "type": "string",
+                                                                                                                "string": {
+                                                                                                                    "original": "results"
+                                                                                                                }
+                                                                                                            }
+                                                                                                        },
+                                                                                                        "jsonExample": "results"
+                                                                                                    },
+                                                                                                    {
+                                                                                                        "shape": {
+                                                                                                            "type": "primitive",
+                                                                                                            "primitive": {
+                                                                                                                "type": "string",
+                                                                                                                "string": {
+                                                                                                                    "original": "results"
+                                                                                                                }
+                                                                                                            }
+                                                                                                        },
+                                                                                                        "jsonExample": "results"
+                                                                                                    }
+                                                                                                ],
+                                                                                                "itemType": {
+                                                                                                    "_type": "primitive",
+                                                                                                    "primitive": {
+                                                                                                        "v1": "STRING",
+                                                                                                        "v2": {
+                                                                                                            "type": "string",
+                                                                                                            "default": null,
+                                                                                                            "validation": null
+                                                                                                        }
                                                                                                     }
                                                                                                 }
-                                                                                            },
-                                                                                            "jsonExample": "results"
+                                                                                            }
                                                                                         },
-                                                                                        {
-                                                                                            "shape": {
-                                                                                                "type": "primitive",
+                                                                                        "jsonExample": [
+                                                                                            "results",
+                                                                                            "results"
+                                                                                        ]
+                                                                                    },
+                                                                                    "valueType": {
+                                                                                        "_type": "container",
+                                                                                        "container": {
+                                                                                            "_type": "list",
+                                                                                            "list": {
+                                                                                                "_type": "primitive",
                                                                                                 "primitive": {
-                                                                                                    "type": "string",
-                                                                                                    "string": {
-                                                                                                        "original": "results"
+                                                                                                    "v1": "STRING",
+                                                                                                    "v2": {
+                                                                                                        "type": "string",
+                                                                                                        "default": null,
+                                                                                                        "validation": null
                                                                                                     }
                                                                                                 }
-                                                                                            },
-                                                                                            "jsonExample": "results"
-                                                                                        }
-                                                                                    ],
-                                                                                    "itemType": {
-                                                                                        "_type": "primitive",
-                                                                                        "primitive": {
-                                                                                            "v1": "STRING",
-                                                                                            "v2": {
-                                                                                                "type": "string",
-                                                                                                "default": null,
-                                                                                                "validation": null
                                                                                             }
                                                                                         }
                                                                                     }
@@ -1463,15 +1600,21 @@
                                                                         "valueType": {
                                                                             "_type": "container",
                                                                             "container": {
-                                                                                "_type": "list",
-                                                                                "list": {
-                                                                                    "_type": "primitive",
-                                                                                    "primitive": {
-                                                                                        "v1": "STRING",
-                                                                                        "v2": {
-                                                                                            "type": "string",
-                                                                                            "default": null,
-                                                                                            "validation": null
+                                                                                "_type": "nullable",
+                                                                                "nullable": {
+                                                                                    "_type": "container",
+                                                                                    "container": {
+                                                                                        "_type": "list",
+                                                                                        "list": {
+                                                                                            "_type": "primitive",
+                                                                                            "primitive": {
+                                                                                                "v1": "STRING",
+                                                                                                "v2": {
+                                                                                                    "type": "string",
+                                                                                                    "default": null,
+                                                                                                    "validation": null
+                                                                                                }
+                                                                                            }
                                                                                         }
                                                                                     }
                                                                                 }
@@ -1542,13 +1685,14 @@
         "typesReferencedOnlyByService": {
             "service_": [
                 "type_:SearchRequestNeighbor",
-                "type_:SearchRequestNeighborRequired",
                 "type_:SearchResponse",
                 "type_:User",
                 "type_:NestedUser"
             ]
         },
-        "sharedTypes": []
+        "sharedTypes": [
+            "type_:SearchRequestNeighborRequired"
+        ]
     },
     "webhookGroups": {},
     "websocketChannels": {},
@@ -1707,10 +1851,13 @@
                         "typeReference": {
                             "type": "optional",
                             "value": {
-                                "type": "list",
+                                "type": "nullable",
                                 "value": {
-                                    "type": "primitive",
-                                    "value": "STRING"
+                                    "type": "list",
+                                    "value": {
+                                        "type": "primitive",
+                                        "value": "STRING"
+                                    }
                                 }
                             }
                         },
@@ -1776,8 +1923,11 @@
                         "typeReference": {
                             "type": "optional",
                             "value": {
-                                "type": "primitive",
-                                "value": "STRING"
+                                "type": "nullable",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                }
                             }
                         },
                         "propertyAccess": null,
@@ -1809,10 +1959,13 @@
                         "typeReference": {
                             "type": "optional",
                             "value": {
-                                "type": "list",
+                                "type": "nullable",
                                 "value": {
-                                    "type": "primitive",
-                                    "value": "STRING"
+                                    "type": "list",
+                                    "value": {
+                                        "type": "primitive",
+                                        "value": "STRING"
+                                    }
                                 }
                             }
                         },
@@ -1878,8 +2031,11 @@
                         "typeReference": {
                             "type": "optional",
                             "value": {
-                                "type": "primitive",
-                                "value": "STRING"
+                                "type": "nullable",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                }
                             }
                         },
                         "propertyAccess": null,
@@ -1911,8 +2067,11 @@
                         "typeReference": {
                             "type": "optional",
                             "value": {
-                                "type": "named",
-                                "value": "type_:User"
+                                "type": "nullable",
+                                "value": {
+                                    "type": "named",
+                                    "value": "type_:User"
+                                }
                             }
                         },
                         "propertyAccess": null,
@@ -1948,9 +2107,47 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [],
+                        "allParts": [
+                            {
+                                "originalName": "",
+                                "camelCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                }
+                            }
+                        ],
                         "packagePath": [],
-                        "file": null
+                        "file": {
+                            "originalName": "",
+                            "camelCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "snakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "pascalCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            }
+                        }
                     }
                 },
                 "location": {
@@ -1980,9 +2177,47 @@
                             }
                         },
                         "fernFilepath": {
-                            "allParts": [],
+                            "allParts": [
+                                {
+                                    "originalName": "",
+                                    "camelCase": {
+                                        "unsafeName": "",
+                                        "safeName": ""
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "",
+                                        "safeName": ""
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "",
+                                        "safeName": ""
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "",
+                                        "safeName": ""
+                                    }
+                                }
+                            ],
                             "packagePath": [],
-                            "file": null
+                            "file": {
+                                "originalName": "",
+                                "camelCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                }
+                            }
                         }
                     },
                     "pathParameters": [],
@@ -2195,8 +2430,11 @@
                                 "value": {
                                     "type": "optional",
                                     "value": {
-                                        "type": "named",
-                                        "value": "type_:User"
+                                        "type": "nullable",
+                                        "value": {
+                                            "type": "named",
+                                            "value": "type_:User"
+                                        }
                                     }
                                 }
                             },
@@ -2229,8 +2467,11 @@
                             "typeReference": {
                                 "type": "optional",
                                 "value": {
-                                    "type": "primitive",
-                                    "value": "DATE_TIME"
+                                    "type": "nullable",
+                                    "value": {
+                                        "type": "primitive",
+                                        "value": "DATE_TIME"
+                                    }
                                 }
                             },
                             "propertyAccess": null,
@@ -2262,14 +2503,20 @@
                             "typeReference": {
                                 "type": "optional",
                                 "value": {
-                                    "type": "map",
-                                    "key": {
-                                        "type": "primitive",
-                                        "value": "STRING"
-                                    },
+                                    "type": "nullable",
                                     "value": {
-                                        "type": "primitive",
-                                        "value": "STRING"
+                                        "type": "map",
+                                        "key": {
+                                            "type": "primitive",
+                                            "value": "STRING"
+                                        },
+                                        "value": {
+                                            "type": "nullable",
+                                            "value": {
+                                                "type": "primitive",
+                                                "value": "STRING"
+                                            }
+                                        }
                                     }
                                 }
                             },
@@ -2302,8 +2549,11 @@
                             "typeReference": {
                                 "type": "optional",
                                 "value": {
-                                    "type": "primitive",
-                                    "value": "STRING"
+                                    "type": "nullable",
+                                    "value": {
+                                        "type": "primitive",
+                                        "value": "STRING"
+                                    }
                                 }
                             },
                             "propertyAccess": null,
@@ -2335,8 +2585,11 @@
                             "typeReference": {
                                 "type": "optional",
                                 "value": {
-                                    "type": "named",
-                                    "value": "type_:NestedUser"
+                                    "type": "nullable",
+                                    "value": {
+                                        "type": "named",
+                                        "value": "type_:NestedUser"
+                                    }
                                 }
                             },
                             "propertyAccess": null,
@@ -2368,8 +2621,11 @@
                             "typeReference": {
                                 "type": "optional",
                                 "value": {
-                                    "type": "named",
-                                    "value": "type_:User"
+                                    "type": "nullable",
+                                    "value": {
+                                        "type": "named",
+                                        "value": "type_:User"
+                                    }
                                 }
                             },
                             "propertyAccess": null,
@@ -2403,8 +2659,11 @@
                                 "value": {
                                     "type": "optional",
                                     "value": {
-                                        "type": "named",
-                                        "value": "type_:User"
+                                        "type": "nullable",
+                                        "value": {
+                                            "type": "named",
+                                            "value": "type_:User"
+                                        }
                                     }
                                 }
                             },
@@ -2439,8 +2698,11 @@
                                 "value": {
                                     "type": "optional",
                                     "value": {
-                                        "type": "primitive",
-                                        "value": "STRING"
+                                        "type": "nullable",
+                                        "value": {
+                                            "type": "primitive",
+                                            "value": "STRING"
+                                        }
                                     }
                                 }
                             },
@@ -2475,8 +2737,11 @@
                                 "value": {
                                     "type": "optional",
                                     "value": {
-                                        "type": "primitive",
-                                        "value": "STRING"
+                                        "type": "nullable",
+                                        "value": {
+                                            "type": "primitive",
+                                            "value": "STRING"
+                                        }
                                     }
                                 }
                             },
@@ -2511,8 +2776,11 @@
                                 "value": {
                                     "type": "optional",
                                     "value": {
-                                        "type": "primitive",
-                                        "value": "STRING"
+                                        "type": "nullable",
+                                        "value": {
+                                            "type": "primitive",
+                                            "value": "STRING"
+                                        }
                                     }
                                 }
                             },
@@ -2545,8 +2813,11 @@
                             "typeReference": {
                                 "type": "optional",
                                 "value": {
-                                    "type": "named",
-                                    "value": "type_:SearchRequestNeighbor"
+                                    "type": "nullable",
+                                    "value": {
+                                        "type": "named",
+                                        "value": "type_:SearchRequestNeighbor"
+                                    }
                                 }
                             },
                             "propertyAccess": null,
@@ -2577,7 +2848,7 @@
                             },
                             "typeReference": {
                                 "type": "named",
-                                "value": "type_:SearchRequestNeighborRequired"
+                                "value": "type_:User"
                             },
                             "propertyAccess": null,
                             "variable": null
@@ -2609,7 +2880,28 @@
         "keywords": null,
         "smartCasing": true
     },
-    "subpackages": {},
+    "subpackages": {
+        "subpackage_": {
+            "name": "",
+            "displayName": null,
+            "fernFilepath": {
+                "allParts": [
+                    ""
+                ],
+                "packagePath": [],
+                "file": ""
+            },
+            "service": "service_",
+            "types": [],
+            "errors": [],
+            "subpackages": [],
+            "navigationConfig": null,
+            "webhooks": null,
+            "websocket": null,
+            "hasEndpointsInTree": true,
+            "docs": null
+        }
+    },
     "rootPackage": {
         "fernFilepath": {
             "allParts": [],
@@ -2617,7 +2909,7 @@
             "file": null
         },
         "websocket": null,
-        "service": "service_",
+        "service": null,
         "types": [
             "type_:SearchRequestNeighbor",
             "type_:SearchRequestNeighborRequired",
@@ -2626,7 +2918,9 @@
             "type_:NestedUser"
         ],
         "errors": [],
-        "subpackages": [],
+        "subpackages": [
+            "subpackage_"
+        ],
         "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": true,

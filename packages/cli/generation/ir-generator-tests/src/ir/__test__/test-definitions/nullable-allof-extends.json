@@ -59,13 +59,19 @@
                             "container": {
                                 "_type": "optional",
                                 "optional": {
-                                    "_type": "primitive",
-                                    "primitive": {
-                                        "v1": "STRING",
-                                        "v2": {
-                                            "type": "string",
-                                            "default": null,
-                                            "validation": null
+                                    "_type": "container",
+                                    "container": {
+                                        "_type": "nullable",
+                                        "nullable": {
+                                            "_type": "primitive",
+                                            "primitive": {
+                                                "v1": "STRING",
+                                                "v2": {
+                                                    "type": "string",
+                                                    "default": null,
+                                                    "validation": null
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -87,13 +93,19 @@
                             "container": {
                                 "_type": "optional",
                                 "optional": {
-                                    "_type": "primitive",
-                                    "primitive": {
-                                        "v1": "STRING",
-                                        "v2": {
-                                            "type": "string",
-                                            "default": null,
-                                            "validation": null
+                                    "_type": "container",
+                                    "container": {
+                                        "_type": "nullable",
+                                        "nullable": {
+                                            "_type": "primitive",
+                                            "primitive": {
+                                                "v1": "STRING",
+                                                "v2": {
+                                                    "type": "string",
+                                                    "default": null,
+                                                    "validation": null
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -148,13 +160,19 @@
                             "container": {
                                 "_type": "optional",
                                 "optional": {
-                                    "_type": "primitive",
-                                    "primitive": {
-                                        "v1": "STRING",
-                                        "v2": {
-                                            "type": "string",
-                                            "default": null,
-                                            "validation": null
+                                    "_type": "container",
+                                    "container": {
+                                        "_type": "nullable",
+                                        "nullable": {
+                                            "_type": "primitive",
+                                            "primitive": {
+                                                "v1": "STRING",
+                                                "v2": {
+                                                    "type": "string",
+                                                    "default": null,
+                                                    "validation": null
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -208,13 +226,19 @@
                             "container": {
                                 "_type": "optional",
                                 "optional": {
-                                    "_type": "primitive",
-                                    "primitive": {
-                                        "v1": "STRING",
-                                        "v2": {
-                                            "type": "string",
-                                            "default": null,
-                                            "validation": null
+                                    "_type": "container",
+                                    "container": {
+                                        "_type": "nullable",
+                                        "nullable": {
+                                            "_type": "primitive",
+                                            "primitive": {
+                                                "v1": "STRING",
+                                                "v2": {
+                                                    "type": "string",
+                                                    "default": null,
+                                                    "validation": null
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -252,9 +276,11 @@
             "availability": null,
             "name": {
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        ""
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": ""
                 }
             },
             "displayName": null,
@@ -329,8 +355,8 @@
                     "userSpecifiedExamples": [
                         {
                             "example": {
-                                "id": "360f197a",
-                                "name": null,
+                                "id": "Example1",
+                                "name": "Example1",
                                 "url": "/test",
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [],
@@ -360,6 +386,78 @@
                                                     "type": "object",
                                                     "properties": [
                                                         {
+                                                            "name": "nullableField",
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "container",
+                                                                    "container": {
+                                                                        "type": "optional",
+                                                                        "optional": {
+                                                                            "shape": {
+                                                                                "type": "container",
+                                                                                "container": {
+                                                                                    "type": "nullable",
+                                                                                    "nullable": {
+                                                                                        "shape": {
+                                                                                            "type": "primitive",
+                                                                                            "primitive": {
+                                                                                                "type": "string",
+                                                                                                "string": {
+                                                                                                    "original": "nullableField"
+                                                                                                }
+                                                                                            }
+                                                                                        },
+                                                                                        "jsonExample": "nullableField"
+                                                                                    },
+                                                                                    "valueType": {
+                                                                                        "_type": "primitive",
+                                                                                        "primitive": {
+                                                                                            "v1": "STRING",
+                                                                                            "v2": {
+                                                                                                "type": "string",
+                                                                                                "default": null,
+                                                                                                "validation": null
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            },
+                                                                            "jsonExample": "nullableField"
+                                                                        },
+                                                                        "valueType": {
+                                                                            "_type": "container",
+                                                                            "container": {
+                                                                                "_type": "nullable",
+                                                                                "nullable": {
+                                                                                    "_type": "primitive",
+                                                                                    "primitive": {
+                                                                                        "v1": "STRING",
+                                                                                        "v2": {
+                                                                                            "type": "string",
+                                                                                            "default": null,
+                                                                                            "validation": null
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "nullableField"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "name": "NullableObject",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "displayName": null,
+                                                                "typeId": "type_:NullableObject"
+                                                            },
+                                                            "propertyAccess": null
+                                                        },
+                                                        {
                                                             "name": "normalField",
                                                             "value": {
                                                                 "shape": {
@@ -368,24 +466,50 @@
                                                                         "type": "optional",
                                                                         "optional": {
                                                                             "shape": {
-                                                                                "type": "primitive",
-                                                                                "primitive": {
-                                                                                    "type": "string",
-                                                                                    "string": {
-                                                                                        "original": "normalField"
+                                                                                "type": "container",
+                                                                                "container": {
+                                                                                    "type": "nullable",
+                                                                                    "nullable": {
+                                                                                        "shape": {
+                                                                                            "type": "primitive",
+                                                                                            "primitive": {
+                                                                                                "type": "string",
+                                                                                                "string": {
+                                                                                                    "original": "normalField"
+                                                                                                }
+                                                                                            }
+                                                                                        },
+                                                                                        "jsonExample": "normalField"
+                                                                                    },
+                                                                                    "valueType": {
+                                                                                        "_type": "primitive",
+                                                                                        "primitive": {
+                                                                                            "v1": "STRING",
+                                                                                            "v2": {
+                                                                                                "type": "string",
+                                                                                                "default": null,
+                                                                                                "validation": null
+                                                                                            }
+                                                                                        }
                                                                                     }
                                                                                 }
                                                                             },
                                                                             "jsonExample": "normalField"
                                                                         },
                                                                         "valueType": {
-                                                                            "_type": "primitive",
-                                                                            "primitive": {
-                                                                                "v1": "STRING",
-                                                                                "v2": {
-                                                                                    "type": "string",
-                                                                                    "default": null,
-                                                                                    "validation": null
+                                                                            "_type": "container",
+                                                                            "container": {
+                                                                                "_type": "nullable",
+                                                                                "nullable": {
+                                                                                    "_type": "primitive",
+                                                                                    "primitive": {
+                                                                                        "v1": "STRING",
+                                                                                        "v2": {
+                                                                                            "type": "string",
+                                                                                            "default": null,
+                                                                                            "validation": null
+                                                                                        }
+                                                                                    }
                                                                                 }
                                                                             }
                                                                         }
@@ -410,6 +534,7 @@
                                                 }
                                             },
                                             "jsonExample": {
+                                                "nullableField": "nullableField",
                                                 "normalField": "normalField"
                                             }
                                         }
@@ -423,7 +548,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "569fd84e",
+                                "id": "33258612",
                                 "url": "/test",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -462,24 +587,50 @@
                                                                         "type": "optional",
                                                                         "optional": {
                                                                             "shape": {
-                                                                                "type": "primitive",
-                                                                                "primitive": {
-                                                                                    "type": "string",
-                                                                                    "string": {
-                                                                                        "original": "normalField"
+                                                                                "type": "container",
+                                                                                "container": {
+                                                                                    "type": "nullable",
+                                                                                    "nullable": {
+                                                                                        "shape": {
+                                                                                            "type": "primitive",
+                                                                                            "primitive": {
+                                                                                                "type": "string",
+                                                                                                "string": {
+                                                                                                    "original": "normalField"
+                                                                                                }
+                                                                                            }
+                                                                                        },
+                                                                                        "jsonExample": "normalField"
+                                                                                    },
+                                                                                    "valueType": {
+                                                                                        "_type": "primitive",
+                                                                                        "primitive": {
+                                                                                            "v1": "STRING",
+                                                                                            "v2": {
+                                                                                                "type": "string",
+                                                                                                "default": null,
+                                                                                                "validation": null
+                                                                                            }
+                                                                                        }
                                                                                     }
                                                                                 }
                                                                             },
                                                                             "jsonExample": "normalField"
                                                                         },
                                                                         "valueType": {
-                                                                            "_type": "primitive",
-                                                                            "primitive": {
-                                                                                "v1": "STRING",
-                                                                                "v2": {
-                                                                                    "type": "string",
-                                                                                    "default": null,
-                                                                                    "validation": null
+                                                                            "_type": "container",
+                                                                            "container": {
+                                                                                "_type": "nullable",
+                                                                                "nullable": {
+                                                                                    "_type": "primitive",
+                                                                                    "primitive": {
+                                                                                        "v1": "STRING",
+                                                                                        "v2": {
+                                                                                            "type": "string",
+                                                                                            "default": null,
+                                                                                            "validation": null
+                                                                                        }
+                                                                                    }
                                                                                 }
                                                                             }
                                                                         }
@@ -508,24 +659,50 @@
                                                                         "type": "optional",
                                                                         "optional": {
                                                                             "shape": {
-                                                                                "type": "primitive",
-                                                                                "primitive": {
-                                                                                    "type": "string",
-                                                                                    "string": {
-                                                                                        "original": "nullableField"
+                                                                                "type": "container",
+                                                                                "container": {
+                                                                                    "type": "nullable",
+                                                                                    "nullable": {
+                                                                                        "shape": {
+                                                                                            "type": "primitive",
+                                                                                            "primitive": {
+                                                                                                "type": "string",
+                                                                                                "string": {
+                                                                                                    "original": "nullableField"
+                                                                                                }
+                                                                                            }
+                                                                                        },
+                                                                                        "jsonExample": "nullableField"
+                                                                                    },
+                                                                                    "valueType": {
+                                                                                        "_type": "primitive",
+                                                                                        "primitive": {
+                                                                                            "v1": "STRING",
+                                                                                            "v2": {
+                                                                                                "type": "string",
+                                                                                                "default": null,
+                                                                                                "validation": null
+                                                                                            }
+                                                                                        }
                                                                                     }
                                                                                 }
                                                                             },
                                                                             "jsonExample": "nullableField"
                                                                         },
                                                                         "valueType": {
-                                                                            "_type": "primitive",
-                                                                            "primitive": {
-                                                                                "v1": "STRING",
-                                                                                "v2": {
-                                                                                    "type": "string",
-                                                                                    "default": null,
-                                                                                    "validation": null
+                                                                            "_type": "container",
+                                                                            "container": {
+                                                                                "_type": "nullable",
+                                                                                "nullable": {
+                                                                                    "_type": "primitive",
+                                                                                    "primitive": {
+                                                                                        "v1": "STRING",
+                                                                                        "v2": {
+                                                                                            "type": "string",
+                                                                                            "default": null,
+                                                                                            "validation": null
+                                                                                        }
+                                                                                    }
                                                                                 }
                                                                             }
                                                                         }
@@ -671,8 +848,8 @@
                     "userSpecifiedExamples": [
                         {
                             "example": {
-                                "id": "5f8020d9",
-                                "name": null,
+                                "id": "Example1",
+                                "name": "Example1",
                                 "url": "/test",
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [],
@@ -723,6 +900,78 @@
                                                     "type": "object",
                                                     "properties": [
                                                         {
+                                                            "name": "nullableField",
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "container",
+                                                                    "container": {
+                                                                        "type": "optional",
+                                                                        "optional": {
+                                                                            "shape": {
+                                                                                "type": "container",
+                                                                                "container": {
+                                                                                    "type": "nullable",
+                                                                                    "nullable": {
+                                                                                        "shape": {
+                                                                                            "type": "primitive",
+                                                                                            "primitive": {
+                                                                                                "type": "string",
+                                                                                                "string": {
+                                                                                                    "original": "nullableField"
+                                                                                                }
+                                                                                            }
+                                                                                        },
+                                                                                        "jsonExample": "nullableField"
+                                                                                    },
+                                                                                    "valueType": {
+                                                                                        "_type": "primitive",
+                                                                                        "primitive": {
+                                                                                            "v1": "STRING",
+                                                                                            "v2": {
+                                                                                                "type": "string",
+                                                                                                "default": null,
+                                                                                                "validation": null
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            },
+                                                                            "jsonExample": "nullableField"
+                                                                        },
+                                                                        "valueType": {
+                                                                            "_type": "container",
+                                                                            "container": {
+                                                                                "_type": "nullable",
+                                                                                "nullable": {
+                                                                                    "_type": "primitive",
+                                                                                    "primitive": {
+                                                                                        "v1": "STRING",
+                                                                                        "v2": {
+                                                                                            "type": "string",
+                                                                                            "default": null,
+                                                                                            "validation": null
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "nullableField"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "name": "NullableObject",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "displayName": null,
+                                                                "typeId": "type_:NullableObject"
+                                                            },
+                                                            "propertyAccess": null
+                                                        },
+                                                        {
                                                             "name": "normalField",
                                                             "value": {
                                                                 "shape": {
@@ -731,24 +980,50 @@
                                                                         "type": "optional",
                                                                         "optional": {
                                                                             "shape": {
-                                                                                "type": "primitive",
-                                                                                "primitive": {
-                                                                                    "type": "string",
-                                                                                    "string": {
-                                                                                        "original": "normalField"
+                                                                                "type": "container",
+                                                                                "container": {
+                                                                                    "type": "nullable",
+                                                                                    "nullable": {
+                                                                                        "shape": {
+                                                                                            "type": "primitive",
+                                                                                            "primitive": {
+                                                                                                "type": "string",
+                                                                                                "string": {
+                                                                                                    "original": "normalField"
+                                                                                                }
+                                                                                            }
+                                                                                        },
+                                                                                        "jsonExample": "normalField"
+                                                                                    },
+                                                                                    "valueType": {
+                                                                                        "_type": "primitive",
+                                                                                        "primitive": {
+                                                                                            "v1": "STRING",
+                                                                                            "v2": {
+                                                                                                "type": "string",
+                                                                                                "default": null,
+                                                                                                "validation": null
+                                                                                            }
+                                                                                        }
                                                                                     }
                                                                                 }
                                                                             },
                                                                             "jsonExample": "normalField"
                                                                         },
                                                                         "valueType": {
-                                                                            "_type": "primitive",
-                                                                            "primitive": {
-                                                                                "v1": "STRING",
-                                                                                "v2": {
-                                                                                    "type": "string",
-                                                                                    "default": null,
-                                                                                    "validation": null
+                                                                            "_type": "container",
+                                                                            "container": {
+                                                                                "_type": "nullable",
+                                                                                "nullable": {
+                                                                                    "_type": "primitive",
+                                                                                    "primitive": {
+                                                                                        "v1": "STRING",
+                                                                                        "v2": {
+                                                                                            "type": "string",
+                                                                                            "default": null,
+                                                                                            "validation": null
+                                                                                        }
+                                                                                    }
                                                                                 }
                                                                             }
                                                                         }
@@ -773,6 +1048,7 @@
                                                 }
                                             },
                                             "jsonExample": {
+                                                "nullableField": "nullableField",
                                                 "normalField": "normalField"
                                             }
                                         }
@@ -786,7 +1062,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "d56515b1",
+                                "id": "b422525",
                                 "url": "/test",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -821,13 +1097,19 @@
                                                                 "type": "optional",
                                                                 "optional": null,
                                                                 "valueType": {
-                                                                    "_type": "primitive",
-                                                                    "primitive": {
-                                                                        "v1": "STRING",
-                                                                        "v2": {
-                                                                            "type": "string",
-                                                                            "default": null,
-                                                                            "validation": null
+                                                                    "_type": "container",
+                                                                    "container": {
+                                                                        "_type": "nullable",
+                                                                        "nullable": {
+                                                                            "_type": "primitive",
+                                                                            "primitive": {
+                                                                                "v1": "STRING",
+                                                                                "v2": {
+                                                                                    "type": "string",
+                                                                                    "default": null,
+                                                                                    "validation": null
+                                                                                }
+                                                                            }
                                                                         }
                                                                     }
                                                                 }
@@ -855,13 +1137,19 @@
                                                                 "type": "optional",
                                                                 "optional": null,
                                                                 "valueType": {
-                                                                    "_type": "primitive",
-                                                                    "primitive": {
-                                                                        "v1": "STRING",
-                                                                        "v2": {
-                                                                            "type": "string",
-                                                                            "default": null,
-                                                                            "validation": null
+                                                                    "_type": "container",
+                                                                    "container": {
+                                                                        "_type": "nullable",
+                                                                        "nullable": {
+                                                                            "_type": "primitive",
+                                                                            "primitive": {
+                                                                                "v1": "STRING",
+                                                                                "v2": {
+                                                                                    "type": "string",
+                                                                                    "default": null,
+                                                                                    "validation": null
+                                                                                }
+                                                                            }
                                                                         }
                                                                     }
                                                                 }
@@ -915,24 +1203,50 @@
                                                                         "type": "optional",
                                                                         "optional": {
                                                                             "shape": {
-                                                                                "type": "primitive",
-                                                                                "primitive": {
-                                                                                    "type": "string",
-                                                                                    "string": {
-                                                                                        "original": "normalField"
+                                                                                "type": "container",
+                                                                                "container": {
+                                                                                    "type": "nullable",
+                                                                                    "nullable": {
+                                                                                        "shape": {
+                                                                                            "type": "primitive",
+                                                                                            "primitive": {
+                                                                                                "type": "string",
+                                                                                                "string": {
+                                                                                                    "original": "normalField"
+                                                                                                }
+                                                                                            }
+                                                                                        },
+                                                                                        "jsonExample": "normalField"
+                                                                                    },
+                                                                                    "valueType": {
+                                                                                        "_type": "primitive",
+                                                                                        "primitive": {
+                                                                                            "v1": "STRING",
+                                                                                            "v2": {
+                                                                                                "type": "string",
+                                                                                                "default": null,
+                                                                                                "validation": null
+                                                                                            }
+                                                                                        }
                                                                                     }
                                                                                 }
                                                                             },
                                                                             "jsonExample": "normalField"
                                                                         },
                                                                         "valueType": {
-                                                                            "_type": "primitive",
-                                                                            "primitive": {
-                                                                                "v1": "STRING",
-                                                                                "v2": {
-                                                                                    "type": "string",
-                                                                                    "default": null,
-                                                                                    "validation": null
+                                                                            "_type": "container",
+                                                                            "container": {
+                                                                                "_type": "nullable",
+                                                                                "nullable": {
+                                                                                    "_type": "primitive",
+                                                                                    "primitive": {
+                                                                                        "v1": "STRING",
+                                                                                        "v2": {
+                                                                                            "type": "string",
+                                                                                            "default": null,
+                                                                                            "validation": null
+                                                                                        }
+                                                                                    }
                                                                                 }
                                                                             }
                                                                         }
@@ -961,24 +1275,50 @@
                                                                         "type": "optional",
                                                                         "optional": {
                                                                             "shape": {
-                                                                                "type": "primitive",
-                                                                                "primitive": {
-                                                                                    "type": "string",
-                                                                                    "string": {
-                                                                                        "original": "nullableField"
+                                                                                "type": "container",
+                                                                                "container": {
+                                                                                    "type": "nullable",
+                                                                                    "nullable": {
+                                                                                        "shape": {
+                                                                                            "type": "primitive",
+                                                                                            "primitive": {
+                                                                                                "type": "string",
+                                                                                                "string": {
+                                                                                                    "original": "nullableField"
+                                                                                                }
+                                                                                            }
+                                                                                        },
+                                                                                        "jsonExample": "nullableField"
+                                                                                    },
+                                                                                    "valueType": {
+                                                                                        "_type": "primitive",
+                                                                                        "primitive": {
+                                                                                            "v1": "STRING",
+                                                                                            "v2": {
+                                                                                                "type": "string",
+                                                                                                "default": null,
+                                                                                                "validation": null
+                                                                                            }
+                                                                                        }
                                                                                     }
                                                                                 }
                                                                             },
                                                                             "jsonExample": "nullableField"
                                                                         },
                                                                         "valueType": {
-                                                                            "_type": "primitive",
-                                                                            "primitive": {
-                                                                                "v1": "STRING",
-                                                                                "v2": {
-                                                                                    "type": "string",
-                                                                                    "default": null,
-                                                                                    "validation": null
+                                                                            "_type": "container",
+                                                                            "container": {
+                                                                                "_type": "nullable",
+                                                                                "nullable": {
+                                                                                    "_type": "primitive",
+                                                                                    "primitive": {
+                                                                                        "v1": "STRING",
+                                                                                        "v2": {
+                                                                                            "type": "string",
+                                                                                            "default": null,
+                                                                                            "validation": null
+                                                                                        }
+                                                                                    }
                                                                                 }
                                                                             }
                                                                         }
@@ -1128,8 +1468,11 @@
                         "typeReference": {
                             "type": "optional",
                             "value": {
-                                "type": "primitive",
-                                "value": "STRING"
+                                "type": "nullable",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                }
                             }
                         },
                         "propertyAccess": null,
@@ -1161,8 +1504,11 @@
                         "typeReference": {
                             "type": "optional",
                             "value": {
-                                "type": "primitive",
-                                "value": "STRING"
+                                "type": "nullable",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                }
                             }
                         },
                         "propertyAccess": null,
@@ -1230,8 +1576,11 @@
                         "typeReference": {
                             "type": "optional",
                             "value": {
-                                "type": "primitive",
-                                "value": "STRING"
+                                "type": "nullable",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                }
                             }
                         },
                         "propertyAccess": null,
@@ -1296,8 +1645,11 @@
                         "typeReference": {
                             "type": "optional",
                             "value": {
-                                "type": "primitive",
-                                "value": "STRING"
+                                "type": "nullable",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                }
                             }
                         },
                         "propertyAccess": null,
@@ -1333,9 +1685,47 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [],
+                        "allParts": [
+                            {
+                                "originalName": "",
+                                "camelCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                }
+                            }
+                        ],
                         "packagePath": [],
-                        "file": null
+                        "file": {
+                            "originalName": "",
+                            "camelCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "snakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "pascalCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            }
+                        }
                     }
                 },
                 "location": {
@@ -1375,9 +1765,47 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [],
+                        "allParts": [
+                            {
+                                "originalName": "",
+                                "camelCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                }
+                            }
+                        ],
                         "packagePath": [],
-                        "file": null
+                        "file": {
+                            "originalName": "",
+                            "camelCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "snakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "pascalCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            }
+                        }
                     }
                 },
                 "location": {
@@ -1445,7 +1873,28 @@
         "keywords": null,
         "smartCasing": true
     },
-    "subpackages": {},
+    "subpackages": {
+        "subpackage_": {
+            "name": "",
+            "displayName": null,
+            "fernFilepath": {
+                "allParts": [
+                    ""
+                ],
+                "packagePath": [],
+                "file": ""
+            },
+            "service": "service_",
+            "types": [],
+            "errors": [],
+            "subpackages": [],
+            "navigationConfig": null,
+            "webhooks": null,
+            "websocket": null,
+            "hasEndpointsInTree": true,
+            "docs": null
+        }
+    },
     "rootPackage": {
         "fernFilepath": {
             "allParts": [],
@@ -1453,14 +1902,16 @@
             "file": null
         },
         "websocket": null,
-        "service": "service_",
+        "service": null,
         "types": [
             "type_:RootObject",
             "type_:NormalObject",
             "type_:NullableObject"
         ],
         "errors": [],
-        "subpackages": [],
+        "subpackages": [
+            "subpackage_"
+        ],
         "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": true,

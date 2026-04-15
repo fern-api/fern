@@ -56,8 +56,11 @@
                     "typeReference": {
                         "type": "optional",
                         "value": {
-                            "type": "primitive",
-                            "value": "STRING"
+                            "type": "nullable",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
                         }
                     },
                     "propertyAccess": null,
@@ -89,8 +92,11 @@
                     "typeReference": {
                         "type": "optional",
                         "value": {
-                            "type": "primitive",
-                            "value": "STRING"
+                            "type": "nullable",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
                         }
                     },
                     "propertyAccess": null,
@@ -103,11 +109,11 @@
     },
     "headers": [],
     "endpoints": {
-        "endpoint_testGroup.test_method_name": {
+        "endpoint_testgroup.testMethodName": {
             "auth": null,
             "declaration": {
                 "name": {
-                    "originalName": "test_method_name",
+                    "originalName": "testMethodName",
                     "camelCase": {
                         "unsafeName": "testMethodName",
                         "safeName": "testMethodName"
@@ -128,43 +134,43 @@
                 "fernFilepath": {
                     "allParts": [
                         {
-                            "originalName": "testGroup",
+                            "originalName": "testgroup",
                             "camelCase": {
-                                "unsafeName": "testGroup",
-                                "safeName": "testGroup"
+                                "unsafeName": "testgroup",
+                                "safeName": "testgroup"
                             },
                             "snakeCase": {
-                                "unsafeName": "test_group",
-                                "safeName": "test_group"
+                                "unsafeName": "testgroup",
+                                "safeName": "testgroup"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "TEST_GROUP",
-                                "safeName": "TEST_GROUP"
+                                "unsafeName": "TESTGROUP",
+                                "safeName": "TESTGROUP"
                             },
                             "pascalCase": {
-                                "unsafeName": "TestGroup",
-                                "safeName": "TestGroup"
+                                "unsafeName": "Testgroup",
+                                "safeName": "Testgroup"
                             }
                         }
                     ],
                     "packagePath": [],
                     "file": {
-                        "originalName": "testGroup",
+                        "originalName": "testgroup",
                         "camelCase": {
-                            "unsafeName": "testGroup",
-                            "safeName": "testGroup"
+                            "unsafeName": "testgroup",
+                            "safeName": "testgroup"
                         },
                         "snakeCase": {
-                            "unsafeName": "test_group",
-                            "safeName": "test_group"
+                            "unsafeName": "testgroup",
+                            "safeName": "testgroup"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "TEST_GROUP",
-                            "safeName": "TEST_GROUP"
+                            "unsafeName": "TESTGROUP",
+                            "safeName": "TESTGROUP"
                         },
                         "pascalCase": {
-                            "unsafeName": "TestGroup",
-                            "safeName": "TestGroup"
+                            "unsafeName": "Testgroup",
+                            "safeName": "Testgroup"
                         }
                     }
                 }
@@ -177,64 +183,64 @@
                 "type": "inlined",
                 "declaration": {
                     "name": {
-                        "originalName": "TestMethodNameTestGroupRequest",
+                        "originalName": "TestGroupTestMethodNameRequest",
                         "camelCase": {
-                            "unsafeName": "testMethodNameTestGroupRequest",
-                            "safeName": "testMethodNameTestGroupRequest"
+                            "unsafeName": "testGroupTestMethodNameRequest",
+                            "safeName": "testGroupTestMethodNameRequest"
                         },
                         "snakeCase": {
-                            "unsafeName": "test_method_name_test_group_request",
-                            "safeName": "test_method_name_test_group_request"
+                            "unsafeName": "test_group_test_method_name_request",
+                            "safeName": "test_group_test_method_name_request"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "TEST_METHOD_NAME_TEST_GROUP_REQUEST",
-                            "safeName": "TEST_METHOD_NAME_TEST_GROUP_REQUEST"
+                            "unsafeName": "TEST_GROUP_TEST_METHOD_NAME_REQUEST",
+                            "safeName": "TEST_GROUP_TEST_METHOD_NAME_REQUEST"
                         },
                         "pascalCase": {
-                            "unsafeName": "TestMethodNameTestGroupRequest",
-                            "safeName": "TestMethodNameTestGroupRequest"
+                            "unsafeName": "TestGroupTestMethodNameRequest",
+                            "safeName": "TestGroupTestMethodNameRequest"
                         }
                     },
                     "fernFilepath": {
                         "allParts": [
                             {
-                                "originalName": "testGroup",
+                                "originalName": "testgroup",
                                 "camelCase": {
-                                    "unsafeName": "testGroup",
-                                    "safeName": "testGroup"
+                                    "unsafeName": "testgroup",
+                                    "safeName": "testgroup"
                                 },
                                 "snakeCase": {
-                                    "unsafeName": "test_group",
-                                    "safeName": "test_group"
+                                    "unsafeName": "testgroup",
+                                    "safeName": "testgroup"
                                 },
                                 "screamingSnakeCase": {
-                                    "unsafeName": "TEST_GROUP",
-                                    "safeName": "TEST_GROUP"
+                                    "unsafeName": "TESTGROUP",
+                                    "safeName": "TESTGROUP"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "TestGroup",
-                                    "safeName": "TestGroup"
+                                    "unsafeName": "Testgroup",
+                                    "safeName": "Testgroup"
                                 }
                             }
                         ],
                         "packagePath": [],
                         "file": {
-                            "originalName": "testGroup",
+                            "originalName": "testgroup",
                             "camelCase": {
-                                "unsafeName": "testGroup",
-                                "safeName": "testGroup"
+                                "unsafeName": "testgroup",
+                                "safeName": "testgroup"
                             },
                             "snakeCase": {
-                                "unsafeName": "test_group",
-                                "safeName": "test_group"
+                                "unsafeName": "testgroup",
+                                "safeName": "testgroup"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "TEST_GROUP",
-                                "safeName": "TEST_GROUP"
+                                "unsafeName": "TESTGROUP",
+                                "safeName": "TESTGROUP"
                             },
                             "pascalCase": {
-                                "unsafeName": "TestGroup",
-                                "safeName": "TestGroup"
+                                "unsafeName": "Testgroup",
+                                "safeName": "Testgroup"
                             }
                         }
                     }

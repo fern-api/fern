@@ -56,8 +56,11 @@
                     "typeReference": {
                         "type": "optional",
                         "value": {
-                            "type": "primitive",
-                            "value": "INTEGER"
+                            "type": "nullable",
+                            "value": {
+                                "type": "primitive",
+                                "value": "INTEGER"
+                            }
                         }
                     },
                     "propertyAccess": null,
@@ -93,9 +96,47 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        {
+                            "originalName": "",
+                            "camelCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "snakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "pascalCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            }
+                        }
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": {
+                        "originalName": "",
+                        "camelCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        },
+                        "snakeCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        },
+                        "pascalCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        }
+                    }
                 }
             },
             "location": {
@@ -125,9 +166,47 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [],
+                        "allParts": [
+                            {
+                                "originalName": "",
+                                "camelCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                }
+                            }
+                        ],
                         "packagePath": [],
-                        "file": null
+                        "file": {
+                            "originalName": "",
+                            "camelCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "snakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "pascalCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            }
+                        }
                     }
                 },
                 "pathParameters": [],
@@ -136,22 +215,22 @@
                         "name": {
                             "wireValue": "assigned_to",
                             "name": {
-                                "originalName": "filter_assigned_to",
+                                "originalName": "assigned_to",
                                 "camelCase": {
-                                    "unsafeName": "filterAssignedTo",
-                                    "safeName": "filterAssignedTo"
+                                    "unsafeName": "assignedTo",
+                                    "safeName": "assignedTo"
                                 },
                                 "snakeCase": {
-                                    "unsafeName": "filter_assigned_to",
-                                    "safeName": "filter_assigned_to"
+                                    "unsafeName": "assigned_to",
+                                    "safeName": "assigned_to"
                                 },
                                 "screamingSnakeCase": {
-                                    "unsafeName": "FILTER_ASSIGNED_TO",
-                                    "safeName": "FILTER_ASSIGNED_TO"
+                                    "unsafeName": "ASSIGNED_TO",
+                                    "safeName": "ASSIGNED_TO"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "FilterAssignedTo",
-                                    "safeName": "FilterAssignedTo"
+                                    "unsafeName": "AssignedTo",
+                                    "safeName": "AssignedTo"
                                 }
                             }
                         },
@@ -172,22 +251,22 @@
                         "name": {
                             "wireValue": "is_complete",
                             "name": {
-                                "originalName": "filter_is_complete",
+                                "originalName": "is_complete",
                                 "camelCase": {
-                                    "unsafeName": "filterIsComplete",
-                                    "safeName": "filterIsComplete"
+                                    "unsafeName": "isComplete",
+                                    "safeName": "isComplete"
                                 },
                                 "snakeCase": {
-                                    "unsafeName": "filter_is_complete",
-                                    "safeName": "filter_is_complete"
+                                    "unsafeName": "is_complete",
+                                    "safeName": "is_complete"
                                 },
                                 "screamingSnakeCase": {
-                                    "unsafeName": "FILTER_IS_COMPLETE",
-                                    "safeName": "FILTER_IS_COMPLETE"
+                                    "unsafeName": "IS_COMPLETE",
+                                    "safeName": "IS_COMPLETE"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "FilterIsComplete",
-                                    "safeName": "FilterIsComplete"
+                                    "unsafeName": "IsComplete",
+                                    "safeName": "IsComplete"
                                 }
                             }
                         },
@@ -208,22 +287,22 @@
                         "name": {
                             "wireValue": "date",
                             "name": {
-                                "originalName": "filter_date",
+                                "originalName": "date",
                                 "camelCase": {
-                                    "unsafeName": "filterDate",
-                                    "safeName": "filterDate"
+                                    "unsafeName": "date",
+                                    "safeName": "date"
                                 },
                                 "snakeCase": {
-                                    "unsafeName": "filter_date",
-                                    "safeName": "filter_date"
+                                    "unsafeName": "date",
+                                    "safeName": "date"
                                 },
                                 "screamingSnakeCase": {
-                                    "unsafeName": "FILTER_DATE",
-                                    "safeName": "FILTER_DATE"
+                                    "unsafeName": "DATE",
+                                    "safeName": "DATE"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "FilterDate",
-                                    "safeName": "FilterDate"
+                                    "unsafeName": "Date",
+                                    "safeName": "Date"
                                 }
                             }
                         },
@@ -266,8 +345,11 @@
                         "typeReference": {
                             "type": "optional",
                             "value": {
-                                "type": "primitive",
-                                "value": "STRING"
+                                "type": "nullable",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                }
                             }
                         },
                         "propertyAccess": null,
@@ -304,8 +386,11 @@
                             "typeReference": {
                                 "type": "optional",
                                 "value": {
-                                    "type": "primitive",
-                                    "value": "STRING"
+                                    "type": "nullable",
+                                    "value": {
+                                        "type": "primitive",
+                                        "value": "STRING"
+                                    }
                                 }
                             },
                             "propertyAccess": null,
@@ -337,8 +422,11 @@
                             "typeReference": {
                                 "type": "optional",
                                 "value": {
-                                    "type": "primitive",
-                                    "value": "DATE"
+                                    "type": "nullable",
+                                    "value": {
+                                        "type": "primitive",
+                                        "value": "DATE"
+                                    }
                                 }
                             },
                             "propertyAccess": null,
@@ -370,8 +458,11 @@
                             "typeReference": {
                                 "type": "optional",
                                 "value": {
-                                    "type": "primitive",
-                                    "value": "BOOLEAN"
+                                    "type": "nullable",
+                                    "value": {
+                                        "type": "primitive",
+                                        "value": "BOOLEAN"
+                                    }
                                 }
                             },
                             "propertyAccess": null,
@@ -403,8 +494,11 @@
                             "typeReference": {
                                 "type": "optional",
                                 "value": {
-                                    "type": "primitive",
-                                    "value": "STRING"
+                                    "type": "nullable",
+                                    "value": {
+                                        "type": "primitive",
+                                        "value": "STRING"
+                                    }
                                 }
                             },
                             "propertyAccess": null,

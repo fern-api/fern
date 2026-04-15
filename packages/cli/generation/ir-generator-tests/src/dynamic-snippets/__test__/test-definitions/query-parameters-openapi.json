@@ -150,10 +150,13 @@
                     "typeReference": {
                         "type": "optional",
                         "value": {
-                            "type": "list",
+                            "type": "nullable",
                             "value": {
-                                "type": "primitive",
-                                "value": "STRING"
+                                "type": "list",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                }
                             }
                         }
                     },
@@ -219,8 +222,11 @@
                     "typeReference": {
                         "type": "optional",
                         "value": {
-                            "type": "primitive",
-                            "value": "STRING"
+                            "type": "nullable",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
                         }
                     },
                     "propertyAccess": null,
@@ -252,10 +258,13 @@
                     "typeReference": {
                         "type": "optional",
                         "value": {
-                            "type": "list",
+                            "type": "nullable",
                             "value": {
-                                "type": "primitive",
-                                "value": "STRING"
+                                "type": "list",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                }
                             }
                         }
                     },
@@ -321,8 +330,11 @@
                     "typeReference": {
                         "type": "optional",
                         "value": {
-                            "type": "primitive",
-                            "value": "STRING"
+                            "type": "nullable",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
                         }
                     },
                     "propertyAccess": null,
@@ -354,8 +366,11 @@
                     "typeReference": {
                         "type": "optional",
                         "value": {
-                            "type": "named",
-                            "value": "type_:User"
+                            "type": "nullable",
+                            "value": {
+                                "type": "named",
+                                "value": "type_:User"
+                            }
                         }
                     },
                     "propertyAccess": null,
@@ -391,9 +406,47 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        {
+                            "originalName": "",
+                            "camelCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "snakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "pascalCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            }
+                        }
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": {
+                        "originalName": "",
+                        "camelCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        },
+                        "snakeCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        },
+                        "pascalCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        }
+                    }
                 }
             },
             "location": {
@@ -423,9 +476,47 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [],
+                        "allParts": [
+                            {
+                                "originalName": "",
+                                "camelCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                }
+                            }
+                        ],
                         "packagePath": [],
-                        "file": null
+                        "file": {
+                            "originalName": "",
+                            "camelCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "snakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "pascalCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            }
+                        }
                     }
                 },
                 "pathParameters": [],
@@ -638,8 +729,11 @@
                             "value": {
                                 "type": "optional",
                                 "value": {
-                                    "type": "named",
-                                    "value": "type_:User"
+                                    "type": "nullable",
+                                    "value": {
+                                        "type": "named",
+                                        "value": "type_:User"
+                                    }
                                 }
                             }
                         },
@@ -672,8 +766,11 @@
                         "typeReference": {
                             "type": "optional",
                             "value": {
-                                "type": "primitive",
-                                "value": "DATE_TIME"
+                                "type": "nullable",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "DATE_TIME"
+                                }
                             }
                         },
                         "propertyAccess": null,
@@ -705,14 +802,20 @@
                         "typeReference": {
                             "type": "optional",
                             "value": {
-                                "type": "map",
-                                "key": {
-                                    "type": "primitive",
-                                    "value": "STRING"
-                                },
+                                "type": "nullable",
                                 "value": {
-                                    "type": "primitive",
-                                    "value": "STRING"
+                                    "type": "map",
+                                    "key": {
+                                        "type": "primitive",
+                                        "value": "STRING"
+                                    },
+                                    "value": {
+                                        "type": "nullable",
+                                        "value": {
+                                            "type": "primitive",
+                                            "value": "STRING"
+                                        }
+                                    }
                                 }
                             }
                         },
@@ -745,8 +848,11 @@
                         "typeReference": {
                             "type": "optional",
                             "value": {
-                                "type": "primitive",
-                                "value": "STRING"
+                                "type": "nullable",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                }
                             }
                         },
                         "propertyAccess": null,
@@ -778,8 +884,11 @@
                         "typeReference": {
                             "type": "optional",
                             "value": {
-                                "type": "named",
-                                "value": "type_:NestedUser"
+                                "type": "nullable",
+                                "value": {
+                                    "type": "named",
+                                    "value": "type_:NestedUser"
+                                }
                             }
                         },
                         "propertyAccess": null,
@@ -811,8 +920,11 @@
                         "typeReference": {
                             "type": "optional",
                             "value": {
-                                "type": "named",
-                                "value": "type_:User"
+                                "type": "nullable",
+                                "value": {
+                                    "type": "named",
+                                    "value": "type_:User"
+                                }
                             }
                         },
                         "propertyAccess": null,
@@ -846,8 +958,11 @@
                             "value": {
                                 "type": "optional",
                                 "value": {
-                                    "type": "named",
-                                    "value": "type_:User"
+                                    "type": "nullable",
+                                    "value": {
+                                        "type": "named",
+                                        "value": "type_:User"
+                                    }
                                 }
                             }
                         },
@@ -882,8 +997,11 @@
                             "value": {
                                 "type": "optional",
                                 "value": {
-                                    "type": "primitive",
-                                    "value": "STRING"
+                                    "type": "nullable",
+                                    "value": {
+                                        "type": "primitive",
+                                        "value": "STRING"
+                                    }
                                 }
                             }
                         },
@@ -918,8 +1036,11 @@
                             "value": {
                                 "type": "optional",
                                 "value": {
-                                    "type": "primitive",
-                                    "value": "STRING"
+                                    "type": "nullable",
+                                    "value": {
+                                        "type": "primitive",
+                                        "value": "STRING"
+                                    }
                                 }
                             }
                         },
@@ -954,8 +1075,11 @@
                             "value": {
                                 "type": "optional",
                                 "value": {
-                                    "type": "primitive",
-                                    "value": "STRING"
+                                    "type": "nullable",
+                                    "value": {
+                                        "type": "primitive",
+                                        "value": "STRING"
+                                    }
                                 }
                             }
                         },
@@ -988,8 +1112,11 @@
                         "typeReference": {
                             "type": "optional",
                             "value": {
-                                "type": "named",
-                                "value": "type_:SearchRequestNeighbor"
+                                "type": "nullable",
+                                "value": {
+                                    "type": "named",
+                                    "value": "type_:SearchRequestNeighbor"
+                                }
                             }
                         },
                         "propertyAccess": null,
@@ -1020,7 +1147,7 @@
                         },
                         "typeReference": {
                             "type": "named",
-                            "value": "type_:SearchRequestNeighborRequired"
+                            "value": "type_:User"
                         },
                         "propertyAccess": null,
                         "variable": null

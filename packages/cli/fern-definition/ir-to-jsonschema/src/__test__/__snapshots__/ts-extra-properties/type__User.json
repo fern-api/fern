@@ -28,6 +28,6 @@
     "user_name",
     "created_at"
   ],
-  "additionalProperties": true,
+  "additionalProperties": false,
   "definitions": {}
 }

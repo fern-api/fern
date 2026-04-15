@@ -116,8 +116,11 @@
                     "typeReference": {
                         "type": "optional",
                         "value": {
-                            "type": "primitive",
-                            "value": "STRING"
+                            "type": "nullable",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
                         }
                     },
                     "propertyAccess": null,
@@ -204,22 +207,22 @@
                 "type": "inlined",
                 "declaration": {
                     "name": {
-                        "originalName": "CreateContactRequest",
+                        "originalName": "ContactsCreateRequest",
                         "camelCase": {
-                            "unsafeName": "createContactRequest",
-                            "safeName": "createContactRequest"
+                            "unsafeName": "contactsCreateRequest",
+                            "safeName": "contactsCreateRequest"
                         },
                         "snakeCase": {
-                            "unsafeName": "create_contact_request",
-                            "safeName": "create_contact_request"
+                            "unsafeName": "contacts_create_request",
+                            "safeName": "contacts_create_request"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "CREATE_CONTACT_REQUEST",
-                            "safeName": "CREATE_CONTACT_REQUEST"
+                            "unsafeName": "CONTACTS_CREATE_REQUEST",
+                            "safeName": "CONTACTS_CREATE_REQUEST"
                         },
                         "pascalCase": {
-                            "unsafeName": "CreateContactRequest",
-                            "safeName": "CreateContactRequest"
+                            "unsafeName": "ContactsCreateRequest",
+                            "safeName": "ContactsCreateRequest"
                         }
                     },
                     "fernFilepath": {
@@ -328,8 +331,11 @@
                             "typeReference": {
                                 "type": "optional",
                                 "value": {
-                                    "type": "primitive",
-                                    "value": "STRING"
+                                    "type": "nullable",
+                                    "value": {
+                                        "type": "primitive",
+                                        "value": "STRING"
+                                    }
                                 }
                             },
                             "propertyAccess": null,
@@ -421,22 +427,22 @@
                 "type": "inlined",
                 "declaration": {
                     "name": {
-                        "originalName": "GetContactsRequest",
+                        "originalName": "ContactsGetRequest",
                         "camelCase": {
-                            "unsafeName": "getContactsRequest",
-                            "safeName": "getContactsRequest"
+                            "unsafeName": "contactsGetRequest",
+                            "safeName": "contactsGetRequest"
                         },
                         "snakeCase": {
-                            "unsafeName": "get_contacts_request",
-                            "safeName": "get_contacts_request"
+                            "unsafeName": "contacts_get_request",
+                            "safeName": "contacts_get_request"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "GET_CONTACTS_REQUEST",
-                            "safeName": "GET_CONTACTS_REQUEST"
+                            "unsafeName": "CONTACTS_GET_REQUEST",
+                            "safeName": "CONTACTS_GET_REQUEST"
                         },
                         "pascalCase": {
-                            "unsafeName": "GetContactsRequest",
-                            "safeName": "GetContactsRequest"
+                            "unsafeName": "ContactsGetRequest",
+                            "safeName": "ContactsGetRequest"
                         }
                     },
                     "fernFilepath": {

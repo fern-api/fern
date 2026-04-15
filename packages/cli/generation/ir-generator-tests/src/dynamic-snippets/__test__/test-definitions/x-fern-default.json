@@ -56,8 +56,11 @@
                     "typeReference": {
                         "type": "optional",
                         "value": {
-                            "type": "primitive",
-                            "value": "STRING"
+                            "type": "nullable",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
                         }
                     },
                     "propertyAccess": null,
@@ -68,47 +71,13 @@
             "additionalProperties": false
         }
     },
-    "headers": [
-        {
-            "name": {
-                "wireValue": "X-API-Version",
-                "name": {
-                    "originalName": "api_version",
-                    "camelCase": {
-                        "unsafeName": "apiVersion",
-                        "safeName": "apiVersion"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "api_version",
-                        "safeName": "api_version"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "API_VERSION",
-                        "safeName": "API_VERSION"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "APIVersion",
-                        "safeName": "APIVersion"
-                    }
-                }
-            },
-            "typeReference": {
-                "type": "optional",
-                "value": {
-                    "type": "primitive",
-                    "value": "STRING"
-                }
-            },
-            "propertyAccess": null,
-            "variable": null
-        }
-    ],
+    "headers": [],
     "endpoints": {
-        "endpoint_.test_get": {
+        "endpoint_.testGet": {
             "auth": null,
             "declaration": {
                 "name": {
-                    "originalName": "test_get",
+                    "originalName": "testGet",
                     "camelCase": {
                         "unsafeName": "testGet",
                         "safeName": "testGet"
@@ -127,9 +96,47 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        {
+                            "originalName": "",
+                            "camelCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "snakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "pascalCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            }
+                        }
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": {
+                        "originalName": "",
+                        "camelCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        },
+                        "snakeCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        },
+                        "pascalCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        }
+                    }
                 }
             },
             "location": {
@@ -159,9 +166,47 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [],
+                        "allParts": [
+                            {
+                                "originalName": "",
+                                "camelCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                }
+                            }
+                        ],
                         "packagePath": [],
-                        "file": null
+                        "file": {
+                            "originalName": "",
+                            "camelCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "snakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "pascalCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            }
+                        }
                     }
                 },
                 "pathParameters": [
@@ -223,8 +268,11 @@
                         "typeReference": {
                             "type": "optional",
                             "value": {
-                                "type": "primitive",
-                                "value": "STRING"
+                                "type": "nullable",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                }
                             }
                         },
                         "propertyAccess": null,

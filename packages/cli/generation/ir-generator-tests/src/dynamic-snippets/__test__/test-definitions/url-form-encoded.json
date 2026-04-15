@@ -56,8 +56,11 @@
                     "typeReference": {
                         "type": "optional",
                         "value": {
-                            "type": "primitive",
-                            "value": "STRING"
+                            "type": "nullable",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
                         }
                     },
                     "propertyAccess": null,
@@ -89,102 +92,12 @@
                     "typeReference": {
                         "type": "optional",
                         "value": {
-                            "type": "primitive",
-                            "value": "STRING"
-                        }
-                    },
-                    "propertyAccess": null,
-                    "variable": null
-                }
-            ],
-            "extends": null,
-            "additionalProperties": false
-        },
-        "type_:TokenRequest": {
-            "type": "object",
-            "declaration": {
-                "name": {
-                    "originalName": "TokenRequest",
-                    "camelCase": {
-                        "unsafeName": "tokenRequest",
-                        "safeName": "tokenRequest"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "token_request",
-                        "safeName": "token_request"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "TOKEN_REQUEST",
-                        "safeName": "TOKEN_REQUEST"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "TokenRequest",
-                        "safeName": "TokenRequest"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": [],
-                    "file": null
-                }
-            },
-            "properties": [
-                {
-                    "name": {
-                        "wireValue": "client_id",
-                        "name": {
-                            "originalName": "client_id",
-                            "camelCase": {
-                                "unsafeName": "clientID",
-                                "safeName": "clientID"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "client_id",
-                                "safeName": "client_id"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "CLIENT_ID",
-                                "safeName": "CLIENT_ID"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "ClientID",
-                                "safeName": "ClientID"
+                            "type": "nullable",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
                             }
                         }
-                    },
-                    "typeReference": {
-                        "type": "primitive",
-                        "value": "STRING"
-                    },
-                    "propertyAccess": null,
-                    "variable": null
-                },
-                {
-                    "name": {
-                        "wireValue": "client_secret",
-                        "name": {
-                            "originalName": "client_secret",
-                            "camelCase": {
-                                "unsafeName": "clientSecret",
-                                "safeName": "clientSecret"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "client_secret",
-                                "safeName": "client_secret"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "CLIENT_SECRET",
-                                "safeName": "CLIENT_SECRET"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "ClientSecret",
-                                "safeName": "ClientSecret"
-                            }
-                        }
-                    },
-                    "typeReference": {
-                        "type": "primitive",
-                        "value": "STRING"
                     },
                     "propertyAccess": null,
                     "variable": null
@@ -248,8 +161,11 @@
                     "typeReference": {
                         "type": "optional",
                         "value": {
-                            "type": "primitive",
-                            "value": "STRING"
+                            "type": "nullable",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
                         }
                     },
                     "propertyAccess": null,
@@ -281,8 +197,11 @@
                     "typeReference": {
                         "type": "optional",
                         "value": {
-                            "type": "primitive",
-                            "value": "INTEGER"
+                            "type": "nullable",
+                            "value": {
+                                "type": "primitive",
+                                "value": "INTEGER"
+                            }
                         }
                     },
                     "propertyAccess": null,
@@ -318,9 +237,47 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        {
+                            "originalName": "",
+                            "camelCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "snakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "pascalCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            }
+                        }
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": {
+                        "originalName": "",
+                        "camelCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        },
+                        "snakeCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        },
+                        "pascalCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        }
+                    }
                 }
             },
             "location": {
@@ -331,28 +288,66 @@
                 "type": "inlined",
                 "declaration": {
                     "name": {
-                        "originalName": "PostSubmitRequest",
+                        "originalName": "SubmitFormDataRequest",
                         "camelCase": {
-                            "unsafeName": "postSubmitRequest",
-                            "safeName": "postSubmitRequest"
+                            "unsafeName": "submitFormDataRequest",
+                            "safeName": "submitFormDataRequest"
                         },
                         "snakeCase": {
-                            "unsafeName": "post_submit_request",
-                            "safeName": "post_submit_request"
+                            "unsafeName": "submit_form_data_request",
+                            "safeName": "submit_form_data_request"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "POST_SUBMIT_REQUEST",
-                            "safeName": "POST_SUBMIT_REQUEST"
+                            "unsafeName": "SUBMIT_FORM_DATA_REQUEST",
+                            "safeName": "SUBMIT_FORM_DATA_REQUEST"
                         },
                         "pascalCase": {
-                            "unsafeName": "PostSubmitRequest",
-                            "safeName": "PostSubmitRequest"
+                            "unsafeName": "SubmitFormDataRequest",
+                            "safeName": "SubmitFormDataRequest"
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [],
+                        "allParts": [
+                            {
+                                "originalName": "",
+                                "camelCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                }
+                            }
+                        ],
                         "packagePath": [],
-                        "file": null
+                        "file": {
+                            "originalName": "",
+                            "camelCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "snakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "pascalCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            }
+                        }
                     }
                 },
                 "pathParameters": [],
@@ -433,11 +428,11 @@
             },
             "examples": null
         },
-        "endpoint_.get_token": {
+        "endpoint_.getToken": {
             "auth": null,
             "declaration": {
                 "name": {
-                    "originalName": "get_token",
+                    "originalName": "getToken",
                     "camelCase": {
                         "unsafeName": "getToken",
                         "safeName": "getToken"
@@ -456,9 +451,47 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        {
+                            "originalName": "",
+                            "camelCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "snakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "pascalCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            }
+                        }
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": {
+                        "originalName": "",
+                        "camelCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        },
+                        "snakeCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        },
+                        "pascalCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        }
+                    }
                 }
             },
             "location": {
@@ -466,14 +499,142 @@
                 "path": "/token"
             },
             "request": {
-                "type": "body",
-                "pathParameters": [],
-                "body": {
-                    "type": "typeReference",
-                    "value": {
-                        "type": "named",
-                        "value": "type_:TokenRequest"
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "TokenRequest",
+                        "camelCase": {
+                            "unsafeName": "tokenRequest",
+                            "safeName": "tokenRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "token_request",
+                            "safeName": "token_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "TOKEN_REQUEST",
+                            "safeName": "TOKEN_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "TokenRequest",
+                            "safeName": "TokenRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "",
+                                "camelCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "",
+                            "camelCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "snakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "pascalCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            }
+                        }
                     }
+                },
+                "pathParameters": [],
+                "queryParameters": [],
+                "headers": [],
+                "body": {
+                    "type": "properties",
+                    "value": [
+                        {
+                            "name": {
+                                "wireValue": "client_id",
+                                "name": {
+                                    "originalName": "client_id",
+                                    "camelCase": {
+                                        "unsafeName": "clientID",
+                                        "safeName": "clientID"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "client_id",
+                                        "safeName": "client_id"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "CLIENT_ID",
+                                        "safeName": "CLIENT_ID"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "ClientID",
+                                        "safeName": "ClientID"
+                                    }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        },
+                        {
+                            "name": {
+                                "wireValue": "client_secret",
+                                "name": {
+                                    "originalName": "client_secret",
+                                    "camelCase": {
+                                        "unsafeName": "clientSecret",
+                                        "safeName": "clientSecret"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "client_secret",
+                                        "safeName": "client_secret"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "CLIENT_SECRET",
+                                        "safeName": "CLIENT_SECRET"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "ClientSecret",
+                                        "safeName": "ClientSecret"
+                                    }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        }
+                    ]
+                },
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
                 }
             },
             "response": {

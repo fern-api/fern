@@ -56,8 +56,11 @@
                     "typeReference": {
                         "type": "optional",
                         "value": {
-                            "type": "primitive",
-                            "value": "STRING"
+                            "type": "nullable",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
                         }
                     },
                     "propertyAccess": null,
@@ -89,8 +92,11 @@
                     "typeReference": {
                         "type": "optional",
                         "value": {
-                            "type": "primitive",
-                            "value": "STRING"
+                            "type": "nullable",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
                         }
                     },
                     "propertyAccess": null,
@@ -122,8 +128,11 @@
                     "typeReference": {
                         "type": "optional",
                         "value": {
-                            "type": "primitive",
-                            "value": "INTEGER"
+                            "type": "nullable",
+                            "value": {
+                                "type": "primitive",
+                                "value": "INTEGER"
+                            }
                         }
                     },
                     "propertyAccess": null,
@@ -188,8 +197,11 @@
                     "typeReference": {
                         "type": "optional",
                         "value": {
-                            "type": "primitive",
-                            "value": "BOOLEAN"
+                            "type": "nullable",
+                            "value": {
+                                "type": "primitive",
+                                "value": "BOOLEAN"
+                            }
                         }
                     },
                     "propertyAccess": null,
@@ -225,9 +237,47 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        {
+                            "originalName": "",
+                            "camelCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "snakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "pascalCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            }
+                        }
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": {
+                        "originalName": "",
+                        "camelCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        },
+                        "snakeCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        },
+                        "pascalCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        }
+                    }
                 }
             },
             "location": {
@@ -257,9 +307,47 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [],
+                        "allParts": [
+                            {
+                                "originalName": "",
+                                "camelCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                }
+                            }
+                        ],
                         "packagePath": [],
-                        "file": null
+                        "file": {
+                            "originalName": "",
+                            "camelCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "snakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "pascalCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            }
+                        }
                     }
                 },
                 "pathParameters": [
@@ -361,9 +449,47 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        {
+                            "originalName": "",
+                            "camelCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "snakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "pascalCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            }
+                        }
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": {
+                        "originalName": "",
+                        "camelCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        },
+                        "snakeCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        },
+                        "pascalCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        }
+                    }
                 }
             },
             "location": {
@@ -374,28 +500,66 @@
                 "type": "inlined",
                 "declaration": {
                     "name": {
-                        "originalName": "NonNullableObject",
+                        "originalName": "PostWithNonNullableNamedRequestBodyTypeRequest",
                         "camelCase": {
-                            "unsafeName": "nonNullableObject",
-                            "safeName": "nonNullableObject"
+                            "unsafeName": "postWithNonNullableNamedRequestBodyTypeRequest",
+                            "safeName": "postWithNonNullableNamedRequestBodyTypeRequest"
                         },
                         "snakeCase": {
-                            "unsafeName": "non_nullable_object",
-                            "safeName": "non_nullable_object"
+                            "unsafeName": "post_with_non_nullable_named_request_body_type_request",
+                            "safeName": "post_with_non_nullable_named_request_body_type_request"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "NON_NULLABLE_OBJECT",
-                            "safeName": "NON_NULLABLE_OBJECT"
+                            "unsafeName": "POST_WITH_NON_NULLABLE_NAMED_REQUEST_BODY_TYPE_REQUEST",
+                            "safeName": "POST_WITH_NON_NULLABLE_NAMED_REQUEST_BODY_TYPE_REQUEST"
                         },
                         "pascalCase": {
-                            "unsafeName": "NonNullableObject",
-                            "safeName": "NonNullableObject"
+                            "unsafeName": "PostWithNonNullableNamedRequestBodyTypeRequest",
+                            "safeName": "PostWithNonNullableNamedRequestBodyTypeRequest"
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [],
+                        "allParts": [
+                            {
+                                "originalName": "",
+                                "camelCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                }
+                            }
+                        ],
                         "packagePath": [],
-                        "file": null
+                        "file": {
+                            "originalName": "",
+                            "camelCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "snakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "pascalCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            }
+                        }
                     }
                 },
                 "pathParameters": [
@@ -439,30 +603,33 @@
                             "name": {
                                 "wireValue": "id",
                                 "name": {
-                                    "originalName": "nonNullableObjectId",
+                                    "originalName": "postWithNonNullableNamedRequestBodyTypeRequestId",
                                     "camelCase": {
-                                        "unsafeName": "nonNullableObjectID",
-                                        "safeName": "nonNullableObjectID"
+                                        "unsafeName": "postWithNonNullableNamedRequestBodyTypeRequestID",
+                                        "safeName": "postWithNonNullableNamedRequestBodyTypeRequestID"
                                     },
                                     "snakeCase": {
-                                        "unsafeName": "non_nullable_object_id",
-                                        "safeName": "non_nullable_object_id"
+                                        "unsafeName": "post_with_non_nullable_named_request_body_type_request_id",
+                                        "safeName": "post_with_non_nullable_named_request_body_type_request_id"
                                     },
                                     "screamingSnakeCase": {
-                                        "unsafeName": "NON_NULLABLE_OBJECT_ID",
-                                        "safeName": "NON_NULLABLE_OBJECT_ID"
+                                        "unsafeName": "POST_WITH_NON_NULLABLE_NAMED_REQUEST_BODY_TYPE_REQUEST_ID",
+                                        "safeName": "POST_WITH_NON_NULLABLE_NAMED_REQUEST_BODY_TYPE_REQUEST_ID"
                                     },
                                     "pascalCase": {
-                                        "unsafeName": "NonNullableObjectID",
-                                        "safeName": "NonNullableObjectID"
+                                        "unsafeName": "PostWithNonNullableNamedRequestBodyTypeRequestID",
+                                        "safeName": "PostWithNonNullableNamedRequestBodyTypeRequestID"
                                     }
                                 }
                             },
                             "typeReference": {
                                 "type": "optional",
                                 "value": {
-                                    "type": "primitive",
-                                    "value": "STRING"
+                                    "type": "nullable",
+                                    "value": {
+                                        "type": "primitive",
+                                        "value": "STRING"
+                                    }
                                 }
                             },
                             "propertyAccess": null,
@@ -494,8 +661,11 @@
                             "typeReference": {
                                 "type": "optional",
                                 "value": {
-                                    "type": "primitive",
-                                    "value": "STRING"
+                                    "type": "nullable",
+                                    "value": {
+                                        "type": "primitive",
+                                        "value": "STRING"
+                                    }
                                 }
                             },
                             "propertyAccess": null,
@@ -527,8 +697,11 @@
                             "typeReference": {
                                 "type": "optional",
                                 "value": {
-                                    "type": "primitive",
-                                    "value": "INTEGER"
+                                    "type": "nullable",
+                                    "value": {
+                                        "type": "primitive",
+                                        "value": "INTEGER"
+                                    }
                                 }
                             },
                             "propertyAccess": null,

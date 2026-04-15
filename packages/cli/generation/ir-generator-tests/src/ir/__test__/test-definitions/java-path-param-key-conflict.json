@@ -96,9 +96,11 @@
             "availability": null,
             "name": {
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        ""
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": ""
                 }
             },
             "displayName": null,
@@ -253,7 +255,7 @@
                     "headers": [],
                     "requestBody": {
                         "type": "inlinedRequestBody",
-                        "name": "ItemData",
+                        "name": "CreateItemRequest",
                         "extends": [],
                         "properties": [
                             {
@@ -289,7 +291,7 @@
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",
-                            "wrapperName": "ItemData",
+                            "wrapperName": "CreateItemRequest",
                             "bodyKey": "body",
                             "includePathParameters": true,
                             "onlyPathParameters": false
@@ -328,8 +330,8 @@
                     "userSpecifiedExamples": [
                         {
                             "example": {
-                                "id": "b7195595",
-                                "name": null,
+                                "id": "Example1",
+                                "name": "Example1",
                                 "url": "/key/value",
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [
@@ -796,9 +798,47 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [],
+                        "allParts": [
+                            {
+                                "originalName": "",
+                                "camelCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                }
+                            }
+                        ],
                         "packagePath": [],
-                        "file": null
+                        "file": {
+                            "originalName": "",
+                            "camelCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "snakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "pascalCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            }
+                        }
                     }
                 },
                 "location": {
@@ -809,28 +849,66 @@
                     "type": "inlined",
                     "declaration": {
                         "name": {
-                            "originalName": "ItemData",
+                            "originalName": "CreateItemRequest",
                             "camelCase": {
-                                "unsafeName": "itemData",
-                                "safeName": "itemData"
+                                "unsafeName": "createItemRequest",
+                                "safeName": "createItemRequest"
                             },
                             "snakeCase": {
-                                "unsafeName": "item_data",
-                                "safeName": "item_data"
+                                "unsafeName": "create_item_request",
+                                "safeName": "create_item_request"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "ITEM_DATA",
-                                "safeName": "ITEM_DATA"
+                                "unsafeName": "CREATE_ITEM_REQUEST",
+                                "safeName": "CREATE_ITEM_REQUEST"
                             },
                             "pascalCase": {
-                                "unsafeName": "ItemData",
-                                "safeName": "ItemData"
+                                "unsafeName": "CreateItemRequest",
+                                "safeName": "CreateItemRequest"
                             }
                         },
                         "fernFilepath": {
-                            "allParts": [],
+                            "allParts": [
+                                {
+                                    "originalName": "",
+                                    "camelCase": {
+                                        "unsafeName": "",
+                                        "safeName": ""
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "",
+                                        "safeName": ""
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "",
+                                        "safeName": ""
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "",
+                                        "safeName": ""
+                                    }
+                                }
+                            ],
                             "packagePath": [],
-                            "file": null
+                            "file": {
+                                "originalName": "",
+                                "camelCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                }
+                            }
                         }
                     },
                     "pathParameters": [
@@ -956,7 +1034,28 @@
         "keywords": null,
         "smartCasing": true
     },
-    "subpackages": {},
+    "subpackages": {
+        "subpackage_": {
+            "name": "",
+            "displayName": null,
+            "fernFilepath": {
+                "allParts": [
+                    ""
+                ],
+                "packagePath": [],
+                "file": ""
+            },
+            "service": "service_",
+            "types": [],
+            "errors": [],
+            "subpackages": [],
+            "navigationConfig": null,
+            "webhooks": null,
+            "websocket": null,
+            "hasEndpointsInTree": true,
+            "docs": null
+        }
+    },
     "rootPackage": {
         "fernFilepath": {
             "allParts": [],
@@ -964,12 +1063,14 @@
             "file": null
         },
         "websocket": null,
-        "service": "service_",
+        "service": null,
         "types": [
             "type_:Item"
         ],
         "errors": [],
-        "subpackages": [],
+        "subpackages": [
+            "subpackage_"
+        ],
         "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": true,

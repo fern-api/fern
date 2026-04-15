@@ -36,13 +36,19 @@
                             "container": {
                                 "_type": "optional",
                                 "optional": {
-                                    "_type": "primitive",
-                                    "primitive": {
-                                        "v1": "STRING",
-                                        "v2": {
-                                            "type": "string",
-                                            "default": null,
-                                            "validation": null
+                                    "_type": "container",
+                                    "container": {
+                                        "_type": "nullable",
+                                        "nullable": {
+                                            "_type": "primitive",
+                                            "primitive": {
+                                                "v1": "STRING",
+                                                "v2": {
+                                                    "type": "string",
+                                                    "default": null,
+                                                    "validation": null
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -64,13 +70,19 @@
                             "container": {
                                 "_type": "optional",
                                 "optional": {
-                                    "_type": "primitive",
-                                    "primitive": {
-                                        "v1": "STRING",
-                                        "v2": {
-                                            "type": "string",
-                                            "default": null,
-                                            "validation": null
+                                    "_type": "container",
+                                    "container": {
+                                        "_type": "nullable",
+                                        "nullable": {
+                                            "_type": "primitive",
+                                            "primitive": {
+                                                "v1": "STRING",
+                                                "v2": {
+                                                    "type": "string",
+                                                    "default": null,
+                                                    "validation": null
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -160,19 +172,19 @@
             "v2Examples": null,
             "displayName": null,
             "headers": [],
-            "docs": "Validation Error"
+            "docs": "UnprocessableEntityError"
         }
     },
     "services": {
-        "service_testGroup": {
+        "service_testgroup": {
             "availability": null,
             "name": {
                 "fernFilepath": {
                     "allParts": [
-                        "testGroup"
+                        "testgroup"
                     ],
                     "packagePath": [],
-                    "file": "testGroup"
+                    "file": "testgroup"
                 }
             },
             "displayName": null,
@@ -191,8 +203,8 @@
             },
             "endpoints": [
                 {
-                    "id": "endpoint_testGroup.test_method_name",
-                    "name": "test_method_name",
+                    "id": "endpoint_testgroup.testMethodName",
+                    "name": "testMethodName",
                     "displayName": "Post Nullable Request Body",
                     "auth": false,
                     "security": null,
@@ -375,7 +387,7 @@
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",
-                            "wrapperName": "TestMethodNameTestGroupRequest",
+                            "wrapperName": "TestGroupTestMethodNameRequest",
                             "bodyKey": "body",
                             "includePathParameters": true,
                             "onlyPathParameters": false
@@ -417,8 +429,8 @@
                     "userSpecifiedExamples": [
                         {
                             "example": {
-                                "id": "2a5575e5",
-                                "name": null,
+                                "id": "Example1",
+                                "name": "Example1",
                                 "url": "/optional-request-body/path_param",
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [
@@ -581,7 +593,7 @@
                         },
                         {
                             "example": {
-                                "id": "3a8a570e",
+                                "id": "94ad89aa",
                                 "url": "/optional-request-body/path_param",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -656,13 +668,19 @@
                                                                     "type": "optional",
                                                                     "optional": null,
                                                                     "valueType": {
-                                                                        "_type": "primitive",
-                                                                        "primitive": {
-                                                                            "v1": "STRING",
-                                                                            "v2": {
-                                                                                "type": "string",
-                                                                                "default": null,
-                                                                                "validation": null
+                                                                        "_type": "container",
+                                                                        "container": {
+                                                                            "_type": "nullable",
+                                                                            "nullable": {
+                                                                                "_type": "primitive",
+                                                                                "primitive": {
+                                                                                    "v1": "STRING",
+                                                                                    "v2": {
+                                                                                        "type": "string",
+                                                                                        "default": null,
+                                                                                        "validation": null
+                                                                                    }
+                                                                                }
                                                                             }
                                                                         }
                                                                     }
@@ -690,13 +708,19 @@
                                                                     "type": "optional",
                                                                     "optional": null,
                                                                     "valueType": {
-                                                                        "_type": "primitive",
-                                                                        "primitive": {
-                                                                            "v1": "STRING",
-                                                                            "v2": {
-                                                                                "type": "string",
-                                                                                "default": null,
-                                                                                "validation": null
+                                                                        "_type": "container",
+                                                                        "container": {
+                                                                            "_type": "nullable",
+                                                                            "nullable": {
+                                                                                "_type": "primitive",
+                                                                                "primitive": {
+                                                                                    "v1": "STRING",
+                                                                                    "v2": {
+                                                                                        "type": "string",
+                                                                                        "default": null,
+                                                                                        "validation": null
+                                                                                    }
+                                                                                }
                                                                             }
                                                                         }
                                                                     }
@@ -762,7 +786,7 @@
     "variables": [],
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
-            "service_testGroup": [
+            "service_testgroup": [
                 "type_:PlainObject"
             ]
         },
@@ -831,8 +855,11 @@
                         "typeReference": {
                             "type": "optional",
                             "value": {
-                                "type": "primitive",
-                                "value": "STRING"
+                                "type": "nullable",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                }
                             }
                         },
                         "propertyAccess": null,
@@ -864,8 +891,11 @@
                         "typeReference": {
                             "type": "optional",
                             "value": {
-                                "type": "primitive",
-                                "value": "STRING"
+                                "type": "nullable",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                }
                             }
                         },
                         "propertyAccess": null,
@@ -878,11 +908,11 @@
         },
         "headers": [],
         "endpoints": {
-            "endpoint_testGroup.test_method_name": {
+            "endpoint_testgroup.testMethodName": {
                 "auth": null,
                 "declaration": {
                     "name": {
-                        "originalName": "test_method_name",
+                        "originalName": "testMethodName",
                         "camelCase": {
                             "unsafeName": "testMethodName",
                             "safeName": "testMethodName"
@@ -903,43 +933,43 @@
                     "fernFilepath": {
                         "allParts": [
                             {
-                                "originalName": "testGroup",
+                                "originalName": "testgroup",
                                 "camelCase": {
-                                    "unsafeName": "testGroup",
-                                    "safeName": "testGroup"
+                                    "unsafeName": "testgroup",
+                                    "safeName": "testgroup"
                                 },
                                 "snakeCase": {
-                                    "unsafeName": "test_group",
-                                    "safeName": "test_group"
+                                    "unsafeName": "testgroup",
+                                    "safeName": "testgroup"
                                 },
                                 "screamingSnakeCase": {
-                                    "unsafeName": "TEST_GROUP",
-                                    "safeName": "TEST_GROUP"
+                                    "unsafeName": "TESTGROUP",
+                                    "safeName": "TESTGROUP"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "TestGroup",
-                                    "safeName": "TestGroup"
+                                    "unsafeName": "Testgroup",
+                                    "safeName": "Testgroup"
                                 }
                             }
                         ],
                         "packagePath": [],
                         "file": {
-                            "originalName": "testGroup",
+                            "originalName": "testgroup",
                             "camelCase": {
-                                "unsafeName": "testGroup",
-                                "safeName": "testGroup"
+                                "unsafeName": "testgroup",
+                                "safeName": "testgroup"
                             },
                             "snakeCase": {
-                                "unsafeName": "test_group",
-                                "safeName": "test_group"
+                                "unsafeName": "testgroup",
+                                "safeName": "testgroup"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "TEST_GROUP",
-                                "safeName": "TEST_GROUP"
+                                "unsafeName": "TESTGROUP",
+                                "safeName": "TESTGROUP"
                             },
                             "pascalCase": {
-                                "unsafeName": "TestGroup",
-                                "safeName": "TestGroup"
+                                "unsafeName": "Testgroup",
+                                "safeName": "Testgroup"
                             }
                         }
                     }
@@ -952,64 +982,64 @@
                     "type": "inlined",
                     "declaration": {
                         "name": {
-                            "originalName": "TestMethodNameTestGroupRequest",
+                            "originalName": "TestGroupTestMethodNameRequest",
                             "camelCase": {
-                                "unsafeName": "testMethodNameTestGroupRequest",
-                                "safeName": "testMethodNameTestGroupRequest"
+                                "unsafeName": "testGroupTestMethodNameRequest",
+                                "safeName": "testGroupTestMethodNameRequest"
                             },
                             "snakeCase": {
-                                "unsafeName": "test_method_name_test_group_request",
-                                "safeName": "test_method_name_test_group_request"
+                                "unsafeName": "test_group_test_method_name_request",
+                                "safeName": "test_group_test_method_name_request"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "TEST_METHOD_NAME_TEST_GROUP_REQUEST",
-                                "safeName": "TEST_METHOD_NAME_TEST_GROUP_REQUEST"
+                                "unsafeName": "TEST_GROUP_TEST_METHOD_NAME_REQUEST",
+                                "safeName": "TEST_GROUP_TEST_METHOD_NAME_REQUEST"
                             },
                             "pascalCase": {
-                                "unsafeName": "TestMethodNameTestGroupRequest",
-                                "safeName": "TestMethodNameTestGroupRequest"
+                                "unsafeName": "TestGroupTestMethodNameRequest",
+                                "safeName": "TestGroupTestMethodNameRequest"
                             }
                         },
                         "fernFilepath": {
                             "allParts": [
                                 {
-                                    "originalName": "testGroup",
+                                    "originalName": "testgroup",
                                     "camelCase": {
-                                        "unsafeName": "testGroup",
-                                        "safeName": "testGroup"
+                                        "unsafeName": "testgroup",
+                                        "safeName": "testgroup"
                                     },
                                     "snakeCase": {
-                                        "unsafeName": "test_group",
-                                        "safeName": "test_group"
+                                        "unsafeName": "testgroup",
+                                        "safeName": "testgroup"
                                     },
                                     "screamingSnakeCase": {
-                                        "unsafeName": "TEST_GROUP",
-                                        "safeName": "TEST_GROUP"
+                                        "unsafeName": "TESTGROUP",
+                                        "safeName": "TESTGROUP"
                                     },
                                     "pascalCase": {
-                                        "unsafeName": "TestGroup",
-                                        "safeName": "TestGroup"
+                                        "unsafeName": "Testgroup",
+                                        "safeName": "Testgroup"
                                     }
                                 }
                             ],
                             "packagePath": [],
                             "file": {
-                                "originalName": "testGroup",
+                                "originalName": "testgroup",
                                 "camelCase": {
-                                    "unsafeName": "testGroup",
-                                    "safeName": "testGroup"
+                                    "unsafeName": "testgroup",
+                                    "safeName": "testgroup"
                                 },
                                 "snakeCase": {
-                                    "unsafeName": "test_group",
-                                    "safeName": "test_group"
+                                    "unsafeName": "testgroup",
+                                    "safeName": "testgroup"
                                 },
                                 "screamingSnakeCase": {
-                                    "unsafeName": "TEST_GROUP",
-                                    "safeName": "TEST_GROUP"
+                                    "unsafeName": "TESTGROUP",
+                                    "safeName": "TESTGROUP"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "TestGroup",
-                                    "safeName": "TestGroup"
+                                    "unsafeName": "Testgroup",
+                                    "safeName": "Testgroup"
                                 }
                             }
                         }
@@ -1178,17 +1208,17 @@
         "smartCasing": true
     },
     "subpackages": {
-        "subpackage_testGroup": {
-            "name": "testGroup",
+        "subpackage_testgroup": {
+            "name": "testgroup",
             "displayName": null,
             "fernFilepath": {
                 "allParts": [
-                    "testGroup"
+                    "testgroup"
                 ],
                 "packagePath": [],
-                "file": "testGroup"
+                "file": "testgroup"
             },
-            "service": "service_testGroup",
+            "service": "service_testgroup",
             "types": [],
             "errors": [],
             "subpackages": [],
@@ -1214,7 +1244,7 @@
             "error_:UnprocessableEntityError"
         ],
         "subpackages": [
-            "subpackage_testGroup"
+            "subpackage_testgroup"
         ],
         "webhooks": null,
         "navigationConfig": null,

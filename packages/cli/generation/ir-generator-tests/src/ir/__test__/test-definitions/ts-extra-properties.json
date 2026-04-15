@@ -98,10 +98,16 @@
                             "container": {
                                 "_type": "optional",
                                 "optional": {
-                                    "_type": "primitive",
-                                    "primitive": {
-                                        "v1": "DATE_TIME",
-                                        "v2": null
+                                    "_type": "container",
+                                    "container": {
+                                        "_type": "nullable",
+                                        "nullable": {
+                                            "_type": "primitive",
+                                            "primitive": {
+                                                "v1": "DATE_TIME",
+                                                "v2": null
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -116,7 +122,7 @@
                         "docs": null
                     }
                 ],
-                "extra-properties": true,
+                "extra-properties": false,
                 "extendedProperties": []
             },
             "referencedTypes": [],
@@ -138,9 +144,11 @@
             "availability": null,
             "name": {
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        ""
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": ""
                 }
             },
             "displayName": null,
@@ -215,8 +223,8 @@
                     "userSpecifiedExamples": [
                         {
                             "example": {
-                                "id": "515a339f",
-                                "name": null,
+                                "id": "Example1",
+                                "name": "Example1",
                                 "url": "/user",
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [],
@@ -331,20 +339,42 @@
                                                                         "type": "optional",
                                                                         "optional": {
                                                                             "shape": {
-                                                                                "type": "primitive",
-                                                                                "primitive": {
-                                                                                    "type": "datetime",
-                                                                                    "datetime": "2024-01-15T09:30:00.000Z",
-                                                                                    "raw": "2024-01-15T09:30:00Z"
+                                                                                "type": "container",
+                                                                                "container": {
+                                                                                    "type": "nullable",
+                                                                                    "nullable": {
+                                                                                        "shape": {
+                                                                                            "type": "primitive",
+                                                                                            "primitive": {
+                                                                                                "type": "datetime",
+                                                                                                "datetime": "2024-01-15T09:30:00.000Z",
+                                                                                                "raw": "2024-01-15T09:30:00Z"
+                                                                                            }
+                                                                                        },
+                                                                                        "jsonExample": "2024-01-15T09:30:00Z"
+                                                                                    },
+                                                                                    "valueType": {
+                                                                                        "_type": "primitive",
+                                                                                        "primitive": {
+                                                                                            "v1": "DATE_TIME",
+                                                                                            "v2": null
+                                                                                        }
+                                                                                    }
                                                                                 }
                                                                             },
                                                                             "jsonExample": "2024-01-15T09:30:00Z"
                                                                         },
                                                                         "valueType": {
-                                                                            "_type": "primitive",
-                                                                            "primitive": {
-                                                                                "v1": "DATE_TIME",
-                                                                                "v2": null
+                                                                            "_type": "container",
+                                                                            "container": {
+                                                                                "_type": "nullable",
+                                                                                "nullable": {
+                                                                                    "_type": "primitive",
+                                                                                    "primitive": {
+                                                                                        "v1": "DATE_TIME",
+                                                                                        "v2": null
+                                                                                    }
+                                                                                }
                                                                             }
                                                                         }
                                                                     }
@@ -384,7 +414,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "4dc401f",
+                                "id": "9f57fb32",
                                 "url": "/user",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -500,20 +530,42 @@
                                                                         "type": "optional",
                                                                         "optional": {
                                                                             "shape": {
-                                                                                "type": "primitive",
-                                                                                "primitive": {
-                                                                                    "type": "datetime",
-                                                                                    "datetime": "2024-01-15T09:30:00.000Z",
-                                                                                    "raw": "2024-01-15T09:30:00Z"
+                                                                                "type": "container",
+                                                                                "container": {
+                                                                                    "type": "nullable",
+                                                                                    "nullable": {
+                                                                                        "shape": {
+                                                                                            "type": "primitive",
+                                                                                            "primitive": {
+                                                                                                "type": "datetime",
+                                                                                                "datetime": "2024-01-15T09:30:00.000Z",
+                                                                                                "raw": "2024-01-15T09:30:00Z"
+                                                                                            }
+                                                                                        },
+                                                                                        "jsonExample": "2024-01-15T09:30:00Z"
+                                                                                    },
+                                                                                    "valueType": {
+                                                                                        "_type": "primitive",
+                                                                                        "primitive": {
+                                                                                            "v1": "DATE_TIME",
+                                                                                            "v2": null
+                                                                                        }
+                                                                                    }
                                                                                 }
                                                                             },
                                                                             "jsonExample": "2024-01-15T09:30:00Z"
                                                                         },
                                                                         "valueType": {
-                                                                            "_type": "primitive",
-                                                                            "primitive": {
-                                                                                "v1": "DATE_TIME",
-                                                                                "v2": null
+                                                                            "_type": "container",
+                                                                            "container": {
+                                                                                "_type": "nullable",
+                                                                                "nullable": {
+                                                                                    "_type": "primitive",
+                                                                                    "primitive": {
+                                                                                        "v1": "DATE_TIME",
+                                                                                        "v2": null
+                                                                                    }
+                                                                                }
                                                                             }
                                                                         }
                                                                     }
@@ -619,20 +671,26 @@
                                         "optional": {
                                             "_type": "container",
                                             "container": {
-                                                "_type": "map",
-                                                "keyType": {
-                                                    "_type": "primitive",
-                                                    "primitive": {
-                                                        "v1": "STRING",
-                                                        "v2": {
-                                                            "type": "string",
-                                                            "default": null,
-                                                            "validation": null
+                                                "_type": "nullable",
+                                                "nullable": {
+                                                    "_type": "container",
+                                                    "container": {
+                                                        "_type": "map",
+                                                        "keyType": {
+                                                            "_type": "primitive",
+                                                            "primitive": {
+                                                                "v1": "STRING",
+                                                                "v2": {
+                                                                    "type": "string",
+                                                                    "default": null,
+                                                                    "validation": null
+                                                                }
+                                                            }
+                                                        },
+                                                        "valueType": {
+                                                            "_type": "unknown"
                                                         }
                                                     }
-                                                },
-                                                "valueType": {
-                                                    "_type": "unknown"
                                                 }
                                             }
                                         }
@@ -697,8 +755,8 @@
                     "userSpecifiedExamples": [
                         {
                             "example": {
-                                "id": "ec78a12e",
-                                "name": null,
+                                "id": "Example1",
+                                "name": "Example1",
                                 "url": "/user",
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [],
@@ -837,20 +895,42 @@
                                                                         "type": "optional",
                                                                         "optional": {
                                                                             "shape": {
-                                                                                "type": "primitive",
-                                                                                "primitive": {
-                                                                                    "type": "datetime",
-                                                                                    "datetime": "2024-01-15T09:30:00.000Z",
-                                                                                    "raw": "2024-01-15T09:30:00Z"
+                                                                                "type": "container",
+                                                                                "container": {
+                                                                                    "type": "nullable",
+                                                                                    "nullable": {
+                                                                                        "shape": {
+                                                                                            "type": "primitive",
+                                                                                            "primitive": {
+                                                                                                "type": "datetime",
+                                                                                                "datetime": "2024-01-15T09:30:00.000Z",
+                                                                                                "raw": "2024-01-15T09:30:00Z"
+                                                                                            }
+                                                                                        },
+                                                                                        "jsonExample": "2024-01-15T09:30:00Z"
+                                                                                    },
+                                                                                    "valueType": {
+                                                                                        "_type": "primitive",
+                                                                                        "primitive": {
+                                                                                            "v1": "DATE_TIME",
+                                                                                            "v2": null
+                                                                                        }
+                                                                                    }
                                                                                 }
                                                                             },
                                                                             "jsonExample": "2024-01-15T09:30:00Z"
                                                                         },
                                                                         "valueType": {
-                                                                            "_type": "primitive",
-                                                                            "primitive": {
-                                                                                "v1": "DATE_TIME",
-                                                                                "v2": null
+                                                                            "_type": "container",
+                                                                            "container": {
+                                                                                "_type": "nullable",
+                                                                                "nullable": {
+                                                                                    "_type": "primitive",
+                                                                                    "primitive": {
+                                                                                        "v1": "DATE_TIME",
+                                                                                        "v2": null
+                                                                                    }
+                                                                                }
                                                                             }
                                                                         }
                                                                     }
@@ -890,7 +970,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "71855db5",
+                                "id": "f34a236a",
                                 "url": "/user",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -930,20 +1010,26 @@
                                                         "valueType": {
                                                             "_type": "container",
                                                             "container": {
-                                                                "_type": "map",
-                                                                "keyType": {
-                                                                    "_type": "primitive",
-                                                                    "primitive": {
-                                                                        "v1": "STRING",
-                                                                        "v2": {
-                                                                            "type": "string",
-                                                                            "default": null,
-                                                                            "validation": null
+                                                                "_type": "nullable",
+                                                                "nullable": {
+                                                                    "_type": "container",
+                                                                    "container": {
+                                                                        "_type": "map",
+                                                                        "keyType": {
+                                                                            "_type": "primitive",
+                                                                            "primitive": {
+                                                                                "v1": "STRING",
+                                                                                "v2": {
+                                                                                    "type": "string",
+                                                                                    "default": null,
+                                                                                    "validation": null
+                                                                                }
+                                                                            }
+                                                                        },
+                                                                        "valueType": {
+                                                                            "_type": "unknown"
                                                                         }
                                                                     }
-                                                                },
-                                                                "valueType": {
-                                                                    "_type": "unknown"
                                                                 }
                                                             }
                                                         }
@@ -1063,20 +1149,42 @@
                                                                         "type": "optional",
                                                                         "optional": {
                                                                             "shape": {
-                                                                                "type": "primitive",
-                                                                                "primitive": {
-                                                                                    "type": "datetime",
-                                                                                    "datetime": "2024-01-15T09:30:00.000Z",
-                                                                                    "raw": "2024-01-15T09:30:00Z"
+                                                                                "type": "container",
+                                                                                "container": {
+                                                                                    "type": "nullable",
+                                                                                    "nullable": {
+                                                                                        "shape": {
+                                                                                            "type": "primitive",
+                                                                                            "primitive": {
+                                                                                                "type": "datetime",
+                                                                                                "datetime": "2024-01-15T09:30:00.000Z",
+                                                                                                "raw": "2024-01-15T09:30:00Z"
+                                                                                            }
+                                                                                        },
+                                                                                        "jsonExample": "2024-01-15T09:30:00Z"
+                                                                                    },
+                                                                                    "valueType": {
+                                                                                        "_type": "primitive",
+                                                                                        "primitive": {
+                                                                                            "v1": "DATE_TIME",
+                                                                                            "v2": null
+                                                                                        }
+                                                                                    }
                                                                                 }
                                                                             },
                                                                             "jsonExample": "2024-01-15T09:30:00Z"
                                                                         },
                                                                         "valueType": {
-                                                                            "_type": "primitive",
-                                                                            "primitive": {
-                                                                                "v1": "DATE_TIME",
-                                                                                "v2": null
+                                                                            "_type": "container",
+                                                                            "container": {
+                                                                                "_type": "nullable",
+                                                                                "nullable": {
+                                                                                    "_type": "primitive",
+                                                                                    "primitive": {
+                                                                                        "v1": "DATE_TIME",
+                                                                                        "v2": null
+                                                                                    }
+                                                                                }
                                                                             }
                                                                         }
                                                                     }
@@ -1298,8 +1406,11 @@
                         "typeReference": {
                             "type": "optional",
                             "value": {
-                                "type": "primitive",
-                                "value": "DATE_TIME"
+                                "type": "nullable",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "DATE_TIME"
+                                }
                             }
                         },
                         "propertyAccess": null,
@@ -1307,7 +1418,7 @@
                     }
                 ],
                 "extends": null,
-                "additionalProperties": true
+                "additionalProperties": false
             }
         },
         "headers": [],
@@ -1335,9 +1446,47 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [],
+                        "allParts": [
+                            {
+                                "originalName": "",
+                                "camelCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                }
+                            }
+                        ],
                         "packagePath": [],
-                        "file": null
+                        "file": {
+                            "originalName": "",
+                            "camelCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "snakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "pascalCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            }
+                        }
                     }
                 },
                 "location": {
@@ -1377,9 +1526,47 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [],
+                        "allParts": [
+                            {
+                                "originalName": "",
+                                "camelCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                }
+                            }
+                        ],
                         "packagePath": [],
-                        "file": null
+                        "file": {
+                            "originalName": "",
+                            "camelCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "snakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "pascalCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            }
+                        }
                     }
                 },
                 "location": {
@@ -1409,9 +1596,47 @@
                             }
                         },
                         "fernFilepath": {
-                            "allParts": [],
+                            "allParts": [
+                                {
+                                    "originalName": "",
+                                    "camelCase": {
+                                        "unsafeName": "",
+                                        "safeName": ""
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "",
+                                        "safeName": ""
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "",
+                                        "safeName": ""
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "",
+                                        "safeName": ""
+                                    }
+                                }
+                            ],
                             "packagePath": [],
-                            "file": null
+                            "file": {
+                                "originalName": "",
+                                "camelCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                }
+                            }
                         }
                     },
                     "pathParameters": [],
@@ -1476,13 +1701,16 @@
                                 "typeReference": {
                                     "type": "optional",
                                     "value": {
-                                        "type": "map",
-                                        "key": {
-                                            "type": "primitive",
-                                            "value": "STRING"
-                                        },
+                                        "type": "nullable",
                                         "value": {
-                                            "type": "unknown"
+                                            "type": "map",
+                                            "key": {
+                                                "type": "primitive",
+                                                "value": "STRING"
+                                            },
+                                            "value": {
+                                                "type": "unknown"
+                                            }
                                         }
                                     }
                                 },
@@ -1515,7 +1743,28 @@
         "keywords": null,
         "smartCasing": true
     },
-    "subpackages": {},
+    "subpackages": {
+        "subpackage_": {
+            "name": "",
+            "displayName": null,
+            "fernFilepath": {
+                "allParts": [
+                    ""
+                ],
+                "packagePath": [],
+                "file": ""
+            },
+            "service": "service_",
+            "types": [],
+            "errors": [],
+            "subpackages": [],
+            "navigationConfig": null,
+            "webhooks": null,
+            "websocket": null,
+            "hasEndpointsInTree": true,
+            "docs": null
+        }
+    },
     "rootPackage": {
         "fernFilepath": {
             "allParts": [],
@@ -1523,12 +1772,14 @@
             "file": null
         },
         "websocket": null,
-        "service": "service_",
+        "service": null,
         "types": [
             "type_:User"
         ],
         "errors": [],
-        "subpackages": [],
+        "subpackages": [
+            "subpackage_"
+        ],
         "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": true,
