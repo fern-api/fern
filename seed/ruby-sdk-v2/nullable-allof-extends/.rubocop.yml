@@ -46,6 +46,7 @@ Layout/LineLength:
 
 Naming/VariableNumber:
   EnforcedStyle: normalcase
+  Severity: warning
 
 Style/Documentation:
   Enabled: false

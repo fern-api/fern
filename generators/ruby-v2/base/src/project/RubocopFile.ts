@@ -24,7 +24,8 @@ export class RubocopFile {
         }
 
         return `Naming/VariableNumber:
-  EnforcedStyle: ${style}`;
+  EnforcedStyle: ${style}
+  Severity: warning`;
     }
 
     public async toString(): Promise<string> {

@@ -1,0 +1,3 @@
+- summary: |
+    Add `Severity: warning` to `Naming/VariableNumber` in generated `.rubocop.yml` config.
+  type: chore
