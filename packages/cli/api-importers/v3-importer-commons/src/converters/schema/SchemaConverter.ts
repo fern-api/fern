@@ -210,6 +210,21 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                 const allOfResult = allOfConverter.convert();
 
                 if (allOfResult?.convertedSchema.typeDeclaration?.shape.type !== "object") {
+                    // Propagate outer schema metadata (description, deprecated, etc.)
+                    // that would otherwise be lost since allOfConverter got the child schema
+                    if (allOfResult != null) {
+                        const decl = allOfResult.convertedSchema.typeDeclaration;
+                        if (this.schema.description != null && decl.docs == null) {
+                            decl.docs = this.schema.description;
+                        }
+                        const outerAvailability = this.context.getAvailability({
+                            node: this.schema,
+                            breadcrumbs: this.breadcrumbs
+                        });
+                        if (outerAvailability != null && decl.availability == null) {
+                            decl.availability = outerAvailability;
+                        }
+                    }
                     return allOfResult;
                 }
             }

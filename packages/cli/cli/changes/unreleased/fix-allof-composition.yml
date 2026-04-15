@@ -6,6 +6,9 @@
     deduplicate merged allOf refs for diamond-shaped inheritance, guard
     variants-flattening and composition-keyword shortcuts against $ref-resolved
     schemas, preserve inline status through allOf merge path, handle nullable
-    enum patterns in allOf shortcuts, and detect cycles across recursive
-    single-element allOf chains.
+    enum patterns in allOf shortcuts, detect cycles across recursive
+    single-element allOf chains, filter unresolved $ref objects from nested allOf
+    flattening, recursively flatten deeply-nested allOf arrays, strip oneOf/anyOf
+    from child schemas during allOf merging, and propagate outer schema metadata
+    through single-element allOf paths.
   type: fix

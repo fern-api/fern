@@ -24,7 +24,7 @@ const MAX_OF_MINS_KEYS = ["minimum", "exclusiveMinimum", "minLength", "minItems"
 
 const MIN_OF_MAXS_KEYS = ["maximum", "exclusiveMaximum", "maxLength", "maxItems", "maxProperties"];
 
-const SKIP_FROM_CHILDREN = ["allOf"];
+const SKIP_FROM_CHILDREN = ["allOf", "oneOf", "anyOf"];
 
 export function mergeAllOfSchemas(
     outerSchema: OpenAPIV3_1.SchemaObject,
@@ -47,7 +47,12 @@ function flattenNestedAllOf(elements: OpenAPIV3_1.SchemaObject[]): OpenAPIV3_1.S
     for (const element of elements) {
         if (Array.isArray(element.allOf) && element.allOf.length > 0) {
             const { allOf, ...sibling } = element;
-            flat.push(...(allOf as OpenAPIV3_1.SchemaObject[]));
+            // Filter out ReferenceObjects — only include resolved SchemaObjects.
+            // Unresolved $ref entries would corrupt the merged result with a
+            // spurious top-level $ref key.
+            const schemaChildren = allOf.filter((child): child is OpenAPIV3_1.SchemaObject => !("$ref" in child));
+            // Recursively flatten in case extracted children also contain allOf
+            flat.push(...flattenNestedAllOf(schemaChildren));
             if (Object.keys(sibling).length > 0) {
                 flat.push(sibling as OpenAPIV3_1.SchemaObject);
             }

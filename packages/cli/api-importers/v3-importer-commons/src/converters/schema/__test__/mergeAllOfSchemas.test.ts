@@ -142,6 +142,65 @@ describe("mergeAllOfSchemas", () => {
             ]);
             expect(result.allOf).toBeUndefined();
         });
+
+        it("filters out $ref objects from nested allOf arrays", () => {
+            const result = mergeAllOfSchemas({} as Schema, [
+                {
+                    required: ["id"],
+                    properties: { id: { type: "string" } },
+                    allOf: [
+                        { $ref: "#/components/schemas/Base" } as unknown as Schema,
+                        { required: ["name"], properties: { name: { type: "string" } } }
+                    ]
+                } as Schema
+            ]);
+            // $ref should be filtered out, inline schema should be merged
+            expect(result.properties?.["id"]).toBeDefined();
+            expect(result.properties?.["name"]).toBeDefined();
+            expect(result.required).toEqual(expect.arrayContaining(["id", "name"]));
+            // No $ref key should leak onto the result
+            expect("$ref" in result).toBe(false);
+        });
+
+        it("recursively flattens doubly-nested allOf", () => {
+            const result = mergeAllOfSchemas({} as Schema, [
+                {
+                    allOf: [
+                        {
+                            properties: { a: { type: "string" } },
+                            allOf: [{ properties: { b: { type: "number" } } }]
+                        }
+                    ]
+                } as Schema
+            ]);
+            expect(result.properties?.["a"]).toBeDefined();
+            expect(result.properties?.["b"]).toBeDefined();
+            expect(result.allOf).toBeUndefined();
+        });
+    });
+
+    describe("composition keyword stripping", () => {
+        it("strips oneOf from child schemas so it does not leak into merged result", () => {
+            const result = mergeAllOfSchemas({} as Schema, [
+                {
+                    properties: { id: { type: "string" } },
+                    oneOf: [{ type: "string" }, { type: "integer" }]
+                } as Schema
+            ]);
+            expect(result.properties?.["id"]).toBeDefined();
+            expect(result.oneOf).toBeUndefined();
+        });
+
+        it("strips anyOf from child schemas", () => {
+            const result = mergeAllOfSchemas({} as Schema, [
+                {
+                    properties: { name: { type: "string" } },
+                    anyOf: [{ type: "string" }, { type: "null" }]
+                } as Schema
+            ]);
+            expect(result.properties?.["name"]).toBeDefined();
+            expect(result.anyOf).toBeUndefined();
+        });
     });
 
     describe("last-writer-wins fallback", () => {
