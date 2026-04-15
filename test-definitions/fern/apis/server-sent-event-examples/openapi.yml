@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
-  title: server-sent-event-examples
-  version: ''
+  title: server-sent-events
+  version: 0.0.0
 paths:
   /stream:
     post:
@@ -10,19 +10,17 @@ paths:
         - Completions
       parameters: []
       responses:
-        '200':
-          description: ''
-          content:
-            text/event-stream:
-              schema:
-                type: string
-                format: binary
+        '204':
+          description: No content
         '400':
-          description: ''
+          description: BadRequestError
           content:
             application/json:
               schema:
                 type: string
+              examples:
+                Bad request:
+                  value: bad request
       requestBody:
         required: true
         content:
@@ -32,8 +30,17 @@ paths:
               properties:
                 query:
                   type: string
+                  examples:
+                    - foo
               required:
                 - query
+            examples:
+              Stream completions:
+                value:
+                  query: foo
+              Bad request:
+                value:
+                  query: ''
   /stream-events:
     post:
       operationId: completions_streamEvents
@@ -41,19 +48,17 @@ paths:
         - Completions
       parameters: []
       responses:
-        '200':
-          description: ''
-          content:
-            text/event-stream:
-              schema:
-                type: string
-                format: binary
+        '204':
+          description: No content
         '400':
-          description: ''
+          description: BadRequestError
           content:
             application/json:
               schema:
                 type: string
+              examples:
+                Bad request:
+                  value: bad request
       requestBody:
         required: true
         content:
@@ -63,8 +68,17 @@ paths:
               properties:
                 query:
                   type: string
+                  examples:
+                    - query
               required:
                 - query
+            examples:
+              Stream events:
+                value:
+                  query: query
+              Bad request:
+                value:
+                  query: ''
   /stream-events-context-protocol:
     post:
       operationId: completions_streamEventsContextProtocol
@@ -72,19 +86,17 @@ paths:
         - Completions
       parameters: []
       responses:
-        '200':
-          description: ''
-          content:
-            text/event-stream:
-              schema:
-                type: string
-                format: binary
+        '204':
+          description: No content
         '400':
-          description: ''
+          description: BadRequestError
           content:
             application/json:
               schema:
                 type: string
+              examples:
+                Bad request context protocol:
+                  value: bad request
       requestBody:
         required: true
         content:
@@ -94,8 +106,17 @@ paths:
               properties:
                 query:
                   type: string
+                  examples:
+                    - query
               required:
                 - query
+            examples:
+              Stream events context protocol:
+                value:
+                  query: query
+              Bad request context protocol:
+                value:
+                  query: ''
 components:
   schemas:
     StreamedCompletion:
@@ -105,8 +126,9 @@ components:
         delta:
           type: string
         tokens:
-          type: integer
-          nullable: true
+          type:
+            - integer
+            - 'null'
       required:
         - delta
     CompletionEvent:
@@ -135,8 +157,9 @@ components:
         error:
           type: string
         code:
-          type: integer
-          nullable: true
+          type:
+            - integer
+            - 'null'
       required:
         - error
     StreamEventContextProtocol:
@@ -148,8 +171,7 @@ components:
               properties:
                 event:
                   type: string
-                  enum:
-                    - completion
+                  const: completion
             - $ref: '#/components/schemas/CompletionEvent'
           required:
             - event
@@ -159,8 +181,7 @@ components:
               properties:
                 event:
                   type: string
-                  enum:
-                    - error
+                  const: error
             - $ref: '#/components/schemas/ErrorEvent'
           required:
             - event
@@ -170,8 +191,7 @@ components:
               properties:
                 event:
                   type: string
-                  enum:
-                    - event
+                  const: event
             - $ref: '#/components/schemas/EventEvent'
           required:
             - event
@@ -184,8 +204,7 @@ components:
               properties:
                 event:
                   type: string
-                  enum:
-                    - completion
+                  const: completion
             - $ref: '#/components/schemas/CompletionEvent'
           required:
             - event
@@ -195,8 +214,7 @@ components:
               properties:
                 event:
                   type: string
-                  enum:
-                    - error
+                  const: error
             - $ref: '#/components/schemas/ErrorEvent'
           required:
             - event

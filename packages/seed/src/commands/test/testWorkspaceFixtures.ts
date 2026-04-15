@@ -5,10 +5,15 @@ import { difference } from "lodash-es";
 import path from "path";
 
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces.js";
+import {
+    LANGUAGE_AGNOSTIC_GENERATORS,
+    LANGUAGE_SPECIFIC_FIXTURE_PREFIXES
+} from "../list-test-fixtures/getAvailableFixtures.js";
+
+export { LANGUAGE_SPECIFIC_FIXTURE_PREFIXES };
+
 import { printTestCases } from "./printTestCases.js";
 import { TestRunner } from "./test-runner/index.js";
-
-export const LANGUAGE_SPECIFIC_FIXTURE_PREFIXES = ["csharp", "go", "java", "python", "ruby", "ts"];
 
 export const FIXTURES = readDirectories(
     path.join(__dirname, "../../../test-definitions", FERN_DIRECTORY, APIS_DIRECTORY)
@@ -44,7 +49,11 @@ export async function testGenerator({
         const config = generator.workspaceConfig.fixtures?.[fixtureName];
         const matchingPrefix = LANGUAGE_SPECIFIC_FIXTURE_PREFIXES.filter((prefix) => fixtureName.startsWith(prefix))[0];
 
-        if (matchingPrefix != null && !generator.workspaceName.startsWith(matchingPrefix)) {
+        if (
+            matchingPrefix != null &&
+            !generator.workspaceName.startsWith(matchingPrefix) &&
+            !LANGUAGE_AGNOSTIC_GENERATORS.has(generator.workspaceName)
+        ) {
             CONSOLE_LOGGER.debug(
                 `Skipping fixture ${fixtureName} for generator ${generator.workspaceName} because it was deemed specific to another language`
             );

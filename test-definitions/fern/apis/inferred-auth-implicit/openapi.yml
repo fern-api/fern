@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: inferred-auth-implicit
-  version: ''
+  version: 0.0.0
 paths:
   /token:
     post:
@@ -16,7 +16,7 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -39,8 +39,9 @@ paths:
                   type: string
                   const: client_credentials
                 scope:
-                  type: string
-                  nullable: true
+                  type:
+                    - string
+                    - 'null'
               required:
                 - client_id
                 - client_secret
@@ -59,7 +60,7 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -84,8 +85,9 @@ paths:
                   type: string
                   const: refresh_token
                 scope:
-                  type: string
-                  nullable: true
+                  type:
+                    - string
+                    - 'null'
               required:
                 - client_id
                 - client_secret
@@ -100,7 +102,7 @@ paths:
       parameters: []
       responses:
         '204':
-          description: ''
+          description: No content
   /nested/get-something:
     get:
       operationId: nested_api_getSomething
@@ -109,9 +111,9 @@ paths:
       parameters: []
       responses:
         '204':
-          description: ''
-      security: &ref_0
-        - InferredAuth: []
+          description: No content
+      security:
+        - InferredAuthScheme: []
   /get-something:
     get:
       operationId: simple_getSomething
@@ -120,8 +122,9 @@ paths:
       parameters: []
       responses:
         '204':
-          description: ''
-      security: *ref_0
+          description: No content
+      security:
+        - InferredAuthScheme: []
 components:
   schemas:
     TokenResponse:
@@ -134,9 +137,13 @@ components:
         expires_in:
           type: integer
         refresh_token:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
       required:
         - access_token
         - expires_in
-  securitySchemes: {}
+  securitySchemes:
+    InferredAuthScheme:
+      type: http
+      scheme: bearer

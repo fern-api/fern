@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: unions
-  version: ''
+  version: 0.0.0
 paths:
   /bigunion/{id}:
     get:
@@ -16,7 +16,7 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -29,7 +29,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -48,7 +48,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -76,7 +76,7 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -89,7 +89,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -111,8 +111,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - normalSweet
+                  const: normalSweet
             - $ref: '#/components/schemas/NormalSweet'
           required:
             - type
@@ -122,8 +121,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - thankfulFactor
+                  const: thankfulFactor
             - $ref: '#/components/schemas/ThankfulFactor'
           required:
             - type
@@ -133,8 +131,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - jumboEnd
+                  const: jumboEnd
             - $ref: '#/components/schemas/JumboEnd'
           required:
             - type
@@ -144,8 +141,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - hastyPain
+                  const: hastyPain
             - $ref: '#/components/schemas/HastyPain'
           required:
             - type
@@ -155,8 +151,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - mistySnow
+                  const: mistySnow
             - $ref: '#/components/schemas/MistySnow'
           required:
             - type
@@ -166,8 +161,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - distinctFailure
+                  const: distinctFailure
             - $ref: '#/components/schemas/DistinctFailure'
           required:
             - type
@@ -177,8 +171,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - practicalPrinciple
+                  const: practicalPrinciple
             - $ref: '#/components/schemas/PracticalPrinciple'
           required:
             - type
@@ -188,8 +181,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - limpingStep
+                  const: limpingStep
             - $ref: '#/components/schemas/LimpingStep'
           required:
             - type
@@ -199,8 +191,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - vibrantExcitement
+                  const: vibrantExcitement
             - $ref: '#/components/schemas/VibrantExcitement'
           required:
             - type
@@ -210,8 +201,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - activeDiamond
+                  const: activeDiamond
             - $ref: '#/components/schemas/ActiveDiamond'
           required:
             - type
@@ -221,8 +211,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - popularLimit
+                  const: popularLimit
             - $ref: '#/components/schemas/PopularLimit'
           required:
             - type
@@ -232,8 +221,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - falseMirror
+                  const: falseMirror
             - $ref: '#/components/schemas/FalseMirror'
           required:
             - type
@@ -243,8 +231,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - primaryBlock
+                  const: primaryBlock
             - $ref: '#/components/schemas/PrimaryBlock'
           required:
             - type
@@ -254,8 +241,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - rotatingRatio
+                  const: rotatingRatio
             - $ref: '#/components/schemas/RotatingRatio'
           required:
             - type
@@ -265,8 +251,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - colorfulCover
+                  const: colorfulCover
             - $ref: '#/components/schemas/ColorfulCover'
           required:
             - type
@@ -276,8 +261,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - disloyalValue
+                  const: disloyalValue
             - $ref: '#/components/schemas/DisloyalValue'
           required:
             - type
@@ -287,8 +271,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - gruesomeCoach
+                  const: gruesomeCoach
             - $ref: '#/components/schemas/GruesomeCoach'
           required:
             - type
@@ -298,8 +281,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - totalWork
+                  const: totalWork
             - $ref: '#/components/schemas/TotalWork'
           required:
             - type
@@ -309,8 +291,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - harmoniousPlay
+                  const: harmoniousPlay
             - $ref: '#/components/schemas/HarmoniousPlay'
           required:
             - type
@@ -320,8 +301,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - uniqueStress
+                  const: uniqueStress
             - $ref: '#/components/schemas/UniqueStress'
           required:
             - type
@@ -331,8 +311,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - unwillingSmoke
+                  const: unwillingSmoke
             - $ref: '#/components/schemas/UnwillingSmoke'
           required:
             - type
@@ -342,8 +321,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - frozenSleep
+                  const: frozenSleep
             - $ref: '#/components/schemas/FrozenSleep'
           required:
             - type
@@ -353,8 +331,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - diligentDeal
+                  const: diligentDeal
             - $ref: '#/components/schemas/DiligentDeal'
           required:
             - type
@@ -364,8 +341,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - attractiveScript
+                  const: attractiveScript
             - $ref: '#/components/schemas/AttractiveScript'
           required:
             - type
@@ -375,8 +351,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - hoarseMouse
+                  const: hoarseMouse
             - $ref: '#/components/schemas/HoarseMouse'
           required:
             - type
@@ -386,8 +361,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - circularCard
+                  const: circularCard
             - $ref: '#/components/schemas/CircularCard'
           required:
             - type
@@ -397,8 +371,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - potableBad
+                  const: potableBad
             - $ref: '#/components/schemas/PotableBad'
           required:
             - type
@@ -408,8 +381,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - triangularRepair
+                  const: triangularRepair
             - $ref: '#/components/schemas/TriangularRepair'
           required:
             - type
@@ -419,8 +391,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - gaseousRoad
+                  const: gaseousRoad
             - $ref: '#/components/schemas/GaseousRoad'
           required:
             - type
@@ -434,15 +405,18 @@ components:
           type: string
           format: date-time
         archived-at:
-          type: string
+          type:
+            - string
+            - 'null'
           format: date-time
-          nullable: true
     NormalSweet:
       title: NormalSweet
       type: object
       properties:
         value:
           type: string
+          examples:
+            - example1
       required:
         - value
     ThankfulFactor:
@@ -451,6 +425,8 @@ components:
       properties:
         value:
           type: string
+          examples:
+            - example1
       required:
         - value
     JumboEnd:
@@ -676,8 +652,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - foo
+              const: foo
             foo:
               $ref: '#/components/schemas/Foo'
           required:
@@ -686,8 +661,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - bar
+              const: bar
             bar:
               $ref: '#/components/schemas/Bar'
           required:
@@ -700,22 +674,22 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - foo
+              const: foo
             value:
-              $ref: '#/components/schemas/Foo'
-              nullable: true
+              anyOf:
+                - $ref: '#/components/schemas/Foo'
+                - type: 'null'
           required:
             - type
         - type: object
           properties:
             type:
               type: string
-              enum:
-                - bar
+              const: bar
             value:
-              $ref: '#/components/schemas/Bar'
-              nullable: true
+              anyOf:
+                - $ref: '#/components/schemas/Bar'
+                - type: 'null'
           required:
             - type
     UnionWithNullableReference:
@@ -725,22 +699,22 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - foo
+              const: foo
             value:
-              $ref: '#/components/schemas/Foo'
-              nullable: true
+              anyOf:
+                - $ref: '#/components/schemas/Foo'
+                - type: 'null'
           required:
             - type
         - type: object
           properties:
             type:
               type: string
-              enum:
-                - bar
+              const: bar
             value:
-              $ref: '#/components/schemas/Bar'
-              nullable: true
+              anyOf:
+                - $ref: '#/components/schemas/Bar'
+                - type: 'null'
           required:
             - type
     UnionWithDiscriminant:
@@ -750,8 +724,7 @@ components:
           properties:
             _type:
               type: string
-              enum:
-                - foo
+              const: foo
             foo:
               $ref: '#/components/schemas/Foo'
           required:
@@ -760,8 +733,7 @@ components:
           properties:
             _type:
               type: string
-              enum:
-                - bar
+              const: bar
             bar:
               $ref: '#/components/schemas/Bar'
           required:
@@ -773,8 +745,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - integer
+              const: integer
             value:
               type: integer
           required:
@@ -783,8 +754,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - string
+              const: string
             value:
               type: string
           required:
@@ -796,8 +766,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - integer1
+              const: integer1
             value:
               type: integer
           required:
@@ -806,8 +775,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - integer2
+              const: integer2
             value:
               type: integer
           required:
@@ -816,8 +784,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - string1
+              const: string1
             value:
               type: string
           required:
@@ -826,8 +793,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - string2
+              const: string2
             value:
               type: string
           required:
@@ -841,8 +807,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - foo
+                  const: foo
             - $ref: '#/components/schemas/Foo'
           required:
             - type
@@ -852,8 +817,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - bar
+                  const: bar
             - $ref: '#/components/schemas/Bar'
           required:
             - type
@@ -866,8 +830,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - foo
+                  const: foo
             - $ref: '#/components/schemas/Foo'
           required:
             - type
@@ -875,8 +838,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - empty
+              const: empty
           required:
             - type
     UnionWithMultipleNoProperties:
@@ -888,8 +850,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - foo
+                  const: foo
             - $ref: '#/components/schemas/Foo'
           required:
             - type
@@ -897,16 +858,14 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - empty1
+              const: empty1
           required:
             - type
         - type: object
           properties:
             type:
               type: string
-              enum:
-                - empty2
+              const: empty2
           required:
             - type
     UnionWithLiteral:
@@ -916,8 +875,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - fern
+              const: fern
             value:
               type: string
               const: fern
@@ -936,8 +894,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - integer
+              const: integer
             value:
               type: integer
           required:
@@ -946,8 +903,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - string
+              const: string
             value:
               type: string
           required:
@@ -958,8 +914,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - foo
+                  const: foo
             - $ref: '#/components/schemas/Foo'
           required:
             - type
@@ -975,8 +930,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - value
+              const: value
             value:
               type: integer
           required:
@@ -985,8 +939,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - date
+              const: date
             value:
               type: string
               format: date
@@ -996,8 +949,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - datetime
+              const: datetime
             value:
               type: string
               format: date-time
@@ -1010,24 +962,24 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - date
+              const: date
             value:
-              type: string
+              type:
+                - string
+                - 'null'
               format: date
-              nullable: true
           required:
             - type
         - type: object
           properties:
             type:
               type: string
-              enum:
-                - datetime
+              const: datetime
             value:
-              type: string
+              type:
+                - string
+                - 'null'
               format: date-time
-              nullable: true
           required:
             - type
     UnionWithSingleElement:
@@ -1039,8 +991,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - foo
+                  const: foo
             - $ref: '#/components/schemas/Foo'
           required:
             - type
@@ -1053,8 +1004,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - foo1
+                  const: foo1
             - $ref: '#/components/schemas/Foo'
           required:
             - type
@@ -1064,8 +1014,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - foo2
+                  const: foo2
             - $ref: '#/components/schemas/Foo'
           required:
             - type
@@ -1078,8 +1027,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - foo
+                  const: foo
             - $ref: '#/components/schemas/Foo'
           required:
             - type
@@ -1089,8 +1037,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - fooExtended
+                  const: fooExtended
             - $ref: '#/components/schemas/FooExtended'
           required:
             - type
@@ -1103,8 +1050,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - firstItemType
+                  const: firstItemType
             - $ref: '#/components/schemas/FirstItemType'
           required:
             - type
@@ -1114,8 +1060,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - secondItemType
+                  const: secondItemType
             - $ref: '#/components/schemas/SecondItemType'
           required:
             - type
@@ -1124,9 +1069,10 @@ components:
       type: object
       properties:
         type:
-          type: string
+          type:
+            - string
+            - 'null'
           const: firstItemType
-          nullable: true
         name:
           type: string
       required:
@@ -1136,9 +1082,10 @@ components:
       type: object
       properties:
         type:
-          type: string
+          type:
+            - string
+            - 'null'
           const: secondItemType
-          nullable: true
         title:
           type: string
       required:
@@ -1149,6 +1096,8 @@ components:
       properties:
         name:
           type: string
+          examples:
+            - example1
       required:
         - name
     FooExtended:
@@ -1157,6 +1106,8 @@ components:
       properties:
         age:
           type: integer
+          examples:
+            - 5
       required:
         - age
       allOf:
@@ -1167,6 +1118,8 @@ components:
       properties:
         name:
           type: string
+          examples:
+            - example1
       required:
         - name
     TypeWithOptionalMap:
@@ -1178,8 +1131,9 @@ components:
         columnValues:
           type: object
           additionalProperties:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
       required:
         - key
         - columnValues
@@ -1190,8 +1144,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - customFormat
+              const: customFormat
             value:
               type: string
           required:
@@ -1200,8 +1153,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - regularString
+              const: regularString
             value:
               type: string
           required:
@@ -1210,8 +1162,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - patternString
+              const: patternString
             value:
               type: string
           required:
@@ -1223,8 +1174,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - positiveInt
+              const: positiveInt
             value:
               type: integer
           required:
@@ -1233,8 +1183,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - negativeInt
+              const: negativeInt
             value:
               type: integer
           required:
@@ -1243,8 +1192,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - anyNumber
+              const: anyNumber
             value:
               type: number
               format: double
@@ -1256,6 +1204,8 @@ components:
       properties:
         id:
           type: string
+          examples:
+            - example
       required:
         - id
     WithName:
@@ -1275,8 +1225,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - circle
+                  const: circle
             - $ref: '#/components/schemas/Circle'
           required:
             - type
@@ -1286,8 +1235,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - square
+                  const: square
             - $ref: '#/components/schemas/Square'
           required:
             - type

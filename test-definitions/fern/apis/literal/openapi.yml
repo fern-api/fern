@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: literal
-  version: ''
+  version: 0.0.0
   description: Test definition for literal schemas.
 paths:
   /headers:
@@ -16,19 +16,31 @@ paths:
           schema:
             type: string
             const: 02-12-2024
+          examples:
+            Example1:
+              value: 02-12-2024
         - name: X-Async
           in: header
           required: true
           schema:
             type: boolean
             const: true
+          examples:
+            Example1:
+              value: true
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/SendResponse'
+              examples:
+                Example1:
+                  value:
+                    message: The weather is sunny
+                    status: 200
+                    success: true
       requestBody:
         required: true
         content:
@@ -38,8 +50,14 @@ paths:
               properties:
                 query:
                   type: string
+                  examples:
+                    - What is the weather today
               required:
                 - query
+            examples:
+              Example1:
+                value:
+                  query: What is the weather today
   /inlined:
     post:
       operationId: inlined_send
@@ -48,11 +66,17 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/SendResponse'
+              examples:
+                Example1:
+                  value:
+                    message: The weather is sunny
+                    status: 200
+                    success: true
       requestBody:
         required: true
         content:
@@ -64,23 +88,28 @@ paths:
                   type: string
                   const: You are a helpful assistant
                 context:
-                  type: string
+                  type:
+                    - string
+                    - 'null'
                   const: You're super wise
-                  nullable: true
                 query:
                   type: string
+                  examples:
+                    - What is the weather today
                 temperature:
-                  type: number
+                  type:
+                    - number
+                    - 'null'
                   format: double
-                  nullable: true
                 stream:
                   type: boolean
                   const: false
                 aliasedContext:
                   $ref: '#/components/schemas/SomeAliasedLiteral'
                 maybeContext:
-                  $ref: '#/components/schemas/SomeAliasedLiteral'
-                  nullable: true
+                  anyOf:
+                    - $ref: '#/components/schemas/SomeAliasedLiteral'
+                    - type: 'null'
                 objectWithLiteral:
                   $ref: '#/components/schemas/ATopLevelLiteral'
               required:
@@ -89,6 +118,19 @@ paths:
                 - stream
                 - aliasedContext
                 - objectWithLiteral
+            examples:
+              Example1:
+                value:
+                  temperature: 10.1
+                  prompt: You are a helpful assistant
+                  context: You're super wise
+                  aliasedContext: You're super wise
+                  maybeContext: You're super wise
+                  objectWithLiteral:
+                    nestedLiteral:
+                      myLiteral: How super cool
+                  stream: false
+                  query: What is the weather today
   /path/{id}:
     post:
       operationId: path_send
@@ -101,13 +143,22 @@ paths:
           schema:
             type: string
             const: '123'
+          examples:
+            Example1:
+              value: '123'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/SendResponse'
+              examples:
+                Example1:
+                  value:
+                    message: The weather is sunny
+                    status: 200
+                    success: true
   /query:
     post:
       operationId: query_send
@@ -120,60 +171,97 @@ paths:
           schema:
             type: string
             const: You are a helpful assistant
+          examples:
+            Example1:
+              value: You are a helpful assistant
         - name: optional_prompt
           in: query
           required: false
           schema:
-            type: string
+            type:
+              - string
+              - 'null'
             const: You are a helpful assistant
-            nullable: true
+          examples:
+            Example1:
+              value: You are a helpful assistant
         - name: alias_prompt
           in: query
           required: true
           schema:
             $ref: '#/components/schemas/AliasToPrompt'
+          examples:
+            Example1:
+              value: You are a helpful assistant
         - name: alias_optional_prompt
           in: query
           required: false
           schema:
-            $ref: '#/components/schemas/AliasToPrompt'
-            nullable: true
+            anyOf:
+              - $ref: '#/components/schemas/AliasToPrompt'
+              - type: 'null'
+          examples:
+            Example1:
+              value: You are a helpful assistant
         - name: query
           in: query
           required: true
           schema:
             type: string
+          examples:
+            Example1:
+              value: What is the weather today
         - name: stream
           in: query
           required: true
           schema:
             type: boolean
             const: false
+          examples:
+            Example1:
+              value: false
         - name: optional_stream
           in: query
           required: false
           schema:
-            type: boolean
+            type:
+              - boolean
+              - 'null'
             const: false
-            nullable: true
+          examples:
+            Example1:
+              value: false
         - name: alias_stream
           in: query
           required: true
           schema:
             $ref: '#/components/schemas/AliasToStream'
+          examples:
+            Example1:
+              value: false
         - name: alias_optional_stream
           in: query
           required: false
           schema:
-            $ref: '#/components/schemas/AliasToStream'
-            nullable: true
+            anyOf:
+              - $ref: '#/components/schemas/AliasToStream'
+              - type: 'null'
+          examples:
+            Example1:
+              value: false
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/SendResponse'
+              examples:
+                Example1:
+                  value:
+                    message: The weather is sunny
+                    status: 200
+                    success: true
   /reference:
     post:
       operationId: reference_send
@@ -182,17 +270,35 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/SendResponse'
+              examples:
+                Example1:
+                  value:
+                    message: The weather is sunny
+                    status: 200
+                    success: true
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/SendRequest'
+            examples:
+              Example1:
+                value:
+                  prompt: You are a helpful assistant
+                  stream: false
+                  context: You're super wise
+                  query: What is the weather today
+                  containerObject:
+                    nestedObjects:
+                      - literal1: literal1
+                        literal2: literal2
+                        strProp: strProp
 components:
   schemas:
     SendResponse:
@@ -201,8 +307,12 @@ components:
       properties:
         message:
           type: string
+          examples:
+            - The weather is sunny
         status:
           type: integer
+          examples:
+            - 200
         success:
           type: boolean
           const: true
@@ -238,8 +348,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - customName
+              const: customName
             value:
               type: string
           required:
@@ -248,8 +357,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - defaultName
+              const: defaultName
             value:
               type: string
               const: Bob
@@ -259,8 +367,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - george
+              const: george
             value:
               type: boolean
           required:
@@ -269,8 +376,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - literalGeorge
+              const: literalGeorge
             value:
               type: boolean
               const: true
@@ -308,6 +414,8 @@ components:
           const: You are a helpful assistant
         query:
           type: string
+          examples:
+            - What is the weather today
         stream:
           type: boolean
           const: false
@@ -317,8 +425,9 @@ components:
         context:
           $ref: '#/components/schemas/SomeLiteral'
         maybeContext:
-          $ref: '#/components/schemas/SomeLiteral'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/SomeLiteral'
+            - type: 'null'
         containerObject:
           $ref: '#/components/schemas/ContainerObject'
       required:

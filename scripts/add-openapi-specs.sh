@@ -3,13 +3,13 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
-CLI_PATH="$REPO_ROOT/packages/cli/cli/dist/prod/cli.cjs"
+SEED_OPENAPI="$REPO_ROOT/seed/openapi"
 
 cd "$REPO_ROOT/test-definitions"
 
 updated=0
 skipped=0
-failed=0
+no_seed_spec=0
 
 for dir in fern/apis/*/; do
     api_name=$(basename "$dir")
@@ -21,12 +21,22 @@ for dir in fern/apis/*/; do
         continue
     fi
 
-    # Export the OpenAPI spec
-    if ! FERN_NO_VERSION_REDIRECTION=true node "$CLI_PATH" export "$dir/openapi.yml" --api "$api_name" > /dev/null 2>&1; then
-        echo "✗ $api_name (export failed)"
-        failed=$((failed + 1))
+    # Find the seed openapi spec
+    seed_spec=""
+    if [ -f "$SEED_OPENAPI/$api_name/openapi.yml" ]; then
+        seed_spec="$SEED_OPENAPI/$api_name/openapi.yml"
+    elif [ -f "$SEED_OPENAPI/$api_name/no-custom-config/openapi.yml" ]; then
+        seed_spec="$SEED_OPENAPI/$api_name/no-custom-config/openapi.yml"
+    fi
+
+    if [ -z "$seed_spec" ]; then
+        echo "✗ $api_name (no seed openapi spec)"
+        no_seed_spec=$((no_seed_spec + 1))
         continue
     fi
+
+    # Copy the seed spec into the test definition directory
+    cp "$seed_spec" "$dir/openapi.yml"
 
     api_block="api:\n  specs:\n    - openapi: ./openapi.yml"
 
@@ -36,7 +46,7 @@ for dir in fern/apis/*/; do
     else
         # Build a new file: keep schema comment if present, add api block, then
         # append remaining non-comment non-empty-doc lines
-        tmp=$(mktemp)
+        tmp="${TMPDIR:-/tmp}/add-openapi-specs-$$"
         first_line=$(head -1 "$gen_file")
         if echo "$first_line" | grep -q "^# yaml-language-server"; then
             echo "$first_line" > "$tmp"
@@ -59,8 +69,7 @@ echo ""
 echo "================================"
 echo "Add OpenAPI Specs Results"
 echo "================================"
-echo "Updated: $updated"
-echo "Skipped: $skipped (already have specs)"
-echo "Failed:  $failed"
+echo "Updated:       $updated"
+echo "Skipped:       $skipped (already have specs)"
+echo "No seed spec:  $no_seed_spec"
 echo "================================"
-

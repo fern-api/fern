@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: trace
-  version: ''
+  version: 0.0.0
 paths:
   /:
     get:
@@ -11,7 +11,7 @@ paths:
       parameters: []
       responses:
         '204':
-          description: ''
+          description: No content
   /admin/store-test-submission-status/{submissionId}:
     post:
       operationId: admin_updateTestSubmissionStatus
@@ -25,7 +25,7 @@ paths:
             $ref: '#/components/schemas/SubmissionId'
       responses:
         '204':
-          description: ''
+          description: No content
       requestBody:
         required: true
         content:
@@ -45,7 +45,7 @@ paths:
             $ref: '#/components/schemas/SubmissionId'
       responses:
         '204':
-          description: ''
+          description: No content
       requestBody:
         required: true
         content:
@@ -65,7 +65,7 @@ paths:
             $ref: '#/components/schemas/SubmissionId'
       responses:
         '204':
-          description: ''
+          description: No content
       requestBody:
         required: true
         content:
@@ -85,7 +85,7 @@ paths:
             $ref: '#/components/schemas/SubmissionId'
       responses:
         '204':
-          description: ''
+          description: No content
       requestBody:
         required: true
         content:
@@ -110,7 +110,7 @@ paths:
             type: string
       responses:
         '204':
-          description: ''
+          description: No content
       requestBody:
         required: true
         content:
@@ -145,7 +145,7 @@ paths:
             $ref: '#/components/schemas/v2TestCaseId'
       responses:
         '204':
-          description: ''
+          description: No content
       requestBody:
         required: true
         content:
@@ -167,7 +167,7 @@ paths:
             $ref: '#/components/schemas/SubmissionId'
       responses:
         '204':
-          description: ''
+          description: No content
       requestBody:
         required: true
         content:
@@ -197,7 +197,7 @@ paths:
             $ref: '#/components/schemas/SubmissionId'
       responses:
         '204':
-          description: ''
+          description: No content
       requestBody:
         required: true
         content:
@@ -214,7 +214,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -228,7 +228,7 @@ paths:
       parameters: []
       responses:
         '204':
-          description: ''
+          description: No content
       requestBody:
         required: true
         content:
@@ -250,7 +250,7 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -279,18 +279,19 @@ paths:
           in: query
           required: false
           schema:
-            type: string
+            type:
+              - string
+              - 'null'
             format: date-time
-            nullable: true
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Playlist'
-      security: &ref_0
-        - BearerAuth: []
+      security:
+        - Bearer: []
       requestBody:
         required: true
         content:
@@ -313,8 +314,9 @@ paths:
           in: query
           required: false
           schema:
-            type: integer
-            nullable: true
+            type:
+              - integer
+              - 'null'
         - name: otherField
           in: query
           description: i'm another field
@@ -335,8 +337,9 @@ paths:
           schema:
             type: array
             items:
-              type: string
-              nullable: true
+              type:
+                - string
+                - 'null'
         - name: multipleField
           in: query
           required: true
@@ -346,14 +349,15 @@ paths:
               type: string
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/Playlist'
-      security: *ref_0
+      security:
+        - Bearer: []
   /v2/playlist/{serviceParam}/{playlistId}:
     get:
       description: Returns a playlist
@@ -373,13 +377,13 @@ paths:
             $ref: '#/components/schemas/PlaylistId'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Playlist'
         '401':
-          description: ''
+          description: UnauthorizedError
           content:
             application/json:
               schema:
@@ -391,7 +395,7 @@ paths:
                         enum:
                           - UnauthorizedError
         '404':
-          description: ''
+          description: PlaylistIdNotFoundError
           content:
             application/json:
               schema:
@@ -422,14 +426,15 @@ paths:
             $ref: '#/components/schemas/PlaylistId'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Playlist'
-                nullable: true
+                anyOf:
+                  - $ref: '#/components/schemas/Playlist'
+                  - type: 'null'
         '404':
-          description: ''
+          description: PlaylistIdNotFoundError
           content:
             application/json:
               schema:
@@ -442,14 +447,16 @@ paths:
                           - PlaylistIdNotFoundError
                       content:
                         $ref: '#/components/schemas/PlaylistIdNotFoundErrorBody'
-      security: *ref_0
+      security:
+        - Bearer: []
       requestBody:
         required: false
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdatePlaylistRequest'
-              nullable: true
+              anyOf:
+                - $ref: '#/components/schemas/UpdatePlaylistRequest'
+                - type: 'null'
   /v2/playlist/{serviceParam}/{playlist_id}:
     delete:
       description: Deletes a playlist
@@ -469,8 +476,9 @@ paths:
             $ref: '#/components/schemas/PlaylistId'
       responses:
         '204':
-          description: ''
-      security: *ref_0
+          description: No content
+      security:
+        - Bearer: []
   /problem-crud/create:
     post:
       description: Creates a problem
@@ -480,7 +488,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -505,7 +513,7 @@ paths:
             $ref: '#/components/schemas/ProblemId'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -530,7 +538,7 @@ paths:
             $ref: '#/components/schemas/ProblemId'
       responses:
         '204':
-          description: ''
+          description: No content
   /problem-crud/default-starter-files:
     post:
       description: Returns default starter files for problem
@@ -540,7 +548,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -585,7 +593,7 @@ paths:
             $ref: '#/components/schemas/Language'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -606,12 +614,13 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ExecutionSessionResponse'
-                nullable: true
+                anyOf:
+                  - $ref: '#/components/schemas/ExecutionSessionResponse'
+                  - type: 'null'
   /sessions/stop/{sessionId}:
     delete:
       description: Stops execution session.
@@ -626,7 +635,7 @@ paths:
             type: string
       responses:
         '204':
-          description: ''
+          description: No content
   /sessions/execution-sessions-state:
     get:
       operationId: submission_getExecutionSessionsState
@@ -635,7 +644,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -658,7 +667,7 @@ paths:
             type: integer
       responses:
         '204':
-          description: ''
+          description: No content
   /sysprop/num-warm-instances:
     get:
       operationId: sysprop_getNumWarmInstances
@@ -667,7 +676,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -683,7 +692,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -699,7 +708,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -720,7 +729,7 @@ paths:
             $ref: '#/components/schemas/ProblemId'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -744,7 +753,7 @@ paths:
             type: integer
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -758,7 +767,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -774,7 +783,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -795,7 +804,7 @@ paths:
             $ref: '#/components/schemas/ProblemId'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -819,7 +828,7 @@ paths:
             type: integer
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -833,8 +842,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - and
+              const: and
             value:
               type: boolean
           required:
@@ -843,8 +851,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - or
+              const: or
             value:
               type: boolean
           required:
@@ -865,40 +872,35 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - integerType
+              const: integerType
           required:
             - type
         - type: object
           properties:
             type:
               type: string
-              enum:
-                - doubleType
+              const: doubleType
           required:
             - type
         - type: object
           properties:
             type:
               type: string
-              enum:
-                - booleanType
+              const: booleanType
           required:
             - type
         - type: object
           properties:
             type:
               type: string
-              enum:
-                - stringType
+              const: stringType
           required:
             - type
         - type: object
           properties:
             type:
               type: string
-              enum:
-                - charType
+              const: charType
           required:
             - type
         - type: object
@@ -907,8 +909,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - listType
+                  const: listType
             - $ref: '#/components/schemas/ListType'
           required:
             - type
@@ -918,8 +919,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - mapType
+                  const: mapType
             - $ref: '#/components/schemas/MapType'
           required:
             - type
@@ -927,24 +927,21 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - binaryTreeType
+              const: binaryTreeType
           required:
             - type
         - type: object
           properties:
             type:
               type: string
-              enum:
-                - singlyLinkedListType
+              const: singlyLinkedListType
           required:
             - type
         - type: object
           properties:
             type:
               type: string
-              enum:
-                - doublyLinkedListType
+              const: doublyLinkedListType
           required:
             - type
     ListType:
@@ -954,8 +951,9 @@ components:
         valueType:
           $ref: '#/components/schemas/VariableType'
         isFixedLength:
-          type: boolean
-          nullable: true
+          type:
+            - boolean
+            - 'null'
           description: >-
             Whether this list is fixed-size (for languages that supports
             fixed-size lists). Defaults to false.
@@ -979,8 +977,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - integerValue
+              const: integerValue
             value:
               type: integer
           required:
@@ -989,8 +986,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - booleanValue
+              const: booleanValue
             value:
               type: boolean
           required:
@@ -999,8 +995,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - doubleValue
+              const: doubleValue
             value:
               type: number
               format: double
@@ -1010,8 +1005,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - stringValue
+              const: stringValue
             value:
               type: string
           required:
@@ -1020,8 +1014,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - charValue
+              const: charValue
             value:
               type: string
           required:
@@ -1032,8 +1025,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - mapValue
+                  const: mapValue
             - $ref: '#/components/schemas/MapValue'
           required:
             - type
@@ -1041,8 +1033,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - listValue
+              const: listValue
             value:
               type: array
               items:
@@ -1055,8 +1046,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - binaryTreeValue
+                  const: binaryTreeValue
             - $ref: '#/components/schemas/BinaryTreeValue'
           required:
             - type
@@ -1066,8 +1056,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - singlyLinkedListValue
+                  const: singlyLinkedListValue
             - $ref: '#/components/schemas/SinglyLinkedListValue'
           required:
             - type
@@ -1077,8 +1066,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - doublyLinkedListValue
+                  const: doublyLinkedListValue
             - $ref: '#/components/schemas/DoublyLinkedListValue'
           required:
             - type
@@ -1086,8 +1074,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - nullValue
+              const: nullValue
           required:
             - type
     DebugVariableValue:
@@ -1097,8 +1084,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - integerValue
+              const: integerValue
             value:
               type: integer
           required:
@@ -1107,8 +1093,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - booleanValue
+              const: booleanValue
             value:
               type: boolean
           required:
@@ -1117,8 +1102,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - doubleValue
+              const: doubleValue
             value:
               type: number
               format: double
@@ -1128,8 +1112,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - stringValue
+              const: stringValue
             value:
               type: string
           required:
@@ -1138,8 +1121,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - charValue
+              const: charValue
             value:
               type: string
           required:
@@ -1150,8 +1132,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - mapValue
+                  const: mapValue
             - $ref: '#/components/schemas/DebugMapValue'
           required:
             - type
@@ -1159,8 +1140,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - listValue
+              const: listValue
             value:
               type: array
               items:
@@ -1173,8 +1153,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - binaryTreeNodeValue
+                  const: binaryTreeNodeValue
             - $ref: '#/components/schemas/BinaryTreeNodeAndTreeValue'
           required:
             - type
@@ -1184,8 +1163,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - singlyLinkedListNodeValue
+                  const: singlyLinkedListNodeValue
             - $ref: '#/components/schemas/SinglyLinkedListNodeAndListValue'
           required:
             - type
@@ -1195,8 +1173,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - doublyLinkedListNodeValue
+                  const: doublyLinkedListNodeValue
             - $ref: '#/components/schemas/DoublyLinkedListNodeAndListValue'
           required:
             - type
@@ -1204,16 +1181,14 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - undefinedValue
+              const: undefinedValue
           required:
             - type
         - type: object
           properties:
             type:
               type: string
-              enum:
-                - nullValue
+              const: nullValue
           required:
             - type
         - type: object
@@ -1222,8 +1197,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - genericValue
+                  const: genericValue
             - $ref: '#/components/schemas/GenericValue'
           required:
             - type
@@ -1232,8 +1206,9 @@ components:
       type: object
       properties:
         stringifiedType:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         stringifiedValue:
           type: string
       required:
@@ -1264,8 +1239,9 @@ components:
       type: object
       properties:
         root:
-          $ref: '#/components/schemas/NodeId'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/NodeId'
+            - type: 'null'
         nodes:
           type: object
           additionalProperties:
@@ -1282,11 +1258,13 @@ components:
           type: number
           format: double
         right:
-          $ref: '#/components/schemas/NodeId'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/NodeId'
+            - type: 'null'
         left:
-          $ref: '#/components/schemas/NodeId'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/NodeId'
+            - type: 'null'
       required:
         - nodeId
         - val
@@ -1306,8 +1284,9 @@ components:
       type: object
       properties:
         head:
-          $ref: '#/components/schemas/NodeId'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/NodeId'
+            - type: 'null'
         nodes:
           type: object
           additionalProperties:
@@ -1324,8 +1303,9 @@ components:
           type: number
           format: double
         next:
-          $ref: '#/components/schemas/NodeId'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/NodeId'
+            - type: 'null'
       required:
         - nodeId
         - val
@@ -1345,8 +1325,9 @@ components:
       type: object
       properties:
         head:
-          $ref: '#/components/schemas/NodeId'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/NodeId'
+            - type: 'null'
         nodes:
           type: object
           additionalProperties:
@@ -1363,11 +1344,13 @@ components:
           type: number
           format: double
         next:
-          $ref: '#/components/schemas/NodeId'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/NodeId'
+            - type: 'null'
         prev:
-          $ref: '#/components/schemas/NodeId'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/NodeId'
+            - type: 'null'
       required:
         - nodeId
         - val
@@ -1527,8 +1510,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - playlistId
+              const: playlistId
             value:
               $ref: '#/components/schemas/PlaylistId'
           required:
@@ -1597,8 +1579,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - html
+              const: html
             value:
               type: string
           required:
@@ -1607,8 +1588,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - variable
+              const: variable
             value:
               $ref: '#/components/schemas/VariableValue'
           required:
@@ -1617,8 +1597,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - testCaseId
+              const: testCaseId
             value:
               type: string
           required:
@@ -1686,8 +1665,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - success
+              const: success
             value:
               $ref: '#/components/schemas/ProblemId'
           required:
@@ -1696,8 +1674,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - error
+              const: error
             value:
               $ref: '#/components/schemas/CreateProblemError'
           required:
@@ -1719,8 +1696,7 @@ components:
               properties:
                 _type:
                   type: string
-                  enum:
-                    - generic
+                  const: generic
             - $ref: '#/components/schemas/GenericCreateProblemError'
           required:
             - _type
@@ -1764,8 +1740,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - initializeProblemRequest
+                  const: initializeProblemRequest
             - $ref: '#/components/schemas/InitializeProblemRequest'
           required:
             - type
@@ -1773,8 +1748,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - initializeWorkspaceRequest
+              const: initializeWorkspaceRequest
           required:
             - type
         - type: object
@@ -1783,8 +1757,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - submitV2
+                  const: submitV2
             - $ref: '#/components/schemas/SubmitRequestV2'
           required:
             - type
@@ -1794,8 +1767,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - workspaceSubmit
+                  const: workspaceSubmit
             - $ref: '#/components/schemas/WorkspaceSubmitRequest'
           required:
             - type
@@ -1805,8 +1777,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - stop
+                  const: stop
             - $ref: '#/components/schemas/StopRequest'
           required:
             - type
@@ -1817,8 +1788,9 @@ components:
         problemId:
           $ref: '#/components/schemas/ProblemId'
         problemVersion:
-          type: integer
-          nullable: true
+          type:
+            - integer
+            - 'null'
       required:
         - problemId
     SubmitRequestV2:
@@ -1836,11 +1808,13 @@ components:
         problemId:
           $ref: '#/components/schemas/ProblemId'
         problemVersion:
-          type: integer
-          nullable: true
+          type:
+            - integer
+            - 'null'
         userId:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
       required:
         - submissionId
         - language
@@ -1859,8 +1833,9 @@ components:
           items:
             $ref: '#/components/schemas/SubmissionFileInfo'
         userId:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
       required:
         - submissionId
         - language
@@ -1882,8 +1857,7 @@ components:
     SubmissionTypeEnum:
       title: SubmissionTypeEnum
       type: string
-      enum:
-        - TEST
+      const: TEST
       description: Keep in sync with SubmissionType.
     StopRequest:
       title: StopRequest
@@ -1900,16 +1874,14 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - serverInitialized
+              const: serverInitialized
           required:
             - type
         - type: object
           properties:
             type:
               type: string
-              enum:
-                - problemInitialized
+              const: problemInitialized
             value:
               $ref: '#/components/schemas/ProblemId'
           required:
@@ -1918,8 +1890,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - workspaceInitialized
+              const: workspaceInitialized
           required:
             - type
         - type: object
@@ -1928,8 +1899,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - serverErrored
+                  const: serverErrored
             - $ref: '#/components/schemas/ExceptionInfo'
           required:
             - type
@@ -1937,8 +1907,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - codeExecutionUpdate
+              const: codeExecutionUpdate
             value:
               $ref: '#/components/schemas/CodeExecutionUpdate'
           required:
@@ -1949,8 +1918,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - terminated
+                  const: terminated
             - $ref: '#/components/schemas/TerminatedResponse'
           required:
             - type
@@ -1963,8 +1931,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - buildingExecutor
+                  const: buildingExecutor
             - $ref: '#/components/schemas/BuildingExecutorResponse'
           required:
             - type
@@ -1974,8 +1941,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - running
+                  const: running
             - $ref: '#/components/schemas/RunningResponse'
           required:
             - type
@@ -1985,8 +1951,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - errored
+                  const: errored
             - $ref: '#/components/schemas/ErroredResponse'
           required:
             - type
@@ -1996,8 +1961,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - stopped
+                  const: stopped
             - $ref: '#/components/schemas/StoppedResponse'
           required:
             - type
@@ -2007,8 +1971,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - graded
+                  const: graded
             - $ref: '#/components/schemas/GradedResponse'
           required:
             - type
@@ -2018,8 +1981,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - gradedV2
+                  const: gradedV2
             - $ref: '#/components/schemas/GradedResponseV2'
           required:
             - type
@@ -2029,8 +1991,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - workspaceRan
+                  const: workspaceRan
             - $ref: '#/components/schemas/WorkspaceRanResponse'
           required:
             - type
@@ -2040,8 +2001,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - recording
+                  const: recording
             - $ref: '#/components/schemas/RecordingResponseNotification'
           required:
             - type
@@ -2051,8 +2011,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - recorded
+                  const: recorded
             - $ref: '#/components/schemas/RecordedResponseNotification'
           required:
             - type
@@ -2062,8 +2021,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - invalidRequest
+                  const: invalidRequest
             - $ref: '#/components/schemas/InvalidRequestResponse'
           required:
             - type
@@ -2073,8 +2031,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - finished
+                  const: finished
             - $ref: '#/components/schemas/FinishedResponse'
           required:
             - type
@@ -2129,8 +2086,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - compileError
+                  const: compileError
             - $ref: '#/components/schemas/CompileError'
           required:
             - type
@@ -2140,8 +2096,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - runtimeError
+                  const: runtimeError
             - $ref: '#/components/schemas/RuntimeError'
           required:
             - type
@@ -2151,8 +2106,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - internalError
+                  const: internalError
             - $ref: '#/components/schemas/InternalError'
           required:
             - type
@@ -2204,11 +2158,13 @@ components:
       type: object
       properties:
         exceptionV2:
-          $ref: '#/components/schemas/ExceptionV2'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/ExceptionV2'
+            - type: 'null'
         exception:
-          $ref: '#/components/schemas/ExceptionInfo'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/ExceptionInfo'
+            - type: 'null'
         stdout:
           type: string
       required:
@@ -2248,8 +2204,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - hidden
+                  const: hidden
             - $ref: '#/components/schemas/TestCaseHiddenGrade'
           required:
             - type
@@ -2259,8 +2214,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - nonHidden
+                  const: nonHidden
             - $ref: '#/components/schemas/TestCaseNonHiddenGrade'
           required:
             - type
@@ -2279,11 +2233,13 @@ components:
         passed:
           type: boolean
         actualResult:
-          $ref: '#/components/schemas/VariableValue'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/VariableValue'
+            - type: 'null'
         exception:
-          $ref: '#/components/schemas/ExceptionV2'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/ExceptionV2'
+            - type: 'null'
         stdout:
           type: string
       required:
@@ -2298,8 +2254,9 @@ components:
         traceResponsesSize:
           type: integer
         testCaseId:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
       required:
         - submissionId
         - traceResponsesSize
@@ -2310,15 +2267,17 @@ components:
         submissionId:
           $ref: '#/components/schemas/SubmissionId'
         testCaseId:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         lineNumber:
           type: integer
         lightweightStackInfo:
           $ref: '#/components/schemas/LightweightStackframeInformation'
         tracedFile:
-          $ref: '#/components/schemas/TracedFile'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/TracedFile'
+            - type: 'null'
       required:
         - submissionId
         - lineNumber
@@ -2366,8 +2325,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - value
+              const: value
             value:
               $ref: '#/components/schemas/VariableValue'
           required:
@@ -2378,8 +2336,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - exception
+                  const: exception
             - $ref: '#/components/schemas/ExceptionInfo'
           required:
             - type
@@ -2387,8 +2344,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - exceptionV2
+              const: exceptionV2
             value:
               $ref: '#/components/schemas/ExceptionV2'
           required:
@@ -2402,8 +2358,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - generic
+                  const: generic
             - $ref: '#/components/schemas/ExceptionInfo'
           required:
             - type
@@ -2411,8 +2366,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - timeout
+              const: timeout
           required:
             - type
     ExceptionInfo:
@@ -2449,8 +2403,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - submissionIdNotFound
+                  const: submissionIdNotFound
             - $ref: '#/components/schemas/SubmissionIdNotFound'
           required:
             - type
@@ -2460,8 +2413,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - customTestCasesUnsupported
+                  const: customTestCasesUnsupported
             - $ref: '#/components/schemas/CustomTestCasesUnsupported'
           required:
             - type
@@ -2471,8 +2423,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - unexpectedLanguage
+                  const: unexpectedLanguage
             - $ref: '#/components/schemas/UnexpectedLanguageError'
           required:
             - type
@@ -2557,16 +2508,19 @@ components:
         lineNumber:
           type: integer
         returnValue:
-          $ref: '#/components/schemas/DebugVariableValue'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/DebugVariableValue'
+            - type: 'null'
         expressionLocation:
-          $ref: '#/components/schemas/ExpressionLocation'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/ExpressionLocation'
+            - type: 'null'
         stack:
           $ref: '#/components/schemas/StackInformation'
         stdout:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
       required:
         - submissionId
         - lineNumber
@@ -2582,16 +2536,19 @@ components:
         file:
           $ref: '#/components/schemas/TracedFile'
         returnValue:
-          $ref: '#/components/schemas/DebugVariableValue'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/DebugVariableValue'
+            - type: 'null'
         expressionLocation:
-          $ref: '#/components/schemas/ExpressionLocation'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/ExpressionLocation'
+            - type: 'null'
         stack:
           $ref: '#/components/schemas/StackInformation'
         stdout:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
       required:
         - submissionId
         - lineNumber
@@ -2626,8 +2583,9 @@ components:
         numStackFrames:
           type: integer
         topStackFrame:
-          $ref: '#/components/schemas/StackFrame'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/StackFrame'
+            - type: 'null'
       required:
         - numStackFrames
     StackFrame:
@@ -2663,8 +2621,9 @@ components:
         sessionId:
           type: string
         executionSessionUrl:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         language:
           $ref: '#/components/schemas/Language'
         status:
@@ -2692,8 +2651,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - test
+                  const: test
             - $ref: '#/components/schemas/TestSubmissionStatusV2'
           required:
             - type
@@ -2703,8 +2661,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - workspace
+                  const: workspace
             - $ref: '#/components/schemas/WorkspaceSubmissionStatusV2'
           required:
             - type
@@ -2756,8 +2713,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - running
+              const: running
             value:
               $ref: '#/components/schemas/RunningSubmissionState'
           required:
@@ -2766,16 +2722,14 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - stopped
+              const: stopped
           required:
             - type
         - type: object
           properties:
             type:
               type: string
-              enum:
-                - errored
+              const: errored
             value:
               $ref: '#/components/schemas/ErrorInfo'
           required:
@@ -2786,8 +2740,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - gradedTestCase
+                  const: gradedTestCase
             - $ref: '#/components/schemas/GradedTestCaseUpdate'
           required:
             - type
@@ -2797,8 +2750,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - recordedTestCase
+                  const: recordedTestCase
             - $ref: '#/components/schemas/RecordedTestCaseUpdate'
           required:
             - type
@@ -2806,8 +2758,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - finished
+              const: finished
           required:
             - type
     WorkspaceSubmissionUpdate:
@@ -2829,8 +2780,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - running
+              const: running
             value:
               $ref: '#/components/schemas/RunningSubmissionState'
           required:
@@ -2841,8 +2791,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - ran
+                  const: ran
             - $ref: '#/components/schemas/WorkspaceRunDetails'
           required:
             - type
@@ -2850,16 +2799,14 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - stopped
+              const: stopped
           required:
             - type
         - type: object
           properties:
             type:
               type: string
-              enum:
-                - traced
+              const: traced
           required:
             - type
         - type: object
@@ -2868,8 +2815,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - tracedV2
+                  const: tracedV2
             - $ref: '#/components/schemas/WorkspaceTracedUpdate'
           required:
             - type
@@ -2877,8 +2823,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - errored
+              const: errored
             value:
               $ref: '#/components/schemas/ErrorInfo'
           required:
@@ -2887,8 +2832,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - finished
+              const: finished
           required:
             - type
     GradedTestCaseUpdate:
@@ -2930,8 +2874,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - test
+                  const: test
             - $ref: '#/components/schemas/TestSubmissionState'
           required:
             - type
@@ -2941,8 +2884,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - workspace
+                  const: workspace
             - $ref: '#/components/schemas/WorkspaceSubmissionState'
           required:
             - type
@@ -2961,16 +2903,14 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - stopped
+              const: stopped
           required:
             - type
         - type: object
           properties:
             type:
               type: string
-              enum:
-                - errored
+              const: errored
             value:
               $ref: '#/components/schemas/ErrorInfo'
           required:
@@ -2979,8 +2919,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - running
+              const: running
             value:
               $ref: '#/components/schemas/RunningSubmissionState'
           required:
@@ -2991,8 +2930,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - ran
+                  const: ran
             - $ref: '#/components/schemas/WorkspaceRunDetails'
           required:
             - type
@@ -3002,8 +2940,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - traced
+                  const: traced
             - $ref: '#/components/schemas/WorkspaceRunDetails'
           required:
             - type
@@ -3035,16 +2972,14 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - stopped
+              const: stopped
           required:
             - type
         - type: object
           properties:
             type:
               type: string
-              enum:
-                - errored
+              const: errored
             value:
               $ref: '#/components/schemas/ErrorInfo'
           required:
@@ -3053,8 +2988,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - running
+              const: running
             value:
               $ref: '#/components/schemas/RunningSubmissionState'
           required:
@@ -3063,8 +2997,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - testCaseIdToState
+              const: testCaseIdToState
             value:
               type: object
               additionalProperties:
@@ -3080,8 +3013,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - graded
+                  const: graded
             - $ref: '#/components/schemas/TestCaseResultWithStdout'
           required:
             - type
@@ -3089,8 +3021,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - gradedV2
+              const: gradedV2
             value:
               $ref: '#/components/schemas/TestCaseGrade'
           required:
@@ -3101,8 +3032,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - traced
+                  const: traced
             - $ref: '#/components/schemas/TracedTestCase'
           required:
             - type
@@ -3122,8 +3052,9 @@ components:
       type: object
       properties:
         offset:
-          type: integer
-          nullable: true
+          type:
+            - integer
+            - 'null'
           description: |-
             If present, use this to load subsequent pages.
             The offset is the id of the next trace response to load.
@@ -3138,8 +3069,9 @@ components:
       type: object
       properties:
         offset:
-          type: integer
-          nullable: true
+          type:
+            - integer
+            - 'null'
           description: |-
             If present, use this to load subsequent pages.
             The offset is the id of the next trace response to load.
@@ -3154,8 +3086,9 @@ components:
       type: object
       properties:
         offset:
-          type: integer
-          nullable: true
+          type:
+            - integer
+            - 'null'
     WorkspaceStarterFilesResponse:
       title: WorkspaceStarterFilesResponse
       type: object
@@ -3194,16 +3127,18 @@ components:
       type: object
       properties:
         lastTimeContacted:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         sessionId:
           type: string
           description: The auto-generated session id. Formatted as a uuid.
         isWarmInstance:
           type: boolean
         awsTaskId:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         language:
           $ref: '#/components/schemas/Language'
         status:
@@ -3222,8 +3157,9 @@ components:
           additionalProperties:
             $ref: '#/components/schemas/ExecutionSessionState'
         numWarmingInstances:
-          type: integer
-          nullable: true
+          type:
+            - integer
+            - 'null'
         warmingSessionIds:
           type: array
           items:
@@ -3236,9 +3172,10 @@ components:
       type: object
       properties:
         timeSubmitted:
-          type: string
+          type:
+            - string
+            - 'null'
           format: date-time
-          nullable: true
         submission:
           type: string
         language:
@@ -3363,8 +3300,9 @@ components:
           additionalProperties:
             $ref: '#/components/schemas/VariableValue'
         expects:
-          $ref: '#/components/schemas/v2TestCaseExpects'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/v2TestCaseExpects'
+            - type: 'null'
       required:
         - metadata
         - implementation
@@ -3374,8 +3312,9 @@ components:
       type: object
       properties:
         expectedStdout:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
     v2TestCaseImplementationReference:
       title: v2TestCaseImplementationReference
       oneOf:
@@ -3383,8 +3322,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - templateId
+              const: templateId
             value:
               $ref: '#/components/schemas/v2TestCaseTemplateId'
           required:
@@ -3395,8 +3333,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - implementation
+                  const: implementation
             - $ref: '#/components/schemas/v2TestCaseImplementation'
           required:
             - type
@@ -3451,8 +3388,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - withActualResult
+                  const: withActualResult
             - $ref: '#/components/schemas/v2TestCaseWithActualResultImplementation'
           required:
             - type
@@ -3462,8 +3398,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - custom
+                  const: custom
             - $ref: '#/components/schemas/v2VoidFunctionDefinition'
           required:
             - type
@@ -3561,8 +3496,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - deepEquality
+                  const: deepEquality
             - $ref: '#/components/schemas/v2DeepEqualityCorrectnessCheck'
           required:
             - type
@@ -3572,8 +3506,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - custom
+                  const: custom
             - $ref: >-
                 #/components/schemas/v2VoidFunctionDefinitionThatTakesActualResult
           required:
@@ -3617,8 +3550,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - html
+              const: html
             value:
               type: string
           required:
@@ -3627,8 +3559,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - paramId
+              const: paramId
             value:
               $ref: '#/components/schemas/v2ParameterId'
           required:
@@ -3664,8 +3595,9 @@ components:
         impl:
           type: string
         imports:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
       required:
         - impl
     v2GeneratedFiles:
@@ -3697,8 +3629,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - basic
+                  const: basic
             - $ref: '#/components/schemas/v2BasicCustomFiles'
           required:
             - type
@@ -3706,8 +3637,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - custom
+              const: custom
             value:
               type: object
               additionalProperties:
@@ -3782,8 +3712,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - void
+                  const: void
             - $ref: '#/components/schemas/v2VoidFunctionSignature'
           required:
             - type
@@ -3793,8 +3722,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - nonVoid
+                  const: nonVoid
             - $ref: '#/components/schemas/v2NonVoidFunctionSignature'
           required:
             - type
@@ -3804,8 +3732,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - voidThatTakesActualResult
+                  const: voidThatTakesActualResult
             - $ref: >-
                 #/components/schemas/v2VoidFunctionSignatureThatTakesActualResult
           required:
@@ -3854,8 +3781,9 @@ components:
       type: object
       properties:
         template:
-          $ref: '#/components/schemas/v2TestCaseTemplate'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/v2TestCaseTemplate'
+            - type: 'null'
         testCase:
           $ref: '#/components/schemas/v2TestCaseV2'
       required:
@@ -3982,8 +3910,9 @@ components:
           additionalProperties:
             $ref: '#/components/schemas/VariableValue'
         expects:
-          $ref: '#/components/schemas/v2v3TestCaseExpects'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/v2v3TestCaseExpects'
+            - type: 'null'
       required:
         - metadata
         - implementation
@@ -3993,8 +3922,9 @@ components:
       type: object
       properties:
         expectedStdout:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
     v2v3TestCaseImplementationReference:
       title: v2v3TestCaseImplementationReference
       oneOf:
@@ -4002,8 +3932,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - templateId
+              const: templateId
             value:
               $ref: '#/components/schemas/v2v3TestCaseTemplateId'
           required:
@@ -4014,8 +3943,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - implementation
+                  const: implementation
             - $ref: '#/components/schemas/v2v3TestCaseImplementation'
           required:
             - type
@@ -4070,8 +3998,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - withActualResult
+                  const: withActualResult
             - $ref: '#/components/schemas/v2v3TestCaseWithActualResultImplementation'
           required:
             - type
@@ -4081,8 +4008,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - custom
+                  const: custom
             - $ref: '#/components/schemas/v2v3VoidFunctionDefinition'
           required:
             - type
@@ -4180,8 +4106,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - deepEquality
+                  const: deepEquality
             - $ref: '#/components/schemas/v2v3DeepEqualityCorrectnessCheck'
           required:
             - type
@@ -4191,8 +4116,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - custom
+                  const: custom
             - $ref: >-
                 #/components/schemas/v2v3VoidFunctionDefinitionThatTakesActualResult
           required:
@@ -4236,8 +4160,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - html
+              const: html
             value:
               type: string
           required:
@@ -4246,8 +4169,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - paramId
+              const: paramId
             value:
               $ref: '#/components/schemas/v2v3ParameterId'
           required:
@@ -4283,8 +4205,9 @@ components:
         impl:
           type: string
         imports:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
       required:
         - impl
     v2v3GeneratedFiles:
@@ -4316,8 +4239,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - basic
+                  const: basic
             - $ref: '#/components/schemas/v2v3BasicCustomFiles'
           required:
             - type
@@ -4325,8 +4247,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - custom
+              const: custom
             value:
               type: object
               additionalProperties:
@@ -4401,8 +4322,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - void
+                  const: void
             - $ref: '#/components/schemas/v2v3VoidFunctionSignature'
           required:
             - type
@@ -4412,8 +4332,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - nonVoid
+                  const: nonVoid
             - $ref: '#/components/schemas/v2v3NonVoidFunctionSignature'
           required:
             - type
@@ -4423,8 +4342,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - voidThatTakesActualResult
+                  const: voidThatTakesActualResult
             - $ref: >-
                 #/components/schemas/v2v3VoidFunctionSignatureThatTakesActualResult
           required:
@@ -4473,8 +4391,9 @@ components:
       type: object
       properties:
         template:
-          $ref: '#/components/schemas/v2v3TestCaseTemplate'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/v2v3TestCaseTemplate'
+            - type: 'null'
         testCase:
           $ref: '#/components/schemas/v2v3TestCaseV2'
       required:
@@ -4488,7 +4407,7 @@ components:
       required:
         - template
   securitySchemes:
-    BearerAuth:
+    Bearer:
       type: http
       scheme: bearer
 servers:

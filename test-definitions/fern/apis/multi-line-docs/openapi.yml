@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: multi-line-docs
-  version: ''
+  version: 0.0.0
 paths:
   /users/{userId}:
     get:
@@ -22,7 +22,7 @@ paths:
             type: string
       responses:
         '204':
-          description: ''
+          description: No content
   /users:
     post:
       description: |-
@@ -34,7 +34,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -52,8 +52,9 @@ paths:
                     The name of the user to create.
                     This name is unique to each user.
                 age:
-                  type: integer
-                  nullable: true
+                  type:
+                    - integer
+                    - 'null'
                   description: |-
                     The age of the user.
                     This property is not required.
@@ -90,8 +91,9 @@ components:
              - Bob
              - Charlie
         age:
-          type: integer
-          nullable: true
+          type:
+            - integer
+            - 'null'
           description: The user's age.
       required:
         - id

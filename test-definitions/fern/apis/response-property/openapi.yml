@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: response-property
-  version: ''
+  version: 0.0.0
 paths:
   /movie:
     post:
@@ -11,7 +11,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -30,7 +30,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -49,7 +49,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -68,7 +68,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -87,12 +87,13 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Response'
-                nullable: true
+                anyOf:
+                  - $ref: '#/components/schemas/Response'
+                  - type: 'null'
       requestBody:
         required: true
         content:
@@ -107,7 +108,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -126,7 +127,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -149,8 +150,9 @@ components:
         - data
     OptionalStringResponse:
       title: OptionalStringResponse
-      $ref: '#/components/schemas/StringResponse'
-      nullable: true
+      anyOf:
+        - $ref: '#/components/schemas/StringResponse'
+        - type: 'null'
     WithMetadata:
       title: WithMetadata
       type: object
@@ -171,8 +173,9 @@ components:
         - docs
     OptionalWithDocs:
       title: OptionalWithDocs
-      $ref: '#/components/schemas/WithDocs'
-      nullable: true
+      anyOf:
+        - $ref: '#/components/schemas/WithDocs'
+        - type: 'null'
     Movie:
       title: Movie
       type: object

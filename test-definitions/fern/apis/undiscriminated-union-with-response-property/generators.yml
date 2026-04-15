@@ -1,3 +1,6 @@
+api:
+  specs:
+    - openapi: ./openapi.yml
 default-group: local
 groups:
   local:

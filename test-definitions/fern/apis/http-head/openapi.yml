@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: http-head
-  version: ''
+  version: 0.0.0
 paths:
   /users:
     head:
@@ -11,7 +11,7 @@ paths:
       parameters: []
       responses:
         '204':
-          description: ''
+          description: No content
     get:
       operationId: user_list
       tags:
@@ -24,7 +24,7 @@ paths:
             type: integer
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:

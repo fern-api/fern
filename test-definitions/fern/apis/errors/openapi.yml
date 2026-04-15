@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: errors
-  version: ''
+  version: 0.0.0
 paths:
   /foo1:
     post:
@@ -11,25 +11,25 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/FooResponse'
         '400':
-          description: ''
+          description: BadRequestError
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
         '404':
-          description: ''
+          description: NotFoundError
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
         '500':
-          description: ''
+          description: InternalServerError
           content:
             application/json:
               schema:
@@ -48,31 +48,31 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/FooResponse'
         '400':
-          description: ''
+          description: BadRequestError
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
         '404':
-          description: ''
+          description: NotFoundError
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
         '429':
-          description: ''
+          description: FooTooMuch
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
         '500':
-          description: ''
+          description: InternalServerError
           content:
             application/json:
               schema:
@@ -91,31 +91,40 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/FooResponse'
+              examples:
+                Example1:
+                  value:
+                    bar: hello
         '400':
-          description: ''
+          description: BadRequestError
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
         '404':
-          description: ''
+          description: NotFoundError
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
         '429':
-          description: ''
+          description: FooTooMuch
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
+              examples:
+                Example1:
+                  value:
+                    message: Too much foo
+                    code: 1
         '500':
-          description: ''
+          description: InternalServerError
           content:
             application/json:
               schema:
@@ -126,6 +135,16 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/FooRequest'
+            examples:
+              Example1:
+                value:
+                  bar: hello
+              Example2:
+                value:
+                  bar: hello
+              Example3:
+                value:
+                  bar: hello
 components:
   schemas:
     ErrorBody:
@@ -145,6 +164,8 @@ components:
       properties:
         bar:
           type: string
+          examples:
+            - hello
       required:
         - bar
     FooResponse:
@@ -153,6 +174,8 @@ components:
       properties:
         bar:
           type: string
+          examples:
+            - hello
       required:
         - bar
   securitySchemes: {}

@@ -2,9 +2,17 @@ import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
 
 /**
  * Language-specific fixture prefixes. Fixtures starting with these prefixes
- * are only available for generators whose workspace name starts with the same prefix.
+ * are only available for generators whose workspace name starts with the same prefix,
+ * unless the generator is in LANGUAGE_AGNOSTIC_GENERATORS.
  */
 export const LANGUAGE_SPECIFIC_FIXTURE_PREFIXES = ["csharp", "go", "java", "python", "ruby", "ts"];
+
+/**
+ * Generators that should run all fixtures regardless of language-specific prefixes.
+ * These generators produce language-agnostic output (e.g. OpenAPI specs) and need
+ * to validate against every test definition.
+ */
+export const LANGUAGE_AGNOSTIC_GENERATORS = new Set(["openapi"]);
 
 /**
  * Get all available fixtures for a generator, optionally including output folders.
@@ -36,6 +44,9 @@ export function getAvailableFixturesFromList(
 ): string[] {
     // Get all available fixtures, filtering out language-specific ones that don't match this generator
     const availableFixtures = allFixtures.filter((fixture) => {
+        if (LANGUAGE_AGNOSTIC_GENERATORS.has(generator.workspaceName)) {
+            return true;
+        }
         const matchingPrefix = LANGUAGE_SPECIFIC_FIXTURE_PREFIXES.filter((prefix) => fixture.startsWith(prefix))[0];
         return matchingPrefix == null || generator.workspaceName.startsWith(matchingPrefix);
     });

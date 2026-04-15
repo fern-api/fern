@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: pagination
-  version: ''
+  version: 0.0.0
 paths:
   /{index}/conversations/search:
     post:
@@ -16,14 +16,14 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/PaginatedConversationResponse'
       summary: Search conversations
       security:
-        - BearerAuth: []
+        - Bearer: []
       requestBody:
         required: true
         content:
@@ -41,21 +41,24 @@ paths:
           description: Defaults to first page
           required: false
           schema:
-            type: integer
-            nullable: true
+            type:
+              - integer
+              - 'null'
         - name: per_page
           in: query
           description: Defaults to per page
           required: false
           schema:
-            type: integer
-            nullable: true
+            type:
+              - integer
+              - 'null'
         - name: order
           in: query
           required: false
           schema:
-            $ref: '#/components/schemas/inline-usersOrder'
-            nullable: true
+            anyOf:
+              - $ref: '#/components/schemas/inline-usersOrder'
+              - type: 'null'
         - name: starting_after
           in: query
           description: |-
@@ -63,11 +66,12 @@ paths:
             the next page of results.
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -82,11 +86,12 @@ paths:
           in: query
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -100,7 +105,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -113,8 +118,9 @@ paths:
               type: object
               properties:
                 pagination:
-                  $ref: '#/components/schemas/inline-usersWithCursor'
-                  nullable: true
+                  anyOf:
+                    - $ref: '#/components/schemas/inline-usersWithCursor'
+                    - type: 'null'
                   description: |-
                     The object that contains the cursor used for pagination
                     in order to fetch the next page of results.
@@ -129,21 +135,24 @@ paths:
           description: Defaults to first page
           required: false
           schema:
-            type: integer
-            nullable: true
+            type:
+              - integer
+              - 'null'
         - name: per_page
           in: query
           description: Defaults to per page
           required: false
           schema:
-            type: integer
-            nullable: true
+            type:
+              - integer
+              - 'null'
         - name: order
           in: query
           required: false
           schema:
-            $ref: '#/components/schemas/inline-usersOrder'
-            nullable: true
+            anyOf:
+              - $ref: '#/components/schemas/inline-usersOrder'
+              - type: 'null'
         - name: starting_after
           in: query
           description: |-
@@ -151,11 +160,12 @@ paths:
             the next page of results.
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -171,23 +181,26 @@ paths:
           description: Defaults to first page
           required: false
           schema:
-            type: number
+            type:
+              - number
+              - 'null'
             format: double
-            nullable: true
         - name: per_page
           in: query
           description: Defaults to per page
           required: false
           schema:
-            type: number
+            type:
+              - number
+              - 'null'
             format: double
-            nullable: true
         - name: order
           in: query
           required: false
           schema:
-            $ref: '#/components/schemas/inline-usersOrder'
-            nullable: true
+            anyOf:
+              - $ref: '#/components/schemas/inline-usersOrder'
+              - type: 'null'
         - name: starting_after
           in: query
           description: |-
@@ -195,11 +208,12 @@ paths:
             the next page of results.
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -212,7 +226,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -225,8 +239,9 @@ paths:
               type: object
               properties:
                 pagination:
-                  $ref: '#/components/schemas/inline-usersWithPage'
-                  nullable: true
+                  anyOf:
+                    - $ref: '#/components/schemas/inline-usersWithPage'
+                    - type: 'null'
                   description: |-
                     The object that contains the offset used for pagination
                     in order to fetch the next page of results.
@@ -241,8 +256,9 @@ paths:
           description: Defaults to first page
           required: false
           schema:
-            type: integer
-            nullable: true
+            type:
+              - integer
+              - 'null'
         - name: limit
           in: query
           description: |-
@@ -251,17 +267,19 @@ paths:
             paginated endpoint.
           required: false
           schema:
-            type: integer
-            nullable: true
+            type:
+              - integer
+              - 'null'
         - name: order
           in: query
           required: false
           schema:
-            $ref: '#/components/schemas/inline-usersOrder'
-            nullable: true
+            anyOf:
+              - $ref: '#/components/schemas/inline-usersOrder'
+              - type: 'null'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -277,8 +295,9 @@ paths:
           description: Defaults to first page
           required: false
           schema:
-            type: integer
-            nullable: true
+            type:
+              - integer
+              - 'null'
         - name: limit
           in: query
           description: |-
@@ -287,17 +306,19 @@ paths:
             paginated endpoint.
           required: false
           schema:
-            type: integer
-            nullable: true
+            type:
+              - integer
+              - 'null'
         - name: order
           in: query
           required: false
           schema:
-            $ref: '#/components/schemas/inline-usersOrder'
-            nullable: true
+            anyOf:
+              - $ref: '#/components/schemas/inline-usersOrder'
+              - type: 'null'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -312,12 +333,13 @@ paths:
           in: query
           required: false
           schema:
-            type: string
+            type:
+              - string
+              - 'null'
             format: uuid
-            nullable: true
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -332,12 +354,13 @@ paths:
           in: query
           required: false
           schema:
-            type: string
+            type:
+              - string
+              - 'null'
             format: uuid
-            nullable: true
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -356,11 +379,12 @@ paths:
             the next page of results.
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -375,11 +399,12 @@ paths:
           in: query
           required: false
           schema:
-            type: integer
-            nullable: true
+            type:
+              - integer
+              - 'null'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -395,21 +420,24 @@ paths:
           description: Defaults to first page
           required: false
           schema:
-            type: integer
-            nullable: true
+            type:
+              - integer
+              - 'null'
         - name: per_page
           in: query
           description: Defaults to per page
           required: false
           schema:
-            type: integer
-            nullable: true
+            type:
+              - integer
+              - 'null'
         - name: order
           in: query
           required: false
           schema:
-            $ref: '#/components/schemas/Order'
-            nullable: true
+            anyOf:
+              - $ref: '#/components/schemas/Order'
+              - type: 'null'
         - name: starting_after
           in: query
           description: |-
@@ -417,11 +445,12 @@ paths:
             the next page of results.
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -436,11 +465,12 @@ paths:
           in: query
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -453,7 +483,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -466,8 +496,9 @@ paths:
               type: object
               properties:
                 pagination:
-                  $ref: '#/components/schemas/WithCursor'
-                  nullable: true
+                  anyOf:
+                    - $ref: '#/components/schemas/WithCursor'
+                    - type: 'null'
                   description: |-
                     The object that contains the cursor used for pagination
                     in order to fetch the next page of results.
@@ -483,11 +514,20 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListUsersTopLevelCursorPaginationResponse'
+              examples:
+                WithCursor:
+                  value:
+                    next_cursor: next_cursor_value
+                    data:
+                      - name: Alice
+                        id: 1
+                      - name: Bob
+                        id: 2
       requestBody:
         required: true
         content:
@@ -496,15 +536,22 @@ paths:
               type: object
               properties:
                 cursor:
-                  type: string
-                  nullable: true
+                  type:
+                    - string
+                    - 'null'
                   description: |-
                     The cursor used for pagination in order to fetch
                     the next page of results.
                 filter:
-                  type: string
-                  nullable: true
+                  type:
+                    - string
+                    - 'null'
                   description: An optional filter to apply to the results.
+            examples:
+              WithCursor:
+                value:
+                  cursor: initial_cursor
+                  filter: active
   /users/offset-pagination:
     get:
       operationId: users_listWithOffsetPagination
@@ -516,21 +563,24 @@ paths:
           description: Defaults to first page
           required: false
           schema:
-            type: integer
-            nullable: true
+            type:
+              - integer
+              - 'null'
         - name: per_page
           in: query
           description: Defaults to per page
           required: false
           schema:
-            type: integer
-            nullable: true
+            type:
+              - integer
+              - 'null'
         - name: order
           in: query
           required: false
           schema:
-            $ref: '#/components/schemas/Order'
-            nullable: true
+            anyOf:
+              - $ref: '#/components/schemas/Order'
+              - type: 'null'
         - name: starting_after
           in: query
           description: |-
@@ -538,11 +588,12 @@ paths:
             the next page of results.
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -558,23 +609,26 @@ paths:
           description: Defaults to first page
           required: false
           schema:
-            type: number
+            type:
+              - number
+              - 'null'
             format: double
-            nullable: true
         - name: per_page
           in: query
           description: Defaults to per page
           required: false
           schema:
-            type: number
+            type:
+              - number
+              - 'null'
             format: double
-            nullable: true
         - name: order
           in: query
           required: false
           schema:
-            $ref: '#/components/schemas/Order'
-            nullable: true
+            anyOf:
+              - $ref: '#/components/schemas/Order'
+              - type: 'null'
         - name: starting_after
           in: query
           description: |-
@@ -582,11 +636,12 @@ paths:
             the next page of results.
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -599,7 +654,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -612,8 +667,9 @@ paths:
               type: object
               properties:
                 pagination:
-                  $ref: '#/components/schemas/WithPage'
-                  nullable: true
+                  anyOf:
+                    - $ref: '#/components/schemas/WithPage'
+                    - type: 'null'
                   description: |-
                     The object that contains the offset used for pagination
                     in order to fetch the next page of results.
@@ -628,8 +684,9 @@ paths:
           description: Defaults to first page
           required: false
           schema:
-            type: integer
-            nullable: true
+            type:
+              - integer
+              - 'null'
         - name: limit
           in: query
           description: |-
@@ -638,17 +695,19 @@ paths:
             paginated endpoint.
           required: false
           schema:
-            type: integer
-            nullable: true
+            type:
+              - integer
+              - 'null'
         - name: order
           in: query
           required: false
           schema:
-            $ref: '#/components/schemas/Order'
-            nullable: true
+            anyOf:
+              - $ref: '#/components/schemas/Order'
+              - type: 'null'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -664,8 +723,14 @@ paths:
           description: Defaults to first page
           required: false
           schema:
-            type: integer
-            nullable: true
+            type:
+              - integer
+              - 'null'
+          examples:
+            HasNextPage:
+              value: 1
+            NoNextPage:
+              value: 1
         - name: limit
           in: query
           description: |-
@@ -674,21 +739,66 @@ paths:
             paginated endpoint.
           required: false
           schema:
-            type: integer
-            nullable: true
+            type:
+              - integer
+              - 'null'
+          examples:
+            HasNextPage:
+              value: 3
+            NoNextPage:
+              value: 10
         - name: order
           in: query
           required: false
           schema:
-            $ref: '#/components/schemas/Order'
-            nullable: true
+            anyOf:
+              - $ref: '#/components/schemas/Order'
+              - type: 'null'
+          examples:
+            HasNextPage:
+              value: asc
+            NoNextPage:
+              value: asc
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListUsersPaginationResponse'
+              examples:
+                HasNextPage:
+                  value:
+                    hasNextPage: true
+                    page:
+                      page: 1
+                      next:
+                        page: 2
+                        starting_after: next_cursor
+                      per_page: 3
+                      total_page: 5
+                    total_count: 15
+                    data:
+                      - name: Alice
+                        id: 1
+                      - name: Bob
+                        id: 2
+                NoNextPage:
+                  value:
+                    hasNextPage: false
+                    page:
+                      page: 1
+                      next:
+                        page: 2
+                        starting_after: next_cursor
+                      per_page: 10
+                      total_page: 1
+                    total_count: 2
+                    data:
+                      - name: Alice
+                        id: 1
+                      - name: Bob
+                        id: 2
   /users/extended-results:
     get:
       operationId: users_listWithExtendedResults
@@ -699,12 +809,13 @@ paths:
           in: query
           required: false
           schema:
-            type: string
+            type:
+              - string
+              - 'null'
             format: uuid
-            nullable: true
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -719,12 +830,13 @@ paths:
           in: query
           required: false
           schema:
-            type: string
+            type:
+              - string
+              - 'null'
             format: uuid
-            nullable: true
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -742,11 +854,12 @@ paths:
             the next page of results.
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -764,16 +877,18 @@ paths:
             the next page of results.
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UsernameCursor'
-                nullable: true
+                anyOf:
+                  - $ref: '#/components/schemas/UsernameCursor'
+                  - type: 'null'
   /users/global-config:
     get:
       operationId: users_listWithGlobalConfig
@@ -784,11 +899,12 @@ paths:
           in: query
           required: false
           schema:
-            type: integer
-            nullable: true
+            type:
+              - integer
+              - 'null'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -804,15 +920,49 @@ paths:
           description: Defaults to first page
           required: false
           schema:
-            type: integer
-            nullable: true
+            type:
+              - integer
+              - 'null'
+          examples:
+            WithData:
+              value: 1
+            WithoutData:
+              value: 1
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListUsersOptionalDataPaginationResponse'
+              examples:
+                WithData:
+                  value:
+                    hasNextPage: true
+                    page:
+                      page: 1
+                      next:
+                        page: 2
+                        starting_after: next_cursor
+                      per_page: 10
+                      total_page: 5
+                    total_count: 50
+                    data:
+                      - name: Alice
+                        id: 1
+                      - name: Bob
+                        id: 2
+                WithoutData:
+                  value:
+                    hasNextPage: false
+                    page:
+                      page: 1
+                      next:
+                        page: 2
+                        starting_after: next_cursor
+                      per_page: 10
+                      total_page: 1
+                    total_count: 0
   /users/aliased-data:
     get:
       operationId: users_listWithAliasedData
@@ -824,15 +974,17 @@ paths:
           description: Defaults to first page
           required: false
           schema:
-            type: integer
-            nullable: true
+            type:
+              - integer
+              - 'null'
         - name: per_page
           in: query
           description: Defaults to per page
           required: false
           schema:
-            type: integer
-            nullable: true
+            type:
+              - integer
+              - 'null'
         - name: starting_after
           in: query
           description: |-
@@ -840,11 +992,12 @@ paths:
             the next page of results.
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -864,8 +1017,9 @@ components:
       type: object
       properties:
         after:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         data:
           type: array
           items:
@@ -882,11 +1036,13 @@ components:
       type: object
       properties:
         operator:
-          $ref: '#/components/schemas/MultipleFilterSearchRequestOperator'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/MultipleFilterSearchRequestOperator'
+            - type: 'null'
         value:
-          $ref: '#/components/schemas/MultipleFilterSearchRequestValue'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/MultipleFilterSearchRequestValue'
+            - type: 'null'
     MultipleFilterSearchRequestOperator:
       title: MultipleFilterSearchRequestOperator
       type: string
@@ -907,14 +1063,17 @@ components:
       type: object
       properties:
         field:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         operator:
-          $ref: '#/components/schemas/SingleFilterSearchRequestOperator'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/SingleFilterSearchRequestOperator'
+            - type: 'null'
         value:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
     SingleFilterSearchRequestOperator:
       title: SingleFilterSearchRequestOperator
       type: string
@@ -934,8 +1093,9 @@ components:
       type: object
       properties:
         pagination:
-          $ref: '#/components/schemas/StartingAfterPaging'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/StartingAfterPaging'
+            - type: 'null'
         query:
           $ref: '#/components/schemas/SearchRequestQuery'
       required:
@@ -949,8 +1109,9 @@ components:
           items:
             $ref: '#/components/schemas/Conversation'
         pages:
-          $ref: '#/components/schemas/CursorPages'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/CursorPages'
+            - type: 'null'
         total_count:
           type: integer
         type:
@@ -965,17 +1126,21 @@ components:
       type: object
       properties:
         next:
-          $ref: '#/components/schemas/StartingAfterPaging'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/StartingAfterPaging'
+            - type: 'null'
         page:
-          type: integer
-          nullable: true
+          type:
+            - integer
+            - 'null'
         per_page:
-          type: integer
-          nullable: true
+          type:
+            - integer
+            - 'null'
         total_pages:
-          type: integer
-          nullable: true
+          type:
+            - integer
+            - 'null'
         type:
           type: string
           const: pages
@@ -988,8 +1153,9 @@ components:
         per_page:
           type: integer
         starting_after:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
       required:
         - per_page
     Conversation:
@@ -1011,15 +1177,17 @@ components:
       type: object
       properties:
         page:
-          type: integer
-          nullable: true
+          type:
+            - integer
+            - 'null'
     inline-usersWithCursor:
       title: inline-usersWithCursor
       type: object
       properties:
         cursor:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
     inline-usersUserListContainer:
       title: inline-usersUserListContainer
       type: object
@@ -1037,9 +1205,10 @@ components:
         data:
           $ref: '#/components/schemas/inline-usersUserListContainer'
         next:
-          type: string
+          type:
+            - string
+            - 'null'
           format: uuid
-          nullable: true
       required:
         - data
     inline-usersUserOptionalListContainer:
@@ -1047,10 +1216,11 @@ components:
       type: object
       properties:
         users:
-          type: array
+          type:
+            - array
+            - 'null'
           items:
             $ref: '#/components/schemas/inline-usersUser'
-          nullable: true
     inline-usersUserOptionalListPage:
       title: inline-usersUserOptionalListPage
       type: object
@@ -1058,9 +1228,10 @@ components:
         data:
           $ref: '#/components/schemas/inline-usersUserOptionalListContainer'
         next:
-          type: string
+          type:
+            - string
+            - 'null'
           format: uuid
-          nullable: true
       required:
         - data
     inline-usersUsernameContainer:
@@ -1100,11 +1271,13 @@ components:
       type: object
       properties:
         hasNextPage:
-          type: boolean
-          nullable: true
+          type:
+            - boolean
+            - 'null'
         page:
-          $ref: '#/components/schemas/inline-usersPage'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/inline-usersPage'
+            - type: 'null'
         total_count:
           type: integer
           description: The totall number of /users
@@ -1132,8 +1305,9 @@ components:
           type: integer
           description: The current page
         next:
-          $ref: '#/components/schemas/inline-usersNextPage'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/inline-usersNextPage'
+            - type: 'null'
         per_page:
           type: integer
         total_page:
@@ -1185,15 +1359,17 @@ components:
       type: object
       properties:
         page:
-          type: integer
-          nullable: true
+          type:
+            - integer
+            - 'null'
     WithCursor:
       title: WithCursor
       type: object
       properties:
         cursor:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
     UserListContainer:
       title: UserListContainer
       type: object
@@ -1211,9 +1387,10 @@ components:
         data:
           $ref: '#/components/schemas/UserListContainer'
         next:
-          type: string
+          type:
+            - string
+            - 'null'
           format: uuid
-          nullable: true
       required:
         - data
     UserOptionalListContainer:
@@ -1221,10 +1398,11 @@ components:
       type: object
       properties:
         users:
-          type: array
+          type:
+            - array
+            - 'null'
           items:
             $ref: '#/components/schemas/User'
-          nullable: true
     UserOptionalListPage:
       title: UserOptionalListPage
       type: object
@@ -1232,9 +1410,10 @@ components:
         data:
           $ref: '#/components/schemas/UserOptionalListContainer'
         next:
-          type: string
+          type:
+            - string
+            - 'null'
           format: uuid
-          nullable: true
       required:
         - data
     UsernameContainer:
@@ -1274,14 +1453,18 @@ components:
       type: object
       properties:
         hasNextPage:
-          type: boolean
-          nullable: true
+          type:
+            - boolean
+            - 'null'
         page:
-          $ref: '#/components/schemas/Page'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/Page'
+            - type: 'null'
         total_count:
           type: integer
           description: The totall number of /users
+          examples:
+            - 15
         data:
           type: array
           items:
@@ -1294,19 +1477,24 @@ components:
       type: object
       properties:
         hasNextPage:
-          type: boolean
-          nullable: true
+          type:
+            - boolean
+            - 'null'
         page:
-          $ref: '#/components/schemas/Page'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/Page'
+            - type: 'null'
         total_count:
           type: integer
           description: The totall number of /users
+          examples:
+            - 50
         data:
-          type: array
+          type:
+            - array
+            - 'null'
           items:
             $ref: '#/components/schemas/User'
-          nullable: true
       required:
         - total_count
     ListUsersMixedTypePaginationResponse:
@@ -1327,8 +1515,9 @@ components:
       type: object
       properties:
         next_cursor:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         data:
           type: array
           items:
@@ -1346,11 +1535,13 @@ components:
       type: object
       properties:
         hasNextPage:
-          type: boolean
-          nullable: true
+          type:
+            - boolean
+            - 'null'
         page:
-          $ref: '#/components/schemas/Page'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/Page'
+            - type: 'null'
         total_count:
           type: integer
           description: The totall number of /users
@@ -1367,8 +1558,9 @@ components:
           type: integer
           description: The current page
         next:
-          $ref: '#/components/schemas/NextPage'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/NextPage'
+            - type: 'null'
         per_page:
           type: integer
         total_page:
@@ -1400,6 +1592,6 @@ components:
         - name
         - id
   securitySchemes:
-    BearerAuth:
+    Bearer:
       type: http
       scheme: bearer
