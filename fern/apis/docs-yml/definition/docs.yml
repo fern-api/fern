@@ -823,6 +823,12 @@ types:
         docs: |
           If `hide-feedback` is set to true, the feedback button will not be rendered. This can be overridden for a specific page using the frontmatter.
 
+      mobile-toc:
+        type: optional<boolean>
+        availability: in-development
+        docs: |
+          If `mobile-toc` is set to true, a sticky collapsible table of contents bar will be shown on mobile viewports for guide and overview layout pages.
+
   DocsSettingsConfig:
     properties:
       search-text:

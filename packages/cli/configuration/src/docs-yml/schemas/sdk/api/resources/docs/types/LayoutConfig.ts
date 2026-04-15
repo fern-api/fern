@@ -94,4 +94,6 @@ export interface LayoutConfig {
     hideNavLinks?: boolean;
     /** If `hide-feedback` is set to true, the feedback button will not be rendered. This can be overridden for a specific page using the frontmatter. */
     hideFeedback?: boolean;
+    /** If `mobile-toc` is set to true, a sticky collapsible table of contents bar will be shown on mobile viewports for guide and overview layout pages. */
+    mobileToc?: boolean;
 }
