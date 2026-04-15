@@ -16,7 +16,7 @@ service:
 
     getWithInlinePath:
       docs: GET with path param
-      path: /path/{param}
+      path: /inline-path/{param}
       method: GET
       response: string
       request:
@@ -36,7 +36,7 @@ service:
 
     getWithAllowMultipleQuery:
       docs: GET with multiple of same query param
-      path: ""
+      path: /allow-multiple
       method: GET
       request:
         name: GetWithMultipleQuery
@@ -61,7 +61,7 @@ service:
 
     getWithInlinePathAndQuery:
       docs: GET with path and query params
-      path: /path-query/{param}
+      path: /inline-path-query/{param}
       method: GET
       request:
         name: getWithInlinePathAndQuery
@@ -83,7 +83,7 @@ service:
 
     modifyWithInlinePath:
       docs: PUT to update with path param
-      path: /path/{param}
+      path: /inline-path/{param}
       method: PUT
       request:
         name: ModifyResourceAtInlinedPath
@@ -120,7 +120,7 @@ service:
 
     getWithPathAndErrors:
       docs: GET with path param that can throw errors
-      path: /path/{param}
+      path: /path-with-errors/{param}
       path-parameters:
         param: string
       method: GET

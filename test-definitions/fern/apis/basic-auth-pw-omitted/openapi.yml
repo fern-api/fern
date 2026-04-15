@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  title: basic-auth
+  title: basic-auth-pw-omitted
   version: ''
 paths:
   /basic-auth:

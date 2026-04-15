@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  title: ts-inline-types
+  title: csharp-inline-types
   version: ''
 paths:
   /root/root:
@@ -549,4 +549,318 @@ components:
           description: lorem ipsum
       required:
         - foo
+    UnionTypeWithAliasVariant:
+      title: UnionTypeWithAliasVariant
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - aliasVariant
+            - $ref: '#/components/schemas/AliasVariantType'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - nonAliasVariant
+            - $ref: '#/components/schemas/NonAliasVariant'
+          required:
+            - type
+    UnionTypeWithAliasMapVariant:
+      title: UnionTypeWithAliasMapVariant
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - aliasVariant
+            value:
+              type: object
+              additionalProperties:
+                $ref: '#/components/schemas/OtherAliasVariant'
+          required:
+            - type
+    UnionTypeWithAliasListVariant:
+      title: UnionTypeWithAliasListVariant
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - aliasVariant
+            value:
+              type: array
+              items:
+                $ref: '#/components/schemas/AliasVariant'
+          required:
+            - type
+    UnionTypeWithAliasSetVariant:
+      title: UnionTypeWithAliasSetVariant
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - aliasVariant
+            value:
+              type: array
+              items:
+                $ref: '#/components/schemas/AliasVariant'
+          required:
+            - type
+    UndiscriminatedUnionTypeWithAliasVariant:
+      title: UndiscriminatedUnionTypeWithAliasVariant
+      oneOf:
+        - $ref: '#/components/schemas/AliasVariant'
+        - $ref: '#/components/schemas/NonAliasVariant'
+    UndiscriminatedUnionTypeWithAliasMapVariant:
+      title: UndiscriminatedUnionTypeWithAliasMapVariant
+      oneOf:
+        - type: object
+          additionalProperties:
+            $ref: '#/components/schemas/OtherAliasVariant'
+    UndiscriminatedUnionTypeWithAliasListVariant:
+      title: UndiscriminatedUnionTypeWithAliasListVariant
+      oneOf:
+        - type: array
+          items:
+            $ref: '#/components/schemas/AliasVariant'
+    UndiscriminatedUnionTypeWithAliasSetVariant:
+      title: UndiscriminatedUnionTypeWithAliasSetVariant
+      oneOf:
+        - type: array
+          items:
+            $ref: '#/components/schemas/AliasVariant'
+    ObjectTypeWithAliasType:
+      title: ObjectTypeWithAliasType
+      type: object
+      properties:
+        prop:
+          $ref: '#/components/schemas/AliasProperty'
+      required:
+        - prop
+    ObjectTypeWithMapAliasTypeValue:
+      title: ObjectTypeWithMapAliasTypeValue
+      type: object
+      properties:
+        prop:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/AliasProperty'
+      required:
+        - prop
+    ObjectTypeWithMapAliasTypeKey:
+      title: ObjectTypeWithMapAliasTypeKey
+      type: object
+      properties:
+        prop:
+          type: object
+          additionalProperties:
+            type: string
+      required:
+        - prop
+    ObjectTypeWithMapAliasTypeBoth:
+      title: ObjectTypeWithMapAliasTypeBoth
+      type: object
+      properties:
+        prop:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/OtherAliasProperty'
+      required:
+        - prop
+    ObjectTypeWithListAliasType:
+      title: ObjectTypeWithListAliasType
+      type: object
+      properties:
+        prop:
+          type: array
+          items:
+            $ref: '#/components/schemas/AliasProperty'
+      required:
+        - prop
+    ObjectTypeWithSetAliasType:
+      title: ObjectTypeWithSetAliasType
+      type: object
+      properties:
+        prop:
+          type: array
+          items:
+            $ref: '#/components/schemas/AliasProperty'
+      required:
+        - prop
+    AliasVariant:
+      title: AliasVariant
+      $ref: '#/components/schemas/AliasVariantType'
+    OtherAliasVariant:
+      title: OtherAliasVariant
+      $ref: '#/components/schemas/OtherAliasVariantType'
+    AliasProperty:
+      title: AliasProperty
+      $ref: '#/components/schemas/AliasPropertyType'
+    OtherAliasProperty:
+      title: OtherAliasProperty
+      $ref: '#/components/schemas/OtherAliasPropertyType'
+    AliasVariantType:
+      title: AliasVariantType
+      type: object
+      properties:
+        prop:
+          type: string
+      required:
+        - prop
+    OtherAliasVariantType:
+      title: OtherAliasVariantType
+      type: object
+      properties:
+        prop:
+          type: string
+      required:
+        - prop
+    AliasPropertyType:
+      title: AliasPropertyType
+      type: object
+      properties:
+        prop:
+          type: string
+      required:
+        - prop
+    OtherAliasPropertyType:
+      title: OtherAliasPropertyType
+      type: object
+      properties:
+        prop:
+          type: string
+      required:
+        - prop
+    NonAliasVariant:
+      title: NonAliasVariant
+      type: object
+      properties:
+        prop:
+          type: string
+      required:
+        - prop
+    TypesPropertyCollisionParent:
+      title: TypesPropertyCollisionParent
+      type: object
+      properties:
+        types:
+          type: string
+          description: This property collides with the default nested class name "Types"
+        child:
+          $ref: '#/components/schemas/TypesPropertyCollisionChild'
+          description: >-
+            This inline child should be nested inside InnerTypes instead of
+            Types
+      required:
+        - types
+        - child
+    TypesPropertyCollisionChild:
+      title: TypesPropertyCollisionChild
+      type: object
+      properties:
+        foo:
+          type: string
+      required:
+        - foo
+    TypesPropertyCollisionBaseParent:
+      title: TypesPropertyCollisionBaseParent
+      type: object
+      properties:
+        types:
+          type: string
+          description: >-
+            This inherited property collides with the default nested class name
+            "Types"
+      required:
+        - types
+    TypesPropertyCollisionExtendsParent:
+      title: TypesPropertyCollisionExtendsParent
+      type: object
+      properties:
+        child:
+          $ref: '#/components/schemas/TypesPropertyCollisionExtendsChild'
+          description: >-
+            This inline child should be nested inside InnerTypes since "Types"
+            is inherited
+      required:
+        - child
+      allOf:
+        - $ref: '#/components/schemas/TypesPropertyCollisionBaseParent'
+    TypesPropertyCollisionExtendsChild:
+      title: TypesPropertyCollisionExtendsChild
+      type: object
+      properties:
+        foo:
+          type: string
+      required:
+        - foo
+    UnionWithTypesVariant:
+      title: UnionWithTypesVariant
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - types
+            - $ref: '#/components/schemas/UnionWithTypesVariantInlineType1'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - otherVariant
+            - $ref: '#/components/schemas/UnionWithTypesVariantOtherInlineType1'
+          required:
+            - type
+      description: >-
+        A union with a variant named "types" that could collide with the inline
+        Types class
+    UnionWithTypesVariantInlineType1:
+      title: UnionWithTypesVariantInlineType1
+      type: object
+      description: lorem ipsum
+      properties:
+        foo:
+          type: string
+          description: lorem ipsum
+        ref:
+          $ref: '#/components/schemas/ReferenceType'
+          description: lorem ipsum
+      required:
+        - foo
+        - ref
+    UnionWithTypesVariantOtherInlineType1:
+      title: UnionWithTypesVariantOtherInlineType1
+      type: object
+      description: lorem ipsum
+      properties:
+        bar:
+          type: string
+          description: lorem ipsum
+        ref:
+          $ref: '#/components/schemas/ReferenceType'
+          description: lorem ipsum
+      required:
+        - bar
+        - ref
   securitySchemes: {}

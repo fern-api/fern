@@ -1,5 +1,5 @@
 service:
-  base-path: /
+  base-path: /a/b
   auth: false
   endpoints:
     foo:

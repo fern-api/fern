@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: inferred-auth-implicit-reference
-  version: ""
+  version: ''
 paths:
   /token:
     post:
@@ -10,18 +10,18 @@ paths:
         - Auth
       parameters: []
       responses:
-        "200":
-          description: ""
+        '200':
+          description: ''
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/TokenResponse"
+                $ref: '#/components/schemas/TokenResponse'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/GetTokenRequest"
+              $ref: '#/components/schemas/GetTokenRequest'
   /token/refresh:
     post:
       operationId: auth_refreshToken
@@ -29,36 +29,36 @@ paths:
         - Auth
       parameters: []
       responses:
-        "200":
-          description: ""
+        '200':
+          description: ''
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/TokenResponse"
+                $ref: '#/components/schemas/TokenResponse'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/RefreshTokenRequest"
+              $ref: '#/components/schemas/RefreshTokenRequest'
   /nested-no-auth/get-something:
     get:
       operationId: nestedNoAuth_api_getSomething
       tags:
-        - NestedNoAuthApi
+        - NestedNoAuthAPI
       parameters: []
       responses:
-        "204":
-          description: ""
+        '204':
+          description: ''
   /nested/get-something:
     get:
       operationId: nested_api_getSomething
       tags:
-        - NestedApi
+        - NestedAPI
       parameters: []
       responses:
-        "204":
-          description: ""
+        '204':
+          description: ''
       security: &ref_0
         - InferredAuth: []
   /get-something:
@@ -68,8 +68,8 @@ paths:
         - Simple
       parameters: []
       responses:
-        "204":
-          description: ""
+        '204':
+          description: ''
       security: *ref_0
 components:
   schemas:
