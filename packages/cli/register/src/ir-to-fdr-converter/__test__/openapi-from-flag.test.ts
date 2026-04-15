@@ -3255,4 +3255,70 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
 
         await expect(workspaceSnapshot).toMatchFileSnapshot("__snapshots__/graphql-workspace.snap");
     });
+
+    it("should gracefully handle circular $ref pointers without blocking processing", async () => {
+        // This spec has PlantCategory -> PlantCategoryAlias -> PlantCategory (a $ref cycle)
+        // which triggers @redocly/openapi-core's "Self-referencing circular pointer" error.
+        // The fix catches this error, logs a warning, and continues with the unbundled document.
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures/circular-ref")),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "circular-ref"
+        });
+
+        // Workspace loading should succeed (not throw) despite circular refs
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        // The pipeline should produce valid output despite the circular ref
+        expect(fdrApiDefinition).toBeDefined();
+        expect(fdrApiDefinition.types).toBeDefined();
+        expect(fdrApiDefinition.rootPackage).toBeDefined();
+        expect(intermediateRepresentation.services).toBeDefined();
+
+        // Verify the Plant schema and endpoints came through
+        const serviceEntries = Object.values(intermediateRepresentation.services);
+        expect(serviceEntries.length).toBeGreaterThan(0);
+
+        // Verify FDR has endpoints (pipeline completed successfully)
+        const totalEndpoints =
+            (fdrApiDefinition.rootPackage.endpoints?.length ?? 0) +
+            Object.values(fdrApiDefinition.subpackages).reduce((sum, sub) => sum + (sub.endpoints?.length ?? 0), 0);
+        expect(totalEndpoints).toBeGreaterThan(0);
+    });
 });
