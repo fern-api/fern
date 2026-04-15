@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: accept
-  version: ''
+  version: 0.0.0
 paths:
   /container/:
     delete:
@@ -11,9 +11,9 @@ paths:
       parameters: []
       responses:
         '204':
-          description: ''
+          description: No content
         '404':
-          description: ''
+          description: NotFoundError
           content:
             application/json:
               schema: {}

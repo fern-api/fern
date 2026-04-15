@@ -1,4 +1,28 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.5.0
+  changelogEntry:
+    - summary: |
+        The generator now emits OpenAPI 3.1.0 specifications (previously 3.0.1). As part of this:
+          - `nullable: true` is no longer emitted. Optional/nullable types now use the OAS 3.1
+            idiom: `type: [T, "null"]` for primitives, and `anyOf: [$ref, {type: "null"}]` for
+            references. This fixes the silent no-op where `$ref` + sibling `nullable` did nothing.
+          - Parameters no longer emit both `example` and `examples` (they are mutually exclusive
+            in OAS 3.0 and 3.1). `examples` is preferred when present.
+          - `info.version` is populated with a non-empty default (`"0.0.0"`) instead of an empty
+            string, which violated the spec.
+          - `exclusiveMinimum`/`exclusiveMaximum` now emit as numbers (JSON Schema 2020-12)
+            instead of the 3.0-era boolean format.
+          - Single-element enums and union discriminant properties now use `const` instead of
+            `enum: [singleValue]`.
+          - Redundant `additionalProperties: true` is no longer emitted (defaults to true in 3.1).
+          - Schema property examples use the 3.1 `examples` array instead of the deprecated
+            singular `example` keyword.
+          - Response descriptions now have meaningful defaults instead of empty strings.
+        This is a breaking change for consumers relying on OAS 3.0 tooling.
+      type: feat
+  createdAt: "2026-04-13"
+  irVersion: 66
+
 - version: 0.4.0-rc.0
   changelogEntry:
     - summary: |

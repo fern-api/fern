@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Improve auto-versioning prompts for better SDK version bump determination and changelog quality.
+    Commit type now matches version bump severity, per-chunk changelog entries use category tags,
+    consolidation prompt deduplicates aggressively, and version context is passed to consolidation.
+  type: feat

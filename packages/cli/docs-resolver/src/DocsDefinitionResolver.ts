@@ -521,7 +521,7 @@ export class DocsDefinitionResolver {
             pages[DocsV1Write.PageId(relativePageFilepath)] = {
                 markdown: stripMdxComments(markdown),
                 editThisPageUrl: editThisPageUrl ? DocsV1Write.Url(editThisPageUrl) : undefined,
-                editThisPageLaunch: editThisPageLaunch as DocsV1Write.EditThisPageLaunch,
+                editThisPageLaunch: editThisPageLaunch as DocsV1Write.EditThisPageLaunch | undefined,
                 rawMarkdown: rawMarkdown
             };
         });
@@ -873,7 +873,7 @@ export class DocsDefinitionResolver {
                 this.parsedDocsConfig.announcement != null
                     ? { text: this.parsedDocsConfig.announcement.message }
                     : undefined,
-            editThisPageLaunch: (this.editThisPage?.launch ?? "dashboard") as DocsV1Write.EditThisPageLaunch,
+            editThisPageLaunch: this.editThisPage?.launch as DocsV1Write.EditThisPageLaunch | undefined,
             pageActions: this.convertPageActions(),
             theme:
                 this.parsedDocsConfig.theme != null
@@ -2287,8 +2287,8 @@ export class DocsDefinitionResolver {
 function createEditThisPageUrl(
     editThisPage: docsYml.RawSchemas.FernDocsConfig.EditThisPageConfig | undefined,
     pageFilepath: string
-): { url: string | undefined; launch: string } {
-    const launch = editThisPage?.launch ?? "dashboard";
+): { url: string | undefined; launch: string | undefined } {
+    const launch = editThisPage?.launch;
 
     if (editThisPage?.github == null) {
         return { url: undefined, launch };

@@ -2,6 +2,7 @@ import { generatorsYml, loadGeneratorsConfiguration } from "@fern-api/configurat
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { Project } from "@fern-api/project-loader";
+import { CliError } from "@fern-api/task-context";
 import * as fs from "fs";
 import { readFile, writeFile } from "fs/promises";
 import { buildClientSchema, getIntrospectionQuery, IntrospectionQuery, printSchema } from "graphql";
@@ -9,7 +10,6 @@ import yaml from "js-yaml";
 import { Readable } from "stream";
 import { finished } from "stream/promises";
 import { ReadableStream } from "stream/web";
-
 import { CliContext } from "../../cli-context/CliContext.js";
 
 async function fetchAndWriteFile(url: string, path: string, logger: Logger, indent: number): Promise<void> {
@@ -72,7 +72,10 @@ function isIntrospectionResult(data: unknown): boolean {
 // Helper function to extract introspection data from response
 function extractIntrospectionData(data: unknown): IntrospectionQuery {
     if (!data || typeof data !== "object") {
-        throw new Error("Data does not contain valid GraphQL introspection result");
+        throw new CliError({
+            message: "Data does not contain valid GraphQL introspection result",
+            code: CliError.Code.InternalError
+        });
     }
 
     // If it has __schema directly, return it
@@ -85,7 +88,10 @@ function extractIntrospectionData(data: unknown): IntrospectionQuery {
         return data.data as IntrospectionQuery;
     }
 
-    throw new Error("Data does not contain valid GraphQL introspection result");
+    throw new CliError({
+        message: "Data does not contain valid GraphQL introspection result",
+        code: CliError.Code.InternalError
+    });
 }
 
 // Try GraphQL POST introspection approach
@@ -290,7 +296,7 @@ export async function fetchGraphQLSchemaWithAutoDetection(url: string, path: str
         `1. Accepts GraphQL introspection queries via POST, or\n` +
         `2. Returns introspection results directly via GET`;
 
-    throw new Error(errorMessage);
+    throw new CliError({ message: errorMessage, code: CliError.Code.InternalError });
 }
 
 export async function updateApiSpec({

@@ -1,4 +1,4 @@
-import { getOriginalName } from "@fern-api/ir-utils";
+import { getOriginalName, getWireValue } from "@fern-api/ir-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { createHash } from "crypto";
 
@@ -71,12 +71,17 @@ export class WireMock {
         }
 
         // Determine which URL paths have both SSE and non-SSE endpoints (need body pattern matching)
-        const pathsNeedingBodyPatterns = new Set<string>();
+        // Also extract the stream condition property name from the SSE endpoint's example request body
+        const pathsNeedingBodyPatterns = new Map<string, string>();
         for (const [key, endpoints] of endpointsByPathAndMethod) {
             const hasSse = endpoints.some((e) => e.isSse);
             const hasNonSse = endpoints.some((e) => !e.isSse);
             if (hasSse && hasNonSse) {
-                pathsNeedingBodyPatterns.add(key);
+                const sseEndpoint = endpoints.find((e) => e.isSse);
+                const streamConditionProperty = sseEndpoint
+                    ? this.findStreamConditionProperty(sseEndpoint.endpoint)
+                    : undefined;
+                pathsNeedingBodyPatterns.set(key, streamConditionProperty ?? "stream");
             }
         }
 
@@ -95,8 +100,14 @@ export class WireMock {
                     const example = exampleWrapper.example;
                     const urlPath = this.buildUrlPathTemplate(endpoint);
                     const key = `${endpoint.method}:${urlPath}`;
-                    const needsBodyPattern = pathsNeedingBodyPatterns.has(key);
-                    const mapping = this.convertExampleToMapping(ir, service, endpoint, example, needsBodyPattern);
+                    const streamConditionProperty = pathsNeedingBodyPatterns.get(key);
+                    const mapping = this.convertExampleToMapping(
+                        ir,
+                        service,
+                        endpoint,
+                        example,
+                        streamConditionProperty
+                    );
                     if (mapping) {
                         mappings.push(mapping);
                     }
@@ -149,7 +160,7 @@ export class WireMock {
         service: FernIr.HttpService,
         endpoint: FernIr.HttpEndpoint,
         example: FernIr.ExampleEndpointCall | undefined,
-        needsBodyPattern: boolean
+        streamConditionProperty: string | undefined
     ): WireMockMapping | null {
         // Build URL path template
         const urlPathTemplate = this.buildUrlPathTemplate(endpoint);
@@ -171,7 +182,7 @@ export class WireMock {
         for (const param of example?.queryParameters || []) {
             const paramValue = this.exampleToQueryOrHeaderValue({ value: param.value });
             if (paramValue !== undefined) {
-                const paramName = param.name?.wireValue;
+                const paramName = param.name != null ? getWireValue(param.name) : undefined;
                 if (paramName) {
                     queryParameters[paramName] = { equalTo: paramValue };
                 }
@@ -199,7 +210,8 @@ export class WireMock {
                 }
             } else if (example.response.type === "error") {
                 // Extract status code from error
-                const errorName = example.response.error?.name?.originalName;
+                const errorName =
+                    example.response.error?.name != null ? getOriginalName(example.response.error.name) : undefined;
                 if (errorName === "NotFoundError") {
                     status = 404;
                 } else if (errorName === "InternalServerError") {
@@ -258,13 +270,13 @@ export class WireMock {
 
         // Build descriptive name
         const endpointName = endpoint.displayName || getOriginalName(endpoint.name);
-        const exampleName = typeof example?.name === "string" ? example.name : "default";
+        const exampleName = example?.name != null ? getOriginalName(example.name) : "default";
         const name = `${endpointName} - ${exampleName}`;
         const uuid = this.deterministicUUIDv4(`${name}-${endpoint.id}-${urlPathTemplate}-${endpoint.method}`);
 
         // Only add body patterns when there are both SSE and non-SSE endpoints for the same URL path
         // This allows WireMock to differentiate between streaming and non-streaming requests
-        const shouldAddBodyPattern = needsBodyPattern && isSseResponse;
+        const shouldAddBodyPattern = streamConditionProperty != null && isSseResponse;
 
         // Build auth header matchers for endpoints that require authentication.
         const authHeaders: Record<string, { matches?: string; equalTo?: string }> = {};
@@ -292,7 +304,7 @@ export class WireMock {
                         authHeaders["Authorization"] = { matches: "Bearer .+" };
                         break;
                     case "header": {
-                        const headerName = scheme.name?.wireValue;
+                        const headerName = scheme.name != null ? getWireValue(scheme.name) : undefined;
                         if (headerName) {
                             authHeaders[headerName] = { matches: ".+" };
                         }
@@ -313,8 +325,10 @@ export class WireMock {
                 queryParameters: Object.keys(queryParameters).length > 0 ? queryParameters : undefined,
                 formParameters: {},
                 // For SSE endpoints that share a URL path with non-SSE endpoints,
-                // add body pattern to match stream: true
-                bodyPatterns: shouldAddBodyPattern ? [{ matchesJsonPath: "$[?(@.stream == true)]" }] : undefined
+                // add body pattern to match the stream condition property
+                bodyPatterns: shouldAddBodyPattern
+                    ? [{ matchesJsonPath: `$[?(@.${streamConditionProperty} == true)]` }]
+                    : undefined
             },
             response: {
                 status,
@@ -406,6 +420,36 @@ export class WireMock {
             case "unknown":
                 return undefined;
         }
+    }
+
+    private findStreamConditionProperty(endpoint: FernIr.HttpEndpoint): string | undefined {
+        const exampleWrapper = endpoint.userSpecifiedExamples[0] ?? endpoint.autogeneratedExamples[0];
+        const example = exampleWrapper?.example;
+        if (example?.request?.type === "inlinedRequestBody") {
+            // Look for a boolean property set to true in the request body
+            for (const prop of example.request.properties) {
+                if (prop.value.jsonExample === true) {
+                    const wireValue = typeof prop.name === "string" ? prop.name : prop.name?.wireValue;
+                    if (wireValue) {
+                        return wireValue;
+                    }
+                }
+            }
+        }
+        // Fall back to checking jsonExample at the top level
+        if (
+            example?.request?.type === "reference" &&
+            typeof example.request.jsonExample === "object" &&
+            example.request.jsonExample !== null
+        ) {
+            const json = example.request.jsonExample as Record<string, unknown>;
+            for (const [key, value] of Object.entries(json)) {
+                if (value === true) {
+                    return key;
+                }
+            }
+        }
+        return undefined;
     }
 
     private extractExampleValue(

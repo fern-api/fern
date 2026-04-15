@@ -1,7 +1,7 @@
 import { createOrganizationIfDoesNotExist } from "@fern-api/auth";
 import { createVenusService } from "@fern-api/core";
 import { askToLogin } from "@fern-api/login";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 
 export async function generateToken({
@@ -26,16 +26,27 @@ export async function generateToken({
     response.error._visit({
         organizationNotFoundError: () =>
             taskContext.failAndThrow(
-                `Failed to create token because the organization ${orgId} was not found. Please reach out to support@buildwithfern.com`
+                `Failed to create token because the organization ${orgId} was not found. Please reach out to support@buildwithfern.com`,
+                undefined,
+                { code: CliError.Code.AuthError }
             ),
         unauthorizedError: () =>
             taskContext.failAndThrow(
-                `Failed to create token because you are not in the ${orgId} organization. Please reach out to support@buildwithfern.com`
+                `Failed to create token because you are not in the ${orgId} organization. Please reach out to support@buildwithfern.com`,
+                undefined,
+                { code: CliError.Code.AuthError }
             ),
         missingOrgPermissionsError: () =>
             taskContext.failAndThrow(
-                `Failed to create token because you do not have the required permissions in the ${orgId} organization. Please reach out to support@buildwithfern.com`
+                `Failed to create token because you do not have the required permissions in the ${orgId} organization. Please reach out to support@buildwithfern.com`,
+                undefined,
+                { code: CliError.Code.AuthError }
             ),
-        _other: () => taskContext.failAndThrow("Failed to create token. Please reach out to support@buildwithfern.com")
+        _other: () =>
+            taskContext.failAndThrow(
+                "Failed to create token. Please reach out to support@buildwithfern.com",
+                undefined,
+                { code: CliError.Code.AuthError }
+            )
     });
 }

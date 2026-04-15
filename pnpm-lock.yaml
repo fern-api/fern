@@ -49,8 +49,8 @@ catalogs:
       specifier: ^0.0.5297
       version: 0.0.5297
     '@fern-fern/fiddle-sdk':
-      specifier: 0.0.775
-      version: 0.0.775
+      specifier: 0.0.64
+      version: 0.0.64
     '@fern-fern/generator-exec-sdk':
       specifier: ^0.0.1167
       version: 0.0.1167
@@ -291,6 +291,9 @@ catalogs:
     domhandler:
       specifier: ^5.0.3
       version: 5.0.3
+    es-toolkit:
+      specifier: ^1.45.1
+      version: 1.45.1
     esbuild:
       specifier: ^0.27.3
       version: 0.27.7
@@ -589,15 +592,10 @@ overrides:
   qs: 6.15.0
   url-join: ^4.0.1
   '@fern-api/fdr-sdk': 0.145.12-b50d999d1
-  es-toolkit: ^1.45.1
-  ts-essentials: ^10.1.1
   form-data: ^4.0.4
   '@fern-api/ui-core-utils': 0.145.12-b50d999d1
   vite: ^7.3.2
   yauzl: ^3.2.1
-  brace-expansion: '>=5.0.5'
-  path-to-regexp@~0.1.12: 0.1.13
-  defu: '>=6.1.5'
 
 importers:
 
@@ -1656,8 +1654,8 @@ importers:
         specifier: workspace:*
         version: link:../browser-compatible-base
       '@fern-fern/ir-sdk':
-        specifier: ^62.6.0
-        version: 62.6.0
+        specifier: ^66.0.0
+        version: 66.0.0
       lodash-es:
         specifier: 'catalog:'
         version: 4.18.1
@@ -1783,8 +1781,8 @@ importers:
         specifier: 'catalog:'
         version: 0.0.1167
       '@fern-fern/ir-sdk':
-        specifier: ^62.6.0
-        version: 62.6.0
+        specifier: ^66.0.0
+        version: 66.0.0
       '@types/node':
         specifier: 'catalog:'
         version: 22.19.17
@@ -1840,8 +1838,8 @@ importers:
         specifier: 'catalog:'
         version: 0.0.1167
       '@fern-fern/ir-sdk':
-        specifier: ^62.6.0
-        version: 62.6.0
+        specifier: ^66.0.0
+        version: 66.0.0
       '@types/node':
         specifier: 'catalog:'
         version: 22.19.17
@@ -4416,7 +4414,7 @@ importers:
         version: link:../workspace/loader
       '@fern-fern/fiddle-sdk':
         specifier: 'catalog:'
-        version: 0.0.775
+        version: 0.0.64
       '@fern-fern/generators-sdk':
         specifier: 'catalog:'
         version: 0.114.0-5745f9e74
@@ -4825,7 +4823,7 @@ importers:
         version: link:../yaml/loader
       '@fern-fern/fiddle-sdk':
         specifier: 'catalog:'
-        version: 0.0.775
+        version: 0.0.64
       '@fern-fern/generators-sdk':
         specifier: 'catalog:'
         version: 0.114.0-5745f9e74
@@ -4945,7 +4943,7 @@ importers:
         version: link:../../commons/path-utils
       '@fern-fern/fiddle-sdk':
         specifier: 'catalog:'
-        version: 0.0.775
+        version: 0.0.64
       zod:
         specifier: ^4.3.6
         version: 4.3.6
@@ -4988,7 +4986,7 @@ importers:
         version: link:../task-context
       '@fern-fern/fiddle-sdk':
         specifier: 'catalog:'
-        version: 0.0.775
+        version: 0.0.64
       '@fern-fern/generators-sdk':
         specifier: 'catalog:'
         version: 0.114.0-5745f9e74
@@ -6077,7 +6075,7 @@ importers:
         version: link:../../../workspace/loader
       '@fern-fern/fiddle-sdk':
         specifier: 'catalog:'
-        version: 0.0.775
+        version: 0.0.64
       '@fern-fern/generator-exec-sdk':
         specifier: 'catalog:'
         version: 0.0.1167
@@ -6234,7 +6232,7 @@ importers:
         version: link:../../../workspace/loader
       '@fern-fern/fiddle-sdk':
         specifier: 'catalog:'
-        version: 0.0.775
+        version: 0.0.64
       axios:
         specifier: 'catalog:'
         version: 1.15.0
@@ -6965,7 +6963,7 @@ importers:
         version: link:../../api-importers/v3-importer-commons
       '@fern-fern/fiddle-sdk':
         specifier: 'catalog:'
-        version: 0.0.775
+        version: 0.0.64
       '@open-rpc/meta-schema':
         specifier: 'catalog:'
         version: 1.14.9
@@ -7390,7 +7388,7 @@ importers:
         version: link:../../cli/task-context
       '@fern-fern/fiddle-sdk':
         specifier: 'catalog:'
-        version: 0.0.775
+        version: 0.0.64
       '@redocly/openapi-core':
         specifier: 'catalog:'
         version: 1.34.11
@@ -7688,8 +7686,8 @@ importers:
         specifier: workspace:*
         version: link:../ir-utils
       '@fern-fern/ir-sdk':
-        specifier: ^61.7.0
-        version: 61.7.0
+        specifier: ^66.0.0
+        version: 66.0.0
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
@@ -7792,7 +7790,7 @@ importers:
         version: 0.0.5297
       '@fern-fern/fiddle-sdk':
         specifier: 'catalog:'
-        version: 0.0.775
+        version: 0.0.64
       '@fern-fern/generators-sdk':
         specifier: 'catalog:'
         version: 0.114.0-5745f9e74
@@ -7816,13 +7814,13 @@ importers:
         specifier: workspace:*
         version: link:../commons/core-utils
       '@fern-api/replay':
-        specifier: 0.10.2
-        version: 0.10.2
+        specifier: 0.10.4
+        version: 0.10.4
       '@octokit/rest':
         specifier: 'catalog:'
         version: 22.0.1
       es-toolkit:
-        specifier: ^1.45.1
+        specifier: 'catalog:'
         version: 1.45.1
       tmp-promise:
         specifier: 'catalog:'
@@ -8015,7 +8013,7 @@ importers:
         version: link:../cli/workspace/loader
       '@fern-fern/fiddle-sdk':
         specifier: 'catalog:'
-        version: 0.0.775
+        version: 0.0.64
       '@fern-fern/generators-sdk':
         specifier: 'catalog:'
         version: 0.114.0-5745f9e74
@@ -9339,8 +9337,8 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
-  '@fern-api/replay@0.10.2':
-    resolution: {integrity: sha512-lUkmqtHqQw5H6Zm6efC+qYcOAVJ+XbeVs+BR/X1Ug39DjupaIjxUT3ADBks0A/2wtWQmkxb1ZSEUdc+J4kBT1g==}
+  '@fern-api/replay@0.10.4':
+    resolution: {integrity: sha512-j/stjn9QMrFPnuLy0KNCwb4rM8ruq7nPtem1ZD5d8E+T7q+yxx1R3QsIaKZcKwFp/LFoyf8PPLhOAa6H8il8WQ==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -9357,8 +9355,9 @@ packages:
   '@fern-fern/fdr-test-sdk@0.0.5297':
     resolution: {integrity: sha512-jrZUZ6oIA64LHtrv77xEq0X7qJhT9xRMGWhKcLjIUArMsD7h6KMWUHVdoB/1MP0Mz/uL/E2xmM31SOgJicpIcA==}
 
-  '@fern-fern/fiddle-sdk@0.0.775':
-    resolution: {integrity: sha512-6X9GausW5nlOnV62tiAFye3H2fTM0nEQlfsZBZVaMADI1o0aqT2TrYuR9zLMH5ZYv21AHYXeCheoWAVIjuXRxA==}
+  '@fern-fern/fiddle-sdk@0.0.64':
+    resolution: {integrity: sha512-ddMzS76Aj64H0A+EFUf00C4ZARIJ0Noy3Dl9jYFflDdkCRUTR+vilwuyEF2XUid2EvrdfG+NmIgEw//jO04D7w==}
+    engines: {node: '>=18.0.0'}
 
   '@fern-fern/generator-cli-sdk@0.1.8':
     resolution: {integrity: sha512-sQPt1AALvDStOXYhkEB0tBLLkEcxn940WhWmSot8dMfyQFg1G4n+Ovz8cH9N+MsebarCZP0IE3NP+oxQOFAuiA==}
@@ -9382,12 +9381,12 @@ packages:
     resolution: {integrity: sha512-uo1+fMnJOw5ApWVmKzb5wcLggjS4te3N8QorMClttA6DcBpgn0x1HbSl823oSyFvdqNV9U7GjmeQ+kzX1lWJUg==}
     engines: {node: '>=18.0.0'}
 
-  '@fern-fern/ir-sdk@66.1.0':
-    resolution: {integrity: sha512-Gq/sxhxFtXIFnsDorSnmkBO9QTAgrM51GDuxx4uGXyUARwoKhGOhSx+AM+6kMVVUHcUHoZ8FDG7sGIOOryDjvQ==}
-    engines: {node: '>=18.0.0'}
-
   '@fern-fern/ir-sdk@66.0.0-alpha.1':
     resolution: {integrity: sha512-scSdUIo0E30ES3Jvx6ox7kby7ZB8jAVDB/52a4TaHquQOMJqrR626NtKHVSfKRCZ7Ut0AjeJ9TR4RRN3zoy6og==}
+    engines: {node: '>=18.0.0'}
+
+  '@fern-fern/ir-sdk@66.1.0':
+    resolution: {integrity: sha512-Gq/sxhxFtXIFnsDorSnmkBO9QTAgrM51GDuxx4uGXyUARwoKhGOhSx+AM+6kMVVUHcUHoZ8FDG7sGIOOryDjvQ==}
     engines: {node: '>=18.0.0'}
 
   '@fern-fern/ir-v53-sdk@1.0.1':
@@ -9413,9 +9412,6 @@ packages:
   '@fern-fern/ir-v58-sdk@1.0.1':
     resolution: {integrity: sha512-U2U1OwrFyviyaTDzRloDzgBw7Ko6TrbqQZqZfavDBl1Y1S20Q1QfZLqJfJcMhYQcntRbXKJeReNjYsSJFaBGsQ==}
     engines: {node: '>=18.0.0'}
-
-  '@fern-fern/ir-v59-sdk@0.0.8':
-    resolution: {integrity: sha512-rPk7crlijG0PvgYZ7g2y5EdhSMMohjGJGfGKo0g5BzdBnA4KqD/LHdful62aHuibYFdORjtGy6GHu1nEH5SD3Q==}
 
   '@fern-fern/ir-v59-sdk@1.0.1':
     resolution: {integrity: sha512-8qEWF6LW+Hr4Ssk8CjnyKcPNnEAKWQYid0sSLHhpsytCHuoywmId3i8/UsCkj2PCYqd+L2zX1xOQ+nATTVxeAQ==}
@@ -11260,8 +11256,8 @@ packages:
     engines: {node: '>=6.0.0'}
     hasBin: true
 
-  basic-ftp@5.2.1:
-    resolution: {integrity: sha512-0yaL8JdxTknKDILitVpfYfV2Ob6yb3udX/hK97M7I3jOeznBNxQPtVvTUtnhUkyHlxFWyr5Lvknmgzoc7jf+1Q==}
+  basic-ftp@5.2.2:
+    resolution: {integrity: sha512-1tDrzKsdCg70WGvbFss/ulVAxupNauGnOlgpyjKzeQxzyllBLS0CGLV7tjIXTK3ZQA9/FBEm9qyFFN1bciA6pw==}
     engines: {node: '>=10.0.0'}
 
   before-after-hook@3.0.2:
@@ -12195,8 +12191,8 @@ packages:
   flatted@3.4.2:
     resolution: {integrity: sha512-PjDse7RzhcPkIJwy5t7KPWQSZ9cAbzQXcafsetQoD7sOJRQlGikNbx7yZp2OotDnJyrDcbyRq3Ttb18iYOqkxA==}
 
-  follow-redirects@1.15.11:
-    resolution: {integrity: sha512-deG2P0JfjrTxl50XGCDyfI97ZGVCxIpfKYmfyrQ54n5FO/0gfIES8C/Psl6kWVDolizcaaxZJnTS0QSMxvnsBQ==}
+  follow-redirects@1.16.0:
+    resolution: {integrity: sha512-y5rN/uOsadFT/JfYwhxRS5R7Qce+g3zG97+JrtFZlC9klX/W5hD7iiLzScI4nZqUS7DNUdhPgw4xI8W2LuXlUw==}
     engines: {node: '>=4.0'}
     peerDependencies:
       debug: '*'
@@ -16378,7 +16374,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@fern-api/replay@0.10.2':
+  '@fern-api/replay@0.10.4':
     dependencies:
       minimatch: 10.2.5
       node-diff3: 3.2.0
@@ -16409,15 +16405,7 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@fern-fern/fiddle-sdk@0.0.775':
-    dependencies:
-      form-data: 4.0.5
-      js-base64: 3.7.2
-      node-fetch: 2.7.0
-      qs: 6.15.0
-      url-join: 4.0.1
-    transitivePeerDependencies:
-      - encoding
+  '@fern-fern/fiddle-sdk@0.0.64': {}
 
   '@fern-fern/generator-cli-sdk@0.1.8':
     dependencies:
@@ -16482,9 +16470,9 @@ snapshots:
 
   '@fern-fern/ir-sdk@66.0.0': {}
 
-  '@fern-fern/ir-sdk@66.1.0': {}
-
   '@fern-fern/ir-sdk@66.0.0-alpha.1': {}
+
+  '@fern-fern/ir-sdk@66.1.0': {}
 
   '@fern-fern/ir-v53-sdk@1.0.1': {}
 
@@ -16497,16 +16485,6 @@ snapshots:
   '@fern-fern/ir-v57-sdk@1.0.1': {}
 
   '@fern-fern/ir-v58-sdk@1.0.1': {}
-
-  '@fern-fern/ir-v59-sdk@0.0.8':
-    dependencies:
-      form-data: 4.0.5
-      formdata-node: 6.0.3
-      node-fetch: 2.7.0
-      qs: 6.15.0
-      readable-stream: 4.7.0
-    transitivePeerDependencies:
-      - encoding
 
   '@fern-fern/ir-v59-sdk@1.0.1': {}
 
@@ -18237,7 +18215,7 @@ snapshots:
 
   axios@1.15.0:
     dependencies:
-      follow-redirects: 1.15.11
+      follow-redirects: 1.16.0
       form-data: 4.0.5
       proxy-from-env: 2.1.0
     transitivePeerDependencies:
@@ -18311,7 +18289,7 @@ snapshots:
 
   baseline-browser-mapping@2.10.16: {}
 
-  basic-ftp@5.2.1: {}
+  basic-ftp@5.2.2: {}
 
   before-after-hook@3.0.2: {}
 
@@ -19377,7 +19355,7 @@ snapshots:
 
   flatted@3.4.2: {}
 
-  follow-redirects@1.15.11: {}
+  follow-redirects@1.16.0: {}
 
   for-each@0.3.5:
     dependencies:
@@ -19482,7 +19460,7 @@ snapshots:
 
   get-uri@6.0.5:
     dependencies:
-      basic-ftp: 5.2.1
+      basic-ftp: 5.2.2
       data-uri-to-buffer: 6.0.2
       debug: 4.4.3
     transitivePeerDependencies:

@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: pagination-uri-path
-  version: ''
+  version: 0.0.0
 paths:
   /users/uri:
     get:
@@ -11,7 +11,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -24,7 +24,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -51,8 +51,9 @@ components:
           items:
             $ref: '#/components/schemas/User'
         next:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
       required:
         - data
     ListUsersPathPaginationResponse:
@@ -64,8 +65,9 @@ components:
           items:
             $ref: '#/components/schemas/User'
         next:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
       required:
         - data
   securitySchemes:

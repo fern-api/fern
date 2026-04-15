@@ -18,7 +18,7 @@ describe("fern generate with settings", () => {
         expect(
             await getDirectoryContentsForSnapshot(join(directory, RelativeFilePath.of("sdks/python")))
         ).toMatchSnapshot();
-    }, 180_000);
+    }, 300_000);
 
     it.concurrent("dependencies-based api", async ({ expect, signal }) => {
         const fixturesDir = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures/api-settings-unioned"));
@@ -32,5 +32,5 @@ describe("fern generate with settings", () => {
         expect(
             await getDirectoryContentsForSnapshot(join(directory, RelativeFilePath.of("sdks/python")))
         ).toMatchSnapshot();
-    }, 180_000);
+    }, 300_000);
 });

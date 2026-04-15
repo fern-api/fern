@@ -23,6 +23,7 @@ from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
     ClientWrapperGenerator,
     ConstructorParameter,
 )
+from fern_python.utils.name_resolver import get_name_from_wire_value, resolve_name
 from typing_extensions import Unpack
 
 import fern.ir.resources as ir_types
@@ -184,6 +185,8 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             base_url_example_value=base_url_example_value,
             sync_init_parameters=self._get_constructor_parameters(is_async=False),
             async_init_parameters=self._get_constructor_parameters(is_async=True),
+            sync_constructor_overloads=self._get_constructor_overloads(is_async=False),
+            async_constructor_overloads=self._get_constructor_overloads(is_async=True),
         )
         self._generated_root_client = root_client_builder.build()
 
@@ -822,7 +825,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 continue
             parameters.append(
                 RootClientConstructorParameter(
-                    constructor_parameter_name=header.name.name.snake_case.safe_name,
+                    constructor_parameter_name=resolve_name(get_name_from_wire_value(header.name)).snake_case.safe_name,
                     type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
                     initializer=AST.Expression(AST.TypeHint.none()),
                 )
@@ -1497,8 +1500,10 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         for literal_header in constructor_info.literal_headers:
             client_wrapper_constructor_kwargs.append(
                 (
-                    literal_header.header.name.name.snake_case.safe_name,
-                    AST.Expression(literal_header.header.name.name.snake_case.safe_name),
+                    resolve_name(get_name_from_wire_value(literal_header.header.name)).snake_case.safe_name,
+                    AST.Expression(
+                        resolve_name(get_name_from_wire_value(literal_header.header.name)).snake_case.safe_name
+                    ),
                 )
             )
 
@@ -1583,7 +1588,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         return variables
 
     def _get_server_variable_param_name(self, var: ir_types.ServerVariable) -> str:
-        name = var.name.snake_case.safe_name
+        name = resolve_name(var.name).snake_case.safe_name
         if name in self._RESERVED_CONSTRUCTOR_PARAM_NAMES:
             return f"server_url_{name}"
         return name
@@ -1622,7 +1627,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                         env_class_name = self._context.get_class_name_of_environments()
                         kwargs_lines = []
                         for base_url in env_union.base_urls:
-                            prop_name = base_url.name.snake_case.safe_name
+                            prop_name = resolve_name(base_url.name).snake_case.safe_name
                             template = first_multi_env.url_templates.get(base_url.id)
                             if template is not None:
                                 kwargs_lines.append(f'{prop_name}="{template}".format({format_kwargs})')
@@ -1650,6 +1655,8 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             base_url_example_value: Optional[AST.Expression] = None,
             sync_init_parameters: Optional[Sequence[ConstructorParameter]] = None,
             async_init_parameters: Optional[Sequence[ConstructorParameter]] = None,
+            sync_constructor_overloads: Optional[List[AST.FunctionSignature]] = None,
+            async_constructor_overloads: Optional[List[AST.FunctionSignature]] = None,
         ):
             self._module_path = module_path
             self._class_name = class_name
@@ -1664,6 +1671,8 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             self._oauth_token_override = oauth_token_override
             self._use_kwargs_snippets = use_kwargs_snippets
             self._base_url_example_value = base_url_example_value
+            self._sync_constructor_overloads = sync_constructor_overloads
+            self._async_constructor_overloads = async_constructor_overloads
 
         def build(self) -> GeneratedRootClient:
             def create_class_reference(class_name: str) -> AST.ClassReference:
@@ -1831,11 +1840,13 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     class_reference=async_class_reference,
                     parameters=self._constructor_parameters,
                     init_parameters=self._async_init_parameters,
+                    constructor_overloads=self._async_constructor_overloads,
                 ),
                 sync_instantiations=sync_instantiations,
                 sync_client=RootClient(
                     class_reference=sync_class_reference,
                     parameters=self._constructor_parameters,
                     init_parameters=self._sync_init_parameters,
+                    constructor_overloads=self._sync_constructor_overloads,
                 ),
             )

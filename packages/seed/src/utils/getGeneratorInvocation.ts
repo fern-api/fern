@@ -3,7 +3,6 @@ import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
-import { GithubPublishInfo, PublishOutputModeV2 } from "@fern-fern/fiddle-sdk/api";
 import * as FernFiddleSerialization from "@fern-fern/fiddle-sdk/serialization";
 
 import { OutputMode } from "../config/api/index.js";
@@ -107,7 +106,8 @@ async function getOutputMode({
             if (language == null) {
                 throw new Error("Seed requires a language to be specified to test in publish mode");
             }
-            const publishOutputModeConfig = publishConfig != null ? (publishConfig as PublishOutputModeV2) : undefined;
+            const publishOutputModeConfig =
+                publishConfig != null ? (publishConfig as FernFiddle.PublishOutputModeV2) : undefined;
             return FernFiddle.remoteGen.OutputMode.publishV2(
                 publishOutputModeConfig ?? getPublishInfo({ language, fixtureName })
             );
@@ -123,7 +123,7 @@ function getGithubPublishInfo({
 }: {
     language: generatorsYml.GenerationLanguage;
     fixtureName: string;
-}): GithubPublishInfo | undefined {
+}): FernFiddle.GithubPublishInfo | undefined {
     switch (language) {
         case "java":
             return FernFiddle.GithubPublishInfo.maven({
@@ -177,7 +177,7 @@ function getPublishInfo({
 }: {
     language: generatorsYml.GenerationLanguage;
     fixtureName: string;
-}): PublishOutputModeV2 {
+}): FernFiddle.PublishOutputModeV2 {
     switch (language) {
         case "java":
             return FernFiddle.remoteGen.PublishOutputModeV2.mavenOverride({

@@ -14,7 +14,7 @@ export async function login(
     context: TaskContext,
     { useDeviceCodeFlow = false, email }: { useDeviceCodeFlow?: boolean; email?: string } = {}
 ): Promise<FernUserToken> {
-    await context.instrumentPostHogEvent({
+    context.instrumentPostHogEvent({
         command: "Login initiated"
     });
 

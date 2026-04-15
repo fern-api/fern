@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: nullable-request-body
-  version: ''
+  version: 0.0.0
 paths:
   /optional-request-body/{path_param}:
     post:
@@ -15,7 +15,6 @@ paths:
           required: true
           schema:
             type: string
-          example: path_param
           examples:
             Example1:
               value: path_param
@@ -23,14 +22,16 @@ paths:
           in: query
           required: false
           schema:
-            $ref: '#/components/schemas/PlainObject'
-            nullable: true
+            anyOf:
+              - $ref: '#/components/schemas/PlainObject'
+              - type: 'null'
         - name: query_param_integer
           in: query
           required: false
           schema:
-            type: integer
-            nullable: true
+            type:
+              - integer
+              - 'null'
       responses:
         '200':
           description: Successful Response
@@ -42,7 +43,7 @@ paths:
                   value:
                     key: value
         '422':
-          description: ''
+          description: UnprocessableEntityError
           content:
             application/json:
               schema:
@@ -53,8 +54,9 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PlainObject'
-              nullable: true
+              anyOf:
+                - $ref: '#/components/schemas/PlainObject'
+                - type: 'null'
             examples:
               Example1:
                 value: {}
@@ -65,9 +67,11 @@ components:
       type: object
       properties:
         id:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         name:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
   securitySchemes: {}

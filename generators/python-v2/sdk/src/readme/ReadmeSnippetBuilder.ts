@@ -1,8 +1,10 @@
-import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator";
+import { AbstractReadmeSnippetBuilder, getNameFromWireValue } from "@fern-api/base-generator";
+import { PYTHON_CASE_CONVERTER as caseConverter } from "@fern-api/python-base";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
 
+import { resolveDefaultEnvironmentName } from "../reference/buildReference.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 interface EndpointWithFilepath {
@@ -291,20 +293,21 @@ asyncio.run(main())`
             switch (scheme.type) {
                 case "bearer":
                     args.push(
-                        `    ${scheme.token.snakeCase.unsafeName}="YOUR_${scheme.token.screamingSnakeCase.unsafeName}",`
+                        `    ${caseConverter.snakeUnsafe(scheme.token)}="YOUR_${caseConverter.screamingSnakeUnsafe(scheme.token)}",`
                     );
                     break;
                 case "basic":
                     args.push(
-                        `    ${scheme.username.snakeCase.unsafeName}="YOUR_${scheme.username.screamingSnakeCase.unsafeName}",`
+                        `    ${caseConverter.snakeUnsafe(scheme.username)}="YOUR_${caseConverter.screamingSnakeUnsafe(scheme.username)}",`
                     );
                     args.push(
-                        `    ${scheme.password.snakeCase.unsafeName}="YOUR_${scheme.password.screamingSnakeCase.unsafeName}",`
+                        `    ${caseConverter.snakeUnsafe(scheme.password)}="YOUR_${caseConverter.screamingSnakeUnsafe(scheme.password)}",`
                     );
                     break;
                 case "header": {
-                    const headerName = scheme.name.name.snakeCase.unsafeName;
-                    const headerScreaming = scheme.name.name.screamingSnakeCase.unsafeName;
+                    const schemeName = getNameFromWireValue(scheme.name);
+                    const headerName = caseConverter.snakeUnsafe(schemeName);
+                    const headerScreaming = caseConverter.screamingSnakeUnsafe(schemeName);
                     args.push(`    ${headerName}="YOUR_${headerScreaming}",`);
                     break;
                 }
@@ -488,7 +491,7 @@ print(response.data)  # access the underlying object`
         }
 
         const { subpackage, channel } = websocketInfo;
-        const subpackageName = subpackage.name.snakeCase.safeName;
+        const subpackageName = caseConverter.snakeSafe(subpackage.name);
         // connectMethodName may not exist on older IR SDK versions
         const connectMethodName = (channel as unknown as { connectMethodName?: string }).connectMethodName;
         const connectMethodNameSnakeCase = this.toSnakeCase(connectMethodName ?? "connect");
@@ -668,28 +671,7 @@ ${constructorArg}
         const envClassName = `${this.clientClassName}Environment`;
         const importLine = `from ${this.packageName}.environment import ${envClassName}`;
 
-        let firstEnvName: string | undefined;
-        if (envConfig.environments.type === "singleBaseUrl") {
-            const defaultEnvId = envConfig.defaultEnvironment;
-            const envs = envConfig.environments.environments;
-            if (defaultEnvId != null) {
-                const defaultEnv = envs.find((e) => e.id === defaultEnvId);
-                firstEnvName = defaultEnv?.name.screamingSnakeCase.unsafeName;
-            }
-            if (firstEnvName == null && envs.length > 0 && envs[0] != null) {
-                firstEnvName = envs[0].name.screamingSnakeCase.unsafeName;
-            }
-        } else if (envConfig.environments.type === "multipleBaseUrls") {
-            const defaultEnvId = envConfig.defaultEnvironment;
-            const envs = envConfig.environments.environments;
-            if (defaultEnvId != null) {
-                const defaultEnv = envs.find((e) => e.id === defaultEnvId);
-                firstEnvName = defaultEnv?.name.screamingSnakeCase.unsafeName;
-            }
-            if (firstEnvName == null && envs.length > 0 && envs[0] != null) {
-                firstEnvName = envs[0].name.screamingSnakeCase.unsafeName;
-            }
-        }
+        const firstEnvName = resolveDefaultEnvironmentName(envConfig);
 
         if (firstEnvName == null) {
             return undefined;
@@ -722,14 +704,14 @@ ${constructorArg}
     }
 
     private getEndpointAccessPath(endpoint: EndpointWithFilepath): string {
-        const clientAccessParts = endpoint.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
-        const methodName = endpoint.endpoint.name.snakeCase.unsafeName;
+        const clientAccessParts = endpoint.fernFilepath.allParts.map((part) => caseConverter.snakeSafe(part));
+        const methodName = caseConverter.snakeUnsafe(endpoint.endpoint.name);
         return clientAccessParts.length > 0 ? `${clientAccessParts.join(".")}.${methodName}` : methodName;
     }
 
     private getRawResponseMethodCall(endpoint: EndpointWithFilepath): string {
-        const clientAccessParts = endpoint.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
-        const methodName = endpoint.endpoint.name.snakeCase.unsafeName;
+        const clientAccessParts = endpoint.fernFilepath.allParts.map((part) => caseConverter.snakeSafe(part));
+        const methodName = caseConverter.snakeUnsafe(endpoint.endpoint.name);
         if (clientAccessParts.length > 0) {
             return `client.${clientAccessParts.join(".")}.with_raw_response.${methodName}`;
         }

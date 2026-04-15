@@ -360,7 +360,7 @@ describe("parseCommitMessageForPR", () => {
         expect(prBody).toBe("## Before/After\n```before```\n```after```");
     });
 
-    it("with versionBumpReason -> prepends to body", () => {
+    it("with versionBumpReason but non-MAJOR bump -> reason is not shown", () => {
         const { prTitle, prBody } = parseCommitMessageForPR(
             "Update SDK",
             undefined,
@@ -368,14 +368,23 @@ describe("parseCommitMessageForPR", () => {
             "Minor dependency bump"
         );
         expect(prTitle).toBe("Update SDK");
-        expect(prBody).toContain("**Version Bump:** Minor dependency bump");
+        expect(prBody).not.toContain("Minor dependency bump");
         expect(prBody).toContain("Automated SDK generation by Fern");
     });
 
-    it("versionBumpReason is prepended before prDescription", () => {
-        const { prBody } = parseCommitMessageForPR("Update SDK", undefined, "Custom PR description", "Patch release");
-        expect(prBody.startsWith("**Version Bump:** Patch release")).toBe(true);
+    it("with versionBumpReason and MAJOR bump -> reason is shown as Breaking", () => {
+        const { prBody } = parseCommitMessageForPR(
+            "Update SDK",
+            undefined,
+            "Custom PR description",
+            "Removed getUser endpoint",
+            "1.0.0",
+            "2.0.0",
+            "MAJOR"
+        );
+        expect(prBody).toContain("**Breaking:** Removed getUser endpoint");
         expect(prBody).toContain("Custom PR description");
+        expect(prBody).toContain("1.0.0 \u2192 2.0.0");
     });
 
     it("empty message -> default title 'SDK Generation'", () => {
@@ -386,6 +395,34 @@ describe("parseCommitMessageForPR", () => {
     it("blank/whitespace-only message -> default title 'SDK Generation'", () => {
         const { prTitle } = parseCommitMessageForPR("   ");
         expect(prTitle).toBe("SDK Generation");
+    });
+
+    it("with changelogUrl -> appends full changelog link", () => {
+        const { prBody } = parseCommitMessageForPR(
+            "Update SDK",
+            undefined,
+            "Some changes",
+            undefined,
+            "1.0.0",
+            "1.1.0",
+            "MINOR",
+            "https://github.com/owner/repo/blob/fern-bot/branch/changelog.md"
+        );
+        expect(prBody).toContain("[See full changelog]");
+        expect(prBody).toContain("https://github.com/owner/repo/blob/fern-bot/branch/changelog.md");
+    });
+
+    it("without changelogUrl -> no changelog link appended", () => {
+        const { prBody } = parseCommitMessageForPR(
+            "Update SDK",
+            undefined,
+            "Some changes",
+            undefined,
+            "1.0.0",
+            "1.1.0",
+            "MINOR"
+        );
+        expect(prBody).not.toContain("[See full changelog]");
     });
 });
 

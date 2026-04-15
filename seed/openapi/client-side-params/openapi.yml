@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: client-side-params
-  version: ''
+  version: 0.0.0
 paths:
   /api/resources:
     get:
@@ -45,18 +45,20 @@ paths:
           description: Comma-separated list of fields to include
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
         - name: search
           in: query
           description: Search query
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -89,7 +91,7 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -115,7 +117,7 @@ paths:
             type: integer
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -128,13 +130,14 @@ paths:
               type: object
               properties:
                 query:
-                  type: string
-                  nullable: true
+                  type:
+                    - string
+                    - 'null'
                   description: Search query text
                 filters:
-                  type: object
-                  additionalProperties: true
-                  nullable: true
+                  type:
+                    - object
+                    - 'null'
   /api/users:
     get:
       description: List or search for users
@@ -147,15 +150,17 @@ paths:
           description: Page index of the results to return. First page is 0.
           required: false
           schema:
-            type: integer
-            nullable: true
+            type:
+              - integer
+              - 'null'
         - name: per_page
           in: query
           description: Number of results per page.
           required: false
           schema:
-            type: integer
-            nullable: true
+            type:
+              - integer
+              - 'null'
         - name: include_totals
           in: query
           description: >-
@@ -163,8 +168,9 @@ paths:
             (true) or as a direct array of results (false, default).
           required: false
           schema:
-            type: boolean
-            nullable: true
+            type:
+              - boolean
+              - 'null'
         - name: sort
           in: query
           description: >-
@@ -172,36 +178,41 @@ paths:
             -1 for descending.
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
         - name: connection
           in: query
           description: Connection filter
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
         - name: q
           in: query
           description: Query string following Lucene query string syntax
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
         - name: search_engine
           in: query
           description: Search engine version (v1, v2, or v3)
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
         - name: fields
           in: query
           description: Comma-separated list of fields to include or exclude
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
       responses:
         '200':
           description: >-
@@ -219,7 +230,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -247,18 +258,20 @@ paths:
           description: Comma-separated list of fields to include or exclude
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
         - name: include_fields
           in: query
           description: true to include the fields specified, false to exclude them
           required: false
           schema:
-            type: boolean
-            nullable: true
+            type:
+              - boolean
+              - 'null'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -276,7 +289,7 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -300,7 +313,7 @@ paths:
             type: string
       responses:
         '204':
-          description: ''
+          description: No content
   /api/connections:
     get:
       description: List all connections
@@ -313,25 +326,28 @@ paths:
           description: Filter by strategy type (e.g., auth0, google-oauth2, samlp)
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
         - name: name
           in: query
           description: Filter by connection name
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
         - name: fields
           in: query
           description: Comma-separated list of fields to include
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -355,11 +371,12 @@ paths:
           description: Comma-separated list of fields to include
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -376,50 +393,57 @@ paths:
           description: Comma-separated list of fields to include
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
         - name: include_fields
           in: query
           description: Whether specified fields are included or excluded
           required: false
           schema:
-            type: boolean
-            nullable: true
+            type:
+              - boolean
+              - 'null'
         - name: page
           in: query
           description: Page number (zero-based)
           required: false
           schema:
-            type: integer
-            nullable: true
+            type:
+              - integer
+              - 'null'
         - name: per_page
           in: query
           description: Number of results per page
           required: false
           schema:
-            type: integer
-            nullable: true
+            type:
+              - integer
+              - 'null'
         - name: include_totals
           in: query
           description: Include total count in response
           required: false
           schema:
-            type: boolean
-            nullable: true
+            type:
+              - boolean
+              - 'null'
         - name: is_global
           in: query
           description: Filter by global clients
           required: false
           schema:
-            type: boolean
-            nullable: true
+            type:
+              - boolean
+              - 'null'
         - name: is_first_party
           in: query
           description: Filter by first party clients
           required: false
           schema:
-            type: boolean
-            nullable: true
+            type:
+              - boolean
+              - 'null'
         - name: app_type
           in: query
           description: >-
@@ -427,13 +451,14 @@ paths:
             non_interactive)
           required: false
           schema:
-            type: array
+            type:
+              - array
+              - 'null'
             items:
               type: string
-            nullable: true
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -455,18 +480,20 @@ paths:
           description: Comma-separated list of fields to include
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
         - name: include_fields
           in: query
           description: Whether specified fields are included or excluded
           required: false
           schema:
-            type: boolean
-            nullable: true
+            type:
+              - boolean
+              - 'null'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -482,8 +509,9 @@ components:
         name:
           type: string
         description:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         created_at:
           type: string
           format: date-time
@@ -491,9 +519,9 @@ components:
           type: string
           format: date-time
         metadata:
-          type: object
-          additionalProperties: true
-          nullable: true
+          type:
+            - object
+            - 'null'
       required:
         - id
         - name
@@ -508,11 +536,13 @@ components:
           items:
             $ref: '#/components/schemas/Resource'
         total:
-          type: integer
-          nullable: true
+          type:
+            - integer
+            - 'null'
         next_offset:
-          type: integer
-          nullable: true
+          type:
+            - integer
+            - 'null'
       required:
         - results
     User:
@@ -527,14 +557,17 @@ components:
         email_verified:
           type: boolean
         username:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         phone_number:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         phone_verified:
-          type: boolean
-          nullable: true
+          type:
+            - boolean
+            - 'null'
         created_at:
           type: string
           format: date-time
@@ -542,51 +575,62 @@ components:
           type: string
           format: date-time
         identities:
-          type: array
+          type:
+            - array
+            - 'null'
           items:
             $ref: '#/components/schemas/Identity'
-          nullable: true
         app_metadata:
-          type: object
-          additionalProperties: true
-          nullable: true
+          type:
+            - object
+            - 'null'
         user_metadata:
-          type: object
-          additionalProperties: true
-          nullable: true
+          type:
+            - object
+            - 'null'
         picture:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         name:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         nickname:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         multifactor:
-          type: array
+          type:
+            - array
+            - 'null'
           items:
             type: string
-          nullable: true
         last_ip:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         last_login:
-          type: string
+          type:
+            - string
+            - 'null'
           format: date-time
-          nullable: true
         logins_count:
-          type: integer
-          nullable: true
+          type:
+            - integer
+            - 'null'
         blocked:
-          type: boolean
-          nullable: true
+          type:
+            - boolean
+            - 'null'
         given_name:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         family_name:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
       required:
         - user_id
         - email
@@ -606,11 +650,13 @@ components:
         is_social:
           type: boolean
         access_token:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         expires_in:
-          type: integer
-          nullable: true
+          type:
+            - integer
+            - 'null'
       required:
         - connection
         - user_id
@@ -632,8 +678,9 @@ components:
         length:
           type: integer
         total:
-          type: integer
-          nullable: true
+          type:
+            - integer
+            - 'null'
       required:
         - users
         - start
@@ -646,28 +693,33 @@ components:
         email:
           type: string
         email_verified:
-          type: boolean
-          nullable: true
+          type:
+            - boolean
+            - 'null'
         username:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         password:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         phone_number:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         phone_verified:
-          type: boolean
-          nullable: true
+          type:
+            - boolean
+            - 'null'
         user_metadata:
-          type: object
-          additionalProperties: true
-          nullable: true
+          type:
+            - object
+            - 'null'
         app_metadata:
-          type: object
-          additionalProperties: true
-          nullable: true
+          type:
+            - object
+            - 'null'
         connection:
           type: string
       required:
@@ -678,34 +730,41 @@ components:
       type: object
       properties:
         email:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         email_verified:
-          type: boolean
-          nullable: true
+          type:
+            - boolean
+            - 'null'
         username:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         phone_number:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         phone_verified:
-          type: boolean
-          nullable: true
+          type:
+            - boolean
+            - 'null'
         user_metadata:
-          type: object
-          additionalProperties: true
-          nullable: true
+          type:
+            - object
+            - 'null'
         app_metadata:
-          type: object
-          additionalProperties: true
-          nullable: true
+          type:
+            - object
+            - 'null'
         password:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         blocked:
-          type: boolean
-          nullable: true
+          type:
+            - boolean
+            - 'null'
     Connection:
       title: Connection
       type: object
@@ -718,8 +777,9 @@ components:
           type: string
           description: Connection name
         display_name:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
           description: Display name for the connection
         strategy:
           type: string
@@ -727,30 +787,33 @@ components:
             The identity provider identifier (auth0, google-oauth2, facebook,
             etc.)
         options:
-          type: object
-          additionalProperties: true
-          nullable: true
+          type:
+            - object
+            - 'null'
           description: Connection-specific configuration options
         enabled_clients:
-          type: array
+          type:
+            - array
+            - 'null'
           items:
             type: string
-          nullable: true
           description: List of client IDs that can use this connection
         realms:
-          type: array
+          type:
+            - array
+            - 'null'
           items:
             type: string
-          nullable: true
           description: Applicable realms for enterprise connections
         is_domain_connection:
-          type: boolean
-          nullable: true
+          type:
+            - boolean
+            - 'null'
           description: Whether this is a domain connection
         metadata:
-          type: object
-          additionalProperties: true
-          nullable: true
+          type:
+            - object
+            - 'null'
           description: Additional metadata
       required:
         - id
@@ -765,135 +828,157 @@ components:
           type: string
           description: The unique client identifier
         tenant:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
           description: The tenant name
         name:
           type: string
           description: Name of the client
         description:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
           description: Free text description of the client
         global:
-          type: boolean
-          nullable: true
+          type:
+            - boolean
+            - 'null'
           description: Whether this is a global client
         client_secret:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
           description: The client secret (only for non-public clients)
         app_type:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
           description: The type of application (spa, native, regular_web, non_interactive)
         logo_uri:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
           description: URL of the client logo
         is_first_party:
-          type: boolean
-          nullable: true
+          type:
+            - boolean
+            - 'null'
           description: Whether this client is a first party client
         oidc_conformant:
-          type: boolean
-          nullable: true
+          type:
+            - boolean
+            - 'null'
           description: Whether this client conforms to OIDC specifications
         callbacks:
-          type: array
+          type:
+            - array
+            - 'null'
           items:
             type: string
-          nullable: true
           description: Allowed callback URLs
         allowed_origins:
-          type: array
+          type:
+            - array
+            - 'null'
           items:
             type: string
-          nullable: true
           description: Allowed origins for CORS
         web_origins:
-          type: array
+          type:
+            - array
+            - 'null'
           items:
             type: string
-          nullable: true
           description: Allowed web origins for CORS
         grant_types:
-          type: array
+          type:
+            - array
+            - 'null'
           items:
             type: string
-          nullable: true
           description: Allowed grant types
         jwt_configuration:
-          type: object
-          additionalProperties: true
-          nullable: true
+          type:
+            - object
+            - 'null'
           description: JWT configuration for the client
         signing_keys:
-          type: array
+          type:
+            - array
+            - 'null'
           items:
             type: object
-            additionalProperties: true
-          nullable: true
           description: Client signing keys
         encryption_key:
-          type: object
-          additionalProperties: true
-          nullable: true
+          type:
+            - object
+            - 'null'
           description: Encryption key
         sso:
-          type: boolean
-          nullable: true
+          type:
+            - boolean
+            - 'null'
           description: Whether SSO is enabled
         sso_disabled:
-          type: boolean
-          nullable: true
+          type:
+            - boolean
+            - 'null'
           description: Whether SSO is disabled
         cross_origin_auth:
-          type: boolean
-          nullable: true
+          type:
+            - boolean
+            - 'null'
           description: Whether to use cross-origin authentication
         cross_origin_loc:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
           description: URL for cross-origin authentication
         custom_login_page_on:
-          type: boolean
-          nullable: true
+          type:
+            - boolean
+            - 'null'
           description: Whether a custom login page is enabled
         custom_login_page:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
           description: Custom login page URL
         custom_login_page_preview:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
           description: Custom login page preview URL
         form_template:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
           description: Form template for WS-Federation
         is_heroku_app:
-          type: boolean
-          nullable: true
+          type:
+            - boolean
+            - 'null'
           description: Whether this is a Heroku application
         addons:
-          type: object
-          additionalProperties: true
-          nullable: true
+          type:
+            - object
+            - 'null'
           description: Addons enabled for this client
         token_endpoint_auth_method:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
           description: Requested authentication method for the token endpoint
         client_metadata:
-          type: object
-          additionalProperties: true
-          nullable: true
+          type:
+            - object
+            - 'null'
           description: Metadata associated with the client
         mobile:
-          type: object
-          additionalProperties: true
-          nullable: true
+          type:
+            - object
+            - 'null'
           description: Mobile app settings
       required:
         - client_id
@@ -913,8 +998,9 @@ components:
           type: integer
           description: Number of items returned
         total:
-          type: integer
-          nullable: true
+          type:
+            - integer
+            - 'null'
           description: Total number of items (when include_totals=true)
         clients:
           type: array

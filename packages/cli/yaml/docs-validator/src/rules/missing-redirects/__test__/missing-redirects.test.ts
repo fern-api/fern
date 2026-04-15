@@ -61,6 +61,50 @@ describe("findRemovedSlugs", () => {
         const local = new Map([["docs/welcome.mdx", "welcome"]]);
         expect(findRemovedSlugs([], local)).toEqual([]);
     });
+
+    it("skips removed page when another local page still serves the same slug", () => {
+        const published: MarkdownEntry[] = [
+            { pageId: "docs/welcome.mdx", slug: "welcome" },
+            { pageId: "changelog/2024-01-15.mdx", slug: "changelog" }
+        ];
+        const local = new Map([
+            ["docs/welcome.mdx", "welcome"],
+            ["changelog/overview.mdx", "changelog"]
+        ]);
+        expect(findRemovedSlugs(published, local)).toEqual([]);
+    });
+
+    it("skips moved page when another local page still serves the old slug", () => {
+        const published: MarkdownEntry[] = [{ pageId: "docs/guide.mdx", slug: "shared-slug" }];
+        const local = new Map([
+            ["docs/guide.mdx", "new-slug"],
+            ["docs/other.mdx", "shared-slug"]
+        ]);
+        expect(findRemovedSlugs(published, local)).toEqual([]);
+    });
+
+    it("skips changelog entries that share their parent slug when entry is removed", () => {
+        const published: MarkdownEntry[] = [
+            { pageId: "changelog/2024-01-15.mdx", slug: "whats-new/changelog" },
+            { pageId: "changelog/2024-01-15-hotfix.mdx", slug: "whats-new/changelog" },
+            { pageId: "changelog/2024-02-01.mdx", slug: "whats-new/changelog" }
+        ];
+        const local = new Map([["changelog/2024-02-01.mdx", "whats-new/changelog"]]);
+        expect(findRemovedSlugs(published, local)).toEqual([]);
+    });
+
+    it("skips published entries with empty slug when landing page serves root", () => {
+        const published: MarkdownEntry[] = [{ pageId: "changelog/2024-01-15.mdx", slug: "" }];
+        const local = new Map([["pages/landing.mdx", ""]]);
+        expect(findRemovedSlugs(published, local)).toEqual([]);
+    });
+
+    it("still flags removed page when no local page serves the old slug", () => {
+        const published: MarkdownEntry[] = [{ pageId: "docs/old.mdx", slug: "unique-old-slug" }];
+        const local = new Map([["docs/new.mdx", "different-slug"]]);
+        const removed = findRemovedSlugs(published, local);
+        expect(removed).toEqual([{ pageId: "docs/old.mdx", oldSlug: "unique-old-slug", newSlug: undefined }]);
+    });
 });
 
 describe("checkMissingRedirects", () => {

@@ -4,10 +4,11 @@ import type { Audiences } from "@fern-api/configuration";
 import type { ContainerRunner } from "@fern-api/core-utils";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import type { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { CliError } from "@fern-api/task-context";
+
 import type { AiConfig } from "../../ai/config/AiConfig.js";
 import type { ApiDefinition } from "../../api/config/ApiDefinition.js";
 import type { Context } from "../../context/Context.js";
-import { CliError } from "../../errors/CliError.js";
 import type { Task } from "../../ui/Task.js";
 import type { Target } from "../config/Target.js";
 import { LegacyLocalGenerationRunner } from "./LegacyLocalGenerationRunner.js";
@@ -122,7 +123,8 @@ export class GeneratorPipeline {
                 throw new CliError({
                     message:
                         `Custom image configurations are only supported with local generation (--local). ` +
-                        `Target "${args.target.name}" uses a custom image registry.`
+                        `Target "${args.target.name}" uses a custom image registry.`,
+                    code: CliError.Code.ConfigError
                 });
             }
             return await this.runRemoteGeneration(args);

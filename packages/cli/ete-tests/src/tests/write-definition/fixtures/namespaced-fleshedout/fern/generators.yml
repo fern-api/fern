@@ -12,7 +12,7 @@ groups:
       - v2-beta
     generators:
       - name: fernapi/fern-python-sdk
-        version: 3.11.0-rc0
+        version: 4.64.1
         smart-casing: true
         config: {}
         api:

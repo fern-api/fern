@@ -109,6 +109,9 @@ export declare namespace TestRunner {
 }
 
 const extractLicenseInfo = (license: unknown, absolutePathToApiDefinition: AbsoluteFilePath) => {
+    if (typeof license === "string") {
+        return license;
+    }
     if (license != null && typeof license === "object" && "custom" in license) {
         const licenseObj = license as { custom: string };
         const licensePath = licenseObj.custom;

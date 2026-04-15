@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix CLI blocking when PostHog is unreachable by adding a 3-second timeout
+    and error handling to analytics flush calls.
+  type: fix

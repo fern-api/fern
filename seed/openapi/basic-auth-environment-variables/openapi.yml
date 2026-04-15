@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: basic-auth-environment-variables
-  version: ''
+  version: 0.0.0
 paths:
   /basic-auth:
     get:
@@ -12,13 +12,13 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 type: boolean
         '401':
-          description: ''
+          description: UnauthorizedRequest
           content:
             application/json:
               schema:
@@ -33,15 +33,15 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 type: boolean
         '400':
-          description: ''
+          description: BadRequest
         '401':
-          description: ''
+          description: UnauthorizedRequest
           content:
             application/json:
               schema:

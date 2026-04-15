@@ -7,7 +7,8 @@ import type { CppLibraryDocsIr } from "@fern-api/library-docs-generator";
 import { generate, generateCpp } from "@fern-api/library-docs-generator";
 import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
-import { InteractiveTaskContext, TaskContext } from "@fern-api/task-context";
+import { CliError, InteractiveTaskContext, TaskContext } from "@fern-api/task-context";
+
 import chalk from "chalk";
 import { readFile } from "fs/promises";
 import { CliContext } from "../../cli-context/CliContext.js";
@@ -77,7 +78,7 @@ function createLibraryDocsClient({ token }: { token: string }): LibraryDocsClien
 
         if (!response.ok) {
             const text = await response.text().catch(() => "");
-            throw new Error(`HTTP ${response.status}: ${text}`);
+            throw new CliError({ message: `HTTP ${response.status}: ${text}`, code: CliError.Code.NetworkError });
         }
 
         return (await response.json()) as T;
@@ -116,7 +117,9 @@ export async function generateLibraryDocs({ project, cliContext, library }: Gene
     const docsWorkspace = project.docsWorkspaces;
 
     if (docsWorkspace == null) {
-        cliContext.failAndThrow("No docs workspace found. Make sure you have a docs.yml file.");
+        cliContext.failAndThrow("No docs workspace found. Make sure you have a docs.yml file.", undefined, {
+            code: CliError.Code.ConfigError
+        });
         return;
     }
 
@@ -125,7 +128,9 @@ export async function generateLibraryDocs({ project, cliContext, library }: Gene
 
     if (libraries == null || Object.keys(libraries).length === 0) {
         cliContext.failAndThrow(
-            "No libraries configured in docs.yml. Add a `libraries` section to configure library documentation."
+            "No libraries configured in docs.yml. Add a `libraries` section to configure library documentation.",
+            undefined,
+            { code: CliError.Code.ConfigError }
         );
         return;
     }
@@ -134,7 +139,9 @@ export async function generateLibraryDocs({ project, cliContext, library }: Gene
 
     if (library != null && libraries[library] == null) {
         cliContext.failAndThrow(
-            `Library '${library}' not found in docs.yml. Available libraries: ${Object.keys(libraries).join(", ")}`
+            `Library '${library}' not found in docs.yml. Available libraries: ${Object.keys(libraries).join(", ")}`,
+            undefined,
+            { code: CliError.Code.ConfigError }
         );
         return;
     }
@@ -144,7 +151,9 @@ export async function generateLibraryDocs({ project, cliContext, library }: Gene
     });
 
     if (token == null) {
-        cliContext.failAndThrow("Failed to authenticate. Please run 'fern login' first.");
+        cliContext.failAndThrow("Failed to authenticate. Please run 'fern login' first.", undefined, {
+            code: CliError.Code.AuthError
+        });
         return;
     }
 
@@ -158,7 +167,9 @@ export async function generateLibraryDocs({ project, cliContext, library }: Gene
                 }
                 if (!isGitLibraryInput(config.input)) {
                     context.failAndThrow(
-                        `Library '${name}' uses 'path' input which is not yet supported. Please use 'git' input.`
+                        `Library '${name}' uses 'path' input which is not yet supported. Please use 'git' input.`,
+                        undefined,
+                        { code: CliError.Code.ConfigError }
                     );
                     return false;
                 }
@@ -204,7 +215,9 @@ async function generateSingleLibrary({
         // Validate language-specific config
         if (config.config?.doxyfile != null && config.lang !== "cpp") {
             return interactiveTaskContext.failAndThrow(
-                `Library '${name}': 'doxyfile' config is only valid for lang: cpp`
+                `Library '${name}': 'doxyfile' config is only valid for lang: cpp`,
+                undefined,
+                { code: CliError.Code.ConfigError }
             );
         }
 
@@ -216,14 +229,20 @@ async function generateSingleLibrary({
                 doxyfileContent = await readFile(doxyfilePath, "utf-8");
             } catch {
                 return interactiveTaskContext.failAndThrow(
-                    `Library '${name}': Could not read Doxyfile at '${config.config.doxyfile}' (resolved to ${doxyfilePath})`
+                    `Library '${name}': Could not read Doxyfile at '${config.config.doxyfile}' (resolved to ${doxyfilePath})`,
+                    undefined,
+                    { code: CliError.Code.ConfigError }
                 );
             }
         }
 
         const language = config.lang === "python" ? "PYTHON" : config.lang === "cpp" ? "CPP" : undefined;
         if (language == null) {
-            return interactiveTaskContext.failAndThrow(`Library '${name}': unsupported language '${config.lang}'`);
+            return interactiveTaskContext.failAndThrow(
+                `Library '${name}': unsupported language '${config.lang}'`,
+                undefined,
+                { code: CliError.Code.ConfigError }
+            );
         }
 
         const client = createLibraryDocsClient({ token: token.value });
@@ -268,7 +287,11 @@ async function generateSingleLibrary({
             });
             interactiveTaskContext.logger.debug(`Generated ${generateResult.pageCount} pages at ${resolvedOutputPath}`);
         } else {
-            return interactiveTaskContext.failAndThrow(`Library '${name}': unsupported language '${config.lang}'`);
+            return interactiveTaskContext.failAndThrow(
+                `Library '${name}': unsupported language '${config.lang}'`,
+                undefined,
+                { code: CliError.Code.ConfigError }
+            );
         }
     });
 }
@@ -302,7 +325,9 @@ async function startGeneration(
         return result.jobId;
     } catch (error) {
         return context.failAndThrow(
-            `Failed to start generation for library '${opts.name}': ${extractErrorMessage(error)}`
+            `Failed to start generation for library '${opts.name}': ${extractErrorMessage(error)}`,
+            error,
+            { code: CliError.Code.NetworkError }
         );
     }
 }
@@ -323,7 +348,9 @@ async function pollForCompletion(
             status = await client.getLibraryDocsGenerationStatus({ jobId });
         } catch (error) {
             return context.failAndThrow(
-                `Failed to check generation status for library '${libraryName}': ${extractErrorMessage(error)}`
+                `Failed to check generation status for library '${libraryName}': ${extractErrorMessage(error)}`,
+                error,
+                { code: CliError.Code.NetworkError }
             );
         }
 
@@ -339,16 +366,24 @@ async function pollForCompletion(
                 return;
             case "FAILED":
                 return context.failAndThrow(
-                    `Generation failed for library '${libraryName}': ${status.error?.message ?? "Unknown error"} (${status.error?.code ?? "UNKNOWN"})`
+                    `Generation failed for library '${libraryName}': ${status.error?.message ?? "Unknown error"} (${status.error?.code ?? "UNKNOWN"})`,
+                    undefined,
+                    { code: CliError.Code.InternalError }
                 );
             default:
                 return context.failAndThrow(
-                    `Unexpected generation status for library '${libraryName}': ${status.status}`
+                    `Unexpected generation status for library '${libraryName}': ${status.status}`,
+                    undefined,
+                    { code: CliError.Code.InternalError }
                 );
         }
     }
 
-    return context.failAndThrow(`Generation timed out for library '${libraryName}' after ${POLL_TIMEOUT_MS / 1000}s`);
+    return context.failAndThrow(
+        `Generation timed out for library '${libraryName}' after ${POLL_TIMEOUT_MS / 1000}s`,
+        undefined,
+        { code: CliError.Code.NetworkError }
+    );
 }
 
 async function downloadIr(
@@ -364,7 +399,9 @@ async function downloadIr(
         resultUrl = result.resultUrl;
     } catch (error) {
         return context.failAndThrow(
-            `Failed to fetch generation result for library '${libraryName}': ${extractErrorMessage(error)}`
+            `Failed to fetch generation result for library '${libraryName}': ${extractErrorMessage(error)}`,
+            error,
+            { code: CliError.Code.NetworkError }
         );
     }
 
@@ -372,7 +409,9 @@ async function downloadIr(
     const irFetchResponse = await fetch(resultUrl);
     if (!irFetchResponse.ok) {
         return context.failAndThrow(
-            `Failed to download IR for library '${libraryName}': HTTP ${irFetchResponse.status}`
+            `Failed to download IR for library '${libraryName}': HTTP ${irFetchResponse.status}`,
+            undefined,
+            { code: CliError.Code.NetworkError }
         );
     }
 
@@ -380,17 +419,23 @@ async function downloadIr(
     const ir = irWrapper.ir;
 
     if (ir == null) {
-        return context.failAndThrow(`IR is empty for library '${libraryName}'`);
+        return context.failAndThrow(`IR is empty for library '${libraryName}'`, undefined, {
+            code: CliError.Code.InternalError
+        });
     }
 
     if (language === "CPP") {
         if (ir.rootNamespace == null) {
-            return context.failAndThrow(`IR has no rootNamespace for C++ library '${libraryName}'`);
+            return context.failAndThrow(`IR has no rootNamespace for C++ library '${libraryName}'`, undefined, {
+                code: CliError.Code.InternalError
+            });
         }
         context.logger.debug(`Downloaded C++ IR for '${libraryName}'`);
     } else {
         if (ir.rootModule == null) {
-            return context.failAndThrow(`IR has no rootModule for library '${libraryName}'`);
+            return context.failAndThrow(`IR has no rootModule for library '${libraryName}'`, undefined, {
+                code: CliError.Code.InternalError
+            });
         }
         context.logger.debug(`Downloaded IR with ${Object.keys(ir.rootModule).length} top-level keys`);
     }
