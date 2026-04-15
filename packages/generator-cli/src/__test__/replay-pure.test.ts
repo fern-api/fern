@@ -396,6 +396,34 @@ describe("parseCommitMessageForPR", () => {
         const { prTitle } = parseCommitMessageForPR("   ");
         expect(prTitle).toBe("SDK Generation");
     });
+
+    it("with changelogUrl -> appends full changelog link", () => {
+        const { prBody } = parseCommitMessageForPR(
+            "Update SDK",
+            undefined,
+            "Some changes",
+            undefined,
+            "1.0.0",
+            "1.1.0",
+            "MINOR",
+            "https://github.com/owner/repo/blob/fern-bot/branch/changelog.md"
+        );
+        expect(prBody).toContain("[See full changelog]");
+        expect(prBody).toContain("https://github.com/owner/repo/blob/fern-bot/branch/changelog.md");
+    });
+
+    it("without changelogUrl -> no changelog link appended", () => {
+        const { prBody } = parseCommitMessageForPR(
+            "Update SDK",
+            undefined,
+            "Some changes",
+            undefined,
+            "1.0.0",
+            "1.1.0",
+            "MINOR"
+        );
+        expect(prBody).not.toContain("[See full changelog]");
+    });
 });
 
 // ---------------------------------------------------------------------------

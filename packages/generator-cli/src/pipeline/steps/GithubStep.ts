@@ -199,6 +199,7 @@ export class GithubStep extends BaseStep {
         }
 
         const finalCommitMessage = this.config.commitMessage ?? "SDK Generation";
+        const changelogUrl = `https://github.com/${this.config.uri}/blob/${prBranch}/changelog.md`;
         const { prTitle, prBody } = parseCommitMessageForPR(
             finalCommitMessage,
             this.config.changelogEntry,
@@ -206,7 +207,8 @@ export class GithubStep extends BaseStep {
             this.config.versionBumpReason,
             this.config.previousVersion,
             this.config.newVersion,
-            this.config.versionBump
+            this.config.versionBump,
+            changelogUrl
         );
         const replaySection = formatReplayPrBody(replayResult, { branchName: prBranch, repoUri: this.config.uri });
         let enrichedBody = replaySection != null ? prBody + "\n\n---\n\n" + replaySection : prBody;
