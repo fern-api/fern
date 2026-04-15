@@ -123,10 +123,7 @@ describe("detectAffected", () => {
 
         it("skips seed for changelog files but still detects other generator changes", () => {
             const result = detectAffected(
-                [
-                    "generators/csharp/sdk/changes/unreleased/.template.yml",
-                    "generators/python/src/generator.ts"
-                ],
+                ["generators/csharp/sdk/changes/unreleased/.template.yml", "generators/python/src/generator.ts"],
                 ALL_GENERATORS
             );
 
