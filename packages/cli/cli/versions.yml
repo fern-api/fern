@@ -1,4 +1,49 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.70.2
+  changelogEntry:
+    - summary: |
+        Fix "Edit this page" button appearing on docs sites that never configured it.
+        The default `editThisPageLaunch` is now `undefined` instead of `"dashboard"`,
+        so the button only renders when explicitly configured.
+      type: fix
+  createdAt: "2026-04-15"
+  irVersion: 66
+- version: 4.70.1
+  changelogEntry:
+    - summary: |
+        Fix "Edit this page" button appearing on docs sites that never configured it.
+        The default `editThisPageLaunch` is now `undefined` instead of `"dashboard"`,
+        so the button only renders when explicitly configured.
+      type: fix
+  createdAt: "2026-04-15"
+  irVersion: 66
+- version: 4.70.0
+  changelogEntry:
+    - summary: |
+        Enable `--push-diff` flag for `fern sdk preview` to push a preview diff
+        branch to the SDK repo in addition to publishing to the preview registry.
+        Adds `diff_url` to the JSON and text output for use by CI integrations.
+      type: feat
+  createdAt: "2026-04-14"
+  irVersion: 66
+- version: 4.69.0
+  changelogEntry:
+    - summary: |
+        Improve auto-versioning prompts for better SDK version bump determination and changelog quality.
+        Commit type now matches version bump severity, per-chunk changelog entries use category tags,
+        consolidation prompt deduplicates aggressively, and version context is passed to consolidation.
+      type: feat
+  createdAt: "2026-04-14"
+  irVersion: 66
+- version: 4.68.5
+  changelogEntry:
+    - summary: |
+        Migrate CLI to a unified error system using a shared CliError class with typed error codes.
+        Error codes drive Sentry reporting eligibility; unclassified errors are temporarily suppressed
+        from Sentry until all call sites are migrated.
+      type: chore
+  createdAt: "2026-04-14"
+  irVersion: 66
 - version: 4.68.4
   changelogEntry:
     - summary: |

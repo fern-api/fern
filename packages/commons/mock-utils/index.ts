@@ -1,4 +1,4 @@
-import { getOriginalName } from "@fern-api/ir-utils";
+import { getOriginalName, getWireValue } from "@fern-api/ir-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { createHash } from "crypto";
 
@@ -182,7 +182,7 @@ export class WireMock {
         for (const param of example?.queryParameters || []) {
             const paramValue = this.exampleToQueryOrHeaderValue({ value: param.value });
             if (paramValue !== undefined) {
-                const paramName = param.name?.wireValue;
+                const paramName = param.name != null ? getWireValue(param.name) : undefined;
                 if (paramName) {
                     queryParameters[paramName] = { equalTo: paramValue };
                 }
@@ -210,7 +210,8 @@ export class WireMock {
                 }
             } else if (example.response.type === "error") {
                 // Extract status code from error
-                const errorName = example.response.error?.name?.originalName;
+                const errorName =
+                    example.response.error?.name != null ? getOriginalName(example.response.error.name) : undefined;
                 if (errorName === "NotFoundError") {
                     status = 404;
                 } else if (errorName === "InternalServerError") {
@@ -269,7 +270,7 @@ export class WireMock {
 
         // Build descriptive name
         const endpointName = endpoint.displayName || getOriginalName(endpoint.name);
-        const exampleName = typeof example?.name === "string" ? example.name : "default";
+        const exampleName = example?.name != null ? getOriginalName(example.name) : "default";
         const name = `${endpointName} - ${exampleName}`;
         const uuid = this.deterministicUUIDv4(`${name}-${endpoint.id}-${urlPathTemplate}-${endpoint.method}`);
 
@@ -303,7 +304,7 @@ export class WireMock {
                         authHeaders["Authorization"] = { matches: "Bearer .+" };
                         break;
                     case "header": {
-                        const headerName = scheme.name?.wireValue;
+                        const headerName = scheme.name != null ? getWireValue(scheme.name) : undefined;
                         if (headerName) {
                             authHeaders[headerName] = { matches: ".+" };
                         }

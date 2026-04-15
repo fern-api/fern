@@ -3,6 +3,7 @@ from typing import Dict
 from .sdk_declaration_referencer import SdkDeclarationReferencer
 from fern_python.codegen import ExportStrategy, Filepath
 from fern_python.generators.pydantic_model.model_utilities import can_be_fern_model
+from fern_python.utils import resolve_name
 
 import fern.ir.resources as ir_types
 
@@ -32,12 +33,12 @@ class TypeDeclarationReferencer(SdkDeclarationReferencer[ir_types.DeclaredTypeNa
                     export_strategy=ExportStrategy(export_all=True),
                 ),
             ),
-            file=Filepath.FilepathPart(module_name=name.name.snake_case.safe_name),
+            file=Filepath.FilepathPart(module_name=resolve_name(name.name).snake_case.safe_name),
         )
 
     def get_class_name(self, *, name: ir_types.DeclaredTypeName, as_request: bool) -> str:
         should_use_td_naming = self._has_typeddict_variant(name=name, as_request=as_request)
-        class_name = name.name.pascal_case.safe_name
+        class_name = resolve_name(name.name).pascal_case.safe_name
         return f"{class_name}Params" if should_use_td_naming else class_name
 
     def _has_typeddict_variant(self, *, name: ir_types.DeclaredTypeName, as_request: bool) -> bool:

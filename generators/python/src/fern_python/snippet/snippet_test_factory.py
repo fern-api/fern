@@ -27,6 +27,7 @@ from fern_python.generators.sdk.environment_generators.single_base_url_environme
 )
 from fern_python.snippet.snippet_writer import SnippetWriter
 from fern_python.source_file_factory.source_file_factory import SourceFileFactory
+from fern_python.utils import get_wire_value, resolve_name
 
 import fern.ir.resources as ir_types
 
@@ -228,11 +229,13 @@ class SnippetTestFactory:
         for pathpart in fern_filepath.package_path:
             directories += (
                 Filepath.DirectoryFilepathPart(
-                    module_name=pathpart.snake_case.safe_name,
+                    module_name=resolve_name(pathpart).snake_case.unsafe_name,
                 ),
             )
 
-        module_name = fern_filepath.file.snake_case.safe_name if fern_filepath.file is not None else "root"
+        module_name = (
+            resolve_name(fern_filepath.file).snake_case.unsafe_name if fern_filepath.file is not None else "root"
+        )
         return Filepath(
             directories=directories,
             file=Filepath.FilepathPart(module_name=f"test_{module_name}"),
@@ -308,7 +311,7 @@ class SnippetTestFactory:
                 enum=lambda _: None,
                 object=lambda obj: dict(
                     [
-                        (prop.name.wire_value, self._generate_type_expectations_for_type_reference(prop.value))
+                        (get_wire_value(prop.name), self._generate_type_expectations_for_type_reference(prop.value))
                         for prop in obj.properties
                     ]
                 ),
@@ -462,7 +465,7 @@ class SnippetTestFactory:
             components += [fern_filepath.file]
         if len(components) == 0:
             return ""
-        return ".".join([component.snake_case.safe_name for component in components]) + "."
+        return ".".join([resolve_name(component).snake_case.safe_name for component in components]) + "."
 
     def _generate_service_test(self, service: ir_types.HttpService, snippet_writer: SnippetWriter) -> None:
         fern_filepath = service.name.fern_filepath
@@ -503,7 +506,7 @@ class SnippetTestFactory:
                 )
             ):
                 continue
-            endpoint_name = endpoint.name.snake_case.safe_name
+            endpoint_name = resolve_name(endpoint.name).snake_case.safe_name
 
             examples = [ex.example for ex in endpoint.user_specified_examples if ex.example is not None]
             if len(endpoint.user_specified_examples) == 0:
@@ -525,7 +528,7 @@ class SnippetTestFactory:
             example = successful_examples[0]
             _path_parameter_names = dict()
             for path_parameter in endpoint.all_path_parameters:
-                _path_parameter_names[path_parameter.name] = path_parameter.name.snake_case.safe_name
+                _path_parameter_names[path_parameter.name] = resolve_name(path_parameter.name).snake_case.safe_name
             endpoint_snippet = self._function_generator(
                 snippet_writer=snippet_writer,
                 service=service,

@@ -1846,22 +1846,42 @@ function addDocsPreviewListCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
 
 function addDocsPreviewDeleteCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
-        "delete <url>",
+        "delete [target]",
         "Delete a preview deployment",
         (yargs) =>
-            yargs.positional("url", {
-                type: "string",
-                description:
-                    "The FQDN of the preview deployment to delete (e.g. acme-preview-abc123.docs.buildwithfern.com)",
-                demandOption: true
-            }),
+            yargs
+                .positional("target", {
+                    type: "string",
+                    description: "A preview URL or ID (auto-detected)"
+                })
+                .option("url", {
+                    type: "string",
+                    description:
+                        "The FQDN of the preview deployment to delete (e.g. acme-preview-abc123.docs.buildwithfern.com)"
+                })
+                .option("id", {
+                    type: "string",
+                    description: "The preview ID to delete. Resolves the URL from the organization in fern.config.json."
+                })
+                .check((argv) => {
+                    const sources = [argv.target, argv.url, argv.id].filter(Boolean);
+                    if (sources.length === 0) {
+                        throw new Error("Must provide a preview URL or --id.");
+                    }
+                    if (sources.length > 1) {
+                        throw new Error("Provide only one of: [target], --url, or --id.");
+                    }
+                    return true;
+                }),
         async (argv) => {
             cliContext.instrumentPostHogEvent({
                 command: "fern docs preview delete"
             });
             await deleteDocsPreview({
                 cliContext,
-                previewUrl: argv.url
+                target: argv.target,
+                previewUrl: argv.url,
+                previewId: argv.id
             });
         }
     );

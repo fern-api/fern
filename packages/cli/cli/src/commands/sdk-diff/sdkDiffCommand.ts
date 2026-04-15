@@ -212,7 +212,7 @@ export async function sdkDiffCommand({
             const rawEntries = allChangelogEntries.map((e) => (e.startsWith("- ") ? e : `- ${e}`)).join("\n");
             try {
                 context.logger.debug(`Consolidating ${allChangelogEntries.length} changelog entries via AI rollup`);
-                const rollup = await bamlClient.ConsolidateChangelog(rawEntries, bestBump, "unknown");
+                const rollup = await bamlClient.ConsolidateChangelog(rawEntries, bestBump, "unknown", "", "");
                 changelogEntry = rollup.consolidated_changelog?.trim() || rawEntries;
                 versionBumpReason = rollup.version_bump_reason?.trim() || "";
             } catch (rollupError) {

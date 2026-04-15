@@ -13,6 +13,7 @@ from .validators import (
 from fern_python.codegen import AST, LocalClassReference, SourceFile
 from fern_python.external_dependencies.pydantic import PydanticVersionCompatibility
 from fern_python.pydantic_codegen import PydanticField, PydanticModel
+from fern_python.utils import get_name_from_wire_value, get_wire_value, resolve_name
 
 import fern.ir.resources as ir_types
 
@@ -365,8 +366,10 @@ class FernAwarePydanticModel:
         else:
             unique_name = []
             if self._type_name is not None:
-                unique_name = [path.snake_case.unsafe_name for path in self._type_name.fern_filepath.package_path]
-                unique_name.append(self._type_name.name.snake_case.unsafe_name)
+                unique_name = [
+                    resolve_name(path).snake_case.unsafe_name for path in self._type_name.fern_filepath.package_path
+                ]
+                unique_name.append(resolve_name(self._type_name.name).snake_case.unsafe_name)
             return PydanticValidatorsGenerator(
                 model=self._pydantic_model,
                 extended_pydantic_fields=self._get_extended_pydantic_fields(self._extends or []),
@@ -380,10 +383,11 @@ class FernAwarePydanticModel:
             shape_union = extended_declaration.shape.get_as_union()
             if shape_union.type == "object":
                 for property in shape_union.properties:
+                    resolved_prop_name = resolve_name(get_name_from_wire_value(property.name))
                     field = self._create_pydantic_field(
-                        name=property.name.name.snake_case.safe_name,
-                        pascal_case_field_name=property.name.name.pascal_case.safe_name,
-                        json_field_name=property.name.wire_value,
+                        name=resolved_prop_name.snake_case.safe_name,
+                        pascal_case_field_name=resolved_prop_name.pascal_case.safe_name,
+                        json_field_name=get_wire_value(property.name),
                         type_reference=property.value_type,
                         description=property.docs,
                     )

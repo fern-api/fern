@@ -15,6 +15,7 @@ from fern_python.generators.sdk.client_generator.base_client_generator import (
 )
 from fern_python.generators.sdk.core_utilities.core_utilities import CoreUtilities
 from fern_python.snippet.template_utils import TemplateGenerator
+from fern_python.utils import get_name_from_wire_value, get_wire_value, resolve_name
 
 import fern.ir.resources as ir_types
 
@@ -665,7 +666,7 @@ class ClientWrapperGenerator:
                     private_member_name=names.get_variable_member_name(variable),
                     type_hint=variable_type_hint,
                     initializer=AST.Expression(
-                        f'{constructor_parameter_name}="YOUR_{variable.name.screaming_snake_case.safe_name}"'
+                        f'{constructor_parameter_name}="YOUR_{resolve_name(variable.name).screaming_snake_case.safe_name}"'
                     ),
                     docs=variable.docs,
                 )
@@ -680,7 +681,7 @@ class ClientWrapperGenerator:
                         constructor_parameter_name=names.get_header_constructor_parameter_name(header),
                         private_member_name=names.get_header_private_member_name(header),
                         header=header,
-                        header_key=header.name.wire_value,
+                        header_key=get_wire_value(header.name),
                     )
                 )
                 continue
@@ -691,9 +692,9 @@ class ClientWrapperGenerator:
                     private_member_name=names.get_header_private_member_name(header),
                     type_hint=type_hint,
                     initializer=AST.Expression(
-                        f'{constructor_parameter_name}="YOUR_{header.name.name.screaming_snake_case.safe_name}"',
+                        f'{constructor_parameter_name}="YOUR_{resolve_name(get_name_from_wire_value(header.name)).screaming_snake_case.safe_name}"',
                     ),
-                    header_key=header.name.wire_value,
+                    header_key=get_wire_value(header.name),
                     environment_variable=header.env,
                 )
             )
@@ -733,9 +734,9 @@ class ClientWrapperGenerator:
                         header_auth_scheme.value_type
                     ),
                     initializer=AST.Expression(
-                        f'{constructor_parameter_name}="YOUR_{header_auth_scheme.name.name.screaming_snake_case.safe_name}"',
+                        f'{constructor_parameter_name}="YOUR_{resolve_name(get_name_from_wire_value(header_auth_scheme.name)).screaming_snake_case.safe_name}"',
                     ),
-                    header_key=header_auth_scheme.name.wire_value,
+                    header_key=get_wire_value(header_auth_scheme.name),
                     header_prefix=header_auth_scheme.prefix,
                     environment_variable=(
                         header_auth_scheme.header_env_var if header_auth_scheme.header_env_var is not None else None
@@ -760,7 +761,7 @@ class ClientWrapperGenerator:
                         else ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT
                     ),
                     initializer=AST.Expression(
-                        f'{constructor_parameter_name}="YOUR_{bearer_auth_scheme.token.screaming_snake_case.safe_name}"',
+                        f'{constructor_parameter_name}="YOUR_{resolve_name(bearer_auth_scheme.token).screaming_snake_case.safe_name}"',
                     ),
                     getter_method=AST.FunctionDeclaration(
                         name=names.get_token_getter_name(bearer_auth_scheme),
@@ -812,7 +813,7 @@ class ClientWrapperGenerator:
                     else AST.TypeHint.optional(ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT)
                 ),
                 initializer=AST.Expression(
-                    f'{username_constructor_parameter_name}="YOUR_{basic_auth_scheme.username.screaming_snake_case.safe_name}"',
+                    f'{username_constructor_parameter_name}="YOUR_{resolve_name(basic_auth_scheme.username).screaming_snake_case.safe_name}"',
                 ),
                 getter_method=AST.FunctionDeclaration(
                     name=names.get_username_getter_name(basic_auth_scheme),
@@ -861,7 +862,7 @@ class ClientWrapperGenerator:
                     else AST.TypeHint.optional(ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT)
                 ),
                 initializer=AST.Expression(
-                    f'{password_constructor_parameter_name}="YOUR_{basic_auth_scheme.password.screaming_snake_case.safe_name}"',
+                    f'{password_constructor_parameter_name}="YOUR_{resolve_name(basic_auth_scheme.password).screaming_snake_case.safe_name}"',
                 ),
                 getter_method=AST.FunctionDeclaration(
                     name=names.get_password_getter_name(basic_auth_scheme),
