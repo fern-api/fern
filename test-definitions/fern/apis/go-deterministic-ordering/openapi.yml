@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
-  title: go-deterministic-ordering
-  version: ''
+  title: exhaustive
+  version: 0.0.0
 paths:
   /container/list-of-primitives:
     post:
@@ -11,15 +11,15 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 type: array
                 items:
                   type: string
-      security: &ref_0
-        - BearerAuth: []
+      security:
+        - Bearer: []
       requestBody:
         required: true
         content:
@@ -36,14 +36,15 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/typesObjectWithRequiredField'
-      security: *ref_0
+      security:
+        - Bearer: []
       requestBody:
         required: true
         content:
@@ -60,14 +61,15 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 type: array
                 items:
                   type: string
-      security: *ref_0
+      security:
+        - Bearer: []
       requestBody:
         required: true
         content:
@@ -84,14 +86,15 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/typesObjectWithRequiredField'
-      security: *ref_0
+      security:
+        - Bearer: []
       requestBody:
         required: true
         content:
@@ -108,14 +111,15 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties:
                   type: string
-      security: *ref_0
+      security:
+        - Bearer: []
       requestBody:
         required: true
         content:
@@ -132,14 +136,15 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties:
                   $ref: '#/components/schemas/typesObjectWithRequiredField'
-      security: *ref_0
+      security:
+        - Bearer: []
       requestBody:
         required: true
         content:
@@ -156,14 +161,15 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties:
                   $ref: '#/components/schemas/typesMixedType'
-      security: *ref_0
+      security:
+        - Bearer: []
       requestBody:
         required: true
         content:
@@ -180,20 +186,23 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/typesObjectWithRequiredField'
-                nullable: true
-      security: *ref_0
+                anyOf:
+                  - $ref: '#/components/schemas/typesObjectWithRequiredField'
+                  - type: 'null'
+      security:
+        - Bearer: []
       requestBody:
         required: false
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/typesObjectWithRequiredField'
-              nullable: true
+              anyOf:
+                - $ref: '#/components/schemas/typesObjectWithRequiredField'
+                - type: 'null'
   /foo/bar:
     post:
       operationId: endpoints_contentType_postJsonPatchContentType
@@ -202,8 +211,9 @@ paths:
       parameters: []
       responses:
         '204':
-          description: ''
-      security: *ref_0
+          description: No content
+      security:
+        - Bearer: []
       requestBody:
         required: true
         content:
@@ -218,8 +228,9 @@ paths:
       parameters: []
       responses:
         '204':
-          description: ''
-      security: *ref_0
+          description: No content
+      security:
+        - Bearer: []
       requestBody:
         required: true
         content:
@@ -235,12 +246,13 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/typesObjectWithOptionalField'
-      security: *ref_0
+      security:
+        - Bearer: []
       requestBody:
         required: true
         content:
@@ -265,18 +277,21 @@ paths:
           in: query
           required: false
           schema:
-            type: integer
-            nullable: true
+            type:
+              - integer
+              - 'null'
         - name: limit
           in: query
           required: false
           schema:
-            type: integer
-            nullable: true
+            type:
+              - integer
+              - 'null'
       responses:
         '204':
-          description: ''
-      security: *ref_0
+          description: No content
+      security:
+        - Bearer: []
   /duplicate-names-a/{id}:
     get:
       description: Get endpoint for service A
@@ -293,12 +308,14 @@ paths:
           in: query
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
       responses:
         '204':
-          description: ''
-      security: *ref_0
+          description: No content
+      security:
+        - Bearer: []
   /duplicate-names-b:
     post:
       description: Create endpoint for service B
@@ -308,12 +325,13 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/typesObjectWithOptionalField'
-      security: *ref_0
+      security:
+        - Bearer: []
       requestBody:
         required: true
         content:
@@ -338,18 +356,21 @@ paths:
           in: query
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
         - name: size
           in: query
           required: false
           schema:
-            type: integer
-            nullable: true
+            type:
+              - integer
+              - 'null'
       responses:
         '204':
-          description: ''
-      security: *ref_0
+          description: No content
+      security:
+        - Bearer: []
   /duplicate-names-b/{id}:
     get:
       description: Get endpoint for service B
@@ -366,12 +387,14 @@ paths:
           in: query
           required: false
           schema:
-            type: boolean
-            nullable: true
+            type:
+              - boolean
+              - 'null'
       responses:
         '204':
-          description: ''
-      security: *ref_0
+          description: No content
+      security:
+        - Bearer: []
   /duplicate-names-c:
     post:
       description: Create endpoint for service C
@@ -381,12 +404,13 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/typesObjectWithOptionalField'
-      security: *ref_0
+      security:
+        - Bearer: []
       requestBody:
         required: true
         content:
@@ -411,18 +435,21 @@ paths:
           in: query
           required: false
           schema:
-            type: integer
-            nullable: true
+            type:
+              - integer
+              - 'null'
         - name: count
           in: query
           required: false
           schema:
-            type: integer
-            nullable: true
+            type:
+              - integer
+              - 'null'
       responses:
         '204':
-          description: ''
-      security: *ref_0
+          description: No content
+      security:
+        - Bearer: []
   /duplicate-names-c/{id}:
     get:
       description: Get endpoint for service C
@@ -439,12 +466,14 @@ paths:
           in: query
           required: false
           schema:
-            type: boolean
-            nullable: true
+            type:
+              - boolean
+              - 'null'
       responses:
         '204':
-          description: ''
-      security: *ref_0
+          description: No content
+      security:
+        - Bearer: []
   /enum:
     post:
       operationId: endpoints_enum_getAndReturnEnum
@@ -453,12 +482,13 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/typesWeatherReport'
-      security: *ref_0
+      security:
+        - Bearer: []
       requestBody:
         required: true
         content:
@@ -478,12 +508,13 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 type: string
-      security: *ref_0
+      security:
+        - Bearer: []
     put:
       operationId: endpoints_httpMethods_testPut
       tags:
@@ -496,12 +527,14 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/typesObjectWithOptionalField'
-      security: *ref_0
+      x-fern-availability: deprecated
+      security:
+        - Bearer: []
       requestBody:
         required: true
         content:
@@ -520,12 +553,14 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/typesObjectWithOptionalField'
-      security: *ref_0
+      x-fern-availability: pre-release
+      security:
+        - Bearer: []
       requestBody:
         required: true
         content:
@@ -544,12 +579,14 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 type: boolean
-      security: *ref_0
+      x-fern-availability: in-development
+      security:
+        - Bearer: []
   /http-methods:
     post:
       operationId: endpoints_httpMethods_testPost
@@ -558,12 +595,14 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/typesObjectWithOptionalField'
-      security: *ref_0
+      x-fern-availability: deprecated
+      security:
+        - Bearer: []
       requestBody:
         required: true
         content:
@@ -578,12 +617,13 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/typesObjectWithOptionalField'
-      security: *ref_0
+      security:
+        - Bearer: []
       requestBody:
         required: true
         content:
@@ -598,12 +638,13 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/typesObjectWithRequiredField'
-      security: *ref_0
+      security:
+        - Bearer: []
       requestBody:
         required: true
         content:
@@ -618,12 +659,13 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/typesObjectWithMapOfMap'
-      security: *ref_0
+      security:
+        - Bearer: []
       requestBody:
         required: true
         content:
@@ -638,12 +680,13 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/typesNestedObjectWithOptionalField'
-      security: *ref_0
+      security:
+        - Bearer: []
       requestBody:
         required: true
         content:
@@ -663,12 +706,13 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/typesNestedObjectWithRequiredField'
-      security: *ref_0
+      security:
+        - Bearer: []
       requestBody:
         required: true
         content:
@@ -683,12 +727,13 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/typesNestedObjectWithRequiredField'
-      security: *ref_0
+      security:
+        - Bearer: []
       requestBody:
         required: true
         content:
@@ -705,18 +750,29 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/typesObjectWithUnknownField'
-      security: *ref_0
+              examples:
+                BackslashExample:
+                  value:
+                    unknown:
+                      $ref: https://example.com/schema
+      security:
+        - Bearer: []
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/typesObjectWithUnknownField'
+            examples:
+              BackslashExample:
+                value:
+                  unknown:
+                    $ref: https://example.com/schema
   /object/get-and-return-with-datetime-like-string:
     post:
       description: >-
@@ -733,18 +789,29 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/typesObjectWithDatetimeLikeString'
-      security: *ref_0
+              examples:
+                DatetimeLikeStringExample:
+                  value:
+                    datetimeLikeString: '2023-08-31T14:15:22Z'
+                    actualDatetime: '2023-08-31T14:15:22Z'
+      security:
+        - Bearer: []
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/typesObjectWithDatetimeLikeString'
+            examples:
+              DatetimeLikeStringExample:
+                value:
+                  datetimeLikeString: '2023-08-31T14:15:22Z'
+                  actualDatetime: '2023-08-31T14:15:22Z'
   /pagination:
     get:
       description: List items with cursor pagination
@@ -757,23 +824,26 @@ paths:
           description: The cursor for pagination
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
         - name: limit
           in: query
           description: Maximum number of items to return
           required: false
           schema:
-            type: integer
-            nullable: true
+            type:
+              - integer
+              - 'null'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/endpointsPaginatedResponse'
-      security: *ref_0
+      security:
+        - Bearer: []
   /params/path/{param}:
     get:
       description: GET with path param
@@ -788,12 +858,13 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 type: string
-      security: *ref_0
+      security:
+        - Bearer: []
     put:
       description: PUT to update with path param
       operationId: endpoints_params_modifyWithPath
@@ -807,12 +878,13 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 type: string
-      security: *ref_0
+      security:
+        - Bearer: []
       requestBody:
         required: true
         content:
@@ -830,14 +902,22 @@ paths:
           required: true
           schema:
             type: string
+          examples:
+            Example1:
+              value: upload-path
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/typesObjectWithRequiredField'
-      security: *ref_0
+              examples:
+                Example1:
+                  value:
+                    string: uploaded
+      security:
+        - Bearer: []
       requestBody:
         required: true
         content:
@@ -859,12 +939,13 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 type: string
-      security: *ref_0
+      security:
+        - Bearer: []
     put:
       description: PUT to update with path param
       operationId: endpoints_params_modifyWithInlinePath
@@ -878,12 +959,13 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 type: string
-      security: *ref_0
+      security:
+        - Bearer: []
       requestBody:
         required: true
         content:
@@ -909,8 +991,9 @@ paths:
             type: integer
       responses:
         '204':
-          description: ''
-      security: *ref_0
+          description: No content
+      security:
+        - Bearer: []
   /params/allow-multiple:
     get:
       description: GET with multiple of same query param
@@ -934,8 +1017,9 @@ paths:
               type: integer
       responses:
         '204':
-          description: ''
-      security: *ref_0
+          description: No content
+      security:
+        - Bearer: []
   /params/path-query/{param}:
     get:
       description: GET with path and query params
@@ -955,8 +1039,9 @@ paths:
             type: string
       responses:
         '204':
-          description: ''
-      security: *ref_0
+          description: No content
+      security:
+        - Bearer: []
   /params/inline-path-query/{param}:
     get:
       description: GET with path and query params
@@ -976,8 +1061,9 @@ paths:
             type: string
       responses:
         '204':
-          description: ''
-      security: *ref_0
+          description: No content
+      security:
+        - Bearer: []
   /primitive/string:
     post:
       operationId: endpoints_primitive_getAndReturnString
@@ -986,12 +1072,13 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 type: string
-      security: *ref_0
+      security:
+        - Bearer: []
       requestBody:
         required: true
         content:
@@ -1006,12 +1093,13 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 type: integer
-      security: *ref_0
+      security:
+        - Bearer: []
       requestBody:
         required: true
         content:
@@ -1026,13 +1114,14 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 type: integer
                 format: int64
-      security: *ref_0
+      security:
+        - Bearer: []
       requestBody:
         required: true
         content:
@@ -1048,13 +1137,14 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 type: number
                 format: double
-      security: *ref_0
+      security:
+        - Bearer: []
       requestBody:
         required: true
         content:
@@ -1070,12 +1160,13 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 type: boolean
-      security: *ref_0
+      security:
+        - Bearer: []
       requestBody:
         required: true
         content:
@@ -1090,13 +1181,14 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 type: string
                 format: date-time
-      security: *ref_0
+      security:
+        - Bearer: []
       requestBody:
         required: true
         content:
@@ -1112,13 +1204,14 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 type: string
                 format: date
-      security: *ref_0
+      security:
+        - Bearer: []
       requestBody:
         required: true
         content:
@@ -1134,13 +1227,14 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 type: string
                 format: uuid
-      security: *ref_0
+      security:
+        - Bearer: []
       requestBody:
         required: true
         content:
@@ -1156,13 +1250,14 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 type: string
                 format: byte
-      security: *ref_0
+      security:
+        - Bearer: []
       requestBody:
         required: true
         content:
@@ -1183,13 +1278,14 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/endpointsPutResponse'
       summary: Put
-      security: *ref_0
+      security:
+        - Bearer: []
   /union:
     post:
       operationId: endpoints_union_getAndReturnUnion
@@ -1198,12 +1294,13 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/typesAnimal'
-      security: *ref_0
+      security:
+        - Bearer: []
       requestBody:
         required: true
         content:
@@ -1218,12 +1315,13 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 type: string
-      security: *ref_0
+      security:
+        - Bearer: []
   /urls/no-ending-slash:
     get:
       operationId: endpoints_urls_noEndingSlash
@@ -1232,12 +1330,13 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 type: string
-      security: *ref_0
+      security:
+        - Bearer: []
   /urls/with-ending-slash/:
     get:
       operationId: endpoints_urls_withEndingSlash
@@ -1246,12 +1345,13 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 type: string
-      security: *ref_0
+      security:
+        - Bearer: []
   /urls/with_underscores:
     get:
       operationId: endpoints_urls_withUnderscores
@@ -1260,12 +1360,13 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 type: string
-      security: *ref_0
+      security:
+        - Bearer: []
   /req-bodies/object:
     post:
       description: POST with custom object in request body, response is an object
@@ -1275,13 +1376,13 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/typesObjectWithOptionalField'
         '400':
-          description: ''
+          description: BadRequestBody
           content:
             application/json:
               schema:
@@ -1312,13 +1413,13 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 type: boolean
         '400':
-          description: ''
+          description: BadRequestBody
           content:
             application/json:
               schema:
@@ -1336,12 +1437,13 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/typesObjectWithOptionalField'
-      security: *ref_0
+      security:
+        - Bearer: []
     post:
       operationId: noReqBody_postWithNoRequestBody
       tags:
@@ -1349,12 +1451,13 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 type: string
-      security: *ref_0
+      security:
+        - Bearer: []
   /test-headers/custom-header:
     post:
       operationId: reqWithHeaders_getWithCustomHeader
@@ -1368,8 +1471,9 @@ paths:
             type: string
       responses:
         '204':
-          description: ''
-      security: *ref_0
+          description: No content
+      security:
+        - Bearer: []
       requestBody:
         required: true
         content:
@@ -1387,8 +1491,9 @@ components:
           items:
             $ref: '#/components/schemas/typesObjectWithRequiredField'
         next:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
       required:
         - items
     endpointsError:
@@ -1400,11 +1505,13 @@ components:
         code:
           $ref: '#/components/schemas/endpointsErrorCode'
         detail:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         field:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
       required:
         - category
         - code
@@ -1435,10 +1542,11 @@ components:
       type: object
       properties:
         errors:
-          type: array
+          type:
+            - array
+            - 'null'
           items:
             $ref: '#/components/schemas/endpointsError'
-          nullable: true
     BadObjectRequestInfo:
       title: BadObjectRequestInfo
       type: object
@@ -1533,67 +1641,82 @@ components:
       type: object
       properties:
         string:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
           description: >-
             This is a rather long descriptor of this single field in a more
             complex type. If you ask me I think this is a pretty good
             description for this field all things considered.
         integer:
-          type: integer
-          nullable: true
+          type:
+            - integer
+            - 'null'
         long:
-          type: integer
+          type:
+            - integer
+            - 'null'
           format: int64
-          nullable: true
         double:
-          type: number
+          type:
+            - number
+            - 'null'
           format: double
-          nullable: true
         bool:
-          type: boolean
-          nullable: true
+          type:
+            - boolean
+            - 'null'
         datetime:
-          type: string
+          type:
+            - string
+            - 'null'
           format: date-time
-          nullable: true
         date:
-          type: string
+          type:
+            - string
+            - 'null'
           format: date
-          nullable: true
         uuid:
-          type: string
+          type:
+            - string
+            - 'null'
           format: uuid
-          nullable: true
         base64:
-          type: string
+          type:
+            - string
+            - 'null'
           format: byte
-          nullable: true
         list:
-          type: array
+          type:
+            - array
+            - 'null'
           items:
             type: string
-          nullable: true
         set:
-          type: array
+          type:
+            - array
+            - 'null'
           items:
             type: string
-          nullable: true
         map:
-          type: object
+          type:
+            - object
+            - 'null'
           additionalProperties:
             type: string
-          nullable: true
         bigint:
-          type: integer
+          type:
+            - integer
+            - 'null'
           format: bigint
-          nullable: true
     typesObjectWithRequiredField:
       title: typesObjectWithRequiredField
       type: object
       properties:
         string:
           type: string
+          examples:
+            - uploaded
       required:
         - string
     typesObjectWithMapOfMap:
@@ -1613,11 +1736,13 @@ components:
       type: object
       properties:
         string:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         NestedObject:
-          $ref: '#/components/schemas/typesObjectWithOptionalField'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/typesObjectWithOptionalField'
+            - type: 'null'
     typesNestedObjectWithRequiredField:
       title: typesNestedObjectWithRequiredField
       type: object
@@ -1634,12 +1759,14 @@ components:
       type: object
       properties:
         optionalAlias:
-          $ref: '#/components/schemas/typesOptionalAlias'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/typesOptionalAlias'
+            - type: 'null'
     typesOptionalAlias:
       title: typesOptionalAlias
-      type: string
-      nullable: true
+      type:
+        - string
+        - 'null'
     typesObjectWithDatetimeLikeString:
       title: typesObjectWithDatetimeLikeString
       type: object
@@ -1651,10 +1778,14 @@ components:
         datetimeLikeString:
           type: string
           description: A string field that happens to contain a datetime-like value
+          examples:
+            - '2023-08-31T14:15:22Z'
         actualDatetime:
           type: string
           format: date-time
           description: An actual datetime field for comparison
+          examples:
+            - '2023-08-31T14:15:22Z'
       required:
         - datetimeLikeString
         - actualDatetime
@@ -1677,8 +1808,7 @@ components:
               properties:
                 animal:
                   type: string
-                  enum:
-                    - dog
+                  const: dog
             - $ref: '#/components/schemas/typesDog'
           required:
             - animal
@@ -1688,8 +1818,7 @@ components:
               properties:
                 animal:
                   type: string
-                  enum:
-                    - cat
+                  const: cat
             - $ref: '#/components/schemas/typesCat'
           required:
             - animal
@@ -1726,6 +1855,6 @@ components:
           items:
             type: string
   securitySchemes:
-    BearerAuth:
+    Bearer:
       type: http
       scheme: bearer

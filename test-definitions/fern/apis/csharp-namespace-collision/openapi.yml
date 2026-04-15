@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: csharp-namespace-collision
-  version: ''
+  version: 0.0.0
 paths:
   /users:
     post:
@@ -11,7 +11,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -30,7 +30,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -49,7 +49,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -62,7 +62,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -81,7 +81,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -96,7 +96,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -115,7 +115,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -139,7 +139,7 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -204,13 +204,15 @@ components:
         tokenId:
           type: string
         token:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         scopes:
-          type: array
+          type:
+            - array
+            - 'null'
           items:
             type: string
-          nullable: true
         createdAt:
           type: string
       required:
@@ -237,8 +239,9 @@ components:
         line1:
           type: string
         line2:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         city:
           type: string
         state:

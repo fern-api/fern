@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: java-with-property-conflict
-  version: ''
+  version: 0.0.0
 paths: {}
 components:
   schemas:
@@ -16,16 +16,19 @@ components:
           type: string
           description: The name of the prop
         label:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
           description: The display label
         withLabel:
-          type: boolean
-          nullable: true
+          type:
+            - boolean
+            - 'null'
           description: If true, requires label-value format
         description:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
           description: A description of the prop
       required:
         - name

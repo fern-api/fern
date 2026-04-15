@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
-  title: java-staged-builder-ordering
-  version: ''
+  title: staged-builder-ordering
+  version: 0.0.0
 paths:
   /staged-builder/simple:
     post:
@@ -11,17 +11,40 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 type: string
+              examples:
+                CorrectOrder:
+                  value: ok
+                ReverseOrder:
+                  value: ok
+                RandomOrder1:
+                  value: ok
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/SimpleStaged'
+            examples:
+              CorrectOrder:
+                value:
+                  first: a
+                  second: b
+                  third: c
+              ReverseOrder:
+                value:
+                  third: c
+                  second: b
+                  first: a
+              RandomOrder1:
+                value:
+                  second: b
+                  third: c
+                  first: a
   /staged-builder/medium:
     post:
       operationId: service_createMedium
@@ -30,17 +53,37 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 type: string
+              examples:
+                CorrectOrder:
+                  value: ok
+                ScrambledOrder:
+                  value: ok
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/MediumStaged'
+            examples:
+              CorrectOrder:
+                value:
+                  alpha: alpha
+                  beta: 1
+                  gamma: gamma
+                  delta: true
+                  optional: optional
+              ScrambledOrder:
+                value:
+                  delta: true
+                  beta: 1
+                  alpha: alpha
+                  gamma: gamma
+                  optional: optional
   /staged-builder/complex:
     post:
       operationId: service_createComplex
@@ -49,17 +92,55 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 type: string
+              examples:
+                CorrectOrder:
+                  value: ok
+                RequiredScrambled:
+                  value: ok
+                PartialReverse:
+                  value: ok
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/ComplexStaged'
+            examples:
+              CorrectOrder:
+                value:
+                  fieldA: a
+                  fieldB: 1
+                  fieldC: true
+                  fieldD: d
+                  fieldE: 1.5
+                  optionalX: x
+                  optionalY: 2
+                  optionalZ: false
+              RequiredScrambled:
+                value:
+                  fieldC: true
+                  fieldE: 1.5
+                  fieldA: a
+                  fieldB: 1
+                  fieldD: d
+                  optionalX: x
+                  optionalZ: false
+                  optionalY: 2
+              PartialReverse:
+                value:
+                  fieldE: 1.5
+                  fieldD: d
+                  fieldC: true
+                  fieldB: 1
+                  fieldA: a
+                  optionalY: 2
+                  optionalX: x
+                  optionalZ: false
   /staged-builder/mixed:
     post:
       operationId: service_createMixed
@@ -68,17 +149,43 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 type: string
+              examples:
+                CorrectOrder:
+                  value: ok
+                WrongOrder:
+                  value: ok
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/MixedStaged'
+            examples:
+              CorrectOrder:
+                value:
+                  id: d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32
+                  name: test
+                  timestamp: '2024-01-15T09:30:00Z'
+                  nested:
+                    first: a
+                    second: b
+                    third: c
+                  count: 42
+              WrongOrder:
+                value:
+                  count: 42
+                  name: test
+                  id: d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32
+                  nested:
+                    third: c
+                    first: a
+                    second: b
+                  timestamp: '2024-01-15T09:30:00Z'
   /staged-builder/parent:
     post:
       operationId: service_createParent
@@ -87,17 +194,37 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 type: string
+              examples:
+                CorrectOrder:
+                  value: ok
+                ParentWrongOrder:
+                  value: ok
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/Parent'
+            examples:
+              CorrectOrder:
+                value:
+                  parentId: parent-123
+                  child:
+                    childId: child-456
+                    childValue: 789
+                  parentName: Parent Name
+              ParentWrongOrder:
+                value:
+                  parentName: Parent Name
+                  child:
+                    childValue: 789
+                    childId: child-456
+                  parentId: parent-123
 components:
   schemas:
     SimpleStaged:
@@ -106,10 +233,16 @@ components:
       properties:
         first:
           type: string
+          examples:
+            - a
         second:
           type: string
+          examples:
+            - b
         third:
           type: string
+          examples:
+            - c
       required:
         - first
         - second
@@ -120,15 +253,24 @@ components:
       properties:
         alpha:
           type: string
+          examples:
+            - alpha
         beta:
           type: integer
+          examples:
+            - 1
         gamma:
           type: string
+          examples:
+            - gamma
         delta:
           type: boolean
+          examples:
+            - true
         optional:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
       required:
         - alpha
         - beta
@@ -140,24 +282,37 @@ components:
       properties:
         fieldA:
           type: string
+          examples:
+            - a
         fieldB:
           type: integer
+          examples:
+            - 1
         fieldC:
           type: boolean
+          examples:
+            - true
         fieldD:
           type: string
+          examples:
+            - d
         fieldE:
           type: number
           format: double
+          examples:
+            - 1.5
         optionalX:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         optionalY:
-          type: integer
-          nullable: true
+          type:
+            - integer
+            - 'null'
         optionalZ:
-          type: boolean
-          nullable: true
+          type:
+            - boolean
+            - 'null'
       required:
         - fieldA
         - fieldB
@@ -171,15 +326,23 @@ components:
         id:
           type: string
           format: uuid
+          examples:
+            - d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32
         name:
           type: string
+          examples:
+            - test
         timestamp:
           type: string
           format: date-time
+          examples:
+            - '2024-01-15T09:30:00Z'
         nested:
           $ref: '#/components/schemas/SimpleStaged'
         count:
           type: integer
+          examples:
+            - 42
       required:
         - id
         - name
@@ -203,10 +366,14 @@ components:
       properties:
         parentId:
           type: string
+          examples:
+            - parent-123
         child:
           $ref: '#/components/schemas/Child'
         parentName:
           type: string
+          examples:
+            - Parent Name
       required:
         - parentId
         - child

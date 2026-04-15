@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
-  title: go-content-type
-  version: ''
+  title: api
+  version: 0.0.0
 paths:
   /movies/create-movie:
     post:
@@ -12,7 +12,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -38,6 +38,6 @@ components:
         - title
         - rating
   securitySchemes:
-    BearerAuth:
+    Bearer:
       type: http
       scheme: bearer

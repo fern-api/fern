@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: csharp-xml-entities
-  version: ''
+  version: 0.0.0
 paths:
   /timezone:
     get:
@@ -12,7 +12,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -36,8 +36,9 @@ components:
           type: string
           description: 'This uses valid XML entity: A &lt; B &amp; C &gt; D'
         specialChars:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
           description: 'Special characters: &nbsp; &hellip; &middot; &copy;'
       required:
         - timeZoneOffset

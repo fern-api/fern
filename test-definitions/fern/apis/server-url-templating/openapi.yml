@@ -1,119 +1,140 @@
-openapi: 3.0.3
+openapi: 3.1.0
 info:
   title: Server URL Templating API
-  description: API demonstrating server URL templating with variables across multiple base URLs
-  version: 1.0.0
-servers:
-  - url: https://api.{region}.{environment}.example.com/v1
-    description: Regional API server
-    x-server-name: Default
-    x-fern-default-url: https://api.example.com/v1
-    variables:
-      region:
-        default: us-east-1
-        description: The AWS region
-        enum:
-          - us-east-1
-          - us-west-2
-          - eu-west-1
-      environment:
-        default: prod
-        description: The deployment environment
-        enum:
-          - prod
-          - staging
-          - dev
+  version: 0.0.0
 paths:
   /users:
     get:
       operationId: getUsers
-      summary: Get all users
+      tags:
+        - ''
+      parameters: []
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/User"
+                  $ref: '#/components/schemas/User'
+              examples:
+                Example1:
+                  value:
+                    - id: id
+                      name: name
+                      email: email
+      summary: Get all users
+      servers:
+        - url: https://api.example.com/v1
   /users/{userId}:
     get:
       operationId: getUser
-      summary: Get a user by ID
+      tags:
+        - ''
       parameters:
         - name: userId
           in: path
           required: true
           schema:
             type: string
+          examples:
+            Example1:
+              value: userId
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/User"
+                $ref: '#/components/schemas/User'
+              examples:
+                Example1:
+                  value:
+                    id: id
+                    name: name
+                    email: email
+      summary: Get a user by ID
+      servers:
+        - url: https://api.example.com/v1
   /auth/token:
     post:
       operationId: getToken
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+              examples:
+                Example1:
+                  value:
+                    access_token: access_token
+                    expires_in: 1
       summary: Get authentication token
       servers:
-        - url: https://auth.{region}.example.com
-          x-fern-server-name: Auth
-          x-fern-default-url: https://auth.example.com
-          variables:
-            region:
-              default: us-east-1
-              description: The AWS region for auth service
-              enum:
-                - us-east-1
-                - us-west-2
-                - eu-west-1
+        - url: https://auth.example.com
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/TokenRequest"
-      responses:
-        "200":
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/TokenResponse"
+              type: object
+              properties:
+                client_id:
+                  type: string
+                  examples:
+                    - client_id
+                client_secret:
+                  type: string
+                  examples:
+                    - client_secret
+              required:
+                - client_id
+                - client_secret
+            examples:
+              Example1:
+                value:
+                  client_id: client_id
+                  client_secret: client_secret
 components:
   schemas:
     User:
+      title: User
       type: object
-      required:
-        - id
-        - name
       properties:
         id:
           type: string
+          examples:
+            - id
         name:
           type: string
+          examples:
+            - name
         email:
-          type: string
-    TokenRequest:
-      type: object
+          type:
+            - string
+            - 'null'
       required:
-        - client_id
-        - client_secret
-      properties:
-        client_id:
-          type: string
-        client_secret:
-          type: string
+        - id
+        - name
     TokenResponse:
+      title: TokenResponse
       type: object
-      required:
-        - access_token
-        - expires_in
       properties:
         access_token:
           type: string
+          examples:
+            - access_token
         expires_in:
           type: integer
+          examples:
+            - 1
+      required:
+        - access_token
+        - expires_in
+  securitySchemes: {}

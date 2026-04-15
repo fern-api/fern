@@ -1,63 +1,96 @@
-openapi: 3.0.3
+openapi: 3.1.0
 info:
   title: Extra Properties Test API
-  version: 1.0.0
+  version: 0.0.0
 paths:
   /user:
     get:
       operationId: getUser
-      summary: Get a user with extra properties
+      tags:
+        - ''
+      parameters: []
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/User"
+                $ref: '#/components/schemas/User'
+              examples:
+                Example1:
+                  value:
+                    id: id
+                    user_name: user_name
+                    created_at: '2024-01-15T09:30:00Z'
+                    updated_at: '2024-01-15T09:30:00Z'
+      summary: Get a user with extra properties
     post:
       operationId: createUser
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+              examples:
+                Example1:
+                  value:
+                    id: id
+                    user_name: user_name
+                    created_at: '2024-01-15T09:30:00Z'
+                    updated_at: '2024-01-15T09:30:00Z'
       summary: Create a user with extra properties
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreateUserRequest"
-      responses:
-        "200":
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/User"
+              type: object
+              properties:
+                user_name:
+                  type: string
+                  examples:
+                    - user_name
+                meta_data:
+                  type:
+                    - object
+                    - 'null'
+              required:
+                - user_name
+            examples:
+              Example1:
+                value:
+                  user_name: user_name
 components:
   schemas:
     User:
+      title: User
       type: object
-      additionalProperties: true
+      properties:
+        id:
+          type: string
+          examples:
+            - id
+        user_name:
+          type: string
+          examples:
+            - user_name
+        created_at:
+          type: string
+          format: date-time
+          examples:
+            - '2024-01-15T09:30:00Z'
+        updated_at:
+          type:
+            - string
+            - 'null'
+          format: date-time
       required:
         - id
         - user_name
         - created_at
-      properties:
-        id:
-          type: string
-        user_name:
-          type: string
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-    CreateUserRequest:
-      type: object
-      additionalProperties: true
-      required:
-        - user_name
-      properties:
-        user_name:
-          type: string
-        meta_data:
-          type: object
-          additionalProperties: true
+  securitySchemes: {}

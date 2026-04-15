@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: bytes-upload
-  version: ''
+  version: 0.0.0
 paths:
   /upload-content:
     post:
@@ -11,7 +11,7 @@ paths:
       parameters: []
       responses:
         '204':
-          description: ''
+          description: No content
       requestBody:
         required: true
         content:
@@ -31,16 +31,20 @@ paths:
           required: true
           schema:
             type: string
+          examples:
+            Example1:
+              value: nova-2
         - name: language
           in: query
           description: The language of the content
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
       responses:
         '204':
-          description: ''
+          description: No content
       requestBody:
         required: true
         content:

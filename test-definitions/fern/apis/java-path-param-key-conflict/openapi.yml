@@ -1,55 +1,77 @@
-openapi: 3.0.3
+openapi: 3.1.0
 info:
   title: Path Parameter Key Conflict Test API
-  version: 1.0.0
-  description: Tests that path parameters named 'key' and 'value' don't conflict with lambda variables in generated Java code
+  version: 0.0.0
 paths:
   /{key}/{value}:
     post:
       operationId: createItem
-      summary: Create an item with key and value path parameters
+      tags:
+        - ''
       parameters:
         - name: key
           in: path
+          description: The key path parameter
           required: true
           schema:
             type: string
-          description: The key path parameter
+          examples:
+            Example1:
+              value: key
         - name: value
           in: path
+          description: The value path parameter
           required: true
           schema:
             type: string
-          description: The value path parameter
+          examples:
+            Example1:
+              value: value
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+              examples:
+                Example1:
+                  value:
+                    id: id
+                    data: data
+      summary: Create an item with key and value path parameters
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ItemData"
-      responses:
-        "200":
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Item"
+              type: object
+              properties:
+                data:
+                  type: string
+                  examples:
+                    - data
+              required:
+                - data
+            examples:
+              Example1:
+                value:
+                  data: data
 components:
   schemas:
     Item:
+      title: Item
       type: object
       properties:
         id:
           type: string
+          examples:
+            - id
         data:
           type: string
+          examples:
+            - data
       required:
         - id
         - data
-    ItemData:
-      type: object
-      properties:
-        data:
-          type: string
-      required:
-        - data
+  securitySchemes: {}

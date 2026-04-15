@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: java-optional-query-params-overloads
-  version: ''
+  version: 0.0.0
 paths:
   /api/users/{userId}/insurance:
     get:
@@ -20,18 +20,20 @@ paths:
           description: Include expired insurance policies
           required: false
           schema:
-            type: boolean
-            nullable: true
+            type:
+              - boolean
+              - 'null'
         - name: policyType
           in: query
           description: Filter by policy type
           required: false
           schema:
-            $ref: '#/components/schemas/PolicyType'
-            nullable: true
+            anyOf:
+              - $ref: '#/components/schemas/PolicyType'
+              - type: 'null'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -54,11 +56,12 @@ paths:
           description: Optional limit
           required: false
           schema:
-            type: integer
-            nullable: true
+            type:
+              - integer
+              - 'null'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -74,7 +77,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:

@@ -1,78 +1,115 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: Java Nullable Named Request Types API
-  version: 1.0.0
+  version: 0.0.0
 paths:
   /postWithNullableNamedRequestBodyType/{id}:
     post:
       operationId: postWithNullableNamedRequestBodyType
+      tags:
+        - ''
       parameters:
         - name: id
           in: path
           required: true
           schema:
             type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/NullableObject"
+          examples:
+            Example1:
+              value: id
       responses:
-        200:
+        '200':
           description: Successful response
           content:
             application/json:
               schema:
-                type: object
-                $ref: "#/components/schemas/ResponseBody"
-
+                $ref: '#/components/schemas/ResponseBody'
+              examples:
+                Example1:
+                  value:
+                    success: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              anyOf:
+                - $ref: '#/components/schemas/NullableObject'
+                - type: 'null'
+            examples:
+              Example1:
+                value: {}
   /postWithNonNullableNamedRequestBodyType/{id}:
     post:
+      operationId: postWithNonNullableNamedRequestBodyType
+      tags:
+        - ''
       parameters:
         - name: id
           in: path
           required: true
           schema:
             type: string
-      operationId: postWithNonNullableNamedRequestBodyType
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/NonNullableObject"
+          examples:
+            Example1:
+              value: id
       responses:
-        200:
+        '200':
           description: Successful response
           content:
             application/json:
               schema:
-                type: object
-                $ref: "#/components/schemas/ResponseBody"
-
+                $ref: '#/components/schemas/ResponseBody'
+              examples:
+                Example1:
+                  value:
+                    success: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type:
+                    - string
+                    - 'null'
+                name:
+                  type:
+                    - string
+                    - 'null'
+                age:
+                  type:
+                    - integer
+                    - 'null'
+            examples:
+              Example1:
+                value: {}
 components:
   schemas:
     NullableObject:
+      title: NullableObject
       type: object
-      nullable: true
       properties:
         id:
-          type: string
+          type:
+            - string
+            - 'null'
         name:
-          type: string
+          type:
+            - string
+            - 'null'
         age:
-          type: integer
-    NonNullableObject:
-      type: object
-      nullable: false
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        age:
-          type: integer
+          type:
+            - integer
+            - 'null'
     ResponseBody:
+      title: ResponseBody
       type: object
       properties:
         success:
-          type: boolean
+          type:
+            - boolean
+            - 'null'
+  securitySchemes: {}

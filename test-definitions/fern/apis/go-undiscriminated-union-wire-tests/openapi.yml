@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
-  title: go-undiscriminated-union-wire-tests
-  version: ''
+  title: api
+  version: 0.0.0
 paths:
   /rerank:
     post:
@@ -12,17 +12,34 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/RerankResponse'
+              examples:
+                Example1:
+                  value:
+                    results:
+                      - Washington, D.C. is the capital of the United States.
+                      - >-
+                        Carson City is the capital city of the American state of
+                        Nevada.
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/RerankRequest'
+            examples:
+              Example1:
+                value:
+                  documents:
+                    - text: >-
+                        Carson City is the capital city of the American state of
+                        Nevada.
+                    - text: Washington, D.C. is the capital of the United States.
+                  query: What is the capital of the United States?
 components:
   schemas:
     DocumentItem:
@@ -48,6 +65,8 @@ components:
             $ref: '#/components/schemas/DocumentItem'
         query:
           type: string
+          examples:
+            - What is the capital of the United States?
       required:
         - documents
         - query
@@ -59,9 +78,12 @@ components:
           type: array
           items:
             type: string
+          examples:
+            - - Washington, D.C. is the capital of the United States.
+              - Carson City is the capital city of the American state of Nevada.
       required:
         - results
   securitySchemes:
-    BearerAuth:
+    Bearer:
       type: http
       scheme: bearer

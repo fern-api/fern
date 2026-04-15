@@ -1,17 +1,31 @@
 openapi: 3.1.0
 info:
   title: null-type
-  description: Tests handling of OpenAPI 3.1 type "null" in response schemas
-  version: ""
+  version: 0.0.0
 paths:
   /conversations/outbound-call:
     post:
-      tags:
-        - Conversations
-      summary: Outbound Call
       description: Place an outbound call or validate call setup with dry_run.
       operationId: conversations_outboundCall
+      tags:
+        - Conversations
+      parameters: []
+      responses:
+        '200':
+          description: Dry run succeeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OutboundCallConversationsResponse'
+              examples:
+                Example1:
+                  value:
+                    conversation_id:
+                      key: value
+                    dry_run: true
+      summary: Outbound Call
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -20,83 +34,83 @@ paths:
                 to_phone_number:
                   type: string
                   description: The phone number to call in E.164 format.
+                  examples:
+                    - to_phone_number
                 dry_run:
-                  type: boolean
-                  description: If true, validates the outbound call setup without placing a call.
+                  type:
+                    - boolean
+                    - 'null'
+                  description: >-
+                    If true, validates the outbound call setup without placing a
+                    call.
               required:
                 - to_phone_number
-      responses:
-        "200":
-          description: Dry run succeeded
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  conversation_id:
-                    type: "null"
-                    description: Always null when dry_run is true.
-                  dry_run:
-                    type: boolean
-                    enum: [true]
-                    description: Always true for this response.
-                required:
-                  - conversation_id
-                  - dry_run
-        "201":
-          description: Call initiated successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  conversation_id:
-                    type: string
-                    description: The ID of the created conversation.
-                  dry_run:
-                    type: boolean
-                    enum: [false]
-                    description: Always false when a conversation was created.
-                required:
-                  - conversation_id
-                  - dry_run
-      x-fern-sdk-group-name: conversations
-      x-fern-sdk-method-name: outboundCall
+            examples:
+              Example1:
+                value:
+                  to_phone_number: to_phone_number
   /users/{id}:
     get:
-      tags:
-        - Users
-      summary: Get User
       description: Gets a user by ID. The deleted_at field uses type null.
       operationId: users_get
+      tags:
+        - Users
       parameters:
         - name: id
           in: path
           required: true
           schema:
             type: string
+          examples:
+            Example1:
+              value: id
       responses:
-        "200":
+        '200':
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/User"
-      x-fern-sdk-group-name: users
-      x-fern-sdk-method-name: get
+                $ref: '#/components/schemas/User'
+              examples:
+                Example1:
+                  value:
+                    id: id
+                    name: name
+                    deleted_at:
+                      key: value
+      summary: Get User
 components:
   schemas:
+    OutboundCallConversationsResponse:
+      title: OutboundCallConversationsResponse
+      type: object
+      properties:
+        conversation_id:
+          description: Always null when dry_run is true.
+        dry_run:
+          type: boolean
+          description: Always true for this response.
+          examples:
+            - true
+      required:
+        - conversation_id
+        - dry_run
     User:
+      title: User
       type: object
       properties:
         id:
           type: string
+          examples:
+            - id
         name:
           type: string
+          examples:
+            - name
         deleted_at:
-          type: "null"
           description: Always null for active users.
       required:
         - id
         - name
         - deleted_at
+  securitySchemes: {}

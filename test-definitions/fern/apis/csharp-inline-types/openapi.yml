@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
-  title: csharp-inline-types
-  version: ''
+  title: object
+  version: 0.0.0
 paths:
   /root/root:
     post:
@@ -11,7 +11,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -38,7 +38,7 @@ paths:
       parameters: []
       responses:
         '204':
-          description: ''
+          description: No content
       requestBody:
         required: true
         content:
@@ -61,7 +61,7 @@ paths:
       parameters: []
       responses:
         '204':
-          description: ''
+          description: No content
       requestBody:
         required: true
         content:
@@ -241,8 +241,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - type1
+                  const: type1
             - $ref: '#/components/schemas/DiscriminatedUnion1InlineType1'
           required:
             - type
@@ -252,8 +251,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - type2
+                  const: type2
             - $ref: '#/components/schemas/DiscriminatedUnion1InlineType2'
           required:
             - type
@@ -263,8 +261,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - ref
+                  const: ref
             - $ref: '#/components/schemas/ReferenceType'
           required:
             - type
@@ -407,8 +404,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - type1
+                  const: type1
             - $ref: >-
                 #/components/schemas/UndiscriminatedUnion1DiscriminatedUnion1InlineType1
           required:
@@ -419,8 +415,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - type2
+                  const: type2
             - $ref: >-
                 #/components/schemas/UndiscriminatedUnion1DiscriminatedUnion1InlineType2
           required:
@@ -431,8 +426,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - ref
+                  const: ref
             - $ref: '#/components/schemas/ReferenceType'
           required:
             - type
@@ -558,8 +552,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - aliasVariant
+                  const: aliasVariant
             - $ref: '#/components/schemas/AliasVariantType'
           required:
             - type
@@ -569,8 +562,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - nonAliasVariant
+                  const: nonAliasVariant
             - $ref: '#/components/schemas/NonAliasVariant'
           required:
             - type
@@ -581,8 +573,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - aliasVariant
+              const: aliasVariant
             value:
               type: object
               additionalProperties:
@@ -596,8 +587,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - aliasVariant
+              const: aliasVariant
             value:
               type: array
               items:
@@ -611,8 +601,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - aliasVariant
+              const: aliasVariant
             value:
               type: array
               items:
@@ -816,8 +805,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - types
+                  const: types
             - $ref: '#/components/schemas/UnionWithTypesVariantInlineType1'
           required:
             - type
@@ -827,8 +815,7 @@ components:
               properties:
                 type:
                   type: string
-                  enum:
-                    - otherVariant
+                  const: otherVariant
             - $ref: '#/components/schemas/UnionWithTypesVariantOtherInlineType1'
           required:
             - type

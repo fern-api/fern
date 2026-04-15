@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: java-optional-nullable-query-params
-  version: ''
+  version: 0.0.0
 paths:
   /api/search:
     get:
@@ -15,53 +15,60 @@ paths:
           description: Search query - defaults to empty string when absent
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
         - name: limit
           in: query
           description: Max results - defaults to 10 when absent
           required: false
           schema:
-            type: integer
-            nullable: true
+            type:
+              - integer
+              - 'null'
         - name: includeArchived
           in: query
           description: Include archived items - defaults to false when absent
           required: false
           schema:
-            type: boolean
-            nullable: true
+            type:
+              - boolean
+              - 'null'
         - name: sortOrder
           in: query
           description: Sort order - defaults to ASC when absent
           required: false
           schema:
-            $ref: '#/components/schemas/SortOrder'
-            nullable: true
+            anyOf:
+              - $ref: '#/components/schemas/SortOrder'
+              - type: 'null'
         - name: optionalWithoutDefault
           in: query
           description: Optional nullable without default - should check wasSpecified
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
         - name: regularOptional
           in: query
           description: Another optional nullable with default for comparison
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
         - name: regularOptionalNoDefault
           in: query
           description: Another optional nullable without default for comparison
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -87,17 +94,21 @@ components:
         totalCount:
           type: integer
         query:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         limit:
-          type: integer
-          nullable: true
+          type:
+            - integer
+            - 'null'
         includeArchived:
-          type: boolean
-          nullable: true
+          type:
+            - boolean
+            - 'null'
         sortOrder:
-          $ref: '#/components/schemas/SortOrder'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/SortOrder'
+            - type: 'null'
       required:
         - results
         - totalCount

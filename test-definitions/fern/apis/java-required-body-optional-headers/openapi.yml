@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: java-required-body-optional-headers
-  version: ''
+  version: 0.0.0
 paths:
   /api/users:
     post:
@@ -15,11 +15,12 @@ paths:
           description: Optional correlation ID for request tracing
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -41,11 +42,12 @@ paths:
           description: Maximum number of users to return
           required: false
           schema:
-            type: integer
-            nullable: true
+            type:
+              - integer
+              - 'null'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -69,11 +71,12 @@ paths:
           description: If true, validate the update without persisting
           required: false
           schema:
-            type: boolean
-            nullable: true
+            type:
+              - boolean
+              - 'null'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -96,18 +99,20 @@ paths:
           description: Whether to validate the request
           required: false
           schema:
-            type: boolean
-            nullable: true
+            type:
+              - boolean
+              - 'null'
         - name: X-Request-Id
           in: header
           description: Optional request ID
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -133,7 +138,7 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -159,7 +164,7 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -182,11 +187,12 @@ paths:
           description: Optional trace ID for request tracing
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -203,8 +209,9 @@ paths:
                 email:
                   type: string
                 age:
-                  type: integer
-                  nullable: true
+                  type:
+                    - integer
+                    - 'null'
                   description: User's age
               required:
                 - name
@@ -221,8 +228,9 @@ components:
         email:
           type: string
         age:
-          type: integer
-          nullable: true
+          type:
+            - integer
+            - 'null'
           description: User's age
       required:
         - name
@@ -239,8 +247,9 @@ components:
         email:
           type: string
         age:
-          type: integer
-          nullable: true
+          type:
+            - integer
+            - 'null'
         createdAt:
           type: string
       required:

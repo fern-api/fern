@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
-  title: java-builder-extension
-  version: ''
+  title: builder-extension
+  version: 0.0.0
 paths:
   /api/hello:
     get:
@@ -11,13 +11,13 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/HelloResponse'
       security:
-        - BearerAuth: []
+        - Bearer: []
 components:
   schemas:
     HelloResponse:
@@ -29,13 +29,19 @@ components:
       required:
         - message
   securitySchemes:
-    BearerAuth:
+    Bearer:
       type: http
       scheme: bearer
 servers:
   - url: https://api.example.com
     description: Production
-  - url: https://api.${DEV_NAMESPACE}.example.com
+  - url: https://api.{DEV_NAMESPACE}.example.com
     description: Development
-  - url: https://api.${STAGE_ENV}.example.com
+    variables:
+      DEV_NAMESPACE:
+        default: ''
+  - url: https://api.{STAGE_ENV}.example.com
     description: Staging
+    variables:
+      STAGE_ENV:
+        default: ''
