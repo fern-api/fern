@@ -74,7 +74,7 @@ runs:
       uses: actions/cache@v4
       with:
         path: /tmp/docker-cache
-        key: ${{ runner.os }}-docker-${{ inputs.generator-name }}-${{ hashFiles('**/Dockerfile*') }}
+        key: ${{ runner.os }}-docker-${{ inputs.generator-name }}-${{ hashFiles('generators/**/Dockerfile*', 'docker/**/Dockerfile*', 'packages/**/Dockerfile*') }}
         restore-keys: |
           ${{ runner.os }}-docker-${{ inputs.generator-name }}-
 
