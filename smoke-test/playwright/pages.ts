@@ -8,9 +8,9 @@ export const PAGES = [
     // Markdown pages
     "/welcome",
 
-    // REST API reference
-    "/rest-api/plant/add-plant",
-    "/rest-api/plant/get-plant-by-id",
+    // REST API reference (paths are /<api-section>/<operation-id>)
+    "/rest-api/add-plant",
+    "/rest-api/get-plant-by-id",
 
     // Sitemap
     "/sitemap.xml"

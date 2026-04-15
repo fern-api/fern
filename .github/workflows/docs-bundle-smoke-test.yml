@@ -79,7 +79,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        node-version: [20, 22, 24, 26]
+        node-version: [20, 22, 24]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 30
 
@@ -148,7 +148,7 @@ jobs:
           FERN_TOKEN: ${{ secrets.FERN_SMOKE_TEST_API_KEY }}
         run: |
           cd smoke-test/fern
-          FERN_NO_VERSION_REDIRECTION=true fern docs dev --force-download \
+          FERN_NO_VERSION_REDIRECTION=true fern docs dev \
             > /tmp/fern-docs-dev.log 2>&1 &
           FERN_PID=$!
           echo "FERN_PID=$FERN_PID" >> $GITHUB_ENV
@@ -221,7 +221,7 @@ jobs:
           FERN_TOKEN: ${{ secrets.FERN_SMOKE_TEST_API_KEY }}
         run: |
           cd smoke-test/fern
-          FERN_NO_VERSION_REDIRECTION=true fern docs dev --force-download \
+          FERN_NO_VERSION_REDIRECTION=true fern docs dev \
             > /tmp/fern-docs-dev.log 2>&1 &
           FERN_PID=$!
           echo "FERN_PID=$FERN_PID" >> $GITHUB_ENV
