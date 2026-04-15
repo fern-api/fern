@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.4.0-rc.1
+  changelogEntry:
+    - summary: |
+        Fix `auth: any` with OAuth + header auth schemes (e.g. API key):
+        - Header auth parameters are now included in the generated client constructor (previously silently dropped when OAuth was present)
+        - Header auth parameters are passed through to the client wrapper (previously missing, causing a runtime `TypeError`)
+        - Header auth types are made optional when alongside OAuth, with conditional header setting
+        - The client can now be instantiated with just a header auth credential (e.g. `api_key`) without requiring OAuth credentials or a bearer token
+      type: fix
+  createdAt: "2026-04-15"
+  irVersion: 66
+
 - version: 5.4.0-rc.0
   changelogEntry:
     - summary: |
