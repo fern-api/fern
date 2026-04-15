@@ -4,7 +4,7 @@
 # many API versions, each with its own OpenAPI spec and shared markdown pages.
 #
 # This script:
-# 1. Scans apis/api-*/ for downloaded historical specs
+# 1. Scans apis/square-*/ for downloaded historical specs
 # 2. Creates a generators.yml for each versioned API workspace
 # 3. Creates a version file (versions/vYYYY-MM-DD.yml) for each version
 # 4. Overwrites docs.yml with versioned configuration
@@ -24,20 +24,20 @@ PAGE_COUNT="${1:-37}"
 rm -rf "$VERSIONS_DIR"
 mkdir -p "$VERSIONS_DIR"
 
-# Discover downloaded versioned specs (api-YYYY-MM-DD directories with openapi.json)
+# Discover downloaded versioned specs (square-YYYY-MM-DD directories with openapi.json)
 FOUND_VERSIONS=()
-for spec_dir in "${APIS_DIR}"/api-*/; do
+for spec_dir in "${APIS_DIR}"/square-*/; do
   [ -d "$spec_dir" ] || continue
   if [ -f "${spec_dir}openapi.json" ]; then
-    # Extract version label from directory name (e.g., "2025-10-16" from "api-2025-10-16")
+    # Extract version label from directory name (e.g., "2025-10-16" from "square-2025-10-16")
     DIR_NAME=$(basename "$spec_dir")
-    VERSION="${DIR_NAME#api-}"
+    VERSION="${DIR_NAME#square-}"
     FOUND_VERSIONS+=("$VERSION")
   fi
 done
 
 if [ ${#FOUND_VERSIONS[@]} -eq 0 ]; then
-  echo "No versioned specs found in ${APIS_DIR}/api-*/. Skipping version generation."
+  echo "No versioned specs found in ${APIS_DIR}/square-*/. Skipping version generation."
   echo "docs.yml will remain in unversioned (flat navigation) mode."
   exit 0
 fi
@@ -49,7 +49,7 @@ echo "Found ${#SORTED_VERSIONS[@]} versioned specs. Generating fixture versions.
 
 # Generate generators.yml for each versioned API workspace
 for VERSION in "${SORTED_VERSIONS[@]}"; do
-  GEN_YML="${APIS_DIR}/api-${VERSION}/generators.yml"
+  GEN_YML="${APIS_DIR}/square-${VERSION}/generators.yml"
   if [ ! -f "$GEN_YML" ]; then
     cat > "$GEN_YML" <<'EOF'
 api:
@@ -113,7 +113,7 @@ for VERSION in "${SORTED_VERSIONS[@]}"; do
 
     # API Reference pointing to this version's workspace
     echo "  - api: API Reference"
-    echo "    api-name: api-${VERSION}"
+    echo "    api-name: square-${VERSION}"
   } > "$VERSION_FILE"
 done
 

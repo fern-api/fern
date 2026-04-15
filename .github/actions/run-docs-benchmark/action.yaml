@@ -52,9 +52,9 @@ runs:
         RESULTS_DIR="${GITHUB_WORKSPACE}/benchmark-results"
         mkdir -p "$RESULTS_DIR"
 
-        # Count versioned specs (api-YYYY-MM-DD directories)
+        # Count versioned specs (square-YYYY-MM-DD directories)
         VERSIONS_FOUND=0
-        for spec_dir in benchmarks/fern/apis/api-*/; do
+        for spec_dir in benchmarks/fern/apis/square-*/; do
           if [ -f "${spec_dir}openapi.json" ]; then
             VERSIONS_FOUND=$((VERSIONS_FOUND + 1))
           fi
