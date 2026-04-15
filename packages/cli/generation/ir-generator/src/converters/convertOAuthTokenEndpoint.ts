@@ -1,4 +1,4 @@
-import { isInlineRequestBody } from "@fern-api/fern-definition-schema";
+import { HttpRequestBodySchema, isInlineRequestBody } from "@fern-api/fern-definition-schema";
 import { OAuthTokenEndpoint } from "@fern-api/ir-sdk";
 
 import { FernFileContext } from "../FernFileContext.js";
@@ -150,7 +150,7 @@ function getRequestBodyPropertyNames({
     }
 
     // Inline request body with explicit properties
-    if (typeof body === "object" && !Array.isArray(body) && isInlineRequestBody(body as any)) {
+    if (typeof body === "object" && !Array.isArray(body) && isInlineRequestBody(body as HttpRequestBodySchema)) {
         return Object.keys((body as { properties?: Record<string, unknown> }).properties ?? {});
     }
 
