@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.70.1
+  changelogEntry:
+    - summary: |
+        Fix "Edit this page" button appearing on docs sites that never configured it.
+        The default `editThisPageLaunch` is now `undefined` instead of `"dashboard"`,
+        so the button only renders when explicitly configured.
+      type: fix
+  createdAt: "2026-04-15"
+  irVersion: 66
 - version: 4.70.0
   changelogEntry:
     - summary: |
