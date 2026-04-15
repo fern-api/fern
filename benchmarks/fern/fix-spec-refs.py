@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Strip dangling $ref entries from an OpenAPI/Swagger spec.
 
-Historical Square API specs contain $ref pointers to schemas that are
-referenced but never defined (e.g. CardRefundDetails, ExternalPower).
-This script removes those dangling references so the spec can be
-processed by Fern without errors.
+Historical API specs may contain $ref pointers to schemas that are
+referenced but never defined in a given release. This script removes
+those dangling references so the spec can be processed by Fern
+without errors.
 
 Usage: python3 fix-spec-refs.py <spec.json> [--in-place]
   Without --in-place, prints the fixed JSON to stdout.

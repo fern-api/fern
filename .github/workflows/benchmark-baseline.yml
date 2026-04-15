@@ -31,7 +31,7 @@ jobs:
           sparse-checkout: |
             .github/actions/fetch-benchmark-specs
             benchmarks/fern/apis
-            benchmarks/fern/square-versions.txt
+            benchmarks/fern/api-versions.txt
 
       - name: Fetch benchmark OpenAPI specs
         uses: ./.github/actions/fetch-benchmark-specs

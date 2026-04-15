@@ -1,8 +1,7 @@
-# Square API spec version labels for multi-version docs benchmarking.
+# API spec version labels for multi-version docs benchmarking.
 # Each line: COMMIT_SHA|VERSION_LABEL
-# Matches the 35 dated versions used by the real Square docs.
-# Commit SHAs point to the corresponding release in
-# square/connect-api-specification so each version uses a real,
+# 35 dated versions derived from a public open-source API specification repo.
+# Commit SHAs point to the corresponding release so each version uses a real,
 # historically different OpenAPI spec.
 # Ordered newest-first.
 ba11c0a1f006b81dcd3633adb9090e9b2f03fef7|2026-01-22

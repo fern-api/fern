@@ -304,7 +304,7 @@ jobs:
           if [[ "$ALL_GENERATORS_AFFECTED" == "true" ]]; then
             DOCS_AFFECTED=true
           else
-            DOCS_PATHS="packages/cli/docs-resolver packages/cli/remote-workspace-runner packages/cli/docs-validator packages/cli/configuration-loader packages/cli/cli/src/commands/generate/generateDocsWorkspace benchmarks/fern/docs.yml benchmarks/fern/pages/template.md benchmarks/fern/generate-fixture-pages.sh benchmarks/fern/generate-fixture-versions.sh benchmarks/fern/square-versions.txt .github/actions/run-docs-benchmark"
+            DOCS_PATHS="packages/cli/docs-resolver packages/cli/remote-workspace-runner packages/cli/docs-validator packages/cli/configuration-loader packages/cli/cli/src/commands/generate/generateDocsWorkspace benchmarks/fern/docs.yml benchmarks/fern/pages/template.md benchmarks/fern/generate-fixture-pages.sh benchmarks/fern/generate-fixture-versions.sh benchmarks/fern/api-versions.txt .github/actions/run-docs-benchmark"
             MERGE_BASE=$(git merge-base HEAD origin/main 2>/dev/null || echo "HEAD~1")
             CHANGED_FILES=$(git diff --name-only "$MERGE_BASE" HEAD 2>/dev/null || echo "")
             for DPATH in $DOCS_PATHS; do
@@ -860,7 +860,7 @@ jobs:
           sparse-checkout: |
             .github/actions/fetch-benchmark-specs
             benchmarks/fern/apis
-            benchmarks/fern/square-versions.txt
+            benchmarks/fern/api-versions.txt
 
       - name: Fetch benchmark OpenAPI specs
         uses: ./.github/actions/fetch-benchmark-specs
