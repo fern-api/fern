@@ -9,14 +9,14 @@ on:
       - "packages/cli/docs-preview/**"
       - "packages/cli/cli/build.prod.mjs"
       - "packages/cli/cli/build.dev.mjs"
-      - "smoke-test/**"
+      - "docs-preview-smoke-test/**"
   pull_request:
     paths:
       - ".github/workflows/docs-bundle-smoke-test.yml"
       - "packages/cli/docs-preview/**"
       - "packages/cli/cli/build.prod.mjs"
       - "packages/cli/cli/build.dev.mjs"
-      - "smoke-test/**"
+      - "docs-preview-smoke-test/**"
   workflow_dispatch:
 
 concurrency:
@@ -138,14 +138,14 @@ jobs:
         if: steps.node-check.outputs.available == 'true'
         shell: bash
         run: |
-          cd smoke-test/playwright && npm install && npx playwright install chromium
+          cd docs-preview-smoke-test/playwright && npm install && npx playwright install chromium
 
       # On Unix, background the server and wait for it to be ready, then run
       # Playwright in a separate step.
       - name: Start fern docs dev server (Unix)
         if: steps.node-check.outputs.available == 'true' && runner.os != 'Windows'
         run: |
-          cd smoke-test/fern
+          cd docs-preview-smoke-test/fern
           FERN_NO_VERSION_REDIRECTION=true fern docs dev \
             > /tmp/fern-docs-dev.log 2>&1 &
           FERN_PID=$!
@@ -224,7 +224,7 @@ jobs:
       - name: Run Playwright smoke tests (Unix)
         if: steps.node-check.outputs.available == 'true' && runner.os != 'Windows'
         shell: bash
-        working-directory: smoke-test/playwright
+        working-directory: docs-preview-smoke-test/playwright
         run: npx playwright test smoke.spec.ts --config playwright.config.ts
 
       # On Windows, background processes (&) are killed when the parent bash
@@ -234,7 +234,7 @@ jobs:
         if: steps.node-check.outputs.available == 'true' && runner.os == 'Windows'
         shell: bash
         run: |
-          cd smoke-test/fern
+          cd docs-preview-smoke-test/fern
           FERN_NO_VERSION_REDIRECTION=true fern docs dev \
             > /tmp/fern-docs-dev.log 2>&1 &
           FERN_PID=$!
@@ -310,7 +310,7 @@ jobs:
           done
 
           echo "Running Playwright smoke tests..."
-          cd "$GITHUB_WORKSPACE/smoke-test/playwright"
+          cd "$GITHUB_WORKSPACE/docs-preview-smoke-test/playwright"
           npx playwright test smoke.spec.ts --config playwright.config.ts
 
       - name: Upload Playwright report
@@ -318,7 +318,7 @@ jobs:
         if: always() && steps.node-check.outputs.available == 'true'
         with:
           name: smoke-test-playwright-report-${{ matrix.os }}-node${{ matrix.node-version }}
-          path: smoke-test/playwright/playwright-report/
+          path: docs-preview-smoke-test/playwright/playwright-report/
           retention-days: 7
 
       - name: Print fern docs dev logs
