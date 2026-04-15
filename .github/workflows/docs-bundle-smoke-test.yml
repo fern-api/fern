@@ -116,12 +116,21 @@ jobs:
           path: cli-dist/
 
       # Simulate what a customer does: npm install -g fern-api
+      # We use `npm pack` + `npm install -g <tarball>` because
+      # `npm install -g ./cli-dist/` creates symlinks back to the local dir
+      # and Node resolves modules relative to the symlink target, where
+      # node_modules doesn't exist. A tarball install copies files into the
+      # global prefix just like a registry install would.
       - name: Install CLI globally
         if: steps.node-check.outputs.available == 'true'
         shell: bash
         run: |
-          echo "Installing CLI globally from artifact (simulating npm install -g fern-api)..."
-          npm install -g ./cli-dist/
+          echo "Packing CLI artifact into tarball..."
+          cd cli-dist && npm pack
+          TARBALL=$(ls *.tgz)
+          echo "Installing CLI globally from $TARBALL (simulating npm install -g fern-api)..."
+          npm install -g "$TARBALL"
+          cd ..
           echo "Installed fern CLI:"
           fern --version || echo "fern --version exited with $?"
 
