@@ -866,6 +866,7 @@ export async function runAppPreviewServer({
             const checkReady = (data: Buffer) => {
                 const output = data.toString();
                 context.logger.debug(`[Next.js] ${output}`);
+                void debugLogger.logServerOutput("stdout", output);
 
                 const portMatch = output.match(/localhost:(\d+)/);
                 if (portMatch != null) {
@@ -878,9 +879,11 @@ export async function runAppPreviewServer({
             };
             serverProcess.stdout?.on("data", checkReady);
 
-            // Also log stderr but don't block on it
+            // Also log stderr to both the console logger and the debug log file
             serverProcess.stderr?.on("data", (data) => {
-                context.logger.debug(`[Next.js] ${data.toString()}`);
+                const text = data.toString();
+                context.logger.debug(`[Next.js stderr] ${text}`);
+                void debugLogger.logServerOutput("stderr", text);
             });
 
             context.logger.debug(`Next.js standalone server started with PID: ${serverProcess.pid}`);
@@ -888,17 +891,18 @@ export async function runAppPreviewServer({
             // eslint-disable-next-line @typescript-eslint/no-floating-promises
             serverProcess.on("error", (err) => {
                 context.logger.debug(`Server process error: ${err.message}`);
+                void debugLogger.logServerOutput("stderr", `[process error] ${err.message}`);
             });
 
             // eslint-disable-next-line @typescript-eslint/no-floating-promises
             serverProcess.on("exit", (code, signal) => {
-                if (code) {
-                    context.logger.debug(`Server process exited with code: ${code}`);
-                } else if (signal) {
-                    context.logger.debug(`Server process killed with signal: ${signal}`);
-                } else {
-                    context.logger.debug("Server process exited");
-                }
+                const msg = code
+                    ? `Server process exited with code: ${code}`
+                    : signal
+                      ? `Server process killed with signal: ${signal}`
+                      : "Server process exited";
+                context.logger.debug(msg);
+                void debugLogger.logServerOutput("stderr", `[process exit] ${msg}`);
             });
 
             // Fallback timeout in case we miss the ready message

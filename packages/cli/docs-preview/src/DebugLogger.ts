@@ -93,7 +93,13 @@ export interface MetricsMessage {
  * CLI-side metric event
  */
 export interface CliMetricEvent {
-    type: "cli_reload_start" | "cli_reload_finish" | "cli_memory" | "cli_docs_generation" | "cli_validation";
+    type:
+        | "cli_reload_start"
+        | "cli_reload_finish"
+        | "cli_memory"
+        | "cli_docs_generation"
+        | "cli_validation"
+        | "nextjs_server_output";
     timestamp: string;
     durationMs?: number;
     metadata?: Record<string, unknown>;
@@ -299,6 +305,22 @@ export class DebugLogger {
         };
 
         await this.logCliMetric(event);
+    }
+
+    /**
+     * Log Next.js server output (stdout/stderr) to the debug file.
+     * This captures rendering errors, module-not-found errors, etc.
+     */
+    async logServerOutput(stream: "stdout" | "stderr", text: string): Promise<void> {
+        const entry: DebugLogEntry = {
+            timestamp: new Date().toISOString(),
+            source: "nextjs-server",
+            level: stream === "stderr" ? "error" : "debug",
+            eventType: "nextjs_server_output",
+            data: { stream, text: text.trimEnd() }
+        };
+
+        await this.writeEntry(entry);
     }
 
     /**
