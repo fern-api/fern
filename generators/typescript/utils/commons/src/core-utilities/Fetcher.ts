@@ -16,7 +16,7 @@ export interface Fetcher {
                 headers: "headers";
                 contentType: "contentType";
                 queryParameters: "queryParameters";
-                queryParameterArrayFormat: "queryParameterArrayFormat";
+                queryParameterArrayFormats: "queryParameterArrayFormats";
                 body: "body";
                 abortSignal: "abortSignal";
                 withCredentials: "withCredentials";
@@ -165,7 +165,7 @@ export declare namespace Fetcher {
         endpointMetadata?: ts.Expression;
         fetchFn?: ts.Expression;
         logging?: ts.Expression;
-        queryParameterArrayFormat?: "indices" | "repeat" | "comma";
+        queryParameterArrayFormats?: ts.Expression;
     }
 }
 
@@ -227,7 +227,7 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                 headers: "headers",
                 contentType: "contentType",
                 queryParameters: "queryParameters",
-                queryParameterArrayFormat: "queryParameterArrayFormat",
+                queryParameterArrayFormats: "queryParameterArrayFormats",
                 maxRetries: "maxRetries",
                 body: "body",
                 timeoutMs: "timeoutMs",
@@ -306,11 +306,11 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                     )
                 );
             }
-            if (args.queryParameterArrayFormat != null) {
+            if (args.queryParameterArrayFormats != null) {
                 properties.push(
                     ts.factory.createPropertyAssignment(
-                        this.Fetcher.Args.properties.queryParameterArrayFormat,
-                        ts.factory.createStringLiteral(args.queryParameterArrayFormat)
+                        this.Fetcher.Args.properties.queryParameterArrayFormats,
+                        args.queryParameterArrayFormats
                     )
                 );
             }

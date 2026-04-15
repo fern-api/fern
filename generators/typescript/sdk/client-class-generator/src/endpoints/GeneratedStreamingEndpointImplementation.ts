@@ -295,9 +295,9 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
                 : undefined
         };
 
-        const queryParameterArrayFormat = getQueryParameterArrayFormat(this.endpoint);
-        if (queryParameterArrayFormat != null) {
-            fetcherArgs.queryParameterArrayFormat = queryParameterArrayFormat;
+        const queryParameterArrayFormats = getQueryParameterArrayFormats(this.endpoint);
+        if (queryParameterArrayFormats != null) {
+            fetcherArgs.queryParameterArrayFormats = queryParameterArrayFormats;
         }
 
         return [
@@ -338,7 +338,18 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
     }
 }
 
-function getQueryParameterArrayFormat(endpoint: FernIr.HttpEndpoint): "comma" | undefined {
-    const hasNonExplodedParam = endpoint.queryParameters.some((param) => param.explode === false);
-    return hasNonExplodedParam ? "comma" : undefined;
+function getQueryParameterArrayFormats(endpoint: FernIr.HttpEndpoint): ts.Expression | undefined {
+    const nonExplodedParams = endpoint.queryParameters.filter((param) => param.explode === false);
+    if (nonExplodedParams.length === 0) {
+        return undefined;
+    }
+    return ts.factory.createObjectLiteralExpression(
+        nonExplodedParams.map((param) =>
+            ts.factory.createPropertyAssignment(
+                ts.factory.createIdentifier(param.name.wireValue),
+                ts.factory.createStringLiteral("comma")
+            )
+        ),
+        false
+    );
 }

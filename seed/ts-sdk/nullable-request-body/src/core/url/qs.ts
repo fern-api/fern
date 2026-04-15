@@ -1,10 +1,14 @@
+type ArrayFormat = "indices" | "repeat" | "comma";
+
 interface QueryStringOptions {
-    arrayFormat?: "indices" | "repeat" | "comma";
+    arrayFormat?: ArrayFormat;
+    arrayFormats?: Record<string, ArrayFormat>;
     encode?: boolean;
 }
 
 const defaultQsOptions: Required<QueryStringOptions> = {
     arrayFormat: "indices",
+    arrayFormats: {},
     encode: true,
 } as const;
 
@@ -33,7 +37,8 @@ function stringifyObject(obj: Record<string, unknown>, prefix = "", options: Req
             if (value.length === 0) {
                 continue;
             }
-            if (options.arrayFormat === "comma") {
+            const effectiveFormat = options.arrayFormats?.[key] ?? options.arrayFormat;
+            if (effectiveFormat === "comma") {
                 const encodedKey = options.encode ? encodeURIComponent(fullKey) : fullKey;
                 const encodedValues = value.map((item) =>
                     item === undefined || item === null ? "" : encodeValue(item, options.encode)
@@ -46,10 +51,10 @@ function stringifyObject(obj: Record<string, unknown>, prefix = "", options: Req
                         continue;
                     }
                     if (typeof item === "object" && !Array.isArray(item) && item !== null) {
-                        const arrayKey = options.arrayFormat === "indices" ? `${fullKey}[${i}]` : fullKey;
+                        const arrayKey = effectiveFormat === "indices" ? `${fullKey}[${i}]` : fullKey;
                         parts.push(...stringifyObject(item as Record<string, unknown>, arrayKey, options));
                     } else {
-                        const arrayKey = options.arrayFormat === "indices" ? `${fullKey}[${i}]` : fullKey;
+                        const arrayKey = effectiveFormat === "indices" ? `${fullKey}[${i}]` : fullKey;
                         const encodedKey = options.encode ? encodeURIComponent(arrayKey) : arrayKey;
                         parts.push(`${encodedKey}=${encodeValue(item, options.encode)}`);
                     }
