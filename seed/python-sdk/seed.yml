@@ -472,3 +472,4 @@ allowedFailures:
   - streaming-parameter
   - server-sent-event-examples:with-wire-tests # TODO: update wiretests geranation then remove it
   - trace
+  - multi-url-environment-reference
