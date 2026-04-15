@@ -52,13 +52,10 @@ await client.search({
         name: "name",
         tags: ["tags", "tags"]
     },
-    userList: [{
-            name: "name",
-            tags: ["tags", "tags"]
-        }, {
-            name: "name",
-            tags: ["tags", "tags"]
-        }],
+    userList: {
+        name: "name",
+        tags: ["tags", "tags"]
+    },
     optionalDeadline: "2024-01-15T09:30:00Z",
     keyValue: {
         "keyValue": "keyValue"
@@ -75,16 +72,13 @@ await client.search({
         name: "name",
         tags: ["tags", "tags"]
     },
-    excludeUser: [{
-            name: "name",
-            tags: ["tags", "tags"]
-        }, {
-            name: "name",
-            tags: ["tags", "tags"]
-        }],
-    filter: ["filter", "filter"],
-    tags: ["tags", "tags"],
-    optionalTags: ["optionalTags", "optionalTags"],
+    excludeUser: {
+        name: "name",
+        tags: ["tags", "tags"]
+    },
+    filter: "filter",
+    tags: "tags",
+    optionalTags: "optionalTags",
     neighbor: {
         name: "name",
         tags: ["tags", "tags"]

@@ -1,18 +1,15 @@
 import {
-    ExampleContainer,
     ExampleHeader,
     ExamplePathParameter,
     ExamplePrimitive,
     ExampleQueryParameter,
     ExampleQueryParameterShape,
-    ExampleTypeReference,
     ExampleTypeReferenceShape,
     HttpHeader,
     PathParameter,
     QueryParameter,
     TypeDeclaration,
-    TypeId,
-    TypeReference
+    TypeId
 } from "@fern-api/ir-sdk";
 import { isTypeReferenceOptional } from "../../utils/isTypeReferenceOptional.js";
 import { getOriginalName } from "../../utils/namesUtils.js";
@@ -152,34 +149,12 @@ export function generateQueryParameterExamples(
             return generatedExample;
         }
 
-        // For allowMultiple query params (e.g., explode: false comma-separated arrays),
-        // wrap the scalar example in a list so wire tests exercise the array serialization path.
-        const value: ExampleTypeReference = q.allowMultiple
-            ? wrapInList(generatedExample.example, q.valueType)
-            : generatedExample.example;
-
         result.push({
             name: q.name,
             shape: q.allowMultiple ? ExampleQueryParameterShape.exploded() : ExampleQueryParameterShape.single(),
-            value
+            value: generatedExample.example
         });
     }
 
     return { type: "success", example: result, jsonExample: undefined };
-}
-
-/**
- * Wraps a scalar example in a list container so that wire tests exercise
- * the array serialization path for allowMultiple query parameters.
- */
-function wrapInList(itemExample: ExampleTypeReference, itemType: TypeReference): ExampleTypeReference {
-    return {
-        jsonExample: [itemExample.jsonExample, itemExample.jsonExample],
-        shape: ExampleTypeReferenceShape.container(
-            ExampleContainer.list({
-                list: [itemExample, itemExample],
-                itemType
-            })
-        )
-    };
 }

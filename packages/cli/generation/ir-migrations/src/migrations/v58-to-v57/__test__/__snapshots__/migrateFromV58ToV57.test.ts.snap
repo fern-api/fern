@@ -520,7 +520,7 @@ exports[`migrateFromV58ToV57 > simple 1`] = `
                     },
                   },
                 ],
-                "id": "29a6569f",
+                "id": "933fb918",
                 "name": null,
                 "queryParameters": [
                   {
@@ -550,52 +550,15 @@ exports[`migrateFromV58ToV57 > simple 1`] = `
                       "type": "exploded",
                     },
                     "value": {
-                      "jsonExample": [
-                        "filter",
-                        "filter",
-                      ],
+                      "jsonExample": "filter",
                       "shape": {
-                        "container": {
-                          "itemType": {
-                            "_type": "primitive",
-                            "primitive": {
-                              "v1": "STRING",
-                              "v2": {
-                                "default": null,
-                                "type": "string",
-                                "validation": null,
-                              },
-                            },
+                        "primitive": {
+                          "string": {
+                            "original": "filter",
                           },
-                          "list": [
-                            {
-                              "jsonExample": "filter",
-                              "shape": {
-                                "primitive": {
-                                  "string": {
-                                    "original": "filter",
-                                  },
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                            {
-                              "jsonExample": "filter",
-                              "shape": {
-                                "primitive": {
-                                  "string": {
-                                    "original": "filter",
-                                  },
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                          ],
-                          "type": "list",
+                          "type": "string",
                         },
-                        "type": "container",
+                        "type": "primitive",
                       },
                     },
                   },
