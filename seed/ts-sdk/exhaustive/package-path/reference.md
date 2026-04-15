@@ -1947,8 +1947,8 @@ GET with multiple of same query param
 
 ```typescript
 await client.endpoints.params.getWithAllowMultipleQuery({
-    query: "query",
-    number: 1
+    query: ["query", "query"],
+    number: [1, 1]
 });
 
 ```

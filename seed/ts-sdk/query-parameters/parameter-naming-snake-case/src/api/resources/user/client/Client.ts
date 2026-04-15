@@ -60,11 +60,14 @@ export class UserClient {
      *             name: "name",
      *             tags: ["tags", "tags"]
      *         },
-     *         exclude_user: {
-     *             name: "name",
-     *             tags: ["tags", "tags"]
-     *         },
-     *         filter: "filter"
+     *         exclude_user: [{
+     *                 name: "name",
+     *                 tags: ["tags", "tags"]
+     *             }, {
+     *                 name: "name",
+     *                 tags: ["tags", "tags"]
+     *             }],
+     *         filter: ["filter", "filter"]
      *     })
      */
     public getUsername(

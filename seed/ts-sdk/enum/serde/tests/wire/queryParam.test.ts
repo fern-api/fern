@@ -24,10 +24,10 @@ describe("QueryParamClient", () => {
         server.mockEndpoint().post("/query-list").respondWith().statusCode(200).build();
 
         const response = await client.queryParam.sendList({
-            operand: ">",
-            maybeOperand: ">",
-            operandOrColor: "red",
-            maybeOperandOrColor: "red",
+            operand: [">", ">"],
+            maybeOperand: [">", ">"],
+            operandOrColor: ["red", "red"],
+            maybeOperandOrColor: ["red", "red"],
         });
         expect(response).toEqual(undefined);
     });

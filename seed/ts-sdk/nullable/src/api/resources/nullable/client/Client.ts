@@ -27,10 +27,10 @@ export class NullableClient {
      *
      * @example
      *     await client.nullable.getUsers({
-     *         usernames: "usernames",
+     *         usernames: ["usernames", "usernames"],
      *         avatar: "avatar",
-     *         activated: true,
-     *         tags: "tags",
+     *         activated: [true, true],
+     *         tags: ["tags", "tags"],
      *         extra: true
      *     })
      */

@@ -1,8 +1,8 @@
 /**
  * @example
  *     {
- *         query: "query",
- *         number: 1
+ *         query: ["query", "query"],
+ *         number: [1, 1]
  *     }
  */
 export interface GetWithMultipleQuery {

@@ -230,8 +230,8 @@ export class ParamsClient {
      *
      * @example
      *     await client.endpoints.params.getWithAllowMultipleQuery({
-     *         query: "query",
-     *         number: 1
+     *         query: ["query", "query"],
+     *         number: [1, 1]
      *     })
      */
     public getWithAllowMultipleQuery(

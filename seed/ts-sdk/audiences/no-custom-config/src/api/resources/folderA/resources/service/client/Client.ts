@@ -27,8 +27,8 @@ export class ServiceClient {
      *
      * @example
      *     await client.folderA.service.getDirectThread({
-     *         ids: "ids",
-     *         tags: "tags"
+     *         ids: ["ids", "ids"],
+     *         tags: ["tags", "tags"]
      *     })
      */
     public getDirectThread(

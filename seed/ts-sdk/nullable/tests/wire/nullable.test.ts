@@ -48,10 +48,10 @@ describe("NullableClient", () => {
         server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.nullable.getUsers({
-            usernames: "usernames",
+            usernames: ["usernames", "usernames"],
             avatar: "avatar",
-            activated: true,
-            tags: "tags",
+            activated: [true, true],
+            tags: ["tags", "tags"],
             extra: true,
         });
         expect(response).toEqual(rawResponseBody);

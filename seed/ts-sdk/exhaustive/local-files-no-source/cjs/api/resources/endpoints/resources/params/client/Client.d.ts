@@ -56,8 +56,8 @@ export declare class ParamsClient {
      *
      * @example
      *     await client.endpoints.params.getWithAllowMultipleQuery({
-     *         query: "query",
-     *         number: 1
+     *         query: ["query", "query"],
+     *         number: [1, 1]
      *     })
      */
     getWithAllowMultipleQuery(request: SeedExhaustive.endpoints.GetWithMultipleQuery, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<void>;

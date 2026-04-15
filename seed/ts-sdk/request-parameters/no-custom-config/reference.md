@@ -205,11 +205,14 @@ await client.user.getUsername({
         name: "name",
         tags: ["tags", "tags"]
     },
-    excludeUser: {
-        name: "name",
-        tags: ["tags", "tags"]
-    },
-    filter: "filter",
+    excludeUser: [{
+            name: "name",
+            tags: ["tags", "tags"]
+        }, {
+            name: "name",
+            tags: ["tags", "tags"]
+        }],
+    filter: ["filter", "filter"],
     longParam: 1000000,
     bigIntParam: "1000000"
 });

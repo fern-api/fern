@@ -5,10 +5,10 @@ import type * as SeedEnum from "../../../../index.js";
 /**
  * @example
  *     {
- *         operand: ">",
- *         maybeOperand: ">",
- *         operandOrColor: "red",
- *         maybeOperandOrColor: "red"
+ *         operand: [">", ">"],
+ *         maybeOperand: [">", ">"],
+ *         operandOrColor: ["red", "red"],
+ *         maybeOperandOrColor: ["red", "red"]
  *     }
  */
 export interface SendEnumListAsQueryParamRequest {

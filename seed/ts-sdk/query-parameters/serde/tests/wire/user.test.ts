@@ -48,11 +48,17 @@ describe("UserClient", () => {
                 name: "name",
                 tags: ["tags", "tags"],
             },
-            excludeUser: {
-                name: "name",
-                tags: ["tags", "tags"],
-            },
-            filter: "filter",
+            excludeUser: [
+                {
+                    name: "name",
+                    tags: ["tags", "tags"],
+                },
+                {
+                    name: "name",
+                    tags: ["tags", "tags"],
+                },
+            ],
+            filter: ["filter", "filter"],
         });
         expect(response).toEqual({
             name: "name",

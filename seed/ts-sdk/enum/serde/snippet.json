@@ -52,7 +52,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedEnumClient } from \"@fern/enum\";\n\nconst client = new SeedEnumClient({ environment: \"YOUR_BASE_URL\" });\nawait client.queryParam.sendList({\n    operand: \">\",\n    maybeOperand: \">\",\n    operandOrColor: \"red\",\n    maybeOperandOrColor: \"red\"\n});\n"
+                "client": "import { SeedEnumClient } from \"@fern/enum\";\n\nconst client = new SeedEnumClient({ environment: \"YOUR_BASE_URL\" });\nawait client.queryParam.sendList({\n    operand: [\">\", \">\"],\n    maybeOperand: [\">\", \">\"],\n    operandOrColor: [\"red\", \"red\"],\n    maybeOperandOrColor: [\"red\", \"red\"]\n});\n"
             }
         }
     ],

@@ -6,8 +6,8 @@
  *         limit: 1,
  *         otherField: "otherField",
  *         multiLineDocs: "multiLineDocs",
- *         optionalMultipleField: "optionalMultipleField",
- *         multipleField: "multipleField"
+ *         optionalMultipleField: ["optionalMultipleField", "optionalMultipleField"],
+ *         multipleField: ["multipleField", "multipleField"]
  *     }
  */
 export interface GetPlaylistsRequest {

@@ -3,8 +3,8 @@
 /**
  * @example
  *     {
- *         ids: "ids",
- *         tags: "tags"
+ *         ids: ["ids", "ids"],
+ *         tags: ["tags", "tags"]
  *     }
  */
 export interface GetDirectThreadRequest {
