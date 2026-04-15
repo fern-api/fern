@@ -8,6 +8,18 @@
       type: chore
   createdAt: "2026-04-16"
   irVersion: 66
+
+- version: 5.4.0-rc.2
+  changelogEntry:
+    - summary: |
+        Fix `mypy` error in generated client wrapper when a non-string global header is
+        declared (e.g. `Request-Timeout: integer`). The generator emits `headers: Dict[str, str]`
+        but previously assigned the raw typed member (e.g. `int`) directly, causing
+        `Incompatible types in assignment`. Non-string global header values are now wrapped
+        with `str(...)` when assigned. String-typed headers are unchanged.
+      type: fix
+  createdAt: "2026-04-15"
+  irVersion: 66
 - version: 5.4.0-rc.1
   changelogEntry:
     - summary: |
