@@ -144,7 +144,9 @@ function determineNextVersion(currentVersion: string, changes: UnreleasedChange[
         }
     }
 
-    const [major, minor, patch] = currentVersion.split(".").map(Number);
+    // Strip pre-release suffix (e.g., "4.2.0-rc.1" -> "4.2.0")
+    const baseVersion = currentVersion.replace(/-.*$/, "");
+    const [major, minor, patch] = baseVersion.split(".").map(Number);
 
     if (
         major === undefined ||
