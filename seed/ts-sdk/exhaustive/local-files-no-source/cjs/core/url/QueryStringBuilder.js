@@ -5,8 +5,8 @@ const qs_js_1 = require("./qs.js");
 /**
  * Creates a fluent builder for constructing URL query strings.
  *
- * Thin wrapper over `toQueryString()` — collects parameters via chained
- * `.add()` calls and delegates all serialization to `qs.ts` at build time.
+ * Each `.add()` call serializes its value immediately (like C#'s builder),
+ * so no format tracking is needed — the style is applied at add-time.
  *
  * Usage (generated code):
  *
@@ -21,11 +21,10 @@ function queryBuilder() {
 }
 class QueryStringBuilder {
     constructor() {
-        this.params = {};
-        this.arrayFormats = {};
+        this.parts = new Map();
     }
     /**
-     * Adds a query parameter.
+     * Adds a query parameter, serializing it immediately.
      *
      * By default arrays use "repeat" format (`key=a&key=b`).
      * Pass `{ style: "comma" }` for OpenAPI `explode: false` parameters
@@ -37,20 +36,27 @@ class QueryStringBuilder {
         if (value === undefined || value === null) {
             return this;
         }
-        this.params[key] = value;
-        if ((options === null || options === void 0 ? void 0 : options.style) === "comma") {
-            this.arrayFormats[key] = "comma";
+        const serialized = (0, qs_js_1.toQueryString)({ [key]: value }, { arrayFormat: (options === null || options === void 0 ? void 0 : options.style) === "comma" ? "comma" : "repeat" });
+        if (serialized.length > 0) {
+            this.parts.set(key, serialized);
         }
         return this;
     }
     /**
      * Merges additional query parameters supplied at call-time via
-     * `requestOptions.queryParams`. Later values for the same key
-     * replace earlier ones (last-write-wins).
+     * `requestOptions.queryParams`. Overrides existing keys (last-write-wins).
      */
     mergeAdditional(additionalParams) {
         if (additionalParams != null) {
-            Object.assign(this.params, additionalParams);
+            for (const [key, value] of Object.entries(additionalParams)) {
+                if (value === undefined) {
+                    continue;
+                }
+                const serialized = (0, qs_js_1.toQueryString)({ [key]: value }, { arrayFormat: "repeat" });
+                if (serialized.length > 0) {
+                    this.parts.set(key, serialized);
+                }
+            }
         }
         return this;
     }
@@ -59,9 +65,6 @@ class QueryStringBuilder {
      * Returns an empty string when no parameters were added.
      */
     build() {
-        return (0, qs_js_1.toQueryString)(this.params, {
-            arrayFormat: "repeat",
-            arrayFormats: this.arrayFormats,
-        });
+        return [...this.parts.values()].join("&");
     }
 }

@@ -1,8 +1,8 @@
 /**
  * Creates a fluent builder for constructing URL query strings.
  *
- * Thin wrapper over `toQueryString()` — collects parameters via chained
- * `.add()` calls and delegates all serialization to `qs.ts` at build time.
+ * Each `.add()` call serializes its value immediately (like C#'s builder),
+ * so no format tracking is needed — the style is applied at add-time.
  *
  * Usage (generated code):
  *
@@ -14,10 +14,9 @@
  */
 export declare function queryBuilder(): QueryStringBuilder;
 declare class QueryStringBuilder {
-    private params;
-    private arrayFormats;
+    private parts;
     /**
-     * Adds a query parameter.
+     * Adds a query parameter, serializing it immediately.
      *
      * By default arrays use "repeat" format (`key=a&key=b`).
      * Pass `{ style: "comma" }` for OpenAPI `explode: false` parameters
@@ -30,8 +29,7 @@ declare class QueryStringBuilder {
     }): this;
     /**
      * Merges additional query parameters supplied at call-time via
-     * `requestOptions.queryParams`. Later values for the same key
-     * replace earlier ones (last-write-wins).
+     * `requestOptions.queryParams`. Overrides existing keys (last-write-wins).
      */
     mergeAdditional(additionalParams?: Record<string, unknown>): this;
     /**
