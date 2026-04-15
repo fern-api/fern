@@ -51,8 +51,8 @@ describe("ParamsClient", () => {
         server.mockEndpoint().get("/params").respondWith().statusCode(200).build();
 
         const response = await client.endpoints.params.getWithAllowMultipleQuery({
-            query: ["query", "query"],
-            number: [1, 1],
+            query: "query",
+            number: 1,
         });
         expect(response).toEqual(undefined);
     });

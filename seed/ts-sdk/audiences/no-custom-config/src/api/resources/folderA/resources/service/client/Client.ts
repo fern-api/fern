@@ -27,8 +27,8 @@ export class ServiceClient {
      *
      * @example
      *     await client.folderA.service.getDirectThread({
-     *         ids: ["ids", "ids"],
-     *         tags: ["tags", "tags"]
+     *         ids: "ids",
+     *         tags: "tags"
      *     })
      */
     public getDirectThread(
@@ -57,8 +57,7 @@ export class ServiceClient {
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
             queryString: core.url
                 .queryBuilder()
-                .add("ids", _queryParams.ids)
-                .add("tags", _queryParams.tags)
+                .addMany(_queryParams)
                 .mergeAdditional(requestOptions?.queryParams)
                 .build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,

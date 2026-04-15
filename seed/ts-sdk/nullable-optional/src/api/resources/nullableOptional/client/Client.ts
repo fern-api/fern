@@ -253,10 +253,7 @@ export class NullableOptionalClient {
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
             queryString: core.url
                 .queryBuilder()
-                .add("limit", _queryParams.limit)
-                .add("offset", _queryParams.offset)
-                .add("includeDeleted", _queryParams.includeDeleted)
-                .add("sortBy", _queryParams.sortBy)
+                .addMany(_queryParams)
                 .mergeAdditional(requestOptions?.queryParams)
                 .build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -324,10 +321,7 @@ export class NullableOptionalClient {
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
             queryString: core.url
                 .queryBuilder()
-                .add("query", _queryParams.query)
-                .add("department", _queryParams.department)
-                .add("role", _queryParams.role)
-                .add("isActive", _queryParams.isActive)
+                .addMany(_queryParams)
                 .mergeAdditional(requestOptions?.queryParams)
                 .build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -791,9 +785,7 @@ export class NullableOptionalClient {
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
             queryString: core.url
                 .queryBuilder()
-                .add("role", _queryParams.role)
-                .add("status", _queryParams.status)
-                .add("secondaryRole", _queryParams.secondaryRole)
+                .addMany(_queryParams)
                 .mergeAdditional(requestOptions?.queryParams)
                 .build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,

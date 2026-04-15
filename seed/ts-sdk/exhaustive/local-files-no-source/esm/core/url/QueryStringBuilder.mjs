@@ -40,6 +40,19 @@ class QueryStringBuilder {
         return this;
     }
     /**
+     * Adds multiple query parameters at once from a record.
+     * All parameters use the default "repeat" array format.
+     * Null / undefined values are silently skipped.
+     */
+    addMany(params) {
+        if (params != null) {
+            for (const [key, value] of Object.entries(params)) {
+                this.add(key, value);
+            }
+        }
+        return this;
+    }
+    /**
      * Merges additional query parameters supplied at call-time via
      * `requestOptions.queryParams`. Overrides existing keys (last-write-wins).
      */

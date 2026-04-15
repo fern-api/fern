@@ -126,8 +126,7 @@ export class ServiceClient {
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
             queryString: core.url
                 .queryBuilder()
-                .add("model", _queryParams.model)
-                .add("language", _queryParams.language)
+                .addMany(_queryParams)
                 .mergeAdditional(requestOptions?.queryParams)
                 .build(),
             requestType: "bytes",

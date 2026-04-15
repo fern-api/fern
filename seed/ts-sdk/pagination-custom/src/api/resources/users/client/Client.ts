@@ -57,8 +57,7 @@ export class UsersClient {
             logging: this._options.logging,
             queryString: core.url
                 .queryBuilder()
-                .add("limit", _queryParams.limit)
-                .add("starting_after", _queryParams.starting_after)
+                .addMany(_queryParams)
                 .mergeAdditional(requestOptions?.queryParams)
                 .build(),
         };

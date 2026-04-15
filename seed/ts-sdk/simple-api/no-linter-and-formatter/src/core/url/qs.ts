@@ -38,10 +38,12 @@ function stringifyObject(obj: Record<string, unknown>, prefix = "", options: Req
             const effectiveFormat = options.arrayFormat;
             if (effectiveFormat === "comma") {
                 const encodedKey = options.encode ? encodeURIComponent(fullKey) : fullKey;
-                const encodedValues = value.map((item) =>
-                    item === undefined || item === null ? "" : encodeValue(item, options.encode)
-                );
-                parts.push(`${encodedKey}=${encodedValues.join(",")}`);
+                const encodedValues = value
+                    .filter((item) => item !== undefined && item !== null)
+                    .map((item) => encodeValue(item, options.encode));
+                if (encodedValues.length > 0) {
+                    parts.push(`${encodedKey}=${encodedValues.join(",")}`);
+                }
             } else {
                 for (let i = 0; i < value.length; i++) {
                     const item = value[i];

@@ -108,8 +108,7 @@ export class ServiceClient {
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
             queryString: core.url
                 .queryBuilder()
-                .add("page_limit", _queryParams.page_limit)
-                .add("beforeDate", _queryParams.beforeDate)
+                .addMany(_queryParams)
                 .mergeAdditional(requestOptions?.queryParams)
                 .build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,

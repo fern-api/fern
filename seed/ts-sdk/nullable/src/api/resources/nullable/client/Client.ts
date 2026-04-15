@@ -27,10 +27,10 @@ export class NullableClient {
      *
      * @example
      *     await client.nullable.getUsers({
-     *         usernames: ["usernames", "usernames"],
+     *         usernames: "usernames",
      *         avatar: "avatar",
-     *         activated: [true, true],
-     *         tags: ["tags", "tags"],
+     *         activated: true,
+     *         tags: "tags",
      *         extra: true
      *     })
      */
@@ -65,11 +65,7 @@ export class NullableClient {
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
             queryString: core.url
                 .queryBuilder()
-                .add("usernames", _queryParams.usernames)
-                .add("avatar", _queryParams.avatar)
-                .add("activated", _queryParams.activated)
-                .add("tags", _queryParams.tags)
-                .add("extra", _queryParams.extra)
+                .addMany(_queryParams)
                 .mergeAdditional(requestOptions?.queryParams)
                 .build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,

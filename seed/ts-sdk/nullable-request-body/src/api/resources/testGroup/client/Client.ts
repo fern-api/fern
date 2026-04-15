@@ -69,8 +69,7 @@ export class TestGroupClient {
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
             queryString: core.url
                 .queryBuilder()
-                .add("query_param_object", _queryParams.query_param_object)
-                .add("query_param_integer", _queryParams.query_param_integer)
+                .addMany(_queryParams)
                 .mergeAdditional(requestOptions?.queryParams)
                 .build(),
             requestType: "json",

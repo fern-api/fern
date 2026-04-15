@@ -3,8 +3,8 @@
 /**
  * @example
  *     {
- *         query: ["query", "query"],
- *         number: [1, 1]
+ *         query: "query",
+ *         number: 1
  *     }
  */
 export interface GetWithMultipleQuery {

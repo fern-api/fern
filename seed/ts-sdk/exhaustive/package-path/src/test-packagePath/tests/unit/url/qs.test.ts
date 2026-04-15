@@ -305,16 +305,22 @@ describe("Test qs toQueryString", () => {
                 expected: "flags=true,false,true",
             },
             {
-                description: "should handle null values in comma format",
+                description: "should skip null values in comma format",
                 input: { items: ["a", null, "c"] },
                 options: { arrayFormat: "comma" },
-                expected: "items=a,,c",
+                expected: "items=a,c",
             },
             {
-                description: "should handle undefined values in comma format",
+                description: "should skip undefined values in comma format",
                 input: { items: ["a", undefined, "c"] },
                 options: { arrayFormat: "comma" },
-                expected: "items=a,,c",
+                expected: "items=a,c",
+            },
+            {
+                description: "should produce empty string for all-null array in comma format",
+                input: { items: [null, undefined] },
+                options: { arrayFormat: "comma" },
+                expected: "",
             },
             {
                 description: "should encode commas within values while keeping separator commas literal",

@@ -14,8 +14,8 @@
 
 ```typescript
 await client.folderA.service.getDirectThread({
-    ids: ["ids", "ids"],
-    tags: ["tags", "tags"]
+    ids: "ids",
+    tags: "tags"
 });
 
 ```

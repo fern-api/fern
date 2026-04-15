@@ -67,10 +67,7 @@ export class QueryParamClient {
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
             queryString: core.url
                 .queryBuilder()
-                .add("operand", _queryParams.operand)
-                .add("maybeOperand", _queryParams.maybeOperand)
-                .add("operandOrColor", _queryParams.operandOrColor)
-                .add("maybeOperandOrColor", _queryParams.maybeOperandOrColor)
+                .addMany(_queryParams)
                 .mergeAdditional(requestOptions?.queryParams)
                 .build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -100,10 +97,10 @@ export class QueryParamClient {
      *
      * @example
      *     await client.queryParam.sendList({
-     *         operand: [">", ">"],
-     *         maybeOperand: [">", ">"],
-     *         operandOrColor: ["red", "red"],
-     *         maybeOperandOrColor: ["red", "red"]
+     *         operand: ">",
+     *         maybeOperand: ">",
+     *         operandOrColor: "red",
+     *         maybeOperandOrColor: "red"
      *     })
      */
     public sendList(
@@ -150,10 +147,7 @@ export class QueryParamClient {
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
             queryString: core.url
                 .queryBuilder()
-                .add("operand", _queryParams.operand)
-                .add("maybeOperand", _queryParams.maybeOperand)
-                .add("operandOrColor", _queryParams.operandOrColor)
-                .add("maybeOperandOrColor", _queryParams.maybeOperandOrColor)
+                .addMany(_queryParams)
                 .mergeAdditional(requestOptions?.queryParams)
                 .build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,

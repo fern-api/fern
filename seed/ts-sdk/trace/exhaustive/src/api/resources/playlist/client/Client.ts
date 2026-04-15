@@ -77,8 +77,7 @@ export class PlaylistClient {
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
             queryString: core.url
                 .queryBuilder()
-                .add("datetime", _queryParams.datetime)
-                .add("optionalDatetime", _queryParams.optionalDatetime)
+                .addMany(_queryParams)
                 .mergeAdditional(requestOptions?.queryParams)
                 .build(),
             requestType: "json",
@@ -129,8 +128,8 @@ export class PlaylistClient {
      *         limit: 1,
      *         otherField: "otherField",
      *         multiLineDocs: "multiLineDocs",
-     *         optionalMultipleField: ["optionalMultipleField", "optionalMultipleField"],
-     *         multipleField: ["multipleField", "multipleField"]
+     *         optionalMultipleField: "optionalMultipleField",
+     *         multipleField: "multipleField"
      *     })
      */
     public getPlaylists(
@@ -175,11 +174,7 @@ export class PlaylistClient {
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
             queryString: core.url
                 .queryBuilder()
-                .add("limit", _queryParams.limit)
-                .add("otherField", _queryParams.otherField)
-                .add("multiLineDocs", _queryParams.multiLineDocs)
-                .add("optionalMultipleField", _queryParams.optionalMultipleField)
-                .add("multipleField", _queryParams.multipleField)
+                .addMany(_queryParams)
                 .mergeAdditional(requestOptions?.queryParams)
                 .build(),
             timeoutMs:

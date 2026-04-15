@@ -121,6 +121,36 @@ describe("QueryStringBuilder", () => {
         });
     });
 
+    describe("addMany()", () => {
+        it("adds all params from a record", () => {
+            const qs = queryBuilder().addMany({ limit: 10, offset: 20, name: "test" }).build();
+            expect(qs).toBe("limit=10&offset=20&name=test");
+        });
+
+        it("skips null and undefined values", () => {
+            const qs = queryBuilder().addMany({ a: "1", b: null, c: undefined, d: "4" }).build();
+            expect(qs).toBe("a=1&d=4");
+        });
+
+        it("handles empty record", () => {
+            const qs = queryBuilder().addMany({}).build();
+            expect(qs).toBe("");
+        });
+
+        it("works with comma-style override after addMany", () => {
+            const params = { limit: 10, tags: ["a", "b"], active: true };
+            const qs = queryBuilder().addMany(params).add("tags", params.tags, { style: "comma" }).build();
+            expect(qs).toBe("limit=10&tags=a,b&active=true");
+        });
+
+        it("handles array values with default repeat format", () => {
+            const qs = queryBuilder()
+                .addMany({ ids: [1, 2, 3] })
+                .build();
+            expect(qs).toBe("ids=1&ids=2&ids=3");
+        });
+    });
+
     describe("mergeAdditional()", () => {
         it("appends additional params", () => {
             const qs = queryBuilder().add("limit", 10).mergeAdditional({ extra: "value" }).build();
@@ -164,20 +194,26 @@ describe("QueryStringBuilder", () => {
 
     describe("end-to-end scenarios", () => {
         it("matches expected query-parameters-openapi output pattern", () => {
+            const params: Record<string, unknown> = {
+                limit: 1,
+                id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                date: "2023-01-15",
+                deadline: "2024-01-15T09:30:00.000Z",
+                bytes: "SGVsbG8gd29ybGQh",
+                user: "user",
+                userList: ["user"],
+                optionalString: "optionalString",
+                nestedUser: "nestedUser",
+                excludeUser: "excludeUser",
+                filter: "filter",
+                tags: ["tags"],
+                optionalTags: undefined,
+            };
             const qs = queryBuilder()
-                .add("limit", 1)
-                .add("id", "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
-                .add("date", "2023-01-15")
-                .add("deadline", "2024-01-15T09:30:00.000Z")
-                .add("bytes", "SGVsbG8gd29ybGQh")
-                .add("user", "user")
-                .add("userList", ["user"])
-                .add("optionalString", "optionalString")
-                .add("nestedUser", "nestedUser")
-                .add("excludeUser", "excludeUser")
-                .add("filter", "filter")
-                .add("tags", ["tags"], { style: "comma" })
-                .add("optionalTags", undefined, { style: "comma" })
+                .addMany(params)
+                .add("tags", params.tags, { style: "comma" })
+                .add("optionalTags", params.optionalTags, { style: "comma" })
+                .mergeAdditional(undefined)
                 .build();
             expect(qs).toContain("limit=1");
             expect(qs).toContain("tags=tags");

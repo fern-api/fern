@@ -13,8 +13,8 @@ describe("ServiceClient", () => {
         server.mockEndpoint().get("").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.folderA.service.getDirectThread({
-            ids: ["ids", "ids"],
-            tags: ["tags", "tags"],
+            ids: "ids",
+            tags: "tags",
         });
         expect(response).toEqual(rawResponseBody);
     });

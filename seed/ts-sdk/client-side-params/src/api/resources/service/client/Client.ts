@@ -72,13 +72,7 @@ export class ServiceClient {
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
             queryString: core.url
                 .queryBuilder()
-                .add("page", _queryParams.page)
-                .add("per_page", _queryParams.per_page)
-                .add("sort", _queryParams.sort)
-                .add("order", _queryParams.order)
-                .add("include_totals", _queryParams.include_totals)
-                .add("fields", _queryParams.fields)
-                .add("search", _queryParams.search)
+                .addMany(_queryParams)
                 .mergeAdditional(requestOptions?.queryParams)
                 .build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -145,8 +139,7 @@ export class ServiceClient {
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
             queryString: core.url
                 .queryBuilder()
-                .add("include_metadata", _queryParams.include_metadata)
-                .add("format", _queryParams.format)
+                .addMany(_queryParams)
                 .mergeAdditional(requestOptions?.queryParams)
                 .build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -217,8 +210,7 @@ export class ServiceClient {
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
             queryString: core.url
                 .queryBuilder()
-                .add("limit", _queryParams.limit)
-                .add("offset", _queryParams.offset)
+                .addMany(_queryParams)
                 .mergeAdditional(requestOptions?.queryParams)
                 .build(),
             requestType: "json",
@@ -305,14 +297,7 @@ export class ServiceClient {
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
             queryString: core.url
                 .queryBuilder()
-                .add("page", _queryParams.page)
-                .add("per_page", _queryParams.per_page)
-                .add("include_totals", _queryParams.include_totals)
-                .add("sort", _queryParams.sort)
-                .add("connection", _queryParams.connection)
-                .add("q", _queryParams.q)
-                .add("search_engine", _queryParams.search_engine)
-                .add("fields", _queryParams.fields)
+                .addMany(_queryParams)
                 .mergeAdditional(requestOptions?.queryParams)
                 .build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -382,8 +367,7 @@ export class ServiceClient {
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
             queryString: core.url
                 .queryBuilder()
-                .add("fields", _queryParams.fields)
-                .add("include_fields", _queryParams.include_fields)
+                .addMany(_queryParams)
                 .mergeAdditional(requestOptions?.queryParams)
                 .build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -644,9 +628,7 @@ export class ServiceClient {
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
             queryString: core.url
                 .queryBuilder()
-                .add("strategy", _queryParams.strategy)
-                .add("name", _queryParams.name)
-                .add("fields", _queryParams.fields)
+                .addMany(_queryParams)
                 .mergeAdditional(requestOptions?.queryParams)
                 .build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -711,7 +693,7 @@ export class ServiceClient {
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
             queryString: core.url
                 .queryBuilder()
-                .add("fields", _queryParams.fields)
+                .addMany(_queryParams)
                 .mergeAdditional(requestOptions?.queryParams)
                 .build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -801,14 +783,7 @@ export class ServiceClient {
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
             queryString: core.url
                 .queryBuilder()
-                .add("fields", _queryParams.fields)
-                .add("include_fields", _queryParams.include_fields)
-                .add("page", _queryParams.page)
-                .add("per_page", _queryParams.per_page)
-                .add("include_totals", _queryParams.include_totals)
-                .add("is_global", _queryParams.is_global)
-                .add("is_first_party", _queryParams.is_first_party)
-                .add("app_type", _queryParams.app_type)
+                .addMany(_queryParams)
                 .mergeAdditional(requestOptions?.queryParams)
                 .build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -878,8 +853,7 @@ export class ServiceClient {
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
             queryString: core.url
                 .queryBuilder()
-                .add("fields", _queryParams.fields)
-                .add("include_fields", _queryParams.include_fields)
+                .addMany(_queryParams)
                 .mergeAdditional(requestOptions?.queryParams)
                 .build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,

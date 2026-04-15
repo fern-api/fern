@@ -68,10 +68,7 @@ export class InlineUsersClient {
                     queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
                     queryString: core.url
                         .queryBuilder()
-                        .add("page", _queryParams.page)
-                        .add("per_page", _queryParams.per_page)
-                        .add("order", _queryParams.order)
-                        .add("starting_after", _queryParams.starting_after)
+                        .addMany(_queryParams)
                         .mergeAdditional(requestOptions?.queryParams)
                         .build(),
                     timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -157,7 +154,7 @@ export class InlineUsersClient {
                     queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
                     queryString: core.url
                         .queryBuilder()
-                        .add("cursor", _queryParams.cursor)
+                        .addMany(_queryParams)
                         .mergeAdditional(requestOptions?.queryParams)
                         .build(),
                     timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -327,10 +324,7 @@ export class InlineUsersClient {
                     queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
                     queryString: core.url
                         .queryBuilder()
-                        .add("page", _queryParams.page)
-                        .add("per_page", _queryParams.per_page)
-                        .add("order", _queryParams.order)
-                        .add("starting_after", _queryParams.starting_after)
+                        .addMany(_queryParams)
                         .mergeAdditional(requestOptions?.queryParams)
                         .build(),
                     timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -419,10 +413,7 @@ export class InlineUsersClient {
                     queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
                     queryString: core.url
                         .queryBuilder()
-                        .add("page", _queryParams.page)
-                        .add("per_page", _queryParams.per_page)
-                        .add("order", _queryParams.order)
-                        .add("starting_after", _queryParams.starting_after)
+                        .addMany(_queryParams)
                         .mergeAdditional(requestOptions?.queryParams)
                         .build(),
                     timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -588,9 +579,7 @@ export class InlineUsersClient {
                     queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
                     queryString: core.url
                         .queryBuilder()
-                        .add("page", _queryParams.page)
-                        .add("limit", _queryParams.limit)
-                        .add("order", _queryParams.order)
+                        .addMany(_queryParams)
                         .mergeAdditional(requestOptions?.queryParams)
                         .build(),
                     timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -677,9 +666,7 @@ export class InlineUsersClient {
                     queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
                     queryString: core.url
                         .queryBuilder()
-                        .add("page", _queryParams.page)
-                        .add("limit", _queryParams.limit)
-                        .add("order", _queryParams.order)
+                        .addMany(_queryParams)
                         .mergeAdditional(requestOptions?.queryParams)
                         .build(),
                     timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -763,7 +750,7 @@ export class InlineUsersClient {
                     queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
                     queryString: core.url
                         .queryBuilder()
-                        .add("cursor", _queryParams.cursor)
+                        .addMany(_queryParams)
                         .mergeAdditional(requestOptions?.queryParams)
                         .build(),
                     timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -845,7 +832,7 @@ export class InlineUsersClient {
                     queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
                     queryString: core.url
                         .queryBuilder()
-                        .add("cursor", _queryParams.cursor)
+                        .addMany(_queryParams)
                         .mergeAdditional(requestOptions?.queryParams)
                         .build(),
                     timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -922,7 +909,7 @@ export class InlineUsersClient {
                     queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
                     queryString: core.url
                         .queryBuilder()
-                        .add("starting_after", _queryParams.starting_after)
+                        .addMany(_queryParams)
                         .mergeAdditional(requestOptions?.queryParams)
                         .build(),
                     timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -997,7 +984,7 @@ export class InlineUsersClient {
                     queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
                     queryString: core.url
                         .queryBuilder()
-                        .add("offset", _queryParams.offset)
+                        .addMany(_queryParams)
                         .mergeAdditional(requestOptions?.queryParams)
                         .build(),
                     timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,

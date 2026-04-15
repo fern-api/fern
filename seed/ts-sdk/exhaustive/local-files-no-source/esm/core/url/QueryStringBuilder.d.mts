@@ -28,6 +28,12 @@ declare class QueryStringBuilder {
         style?: "comma";
     }): this;
     /**
+     * Adds multiple query parameters at once from a record.
+     * All parameters use the default "repeat" array format.
+     * Null / undefined values are silently skipped.
+     */
+    addMany(params: Record<string, unknown>): this;
+    /**
      * Merges additional query parameters supplied at call-time via
      * `requestOptions.queryParams`. Overrides existing keys (last-write-wins).
      */

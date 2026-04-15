@@ -1106,8 +1106,8 @@ await client.playlist.getPlaylists(1, {
     limit: 1,
     otherField: "otherField",
     multiLineDocs: "multiLineDocs",
-    optionalMultipleField: ["optionalMultipleField", "optionalMultipleField"],
-    multipleField: ["multipleField", "multipleField"]
+    optionalMultipleField: "optionalMultipleField",
+    multipleField: "multipleField"
 });
 
 ```

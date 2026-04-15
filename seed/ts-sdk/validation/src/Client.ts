@@ -116,9 +116,7 @@ export class SeedValidationClient {
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
             queryString: core.url
                 .queryBuilder()
-                .add("decimal", _queryParams.decimal)
-                .add("even", _queryParams.even)
-                .add("name", _queryParams.name)
+                .addMany(_queryParams)
                 .mergeAdditional(requestOptions?.queryParams)
                 .build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,

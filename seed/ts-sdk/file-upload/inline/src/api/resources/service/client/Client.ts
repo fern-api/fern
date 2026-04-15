@@ -236,11 +236,7 @@ export class ServiceClient {
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
             queryString: core.url
                 .queryBuilder()
-                .add("maybeString", _queryParams.maybeString)
-                .add("integer", _queryParams.integer)
-                .add("maybeInteger", _queryParams.maybeInteger)
-                .add("listOfStrings", _queryParams.listOfStrings)
-                .add("optionalListOfStrings", _queryParams.optionalListOfStrings)
+                .addMany(_queryParams)
                 .mergeAdditional(requestOptions?.queryParams)
                 .build(),
             requestType: "file",
@@ -305,8 +301,7 @@ export class ServiceClient {
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
             queryString: core.url
                 .queryBuilder()
-                .add("maybeString", _queryParams.maybeString)
-                .add("maybeInteger", _queryParams.maybeInteger)
+                .addMany(_queryParams)
                 .mergeAdditional(requestOptions?.queryParams)
                 .build(),
             requestType: "file",

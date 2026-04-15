@@ -60,14 +60,11 @@ export class UserClient {
      *             name: "name",
      *             tags: ["tags", "tags"]
      *         },
-     *         exclude_user: [{
-     *                 name: "name",
-     *                 tags: ["tags", "tags"]
-     *             }, {
-     *                 name: "name",
-     *                 tags: ["tags", "tags"]
-     *             }],
-     *         filter: ["filter", "filter"]
+     *         exclude_user: {
+     *             name: "name",
+     *             tags: ["tags", "tags"]
+     *         },
+     *         filter: "filter"
      *     })
      */
     public getUsername(
@@ -125,20 +122,7 @@ export class UserClient {
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
             queryString: core.url
                 .queryBuilder()
-                .add("limit", _queryParams.limit)
-                .add("id", _queryParams.id)
-                .add("date", _queryParams.date)
-                .add("deadline", _queryParams.deadline)
-                .add("bytes", _queryParams.bytes)
-                .add("user", _queryParams.user)
-                .add("userList", _queryParams.userList)
-                .add("optionalDeadline", _queryParams.optionalDeadline)
-                .add("keyValue", _queryParams.keyValue)
-                .add("optionalString", _queryParams.optionalString)
-                .add("nestedUser", _queryParams.nestedUser)
-                .add("optionalUser", _queryParams.optionalUser)
-                .add("excludeUser", _queryParams.excludeUser)
-                .add("filter", _queryParams.filter)
+                .addMany(_queryParams)
                 .mergeAdditional(requestOptions?.queryParams)
                 .build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,

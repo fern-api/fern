@@ -59,10 +59,7 @@ export class SeedApiClient {
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
             queryString: core.url
                 .queryBuilder()
-                .add("assigned_to", _queryParams.assigned_to)
-                .add("is_complete", _queryParams.is_complete)
-                .add("date", _queryParams.date)
-                .add("_fields", _queryParams._fields)
+                .addMany(_queryParams)
                 .mergeAdditional(requestOptions?.queryParams)
                 .build(),
             requestType: "json",

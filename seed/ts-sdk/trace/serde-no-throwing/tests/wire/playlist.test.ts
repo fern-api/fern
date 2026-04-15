@@ -70,8 +70,8 @@ describe("PlaylistClient", () => {
             limit: 1,
             otherField: "otherField",
             multiLineDocs: "multiLineDocs",
-            optionalMultipleField: ["optionalMultipleField", "optionalMultipleField"],
-            multipleField: ["multipleField", "multipleField"],
+            optionalMultipleField: "optionalMultipleField",
+            multipleField: "multipleField",
         });
         expect(response).toEqual({
             body: [

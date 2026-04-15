@@ -14,10 +14,10 @@
 
 ```typescript
 await client.nullable.getUsers({
-    usernames: ["usernames", "usernames"],
+    usernames: "usernames",
     avatar: "avatar",
-    activated: [true, true],
-    tags: ["tags", "tags"],
+    activated: true,
+    tags: "tags",
     extra: true
 });
 
