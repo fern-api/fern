@@ -41855,7 +41855,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/problems-v2/lightweight-problem-info"
+                "path": "/problems-v2/v3/lightweight-problem-info"
             },
             "request": {
                 "type": "body",
@@ -42033,7 +42033,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/problems-v2/problem-info"
+                "path": "/problems-v2/v3/problem-info"
             },
             "request": {
                 "type": "body",
@@ -42211,7 +42211,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/problems-v2/problem-info/{problemId}"
+                "path": "/problems-v2/v3/problem-info/{problemId}"
             },
             "request": {
                 "type": "body",
@@ -42420,7 +42420,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/problems-v2/problem-info/{problemId}/version/{problemVersion}"
+                "path": "/problems-v2/v3/problem-info/{problemId}/version/{problemVersion}"
             },
             "request": {
                 "type": "body",

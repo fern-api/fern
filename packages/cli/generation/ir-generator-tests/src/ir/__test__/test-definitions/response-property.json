@@ -1007,11 +1007,11 @@
                     "method": "POST",
                     "basePath": null,
                     "path": {
-                        "head": "/movie",
+                        "head": "/movie/docs",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "movie",
+                        "head": "movie/docs",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -1117,7 +1117,7 @@
                         {
                             "example": {
                                 "id": "1e253c41",
-                                "url": "/movie",
+                                "url": "/movie/docs",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -1408,11 +1408,11 @@
                     "method": "POST",
                     "basePath": null,
                     "path": {
-                        "head": "/movie",
+                        "head": "/movie/name",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "movie",
+                        "head": "movie/name",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -1516,7 +1516,7 @@
                         {
                             "example": {
                                 "id": "d685c847",
-                                "url": "/movie",
+                                "url": "/movie/name",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -1620,11 +1620,11 @@
                     "method": "POST",
                     "basePath": null,
                     "path": {
-                        "head": "/movie",
+                        "head": "/movie/metadata",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "movie",
+                        "head": "movie/metadata",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -1747,7 +1747,7 @@
                         {
                             "example": {
                                 "id": "1e253c41",
-                                "url": "/movie",
+                                "url": "/movie/metadata",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -2038,11 +2038,11 @@
                     "method": "POST",
                     "basePath": null,
                     "path": {
-                        "head": "/movie",
+                        "head": "/movie/optional",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "movie",
+                        "head": "movie/optional",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -2158,7 +2158,7 @@
                         {
                             "example": {
                                 "id": "7454e14f",
-                                "url": "/movie",
+                                "url": "/movie/optional",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -2482,11 +2482,11 @@
                     "method": "POST",
                     "basePath": null,
                     "path": {
-                        "head": "/movie",
+                        "head": "/movie/optional/docs",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "movie",
+                        "head": "movie/optional/docs",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -2592,7 +2592,7 @@
                         {
                             "example": {
                                 "id": "77b8b184",
-                                "url": "/movie",
+                                "url": "/movie/optional/docs",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -2749,11 +2749,11 @@
                     "method": "POST",
                     "basePath": null,
                     "path": {
-                        "head": "/movie",
+                        "head": "/movie/optional/name",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "movie",
+                        "head": "movie/optional/name",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -2857,7 +2857,7 @@
                         {
                             "example": {
                                 "id": "3d340157",
-                                "url": "/movie",
+                                "url": "/movie/optional/name",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -3833,7 +3833,7 @@
                 },
                 "location": {
                     "method": "POST",
-                    "path": "/movie"
+                    "path": "/movie/docs"
                 },
                 "request": {
                     "type": "body",
@@ -3919,7 +3919,7 @@
                 },
                 "location": {
                     "method": "POST",
-                    "path": "/movie"
+                    "path": "/movie/name"
                 },
                 "request": {
                     "type": "body",
@@ -4005,7 +4005,7 @@
                 },
                 "location": {
                     "method": "POST",
-                    "path": "/movie"
+                    "path": "/movie/metadata"
                 },
                 "request": {
                     "type": "body",
@@ -4091,7 +4091,7 @@
                 },
                 "location": {
                     "method": "POST",
-                    "path": "/movie"
+                    "path": "/movie/optional"
                 },
                 "request": {
                     "type": "body",
@@ -4177,7 +4177,7 @@
                 },
                 "location": {
                     "method": "POST",
-                    "path": "/movie"
+                    "path": "/movie/optional/docs"
                 },
                 "request": {
                     "type": "body",
@@ -4263,7 +4263,7 @@
                 },
                 "location": {
                     "method": "POST",
-                    "path": "/movie"
+                    "path": "/movie/optional/name"
                 },
                 "request": {
                     "type": "body",

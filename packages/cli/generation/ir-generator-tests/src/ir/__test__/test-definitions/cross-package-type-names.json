@@ -487,7 +487,7 @@
             },
             "displayName": null,
             "basePath": {
-                "head": "/",
+                "head": "/folder-a",
                 "parts": []
             },
             "headers": [],
@@ -516,7 +516,7 @@
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "",
+                        "head": "/folder-a",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -564,7 +564,7 @@
                         {
                             "example": {
                                 "id": "bd1a3db4",
-                                "url": "",
+                                "url": "/folder-a",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -833,7 +833,7 @@
             },
             "displayName": null,
             "basePath": {
-                "head": "/",
+                "head": "/folder-d",
                 "parts": []
             },
             "headers": [],
@@ -862,7 +862,7 @@
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "",
+                        "head": "/folder-d",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -910,7 +910,7 @@
                         {
                             "example": {
                                 "id": "da427ee",
-                                "url": "",
+                                "url": "/folder-d",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -2481,7 +2481,7 @@
                 },
                 "location": {
                     "method": "GET",
-                    "path": "/"
+                    "path": "/folder-a"
                 },
                 "request": {
                     "type": "body",
@@ -2600,7 +2600,7 @@
                 },
                 "location": {
                     "method": "GET",
-                    "path": "/"
+                    "path": "/folder-d"
                 },
                 "request": {
                     "type": "body",

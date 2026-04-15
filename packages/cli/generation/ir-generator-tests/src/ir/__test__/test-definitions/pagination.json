@@ -5892,11 +5892,11 @@
                     "method": "GET",
                     "basePath": null,
                     "path": {
-                        "head": "",
+                        "head": "/cursor-pagination",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "/inline-users",
+                        "head": "/inline-users/cursor-pagination",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -6082,7 +6082,7 @@
                         {
                             "example": {
                                 "id": "4f632e40",
-                                "url": "/inline-users",
+                                "url": "/inline-users/cursor-pagination",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -7037,11 +7037,11 @@
                     "method": "POST",
                     "basePath": null,
                     "path": {
-                        "head": "",
+                        "head": "/mixed-type-cursor-pagination",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "/inline-users",
+                        "head": "/inline-users/mixed-type-cursor-pagination",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -7130,7 +7130,7 @@
                         {
                             "example": {
                                 "id": "1af468ae",
-                                "url": "/inline-users",
+                                "url": "/inline-users/mixed-type-cursor-pagination",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -7659,11 +7659,11 @@
                     "method": "POST",
                     "basePath": null,
                     "path": {
-                        "head": "",
+                        "head": "/body-cursor-pagination",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "/inline-users",
+                        "head": "/inline-users/body-cursor-pagination",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -7767,7 +7767,7 @@
                         {
                             "example": {
                                 "id": "a7703dec",
-                                "url": "/inline-users",
+                                "url": "/inline-users/body-cursor-pagination",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -8785,11 +8785,11 @@
                     "method": "GET",
                     "basePath": null,
                     "path": {
-                        "head": "",
+                        "head": "/offset-pagination",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "/inline-users",
+                        "head": "/inline-users/offset-pagination",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -8975,7 +8975,7 @@
                         {
                             "example": {
                                 "id": "4f632e40",
-                                "url": "/inline-users",
+                                "url": "/inline-users/offset-pagination",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -9852,11 +9852,11 @@
                     "method": "GET",
                     "basePath": null,
                     "path": {
-                        "head": "",
+                        "head": "/double-offset-pagination",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "/inline-users",
+                        "head": "/inline-users/double-offset-pagination",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -10042,7 +10042,7 @@
                         {
                             "example": {
                                 "id": "4f632e40",
-                                "url": "/inline-users",
+                                "url": "/inline-users/double-offset-pagination",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -10919,11 +10919,11 @@
                     "method": "POST",
                     "basePath": null,
                     "path": {
-                        "head": "",
+                        "head": "/body-offset-pagination",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "/inline-users",
+                        "head": "/inline-users/body-offset-pagination",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -11027,7 +11027,7 @@
                         {
                             "example": {
                                 "id": "bc3c98f4",
-                                "url": "/inline-users",
+                                "url": "/inline-users/body-offset-pagination",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -11967,11 +11967,11 @@
                     "method": "GET",
                     "basePath": null,
                     "path": {
-                        "head": "",
+                        "head": "/offset-step-pagination",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "/inline-users",
+                        "head": "/inline-users/offset-step-pagination",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -12127,7 +12127,7 @@
                         {
                             "example": {
                                 "id": "4f632e40",
-                                "url": "/inline-users",
+                                "url": "/inline-users/offset-step-pagination",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -13037,11 +13037,11 @@
                     "method": "GET",
                     "basePath": null,
                     "path": {
-                        "head": "",
+                        "head": "/offset-pagination-has-next-page",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "/inline-users",
+                        "head": "/inline-users/offset-pagination-has-next-page",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -13197,7 +13197,7 @@
                         {
                             "example": {
                                 "id": "4f632e40",
-                                "url": "/inline-users",
+                                "url": "/inline-users/offset-pagination-has-next-page",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -14136,11 +14136,11 @@
                     "method": "GET",
                     "basePath": null,
                     "path": {
-                        "head": "",
+                        "head": "/extended-results",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "/inline-users",
+                        "head": "/inline-users/extended-results",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -14225,7 +14225,7 @@
                         {
                             "example": {
                                 "id": "6bb7963",
-                                "url": "/inline-users",
+                                "url": "/inline-users/extended-results",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -14796,11 +14796,11 @@
                     "method": "GET",
                     "basePath": null,
                     "path": {
-                        "head": "",
+                        "head": "/extended-results-optional-data",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "/inline-users",
+                        "head": "/inline-users/extended-results-optional-data",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -14885,7 +14885,7 @@
                         {
                             "example": {
                                 "id": "87b5c056",
-                                "url": "/inline-users",
+                                "url": "/inline-users/extended-results-optional-data",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -15504,11 +15504,11 @@
                     "method": "GET",
                     "basePath": null,
                     "path": {
-                        "head": "",
+                        "head": "/usernames",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "/inline-users",
+                        "head": "/inline-users/usernames",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -15592,7 +15592,7 @@
                         {
                             "example": {
                                 "id": "f83b3c8d",
-                                "url": "/inline-users",
+                                "url": "/inline-users/usernames",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -15947,11 +15947,11 @@
                     "method": "GET",
                     "basePath": null,
                     "path": {
-                        "head": "",
+                        "head": "/global-config",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "/inline-users",
+                        "head": "/inline-users/global-config",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -16040,7 +16040,7 @@
                         {
                             "example": {
                                 "id": "5867ed2",
-                                "url": "/inline-users",
+                                "url": "/inline-users/global-config",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -16280,11 +16280,11 @@
                     "method": "GET",
                     "basePath": null,
                     "path": {
-                        "head": "",
+                        "head": "/cursor-pagination",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "/users",
+                        "head": "/users/cursor-pagination",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -16464,7 +16464,7 @@
                         {
                             "example": {
                                 "id": "bc51c85c",
-                                "url": "/users",
+                                "url": "/users/cursor-pagination",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -17263,11 +17263,11 @@
                     "method": "POST",
                     "basePath": null,
                     "path": {
-                        "head": "",
+                        "head": "/mixed-type-cursor-pagination",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "/users",
+                        "head": "/users/mixed-type-cursor-pagination",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -17353,7 +17353,7 @@
                         {
                             "example": {
                                 "id": "23449fa0",
-                                "url": "/users",
+                                "url": "/users/mixed-type-cursor-pagination",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -17768,11 +17768,11 @@
                     "method": "POST",
                     "basePath": null,
                     "path": {
-                        "head": "",
+                        "head": "/body-cursor-pagination",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "/users",
+                        "head": "/users/body-cursor-pagination",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -17870,7 +17870,7 @@
                         {
                             "example": {
                                 "id": "32a42c95",
-                                "url": "/users",
+                                "url": "/users/body-cursor-pagination",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -19746,11 +19746,11 @@
                     "method": "GET",
                     "basePath": null,
                     "path": {
-                        "head": "",
+                        "head": "/offset-pagination",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "/users",
+                        "head": "/users/offset-pagination",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -19930,7 +19930,7 @@
                         {
                             "example": {
                                 "id": "bc51c85c",
-                                "url": "/users",
+                                "url": "/users/offset-pagination",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -20657,11 +20657,11 @@
                     "method": "GET",
                     "basePath": null,
                     "path": {
-                        "head": "",
+                        "head": "/double-offset-pagination",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "/users",
+                        "head": "/users/double-offset-pagination",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -20841,7 +20841,7 @@
                         {
                             "example": {
                                 "id": "bc51c85c",
-                                "url": "/users",
+                                "url": "/users/double-offset-pagination",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -21568,11 +21568,11 @@
                     "method": "POST",
                     "basePath": null,
                     "path": {
-                        "head": "",
+                        "head": "/body-offset-pagination",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "/users",
+                        "head": "/users/body-offset-pagination",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -21670,7 +21670,7 @@
                         {
                             "example": {
                                 "id": "4f9be3ed",
-                                "url": "/users",
+                                "url": "/users/body-offset-pagination",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -22454,11 +22454,11 @@
                     "method": "GET",
                     "basePath": null,
                     "path": {
-                        "head": "",
+                        "head": "/offset-step-pagination",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "/users",
+                        "head": "/users/offset-step-pagination",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -22608,7 +22608,7 @@
                         {
                             "example": {
                                 "id": "bc51c85c",
-                                "url": "/users",
+                                "url": "/users/offset-step-pagination",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -23368,11 +23368,11 @@
                     "method": "GET",
                     "basePath": null,
                     "path": {
-                        "head": "",
+                        "head": "/offset-pagination-has-next-page",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "/users",
+                        "head": "/users/offset-pagination-has-next-page",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -23522,7 +23522,7 @@
                             "example": {
                                 "id": "HasNextPage",
                                 "name": "HasNextPage",
-                                "url": "/users",
+                                "url": "/users/offset-pagination-has-next-page",
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [],
                                 "servicePathParameters": [],
@@ -24281,7 +24281,7 @@
                             "example": {
                                 "id": "NoNextPage",
                                 "name": "NoNextPage",
-                                "url": "/users",
+                                "url": "/users/offset-pagination-has-next-page",
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [],
                                 "servicePathParameters": [],
@@ -25041,7 +25041,7 @@
                         {
                             "example": {
                                 "id": "bc51c85c",
-                                "url": "/users",
+                                "url": "/users/offset-pagination-has-next-page",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -25830,11 +25830,11 @@
                     "method": "GET",
                     "basePath": null,
                     "path": {
-                        "head": "",
+                        "head": "/extended-results",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "/users",
+                        "head": "/users/extended-results",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -25916,7 +25916,7 @@
                         {
                             "example": {
                                 "id": "dfb1ef7e",
-                                "url": "/users",
+                                "url": "/users/extended-results",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -26442,11 +26442,11 @@
                     "method": "GET",
                     "basePath": null,
                     "path": {
-                        "head": "",
+                        "head": "/extended-results-optional-data",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "/users",
+                        "head": "/users/extended-results-optional-data",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -26528,7 +26528,7 @@
                         {
                             "example": {
                                 "id": "eb5aeefa",
-                                "url": "/users",
+                                "url": "/users/extended-results-optional-data",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -27099,11 +27099,11 @@
                     "method": "GET",
                     "basePath": null,
                     "path": {
-                        "head": "",
+                        "head": "/usernames",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "/users",
+                        "head": "/users/usernames",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -27187,7 +27187,7 @@
                         {
                             "example": {
                                 "id": "f83b3c8d",
-                                "url": "/users",
+                                "url": "/users/usernames",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -27542,11 +27542,11 @@
                     "method": "GET",
                     "basePath": null,
                     "path": {
-                        "head": "",
+                        "head": "/usernames-optional-response",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "/users",
+                        "head": "/users/usernames-optional-response",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -27636,7 +27636,7 @@
                         {
                             "example": {
                                 "id": "f48de04f",
-                                "url": "/users",
+                                "url": "/users/usernames-optional-response",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -28021,11 +28021,11 @@
                     "method": "GET",
                     "basePath": null,
                     "path": {
-                        "head": "",
+                        "head": "/global-config",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "/users",
+                        "head": "/users/global-config",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -28111,7 +28111,7 @@
                         {
                             "example": {
                                 "id": "f1bb08a8",
-                                "url": "/users",
+                                "url": "/users/global-config",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -38870,7 +38870,7 @@
                 },
                 "location": {
                     "method": "GET",
-                    "path": "/inline-users"
+                    "path": "/inline-users/cursor-pagination"
                 },
                 "request": {
                     "type": "inlined",
@@ -39252,7 +39252,7 @@
                 },
                 "location": {
                     "method": "POST",
-                    "path": "/inline-users"
+                    "path": "/inline-users/mixed-type-cursor-pagination"
                 },
                 "request": {
                     "type": "inlined",
@@ -39535,7 +39535,7 @@
                 },
                 "location": {
                     "method": "POST",
-                    "path": "/inline-users"
+                    "path": "/inline-users/body-cursor-pagination"
                 },
                 "request": {
                     "type": "inlined",
@@ -39821,7 +39821,7 @@
                 },
                 "location": {
                     "method": "GET",
-                    "path": "/inline-users"
+                    "path": "/inline-users/offset-pagination"
                 },
                 "request": {
                     "type": "inlined",
@@ -40203,7 +40203,7 @@
                 },
                 "location": {
                     "method": "GET",
-                    "path": "/inline-users"
+                    "path": "/inline-users/double-offset-pagination"
                 },
                 "request": {
                     "type": "inlined",
@@ -40585,7 +40585,7 @@
                 },
                 "location": {
                     "method": "POST",
-                    "path": "/inline-users"
+                    "path": "/inline-users/body-offset-pagination"
                 },
                 "request": {
                     "type": "inlined",
@@ -40871,7 +40871,7 @@
                 },
                 "location": {
                     "method": "GET",
-                    "path": "/inline-users"
+                    "path": "/inline-users/offset-step-pagination"
                 },
                 "request": {
                     "type": "inlined",
@@ -41220,7 +41220,7 @@
                 },
                 "location": {
                     "method": "GET",
-                    "path": "/inline-users"
+                    "path": "/inline-users/offset-pagination-has-next-page"
                 },
                 "request": {
                     "type": "inlined",
@@ -41569,7 +41569,7 @@
                 },
                 "location": {
                     "method": "GET",
-                    "path": "/inline-users"
+                    "path": "/inline-users/extended-results"
                 },
                 "request": {
                     "type": "inlined",
@@ -41852,7 +41852,7 @@
                 },
                 "location": {
                     "method": "GET",
-                    "path": "/inline-users"
+                    "path": "/inline-users/extended-results-optional-data"
                 },
                 "request": {
                     "type": "inlined",
@@ -42135,7 +42135,7 @@
                 },
                 "location": {
                     "method": "GET",
-                    "path": "/inline-users"
+                    "path": "/inline-users/usernames"
                 },
                 "request": {
                     "type": "inlined",
@@ -42418,7 +42418,7 @@
                 },
                 "location": {
                     "method": "GET",
-                    "path": "/inline-users"
+                    "path": "/inline-users/global-config"
                 },
                 "request": {
                     "type": "inlined",
@@ -42662,7 +42662,7 @@
                 },
                 "location": {
                     "method": "GET",
-                    "path": "/users"
+                    "path": "/users/cursor-pagination"
                 },
                 "request": {
                     "type": "inlined",
@@ -42966,7 +42966,7 @@
                 },
                 "location": {
                     "method": "POST",
-                    "path": "/users"
+                    "path": "/users/mixed-type-cursor-pagination"
                 },
                 "request": {
                     "type": "inlined",
@@ -43171,7 +43171,7 @@
                 },
                 "location": {
                     "method": "POST",
-                    "path": "/users"
+                    "path": "/users/body-cursor-pagination"
                 },
                 "request": {
                     "type": "inlined",
@@ -43620,7 +43620,7 @@
                 },
                 "location": {
                     "method": "GET",
-                    "path": "/users"
+                    "path": "/users/offset-pagination"
                 },
                 "request": {
                     "type": "inlined",
@@ -43924,7 +43924,7 @@
                 },
                 "location": {
                     "method": "GET",
-                    "path": "/users"
+                    "path": "/users/double-offset-pagination"
                 },
                 "request": {
                     "type": "inlined",
@@ -44228,7 +44228,7 @@
                 },
                 "location": {
                     "method": "POST",
-                    "path": "/users"
+                    "path": "/users/body-offset-pagination"
                 },
                 "request": {
                     "type": "inlined",
@@ -44436,7 +44436,7 @@
                 },
                 "location": {
                     "method": "GET",
-                    "path": "/users"
+                    "path": "/users/offset-step-pagination"
                 },
                 "request": {
                     "type": "inlined",
@@ -44707,7 +44707,7 @@
                 },
                 "location": {
                     "method": "GET",
-                    "path": "/users"
+                    "path": "/users/offset-pagination-has-next-page"
                 },
                 "request": {
                     "type": "inlined",
@@ -44978,7 +44978,7 @@
                 },
                 "location": {
                     "method": "GET",
-                    "path": "/users"
+                    "path": "/users/extended-results"
                 },
                 "request": {
                     "type": "inlined",
@@ -45183,7 +45183,7 @@
                 },
                 "location": {
                     "method": "GET",
-                    "path": "/users"
+                    "path": "/users/extended-results-optional-data"
                 },
                 "request": {
                     "type": "inlined",
@@ -45388,7 +45388,7 @@
                 },
                 "location": {
                     "method": "GET",
-                    "path": "/users"
+                    "path": "/users/usernames"
                 },
                 "request": {
                     "type": "inlined",
@@ -45593,7 +45593,7 @@
                 },
                 "location": {
                     "method": "GET",
-                    "path": "/users"
+                    "path": "/users/usernames-optional-response"
                 },
                 "request": {
                     "type": "inlined",
@@ -45798,7 +45798,7 @@
                 },
                 "location": {
                     "method": "GET",
-                    "path": "/users"
+                    "path": "/users/global-config"
                 },
                 "request": {
                     "type": "inlined",

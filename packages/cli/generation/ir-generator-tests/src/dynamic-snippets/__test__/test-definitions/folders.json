@@ -302,7 +302,7 @@
             },
             "location": {
                 "method": "POST",
-                "path": "/"
+                "path": "/a/b"
             },
             "request": {
                 "type": "body",
@@ -422,7 +422,7 @@
             },
             "location": {
                 "method": "POST",
-                "path": "/"
+                "path": "/a/c"
             },
             "request": {
                 "type": "body",
@@ -504,7 +504,7 @@
             },
             "location": {
                 "method": "POST",
-                "path": "/"
+                "path": "/folder"
             },
             "request": {
                 "type": "body",

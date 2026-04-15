@@ -1221,11 +1221,11 @@
                     "method": "POST",
                     "basePath": null,
                     "path": {
-                        "head": "/documents/upload",
+                        "head": "/documents/upload/pdf",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "documents/upload",
+                        "head": "documents/upload/pdf",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -1904,7 +1904,7 @@
                 },
                 "location": {
                     "method": "POST",
-                    "path": "/documents/upload"
+                    "path": "/documents/upload/pdf"
                 },
                 "request": {
                     "type": "body",

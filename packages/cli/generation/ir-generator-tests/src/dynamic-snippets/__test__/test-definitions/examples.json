@@ -5571,7 +5571,7 @@
             },
             "location": {
                 "method": "POST",
-                "path": "/"
+                "path": "/echo"
             },
             "request": {
                 "type": "body",
@@ -5640,7 +5640,7 @@
             },
             "location": {
                 "method": "POST",
-                "path": "/"
+                "path": "/create-type"
             },
             "request": {
                 "type": "body",

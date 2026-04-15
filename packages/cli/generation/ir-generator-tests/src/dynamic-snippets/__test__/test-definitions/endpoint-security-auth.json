@@ -689,7 +689,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/users"
+                "path": "/users/bearer"
             },
             "request": {
                 "type": "body",
@@ -790,7 +790,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/users"
+                "path": "/users/api-key"
             },
             "request": {
                 "type": "body",
@@ -891,7 +891,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/users"
+                "path": "/users/oauth"
             },
             "request": {
                 "type": "body",
@@ -992,7 +992,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/users"
+                "path": "/users/basic"
             },
             "request": {
                 "type": "body",
@@ -1093,7 +1093,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/users"
+                "path": "/users/inferred"
             },
             "request": {
                 "type": "body",
@@ -1194,7 +1194,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/users"
+                "path": "/users/any-auth"
             },
             "request": {
                 "type": "body",
@@ -1295,7 +1295,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/users"
+                "path": "/users/all-auth"
             },
             "request": {
                 "type": "body",

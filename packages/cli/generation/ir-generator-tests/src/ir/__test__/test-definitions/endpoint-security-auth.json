@@ -974,11 +974,11 @@
                     "method": "GET",
                     "basePath": null,
                     "path": {
-                        "head": "/users",
+                        "head": "/users/bearer",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "users",
+                        "head": "users/bearer",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -1029,7 +1029,7 @@
                         {
                             "example": {
                                 "id": "f4c4453",
-                                "url": "/users",
+                                "url": "/users/bearer",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -1276,11 +1276,11 @@
                     "method": "GET",
                     "basePath": null,
                     "path": {
-                        "head": "/users",
+                        "head": "/users/api-key",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "users",
+                        "head": "users/api-key",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -1331,7 +1331,7 @@
                         {
                             "example": {
                                 "id": "f4c4453",
-                                "url": "/users",
+                                "url": "/users/api-key",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -1580,11 +1580,11 @@
                     "method": "GET",
                     "basePath": null,
                     "path": {
-                        "head": "/users",
+                        "head": "/users/oauth",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "users",
+                        "head": "users/oauth",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -1635,7 +1635,7 @@
                         {
                             "example": {
                                 "id": "f4c4453",
-                                "url": "/users",
+                                "url": "/users/oauth",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -1882,11 +1882,11 @@
                     "method": "GET",
                     "basePath": null,
                     "path": {
-                        "head": "/users",
+                        "head": "/users/basic",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "users",
+                        "head": "users/basic",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -1937,7 +1937,7 @@
                         {
                             "example": {
                                 "id": "f4c4453",
-                                "url": "/users",
+                                "url": "/users/basic",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -2184,11 +2184,11 @@
                     "method": "GET",
                     "basePath": null,
                     "path": {
-                        "head": "/users",
+                        "head": "/users/inferred",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "users",
+                        "head": "users/inferred",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -2239,7 +2239,7 @@
                         {
                             "example": {
                                 "id": "f4c4453",
-                                "url": "/users",
+                                "url": "/users/inferred",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -2500,11 +2500,11 @@
                     "method": "GET",
                     "basePath": null,
                     "path": {
-                        "head": "/users",
+                        "head": "/users/any-auth",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "users",
+                        "head": "users/any-auth",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -2555,7 +2555,7 @@
                         {
                             "example": {
                                 "id": "f4c4453",
-                                "url": "/users",
+                                "url": "/users/any-auth",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -2808,11 +2808,11 @@
                     "method": "GET",
                     "basePath": null,
                     "path": {
-                        "head": "/users",
+                        "head": "/users/all-auth",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "users",
+                        "head": "users/all-auth",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -2863,7 +2863,7 @@
                         {
                             "example": {
                                 "id": "f4c4453",
-                                "url": "/users",
+                                "url": "/users/all-auth",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -3815,7 +3815,7 @@
                 },
                 "location": {
                     "method": "GET",
-                    "path": "/users"
+                    "path": "/users/bearer"
                 },
                 "request": {
                     "type": "body",
@@ -3916,7 +3916,7 @@
                 },
                 "location": {
                     "method": "GET",
-                    "path": "/users"
+                    "path": "/users/api-key"
                 },
                 "request": {
                     "type": "body",
@@ -4017,7 +4017,7 @@
                 },
                 "location": {
                     "method": "GET",
-                    "path": "/users"
+                    "path": "/users/oauth"
                 },
                 "request": {
                     "type": "body",
@@ -4118,7 +4118,7 @@
                 },
                 "location": {
                     "method": "GET",
-                    "path": "/users"
+                    "path": "/users/basic"
                 },
                 "request": {
                     "type": "body",
@@ -4219,7 +4219,7 @@
                 },
                 "location": {
                     "method": "GET",
-                    "path": "/users"
+                    "path": "/users/inferred"
                 },
                 "request": {
                     "type": "body",
@@ -4320,7 +4320,7 @@
                 },
                 "location": {
                     "method": "GET",
-                    "path": "/users"
+                    "path": "/users/any-auth"
                 },
                 "request": {
                     "type": "body",
@@ -4421,7 +4421,7 @@
                 },
                 "location": {
                     "method": "GET",
-                    "path": "/users"
+                    "path": "/users/all-auth"
                 },
                 "request": {
                     "type": "body",

@@ -822,11 +822,11 @@
                     "method": "POST",
                     "basePath": null,
                     "path": {
-                        "head": "/",
+                        "head": "/do-thing",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "",
+                        "head": "do-thing",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -918,7 +918,7 @@
                         {
                             "example": {
                                 "id": "26a32b6e",
-                                "url": "",
+                                "url": "/do-thing",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -1330,11 +1330,11 @@
                     "method": "POST",
                     "basePath": null,
                     "path": {
-                        "head": "/",
+                        "head": "/do-thing-required",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "",
+                        "head": "do-thing-required",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -1426,7 +1426,7 @@
                         {
                             "example": {
                                 "id": "9a4a8195",
-                                "url": "",
+                                "url": "/do-thing-required",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -1903,11 +1903,11 @@
                     "method": "POST",
                     "basePath": null,
                     "path": {
-                        "head": "/",
+                        "head": "/do-thing-inline",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "",
+                        "head": "do-thing-inline",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -1999,7 +1999,7 @@
                         {
                             "example": {
                                 "id": "47e49292",
-                                "url": "",
+                                "url": "/do-thing-inline",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -3711,7 +3711,7 @@
                 },
                 "location": {
                     "method": "POST",
-                    "path": "/"
+                    "path": "/do-thing"
                 },
                 "request": {
                     "type": "body",
@@ -3797,7 +3797,7 @@
                 },
                 "location": {
                     "method": "POST",
-                    "path": "/"
+                    "path": "/do-thing-required"
                 },
                 "request": {
                     "type": "body",
@@ -3883,7 +3883,7 @@
                 },
                 "location": {
                     "method": "POST",
-                    "path": "/"
+                    "path": "/do-thing-inline"
                 },
                 "request": {
                     "type": "body",

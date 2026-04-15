@@ -1205,7 +1205,7 @@
             },
             "location": {
                 "method": "POST",
-                "path": "/users"
+                "path": "/users/task"
             },
             "request": {
                 "type": "body",
@@ -1545,7 +1545,7 @@
             },
             "location": {
                 "method": "POST",
-                "path": "/users"
+                "path": "/system/users"
             },
             "request": {
                 "type": "body",
@@ -1633,7 +1633,7 @@
             },
             "location": {
                 "method": "POST",
-                "path": "/users"
+                "path": "/system/users/task"
             },
             "request": {
                 "type": "body",
@@ -1721,7 +1721,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/users/{userId}"
+                "path": "/system/users/{userId}"
             },
             "request": {
                 "type": "body",

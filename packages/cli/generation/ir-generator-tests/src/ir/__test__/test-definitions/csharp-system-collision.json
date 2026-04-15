@@ -836,11 +836,11 @@
                     "method": "POST",
                     "basePath": null,
                     "path": {
-                        "head": "",
+                        "head": "/task",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "/users",
+                        "head": "/users/task",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -926,7 +926,7 @@
                         {
                             "example": {
                                 "id": "f0e87b36",
-                                "url": "/users",
+                                "url": "/users/task",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -2305,7 +2305,7 @@
                 },
                 "location": {
                     "method": "POST",
-                    "path": "/users"
+                    "path": "/users/task"
                 },
                 "request": {
                     "type": "body",

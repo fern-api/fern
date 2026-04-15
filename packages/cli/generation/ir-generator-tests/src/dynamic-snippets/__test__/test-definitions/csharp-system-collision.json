@@ -394,7 +394,7 @@
             },
             "location": {
                 "method": "POST",
-                "path": "/users"
+                "path": "/users/task"
             },
             "request": {
                 "type": "body",

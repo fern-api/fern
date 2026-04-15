@@ -7491,7 +7491,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/inline-users"
+                "path": "/inline-users/cursor-pagination"
             },
             "request": {
                 "type": "inlined",
@@ -7873,7 +7873,7 @@
             },
             "location": {
                 "method": "POST",
-                "path": "/inline-users"
+                "path": "/inline-users/mixed-type-cursor-pagination"
             },
             "request": {
                 "type": "inlined",
@@ -8156,7 +8156,7 @@
             },
             "location": {
                 "method": "POST",
-                "path": "/inline-users"
+                "path": "/inline-users/body-cursor-pagination"
             },
             "request": {
                 "type": "inlined",
@@ -8442,7 +8442,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/inline-users"
+                "path": "/inline-users/offset-pagination"
             },
             "request": {
                 "type": "inlined",
@@ -8824,7 +8824,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/inline-users"
+                "path": "/inline-users/double-offset-pagination"
             },
             "request": {
                 "type": "inlined",
@@ -9206,7 +9206,7 @@
             },
             "location": {
                 "method": "POST",
-                "path": "/inline-users"
+                "path": "/inline-users/body-offset-pagination"
             },
             "request": {
                 "type": "inlined",
@@ -9492,7 +9492,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/inline-users"
+                "path": "/inline-users/offset-step-pagination"
             },
             "request": {
                 "type": "inlined",
@@ -9841,7 +9841,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/inline-users"
+                "path": "/inline-users/offset-pagination-has-next-page"
             },
             "request": {
                 "type": "inlined",
@@ -10190,7 +10190,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/inline-users"
+                "path": "/inline-users/extended-results"
             },
             "request": {
                 "type": "inlined",
@@ -10473,7 +10473,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/inline-users"
+                "path": "/inline-users/extended-results-optional-data"
             },
             "request": {
                 "type": "inlined",
@@ -10756,7 +10756,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/inline-users"
+                "path": "/inline-users/usernames"
             },
             "request": {
                 "type": "inlined",
@@ -11039,7 +11039,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/inline-users"
+                "path": "/inline-users/global-config"
             },
             "request": {
                 "type": "inlined",
@@ -11283,7 +11283,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/users"
+                "path": "/users/cursor-pagination"
             },
             "request": {
                 "type": "inlined",
@@ -11587,7 +11587,7 @@
             },
             "location": {
                 "method": "POST",
-                "path": "/users"
+                "path": "/users/mixed-type-cursor-pagination"
             },
             "request": {
                 "type": "inlined",
@@ -11792,7 +11792,7 @@
             },
             "location": {
                 "method": "POST",
-                "path": "/users"
+                "path": "/users/body-cursor-pagination"
             },
             "request": {
                 "type": "inlined",
@@ -12241,7 +12241,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/users"
+                "path": "/users/offset-pagination"
             },
             "request": {
                 "type": "inlined",
@@ -12545,7 +12545,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/users"
+                "path": "/users/double-offset-pagination"
             },
             "request": {
                 "type": "inlined",
@@ -12849,7 +12849,7 @@
             },
             "location": {
                 "method": "POST",
-                "path": "/users"
+                "path": "/users/body-offset-pagination"
             },
             "request": {
                 "type": "inlined",
@@ -13057,7 +13057,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/users"
+                "path": "/users/offset-step-pagination"
             },
             "request": {
                 "type": "inlined",
@@ -13328,7 +13328,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/users"
+                "path": "/users/offset-pagination-has-next-page"
             },
             "request": {
                 "type": "inlined",
@@ -13599,7 +13599,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/users"
+                "path": "/users/extended-results"
             },
             "request": {
                 "type": "inlined",
@@ -13804,7 +13804,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/users"
+                "path": "/users/extended-results-optional-data"
             },
             "request": {
                 "type": "inlined",
@@ -14009,7 +14009,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/users"
+                "path": "/users/usernames"
             },
             "request": {
                 "type": "inlined",
@@ -14214,7 +14214,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/users"
+                "path": "/users/usernames-optional-response"
             },
             "request": {
                 "type": "inlined",
@@ -14419,7 +14419,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/users"
+                "path": "/users/global-config"
             },
             "request": {
                 "type": "inlined",

@@ -8623,11 +8623,11 @@
                     "method": "POST",
                     "basePath": null,
                     "path": {
-                        "head": "",
+                        "head": "/echo",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "",
+                        "head": "/echo",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -8707,7 +8707,7 @@
                             "example": {
                                 "id": "d54376eb",
                                 "name": null,
-                                "url": "/",
+                                "url": "/echo",
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [],
                                 "servicePathParameters": [],
@@ -8754,7 +8754,7 @@
                         {
                             "example": {
                                 "id": "63248c43",
-                                "url": "",
+                                "url": "/echo",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -8820,11 +8820,11 @@
                     "method": "POST",
                     "basePath": null,
                     "path": {
-                        "head": "",
+                        "head": "/create-type",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "",
+                        "head": "/create-type",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -8910,7 +8910,7 @@
                         {
                             "example": {
                                 "id": "5481e467",
-                                "url": "",
+                                "url": "/create-type",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -20581,7 +20581,7 @@
                 },
                 "location": {
                     "method": "POST",
-                    "path": "/"
+                    "path": "/echo"
                 },
                 "request": {
                     "type": "body",
@@ -20650,7 +20650,7 @@
                 },
                 "location": {
                     "method": "POST",
-                    "path": "/"
+                    "path": "/create-type"
                 },
                 "request": {
                     "type": "body",

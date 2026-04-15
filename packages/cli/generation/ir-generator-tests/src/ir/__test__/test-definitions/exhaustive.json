@@ -24552,7 +24552,7 @@
                     "method": "GET",
                     "basePath": null,
                     "path": {
-                        "head": "/path/",
+                        "head": "/inline-path/",
                         "parts": [
                             {
                                 "pathParameter": "param",
@@ -24561,7 +24561,7 @@
                         ]
                     },
                     "fullPath": {
-                        "head": "/params/path/",
+                        "head": "/params/inline-path/",
                         "parts": [
                             {
                                 "pathParameter": "param",
@@ -24665,7 +24665,7 @@
                         {
                             "example": {
                                 "id": "4e00b283",
-                                "url": "/params/path/param",
+                                "url": "/params/inline-path/param",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [
@@ -24907,11 +24907,11 @@
                     "method": "GET",
                     "basePath": null,
                     "path": {
-                        "head": "",
+                        "head": "/allow-multiple",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "/params",
+                        "head": "/params/allow-multiple",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -24993,7 +24993,7 @@
                         {
                             "example": {
                                 "id": "61cb651e",
-                                "url": "/params",
+                                "url": "/params/allow-multiple",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -25277,7 +25277,7 @@
                     "method": "GET",
                     "basePath": null,
                     "path": {
-                        "head": "/path-query/",
+                        "head": "/inline-path-query/",
                         "parts": [
                             {
                                 "pathParameter": "param",
@@ -25286,7 +25286,7 @@
                         ]
                     },
                     "fullPath": {
-                        "head": "/params/path-query/",
+                        "head": "/params/inline-path-query/",
                         "parts": [
                             {
                                 "pathParameter": "param",
@@ -25397,7 +25397,7 @@
                         {
                             "example": {
                                 "id": "abbc046d",
-                                "url": "/params/path-query/param",
+                                "url": "/params/inline-path-query/param",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [
@@ -25707,7 +25707,7 @@
                     "method": "PUT",
                     "basePath": null,
                     "path": {
-                        "head": "/path/",
+                        "head": "/inline-path/",
                         "parts": [
                             {
                                 "pathParameter": "param",
@@ -25716,7 +25716,7 @@
                         ]
                     },
                     "fullPath": {
-                        "head": "/params/path/",
+                        "head": "/params/inline-path/",
                         "parts": [
                             {
                                 "pathParameter": "param",
@@ -25836,7 +25836,7 @@
                         {
                             "example": {
                                 "id": "8842e171",
-                                "url": "/params/path/param",
+                                "url": "/params/inline-path/param",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [
@@ -26347,7 +26347,7 @@
                     "method": "GET",
                     "basePath": null,
                     "path": {
-                        "head": "/path/",
+                        "head": "/path-with-errors/",
                         "parts": [
                             {
                                 "pathParameter": "param",
@@ -26356,7 +26356,7 @@
                         ]
                     },
                     "fullPath": {
-                        "head": "/params/path/",
+                        "head": "/params/path-with-errors/",
                         "parts": [
                             {
                                 "pathParameter": "param",
@@ -26465,7 +26465,7 @@
                         {
                             "example": {
                                 "id": "4e00b283",
-                                "url": "/params/path/param",
+                                "url": "/params/path-with-errors/param",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [
@@ -26514,7 +26514,7 @@
                         {
                             "example": {
                                 "id": "a563fcf1",
-                                "url": "/params/path/param",
+                                "url": "/params/path-with-errors/param",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [
@@ -43101,7 +43101,7 @@
                 },
                 "location": {
                     "method": "GET",
-                    "path": "/params/path/{param}"
+                    "path": "/params/inline-path/{param}"
                 },
                 "request": {
                     "type": "inlined",
@@ -43691,7 +43691,7 @@
                 },
                 "location": {
                     "method": "GET",
-                    "path": "/params"
+                    "path": "/params/allow-multiple"
                 },
                 "request": {
                     "type": "inlined",
@@ -44318,7 +44318,7 @@
                 },
                 "location": {
                     "method": "GET",
-                    "path": "/params/path-query/{param}"
+                    "path": "/params/inline-path-query/{param}"
                 },
                 "request": {
                     "type": "inlined",
@@ -44806,7 +44806,7 @@
                 },
                 "location": {
                     "method": "PUT",
-                    "path": "/params/path/{param}"
+                    "path": "/params/inline-path/{param}"
                 },
                 "request": {
                     "type": "inlined",
@@ -45458,7 +45458,7 @@
                 },
                 "location": {
                     "method": "GET",
-                    "path": "/params/path/{param}"
+                    "path": "/params/path-with-errors/{param}"
                 },
                 "request": {
                     "type": "body",

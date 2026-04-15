@@ -222,7 +222,7 @@
             },
             "displayName": null,
             "basePath": {
-                "head": "/",
+                "head": "/a/b",
                 "parts": []
             },
             "headers": [],
@@ -251,7 +251,7 @@
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "",
+                        "head": "/a/b",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -274,7 +274,7 @@
                         {
                             "example": {
                                 "id": "b8b5a106",
-                                "url": "",
+                                "url": "/a/b",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -325,7 +325,7 @@
             },
             "displayName": null,
             "basePath": {
-                "head": "/",
+                "head": "/a/c",
                 "parts": []
             },
             "headers": [],
@@ -354,7 +354,7 @@
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "",
+                        "head": "/a/c",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -377,7 +377,7 @@
                         {
                             "example": {
                                 "id": "b8b5a106",
-                                "url": "",
+                                "url": "/a/c",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -426,7 +426,7 @@
             },
             "displayName": null,
             "basePath": {
-                "head": "/",
+                "head": "/folder",
                 "parts": []
             },
             "headers": [],
@@ -455,7 +455,7 @@
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "",
+                        "head": "/folder",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -478,7 +478,7 @@
                         {
                             "example": {
                                 "id": "b8b5a106",
-                                "url": "",
+                                "url": "/folder",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -1117,7 +1117,7 @@
                 },
                 "location": {
                     "method": "POST",
-                    "path": "/"
+                    "path": "/a/b"
                 },
                 "request": {
                     "type": "body",
@@ -1237,7 +1237,7 @@
                 },
                 "location": {
                     "method": "POST",
-                    "path": "/"
+                    "path": "/a/c"
                 },
                 "request": {
                     "type": "body",
@@ -1319,7 +1319,7 @@
                 },
                 "location": {
                     "method": "POST",
-                    "path": "/"
+                    "path": "/folder"
                 },
                 "request": {
                     "type": "body",

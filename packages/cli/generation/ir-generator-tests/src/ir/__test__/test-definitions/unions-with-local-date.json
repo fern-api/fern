@@ -6791,7 +6791,7 @@
             },
             "displayName": null,
             "basePath": {
-                "head": "/",
+                "head": "/bigunion",
                 "parts": []
             },
             "headers": [],
@@ -6825,7 +6825,7 @@
                         ]
                     },
                     "fullPath": {
-                        "head": "/",
+                        "head": "/bigunion/",
                         "parts": [
                             {
                                 "pathParameter": "id",
@@ -6923,7 +6923,7 @@
                         {
                             "example": {
                                 "id": "d2e0ccdd",
-                                "url": "/id",
+                                "url": "/bigunion/id",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [
@@ -7115,7 +7115,7 @@
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "",
+                        "head": "/bigunion",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -7202,7 +7202,7 @@
                         {
                             "example": {
                                 "id": "874c7742",
-                                "url": "",
+                                "url": "/bigunion",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -7376,7 +7376,7 @@
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "/many",
+                        "head": "/bigunion/many",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -7492,7 +7492,7 @@
                         {
                             "example": {
                                 "id": "6bc8bf9d",
-                                "url": "/many",
+                                "url": "/bigunion/many",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -8598,7 +8598,7 @@
             },
             "displayName": null,
             "basePath": {
-                "head": "/",
+                "head": "/union",
                 "parts": []
             },
             "headers": [],
@@ -8632,7 +8632,7 @@
                         ]
                     },
                     "fullPath": {
-                        "head": "/",
+                        "head": "/union/",
                         "parts": [
                             {
                                 "pathParameter": "id",
@@ -8730,7 +8730,7 @@
                         {
                             "example": {
                                 "id": "3c4bab1a",
-                                "url": "/id",
+                                "url": "/union/id",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [
@@ -8903,7 +8903,7 @@
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "",
+                        "head": "/union",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -8990,7 +8990,7 @@
                         {
                             "example": {
                                 "id": "7f6f2367",
-                                "url": "",
+                                "url": "/union",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -19495,7 +19495,7 @@
                 },
                 "location": {
                     "method": "GET",
-                    "path": "/{id}"
+                    "path": "/bigunion/{id}"
                 },
                 "request": {
                     "type": "body",
@@ -19606,7 +19606,7 @@
                 },
                 "location": {
                     "method": "PATCH",
-                    "path": "/"
+                    "path": "/bigunion"
                 },
                 "request": {
                     "type": "body",
@@ -19692,7 +19692,7 @@
                 },
                 "location": {
                     "method": "PATCH",
-                    "path": "/many"
+                    "path": "/bigunion/many"
                 },
                 "request": {
                     "type": "body",
@@ -19978,7 +19978,7 @@
                 },
                 "location": {
                     "method": "GET",
-                    "path": "/{id}"
+                    "path": "/union/{id}"
                 },
                 "request": {
                     "type": "body",
@@ -20089,7 +20089,7 @@
                 },
                 "location": {
                     "method": "PATCH",
-                    "path": "/"
+                    "path": "/union"
                 },
                 "request": {
                     "type": "body",

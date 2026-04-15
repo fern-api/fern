@@ -1241,11 +1241,11 @@
                     "method": "POST",
                     "basePath": null,
                     "path": {
-                        "head": "",
+                        "head": "/task",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "/users",
+                        "head": "/users/task",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -1331,7 +1331,7 @@
                         {
                             "example": {
                                 "id": "49be8141",
-                                "url": "/users",
+                                "url": "/users/task",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -2865,7 +2865,7 @@
             },
             "displayName": null,
             "basePath": {
-                "head": "/users",
+                "head": "/system/users",
                 "parts": []
             },
             "headers": [],
@@ -2894,7 +2894,7 @@
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "/users",
+                        "head": "/system/users",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -2992,7 +2992,7 @@
                         {
                             "example": {
                                 "id": "73666d2",
-                                "url": "/users",
+                                "url": "/system/users",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -3493,11 +3493,11 @@
                     "method": "POST",
                     "basePath": null,
                     "path": {
-                        "head": "",
+                        "head": "/task",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "/users",
+                        "head": "/system/users/task",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -3595,7 +3595,7 @@
                         {
                             "example": {
                                 "id": "238be265",
-                                "url": "/users",
+                                "url": "/system/users/task",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -4782,7 +4782,7 @@
                         ]
                     },
                     "fullPath": {
-                        "head": "/users/",
+                        "head": "/system/users/",
                         "parts": [
                             {
                                 "pathParameter": "userId",
@@ -4882,7 +4882,7 @@
                         {
                             "example": {
                                 "id": "8d26b07d",
-                                "url": "/users/userId",
+                                "url": "/system/users/userId",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [
@@ -6408,7 +6408,7 @@
                 },
                 "location": {
                     "method": "POST",
-                    "path": "/users"
+                    "path": "/users/task"
                 },
                 "request": {
                     "type": "body",
@@ -6748,7 +6748,7 @@
                 },
                 "location": {
                     "method": "POST",
-                    "path": "/users"
+                    "path": "/system/users"
                 },
                 "request": {
                     "type": "body",
@@ -6836,7 +6836,7 @@
                 },
                 "location": {
                     "method": "POST",
-                    "path": "/users"
+                    "path": "/system/users/task"
                 },
                 "request": {
                     "type": "body",
@@ -6924,7 +6924,7 @@
                 },
                 "location": {
                     "method": "GET",
-                    "path": "/users/{userId}"
+                    "path": "/system/users/{userId}"
                 },
                 "request": {
                     "type": "body",

@@ -926,7 +926,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/"
+                "path": "/folder-a"
             },
             "request": {
                 "type": "body",
@@ -1045,7 +1045,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/"
+                "path": "/folder-d"
             },
             "request": {
                 "type": "body",

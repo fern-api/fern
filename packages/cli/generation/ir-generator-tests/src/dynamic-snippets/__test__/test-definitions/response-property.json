@@ -804,7 +804,7 @@
             },
             "location": {
                 "method": "POST",
-                "path": "/movie"
+                "path": "/movie/docs"
             },
             "request": {
                 "type": "body",
@@ -890,7 +890,7 @@
             },
             "location": {
                 "method": "POST",
-                "path": "/movie"
+                "path": "/movie/name"
             },
             "request": {
                 "type": "body",
@@ -976,7 +976,7 @@
             },
             "location": {
                 "method": "POST",
-                "path": "/movie"
+                "path": "/movie/metadata"
             },
             "request": {
                 "type": "body",
@@ -1062,7 +1062,7 @@
             },
             "location": {
                 "method": "POST",
-                "path": "/movie"
+                "path": "/movie/optional"
             },
             "request": {
                 "type": "body",
@@ -1148,7 +1148,7 @@
             },
             "location": {
                 "method": "POST",
-                "path": "/movie"
+                "path": "/movie/optional/docs"
             },
             "request": {
                 "type": "body",
@@ -1234,7 +1234,7 @@
             },
             "location": {
                 "method": "POST",
-                "path": "/movie"
+                "path": "/movie/optional/name"
             },
             "request": {
                 "type": "body",

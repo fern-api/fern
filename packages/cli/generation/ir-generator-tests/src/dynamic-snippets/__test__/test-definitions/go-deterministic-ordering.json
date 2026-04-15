@@ -11061,7 +11061,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/params/path/{param}"
+                "path": "/params/inline-path/{param}"
             },
             "request": {
                 "type": "inlined",
@@ -11651,7 +11651,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/params"
+                "path": "/params/allow-multiple"
             },
             "request": {
                 "type": "inlined",
@@ -12278,7 +12278,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/params/path-query/{param}"
+                "path": "/params/inline-path-query/{param}"
             },
             "request": {
                 "type": "inlined",
@@ -12766,7 +12766,7 @@
             },
             "location": {
                 "method": "PUT",
-                "path": "/params/path/{param}"
+                "path": "/params/inline-path/{param}"
             },
             "request": {
                 "type": "inlined",
