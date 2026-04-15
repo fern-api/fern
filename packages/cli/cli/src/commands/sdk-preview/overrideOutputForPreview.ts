@@ -87,62 +87,69 @@ export function overrideGroupOutputForDownload({
 
 /**
  * Overrides a generator group's output mode to publish to the preview registry.
- *
- * Used for both local Docker generation and remote Fiddle generation.
- * By default, uses publishV2(npmOverride) for registry-only publishing.
- *
- * When pushDiff is true AND the generator has github configuration (owner/repo),
- * uses githubV2(push) with npm publishInfo so Fiddle routes the task to
- * GithubFiddleTask, which handles both npm publishing and pushing a preview
- * diff branch to the SDK repo.
+ * Always uses publishV2(npmOverride) for registry-only publishing.
  *
  * @param token - The Fern org token (FERN_TOKEN). Used for registry auth.
- * @param pushDiff - When true, use githubV2(push) to push a diff branch to the SDK repo.
  */
 export function overrideGroupOutputForPreview({
     group,
     packageName,
     token,
-    registryUrl,
-    pushDiff
+    registryUrl
 }: {
     group: generatorsYml.GeneratorGroup;
     packageName: string;
     token: string;
     registryUrl: string;
-    pushDiff?: boolean;
 }): generatorsYml.GeneratorGroup {
-    const modifiedGenerators = group.generators.map((generator) => {
-        if (pushDiff === true) {
-            const githubInfo = getGithubOwnerRepo(generator.outputMode);
-            if (githubInfo != null) {
-                return {
-                    ...generator,
-                    outputMode: FernFiddle.OutputMode.githubV2(
-                        FernFiddle.GithubOutputModeV2.push({
-                            owner: githubInfo.owner,
-                            repo: githubInfo.repo,
-                            branch: undefined,
-                            license: undefined,
-                            publishInfo: FernFiddle.GithubPublishInfo.npm({
-                                registryUrl,
-                                packageName,
-                                token
-                            }),
-                            downloadSnippets: false
-                        })
-                    ),
-                    absolutePathToLocalOutput: undefined
-                };
-            }
-        }
+    const modifiedGenerators = group.generators.map((generator) => ({
+        ...generator,
+        outputMode: createNpmOverrideOutputMode({ registryUrl, packageName, token }),
+        absolutePathToLocalOutput: undefined
+    }));
 
-        return {
-            ...generator,
-            outputMode: createNpmOverrideOutputMode({ registryUrl, packageName, token }),
-            absolutePathToLocalOutput: undefined
-        };
-    });
+    return {
+        ...group,
+        generators: modifiedGenerators
+    };
+}
+
+/**
+ * Overrides a generator group's output mode to githubV2(push) with original
+ * metadata and no publishInfo. Used to push a clean diff branch to the SDK
+ * repo — the generated code uses the original package name so the diff shows
+ * real API changes without preview artifacts.
+ *
+ * Only includes generators that have GitHub configuration (owner/repo).
+ * Generators without GitHub config are excluded (they can't push a diff branch).
+ */
+export function overrideGroupOutputForDiffBranch({
+    group
+}: {
+    group: generatorsYml.GeneratorGroup;
+}): generatorsYml.GeneratorGroup {
+    const modifiedGenerators = group.generators
+        .map((generator) => {
+            const githubInfo = getGithubOwnerRepo(generator.outputMode);
+            if (githubInfo == null) {
+                return undefined;
+            }
+            return {
+                ...generator,
+                outputMode: FernFiddle.OutputMode.githubV2(
+                    FernFiddle.GithubOutputModeV2.push({
+                        owner: githubInfo.owner,
+                        repo: githubInfo.repo,
+                        branch: undefined,
+                        license: undefined,
+                        publishInfo: undefined,
+                        downloadSnippets: false
+                    })
+                ),
+                absolutePathToLocalOutput: undefined
+            };
+        })
+        .filter((g): g is NonNullable<typeof g> => g != null);
 
     return {
         ...group,
