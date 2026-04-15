@@ -132,6 +132,12 @@ describe("detectAffected", () => {
             expect(result.affectedGenerators).not.toContain("csharp-model");
         });
 
+        it("does not ignore non-changelog /changes/ paths under generator source", () => {
+            const result = detectAffected(["generators/python/src/changes/handler.ts"], ALL_GENERATORS);
+
+            expect(result.affectedGenerators).toContain("python-sdk");
+        });
+
         it("skips seed for versions.yml but still detects other generator changes", () => {
             const result = detectAffected(
                 ["generators/csharp/sdk/versions.yml", "generators/python/src/generator.ts"],
