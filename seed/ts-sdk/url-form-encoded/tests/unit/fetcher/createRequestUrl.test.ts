@@ -160,4 +160,24 @@ describe("Test createRequestUrl", () => {
             expect(createRequestUrl(baseUrl, queryParams)).toBe(expected);
         });
     });
+
+    describe("comma array format", () => {
+        it("should serialize arrays as comma-separated values", () => {
+            expect(
+                createRequestUrl(BASE_URL, { event_type: ["ACCESS_GRANTED", "COPY", "DELETE"] }, "comma")
+            ).toBe("https://api.example.com?event_type=ACCESS_GRANTED,COPY,DELETE");
+        });
+
+        it("should handle mixed comma array and scalar parameters", () => {
+            expect(
+                createRequestUrl(BASE_URL, { event_type: ["ACCESS_GRANTED", "COPY"], limit: 10 }, "comma")
+            ).toBe("https://api.example.com?event_type=ACCESS_GRANTED,COPY&limit=10");
+        });
+
+        it("should default to repeat format when no arrayFormat is specified", () => {
+            expect(createRequestUrl(BASE_URL, { items: ["a", "b"] })).toBe(
+                "https://api.example.com?items=a&items=b"
+            );
+        });
+    });
 });

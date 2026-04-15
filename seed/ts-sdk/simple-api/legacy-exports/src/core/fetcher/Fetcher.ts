@@ -1,17 +1,17 @@
-import { toJson } from "../json";
-import { createLogger, type LogConfig, type Logger } from "../logging/logger";
-import type { APIResponse } from "./APIResponse";
-import { createRequestUrl } from "./createRequestUrl";
-import type { EndpointMetadata } from "./EndpointMetadata";
-import { EndpointSupplier } from "./EndpointSupplier";
-import { getErrorResponseBody } from "./getErrorResponseBody";
-import { getFetchFn } from "./getFetchFn";
-import { getRequestBody } from "./getRequestBody";
-import { getResponseBody } from "./getResponseBody";
-import { Headers } from "./Headers";
-import { makeRequest } from "./makeRequest";
-import { abortRawResponse, toRawResponse, unknownRawResponse } from "./RawResponse";
-import { requestWithRetries } from "./requestWithRetries";
+import { toJson } from "../json.js";
+import { createLogger, type LogConfig, type Logger } from "../logging/logger.js";
+import type { APIResponse } from "./APIResponse.js";
+import { createRequestUrl } from "./createRequestUrl.js";
+import type { EndpointMetadata } from "./EndpointMetadata.js";
+import { EndpointSupplier } from "./EndpointSupplier.js";
+import { getErrorResponseBody } from "./getErrorResponseBody.js";
+import { getFetchFn } from "./getFetchFn.js";
+import { getRequestBody } from "./getRequestBody.js";
+import { getResponseBody } from "./getResponseBody.js";
+import { Headers } from "./Headers.js";
+import { makeRequest } from "./makeRequest.js";
+import { abortRawResponse, toRawResponse, unknownRawResponse } from "./RawResponse.js";
+import { requestWithRetries } from "./requestWithRetries.js";
 
 export type FetchFunction = <R = unknown>(args: Fetcher.Args) => Promise<APIResponse<R, Fetcher.Error>>;
 
@@ -22,6 +22,7 @@ export declare namespace Fetcher {
         contentType?: string;
         headers?: Record<string, unknown>;
         queryParameters?: Record<string, unknown>;
+        queryParameterArrayFormat?: "indices" | "repeat" | "comma";
         body?: unknown;
         timeoutMs?: number;
         maxRetries?: number;
@@ -251,7 +252,7 @@ async function getHeaders(args: Fetcher.Args): Promise<Headers> {
 }
 
 export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse<R, Fetcher.Error>> {
-    const url = createRequestUrl(args.url, args.queryParameters);
+    const url = createRequestUrl(args.url, args.queryParameters, args.queryParameterArrayFormat);
     const requestBody: BodyInit | undefined = await getRequestBody({
         body: args.body,
         type: args.requestType ?? "other",

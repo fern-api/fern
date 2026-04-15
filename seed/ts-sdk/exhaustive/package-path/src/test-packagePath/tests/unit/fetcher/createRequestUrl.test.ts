@@ -1,4 +1,4 @@
-import { createRequestUrl } from "../../../core/fetcher/createRequestUrl";
+import { createRequestUrl } from "../../../src/core/fetcher/createRequestUrl";
 
 describe("Test createRequestUrl", () => {
     const BASE_URL = "https://api.example.com";
@@ -158,6 +158,26 @@ describe("Test createRequestUrl", () => {
     testCases.forEach(({ description, baseUrl, queryParams, expected }) => {
         it(description, () => {
             expect(createRequestUrl(baseUrl, queryParams)).toBe(expected);
+        });
+    });
+
+    describe("comma array format", () => {
+        it("should serialize arrays as comma-separated values", () => {
+            expect(
+                createRequestUrl(BASE_URL, { event_type: ["ACCESS_GRANTED", "COPY", "DELETE"] }, "comma")
+            ).toBe("https://api.example.com?event_type=ACCESS_GRANTED,COPY,DELETE");
+        });
+
+        it("should handle mixed comma array and scalar parameters", () => {
+            expect(
+                createRequestUrl(BASE_URL, { event_type: ["ACCESS_GRANTED", "COPY"], limit: 10 }, "comma")
+            ).toBe("https://api.example.com?event_type=ACCESS_GRANTED,COPY&limit=10");
+        });
+
+        it("should default to repeat format when no arrayFormat is specified", () => {
+            expect(createRequestUrl(BASE_URL, { items: ["a", "b"] })).toBe(
+                "https://api.example.com?items=a&items=b"
+            );
         });
     });
 });
