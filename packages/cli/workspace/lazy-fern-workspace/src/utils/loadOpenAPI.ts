@@ -64,7 +64,8 @@ export async function loadOpenAPI({
     loadAiExamples?: boolean;
 }): Promise<OpenAPI.Document> {
     const parsed = await parseOpenAPI({
-        absolutePathToOpenAPI
+        absolutePathToOpenAPI,
+        logger: context.logger
     });
 
     // Normalize overrides to an array for consistent processing
@@ -106,7 +107,8 @@ export async function loadOpenAPI({
         result = await parseOpenAPI({
             absolutePathToOpenAPI,
             absolutePathToOpenAPIOverrides: overridesFilepath,
-            parsed: result
+            parsed: result,
+            logger: context.logger
         });
     }
 
@@ -187,7 +189,8 @@ export async function loadOpenAPI({
         return await parseOpenAPI({
             absolutePathToOpenAPI,
             absolutePathToOpenAPIOverlays, // Include overlay path for ref resolver
-            parsed: result
+            parsed: result,
+            logger: context.logger
         });
     }
     return result;
