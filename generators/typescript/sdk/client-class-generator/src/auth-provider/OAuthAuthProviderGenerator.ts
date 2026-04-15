@@ -874,7 +874,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             if (resolvedType.type === "container" && resolvedType.container.type === "literal") {
                 const propertyName = this.getName(customProperty.property.name, context);
                 const literalValue = resolvedType.container.literal._visit<string>({
-                    string: (val: string) => `"${val}"`,
+                    string: (val: string) => `"${val.replace(/\\/g, "\\\\").replace(/"/g, '\\"')}"`,
                     boolean: (val: boolean) => `${val}`,
                     _other: () => {
                         throw new Error("Encountered non-boolean, non-string literal");
