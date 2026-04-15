@@ -155,9 +155,8 @@ jobs:
 
           echo "Waiting for fern docs dev server to start (PID: $FERN_PID)..."
           for i in $(seq 1 180); do
-            if grep -q "Ready on" /tmp/fern-docs-dev.log 2>/dev/null || \
-               curl -sf -o /dev/null http://localhost:3000/ 2>/dev/null; then
-              echo "Server is ready after ${i}s!"
+            if grep -qi "ready on" /tmp/fern-docs-dev.log 2>/dev/null; then
+              echo "Server reported ready after ${i}s!"
               echo "--- Dev server logs ---"
               cat /tmp/fern-docs-dev.log
               echo "--- End dev server logs ---"
@@ -188,6 +187,24 @@ jobs:
             sleep 1
           done
 
+          # Wait for port 3000 to actually accept connections — the CLI may
+          # report ready before the underlying Next.js server is listening.
+          echo "Waiting for port 3000 to accept connections..."
+          for j in $(seq 1 120); do
+            if curl -s --max-time 5 -o /dev/null http://localhost:3000/ 2>/dev/null; then
+              echo "Port 3000 is accepting connections after ${j}s"
+              break
+            fi
+            if [ $j -eq 120 ]; then
+              echo "Port 3000 never became ready after 120s"
+              echo "--- Dev server logs ---"
+              cat /tmp/fern-docs-dev.log
+              echo "--- End dev server logs ---"
+              exit 1
+            fi
+            sleep 1
+          done
+
       - name: Run Playwright smoke tests (Unix)
         if: steps.node-check.outputs.available == 'true' && runner.os != 'Windows'
         shell: bash
@@ -211,9 +228,8 @@ jobs:
 
           echo "Waiting for fern docs dev server to start (PID: $FERN_PID)..."
           for i in $(seq 1 180); do
-            if grep -q "Ready on" /tmp/fern-docs-dev.log 2>/dev/null || \
-               curl -sf -o /dev/null http://localhost:3000/ 2>/dev/null; then
-              echo "Server is ready after ${i}s!"
+            if grep -qi "ready on" /tmp/fern-docs-dev.log 2>/dev/null; then
+              echo "Server reported ready after ${i}s!"
               echo "--- Dev server logs ---"
               cat /tmp/fern-docs-dev.log
               echo "--- End dev server logs ---"
@@ -248,7 +264,7 @@ jobs:
           # the underlying Next.js server is actually accepting connections.
           echo "Waiting for port 3000 to accept connections..."
           for j in $(seq 1 60); do
-            if curl -sf -o /dev/null http://localhost:3000/ 2>/dev/null; then
+            if curl -s --max-time 5 -o /dev/null http://localhost:3000/ 2>/dev/null; then
               echo "Port 3000 is accepting connections after ${j}s"
               break
             fi
