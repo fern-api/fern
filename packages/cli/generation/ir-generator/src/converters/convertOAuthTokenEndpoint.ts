@@ -1,3 +1,4 @@
+import { isInlineRequestBody, RawSchemas } from "@fern-api/fern-definition-schema";
 import { OAuthTokenEndpoint } from "@fern-api/ir-sdk";
 
 import { FernFileContext } from "../FernFileContext.js";
@@ -26,7 +27,7 @@ export function convertOAuthTokenEndpoint({
     });
 
     const requestBodyProperties = getRequestBodyPropertyNames({
-        resolvedEndpoint: resolvedEndpoint.endpoint,
+        endpoint: resolvedEndpoint.endpoint,
         file: resolvedEndpoint.file,
         typeResolver
     });
@@ -126,40 +127,27 @@ const resolveCustomRequestProperties = ({
  * handling both inline request bodies and referenced type bodies.
  */
 function getRequestBodyPropertyNames({
-    resolvedEndpoint,
+    endpoint,
     file,
     typeResolver
 }: {
-    resolvedEndpoint: { request?: unknown };
+    endpoint: RawSchemas.HttpEndpointSchema;
     file: FernFileContext;
     typeResolver: TypeResolver;
 }): string[] {
-    const request = resolvedEndpoint.request;
-    if (request == null || typeof request === "string") {
-        // request is a bare type reference string
-        if (typeof request === "string") {
-            return getPropertyNamesFromType({ typeName: request, file, typeResolver });
-        }
+    const request = endpoint.request;
+    if (request == null) {
         return [];
     }
 
-    const body = (request as { body?: unknown }).body;
+    // request can be a bare type reference string (shorthand)
+    if (typeof request === "string") {
+        return getPropertyNamesFromType({ typeName: request, file, typeResolver });
+    }
+
+    const body: RawSchemas.HttpRequestBodySchema | undefined = request.body;
     if (body == null) {
         return [];
-    }
-
-    // Inline request body with explicit properties (has `extends` or `properties`)
-    if (typeof body === "object" && !Array.isArray(body)) {
-        const bodyRecord = body as Record<string, unknown>;
-        if ("properties" in bodyRecord || "extends" in bodyRecord) {
-            return Object.keys((bodyRecord.properties as Record<string, unknown>) ?? {});
-        }
-    }
-
-    // Referenced request body with a type field
-    if (typeof body === "object" && "type" in (body as Record<string, unknown>)) {
-        const typeName = (body as { type: string }).type;
-        return getPropertyNamesFromType({ typeName, file, typeResolver });
     }
 
     // Bare string body (type reference)
@@ -167,7 +155,21 @@ function getRequestBodyPropertyNames({
         return getPropertyNamesFromType({ typeName: body, file, typeResolver });
     }
 
-    return [];
+    // Inline request body with explicit properties
+    if (isInlineRequestBody(body)) {
+        const names = Object.keys(body.properties ?? {});
+        // Also include properties from extended types
+        if (body.extends != null) {
+            const extendsList = typeof body.extends === "string" ? [body.extends] : body.extends;
+            for (const extendedType of extendsList) {
+                names.push(...getPropertyNamesFromType({ typeName: extendedType, file, typeResolver }));
+            }
+        }
+        return names;
+    }
+
+    // Referenced request body (has a `type` field)
+    return getPropertyNamesFromType({ typeName: body.type, file, typeResolver });
 }
 
 function getPropertyNamesFromType({
