@@ -1,4 +1,0 @@
-# yaml-language-server: $schema=../../../../generators-yml.schema.json
-api:
-  specs:
-    - openapi: ./openapi.yml
