@@ -34,6 +34,14 @@ export interface AffectedResult {
 const IGNORED_FILENAMES = ["versions.yml"];
 
 /**
+ * Path segments that indicate changelog / release metadata directories.
+ * Files under paths containing these segments live under generator source
+ * paths but do not affect generated code (e.g.
+ * `generators/typescript/sdk/changes/unreleased/.template.yml`).
+ */
+const IGNORED_PATH_SEGMENTS = ["/changes/"];
+
+/**
  * Paths that, when changed, affect ALL generators and ALL fixtures.
  * These are infrastructure-level changes that feed into IR generation
  * or affect how seed tests execute. Includes:
@@ -214,6 +222,9 @@ export function detectAffected(changedFiles: string[], allGenerators: GeneratorW
         // Skip metadata files that live under generator paths but don't affect codegen
         const basename = file.split("/").pop() ?? "";
         if (IGNORED_FILENAMES.includes(basename)) {
+            continue;
+        }
+        if (IGNORED_PATH_SEGMENTS.some((segment) => file.includes(segment))) {
             continue;
         }
         for (const [generatorName, sourcePaths] of Object.entries(GENERATOR_SOURCE_PATHS)) {
