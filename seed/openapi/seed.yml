@@ -58,19 +58,13 @@ fixtures:
                 type: null
       outputFolder: custom-overrides
 scripts:
-  docker:
-    - image: fernapi/fern-openapi:latest
-      name: spectral-lint
-      commands:
-        test:
-          - spectral lint openapi.yml --ruleset /.spectral.yml --fail-severity error
   local:
     - name: spectral-lint
       commands:
         test:
           - |
             echo 'extends: ["spectral:oas"]' > .spectral.yml
-            npx --yes @stoplight/spectral-cli lint openapi.yml --fail-severity error
+            npx --yes @stoplight/spectral-cli@6.15.1 lint openapi.yml --fail-severity error
             rm -f .spectral.yml
 allowedFailures:
   # CLI/IR layer: auto-generated examples don't conform to OAS schema constraints.
