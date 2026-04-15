@@ -2240,7 +2240,10 @@ function addAutomationsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
  * `fern automations generate` commands — one per generator. Designed to be
  * consumed by a GitHub Actions matrix strategy to fan out generation jobs.
  *
- * Generators with `automation.generate: false` in generators.yml are excluded.
+ * Generators are excluded when any of the following is true:
+ * - `automation.generate: false` in generators.yml
+ * - Output is configured for `local-file-system` (cannot run remotely)
+ * - `autorelease: false` at the generator or root level
  *
  * Arguments passed to `list` (--version, --auto-merge) are forwarded into
  * each generated command, so the caller doesn't need to re-specify them.
@@ -2323,7 +2326,9 @@ function addAutomationsListGenerateCommand(cli: Argv<GlobalCliOptions>, cliConte
             const commands: string[] = [];
 
             for (const workspace of project.apiWorkspaces) {
-                const groups = workspace.generatorsConfiguration?.groups ?? [];
+                const generatorsConfiguration = workspace.generatorsConfiguration;
+                const groups = generatorsConfiguration?.groups ?? [];
+                const rootAutorelease = generatorsConfiguration?.rawConfiguration.autorelease;
                 for (const group of groups) {
                     if (argv.group != null && group.groupName !== argv.group) {
                         continue;
@@ -2331,6 +2336,19 @@ function addAutomationsListGenerateCommand(cli: Argv<GlobalCliOptions>, cliConte
                     for (let i = 0; i < group.generators.length; i++) {
                         const generator = group.generators[i];
                         if (generator == null || !generator.automation.generate) {
+                            continue;
+                        }
+
+                        // Skip generators that output to local file system (cannot run remotely)
+                        if (generator.absolutePathToLocalOutput != null) {
+                            continue;
+                        }
+
+                        // Skip generators with autorelease disabled (generator-level overrides root-level)
+                        const autoreleaseDisabled =
+                            generator.raw?.autorelease === false ||
+                            (generator.raw?.autorelease == null && rootAutorelease === false);
+                        if (autoreleaseDisabled) {
                             continue;
                         }
 
