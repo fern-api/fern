@@ -9,44 +9,117 @@ outputs:
 runs:
   using: composite
   steps:
-    - name: Fetch Square OpenAPI spec
-      id: fetch-square
+    - name: Fetch primary OpenAPI spec
+      id: fetch-primary
       shell: bash
       run: |
-        # Pinned to a specific commit SHA for reproducibility.
-        # A live endpoint would be preferable but Square does not publish one.
+        # Pinned to a known-good commit for reproducibility.
         FETCH_OK=false
         for ATTEMPT in 1 2 3; do
-          echo "Attempt ${ATTEMPT}/3: Fetching Square OpenAPI spec..."
+          echo "Attempt ${ATTEMPT}/3: Fetching primary OpenAPI spec..."
           if curl -sSfL --retry 2 --retry-delay 5 \
             "https://raw.githubusercontent.com/square/connect-api-specification/ba11c0a1f006b81dcd3633adb9090e9b2f03fef7/api.json" \
             -o benchmarks/fern/apis/square/openapi.json; then
             BYTES=$(wc -c < benchmarks/fern/apis/square/openapi.json)
-            echo "Downloaded Square OpenAPI spec (${BYTES} bytes)"
+            echo "Downloaded primary OpenAPI spec (${BYTES} bytes)"
             if [ "$BYTES" -ge 100000 ]; then
               FETCH_OK=true
               break
             fi
-            echo "::warning::Square spec unexpectedly small (${BYTES} bytes) on attempt ${ATTEMPT}"
+            echo "::warning::Primary spec unexpectedly small (${BYTES} bytes) on attempt ${ATTEMPT}"
           else
             echo "::warning::curl failed on attempt ${ATTEMPT}"
           fi
           [ "$ATTEMPT" -lt 3 ] && sleep 5
         done
         if [ "$FETCH_OK" = "true" ]; then
-          echo "square-ok=true" >> $GITHUB_OUTPUT
+          echo "primary-ok=true" >> $GITHUB_OUTPUT
         else
-          echo "::warning::Failed to fetch Square spec after 3 attempts. Skipping Square benchmarks."
+          echo "::warning::Failed to fetch primary spec after 3 attempts. Skipping benchmarks."
           rm -f benchmarks/fern/apis/square/openapi.json
-          echo "square-ok=false" >> $GITHUB_OUTPUT
+          echo "primary-ok=false" >> $GITHUB_OUTPUT
         fi
+
+    # Fetch real historical versions of the spec for multi-version docs
+    # benchmarking.  Each version is downloaded from its release commit,
+    # then a lightweight Python script strips
+    # any dangling $ref entries (schemas referenced but never defined) so the
+    # spec can be processed by Fern without errors.
+    - name: Fetch historical spec versions
+      id: fetch-versions
+      shell: bash
+      run: |
+        VERSIONS_FILE="benchmarks/fern/api-versions.txt"
+        FIX_SCRIPT="benchmarks/fern/fix-spec-refs.py"
+        if [ ! -f "$VERSIONS_FILE" ]; then
+          echo "::warning::No api-versions.txt found. Skipping versioned docs benchmark."
+          echo "versions-fetched=0" >> $GITHUB_OUTPUT
+          exit 0
+        fi
+
+        FETCHED=0
+        FAILED=0
+        PIDS=()
+        VERSIONS=()
+
+        # Launch parallel downloads — one curl per version
+        while IFS='|' read -r SHA VERSION; do
+          [[ "$SHA" =~ ^#.*$ || -z "$SHA" ]] && continue
+          DIR="benchmarks/fern/apis/square-${VERSION}"
+          mkdir -p "$DIR"
+          OUTPUT="${DIR}/openapi.json"
+          VERSIONS+=("$VERSION")
+
+          (
+            curl -sSfL --retry 2 --retry-delay 3 \
+              "https://raw.githubusercontent.com/square/connect-api-specification/${SHA}/api.json" \
+              -o "$OUTPUT" 2>/dev/null
+          ) &
+          PIDS+=($!)
+        done < "$VERSIONS_FILE"
+
+        echo "Launched ${#PIDS[@]} parallel downloads..."
+
+        # Wait for all downloads and validate
+        for i in "${!PIDS[@]}"; do
+          VERSION="${VERSIONS[$i]}"
+          FILE="benchmarks/fern/apis/square-${VERSION}/openapi.json"
+          if wait "${PIDS[$i]}" && [ -f "$FILE" ]; then
+            BYTES=$(wc -c < "$FILE")
+            if [ "$BYTES" -ge 100000 ]; then
+              FETCHED=$((FETCHED + 1))
+            else
+              echo "::warning::square-${VERSION} spec too small (${BYTES} bytes), removing"
+              rm -f "$FILE"
+              FAILED=$((FAILED + 1))
+            fi
+          else
+            echo "::warning::Failed to fetch square-${VERSION}"
+            rm -f "$FILE"
+            FAILED=$((FAILED + 1))
+          fi
+        done
+
+        echo "Fetched ${FETCHED}/${#PIDS[@]} historical specs (${FAILED} failed)"
+
+        # Strip dangling $ref entries from all fetched specs
+        if [ -f "$FIX_SCRIPT" ]; then
+          FIXED=0
+          for spec_file in benchmarks/fern/apis/square-*/openapi.json; do
+            [ -f "$spec_file" ] || continue
+            python3 "$FIX_SCRIPT" "$spec_file" --in-place 2>&1 && FIXED=$((FIXED + 1))
+          done
+          echo "Ran $ref fix on ${FIXED} specs"
+        fi
+
+        echo "versions-fetched=${FETCHED}" >> $GITHUB_OUTPUT
 
     - name: Summarize fetched specs
       id: summary
       shell: bash
       run: |
         SPECS=""
-        if [ "${{ steps.fetch-square.outputs.square-ok }}" = "true" ]; then
+        if [ "${{ steps.fetch-primary.outputs.primary-ok }}" = "true" ]; then
           SPECS="square"
         fi
         if [ -z "$SPECS" ]; then
@@ -55,3 +128,5 @@ runs:
         fi
         echo "specs-fetched=$SPECS" >> $GITHUB_OUTPUT
         echo "Successfully fetched specs: $SPECS"
+        VERSIONS="${{ steps.fetch-versions.outputs.versions-fetched }}"
+        echo "Historical versions fetched: ${VERSIONS:-0}"

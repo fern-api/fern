@@ -540,9 +540,9 @@ describe("E2E: maxVersionBump merging logic", () => {
         expect(bestBump).toBe(VersionBump.MINOR);
         // Message should come from chunk 4 (first MINOR)
         expect(bestMessage).toBe("message from chunk 4");
-        // Changelog aggregates all non-empty entries as a markdown list
-        const aggregated = allChangelogs.length > 1 ? allChangelogs.map((e) => `- ${e}`).join("\n") : allChangelogs[0];
-        expect(aggregated).toBe("- Fixed retry logic.\n- Added new paginator helper.\n- New webhook event types.");
+        // Changelog aggregates all non-empty entries separated by double newlines
+        const aggregated = allChangelogs.length > 1 ? allChangelogs.join("\n\n") : allChangelogs[0];
+        expect(aggregated).toBe("Fixed retry logic.\n\nAdded new paginator helper.\n\nNew webhook event types.");
     });
 
     it("processes all chunks even with MAJOR bump to collect full changelog", () => {
@@ -566,9 +566,9 @@ describe("E2E: maxVersionBump merging logic", () => {
         }
 
         expect(bestBump).toBe(VersionBump.MAJOR);
-        // All chunks processed — changelog includes entries from all 5 chunks as markdown list
-        const aggregated = allChangelogs.length > 1 ? allChangelogs.map((e) => `- ${e}`).join("\n") : allChangelogs[0];
-        expect(aggregated).toBe("- New feature added.\n- Breaking API removed.\n- Extra helpers added.");
+        // All chunks processed — changelog includes entries from all 5 chunks separated by double newlines
+        const aggregated = allChangelogs.length > 1 ? allChangelogs.join("\n\n") : allChangelogs[0];
+        expect(aggregated).toBe("New feature added.\n\nBreaking API removed.\n\nExtra helpers added.");
     });
 });
 
@@ -648,9 +648,7 @@ describe("E2E: Full pipeline — clean + chunk + analyze (mocked AI)", () => {
         }
 
         const aggregatedChangelog =
-            allChangelogEntries.length > 1
-                ? allChangelogEntries.map((e) => `- ${e}`).join("\n")
-                : (allChangelogEntries[0] ?? "");
+            allChangelogEntries.length > 1 ? allChangelogEntries.join("\n\n") : (allChangelogEntries[0] ?? "");
         const pipelineElapsed = performance.now() - pipelineStart;
 
         console.log("\n=== Full Pipeline Results ===");

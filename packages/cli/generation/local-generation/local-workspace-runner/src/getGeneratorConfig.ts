@@ -2,18 +2,7 @@ import { GeneratorInvocation, generatorsYml } from "@fern-api/configuration";
 import { isGithubSelfhosted } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { parseRepository } from "@fern-api/github";
-import {
-    CratesOutput,
-    GithubPublishInfo as FiddleGithubPublishInfo,
-    MavenOutput,
-    NpmOutput,
-    NugetOutput,
-    PostmanOutput,
-    PublishOutputMode,
-    PublishOutputModeV2,
-    PypiOutput,
-    RubyGemsOutput
-} from "@fern-fern/fiddle-sdk/api";
+import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { EnvironmentVariable } from "@fern-fern/generator-exec-sdk/api";
 import * as path from "path";
@@ -110,10 +99,10 @@ export declare namespace getGeneratorConfig {
 }
 
 function getGithubPublishConfig(
-    githubPublishInfo: FiddleGithubPublishInfo | undefined
+    githubPublishInfo: FernFiddle.GithubPublishInfo | undefined
 ): FernGeneratorExec.GithubPublishInfo | undefined {
     return githubPublishInfo != null
-        ? FiddleGithubPublishInfo._visit<FernGeneratorExec.GithubPublishInfo | undefined>(githubPublishInfo, {
+        ? FernFiddle.GithubPublishInfo._visit<FernGeneratorExec.GithubPublishInfo | undefined>(githubPublishInfo, {
               npm: (value) => {
                   const token = (value.token ?? "").trim();
                   const useOidc = token === "<USE_OIDC>" || token === "OIDC";
@@ -308,7 +297,7 @@ export function getGeneratorConfig({
 
 function newDummyPublishOutputConfig(
     version: string,
-    multipleOutputMode: PublishOutputMode | PublishOutputModeV2,
+    multipleOutputMode: FernFiddle.PublishOutputMode | FernFiddle.PublishOutputModeV2,
     generatorInvocation: GeneratorInvocation,
     paths: {
         outputDirectory: AbsoluteFilePath;
@@ -316,25 +305,25 @@ function newDummyPublishOutputConfig(
 ): FernGeneratorExec.GeneratorOutputConfig {
     const { outputDirectory } = paths;
     let outputMode:
-        | NpmOutput
-        | MavenOutput
-        | PypiOutput
-        | RubyGemsOutput
-        | PostmanOutput
-        | NugetOutput
-        | CratesOutput
+        | FernFiddle.NpmOutput
+        | FernFiddle.MavenOutput
+        | FernFiddle.PypiOutput
+        | FernFiddle.RubyGemsOutput
+        | FernFiddle.PostmanOutput
+        | FernFiddle.NugetOutput
+        | FernFiddle.CratesOutput
         | undefined;
     if ("registryOverrides" in multipleOutputMode) {
         outputMode = multipleOutputMode.registryOverrides.maven ?? multipleOutputMode.registryOverrides.npm;
     } else if (outputMode != null) {
         outputMode = multipleOutputMode._visit<
-            | NpmOutput
-            | MavenOutput
-            | PypiOutput
-            | RubyGemsOutput
-            | PostmanOutput
-            | NugetOutput
-            | CratesOutput
+            | FernFiddle.NpmOutput
+            | FernFiddle.MavenOutput
+            | FernFiddle.PypiOutput
+            | FernFiddle.RubyGemsOutput
+            | FernFiddle.PostmanOutput
+            | FernFiddle.NugetOutput
+            | FernFiddle.CratesOutput
             | undefined
         >({
             mavenOverride: (value) => value,
@@ -464,7 +453,7 @@ function buildRegistriesFromPublishTarget(publishTarget: FernGeneratorExec.Gener
 }
 
 function getPublishTargetFromPublishMode(
-    mode: PublishOutputMode
+    mode: FernFiddle.PublishOutputMode
 ): FernGeneratorExec.GeneratorPublishTarget | undefined {
     if ("registryOverrides" in mode) {
         const overrides = mode.registryOverrides;
@@ -489,7 +478,7 @@ function getPublishTargetFromPublishMode(
 }
 
 function getPublishTargetFromPublishModeV2(
-    mode: PublishOutputModeV2
+    mode: FernFiddle.PublishOutputModeV2
 ): FernGeneratorExec.GeneratorPublishTarget | undefined {
     return mode._visit<FernGeneratorExec.GeneratorPublishTarget | undefined>({
         npmOverride: (value) =>

@@ -325,7 +325,9 @@ export async function runLocalGenerationForWorkspace({
                     autoVersioningChangelogEntry,
                     autoVersioningPrDescription,
                     autoVersioningVersionBumpReason,
-                    autoVersioningVersionBump
+                    autoVersioningVersionBump,
+                    autoVersioningNewVersion,
+                    autoVersioningPreviousVersion
                 } = await writeFilesToDiskAndRunGenerator({
                     organization: projectConfig.organization,
                     absolutePathToFernConfig:
@@ -385,6 +387,9 @@ export async function runLocalGenerationForWorkspace({
                                 changelogEntry: autoVersioningChangelogEntry,
                                 prDescription: autoVersioningPrDescription,
                                 versionBumpReason: autoVersioningVersionBumpReason,
+                                previousVersion: autoVersioningPreviousVersion,
+                                newVersion: autoVersioningNewVersion,
+                                versionBump: autoVersioningVersionBump,
                                 previewMode: selfhostedGithubConfig.previewMode,
                                 generatorName: generatorInvocation.name,
                                 automationMode,
