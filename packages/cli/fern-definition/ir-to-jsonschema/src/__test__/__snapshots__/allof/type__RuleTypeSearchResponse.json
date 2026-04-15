@@ -1,0 +1,75 @@
+{
+  "type": "object",
+  "properties": {
+    "results": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RuleType"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "paging": {
+      "$ref": "#/definitions/PagingCursors"
+    }
+  },
+  "required": [
+    "paging"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "RuleType": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "PagingCursors": {
+      "type": "object",
+      "properties": {
+        "next": {
+          "type": "string"
+        },
+        "previous": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "next"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "summary": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "status": {
+      "$ref": "#/definitions/CombinedEntityStatus"
+    }
+  },
+  "required": [
+    "id",
+    "status"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "CombinedEntityStatus": {
+      "type": "string",
+      "enum": [
+        "active",
+        "archived"
+      ]
+    }
+  }
+}
