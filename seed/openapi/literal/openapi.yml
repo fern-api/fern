@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: literal
-  version: ''
+  version: 0.0.0
   description: Test definition for literal schemas.
 paths:
   /headers:
@@ -16,7 +16,6 @@ paths:
           schema:
             type: string
             const: 02-12-2024
-          example: 02-12-2024
           examples:
             Example1:
               value: 02-12-2024
@@ -26,13 +25,12 @@ paths:
           schema:
             type: boolean
             const: true
-          example: true
           examples:
             Example1:
               value: true
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -52,7 +50,8 @@ paths:
               properties:
                 query:
                   type: string
-                  example: What is the weather today
+                  examples:
+                    - What is the weather today
               required:
                 - query
             examples:
@@ -67,7 +66,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -89,24 +88,28 @@ paths:
                   type: string
                   const: You are a helpful assistant
                 context:
-                  type: string
+                  type:
+                    - string
+                    - 'null'
                   const: You're super wise
-                  nullable: true
                 query:
                   type: string
-                  example: What is the weather today
+                  examples:
+                    - What is the weather today
                 temperature:
-                  type: number
+                  type:
+                    - number
+                    - 'null'
                   format: double
-                  nullable: true
                 stream:
                   type: boolean
                   const: false
                 aliasedContext:
                   $ref: '#/components/schemas/SomeAliasedLiteral'
                 maybeContext:
-                  $ref: '#/components/schemas/SomeAliasedLiteral'
-                  nullable: true
+                  anyOf:
+                    - $ref: '#/components/schemas/SomeAliasedLiteral'
+                    - type: 'null'
                 objectWithLiteral:
                   $ref: '#/components/schemas/ATopLevelLiteral'
               required:
@@ -140,13 +143,12 @@ paths:
           schema:
             type: string
             const: '123'
-          example: '123'
           examples:
             Example1:
               value: '123'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -169,7 +171,6 @@ paths:
           schema:
             type: string
             const: You are a helpful assistant
-          example: You are a helpful assistant
           examples:
             Example1:
               value: You are a helpful assistant
@@ -177,10 +178,10 @@ paths:
           in: query
           required: false
           schema:
-            type: string
+            type:
+              - string
+              - 'null'
             const: You are a helpful assistant
-            nullable: true
-          example: You are a helpful assistant
           examples:
             Example1:
               value: You are a helpful assistant
@@ -189,7 +190,6 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/AliasToPrompt'
-          example: You are a helpful assistant
           examples:
             Example1:
               value: You are a helpful assistant
@@ -197,9 +197,9 @@ paths:
           in: query
           required: false
           schema:
-            $ref: '#/components/schemas/AliasToPrompt'
-            nullable: true
-          example: You are a helpful assistant
+            anyOf:
+              - $ref: '#/components/schemas/AliasToPrompt'
+              - type: 'null'
           examples:
             Example1:
               value: You are a helpful assistant
@@ -208,7 +208,6 @@ paths:
           required: true
           schema:
             type: string
-          example: What is the weather today
           examples:
             Example1:
               value: What is the weather today
@@ -218,7 +217,6 @@ paths:
           schema:
             type: boolean
             const: false
-          example: false
           examples:
             Example1:
               value: false
@@ -226,10 +224,10 @@ paths:
           in: query
           required: false
           schema:
-            type: boolean
+            type:
+              - boolean
+              - 'null'
             const: false
-            nullable: true
-          example: false
           examples:
             Example1:
               value: false
@@ -238,7 +236,6 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/AliasToStream'
-          example: false
           examples:
             Example1:
               value: false
@@ -246,15 +243,15 @@ paths:
           in: query
           required: false
           schema:
-            $ref: '#/components/schemas/AliasToStream'
-            nullable: true
-          example: false
+            anyOf:
+              - $ref: '#/components/schemas/AliasToStream'
+              - type: 'null'
           examples:
             Example1:
               value: false
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -273,7 +270,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -310,10 +307,12 @@ components:
       properties:
         message:
           type: string
-          example: The weather is sunny
+          examples:
+            - The weather is sunny
         status:
           type: integer
-          example: 200
+          examples:
+            - 200
         success:
           type: boolean
           const: true
@@ -349,8 +348,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - customName
+              const: customName
             value:
               type: string
           required:
@@ -359,8 +357,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - defaultName
+              const: defaultName
             value:
               type: string
               const: Bob
@@ -370,8 +367,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - george
+              const: george
             value:
               type: boolean
           required:
@@ -380,8 +376,7 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - literalGeorge
+              const: literalGeorge
             value:
               type: boolean
               const: true
@@ -419,7 +414,8 @@ components:
           const: You are a helpful assistant
         query:
           type: string
-          example: What is the weather today
+          examples:
+            - What is the weather today
         stream:
           type: boolean
           const: false
@@ -429,8 +425,9 @@ components:
         context:
           $ref: '#/components/schemas/SomeLiteral'
         maybeContext:
-          $ref: '#/components/schemas/SomeLiteral'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/SomeLiteral'
+            - type: 'null'
         containerObject:
           $ref: '#/components/schemas/ContainerObject'
       required:

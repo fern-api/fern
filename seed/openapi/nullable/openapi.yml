@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: nullable
-  version: ''
+  version: 0.0.0
 paths:
   /users:
     get:
@@ -15,39 +15,44 @@ paths:
           schema:
             type: array
             items:
-              type: string
-              nullable: true
+              type:
+                - string
+                - 'null'
         - name: avatar
           in: query
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
         - name: activated
           in: query
           required: false
           schema:
             type: array
             items:
-              type: boolean
-              nullable: true
+              type:
+                - boolean
+                - 'null'
         - name: tags
           in: query
           required: false
           schema:
             type: array
             items:
-              type: string
-              nullable: true
+              type:
+                - string
+                - 'null'
         - name: extra
           in: query
           required: false
           schema:
-            type: boolean
-            nullable: true
+            type:
+              - boolean
+              - 'null'
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -61,7 +66,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -76,16 +81,19 @@ paths:
                 username:
                   type: string
                 tags:
-                  type: array
+                  type:
+                    - array
+                    - 'null'
                   items:
                     type: string
-                  nullable: true
                 metadata:
-                  $ref: '#/components/schemas/Metadata'
-                  nullable: true
+                  anyOf:
+                    - $ref: '#/components/schemas/Metadata'
+                    - type: 'null'
                 avatar:
-                  type: string
-                  nullable: true
+                  type:
+                    - string
+                    - 'null'
               required:
                 - username
     delete:
@@ -95,7 +103,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -108,17 +116,19 @@ paths:
               type: object
               properties:
                 username:
-                  type: string
+                  type:
+                    - string
+                    - 'null'
                   minLength: 2
                   maxLength: 1024
-                  nullable: true
                   description: The user to delete.
 components:
   schemas:
     Email:
       title: Email
-      type: string
-      nullable: true
+      type:
+        - string
+        - 'null'
     UserId:
       title: UserId
       type: string
@@ -126,11 +136,13 @@ components:
       title: WeirdNumber
       oneOf:
         - type: integer
-        - type: integer
+        - type:
+            - integer
+            - 'null'
           format: float
-          nullable: true
-        - type: string
-          nullable: true
+        - type:
+            - string
+            - 'null'
         - type: number
           format: double
     User:
@@ -142,26 +154,29 @@ components:
         id:
           $ref: '#/components/schemas/UserId'
         tags:
-          type: array
+          type:
+            - array
+            - 'null'
           items:
             type: string
-          nullable: true
         metadata:
-          $ref: '#/components/schemas/Metadata'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/Metadata'
+            - type: 'null'
         email:
           $ref: '#/components/schemas/Email'
         favorite-number:
           $ref: '#/components/schemas/WeirdNumber'
         numbers:
-          type: array
+          type:
+            - array
+            - 'null'
           items:
             type: integer
-          nullable: true
         strings:
-          type: object
-          additionalProperties: true
-          nullable: true
+          type:
+            - object
+            - 'null'
       required:
         - name
         - id
@@ -175,32 +190,31 @@ components:
           properties:
             type:
               type: string
-              enum:
-                - active
+              const: active
           required:
             - type
         - type: object
           properties:
             type:
               type: string
-              enum:
-                - archived
+              const: archived
             value:
-              type: string
+              type:
+                - string
+                - 'null'
               format: date-time
-              nullable: true
           required:
             - type
         - type: object
           properties:
             type:
               type: string
-              enum:
-                - soft-deleted
+              const: soft-deleted
             value:
-              type: string
+              type:
+                - string
+                - 'null'
               format: date-time
-              nullable: true
           required:
             - type
     Metadata:
@@ -214,19 +228,23 @@ components:
           type: string
           format: date-time
         avatar:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         activated:
-          type: boolean
-          nullable: true
+          type:
+            - boolean
+            - 'null'
         status:
           $ref: '#/components/schemas/Status'
         values:
-          type: object
+          type:
+            - object
+            - 'null'
           additionalProperties:
-            type: string
-            nullable: true
-          nullable: true
+            type:
+              - string
+              - 'null'
       required:
         - createdAt
         - updatedAt

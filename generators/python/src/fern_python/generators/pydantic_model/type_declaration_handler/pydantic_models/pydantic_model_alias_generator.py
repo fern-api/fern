@@ -12,6 +12,7 @@ from fern_python.generators.pydantic_model.type_declaration_handler.type_utiliti
     declared_type_name_to_named_type,
 )
 from fern_python.snippet import SnippetWriter
+from fern_python.utils import resolve_name
 
 import fern.ir.resources as ir_types
 
@@ -100,7 +101,7 @@ class PydanticModelAliasGenerator(AbstractAliasGenerator):
                 nullable=self._get_builder_name,
                 literal=lambda _: "from_string",
             ),
-            named=lambda type_name: "from_" + type_name.name.snake_case.unsafe_name,
+            named=lambda type_name: "from_" + resolve_name(type_name.name).snake_case.unsafe_name,
             primitive=lambda primitive: primitive.v_1.visit(
                 integer=lambda: "from_int",
                 double=lambda: "from_float",
@@ -130,7 +131,7 @@ class PydanticModelAliasGenerator(AbstractAliasGenerator):
                 nullable=self._get_getter_name,
                 literal=lambda _: "get_as_string",
             ),
-            named=lambda type_name: "get_as_" + type_name.name.snake_case.unsafe_name,
+            named=lambda type_name: "get_as_" + resolve_name(type_name.name).snake_case.unsafe_name,
             primitive=lambda primitive: primitive.v_1.visit(
                 integer=lambda: "get_as_int",
                 double=lambda: "get_as_float",

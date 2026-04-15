@@ -57,6 +57,11 @@ export interface AutoVersionResult {
      * Used by automation mode to detect breaking changes (MAJOR = breaking).
      */
     versionBump?: string;
+    /**
+     * The previous SDK version before this change (e.g., "1.2.3").
+     * Used for version header in PR body ("1.2.3 → 1.3.0").
+     */
+    previousVersion?: string;
 }
 
 /**

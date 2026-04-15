@@ -6,11 +6,10 @@ import typing
 from collections import defaultdict
 
 import typing_extensions
+from .datetime_utils import serialize_datetime
 
 import pydantic
 from pydantic.fields import FieldInfo as _FieldInfo
-
-from .datetime_utils import serialize_datetime
 
 IS_PYDANTIC_V2 = pydantic.VERSION.startswith("2.")
 
@@ -40,23 +39,33 @@ if IS_PYDANTIC_V2:
     def is_union(tp: typing.Optional[typing.Type[typing.Any]]) -> bool:  # type: ignore[misc]
         return tp is typing.Union or typing_extensions.get_origin(tp) is typing.Union  # type: ignore[comparison-overlap]
 
-    from pydantic.fields import FieldInfo as ModelField  # type: ignore[no-redef, assignment]
-
     import re as _re
     from collections import deque as _deque
     from decimal import Decimal as _Decimal
     from enum import Enum as _Enum
     from ipaddress import (
         IPv4Address as _IPv4Address,
+    )
+    from ipaddress import (
         IPv4Interface as _IPv4Interface,
+    )
+    from ipaddress import (
         IPv4Network as _IPv4Network,
+    )
+    from ipaddress import (
         IPv6Address as _IPv6Address,
+    )
+    from ipaddress import (
         IPv6Interface as _IPv6Interface,
+    )
+    from ipaddress import (
         IPv6Network as _IPv6Network,
     )
     from pathlib import Path as _Path
     from types import GeneratorType as _GeneratorType
     from uuid import UUID as _UUID
+
+    from pydantic.fields import FieldInfo as ModelField  # type: ignore[no-redef, assignment]
 
     def _decimal_encoder(dec_value: typing.Any) -> typing.Any:
         if dec_value.as_tuple().exponent >= 0:

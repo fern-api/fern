@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: Schemaless Request Body Examples API
-  version: ''
+  version: 0.0.0
 paths:
   /plants:
     post:
@@ -52,7 +52,6 @@ paths:
           required: true
           schema:
             type: string
-          example: plantId
           examples:
             Example1:
               value: plantId
@@ -108,11 +107,13 @@ paths:
               type: object
               properties:
                 name:
-                  type: string
-                  nullable: true
+                  type:
+                    - string
+                    - 'null'
                 species:
-                  type: string
-                  nullable: true
+                  type:
+                    - string
+                    - 'null'
             examples:
               Example1:
                 value:
@@ -125,29 +126,35 @@ components:
       type: object
       properties:
         id:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         name:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
     UpdatePlantResponse:
       title: UpdatePlantResponse
       type: object
       properties:
         id:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         name:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
     CreatePlantWithSchemaResponse:
       title: CreatePlantWithSchemaResponse
       type: object
       properties:
         id:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         name:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
   securitySchemes: {}

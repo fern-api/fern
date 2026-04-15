@@ -1,11 +1,10 @@
 import { createOrganizationIfDoesNotExist } from "@fern-api/auth";
 import { createVenusService } from "@fern-api/core";
+import { CliError } from "@fern-api/task-context";
 import type { Argv } from "yargs";
-
 import { TaskContextAdapter } from "../../../context/adapter/TaskContextAdapter.js";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
-import { CliError } from "../../../errors/CliError.js";
 import { Icons } from "../../../ui/format.js";
 import { command } from "../../_internal/command.js";
 
@@ -42,24 +41,32 @@ export class TokenCommand {
         response.error._visit({
             organizationNotFoundError: () => {
                 process.stderr.write(`${Icons.error} Organization "${orgId}" was not found.\n`);
-                throw CliError.exit();
+                throw new CliError({
+                    code: CliError.Code.ConfigError
+                });
             },
             unauthorizedError: () => {
                 process.stderr.write(`${Icons.error} You do not have access to organization "${orgId}".\n`);
-                throw CliError.exit();
+                throw new CliError({
+                    code: CliError.Code.AuthError
+                });
             },
             missingOrgPermissionsError: () => {
                 process.stderr.write(
                     `${Icons.error} You do not have the required permissions in organization "${orgId}".\n`
                 );
-                throw CliError.exit();
+                throw new CliError({
+                    code: CliError.Code.AuthError
+                });
             },
             _other: () => {
                 process.stderr.write(
                     `${Icons.error} Failed to generate token.\n` +
                         `\n  Please contact support@buildwithfern.com for assistance.\n`
                 );
-                throw CliError.exit();
+                throw new CliError({
+                    code: CliError.Code.InternalError
+                });
             }
         });
     }
@@ -76,7 +83,7 @@ export class TokenCommand {
                 `${Icons.error} No organization specified.\n` +
                     `\n  Run fern init or specify an organization with --org, then run this command again.\n`
             );
-            throw CliError.exit();
+            throw new CliError({ code: CliError.Code.ConfigError });
         }
     }
 }

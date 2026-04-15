@@ -1,10 +1,11 @@
+import { CliError } from "@fern-api/task-context";
+
 import chalk from "chalk";
 import type { Argv } from "yargs";
 import { ApiChecker } from "../../api/checker/ApiChecker.js";
 import type { Context } from "../../context/Context.js";
 import type { GlobalArgs } from "../../context/GlobalArgs.js";
 import { DocsChecker } from "../../docs/checker/DocsChecker.js";
-import { CliError } from "../../errors/CliError.js";
 import { SdkChecker } from "../../sdk/checker/SdkChecker.js";
 import { Icons } from "../../ui/format.js";
 import type { Workspace } from "../../workspace/Workspace.js";
@@ -45,14 +46,14 @@ export class CheckCommand {
             const response = this.buildJsonResponse({ apiCheckResult, sdkCheckResult, docsCheckResult, hasErrors });
             context.stdout.info(JSON.stringify(response, null, 2));
             if (hasErrors) {
-                throw CliError.exit();
+                throw new CliError({ code: CliError.Code.ValidationError });
             }
             return;
         }
 
         // Fail if there are errors, or if strict mode and there are warnings.
         if (hasErrors) {
-            throw CliError.exit();
+            throw new CliError({ code: CliError.Code.ValidationError });
         }
 
         if (totalWarnings > 0) {
@@ -158,7 +159,8 @@ export class CheckCommand {
         if (args.api != null && workspace.apis[args.api] == null) {
             const availableApis = Object.keys(workspace.apis).join(", ");
             throw new CliError({
-                message: `API '${args.api}' not found. Available APIs: ${availableApis}`
+                message: `API '${args.api}' not found. Available APIs: ${availableApis}`,
+                code: CliError.Code.ConfigError
             });
         }
     }

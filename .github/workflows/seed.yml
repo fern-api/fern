@@ -110,6 +110,7 @@ jobs:
       rust-model: ${{ steps.create-dynamic-matrix.outputs.rust-model-test-matrix }}
       rust-sdk: ${{ steps.create-dynamic-matrix.outputs.rust-sdk-test-matrix }}
       benchmark-generators: ${{ steps.create-dynamic-matrix.outputs.benchmark-generators }}
+      benchmark-docs: ${{ steps.create-dynamic-matrix.outputs.benchmark-docs }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6
@@ -294,6 +295,32 @@ jobs:
           else
             echo "benchmark-generators=$BENCHMARK_LIST" >> $GITHUB_OUTPUT
             echo "Benchmark generators: $BENCHMARK_LIST"
+          fi
+
+          # Detect if docs-related code changed for docs benchmarking.
+          # Docs benchmarks run when core/shared packages change (ALL_GENERATORS_AFFECTED)
+          # or when docs-specific packages are modified.
+          DOCS_AFFECTED=false
+          if [[ "$ALL_GENERATORS_AFFECTED" == "true" ]]; then
+            DOCS_AFFECTED=true
+          else
+            DOCS_PATHS="packages/cli/docs-resolver packages/cli/remote-workspace-runner packages/cli/docs-validator packages/cli/configuration-loader packages/cli/cli/src/commands/generate/generateDocsWorkspace benchmarks/fern/docs.yml benchmarks/fern/pages/template.md benchmarks/fern/generate-fixture-pages.sh benchmarks/fern/generate-fixture-versions.sh benchmarks/fern/api-versions.txt .github/actions/run-docs-benchmark"
+            MERGE_BASE=$(git merge-base HEAD origin/main 2>/dev/null || echo "HEAD~1")
+            CHANGED_FILES=$(git diff --name-only "$MERGE_BASE" HEAD 2>/dev/null || echo "")
+            for DPATH in $DOCS_PATHS; do
+              if echo "$CHANGED_FILES" | grep -q "^${DPATH}"; then
+                DOCS_AFFECTED=true
+                break
+              fi
+            done
+          fi
+
+          if [[ "$DOCS_AFFECTED" == "true" ]]; then
+            echo "benchmark-docs=true" >> $GITHUB_OUTPUT
+            echo "Docs benchmark: affected"
+          else
+            echo "benchmark-docs=" >> $GITHUB_OUTPUT
+            echo "Docs benchmark: not affected"
           fi
 
   ruby-sdk-v2:
@@ -823,7 +850,7 @@ jobs:
     if: >-
       ${{
         github.event_name == 'pull_request'
-        && needs.get-all-test-matrices.outputs.benchmark-generators != ''
+        && (needs.get-all-test-matrices.outputs.benchmark-generators != '' || needs.get-all-test-matrices.outputs.benchmark-docs != '')
         && github.event.pull_request.draft == false
       }}
     steps:
@@ -833,6 +860,7 @@ jobs:
           sparse-checkout: |
             .github/actions/fetch-benchmark-specs
             benchmarks/fern/apis
+            benchmarks/fern/api-versions.txt
 
       - name: Fetch benchmark OpenAPI specs
         uses: ./.github/actions/fetch-benchmark-specs
@@ -1124,6 +1152,219 @@ jobs:
             done < "$f"
           done
           echo "PostHog PR metrics: ${SENT} sent, ${FAILED} failed"
+
+  # ---------------------------------------------------------------------------
+  # Docs Generation Benchmark (PR)
+  # ---------------------------------------------------------------------------
+  # Runs the real `fern generate --docs --preview` command against the benchmark
+  # fixture and measures wall-clock time, same philosophy as SDK benchmarks.
+  docs-benchmark:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    needs: [get-all-test-matrices, benchmark-setup]
+    if: >-
+      ${{
+        github.event_name == 'pull_request'
+        && needs.get-all-test-matrices.outputs.benchmark-docs != ''
+        && github.event.pull_request.draft == false
+      }}
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v6
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Download shared specs
+        uses: actions/download-artifact@v4
+        with:
+          name: benchmark-specs
+          path: benchmarks/fern/apis
+
+      - name: Run docs benchmark (PR branch)
+        uses: ./.github/actions/run-docs-benchmark
+        with:
+          fern-token: ${{ secrets.FERN_FERN_TOKEN }}
+
+      - name: Upload PR docs benchmark results
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-pr-docs
+          path: benchmark-results/
+          retention-days: 5
+
+  docs-benchmark-report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: [docs-benchmark]
+    if: >-
+      ${{
+        always() && !cancelled()
+        && github.event_name == 'pull_request'
+        && needs.docs-benchmark.result != 'skipped'
+      }}
+    permissions:
+      pull-requests: write
+      actions: read
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+        with:
+          sparse-checkout: .github/scripts
+
+      - name: Download PR docs benchmark artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: benchmark-pr-docs
+          path: docs-pr-results
+          merge-multiple: true
+
+      - name: Download docs baseline from latest nightly artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          mkdir -p docs-baseline-results
+
+          # Find the latest successful run of benchmark-baseline.yml on main
+          LATEST_RUN=$(gh api "repos/${{ github.repository }}/actions/workflows/benchmark-baseline.yml/runs?status=success&per_page=1&branch=main" \
+            --jq '.workflow_runs[0]' 2>/dev/null || true)
+
+          if [ -z "$LATEST_RUN" ] || [ "$LATEST_RUN" = "null" ]; then
+            echo "::warning::No successful nightly baseline run found. Report will show N/A for main timings."
+            exit 0
+          fi
+
+          RUN_ID=$(echo "$LATEST_RUN" | jq -r '.id')
+          RUN_DATE=$(echo "$LATEST_RUN" | jq -r '.created_at')
+          echo "Using baseline from nightly run ${RUN_ID} (${RUN_DATE})"
+
+          echo "{\"latest_timestamp\":\"${RUN_DATE}\",\"run_id\":\"${RUN_ID}\"}" \
+            > docs-baseline-results/_metadata.json
+
+          # Download docs baseline artifact
+          gh run download "$RUN_ID" --repo "${{ github.repository }}" --pattern "benchmark-docs-baseline" --dir /tmp/docs-baseline/ 2>/dev/null || true
+          for f in /tmp/docs-baseline/*/*.jsonl /tmp/docs-baseline/*.jsonl; do
+            [ -f "$f" ] && cp "$f" docs-baseline-results/
+          done
+
+          if ! ls docs-baseline-results/*.jsonl 1>/dev/null 2>&1; then
+            echo "::warning::No docs baseline artifacts found in run ${RUN_ID}."
+            rm -f docs-baseline-results/_metadata.json
+          else
+            echo "Docs baseline artifacts downloaded successfully"
+          fi
+
+      - name: Generate docs benchmark report
+        id: report
+        shell: bash
+        run: |
+          BASELINE_TS=""
+          if [ -f docs-baseline-results/_metadata.json ]; then
+            BASELINE_TS=$(cat docs-baseline-results/_metadata.json | jq -r '.latest_timestamp // empty')
+          fi
+          export BASELINE_TIMESTAMP="$BASELINE_TS"
+
+          REPORT=$(bash .github/scripts/format-docs-benchmark-report.sh \
+            docs-pr-results \
+            docs-baseline-results)
+          printf '%s\n' "$REPORT" > docs-benchmark-comment.md
+          echo "Generated docs benchmark report"
+
+      - name: Post or update PR comment
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          SENTINEL="<!-- fern-docs-benchmark-results -->"
+          BODY=$(cat docs-benchmark-comment.md)
+
+          # Search existing comments for the sentinel marker
+          COMMENT_ID=$(gh api "repos/${REPO}/issues/${PR_NUMBER}/comments" \
+            --paginate --jq '.[] | select(.body | contains("'"${SENTINEL}"'")) | .id' \
+            | head -n1)
+
+          if [ -n "$COMMENT_ID" ]; then
+            echo "Updating existing docs benchmark comment ${COMMENT_ID}"
+            gh api "repos/${REPO}/issues/comments/${COMMENT_ID}" \
+              --method PATCH \
+              --input <(jq -n --arg body "$BODY" '{"body": $body}')
+          else
+            echo "Creating new docs benchmark comment"
+            gh api "repos/${REPO}/issues/${PR_NUMBER}/comments" \
+              --method POST \
+              --input <(jq -n --arg body "$BODY" '{"body": $body}')
+          fi
+
+      - name: Send PR docs benchmark events to PostHog
+        shell: bash
+        env:
+          POSTHOG_API_KEY: ${{ secrets.POSTHOG_API_KEY }}
+          PR_BRANCH: ${{ github.head_ref }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_SHA: ${{ github.event.pull_request.head.sha }}
+          RUN_ID: ${{ github.run_id }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          if [ -z "$POSTHOG_API_KEY" ]; then
+            echo "::notice::POSTHOG_API_KEY not set, skipping PR docs benchmark metrics"
+            exit 0
+          fi
+          TIMESTAMP=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+          SENT=0
+          FAILED=0
+          for f in docs-pr-results/*.jsonl; do
+            [ -f "$f" ] || continue
+            while IFS= read -r line; do
+              spec=$(echo "$line" | jq -r '.spec')
+              dur=$(echo "$line" | jq -r '.duration_seconds')
+              ec=$(echo "$line" | jq -r '.exit_code // 0')
+              skip=$(echo "$line" | jq -r '.skipped // false')
+              payload=$(jq -n \
+                --arg api_key "$POSTHOG_API_KEY" \
+                --arg event "benchmark-pr-result" \
+                --arg distinct_id "fern-ci-benchmark" \
+                --arg timestamp "$TIMESTAMP" \
+                --arg spec "$spec" \
+                --argjson duration_seconds "$dur" \
+                --argjson exit_code "$ec" \
+                --argjson skipped "$skip" \
+                --arg mode "docs" \
+                --arg branch "$PR_BRANCH" \
+                --argjson pr_number "$PR_NUMBER" \
+                --arg commit_sha "$PR_SHA" \
+                --arg run_id "$RUN_ID" \
+                --arg run_url "$RUN_URL" \
+                '{
+                  api_key: $api_key,
+                  event: $event,
+                  distinct_id: $distinct_id,
+                  timestamp: $timestamp,
+                  properties: {
+                    spec: $spec,
+                    duration_seconds: $duration_seconds,
+                    exit_code: $exit_code,
+                    skipped: $skipped,
+                    mode: $mode,
+                    branch: $branch,
+                    pr_number: $pr_number,
+                    commit_sha: $commit_sha,
+                    run_id: $run_id,
+                    run_url: $run_url
+                  }
+                }')
+              if ! curl -sf --max-time 10 -X POST https://us.i.posthog.com/capture/ \
+                -H "Content-Type: application/json" \
+                -d "$payload" 2>/dev/null; then
+                FAILED=$((FAILED + 1))
+              else
+                SENT=$((SENT + 1))
+              fi
+            done < "$f"
+          done
+          echo "PostHog PR docs metrics: ${SENT} sent, ${FAILED} failed"
 
   # Round up all tests into job with defined name for PR merge requirements
   seed-test-results:

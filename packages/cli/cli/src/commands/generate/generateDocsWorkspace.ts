@@ -7,8 +7,8 @@ import { askToLogin } from "@fern-api/login";
 import { validateOSSWorkspace } from "@fern-api/oss-validator";
 import { Project } from "@fern-api/project-loader";
 import { runRemoteGenerationForDocsWorkspace } from "@fern-api/remote-workspace-runner";
+import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
-
 import { CliContext } from "../../cli-context/CliContext.js";
 import { detectCISource, detectDeployerAuthor, isCI } from "../../utils/environment.js";
 import { validateDocsWorkspaceAndLogIssues } from "../validate/validateDocsWorkspaceAndLogIssues.js";
@@ -52,7 +52,10 @@ function buildPreviewDomain({ orgId, previewId }: { orgId: string; previewId: st
 
     const minIdLength = 8;
     if (availableSpace < minIdLength) {
-        throw new Error(`Organization name "${orgId}" is too long to generate a valid preview URL`);
+        throw new CliError({
+            message: `Organization name "${orgId}" is too long to generate a valid preview URL`,
+            code: CliError.Code.InternalError
+        });
     }
 
     const truncatedId = sanitizedId.slice(0, availableSpace).replace(/-+$/, "");
@@ -86,7 +89,9 @@ export async function generateDocsWorkspace({
 }): Promise<void> {
     const docsWorkspace = project.docsWorkspaces;
     if (docsWorkspace == null) {
-        cliContext.failAndThrow("No docs.yml file found. Please make sure your project has one.");
+        cliContext.failAndThrow("No docs.yml file found. Please make sure your project has one.", undefined, {
+            code: CliError.Code.ConfigError
+        });
         return;
     }
     const hasFdrOriginOverride = !!process.env["FERN_FDR_ORIGIN"] || !!process.env["OVERRIDE_FDR_ORIGIN"];
@@ -110,7 +115,9 @@ export async function generateDocsWorkspace({
         const fernToken = await getToken();
         if (!fernToken) {
             cliContext.failAndThrow(
-                "No token found. Please set the FERN_TOKEN environment variable or run `fern login`."
+                "No token found. Please set the FERN_TOKEN environment variable or run `fern login`.",
+                undefined,
+                { code: CliError.Code.AuthError }
             );
             return;
         }
@@ -176,7 +183,9 @@ export async function generateDocsWorkspace({
                 }
                 context.failAndThrow(
                     `OpenAPI spec validation failed with ${errors.length} error${errors.length !== 1 ? "s" : ""}. ` +
-                        "Fix the errors above before generating docs."
+                        "Fix the errors above before generating docs.",
+                    undefined,
+                    { code: CliError.Code.ValidationError }
                 );
             }
         }

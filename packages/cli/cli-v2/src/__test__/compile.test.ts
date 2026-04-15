@@ -1,10 +1,11 @@
 import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
+import { CliError } from "@fern-api/task-context";
+
 import { randomUUID } from "crypto";
 import { readFile, rm } from "fs/promises";
 import { join } from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { CompileCommand } from "../commands/api/compile/command.js";
-import { CliError } from "../errors/CliError.js";
 import { createTestContextWithCapture } from "./utils/createTestContext.js";
 
 const FIXTURES_DIR = AbsoluteFilePath.of(join(__dirname, "fixtures"));

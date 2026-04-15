@@ -107,6 +107,17 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
     private allTypeClassReferences?: Map<string, Set<Namespace>>;
     private readOnlyMemoryTypes: Set<PrimitiveTypeV1>;
 
+    /**
+     * Lazily-initialized map from inline typeId to its immediate parent typeId.
+     * Built by scanning all type declarations' properties/members for references to inline types.
+     */
+    private _inlineTypeParentMap?: Map<TypeId, TypeId>;
+
+    /**
+     * Lazily-initialized map from parent typeId to the set of its direct inline child typeIds.
+     */
+    private _inlineTypeChildrenMap?: Map<TypeId, Set<TypeId>>;
+
     /** Provides access to C# code generation utilities */
     public get csharp(): Generation["csharp"] {
         return this.generation.csharp;
@@ -844,6 +855,300 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
             }),
             protobufService
         };
+    }
+
+    /**
+     * Extracts all named TypeIds referenced from a TypeReference,
+     * recursing into containers (list, set, map, optional, nullable)
+     * and following alias chains to find transitively-referenced types.
+     */
+    private extractNamedTypeIdsFromTypeReference(typeRef: TypeReference, visited?: Set<TypeId>): TypeId[] {
+        switch (typeRef.type) {
+            case "named": {
+                const ids: TypeId[] = [typeRef.typeId];
+                // Follow alias chains so that types referenced through aliases
+                // are also discovered (needed for inline type parent assignment).
+                // Track visited type IDs to prevent infinite recursion on circular aliases.
+                const decl = this.ir.types[typeRef.typeId];
+                if (decl?.shape.type === "alias") {
+                    const visitedSet = visited ?? new Set<TypeId>();
+                    if (!visitedSet.has(typeRef.typeId)) {
+                        visitedSet.add(typeRef.typeId);
+                        ids.push(...this.extractNamedTypeIdsFromTypeReference(decl.shape.aliasOf, visitedSet));
+                    }
+                }
+                return ids;
+            }
+            case "container":
+                switch (typeRef.container.type) {
+                    case "list":
+                        return this.extractNamedTypeIdsFromTypeReference(typeRef.container.list, visited);
+                    case "set":
+                        return this.extractNamedTypeIdsFromTypeReference(typeRef.container.set, visited);
+                    case "map":
+                        return [
+                            ...this.extractNamedTypeIdsFromTypeReference(typeRef.container.keyType, visited),
+                            ...this.extractNamedTypeIdsFromTypeReference(typeRef.container.valueType, visited)
+                        ];
+                    case "optional":
+                        return this.extractNamedTypeIdsFromTypeReference(typeRef.container.optional, visited);
+                    case "nullable":
+                        return this.extractNamedTypeIdsFromTypeReference(typeRef.container.nullable, visited);
+                    case "literal":
+                        return [];
+                    default:
+                        return [];
+                }
+            case "primitive":
+            case "unknown":
+                return [];
+            default:
+                return [];
+        }
+    }
+
+    /**
+     * Builds the inline type parent and children maps by scanning all type declarations.
+     * For each non-alias type, finds named references to inline types in its properties/members
+     * (following alias chains). An inline type is only inlined if exactly one non-alias type
+     * references it; otherwise it stays top-level to avoid broken cross-references.
+     */
+    private buildInlineTypeMaps(): void {
+        if (this._inlineTypeParentMap != null) {
+            return;
+        }
+        const parentMap = new Map<TypeId, TypeId>();
+        const childrenMap = new Map<TypeId, Set<TypeId>>();
+
+        // First pass: for each non-alias type, collect all inline types it references
+        // (following alias chains). Track how many non-alias types reference each inline type.
+        const inlineTypeReferencers = new Map<TypeId, Set<TypeId>>();
+
+        for (const [typeId, typeDeclaration] of Object.entries(this.ir.types)) {
+            // Skip alias types as potential parents since they don't generate class files.
+            if (typeDeclaration.shape.type === "alias") {
+                continue;
+            }
+
+            const referencedTypeIds: TypeId[] = [];
+
+            typeDeclaration.shape._visit({
+                alias: () => {
+                    // Already filtered above, but required by visitor
+                },
+                object: (otd) => {
+                    for (const property of [...otd.properties, ...(otd.extendedProperties ?? [])]) {
+                        referencedTypeIds.push(...this.extractNamedTypeIdsFromTypeReference(property.valueType));
+                    }
+                },
+                enum: () => {
+                    // Enums don't reference other types
+                },
+                union: (utd) => {
+                    for (const unionType of utd.types) {
+                        unionType.shape._visit({
+                            samePropertiesAsObject: (declaredTypeName) => {
+                                referencedTypeIds.push(declaredTypeName.typeId);
+                            },
+                            singleProperty: (singleProperty) => {
+                                referencedTypeIds.push(
+                                    ...this.extractNamedTypeIdsFromTypeReference(singleProperty.type)
+                                );
+                            },
+                            noProperties: () => {
+                                // No-op: no types to reference
+                            },
+                            _other: () => {
+                                // Unknown union types are ignored
+                            }
+                        });
+                    }
+                    for (const baseProp of utd.baseProperties) {
+                        referencedTypeIds.push(...this.extractNamedTypeIdsFromTypeReference(baseProp.valueType));
+                    }
+                },
+                undiscriminatedUnion: (uutd) => {
+                    for (const member of uutd.members) {
+                        referencedTypeIds.push(...this.extractNamedTypeIdsFromTypeReference(member.type));
+                    }
+                },
+                _other: () => {
+                    // Unknown shape types are ignored
+                }
+            });
+
+            for (const refTypeId of referencedTypeIds) {
+                const refDeclaration = this.ir.types[refTypeId];
+                if (refDeclaration?.inline === true) {
+                    if (!inlineTypeReferencers.has(refTypeId)) {
+                        inlineTypeReferencers.set(refTypeId, new Set());
+                    }
+                    inlineTypeReferencers.get(refTypeId)?.add(typeId);
+                }
+            }
+        }
+
+        // Second pass: only inline types referenced by exactly one non-alias parent
+        // can be safely nested. Types referenced by multiple parents stay top-level.
+        for (const [inlineTypeId, referencers] of inlineTypeReferencers) {
+            if (referencers.size === 1) {
+                const parentTypeId = [...referencers][0];
+                if (parentTypeId != null) {
+                    parentMap.set(inlineTypeId, parentTypeId);
+                    if (!childrenMap.has(parentTypeId)) {
+                        childrenMap.set(parentTypeId, new Set());
+                    }
+                    childrenMap.get(parentTypeId)?.add(inlineTypeId);
+                }
+            }
+        }
+
+        // Third pass: validate that every parent in the chain will actually be generated
+        // as a class file. If a parent is itself inline (in the IR) but has no parent in
+        // the map (orphaned inline — e.g. only referenced from an endpoint request body),
+        // then it won't be generated, so its children can't be nested inside it either.
+        // Recursively remove such orphaned subtrees from the maps.
+        const orphanedParents = new Set<TypeId>();
+        for (const [inlineTypeId, parentTypeId] of parentMap) {
+            let currentParent: TypeId | undefined = parentTypeId;
+            const visitedInChain = new Set<TypeId>();
+            while (currentParent != null) {
+                if (visitedInChain.has(currentParent)) {
+                    // Cycle detected — treat as orphaned since no non-inline root exists
+                    orphanedParents.add(currentParent);
+                    break;
+                }
+                visitedInChain.add(currentParent);
+                const currentParentDeclaration = this.ir.types[currentParent];
+                if (currentParentDeclaration?.inline === true && !parentMap.has(currentParent)) {
+                    // This parent is inline but has no parent itself — it's orphaned
+                    orphanedParents.add(currentParent);
+                    break;
+                }
+                // Walk up the chain
+                currentParent = parentMap.get(currentParent);
+            }
+        }
+
+        if (orphanedParents.size > 0) {
+            // Remove all inline types whose ancestor chain includes an orphaned parent
+            const toRemove = new Set<TypeId>();
+            const collectOrphanedDescendants = (typeId: TypeId) => {
+                toRemove.add(typeId);
+                const children = childrenMap.get(typeId);
+                if (children) {
+                    for (const childId of children) {
+                        collectOrphanedDescendants(childId);
+                    }
+                }
+            };
+            for (const orphanedParent of orphanedParents) {
+                // Also collect the orphaned parent itself so it is removed from the maps
+                collectOrphanedDescendants(orphanedParent);
+            }
+            for (const typeId of toRemove) {
+                const parent = parentMap.get(typeId);
+                if (parent != null) {
+                    childrenMap.get(parent)?.delete(typeId);
+                }
+                parentMap.delete(typeId);
+                childrenMap.delete(typeId);
+            }
+        }
+
+        this._inlineTypeParentMap = parentMap;
+        this._inlineTypeChildrenMap = childrenMap;
+    }
+
+    /**
+     * Returns the map from inline typeId to its immediate parent typeId.
+     */
+    public getInlineTypeParentMap(): Map<TypeId, TypeId> {
+        this.buildInlineTypeMaps();
+        // buildInlineTypeMaps always initializes the maps, so this is safe after the call
+        return this._inlineTypeParentMap ?? new Map();
+    }
+
+    /**
+     * Returns the map from parent typeId to the set of its direct inline child typeIds.
+     */
+    public getInlineTypeChildrenMap(): Map<TypeId, Set<TypeId>> {
+        this.buildInlineTypeMaps();
+        // buildInlineTypeMaps always initializes the maps, so this is safe after the call
+        return this._inlineTypeChildrenMap ?? new Map();
+    }
+
+    /**
+     * Returns true if the given typeId is an inline type AND the inline-types feature is enabled.
+     */
+    public isInlineType(typeId: TypeId): boolean {
+        if (!this.settings.enableInlineTypes) {
+            return false;
+        }
+        // A type is only treated as inline if it has a parent in the map.
+        // Types marked inline in the IR but referenced by multiple non-alias parents
+        // cannot be safely nested, so they stay top-level.
+        return this.getInlineTypeParentMap().has(typeId);
+    }
+
+    /**
+     * Returns the immediate parent typeId for an inline type, or undefined if not inline.
+     */
+    public getInlineTypeParent(typeId: TypeId): TypeId | undefined {
+        if (!this.settings.enableInlineTypes) {
+            return undefined;
+        }
+        return this.getInlineTypeParentMap().get(typeId);
+    }
+
+    /**
+     * Returns the direct inline children of a type, or an empty set if none.
+     */
+    public getInlineTypeChildren(typeId: TypeId): Set<TypeId> {
+        if (!this.settings.enableInlineTypes) {
+            return new Set();
+        }
+        return this.getInlineTypeChildrenMap().get(typeId) ?? new Set();
+    }
+
+    /**
+     * Returns the name to use for the static nested `Types` class inside a parent type.
+     * Normally returns "Types", but if the parent type has a property whose PascalCase name
+     * is "Types", returns "InnerTypes" to avoid a C# naming collision.
+     */
+    public getInlineTypesClassName(typeId: TypeId): string {
+        const typeDeclaration = this.ir.types[typeId];
+        if (typeDeclaration == null) {
+            return "Types";
+        }
+        // Collect properties from both object types and union base properties
+        const properties =
+            typeDeclaration.shape.type === "object"
+                ? [...typeDeclaration.shape.properties, ...(typeDeclaration.shape.extendedProperties ?? [])]
+                : typeDeclaration.shape.type === "union"
+                  ? typeDeclaration.shape.baseProperties
+                  : [];
+        const propertyNames = new Set(properties.map((p) => this.case.pascalSafe(p.name)));
+
+        // Also check union variant struct names since discriminated unions generate
+        // nested structs for each variant (e.g. `public struct Status { }`).
+        if (typeDeclaration.shape.type === "union") {
+            for (const variant of typeDeclaration.shape.types) {
+                propertyNames.add(this.case.pascalSafe(variant.discriminantValue));
+            }
+        }
+
+        // Iteratively find a non-colliding name: Types → InnerTypes → InnerTypes2 → ...
+        let candidate = "Types";
+        if (propertyNames.has(candidate)) {
+            candidate = "InnerTypes";
+            let suffix = 2;
+            while (propertyNames.has(candidate)) {
+                candidate = `InnerTypes${suffix}`;
+                suffix++;
+            }
+        }
+        return candidate;
     }
 
     precalculate() {

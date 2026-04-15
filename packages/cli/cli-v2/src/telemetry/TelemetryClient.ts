@@ -107,7 +107,7 @@ export class TelemetryClient {
      * The caller is responsible for deciding which errors are worth reporting
      * (see `shouldReportToSentry` in withContext.ts).
      */
-    public captureException(error: unknown): void {
+    public captureException(error: unknown, { errorCode }: { errorCode: string }): void {
         if (this.sentry === undefined) {
             return;
         }
@@ -115,7 +115,7 @@ export class TelemetryClient {
             this.sentry.captureException(error, {
                 captureContext: {
                     user: { id: this.distinctId },
-                    tags: { ...this.baseTags, ...this.accumulatedTags }
+                    tags: { ...this.baseTags, ...this.accumulatedTags, "error.code": errorCode }
                 }
             });
         } catch {
@@ -126,7 +126,12 @@ export class TelemetryClient {
     public async flush(): Promise<void> {
         const promises: Promise<unknown>[] = [];
         if (this.posthog != null) {
-            promises.push(this.posthog.shutdown().catch(() => undefined));
+            promises.push(
+                Promise.race([
+                    this.posthog.shutdown().catch(() => undefined),
+                    new Promise<void>((resolve) => setTimeout(resolve, 3000))
+                ])
+            );
         }
         if (this.sentry !== undefined) {
             promises.push(Promise.resolve(this.sentry.flush(2000)).catch(() => undefined));

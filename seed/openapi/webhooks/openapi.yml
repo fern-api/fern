@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: webhooks
-  version: ''
+  version: 0.0.0
 paths: {}
 components:
   schemas:
@@ -59,8 +59,9 @@ components:
           type: number
           format: double
         reason:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
       required:
         - refundId
         - amount
