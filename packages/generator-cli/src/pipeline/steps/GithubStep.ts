@@ -199,7 +199,9 @@ export class GithubStep extends BaseStep {
         }
 
         const finalCommitMessage = this.config.commitMessage ?? "SDK Generation";
-        const changelogUrl = `https://github.com/${this.config.uri}/blob/${prBranch}/changelog.md`;
+        const changelogUrl = this.config.changelogEntry
+            ? `https://github.com/${this.config.uri}/blob/${prBranch}/changelog.md`
+            : undefined;
         const { prTitle, prBody } = parseCommitMessageForPR(
             finalCommitMessage,
             this.config.changelogEntry,
