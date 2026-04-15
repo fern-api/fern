@@ -102,6 +102,9 @@ public final class WeirdNumber {
             if (value instanceof Integer) {
                 return of((Integer) value);
             }
+            if (value instanceof Double) {
+                return of((Double) value);
+            }
             try {
                 return of2(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<Optional<Float>>() {}));
             } catch (RuntimeException e) {
@@ -109,9 +112,6 @@ public final class WeirdNumber {
             try {
                 return of3(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<Optional<String>>() {}));
             } catch (RuntimeException e) {
-            }
-            if (value instanceof Double) {
-                return of((Double) value);
             }
             throw new JsonParseException(p, "Failed to deserialize");
         }

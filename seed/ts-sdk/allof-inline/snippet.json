@@ -1,0 +1,60 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/rule-types",
+                "method": "GET",
+                "identifier_override": "endpoint_.searchRuleTypes"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/allof-inline\";\n\nconst client = new SeedApiClient;\nawait client.searchRuleTypes();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/rules",
+                "method": "POST",
+                "identifier_override": "endpoint_.createRule"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/allof-inline\";\n\nconst client = new SeedApiClient;\nawait client.createRule({\n    name: \"name\",\n    executionContext: \"prod\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_.listUsers"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/allof-inline\";\n\nconst client = new SeedApiClient;\nawait client.listUsers();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/entities",
+                "method": "GET",
+                "identifier_override": "endpoint_.getEntity"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/allof-inline\";\n\nconst client = new SeedApiClient;\nawait client.getEntity();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/organizations",
+                "method": "GET",
+                "identifier_override": "endpoint_.getOrganization"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/allof-inline\";\n\nconst client = new SeedApiClient;\nawait client.getOrganization();\n"
+            }
+        }
+    ],
+    "types": {}
+}

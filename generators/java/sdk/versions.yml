@@ -1,4 +1,32 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.2.1
+  changelogEntry:
+    - summary: |
+        Propagate the `as: "request"` context through discriminated and undiscriminated
+        union type conversion in the dynamic snippets generator. Literal-typed properties
+        (e.g., `method: literal<"card">`) are now correctly filtered from builder calls
+        inside union variants, matching the Java SDK builder which excludes literal
+        properties from setters. Fixes `cannot find symbol` compilation errors in
+        generated wire tests for types with literal discriminant fields.
+      type: fix
+    - summary: |
+        Fix undiscriminated union deserialization for `String | int` (and similar)
+        unions. Previously, `convertValue(Integer, String.class)` would silently coerce
+        integers to strings, causing the String variant to always win. Primitive
+        `instanceof` checks now run before `convertValue` branches so exact type matches
+        take precedence over lossy coercion.
+      type: fix
+    - summary: |
+        Fix wire test response assertions for several round-trip serialization quirks:
+        (1) allow explicit null fields in expected JSON to match missing fields in actual
+        (Jackson's `@JsonInclude(NON_ABSENT)` drops `Optional.empty()`); (2) normalize
+        timezone-less ISO 8601 datetimes in expected JSON to include the `Z` suffix
+        that Jackson adds on re-serialization. Unified the two recursive JSON
+        normalization passes into a single tree walk.
+      type: fix
+  createdAt: "2026-04-14"
+  irVersion: 66
+
 - version: 4.2.0
   changelogEntry:
     - summary: |

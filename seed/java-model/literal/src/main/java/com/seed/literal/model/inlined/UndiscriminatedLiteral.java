@@ -107,12 +107,12 @@ public final class UndiscriminatedLiteral {
     public UndiscriminatedLiteral deserialize(JsonParser p, DeserializationContext context) throws
         IOException {
       Object value = p.readValueAs(Object.class);
+      if (value instanceof Boolean) {
+        return of((Boolean) value);
+      }
       try {
         return of(ObjectMappers.JSON_MAPPER.convertValue(value, String.class));
       } catch(RuntimeException e) {
-      }
-      if (value instanceof Boolean) {
-        return of((Boolean) value);
       }
       throw new JsonParseException(p, "Failed to deserialize");
     }

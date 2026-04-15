@@ -139,7 +139,8 @@ export class TestClassBuilder {
         writer.indent();
         writer.writeLine("java.util.Map.Entry<String, JsonNode> entry = iter.next();");
         writer.writeLine("JsonNode actualValue = actual.get(entry.getKey());");
-        writer.writeLine("if (actualValue == null || !jsonEquals(entry.getValue(), actualValue)) return false;");
+        writer.writeLine("if (actualValue == null) { if (!entry.getValue().isNull()) return false; }");
+        writer.writeLine("else if (!jsonEquals(entry.getValue(), actualValue)) return false;");
         writer.dedent();
         writer.writeLine("}");
         writer.writeLine("return true;");

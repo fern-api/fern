@@ -1298,20 +1298,41 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             )
             writer.write_newline_if_last_line_not()
 
-        # else: raise error
+        # else: fall back to header-auth-only or raise error
+        has_header_auth_schemes = len(client_wrapper_generator._get_header_auth_schemes()) > 0
         writer.write_line("else:")
         with writer.indent():
-            writer.write("raise ")
-            writer.write_node(
-                self._context.core_utilities.instantiate_api_error(
-                    headers=None,
-                    status_code=None,
-                    body=AST.Expression(
-                        "\"The client must be instantiated with either 'token' or both 'client_id' and 'client_secret'\""
-                    ),
+            if has_header_auth_schemes:
+                # When header auth schemes exist (e.g. api_key via auth: any), allow constructing
+                # the client without a bearer token — the header auth alone is sufficient.
+                header_only_kwargs = self._get_client_wrapper_kwargs(
+                    client_wrapper_generator=client_wrapper_generator,
+                    environments_config=self._environments_config,
+                    timeout_local_variable=timeout_local_variable,
+                    is_async=is_async,
+                    exclude_auth=True,
+                    transport_variable_name=transport_variable_name,
                 )
-            )
-            writer.write_newline_if_last_line_not()
+                writer.write(f"self.{self._get_client_wrapper_member_name()} = ")
+                writer.write_node(
+                    AST.ClassInstantiation(
+                        self._context.core_utilities.get_reference_to_client_wrapper(is_async=is_async),
+                        kwargs=header_only_kwargs,
+                    )
+                )
+                writer.write_newline_if_last_line_not()
+            else:
+                writer.write("raise ")
+                writer.write_node(
+                    self._context.core_utilities.instantiate_api_error(
+                        headers=None,
+                        status_code=None,
+                        body=AST.Expression(
+                            "\"The client must be instantiated with either 'token' or both 'client_id' and 'client_secret'\""
+                        ),
+                    )
+                )
+                writer.write_newline_if_last_line_not()
 
     def _get_client_wrapper_kwargs(
         self,

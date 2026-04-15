@@ -1,0 +1,3 @@
+rootProject.name = 'allof'
+
+include 'sample-app'

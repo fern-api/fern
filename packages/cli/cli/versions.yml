@@ -1,4 +1,20 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.71.2
+  changelogEntry:
+    - summary: |
+        Fix allOf composition bugs in V3 OpenAPI importer: resolve $ref schemas
+        within multi-element allOf arrays instead of falling back to untyped objects,
+        deduplicate merged allOf refs for diamond-shaped inheritance, guard
+        variants-flattening and composition-keyword shortcuts against $ref-resolved
+        schemas, preserve inline status through allOf merge path, handle nullable
+        enum patterns in allOf shortcuts, detect cycles across recursive
+        single-element allOf chains, filter unresolved $ref objects from nested allOf
+        flattening, recursively flatten deeply-nested allOf arrays, strip oneOf/anyOf
+        from child schemas during allOf merging, and propagate outer schema metadata
+        through single-element allOf paths.
+      type: fix
+  createdAt: "2026-04-15"
+  irVersion: 66
 - version: 4.71.1
   changelogEntry:
     - summary: |
