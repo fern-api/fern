@@ -87,8 +87,6 @@ export class OAuthAuthProvider implements core.AuthProvider {
                 const tokenResponse = await this.authClient.getToken({
                     client_id: clientId,
                     client_secret: clientSecret,
-                    audience: "https://api.example.com",
-                    grant_type: "client_credentials",
                 });
                 if (!tokenResponse.ok) {
                     throw new errors.SeedOauthClientCredentialsError({ body: tokenResponse.error });

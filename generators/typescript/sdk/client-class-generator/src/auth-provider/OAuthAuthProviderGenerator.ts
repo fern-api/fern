@@ -246,7 +246,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         const clientSecretProperty = this.getName(requestProperties.clientSecret.property.name, context);
         const endpointName = this.getName(endpoint.name, context);
 
-        const customPropertyAssignments = this.getCustomPropertyAssignments(requestProperties, context);
+        const customPropertyAssignments = this.getCustomPropertyAssignments(requestProperties, endpoint, context);
 
         const accessTokenProperty = context.type.generateGetterForResponsePropertyAsString({
             property: responseProperties.accessToken,
@@ -866,8 +866,18 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
 
     private getCustomPropertyAssignments(
         requestProperties: FernIr.OAuthAccessTokenRequestProperties,
+        endpoint: FernIr.HttpEndpoint,
         context: FileContext
     ): string {
+        // When the request body is inlined, the generated client method already
+        // injects literal properties into the body (via getLiteralProperties in
+        // GeneratedDefaultEndpointRequest). Including them again here would
+        // cause TypeScript excess-property errors because the generated request
+        // type excludes those literals. We only need to emit them when the
+        // request type keeps them as required fields (i.e. non-inlined bodies).
+        if (endpoint.requestBody?.type === "inlinedRequestBody") {
+            return "";
+        }
         const assignments: string[] = [];
         for (const customProperty of requestProperties.customProperties ?? []) {
             const resolvedType = context.type.resolveTypeReference(customProperty.property.valueType);
