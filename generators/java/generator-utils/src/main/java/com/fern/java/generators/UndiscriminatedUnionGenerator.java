@@ -583,9 +583,12 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
                 .addAnnotation(ClassName.get("", "java.lang.Override"))
                 .addStatement(
                         "$T $L = $L.readValueAs($T.class)", Object.class, VALUE_FIELD_SPEC.name, "p", Object.class);
+        // Process primitive instanceof checks first — they are exact type matches.
+        // convertValue branches (used for non-primitives) can do lossy coercion
+        // (e.g., Integer → String), so they must come after primitives to avoid
+        // capturing values meant for a more specific primitive variant.
         for (int i = 0; i < membersWithoutLiterals.size(); ++i) {
             UndiscriminatedUnionMember member = membersWithoutLiterals.get(i);
-
             TypeName typeName = memberTypeNames.get(member);
             if (typeName.isPrimitive() || typeName.isBoxedPrimitive()) {
                 deserializeMethod
@@ -593,32 +596,38 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
                         .addStatement(
                                 "return $L(($T) $L)", STATIC_FACTORY_METHOD_NAME, typeName.box(), VALUE_FIELD_SPEC.name)
                         .endControlFlow();
+            }
+        }
+        for (int i = 0; i < membersWithoutLiterals.size(); ++i) {
+            UndiscriminatedUnionMember member = membersWithoutLiterals.get(i);
+            TypeName typeName = memberTypeNames.get(member);
+            if (typeName.isPrimitive() || typeName.isBoxedPrimitive()) {
+                continue;
+            }
+            if (shouldDeserializeWithTypeReference(member)) {
+                deserializeMethod
+                        .beginControlFlow("try")
+                        .addStatement(
+                                "return $L($T.$N.convertValue($L, new $T() {}))",
+                                getDeConflictedMemberName(member, STATIC_FACTORY_METHOD_NAME),
+                                generatorContext.getPoetClassNameFactory().getObjectMapperClassName(),
+                                ObjectMappersGenerator.JSON_MAPPER_STATIC_FIELD_NAME,
+                                VALUE_FIELD_SPEC.name,
+                                ParameterizedTypeName.get(ClassName.get(TypeReference.class), typeName))
+                        .nextControlFlow("catch($T e)", RuntimeException.class)
+                        .endControlFlow();
             } else {
-                if (shouldDeserializeWithTypeReference(member)) {
-                    deserializeMethod
-                            .beginControlFlow("try")
-                            .addStatement(
-                                    "return $L($T.$N.convertValue($L, new $T() {}))",
-                                    getDeConflictedMemberName(member, STATIC_FACTORY_METHOD_NAME),
-                                    generatorContext.getPoetClassNameFactory().getObjectMapperClassName(),
-                                    ObjectMappersGenerator.JSON_MAPPER_STATIC_FIELD_NAME,
-                                    VALUE_FIELD_SPEC.name,
-                                    ParameterizedTypeName.get(ClassName.get(TypeReference.class), typeName))
-                            .nextControlFlow("catch($T e)", RuntimeException.class)
-                            .endControlFlow();
-                } else {
-                    deserializeMethod
-                            .beginControlFlow("try")
-                            .addStatement(
-                                    "return $L($T.$N.convertValue($L, $T.class))",
-                                    getDeConflictedMemberName(member, STATIC_FACTORY_METHOD_NAME),
-                                    generatorContext.getPoetClassNameFactory().getObjectMapperClassName(),
-                                    ObjectMappersGenerator.JSON_MAPPER_STATIC_FIELD_NAME,
-                                    VALUE_FIELD_SPEC.name,
-                                    typeName)
-                            .nextControlFlow("catch($T e)", RuntimeException.class)
-                            .endControlFlow();
-                }
+                deserializeMethod
+                        .beginControlFlow("try")
+                        .addStatement(
+                                "return $L($T.$N.convertValue($L, $T.class))",
+                                getDeConflictedMemberName(member, STATIC_FACTORY_METHOD_NAME),
+                                generatorContext.getPoetClassNameFactory().getObjectMapperClassName(),
+                                ObjectMappersGenerator.JSON_MAPPER_STATIC_FIELD_NAME,
+                                VALUE_FIELD_SPEC.name,
+                                typeName)
+                        .nextControlFlow("catch($T e)", RuntimeException.class)
+                        .endControlFlow();
             }
         }
         deserializeMethod.addStatement("throw new $T(p, $S)", JsonParseException.class, "Failed to deserialize");

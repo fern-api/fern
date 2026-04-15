@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.63.5
+  changelogEntry:
+    - summary: |
+        Support inferred OAuth auth with form-encoded (application/x-www-form-urlencoded) token endpoints.
+        Previously, the generator crashed with "Cannot get exported name for request wrapper" when the
+        token endpoint used a justRequestBody shape instead of a wrapper shape.
+      type: fix
+  createdAt: "2026-04-15"
+  irVersion: 66
 - version: 3.63.4
   changelogEntry:
     - summary: |
