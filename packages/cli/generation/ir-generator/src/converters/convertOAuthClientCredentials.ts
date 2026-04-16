@@ -4,6 +4,7 @@ import { OAuthClientCredentials } from "@fern-api/ir-sdk";
 import { FernFileContext } from "../FernFileContext.js";
 import { EndpointResolver } from "../resolvers/EndpointResolver.js";
 import { PropertyResolver } from "../resolvers/PropertyResolver.js";
+import { TypeResolver } from "../resolvers/TypeResolver.js";
 import { convertOAuthRefreshEndpoint } from "./convertOAuthRefreshEndpoint.js";
 import { convertOAuthTokenEndpoint } from "./convertOAuthTokenEndpoint.js";
 import { RefreshTokenEndpoint, TokenEndpoint } from "./convertOAuthUtils.js";
@@ -11,6 +12,7 @@ import { RefreshTokenEndpoint, TokenEndpoint } from "./convertOAuthUtils.js";
 export function convertOAuthClientCredentials({
     propertyResolver,
     endpointResolver,
+    typeResolver,
     file,
     oauthScheme,
     tokenEndpoint,
@@ -18,6 +20,7 @@ export function convertOAuthClientCredentials({
 }: {
     propertyResolver: PropertyResolver;
     endpointResolver: EndpointResolver;
+    typeResolver: TypeResolver;
     file: FernFileContext;
     oauthScheme: RawSchemas.OAuthSchemeSchema;
     tokenEndpoint: TokenEndpoint;
@@ -26,6 +29,7 @@ export function convertOAuthClientCredentials({
     const oauthTokenEndpoint = convertOAuthTokenEndpoint({
         propertyResolver,
         endpointResolver,
+        typeResolver,
         file,
         tokenEndpoint
     });

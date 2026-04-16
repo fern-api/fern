@@ -147,7 +147,8 @@ export function generateIntermediateRepresentation({
             rawApiFileSchema: workspace.definition.rootApiFile.contents,
             file: rootApiFileContext,
             propertyResolver,
-            endpointResolver
+            endpointResolver,
+            typeResolver
         }),
         headers:
             workspace.definition.rootApiFile.contents.headers != null

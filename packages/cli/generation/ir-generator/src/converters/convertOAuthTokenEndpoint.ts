@@ -1,19 +1,23 @@
+import { isInlineRequestBody, RawSchemas } from "@fern-api/fern-definition-schema";
 import { OAuthTokenEndpoint } from "@fern-api/ir-sdk";
 
 import { FernFileContext } from "../FernFileContext.js";
 import { EndpointResolver } from "../resolvers/EndpointResolver.js";
 import { PropertyResolver } from "../resolvers/PropertyResolver.js";
+import { TypeResolver } from "../resolvers/TypeResolver.js";
 import { createEndpointReference } from "../utils/createEndpointReference.js";
 import { TokenEndpoint } from "./convertOAuthUtils.js";
 
 export function convertOAuthTokenEndpoint({
     endpointResolver,
     propertyResolver,
+    typeResolver,
     file,
     tokenEndpoint
 }: {
     endpointResolver: EndpointResolver;
     propertyResolver: PropertyResolver;
+    typeResolver: TypeResolver;
     file: FernFileContext;
     tokenEndpoint: TokenEndpoint;
 }): OAuthTokenEndpoint | undefined {
@@ -22,13 +26,11 @@ export function convertOAuthTokenEndpoint({
         file
     });
 
-    const requestBodyProperties =
-        typeof resolvedEndpoint.endpoint.request === "object" &&
-        resolvedEndpoint.endpoint.request.body != null &&
-        typeof resolvedEndpoint.endpoint.request.body === "object" &&
-        "properties" in resolvedEndpoint.endpoint.request.body
-            ? (resolvedEndpoint.endpoint.request.body.properties ?? {})
-            : {};
+    const requestBodyProperties = getRequestBodyPropertyNames({
+        endpoint: resolvedEndpoint.endpoint,
+        file: resolvedEndpoint.file,
+        typeResolver
+    });
 
     let expiresIn = undefined;
     try {
@@ -65,7 +67,7 @@ export function convertOAuthTokenEndpoint({
                       })
                     : undefined,
             customProperties: resolveCustomRequestProperties({
-                requestBodyProperties,
+                requestBodyPropertyNames: requestBodyProperties,
                 tokenEndpoint,
                 file,
                 propertyResolver
@@ -91,17 +93,17 @@ export function convertOAuthTokenEndpoint({
 }
 
 const resolveCustomRequestProperties = ({
-    requestBodyProperties,
+    requestBodyPropertyNames,
     tokenEndpoint,
     file,
     propertyResolver
 }: {
-    requestBodyProperties: Record<string, unknown>;
+    requestBodyPropertyNames: string[];
     tokenEndpoint: TokenEndpoint;
     file: FernFileContext;
     propertyResolver: PropertyResolver;
 }) => {
-    const customPropertyNames = Object.keys(requestBodyProperties).filter(
+    const customPropertyNames = requestBodyPropertyNames.filter(
         (propertyName) =>
             !tokenEndpoint.requestProperties.client_id.includes(propertyName) &&
             !tokenEndpoint.requestProperties.client_secret.includes(propertyName) &&
@@ -119,3 +121,77 @@ const resolveCustomRequestProperties = ({
           )
         : undefined;
 };
+
+/**
+ * Extracts property names from the token endpoint's request body,
+ * handling both inline request bodies and referenced type bodies.
+ */
+function getRequestBodyPropertyNames({
+    endpoint,
+    file,
+    typeResolver
+}: {
+    endpoint: RawSchemas.HttpEndpointSchema;
+    file: FernFileContext;
+    typeResolver: TypeResolver;
+}): string[] {
+    const request = endpoint.request;
+    if (request == null) {
+        return [];
+    }
+
+    // request can be a bare type reference string (shorthand)
+    if (typeof request === "string") {
+        return getPropertyNamesFromType({ typeName: request, file, typeResolver });
+    }
+
+    const body: RawSchemas.HttpRequestBodySchema | undefined = request.body;
+    if (body == null) {
+        return [];
+    }
+
+    // Bare string body (type reference)
+    if (typeof body === "string") {
+        return getPropertyNamesFromType({ typeName: body, file, typeResolver });
+    }
+
+    // Inline request body with explicit properties
+    if (isInlineRequestBody(body)) {
+        const names = Object.keys(body.properties ?? {});
+        // Also include properties from extended types
+        if (body.extends != null) {
+            const extendsList = typeof body.extends === "string" ? [body.extends] : body.extends;
+            for (const extendedType of extendsList) {
+                names.push(...getPropertyNamesFromType({ typeName: extendedType, file, typeResolver }));
+            }
+        }
+        return names;
+    }
+
+    // Referenced request body (has a `type` field)
+    return getPropertyNamesFromType({ typeName: body.type, file, typeResolver });
+}
+
+function getPropertyNamesFromType({
+    typeName,
+    file,
+    typeResolver
+}: {
+    typeName: string;
+    file: FernFileContext;
+    typeResolver: TypeResolver;
+}): string[] {
+    const resolved = typeResolver.resolveType({ type: typeName, file });
+    if (resolved == null || resolved._type !== "named") {
+        return [];
+    }
+    const declaration = resolved.declaration;
+    const names: string[] = [];
+    if ("properties" in declaration && declaration.properties != null) {
+        names.push(...Object.keys(declaration.properties));
+    }
+    if ("base-properties" in declaration && declaration["base-properties"] != null) {
+        names.push(...Object.keys(declaration["base-properties"]));
+    }
+    return names;
+}

@@ -37,8 +37,8 @@ catalogs:
       specifier: 0.0.6-2ee1b7e28
       version: 0.0.6-2ee1b7e28
     '@fern-api/generator-cli':
-      specifier: 0.9.4
-      version: 0.9.4
+      specifier: 0.9.8
+      version: 0.9.8
     '@fern-api/venus-api-sdk':
       specifier: 0.22.34
       version: 0.22.34
@@ -628,7 +628,7 @@ importers:
         version: link:packages/configs
       '@fern-api/generator-cli':
         specifier: 'catalog:'
-        version: 0.9.4
+        version: 0.9.8
       '@rolldown/binding-darwin-arm64':
         specifier: 'catalog:'
         version: 1.0.0-rc.5
@@ -694,7 +694,7 @@ importers:
         version: link:../../packages/commons/fs-utils
       '@fern-api/generator-cli':
         specifier: 'catalog:'
-        version: 0.9.4
+        version: 0.9.8
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../packages/ir-sdk
@@ -2425,7 +2425,7 @@ importers:
         version: link:../../../packages/commons/fs-utils
       '@fern-api/generator-cli':
         specifier: 'catalog:'
-        version: 0.9.4
+        version: 0.9.8
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../../packages/cli/logger
@@ -9325,17 +9325,12 @@ packages:
   '@fern-api/fdr-sdk@0.145.12-b50d999d1':
     resolution: {integrity: sha512-qTHoosyHoHFqXM/ZcHjdiAw5tByBo1mxcfMLkId9qZ4LRSw/hJmybQEa00k7dstirNnG5DvBta6Kwq74F8NfjQ==}
 
-  '@fern-api/generator-cli@0.9.4':
-    resolution: {integrity: sha512-VBA8FVLwtX/EymumqhMNW8VIhxiaWpoOoN5ghjosCASBNBRH6uHm6NRPikDZYwNa8F+4q/sEW+AoiPVofSx54Q==}
+  '@fern-api/generator-cli@0.9.8':
+    resolution: {integrity: sha512-iNXuiCTyzfFpH9DwDPTEt/yYin1AOVQ3jHV/CHmPH6UAsstMlrLr5Qnxzu4jCDMl9yM2vjYmZTcpwa99ljz4jQ==}
     hasBin: true
 
   '@fern-api/logger@0.4.24-rc1':
     resolution: {integrity: sha512-yh0E2F3K3IPnJZcE4dv+u8I51iKgTgv/reinKo4K5YmYEG1iLtw5vBEYMOPkQmsYFPAKIh++OMB/6TrsahMWew==}
-
-  '@fern-api/replay@0.10.1':
-    resolution: {integrity: sha512-WjBT2GiEnsYlybLOLE13Cy0z389+45s+zN7RAf1AcxnCmc2P/JVtPwxVUReoVlFtnAxlyb3YMGPsKdsYIN+maw==}
-    engines: {node: '>=18'}
-    hasBin: true
 
   '@fern-api/replay@0.10.4':
     resolution: {integrity: sha512-j/stjn9QMrFPnuLy0KNCwb4rM8ruq7nPtem1ZD5d8E+T7q+yxx1R3QsIaKZcKwFp/LFoyf8PPLhOAa6H8il8WQ==}
@@ -9370,12 +9365,6 @@ packages:
 
   '@fern-fern/generators-sdk@0.114.0-5745f9e74':
     resolution: {integrity: sha512-FG7SU7ul1Q6EELAPsixGvbq8VP4Xjl42cd1VmLBlYXds5EtYxG/SZCu2QLsGgPMrkCFJ6V6VQgzXFTU3RoYR9A==}
-
-  '@fern-fern/ir-sdk@61.7.0':
-    resolution: {integrity: sha512-LHz8xJRISnuMVzLZHjwh1ziEofE0smL08Ddoe/YHnod8p7DPS/mpOcQKEfzqUn2mdLB6iqUBKB74NMchP/nM+Q==}
-
-  '@fern-fern/ir-sdk@62.6.0':
-    resolution: {integrity: sha512-UVSyKnIzcnvutyQ2tyIPqzG2uh+IEo8IZ3esGeULJdAKQ2fyCaDnFrpc/om08z6aCoEHRBuH+XYD/kmxODwm9A==}
 
   '@fern-fern/ir-sdk@66.0.0':
     resolution: {integrity: sha512-uo1+fMnJOw5ApWVmKzb5wcLggjS4te3N8QorMClttA6DcBpgn0x1HbSl823oSyFvdqNV9U7GjmeQ+kzX1lWJUg==}
@@ -16351,9 +16340,9 @@ snapshots:
       - encoding
       - typescript
 
-  '@fern-api/generator-cli@0.9.4':
+  '@fern-api/generator-cli@0.9.8':
     dependencies:
-      '@fern-api/replay': 0.10.1
+      '@fern-api/replay': 0.10.4
       '@octokit/rest': 22.0.1
       es-toolkit: 1.45.1
       tmp-promise: 3.0.3
@@ -16364,15 +16353,6 @@ snapshots:
     dependencies:
       '@fern-api/core-utils': 0.4.24-rc1
       chalk: 5.6.2
-
-  '@fern-api/replay@0.10.1':
-    dependencies:
-      minimatch: 10.2.5
-      node-diff3: 3.2.0
-      simple-git: 3.35.2
-      yaml: 2.8.3
-    transitivePeerDependencies:
-      - supports-color
 
   '@fern-api/replay@0.10.4':
     dependencies:
@@ -16445,26 +16425,6 @@ snapshots:
       qs: 6.15.0
       readable-stream: 4.7.0
       url-join: 4.0.1
-    transitivePeerDependencies:
-      - encoding
-
-  '@fern-fern/ir-sdk@61.7.0':
-    dependencies:
-      form-data: 4.0.5
-      formdata-node: 6.0.3
-      node-fetch: 2.7.0
-      qs: 6.15.0
-      readable-stream: 4.7.0
-    transitivePeerDependencies:
-      - encoding
-
-  '@fern-fern/ir-sdk@62.6.0':
-    dependencies:
-      form-data: 4.0.5
-      formdata-node: 6.0.3
-      node-fetch: 2.7.0
-      qs: 6.15.0
-      readable-stream: 4.7.0
     transitivePeerDependencies:
       - encoding
 
