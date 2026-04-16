@@ -176,18 +176,18 @@ groups:
         expect(sdks.targets).toHaveProperty("java");
         expect(sdks.targets).toHaveProperty("python");
 
-        const ts = sdks.targets.typescript!;
+        const ts = sdks.targets["typescript"] as Record<string, unknown>;
         expect(ts.lang).toBe("typescript");
         expect(ts.version).toBe("0.44.3");
         const tsPublish = ts.publish as { npm: { packageName: string } };
         expect(tsPublish.npm.packageName).toBe("intercom-sdk");
         expect(ts.config).toBeDefined();
 
-        const java = sdks.targets.java!;
+        const java = sdks.targets["java"] as Record<string, unknown>;
         expect(java.lang).toBe("java");
         expect(java.version).toBe("2.11.0");
 
-        const py = sdks.targets.python!;
+        const py = sdks.targets["python"] as Record<string, unknown>;
         expect(py.lang).toBe("python");
         expect(py.version).toBe("3.10.6");
 
@@ -282,15 +282,15 @@ groups:
         const sdks = yml.sdks as { targets: Record<string, Record<string, unknown>> };
 
         expect(sdks.targets).toHaveProperty("go");
-        const go = sdks.targets.go!;
+        const go = sdks.targets["go"] as Record<string, unknown>;
         expect(go.lang).toBe("go");
         expect(go.output).toBe("../generated/go");
 
         expect(sdks.targets).toHaveProperty("java");
-        expect(sdks.targets.java!.lang).toBe("java");
+        expect((sdks.targets["java"] as Record<string, unknown>).lang).toBe("java");
 
         expect(sdks.targets).toHaveProperty("typescript");
-        expect(sdks.targets.typescript!.lang).toBe("typescript");
+        expect((sdks.targets["typescript"] as Record<string, unknown>).lang).toBe("typescript");
 
         const raw = await readMigratedYmlRaw(projectDir);
         expect(raw).not.toContain("default-group");
@@ -346,7 +346,7 @@ groups:
         const sdks = yml.sdks as { targets: Record<string, Record<string, unknown>> };
 
         expect(sdks.targets).toHaveProperty("typescript");
-        const ts = sdks.targets.typescript!;
+        const ts = sdks.targets["typescript"] as Record<string, unknown>;
         expect(ts.lang).toBe("typescript");
         expect(ts.version).toBe("0.9.4");
         const tsPublish = ts.publish as { npm: { packageName: string } };
@@ -358,7 +358,7 @@ groups:
         expect(tsOutput.git.mode).toBe("push");
 
         expect(sdks.targets).toHaveProperty("python");
-        const py = sdks.targets.python!;
+        const py = sdks.targets["python"] as Record<string, unknown>;
         expect(py.lang).toBe("python");
         const pyPublish = py.publish as { pypi: { packageName: string } };
         expect(pyPublish.pypi.packageName).toBe("webflow");
@@ -395,7 +395,7 @@ groups:
 
         const sdks = yml.sdks as { targets: Record<string, Record<string, unknown>> };
         expect(sdks.targets).toHaveProperty("typescript");
-        const ts = sdks.targets.typescript!;
+        const ts = sdks.targets["typescript"] as Record<string, unknown>;
         expect(ts.lang).toBe("typescript");
         expect(ts.version).toBe("0.11.4-rc2");
         expect(ts.config).toBeDefined();
@@ -443,7 +443,7 @@ groups:
 
         const sdks = yml.sdks as { targets: Record<string, Record<string, unknown>> };
         expect(sdks.targets).toHaveProperty("python");
-        const py = sdks.targets.python!;
+        const py = sdks.targets["python"] as Record<string, unknown>;
         expect(py.lang).toBe("python");
         expect(py.version).toBe("0.11.9");
 
@@ -566,7 +566,7 @@ favicon: ./docs/assets/favicon.png
 
         const sdks = yml.sdks as { targets: Record<string, Record<string, unknown>> };
         expect(sdks.targets).toHaveProperty("ruby");
-        const ruby = sdks.targets.ruby!;
+        const ruby = sdks.targets["ruby"] as Record<string, unknown>;
         expect(ruby.lang).toBe("ruby");
         expect(ruby.version).toBe("0.1.0-rc0");
     });
@@ -605,7 +605,7 @@ groups:
 
         const sdks = yml.sdks as { targets: Record<string, Record<string, unknown>> };
         expect(sdks.targets).toHaveProperty("go");
-        const go = sdks.targets.go!;
+        const go = sdks.targets["go"] as Record<string, unknown>;
         expect(go.lang).toBe("go");
         expect(go.version).toBe("0.18.0");
 
@@ -676,7 +676,7 @@ navbar-links:
 
         const sdks = yml.sdks as { targets: Record<string, Record<string, unknown>> };
         expect(sdks.targets).toHaveProperty("typescript");
-        const ts = sdks.targets.typescript!;
+        const ts = sdks.targets["typescript"] as Record<string, unknown>;
         expect(ts.lang).toBe("typescript");
         const tsPublish = ts.publish as { npm: { packageName: string } };
         expect(tsPublish.npm.packageName).toBe("plumery");
@@ -759,7 +759,7 @@ favicon: ./docs/assets/favicon.ico
 
         const sdks = yml.sdks as { targets: Record<string, Record<string, unknown>> };
         expect(sdks.targets).toHaveProperty("typescript");
-        const ts = sdks.targets.typescript!;
+        const ts = sdks.targets["typescript"] as Record<string, unknown>;
         expect(ts.lang).toBe("typescript");
         expect(ts.output).toBe("../generated/sdk/node");
 
@@ -838,7 +838,7 @@ groups:
 
         const sdks = yml.sdks as { targets: Record<string, Record<string, unknown>> };
         expect(sdks.targets).toHaveProperty("typescript");
-        const ts = sdks.targets.typescript!;
+        const ts = sdks.targets["typescript"] as Record<string, unknown>;
         expect(ts.lang).toBe("typescript");
         expect(ts.version).toBe("0.11.0");
 
@@ -877,7 +877,7 @@ groups:
 
         const sdks = yml.sdks as { targets: Record<string, Record<string, unknown>> };
         expect(sdks.targets).toHaveProperty("typescript");
-        const ts = sdks.targets.typescript!;
+        const ts = sdks.targets["typescript"] as Record<string, unknown>;
         expect(ts.lang).toBe("typescript");
         expect(ts.version).toBe("0.12.2");
         expect(ts.config).toEqual({
