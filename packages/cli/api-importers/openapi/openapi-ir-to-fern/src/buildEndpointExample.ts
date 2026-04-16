@@ -110,21 +110,13 @@ export function buildEndpointExample({
                 continue;
             }
 
-            // Check if the header type is optional/nullable — if so, skip generating
-            // an example. Optional headers don't need example values, and using the
-            // header name as a string placeholder would be type-incorrect for non-string
-            // headers (e.g. integer timeout parameters).
+            // Generate a type-appropriate placeholder example based on the header's
+            // declared type (unwrapping optional/nullable wrappers first).
             const headerType =
                 info != null && typeof info === "object" ? info.type : typeof info === "string" ? info : undefined;
-            if (headerType != null && (headerType.startsWith("optional<") || headerType.startsWith("nullable<"))) {
-                continue;
-            }
-
-            // For required headers without a literal value, generate a type-appropriate
-            // placeholder example based on the header's declared type.
             namedFullExamples.push({
                 name: header,
-                value: FullExample.primitive(buildPrimitiveExampleForType(headerType, header))
+                value: FullExample.primitive(buildPrimitiveExampleForType(unwrapType(headerType), header))
             });
         }
 
@@ -199,6 +191,14 @@ function convertQueryParameterExample(
         }
     });
     return result;
+}
+
+function unwrapType(type: string | undefined): string | undefined {
+    if (type == null) {
+        return undefined;
+    }
+    const match = type.match(/^(?:optional|nullable)<(.+)>$/);
+    return match != null ? unwrapType(match[1]) : type;
 }
 
 function buildPrimitiveExampleForType(headerType: string | undefined, headerName: string): PrimitiveExample {

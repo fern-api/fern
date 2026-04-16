@@ -14,7 +14,10 @@
               "docs": undefined,
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "date_header": "2024-01-01",
+                    "date_time_header": "2024-01-01T00:00:00Z",
+                  },
                   "request": {},
                   "response": {
                     "body": {
@@ -95,7 +98,9 @@
         type: Response
         status-code: 200
       examples:
-        - headers: {}
+        - headers:
+            date_header: '2024-01-01'
+            date_time_header: '2024-01-01T00:00:00Z'
           request: {}
           response:
             body:

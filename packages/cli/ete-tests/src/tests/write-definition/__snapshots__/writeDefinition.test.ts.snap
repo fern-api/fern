@@ -46,7 +46,8 @@ service:
     createPets:
       display-name: Create a pet
       examples:
-        - headers: {}
+        - headers:
+            X-Dummy-Header: X-Dummy-Header
       method: POST
       path: /pets
       source:
@@ -54,7 +55,8 @@ service:
     listPets:
       display-name: List all pets
       examples:
-        - headers: {}
+        - headers:
+            X-Dummy-Header: X-Dummy-Header
           response:
             body:
               - id: 1000000
@@ -79,7 +81,8 @@ service:
     showPetById:
       display-name: Info for a specific pet
       examples:
-        - headers: {}
+        - headers:
+            X-Dummy-Header: X-Dummy-Header
           path-parameters:
             petId: petId
           response:
