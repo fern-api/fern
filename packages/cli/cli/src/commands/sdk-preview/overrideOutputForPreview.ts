@@ -115,10 +115,31 @@ export function overrideGroupOutputForPreview({
 }
 
 /**
- * Overrides a generator group's output mode to githubV2(push) with original
- * metadata and no publishInfo. Used to push a clean diff branch to the SDK
- * repo — the generated code uses the original package name so the diff shows
- * real API changes without preview artifacts.
+ * Extracts the publishInfo from a githubV2 output mode.
+ * Returns undefined for non-github modes.
+ */
+function getGithubPublishInfo(outputMode: FernFiddle.remoteGen.OutputMode): FernFiddle.GithubPublishInfo | undefined {
+    return outputMode._visit<FernFiddle.GithubPublishInfo | undefined>({
+        downloadFiles: () => undefined,
+        github: () => undefined,
+        githubV2: (val) =>
+            val._visit<FernFiddle.GithubPublishInfo | undefined>({
+                push: (v) => v.publishInfo,
+                commitAndRelease: (v) => v.publishInfo,
+                pullRequest: (v) => v.publishInfo,
+                _other: () => undefined
+            }),
+        publish: () => undefined,
+        publishV2: () => undefined,
+        _other: () => undefined
+    });
+}
+
+/**
+ * Overrides a generator group's output mode to githubV2(push) for pushing a
+ * clean diff branch. Preserves the original publishInfo so the generator
+ * produces code with the correct package name (e.g. in package.json).
+ * Fiddle's dryRun=true prevents actual publishing.
  *
  * Only includes generators that have GitHub configuration (owner/repo).
  * Generators without GitHub config are excluded (they can't push a diff branch).
@@ -142,7 +163,7 @@ export function overrideGroupOutputForDiffBranch({
                         repo: githubInfo.repo,
                         branch: undefined,
                         license: undefined,
-                        publishInfo: undefined,
+                        publishInfo: getGithubPublishInfo(generator.outputMode),
                         downloadSnippets: false
                     })
                 ),

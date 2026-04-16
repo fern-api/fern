@@ -299,7 +299,7 @@ describe("overrideGroupOutputForPreview", () => {
 });
 
 describe("overrideGroupOutputForDiffBranch", () => {
-    it("produces githubV2(push) with no publishInfo for generators with github config", () => {
+    it("produces githubV2(push) for generators with github config", () => {
         const generator = makeGenerator(
             FernFiddle.OutputMode.githubV2(
                 FernFiddle.GithubOutputModeV2.push({
@@ -319,6 +319,52 @@ describe("overrideGroupOutputForDiffBranch", () => {
         const outputMode = result.generators[0]?.outputMode;
         expect(outputMode?.type).toBe("githubV2");
         expect(result.generators[0]?.absolutePathToLocalOutput).toBeUndefined();
+    });
+
+    it("preserves publishInfo from the original output mode", () => {
+        const npmPublishInfo = FernFiddle.GithubPublishInfo.npm({
+            registryUrl: "https://registry.npmjs.org",
+            packageName: "@fern-demo/sdk-preview-test",
+            token: "npm-token-123"
+        });
+        const generator = makeGenerator(
+            FernFiddle.OutputMode.githubV2(
+                FernFiddle.GithubOutputModeV2.push({
+                    owner: "fern-demo",
+                    repo: "sdk-preview-test-sdk",
+                    branch: undefined,
+                    license: undefined,
+                    publishInfo: npmPublishInfo,
+                    downloadSnippets: false
+                })
+            )
+        );
+        const group = makeGroup([generator]);
+
+        const result = overrideGroupOutputForDiffBranch({ group });
+
+        expect(result.generators).toHaveLength(1);
+        const outputMode = result.generators[0]?.outputMode;
+        expect(outputMode?.type).toBe("githubV2");
+        // The publishInfo should be preserved so the generator produces
+        // code with the correct package name (e.g. in package.json).
+        outputMode?._visit({
+            githubV2: (v) =>
+                v._visit({
+                    push: (p) => {
+                        expect(p.publishInfo).toBeDefined();
+                        expect(p.publishInfo?.type).toBe("npm");
+                    },
+                    commitAndRelease: () => {},
+                    pullRequest: () => {},
+                    _other: () => {}
+                }),
+            downloadFiles: () => {},
+            github: () => {},
+            publish: () => {},
+            publishV2: () => {},
+            _other: () => {}
+        });
     });
 
     it("extracts owner/repo from github v1 output mode", () => {
