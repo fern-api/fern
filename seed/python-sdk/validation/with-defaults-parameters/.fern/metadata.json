@@ -3,7 +3,7 @@
   "generatorName": "fernapi/fern-python-sdk",
   "generatorVersion": "local",
   "generatorConfig": {
-    "use_request_defaults": "all"
+    "use_request_defaults": "parameters"
   },
   "originGitCommit": "DUMMY",
   "sdkVersion": "0.0.1"

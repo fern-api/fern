@@ -24,7 +24,7 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
         generator_config: GeneratorConfig,
         project_module_path: AST.ModulePath,
         allow_skipping_validation: bool,
-        allow_leveraging_defaults: bool,
+        allow_leveraging_defaults: str,
         use_typeddict_requests: bool,
         use_str_enums: bool,
         skip_formatting: bool,
@@ -96,10 +96,14 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
         default_value = None
         union = type_reference.get_as_union()
 
-        # Only populate primitive defaults if we're allowed to leverage them via config
-        # AND this is for a request param (query param or header). Request body properties
-        # and Pydantic model fields should not get primitive defaults.
-        if union.type == "primitive" and self._allow_leveraging_defaults and for_request_param:
+        # Apply primitive defaults based on the use_request_defaults mode:
+        # - "all": apply everywhere (query params, body params, pydantic model fields)
+        # - "parameters": only for endpoint query params and headers
+        # - "none": never apply
+        should_apply_defaults = self._allow_leveraging_defaults == "all" or (
+            self._allow_leveraging_defaults == "parameters" and for_request_param
+        )
+        if union.type == "primitive" and should_apply_defaults:
             maybe_v2_scheme = union.primitive.v_2
             if maybe_v2_scheme is not None:
                 default_value = maybe_v2_scheme.visit(

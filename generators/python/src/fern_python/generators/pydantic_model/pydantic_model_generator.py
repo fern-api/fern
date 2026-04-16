@@ -81,7 +81,7 @@ class PydanticModelGenerator(AbstractGenerator):
                 ir=ir,
             ),
             allow_skipping_validation=custom_config.skip_validation,
-            allow_leveraging_defaults=custom_config.use_provided_defaults,
+            allow_leveraging_defaults="parameters" if custom_config.use_provided_defaults else "none",
             use_typeddict_requests=custom_config.use_typeddict_requests,
             use_str_enums=custom_config.use_str_enums,
             skip_formatting=custom_config.skip_formatting,
