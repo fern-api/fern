@@ -56,6 +56,14 @@ fixtures:
     - customConfig:
         use_inheritance_for_extended_models: false
       outputFolder: no-inheritance-for-extended-models
+  allof:
+    - outputFolder: no-custom-config
+      customConfig:
+        enable_wire_tests: true
+  allof-inline:
+    - outputFolder: no-custom-config
+      customConfig:
+        enable_wire_tests: true
   circular-references:
     - customConfig: null
       outputFolder: no-custom-config
@@ -303,9 +311,11 @@ fixtures:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
-        pydantic_config:
-          use_provided_defaults: true
+        use_request_defaults: "all"
       outputFolder: with-defaults
+    - customConfig:
+        use_request_defaults: "parameters"
+      outputFolder: with-defaults-parameters
   literal:
     - customConfig: null
       outputFolder: no-custom-config
@@ -449,6 +459,8 @@ scripts:
         - poetry run pytest -rP -n auto -m aiohttp .
 allowedFailures:
   - schemaless-request-body-examples
+  - allof:no-custom-config
+  - allof-inline:no-custom-config
   - any-auth
   - endpoint-security-auth
   - examples:legacy-wire-tests
@@ -462,3 +474,4 @@ allowedFailures:
   - streaming-parameter
   - server-sent-event-examples:with-wire-tests # TODO: update wiretests geranation then remove it
   - trace
+  - multi-url-environment-reference

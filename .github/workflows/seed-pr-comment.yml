@@ -112,38 +112,66 @@ jobs:
 
             // Language to generators mapping
             const languageMap = {
-              'Python': ['python-sdk', 'pydantic', 'pydantic-v2'],
+              'Python': ['python-sdk'],
               'TypeScript': ['ts-sdk'],
-              'Java': ['java-sdk', 'java-model'],
-              'Go': ['go-sdk', 'go-model'],
+              'Java': ['java-sdk'],
+              'Go': ['go-sdk'],
               'Ruby': ['ruby-sdk-v2'],
-              'C#': ['csharp-sdk', 'csharp-model'],
-              'PHP': ['php-sdk', 'php-model'],
+              'C#': ['csharp-sdk'],
+              'PHP': ['php-sdk'],
               'Swift': ['swift-sdk'],
-              'Rust': ['rust-sdk', 'rust-model'],
+              'Rust': ['rust-sdk'],
               'OpenAPI': ['openapi'],
             };
 
             // Generator to path mapping
             const generatorPathMap = {
               'python-sdk': 'generators/python',
-              'pydantic': 'generators/python',
-              'pydantic-v2': 'generators/python-v2',
               'ts-sdk': 'generators/typescript',
               'java-sdk': 'generators/java',
-              'java-model': 'generators/java',
               'go-sdk': 'generators/go',
-              'go-model': 'generators/go',
               'ruby-sdk-v2': 'generators/ruby-v2',
               'csharp-sdk': 'generators/csharp',
-              'csharp-model': 'generators/csharp',
               'php-sdk': 'generators/php',
-              'php-model': 'generators/php',
               'swift-sdk': 'generators/swift',
               'rust-sdk': 'generators/rust',
-              'rust-model': 'generators/rust',
               'openapi': 'generators/openapi',
             };
+
+            // // Language to generators mapping
+            // const languageMap = {
+            //   'Python': ['python-sdk', 'pydantic', 'pydantic-v2'],
+            //   'TypeScript': ['ts-sdk'],
+            //   'Java': ['java-sdk', 'java-model'],
+            //   'Go': ['go-sdk', 'go-model'],
+            //   'Ruby': ['ruby-sdk-v2'],
+            //   'C#': ['csharp-sdk', 'csharp-model'],
+            //   'PHP': ['php-sdk', 'php-model'],
+            //   'Swift': ['swift-sdk'],
+            //   'Rust': ['rust-sdk', 'rust-model'],
+            //   'OpenAPI': ['openapi'],
+            // };
+            // 
+            // // Generator to path mapping
+            // const generatorPathMap = {
+            //   'python-sdk': 'generators/python',
+            //   'pydantic': 'generators/python',
+            //   'pydantic-v2': 'generators/python-v2',
+            //   'ts-sdk': 'generators/typescript',
+            //   'java-sdk': 'generators/java',
+            //   'java-model': 'generators/java',
+            //   'go-sdk': 'generators/go',
+            //   'go-model': 'generators/go',
+            //   'ruby-sdk-v2': 'generators/ruby-v2',
+            //   'csharp-sdk': 'generators/csharp',
+            //   'csharp-model': 'generators/csharp',
+            //   'php-sdk': 'generators/php',
+            //   'php-model': 'generators/php',
+            //   'swift-sdk': 'generators/swift',
+            //   'rust-sdk': 'generators/rust',
+            //   'rust-model': 'generators/rust',
+            //   'openapi': 'generators/openapi',
+            // };
 
             // Parse checked languages
             const lines = commentBody.split('\n');

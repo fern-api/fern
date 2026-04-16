@@ -1,7 +1,7 @@
 import type { schemas } from "@fern-api/config";
 import { AbsoluteFilePath, dirname, doesPathExist, join, RelativeFilePath, relative } from "@fern-api/fs-utils";
 import { isNullish, type Sourced } from "@fern-api/source";
-import { ValidationIssue } from "@fern-api/yaml-loader";
+import { type ReferenceResolver, ValidationIssue } from "@fern-api/yaml-loader";
 import type { FernYmlSchemaLoader } from "../../../config/fern-yml/FernYmlSchemaLoader.js";
 import type { ApiDefinition } from "../ApiDefinition.js";
 import type { ApiSpec } from "../ApiSpec.js";
@@ -83,7 +83,7 @@ export class ApiDefinitionConverter {
         let result: Record<string, ApiDefinition> = {};
         if (api != null && !isNullish(sourced.api)) {
             result = await this.convertApi({
-                absoluteFernYmlPath: fernYml.absoluteFilePath,
+                absoluteFernYmlPath: this.resolveBasePathForKey("api", fernYml),
                 api,
                 sourcedApi: sourced.api
             });
@@ -91,6 +91,7 @@ export class ApiDefinitionConverter {
         if (apis != null && !isNullish(sourced.apis)) {
             result = await this.convertApis({
                 absoluteFernYmlPath: fernYml.absoluteFilePath,
+                pathMappings: fernYml.pathMappings,
                 apis,
                 sourcedApis: sourced.apis
             });
@@ -142,10 +143,12 @@ export class ApiDefinitionConverter {
 
     private async convertApis({
         absoluteFernYmlPath,
+        pathMappings,
         apis,
         sourcedApis
     }: {
         absoluteFernYmlPath: AbsoluteFilePath;
+        pathMappings: ReferenceResolver.PathMapping[];
         apis: schemas.ApisSchema;
         sourcedApis: Sourced<schemas.ApisSchema> | null | undefined;
     }): Promise<Record<string, ApiDefinition>> {
@@ -161,8 +164,15 @@ export class ApiDefinitionConverter {
             );
         const convertedEntries = await Promise.all(
             apiEntries.map(async ({ apiName, apiDef, sourcedApiDef }) => {
+                // Resolve the base path for this API entry. Prefer the most specific
+                // mapping (e.g., ["apis", "my-api"]) then fall back to ["apis"] if
+                // the whole section was $ref'd, then to fern.yml itself.
+                const entryBasePath =
+                    this.findBasePathInMappings(["apis", apiName], pathMappings) ??
+                    this.findBasePathInMappings(["apis"], pathMappings) ??
+                    absoluteFernYmlPath;
                 const specs = await this.convertSpecs({
-                    absoluteFernYmlPath,
+                    absoluteFernYmlPath: entryBasePath,
                     specs: apiDef.specs,
                     sourced: sourcedApiDef.specs
                 });
@@ -578,5 +588,36 @@ export class ApiDefinitionConverter {
                 );
             }
         }
+    }
+
+    /**
+     * Returns the file path of the document that provided the content at the
+     * given YAML path prefix (via a `$ref`), or `undefined` if no mapping matches.
+     *
+     * Used to resolve spec paths relative to the correct source file when a
+     * config section (e.g. `api`, `apis`, `apis.my-api`) was loaded via `$ref`.
+     */
+    private findBasePathInMappings(
+        yamlPath: string[],
+        pathMappings: ReferenceResolver.PathMapping[]
+    ): AbsoluteFilePath | undefined {
+        for (const mapping of pathMappings) {
+            if (
+                mapping.yamlPath.length === yamlPath.length &&
+                yamlPath.every((seg, i) => seg === mapping.yamlPath[i])
+            ) {
+                return mapping.document.absoluteFilePath;
+            }
+        }
+        return undefined;
+    }
+
+    /**
+     * Returns the base file path to use for resolving paths in the given top-level
+     * key (e.g. "api"). If the key was `$ref`'d, returns the path of the referenced
+     * file; otherwise falls back to the fern.yml path.
+     */
+    private resolveBasePathForKey(key: string, fernYml: FernYmlSchemaLoader.Success): AbsoluteFilePath {
+        return this.findBasePathInMappings([key], fernYml.pathMappings) ?? fernYml.absoluteFilePath;
     }
 }

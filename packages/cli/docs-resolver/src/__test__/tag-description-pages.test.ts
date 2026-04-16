@@ -101,6 +101,108 @@ describe("tag-description-pages", () => {
         expect(apiSection.tagDescriptionPages).toMatchSnapshot("tag-description-pages-disabled");
     });
 
+    describe("overviewPageId inheritance", () => {
+        it("does not inherit child tag overviewPageId when tag-description-pages is enabled", async () => {
+            const docsWorkspace = await loadDocsWorkspace({
+                fernDirectory: FIXTURE_DIR,
+                context
+            });
+
+            if (docsWorkspace == null) {
+                throw new Error("Workspace is null");
+            }
+
+            const parsedDocsConfig = await parseDocsConfiguration({
+                rawDocsConfiguration: docsWorkspace.config,
+                context,
+                absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
+                absoluteFilepathToDocsConfig: docsWorkspace.absoluteFilepathToDocsConfig
+            });
+
+            if (parsedDocsConfig.navigation.type !== "untabbed") {
+                throw new Error("Expected untabbed navigation");
+            }
+
+            if (parsedDocsConfig.navigation.items[0]?.type !== "apiSection") {
+                throw new Error("Expected apiSection");
+            }
+
+            const apiSection = parsedDocsConfig.navigation.items[0];
+            expect(apiSection.tagDescriptionPages).toBe(true);
+
+            const result = await loadAPIWorkspace({
+                absolutePathToWorkspace: FIXTURE_DIR,
+                context,
+                cliVersion: "0.0.0",
+                workspaceName: undefined
+            });
+
+            if (!result.didSucceed) {
+                throw new Error("API workspace failed to load");
+            }
+
+            const apiWorkspace = await result.workspace.toFernWorkspace({ context });
+            const slug = FernNavigation.V1.SlugGenerator.init("/docs");
+
+            const ir = generateIntermediateRepresentation({
+                workspace: apiWorkspace,
+                audiences: { type: "all" },
+                generationLanguage: undefined,
+                keywords: undefined,
+                smartCasing: false,
+                exampleGeneration: { disabled: false },
+                readme: undefined,
+                version: undefined,
+                packageName: undefined,
+                context,
+                sourceResolver: new SourceResolverImpl(context, apiWorkspace)
+            });
+
+            const apiDefinition = convertIrToApiDefinition({
+                ir,
+                apiDefinitionId: "test-api-id",
+                context
+            });
+
+            const openApiTags: Record<string, { id: string; description: string | undefined }> = {
+                pet: { id: "pet", description: "Everything about your Pets" },
+                store: { id: "store", description: "Access to Petstore orders" },
+                user: { id: "user", description: "Operations about user" }
+            };
+
+            const converter = new ApiReferenceNodeConverter(
+                apiSection,
+                apiDefinition,
+                slug,
+                docsWorkspace,
+                context,
+                new Map(),
+                new Map(),
+                new Map(),
+                NodeIdGenerator.init(),
+                new Map(),
+                apiWorkspace,
+                undefined,
+                undefined,
+                openApiTags
+            );
+
+            const node = converter.get();
+
+            // The top-level API reference should NOT inherit a child tag's overviewPageId
+            // when tag-description-pages is enabled. Each tag keeps its own overview page;
+            // the parent title should remain non-clickable.
+            expect(node.overviewPageId).toBeUndefined();
+            expect(node.type).toBe("apiReference");
+
+            // Verify that child apiPackage nodes DO have overviewPageIds (tag description pages)
+            const childrenWithOverview = node.children.filter(
+                (child) => child.type === "apiPackage" && child.overviewPageId != null
+            );
+            expect(childrenWithOverview.length).toBeGreaterThan(0);
+        });
+    });
+
     describe("tag description content preservation", () => {
         it("does not escape curly braces or angle brackets in tag descriptions", async () => {
             const docsWorkspace = await loadDocsWorkspace({

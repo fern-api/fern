@@ -1,0 +1,5 @@
+- summary: |
+    Fix dynamic snippets using the generator version instead of the SDK version
+    for resolving Go import paths, which caused incorrect major version suffixes
+    in wire test imports and broke go mod tidy.
+  type: fix

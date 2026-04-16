@@ -110,6 +110,9 @@ public final class UnionWithDuplicateTypes {
     public UnionWithDuplicateTypes deserialize(JsonParser p, DeserializationContext context) throws
         IOException {
       Object value = p.readValueAs(Object.class);
+      if (value instanceof Integer) {
+        return of((Integer) value);
+      }
       try {
         return of(ObjectMappers.JSON_MAPPER.convertValue(value, String.class));
       } catch(RuntimeException e) {
@@ -117,9 +120,6 @@ public final class UnionWithDuplicateTypes {
       try {
         return of(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<List<String>>() {}));
       } catch(RuntimeException e) {
-      }
-      if (value instanceof Integer) {
-        return of((Integer) value);
       }
       try {
         return of(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<Set<String>>() {}));

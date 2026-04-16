@@ -158,7 +158,7 @@ describe("@fern-api/generator-migrations", () => {
             const module = migrations["fernapi/fern-python-sdk"];
             const versions = module?.migrations.map((m) => m.version) ?? [];
 
-            expect(versions).toEqual(["4.0.0"]);
+            expect(versions).toEqual(["4.0.0", "4.54.4"]);
         });
     });
 

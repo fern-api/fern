@@ -12,7 +12,6 @@ on:
       - "generators/java/sdk/changes/**"
       - "generators/php/sdk/changes/**"
       - "generators/python/sdk/changes/**"
-      - "generators/ruby/sdk/changes/**"
       - "generators/ruby-v2/sdk/changes/**"
       - "generators/rust/sdk/changes/**"
       - "generators/swift/sdk/changes/**"
@@ -33,7 +32,6 @@ on:
           - java
           - php
           - python
-          - ruby
           - ruby-v2
           - rust
           - swift

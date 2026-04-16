@@ -1,0 +1,6 @@
+- summary: |
+    Fix OAuth token request to include literal custom properties (e.g., grant_type)
+    from the token endpoint request. Previously, only client_id and client_secret
+    were passed, causing TypeScript compilation errors for APIs that require
+    additional literal properties like grant_type on the token request.
+  type: fix
