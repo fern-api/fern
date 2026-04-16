@@ -194,11 +194,27 @@ describe("QueryStringBuilder", () => {
             expect(qs).toBe("limit=10");
         });
 
+        it("skips null values in additional params", () => {
+            const qs = queryBuilder()
+                .add("limit", 10)
+                .mergeAdditional({ extra: null })
+                .build();
+            expect(qs).toBe("limit=10");
+        });
+
         it("handles array values in additional params using repeat format", () => {
             const qs = queryBuilder()
                 .mergeAdditional({ ids: [1, 2, 3] })
                 .build();
             expect(qs).toBe("ids=1&ids=2&ids=3");
+        });
+
+        it("overrides a comma-style param with repeat format", () => {
+            const qs = queryBuilder()
+                .add("tags", ["a", "b"], { style: "comma" })
+                .mergeAdditional({ tags: ["x", "y"] })
+                .build();
+            expect(qs).toBe("tags=x&tags=y");
         });
     });
 
