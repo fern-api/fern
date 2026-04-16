@@ -14,9 +14,7 @@
               "docs": undefined,
               "examples": [
                 {
-                  "headers": {
-                    "X-API-Key": "X-API-Key",
-                  },
+                  "headers": {},
                 },
               ],
               "method": "GET",
@@ -43,9 +41,7 @@
               "docs": undefined,
               "examples": [
                 {
-                  "headers": {
-                    "X-API-Key": "X-API-Key",
-                  },
+                  "headers": {},
                 },
               ],
               "method": "GET",
@@ -64,9 +60,7 @@
               "docs": undefined,
               "examples": [
                 {
-                  "headers": {
-                    "X-API-Key": "X-API-Key",
-                  },
+                  "headers": {},
                 },
               ],
               "method": "GET",
@@ -81,9 +75,7 @@
               "docs": undefined,
               "examples": [
                 {
-                  "headers": {
-                    "X-API-Key": "X-API-Key",
-                  },
+                  "headers": {},
                 },
               ],
               "method": "GET",
@@ -103,9 +95,7 @@
               "docs": undefined,
               "examples": [
                 {
-                  "headers": {
-                    "X-API-Key": "X-API-Key",
-                  },
+                  "headers": {},
                 },
               ],
               "method": "GET",
@@ -165,8 +155,7 @@ service:
       source:
         openapi: ../openapi.yml
       examples:
-        - headers:
-            X-API-Key: X-API-Key
+        - headers: {}
     getPublic:
       path: /public
       method: GET
@@ -174,8 +163,7 @@ service:
       source:
         openapi: ../openapi.yml
       examples:
-        - headers:
-            X-API-Key: X-API-Key
+        - headers: {}
     getProtected:
       path: /protected
       method: GET
@@ -184,8 +172,7 @@ service:
       source:
         openapi: ../openapi.yml
       examples:
-        - headers:
-            X-API-Key: X-API-Key
+        - headers: {}
     getSecure:
       path: /secure
       method: GET
@@ -195,8 +182,7 @@ service:
       source:
         openapi: ../openapi.yml
       examples:
-        - headers:
-            X-API-Key: X-API-Key
+        - headers: {}
     getFlexible:
       path: /flexible
       method: GET
@@ -208,8 +194,7 @@ service:
       source:
         openapi: ../openapi.yml
       examples:
-        - headers:
-            X-API-Key: X-API-Key
+        - headers: {}
   source:
     openapi: ../openapi.yml
 ",

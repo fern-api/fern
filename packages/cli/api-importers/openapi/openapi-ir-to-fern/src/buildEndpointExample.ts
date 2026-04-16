@@ -1,12 +1,6 @@
 import { isNonNullish, noop } from "@fern-api/core-utils";
 import { RawSchemas, recursivelyVisitRawTypeReference } from "@fern-api/fern-definition-schema";
-import {
-    EndpointExample,
-    FullExample,
-    LiteralExample,
-    PathParameterExample,
-    PrimitiveExample
-} from "@fern-api/openapi-ir";
+import { EndpointExample, FullExample, LiteralExample, PathParameterExample } from "@fern-api/openapi-ir";
 
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext.js";
 import { convertEndpointResponseExample, convertFullExample } from "./utils/convertFullExample.js";
