@@ -77,12 +77,19 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
                     property_name = f"{(resolve_name(maybe_body_name).snake_case.safe_name if maybe_body_name is not None else 'request')}_{property_name}"
 
                 self.parameter_name_rewrites[get_name_from_wire_value(property.name)] = property_name
+                maybe_default = self._context.pydantic_generator_context.get_initializer_for_type_reference(
+                    property.value_type
+                )
                 parameters.append(
                     AST.NamedFunctionParameter(
                         name=property_name,
                         docs=property.docs,
                         type_hint=type_hint,
-                        initializer=AST.Expression(DEFAULT_BODY_PARAMETER_VALUE) if type_hint.is_optional else None,
+                        initializer=maybe_default
+                        if maybe_default is not None
+                        else AST.Expression(DEFAULT_BODY_PARAMETER_VALUE)
+                        if type_hint.is_optional
+                        else None,
                         raw_type=property.value_type,
                         raw_name=get_wire_value(property.name),
                     ),

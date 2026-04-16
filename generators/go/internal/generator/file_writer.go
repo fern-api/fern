@@ -464,12 +464,13 @@ func (f *fileWriter) GenerateGetterSetterTestFile() (*File, error) {
 	validSubpackages := make(map[string]struct{})
 	for _, typeDecl := range f.types {
 		if typeDecl.Name.FernFilepath != nil && len(typeDecl.Name.FernFilepath.PackagePath) > 0 {
-			// The last element of the package path is the subpackage name
+			// The last element of the package path is the Go package qualifier used in type references
 			subpkg := typeDecl.Name.FernFilepath.PackagePath[len(typeDecl.Name.FernFilepath.PackagePath)-1].CamelCase.SafeName
 			if subpkg != "" && subpkg != f.packageName {
 				validSubpackages[subpkg] = struct{}{}
-				// Add import for this SDK subpackage upfront
-				subpkgImportPath := packagePathToImportPath(f.baseImportPath, []string{subpkg})
+				// Use the full Fern filepath to build the correct import path,
+				// including any intermediate path segments (e.g. common/foo, not just foo).
+				subpkgImportPath := fernFilepathToImportPath(f.baseImportPath, typeDecl.Name.FernFilepath)
 				testWriter.scope.AddImport(subpkgImportPath)
 			}
 		}

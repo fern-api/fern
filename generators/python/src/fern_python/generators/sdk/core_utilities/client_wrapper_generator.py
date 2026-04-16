@@ -13,6 +13,7 @@ from fern_python.external_dependencies import httpx
 from fern_python.generators.sdk.client_generator.base_client_generator import (
     ConstructorParameter as BaseClientGeneratorConstructorParameter,
 )
+from fern_python.generators.sdk.client_generator.type_utilities import is_type_reference_string
 from fern_python.generators.sdk.core_utilities.core_utilities import CoreUtilities
 from fern_python.snippet.template_utils import TemplateGenerator
 from fern_python.utils import get_name_from_wire_value, get_wire_value, resolve_name
@@ -29,6 +30,9 @@ class ConstructorParameter(BaseClientGeneratorConstructorParameter):
     is_basic: bool = False
     docs: typing.Optional[str] = None
     template: typing.Optional[Template] = None
+    # True when the underlying fern type is not a string and the value must be
+    # wrapped with str(...) to satisfy the Dict[str, str] headers type.
+    needs_str_conversion: bool = False
 
 
 @dataclass
@@ -585,6 +589,7 @@ class ClientWrapperGenerator:
                             if param.type_hint.is_optional:
                                 writer.outdent()
                     else:
+                        stringify = (lambda expr: f"str({expr})") if param.needs_str_conversion else (lambda expr: expr)
                         if param.getter_method is not None:
                             if param.type_hint.is_optional:
                                 writer.write_line(
@@ -593,15 +598,19 @@ class ClientWrapperGenerator:
                                 writer.write_line(f"if {param.constructor_parameter_name} is not None:")
                                 with writer.indent():
                                     writer.write_line(
-                                        f'headers["{param.header_key}"] = {param.constructor_parameter_name}'
+                                        f'headers["{param.header_key}"] = {stringify(param.constructor_parameter_name)}'
                                     )
                             else:
-                                writer.write_line(f'headers["{param.header_key}"] = self.{param.getter_method.name}()')
+                                writer.write_line(
+                                    f'headers["{param.header_key}"] = {stringify(f"self.{param.getter_method.name}()")}'
+                                )
                         elif param.private_member_name is not None:
                             if param.type_hint.is_optional:
                                 writer.write_line(f"if self.{param.private_member_name} is not None:")
                                 writer.indent()
-                            writer.write_line(f'headers["{param.header_key}"] = self.{param.private_member_name}')
+                            writer.write_line(
+                                f'headers["{param.header_key}"] = {stringify(f"self.{param.private_member_name}")}'
+                            )
                             if param.type_hint.is_optional:
                                 writer.outdent()
             for literal_header in literal_headers:
@@ -686,6 +695,10 @@ class ClientWrapperGenerator:
                 )
                 continue
             constructor_parameter_name = names.get_header_constructor_parameter_name(header)
+            needs_str_conversion = not is_type_reference_string(
+                header.value_type,
+                self._context.pydantic_generator_context.get_declaration_for_type_id,
+            )
             parameters.append(
                 ConstructorParameter(
                     constructor_parameter_name=constructor_parameter_name,
@@ -696,6 +709,7 @@ class ClientWrapperGenerator:
                     ),
                     header_key=get_wire_value(header.name),
                     environment_variable=header.env,
+                    needs_str_conversion=needs_str_conversion,
                 )
             )
 
