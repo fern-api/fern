@@ -31,6 +31,7 @@ jobs:
           sparse-checkout: |
             .github/actions/fetch-benchmark-specs
             benchmarks/fern/apis
+            benchmarks/fern/api-versions.txt
 
       - name: Fetch benchmark OpenAPI specs
         uses: ./.github/actions/fetch-benchmark-specs
@@ -118,14 +119,46 @@ jobs:
           path: benchmark-results/
           retention-days: 30
 
+  # Run docs generation benchmark on main.
+  # Uses --preview to create an ephemeral preview deployment (no production impact).
+  docs-baseline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    needs: [fetch-specs]
+    if: ${{ github.ref == 'refs/heads/main' }}
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v6
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Download shared specs
+        uses: actions/download-artifact@v4
+        with:
+          name: benchmark-specs
+          path: benchmarks/fern/apis
+
+      - name: Run docs benchmark
+        uses: ./.github/actions/run-docs-benchmark
+        with:
+          fern-token: ${{ secrets.FERN_FERN_TOKEN }}
+
+      - name: Upload docs baseline results
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-docs-baseline
+          path: benchmark-results/
+          retention-days: 30
+
   # Send benchmark results to PostHog for long-term trend analysis and dashboards.
   # Uses the same PostHog project + API key as seed test metrics (seed.yml).
   # Fire-and-forget: failures here never affect cache save or downstream jobs.
   post-metrics:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    needs: [baseline, baseline-e2e]
-    if: ${{ always() && !cancelled() && needs.baseline.result != 'skipped' }}
+    needs: [baseline, baseline-e2e, docs-baseline]
+    if: ${{ always() && !cancelled() && (needs.baseline.result != 'skipped' || needs.docs-baseline.result != 'skipped') }}
     # No repo permissions needed — only makes outbound HTTPS calls to PostHog.
     permissions: {}
     steps:
@@ -141,6 +174,13 @@ jobs:
         with:
           pattern: benchmark-e2e-*
           path: e2e-results
+          merge-multiple: true
+
+      - name: Download docs baseline artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: benchmark-docs-baseline
+          path: docs-results
           merge-multiple: true
 
       - name: Send benchmark events to PostHog
@@ -229,6 +269,18 @@ jobs:
               ec=$(echo "$line" | jq -r '.exit_code // 0')
               skip=$(echo "$line" | jq -r '.skipped // false')
               send_event "e2e" "$gen" "$spec" "$dur" "$ec" "$skip"
+            done < "$f"
+          done
+
+          # Send docs benchmark results
+          for f in docs-results/*.jsonl; do
+            [ -f "$f" ] || continue
+            while IFS= read -r line; do
+              spec=$(echo "$line" | jq -r '.spec')
+              dur=$(echo "$line" | jq -r '.duration_seconds')
+              ec=$(echo "$line" | jq -r '.exit_code // 0')
+              skip=$(echo "$line" | jq -r '.skipped // false')
+              send_event "docs" "docs" "$spec" "$dur" "$ec" "$skip"
             done < "$f"
           done
 

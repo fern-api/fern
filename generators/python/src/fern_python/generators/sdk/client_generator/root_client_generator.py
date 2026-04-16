@@ -23,6 +23,7 @@ from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
     ClientWrapperGenerator,
     ConstructorParameter,
 )
+from fern_python.utils.name_resolver import get_name_from_wire_value, resolve_name
 from typing_extensions import Unpack
 
 import fern.ir.resources as ir_types
@@ -824,7 +825,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 continue
             parameters.append(
                 RootClientConstructorParameter(
-                    constructor_parameter_name=header.name.name.snake_case.safe_name,
+                    constructor_parameter_name=resolve_name(get_name_from_wire_value(header.name)).snake_case.safe_name,
                     type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
                     initializer=AST.Expression(AST.TypeHint.none()),
                 )
@@ -1297,20 +1298,41 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             )
             writer.write_newline_if_last_line_not()
 
-        # else: raise error
+        # else: fall back to header-auth-only or raise error
+        has_header_auth_schemes = len(client_wrapper_generator._get_header_auth_schemes()) > 0
         writer.write_line("else:")
         with writer.indent():
-            writer.write("raise ")
-            writer.write_node(
-                self._context.core_utilities.instantiate_api_error(
-                    headers=None,
-                    status_code=None,
-                    body=AST.Expression(
-                        "\"The client must be instantiated with either 'token' or both 'client_id' and 'client_secret'\""
-                    ),
+            if has_header_auth_schemes:
+                # When header auth schemes exist (e.g. api_key via auth: any), allow constructing
+                # the client without a bearer token — the header auth alone is sufficient.
+                header_only_kwargs = self._get_client_wrapper_kwargs(
+                    client_wrapper_generator=client_wrapper_generator,
+                    environments_config=self._environments_config,
+                    timeout_local_variable=timeout_local_variable,
+                    is_async=is_async,
+                    exclude_auth=True,
+                    transport_variable_name=transport_variable_name,
                 )
-            )
-            writer.write_newline_if_last_line_not()
+                writer.write(f"self.{self._get_client_wrapper_member_name()} = ")
+                writer.write_node(
+                    AST.ClassInstantiation(
+                        self._context.core_utilities.get_reference_to_client_wrapper(is_async=is_async),
+                        kwargs=header_only_kwargs,
+                    )
+                )
+                writer.write_newline_if_last_line_not()
+            else:
+                writer.write("raise ")
+                writer.write_node(
+                    self._context.core_utilities.instantiate_api_error(
+                        headers=None,
+                        status_code=None,
+                        body=AST.Expression(
+                            "\"The client must be instantiated with either 'token' or both 'client_id' and 'client_secret'\""
+                        ),
+                    )
+                )
+                writer.write_newline_if_last_line_not()
 
     def _get_client_wrapper_kwargs(
         self,
@@ -1499,8 +1521,10 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         for literal_header in constructor_info.literal_headers:
             client_wrapper_constructor_kwargs.append(
                 (
-                    literal_header.header.name.name.snake_case.safe_name,
-                    AST.Expression(literal_header.header.name.name.snake_case.safe_name),
+                    resolve_name(get_name_from_wire_value(literal_header.header.name)).snake_case.safe_name,
+                    AST.Expression(
+                        resolve_name(get_name_from_wire_value(literal_header.header.name)).snake_case.safe_name
+                    ),
                 )
             )
 
@@ -1585,7 +1609,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         return variables
 
     def _get_server_variable_param_name(self, var: ir_types.ServerVariable) -> str:
-        name = var.name.snake_case.safe_name
+        name = resolve_name(var.name).snake_case.safe_name
         if name in self._RESERVED_CONSTRUCTOR_PARAM_NAMES:
             return f"server_url_{name}"
         return name
@@ -1624,7 +1648,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                         env_class_name = self._context.get_class_name_of_environments()
                         kwargs_lines = []
                         for base_url in env_union.base_urls:
-                            prop_name = base_url.name.snake_case.safe_name
+                            prop_name = resolve_name(base_url.name).snake_case.safe_name
                             template = first_multi_env.url_templates.get(base_url.id)
                             if template is not None:
                                 kwargs_lines.append(f'{prop_name}="{template}".format({format_kwargs})')

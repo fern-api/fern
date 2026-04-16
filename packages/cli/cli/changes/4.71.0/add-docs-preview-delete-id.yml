@@ -1,0 +1,3 @@
+- summary: |
+    Add `--id` flag to `fern docs preview delete`, allowing deletion of preview deployments by their stable preview ID instead of the full URL. The org is resolved automatically from `fern.config.json`. Existing usage of `fern docs preview delete <url>` continues to work unchanged via the new auto-detecting `[target]` positional.
+  type: feat

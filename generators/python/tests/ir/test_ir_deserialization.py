@@ -17,7 +17,7 @@ def test_ir_deserialization() -> None:
             "python",
             # TODO: remove version pin after python generator supports ir v 66 and later (jsklan)
             "--version",
-            "v65"
+            "v65",
         ],
         cwd=os.path.join(
             os.path.dirname(__file__),

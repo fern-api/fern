@@ -1,4 +1,172 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.76.0
+  changelogEntry:
+    - summary: |
+        Replace fake time-based extraction progress bar with real file-count
+        tracking, and add a new progress bar for Windows symlink patching.
+      type: feat
+  createdAt: "2026-04-16"
+  irVersion: 66
+- version: 4.75.0
+  changelogEntry:
+    - summary: |
+        When using `fern sdk preview --push-diff`, the diff branch now uses the
+        original package name instead of the preview-scoped name. This makes the
+        diff show only real API changes without preview artifacts like package
+        name rewrites.
+      type: feat
+  createdAt: "2026-04-16"
+  irVersion: 66
+- version: 4.74.0
+  changelogEntry:
+    - summary: |
+        Resolve Windows symlinks via NTFS junctions during bundle extraction instead
+        of running pnpm install in standalone. This enables docs preview on Windows
+        without elevated privileges.
+      type: feat
+  createdAt: "2026-04-16"
+  irVersion: 66
+- version: 4.73.0
+  changelogEntry:
+    - summary: |
+        Present an interactive TUI dropdown when the user omits `--api`,
+        `--instance`, or `--group` flags and multiple options exist.
+        In TTY environments the CLI now prompts for selection instead of
+        failing hard. Non-TTY environments retain the previous error behavior.
+      type: feat
+  createdAt: "2026-04-16"
+  irVersion: 66
+- version: 4.72.0
+  changelogEntry:
+    - summary: |
+        Polish `fern config migrate` command: point the `docs` key at the
+        existing `docs.yml` file via `$ref` syntax instead of inlining, drop
+        legacy `defaultGroup` and `group` fields from SDK target output, and
+        automatically update GitHub Actions workflow files to use the v2 CLI
+        syntax (`fern sdk generate`, `--target` instead of `--group`).
+      type: feat
+  createdAt: "2026-04-16"
+  irVersion: 66
+- version: 4.71.6
+  changelogEntry:
+    - summary: |
+        Fix MDX rendering of C++ library docs by properly escaping angle brackets
+        in template parameters and HTML-like tags within description text. Unescaped
+        angle brackets (e.g. `vector<int>`, `<para>`) caused MDX parse failures.
+      type: fix
+  createdAt: "2026-04-16"
+  irVersion: 66
+- version: 4.71.5
+  changelogEntry:
+    - summary: |
+        `fern automations list generate` now skips generators with local-file-system output
+        or autorelease disabled, matching the behavior of autopilot.
+      type: fix
+  createdAt: "2026-04-15"
+  irVersion: 66
+- version: 4.71.4
+  changelogEntry:
+    - summary: |
+        Fix per-endpoint server overrides being ignored when top-level servers
+        define multiple base URLs with x-fern-server-name. Endpoints now correctly
+        resolve to their specified server URL instead of always using the default.
+      type: fix
+  createdAt: "2026-04-15"
+  irVersion: 66
+- version: 4.71.3
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI-to-IR conversion to resolve custom properties (e.g., grant_type)
+        in OAuth token endpoint requests. Previously, customProperties was always set
+        to undefined for OpenAPI specs, causing generated SDKs to omit required
+        literal properties from the token request.
+      type: fix
+  createdAt: "2026-04-15"
+  irVersion: 66
+- version: 4.71.2
+  changelogEntry:
+    - summary: |
+        Fix allOf composition bugs in V3 OpenAPI importer: resolve $ref schemas
+        within multi-element allOf arrays instead of falling back to untyped objects,
+        deduplicate merged allOf refs for diamond-shaped inheritance, guard
+        variants-flattening and composition-keyword shortcuts against $ref-resolved
+        schemas, preserve inline status through allOf merge path, handle nullable
+        enum patterns in allOf shortcuts, detect cycles across recursive
+        single-element allOf chains, filter unresolved $ref objects from nested allOf
+        flattening, recursively flatten deeply-nested allOf arrays, strip oneOf/anyOf
+        from child schemas during allOf merging, and propagate outer schema metadata
+        through single-element allOf paths.
+      type: fix
+  createdAt: "2026-04-15"
+  irVersion: 66
+- version: 4.71.1
+  changelogEntry:
+    - summary: |
+        Fix false positive warnings in the `missing-redirects` check. Pages are no
+        longer flagged as removed or moved when their old URL is still actively
+        served by another page in the local docs config.
+      type: fix
+  createdAt: "2026-04-15"
+  irVersion: 66
+- version: 4.71.0
+  changelogEntry:
+    - summary: |
+        Add `--id` flag to `fern docs preview delete`, allowing deletion of preview deployments by their stable preview ID instead of the full URL. The org is resolved automatically from `fern.config.json`. Existing usage of `fern docs preview delete <url>` continues to work unchanged via the new auto-detecting `[target]` positional.
+      type: feat
+  createdAt: "2026-04-15"
+  irVersion: 66
+- version: 4.70.2
+  changelogEntry:
+    - summary: |
+        Fix "Edit this page" button appearing on docs sites that never configured it.
+        The default `editThisPageLaunch` is now `undefined` instead of `"dashboard"`,
+        so the button only renders when explicitly configured.
+      type: fix
+  createdAt: "2026-04-15"
+  irVersion: 66
+- version: 4.70.1
+  changelogEntry:
+    - summary: |
+        Fix "Edit this page" button appearing on docs sites that never configured it.
+        The default `editThisPageLaunch` is now `undefined` instead of `"dashboard"`,
+        so the button only renders when explicitly configured.
+      type: fix
+  createdAt: "2026-04-15"
+  irVersion: 66
+- version: 4.70.0
+  changelogEntry:
+    - summary: |
+        Enable `--push-diff` flag for `fern sdk preview` to push a preview diff
+        branch to the SDK repo in addition to publishing to the preview registry.
+        Adds `diff_url` to the JSON and text output for use by CI integrations.
+      type: feat
+  createdAt: "2026-04-14"
+  irVersion: 66
+- version: 4.69.0
+  changelogEntry:
+    - summary: |
+        Improve auto-versioning prompts for better SDK version bump determination and changelog quality.
+        Commit type now matches version bump severity, per-chunk changelog entries use category tags,
+        consolidation prompt deduplicates aggressively, and version context is passed to consolidation.
+      type: feat
+  createdAt: "2026-04-14"
+  irVersion: 66
+- version: 4.68.5
+  changelogEntry:
+    - summary: |
+        Migrate CLI to a unified error system using a shared CliError class with typed error codes.
+        Error codes drive Sentry reporting eligibility; unclassified errors are temporarily suppressed
+        from Sentry until all call sites are migrated.
+      type: chore
+  createdAt: "2026-04-14"
+  irVersion: 66
+- version: 4.68.4
+  changelogEntry:
+    - summary: |
+        Deduplicate global headers when merging IRs from multiple OpenAPI specs. Previously, if multiple specs shared the same `globalHeaderOverrides` from `generators.yml`, the same header would appear once per spec in the merged IR.
+      type: fix
+  createdAt: "2026-04-14"
+  irVersion: 66
 - version: 4.68.3
   changelogEntry:
     - summary: |
@@ -187,7 +355,6 @@
       type: feat
   createdAt: "2026-04-07"
   irVersion: 66
-
 - version: 4.62.6
   changelogEntry:
     - summary: |
@@ -209,7 +376,6 @@
       type: chore
   createdAt: "2026-04-06"
   irVersion: 66
-
 - version: 4.62.3
   changelogEntry:
     - summary: |
@@ -299,7 +465,6 @@
       type: feat
   createdAt: "2026-04-02"
   irVersion: 66
-
 - version: 4.56.0
   changelogEntry:
     - summary: |

@@ -1,8 +1,10 @@
+from fern_python.utils.name_resolver import get_name_from_wire_value, resolve_name
+
 import fern.ir.resources as ir_types
 
 
 def request_property_to_name(request_property: ir_types.RequestPropertyValue) -> str:
-    return request_property.get_as_union().name.name.snake_case.safe_name
+    return resolve_name(get_name_from_wire_value(request_property.get_as_union().name)).snake_case.safe_name
 
 
 def retrieve_pagination_default(type_reference: ir_types.TypeReference) -> int:

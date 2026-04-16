@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
-# Benchmark fixture for a large e-commerce public OpenAPI spec (Square).
+# Benchmark fixture for a large public OpenAPI spec.
 # The openapi.json file is fetched at CI runtime by the fetch-benchmark-specs action.
 # The "version: latest" field is effectively a no-op for benchmarks — seed:local builds
 # generators from local source, so both main baseline and PR benchmarks use the same

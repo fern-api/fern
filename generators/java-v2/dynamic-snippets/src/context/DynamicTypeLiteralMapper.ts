@@ -321,7 +321,8 @@ export class DynamicTypeLiteralMapper {
             case "discriminatedUnion":
                 return this.convertDiscriminatedUnion({
                     discriminatedUnion: named,
-                    value
+                    value,
+                    as
                 });
             case "enum":
                 return this.convertEnum({ enum_: named, value });
@@ -330,7 +331,7 @@ export class DynamicTypeLiteralMapper {
             case "undiscriminatedUnion":
                 // Don't pass inUndiscriminatedUnion here - we're AT the undiscriminated union level,
                 // not within it. The flag should only apply to the variants within the union.
-                return this.convertUndiscriminatedUnion({ undiscriminatedUnion: named, value });
+                return this.convertUndiscriminatedUnion({ undiscriminatedUnion: named, value, as });
             default:
                 assertNever(named);
         }
@@ -338,10 +339,12 @@ export class DynamicTypeLiteralMapper {
 
     private convertDiscriminatedUnion({
         discriminatedUnion,
-        value
+        value,
+        as
     }: {
         discriminatedUnion: FernIr.dynamic.DiscriminatedUnionType;
         value: unknown;
+        as?: DynamicTypeLiteralMapper.ConvertedAs;
     }): java.TypeLiteral {
         const classReference = this.context.getJavaClassReferenceFromDeclaration({
             declaration: discriminatedUnion.declaration
@@ -366,7 +369,7 @@ export class DynamicTypeLiteralMapper {
                     java.invokeMethod({
                         on: classReference,
                         method: this.context.getPropertyName(unionVariant.discriminantValue.name),
-                        arguments_: [this.convertNamed({ named, value: discriminatedUnionTypeInstance.value })]
+                        arguments_: [this.convertNamed({ named, value: discriminatedUnionTypeInstance.value, as })]
                     })
                 );
             }
@@ -386,7 +389,8 @@ export class DynamicTypeLiteralMapper {
                             arguments_: [
                                 this.convert({
                                     typeReference: unionVariant.typeReference,
-                                    value: record[propertyKey]
+                                    value: record[propertyKey],
+                                    as
                                 })
                             ]
                         })
@@ -646,14 +650,17 @@ export class DynamicTypeLiteralMapper {
 
     private convertUndiscriminatedUnion({
         undiscriminatedUnion,
-        value
+        value,
+        as
     }: {
         undiscriminatedUnion: FernIr.dynamic.UndiscriminatedUnionType;
         value: unknown;
+        as?: DynamicTypeLiteralMapper.ConvertedAs;
     }): java.TypeLiteral {
         const result = this.findMatchingUndiscriminatedUnionType({
             undiscriminatedUnion,
-            value
+            value,
+            as
         });
         if (result == null) {
             return java.TypeLiteral.nop();
@@ -686,10 +693,12 @@ export class DynamicTypeLiteralMapper {
 
     private findMatchingUndiscriminatedUnionType({
         undiscriminatedUnion,
-        value
+        value,
+        as
     }: {
         undiscriminatedUnion: FernIr.dynamic.UndiscriminatedUnionType;
         value: unknown;
+        as?: DynamicTypeLiteralMapper.ConvertedAs;
     }): { valueTypeReference: FernIr.dynamic.TypeReference; typeInstantiation: java.TypeLiteral } | undefined {
         for (const typeReference of undiscriminatedUnion.types) {
             const errorsBefore = this.context.errors.size();
@@ -697,6 +706,7 @@ export class DynamicTypeLiteralMapper {
                 const typeInstantiation = this.convert({
                     typeReference,
                     value,
+                    as,
                     inUndiscriminatedUnion: true
                 });
 

@@ -203,11 +203,19 @@ export class GithubStep extends BaseStep {
         }
 
         const finalCommitMessage = this.config.commitMessage ?? "SDK Generation";
+        const headSha = await repository.getHeadSha();
+        const changelogUrl = this.config.changelogEntry
+            ? `https://github.com/${this.config.uri}/blob/${headSha}/changelog.md`
+            : undefined;
         const { prTitle, prBody } = parseCommitMessageForPR(
             finalCommitMessage,
             this.config.changelogEntry,
             this.config.prDescription,
-            this.config.versionBumpReason
+            this.config.versionBumpReason,
+            this.config.previousVersion,
+            this.config.newVersion,
+            this.config.versionBump,
+            changelogUrl
         );
         const replaySection = formatReplayPrBody(replayResult, { branchName: prBranch, repoUri: this.config.uri });
         let enrichedBody = replaySection != null ? prBody + "\n\n---\n\n" + replaySection : prBody;

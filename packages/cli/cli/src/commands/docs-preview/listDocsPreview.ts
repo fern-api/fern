@@ -1,8 +1,8 @@
 import { FernToken } from "@fern-api/auth";
 import { createFdrService } from "@fern-api/core";
 import { askToLogin } from "@fern-api/login";
+import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
-
 import { CliContext } from "../../cli-context/CliContext.js";
 
 interface PreviewDeployment {
@@ -25,7 +25,9 @@ export async function listDocsPreview({
     });
 
     if (token == null) {
-        cliContext.failAndThrow("Failed to authenticate. Please run 'fern login' first.");
+        cliContext.failAndThrow("Failed to authenticate. Please run 'fern login' first.", undefined, {
+            code: CliError.Code.AuthError
+        });
         return;
     }
 
@@ -44,7 +46,9 @@ export async function listDocsPreview({
             switch (listResponse.error.error) {
                 case "UnauthorizedError":
                     return context.failAndThrow(
-                        "Unauthorized to list preview deployments. Please run 'fern login' to refresh your credentials, or set the FERN_TOKEN environment variable."
+                        "Unauthorized to list preview deployments. Please run 'fern login' to refresh your credentials, or set the FERN_TOKEN environment variable.",
+                        undefined,
+                        { code: CliError.Code.NetworkError }
                     );
                 default: {
                     const errorContent =
@@ -56,7 +60,8 @@ export async function listDocsPreview({
                     context.logger.debug(`Error fetching preview deployments: ${JSON.stringify(errorContent)}`);
                     return context.failAndThrow(
                         "Failed to fetch preview deployments. Please ensure you are logged in with 'fern login' or have FERN_TOKEN set, then try again.",
-                        listResponse.error
+                        listResponse.error,
+                        { code: CliError.Code.NetworkError }
                     );
                 }
             }
