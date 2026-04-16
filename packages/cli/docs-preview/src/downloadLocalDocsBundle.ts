@@ -5,7 +5,7 @@ import chalk from "chalk";
 import { execSync } from "child_process";
 import cliProgress from "cli-progress";
 import decompress from "decompress";
-import { cpSync, existsSync, mkdirSync, statSync, symlinkSync } from "fs";
+import { cpSync, existsSync, lstatSync, mkdirSync, symlinkSync } from "fs";
 import { mkdir, readFile, rename, rm, writeFile } from "fs/promises";
 import { homedir } from "os";
 import path from "path";
@@ -115,102 +115,75 @@ function resolveWindowsSymlinks(
 
     const rootPnpmStore = path.join(outputDir, "standalone", "node_modules", ".pnpm");
 
-    // Multi-pass resolution: some symlinks (e.g. turbopack aliases like
-    // qs-0df67fa3c19a2c11 -> qs) depend on other symlinks (qs -> .pnpm/...).
-    // Retry unresolved entries until no more progress is made.
-    let pending = symlinks;
-    const MAX_PASSES = 5;
+    for (const { path: symlinkPath, linkname } of symlinks) {
+        const fullSymlinkPath = path.join(outputDir, symlinkPath);
 
-    for (let pass = 0; pass < MAX_PASSES && pending.length > 0; pass++) {
-        const stillPending: SymlinkEntry[] = [];
+        if (!isWithinOutputDir(fullSymlinkPath, outputDir)) {
+            logger.warn(`Skipping symlink with path outside outputDir: ${symlinkPath}`);
+            failed++;
+            continue;
+        }
 
-        for (const { path: symlinkPath, linkname } of pending) {
-            const fullSymlinkPath = path.join(outputDir, symlinkPath);
+        const symlinkDir = path.dirname(fullSymlinkPath);
+        const resolvedTarget = path.resolve(symlinkDir, linkname);
 
-            if (!isWithinOutputDir(fullSymlinkPath, outputDir)) {
-                logger.warn(`Skipping symlink with path outside outputDir: ${symlinkPath}`);
-                failed++;
-                continue;
-            }
+        if (existsSync(fullSymlinkPath)) {
+            alreadyExisted++;
+            continue;
+        }
 
-            const symlinkDir = path.dirname(fullSymlinkPath);
-            const resolvedTarget = path.resolve(symlinkDir, linkname);
+        let sourcePath = resolvedTarget;
+        let usedFallback = false;
 
-            if (existsSync(fullSymlinkPath)) {
-                alreadyExisted++;
-                continue;
-            }
-
-            let sourcePath = resolvedTarget;
-            let usedFallback = false;
-
-            // If direct target doesn't exist, try fallback in root .pnpm store
-            if (!existsSync(sourcePath) && existsSync(rootPnpmStore)) {
-                const parts = linkname.split("/");
-                const nmIdx = parts.lastIndexOf("node_modules");
-                if (nmIdx >= 0 && nmIdx > 0) {
-                    const pnpmDirName = parts[nmIdx - 1];
-                    const pkgRelPath = parts.slice(nmIdx + 1).join("/");
-                    if (pnpmDirName != null && pkgRelPath != null) {
-                        const fallback = path.join(rootPnpmStore, pnpmDirName, "node_modules", pkgRelPath);
-                        if (!isWithinOutputDir(fallback, outputDir)) {
-                            continue; // skip unsafe fallback
-                        }
-                        if (existsSync(fallback)) {
-                            sourcePath = fallback;
-                            usedFallback = true;
-                        }
+        // If direct target doesn't exist, try fallback in root .pnpm store
+        if (!existsSync(sourcePath) && existsSync(rootPnpmStore)) {
+            const parts = linkname.split("/");
+            const nmIdx = parts.lastIndexOf("node_modules");
+            if (nmIdx >= 0 && nmIdx > 0) {
+                const pnpmDirName = parts[nmIdx - 1];
+                const pkgRelPath = parts.slice(nmIdx + 1).join("/");
+                if (pnpmDirName != null && pkgRelPath != null) {
+                    const fallback = path.join(rootPnpmStore, pnpmDirName, "node_modules", pkgRelPath);
+                    if (!isWithinOutputDir(fallback, outputDir)) {
+                        continue; // skip unsafe fallback
+                    }
+                    if (existsSync(fallback)) {
+                        sourcePath = fallback;
+                        usedFallback = true;
                     }
                 }
             }
-
-            if (!isWithinOutputDir(sourcePath, outputDir)) {
-                logger.warn(`Skipping symlink whose target is outside outputDir: ${linkname}`);
-                failed++;
-                continue;
-            }
-
-            if (!existsSync(sourcePath)) {
-                // Target doesn't exist yet — may be resolved in a later pass
-                stillPending.push({ path: symlinkPath, linkname });
-                continue;
-            }
-
-            try {
-                mkdirSync(path.dirname(fullSymlinkPath), { recursive: true });
-                // Use statSync (follows symlinks/junctions) instead of lstatSync
-                // so that targets already resolved as junctions are correctly
-                // identified as directories.
-                const stat = statSync(sourcePath);
-                if (stat.isDirectory()) {
-                    symlinkSync(sourcePath, fullSymlinkPath, "junction");
-                    junctions++;
-                } else {
-                    cpSync(sourcePath, fullSymlinkPath);
-                    copies++;
-                }
-                if (usedFallback) {
-                    fallbackUsed++;
-                }
-            } catch (error) {
-                logger.debug(`Failed to resolve symlink ${symlinkPath}: ${error}`);
-                failed++;
-            }
-            onProgress?.(junctions + copies + alreadyExisted + failed, symlinks.length);
         }
 
-        if (stillPending.length === pending.length) {
-            // No progress — all remaining entries are unresolvable
-            failed += stillPending.length;
-            break;
+        if (!isWithinOutputDir(sourcePath, outputDir)) {
+            logger.warn(`Skipping symlink whose target is outside outputDir: ${linkname}`);
+            failed++;
+            continue;
         }
 
-        if (stillPending.length > 0) {
-            logger.debug(
-                `Pass ${pass + 1}: ${pending.length - stillPending.length} resolved, ${stillPending.length} deferred`
-            );
+        if (!existsSync(sourcePath)) {
+            failed++;
+            continue;
         }
-        pending = stillPending;
+
+        try {
+            mkdirSync(path.dirname(fullSymlinkPath), { recursive: true });
+            const stat = lstatSync(sourcePath);
+            if (stat.isDirectory()) {
+                symlinkSync(sourcePath, fullSymlinkPath, "junction");
+                junctions++;
+            } else {
+                cpSync(sourcePath, fullSymlinkPath);
+                copies++;
+            }
+            if (usedFallback) {
+                fallbackUsed++;
+            }
+        } catch (error) {
+            logger.debug(`Failed to resolve symlink ${symlinkPath}: ${error}`);
+            failed++;
+        }
+        onProgress?.(junctions + copies + alreadyExisted + failed, symlinks.length);
     }
 
     logger.debug(
