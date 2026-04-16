@@ -1,0 +1,46 @@
+{
+  "type": "object",
+  "properties": {
+    "data": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/common.foo.types.BaseType"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "label": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "label"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "common.foo.types.BaseType": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "value": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false
+    }
+  }
+}
