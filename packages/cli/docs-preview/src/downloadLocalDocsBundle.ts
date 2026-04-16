@@ -330,7 +330,7 @@ export async function downloadBundle({
             await decompress(outputZipPath, absolutePathToBundleFolder, {
                 filter: (file) => {
                     if (PLATFORM_IS_WINDOWS && file.type === "symlink") {
-                        const linkname = (file as Record<string, unknown>).linkname;
+                        const linkname = (file as unknown as Record<string, unknown>).linkname;
                         if (typeof linkname === "string") {
                             collectedSymlinks.push({ path: file.path, linkname });
                         }
