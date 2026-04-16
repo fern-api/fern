@@ -1,6 +1,13 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Upgrade @fern-api/replay to 0.11.0.
+      type: chore
+  createdAt: "2026-04-16"
+  version: 0.9.9
+
+- changelogEntry:
+    - summary: |
         Use commit SHA instead of branch name in changelog URL so the link
         remains valid after the PR branch is deleted or squash-merged.
       type: fix
