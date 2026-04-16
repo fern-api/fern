@@ -271,7 +271,7 @@ jobs:
           echo "${{ matrix.generator-name }}-changes=${{ steps.get-generator-changes.outputs.any_changed }}" >> $GITHUB_OUTPUT
 
   get-all-test-matrices:
-    runs-on: Seed
+    runs-on: ubuntu-latest
     timeout-minutes: 10
     needs: [setup]
     outputs:
@@ -406,7 +406,7 @@ jobs:
           dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   python-sdk-seed-update:
-    runs-on: Seed
+    runs-on: ubuntu-latest
     timeout-minutes: 60
     needs: [changes, setup, get-all-test-matrices]
     if: >-
@@ -478,7 +478,7 @@ jobs:
           dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   java-sdk-seed-update:
-    runs-on: Seed
+    runs-on: ubuntu-latest
     timeout-minutes: 60
     needs: [changes, setup, get-all-test-matrices]
     if: >-
