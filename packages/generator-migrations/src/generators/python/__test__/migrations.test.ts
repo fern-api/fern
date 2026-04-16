@@ -435,6 +435,27 @@ describe("Python SDK Migrations", () => {
 
             expect(result.config).toEqual({});
         });
+
+        it("passes through custom-image generator configs unchanged", () => {
+            // Custom-image generators are identified by `image` rather than `name`,
+            // so the python SDK migration should not attempt to modify them.
+            const config = {
+                image: "my-org/my-custom-python-generator:1.0.0",
+                version: "4.54.3",
+                config: {
+                    pydantic_config: {
+                        use_provided_defaults: true
+                    }
+                }
+            } as unknown as generatorsYml.GeneratorInvocationSchema;
+
+            const result = migration_4_54_4.migrateGeneratorConfig({
+                config,
+                context: { logger: mockLogger }
+            });
+
+            expect(result).toBe(config);
+        });
     });
 
     describe("migration module", () => {
