@@ -82,6 +82,12 @@ function warnIfLongPathsDisabled(logger: Logger): void {
     );
 }
 
+function isWithinOutputDir(resolvedPath: string, outputDir: string): boolean {
+    const rel = path.relative(outputDir, resolvedPath);
+    // rel must not start with ".." and must not be an absolute path
+    return !rel.startsWith("..") && !path.isAbsolute(rel);
+}
+
 /**
  * On Windows, tar symlinks are filtered out during extraction (fs.symlink
  * requires elevated privileges). This function resolves each collected symlink
@@ -106,6 +112,13 @@ function resolveWindowsSymlinks(outputDir: string, symlinks: SymlinkEntry[], log
 
     for (const { path: symlinkPath, linkname } of symlinks) {
         const fullSymlinkPath = path.join(outputDir, symlinkPath);
+
+        if (!isWithinOutputDir(fullSymlinkPath, outputDir)) {
+            logger.warn(`Skipping symlink with path outside outputDir: ${symlinkPath}`);
+            failed++;
+            continue;
+        }
+
         const symlinkDir = path.dirname(fullSymlinkPath);
         const resolvedTarget = path.resolve(symlinkDir, linkname);
 
@@ -126,12 +139,21 @@ function resolveWindowsSymlinks(outputDir: string, symlinks: SymlinkEntry[], log
                 const pkgRelPath = parts.slice(nmIdx + 1).join("/");
                 if (pnpmDirName != null && pkgRelPath != null) {
                     const fallback = path.join(rootPnpmStore, pnpmDirName, "node_modules", pkgRelPath);
+                    if (!isWithinOutputDir(fallback, outputDir)) {
+                        continue; // skip unsafe fallback
+                    }
                     if (existsSync(fallback)) {
                         sourcePath = fallback;
                         usedFallback = true;
                     }
                 }
             }
+        }
+
+        if (!isWithinOutputDir(sourcePath, outputDir)) {
+            logger.warn(`Skipping symlink whose target is outside outputDir: ${linkname}`);
+            failed++;
+            continue;
         }
 
         if (!existsSync(sourcePath)) {
