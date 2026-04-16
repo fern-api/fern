@@ -46,7 +46,7 @@ async function getTargets(
         groupName?: string;
     }
 ): Promise<Target[]> {
-    const context = createTestContext({ cwd: AbsoluteFilePath.of("/tmp") });
+    const context = await createTestContext({ cwd: AbsoluteFilePath.of("/tmp") });
     // Force isTTY = false so promptSelect always throws CliError instead of showing TUI
     Object.defineProperty(context, "isTTY", { get: () => false });
 

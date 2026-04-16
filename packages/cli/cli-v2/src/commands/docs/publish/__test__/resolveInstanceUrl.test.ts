@@ -18,7 +18,7 @@ async function resolveInstanceUrl(
     instances: Array<{ url: string }>,
     instance?: string
 ): Promise<string> {
-    const context = createTestContext({ cwd: AbsoluteFilePath.of("/tmp") });
+    const context = await createTestContext({ cwd: AbsoluteFilePath.of("/tmp") });
     Object.defineProperty(context, "isTTY", { get: () => false });
 
     return (
