@@ -207,10 +207,10 @@ jobs:
             core.setOutput('generator-path-map', JSON.stringify(generatorPathMap));
             core.setOutput('comment-id', commentId);
             core.setOutput('pr-number', prNumber);
-            core.setOutput('pr-ref', pr.data.head.ref);
-            core.setOutput('pr-sha', pr.data.head.sha);
-            core.setOutput('pr-repo-full-name', pr.data.head.repo.full_name);
-            core.setOutput('base-repo-full-name', pr.data.base.repo.full_name);
+            core.setOutput('pr-ref', pr.head.ref);
+            core.setOutput('pr-sha', pr.head.sha);
+            core.setOutput('pr-repo-full-name', pr.head.repo.full_name);
+            core.setOutput('base-repo-full-name', pr.base.repo.full_name);
 
       - name: Check if we can push to PR branch
         id: check-push
