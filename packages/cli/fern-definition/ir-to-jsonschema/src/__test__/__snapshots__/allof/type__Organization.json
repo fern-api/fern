@@ -1,0 +1,50 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string"
+    },
+    "metadata": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/BaseOrgMetadata"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "name",
+    "id"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "BaseOrgMetadata": {
+      "type": "object",
+      "properties": {
+        "region": {
+          "type": "string"
+        },
+        "tier": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "region"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

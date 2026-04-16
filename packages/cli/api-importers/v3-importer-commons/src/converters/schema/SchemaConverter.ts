@@ -1,13 +1,12 @@
 import * as FernIr from "@fern-api/ir-sdk";
-import { mergeWith } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
-
 import { AbstractConverter, AbstractConverterContext, Extensions } from "../../index.js";
 import { createTypeReferenceFromFernType } from "../../utils/CreateTypeReferenceFromFernType.js";
 import { ExampleConverter } from "../ExampleConverter.js";
 import { ArraySchemaConverter } from "./ArraySchemaConverter.js";
 import { EnumSchemaConverter } from "./EnumSchemaConverter.js";
 import { MapSchemaConverter } from "./MapSchemaConverter.js";
+import { mergeAllOfSchemas } from "./mergeAllOfSchemas.js";
 import { ObjectSchemaConverter } from "./ObjectSchemaConverter.js";
 import { OneOfSchemaConverter } from "./OneOfSchemaConverter.js";
 import { PrimitiveSchemaConverter } from "./PrimitiveSchemaConverter.js";
@@ -31,6 +30,7 @@ export declare namespace SchemaConverter {
         schema: OpenAPIV3_1.SchemaObject;
         inlined?: boolean;
         nameOverride?: string;
+        visitedRefs?: Set<string>;
     }
 
     export interface ConvertedSchema {
@@ -51,13 +51,23 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
     private readonly inlined: boolean;
     private readonly audiences: string[];
     private readonly nameOverride?: string;
+    private readonly visitedRefs: Set<string>;
 
-    constructor({ context, breadcrumbs, schema, id, inlined = false, nameOverride }: SchemaConverter.Args) {
+    constructor({
+        context,
+        breadcrumbs,
+        schema,
+        id,
+        inlined = false,
+        nameOverride,
+        visitedRefs
+    }: SchemaConverter.Args) {
         super({ context, breadcrumbs });
         this.schema = schema;
         this.id = id;
         this.inlined = inlined;
         this.nameOverride = nameOverride;
+        this.visitedRefs = visitedRefs ?? new Set<string>();
         this.audiences =
             this.context.getAudiences({
                 operation: this.schema,
@@ -168,23 +178,53 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             this.schema.allOf?.length === 1 &&
             this.schema.allOf[0] != null
         ) {
+            const allOfElement = this.schema.allOf[0];
+
+            // Guard against single-element allOf cycles (e.g. A → B → A via single-element allOf chains)
+            if (this.context.isReferenceObject(allOfElement)) {
+                const refPath = allOfElement.$ref;
+                if (this.visitedRefs.has(refPath)) {
+                    return undefined;
+                }
+            }
+
             const allOfSchema = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
-                schemaOrReference: this.schema.allOf[0],
+                schemaOrReference: allOfElement,
                 breadcrumbs: this.breadcrumbs
             });
 
             if (allOfSchema != null) {
+                const visitedRefsForChild = this.context.isReferenceObject(allOfElement)
+                    ? new Set<string>([...this.visitedRefs, allOfElement.$ref])
+                    : this.visitedRefs;
+
                 const allOfConverter = new SchemaConverter({
                     context: this.context,
                     breadcrumbs: [...this.breadcrumbs, "allOf", "0"],
                     schema: allOfSchema,
                     id: this.id,
-                    inlined: true
+                    inlined: this.inlined,
+                    visitedRefs: visitedRefsForChild
                 });
 
                 const allOfResult = allOfConverter.convert();
 
                 if (allOfResult?.convertedSchema.typeDeclaration?.shape.type !== "object") {
+                    // Propagate outer schema metadata (description, deprecated, etc.)
+                    // that would otherwise be lost since allOfConverter got the child schema
+                    if (allOfResult != null) {
+                        const decl = allOfResult.convertedSchema.typeDeclaration;
+                        if (this.schema.description != null && decl.docs == null) {
+                            decl.docs = this.schema.description;
+                        }
+                        const outerAvailability = this.context.getAvailability({
+                            node: this.schema,
+                            breadcrumbs: this.breadcrumbs
+                        });
+                        if (outerAvailability != null && decl.availability == null) {
+                            decl.availability = outerAvailability;
+                        }
+                    }
                     return allOfResult;
                 }
             }
@@ -196,18 +236,49 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             this.schema.allOf.length >= 1;
 
         if (shouldMergeAllOf) {
-            let mergedSchema: Record<string, unknown> = {};
+            const localResolvedRefs = new Set<string>();
+            const resolvedElements: OpenAPIV3_1.SchemaObject[] = [];
+            let hasCycle = false;
+
             for (const allOfSchema of this.schema.allOf ?? []) {
+                let schemaToMerge: OpenAPIV3_1.SchemaObject;
+
                 if (this.context.isReferenceObject(allOfSchema)) {
-                    return undefined;
+                    const refPath = allOfSchema.$ref;
+                    // Check ancestor set for true cross-schema cycles
+                    if (this.visitedRefs.has(refPath)) {
+                        hasCycle = true;
+                        break;
+                    }
+                    // Skip same-array duplicates (e.g. allOf: [$ref:Base, $ref:Base])
+                    // without triggering the cycle breaker
+                    if (localResolvedRefs.has(refPath)) {
+                        continue;
+                    }
+                    localResolvedRefs.add(refPath);
+
+                    const resolved = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                        schemaOrReference: allOfSchema,
+                        breadcrumbs: this.breadcrumbs
+                    });
+                    if (resolved == null) {
+                        return undefined;
+                    }
+                    schemaToMerge = resolved;
+                } else {
+                    schemaToMerge = allOfSchema;
                 }
 
                 // Handle bare oneOf/anyOf elements used for mutual exclusion patterns
                 // (e.g., oneOf with variants containing `not: {}` properties).
                 // Flatten variant properties into the merged schema as optional properties.
-                const variants =
-                    (allOfSchema as OpenAPIV3_1.SchemaObject).oneOf ?? (allOfSchema as OpenAPIV3_1.SchemaObject).anyOf;
-                if (variants != null && allOfSchema.type == null && allOfSchema.properties == null) {
+                const variants = schemaToMerge.oneOf ?? schemaToMerge.anyOf;
+                if (
+                    !this.context.isReferenceObject(allOfSchema) &&
+                    variants != null &&
+                    schemaToMerge.type == null &&
+                    schemaToMerge.properties == null
+                ) {
                     const flattenedProperties: Record<string, unknown> = {};
                     for (const variantSchemaOrRef of variants) {
                         const variantSchema = this.context.isReferenceObject(variantSchemaOrRef)
@@ -235,31 +306,29 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                         }
                     }
                     if (Object.keys(flattenedProperties).length > 0) {
-                        // Add flattened properties as optional on the merged schema
-                        const existingProperties = (mergedSchema.properties as Record<string, unknown>) ?? {};
-                        mergedSchema.properties = { ...existingProperties, ...flattenedProperties };
-                        // Do not add to required — variant properties are optional on the parent
+                        resolvedElements.push({ properties: flattenedProperties } as OpenAPIV3_1.SchemaObject);
                     }
                     continue;
                 }
 
-                mergedSchema = mergeWith(mergedSchema, allOfSchema, (objValue, srcValue) => {
-                    if (srcValue === allOfSchema) {
-                        return objValue;
-                    }
-                    if (Array.isArray(objValue) && Array.isArray(srcValue)) {
-                        return [...objValue, ...srcValue];
-                    }
-                    return undefined;
-                });
+                resolvedElements.push(schemaToMerge);
             }
 
+            // If a circular reference was detected, fall back to the ObjectSchemaConverter path
+            if (hasCycle) {
+                return undefined;
+            }
+
+            const mergedSchema = mergeAllOfSchemas(this.schema, resolvedElements);
+
+            const allResolvedRefs = new Set<string>([...this.visitedRefs, ...localResolvedRefs]);
             const mergedConverter = new SchemaConverter({
                 context: this.context,
                 breadcrumbs: this.breadcrumbs,
                 schema: mergedSchema,
                 id: this.id,
-                inlined: true
+                inlined: this.inlined,
+                visitedRefs: allResolvedRefs
             });
             return mergedConverter.convert();
         }

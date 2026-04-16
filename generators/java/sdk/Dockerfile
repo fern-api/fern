@@ -1,7 +1,8 @@
 # Stage 1: Java V2
 # Updated: WebSocket feature support added
-# Updated Node.js to 24.13.0 to fix CVE-2025-59465, CVE-2025-55131, CVE-2025-55130, CVE-2026-21637, CVE-2025-59466, CVE-2025-55132
-FROM node:24.13.0-bookworm AS node
+# Updated Node.js to 24.14.1 to fix CVE-2026-21710, CVE-2026-21717, CVE-2026-21713,
+# CVE-2026-21714, CVE-2026-21712, CVE-2026-21715, CVE-2026-21716
+FROM node:24.14.1-bookworm AS node
 COPY generators/java-v2/sdk/dist/cli.cjs /dist/cli.cjs
 COPY generators/java-v2/sdk/features.yml /assets/features.yml
 
@@ -52,6 +53,10 @@ RUN rm -f /opt/gradle/lib/jackson-core-*.jar && \
 # CVE-2025-14819, CVE-2025-15079, CVE-2025-15224), alsa-lib (CVE-2026-25068),
 # expat (CVE-2026-25210), openssh/openssh-clients (CVE-2025-61984, CVE-2025-61985)
 # Security update 2026-03-30: add freetype (CVE-2026-23865, ALAS2023-2026-1486)
+# Security update 2026-04-15: add python3/python3-libs (ALAS2023-2026-1583,
+# CVE-2025-11468, CVE-2025-15282, CVE-2026-0672, CVE-2026-0865, CVE-2026-1299,
+# CVE-2026-2297, CVE-2026-4224, CVE-2026-4519),
+# libnghttp2 (ALAS2023-2026-1542, CVE-2026-27135)
 RUN dnf --releasever=latest update -y \
     openssl-fips-provider-latest \
     openssl-libs \
@@ -68,7 +73,10 @@ RUN dnf --releasever=latest update -y \
     expat \
     openssh \
     openssh-clients \
-    freetype && \
+    freetype \
+    python3 \
+    python3-libs \
+    libnghttp2 && \
     dnf remove -y git-lfs wget || true && \
     dnf clean all && \
     rm -rf /var/cache/dnf

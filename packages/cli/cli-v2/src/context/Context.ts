@@ -10,12 +10,13 @@ import { schemas } from "@fern-api/config";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { createLogger, LOG_LEVELS, Logger, LogLevel } from "@fern-api/logger";
 import { getTokenFromAuth0 } from "@fern-api/login";
+import { CliError } from "@fern-api/task-context";
+
 import chalk from "chalk";
 import inquirer from "inquirer";
 import { CredentialStore, TokenService } from "../auth/index.js";
 import { Cache } from "../cache/index.js";
 import { FernYmlSchemaLoader } from "../config/fern-yml/FernYmlSchemaLoader.js";
-import { CliError } from "../errors/CliError.js";
 import { Target } from "../sdk/config/Target.js";
 import { TelemetryClient } from "../telemetry/index.js";
 import { Icons } from "../ui/format.js";
@@ -30,6 +31,7 @@ export class Context {
     private isShuttingDown = false;
     private logFilePathPrinted = false;
 
+    public readonly createdAt: number = Date.now();
     public readonly cwd: AbsoluteFilePath;
     public readonly logLevel: LogLevel;
     public readonly info: CommandInfo;
@@ -41,7 +43,7 @@ export class Context {
     public readonly tokenService: TokenService;
     public readonly ttyAwareLogger: TtyAwareLogger;
 
-    constructor({
+    public static async create({
         stdout,
         stderr,
         cwd,
@@ -51,6 +53,24 @@ export class Context {
         stderr: NodeJS.WriteStream;
         cwd?: AbsoluteFilePath;
         logLevel?: LogLevel;
+    }): Promise<Context> {
+        const ttyAwareLogger = new TtyAwareLogger(stdout, stderr);
+        const telemetry = await TelemetryClient.create({ isTTY: ttyAwareLogger.isTTY });
+        return new Context({ stdout, stderr, cwd, logLevel, ttyAwareLogger, telemetry });
+    }
+
+    private constructor({
+        cwd,
+        logLevel,
+        ttyAwareLogger,
+        telemetry
+    }: {
+        stdout: NodeJS.WriteStream;
+        stderr: NodeJS.WriteStream;
+        cwd?: AbsoluteFilePath;
+        logLevel?: LogLevel;
+        ttyAwareLogger: TtyAwareLogger;
+        telemetry: TelemetryClient;
     }) {
         this.cwd = cwd ?? AbsoluteFilePath.of(process.cwd());
         this.logLevel = logLevel ?? LogLevel.Info;
@@ -59,8 +79,8 @@ export class Context {
         this.stderr = createLogger((level: LogLevel, ...args: string[]) => this.logStderr(level, ...args));
         this.cache = new Cache({ logger: this.stderr });
         this.logs = new LogFileWriter(this.cache.logs.absoluteFilePath);
-        this.ttyAwareLogger = new TtyAwareLogger(stdout, stderr);
-        this.telemetry = new TelemetryClient({ isTTY: this.isTTY });
+        this.ttyAwareLogger = ttyAwareLogger;
+        this.telemetry = telemetry;
         this.tokenService = new TokenService({ credential: new CredentialStore() });
     }
 
@@ -126,7 +146,7 @@ export class Context {
                 this.stderr.info(
                     chalk.dim("  To authenticate, run: 'fern auth login' or set the FERN_TOKEN environment variable")
                 );
-                throw CliError.exit();
+                throw new CliError({ code: CliError.Code.AuthError });
             }
             return await this.promptAndLogin();
         }
@@ -139,7 +159,7 @@ export class Context {
                 this.stderr.info(
                     chalk.dim("  To authenticate, run: 'fern auth login' or set the FERN_TOKEN environment variable")
                 );
-                throw CliError.exit();
+                throw new CliError({ code: CliError.Code.AuthError });
             }
             return await this.promptAndLogin();
         }
@@ -158,7 +178,7 @@ export class Context {
         ]);
 
         if (!confirm) {
-            throw CliError.exit();
+            throw new CliError({ code: CliError.Code.AuthError });
         }
 
         this.stderr.info(`${Icons.info} Opening browser to log in to Fern...`);
@@ -173,13 +193,13 @@ export class Context {
         const payload = await verifyAndDecodeJwt(idToken);
         if (payload == null) {
             this.stderr.error(`${Icons.error} Internal error; could not verify ID token`);
-            throw CliError.exit();
+            throw new CliError({ code: CliError.Code.InternalError });
         }
 
         const email = payload.email;
         if (email == null) {
             this.stderr.error(`${Icons.error} Internal error; ID token does not contain email claim`);
-            throw CliError.exit();
+            throw new CliError({ code: CliError.Code.InternalError });
         }
 
         await this.tokenService.login(email, accessToken);

@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: content-types
-  version: ''
+  version: 0.0.0
 paths:
   /:
     patch:
@@ -11,7 +11,7 @@ paths:
       parameters: []
       responses:
         '204':
-          description: ''
+          description: No content
       requestBody:
         required: true
         content:
@@ -20,11 +20,13 @@ paths:
               type: object
               properties:
                 application:
-                  type: string
-                  nullable: true
+                  type:
+                    - string
+                    - 'null'
                 require_auth:
-                  type: boolean
-                  nullable: true
+                  type:
+                    - boolean
+                    - 'null'
               required:
                 - application
                 - require_auth
@@ -46,7 +48,7 @@ paths:
             type: string
       responses:
         '204':
-          description: ''
+          description: No content
       requestBody:
         required: true
         content:
@@ -55,39 +57,47 @@ paths:
               type: object
               properties:
                 name:
-                  type: string
-                  nullable: true
+                  type:
+                    - string
+                    - 'null'
                 age:
-                  type: integer
-                  nullable: true
+                  type:
+                    - integer
+                    - 'null'
                 active:
-                  type: boolean
-                  nullable: true
+                  type:
+                    - boolean
+                    - 'null'
                 metadata:
-                  type: object
-                  additionalProperties: true
-                  nullable: true
+                  type:
+                    - object
+                    - 'null'
                 tags:
-                  type: array
+                  type:
+                    - array
+                    - 'null'
                   items:
                     type: string
-                  nullable: true
                 email:
-                  type: string
-                  nullable: true
+                  type:
+                    - string
+                    - 'null'
                 nickname:
-                  type: string
-                  nullable: true
+                  type:
+                    - string
+                    - 'null'
                 bio:
-                  type: string
-                  nullable: true
+                  type:
+                    - string
+                    - 'null'
                 profileImageUrl:
-                  type: string
-                  nullable: true
+                  type:
+                    - string
+                    - 'null'
                 settings:
-                  type: object
-                  additionalProperties: true
-                  nullable: true
+                  type:
+                    - object
+                    - 'null'
   /named-mixed/{id}:
     patch:
       description: >-
@@ -107,7 +117,7 @@ paths:
             type: string
       responses:
         '204':
-          description: ''
+          description: No content
       requestBody:
         required: true
         content:
@@ -116,14 +126,17 @@ paths:
               type: object
               properties:
                 appId:
-                  type: string
-                  nullable: true
+                  type:
+                    - string
+                    - 'null'
                 instructions:
-                  type: string
-                  nullable: true
+                  type:
+                    - string
+                    - 'null'
                 active:
-                  type: boolean
-                  nullable: true
+                  type:
+                    - boolean
+                    - 'null'
               required:
                 - instructions
                 - active
@@ -144,7 +157,7 @@ paths:
       parameters: []
       responses:
         '204':
-          description: ''
+          description: No content
       requestBody:
         required: true
         content:
@@ -155,17 +168,21 @@ paths:
                 requiredField:
                   type: string
                 optionalString:
-                  type: string
-                  nullable: true
+                  type:
+                    - string
+                    - 'null'
                 optionalInteger:
-                  type: integer
-                  nullable: true
+                  type:
+                    - integer
+                    - 'null'
                 optionalBoolean:
-                  type: boolean
-                  nullable: true
+                  type:
+                    - boolean
+                    - 'null'
                 nullableString:
-                  type: string
-                  nullable: true
+                  type:
+                    - string
+                    - 'null'
               required:
                 - requiredField
                 - nullableString
@@ -183,7 +200,7 @@ paths:
             type: string
       responses:
         '204':
-          description: ''
+          description: No content
       requestBody:
         required: true
         content:
@@ -192,11 +209,13 @@ paths:
               type: object
               properties:
                 field1:
-                  type: string
-                  nullable: true
+                  type:
+                    - string
+                    - 'null'
                 field2:
-                  type: integer
-                  nullable: true
+                  type:
+                    - integer
+                    - 'null'
 components:
   schemas: {}
   securitySchemes: {}

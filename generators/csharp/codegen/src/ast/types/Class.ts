@@ -36,6 +36,7 @@ export class Class extends DefinedType {
     public readonly annotations: Annotation[] = [];
     public readonly primaryConstructor: Class.PrimaryConstructor | undefined;
     public readonly namespaceReferences: string[] = [];
+    public readonly skipNamespaceDeclaration: boolean;
 
     private constructors: Class.Constructor[] = [];
     private operators: Class.Operator[] = [];
@@ -61,12 +62,14 @@ export class Class extends DefinedType {
             doc,
             annotations,
             primaryConstructor,
+            skipNamespaceDeclaration,
             origin
         }: Class.Args,
         generation: Generation
     ) {
         super({ name, namespace, access, partial, interfaceReferences, enclosingType, origin }, generation);
 
+        this.skipNamespaceDeclaration = skipNamespaceDeclaration ?? false;
         this.static_ = static_ ?? false;
         this.abstract_ = abstract_ ?? false;
         this.sealed = sealed ?? false;
@@ -147,7 +150,7 @@ export class Class extends DefinedType {
             writer.addNamespace(namespace);
         });
 
-        if (!this.isNested) {
+        if (!this.isNested && !this.skipNamespaceDeclaration) {
             writer.writeLine(`namespace ${this.namespace};`);
             writer.newLine();
         }
@@ -156,7 +159,9 @@ export class Class extends DefinedType {
         this.annotations.forEach((annotation) => {
             annotation.write(writer);
         });
-        writer.writeNewLineIfLastLineNot();
+        if (!this.skipNamespaceDeclaration) {
+            writer.writeNewLineIfLastLineNot();
+        }
         writer.write(`${this.access}`);
         if (this.static_) {
             writer.write(" static");
@@ -430,6 +435,8 @@ export namespace Class {
         annotations?: (Annotation | ClassReference)[];
         /* Any annotations to add to the class */
         primaryConstructor?: PrimaryConstructor;
+        /* If true, omit the `namespace X;` declaration from the output. Defaults to false. */
+        skipNamespaceDeclaration?: boolean;
     }
 
     export namespace Constructor {

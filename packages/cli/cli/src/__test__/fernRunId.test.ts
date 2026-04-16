@@ -1,5 +1,5 @@
+import { getFernRunId, getOrCreateFernRunId } from "@fern-api/cli-telemetry";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { getFernRunId, getOrCreateFernRunId } from "../fernRunId.js";
 
 describe("getOrCreateFernRunId", () => {
     beforeEach(() => {

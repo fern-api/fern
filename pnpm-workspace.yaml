@@ -28,7 +28,6 @@ minimumReleaseAge: 1440
 minimumReleaseAgeExclude:
   - "@fern-api/*"
   - "@fern-fern/*"
-  - "vite"
 
 # Prevent trust level downgrades (e.g. a previously trusted-publisher package
 # losing its attestation). Catches compromised maintainer accounts.
@@ -61,12 +60,12 @@ catalog:
   "@fern-api/docs-parsers": 0.0.65
   "@fern-api/fai-sdk": 0.0.6-2ee1b7e28
   "@fern-api/fdr-sdk": 1.1.13-c1ad12a2b8
-  "@fern-api/generator-cli": 0.9.3
+  "@fern-api/generator-cli": 0.9.8
   "@fern-api/ui-core-utils": 0.129.4-b6c699ad2
-  "@fern-api/venus-api-sdk": 0.17.3-3-gf696595
+  "@fern-api/venus-api-sdk": 0.22.34
   "@fern-fern/docs-config": 0.0.80
   "@fern-fern/fdr-test-sdk": ^0.0.5297
-  "@fern-fern/fiddle-sdk": 0.0.775
+  "@fern-fern/fiddle-sdk": 0.0.64
   "@fern-fern/generator-exec-sdk": ^0.0.1167
   "@fern-fern/generators-sdk": 0.114.0-5745f9e74
   "@fern-fern/ir-v53-sdk": 1.0.1
@@ -134,7 +133,7 @@ catalog:
   "@wasm-fmt/ruff_fmt": ^0.6.1
   ajv-formats: ^3.0.1
   ansi-escapes: ^5.0.0
-  axios: ^1.13.6
+  axios: ^1.15.0
   boxen: ^7.1.1
   chalk: ^5.3.0
   chardet: ^2.0.0

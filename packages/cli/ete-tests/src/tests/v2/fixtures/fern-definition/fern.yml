@@ -9,16 +9,16 @@ api:
 sdks:
   targets:
     go:
-      version: 1.30.0
+      version: 1.34.3
       output:
         path: ./sdks/go
 
     typescript:
-      version: 3.45.1
+      version: 3.63.3
       output:
         path: ./sdks/typescript
 
     python:
-      version: 4.50.1
+      version: 4.64.1
       output:
         path: ./sdks/python

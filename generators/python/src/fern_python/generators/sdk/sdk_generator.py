@@ -39,7 +39,8 @@ from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
 )
 from fern_python.snippet import SnippetRegistry, SnippetWriter
 from fern_python.snippet.snippet_test_factory import SnippetTestFactory
-from fern_python.utils import build_snippet_writer
+from fern_python.utils import resolve_name
+from fern_python.utils.build_snippet_writer import build_snippet_writer
 
 import fern.ir.resources as ir_types
 from fern.generator_exec import GeneratorUpdate, LogLevel, LogUpdate, Snippets
@@ -83,7 +84,7 @@ class SdkGenerator(AbstractGenerator):
         return (
             (
                 cleaned_org_name,
-                ir.api_name.snake_case.safe_name,
+                resolve_name(ir.api_name).snake_case.safe_name,
             )
             if custom_config.use_api_name_in_package
             else (cleaned_org_name,)
@@ -605,6 +606,23 @@ class SdkGenerator(AbstractGenerator):
         root_client: "RootClient",
     ) -> AST.ClassDeclaration:
         params = root_client.init_parameters if root_client.init_parameters is not None else root_client.parameters
+
+        if root_client.constructor_overloads is not None:
+            # When the base class has overloaded __init__ (e.g. OAuth + token),
+            # mirror the overloads on the wrapper and use **kwargs pass-through
+            # so the call to super().__init__() satisfies mypy without type: ignore.
+            def write_kwargs_super_init(writer: AST.NodeWriter) -> None:
+                writer.write_line("super().__init__(**kwargs)")
+
+            return AST.ClassDeclaration(
+                name=class_name,
+                extends=[base_class_ref],
+                constructor=AST.ClassConstructor(
+                    signature=AST.FunctionSignature(include_kwargs=True),
+                    body=AST.CodeWriter(write_kwargs_super_init),
+                    overloads=root_client.constructor_overloads,
+                ),
+            )
 
         named_params = [
             AST.NamedFunctionParameter(

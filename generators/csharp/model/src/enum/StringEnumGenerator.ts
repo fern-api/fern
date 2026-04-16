@@ -59,7 +59,6 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelGenerato
             access: ast.Access.Public,
             type: ast.Class.ClassType.Class,
             static_: true,
-            namespace: stringEnum.reference.namespace,
             enclosingType: stringEnum.reference,
             summary: "Constant strings for enum values",
             annotations: [this.System.Serializable]
@@ -231,7 +230,6 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelGenerato
             origin: serializerOrigin,
             access: ast.Access.Internal,
             type: ast.Class.ClassType.Class,
-            namespace: stringEnum.reference.namespace,
             enclosingType: stringEnum.reference,
             parentClassReference: this.csharp.classReference({
                 name: `JsonConverter<${this.classReference.name}>`,

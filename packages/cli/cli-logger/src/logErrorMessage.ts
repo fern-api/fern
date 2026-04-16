@@ -1,6 +1,8 @@
 import { Logger, LogLevel } from "@fern-api/logger";
-import { FernCliError } from "@fern-api/task-context";
+import { TaskAbortSignal } from "@fern-api/task-context";
 import chalk from "chalk";
+
+const USE_NODE_18_OR_ABOVE_MESSAGE = "The Fern CLI requires Node 18+ or above.";
 
 export function logErrorMessage({
     message,
@@ -20,7 +22,7 @@ export function logErrorMessage({
     }
 
     // thrower is responsible for logging, so we don't need to log the error's message too
-    if (error instanceof FernCliError) {
+    if (error instanceof TaskAbortSignal) {
         return;
     }
 
@@ -42,6 +44,10 @@ function convertErrorToString(error: unknown): string | undefined {
         return error;
     }
     if (error instanceof Error) {
+        if ((error as Error)?.message?.includes("globalThis")) {
+            return USE_NODE_18_OR_ABOVE_MESSAGE;
+        }
+
         return error.message;
     }
     return undefined;

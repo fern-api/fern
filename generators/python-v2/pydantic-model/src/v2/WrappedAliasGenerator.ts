@@ -1,7 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { python } from "@fern-api/python-ast";
-import { core, dt, pydantic, WriteablePythonFile } from "@fern-api/python-base";
+import { PYTHON_CASE_CONVERTER as caseConverter, core, dt, pydantic, WriteablePythonFile } from "@fern-api/python-base";
 import { FernIr } from "@fern-fern/ir-sdk";
 
 import { PydanticModelGeneratorContext } from "../ModelGeneratorContext.js";
@@ -110,7 +110,7 @@ export class WrappedAliasGenerator {
                     literal: () => "get_as_string",
                     _other: () => "get_value"
                 }),
-            named: (typeName) => "get_as_" + typeName.name.snakeCase.unsafeName,
+            named: (typeName) => "get_as_" + caseConverter.snakeUnsafe(typeName.name),
             primitive: (primitive) => {
                 if (primitive.v2 != null) {
                     return primitive.v2?._visit({
@@ -120,6 +120,7 @@ export class WrappedAliasGenerator {
                         boolean: () => "get_as_bool",
                         long: () => "get_as_int",
                         dateTime: () => "get_as_datetime",
+                        dateTimeRfc2822: () => "get_as_datetime",
                         date: () => "get_as_date",
                         uuid: () => "get_as_uuid",
                         base64: () => "get_as_str",
@@ -157,6 +158,8 @@ export class WrappedAliasGenerator {
                         return "get_as_int";
                     case FernIr.PrimitiveTypeV1.Float:
                         return "get_as_float";
+                    case FernIr.PrimitiveTypeV1.DateTimeRfc2822:
+                        return "get_as_datetime";
                     default:
                         assertNever(primitive.v1);
                 }
@@ -202,7 +205,7 @@ export class WrappedAliasGenerator {
                     literal: () => "from_string",
                     _other: () => "from_value"
                 }),
-            named: (typeName) => "from_" + typeName.name.snakeCase.unsafeName,
+            named: (typeName) => "from_" + caseConverter.snakeUnsafe(typeName.name),
             primitive: (primitive) => {
                 if (primitive.v2 != null) {
                     return primitive.v2?._visit({
@@ -212,6 +215,7 @@ export class WrappedAliasGenerator {
                         boolean: () => "from_bool",
                         long: () => "from_int",
                         dateTime: () => "from_datetime",
+                        dateTimeRfc2822: () => "from_datetime",
                         date: () => "from_date",
                         uuid: () => "from_uuid",
                         base64: () => "from_str",
@@ -249,6 +253,8 @@ export class WrappedAliasGenerator {
                         return "from_int";
                     case FernIr.PrimitiveTypeV1.Float:
                         return "from_float";
+                    case FernIr.PrimitiveTypeV1.DateTimeRfc2822:
+                        return "from_datetime";
                     default:
                         assertNever(primitive.v1);
                 }

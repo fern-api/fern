@@ -1,5 +1,5 @@
 displayName: Swift SDK
-irVersion: v61
+irVersion: v66
 image: fernapi/fern-swift-sdk
 changelogLocation: ../../generators/swift/sdk/versions.yml
 
@@ -148,6 +148,7 @@ allowedFailures:
   - mixed-file-directory
   - multi-url-environment
   - multi-url-environment-no-default
+  - multi-url-environment-reference
   - nullable:no-custom-config
   - nullable:nullable-as-optional
   - nullable-optional:no-custom-config

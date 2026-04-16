@@ -147,6 +147,10 @@ export function buildChannel({
             })
         };
 
+        if (message.displayName != null) {
+            messageSchema["display-name"] = message.displayName;
+        }
+
         if (message.methodName != null) {
             messageSchema["method-name"] = message.methodName;
         }

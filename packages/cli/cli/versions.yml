@@ -1,17 +1,222 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.71.5
+  changelogEntry:
+    - summary: |
+        `fern automations list generate` now skips generators with local-file-system output
+        or autorelease disabled, matching the behavior of autopilot.
+      type: fix
+  createdAt: "2026-04-15"
+  irVersion: 66
+- version: 4.71.4
+  changelogEntry:
+    - summary: |
+        Fix per-endpoint server overrides being ignored when top-level servers
+        define multiple base URLs with x-fern-server-name. Endpoints now correctly
+        resolve to their specified server URL instead of always using the default.
+      type: fix
+  createdAt: "2026-04-15"
+  irVersion: 66
+- version: 4.71.3
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI-to-IR conversion to resolve custom properties (e.g., grant_type)
+        in OAuth token endpoint requests. Previously, customProperties was always set
+        to undefined for OpenAPI specs, causing generated SDKs to omit required
+        literal properties from the token request.
+      type: fix
+  createdAt: "2026-04-15"
+  irVersion: 66
+- version: 4.71.2
+  changelogEntry:
+    - summary: |
+        Fix allOf composition bugs in V3 OpenAPI importer: resolve $ref schemas
+        within multi-element allOf arrays instead of falling back to untyped objects,
+        deduplicate merged allOf refs for diamond-shaped inheritance, guard
+        variants-flattening and composition-keyword shortcuts against $ref-resolved
+        schemas, preserve inline status through allOf merge path, handle nullable
+        enum patterns in allOf shortcuts, detect cycles across recursive
+        single-element allOf chains, filter unresolved $ref objects from nested allOf
+        flattening, recursively flatten deeply-nested allOf arrays, strip oneOf/anyOf
+        from child schemas during allOf merging, and propagate outer schema metadata
+        through single-element allOf paths.
+      type: fix
+  createdAt: "2026-04-15"
+  irVersion: 66
+- version: 4.71.1
+  changelogEntry:
+    - summary: |
+        Fix false positive warnings in the `missing-redirects` check. Pages are no
+        longer flagged as removed or moved when their old URL is still actively
+        served by another page in the local docs config.
+      type: fix
+  createdAt: "2026-04-15"
+  irVersion: 66
+- version: 4.71.0
+  changelogEntry:
+    - summary: |
+        Add `--id` flag to `fern docs preview delete`, allowing deletion of preview deployments by their stable preview ID instead of the full URL. The org is resolved automatically from `fern.config.json`. Existing usage of `fern docs preview delete <url>` continues to work unchanged via the new auto-detecting `[target]` positional.
+      type: feat
+  createdAt: "2026-04-15"
+  irVersion: 66
+- version: 4.70.2
+  changelogEntry:
+    - summary: |
+        Fix "Edit this page" button appearing on docs sites that never configured it.
+        The default `editThisPageLaunch` is now `undefined` instead of `"dashboard"`,
+        so the button only renders when explicitly configured.
+      type: fix
+  createdAt: "2026-04-15"
+  irVersion: 66
+- version: 4.70.1
+  changelogEntry:
+    - summary: |
+        Fix "Edit this page" button appearing on docs sites that never configured it.
+        The default `editThisPageLaunch` is now `undefined` instead of `"dashboard"`,
+        so the button only renders when explicitly configured.
+      type: fix
+  createdAt: "2026-04-15"
+  irVersion: 66
+- version: 4.70.0
+  changelogEntry:
+    - summary: |
+        Enable `--push-diff` flag for `fern sdk preview` to push a preview diff
+        branch to the SDK repo in addition to publishing to the preview registry.
+        Adds `diff_url` to the JSON and text output for use by CI integrations.
+      type: feat
+  createdAt: "2026-04-14"
+  irVersion: 66
+- version: 4.69.0
+  changelogEntry:
+    - summary: |
+        Improve auto-versioning prompts for better SDK version bump determination and changelog quality.
+        Commit type now matches version bump severity, per-chunk changelog entries use category tags,
+        consolidation prompt deduplicates aggressively, and version context is passed to consolidation.
+      type: feat
+  createdAt: "2026-04-14"
+  irVersion: 66
+- version: 4.68.5
+  changelogEntry:
+    - summary: |
+        Migrate CLI to a unified error system using a shared CliError class with typed error codes.
+        Error codes drive Sentry reporting eligibility; unclassified errors are temporarily suppressed
+        from Sentry until all call sites are migrated.
+      type: chore
+  createdAt: "2026-04-14"
+  irVersion: 66
+- version: 4.68.4
+  changelogEntry:
+    - summary: |
+        Deduplicate global headers when merging IRs from multiple OpenAPI specs. Previously, if multiple specs shared the same `globalHeaderOverrides` from `generators.yml`, the same header would appear once per spec in the merged IR.
+      type: fix
+  createdAt: "2026-04-14"
+  irVersion: 66
+- version: 4.68.3
+  changelogEntry:
+    - summary: |
+        Fix global headers from `generators.yml` not appearing in documentation endpoints. The new OpenAPI v3 parser (`openapi-to-ir`) had a TODO placeholder but never converted `globalHeaderOverrides` into IR headers.
+      type: fix
+  createdAt: "2026-04-14"
+  irVersion: 66
+- version: 4.68.2
+  changelogEntry:
+    - summary: |
+        Fix an issue where `api:<apiName>:METHOD/path` links worked on published docs sites but did not resolve in `fern docs dev`.
+      type: fix
+  createdAt: "2026-04-14"
+  irVersion: 66
+- version: 4.68.1
+  changelogEntry:
+    - summary: |
+        Fix CLI blocking when PostHog is unreachable by adding a 3-second timeout
+        and error handling to analytics flush calls.
+      type: fix
+  createdAt: "2026-04-13"
+  irVersion: 66
+- version: 4.68.0
+  changelogEntry:
+    - summary: |
+        Add support for `x-fern-display-name` on AsyncAPI operations. This allows setting friendly display names on AsyncAPI v2 publish/subscribe operations and v3 operations, which is useful when operation keys need to be normalized (e.g. for versioned endpoints) but you still want readable names in docs.
+      type: feat
+  createdAt: "2026-04-13"
+  irVersion: 66
+- version: 4.67.1
+  changelogEntry:
+    - summary: |
+        Fall back to git tags for auto-versioning when the magic version is not
+        embedded in any generated source file. This fixes auto-versioning for
+        SDKs like Swift that use git tags for versioning (via SPM) rather than
+        a version field in source code.
+      type: fix
+  createdAt: "2026-04-10"
+  irVersion: 66
 
+- version: 4.67.0
+  changelogEntry:
+    - summary: |
+        Add `agents.llms-txt` and `agents.llms-full-txt` to `docs.yml` so customers can upload
+        custom `llms.txt` and `llms-full.txt` files that override the auto-generated versions
+        on their docs sites.
+      type: feat
+  createdAt: "2026-04-10"
+  irVersion: 66
+
+- version: 4.66.1
+  changelogEntry:
+    - summary: |
+        Fix GraphQL converter to properly handle interface types. Interfaces
+        with implementing types (e.g., `CatalogProductOption` with
+        `CheckboxOption`, `MultipleChoiceOption`, etc.) are now converted to
+        `undiscriminatedUnion` shapes so that all possible concrete types are
+        discoverable in generated docs. Interfaces with no implementations
+        fall back to plain object types.
+      type: fix
+  createdAt: "2026-04-10"
+  irVersion: 66
+
+- version: 4.66.0
+  changelogEntry:
+    - summary: |
+        Internal infrastructure for GitHub Actions-based SDK generation automation.
+      type: chore
+  createdAt: "2026-04-10"
+  irVersion: 66
+
+- version: 4.65.3
+  changelogEntry:
+    - summary: |
+        Fix broken-link checker incorrectly flagging absolute links in versioned
+        docs pages as broken.
+      type: fix
+  createdAt: "2026-04-10"
+  irVersion: 66
+- version: 4.65.2
+  changelogEntry:
+    - summary: |
+        Improve error messages for `fern docs preview list` command. The default
+        error now suggests checking authentication instead of network connectivity,
+        and the full error response is logged at debug level for easier diagnosis.
+      type: fix
+  createdAt: "2026-04-10"
+  irVersion: 66
+- version: 4.65.1
+  changelogEntry:
+    - summary: |
+        Fixed a performance issue in `fern check` where `valid-markdown-links`
+        repeatedly reprocessed duplicate API descriptions and pathnames in API
+        sections, significantly improving runtime on large docs sites.
+      type: fix
+  createdAt: "2026-04-09"
+  irVersion: 66
 - version: 4.65.0
   changelogEntry:
     - summary: |
-        Polish `fern config migrate` command: point the `docs` key at the
-        existing `docs.yml` file via `$ref` syntax instead of inlining, drop
-        legacy `defaultGroup` and `group` fields from SDK target output, and
-        automatically update GitHub Actions workflow files to use the v2 CLI
-        syntax (`fern sdk generate`, `--target` instead of `--group`).
+        Add `--output` flag to `fern sdk preview` that accepts filesystem paths
+        and/or registry URLs. Omit to publish to the default preview registry and
+        write to a temp directory. Use `--output <path>` for disk-only output, or
+        `--output <path> --output <url>` to write to disk and publish to a custom registry.
       type: feat
   createdAt: "2026-04-08"
   irVersion: 66
-
 - version: 4.64.1
   changelogEntry:
     - summary: |
@@ -23,7 +228,6 @@
       type: chore
   createdAt: "2026-04-09"
   irVersion: 66
-
 - version: 4.64.0
   changelogEntry:
     - summary: |
@@ -34,7 +238,6 @@
       type: feat
   createdAt: "2026-04-08"
   irVersion: 66
-
 - version: 4.63.5
   changelogEntry:
     - summary: |
@@ -43,7 +246,6 @@
       type: fix
   createdAt: "2026-04-08"
   irVersion: 66
-
 - version: 4.63.4
   changelogEntry:
     - summary: |
@@ -56,7 +258,6 @@
       type: fix
   createdAt: "2026-04-08"
   irVersion: 66
-
 - version: 4.63.3
   changelogEntry:
     - summary: |
@@ -1420,6 +1621,7 @@
       type: feat
   createdAt: "2026-03-09"
   irVersion: 65
+
 - version: 4.15.5
   changelogEntry:
     - summary: |

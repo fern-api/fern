@@ -181,9 +181,295 @@
           }
         }
       }
+    },
+    {
+      "id": "a92674bc-618d-43b5-a4b8-ee4724d69afd",
+      "name": "x-fern-streaming with stream-condition and $ref request body - default",
+      "request": {
+        "urlPathTemplate": "/stream/x-fern-streaming-condition",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "\"\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "a92674bc-618d-43b5-a4b8-ee4724d69afd",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "c4399573-7257-4afa-9a26-c13c862f7f44",
+      "name": "x-fern-streaming with stream-condition and $ref request body - default",
+      "request": {
+        "urlPathTemplate": "/stream/x-fern-streaming-condition",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"answer\": \"answer\",\n  \"finishReason\": \"complete\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "c4399573-7257-4afa-9a26-c13c862f7f44",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "56fc9590-ba61-4747-bd46-f04be1269f11",
+      "name": "x-fern-streaming with shared request schema - default",
+      "request": {
+        "urlPathTemplate": "/stream/x-fern-streaming-shared-schema",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "\"\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "56fc9590-ba61-4747-bd46-f04be1269f11",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "320847df-8c7b-42b5-b97e-2237c36bbfa5",
+      "name": "x-fern-streaming with shared request schema - default",
+      "request": {
+        "urlPathTemplate": "/stream/x-fern-streaming-shared-schema",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"answer\": \"answer\",\n  \"finishReason\": \"complete\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "320847df-8c7b-42b5-b97e-2237c36bbfa5",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "99e09f9c-44a7-40c2-9b71-c7b58c309670",
+      "name": "Non-streaming endpoint sharing request schema with endpoint 10 - default",
+      "request": {
+        "urlPathTemplate": "/validate-completion",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"answer\": \"answer\",\n  \"finishReason\": \"complete\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "99e09f9c-44a7-40c2-9b71-c7b58c309670",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "6403c880-9bb6-4af4-96df-cf5125abf22a",
+      "name": "x-fern-streaming with discriminated union request body - default",
+      "request": {
+        "urlPathTemplate": "/stream/x-fern-streaming-union",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "\"\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "6403c880-9bb6-4af4-96df-cf5125abf22a",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "8831acea-84dc-48da-9aca-477729d64cec",
+      "name": "x-fern-streaming with discriminated union request body - default",
+      "request": {
+        "urlPathTemplate": "/stream/x-fern-streaming-union",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"answer\": \"answer\",\n  \"finishReason\": \"complete\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "8831acea-84dc-48da-9aca-477729d64cec",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "97d9037b-42ab-4e79-ad59-583bfa3a6138",
+      "name": "Non-streaming endpoint referencing the union base schema - default",
+      "request": {
+        "urlPathTemplate": "/validate-union-request",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"valid\": true\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "97d9037b-42ab-4e79-ad59-583bfa3a6138",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "1983a87e-800d-48d1-9596-4ddca4dc6b65",
+      "name": "x-fern-streaming with nullable stream condition field - default",
+      "request": {
+        "urlPathTemplate": "/stream/x-fern-streaming-nullable-condition",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "\"\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "1983a87e-800d-48d1-9596-4ddca4dc6b65",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "1e1675a0-7b8a-4ce5-ab4a-2a3a1a04b162",
+      "name": "x-fern-streaming with nullable stream condition field - default",
+      "request": {
+        "urlPathTemplate": "/stream/x-fern-streaming-nullable-condition",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"answer\": \"answer\",\n  \"finishReason\": \"complete\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "1e1675a0-7b8a-4ce5-ab4a-2a3a1a04b162",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "6c0b88de-5271-4c14-b4e1-865445d0f99f",
+      "name": "x-fern-streaming with SSE format but no stream-condition - default",
+      "request": {
+        "urlPathTemplate": "/stream/x-fern-streaming-sse-only",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "event: message\ndata: \"string\"\n",
+        "headers": {
+          "Content-Type": "text/event-stream"
+        }
+      },
+      "uuid": "6c0b88de-5271-4c14-b4e1-865445d0f99f",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
     }
   ],
   "meta": {
-    "total": 7
+    "total": 18
   }
 }

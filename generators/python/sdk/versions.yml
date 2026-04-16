@@ -1,5 +1,126 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.4.0
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.8. Changelog URLs in generated PRs
+        now use the commit SHA instead of the PR branch name, keeping the link
+        valid after the branch is deleted or squash-merged.
+      type: chore
+  createdAt: "2026-04-16"
+  irVersion: 66
+
+- version: 5.4.0-rc.2
+  changelogEntry:
+    - summary: |
+        Fix `mypy` error in generated client wrapper when a non-string global header is
+        declared (e.g. `Request-Timeout: integer`). The generator emits `headers: Dict[str, str]`
+        but previously assigned the raw typed member (e.g. `int`) directly, causing
+        `Incompatible types in assignment`. Non-string global header values are now wrapped
+        with `str(...)` when assigned. String-typed headers are unchanged.
+      type: fix
+  createdAt: "2026-04-15"
+  irVersion: 66
+- version: 5.4.0-rc.1
+  changelogEntry:
+    - summary: |
+        Fix `auth: any` with OAuth + header auth schemes (e.g. API key):
+        - Header auth parameters are now included in the generated client constructor (previously silently dropped when OAuth was present)
+        - Header auth parameters are passed through to the client wrapper (previously missing, causing a runtime `TypeError`)
+        - Header auth types are made optional when alongside OAuth, with conditional header setting
+        - The client can now be instantiated with just a header auth credential (e.g. `api_key`) without requiring OAuth credentials or a bearer token
+      type: fix
+  createdAt: "2026-04-15"
+  irVersion: 66
+
+- version: 5.4.0-rc.0
+  changelogEntry:
+    - summary: |
+        Upgrade to IR v66 which compresses the IR Name type, reducing IR size and increasing performance.
+      type: feat
+  createdAt: "2026-04-10"
+  irVersion: 66
+
+- version: 5.3.14
+  changelogEntry:
+    - summary: |
+        Bump pytest from 7.4.4 to 9.0.3 and add pytest-asyncio for async test support.
+      type: chore
+  createdAt: "2026-04-14"
+  irVersion: 65
+- version: 5.3.13
+  changelogEntry:
+    - summary: |
+        Fix `NameError` when a type uses `extends` to inherit from a base type in a different
+        file and that base type is part of a circular reference cycle. The generator was
+        incorrectly deferring the base class import to the bottom of the file via ghost
+        references, but Python requires base class imports before the class definition.
+        Ghost references for extended (base class) types are now skipped so their imports
+        remain at the top of the file.
+      type: fix
+  createdAt: "2026-04-13"
+  irVersion: 65
 # For unreleased changes, use unreleased.yml
+- version: 5.3.12
+  changelogEntry:
+    - summary: |
+        Bump generator-cli to 0.9.7 which upgrades @fern-api/replay to 0.10.4.
+      type: chore
+  createdAt: "2026-04-12"
+  irVersion: 65
+
+- version: 5.3.11
+  changelogEntry:
+    - summary: |
+        Fix duplicate keyword arguments in generated code for discriminated union
+        request bodies with stream condition properties. When a union variant inherits
+        the stream condition field from a base schema via extends, the property was
+        emitted twice — once from the union's base properties and once from the
+        variant's extended properties — causing SyntaxError in generated Python code.
+      type: fix
+    - summary: |
+        Escape triple quotes in docstrings to prevent premature docstring termination
+        when OpenAPI descriptions contain Python code examples with triple-quoted strings.
+      type: fix
+    - summary: |
+        Fix mypy call-overload errors in exported client wrapper by mirroring the
+        base client's @overload signatures and using **kwargs pass-through, instead
+        of suppressing the error with a type: ignore comment.
+      type: fix
+  createdAt: "2026-04-10"
+  irVersion: 65
+
+- version: 5.3.10
+  changelogEntry:
+    - summary: |
+        Bump generator-cli to 0.9.6 which upgrades @fern-api/replay to 0.10.3.
+      type: chore
+  createdAt: "2026-04-10"
+  irVersion: 65
+
+- version: 5.3.9
+  changelogEntry:
+    - summary: |
+        Bump generator-cli to 0.9.5 which upgrades @fern-api/replay to 0.10.2.
+      type: chore
+  createdAt: "2026-04-10"
+  irVersion: 65
+
+- version: 5.3.8
+  changelogEntry:
+    - summary: |
+        Bump generator-cli to 0.9.4.
+      type: chore
+  createdAt: "2026-04-09"
+  irVersion: 65
+
+- version: 5.3.7
+  changelogEntry:
+    - summary: |
+        Upgrade @fern-api/generator-cli to 0.9.4 which upgrades @fern-api/replay to 0.10.1.
+      type: chore
+  createdAt: "2026-04-09"
+  irVersion: 65
+
 - version: 5.3.6
   changelogEntry:
     - summary: |

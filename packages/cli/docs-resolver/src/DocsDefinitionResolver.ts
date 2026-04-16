@@ -521,7 +521,7 @@ export class DocsDefinitionResolver {
             pages[DocsV1Write.PageId(relativePageFilepath)] = {
                 markdown: stripMdxComments(markdown),
                 editThisPageUrl: editThisPageUrl ? DocsV1Write.Url(editThisPageUrl) : undefined,
-                editThisPageLaunch: editThisPageLaunch as DocsV1Write.EditThisPageLaunch,
+                editThisPageLaunch: editThisPageLaunch as DocsV1Write.EditThisPageLaunch | undefined,
                 rawMarkdown: rawMarkdown
             };
         });
@@ -813,7 +813,16 @@ export class DocsDefinitionResolver {
             css: this.parsedDocsConfig.css,
             js: this.convertJavascriptConfiguration(),
             // @ts-expect-error - Remove this when the fdr-sdk upgraded to the latest version
-            agents: this.parsedDocsConfig.agents,
+            agents:
+                this.parsedDocsConfig.agents != null ||
+                this.parsedDocsConfig.llmsTxtFile != null ||
+                this.parsedDocsConfig.llmsFullTxtFile != null
+                    ? {
+                          ...this.parsedDocsConfig.agents,
+                          llmsTxt: this.getFileId(this.parsedDocsConfig.llmsTxtFile),
+                          llmsFullTxt: this.getFileId(this.parsedDocsConfig.llmsFullTxtFile)
+                      }
+                    : undefined,
             metadata: this.convertMetadata(),
             redirects: this.parsedDocsConfig.redirects,
             integrations,
@@ -864,7 +873,7 @@ export class DocsDefinitionResolver {
                 this.parsedDocsConfig.announcement != null
                     ? { text: this.parsedDocsConfig.announcement.message }
                     : undefined,
-            editThisPageLaunch: (this.editThisPage?.launch ?? "dashboard") as DocsV1Write.EditThisPageLaunch,
+            editThisPageLaunch: this.editThisPage?.launch as DocsV1Write.EditThisPageLaunch | undefined,
             pageActions: this.convertPageActions(),
             theme:
                 this.parsedDocsConfig.theme != null
@@ -2278,8 +2287,8 @@ export class DocsDefinitionResolver {
 function createEditThisPageUrl(
     editThisPage: docsYml.RawSchemas.FernDocsConfig.EditThisPageConfig | undefined,
     pageFilepath: string
-): { url: string | undefined; launch: string } {
-    const launch = editThisPage?.launch ?? "dashboard";
+): { url: string | undefined; launch: string | undefined } {
+    const launch = editThisPage?.launch;
 
     if (editThisPage?.github == null) {
         return { url: undefined, launch };

@@ -86,6 +86,58 @@ describe("detectAffected", () => {
             expect(result.affectedFixtures).toEqual([]);
         });
 
+        it("skips all seed tests when only changelog template files change", () => {
+            const result = detectAffected(
+                [
+                    "generators/typescript/sdk/changes/unreleased/.template.yml",
+                    "generators/python/sdk/changes/unreleased/.template.yml",
+                    "generators/java/sdk/changes/unreleased/.template.yml",
+                    "generators/csharp/sdk/changes/unreleased/.template.yml",
+                    "generators/go/sdk/changes/unreleased/.template.yml"
+                ],
+                ALL_GENERATORS
+            );
+
+            expect(result.allGeneratorsAffected).toBe(false);
+            expect(result.allFixturesAffected).toBe(false);
+            expect(result.affectedGenerators).toEqual([]);
+            expect(result.generatorsWithAllFixtures).toEqual([]);
+            expect(result.affectedFixtures).toEqual([]);
+        });
+
+        it("skips all seed tests when only changelog entry files change", () => {
+            const result = detectAffected(
+                [
+                    "generators/typescript/sdk/changes/unreleased/add-new-feature.yml",
+                    "generators/python/sdk/changes/1.0.0/fix-bug.yml"
+                ],
+                ALL_GENERATORS
+            );
+
+            expect(result.allGeneratorsAffected).toBe(false);
+            expect(result.allFixturesAffected).toBe(false);
+            expect(result.affectedGenerators).toEqual([]);
+            expect(result.generatorsWithAllFixtures).toEqual([]);
+            expect(result.affectedFixtures).toEqual([]);
+        });
+
+        it("skips seed for changelog files but still detects other generator changes", () => {
+            const result = detectAffected(
+                ["generators/csharp/sdk/changes/unreleased/.template.yml", "generators/python/src/generator.ts"],
+                ALL_GENERATORS
+            );
+
+            expect(result.affectedGenerators).toContain("python-sdk");
+            expect(result.affectedGenerators).not.toContain("csharp-sdk");
+            expect(result.affectedGenerators).not.toContain("csharp-model");
+        });
+
+        it("does not ignore non-changelog /changes/ paths under generator source", () => {
+            const result = detectAffected(["generators/python/src/changes/handler.ts"], ALL_GENERATORS);
+
+            expect(result.affectedGenerators).toContain("python-sdk");
+        });
+
         it("skips seed for versions.yml but still detects other generator changes", () => {
             const result = detectAffected(
                 ["generators/csharp/sdk/versions.yml", "generators/python/src/generator.ts"],
@@ -793,6 +845,34 @@ describe("end-to-end scenario tests", () => {
             "generators/csharp/sdk/versions.yml",
             "generators/csharp/model/versions.yml",
             "generators/python/sdk/versions.yml"
+        ];
+        const affected = detectAffected(changedFiles, ALL_GENERATORS);
+
+        // No generators should run
+        const generators = resolveAffectedGenerators(affected, ALL_GENERATORS);
+        expect(generators).toHaveLength(0);
+
+        // No fixtures should be resolved
+        for (const gen of ALL_GENERATORS) {
+            const fixtures = resolveAffectedFixtures(affected, ALL_FIXTURES, gen.workspaceName);
+            expect(fixtures).toEqual([]);
+        }
+    });
+
+    it("scenario: changelog and release metadata changes are fully ignored for seed detection", () => {
+        const changedFiles = [
+            "generators/csharp/sdk/changes/unreleased/.template.yml",
+            "generators/go/sdk/changes/unreleased/.template.yml",
+            "generators/java/sdk/changes/unreleased/.template.yml",
+            "generators/php/sdk/changes/unreleased/.template.yml",
+            "generators/python/sdk/changes/unreleased/.template.yml",
+            "generators/ruby-v2/sdk/changes/unreleased/.template.yml",
+            "generators/rust/sdk/changes/unreleased/.template.yml",
+            "generators/swift/sdk/changes/unreleased/.template.yml",
+            "generators/typescript/sdk/changes/unreleased/.template.yml",
+            "fern-changes-yml.schema.json",
+            "scripts/release.ts",
+            "packages/cli/cli/changes/unreleased/.template.yml"
         ];
         const affected = detectAffected(changedFiles, ALL_GENERATORS);
 

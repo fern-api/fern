@@ -1,8 +1,8 @@
+import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
 import type { Argv } from "yargs";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
-import { CliError } from "../../../errors/CliError.js";
 import { command } from "../../_internal/command.js";
 
 export declare namespace WhoamiCommand {
@@ -18,7 +18,7 @@ export class WhoamiCommand {
             context.stdout.warn(`${chalk.yellow("⚠")} You are not logged in to Fern.`);
             context.stdout.info("");
             context.stdout.info(chalk.dim("  To log in, run: fern auth login"));
-            throw CliError.exit();
+            throw new CliError({ code: CliError.Code.AuthError });
         }
 
         if (args.json) {

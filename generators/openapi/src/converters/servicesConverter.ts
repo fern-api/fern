@@ -391,14 +391,14 @@ function convertResponse({
         }
 
         responseByStatusCode[String(httpResponse.statusCode ?? 200)] = {
-            description: httpResponse.body.value.docs ?? "",
+            description: httpResponse.body.value.docs || "Success",
             content: {
                 "application/json": convertedResponse
             }
         };
     } else {
         responseByStatusCode["204"] = {
-            description: ""
+            description: "No content"
         };
     }
 
@@ -412,7 +412,7 @@ function convertResponse({
                     );
                 }
                 const responseForStatusCode: OpenAPIV3.ResponseObject = {
-                    description: responseError.docs ?? ""
+                    description: responseError.docs || getOriginalName(responseError.error.name)
                 };
                 if (errorDeclaration.type != null) {
                     const convertedResponse: OpenAPIV3.MediaTypeObject = {
@@ -492,7 +492,7 @@ function convertResponse({
                 }
 
                 responseByStatusCode[statusCode] = {
-                    description: "",
+                    description: errorInfos.map((e) => getOriginalName(e.responseError.error.name)).join(", "),
                     content: {
                         "application/json": convertedResponse
                     }
@@ -608,32 +608,13 @@ function convertPathParameter({
         schema: convertTypeReference(pathParameter.valueType)
     };
 
-    const openapiExamples: OpenAPIV3.ParameterObject["examples"] = {};
-    for (const example of examples) {
-        const pathParameterExample = [
+    applyParameterExamples(convertedParameter, examples, (example) => {
+        return [
             ...example.rootPathParameters,
             ...example.servicePathParameters,
             ...example.endpointPathParameters
         ].find((param) => getOriginalName(param.name) === getOriginalName(pathParameter.name));
-        if (pathParameterExample != null) {
-            if (example.name && getOriginalName(example.name) !== "") {
-                openapiExamples[getOriginalName(example.name)] = {
-                    value: pathParameterExample.value.jsonExample
-                };
-            } else {
-                openapiExamples[`Example${size(openapiExamples) + 1}`] = {
-                    value: pathParameterExample.value.jsonExample
-                };
-            }
-
-            if (convertedParameter.example == null) {
-                convertedParameter.example = pathParameterExample.value.jsonExample;
-            }
-        }
-    }
-    if (size(openapiExamples) > 0) {
-        convertedParameter.examples = openapiExamples;
-    }
+    });
 
     return convertedParameter;
 }
@@ -664,30 +645,9 @@ function convertQueryParameter({
         }
     }
 
-    const openapiExamples: OpenAPIV3.ParameterObject["examples"] = {};
-    for (const example of examples) {
-        const queryParameterExample = example.queryParameters.find(
-            (param) => getWireValue(param.name) === getWireValue(queryParameter.name)
-        );
-        if (queryParameterExample != null) {
-            if (example.name && getOriginalName(example.name) !== "") {
-                openapiExamples[getOriginalName(example.name)] = {
-                    value: queryParameterExample.value.jsonExample
-                };
-            } else {
-                openapiExamples[`Example${size(openapiExamples) + 1}`] = {
-                    value: queryParameterExample.value.jsonExample
-                };
-            }
-
-            if (convertedParameter.example == null) {
-                convertedParameter.example = queryParameterExample.value.jsonExample;
-            }
-        }
-    }
-    if (size(openapiExamples) > 0) {
-        convertedParameter.examples = openapiExamples;
-    }
+    applyParameterExamples(convertedParameter, examples, (example) => {
+        return example.queryParameters.find((param) => getWireValue(param.name) === getWireValue(queryParameter.name));
+    });
 
     return convertedParameter;
 }
@@ -716,30 +676,11 @@ function convertHeader({
         }
     }
 
-    const openapiExamples: OpenAPIV3.ParameterObject["examples"] = {};
-    for (const example of examples) {
-        const headerExample = [...example.serviceHeaders, ...example.endpointHeaders].find(
+    applyParameterExamples(convertedParameter, examples, (example) => {
+        return [...example.serviceHeaders, ...example.endpointHeaders].find(
             (headerFromExample) => getWireValue(headerFromExample.name) === getWireValue(httpHeader.name)
         );
-        if (headerExample != null) {
-            if (example.name && getOriginalName(example.name) !== "") {
-                openapiExamples[getOriginalName(example.name)] = {
-                    value: headerExample.value.jsonExample
-                };
-            } else {
-                openapiExamples[`Example${size(openapiExamples) + 1}`] = {
-                    value: headerExample.value.jsonExample
-                };
-            }
-
-            if (convertedParameter.example == null) {
-                convertedParameter.example = headerExample.value.jsonExample;
-            }
-        }
-    }
-    if (size(openapiExamples) > 0) {
-        convertedParameter.examples = openapiExamples;
-    }
+    });
 
     return convertedParameter;
 }
@@ -750,6 +691,37 @@ function convertHttpPathToString(httpPath: FernIr.HttpPath): string {
         endpointPath += `{${httpPathPart.pathParameter}}${httpPathPart.tail}`;
     }
     return endpointPath;
+}
+
+/**
+ * Collects examples for a parameter and sets either `example` or `examples` (never both)
+ * on the parameter object. OAS 3.0/3.1 require these to be mutually exclusive.
+ */
+function applyParameterExamples(
+    parameter: OpenAPIV3.ParameterObject,
+    examples: FernIr.ExampleEndpointCall[],
+    selector: (example: FernIr.ExampleEndpointCall) => { value: { jsonExample: unknown } } | undefined
+): void {
+    const openapiExamples: OpenAPIV3.ParameterObject["examples"] = {};
+    let firstJsonExample: unknown = undefined;
+    for (const example of examples) {
+        const match = selector(example);
+        if (match != null) {
+            const key =
+                example.name && getOriginalName(example.name) !== ""
+                    ? getOriginalName(example.name)
+                    : `Example${size(openapiExamples) + 1}`;
+            openapiExamples[key] = { value: match.value.jsonExample };
+            if (firstJsonExample === undefined) {
+                firstJsonExample = match.value.jsonExample;
+            }
+        }
+    }
+    if (size(openapiExamples) > 0) {
+        parameter.examples = openapiExamples;
+    } else if (firstJsonExample !== undefined) {
+        parameter.example = firstJsonExample;
+    }
 }
 
 function isTypeReferenceRequired({

@@ -1,4 +1,4 @@
-import { File, GeneratorNotificationService } from "@fern-api/base-generator";
+import { File, GeneratorNotificationService, getWireValue } from "@fern-api/base-generator";
 import { assertNever, entries, extractErrorMessage, noop } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractSwiftGeneratorCli, SourceTemplateFiles, TestTemplateFiles } from "@fern-api/swift-base";
@@ -245,7 +245,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                 if (endpoint.requestBody?.type === "inlinedRequestBody") {
                     const symbol = context.project.nameRegistry.getRequestTypeSymbolOrThrow(
                         endpoint.id,
-                        endpoint.requestBody.name.pascalCase.unsafeName
+                        context.caseConverter.pascalUnsafe(endpoint.requestBody.name)
                     );
                     const generator = new ObjectGenerator({
                         symbol,
@@ -267,7 +267,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                 } else if (endpoint.requestBody?.type === "fileUpload") {
                     const requestTypeSymbol = context.project.nameRegistry.getRequestTypeSymbolOrThrow(
                         endpoint.id,
-                        endpoint.requestBody.name.pascalCase.unsafeName
+                        context.caseConverter.pascalUnsafe(endpoint.requestBody.name)
                     );
                     const referencerFromRequestType = context.createReferencer(requestTypeSymbol);
 
@@ -278,7 +278,9 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                                     return fileProperty._visit({
                                         file: (property) => {
                                             return swift.property({
-                                                unsafeName: sanitizeSelf(property.key.name.camelCase.unsafeName),
+                                                unsafeName: sanitizeSelf(
+                                                    context.caseConverter.camelUnsafe(property.key)
+                                                ),
                                                 accessLevel: "public",
                                                 declarationType: "let",
                                                 type: referencerFromRequestType.referenceAsIsType("FormFile"),
@@ -289,7 +291,9 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                                         },
                                         fileArray: (property) => {
                                             return swift.property({
-                                                unsafeName: sanitizeSelf(property.key.name.camelCase.unsafeName),
+                                                unsafeName: sanitizeSelf(
+                                                    context.caseConverter.camelUnsafe(property.key)
+                                                ),
                                                 accessLevel: "public",
                                                 declarationType: "let",
                                                 type: swift.TypeReference.array(
@@ -305,7 +309,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                                 },
                                 bodyProperty: (property) => {
                                     return swift.property({
-                                        unsafeName: sanitizeSelf(property.name.name.camelCase.unsafeName),
+                                        unsafeName: sanitizeSelf(context.caseConverter.camelUnsafe(property.name)),
                                         accessLevel: "public",
                                         declarationType: "let",
                                         type: context.getSwiftTypeReferenceFromScope(
@@ -369,12 +373,14 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                                                 arguments_: [
                                                     swift.functionArgument({
                                                         value: swift.Expression.reference(
-                                                            property.key.name.camelCase.unsafeName
+                                                            context.caseConverter.camelUnsafe(property.key)
                                                         )
                                                     }),
                                                     swift.functionArgument({
                                                         label: "fieldName",
-                                                        value: swift.Expression.stringLiteral(property.key.wireValue)
+                                                        value: swift.Expression.stringLiteral(
+                                                            getWireValue(property.key)
+                                                        )
                                                     })
                                                 ]
                                             });
@@ -385,12 +391,14 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                                                 arguments_: [
                                                     swift.functionArgument({
                                                         value: swift.Expression.reference(
-                                                            property.key.name.camelCase.unsafeName
+                                                            context.caseConverter.camelUnsafe(property.key)
                                                         )
                                                     }),
                                                     swift.functionArgument({
                                                         label: "fieldName",
-                                                        value: swift.Expression.stringLiteral(property.key.wireValue)
+                                                        value: swift.Expression.stringLiteral(
+                                                            getWireValue(property.key)
+                                                        )
                                                     })
                                                 ]
                                             });
@@ -404,12 +412,12 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                                         arguments_: [
                                             swift.functionArgument({
                                                 value: swift.Expression.reference(
-                                                    property.name.name.camelCase.unsafeName
+                                                    context.caseConverter.camelUnsafe(property.name)
                                                 )
                                             }),
                                             swift.functionArgument({
                                                 label: "fieldName",
-                                                value: swift.Expression.stringLiteral(property.name.wireValue)
+                                                value: swift.Expression.stringLiteral(getWireValue(property.name))
                                             })
                                         ]
                                     });
@@ -501,7 +509,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                     const symbol = context.project.nameRegistry.getSchemaTypeSymbolOrThrow(typeId);
                     const generator = new StringEnumGenerator({
                         name: symbol.name,
-                        source: { type: "ir", enumTypeDeclaration: etd },
+                        source: { type: "ir", enumTypeDeclaration: etd, caseConverter: context.caseConverter },
                         docsContent: typeDeclaration.docs
                     });
                     const enum_ = generator.generate();

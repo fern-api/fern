@@ -1,12 +1,18 @@
+import { CliError } from "@fern-api/task-context";
+
 /**
  * Error thrown when the system keyring is unavailable.
  */
-export class KeyringUnavailableError extends Error {
+export class KeyringUnavailableError extends CliError {
     public readonly platform: NodeJS.Platform;
-    public readonly cause?: Error;
+    public override readonly cause?: Error;
 
     constructor(platform: NodeJS.Platform, cause?: Error) {
-        super(getKeyringErrorMessage(platform));
+        super({
+            message: getKeyringErrorMessage(platform),
+            code: CliError.Code.AuthError
+        });
+        Object.setPrototypeOf(this, KeyringUnavailableError.prototype);
         this.platform = platform;
         this.cause = cause;
     }

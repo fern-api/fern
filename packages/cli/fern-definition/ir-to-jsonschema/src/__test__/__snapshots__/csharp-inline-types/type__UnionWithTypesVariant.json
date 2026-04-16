@@ -1,0 +1,64 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "types",
+        "otherVariant"
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "type": {
+          "const": "types"
+        },
+        "foo": {
+          "type": "string"
+        },
+        "ref": {
+          "$ref": "#/definitions/ReferenceType"
+        }
+      },
+      "required": [
+        "type",
+        "foo",
+        "ref"
+      ]
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "otherVariant"
+        },
+        "bar": {
+          "type": "string"
+        },
+        "ref": {
+          "$ref": "#/definitions/ReferenceType"
+        }
+      },
+      "required": [
+        "type",
+        "bar",
+        "ref"
+      ]
+    }
+  ],
+  "definitions": {
+    "ReferenceType": {
+      "type": "object",
+      "properties": {
+        "foo": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "foo"
+      ],
+      "additionalProperties": false
+    }
+  }
+}
