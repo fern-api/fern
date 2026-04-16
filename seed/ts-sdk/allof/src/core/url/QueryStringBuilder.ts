@@ -1,7 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.queryBuilder = queryBuilder;
-const qs_js_1 = require("./qs.js");
+import { toQueryString } from "./qs.js";
+
 /**
  * Creates a fluent builder for constructing URL query strings.
  *
@@ -16,13 +14,13 @@ const qs_js_1 = require("./qs.js");
  *         .mergeAdditional(requestOptions?.queryParams)
  *         .build();
  */
-function queryBuilder() {
+export function queryBuilder(): QueryStringBuilder {
     return new QueryStringBuilder();
 }
+
 class QueryStringBuilder {
-    constructor() {
-        this.parts = new Map();
-    }
+    private parts: Map<string, string> = new Map();
+
     /**
      * Adds a query parameter, serializing it immediately.
      *
@@ -32,22 +30,26 @@ class QueryStringBuilder {
      *
      * Null / undefined values are silently skipped.
      */
-    add(key, value, options) {
+    add(key: string, value: unknown, options?: { style?: "comma" }): this {
         if (value === undefined || value === null) {
             return this;
         }
-        const serialized = (0, qs_js_1.toQueryString)({ [key]: value }, { arrayFormat: (options === null || options === void 0 ? void 0 : options.style) === "comma" ? "comma" : "repeat" });
+        const serialized = toQueryString(
+            { [key]: value },
+            { arrayFormat: options?.style === "comma" ? "comma" : "repeat" },
+        );
         if (serialized.length > 0) {
             this.parts.set(key, serialized);
         }
         return this;
     }
+
     /**
      * Adds multiple query parameters at once from a record.
      * All parameters use the default "repeat" array format.
      * Null / undefined values are silently skipped.
      */
-    addMany(params) {
+    addMany(params: Record<string, unknown>): this {
         if (params != null) {
             for (const [key, value] of Object.entries(params)) {
                 this.add(key, value);
@@ -55,17 +57,18 @@ class QueryStringBuilder {
         }
         return this;
     }
+
     /**
      * Merges additional query parameters supplied at call-time via
      * `requestOptions.queryParams`. Overrides existing keys (last-write-wins).
      */
-    mergeAdditional(additionalParams) {
+    mergeAdditional(additionalParams?: Record<string, unknown>): this {
         if (additionalParams != null) {
             for (const [key, value] of Object.entries(additionalParams)) {
                 if (value === undefined || value === null) {
                     continue;
                 }
-                const serialized = (0, qs_js_1.toQueryString)({ [key]: value }, { arrayFormat: "repeat" });
+                const serialized = toQueryString({ [key]: value }, { arrayFormat: "repeat" });
                 if (serialized.length > 0) {
                     this.parts.set(key, serialized);
                 }
@@ -73,11 +76,12 @@ class QueryStringBuilder {
         }
         return this;
     }
+
     /**
      * Returns the assembled query string (without the leading `?`).
      * Returns an empty string when no parameters were added.
      */
-    build() {
+    build(): string {
         return [...this.parts.values()].join("&");
     }
 }

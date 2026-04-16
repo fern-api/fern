@@ -59,7 +59,7 @@ class QueryStringBuilder {
     mergeAdditional(additionalParams) {
         if (additionalParams != null) {
             for (const [key, value] of Object.entries(additionalParams)) {
-                if (value === undefined) {
+                if (value === undefined || value === null) {
                     continue;
                 }
                 const serialized = toQueryString({ [key]: value }, { arrayFormat: "repeat" });
