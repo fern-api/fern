@@ -200,6 +200,19 @@ describe("QueryStringBuilder", () => {
                 .build();
             expect(qs).toBe("ids=1&ids=2&ids=3");
         });
+
+        it("skips null values in additional params", () => {
+            const qs = queryBuilder().add("limit", 10).mergeAdditional({ extra: null }).build();
+            expect(qs).toBe("limit=10");
+        });
+
+        it("overrides a comma-style param with repeat format", () => {
+            const qs = queryBuilder()
+                .add("tags", ["a", "b"], { style: "comma" })
+                .mergeAdditional({ tags: ["x", "y"] })
+                .build();
+            expect(qs).toBe("tags=x&tags=y");
+        });
     });
 
     describe("build()", () => {
