@@ -98,8 +98,7 @@ export const ValidExampleEndpointCallRule: Rule = {
                             rawType: typeof queryParameter === "string" ? queryParameter : queryParameter.type
                         }),
                         isAllowMultiple: (queryParameter) =>
-                            typeof queryParameter !== "string" &&
-                            queryParameter["allow-multiple"] === true,
+                            typeof queryParameter !== "string" && queryParameter["allow-multiple"] === true,
                         breadcrumbs: ["query-parameters"]
                     });
                 },
