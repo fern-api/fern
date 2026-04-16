@@ -360,7 +360,7 @@ jobs:
 
   create-grype-pr-java-sdk:
     name: Run grype scan - java SDK
-    runs-on: Seed
+    runs-on: ubuntu-latest
     permissions:
       id-token: write
       contents: write
