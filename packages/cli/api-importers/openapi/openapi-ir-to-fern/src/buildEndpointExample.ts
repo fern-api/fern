@@ -1,6 +1,12 @@
 import { isNonNullish, noop } from "@fern-api/core-utils";
 import { RawSchemas, recursivelyVisitRawTypeReference } from "@fern-api/fern-definition-schema";
-import { EndpointExample, FullExample, LiteralExample, PathParameterExample } from "@fern-api/openapi-ir";
+import {
+    EndpointExample,
+    FullExample,
+    LiteralExample,
+    PathParameterExample,
+    PrimitiveExample
+} from "@fern-api/openapi-ir";
 
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext.js";
 import { convertEndpointResponseExample, convertFullExample } from "./utils/convertFullExample.js";
@@ -99,13 +105,28 @@ export function buildEndpointExample({
                 }
             }
 
-            // Skip if already in endpoint headers (use existing example) or if the
-            // header wasn't in the endpoint example at all (e.g. optional headers that
-            // had no example generated). Generating a placeholder here would produce a
-            // type-incorrect value for non-string headers.
+            // Skip if already in endpoint headers (use existing example value)
             if (endpointHeaderNames.has(header)) {
                 continue;
             }
+
+            // Check if the header type is optional/nullable — if so, skip generating
+            // an example. Optional headers don't need example values, and using the
+            // header name as a string placeholder would be type-incorrect for non-string
+            // headers (e.g. integer timeout parameters).
+            const headerType =
+                info != null && typeof info === "object" ? info.type : typeof info === "string" ? info : undefined;
+            if (headerType != null && (headerType.startsWith("optional<") || headerType.startsWith("nullable<"))) {
+                continue;
+            }
+
+            // For required headers without a literal value, fall back to using the
+            // header name as a string placeholder. This isn't type-correct for non-string
+            // headers but is needed to satisfy "required header must have an example".
+            namedFullExamples.push({
+                name: header,
+                value: FullExample.primitive(PrimitiveExample.string(header))
+            });
         }
 
         example.headers = convertHeaderExamples({

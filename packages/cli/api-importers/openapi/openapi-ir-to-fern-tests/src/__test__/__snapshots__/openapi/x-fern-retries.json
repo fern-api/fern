@@ -43,7 +43,9 @@
               "docs": undefined,
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "X-API-Key": "X-API-Key",
+                  },
                   "request": {
                     "message": "message",
                   },
@@ -84,7 +86,8 @@ service:
         body: root.Update
         content-type: application/json
       examples:
-        - headers: {}
+        - headers:
+            X-API-Key: X-API-Key
           request:
             message: message
       retries:
@@ -111,7 +114,9 @@ service:
               "docs": undefined,
               "examples": [
                 {
-                  "headers": {},
+                  "headers": {
+                    "X-API-Key": "X-API-Key",
+                  },
                   "request": {
                     "message": "message",
                   },
@@ -149,7 +154,8 @@ service:
         body: root.Update
         content-type: application/json
       examples:
-        - headers: {}
+        - headers:
+            X-API-Key: X-API-Key
           request:
             message: message
       audiences:
