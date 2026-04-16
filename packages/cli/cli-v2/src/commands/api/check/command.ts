@@ -8,7 +8,6 @@ import type { GlobalArgs } from "../../../context/GlobalArgs.js";
 import { Icons } from "../../../ui/format.js";
 import { command } from "../../_internal/command.js";
 import { type JsonOutput, toJsonViolation } from "../../_internal/toJsonViolation.js";
-import { resolveApiFilter } from "../utils/resolveApiFilter.js";
 
 export declare namespace CheckCommand {
     export interface Args extends GlobalArgs {
@@ -24,12 +23,19 @@ export declare namespace CheckCommand {
 export class CheckCommand {
     public async handle(context: Context, args: CheckCommand.Args): Promise<void> {
         const workspace = await context.loadWorkspaceOrThrow();
-        const api = await resolveApiFilter({ context, args, workspace });
+
+        if (args.api != null && workspace.apis[args.api] == null) {
+            const availableApis = Object.keys(workspace.apis).join(", ");
+            throw new CliError({
+                message: `API '${args.api}' not found. Available APIs: ${availableApis}`,
+                code: CliError.Code.ConfigError
+            });
+        }
 
         const checker = new ApiChecker({ context, cliVersion: workspace.cliVersion });
         const result = await checker.check({
             workspace,
-            apiNames: api != null ? [api] : undefined,
+            apiNames: args.api != null ? [args.api] : undefined,
             strict: args.strict
         });
 

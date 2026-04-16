@@ -17,7 +17,6 @@ import type { SpecEntry } from "../utils/filterSpecs.js";
 import { filterSpecs } from "../utils/filterSpecs.js";
 import { isEnoentError } from "../utils/isEnoentError.js";
 import { loadSpec, parseSpec, serializeSpec } from "../utils/loadSpec.js";
-import { resolveApiFilter } from "../utils/resolveApiFilter.js";
 import {
     ALL_FORMAT_NAMES,
     deriveOutputPath,
@@ -50,8 +49,7 @@ export class SplitCommand {
             throw new CliError({ message: "No APIs found in workspace.", code: CliError.Code.ConfigError });
         }
 
-        const api = await resolveApiFilter({ context, args, workspace });
-        const entries = filterSpecs(workspace, { api });
+        const entries = filterSpecs(workspace, { api: args.api });
 
         if (entries.length === 0) {
             context.stderr.info(chalk.dim("No matching OpenAPI/AsyncAPI specs found."));
