@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add a generator migration that preserves the previous behavior of
+    `pydantic_config.use_provided_defaults: true` in the Python SDK generator.
+    When upgrading through 4.54.4 (where applying defaults to inlined request
+    body properties was removed) the migration now sets `use_request_defaults: all`
+    on the generator config so pydantic model fields and request body parameters
+    continue to receive OpenAPI/IR defaults.
+  type: fix
