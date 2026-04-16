@@ -107,8 +107,8 @@ describe("GenerateCommand.getTargets", () => {
 
         it("throws when --group matches no targets", async () => {
             const workspace = makeWorkspace([makeTarget("typescript", ["production"])]);
-            await expect(getTargets(cmd, { workspace, args: {}, groupName: "staging" })).rejects.toThrow(
-                "No targets found for group 'staging'"
+            await expect(getTargets(cmd, { workspace, args: {}, groupName: "staging" })).rejects.toSatisfy(
+                (e) => e instanceof CliError && e.message.includes("No targets found for group 'staging'")
             );
         });
     });
@@ -146,12 +146,16 @@ describe("GenerateCommand.getTargets", () => {
     describe("no targets configured", () => {
         it("throws when sdks is undefined", async () => {
             const workspace: Workspace = { org: "test-org", apis: {}, cliVersion: "0.0.0" };
-            await expect(getTargets(cmd, { workspace, args: {} })).rejects.toThrow("No targets configured");
+            await expect(getTargets(cmd, { workspace, args: {} })).rejects.toSatisfy(
+                (e) => e instanceof CliError && e.message.includes("No targets configured")
+            );
         });
 
         it("throws when targets array is empty", async () => {
             const workspace = makeWorkspace([]);
-            await expect(getTargets(cmd, { workspace, args: {} })).rejects.toThrow("No targets configured");
+            await expect(getTargets(cmd, { workspace, args: {} })).rejects.toSatisfy(
+                (e) => e instanceof CliError && e.message.includes("No targets configured")
+            );
         });
     });
 

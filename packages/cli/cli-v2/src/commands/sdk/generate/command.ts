@@ -157,11 +157,14 @@ export class GenerateCommand {
             });
         }
 
-        // After validation, these are guaranteed to be defined.
-        const api = args.api as string;
-        const target = args.target as string;
-        const org = args.org as string;
-        const output = args.output as string;
+        // All four are guaranteed to be defined after the missingFlags check above.
+        if (args.api == null || args.target == null || args.org == null || args.output == null) {
+            throw new CliError({
+                message: "Internal error: required flags missing",
+                code: CliError.Code.InternalError
+            });
+        }
+        const { api, target, org, output } = args;
 
         const resolver = new ApiSpecResolver({ context });
         const resolvedSpec = await resolver.resolve({
@@ -516,9 +519,15 @@ export class GenerateCommand {
         }
         if (matched.length === 0) {
             if (groupName != null) {
-                throw new Error(`No targets found for group '${groupName}'`);
+                throw new CliError({
+                    message: `No targets found for group '${groupName}'`,
+                    code: CliError.Code.ConfigError
+                });
             }
-            throw new Error("No targets configured in fern.yml");
+            throw new CliError({
+                message: "No targets configured in fern.yml",
+                code: CliError.Code.ConfigError
+            });
         }
 
         // When multiple targets exist and no group/target was specified, prompt for selection.
@@ -619,11 +628,13 @@ export class GenerateCommand {
     }
 
     private resolveLanguage(target: string): Language {
-        const lang = target as Language;
-        if (LANGUAGES.includes(lang)) {
-            return lang;
+        if (isLanguage(target)) {
+            return target;
         }
-        throw new Error(`"${target}" is not a supported language. Supported: ${LANGUAGES.join(", ")}`);
+        throw new CliError({
+            message: `"${target}" is not a supported language. Supported: ${LANGUAGES.join(", ")}`,
+            code: CliError.Code.ConfigError
+        });
     }
 
     private parseAudiences(audiences: string[] | undefined): Audiences | undefined {
@@ -683,6 +694,10 @@ export class GenerateCommand {
             .map((line) => (line.length > 0 ? `  ${line}` : line))
             .join("\n");
     }
+}
+
+function isLanguage(target: string): target is Language {
+    return (LANGUAGES as readonly string[]).includes(target);
 }
 
 export function addGenerateCommand(cli: Argv<GlobalArgs>): void {

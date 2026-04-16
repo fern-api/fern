@@ -1,9 +1,6 @@
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { CliError } from "@fern-api/task-context";
 import { describe, expect, it } from "vitest";
-import { createTestContext } from "../../../../__test__/utils/createTestContext.js";
 import type { ApiDefinition } from "../../../../api/config/ApiDefinition.js";
-import type { Context } from "../../../../context/Context.js";
 import type { Workspace } from "../../../../workspace/Workspace.js";
 import { CompileCommand } from "../command.js";
 
@@ -19,51 +16,55 @@ function makeWorkspace(...apiNames: string[]): Workspace {
     return { org: "test-org", apis, cliVersion: "0.0.0" };
 }
 
-/** Calls the private `resolveApi` via type cast with isTTY forced to false. */
-async function resolveApi(
+/** Calls the private `resolveApiEntries` via type cast. */
+function resolveApiEntries(
     cmd: CompileCommand,
     workspace: Workspace,
     api?: string
-): Promise<{ apiName: string; definition: ApiDefinition }> {
-    const context = await createTestContext({ cwd: AbsoluteFilePath.of("/tmp") });
-    Object.defineProperty(context, "isTTY", { get: () => false });
-
+): Array<{ apiName: string; definition: ApiDefinition }> {
     return (
         cmd as unknown as {
-            resolveApi: (
-                context: Context,
+            resolveApiEntries: (
                 args: { api?: string },
                 workspace: Workspace
-            ) => Promise<{ apiName: string; definition: ApiDefinition }>;
+            ) => Array<{ apiName: string; definition: ApiDefinition }>;
         }
-    ).resolveApi(context, { api }, workspace);
+    ).resolveApiEntries({ api }, workspace);
 }
 
 // ---------------------------------------------------------------------------
 // Tests
 // ---------------------------------------------------------------------------
 
-describe("CompileCommand.resolveApi", () => {
+describe("CompileCommand.resolveApiEntries", () => {
     const cmd = new CompileCommand();
 
     describe("single API", () => {
-        it("returns the only API without prompting", async () => {
+        it("returns the only API", () => {
             const workspace = makeWorkspace("rest");
-            const result = await resolveApi(cmd, workspace);
-            expect(result.apiName).toBe("rest");
+            const entries = resolveApiEntries(cmd, workspace);
+            expect(entries).toHaveLength(1);
+            expect(entries[0]?.apiName).toBe("rest");
         });
     });
 
     describe("--api flag", () => {
-        it("returns the named API when --api matches", async () => {
+        it("returns only the named API when --api matches", () => {
             const workspace = makeWorkspace("rest", "grpc");
-            const result = await resolveApi(cmd, workspace, "grpc");
-            expect(result.apiName).toBe("grpc");
+            const entries = resolveApiEntries(cmd, workspace, "grpc");
+            expect(entries).toHaveLength(1);
+            expect(entries[0]?.apiName).toBe("grpc");
         });
 
-        it("throws CliError when --api does not match any API", async () => {
+        it("throws CliError when --api does not match any API", () => {
             const workspace = makeWorkspace("rest", "grpc");
-            await expect(resolveApi(cmd, workspace, "unknown")).rejects.toSatisfy(
+            let thrown: unknown;
+            try {
+                resolveApiEntries(cmd, workspace, "unknown");
+            } catch (e) {
+                thrown = e;
+            }
+            expect(thrown).toSatisfy(
                 (e) =>
                     e instanceof CliError &&
                     e.message.includes("unknown") &&
@@ -73,16 +74,12 @@ describe("CompileCommand.resolveApi", () => {
         });
     });
 
-    describe("multiple APIs — non-TTY", () => {
-        it("throws CliError listing all APIs and --api hint", async () => {
+    describe("multiple APIs — no --api flag", () => {
+        it("returns all APIs when no --api is specified", () => {
             const workspace = makeWorkspace("rest", "grpc");
-            await expect(resolveApi(cmd, workspace)).rejects.toSatisfy(
-                (e) =>
-                    e instanceof CliError &&
-                    e.message.includes("rest") &&
-                    e.message.includes("grpc") &&
-                    e.message.includes("--api")
-            );
+            const entries = resolveApiEntries(cmd, workspace);
+            expect(entries).toHaveLength(2);
+            expect(entries.map((e) => e.apiName)).toEqual(expect.arrayContaining(["rest", "grpc"]));
         });
     });
 });

@@ -200,7 +200,7 @@ export class PublishCommand {
 
         if (instances.length > 1) {
             const available = instances.map((i) => `  - ${i.url}`).join("\n");
-            return promptSelect<string>({
+            return await promptSelect<string>({
                 isTTY: context.isTTY,
                 message: "Multiple docs instances configured. Select one:",
                 choices: instances.map((i) => ({ name: i.url, value: i.url })),
