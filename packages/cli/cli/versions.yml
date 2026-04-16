@@ -1,4 +1,43 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.74.0
+  changelogEntry:
+    - summary: |
+        Resolve Windows symlinks via NTFS junctions during bundle extraction instead
+        of running pnpm install in standalone. This enables docs preview on Windows
+        without elevated privileges.
+      type: feat
+  createdAt: "2026-04-16"
+  irVersion: 66
+- version: 4.73.0
+  changelogEntry:
+    - summary: |
+        Present an interactive TUI dropdown when the user omits `--api`,
+        `--instance`, or `--group` flags and multiple options exist.
+        In TTY environments the CLI now prompts for selection instead of
+        failing hard. Non-TTY environments retain the previous error behavior.
+      type: feat
+  createdAt: "2026-04-16"
+  irVersion: 66
+- version: 4.72.0
+  changelogEntry:
+    - summary: |
+        Polish `fern config migrate` command: point the `docs` key at the
+        existing `docs.yml` file via `$ref` syntax instead of inlining, drop
+        legacy `defaultGroup` and `group` fields from SDK target output, and
+        automatically update GitHub Actions workflow files to use the v2 CLI
+        syntax (`fern sdk generate`, `--target` instead of `--group`).
+      type: feat
+  createdAt: "2026-04-16"
+  irVersion: 66
+- version: 4.71.6
+  changelogEntry:
+    - summary: |
+        Fix MDX rendering of C++ library docs by properly escaping angle brackets
+        in template parameters and HTML-like tags within description text. Unescaped
+        angle brackets (e.g. `vector<int>`, `<para>`) caused MDX parse failures.
+      type: fix
+  createdAt: "2026-04-16"
+  irVersion: 66
 - version: 4.71.5
   changelogEntry:
     - summary: |
@@ -298,7 +337,6 @@
       type: feat
   createdAt: "2026-04-07"
   irVersion: 66
-
 - version: 4.62.6
   changelogEntry:
     - summary: |
@@ -320,7 +358,6 @@
       type: chore
   createdAt: "2026-04-06"
   irVersion: 66
-
 - version: 4.62.3
   changelogEntry:
     - summary: |
@@ -410,7 +447,6 @@
       type: feat
   createdAt: "2026-04-02"
   irVersion: 66
-
 - version: 4.56.0
   changelogEntry:
     - summary: |

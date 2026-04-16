@@ -22,6 +22,7 @@ import { LANGUAGES, type Language } from "../../../sdk/config/Language.js";
 import type { Target } from "../../../sdk/config/Target.js";
 import { GeneratorPipeline } from "../../../sdk/generator/GeneratorPipeline.js";
 import { SdkStageOverrides, SdkTaskGroup } from "../../../sdk/task/SdkTaskGroup.js";
+import { promptSelect } from "../../../ui/promptSelect.js";
 import type { TaskStageLabels } from "../../../ui/TaskStageLabels.js";
 import type { Workspace } from "../../../workspace/Workspace.js";
 import { WorkspaceBuilder } from "../../../workspace/WorkspaceBuilder.js";
@@ -118,7 +119,8 @@ export class GenerateCommand {
             };
         }
 
-        const targets = this.getTargets({
+        const targets = await this.getTargets({
+            context,
             workspace: workspaceWithOverrides,
             args,
             groupName: args.target != null ? undefined : (args.group ?? workspaceWithOverrides.sdks?.defaultGroup)
@@ -155,11 +157,14 @@ export class GenerateCommand {
             });
         }
 
-        // After validation, these are guaranteed to be defined.
-        const api = args.api as string;
-        const target = args.target as string;
-        const org = args.org as string;
-        const output = args.output as string;
+        // All four are guaranteed to be defined after the missingFlags check above.
+        if (args.api == null || args.target == null || args.org == null || args.output == null) {
+            throw new CliError({
+                message: "Internal error: required flags missing",
+                code: CliError.Code.InternalError
+            });
+        }
+        const { api, target, org, output } = args;
 
         const resolver = new ApiSpecResolver({ context });
         const resolvedSpec = await resolver.resolve({
@@ -482,33 +487,106 @@ export class GenerateCommand {
         return { path: args.output };
     }
 
-    private getTargets({
+    private async getTargets({
+        context,
         workspace,
         args,
         groupName
     }: {
+        context: Context;
         workspace: Workspace;
         args: GenerateCommand.Args;
         groupName: string | undefined;
-    }): Target[] {
+    }): Promise<Target[]> {
         let matched = workspace.sdks != null ? this.filterTargetsByGroup(workspace.sdks.targets, groupName) : [];
         if (args.target != null) {
             matched = matched.filter((t) => t.name === args.target);
             if (matched.length === 0) {
-                throw new Error(`Target '${args.target}' not found`);
+                const allTargets = workspace.sdks?.targets ?? [];
+                const available = allTargets.map((t) => t.name);
+                if (available.length > 0) {
+                    throw new CliError({
+                        message: `Target '${args.target}' not found. Available targets: ${available.join(", ")}`,
+                        code: CliError.Code.ConfigError
+                    });
+                } else {
+                    throw new CliError({
+                        message: `Target '${args.target}' not found`,
+                        code: CliError.Code.ConfigError
+                    });
+                }
             }
         }
         if (matched.length === 0) {
             if (groupName != null) {
-                throw new Error(`No targets found for group '${groupName}'`);
+                throw new CliError({
+                    message: `No targets found for group '${groupName}'`,
+                    code: CliError.Code.ConfigError
+                });
             }
-            throw new Error("No targets configured in fern.yml");
+            throw new CliError({
+                message: "No targets configured in fern.yml",
+                code: CliError.Code.ConfigError
+            });
         }
+
+        // When multiple targets exist and no group/target was specified, prompt for selection.
+        // Prefer group-based selection when groups are defined; fall back to target selection otherwise.
+        if (groupName == null && args.target == null && matched.length > 1) {
+            const allGroups = this.collectGroups(matched);
+            if (allGroups.length > 1) {
+                // Multiple groups defined — prompt by group.
+                // Use undefined as the "all" sentinel to avoid any collision with real group names.
+                const selectedGroup = await promptSelect<string | undefined>({
+                    isTTY: context.isTTY,
+                    message: "Multiple SDK groups found. Select one:",
+                    choices: [
+                        { name: `all (${matched.length} targets)`, value: undefined },
+                        ...allGroups.map((g) => ({ name: g, value: g }))
+                    ],
+                    nonInteractiveError: `Multiple SDK groups found: ${allGroups.join(", ")}. Use --group to select one.`,
+                    flagHint: (value) => (value != null ? `--group ${value}` : undefined)
+                });
+                if (selectedGroup != null) {
+                    matched = this.filterTargetsByGroup(matched, selectedGroup);
+                }
+            } else {
+                // No groups defined — prompt by target name.
+                // Use undefined as the "all" sentinel to avoid any collision with real target names.
+                const targetNames = matched.map((t) => t.name);
+                const selectedTarget = await promptSelect<string | undefined>({
+                    isTTY: context.isTTY,
+                    message: "Multiple SDK targets found. Select one:",
+                    choices: [
+                        { name: `all (${matched.length} targets)`, value: undefined },
+                        ...targetNames.map((name) => ({ name, value: name }))
+                    ],
+                    nonInteractiveError: `Multiple SDK targets found: ${targetNames.join(", ")}. Use --target to select one.`,
+                    flagHint: (value) => (value != null ? `--target ${value}` : undefined)
+                });
+                if (selectedTarget != null) {
+                    matched = matched.filter((t) => t.name === selectedTarget);
+                }
+            }
+        }
+
         return matched.map((target) => ({
             ...target,
             version: args["target-version"] ?? target.version,
             output: args.output != null ? this.parseTargetOutput(args) : target.output
         }));
+    }
+
+    private collectGroups(targets: Target[]): string[] {
+        const groups = new Set<string>();
+        for (const target of targets) {
+            if (target.groups != null) {
+                for (const group of target.groups) {
+                    groups.add(group);
+                }
+            }
+        }
+        return [...groups].sort();
     }
 
     private async checkOutputDirectory({
@@ -550,11 +628,13 @@ export class GenerateCommand {
     }
 
     private resolveLanguage(target: string): Language {
-        const lang = target as Language;
-        if (LANGUAGES.includes(lang)) {
-            return lang;
+        if (isLanguage(target)) {
+            return target;
         }
-        throw new Error(`"${target}" is not a supported language. Supported: ${LANGUAGES.join(", ")}`);
+        throw new CliError({
+            message: `"${target}" is not a supported language. Supported: ${LANGUAGES.join(", ")}`,
+            code: CliError.Code.ConfigError
+        });
     }
 
     private parseAudiences(audiences: string[] | undefined): Audiences | undefined {
@@ -614,6 +694,10 @@ export class GenerateCommand {
             .map((line) => (line.length > 0 ? `  ${line}` : line))
             .join("\n");
     }
+}
+
+function isLanguage(target: string): target is Language {
+    return (LANGUAGES as readonly string[]).includes(target);
 }
 
 export function addGenerateCommand(cli: Argv<GlobalArgs>): void {

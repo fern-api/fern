@@ -2,10 +2,13 @@ import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-a
 import { Logger } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
 import chalk from "chalk";
+import { execSync } from "child_process";
 import cliProgress from "cli-progress";
 import decompress from "decompress";
+import { cpSync, existsSync, lstatSync, mkdirSync, symlinkSync } from "fs";
 import { mkdir, readFile, rename, rm, writeFile } from "fs/promises";
 import { homedir } from "os";
+import path from "path";
 import tmp from "tmp-promise";
 import xml2js from "xml2js";
 
@@ -25,10 +28,172 @@ const LOCAL_STORAGE_FOLDER = process.env.LOCAL_STORAGE_FOLDER ?? ".fern";
 
 // Const for windows post-processing
 const INSTRUMENTATION_PATH = "packages/fern-docs/bundle/.next/server/instrumentation.js";
-const NPMRC_NAME = ".npmrc";
-const PNPMFILE_CJS_NAME = ".pnpmfile.cjs";
-const PNPM_WORKSPACE_YAML_NAME = "pnpm-workspace.yaml";
 const COREPACK_MISSING_KEYID_ERROR_MESSAGE = 'Cannot find matching keyid: {"signatures":';
+
+interface SymlinkEntry {
+    path: string;
+    linkname: string;
+}
+
+/**
+ * Checks the Windows registry for LongPathsEnabled and prints a prominent
+ * warning if long paths are not enabled. Long paths are required because
+ * .pnpm directory names inside the bundle can exceed the 260-char MAX_PATH.
+ */
+function warnIfLongPathsDisabled(logger: Logger): void {
+    try {
+        const output = execSync(
+            'reg query "HKLM\\SYSTEM\\CurrentControlSet\\Control\\FileSystem" /v LongPathsEnabled',
+            { encoding: "utf-8", timeout: 5000 }
+        );
+        // Output looks like: "LongPathsEnabled    REG_DWORD    0x1"
+        const match = output.match(/LongPathsEnabled\s+REG_DWORD\s+0x(\d+)/i);
+        if (match != null && match[1] === "1") {
+            return;
+        }
+    } catch (error) {
+        // reg query failed — key may not exist, which means long paths are disabled
+        logger.debug(`Registry query for LongPathsEnabled failed: ${error}`);
+    }
+
+    logger.warn(
+        chalk.yellow.bold(
+            "\n" +
+                "╔══════════════════════════════════════════════════════════════════════════╗\n" +
+                "║  WARNING: Windows long path support is NOT enabled.                     ║\n" +
+                "║                                                                         ║\n" +
+                "║  The docs bundle contains deeply nested .pnpm paths that may exceed     ║\n" +
+                "║  the 260-character MAX_PATH limit. Extraction may silently truncate     ║\n" +
+                "║  paths and produce a broken bundle.                                     ║\n" +
+                "║                                                                         ║\n" +
+                "║  To fix, run this in an elevated PowerShell:                             ║\n" +
+                "║                                                                         ║\n" +
+                "║    New-ItemProperty -Path                                                ║\n" +
+                "║      'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\FileSystem'           ║\n" +
+                "║      -Name 'LongPathsEnabled' -Value 1 -PropertyType DWORD -Force       ║\n" +
+                "║                                                                         ║\n" +
+                "║  Then restart your terminal.                                             ║\n" +
+                "║                                                                         ║\n" +
+                "║  For more details, see:                                                  ║\n" +
+                "║  https://learn.microsoft.com/en-us/windows/win32/fileio/                 ║\n" +
+                "║  maximum-file-path-limitation                                            ║\n" +
+                "╚══════════════════════════════════════════════════════════════════════════╝\n"
+        )
+    );
+}
+
+function isWithinOutputDir(resolvedPath: string, outputDir: string): boolean {
+    const rel = path.relative(outputDir, resolvedPath);
+    // rel must not start with ".." and must not be an absolute path
+    return !rel.startsWith("..") && !path.isAbsolute(rel);
+}
+
+/**
+ * On Windows, tar symlinks are filtered out during extraction (fs.symlink
+ * requires elevated privileges). This function resolves each collected symlink
+ * by creating an NTFS junction (for directories) or copying the file.
+ * When a direct target doesn't exist, it falls back to searching the root
+ * .pnpm store.
+ */
+function resolveWindowsSymlinks(outputDir: string, symlinks: SymlinkEntry[], logger: Logger): void {
+    if (symlinks.length === 0) {
+        return;
+    }
+
+    logger.debug(`Resolving ${symlinks.length} symlinks via NTFS junctions/copies...`);
+
+    let junctions = 0;
+    let copies = 0;
+    let failed = 0;
+    let fallbackUsed = 0;
+    let alreadyExisted = 0;
+
+    const rootPnpmStore = path.join(outputDir, "standalone", "node_modules", ".pnpm");
+
+    for (const { path: symlinkPath, linkname } of symlinks) {
+        const fullSymlinkPath = path.join(outputDir, symlinkPath);
+
+        if (!isWithinOutputDir(fullSymlinkPath, outputDir)) {
+            logger.warn(`Skipping symlink with path outside outputDir: ${symlinkPath}`);
+            failed++;
+            continue;
+        }
+
+        const symlinkDir = path.dirname(fullSymlinkPath);
+        const resolvedTarget = path.resolve(symlinkDir, linkname);
+
+        if (existsSync(fullSymlinkPath)) {
+            alreadyExisted++;
+            continue;
+        }
+
+        let sourcePath = resolvedTarget;
+        let usedFallback = false;
+
+        // If direct target doesn't exist, try fallback in root .pnpm store
+        if (!existsSync(sourcePath) && existsSync(rootPnpmStore)) {
+            const parts = linkname.split("/");
+            const nmIdx = parts.lastIndexOf("node_modules");
+            if (nmIdx >= 0 && nmIdx > 0) {
+                const pnpmDirName = parts[nmIdx - 1];
+                const pkgRelPath = parts.slice(nmIdx + 1).join("/");
+                if (pnpmDirName != null && pkgRelPath != null) {
+                    const fallback = path.join(rootPnpmStore, pnpmDirName, "node_modules", pkgRelPath);
+                    if (!isWithinOutputDir(fallback, outputDir)) {
+                        continue; // skip unsafe fallback
+                    }
+                    if (existsSync(fallback)) {
+                        sourcePath = fallback;
+                        usedFallback = true;
+                    }
+                }
+            }
+        }
+
+        if (!isWithinOutputDir(sourcePath, outputDir)) {
+            logger.warn(`Skipping symlink whose target is outside outputDir: ${linkname}`);
+            failed++;
+            continue;
+        }
+
+        if (!existsSync(sourcePath)) {
+            failed++;
+            continue;
+        }
+
+        try {
+            mkdirSync(path.dirname(fullSymlinkPath), { recursive: true });
+            const stat = lstatSync(sourcePath);
+            if (stat.isDirectory()) {
+                symlinkSync(sourcePath, fullSymlinkPath, "junction");
+                junctions++;
+            } else {
+                cpSync(sourcePath, fullSymlinkPath);
+                copies++;
+            }
+            if (usedFallback) {
+                fallbackUsed++;
+            }
+        } catch (error) {
+            logger.debug(`Failed to resolve symlink ${symlinkPath}: ${error}`);
+            failed++;
+        }
+    }
+
+    logger.debug(
+        `Symlink resolution: ${junctions} junctions, ${copies} file copies, ` +
+            `${alreadyExisted} pre-existing, ${failed} failed (${fallbackUsed} via fallback) ` +
+            `out of ${symlinks.length}`
+    );
+
+    // Verify critical top-level packages
+    const standaloneNM = path.join(outputDir, "standalone", "node_modules");
+    for (const dep of ["next", "react", "react-dom", "styled-jsx"]) {
+        if (!existsSync(path.join(standaloneNM, dep))) {
+            logger.warn(`${dep} is MISSING from standalone/node_modules/`);
+        }
+    }
+}
 
 export function getLocalStorageFolder(): AbsoluteFilePath {
     return join(AbsoluteFilePath.of(homedir()), RelativeFilePath.of(LOCAL_STORAGE_FOLDER));
@@ -53,18 +218,6 @@ export function getPathToInstrumentationJs({ app = false }: { app?: boolean }): 
     return join(getPathToStandaloneFolder({ app }), RelativeFilePath.of(INSTRUMENTATION_PATH));
 }
 
-function getPathToPnpmWorkspaceYaml({ app = false }: { app?: boolean }): AbsoluteFilePath {
-    return join(getPathToStandaloneFolder({ app }), RelativeFilePath.of(PNPM_WORKSPACE_YAML_NAME));
-}
-
-function getPathToPnpmfileCjs({ app = false }: { app?: boolean }): AbsoluteFilePath {
-    return join(getPathToStandaloneFolder({ app }), RelativeFilePath.of(PNPMFILE_CJS_NAME));
-}
-
-function getPathToNpmrc({ app = false }: { app?: boolean }): AbsoluteFilePath {
-    return join(getPathToStandaloneFolder({ app }), RelativeFilePath.of(NPMRC_NAME));
-}
-
 function contactFernSupportError(errorMessage: string): Error {
     return new Error(`${errorMessage}. Please reach out to support@buildwithfern.com.`);
 }
@@ -84,27 +237,6 @@ export declare namespace DownloadLocalBundle {
         type: "failure";
     }
 }
-
-const PNPMFILE_CJS_CONTENTS = `module.exports = {
-    hooks: {
-        readPackage(pkg) {
-            // Remove all workspace:* dependencies
-            if (pkg.dependencies) {
-                Object.keys(pkg.dependencies).forEach(dep => {
-                    if (pkg.dependencies[dep] === 'workspace:*') {
-                        delete pkg.dependencies[dep]; } });
-                    }
-            if (pkg.devDependencies) {
-                Object.keys(pkg.devDependencies).forEach(dep => {
-                    if (pkg.devDependencies[dep] === 'workspace:*') {
-                        delete pkg.devDependencies[dep]; } });
-            } return pkg;
-        }
-    }
-};
-`;
-
-const NPMRC_CONTENTS = "@fern-fern:registry=https://npm.buildwithfern.com\n";
 
 export async function downloadBundle({
     bucketUrl,
@@ -263,9 +395,26 @@ export async function downloadBundle({
             }, 50);
         }
 
+        if (PLATFORM_IS_WINDOWS) {
+            warnIfLongPathsDisabled(logger);
+        }
+
+        const collectedSymlinks: SymlinkEntry[] = [];
+
         try {
             await decompress(outputZipPath, absolutePathToBundleFolder, {
-                filter: (file) => !(PLATFORM_IS_WINDOWS && file.type === "symlink")
+                filter: (file) => {
+                    if (PLATFORM_IS_WINDOWS && file.type === "symlink") {
+                        // decompress-tar adds `linkname` for symlink entries but the
+                        // TypeScript types don't include it, so access via bracket notation.
+                        const linkname = (file as unknown as Record<string, unknown>)["linkname"];
+                        if (typeof linkname === "string") {
+                            collectedSymlinks.push({ path: file.path, linkname });
+                        }
+                        return false;
+                    }
+                    return true;
+                }
             });
         } finally {
             if (unzipInterval) {
@@ -275,6 +424,11 @@ export async function downloadBundle({
                 unzipProgressBar.update(100);
                 unzipProgressBar.stop();
             }
+        }
+
+        // Resolve symlinks via NTFS junctions on Windows
+        if (PLATFORM_IS_WINDOWS && collectedSymlinks.length > 0) {
+            resolveWindowsSymlinks(absolutePathToBundleFolder, collectedSymlinks, logger);
         }
 
         // write etag
@@ -362,52 +516,10 @@ export async function downloadBundle({
             }
 
             if (PLATFORM_IS_WINDOWS) {
-                const absPathToStandalone = getPathToStandaloneFolder({ app });
                 const absPathToInstrumentationJs = getPathToInstrumentationJs({ app });
-                const pnpmWorkspacePath = getPathToPnpmWorkspaceYaml({ app });
-                const pnpmfilePath = getPathToPnpmfileCjs({ app });
-                const npmrcPath = getPathToNpmrc({ app });
-
-                // Check all paths in parallel
-                const [pnpmWorkspaceExists, pnpmfileExists, npmrcExists, instrumentationJsExists] = await Promise.all([
-                    doesPathExist(pnpmWorkspacePath),
-                    doesPathExist(pnpmfilePath),
-                    doesPathExist(npmrcPath),
-                    doesPathExist(absPathToInstrumentationJs)
-                ]);
-
-                // Warn if pnpm-workspace.yaml does not exist
-                if (!pnpmWorkspaceExists) {
-                    logger.warn(
-                        `Expected pnpm-workspace.yaml at ${pnpmWorkspacePath} but it does not exist. If you are experiencing issues, please contact support@buildwithfern.com.`
-                    );
-                }
-
-                // Write pnpmfile.cjs if it does not exist
-                if (!pnpmfileExists) {
-                    logger.debug(`Writing pnpmfile.cjs at ${pnpmfilePath}`);
-                    await writeFile(pnpmfilePath, PNPMFILE_CJS_CONTENTS);
-                }
-                // Write .npmrc if it does not exist
-                if (!npmrcExists) {
-                    logger.debug(`Writing .npmrc at ${npmrcPath}`);
-                    await writeFile(npmrcPath, NPMRC_CONTENTS);
-                }
-                // Remove instrumentation.js if it exists
-                if (instrumentationJsExists) {
+                if (await doesPathExist(absPathToInstrumentationJs)) {
                     logger.debug(`Removing instrumentation.js at ${absPathToInstrumentationJs}`);
                     await rm(absPathToInstrumentationJs);
-                }
-
-                try {
-                    // pnpm install within standalone
-                    logger.debug("Running pnpm install within standalone");
-                    await loggingExeca(logger, "pnpm", ["install"], {
-                        cwd: absPathToStandalone,
-                        doNotPipeOutput: true
-                    });
-                } catch (error) {
-                    throw contactFernSupportError(`Failed to install required package due to error: ${error}`);
                 }
             }
         }
