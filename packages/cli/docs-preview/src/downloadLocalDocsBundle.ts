@@ -5,6 +5,7 @@ import chalk from "chalk";
 import cliProgress from "cli-progress";
 import decompress from "decompress";
 import { cpSync, existsSync, lstatSync, mkdirSync, symlinkSync } from "fs";
+import { execSync } from "child_process";
 import { mkdir, readFile, rename, rm, writeFile } from "fs/promises";
 import { homedir } from "os";
 import path from "path";
@@ -32,6 +33,47 @@ const COREPACK_MISSING_KEYID_ERROR_MESSAGE = 'Cannot find matching keyid: {"sign
 interface SymlinkEntry {
     path: string;
     linkname: string;
+}
+
+/**
+ * Checks the Windows registry for LongPathsEnabled and prints a prominent
+ * warning if long paths are not enabled. Long paths are required because
+ * .pnpm directory names inside the bundle can exceed the 260-char MAX_PATH.
+ */
+function warnIfLongPathsDisabled(logger: Logger): void {
+    try {
+        const output = execSync(
+            'reg query "HKLM\\SYSTEM\\CurrentControlSet\\Control\\FileSystem" /v LongPathsEnabled',
+            { encoding: "utf-8", timeout: 5000 }
+        );
+        // Output looks like: "LongPathsEnabled    REG_DWORD    0x1"
+        const match = output.match(/LongPathsEnabled\s+REG_DWORD\s+0x(\d+)/i);
+        if (match != null && match[1] === "1") {
+            return;
+        }
+    } catch {
+        // reg query failed — key may not exist, which means long paths are disabled
+    }
+
+    logger.warn(
+        chalk.yellow.bold("\n" +
+            "WARNING: Windows long path support is NOT enabled.\n" +
+            "\n" +
+            "The docs bundle contains deeply nested .pnpm paths that may\n" +
+            "exceed the 260-character MAX_PATH limit. Without long path\n" +
+            "support, extraction may silently truncate paths and produce\n" +
+            "a broken bundle.\n" +
+            "\n" +
+            "To enable long paths, run this in an elevated PowerShell:\n" +
+            "\n" +
+            "  New-ItemProperty -Path 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\FileSystem' `\n" +
+            "    -Name 'LongPathsEnabled' -Value 1 -PropertyType DWORD -Force\n" +
+            "\n" +
+            "Then restart your terminal.\n" +
+            "\n" +
+            "For more details, see:\n" +
+            "  https://learn.microsoft.com/en-us/windows/win32/fileio/maximum-file-path-limitation\n")
+    );
 }
 
 /**
@@ -322,6 +364,10 @@ export async function downloadBundle({
                 const percentage = Math.min(99, Math.floor(p * 100));
                 unzipProgressBar?.update(percentage);
             }, 50);
+        }
+
+        if (PLATFORM_IS_WINDOWS) {
+            warnIfLongPathsDisabled(logger);
         }
 
         const collectedSymlinks: SymlinkEntry[] = [];
