@@ -1,0 +1,5 @@
+- summary: |
+    Fix Windows bundle extraction for turbopack-generated external modules
+    (e.g. qs-0df67fa3c19a2c11) by resolving symlinks in multiple passes and
+    following through NTFS junctions when determining target type.
+  type: fix
