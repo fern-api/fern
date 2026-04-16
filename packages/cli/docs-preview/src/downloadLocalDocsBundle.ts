@@ -51,8 +51,9 @@ function warnIfLongPathsDisabled(logger: Logger): void {
         if (match != null && match[1] === "1") {
             return;
         }
-    } catch {
+    } catch (error) {
         // reg query failed — key may not exist, which means long paths are disabled
+        logger.debug(`Registry query for LongPathsEnabled failed: ${error}`);
     }
 
     logger.warn(
@@ -151,7 +152,8 @@ function resolveWindowsSymlinks(outputDir: string, symlinks: SymlinkEntry[], log
             if (usedFallback) {
                 fallbackUsed++;
             }
-        } catch {
+        } catch (error) {
+            logger.debug(`Failed to resolve symlink ${symlinkPath}: ${error}`);
             failed++;
         }
     }
@@ -381,7 +383,9 @@ export async function downloadBundle({
             await decompress(outputZipPath, absolutePathToBundleFolder, {
                 filter: (file) => {
                     if (PLATFORM_IS_WINDOWS && file.type === "symlink") {
-                        const linkname = (file as unknown as Record<string, unknown>).linkname;
+                        // decompress-tar adds `linkname` for symlink entries but the
+                        // TypeScript types don't include it, so access via bracket notation.
+                        const linkname = (file as unknown as Record<string, unknown>)["linkname"];
                         if (typeof linkname === "string") {
                             collectedSymlinks.push({ path: file.path, linkname });
                         }
