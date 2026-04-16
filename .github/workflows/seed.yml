@@ -360,11 +360,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.get-all-test-matrices.outputs.pydantic != ''
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.get-all-test-matrices.outputs.pydantic != ''
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    if: false # generator not actively supported
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 15 # Limit the number of runners for this job
@@ -489,11 +490,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.get-all-test-matrices.outputs.java-model != ''
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.get-all-test-matrices.outputs.java-model != ''
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    if: false # generator not actively supported
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 15 # Limit the number of runners for this job
@@ -554,11 +556,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     needs: [setup, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.get-all-test-matrices.outputs.go-model != ''
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.get-all-test-matrices.outputs.go-model != ''
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    if: false # generator not actively supported
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 15 # Limit the number of runners for this job
@@ -618,11 +621,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.get-all-test-matrices.outputs.csharp-model != ''
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.get-all-test-matrices.outputs.csharp-model != ''
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    if: false # generator not actively supported
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 15 # Limit the number of runners for this job
@@ -682,11 +686,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.get-all-test-matrices.outputs.php-model != ''
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.get-all-test-matrices.outputs.php-model != ''
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    if: false # generator not actively supported
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 15 # Limit the number of runners for this job
@@ -778,11 +783,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.get-all-test-matrices.outputs.rust-model != ''
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.get-all-test-matrices.outputs.rust-model != ''
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    if: false # generator not actively supported
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 15 # Limit the number of runners for this job
