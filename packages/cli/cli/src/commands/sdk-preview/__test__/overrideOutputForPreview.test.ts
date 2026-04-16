@@ -346,39 +346,53 @@ describe("overrideGroupOutputForDiffBranch", () => {
         expect(result.generators).toHaveLength(1);
         const outputMode = result.generators[0]?.outputMode;
         expect(outputMode?.type).toBe("githubV2");
+
+        // Extract the publishInfo from the nested githubV2 > push structure.
         // The publishInfo should preserve the package name for code generation
         // but strip the auth token to prevent accidental publishing.
+        let extractedPublishInfo: FernFiddle.GithubPublishInfo | undefined;
         outputMode?._visit({
-            githubV2: (v) =>
+            githubV2: (v) => {
                 v._visit({
                     push: (p) => {
-                        expect(p.publishInfo).toBeDefined();
-                        expect(p.publishInfo?.type).toBe("npm");
-                        p.publishInfo?._visit({
-                            npm: (npm) => {
-                                expect(npm.packageName).toBe("@fern-demo/sdk-preview-test");
-                                expect(npm.registryUrl).toBe("https://registry.npmjs.org");
-                                expect(npm.token).toBeUndefined();
-                            },
-                            maven: () => {},
-                            postman: () => {},
-                            pypi: () => {},
-                            nuget: () => {},
-                            rubygems: () => {},
-                            crates: () => {},
-                            _other: () => {}
-                        });
+                        extractedPublishInfo = p.publishInfo;
                     },
-                    commitAndRelease: () => {},
-                    pullRequest: () => {},
-                    _other: () => {}
-                }),
-            downloadFiles: () => {},
-            github: () => {},
-            publish: () => {},
-            publishV2: () => {},
-            _other: () => {}
+                    commitAndRelease: () => undefined,
+                    pullRequest: () => undefined,
+                    _other: () => undefined
+                });
+            },
+            downloadFiles: () => undefined,
+            github: () => undefined,
+            publish: () => undefined,
+            publishV2: () => undefined,
+            _other: () => undefined
         });
+
+        expect(extractedPublishInfo).toBeDefined();
+        expect(extractedPublishInfo?.type).toBe("npm");
+
+        let npmPackageName: string | undefined;
+        let npmRegistryUrl: string | undefined;
+        let npmToken: string | undefined;
+        extractedPublishInfo?._visit({
+            npm: (npm) => {
+                npmPackageName = npm.packageName;
+                npmRegistryUrl = npm.registryUrl;
+                npmToken = npm.token;
+            },
+            maven: () => undefined,
+            postman: () => undefined,
+            pypi: () => undefined,
+            nuget: () => undefined,
+            rubygems: () => undefined,
+            crates: () => undefined,
+            _other: () => undefined
+        });
+
+        expect(npmPackageName).toBe("@fern-demo/sdk-preview-test");
+        expect(npmRegistryUrl).toBe("https://registry.npmjs.org");
+        expect(npmToken).toBeUndefined();
     });
 
     it("extracts owner/repo from github v1 output mode", () => {
