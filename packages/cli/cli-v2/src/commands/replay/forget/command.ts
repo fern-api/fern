@@ -77,6 +77,12 @@ export class ForgetCommand {
             }
 
             // Search/pattern mode or no-args mode
+            if (positionalArgs.length > 1) {
+                throw new CliError({
+                    message: `Ambiguous arguments: expected patch IDs (e.g. patch-abc123) or a single search pattern, got: ${positionalArgs.join(", ")}`,
+                    code: CliError.Code.ConfigError
+                });
+            }
             const pattern = positionalArgs.length === 1 ? positionalArgs[0] : undefined;
             const result = replayForget({ outputDir, options: { pattern } });
 

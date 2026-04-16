@@ -1,6 +1,6 @@
 import { schemas } from "@fern-api/config";
 import { getFiddleOrigin } from "@fern-api/core";
-import { extractErrorMessage } from "@fern-api/core-utils";
+import { extractErrorMessage, replaceEnvVariables } from "@fern-api/core-utils";
 import { formatBootstrapSummary, replayInit } from "@fern-api/generator-cli";
 import { CliError } from "@fern-api/task-context";
 
@@ -123,7 +123,13 @@ export class InitCommand {
                 });
             }
 
-            const data = (await response.json()) as { prUrl: string };
+            const data: unknown = await response.json();
+            if (!isPrUrlResponse(data)) {
+                throw new CliError({
+                    message: "Unexpected response from Fern: missing prUrl field.",
+                    code: CliError.Code.NetworkError
+                });
+            }
             context.stderr.info(`\n${Icons.success} PR created: ${chalk.underline(data.prUrl)}`);
             context.stderr.info("Merge the PR to enable Replay for this repository.");
         } catch (error) {
@@ -174,7 +180,15 @@ export class InitCommand {
 
             if (schemas.isGitOutputSelfHosted(git)) {
                 context.stderr.info(`Using github config from group "${groupName}" target "${target.name}"`);
-                return { githubRepo: git.uri, token: git.token };
+                const resolvedGit = replaceEnvVariables(git, {
+                    onError: (message) => {
+                        throw new CliError({
+                            message: message ?? "Failed to resolve env variable",
+                            code: CliError.Code.ConfigError
+                        });
+                    }
+                });
+                return { githubRepo: resolvedGit.uri, token: resolvedGit.token };
             }
 
             if (schemas.isGitOutputGitHubRepository(git)) {
@@ -192,6 +206,15 @@ export class InitCommand {
             code: CliError.Code.ConfigError
         });
     }
+}
+
+function isPrUrlResponse(data: unknown): data is { prUrl: string } {
+    return (
+        typeof data === "object" &&
+        data != null &&
+        "prUrl" in data &&
+        typeof (data as Record<string, unknown>).prUrl === "string"
+    );
 }
 
 function parseOwnerRepo(githubRepo: string): { owner: string; repo: string } {
