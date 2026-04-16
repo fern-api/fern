@@ -247,8 +247,6 @@ jobs:
       - name: Start server and run Playwright smoke tests (Windows)
         if: steps.node-check.outputs.available == 'true' && runner.os == 'Windows'
         shell: bash
-        env:
-          WATCHPACK_POLLING: "true"
         run: |
           cd docs-preview-smoke-test/fern
           FERN_NO_VERSION_REDIRECTION=true fern docs dev \
