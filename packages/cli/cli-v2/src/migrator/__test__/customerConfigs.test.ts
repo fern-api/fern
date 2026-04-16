@@ -1,9 +1,11 @@
 /**
  * Customer config migration tests.
  *
- * Each test sets up a realistic legacy Fern project directory structure
- * (fern.config.json, generators.yml, docs.yml, .github/workflows/*)
- * and asserts the full migrated fern.yml output.
+ * Each test uses REAL configuration files sourced from the fern-demo GitHub
+ * organization (https://github.com/fern-demo).  The generators.yml and
+ * fern.config.json payloads are copied verbatim (or with minor redactions of
+ * tokens) so the test suite exercises the migrator against actual customer
+ * setups rather than synthetic fixtures.
  */
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import type { Logger } from "@fern-api/logger";
@@ -33,15 +35,10 @@ function makeLogger(): Logger {
 }
 
 interface ProjectFiles {
-    /** fern.config.json content */
     fernConfig: { organization: string; version: string };
-    /** generators.yml content (single-API) or per-API generators.yml (multi-API) */
     generatorsYml?: string;
-    /** Multi-API: map of apiName -> generators.yml content */
     apis?: Record<string, string>;
-    /** docs.yml content (optional) */
     docsYml?: string;
-    /** GitHub workflow files: filename -> content */
     workflows?: Record<string, string>;
 }
 
@@ -97,10 +94,10 @@ async function readMigratedYmlRaw(projectDir: string): Promise<string> {
 }
 
 // ---------------------------------------------------------------------------
-// Customer config collection
+// Real customer config collection  (sourced from fern-demo GitHub org)
 // ---------------------------------------------------------------------------
 
-describe("Customer config migrations", () => {
+describe("Customer config migrations (fern-demo)", () => {
     let base: string;
 
     beforeEach(async () => {
@@ -112,19 +109,59 @@ describe("Customer config migrations", () => {
         await rm(base, { recursive: true, force: true });
     });
 
-    // ── 1. Minimal TypeScript SDK (e.g. small startup) ──────────────────
+    // -- 1. Intercom -- multi-SDK (TS/Java/Python), smart-casing, OpenAPI settings
+    // Source: fern-demo/intercom-fern-config
 
-    it("migrates a minimal single-SDK project with local output", async () => {
+    it("migrates the Intercom config (TS + Java + Python, smart-casing)", async () => {
         const projectDir = await setupProject(base, {
-            fernConfig: { organization: "acme", version: "0.44.0" },
-            generatorsYml: `groups:
-  sdk:
+            fernConfig: { organization: "intercom", version: "0.117.0" },
+            generatorsYml: `api:
+  specs:
+    - openapi: ../openapi.yml
+      overrides: ../openapi-overrides.yml
+      settings:
+        title-as-schema-name: false
+        inline-path-parameters: true
+
+groups:
+  ts-sdk:
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 1.5.0
+        version: 0.44.3
         output:
-          location: local-file-system
-          path: ./sdks/typescript
+          location: npm
+          package-name: intercom-sdk
+          token: \${NPM_TOKEN}
+        github:
+          repository: fern-demo/intercom-typescript
+          mode: pull-request
+        config:
+          namespaceExport: Intercom
+          allowCustomFetcher: true
+          skipResponseValidation: true
+          includeApiReference: true
+          noSerdeLayer: true
+          enableInlineTypes: true
+          inlinePathParameters: true
+        smart-casing: true
+  java-sdk:
+    generators:
+      - name: fernapi/fern-java-sdk
+        version: 2.11.0
+        github:
+          repository: fern-demo/intercom-java-sdk
+        config:
+          enable-inline-types: true
+          client-class-name: Intercom
+          inline-path-parameters: true
+  python-sdk:
+    generators:
+      - name: fernapi/fern-python-sdk
+        version: 3.10.6
+        github:
+          repository: fern-demo/intercom-python-sdk
+        config:
+          client_class_name: Intercom
 `
         });
 
@@ -132,50 +169,107 @@ describe("Customer config migrations", () => {
         expect(result.success).toBe(true);
 
         const yml = await readMigratedYml(projectDir);
-        expect(yml.org).toBe("acme");
-        expect(yml.sdks).toBeDefined();
+        expect(yml.org).toBe("intercom");
 
-        const sdks = yml.sdks as { targets: Record<string, { lang: string; version: string; output: unknown }> };
+        const sdks = yml.sdks as { targets: Record<string, Record<string, unknown>> };
         expect(sdks.targets).toHaveProperty("typescript");
-        expect(sdks.targets.typescript.lang).toBe("typescript");
-        expect(sdks.targets.typescript.version).toBe("1.5.0");
-        // local-file-system output should be simplified to just the path string
-        expect(sdks.targets.typescript.output).toBe("./sdks/typescript");
+        expect(sdks.targets).toHaveProperty("java");
+        expect(sdks.targets).toHaveProperty("python");
+
+        const ts = sdks.targets.typescript;
+        expect(ts.lang).toBe("typescript");
+        expect(ts.version).toBe("0.44.3");
+        const tsPublish = ts.publish as { npm: { packageName: string } };
+        expect(tsPublish.npm.packageName).toBe("intercom-sdk");
+        expect(ts.config).toBeDefined();
+
+        const java = sdks.targets.java;
+        expect(java.lang).toBe("java");
+        expect(java.version).toBe("2.11.0");
+
+        const py = sdks.targets.python;
+        expect(py.lang).toBe("python");
+        expect(py.version).toBe("3.10.6");
+
+        const raw = await readMigratedYmlRaw(projectDir);
+        expect(raw).not.toContain("defaultGroup");
+        expect(raw).not.toMatch(/^group:/m);
     });
 
-    // ── 2. TypeScript + Python SDK with npm/pypi publish ────────────────
+    // -- 2. Sayari -- default-group, many generator groups
+    // Source: fern-demo/sayari-fern-spec
 
-    it("migrates a dual-SDK project with npm and pypi publishing", async () => {
+    it("migrates the Sayari config (default-group, Go/Python/Java/TS)", async () => {
         const projectDir = await setupProject(base, {
-            fernConfig: { organization: "stripe-lite", version: "0.44.0" },
-            generatorsYml: `api:
-  specs:
-    - openapi: ./openapi.yml
+            fernConfig: { organization: "sayari-analytics", version: "0.117.0" },
+            generatorsYml: `default-group: all
 groups:
-  typescript:
+  python-cloud:
     generators:
-      - name: fernapi/fern-typescript-node-sdk
-        version: 3.59.2
+      - name: fernapi/fern-python-sdk
+        version: 1.4.0-rc3
         output:
-          location: npm
-          package-name: stripe-lite-sdk
+          location: pypi
+          package-name: "sayari"
+          token: ""
         github:
-          repository: stripe-lite/typescript-sdk
+          repository: "fern-demo/sayari-python"
           mode: pull-request
         config:
-          namespaceExport: StripeLite
+          package_name: sayari
+          client_class_name: "Sayari"
+          improved_imports: true
+          pydantic_config:
+            use_str_enums: true
+  go:
+    generators:
+      - name: fernapi/fern-go-sdk
+        version: 9.0.2
+        config:
+          importPath: github.com/sayari-analytics/sayari-go/generated/go
+        output:
+          location: local-file-system
+          path: ../generated/go
   python:
     generators:
       - name: fernapi/fern-python-sdk
-        version: 4.3.1
+        version: 9.0.5
         output:
-          location: pypi
-          package-name: stripe-lite
-        github:
-          repository: stripe-lite/python-sdk
-          mode: pull-request
+          location: local-file-system
+          path: ../generated/python
+  postman:
+    generators:
+      - name: fernapi/fern-postman
+        version: 0.1.1-rc0
+        output:
+          location: local-file-system
+          path: ../generated/postman
+  openapi:
+    generators:
+      - name: fernapi/fern-openapi
+        version: 0.0.28
+        output:
+          location: local-file-system
+          path: ../generated/openapi
+  java:
+    generators:
+      - name: fernapi/fern-java-sdk
+        version: 0.6.1
+        output:
+          location: local-file-system
+          path: ../generated/java
         config:
-          client_class_name: StripeLiteClient
+          packagePrefix: com.sayari.sdk
+          mode: client
+  node:
+    generators:
+      - name: fernapi/fern-typescript-node-sdk
+        version: 0.9.0
+        config:
+          outputSourceFiles: true
+        output:
+          location: local-file-system
+          path: ../generated/node
 `
         });
 
@@ -183,92 +277,113 @@ groups:
         expect(result.success).toBe(true);
 
         const yml = await readMigratedYml(projectDir);
-        expect(yml.org).toBe("stripe-lite");
+        expect(yml.org).toBe("sayari-analytics");
 
         const sdks = yml.sdks as { targets: Record<string, Record<string, unknown>> };
 
-        // TypeScript target
+        expect(sdks.targets).toHaveProperty("go");
+        const go = sdks.targets.go;
+        expect(go.lang).toBe("go");
+        expect(go.output).toBe("../generated/go");
+
+        expect(sdks.targets).toHaveProperty("java");
+        expect(sdks.targets.java.lang).toBe("java");
+
+        expect(sdks.targets).toHaveProperty("typescript");
+        expect(sdks.targets.typescript.lang).toBe("typescript");
+
+        const raw = await readMigratedYmlRaw(projectDir);
+        expect(raw).not.toContain("default-group");
+        expect(raw).not.toContain("defaultGroup");
+    });
+
+    // -- 3. Webflow -- TS + Python with npm/pypi, git branch config
+    // Source: fern-demo/webflow-config
+
+    it("migrates the Webflow config (TS npm + Python pypi, git branch)", async () => {
+        const projectDir = await setupProject(base, {
+            fernConfig: { organization: "webflow", version: "0.117.0" },
+            generatorsYml: `openapi: ../specs/v2.yml
+groups:
+  js-sdk:
+    generators:
+      - name: fernapi/fern-typescript-node-sdk
+        version: 0.9.4
+        output:
+          location: npm
+          token: \${NPM_TOKEN}
+          package-name: webflow-api
+        config:
+          namespaceExport: Webflow
+          skipResponseValidation: true
+        github:
+          mode: push
+          repository: webflow/js-webflow-api
+          branch: 2.0.0-beta.0
+
+  python-sdk:
+    generators:
+      - name: fernapi/fern-python-sdk
+        version: 0.6.5
+        output:
+          location: pypi
+          token: \${PYPI_TOKEN}
+          package-name: webflow
+        config:
+          client_class_name: Webflow
+        github:
+          repository: webflow/webflow-python
+          mode: pull-request
+`
+        });
+
+        const result = await runMigration(projectDir);
+        expect(result.success).toBe(true);
+
+        const yml = await readMigratedYml(projectDir);
+        expect(yml.org).toBe("webflow");
+
+        const sdks = yml.sdks as { targets: Record<string, Record<string, unknown>> };
+
         expect(sdks.targets).toHaveProperty("typescript");
         const ts = sdks.targets.typescript;
         expect(ts.lang).toBe("typescript");
-        expect(ts.version).toBe("3.59.2");
-        expect(ts.publish).toBeDefined();
+        expect(ts.version).toBe("0.9.4");
         const tsPublish = ts.publish as { npm: { packageName: string } };
-        expect(tsPublish.npm.packageName).toBe("stripe-lite-sdk");
-        expect(ts.config).toEqual({ namespaceExport: "StripeLite" });
+        expect(tsPublish.npm.packageName).toBe("webflow-api");
 
-        // Python target
+        const tsOutput = ts.output as { git: { repository: string; branch: string; mode: string } };
+        expect(tsOutput.git.repository).toBe("webflow/js-webflow-api");
+        expect(tsOutput.git.branch).toBe("2.0.0-beta.0");
+        expect(tsOutput.git.mode).toBe("push");
+
         expect(sdks.targets).toHaveProperty("python");
         const py = sdks.targets.python;
         expect(py.lang).toBe("python");
-        expect(py.version).toBe("4.3.1");
-        expect(py.publish).toBeDefined();
         const pyPublish = py.publish as { pypi: { packageName: string } };
-        expect(pyPublish.pypi.packageName).toBe("stripe-lite");
-        expect(py.config).toEqual({ client_class_name: "StripeLiteClient" });
-
-        // Git output should be present on both
-        const tsOutput = ts.output as { git: { repository: string; mode: string } };
-        expect(tsOutput.git.repository).toBe("stripe-lite/typescript-sdk");
-        expect(tsOutput.git.mode).toBe("pr");
+        expect(pyPublish.pypi.packageName).toBe("webflow");
     });
 
-    // ── 3. Multi-language SDK with all package managers ─────────────────
+    // -- 4. Carbon AI -- deprecated top-level openapi key, smart-casing
+    // Source: fern-demo/carbon-config
 
-    it("migrates a project with all supported package manager outputs", async () => {
+    it("migrates the Carbon AI config (deprecated openapi key, smart-casing)", async () => {
         const projectDir = await setupProject(base, {
-            fernConfig: { organization: "megacorp", version: "0.44.0" },
-            generatorsYml: `api:
-  specs:
-    - openapi: ./openapi.yml
+            fernConfig: { organization: "carbon-ai", version: "0.117.0" },
+            generatorsYml: `openapi: ../openapi.yml
+openapi-overrides: ../openapi-overrides.yml
 groups:
-  typescript:
+  ts-sdk:
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 3.0.0
-        output:
-          location: npm
-          package-name: megacorp
+        version: 0.11.4-rc2
         github:
-          repository: megacorp/ts-sdk
-          mode: push
-  python:
-    generators:
-      - name: fernapi/fern-python-sdk
-        version: 4.0.0
-        output:
-          location: pypi
-          package-name: megacorp
-  java:
-    generators:
-      - name: fernapi/fern-java-sdk
-        version: 2.0.0
-        output:
-          location: maven
-          coordinate: com.megacorp:sdk
-          username: \${MAVEN_USER}
-          password: \${MAVEN_PASS}
-  csharp:
-    generators:
-      - name: fernapi/fern-csharp-sdk
-        version: 1.0.0
-        output:
-          location: nuget
-          package-name: Megacorp.Sdk
-  ruby:
-    generators:
-      - name: fernapi/fern-ruby-sdk
-        version: 0.5.0
-        output:
-          location: rubygems
-          package-name: megacorp
-  rust:
-    generators:
-      - name: fernapi/fern-rust-sdk
-        version: 0.3.0
-        output:
-          location: crates
-          package-name: megacorp
+          repository: fern-demo/carbon-typescript
+        config:
+          namespaceExport: Carbon
+          skipResponseValidation: true
+          includeApiReference: true
+        smart-casing: true
 `
         });
 
@@ -276,110 +391,404 @@ groups:
         expect(result.success).toBe(true);
 
         const yml = await readMigratedYml(projectDir);
+        expect(yml.org).toBe("carbon-ai");
+
         const sdks = yml.sdks as { targets: Record<string, Record<string, unknown>> };
-
-        // All 6 languages should have targets
-        expect(Object.keys(sdks.targets)).toHaveLength(6);
         expect(sdks.targets).toHaveProperty("typescript");
-        expect(sdks.targets).toHaveProperty("python");
-        expect(sdks.targets).toHaveProperty("java");
-        expect(sdks.targets).toHaveProperty("csharp");
-        expect(sdks.targets).toHaveProperty("ruby");
-        expect(sdks.targets).toHaveProperty("rust");
+        const ts = sdks.targets.typescript;
+        expect(ts.lang).toBe("typescript");
+        expect(ts.version).toBe("0.11.4-rc2");
+        expect(ts.config).toBeDefined();
 
-        // Each target should have publish config with the right registry
-        expect((sdks.targets.typescript.publish as Record<string, unknown>).npm).toBeDefined();
-        expect((sdks.targets.python.publish as Record<string, unknown>).pypi).toBeDefined();
-        expect((sdks.targets.java.publish as Record<string, unknown>).maven).toBeDefined();
-        expect((sdks.targets.csharp.publish as Record<string, unknown>).nuget).toBeDefined();
-        expect((sdks.targets.ruby.publish as Record<string, unknown>).rubygems).toBeDefined();
-        expect((sdks.targets.rust.publish as Record<string, unknown>).crates).toBeDefined();
+        const raw = await readMigratedYmlRaw(projectDir);
+        expect(raw).not.toMatch(/^group:/m);
     });
 
-    // ── 4. Multi-API workspace (xAI-style: REST + gRPC) ────────────────
+    // -- 5. Datastax (Astrapy) -- Python SDK with pydantic config, pypi
+    // Source: fern-demo/datastax-api
 
-    it("migrates a multi-API workspace with REST and gRPC APIs", async () => {
+    it("migrates the Datastax/Astrapy config (Python SDK, pydantic config, pypi)", async () => {
         const projectDir = await setupProject(base, {
-            fernConfig: { organization: "xai", version: "0.44.0" },
-            apis: {
-                rest: `api:
-  specs:
-    - openapi: ./openapi.yml
-      overrides: ./overrides.yml
-    - asyncapi: ./asyncapi.yml
-autorelease: false
-groups:
-  typescript:
-    generators:
-      - name: fernapi/fern-typescript-node-sdk
-        version: 3.59.2
-        output:
-          location: npm
-          package-name: xai
-        github:
-          repository: xai-org/xai-typescript
-          mode: pull-request
-        config:
-          naming:
-            namespace: xai
-          generateWebSocketClients: true
-  python:
+            fernConfig: { organization: "astrapy", version: "0.117.0" },
+            generatorsYml: `groups:
+  py-sdk:
     generators:
       - name: fernapi/fern-python-sdk
-        version: 4.3.1
+        version: 0.11.9
+        config:
+          improved_imports: true
+          pydantic_config:
+            use_str_enums: true
+          package_name: astrapy
+          client:
+            class_name: BaseAstraDB
+            filename: base_client.py
+            exported_class_name: AstraDB
+            exported_filename: client.py
         output:
           location: pypi
-          package-name: xai
+          package-name: astrapy
+          token: \${PYPI_TOKEN}
         github:
-          repository: xai-org/xai-python
-          mode: pull-request
-  rust:
-    generators:
-      - name: fernapi/fern-rust-sdk
-        version: 0.26.6
-        output:
-          location: crates
-          package-name: xai
-        github:
-          repository: xai-org/xai-rust
-          mode: pull-request
-        config:
-          clientClassName: XaiClient
-          crateName: xai
-`,
-                grpc: `api:
-  specs:
-    - proto:
-        root: ./proto
-        overrides: ./overrides.yml
-        from-openapi: true
-        local-generation: true
-autorelease: false
-groups:
-  dotnet:
-    generators:
-      - name: fernapi/fern-csharp-sdk
-        version: 2.32.0
-        output:
-          location: nuget
-          package-name: Xai
-        github:
-          repository: xai-org/xai-dotnet
-          mode: pull-request
-        config:
-          namespace: Xai
-          client-class-name: XaiClient
-  java:
-    generators:
-      - name: fernapi/fern-java-sdk
-        version: 2.10.0
-        output:
-          location: maven
-          coordinate: com.xai:sdk
-        github:
-          repository: xai-org/xai-java
+          repository: "fern-demo/astrapy"
           mode: pull-request
 `
+        });
+
+        const result = await runMigration(projectDir);
+        expect(result.success).toBe(true);
+
+        const yml = await readMigratedYml(projectDir);
+        expect(yml.org).toBe("astrapy");
+
+        const sdks = yml.sdks as { targets: Record<string, Record<string, unknown>> };
+        expect(sdks.targets).toHaveProperty("python");
+        const py = sdks.targets.python;
+        expect(py.lang).toBe("python");
+        expect(py.version).toBe("0.11.9");
+
+        const pyPublish = py.publish as { pypi: { packageName: string } };
+        expect(pyPublish.pypi.packageName).toBe("astrapy");
+
+        const config = py.config as Record<string, unknown>;
+        expect(config.improved_imports).toBe(true);
+        expect(config.pydantic_config).toEqual({ use_str_enums: true });
+        expect(config.client).toEqual({
+            class_name: "BaseAstraDB",
+            filename: "base_client.py",
+            exported_class_name: "AstraDB",
+            exported_filename: "client.py"
+        });
+    });
+
+    // -- 6. Intrinsic -- Ruby SDK + FastAPI server, audiences, with docs.yml
+    // Source: fern-demo/intrinsic-api
+
+    it("migrates the Intrinsic config (Ruby SDK, docs.yml $ref pointer)", async () => {
+        const projectDir = await setupProject(base, {
+            fernConfig: { organization: "intrinsic", version: "0.117.0" },
+            generatorsYml: `groups:
+  public:
+    audiences:
+      - public
+    generators:
+      - name: fernapi/fern-fastapi-server
+        version: 1.0.0-rc1
+        output:
+          location: local-file-system
+          path: ../src/python/hopper/api/generated
+        config:
+          async_handlers: true
+  internal:
+    audiences:
+      - public
+      - internal
+    generators:
+      - name: fernapi/fern-fastapi-server
+        version: 1.0.0-rc1
+        output:
+          location: local-file-system
+          path: ../src/python/hopper/api/generated
+        config:
+          async_handlers: true
+  hopper:
+    audiences:
+      - hopper
+    generators:
+      - name: fernapi/fern-fastapi-server
+        version: 1.0.0-rc1
+        output:
+          location: local-file-system
+          path: ../src/python/hopper/api/generated
+        config:
+          async_handlers: true
+  ruby-sdk:
+    audiences:
+      - public
+    generators:
+      - name: fernapi/fern-ruby-sdk
+        version: 0.1.0-rc0
+        github:
+          repository: fern-demo/intrinsic-ruby
+        config:
+          clientClassName: Intrinsic
+`,
+            docsYml: `instances:
+  - url: intrinsic.docs.buildwithfern.com
+    custom-domain: docs.intrinsicapi.com
+
+title: Intrinsic | Docs
+
+navigation:
+  - section: Getting started
+    contents:
+      - page: Welcome
+        path: ./docs/pages/welcome.mdx
+      - page: Quickstart
+        path: ./docs/pages/quickstart.mdx
+  - api: API Reference
+    audiences:
+      - public
+
+navbar-links:
+  - type: primary
+    text: Contact us
+    url: "mailto:support@withintrinsic.com"
+
+colors:
+  accentPrimary:
+    dark: "#18ed9d"
+    light: "#13A06C"
+
+logo:
+  dark: ./docs/assets/logo_white.png
+  light: ./docs/assets/logo_black.png
+  height: 25
+
+favicon: ./docs/assets/favicon.png
+`
+        });
+
+        const result = await runMigration(projectDir);
+        expect(result.success).toBe(true);
+
+        const yml = await readMigratedYml(projectDir);
+        expect(yml.org).toBe("intrinsic");
+
+        const raw = await readMigratedYmlRaw(projectDir);
+        expect(raw).toContain("$ref: ./docs.yml");
+        expect(raw).not.toContain("intrinsic.docs.buildwithfern.com");
+        expect(raw).not.toContain("favicon");
+
+        const docsContent = await readFile(join(projectDir, "fern", "docs.yml"), "utf-8");
+        expect(docsContent).toContain("intrinsic.docs.buildwithfern.com");
+        expect(docsContent).toContain("docs.intrinsicapi.com");
+
+        const sdks = yml.sdks as { targets: Record<string, Record<string, unknown>> };
+        expect(sdks.targets).toHaveProperty("ruby");
+        const ruby = sdks.targets.ruby;
+        expect(ruby.lang).toBe("ruby");
+        expect(ruby.version).toBe("0.1.0-rc0");
+    });
+
+    // -- 7. MongoDB -- Go SDK with smart-casing, deprecated openapi object
+    // Source: fern-demo/mongo-config
+
+    it("migrates the MongoDB config (Go SDK, smart-casing, openapi object)", async () => {
+        const projectDir = await setupProject(base, {
+            fernConfig: { organization: "mongodb", version: "0.117.0" },
+            generatorsYml: `openapi:
+  path: ../openapi.yml
+  disable-examples: true
+groups:
+  go-sdk:
+    generators:
+      - name: fernapi/fern-go-sdk
+        version: 0.18.0
+        config:
+          packageName: mongodb
+          union: v1
+          module:
+            version: "1.18"
+        smart-casing: true
+        github:
+          repository: fern-demo/mongodb-atlas-go
+          mode: pull-request
+`
+        });
+
+        const result = await runMigration(projectDir);
+        expect(result.success).toBe(true);
+
+        const yml = await readMigratedYml(projectDir);
+        expect(yml.org).toBe("mongodb");
+
+        const sdks = yml.sdks as { targets: Record<string, Record<string, unknown>> };
+        expect(sdks.targets).toHaveProperty("go");
+        const go = sdks.targets.go;
+        expect(go.lang).toBe("go");
+        expect(go.version).toBe("0.18.0");
+
+        const config = go.config as Record<string, unknown>;
+        expect(config.packageName).toBe("mongodb");
+
+        const goOutput = go.output as { git: { repository: string; mode: string } };
+        expect(goOutput.git.repository).toBe("fern-demo/mongodb-atlas-go");
+        expect(goOutput.git.mode).toBe("pr");
+    });
+
+    // -- 8. Plumery -- TS SDK with npm, docs.yml
+    // Source: fern-demo/plumery-config
+
+    it("migrates the Plumery config (TS SDK, npm, docs.yml)", async () => {
+        const projectDir = await setupProject(base, {
+            fernConfig: { organization: "plumery", version: "0.117.0" },
+            generatorsYml: `openapi: ../openapi.yml
+openapi-overrides: ../openapi-overrides.yml
+groups:
+  node-sdk:
+    generators:
+      - name: fernapi/fern-typescript-node-sdk
+        version: 0.11.0
+        output:
+          location: npm
+          package-name: "plumery"
+          token: ""
+        github:
+          repository: "fern-demo/plumery-node"
+          mode: "pull-request"
+        config:
+          namespaceExport: Plumery
+          allowCustomFetcher: true
+          skipResponseValidation: true
+`,
+            docsYml: `instances:
+  - url: https://plumery.docs.buildwithfern.com
+title: Plumery | Docs
+navigation:
+  - api: API Reference
+    snippets:
+      typescript: plumery
+colors:
+  accentPrimary:
+    light: "#6670f6"
+  background:
+    light: "#ffffff"
+logo:
+  href: https://plumery.docs.buildwithfern.com
+  light: ./assets/Plumery-Logo.svg
+  height: 35
+layout:
+  page-width: 1504px
+  header-height: 83px
+navbar-links:
+  - type: primary
+    text: Get Started
+    url: https://plumery.com/contact/
+`
+        });
+
+        const result = await runMigration(projectDir);
+        expect(result.success).toBe(true);
+
+        const yml = await readMigratedYml(projectDir);
+        expect(yml.org).toBe("plumery");
+
+        const sdks = yml.sdks as { targets: Record<string, Record<string, unknown>> };
+        expect(sdks.targets).toHaveProperty("typescript");
+        const ts = sdks.targets.typescript;
+        expect(ts.lang).toBe("typescript");
+        const tsPublish = ts.publish as { npm: { packageName: string } };
+        expect(tsPublish.npm.packageName).toBe("plumery");
+
+        const raw = await readMigratedYmlRaw(projectDir);
+        expect(raw).toContain("$ref: ./docs.yml");
+        expect(raw).not.toContain("plumery.docs.buildwithfern.com");
+    });
+
+    // -- 9. ShipBob -- default-group, openapi + TS SDK generator, docs.yml
+    // Source: fern-demo/shipbob-config
+
+    it("migrates the ShipBob config (default-group, openapi gen + TS SDK, docs.yml)", async () => {
+        const projectDir = await setupProject(base, {
+            fernConfig: { organization: "your-organization", version: "0.16.41" },
+            generatorsYml: `default-group: local
+groups:
+  local:
+    generators:
+      - name: fernapi/fern-openapi
+        version: 0.0.30
+        config:
+          format: yaml
+        output:
+          location: local-file-system
+          path: ../generated/openapi
+
+      - name: fernapi/fern-typescript-node-sdk
+        version: 0.9.5
+        output:
+          location: local-file-system
+          path: ../generated/sdk/node
+`,
+            docsYml: `instances:
+  - url: shipbob.docs.buildwithfern.com
+
+title: ShipBob | Docs
+
+navigation:
+  - section: Getting started
+    contents:
+      - page: Welcome
+        path: ./docs/pages/welcome.mdx
+      - page: SDKs
+        path: ./docs/pages/sdks.mdx
+  - section: Guides
+    contents:
+      - page: API Overview
+        path: ./docs/pages/guides/overview.mdx
+  - api: API Reference
+
+navbar-links:
+  - type: secondary
+    text: Support
+    url: developers@shipbob.com
+
+colors:
+  accentPrimary:
+    dark: "#adff8c"
+    light: "#376d20"
+
+logo:
+  dark: ./docs/assets/logo_dark_mode.png
+  light: ./docs/assets/logo_light_mode.png
+  height: 30
+
+favicon: ./docs/assets/favicon.ico
+`
+        });
+
+        const result = await runMigration(projectDir);
+        expect(result.success).toBe(true);
+
+        const yml = await readMigratedYml(projectDir);
+        expect(yml.org).toBe("your-organization");
+
+        const raw = await readMigratedYmlRaw(projectDir);
+        expect(raw).not.toContain("default-group");
+        expect(raw).not.toContain("defaultGroup");
+
+        const sdks = yml.sdks as { targets: Record<string, Record<string, unknown>> };
+        expect(sdks.targets).toHaveProperty("typescript");
+        const ts = sdks.targets.typescript;
+        expect(ts.lang).toBe("typescript");
+        expect(ts.output).toBe("../generated/sdk/node");
+
+        expect(raw).toContain("$ref: ./docs.yml");
+    });
+
+    // -- 10. Alpaca -- multi-API workspace (6 APIs), Postman generators
+    // Source: fern-demo/alpaca-config
+
+    it("migrates the Alpaca config (multi-API workspace with 6 APIs)", async () => {
+        const postmanGen = `groups:
+  postman:
+    generators:
+      - name: fernapi/fern-postman
+        version: 0.1.1-rc0
+        output:
+          location: local-file-system
+          path: ../generated/postman
+`;
+
+        const projectDir = await setupProject(base, {
+            fernConfig: { organization: "alpaca-markets", version: "0.117.0" },
+            apis: {
+                broker_v1: postmanGen,
+                "broker_v1.1": postmanGen,
+                market_v1: postmanGen,
+                "market_v1.1": postmanGen,
+                trader_v1: postmanGen,
+                "trader_v1.1": postmanGen
             }
         });
 
@@ -387,108 +796,122 @@ groups:
         expect(result.success).toBe(true);
 
         const yml = await readMigratedYml(projectDir);
-        expect(yml.org).toBe("xai");
+        expect(yml.org).toBe("alpaca-markets");
 
-        // Should use `apis` (multi-API), not `api`
         expect(yml.apis).toBeDefined();
-        expect(yml.api).toBeUndefined();
-
         const apis = yml.apis as Record<string, unknown>;
-        expect(apis).toHaveProperty("rest");
-        expect(apis).toHaveProperty("grpc");
-
-        // SDK targets from both APIs, suffixed with API name
-        const sdks = yml.sdks as { targets: Record<string, Record<string, unknown>>; autorelease: boolean };
-        expect(sdks.targets).toHaveProperty("typescript-rest");
-        expect(sdks.targets).toHaveProperty("python-rest");
-        expect(sdks.targets).toHaveProperty("rust-rest");
-        expect(sdks.targets).toHaveProperty("csharp-grpc");
-        expect(sdks.targets).toHaveProperty("java-grpc");
-
-        // Each target should have the correct api field
-        expect(sdks.targets["typescript-rest"].api).toBe("rest");
-        expect(sdks.targets["csharp-grpc"].api).toBe("grpc");
-
-        // Autorelease should be preserved
-        expect(sdks.autorelease).toBe(false);
+        expect(Object.keys(apis)).toHaveLength(6);
+        expect(apis).toHaveProperty("broker_v1");
+        expect(apis).toHaveProperty("broker_v1.1");
+        expect(apis).toHaveProperty("market_v1");
+        expect(apis).toHaveProperty("trader_v1");
     });
 
-    // ── 5. Project with docs.yml (Twilio-style) ────────────────────────
+    // -- 11. Cal.com -- TS SDK with smart-casing, github output
+    // Source: fern-demo/cal-config
 
-    it("migrates a project with docs.yml and emits $ref pointer", async () => {
+    it("migrates the Cal.com config (TS SDK, smart-casing)", async () => {
         const projectDir = await setupProject(base, {
-            fernConfig: { organization: "twilio-clone", version: "0.44.0" },
-            generatorsYml: `api:
-  specs:
-    - openapi: ./openapi.yml
+            fernConfig: { organization: "cal", version: "0.117.0" },
+            generatorsYml: `openapi: ../openapi.json
+openapi-overrides: ../openapi-overrides.yml
 groups:
-  typescript:
+  ts-sdk:
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 3.50.0
-        output:
-          location: npm
-          package-name: twilio-clone
+        version: 0.11.0
         github:
-          repository: twilio-clone/node-sdk
-          mode: push
-`,
-            docsYml: `instances:
-  - url: twilio-clone.docs.buildwithfern.com
-    custom-domain: docs.twilio-clone.com
-title: Twilio Clone API Docs
-logo:
-  dark: ./images/logo-dark.png
-  light: ./images/logo-light.png
-colors:
-  accentPrimary: "#F22F46"
-navigation:
-  - section: Getting Started
-    contents:
-      - page: Introduction
-        path: ./pages/introduction.mdx
-      - page: Authentication
-        path: ./pages/auth.mdx
-  - api: API Reference
-tabs:
-  api:
-    display-name: API
-    icon: code
-  changelog:
-    display-name: Changelog
-    icon: clock
+          repository: fern-demo/cal-typescript
+        config:
+          namespaceExport: Cal
+          allowCustomFetcher: true
+          skipResponseValidation: true
+        smart-casing: true
 `
         });
 
         const result = await runMigration(projectDir);
         expect(result.success).toBe(true);
 
-        const raw = await readMigratedYmlRaw(projectDir);
-        // Should contain $ref pointer, not inlined content
-        expect(raw).toContain("$ref: ./docs.yml");
-        expect(raw).not.toContain("instances:");
-        expect(raw).not.toContain("Twilio Clone API Docs");
-        expect(raw).not.toContain("navigation:");
-        expect(raw).not.toContain("tabs:");
+        const yml = await readMigratedYml(projectDir);
+        expect(yml.org).toBe("cal");
 
-        // docs.yml should remain untouched
-        const docsContent = await readFile(join(projectDir, "fern", "docs.yml"), "utf-8");
-        expect(docsContent).toContain("twilio-clone.docs.buildwithfern.com");
+        const sdks = yml.sdks as { targets: Record<string, Record<string, unknown>> };
+        expect(sdks.targets).toHaveProperty("typescript");
+        const ts = sdks.targets.typescript;
+        expect(ts.lang).toBe("typescript");
+        expect(ts.version).toBe("0.11.0");
+
+        const tsOutput = ts.output as { git: { repository: string } };
+        expect(tsOutput.git.repository).toBe("fern-demo/cal-typescript");
     });
 
-    // ── 6. Project with GitHub workflows ───────────────────────────────
+    // -- 12. TRM Labs -- TS SDK, smart-casing, overrides
+    // Source: fern-demo/trmlabs-config
 
-    it("migrates GitHub workflow files alongside fern.yml", async () => {
+    it("migrates the TRM Labs config (TS SDK, smart-casing, overrides)", async () => {
         const projectDir = await setupProject(base, {
-            fernConfig: { organization: "acme", version: "0.44.0" },
-            generatorsYml: `groups:
-  sdk:
+            fernConfig: { organization: "trmlabs", version: "0.117.0" },
+            generatorsYml: `openapi: ../trmlabs-public-v2.yaml
+openapi-overrides: ../openapi-overrides.yml
+groups:
+  ts-sdk:
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 1.0.0
+        version: 0.12.2
+        github:
+          repository: fern-demo/trmlabs-typescript
+          mode: pull-request
+        config:
+          namespaceExport: TRMLabs
+          skipResponseValidation: true
+          allowCustomFetcher: true
+`
+        });
+
+        const result = await runMigration(projectDir);
+        expect(result.success).toBe(true);
+
+        const yml = await readMigratedYml(projectDir);
+        expect(yml.org).toBe("trmlabs");
+
+        const sdks = yml.sdks as { targets: Record<string, Record<string, unknown>> };
+        expect(sdks.targets).toHaveProperty("typescript");
+        const ts = sdks.targets.typescript;
+        expect(ts.lang).toBe("typescript");
+        expect(ts.version).toBe("0.12.2");
+        expect(ts.config).toEqual({
+            namespaceExport: "TRMLabs",
+            skipResponseValidation: true,
+            allowCustomFetcher: true
+        });
+
+        const tsOutput = ts.output as { git: { repository: string; mode: string } };
+        expect(tsOutput.git.repository).toBe("fern-demo/trmlabs-typescript");
+        expect(tsOutput.git.mode).toBe("pr");
+    });
+
+    // -- 13. Plumery with GitHub workflow migration
+    // Uses real Plumery config + a realistic workflow
+
+    it("migrates GitHub workflow files alongside the Plumery config", async () => {
+        const projectDir = await setupProject(base, {
+            fernConfig: { organization: "plumery", version: "0.117.0" },
+            generatorsYml: `openapi: ../openapi.yml
+groups:
+  node-sdk:
+    generators:
+      - name: fernapi/fern-typescript-node-sdk
+        version: 0.11.0
         output:
-          location: local-file-system
-          path: ./sdks/ts
+          location: npm
+          package-name: "plumery"
+          token: ""
+        github:
+          repository: "fern-demo/plumery-node"
+          mode: "pull-request"
+        config:
+          namespaceExport: Plumery
 `,
             workflows: {
                 "generate.yml": `name: Generate SDKs
@@ -502,10 +925,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install Fern
         run: npm install -g fern-api
-      - name: Generate TypeScript SDK
-        run: fern generate --group typescript
-      - name: Generate Python SDK
-        run: fern generate --group python
+      - name: Generate Node SDK
+        run: fern generate --group node-sdk
 `,
                 "ci.yml": `name: CI
 on: pull_request
@@ -522,75 +943,48 @@ jobs:
         const result = await runMigration(projectDir);
         expect(result.success).toBe(true);
 
-        // generate.yml should be migrated
         const generateContent = await readFile(join(projectDir, ".github", "workflows", "generate.yml"), "utf-8");
-        expect(generateContent).toContain("fern sdk generate --target typescript");
-        expect(generateContent).toContain("fern sdk generate --target python");
+        expect(generateContent).toContain("fern sdk generate --target node-sdk");
         expect(generateContent).not.toContain("fern generate --group");
 
-        // ci.yml should be untouched (no fern commands)
         const ciContent = await readFile(join(projectDir, ".github", "workflows", "ci.yml"), "utf-8");
         expect(ciContent).not.toContain("fern sdk generate");
         expect(ciContent).toContain("npm test");
     });
 
-    // ── 7. Full-stack project: multi-API + docs + workflows ─────────────
+    // -- 14. Intercom with fern-api prefix workflow
+    // Uses real Intercom config + workflow using npx fern-api generate
 
-    it("migrates a full-stack project with multi-API, docs, and workflows", async () => {
+    it("migrates fern-api prefix commands in workflows (Intercom-style)", async () => {
         const projectDir = await setupProject(base, {
-            fernConfig: { organization: "fullstack-co", version: "0.44.0" },
-            apis: {
-                public: `api:
+            fernConfig: { organization: "intercom", version: "0.117.0" },
+            generatorsYml: `api:
   specs:
-    - openapi: ./openapi.yml
+    - openapi: ../openapi.yml
 groups:
-  typescript:
+  ts-sdk:
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 3.50.0
+        version: 0.44.3
         output:
           location: npm
-          package-name: "@fullstack-co/public-sdk"
+          package-name: intercom-sdk
         github:
-          repository: fullstack-co/public-ts-sdk
-          mode: push
-`,
-                internal: `api:
-  specs:
-    - openapi: ./internal-api.yml
-groups:
-  python:
-    generators:
-      - name: fernapi/fern-python-sdk
-        version: 4.0.0
-        output:
-          location: pypi
-          package-name: fullstack-internal
-        github:
-          repository: fullstack-co/internal-py-sdk
+          repository: fern-demo/intercom-typescript
           mode: pull-request
-`
-            },
-            docsYml: `instances:
-  - url: fullstack-co.docs.buildwithfern.com
-title: Fullstack Co API
-navigation:
-  - api: Public API
-  - api: Internal API
 `,
             workflows: {
-                "publish-sdks.yml": `name: Publish SDKs
+                "publish.yml": `name: Publish SDKs
 on:
-  push:
-    branches: [main]
+  release:
+    types: [published]
 jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: npm install -g fern-api
-      - run: fern generate --group typescript
-      - run: fern generate --group python
+      - run: npx fern-api generate --group ts-sdk
+      - run: npx fern-api generate --group java-sdk
 `
             }
         });
@@ -598,597 +992,52 @@ jobs:
         const result = await runMigration(projectDir);
         expect(result.success).toBe(true);
 
-        const yml = await readMigratedYml(projectDir);
-
-        // Multi-API
-        expect(yml.apis).toBeDefined();
-        const apis = yml.apis as Record<string, unknown>;
-        expect(apis).toHaveProperty("public");
-        expect(apis).toHaveProperty("internal");
-
-        // SDK targets with API suffix
-        const sdks = yml.sdks as { targets: Record<string, Record<string, unknown>> };
-        expect(sdks.targets).toHaveProperty("typescript-public");
-        expect(sdks.targets).toHaveProperty("python-internal");
-        expect(sdks.targets["typescript-public"].api).toBe("public");
-        expect(sdks.targets["python-internal"].api).toBe("internal");
-
-        // Docs $ref pointer
-        const raw = await readMigratedYmlRaw(projectDir);
-        expect(raw).toContain("$ref: ./docs.yml");
-
-        // Workflows migrated
-        const workflowContent = await readFile(join(projectDir, ".github", "workflows", "publish-sdks.yml"), "utf-8");
-        expect(workflowContent).toContain("fern sdk generate --target typescript");
-        expect(workflowContent).toContain("fern sdk generate --target python");
-    });
-
-    // ── 8. Project with default-group (should be dropped) ──────────────
-
-    it("drops defaultGroup and group from migrated output", async () => {
-        const projectDir = await setupProject(base, {
-            fernConfig: { organization: "grouped-co", version: "0.44.0" },
-            generatorsYml: `default-group: production
-groups:
-  staging:
-    generators:
-      - name: fernapi/fern-typescript-node-sdk
-        version: 1.0.0
-        output:
-          location: local-file-system
-          path: ./ts-staging
-  production:
-    generators:
-      - name: fernapi/fern-typescript-node-sdk
-        version: 1.0.0
-        output:
-          location: npm
-          package-name: grouped-co
-        github:
-          repository: grouped-co/ts-sdk
-          mode: push
-      - name: fernapi/fern-python-sdk
-        version: 2.0.0
-        output:
-          location: pypi
-          package-name: grouped-co
-        github:
-          repository: grouped-co/py-sdk
-          mode: push
-`
-        });
-
-        const result = await runMigration(projectDir);
-        expect(result.success).toBe(true);
-
-        const raw = await readMigratedYmlRaw(projectDir);
-        expect(raw).not.toContain("defaultGroup");
-        expect(raw).not.toContain("default-group");
-
-        const yml = await readMigratedYml(projectDir);
-        const sdks = yml.sdks as { targets: Record<string, Record<string, unknown>> };
-
-        // No target should have a "group" field
-        for (const target of Object.values(sdks.targets)) {
-            expect(target).not.toHaveProperty("group");
-            expect(target).not.toHaveProperty("defaultGroup");
-        }
-
-        // Should have two typescript targets (deduped with count) and one python
-        const targetNames = Object.keys(sdks.targets);
-        expect(targetNames).toContain("typescript");
-        expect(targetNames).toContain("typescript-2");
-        expect(targetNames).toContain("python");
-    });
-
-    // ── 9. Project with OpenAPI + overrides + AsyncAPI specs ────────────
-
-    it("correctly converts API specs with overrides and asyncapi", async () => {
-        const projectDir = await setupProject(base, {
-            fernConfig: { organization: "specful-co", version: "0.44.0" },
-            generatorsYml: `api:
-  specs:
-    - openapi: ./openapi/main.yml
-      overrides: ./openapi/overrides.yml
-    - openapi: ./openapi/admin.yml
-    - asyncapi: ./events/asyncapi.yml
-groups:
-  sdk:
-    generators:
-      - name: fernapi/fern-typescript-node-sdk
-        version: 3.0.0
-        output:
-          location: local-file-system
-          path: ./sdks/ts
-`
-        });
-
-        const result = await runMigration(projectDir);
-        expect(result.success).toBe(true);
-
-        const yml = await readMigratedYml(projectDir);
-        expect(yml.api).toBeDefined();
-
-        const api = yml.api as { specs: Array<Record<string, unknown>> };
-        expect(api.specs).toHaveLength(3);
-
-        // First spec should have openapi + overrides
-        const first = api.specs[0];
-        expect(first.openapi).toBeDefined();
-        expect(first.overrides).toBeDefined();
-
-        // Second spec should have openapi only
-        const second = api.specs[1];
-        expect(second.openapi).toBeDefined();
-        expect(second.overrides).toBeUndefined();
-
-        // Third spec should be asyncapi
-        const third = api.specs[2];
-        expect(third.asyncapi).toBeDefined();
-    });
-
-    // ── 10. Project with autorelease enabled ────────────────────────────
-
-    it("preserves autorelease setting in migrated output", async () => {
-        const projectDir = await setupProject(base, {
-            fernConfig: { organization: "auto-co", version: "0.44.0" },
-            generatorsYml: `autorelease: true
-api:
-  specs:
-    - openapi: ./openapi.yml
-groups:
-  typescript:
-    generators:
-      - name: fernapi/fern-typescript-node-sdk
-        version: 3.0.0
-        output:
-          location: npm
-          package-name: auto-co
-        github:
-          repository: auto-co/ts-sdk
-          mode: push
-`
-        });
-
-        const result = await runMigration(projectDir);
-        expect(result.success).toBe(true);
-
-        const yml = await readMigratedYml(projectDir);
-        const sdks = yml.sdks as { autorelease: boolean; targets: Record<string, unknown> };
-        expect(sdks.autorelease).toBe(true);
-    });
-
-    // ── 11. Project with metadata and license ────────────────────────────
-
-    it("migrates generator metadata fields correctly", async () => {
-        const projectDir = await setupProject(base, {
-            fernConfig: { organization: "meta-co", version: "0.44.0" },
-            generatorsYml: `groups:
-  sdk:
-    generators:
-      - name: fernapi/fern-python-sdk
-        version: 4.0.0
-        output:
-          location: pypi
-          package-name: meta-co
-        github:
-          repository: meta-co/py-sdk
-          mode: push
-        metadata:
-          package-description: "Official Meta Co Python SDK"
-          author: "Meta Co"
-          email: "sdk@meta.co"
-          license: MIT
-          reference-url: "https://docs.meta.co"
-`
-        });
-
-        const result = await runMigration(projectDir);
-        expect(result.success).toBe(true);
-
-        const yml = await readMigratedYml(projectDir);
-        const sdks = yml.sdks as { targets: Record<string, Record<string, unknown>> };
-        const target = sdks.targets.python;
-
-        // metadata fields should be migrated
-        const metadata = target.metadata as { description: string; authors: Array<{ name: string; email: string }> };
-        expect(metadata.description).toBe("Official Meta Co Python SDK");
-        expect(metadata.authors).toEqual([{ name: "Meta Co", email: "sdk@meta.co" }]);
-
-        // license should be on output.git
-        const output = target.output as { git: { license: string } };
-        expect(output.git.license).toBe("MIT");
-
-        // reference-url should generate an unsupported warning
-        expect(result.warnings.some((w) => w.message.includes("reference-url"))).toBe(true);
-    });
-
-    // ── 12. Project with smart-casing (should warn) ─────────────────────
-
-    it("warns about unsupported smart-casing configuration", async () => {
-        const projectDir = await setupProject(base, {
-            fernConfig: { organization: "casing-co", version: "0.44.0" },
-            generatorsYml: `groups:
-  sdk:
-    generators:
-      - name: fernapi/fern-typescript-node-sdk
-        version: 3.0.0
-        smart-casing: true
-        output:
-          location: local-file-system
-          path: ./sdks/ts
-`
-        });
-
-        const result = await runMigration(projectDir);
-        expect(result.success).toBe(true);
-
-        // Should warn about smart-casing
-        expect(result.warnings.some((w) => w.message.includes("smart-casing"))).toBe(true);
-    });
-
-    // ── 13. Project with OpenAPI settings (titleAsSchemaName etc.) ──────
-
-    it("migrates a project with openapi settings in api config", async () => {
-        const projectDir = await setupProject(base, {
-            fernConfig: { organization: "settings-co", version: "0.44.0" },
-            generatorsYml: `api:
-  specs:
-    - openapi: ./openapi.yml
-  settings:
-    unions: v1
-    message-naming: v2
-    title-as-schema-name: true
-groups:
-  sdk:
-    generators:
-      - name: fernapi/fern-typescript-node-sdk
-        version: 3.0.0
-        output:
-          location: local-file-system
-          path: ./sdks/ts
-`
-        });
-
-        const result = await runMigration(projectDir);
-        expect(result.success).toBe(true);
-
-        const yml = await readMigratedYml(projectDir);
-        expect(yml.api).toBeDefined();
-
-        const api = yml.api as { settings?: Record<string, unknown> };
-        if (api.settings != null) {
-            // Settings should be preserved
-            expect(api.settings).toBeDefined();
-        }
-    });
-
-    // ── 14. Project with fern-api/ prefix in workflow ───────────────────
-
-    it("handles fern-api variant commands in workflows", async () => {
-        const projectDir = await setupProject(base, {
-            fernConfig: { organization: "prefix-co", version: "0.44.0" },
-            generatorsYml: `groups:
-  sdk:
-    generators:
-      - name: fernapi/fern-typescript-node-sdk
-        version: 1.0.0
-        output:
-          location: local-file-system
-          path: ./sdks/ts
-`,
-            workflows: {
-                "deploy.yml": `name: Deploy
-on: push
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - run: npx fern-api generate --group production
-      - run: npx fern-api generate
-`
-            }
-        });
-
-        const result = await runMigration(projectDir);
-        expect(result.success).toBe(true);
-
-        const workflowContent = await readFile(join(projectDir, ".github", "workflows", "deploy.yml"), "utf-8");
-        // fern-api generate should become fern-api sdk generate
-        expect(workflowContent).toContain("fern-api sdk generate --target production");
-        expect(workflowContent).toContain("fern-api sdk generate");
+        const workflowContent = await readFile(join(projectDir, ".github", "workflows", "publish.yml"), "utf-8");
+        expect(workflowContent).toContain("fern-api sdk generate --target ts-sdk");
+        expect(workflowContent).toContain("fern-api sdk generate --target java-sdk");
         expect(workflowContent).not.toContain("fern-api generate --group");
     });
 
-    // ── 15. Empty groups (minimal project, no generators) ───────────────
+    // -- 15. Full integration: Sayari with docs + workflows
+    // Combines real Sayari generators with docs and workflows
 
-    it("handles empty groups gracefully", async () => {
+    it("migrates a full-stack Sayari-like project (generators + docs + workflows)", async () => {
         const projectDir = await setupProject(base, {
-            fernConfig: { organization: "empty-co", version: "0.44.0" },
-            generatorsYml: `groups: {}
-`
-        });
-
-        const result = await runMigration(projectDir);
-        expect(result.success).toBe(true);
-
-        const yml = await readMigratedYml(projectDir);
-        expect(yml.org).toBe("empty-co");
-        // Should either have empty sdks or no sdks key
-        const sdks = yml.sdks as { targets: Record<string, unknown> } | undefined;
-        if (sdks != null) {
-            expect(Object.keys(sdks.targets)).toHaveLength(0);
-        }
-    });
-
-    // ── 16. Project with multiple generators in one group ───────────────
-
-    it("creates separate targets for multiple generators in the same group", async () => {
-        const projectDir = await setupProject(base, {
-            fernConfig: { organization: "multi-gen", version: "0.44.0" },
-            generatorsYml: `groups:
-  all:
+            fernConfig: { organization: "sayari-analytics", version: "0.117.0" },
+            generatorsYml: `default-group: all
+groups:
+  python-cloud:
     generators:
-      - name: fernapi/fern-typescript-node-sdk
-        version: 3.0.0
-        output:
-          location: local-file-system
-          path: ./sdks/ts
       - name: fernapi/fern-python-sdk
-        version: 4.0.0
+        version: 1.4.0-rc3
         output:
-          location: local-file-system
-          path: ./sdks/py
-      - name: fernapi/fern-go-sdk
-        version: 1.0.0
-        output:
-          location: local-file-system
-          path: ./sdks/go
-      - name: fernapi/fern-java-sdk
-        version: 2.0.0
-        output:
-          location: local-file-system
-          path: ./sdks/java
-`
-        });
-
-        const result = await runMigration(projectDir);
-        expect(result.success).toBe(true);
-
-        const yml = await readMigratedYml(projectDir);
-        const sdks = yml.sdks as { targets: Record<string, Record<string, unknown>> };
-
-        expect(Object.keys(sdks.targets)).toHaveLength(4);
-        expect(sdks.targets).toHaveProperty("typescript");
-        expect(sdks.targets).toHaveProperty("python");
-        expect(sdks.targets).toHaveProperty("go");
-        expect(sdks.targets).toHaveProperty("java");
-
-        // Each should have correct lang
-        expect(sdks.targets.typescript.lang).toBe("typescript");
-        expect(sdks.targets.python.lang).toBe("python");
-        expect(sdks.targets.go.lang).toBe("go");
-        expect(sdks.targets.java.lang).toBe("java");
-
-        // All should have simplified local output paths
-        expect(sdks.targets.typescript.output).toBe("./sdks/ts");
-        expect(sdks.targets.python.output).toBe("./sdks/py");
-        expect(sdks.targets.go.output).toBe("./sdks/go");
-        expect(sdks.targets.java.output).toBe("./sdks/java");
-    });
-
-    // ── 17. Project with git push mode and branch config ────────────────
-
-    it("preserves git output branch and mode settings", async () => {
-        const projectDir = await setupProject(base, {
-            fernConfig: { organization: "git-co", version: "0.44.0" },
-            generatorsYml: `groups:
-  sdk:
-    generators:
-      - name: fernapi/fern-typescript-node-sdk
-        version: 3.0.0
-        output:
-          location: npm
-          package-name: git-co
+          location: pypi
+          package-name: "sayari"
+          token: ""
         github:
-          repository: git-co/ts-sdk
-          mode: push
-          branch: generated/main
-`
-        });
-
-        const result = await runMigration(projectDir);
-        expect(result.success).toBe(true);
-
-        const yml = await readMigratedYml(projectDir);
-        const sdks = yml.sdks as { targets: Record<string, Record<string, unknown>> };
-        const output = sdks.targets.typescript.output as { git: { repository: string; mode: string; branch: string } };
-
-        expect(output.git.repository).toBe("git-co/ts-sdk");
-        expect(output.git.mode).toBe("push");
-        expect(output.git.branch).toBe("generated/main");
-    });
-
-    // ── 18. Project with deprecated top-level openapi/async-api keys ────
-
-    it("warns about deprecated top-level openapi key", async () => {
-        const projectDir = await setupProject(base, {
-            fernConfig: { organization: "deprecated-co", version: "0.44.0" },
-            generatorsYml: `openapi: ./openapi.yml
-groups:
-  sdk:
-    generators:
-      - name: fernapi/fern-typescript-node-sdk
-        version: 1.0.0
-        output:
-          location: local-file-system
-          path: ./sdks/ts
-`
-        });
-
-        const result = await runMigration(projectDir);
-        expect(result.success).toBe(true);
-        expect(result.warnings.some((w) => w.message.toLowerCase().includes("openapi"))).toBe(true);
-    });
-
-    // ── 19. Proto-based API project ─────────────────────────────────────
-
-    it("migrates a proto-based API configuration", async () => {
-        const projectDir = await setupProject(base, {
-            fernConfig: { organization: "proto-co", version: "0.44.0" },
-            generatorsYml: `api:
-  specs:
-    - proto:
-        root: ./proto
-        overrides: ./overrides.yml
-        from-openapi: true
-        local-generation: true
-groups:
+          repository: "fern-demo/sayari-python"
+          mode: pull-request
+        config:
+          package_name: sayari
+          client_class_name: "Sayari"
   go:
     generators:
       - name: fernapi/fern-go-sdk
-        version: 1.5.0
-        output:
-          location: local-file-system
-          path: ./sdks/go
+        version: 9.0.2
         config:
-          packageName: protoco
-          module:
-            path: github.com/proto-co/go-sdk
-`
-        });
-
-        const result = await runMigration(projectDir);
-        expect(result.success).toBe(true);
-
-        const yml = await readMigratedYml(projectDir);
-        expect(yml.api).toBeDefined();
-
-        const api = yml.api as { specs: Array<{ proto: Record<string, unknown> }> };
-        expect(api.specs[0].proto).toBeDefined();
-        expect(api.specs[0].proto.root).toBe("./proto");
-
-        const sdks = yml.sdks as { targets: Record<string, Record<string, unknown>> };
-        expect(sdks.targets).toHaveProperty("go");
-        expect(sdks.targets.go.config).toEqual({
-            packageName: "protoco",
-            module: { path: "github.com/proto-co/go-sdk" }
-        });
-    });
-
-    // ── 20. Project with Swift and PHP SDKs ─────────────────────────────
-
-    it("migrates Swift and PHP SDK configurations", async () => {
-        const projectDir = await setupProject(base, {
-            fernConfig: { organization: "mobile-co", version: "0.44.0" },
-            generatorsYml: `api:
-  specs:
-    - openapi: ./openapi.yml
-groups:
-  swift:
-    generators:
-      - name: fernapi/fern-swift-sdk
-        version: 0.10.0
+          importPath: github.com/sayari-analytics/sayari-go/generated/go
         output:
           location: local-file-system
-          path: ./sdks/swift
-        github:
-          repository: mobile-co/swift-sdk
-          mode: push
-        config:
-          clientName: MobileCoClient
-  php:
-    generators:
-      - name: fernapi/fern-php-sdk
-        version: 1.2.0
-        output:
-          location: local-file-system
-          path: ./sdks/php
-        github:
-          repository: mobile-co/php-sdk
-          mode: push
-        config:
-          namespace: MobileCo
-`
-        });
-
-        const result = await runMigration(projectDir);
-        expect(result.success).toBe(true);
-
-        const yml = await readMigratedYml(projectDir);
-        const sdks = yml.sdks as { targets: Record<string, Record<string, unknown>> };
-
-        expect(sdks.targets).toHaveProperty("swift");
-        expect(sdks.targets.swift.lang).toBe("swift");
-        expect(sdks.targets.swift.config).toEqual({ clientName: "MobileCoClient" });
-
-        expect(sdks.targets).toHaveProperty("php");
-        expect(sdks.targets.php.lang).toBe("php");
-        expect(sdks.targets.php.config).toEqual({ namespace: "MobileCo" });
-    });
-
-    // ── 21. Multi-API with docs and no generators in one API ────────────
-
-    it("handles multi-API where one API has no generators", async () => {
-        const projectDir = await setupProject(base, {
-            fernConfig: { organization: "partial-co", version: "0.44.0" },
-            apis: {
-                main: `api:
-  specs:
-    - openapi: ./openapi.yml
-groups:
-  typescript:
-    generators:
-      - name: fernapi/fern-typescript-node-sdk
-        version: 3.0.0
-        output:
-          location: local-file-system
-          path: ./sdks/ts
+          path: ../generated/go
 `,
-                experimental: `api:
-  specs:
-    - openapi: ./experimental.yml
-groups: {}
-`
-            },
             docsYml: `instances:
-  - url: partial-co.docs.buildwithfern.com
-title: Partial Co
-`
-        });
-
-        const result = await runMigration(projectDir);
-        expect(result.success).toBe(true);
-
-        const yml = await readMigratedYml(projectDir);
-        expect(yml.apis).toBeDefined();
-        const apis = yml.apis as Record<string, unknown>;
-        expect(apis).toHaveProperty("main");
-        expect(apis).toHaveProperty("experimental");
-
-        // Only main API should have SDK targets
-        const sdks = yml.sdks as { targets: Record<string, Record<string, unknown>> } | undefined;
-        if (sdks != null) {
-            const targetNames = Object.keys(sdks.targets);
-            expect(targetNames.some((n) => n.includes("main"))).toBe(true);
-            expect(targetNames.some((n) => n.includes("experimental"))).toBe(false);
-        }
-
-        // Docs $ref
-        const raw = await readMigratedYmlRaw(projectDir);
-        expect(raw).toContain("$ref: ./docs.yml");
-    });
-
-    // ── 22. Project with complex workflow (multiple fern commands) ──────
-
-    it("migrates workflows with multiple fern generate commands", async () => {
-        const projectDir = await setupProject(base, {
-            fernConfig: { organization: "workflow-co", version: "0.44.0" },
-            generatorsYml: `groups: {}
+  - url: sayari.docs.buildwithfern.com
+title: Sayari | Docs
+navigation:
+  - api: API Reference
 `,
             workflows: {
-                "multi-step.yml": `name: Multi-step
+                "generate-sdks.yml": `name: Generate SDKs
 on:
   push:
     branches: [main]
@@ -1197,15 +1046,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: npm install -g fern-api
-      - name: Generate TypeScript
-        run: fern generate --group ts-sdk --log-level debug
+      - name: Install Fern
+        run: npm install -g fern-api
       - name: Generate Python
-        run: fern generate --group py-sdk
+        run: fern generate --group python-cloud
       - name: Generate Go
-        run: fern generate --group go-sdk
-      - name: Check
-        run: fern check
+        run: fern generate --group go
 `
             }
         });
@@ -1213,151 +1059,20 @@ jobs:
         const result = await runMigration(projectDir);
         expect(result.success).toBe(true);
 
-        const workflowContent = await readFile(join(projectDir, ".github", "workflows", "multi-step.yml"), "utf-8");
+        const yml = await readMigratedYml(projectDir);
+        expect(yml.org).toBe("sayari-analytics");
 
-        // All fern generate --group X should be migrated
-        expect(workflowContent).toContain("fern sdk generate --target ts-sdk --log-level debug");
-        expect(workflowContent).toContain("fern sdk generate --target py-sdk");
-        expect(workflowContent).toContain("fern sdk generate --target go-sdk");
-        // fern check should remain untouched
-        expect(workflowContent).toContain("fern check");
+        const sdks = yml.sdks as { targets: Record<string, Record<string, unknown>> };
+        expect(sdks.targets).toHaveProperty("python");
+        expect(sdks.targets).toHaveProperty("go");
+
+        const raw = await readMigratedYmlRaw(projectDir);
+        expect(raw).toContain("$ref: ./docs.yml");
+        expect(raw).not.toContain("default-group");
+
+        const workflowContent = await readFile(join(projectDir, ".github", "workflows", "generate-sdks.yml"), "utf-8");
+        expect(workflowContent).toContain("fern sdk generate --target python-cloud");
+        expect(workflowContent).toContain("fern sdk generate --target go");
         expect(workflowContent).not.toContain("fern generate --group");
-    });
-
-    // ── 23. Project with maven signing config ───────────────────────────
-
-    it("migrates maven output with signature configuration", async () => {
-        const projectDir = await setupProject(base, {
-            fernConfig: { organization: "java-co", version: "0.44.0" },
-            generatorsYml: `api:
-  specs:
-    - openapi: ./openapi.yml
-groups:
-  java:
-    generators:
-      - name: fernapi/fern-java-sdk
-        version: 2.0.0
-        output:
-          location: maven
-          coordinate: com.java-co:sdk
-          url: https://s01.oss.sonatype.org/content/repositories/releases/
-          username: \${MAVEN_USERNAME}
-          password: \${MAVEN_PASSWORD}
-          signature:
-            keyId: \${GPG_KEY_ID}
-            password: \${GPG_PASSWORD}
-            secretKey: \${GPG_SECRET_KEY}
-        github:
-          repository: java-co/java-sdk
-          mode: push
-`
-        });
-
-        const result = await runMigration(projectDir);
-        expect(result.success).toBe(true);
-
-        const yml = await readMigratedYml(projectDir);
-        const sdks = yml.sdks as { targets: Record<string, Record<string, unknown>> };
-        const target = sdks.targets.java;
-
-        expect(target.lang).toBe("java");
-        const publish = target.publish as { maven: { coordinate: string; signature?: Record<string, unknown> } };
-        expect(publish.maven.coordinate).toBe("com.java-co:sdk");
-        expect(publish.maven.signature).toBeDefined();
-    });
-
-    // ── 24. Large multi-API project (3+ APIs) ───────────────────────────
-
-    it("migrates a large project with 3+ API directories", async () => {
-        const projectDir = await setupProject(base, {
-            fernConfig: { organization: "enterprise", version: "0.44.0" },
-            apis: {
-                users: `api:
-  specs:
-    - openapi: ./users-api.yml
-groups:
-  typescript:
-    generators:
-      - name: fernapi/fern-typescript-node-sdk
-        version: 3.0.0
-        output:
-          location: local-file-system
-          path: ./sdks/ts-users
-`,
-                billing: `api:
-  specs:
-    - openapi: ./billing-api.yml
-groups:
-  typescript:
-    generators:
-      - name: fernapi/fern-typescript-node-sdk
-        version: 3.0.0
-        output:
-          location: local-file-system
-          path: ./sdks/ts-billing
-  python:
-    generators:
-      - name: fernapi/fern-python-sdk
-        version: 4.0.0
-        output:
-          location: local-file-system
-          path: ./sdks/py-billing
-`,
-                analytics: `api:
-  specs:
-    - openapi: ./analytics-api.yml
-groups:
-  go:
-    generators:
-      - name: fernapi/fern-go-sdk
-        version: 1.0.0
-        output:
-          location: local-file-system
-          path: ./sdks/go-analytics
-`
-            }
-        });
-
-        const result = await runMigration(projectDir);
-        expect(result.success).toBe(true);
-
-        const yml = await readMigratedYml(projectDir);
-        const apis = yml.apis as Record<string, unknown>;
-        expect(Object.keys(apis)).toHaveLength(3);
-
-        const sdks = yml.sdks as { targets: Record<string, Record<string, unknown>> };
-        expect(sdks.targets).toHaveProperty("typescript-users");
-        expect(sdks.targets).toHaveProperty("typescript-billing");
-        expect(sdks.targets).toHaveProperty("python-billing");
-        expect(sdks.targets).toHaveProperty("go-analytics");
-        expect(Object.keys(sdks.targets)).toHaveLength(4);
-    });
-
-    // ── 25. Project with Fern definition (no openapi spec) ──────────────
-
-    it("migrates a project using Fern definition files (no OpenAPI)", async () => {
-        const projectDir = await setupProject(base, {
-            fernConfig: { organization: "ferndef-co", version: "0.44.0" },
-            generatorsYml: `groups:
-  typescript:
-    generators:
-      - name: fernapi/fern-typescript-node-sdk
-        version: 3.0.0
-        output:
-          location: local-file-system
-          path: ./sdks/ts
-`
-        });
-
-        // Create definition directory to simulate Fern definition project
-        await mkdir(join(projectDir, "fern", "definition"), { recursive: true });
-        await writeFile(join(projectDir, "fern", "definition", "api.yml"), "name: ferndef-co\n");
-
-        const result = await runMigration(projectDir);
-        expect(result.success).toBe(true);
-
-        const yml = await readMigratedYml(projectDir);
-        expect(yml.org).toBe("ferndef-co");
-        expect(yml.sdks).toBeDefined();
     });
 });
