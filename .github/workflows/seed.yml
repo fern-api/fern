@@ -324,7 +324,7 @@ jobs:
           fi
 
   ruby-sdk-v2:
-    runs-on: Seed
+    runs-on: ubuntu-latest-16-cores
     timeout-minutes: 20
     needs: [setup, get-all-test-matrices]
     if: >-
@@ -357,7 +357,7 @@ jobs:
           dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   pydantic:
-    runs-on: Seed
+    runs-on: ubuntu-latest-16-cores
     timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
     if: >-
@@ -389,7 +389,7 @@ jobs:
           dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   python-sdk:
-    runs-on: Seed
+    runs-on: ubuntu-latest-16-cores
     timeout-minutes: 30
     needs: [setup, get-all-test-matrices]
     if: >-
@@ -454,7 +454,7 @@ jobs:
           dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   java-sdk:
-    runs-on: Seed
+    runs-on: ubuntu-latest-16-cores
     timeout-minutes: 30
     needs: [setup, get-all-test-matrices]
     if: >-
@@ -486,7 +486,7 @@ jobs:
           dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   java-model:
-    runs-on: Seed
+    runs-on: ubuntu-latest-16-cores
     timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
     if: >-
@@ -518,7 +518,7 @@ jobs:
           dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   ts-sdk:
-    runs-on: Seed
+    runs-on: ubuntu-latest-16-cores
     timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
     if: >-
@@ -551,7 +551,7 @@ jobs:
           dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   go-model:
-    runs-on: Seed
+    runs-on: ubuntu-latest-16-cores
     timeout-minutes: 20
     needs: [setup, get-all-test-matrices]
     if: >-
@@ -583,7 +583,7 @@ jobs:
           dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   go-sdk:
-    runs-on: Seed
+    runs-on: ubuntu-latest-16-cores
     timeout-minutes: 20
     needs: [setup, get-all-test-matrices]
     if: >-
@@ -615,7 +615,7 @@ jobs:
           dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   csharp-model:
-    runs-on: Seed
+    runs-on: ubuntu-latest-16-cores
     timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
     if: >-
@@ -647,7 +647,7 @@ jobs:
           dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   csharp-sdk:
-    runs-on: Seed
+    runs-on: ubuntu-latest-16-cores
     timeout-minutes: 20
     needs: [setup, get-all-test-matrices]
     if: >-
@@ -679,7 +679,7 @@ jobs:
           dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   php-model:
-    runs-on: Seed
+    runs-on: ubuntu-latest-16-cores
     timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
     if: >-
@@ -711,7 +711,7 @@ jobs:
           dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   php-sdk:
-    runs-on: Seed
+    runs-on: ubuntu-latest-16-cores
     timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
     if: >-
@@ -743,7 +743,7 @@ jobs:
           dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   swift-sdk:
-    runs-on: Seed
+    runs-on: ubuntu-latest-16-cores
     timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
     if: >-
@@ -775,7 +775,7 @@ jobs:
           dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   rust-model:
-    runs-on: Seed
+    runs-on: ubuntu-latest-16-cores
     timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
     if: >-
@@ -807,7 +807,7 @@ jobs:
           dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   rust-sdk:
-    runs-on: Seed
+    runs-on: ubuntu-latest-16-cores
     timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
     if: >-
@@ -873,7 +873,7 @@ jobs:
           retention-days: 1
 
   benchmark:
-    runs-on: Seed
+    runs-on: ubuntu-latest-16-cores
     timeout-minutes: 60
     needs: [get-all-test-matrices, benchmark-setup]
     if: >-
@@ -1159,7 +1159,7 @@ jobs:
   # Runs the real `fern generate --docs --preview` command against the benchmark
   # fixture and measures wall-clock time, same philosophy as SDK benchmarks.
   docs-benchmark:
-    runs-on: Seed
+    runs-on: ubuntu-latest-16-cores
     timeout-minutes: 45
     needs: [get-all-test-matrices, benchmark-setup]
     if: >-
