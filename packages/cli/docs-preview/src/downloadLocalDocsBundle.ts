@@ -2,10 +2,10 @@ import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-a
 import { Logger } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
 import chalk from "chalk";
+import { execSync } from "child_process";
 import cliProgress from "cli-progress";
 import decompress from "decompress";
 import { cpSync, existsSync, lstatSync, mkdirSync, symlinkSync } from "fs";
-import { execSync } from "child_process";
 import { mkdir, readFile, rename, rm, writeFile } from "fs/promises";
 import { homedir } from "os";
 import path from "path";
@@ -56,23 +56,28 @@ function warnIfLongPathsDisabled(logger: Logger): void {
     }
 
     logger.warn(
-        chalk.yellow.bold("\n" +
-            "WARNING: Windows long path support is NOT enabled.\n" +
+        chalk.yellow.bold(
             "\n" +
-            "The docs bundle contains deeply nested .pnpm paths that may\n" +
-            "exceed the 260-character MAX_PATH limit. Without long path\n" +
-            "support, extraction may silently truncate paths and produce\n" +
-            "a broken bundle.\n" +
-            "\n" +
-            "To enable long paths, run this in an elevated PowerShell:\n" +
-            "\n" +
-            "  New-ItemProperty -Path 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\FileSystem' `\n" +
-            "    -Name 'LongPathsEnabled' -Value 1 -PropertyType DWORD -Force\n" +
-            "\n" +
-            "Then restart your terminal.\n" +
-            "\n" +
-            "For more details, see:\n" +
-            "  https://learn.microsoft.com/en-us/windows/win32/fileio/maximum-file-path-limitation\n")
+                "╔══════════════════════════════════════════════════════════════════════════╗\n" +
+                "║  WARNING: Windows long path support is NOT enabled.                     ║\n" +
+                "║                                                                         ║\n" +
+                "║  The docs bundle contains deeply nested .pnpm paths that may exceed     ║\n" +
+                "║  the 260-character MAX_PATH limit. Extraction may silently truncate     ║\n" +
+                "║  paths and produce a broken bundle.                                     ║\n" +
+                "║                                                                         ║\n" +
+                "║  To fix, run this in an elevated PowerShell:                             ║\n" +
+                "║                                                                         ║\n" +
+                "║    New-ItemProperty -Path                                                ║\n" +
+                "║      'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\FileSystem'           ║\n" +
+                "║      -Name 'LongPathsEnabled' -Value 1 -PropertyType DWORD -Force       ║\n" +
+                "║                                                                         ║\n" +
+                "║  Then restart your terminal.                                             ║\n" +
+                "║                                                                         ║\n" +
+                "║  For more details, see:                                                  ║\n" +
+                "║  https://learn.microsoft.com/en-us/windows/win32/fileio/                 ║\n" +
+                "║  maximum-file-path-limitation                                            ║\n" +
+                "╚══════════════════════════════════════════════════════════════════════════╝\n"
+        )
     );
 }
 
