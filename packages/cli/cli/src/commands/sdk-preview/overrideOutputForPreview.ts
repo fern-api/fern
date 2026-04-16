@@ -115,11 +115,15 @@ export function overrideGroupOutputForPreview({
 }
 
 /**
- * Extracts the publishInfo from a githubV2 output mode.
+ * Extracts the publishInfo from a githubV2 output mode, stripping all
+ * auth tokens/credentials. Only the package name and registry URL are
+ * needed for code generation (e.g. package.json name field).
  * Returns undefined for non-github modes.
  */
-function getGithubPublishInfo(outputMode: FernFiddle.remoteGen.OutputMode): FernFiddle.GithubPublishInfo | undefined {
-    return outputMode._visit<FernFiddle.GithubPublishInfo | undefined>({
+function getGithubPublishInfoWithoutToken(
+    outputMode: FernFiddle.remoteGen.OutputMode
+): FernFiddle.GithubPublishInfo | undefined {
+    const publishInfo = outputMode._visit<FernFiddle.GithubPublishInfo | undefined>({
         downloadFiles: () => undefined,
         github: () => undefined,
         githubV2: (val) =>
@@ -132,6 +136,65 @@ function getGithubPublishInfo(outputMode: FernFiddle.remoteGen.OutputMode): Fern
         publish: () => undefined,
         publishV2: () => undefined,
         _other: () => undefined
+    });
+
+    if (publishInfo == null) {
+        return undefined;
+    }
+
+    return stripPublishInfoCredentials(publishInfo);
+}
+
+/**
+ * Returns a copy of GithubPublishInfo with all auth credentials removed.
+ * Preserves package name, registry URL, and other non-sensitive metadata.
+ */
+function stripPublishInfoCredentials(publishInfo: FernFiddle.GithubPublishInfo): FernFiddle.GithubPublishInfo {
+    return publishInfo._visit<FernFiddle.GithubPublishInfo>({
+        npm: (val) =>
+            FernFiddle.GithubPublishInfo.npm({
+                registryUrl: val.registryUrl,
+                packageName: val.packageName,
+                token: undefined
+            }),
+        maven: (val) =>
+            FernFiddle.GithubPublishInfo.maven({
+                registryUrl: val.registryUrl,
+                coordinate: val.coordinate,
+                credentials: undefined,
+                signature: undefined
+            }),
+        postman: () =>
+            FernFiddle.GithubPublishInfo.postman({
+                apiKey: "",
+                workspaceId: ""
+            }),
+        pypi: (val) =>
+            FernFiddle.GithubPublishInfo.pypi({
+                registryUrl: val.registryUrl,
+                packageName: val.packageName,
+                credentials: undefined,
+                pypiMetadata: val.pypiMetadata
+            }),
+        nuget: (val) =>
+            FernFiddle.GithubPublishInfo.nuget({
+                registryUrl: val.registryUrl,
+                packageName: val.packageName,
+                apiKey: undefined
+            }),
+        rubygems: (val) =>
+            FernFiddle.GithubPublishInfo.rubygems({
+                registryUrl: val.registryUrl,
+                packageName: val.packageName,
+                apiKey: undefined
+            }),
+        crates: (val) =>
+            FernFiddle.GithubPublishInfo.crates({
+                registryUrl: val.registryUrl,
+                packageName: val.packageName,
+                token: undefined
+            }),
+        _other: () => publishInfo
     });
 }
 
@@ -163,7 +226,7 @@ export function overrideGroupOutputForDiffBranch({
                         repo: githubInfo.repo,
                         branch: undefined,
                         license: undefined,
-                        publishInfo: getGithubPublishInfo(generator.outputMode),
+                        publishInfo: getGithubPublishInfoWithoutToken(generator.outputMode),
                         downloadSnippets: false
                     })
                 ),

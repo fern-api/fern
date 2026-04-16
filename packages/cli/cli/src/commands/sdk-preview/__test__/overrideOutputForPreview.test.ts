@@ -321,7 +321,7 @@ describe("overrideGroupOutputForDiffBranch", () => {
         expect(result.generators[0]?.absolutePathToLocalOutput).toBeUndefined();
     });
 
-    it("preserves publishInfo from the original output mode", () => {
+    it("preserves publishInfo package name but strips token from the original output mode", () => {
         const npmPublishInfo = FernFiddle.GithubPublishInfo.npm({
             registryUrl: "https://registry.npmjs.org",
             packageName: "@fern-demo/sdk-preview-test",
@@ -346,14 +346,28 @@ describe("overrideGroupOutputForDiffBranch", () => {
         expect(result.generators).toHaveLength(1);
         const outputMode = result.generators[0]?.outputMode;
         expect(outputMode?.type).toBe("githubV2");
-        // The publishInfo should be preserved so the generator produces
-        // code with the correct package name (e.g. in package.json).
+        // The publishInfo should preserve the package name for code generation
+        // but strip the auth token to prevent accidental publishing.
         outputMode?._visit({
             githubV2: (v) =>
                 v._visit({
                     push: (p) => {
                         expect(p.publishInfo).toBeDefined();
                         expect(p.publishInfo?.type).toBe("npm");
+                        p.publishInfo?._visit({
+                            npm: (npm) => {
+                                expect(npm.packageName).toBe("@fern-demo/sdk-preview-test");
+                                expect(npm.registryUrl).toBe("https://registry.npmjs.org");
+                                expect(npm.token).toBeUndefined();
+                            },
+                            maven: () => {},
+                            postman: () => {},
+                            pypi: () => {},
+                            nuget: () => {},
+                            rubygems: () => {},
+                            crates: () => {},
+                            _other: () => {}
+                        });
                     },
                     commitAndRelease: () => {},
                     pullRequest: () => {},
