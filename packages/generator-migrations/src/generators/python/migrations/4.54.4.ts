@@ -39,7 +39,10 @@ export const migration_4_54_4: Migration = {
 
     migrateGeneratorConfig: ({ config }) => {
         // use_request_defaults only exists on the Python SDK generator's config schema.
-        if (config.name !== "fernapi/fern-python-sdk") {
+        // Custom-image generators (which use `image` instead of `name`) are user-managed
+        // and are passed through unchanged.
+        const generatorName = "name" in config ? config.name : undefined;
+        if (generatorName !== "fernapi/fern-python-sdk") {
             return config;
         }
 
