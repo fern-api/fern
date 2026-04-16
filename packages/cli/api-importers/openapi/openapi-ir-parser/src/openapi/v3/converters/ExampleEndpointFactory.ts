@@ -503,9 +503,14 @@ export class ExampleEndpointFactory {
                     ignoreOptionals: true
                 }
             });
-            // Query parameters can be primitives, arrays, or objects (unlike path
-            // parameters which must be scalar URL segments). Accept any example type
-            // so that array examples from explode:false params flow through.
+            if (example != null && !isExamplePrimitive(example) && example.type !== "array") {
+                this.logger.debug(
+                    `Expected a primitive example but got ${example.type} for query parameter ${
+                        queryParameter.name
+                    } for ${endpoint.method.toUpperCase()} ${endpoint.path}`
+                );
+                example = undefined;
+            }
             if (required && example == null) {
                 return [];
             } else if (example != null) {
