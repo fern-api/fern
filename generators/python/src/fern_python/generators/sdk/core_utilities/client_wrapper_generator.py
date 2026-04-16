@@ -589,6 +589,9 @@ class ClientWrapperGenerator:
                             if param.type_hint.is_optional:
                                 writer.outdent()
                     else:
+                        stringify = (
+                            (lambda expr: f"str({expr})") if param.needs_str_conversion else (lambda expr: expr)
+                        )
                         if param.getter_method is not None:
                             if param.type_hint.is_optional:
                                 writer.write_line(
@@ -596,23 +599,20 @@ class ClientWrapperGenerator:
                                 )
                                 writer.write_line(f"if {param.constructor_parameter_name} is not None:")
                                 with writer.indent():
-                                    value_expr = (
-                                        f"str({param.constructor_parameter_name})"
-                                        if param.needs_str_conversion
-                                        else param.constructor_parameter_name
+                                    writer.write_line(
+                                        f'headers["{param.header_key}"] = {stringify(param.constructor_parameter_name)}'
                                     )
-                                    writer.write_line(f'headers["{param.header_key}"] = {value_expr}')
                             else:
-                                getter_call = f"self.{param.getter_method.name}()"
-                                value_expr = f"str({getter_call})" if param.needs_str_conversion else getter_call
-                                writer.write_line(f'headers["{param.header_key}"] = {value_expr}')
+                                writer.write_line(
+                                    f'headers["{param.header_key}"] = {stringify(f"self.{param.getter_method.name}()")}'
+                                )
                         elif param.private_member_name is not None:
                             if param.type_hint.is_optional:
                                 writer.write_line(f"if self.{param.private_member_name} is not None:")
                                 writer.indent()
-                            member_access = f"self.{param.private_member_name}"
-                            value_expr = f"str({member_access})" if param.needs_str_conversion else member_access
-                            writer.write_line(f'headers["{param.header_key}"] = {value_expr}')
+                            writer.write_line(
+                                f'headers["{param.header_key}"] = {stringify(f"self.{param.private_member_name}")}'
+                            )
                             if param.type_hint.is_optional:
                                 writer.outdent()
             for literal_header in literal_headers:
