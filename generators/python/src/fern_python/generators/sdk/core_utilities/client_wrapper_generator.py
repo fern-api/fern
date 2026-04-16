@@ -589,9 +589,7 @@ class ClientWrapperGenerator:
                             if param.type_hint.is_optional:
                                 writer.outdent()
                     else:
-                        stringify = (
-                            (lambda expr: f"str({expr})") if param.needs_str_conversion else (lambda expr: expr)
-                        )
+                        stringify = (lambda expr: f"str({expr})") if param.needs_str_conversion else (lambda expr: expr)
                         if param.getter_method is not None:
                             if param.type_hint.is_optional:
                                 writer.write_line(
