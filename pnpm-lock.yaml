@@ -4764,6 +4764,9 @@ importers:
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
+      '@fern-api/generator-cli':
+        specifier: workspace:*
+        version: link:../../generator-cli
       '@fern-api/github':
         specifier: workspace:*
         version: link:../../commons/github
