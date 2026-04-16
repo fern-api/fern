@@ -148,9 +148,12 @@ function getGithubPublishInfoWithoutToken(
 /**
  * Returns a copy of GithubPublishInfo with all auth credentials removed.
  * Preserves package name, registry URL, and other non-sensitive metadata.
+ * Returns undefined for unknown variants to fail safe rather than leak credentials.
  */
-function stripPublishInfoCredentials(publishInfo: FernFiddle.GithubPublishInfo): FernFiddle.GithubPublishInfo {
-    return publishInfo._visit<FernFiddle.GithubPublishInfo>({
+function stripPublishInfoCredentials(
+    publishInfo: FernFiddle.GithubPublishInfo
+): FernFiddle.GithubPublishInfo | undefined {
+    return publishInfo._visit<FernFiddle.GithubPublishInfo | undefined>({
         npm: (val) =>
             FernFiddle.GithubPublishInfo.npm({
                 registryUrl: val.registryUrl,
@@ -164,11 +167,7 @@ function stripPublishInfoCredentials(publishInfo: FernFiddle.GithubPublishInfo):
                 credentials: undefined,
                 signature: undefined
             }),
-        postman: () =>
-            FernFiddle.GithubPublishInfo.postman({
-                apiKey: "",
-                workspaceId: ""
-            }),
+        postman: () => undefined,
         pypi: (val) =>
             FernFiddle.GithubPublishInfo.pypi({
                 registryUrl: val.registryUrl,
@@ -194,7 +193,7 @@ function stripPublishInfoCredentials(publishInfo: FernFiddle.GithubPublishInfo):
                 packageName: val.packageName,
                 token: undefined
             }),
-        _other: () => publishInfo
+        _other: () => undefined
     });
 }
 
