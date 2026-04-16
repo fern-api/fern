@@ -95,7 +95,12 @@ function isWithinOutputDir(resolvedPath: string, outputDir: string): boolean {
  * When a direct target doesn't exist, it falls back to searching the root
  * .pnpm store.
  */
-function resolveWindowsSymlinks(outputDir: string, symlinks: SymlinkEntry[], logger: Logger): void {
+function resolveWindowsSymlinks(
+    outputDir: string,
+    symlinks: SymlinkEntry[],
+    logger: Logger,
+    onProgress?: (resolved: number, total: number) => void
+): void {
     if (symlinks.length === 0) {
         return;
     }
@@ -191,6 +196,7 @@ function resolveWindowsSymlinks(outputDir: string, symlinks: SymlinkEntry[], log
                 logger.debug(`Failed to resolve symlink ${symlinkPath}: ${error}`);
                 failed++;
             }
+            onProgress?.(junctions + copies + alreadyExisted + failed, symlinks.length);
         }
 
         if (stillPending.length === pending.length) {
@@ -400,26 +406,17 @@ export async function downloadBundle({
         logger.debug(`Decompressing bundle from ${outputZipPath} to ${absolutePathToBundleFolder}`);
 
         let unzipProgressBar: cliProgress.SingleBar | undefined;
-        let unzipInterval: NodeJS.Timeout | undefined;
+        let extractedFiles = 0;
 
         if (app) {
             unzipProgressBar = new cliProgress.SingleBar({
-                format: `${DOCS_PREFIX} ${formatProgressLabel("Unzipping docs bundle")} [{bar}] {percentage}%`,
+                format: `${DOCS_PREFIX} ${formatProgressLabel("Extracting docs bundle")} [{bar}] {value} files`,
                 barCompleteChar: "\u2588",
                 barIncompleteChar: "\u2591",
                 hideCursor: true
             });
-            unzipProgressBar.start(100, 0);
-
-            const UNZIP_DURATION_MS = 30000;
-            const startTime = Date.now();
-            unzipInterval = setInterval(() => {
-                const elapsed = Date.now() - startTime;
-                const t = Math.min(elapsed / UNZIP_DURATION_MS, 1);
-                const p = 1 - Math.pow(1 - t, 3);
-                const percentage = Math.min(99, Math.floor(p * 100));
-                unzipProgressBar?.update(percentage);
-            }, 50);
+            // Start with an estimated total; snapped to actual count when done
+            unzipProgressBar.start(5000, 0);
         }
 
         if (PLATFORM_IS_WINDOWS) {
@@ -431,6 +428,10 @@ export async function downloadBundle({
         try {
             await decompress(outputZipPath, absolutePathToBundleFolder, {
                 filter: (file) => {
+                    extractedFiles++;
+                    if (unzipProgressBar) {
+                        unzipProgressBar.update(extractedFiles);
+                    }
                     if (PLATFORM_IS_WINDOWS && file.type === "symlink") {
                         // decompress-tar adds `linkname` for symlink entries but the
                         // TypeScript types don't include it, so access via bracket notation.
@@ -444,18 +445,35 @@ export async function downloadBundle({
                 }
             });
         } finally {
-            if (unzipInterval) {
-                clearInterval(unzipInterval);
-            }
             if (unzipProgressBar) {
-                unzipProgressBar.update(100);
+                unzipProgressBar.setTotal(extractedFiles);
+                unzipProgressBar.update(extractedFiles);
                 unzipProgressBar.stop();
             }
         }
 
         // Resolve symlinks via NTFS junctions on Windows
         if (PLATFORM_IS_WINDOWS && collectedSymlinks.length > 0) {
-            resolveWindowsSymlinks(absolutePathToBundleFolder, collectedSymlinks, logger);
+            let symlinkProgressBar: cliProgress.SingleBar | undefined;
+            if (app) {
+                symlinkProgressBar = new cliProgress.SingleBar({
+                    format: `${DOCS_PREFIX} ${formatProgressLabel("Patching symlinks")} [{bar}] {percentage}% | {value}/{total}`,
+                    barCompleteChar: "\u2588",
+                    barIncompleteChar: "\u2591",
+                    hideCursor: true
+                });
+                symlinkProgressBar.start(collectedSymlinks.length, 0);
+            }
+            resolveWindowsSymlinks(
+                absolutePathToBundleFolder,
+                collectedSymlinks,
+                logger,
+                symlinkProgressBar ? (resolved, total) => symlinkProgressBar?.update(resolved) : undefined
+            );
+            if (symlinkProgressBar) {
+                symlinkProgressBar.update(collectedSymlinks.length);
+                symlinkProgressBar.stop();
+            }
         }
 
         // write etag
