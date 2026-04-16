@@ -699,6 +699,34 @@ class ClientWrapperGenerator:
                 )
             )
 
+        # Header auth schemes (e.g. X-API-Key) are independent of bearer/basic/OAuth auth
+        # and must always be included — even when exclude_auth is True (OAuth token override mode).
+        # When OAuth is also present (auth: any), make them optional so users can authenticate
+        # with either OAuth or the header auth scheme alone.
+        # TODO(dsinghvi): Support suppliers for header auth schemes
+        for header_auth_scheme in self._get_header_auth_schemes():
+            constructor_parameter_name = names.get_auth_scheme_header_constructor_parameter_name(header_auth_scheme)
+            type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                header_auth_scheme.value_type
+            )
+            if self._has_oauth() and not type_hint.is_optional:
+                type_hint = AST.TypeHint.optional(type_hint)
+            parameters.append(
+                ConstructorParameter(
+                    constructor_parameter_name=constructor_parameter_name,
+                    private_member_name=names.get_auth_scheme_header_private_member_name(header_auth_scheme),
+                    type_hint=type_hint,
+                    initializer=AST.Expression(
+                        f'{constructor_parameter_name}="YOUR_{resolve_name(get_name_from_wire_value(header_auth_scheme.name)).screaming_snake_case.safe_name}"',
+                    ),
+                    header_key=get_wire_value(header_auth_scheme.name),
+                    header_prefix=header_auth_scheme.prefix,
+                    environment_variable=(
+                        header_auth_scheme.header_env_var if header_auth_scheme.header_env_var is not None else None
+                    ),
+                )
+            )
+
         if exclude_auth:
             # Add generic headers parameter even when excluding auth
             parameters.append(headers_constructor_parameter)
@@ -720,27 +748,6 @@ class ClientWrapperGenerator:
                     private_member_name=ClientWrapperGenerator.AUTH_HEADERS_MEMBER_NAME,
                     initializer=AST.Expression(AST.TypeHint.none()),
                     docs="A callable that returns auth headers to send with every request. Used for inferred authentication.",
-                )
-            )
-
-        # TODO(dsinghvi): Support suppliers for header auth schemes
-        for header_auth_scheme in self._get_header_auth_schemes():
-            constructor_parameter_name = names.get_auth_scheme_header_constructor_parameter_name(header_auth_scheme)
-            parameters.append(
-                ConstructorParameter(
-                    constructor_parameter_name=constructor_parameter_name,
-                    private_member_name=names.get_auth_scheme_header_private_member_name(header_auth_scheme),
-                    type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                        header_auth_scheme.value_type
-                    ),
-                    initializer=AST.Expression(
-                        f'{constructor_parameter_name}="YOUR_{resolve_name(get_name_from_wire_value(header_auth_scheme.name)).screaming_snake_case.safe_name}"',
-                    ),
-                    header_key=get_wire_value(header_auth_scheme.name),
-                    header_prefix=header_auth_scheme.prefix,
-                    environment_variable=(
-                        header_auth_scheme.header_env_var if header_auth_scheme.header_env_var is not None else None
-                    ),
                 )
             )
 

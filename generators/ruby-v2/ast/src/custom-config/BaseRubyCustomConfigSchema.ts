@@ -37,6 +37,11 @@ export const BaseRubyCustomConfigSchema = z.object({
     // - "normalcase": allows numbers without underscores (e.g., recaptcha_v2, office365)
     // - "disabled": disables the cop entirely
     rubocopVariableNumberStyle: z.enum(["snake_case", "normalcase", "disabled"]).optional(),
+    // Severity level for the Naming/VariableNumber cop
+    // - "info": reports violations as informational notes
+    // - "warning": reports violations as warnings (default for customer SDKs)
+    // - "error": reports violations as errors (used in seed to enforce rubocop)
+    rubocopSeverity: z.enum(["info", "warning", "error"]).optional(),
     maxRetries: z.number().int().min(0).optional()
 });
 

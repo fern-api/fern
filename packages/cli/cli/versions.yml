@@ -1,4 +1,31 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.71.5
+  changelogEntry:
+    - summary: |
+        `fern automations list generate` now skips generators with local-file-system output
+        or autorelease disabled, matching the behavior of autopilot.
+      type: fix
+  createdAt: "2026-04-15"
+  irVersion: 66
+- version: 4.71.4
+  changelogEntry:
+    - summary: |
+        Fix per-endpoint server overrides being ignored when top-level servers
+        define multiple base URLs with x-fern-server-name. Endpoints now correctly
+        resolve to their specified server URL instead of always using the default.
+      type: fix
+  createdAt: "2026-04-15"
+  irVersion: 66
+- version: 4.71.3
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI-to-IR conversion to resolve custom properties (e.g., grant_type)
+        in OAuth token endpoint requests. Previously, customProperties was always set
+        to undefined for OpenAPI specs, causing generated SDKs to omit required
+        literal properties from the token request.
+      type: fix
+  createdAt: "2026-04-15"
+  irVersion: 66
 - version: 4.71.2
   changelogEntry:
     - summary: |

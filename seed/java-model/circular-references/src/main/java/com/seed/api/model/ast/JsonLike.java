@@ -118,6 +118,12 @@ public final class JsonLike {
     @java.lang.Override
     public JsonLike deserialize(JsonParser p, DeserializationContext context) throws IOException {
       Object value = p.readValueAs(Object.class);
+      if (value instanceof Integer) {
+        return of((Integer) value);
+      }
+      if (value instanceof Boolean) {
+        return of((Boolean) value);
+      }
       try {
         return of(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<List<JsonLike>>() {}));
       } catch(RuntimeException e) {
@@ -129,12 +135,6 @@ public final class JsonLike {
       try {
         return of(ObjectMappers.JSON_MAPPER.convertValue(value, String.class));
       } catch(RuntimeException e) {
-      }
-      if (value instanceof Integer) {
-        return of((Integer) value);
-      }
-      if (value instanceof Boolean) {
-        return of((Boolean) value);
       }
       throw new JsonParseException(p, "Failed to deserialize");
     }
