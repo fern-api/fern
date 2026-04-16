@@ -105,16 +105,13 @@ export function buildEndpointExample({
                 }
             }
 
-            // Skip if already in endpoint headers and no override value was found
+            // Skip if already in endpoint headers (use existing example) or if the
+            // header wasn't in the endpoint example at all (e.g. optional headers that
+            // had no example generated). Generating a placeholder here would produce a
+            // type-incorrect value for non-string headers.
             if (endpointHeaderNames.has(header)) {
                 continue;
             }
-
-            // Adds a header example using the header name as the value when no type information is available
-            namedFullExamples.push({
-                name: header,
-                value: FullExample.primitive(PrimitiveExample.string(header))
-            });
         }
 
         example.headers = convertHeaderExamples({
