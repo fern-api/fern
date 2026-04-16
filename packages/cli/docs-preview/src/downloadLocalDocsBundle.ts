@@ -379,17 +379,26 @@ export async function downloadBundle({
         logger.debug(`Decompressing bundle from ${outputZipPath} to ${absolutePathToBundleFolder}`);
 
         let unzipProgressBar: cliProgress.SingleBar | undefined;
-        let extractedFiles = 0;
+        let unzipInterval: NodeJS.Timeout | undefined;
 
         if (app) {
             unzipProgressBar = new cliProgress.SingleBar({
-                format: `${DOCS_PREFIX} ${formatProgressLabel("Extracting docs bundle")} [{bar}] {value} files`,
+                format: `${DOCS_PREFIX} ${formatProgressLabel("Unzipping docs bundle")} [{bar}] {percentage}%`,
                 barCompleteChar: "\u2588",
                 barIncompleteChar: "\u2591",
                 hideCursor: true
             });
-            // Start with an estimated total; snapped to actual count when done
-            unzipProgressBar.start(5000, 0);
+            unzipProgressBar.start(100, 0);
+
+            const UNZIP_DURATION_MS = PLATFORM_IS_WINDOWS ? 60000 : 30000;
+            const startTime = Date.now();
+            unzipInterval = setInterval(() => {
+                const elapsed = Date.now() - startTime;
+                const t = Math.min(elapsed / UNZIP_DURATION_MS, 1);
+                const p = 1 - Math.pow(1 - t, 3);
+                const percentage = Math.min(99, Math.floor(p * 100));
+                unzipProgressBar?.update(percentage);
+            }, 50);
         }
 
         if (PLATFORM_IS_WINDOWS) {
@@ -401,10 +410,6 @@ export async function downloadBundle({
         try {
             await decompress(outputZipPath, absolutePathToBundleFolder, {
                 filter: (file) => {
-                    extractedFiles++;
-                    if (unzipProgressBar) {
-                        unzipProgressBar.update(extractedFiles);
-                    }
                     if (PLATFORM_IS_WINDOWS && file.type === "symlink") {
                         // decompress-tar adds `linkname` for symlink entries but the
                         // TypeScript types don't include it, so access via bracket notation.
@@ -418,9 +423,11 @@ export async function downloadBundle({
                 }
             });
         } finally {
+            if (unzipInterval) {
+                clearInterval(unzipInterval);
+            }
             if (unzipProgressBar) {
-                unzipProgressBar.setTotal(extractedFiles);
-                unzipProgressBar.update(extractedFiles);
+                unzipProgressBar.update(100);
                 unzipProgressBar.stop();
             }
         }
