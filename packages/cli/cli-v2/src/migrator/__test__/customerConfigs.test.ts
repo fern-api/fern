@@ -6,6 +6,7 @@
  * and asserts the full migrated fern.yml output.
  */
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import type { Logger } from "@fern-api/logger";
 import { randomUUID } from "crypto";
 import { mkdir, readFile, rm, writeFile } from "fs/promises";
 import yaml from "js-yaml";
@@ -13,7 +14,6 @@ import { tmpdir } from "os";
 import { join } from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { Migrator } from "../Migrator.js";
-import type { Logger } from "@fern-api/logger";
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -523,10 +523,7 @@ jobs:
         expect(result.success).toBe(true);
 
         // generate.yml should be migrated
-        const generateContent = await readFile(
-            join(projectDir, ".github", "workflows", "generate.yml"),
-            "utf-8"
-        );
+        const generateContent = await readFile(join(projectDir, ".github", "workflows", "generate.yml"), "utf-8");
         expect(generateContent).toContain("fern sdk generate --target typescript");
         expect(generateContent).toContain("fern sdk generate --target python");
         expect(generateContent).not.toContain("fern generate --group");
@@ -621,10 +618,7 @@ jobs:
         expect(raw).toContain("$ref: ./docs.yml");
 
         // Workflows migrated
-        const workflowContent = await readFile(
-            join(projectDir, ".github", "workflows", "publish-sdks.yml"),
-            "utf-8"
-        );
+        const workflowContent = await readFile(join(projectDir, ".github", "workflows", "publish-sdks.yml"), "utf-8");
         expect(workflowContent).toContain("fern sdk generate --target typescript");
         expect(workflowContent).toContain("fern sdk generate --target python");
     });
@@ -900,10 +894,7 @@ jobs:
         const result = await runMigration(projectDir);
         expect(result.success).toBe(true);
 
-        const workflowContent = await readFile(
-            join(projectDir, ".github", "workflows", "deploy.yml"),
-            "utf-8"
-        );
+        const workflowContent = await readFile(join(projectDir, ".github", "workflows", "deploy.yml"), "utf-8");
         // fern-api generate should become fern-api sdk generate
         expect(workflowContent).toContain("fern-api sdk generate --target production");
         expect(workflowContent).toContain("fern-api sdk generate");
@@ -1222,10 +1213,7 @@ jobs:
         const result = await runMigration(projectDir);
         expect(result.success).toBe(true);
 
-        const workflowContent = await readFile(
-            join(projectDir, ".github", "workflows", "multi-step.yml"),
-            "utf-8"
-        );
+        const workflowContent = await readFile(join(projectDir, ".github", "workflows", "multi-step.yml"), "utf-8");
 
         // All fern generate --group X should be migrated
         expect(workflowContent).toContain("fern sdk generate --target ts-sdk --log-level debug");
