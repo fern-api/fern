@@ -1327,6 +1327,7 @@ jobs:
                 --arg event "benchmark-pr-result" \
                 --arg distinct_id "fern-ci-benchmark" \
                 --arg timestamp "$TIMESTAMP" \
+                --arg generator "docs" \
                 --arg spec "$spec" \
                 --argjson duration_seconds "$dur" \
                 --argjson exit_code "$ec" \
@@ -1343,6 +1344,7 @@ jobs:
                   distinct_id: $distinct_id,
                   timestamp: $timestamp,
                   properties: {
+                    generator: $generator,
                     spec: $spec,
                     duration_seconds: $duration_seconds,
                     exit_code: $exit_code,
