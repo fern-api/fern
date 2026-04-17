@@ -371,7 +371,6 @@ public partial class HttpMethodsClient : IHttpMethodsClient
     /// <example><code>
     /// await client.Endpoints.HttpMethods.TestPostAsync(new ObjectWithRequiredField { String = "string" });
     /// </code></example>
-    [Obsolete]
     public WithRawResponseTask<ObjectWithOptionalField> TestPostAsync(
         ObjectWithRequiredField request,
         RequestOptions? options = null,
@@ -389,7 +388,6 @@ public partial class HttpMethodsClient : IHttpMethodsClient
     ///     new ObjectWithRequiredField { String = "string" }
     /// );
     /// </code></example>
-    [Obsolete("Use testPatch instead.")]
     public WithRawResponseTask<ObjectWithOptionalField> TestPutAsync(
         string id,
         ObjectWithRequiredField request,
@@ -402,9 +400,6 @@ public partial class HttpMethodsClient : IHttpMethodsClient
         );
     }
 
-    /// <summary>
-    /// @beta This endpoint is in pre-release and may change.
-    /// </summary>
     /// <example><code>
     /// await client.Endpoints.HttpMethods.TestPatchAsync(
     ///     "id",
@@ -438,9 +433,6 @@ public partial class HttpMethodsClient : IHttpMethodsClient
         );
     }
 
-    /// <summary>
-    /// @beta This endpoint is in development and may change.
-    /// </summary>
     /// <example><code>
     /// await client.Endpoints.HttpMethods.TestDeleteAsync("id");
     /// </code></example>

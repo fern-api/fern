@@ -183,8 +183,6 @@ public partial class ImdbClient : IImdbClient
     }
 
     /// <summary>
-    /// @beta This endpoint is in pre-release and may change.
-    ///
     /// Add a movie to the database using the movies/* /... path.
     /// </summary>
     /// <example><code>
@@ -204,7 +202,6 @@ public partial class ImdbClient : IImdbClient
     /// <example><code>
     /// await client.Imdb.GetMovieAsync("movieId");
     /// </code></example>
-    [Obsolete]
     public WithRawResponseTask<Movie> GetMovieAsync(
         string movieId,
         RequestOptions? options = null,
