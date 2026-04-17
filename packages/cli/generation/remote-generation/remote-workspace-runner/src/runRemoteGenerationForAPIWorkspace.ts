@@ -4,7 +4,7 @@ import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
-import { TaskContext } from "@fern-api/task-context";
+import { TaskAbortSignal, TaskContext } from "@fern-api/task-context";
 import {
     AbstractAPIWorkspace,
     getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation
@@ -127,7 +127,10 @@ export async function runRemoteGenerationForAPIWorkspace({
     );
 
     if (automation == null && results.some((didSucceed) => !didSucceed)) {
-        context.failAndThrow();
+        // Subtasks have already logged and reported their failures via their own
+        // `failAndThrow`. Throw a bare TaskAbortSignal to unwind without firing
+        // redundant logging, PostHog, or Sentry events.
+        throw new TaskAbortSignal();
     }
 
     return {
