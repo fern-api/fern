@@ -55,3 +55,10 @@ export {
     type StatusPatch,
     type StatusResult
 } from "./replay/replay-status.js";
+export {
+    parseOwnerRepo,
+    ReplaySubmitError,
+    type SubmitReplayInitParams,
+    type SubmitReplayInitResult,
+    submitReplayInit
+} from "./replay/replay-submit-init.js";

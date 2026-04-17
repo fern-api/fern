@@ -1,7 +1,7 @@
 import { schemas } from "@fern-api/config";
 import { getFiddleOrigin } from "@fern-api/core";
 import { extractErrorMessage, replaceEnvVariables } from "@fern-api/core-utils";
-import { formatBootstrapSummary, replayInit } from "@fern-api/generator-cli";
+import { formatBootstrapSummary, ReplaySubmitError, replayInit, submitReplayInit } from "@fern-api/generator-cli";
 import { CliError } from "@fern-api/task-context";
 
 import chalk from "chalk";
@@ -89,49 +89,24 @@ export class InitCommand {
 
             const fernToken = await context.getTokenOrPrompt();
 
-            const { owner, repo } = parseOwnerRepo(githubRepo);
-            const fiddleOrigin = getFiddleOrigin();
-
-            const response = await fetch(`${fiddleOrigin}/api/remote-gen/replay/init`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${fernToken.value}`
-                },
-                body: JSON.stringify({
-                    owner,
-                    repo,
-                    lockfileContents: result.lockfileContent,
-                    fernignoreEntries: result.fernignoreEntries,
-                    prBody: result.prBody
-                })
-            });
-
-            if (!response.ok) {
-                if (response.status === 404) {
+            try {
+                const { prUrl } = await submitReplayInit({
+                    fiddleOrigin: getFiddleOrigin(),
+                    fernToken: fernToken.value,
+                    githubRepo,
+                    initResult: result
+                });
+                context.stderr.info(`\n${Icons.success} PR created: ${chalk.underline(prUrl)}`);
+                context.stderr.info("Merge the PR to enable Replay for this repository.");
+            } catch (submitError) {
+                if (submitError instanceof ReplaySubmitError) {
                     throw new CliError({
-                        message:
-                            "The Fern GitHub App is not installed on this repository. " +
-                            "Install it at https://github.com/apps/fern-api to enable server-side PR creation.",
-                        code: CliError.Code.ConfigError
+                        message: submitError.message,
+                        code: submitError.statusCode === 404 ? CliError.Code.ConfigError : CliError.Code.NetworkError
                     });
                 }
-                const body = await response.text();
-                throw new CliError({
-                    message: `Failed to create PR via Fern: ${body}`,
-                    code: CliError.Code.NetworkError
-                });
+                throw submitError;
             }
-
-            const data: unknown = await response.json();
-            if (!isPrUrlResponse(data)) {
-                throw new CliError({
-                    message: "Unexpected response from Fern: missing prUrl field.",
-                    code: CliError.Code.NetworkError
-                });
-            }
-            context.stderr.info(`\n${Icons.success} PR created: ${chalk.underline(data.prUrl)}`);
-            context.stderr.info("Merge the PR to enable Replay for this repository.");
         } catch (error) {
             if (error instanceof CliError) {
                 throw error;
@@ -206,32 +181,6 @@ export class InitCommand {
             code: CliError.Code.ConfigError
         });
     }
-}
-
-function isPrUrlResponse(data: unknown): data is { prUrl: string } {
-    return (
-        typeof data === "object" &&
-        data != null &&
-        "prUrl" in data &&
-        typeof (data as Record<string, unknown>).prUrl === "string"
-    );
-}
-
-function parseOwnerRepo(githubRepo: string): { owner: string; repo: string } {
-    const cleaned = githubRepo
-        .replace(/^https?:\/\//, "")
-        .replace(/\.git$/, "")
-        .replace(/^github\.com\//, "");
-    const parts = cleaned.split("/");
-    const owner = parts[parts.length - 2];
-    const repo = parts[parts.length - 1];
-    if (owner == null || repo == null) {
-        throw new CliError({
-            message: `Could not parse owner/repo from: ${githubRepo}`,
-            code: CliError.Code.ParseError
-        });
-    }
-    return { owner, repo };
 }
 
 export function addInitCommand(cli: Argv<GlobalArgs>): void {
