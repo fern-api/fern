@@ -152,8 +152,7 @@ public abstract class AbstractEndpointWriter {
 
     public final HttpEndpointMethodSpecs generate() {
         // Step 1: Populate JavaDoc
-        boolean emitAvailability =
-                clientGeneratorContext.getCustomConfig().generateEndpointAvailability();
+        boolean emitAvailability = clientGeneratorContext.getCustomConfig().generateEndpointAvailability();
         Optional<String> availabilityDocs =
                 emitAvailability ? AvailabilityUtils.getAvailabilityDocs(httpEndpoint) : Optional.empty();
         boolean isDeprecated = emitAvailability && AvailabilityUtils.isDeprecated(httpEndpoint);
