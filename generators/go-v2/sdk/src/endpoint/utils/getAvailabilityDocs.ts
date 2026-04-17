@@ -14,36 +14,28 @@ import { FernIr } from "@fern-fern/ir-sdk";
  *
  * GENERAL_AVAILABILITY and nullish availability produce no extra docs.
  */
-export function getAvailabilityDocs(
-  availability: FernIr.Availability | undefined,
-): string | undefined {
-  if (availability == null) {
-    return undefined;
-  }
-  switch (availability.status) {
-    case FernIr.AvailabilityStatus.Deprecated: {
-      const message = availability.message;
-      return message != null
-        ? `Deprecated: ${message}`
-        : "Deprecated: This endpoint is deprecated.";
+export function getAvailabilityDocs(availability: FernIr.Availability | undefined): string | undefined {
+    if (availability == null) {
+        return undefined;
     }
-    case FernIr.AvailabilityStatus.InDevelopment: {
-      const warning = "@beta This endpoint is in development and may change.";
-      return availability.message != null
-        ? `${warning} ${availability.message}`
-        : warning;
+    switch (availability.status) {
+        case FernIr.AvailabilityStatus.Deprecated: {
+            const message = availability.message;
+            return message != null ? `Deprecated: ${message}` : "Deprecated: This endpoint is deprecated.";
+        }
+        case FernIr.AvailabilityStatus.InDevelopment: {
+            const warning = "@beta This endpoint is in development and may change.";
+            return availability.message != null ? `${warning} ${availability.message}` : warning;
+        }
+        case FernIr.AvailabilityStatus.PreRelease: {
+            const warning = "@beta This endpoint is in pre-release and may change.";
+            return availability.message != null ? `${warning} ${availability.message}` : warning;
+        }
+        case FernIr.AvailabilityStatus.GeneralAvailability:
+            return undefined;
+        default:
+            return undefined;
     }
-    case FernIr.AvailabilityStatus.PreRelease: {
-      const warning = "@beta This endpoint is in pre-release and may change.";
-      return availability.message != null
-        ? `${warning} ${availability.message}`
-        : warning;
-    }
-    case FernIr.AvailabilityStatus.GeneralAvailability:
-      return undefined;
-    default:
-      return undefined;
-  }
 }
 
 /**
@@ -54,15 +46,15 @@ export function getAvailabilityDocs(
  * recognize markers like `Deprecated:` as their own paragraph.
  */
 export function combineDocsWithAvailability(
-  docs: string | undefined,
-  availability: FernIr.Availability | undefined,
+    docs: string | undefined,
+    availability: FernIr.Availability | undefined
 ): string | undefined {
-  const availabilityLine = getAvailabilityDocs(availability);
-  if (availabilityLine == null) {
-    return docs;
-  }
-  if (docs == null || docs.length === 0) {
-    return availabilityLine;
-  }
-  return `${docs}\n\n${availabilityLine}`;
+    const availabilityLine = getAvailabilityDocs(availability);
+    if (availabilityLine == null) {
+        return docs;
+    }
+    if (docs == null || docs.length === 0) {
+        return availabilityLine;
+    }
+    return `${docs}\n\n${availabilityLine}`;
 }
