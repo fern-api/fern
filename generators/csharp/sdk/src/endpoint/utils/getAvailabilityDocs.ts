@@ -1,3 +1,4 @@
+import { assertNever } from "@fern-api/core-utils";
 import { ast, type CSharp } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 
@@ -32,7 +33,7 @@ export function getAvailabilityDocs(endpoint: HttpEndpoint): string | undefined 
         case FernIr.AvailabilityStatus.GeneralAvailability:
             return undefined;
         default:
-            return undefined;
+            assertNever(availability.status);
     }
 }
 
