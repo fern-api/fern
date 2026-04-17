@@ -7,13 +7,11 @@ export interface MarkdownEntry {
 }
 
 /**
- * FDR's slug table may legitimately contain multiple historical (pageId, slug)
- * rows per pageId — either as a side effect of the slug-change row-leak before
- * it was fixed, or deliberately once FDR starts preserving old mappings for
- * docs-site versioning. For the missing-redirects check we only care about the
- * most recent slug per pageId: that's the one representing the last published
- * state of the page. Older rows would otherwise produce warnings for URLs the
- * customer already handled at the time (if they were ever served at all).
+ * FDR's slug table may contain multiple (pageId, slug) rows per pageId —
+ * either as the tail of a past slug change, or deliberately as part of future
+ * docs-site versioning. The missing-redirects check only needs the most recent
+ * row per pageId; older rows describe an older published state and would
+ * otherwise produce false positives.
  */
 export function keepLatestEntryPerPageId(entries: MarkdownEntry[]): MarkdownEntry[] {
     const latestByPageId = new Map<string, MarkdownEntry>();
