@@ -86,10 +86,13 @@ export async function getIntermediateRepresentation({
         originGitCommit: getOriginGitCommit(),
         originGitCommitIsDirty: getOriginGitCommitIsDirty(),
         invokedBy: detectInvocationSource(),
-        // Preserve the raw user-provided `--version` value from the pre-generated IR if any;
-        // `version` here may have been resolved (e.g. via `computeSemanticVersion`) and is not
-        // necessarily the raw flag value.
-        requestedVersion: intermediateRepresentation.generationMetadata?.requestedVersion ?? version,
+        // `requestedVersion` must reflect the raw `--version` flag passed by the user. The
+        // `version` parameter here may have been resolved (e.g. via `computeSemanticVersion`)
+        // so we never fall back to it. When the IR is freshly generated above, this field is
+        // populated with the raw flag value. When the IR is pre-generated, the caller is
+        // responsible for having set this correctly; a pre-existing `undefined` means the
+        // user did not pass `--version`.
+        requestedVersion: intermediateRepresentation.generationMetadata?.requestedVersion,
         ciProvider: detectCiProvider()
     };
 
