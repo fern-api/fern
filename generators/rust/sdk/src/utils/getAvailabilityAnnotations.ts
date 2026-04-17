@@ -28,35 +28,29 @@ export function getAvailabilityAnnotations(
     return {};
   }
 
-  switch (availability.status) {
-    case FernIr.AvailabilityStatus.Deprecated: {
+  return FernIr.AvailabilityStatus._visit<AvailabilityAnnotations>(availability.status, {
+    deprecated: () => {
       const args =
         availability.message != null
           ? [`note = ${JSON.stringify(availability.message)}`]
           : undefined;
       return { attribute: rust.attribute({ name: "deprecated", args }) };
-    }
-    case FernIr.AvailabilityStatus.InDevelopment: {
+    },
+    inDevelopment: () => {
       const warning = "@beta This endpoint is in development and may change.";
       return {
-        docNote:
-          availability.message != null
-            ? `${warning} ${availability.message}`
-            : warning,
+        docNote: availability.message != null ? `${warning} ${availability.message}` : warning,
       };
-    }
-    case FernIr.AvailabilityStatus.PreRelease: {
+    },
+    preRelease: () => {
       const warning = "@beta This endpoint is in pre-release and may change.";
       return {
-        docNote:
-          availability.message != null
-            ? `${warning} ${availability.message}`
-            : warning,
+        docNote: availability.message != null ? `${warning} ${availability.message}` : warning,
       };
-    }
-    case FernIr.AvailabilityStatus.GeneralAvailability:
-      return {};
-    default:
-      return {};
-  }
+    },
+    generalAvailability: () => ({}),
+    // Forward-compatible: unknown availability statuses from newer IR versions
+    // produce no annotations rather than throwing.
+    _other: () => ({}),
+  });
 }
