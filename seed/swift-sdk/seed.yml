@@ -62,7 +62,7 @@ fixtures:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
-        generateEndpointAvailability: true
+        generateAvailabilityAnnotations: true
       outputFolder: availability-annotations
   examples:
     - customConfig: null

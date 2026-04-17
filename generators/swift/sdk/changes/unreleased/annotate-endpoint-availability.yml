@@ -4,9 +4,12 @@
     Generated Swift SDK methods can now surface endpoint availability
     (deprecated / in-development / pre-release) using the language's native
     deprecation mechanism where one exists, and fall back to doc comments
-    otherwise. This behavior is opt-in behind a new `generateEndpointAvailability`
-    custom config flag (default `false`). Set `generateEndpointAvailability: true`
-    in `generators.yml` to enable the annotations; existing output is unchanged
-    when the flag is off. The default will flip to `true` in the next major
-    version of this generator.
+    otherwise. This behavior is opt-in behind a new `generateAvailabilityAnnotations`
+    custom config flag (default `false`). The flag governs availability annotations
+    generally, so future surfaces (services, types, properties, enum values,
+    webhooks, WebSocket channels, errors) can opt in under the same key without
+    introducing another flag. Set `generateAvailabilityAnnotations: true` in
+    `generators.yml` to enable; existing output is unchanged when the flag is
+    off. The default will flip to `true` in the next major version of this
+    generator.
   type: feat

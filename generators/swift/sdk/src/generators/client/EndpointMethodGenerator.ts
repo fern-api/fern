@@ -39,7 +39,7 @@ export class EndpointMethodGenerator {
 
     public generateMethod(endpoint: FernIr.HttpEndpoint): swift.Method {
         const parameters = this.getMethodParametersForEndpoint(endpoint);
-        const availabilityAnnotations = this.sdkGeneratorContext.customConfig.generateEndpointAvailability
+        const availabilityAnnotations = this.sdkGeneratorContext.customConfig.generateAvailabilityAnnotations
             ? getAvailabilityAnnotations(endpoint.availability)
             : undefined;
         const parameterDocs = parameters

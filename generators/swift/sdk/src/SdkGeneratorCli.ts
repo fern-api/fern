@@ -34,7 +34,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     private static readonly defaultCustomConfig: SdkCustomConfigSchema = {
         enableWireTests: SdkCustomConfigSchemaDefaults.enableWireTests,
         nullableAsOptional: SdkCustomConfigSchemaDefaults.nullableAsOptional,
-        generateEndpointAvailability: SdkCustomConfigSchemaDefaults.generateEndpointAvailability
+        generateAvailabilityAnnotations: SdkCustomConfigSchemaDefaults.generateAvailabilityAnnotations
     };
 
     protected constructContext({
