@@ -1,4 +1,23 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.64.1
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.10 which upgrades @fern-api/replay to 0.11.0
+        and only pushes the fern-generation-base tag when replay has unresolved conflicts.
+      type: chore
+  createdAt: "2026-04-17"
+  irVersion: 66
+- version: 3.64.0
+  changelogEntry:
+    - summary: |
+        Add queryBuilder() for query parameter serialization with per-parameter format control.
+        The generator now emits a fluent builder pattern (`core.url.queryBuilder()`) for query string
+        construction, where each parameter's serialization format is decided at code-gen time via
+        `.add(key, value, { style: "comma" })`. OpenAPI query parameters with `explode: false` use
+        the comma style to produce comma-separated values (e.g., `tags=a,b,c`).
+      type: feat
+  createdAt: "2026-04-17"
+  irVersion: 66
 - version: 3.63.8
   changelogEntry:
     - summary: |

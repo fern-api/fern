@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 5.5.1
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.10 which upgrades @fern-api/replay to 0.11.0
+        and only pushes the fern-generation-base tag when replay has unresolved conflicts.
+      type: chore
+  createdAt: "2026-04-17"
+  irVersion: 66
 - version: 5.5.0
   changelogEntry:
     - summary: |

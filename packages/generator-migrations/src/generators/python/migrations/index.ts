@@ -1,6 +1,7 @@
 import type { MigrationModule } from "@fern-api/migrations-base";
 
 import { migration_4_0_0 } from "./4.0.0.js";
+import { migration_4_54_4 } from "./4.54.4.js";
 
 /**
  * Migration module for Python SDK generator.
@@ -18,7 +19,7 @@ import { migration_4_0_0 } from "./4.0.0.js";
  * are not included in this migration module.
  */
 const migrationModule: MigrationModule = {
-    migrations: [migration_4_0_0]
+    migrations: [migration_4_0_0, migration_4_54_4]
 };
 
 export default migrationModule;

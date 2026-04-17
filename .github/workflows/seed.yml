@@ -324,7 +324,7 @@ jobs:
           fi
 
   ruby-sdk-v2:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     timeout-minutes: 20
     needs: [setup, get-all-test-matrices]
     if: >-
@@ -357,14 +357,15 @@ jobs:
           dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   pydantic:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.get-all-test-matrices.outputs.pydantic != ''
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.get-all-test-matrices.outputs.pydantic != ''
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    if: false # generator not actively supported
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 15 # Limit the number of runners for this job
@@ -389,7 +390,7 @@ jobs:
           dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   python-sdk:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     timeout-minutes: 30
     needs: [setup, get-all-test-matrices]
     if: >-
@@ -454,7 +455,7 @@ jobs:
           dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   java-sdk:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     timeout-minutes: 30
     needs: [setup, get-all-test-matrices]
     if: >-
@@ -486,14 +487,15 @@ jobs:
           dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   java-model:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.get-all-test-matrices.outputs.java-model != ''
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.get-all-test-matrices.outputs.java-model != ''
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    if: false # generator not actively supported
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 15 # Limit the number of runners for this job
@@ -518,7 +520,7 @@ jobs:
           dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   ts-sdk:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
     if: >-
@@ -551,14 +553,15 @@ jobs:
           dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   go-model:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     timeout-minutes: 20
     needs: [setup, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.get-all-test-matrices.outputs.go-model != ''
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.get-all-test-matrices.outputs.go-model != ''
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    if: false # generator not actively supported
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 15 # Limit the number of runners for this job
@@ -583,7 +586,7 @@ jobs:
           dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   go-sdk:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     timeout-minutes: 20
     needs: [setup, get-all-test-matrices]
     if: >-
@@ -615,14 +618,15 @@ jobs:
           dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   csharp-model:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.get-all-test-matrices.outputs.csharp-model != ''
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.get-all-test-matrices.outputs.csharp-model != ''
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    if: false # generator not actively supported
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 15 # Limit the number of runners for this job
@@ -647,7 +651,7 @@ jobs:
           dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   csharp-sdk:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     timeout-minutes: 20
     needs: [setup, get-all-test-matrices]
     if: >-
@@ -679,14 +683,15 @@ jobs:
           dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   php-model:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.get-all-test-matrices.outputs.php-model != ''
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.get-all-test-matrices.outputs.php-model != ''
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    if: false # generator not actively supported
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 15 # Limit the number of runners for this job
@@ -711,7 +716,7 @@ jobs:
           dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   php-sdk:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
     if: >-
@@ -743,7 +748,7 @@ jobs:
           dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   swift-sdk:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
     if: >-
@@ -775,14 +780,15 @@ jobs:
           dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   rust-model:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
-    if: >-
-      ${{
-        (needs.get-all-test-matrices.outputs.rust-model != ''
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # if: >-
+    #   ${{
+    #     (needs.get-all-test-matrices.outputs.rust-model != ''
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
+    if: false # generator not actively supported
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 15 # Limit the number of runners for this job
@@ -807,7 +813,7 @@ jobs:
           dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
   rust-sdk:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     timeout-minutes: 15
     needs: [setup, get-all-test-matrices]
     if: >-
@@ -866,14 +872,14 @@ jobs:
         uses: ./.github/actions/fetch-benchmark-specs
 
       - name: Upload specs as shared artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: benchmark-specs
           path: benchmarks/fern/apis/*/openapi.json
           retention-days: 1
 
   benchmark:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     timeout-minutes: 60
     needs: [get-all-test-matrices, benchmark-setup]
     if: >-
@@ -895,7 +901,7 @@ jobs:
 
       - name: Log in to Docker Hub
         if: ${{ env.DOCKERHUB_USERNAME != '' }}
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         env:
           DOCKERHUB_USERNAME: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
         with:
@@ -907,7 +913,7 @@ jobs:
 
       - name: Cache Docker images
         id: docker-cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: /tmp/docker-cache
           key: ${{ runner.os }}-docker-${{ matrix.generator }}-${{ hashFiles('**/Dockerfile*') }}
@@ -924,7 +930,7 @@ jobs:
         run: docker images -q | sort -u > /tmp/docker-images-before.txt
 
       - name: Download shared specs
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           name: benchmark-specs
           path: benchmarks/fern/apis
@@ -951,7 +957,7 @@ jobs:
           done
 
       - name: Upload PR results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: benchmark-pr-${{ matrix.generator }}
           path: benchmark-results/
@@ -977,7 +983,7 @@ jobs:
           sparse-checkout: .github/scripts
 
       - name: Download all PR benchmark artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           pattern: benchmark-pr-*
           path: benchmark-pr-results
@@ -1159,7 +1165,7 @@ jobs:
   # Runs the real `fern generate --docs --preview` command against the benchmark
   # fixture and measures wall-clock time, same philosophy as SDK benchmarks.
   docs-benchmark:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     timeout-minutes: 45
     needs: [get-all-test-matrices, benchmark-setup]
     if: >-
@@ -1176,7 +1182,7 @@ jobs:
         uses: ./.github/actions/install
 
       - name: Download shared specs
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           name: benchmark-specs
           path: benchmarks/fern/apis
@@ -1187,7 +1193,7 @@ jobs:
           fern-token: ${{ secrets.FERN_FERN_TOKEN }}
 
       - name: Upload PR docs benchmark results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: benchmark-pr-docs
           path: benchmark-results/
@@ -1213,7 +1219,7 @@ jobs:
           sparse-checkout: .github/scripts
 
       - name: Download PR docs benchmark artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           pattern: benchmark-pr-docs
           path: docs-pr-results
@@ -1327,6 +1333,7 @@ jobs:
                 --arg event "benchmark-pr-result" \
                 --arg distinct_id "fern-ci-benchmark" \
                 --arg timestamp "$TIMESTAMP" \
+                --arg generator "docs" \
                 --arg spec "$spec" \
                 --argjson duration_seconds "$dur" \
                 --argjson exit_code "$ec" \
@@ -1343,6 +1350,7 @@ jobs:
                   distinct_id: $distinct_id,
                   timestamp: $timestamp,
                   properties: {
+                    generator: $generator,
                     spec: $spec,
                     duration_seconds: $duration_seconds,
                     exit_code: $exit_code,
