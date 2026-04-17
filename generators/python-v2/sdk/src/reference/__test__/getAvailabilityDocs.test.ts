@@ -1,11 +1,10 @@
-import { describe, expect, it } from "vitest";
-
 import { FernIr } from "@fern-fern/ir-sdk";
+import { describe, expect, it } from "vitest";
 
 import { getAvailabilityDocs } from "../getAvailabilityDocs.js";
 
 const makeEndpoint = (availability: FernIr.Availability | undefined): FernIr.HttpEndpoint =>
-    ({ availability } as unknown as FernIr.HttpEndpoint);
+    ({ availability }) as unknown as FernIr.HttpEndpoint;
 
 describe("getAvailabilityDocs", () => {
     it("returns undefined when availability is not set", () => {
