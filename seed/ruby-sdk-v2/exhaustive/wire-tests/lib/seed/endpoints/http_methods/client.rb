@@ -41,6 +41,8 @@ module Seed
           raise error_class.new(response.body, code: code)
         end
 
+        # @deprecated
+        #
         # @param request_options [Hash]
         # @param params [Seed::Types::Object_::Types::ObjectWithRequiredField]
         # @option request_options [String] :base_url
@@ -73,6 +75,8 @@ module Seed
           end
         end
 
+        # @deprecated Use testPatch instead.
+        #
         # @param request_options [Hash]
         # @param params [Seed::Types::Object_::Types::ObjectWithRequiredField]
         # @option request_options [String] :base_url
@@ -106,6 +110,8 @@ module Seed
           end
         end
 
+        # @beta This endpoint is in pre-release and may change.
+        #
         # @param request_options [Hash]
         # @param params [Seed::Types::Object_::Types::ObjectWithOptionalField]
         # @option request_options [String] :base_url
@@ -139,6 +145,8 @@ module Seed
           end
         end
 
+        # @beta This endpoint is in development and may change.
+        #
         # @param request_options [Hash]
         # @param params [Hash]
         # @option request_options [String] :base_url

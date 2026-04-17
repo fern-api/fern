@@ -5,6 +5,7 @@ generatorType: SDK
 defaultOutputMode: github
 defaultCustomConfig:
   rubocopSeverity: error
+  generateAvailabilityAnnotations: true
 image: fernapi/fern-ruby-sdk-v2
 imageAliases: [fernapi/fern-ruby-sdk]
 changelogLocation: ../../generators/ruby-v2/sdk/versions.yml

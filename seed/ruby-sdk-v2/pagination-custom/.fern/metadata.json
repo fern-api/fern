@@ -4,6 +4,7 @@
   "generatorVersion": "local",
   "generatorConfig": {
     "rubocopSeverity": "error",
+    "generateAvailabilityAnnotations": true,
     "customPagerName": "FooPager"
   },
   "originGitCommit": "DUMMY",

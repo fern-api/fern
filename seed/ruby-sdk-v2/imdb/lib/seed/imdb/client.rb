@@ -11,6 +11,7 @@ module Seed
       end
 
       # Add a movie to the database using the movies/* /... path.
+      # @beta This endpoint is in pre-release and may change.
       #
       # @param request_options [Hash]
       # @param params [Seed::Imdb::Types::CreateMovieRequest]
@@ -44,6 +45,8 @@ module Seed
         end
       end
 
+      # @deprecated
+      #
       # @param request_options [Hash]
       # @param params [Hash]
       # @option request_options [String] :base_url
