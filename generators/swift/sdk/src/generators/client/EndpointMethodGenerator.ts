@@ -5,6 +5,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { ClientGeneratorContext } from "./ClientGeneratorContext.js";
 import { formatEndpointPathForSwift } from "./util/format-endpoint-path-for-swift.js";
+import { getAvailabilityAnnotations } from "./util/getAvailabilityAnnotations.js";
 import { parseEndpointPath } from "./util/parse-endpoint-path.js";
 
 export declare namespace EndpointMethodGenerator {
@@ -38,7 +39,18 @@ export class EndpointMethodGenerator {
 
     public generateMethod(endpoint: FernIr.HttpEndpoint): swift.Method {
         const parameters = this.getMethodParametersForEndpoint(endpoint);
+        const availabilityAnnotations = getAvailabilityAnnotations(endpoint.availability);
+        const parameterDocs = parameters
+            .map((p) => ({
+                name: p.unsafeName,
+                description: p.docsContent ?? ""
+            }))
+            .filter((p) => p.description !== "");
+        const availabilityDocs = availabilityAnnotations?.docs;
+        const summary = availabilityDocs ?? endpoint.docs ?? undefined;
+        const description = availabilityDocs != null && endpoint.docs != null ? endpoint.docs : undefined;
         return swift.method({
+            attributes: availabilityAnnotations?.attribute ? [availabilityAnnotations.attribute] : undefined,
             unsafeName: this.sdkGeneratorContext.caseConverter.camelUnsafe(endpoint.name),
             accessLevel: swift.AccessLevel.Public,
             parameters,
@@ -46,17 +58,14 @@ export class EndpointMethodGenerator {
             throws: true,
             returnType: this.getMethodReturnTypeForEndpoint(endpoint),
             body: this.getMethodBodyForEndpoint(endpoint),
-            docs: endpoint.docs
-                ? swift.docComment({
-                      summary: endpoint.docs,
-                      parameters: parameters
-                          .map((p) => ({
-                              name: p.unsafeName,
-                              description: p.docsContent ?? ""
-                          }))
-                          .filter((p) => p.description !== "")
-                  })
-                : undefined
+            docs:
+                summary != null
+                    ? swift.docComment({
+                          summary,
+                          description,
+                          parameters: parameterDocs
+                      })
+                    : undefined
         });
     }
 

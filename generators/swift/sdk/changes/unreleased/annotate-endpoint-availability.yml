@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Generated Swift SDK methods now surface endpoint availability
+    (deprecated / in-development / pre-release) using the language's native
+    deprecation mechanism where one exists, and fall back to doc comments
+    otherwise.
+  type: feat

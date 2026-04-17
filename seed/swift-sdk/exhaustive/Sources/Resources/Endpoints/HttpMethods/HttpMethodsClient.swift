@@ -16,7 +16,7 @@ public final class HttpMethodsClient: Sendable {
         )
     }
 
-    public func testPost(request: ObjectWithRequiredField, requestOptions: RequestOptions? = nil) async throws -> ObjectWithOptionalField {
+    @available(*, deprecated) public func testPost(request: ObjectWithRequiredField, requestOptions: RequestOptions? = nil) async throws -> ObjectWithOptionalField {
         return try await httpClient.performRequest(
             method: .post,
             path: "/http-methods",
@@ -26,7 +26,7 @@ public final class HttpMethodsClient: Sendable {
         )
     }
 
-    public func testPut(id: String, request: ObjectWithRequiredField, requestOptions: RequestOptions? = nil) async throws -> ObjectWithOptionalField {
+    @available(*, deprecated, message: "Use testPatch instead.") public func testPut(id: String, request: ObjectWithRequiredField, requestOptions: RequestOptions? = nil) async throws -> ObjectWithOptionalField {
         return try await httpClient.performRequest(
             method: .put,
             path: "/http-methods/\(id)",
@@ -36,6 +36,9 @@ public final class HttpMethodsClient: Sendable {
         )
     }
 
+    /// @beta This endpoint is in pre-release and may change.
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func testPatch(id: String, request: ObjectWithOptionalField, requestOptions: RequestOptions? = nil) async throws -> ObjectWithOptionalField {
         return try await httpClient.performRequest(
             method: .patch,
@@ -46,6 +49,9 @@ public final class HttpMethodsClient: Sendable {
         )
     }
 
+    /// @beta This endpoint is in development and may change.
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func testDelete(id: String, requestOptions: RequestOptions? = nil) async throws -> Bool {
         return try await httpClient.performRequest(
             method: .delete,
