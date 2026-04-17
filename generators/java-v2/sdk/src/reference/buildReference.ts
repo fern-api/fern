@@ -33,11 +33,13 @@ export function buildReference({ context }: { context: SdkGeneratorContext }): R
 function getEndpointReferencesForService({
     context,
     serviceId,
-    service
+    service,
+    emitAvailability
 }: {
     context: SdkGeneratorContext;
     serviceId: FernIr.ServiceId;
     service: FernIr.HttpService;
+    emitAvailability: boolean;
 }): FernGeneratorCli.EndpointReference[] {
     return service.endpoints
         .map((endpoint) => {
@@ -63,7 +65,8 @@ function getEndpointReferencesForService({
                 serviceId,
                 service,
                 endpoint,
-                singleEndpointSnippet
+                singleEndpointSnippet,
+                emitAvailability
             });
         })
         .filter((endpoint): endpoint is FernGeneratorCli.EndpointReference => !!endpoint);
@@ -74,13 +77,15 @@ function getEndpointReference({
     serviceId,
     service,
     endpoint,
-    singleEndpointSnippet
+    singleEndpointSnippet,
+    emitAvailability
 }: {
     context: SdkGeneratorContext;
     serviceId: FernIr.ServiceId;
     service: FernIr.HttpService;
     endpoint: FernIr.HttpEndpoint;
     singleEndpointSnippet: SingleEndpointSnippet;
+    emitAvailability: boolean;
 }): FernGeneratorCli.EndpointReference {
     const returnValue = getReturnValue({ context, endpoint });
     return {
@@ -98,15 +103,18 @@ function getEndpointReference({
             ],
             returnValue
         },
-        description: getEndpointReferenceDescription(endpoint),
+        description: getEndpointReferenceDescription(endpoint, emitAvailability),
         snippet: singleEndpointSnippet.endpointCall.trim(),
         parameters: getEndpointParameters({ context, endpoint })
     };
 }
 
-function getEndpointReferenceDescription(endpoint: FernIr.HttpEndpoint): string | undefined {
-    const availabilityDocs = getAvailabilityDocs(endpoint);
+function getEndpointReferenceDescription(endpoint: FernIr.HttpEndpoint, emitAvailability: boolean): string | undefined {
     const docs = endpoint.docs;
+    if (!emitAvailability) {
+        return docs;
+    }
+    const availabilityDocs = getAvailabilityDocs(endpoint);
     if (availabilityDocs == null) {
         return docs;
     }
