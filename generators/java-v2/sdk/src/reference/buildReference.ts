@@ -10,7 +10,7 @@ import { SingleEndpointSnippet } from "./EndpointSnippetsGenerator.js";
 export function buildReference({ context }: { context: SdkGeneratorContext }): ReferenceConfigBuilder {
     const builder = new ReferenceConfigBuilder();
     const serviceEntries = Object.entries(context.ir.services);
-    const emitAvailability = context.customConfig?.["generate-endpoint-availability"] === true;
+    const emitAvailability = context.customConfig?.["generate-availability-annotations"] === true;
 
     serviceEntries.forEach(([serviceId, service]) => {
         const section = isRootServiceId({ context, serviceId })
