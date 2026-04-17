@@ -2139,6 +2139,17 @@ export class SubClientGenerator {
     );
 
     const availability = getAvailabilityAnnotations(endpoint.availability);
+    const summary = [availability.docNote, endpoint.docs]
+      .filter((s): s is string => s != null)
+      .join("\n\n");
+    const docs =
+      summary.length > 0
+        ? rust.docComment({
+            summary,
+            parameters: this.extractParameterDocs(params, endpoint),
+            returns: this.getReturnTypeDescription(endpoint),
+          })
+        : undefined;
 
     return {
       name: baseName,
@@ -2146,6 +2157,7 @@ export class SubClientGenerator {
       returnType: returnType.toString(),
       isAsync: true,
       body: paginationLogic,
+      docs,
       attributes: availability.attribute ? [availability.attribute] : undefined,
     };
   }
