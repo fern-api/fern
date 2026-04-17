@@ -35,6 +35,12 @@ language: rust
 generatorType: SDK
 defaultOutputMode: github
 
+defaultCustomConfig:
+  # Exercise the opt-in availability annotations across every fixture. The
+  # customer-facing default in SdkCustomConfig stays `false`; flipping this on
+  # here lets seed snapshots capture the annotated output end-to-end.
+  generateAvailabilityAnnotations: true
+
 customFixtureConfig:
   customConfig:
     packageName: test_sdk

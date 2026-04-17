@@ -2,6 +2,9 @@
   "cliVersion": "DUMMY",
   "generatorName": "fernapi/fern-rust-sdk",
   "generatorVersion": "local",
+  "generatorConfig": {
+    "generateAvailabilityAnnotations": true
+  },
   "originGitCommit": "DUMMY",
   "sdkVersion": "0.0.1"
 }

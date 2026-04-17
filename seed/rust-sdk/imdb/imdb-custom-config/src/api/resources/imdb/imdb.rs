@@ -13,6 +13,8 @@ impl ImdbClient {
         })
     }
 
+    /// @beta This endpoint is in pre-release and may change.
+    ///
     /// Add a movie to the database using the movies/* /... path.
     ///
     /// # Arguments
@@ -38,6 +40,7 @@ impl ImdbClient {
             .await
     }
 
+    #[deprecated]
     pub async fn get_movie(
         &self,
         movie_id: &MovieId,

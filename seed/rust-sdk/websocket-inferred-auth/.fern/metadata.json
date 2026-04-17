@@ -3,6 +3,7 @@
   "generatorName": "fernapi/fern-rust-sdk",
   "generatorVersion": "local",
   "generatorConfig": {
+    "generateAvailabilityAnnotations": true,
     "enableWebsockets": true
   },
   "originGitCommit": "DUMMY",
