@@ -58,7 +58,7 @@ export class GrpcEndpointGenerator extends AbstractEndpointGenerator {
             request: endpointSignatureInfo.request,
             return_: endpointSignatureInfo.returnType
         });
-        const availabilityEnabled = this.settings.generateEndpointAvailability;
+        const availabilityEnabled = this.settings.generateAvailabilityAnnotations;
         cls.addMethod({
             name: this.context.getEndpointMethodName(endpoint),
             access: ast.Access.Public,

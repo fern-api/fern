@@ -1,14 +1,18 @@
 - type: feat
   summary: |
-    Added a new opt-in `generateEndpointAvailability` custom config option
-    (default `false`). When enabled, generated C# SDK methods surface each
-    endpoint's availability: deprecated endpoints are emitted with
-    `[System.ObsoleteAttribute("message")]`, and in-development / pre-release
-    endpoints get an `@beta` note prepended to their XML doc summary.
+    Added a new opt-in `generateAvailabilityAnnotations` custom config option
+    (default `false`). When enabled, the generator surfaces availability
+    metadata from the IR on generated code. Today this covers HTTP endpoints:
+    deprecated endpoints are emitted with `[System.ObsoleteAttribute("message")]`,
+    and in-development / pre-release endpoints get an `@beta` note prepended to
+    their XML doc summary. The same flag is intended to govern availability
+    annotations on future surfaces (services, types, properties, enum values,
+    webhooks, WebSocket channels/messages, errors) without introducing
+    additional flags.
 
     This is opt-in because annotations such as `[Obsolete]` are a breaking
     change for customers compiling with warnings-as-errors
     (`TreatWarningsAsErrors`). When the flag is `false`, generator output is
-    unchanged. Enable with `generateEndpointAvailability: true` under this
+    unchanged. Enable with `generateAvailabilityAnnotations: true` under this
     generator's `config:` block in `generators.yml`. The default will flip to
     `true` in the next major version of this generator.

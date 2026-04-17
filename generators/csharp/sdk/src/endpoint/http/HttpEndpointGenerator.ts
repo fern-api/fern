@@ -169,7 +169,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             }
         });
 
-        const availabilityEnabled = this.settings.generateEndpointAvailability;
+        const availabilityEnabled = this.settings.generateAvailabilityAnnotations;
         const publicMethod = cls.addMethod({
             name: this.getUnpagedEndpointMethodName(endpoint),
             access: this.hasPagination(endpoint) ? ast.Access.Private : ast.Access.Public,
@@ -1182,7 +1182,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     assertNever(endpoint.pagination);
             }
         });
-        const availabilityEnabled = this.settings.generateEndpointAvailability;
+        const availabilityEnabled = this.settings.generateAvailabilityAnnotations;
         return cls.addMethod({
             name: this.context.getEndpointMethodName(endpoint),
             access: ast.Access.Public,

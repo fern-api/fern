@@ -141,7 +141,7 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
             return_ = this.System.Threading.Tasks.Task();
         }
 
-        const availabilityEnabled = this.settings.generateEndpointAvailability;
+        const availabilityEnabled = this.settings.generateAvailabilityAnnotations;
         interface_.addMethod({
             name: this.context.getEndpointMethodName(endpoint),
             parameters,
@@ -185,7 +185,7 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
         const rawReturn = this.getPagerReturnType(endpoint);
         const return_ = this.System.Threading.Tasks.Task(rawReturn);
 
-        const availabilityEnabled = this.settings.generateEndpointAvailability;
+        const availabilityEnabled = this.settings.generateAvailabilityAnnotations;
         interface_.addMethod({
             name: this.context.getEndpointMethodName(endpoint),
             parameters,

@@ -209,7 +209,7 @@ fixtures:
         omit-fern-headers: true
       outputFolder: omit-fern-headers
     - customConfig:
-        generateEndpointAvailability: true
+        generateAvailabilityAnnotations: true
       outputFolder: endpoint-availability
   multi-url-environment:
     - customConfig:
@@ -238,7 +238,7 @@ fixtures:
         use-undiscriminated-unions: true
       outputFolder: use-undiscriminated-unions
     - customConfig:
-        generateEndpointAvailability: true
+        generateAvailabilityAnnotations: true
       outputFolder: endpoint-availability
   optional:
     - customConfig: null

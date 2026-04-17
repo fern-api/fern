@@ -117,13 +117,17 @@ export const CsharpConfigSchema = z.object({
     "sln-format": z.enum(["sln", "slnx"]).optional(),
     maxRetries: z.number().int().min(0).optional(),
 
-    // When true, generated endpoint methods reflect each endpoint's availability:
-    // deprecated endpoints are marked with [System.ObsoleteAttribute], and in-development
-    // or pre-release endpoints get a `@beta` note prepended to their XML doc summary.
-    // Default false — annotations can be a breaking change for customers compiling with
-    // warnings-as-errors (e.g., `treatWarningsAsErrors`).
+    // When true, generated code reflects availability metadata from the IR:
+    // today this covers HTTP endpoints — deprecated endpoints are marked with
+    // [System.ObsoleteAttribute], and in-development or pre-release endpoints get a
+    // `@beta` note prepended to their XML doc summary. Future work may extend the
+    // same flag to services, types, properties, enum values, webhooks, WebSocket
+    // channels/messages, and errors.
+    //
+    // Default false — annotations can be a breaking change for customers compiling
+    // with warnings-as-errors (e.g., `treatWarningsAsErrors`).
     // TODO(next-major): flip default to true.
-    generateEndpointAvailability: z.boolean().optional()
+    generateAvailabilityAnnotations: z.boolean().optional()
 });
 
 export type CsharpConfigSchema = z.infer<typeof CsharpConfigSchema>;

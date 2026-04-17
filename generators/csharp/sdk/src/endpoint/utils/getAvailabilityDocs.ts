@@ -14,7 +14,7 @@ type HttpEndpoint = FernIr.HttpEndpoint;
  * equivalent native attribute, so we fall back to free-form doc text that mirrors the
  * wording used by the TypeScript generator.
  *
- * Gated behind the `generateEndpointAvailability` custom config flag — when disabled,
+ * Gated behind the `generateAvailabilityAnnotations` custom config flag — when disabled,
  * always returns `undefined` so the generator's output is unchanged.
  */
 export function getAvailabilityDocs({
@@ -53,7 +53,7 @@ export function getAvailabilityDocs({
  * Combines the endpoint's existing docs (if any) with any additional availability-related
  * doc text that should be surfaced in the generated XML doc summary.
  *
- * When the `generateEndpointAvailability` flag is disabled, this returns the endpoint's
+ * When the `generateAvailabilityAnnotations` flag is disabled, this returns the endpoint's
  * existing docs unchanged (i.e. the generator's pre-flag behavior).
  */
 export function getEndpointSummary({
@@ -78,7 +78,7 @@ export function getEndpointSummary({
  * based on its availability. Currently emits `[System.ObsoleteAttribute]` for deprecated
  * endpoints (with the availability message as its argument when present).
  *
- * Gated behind the `generateEndpointAvailability` custom config flag — when disabled,
+ * Gated behind the `generateAvailabilityAnnotations` custom config flag — when disabled,
  * always returns `[]` so the generator's output is unchanged.
  */
 export function getAvailabilityAnnotations({

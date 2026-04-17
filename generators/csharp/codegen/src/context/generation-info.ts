@@ -242,12 +242,15 @@ export class Generation {
         /** When true, requires explicit namespace declarations instead of using file-scoped namespaces. Default: false. */
         explicitNamespaces: () => this.customConfig["explicit-namespaces"] === true,
         /**
-         * When true, generated endpoint methods reflect each endpoint's availability
-         * (deprecated / in-development / pre-release) via `[System.ObsoleteAttribute]`
-         * or a `@beta` note in the XML doc summary. Default: false.
+         * When true, generated code reflects availability metadata from the IR.
+         * Today this covers HTTP endpoints (deprecated → `[System.ObsoleteAttribute]`;
+         * in-development / pre-release → `@beta` note in the XML doc summary). The
+         * same flag may, in the future, govern availability annotations on other
+         * surfaces (services, types, properties, enum values, webhooks, WebSocket
+         * channels/messages, errors). Default: false.
          * TODO(next-major): flip default to true.
          */
-        generateEndpointAvailability: () => this.customConfig.generateEndpointAvailability ?? false,
+        generateAvailabilityAnnotations: () => this.customConfig.generateAvailabilityAnnotations ?? false,
         /** Override the default max retries for the SDK client. Default: 2. */
         maxRetries: () => this.customConfig.maxRetries,
         /**
