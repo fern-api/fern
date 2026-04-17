@@ -6,7 +6,7 @@ import { upperFirst } from "lodash-es";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator.js";
-import { getEndpointDocs } from "../utils/getAvailabilityDocs.js";
+import { getEndpointDocs as computeEndpointDocsWithAvailability } from "../utils/getAvailabilityDocs.js";
 import { getEndpointReturnType } from "../utils/getEndpointReturnType.js";
 
 type PagingEndpoint = FernIr.HttpEndpoint & { pagination: NonNullable<FernIr.HttpEndpoint["pagination"]> };
@@ -29,6 +29,13 @@ const STATUS_CODE_VARIABLE_NAME = "$statusCode";
 export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     public constructor({ context }: { context: SdkGeneratorContext }) {
         super({ context });
+    }
+
+    private getEndpointDocs(endpoint: FernIr.HttpEndpoint): string | undefined {
+        if (!this.context.customConfig.generateEndpointAvailability) {
+            return endpoint.docs;
+        }
+        return computeEndpointDocsWithAvailability(endpoint);
     }
 
     public generate({
@@ -81,7 +88,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     name: this.context.getPagedEndpointMethodName(endpoint),
                     access: "public",
                     parameters,
-                    docs: getEndpointDocs(endpoint),
+                    docs: this.getEndpointDocs(endpoint),
                     return_,
                     noBody: true
                 })
@@ -93,7 +100,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     name: this.context.getEndpointMethodName(endpoint),
                     access: "public",
                     parameters,
-                    docs: getEndpointDocs(endpoint),
+                    docs: this.getEndpointDocs(endpoint),
                     return_,
                     noBody: true
                 })
@@ -128,7 +135,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 : this.context.getEndpointMethodName(endpoint),
             access: hasPagination ? "private" : "public",
             parameters,
-            docs: getEndpointDocs(endpoint),
+            docs: this.getEndpointDocs(endpoint),
             return_,
             throws: [this.context.getBaseExceptionClassReference(), this.context.getBaseApiExceptionClassReference()],
             body: php.codeblock((writer) => {
@@ -225,7 +232,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             name: this.context.getPagedEndpointMethodName(endpoint),
             access: "public",
             parameters,
-            docs: getEndpointDocs(endpoint),
+            docs: this.getEndpointDocs(endpoint),
             return_,
             body: php.codeblock((writer) => {
                 const requestParam = endpointSignatureInfo.requestParameter;

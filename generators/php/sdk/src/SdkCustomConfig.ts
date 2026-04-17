@@ -13,6 +13,9 @@ export const SdkCustomConfigSchema = z
         useDefaultRequestParameterValues: z.boolean().optional(),
         // Generate interfaces for all SDK client classes to enable mocking and DI
         generateClientInterfaces: z.boolean().optional(),
+        // Emit PHPDoc availability annotations (@deprecated / @beta) on generated endpoint methods.
+        // TODO(next-major): flip default to true.
+        generateEndpointAvailability: z.boolean().optional(),
         maxRetries: z.number().int().min(0).optional()
     })
     .extend(BasePhpCustomConfigSchema.shape)
@@ -21,7 +24,8 @@ export const SdkCustomConfigSchema = z
         enableWireTests: config["enable-wire-tests"] ?? false,
         customPagerClassname: config["custom-pager-classname"] ?? "CustomPager",
         useDefaultRequestParameterValues: config.useDefaultRequestParameterValues ?? false,
-        generateClientInterfaces: config.generateClientInterfaces ?? false
+        generateClientInterfaces: config.generateClientInterfaces ?? false,
+        generateEndpointAvailability: config.generateEndpointAvailability ?? false
     }));
 
 export type SdkCustomConfigSchema = z.infer<typeof SdkCustomConfigSchema>;

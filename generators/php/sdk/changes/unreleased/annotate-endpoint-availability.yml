@@ -1,7 +1,9 @@
 - type: feat
   summary: |
-    Generated PHP SDK methods now surface endpoint availability
-    (deprecated / in-development / pre-release) using PHPDoc tags.
-    Deprecated endpoints are annotated with `@deprecated` (and the IR
-    `message`, when present). In-development and pre-release endpoints
-    receive a `@beta` warning in the method's PHPDoc block.
+    Add an opt-in `generateEndpointAvailability` custom config flag that
+    emits PHPDoc availability annotations on generated endpoint methods:
+    `@deprecated` (with the IR `message`, when present) for deprecated
+    endpoints, and `@beta` warnings for in-development / pre-release
+    endpoints. The flag defaults to `false` to preserve backwards
+    compatibility (static analyzers / `-Werror`-style pipelines), and
+    will become the default in the next major release.
