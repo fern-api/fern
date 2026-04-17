@@ -41,7 +41,8 @@ export async function generateAPIWorkspaces({
     retryRateLimited,
     requireEnvVars,
     automationMode,
-    autoMerge
+    autoMerge,
+    skipIfNoDiff
 }: {
     project: Project;
     cliContext: CliContext;
@@ -68,6 +69,7 @@ export async function generateAPIWorkspaces({
     requireEnvVars: boolean;
     automationMode?: boolean;
     autoMerge?: boolean;
+    skipIfNoDiff?: boolean;
 }): Promise<void> {
     let token: FernToken | undefined = undefined;
 
@@ -180,7 +182,8 @@ export async function generateAPIWorkspaces({
                     retryRateLimited,
                     requireEnvVars,
                     automationMode,
-                    autoMerge
+                    autoMerge,
+                    skipIfNoDiff
                 });
             });
         })

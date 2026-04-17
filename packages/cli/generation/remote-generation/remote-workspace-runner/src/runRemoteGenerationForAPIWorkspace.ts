@@ -41,7 +41,8 @@ export async function runRemoteGenerationForAPIWorkspace({
     retryRateLimited,
     requireEnvVars,
     automationMode,
-    autoMerge
+    autoMerge,
+    skipIfNoDiff
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     organization: string;
@@ -68,6 +69,7 @@ export async function runRemoteGenerationForAPIWorkspace({
     requireEnvVars: boolean;
     automationMode?: boolean;
     autoMerge?: boolean;
+    skipIfNoDiff?: boolean;
 }): Promise<RemoteGenerationForAPIWorkspaceResponse | null> {
     if (generatorGroup.generators.length === 0) {
         context.logger.warn("No generators specified.");
@@ -154,7 +156,8 @@ export async function runRemoteGenerationForAPIWorkspace({
                     retryRateLimited,
                     requireEnvVars,
                     automationMode,
-                    autoMerge
+                    autoMerge,
+                    skipIfNoDiff
                 });
                 if (remoteTaskHandlerResponse != null && remoteTaskHandlerResponse.createdSnippets) {
                     snippetsProducedBy.push(generatorInvocation);

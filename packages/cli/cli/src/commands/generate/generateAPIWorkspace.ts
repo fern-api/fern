@@ -43,7 +43,8 @@ export async function generateWorkspace({
     retryRateLimited,
     requireEnvVars,
     automationMode,
-    autoMerge
+    autoMerge,
+    skipIfNoDiff
 }: {
     organization: string;
     workspace: AbstractAPIWorkspace<unknown>;
@@ -70,6 +71,7 @@ export async function generateWorkspace({
     requireEnvVars: boolean;
     automationMode?: boolean;
     autoMerge?: boolean;
+    skipIfNoDiff?: boolean;
 }): Promise<void> {
     if (workspace.generatorsConfiguration == null) {
         context.logger.warn("This workspaces has no generators.yml");
@@ -169,7 +171,8 @@ export async function generateWorkspace({
                     requireEnvVars,
                     skipFernignore,
                     automationMode,
-                    autoMerge
+                    autoMerge,
+                    skipIfNoDiff
                 });
             } else if (token != null) {
                 // Block custom images for remote generation — only trusted images can run on Fiddle
@@ -200,7 +203,8 @@ export async function generateWorkspace({
                     retryRateLimited,
                     requireEnvVars,
                     automationMode,
-                    autoMerge
+                    autoMerge,
+                    skipIfNoDiff
                 });
             }
         })

@@ -40,7 +40,8 @@ export async function createAndStartJob({
     skipFernignore,
     retryRateLimited,
     automationMode,
-    autoMerge
+    autoMerge,
+    skipIfNoDiff
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     workspace: FernWorkspace;
@@ -63,6 +64,7 @@ export async function createAndStartJob({
     retryRateLimited: boolean;
     automationMode?: boolean;
     autoMerge?: boolean;
+    skipIfNoDiff?: boolean;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     // Determine fernignore contents:
     // - If --skip-fernignore is set, upload an empty .fernignore so nothing is ignored
@@ -96,7 +98,8 @@ export async function createAndStartJob({
                 pushPreviewBranch,
                 fernignoreContents,
                 automationMode,
-                autoMerge
+                autoMerge,
+                skipIfNoDiff
             }),
         retryRateLimited,
         logger: context.logger,
@@ -141,6 +144,7 @@ async function createJob({
     fernignoreContents: string | undefined;
     automationMode?: boolean;
     autoMerge?: boolean;
+    skipIfNoDiff?: boolean;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     const remoteGenerationService = createFiddleService({ token: token.value });
 
