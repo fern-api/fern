@@ -3,6 +3,7 @@
   "generatorName": "fernapi/fern-swift-sdk",
   "generatorVersion": "local",
   "generatorConfig": {
+    "generateAvailabilityAnnotations": true,
     "custom-pager-name": "MyPager"
   },
   "originGitCommit": "DUMMY",

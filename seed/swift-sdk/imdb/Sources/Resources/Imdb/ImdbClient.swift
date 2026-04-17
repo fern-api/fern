@@ -7,6 +7,8 @@ public final class ImdbClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
+    /// @beta This endpoint is in pre-release and may change.
+    ///
     /// Add a movie to the database using the movies/* /... path.
     ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
@@ -20,7 +22,7 @@ public final class ImdbClient: Sendable {
         )
     }
 
-    public func getMovie(movieId: String, requestOptions: RequestOptions? = nil) async throws -> Movie {
+    @available(*, deprecated) public func getMovie(movieId: String, requestOptions: RequestOptions? = nil) async throws -> Movie {
         return try await httpClient.performRequest(
             method: .get,
             path: "/movies/\(movieId)",

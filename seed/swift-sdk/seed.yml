@@ -27,7 +27,8 @@ test:
 language: swift
 generatorType: SDK
 defaultOutputMode: github
-defaultCustomConfig: {}
+defaultCustomConfig:
+  generateAvailabilityAnnotations: true
 
 scripts:
   docker:
@@ -58,12 +59,6 @@ fixtures:
       outputFolder: with-custom-config
     - customConfig: null
       outputFolder: no-custom-config
-  exhaustive:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig:
-        generateAvailabilityAnnotations: true
-      outputFolder: availability-annotations
   examples:
     - customConfig: null
       outputFolder: no-custom-config
@@ -140,8 +135,7 @@ allowedFailures:
   - errors
   - examples:no-custom-config
   - examples:readme-config
-  - exhaustive:no-custom-config
-  - exhaustive:availability-annotations
+  - exhaustive
   - extra-properties
   - file-upload-openapi
   - idempotency-headers
