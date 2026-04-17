@@ -1,9 +1,9 @@
 import {
-    detectCiEnvironmentMetadata,
+    detectCiProvider,
     detectInvocationSource,
     FernWorkspace,
-    getCliInvocation,
-    getOriginGitCommit
+    getOriginGitCommit,
+    getOriginGitCommitIsDirty
 } from "@fern-api/api-workspace-commons";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { Audiences, generatorsYml } from "@fern-api/configuration";
@@ -69,10 +69,10 @@ export async function getIntermediateRepresentation({
                 generatorVersion: generatorInvocation.version,
                 generatorConfig: generatorInvocation.config,
                 originGitCommit: getOriginGitCommit(),
+                originGitCommitIsDirty: getOriginGitCommitIsDirty(),
                 invokedBy: detectInvocationSource(),
-                cliInvocation: getCliInvocation(),
                 requestedVersion: version,
-                ciEnvironment: detectCiEnvironmentMetadata()
+                ciProvider: detectCiProvider()
             }
         });
     if (sourceConfig != null) {
@@ -84,13 +84,13 @@ export async function getIntermediateRepresentation({
         generatorVersion: generatorInvocation.version,
         generatorConfig: generatorInvocation.config,
         originGitCommit: getOriginGitCommit(),
+        originGitCommitIsDirty: getOriginGitCommitIsDirty(),
         invokedBy: detectInvocationSource(),
-        cliInvocation: getCliInvocation(),
         // Preserve the raw user-provided `--version` value from the pre-generated IR if any;
         // `version` here may have been resolved (e.g. via `computeSemanticVersion`) and is not
         // necessarily the raw flag value.
         requestedVersion: intermediateRepresentation.generationMetadata?.requestedVersion ?? version,
-        ciEnvironment: detectCiEnvironmentMetadata()
+        ciProvider: detectCiProvider()
     };
 
     context.logger.debug("Generated IR");

@@ -22,66 +22,56 @@ export function detectInvocationSource(): FernIr.InvocationSource {
 }
 
 /**
- * Returns structured metadata about the CI environment, if one is detected.
- * Currently supports GitHub Actions, GitLab CI, and Bitbucket Pipelines.
+ * Returns the name of the CI provider the CLI is running in, if any.
+ *
+ * Only the provider's name is returned — we intentionally do not expose any
+ * repository, run, branch, commit, or actor metadata because those values can
+ * leak private information into the generated SDK's `.fern/metadata.json`.
  */
-export function detectCiEnvironmentMetadata(): FernIr.CiEnvironmentMetadata | undefined {
+export function detectCiProvider(): string | undefined {
     if (process.env.GITHUB_ACTIONS === "true") {
-        const repo = process.env.GITHUB_REPOSITORY;
-        const serverUrl = process.env.GITHUB_SERVER_URL ?? "https://github.com";
-        const runId = process.env.GITHUB_RUN_ID;
-        return {
-            provider: "github",
-            repo,
-            runId,
-            runUrl: repo != null && runId != null ? `${serverUrl}/${repo}/actions/runs/${runId}` : undefined,
-            commitSha: process.env.GITHUB_SHA,
-            branch: process.env.GITHUB_REF_NAME,
-            actor: process.env.GITHUB_ACTOR
-        };
+        return "github";
     }
     if (process.env.GITLAB_CI === "true") {
-        return {
-            provider: "gitlab",
-            repo: process.env.CI_PROJECT_PATH,
-            runId: process.env.CI_PIPELINE_ID,
-            runUrl: process.env.CI_PIPELINE_URL,
-            commitSha: process.env.CI_COMMIT_SHA,
-            branch: process.env.CI_COMMIT_REF_NAME,
-            actor: process.env.GITLAB_USER_LOGIN
-        };
+        return "gitlab";
     }
     if (process.env.BITBUCKET_BUILD_NUMBER != null) {
-        const workspace = process.env.BITBUCKET_WORKSPACE;
-        const repoSlug = process.env.BITBUCKET_REPO_SLUG;
-        const buildNumber = process.env.BITBUCKET_BUILD_NUMBER;
-        return {
-            provider: "bitbucket",
-            repo: workspace != null && repoSlug != null ? `${workspace}/${repoSlug}` : undefined,
-            runId: buildNumber,
-            runUrl:
-                workspace != null && repoSlug != null
-                    ? `https://bitbucket.org/${workspace}/${repoSlug}/pipelines/results/${buildNumber}`
-                    : undefined,
-            commitSha: process.env.BITBUCKET_COMMIT,
-            branch: process.env.BITBUCKET_BRANCH,
-            actor: undefined
-        };
+        return "bitbucket";
+    }
+    if (process.env.CIRCLECI === "true") {
+        return "circleci";
+    }
+    if (process.env.TRAVIS === "true") {
+        return "travis";
+    }
+    if (process.env.JENKINS_URL != null || process.env.JENKINS_HOME != null) {
+        return "jenkins";
+    }
+    if (process.env.TF_BUILD != null) {
+        return "azure-pipelines";
+    }
+    if (process.env.BUILDKITE === "true") {
+        return "buildkite";
+    }
+    if (process.env.CODEBUILD_BUILD_ID != null) {
+        return "codebuild";
+    }
+    if (process.env.TEAMCITY_VERSION != null) {
+        return "teamcity";
+    }
+    if (process.env.DRONE === "true") {
+        return "drone";
+    }
+    if (process.env.SEMAPHORE === "true") {
+        return "semaphore";
+    }
+    if (process.env.APPVEYOR === "true" || process.env.APPVEYOR === "True") {
+        return "appveyor";
+    }
+    if (isCIEnvironment()) {
+        return "unknown";
     }
     return undefined;
-}
-
-/**
- * Returns the CLI arguments the Fern CLI was invoked with (i.e. everything after
- * the node binary and script path) joined by spaces. Returns `undefined` when
- * not enough argv is available.
- */
-export function getCliInvocation(): string | undefined {
-    const args = process.argv.slice(2);
-    if (args.length === 0) {
-        return undefined;
-    }
-    return args.join(" ");
 }
 
 function normalizeInvoker(raw: string | undefined): FernIr.InvocationSource | undefined {

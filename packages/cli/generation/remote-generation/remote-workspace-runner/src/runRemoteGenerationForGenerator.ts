@@ -1,10 +1,10 @@
 import {
     checkVersionDoesNotAlreadyExist,
     computeSemanticVersion,
-    detectCiEnvironmentMetadata,
+    detectCiProvider,
     detectInvocationSource,
-    getCliInvocation,
-    getOriginGitCommit
+    getOriginGitCommit,
+    getOriginGitCommitIsDirty
 } from "@fern-api/api-workspace-commons";
 import { FernToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
@@ -153,10 +153,10 @@ export async function runRemoteGenerationForGenerator({
             generatorVersion: generatorInvocation.version,
             generatorConfig: generatorInvocation.config,
             originGitCommit: getOriginGitCommit(),
+            originGitCommitIsDirty: getOriginGitCommitIsDirty(),
             invokedBy: detectInvocationSource(),
-            cliInvocation: getCliInvocation(),
             requestedVersion: version,
-            ciEnvironment: detectCiEnvironmentMetadata()
+            ciProvider: detectCiProvider()
         }
     });
 

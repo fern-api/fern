@@ -1,9 +1,9 @@
 import {
-    detectCiEnvironmentMetadata,
+    detectCiProvider,
     detectInvocationSource,
     FernWorkspace,
-    getCliInvocation,
-    getOriginGitCommit
+    getOriginGitCommit,
+    getOriginGitCommitIsDirty
 } from "@fern-api/api-workspace-commons";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { generatorsYml, SNIPPET_JSON_FILENAME } from "@fern-api/configuration";
@@ -182,10 +182,10 @@ export class GenerationRunner {
                 generatorVersion: generatorInvocation.version,
                 generatorConfig: generatorInvocation.config,
                 originGitCommit: getOriginGitCommit(),
+                originGitCommitIsDirty: getOriginGitCommitIsDirty(),
                 invokedBy: detectInvocationSource(),
-                cliInvocation: getCliInvocation(),
                 requestedVersion: outputVersionOverride,
-                ciEnvironment: detectCiEnvironmentMetadata()
+                ciProvider: detectCiProvider()
             }
         });
 

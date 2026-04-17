@@ -1,10 +1,10 @@
 import {
     checkVersionDoesNotAlreadyExist,
     computeSemanticVersion,
-    detectCiEnvironmentMetadata,
+    detectCiProvider,
     detectInvocationSource,
-    getCliInvocation,
     getOriginGitCommit,
+    getOriginGitCommitIsDirty,
     getPackageNameFromGeneratorConfig
 } from "@fern-api/api-workspace-commons";
 import { validateAPIWorkspaceAndLogIssues } from "@fern-api/api-workspace-validator";
@@ -167,10 +167,10 @@ export async function runLocalGenerationForWorkspace({
                         generatorVersion: generatorInvocation.version,
                         generatorConfig: generatorInvocation.config,
                         originGitCommit: getOriginGitCommit(),
+                        originGitCommitIsDirty: getOriginGitCommitIsDirty(),
                         invokedBy: detectInvocationSource(),
-                        cliInvocation: getCliInvocation(),
                         requestedVersion: userProvidedVersion,
-                        ciEnvironment: detectCiEnvironmentMetadata()
+                        ciProvider: detectCiProvider()
                     }
                 });
 

@@ -2,7 +2,6 @@ export * from "./ApiDefinitionSource.js";
 export * from "./ApiDefinitionSourceId.js";
 export * from "./ApiVersionScheme.js";
 export * from "./CasingsConfig.js";
-export * from "./CiEnvironmentMetadata.js";
 export * from "./ErrorDiscriminationByPropertyStrategy.js";
 export * from "./ErrorDiscriminationStrategy.js";
 export * from "./ExampleStyle.js";

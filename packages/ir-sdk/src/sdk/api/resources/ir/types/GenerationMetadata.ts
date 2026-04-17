@@ -22,22 +22,27 @@ export interface GenerationMetadata {
      */
     originGitCommit: string | undefined;
     /**
+     * Whether the Fern configuration repository had uncommitted changes at the time
+     * of generation. When `true`, `originGitCommit` does not fully describe the
+     * configuration that produced the SDK.
+     */
+    originGitCommitIsDirty: boolean | undefined;
+    /**
      * Identifies who or what triggered the generation. Auto-detected from the
      * `FERN_INVOKER` environment variable when set, otherwise derived from common
      * CI environment variables.
      */
     invokedBy: FernIr.InvocationSource | undefined;
     /**
-     * The CLI arguments passed to the Fern CLI (i.e. `process.argv.slice(2)` joined
-     * by spaces). Useful for understanding exactly how generation was triggered
-     * (e.g. whether `--version AUTO` was used).
-     */
-    cliInvocation: string | undefined;
-    /**
      * The raw value of the `--version` flag passed to the Fern CLI, if any.
      * A value of "AUTO" indicates automatic semantic versioning was requested.
      */
     requestedVersion: string | undefined;
-    /** Structured metadata describing the CI environment the generation ran in, if any. */
-    ciEnvironment: FernIr.CiEnvironmentMetadata | undefined;
+    /**
+     * The name of the CI provider the CLI is running in, if any (e.g. `github`,
+     * `gitlab`, `bitbucket`, `circleci`). Only the provider name is recorded;
+     * no repository, run, branch, or actor information is captured, as those
+     * can leak private metadata.
+     */
+    ciProvider: string | undefined;
 }
