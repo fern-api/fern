@@ -3,8 +3,8 @@ import { FernIr } from "@fern-fern/ir-sdk";
 /**
  * Returns YARD doc lines for the endpoint's availability status.
  * - DEPRECATED -> @deprecated tag (with optional message)
- * - IN_DEVELOPMENT -> @note warning
- * - PRE_RELEASE -> @note warning
+ * - IN_DEVELOPMENT -> @beta warning
+ * - PRE_RELEASE -> @beta warning
  * - GENERAL_AVAILABILITY or undefined -> no additional docs
  */
 export function getAvailabilityDocs(availability: FernIr.Availability | undefined): string | undefined {
