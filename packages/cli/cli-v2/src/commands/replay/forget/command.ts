@@ -114,7 +114,7 @@ export class ForgetCommand {
             }
 
             if (!args.yes) {
-                if (!process.stdout.isTTY) {
+                if (!context.isTTY) {
                     throw new CliError({
                         message: "Confirmation required. Use --yes to skip confirmation in non-interactive mode.",
                         code: CliError.Code.ConfigError
