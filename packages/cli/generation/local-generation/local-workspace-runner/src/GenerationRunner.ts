@@ -4,7 +4,7 @@ import { generatorsYml, SNIPPET_JSON_FILENAME } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
-import { TaskAbortSignal, TaskContext } from "@fern-api/task-context";
+import { CliError, TaskAbortSignal, TaskContext } from "@fern-api/task-context";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import chalk from "chalk";
 import { generateDynamicSnippetTests } from "./dynamic-snippets/generateDynamicSnippetTests.js";
@@ -57,7 +57,9 @@ export class GenerationRunner {
                     async (interactiveTaskContext) => {
                         if (generatorInvocation.absolutePathToLocalOutput == null) {
                             interactiveTaskContext.failWithoutThrowing(
-                                "Cannot generate because output location is not local-file-system"
+                                "Cannot generate because output location is not local-file-system",
+                                undefined,
+                                { code: CliError.Code.ConfigError }
                             );
                             return;
                         }
@@ -104,7 +106,8 @@ export class GenerationRunner {
                             } else {
                                 interactiveTaskContext.failWithoutThrowing(
                                     `Generation failed: ${error instanceof Error ? error.message : "Unknown error"}`,
-                                    error
+                                    error,
+                                    { code: error instanceof CliError ? error.code : CliError.Code.InternalError }
                                 );
                             }
                         }
@@ -150,7 +153,7 @@ export class GenerationRunner {
         context.logger.info(`Starting generation for ${generatorInvocation.name}`);
 
         if (generatorInvocation.absolutePathToLocalOutput == null) {
-            throw new Error("Output path is required for generation");
+            throw new CliError({ message: "Output path is required for generation", code: CliError.Code.ConfigError });
         }
 
         // Generate IR once here
