@@ -97,6 +97,8 @@ class HttpMethodsClient
     }
 
     /**
+     * @deprecated
+     *
      * @param ObjectWithRequiredField $request
      * @param ?array{
      *   baseUrl?: string,
@@ -144,6 +146,8 @@ class HttpMethodsClient
     }
 
     /**
+     * @deprecated Use testPatch instead.
+     *
      * @param string $id
      * @param ObjectWithRequiredField $request
      * @param ?array{
@@ -192,6 +196,8 @@ class HttpMethodsClient
     }
 
     /**
+     * @beta This endpoint is in pre-release and may change.
+     *
      * @param string $id
      * @param ObjectWithOptionalField $request
      * @param ?array{
@@ -240,6 +246,8 @@ class HttpMethodsClient
     }
 
     /**
+     * @beta This endpoint is in development and may change.
+     *
      * @param string $id
      * @param ?array{
      *   baseUrl?: string,

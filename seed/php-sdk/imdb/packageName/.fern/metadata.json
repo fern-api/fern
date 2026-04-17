@@ -3,6 +3,7 @@
   "generatorName": "fernapi/fern-php-sdk",
   "generatorVersion": "local",
   "generatorConfig": {
+    "generateAvailabilityAnnotations": true,
     "packageName": "fern-api/imdb-php"
   },
   "originGitCommit": "DUMMY",

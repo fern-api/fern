@@ -24,6 +24,8 @@ test:
 language: php
 generatorType: SDK
 defaultOutputMode: github
+defaultCustomConfig:
+  generateAvailabilityAnnotations: true
 fixtures:
   basic-auth:
     - outputFolder: wire-tests

@@ -3,6 +3,7 @@
   "generatorName": "fernapi/fern-php-sdk",
   "generatorVersion": "local",
   "generatorConfig": {
+    "generateAvailabilityAnnotations": true,
     "composerJson": {
       "name": "fern/empty",
       "version": "1.0.0",

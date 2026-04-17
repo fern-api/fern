@@ -3,6 +3,7 @@
   "generatorName": "fernapi/fern-php-sdk",
   "generatorVersion": "local",
   "generatorConfig": {
+    "generateAvailabilityAnnotations": true,
     "generateClientInterfaces": true
   },
   "originGitCommit": "DUMMY",
