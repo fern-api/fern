@@ -43,6 +43,7 @@ export function getOriginGitCommitIsDirty(): boolean | undefined {
         });
         return status.trim().length > 0;
     } catch {
+        // Expected when git is not installed or the working directory is not a git repository.
         return undefined;
     }
 }
