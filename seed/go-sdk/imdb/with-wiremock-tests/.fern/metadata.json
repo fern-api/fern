@@ -6,7 +6,8 @@
     "enableWireTests": true,
     "packageName": "testPackageName",
     "errorCodes": "per-endpoint",
-    "clientConstructorName": "NewIMDBClient"
+    "clientConstructorName": "NewIMDBClient",
+    "generateEndpointAvailability": true
   },
   "originGitCommit": "DUMMY",
   "sdkVersion": "v0.0.1"

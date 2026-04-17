@@ -5,7 +5,8 @@
   "generatorConfig": {
     "enableWireTests": false,
     "omitFernHeaders": true,
-    "maxRetries": 5
+    "maxRetries": 5,
+    "generateEndpointAvailability": true
   },
   "originGitCommit": "DUMMY",
   "sdkVersion": "v0.0.1"

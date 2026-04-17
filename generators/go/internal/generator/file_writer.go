@@ -82,6 +82,7 @@ type fileWriter struct {
 	exportAllRequestsAtRoot      bool
 	omitEmptyRequestWrappers     bool
 	omitFernHeaders              bool
+	generateEndpointAvailability bool
 	unionVersion                 UnionVersion
 	customPagerName              string
 	scope                        *gospec.Scope

@@ -1,10 +1,13 @@
 # yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
 
 - summary: |
-    Annotate endpoint availability in the generated Go SDK. Deprecated
-    endpoints emit a `// Deprecated: <message>` paragraph (recognized by
-    `go doc` and staticcheck's SA1019), and in-development / pre-release
-    endpoints emit a `// @beta` doc comment matching the wording used by
-    the TypeScript SDK generator. `GENERAL_AVAILABILITY` endpoints are
-    unaffected.
+    Add opt-in support for annotating endpoint availability in the
+    generated Go SDK. When `generateEndpointAvailability: true` is set in
+    `generators.yml`, deprecated endpoints emit a `// Deprecated: <message>`
+    paragraph (recognized by `go doc` and staticcheck's SA1019), and
+    in-development / pre-release endpoints emit a `// @beta` doc comment
+    matching the wording used by the TypeScript SDK generator.
+    `GENERAL_AVAILABILITY` endpoints are unaffected. The flag defaults to
+    `false` so existing output is unchanged; it will become the default in
+    the next major version.
   type: feat

@@ -806,6 +806,7 @@ func (g *Generator) generateRootService(
 		ir.Errors,
 		g.coordinator,
 	)
+	writer.generateEndpointAvailability = g.config.GenerateEndpointAvailability
 	generatedClient, err := writer.WriteClient(
 		ir.Auth,
 		irService.Endpoints,
@@ -859,6 +860,7 @@ func (g *Generator) generateService(
 		ir.Errors,
 		g.coordinator,
 	)
+	writer.generateEndpointAvailability = g.config.GenerateEndpointAvailability
 	generatedClient, err := writer.WriteClient(
 		ir.Auth,
 		irService.Endpoints,
@@ -915,6 +917,7 @@ func (g *Generator) generateServiceWithoutEndpoints(
 		ir.Errors,
 		g.coordinator,
 	)
+	writer.generateEndpointAvailability = g.config.GenerateEndpointAvailability
 	if _, err := writer.WriteClient(
 		ir.Auth,
 		nil,
@@ -966,6 +969,7 @@ func (g *Generator) generateRootServiceWithoutEndpoints(
 		ir.Errors,
 		g.coordinator,
 	)
+	writer.generateEndpointAvailability = g.config.GenerateEndpointAvailability
 	generatedClient, err := writer.WriteClient(
 		ir.Auth,
 		nil,

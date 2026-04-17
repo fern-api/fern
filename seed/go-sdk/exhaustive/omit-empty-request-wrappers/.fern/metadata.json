@@ -4,7 +4,8 @@
   "generatorVersion": "local",
   "generatorConfig": {
     "enableWireTests": true,
-    "omitEmptyRequestWrappers": true
+    "omitEmptyRequestWrappers": true,
+    "generateEndpointAvailability": true
   },
   "originGitCommit": "DUMMY",
   "sdkVersion": "v0.0.1"

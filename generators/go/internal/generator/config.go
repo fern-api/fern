@@ -30,6 +30,7 @@ type Config struct {
 	ExportAllRequestsAtRoot      bool
 	OmitEmptyRequestWrappers     bool
 	OmitFernHeaders              bool
+	GenerateEndpointAvailability bool
 	Organization                 string
 	Version                      string
 	IRFilepath                   string
@@ -78,6 +79,7 @@ func NewConfig(
 	exportAllRequestsAtRoot bool,
 	omitEmptyRequestWrappers bool,
 	omitFernHeaders bool,
+	generateEndpointAvailability bool,
 	organization string,
 	version string,
 	irFilepath string,
@@ -111,6 +113,7 @@ func NewConfig(
 		ExportAllRequestsAtRoot:      exportAllRequestsAtRoot,
 		OmitEmptyRequestWrappers:     omitEmptyRequestWrappers,
 		OmitFernHeaders:              omitFernHeaders,
+		GenerateEndpointAvailability: generateEndpointAvailability,
 		Version:                      version,
 		IRFilepath:                   irFilepath,
 		SnippetFilepath:              snippetFilepath,

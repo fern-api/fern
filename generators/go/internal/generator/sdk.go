@@ -1379,11 +1379,13 @@ func (f *fileWriter) WriteClient(
 	// Implement this service's methods.
 	for _, endpoint := range endpoints {
 		f.WriteDocs(endpoint.Docs)
-		if availabilityLine := getAvailabilityDocs(endpoint.Availability); availabilityLine != "" {
-			if endpoint.Docs != nil && len(*endpoint.Docs) > 0 {
-				f.P("//")
+		if f.generateEndpointAvailability {
+			if availabilityLine := getAvailabilityDocs(endpoint.Availability); availabilityLine != "" {
+				if endpoint.Docs != nil && len(*endpoint.Docs) > 0 {
+					f.P("//")
+				}
+				f.P("// ", availabilityLine)
 			}
-			f.P("// ", availabilityLine)
 		}
 		f.P("func (", receiver, " *", clientName, ") ", endpoint.Name.PascalCase.UnsafeName, "(")
 		for _, signatureParameter := range endpoint.SignatureParameters {

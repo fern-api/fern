@@ -36,6 +36,7 @@ func run(config *cmd.Config, coordinator *coordinator.Client) ([]*generator.File
 		config.ExportAllRequestsAtRoot,
 		config.OmitEmptyRequestWrappers,
 		config.OmitFernHeaders,
+		config.GenerateEndpointAvailability,
 		config.Organization,
 		config.Version,
 		config.IrFilepath,

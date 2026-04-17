@@ -132,18 +132,23 @@ fixtures:
         packageName: testPackageName
         errorCodes: per-endpoint
         clientConstructorName: NewIMDBClient
+        generateEndpointAvailability: true
     - outputFolder: no-custom-config
-      customConfig: null
+      customConfig:
+        generateEndpointAvailability: true
     - outputFolder: package-path
       customConfig:
         packagePath: inhereplease
+        generateEndpointAvailability: true
     - outputFolder: deep-package-path
       customConfig:
         packagePath: all/the/way/in/here/please
+        generateEndpointAvailability: true
     - outputFolder: omit-fern-headers
       customConfig:
         omitFernHeaders: true
         maxRetries: 5
+        generateEndpointAvailability: true
   undiscriminated-unions:
     - outputFolder: no-custom-config
       outputVersion: 0.0.1
@@ -280,14 +285,17 @@ fixtures:
       customConfig:
         enableWireTests: true
         exportAllRequestsAtRoot: true
+        generateEndpointAvailability: true
   exhaustive:
     - outputFolder: no-custom-config
       customConfig:
         enableWireTests: true
+        generateEndpointAvailability: true
     - outputFolder: omit-empty-request-wrappers
       customConfig:
         enableWireTests: true
         omitEmptyRequestWrappers: true
+        generateEndpointAvailability: true
   inferred-auth-implicit:
     - outputFolder: .
       customConfig: null

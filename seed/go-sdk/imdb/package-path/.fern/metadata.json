@@ -4,7 +4,8 @@
   "generatorVersion": "local",
   "generatorConfig": {
     "enableWireTests": false,
-    "packagePath": "inhereplease"
+    "packagePath": "inhereplease",
+    "generateEndpointAvailability": true
   },
   "originGitCommit": "DUMMY",
   "sdkVersion": "v0.0.1"

@@ -66,6 +66,7 @@ type Config struct {
 	ExportAllRequestsAtRoot      bool
 	OmitEmptyRequestWrappers     bool
 	OmitFernHeaders              bool
+	GenerateEndpointAvailability bool
 	Organization                 string
 	CoordinatorURL               string
 	CoordinatorTaskID            string
@@ -239,6 +240,7 @@ func newConfig(configFilename string) (*Config, error) {
 		ExportAllRequestsAtRoot:      *customConfig.ExportAllRequestsAtRoot,
 		OmitEmptyRequestWrappers:     *customConfig.OmitEmptyRequestWrappers,
 		OmitFernHeaders:              *customConfig.OmitFernHeaders,
+		GenerateEndpointAvailability: *customConfig.GenerateEndpointAvailability,
 		Organization:                 config.Organization,
 		AlwaysSendRequiredProperties: *customConfig.AlwaysSendRequiredProperties,
 		Whitelabel:                   config.Whitelabel,
@@ -305,6 +307,8 @@ type customConfig struct {
 	ExportAllRequestsAtRoot      *bool         `json:"exportAllRequestsAtRoot,omitempty"`
 	OmitEmptyRequestWrappers     *bool         `json:"omitEmptyRequestWrappers,omitempty"`
 	OmitFernHeaders              *bool         `json:"omitFernHeaders,omitempty"`
+	// TODO(next-major): flip default to true in applyCustomConfigDefaultsForV1.
+	GenerateEndpointAvailability *bool         `json:"generateEndpointAvailability,omitempty"`
 	ClientName                   string        `json:"clientName,omitempty"`
 	ClientConstructorName        string        `json:"clientConstructorName,omitempty"`
 	ImportPath                   string        `json:"importPath,omitempty"`
@@ -474,6 +478,9 @@ func applyCustomConfigDefaultsForV1(customConfig *customConfig) *customConfig {
 	}
 	if customConfig.OmitFernHeaders == nil {
 		customConfig.OmitFernHeaders = gospec.Ptr(false)
+	}
+	if customConfig.GenerateEndpointAvailability == nil {
+		customConfig.GenerateEndpointAvailability = gospec.Ptr(false)
 	}
 	if customConfig.UnionVersion == "" {
 		customConfig.UnionVersion = "v1"
