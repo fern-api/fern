@@ -3,10 +3,14 @@ import { CliError } from "@fern-api/task-context";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { InitCommand } from "../command.js";
 
-vi.mock("@fern-api/generator-cli", () => ({
-    replayInit: vi.fn(),
-    formatBootstrapSummary: vi.fn().mockReturnValue([])
-}));
+vi.mock("@fern-api/generator-cli", async (importOriginal) => {
+    const orig = await importOriginal<typeof import("@fern-api/generator-cli")>();
+    return {
+        ...orig,
+        replayInit: vi.fn(),
+        formatBootstrapSummary: vi.fn().mockReturnValue([])
+    };
+});
 
 vi.mock("@fern-api/core", () => ({
     getFiddleOrigin: vi.fn().mockReturnValue("https://fiddle.example.com")
