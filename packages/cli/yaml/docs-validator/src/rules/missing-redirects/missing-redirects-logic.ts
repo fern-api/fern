@@ -3,6 +3,27 @@ import { match } from "path-to-regexp";
 export interface MarkdownEntry {
     pageId: string;
     slug: string;
+    lastUpdated: string;
+}
+
+/**
+ * FDR's slug table may legitimately contain multiple historical (pageId, slug)
+ * rows per pageId — either as a side effect of the slug-change row-leak before
+ * it was fixed, or deliberately once FDR starts preserving old mappings for
+ * docs-site versioning. For the missing-redirects check we only care about the
+ * most recent slug per pageId: that's the one representing the last published
+ * state of the page. Older rows would otherwise produce warnings for URLs the
+ * customer already handled at the time (if they were ever served at all).
+ */
+export function keepLatestEntryPerPageId(entries: MarkdownEntry[]): MarkdownEntry[] {
+    const latestByPageId = new Map<string, MarkdownEntry>();
+    for (const entry of entries) {
+        const existing = latestByPageId.get(entry.pageId);
+        if (existing == null || Date.parse(entry.lastUpdated) >= Date.parse(existing.lastUpdated)) {
+            latestByPageId.set(entry.pageId, entry);
+        }
+    }
+    return Array.from(latestByPageId.values());
 }
 
 export interface RemovedSlug {
