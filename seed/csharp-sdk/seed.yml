@@ -49,7 +49,12 @@ test:
 language: csharp
 generatorType: SDK
 defaultOutputMode: github
-defaultCustomConfig: {}
+defaultCustomConfig:
+  # Exercise the availability annotations flag across every seed fixture. The
+  # customer-facing default in the C# generator's custom-config schema remains
+  # `false`; this seed-only default ensures every fixture with availability
+  # metadata in its IR produces annotated output for snapshot coverage.
+  generateAvailabilityAnnotations: true
 scripts:
   - image: fernapi/csharp-seed
     commands:
@@ -208,9 +213,6 @@ fixtures:
     - customConfig:
         omit-fern-headers: true
       outputFolder: omit-fern-headers
-    - customConfig:
-        generateAvailabilityAnnotations: true
-      outputFolder: endpoint-availability
   multi-url-environment:
     - customConfig:
         pascal-case-environments: false
@@ -237,9 +239,6 @@ fixtures:
     - customConfig:
         use-undiscriminated-unions: true
       outputFolder: use-undiscriminated-unions
-    - customConfig:
-        generateAvailabilityAnnotations: true
-      outputFolder: endpoint-availability
   optional:
     - customConfig: null
       outputFolder: no-custom-config

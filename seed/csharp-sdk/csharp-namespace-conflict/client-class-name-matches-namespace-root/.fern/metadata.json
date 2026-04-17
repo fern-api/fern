@@ -3,6 +3,7 @@
   "generatorName": "fernapi/fern-csharp-sdk",
   "generatorVersion": "local",
   "generatorConfig": {
+    "generateAvailabilityAnnotations": true,
     "namespace": "Seed.CsharpNamespaceConflict",
     "client-class-name": "Seed",
     "experimental-fully-qualified-namespaces": true

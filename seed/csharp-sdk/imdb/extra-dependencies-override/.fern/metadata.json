@@ -3,6 +3,7 @@
   "generatorName": "fernapi/fern-csharp-sdk",
   "generatorVersion": "local",
   "generatorConfig": {
+    "generateAvailabilityAnnotations": true,
     "extra-dependencies": {
       "PolySharp": "1.14.0"
     }

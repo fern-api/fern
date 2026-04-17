@@ -3,6 +3,7 @@
   "generatorName": "fernapi/fern-csharp-sdk",
   "generatorVersion": "local",
   "generatorConfig": {
+    "generateAvailabilityAnnotations": true,
     "extra-dependencies": {
       "Moq": "4.20.70",
       "Moq.Contrib.HttpClient": "1.4.0"

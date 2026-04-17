@@ -3,6 +3,7 @@
   "generatorName": "fernapi/fern-csharp-sdk",
   "generatorVersion": "local",
   "generatorConfig": {
+    "generateAvailabilityAnnotations": true,
     "experimental-fully-qualified-namespaces": true,
     "experimental-dotnet-format": true
   },

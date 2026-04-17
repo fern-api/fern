@@ -3,6 +3,7 @@
   "generatorName": "fernapi/fern-csharp-sdk",
   "generatorVersion": "local",
   "generatorConfig": {
+    "generateAvailabilityAnnotations": true,
     "use-discriminated-unions": false
   },
   "originGitCommit": "DUMMY",

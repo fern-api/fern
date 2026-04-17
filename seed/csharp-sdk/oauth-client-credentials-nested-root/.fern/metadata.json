@@ -2,7 +2,9 @@
   "cliVersion": "DUMMY",
   "generatorName": "fernapi/fern-csharp-sdk",
   "generatorVersion": "local",
-  "generatorConfig": {},
+  "generatorConfig": {
+    "generateAvailabilityAnnotations": true
+  },
   "originGitCommit": "DUMMY",
   "sdkVersion": "0.0.1"
 }

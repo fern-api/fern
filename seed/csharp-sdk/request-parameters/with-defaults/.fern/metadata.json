@@ -3,6 +3,7 @@
   "generatorName": "fernapi/fern-csharp-sdk",
   "generatorVersion": "local",
   "generatorConfig": {
+    "generateAvailabilityAnnotations": true,
     "use-default-request-parameter-values": true,
     "experimental-explicit-nullable-optional": true,
     "use-undiscriminated-unions": true
