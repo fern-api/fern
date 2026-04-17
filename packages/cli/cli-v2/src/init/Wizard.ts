@@ -714,7 +714,7 @@ export class Wizard {
         if (!response.ok) {
             throw new CliError({
                 message: `HTTP ${response.status} ${response.statusText}`,
-                code: CliError.Code.InternalError
+                code: CliError.Code.NetworkError
             });
         }
         const content = await response.text();

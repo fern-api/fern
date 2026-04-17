@@ -20,7 +20,7 @@ export function parseOutputArg(outputArg: string): schemas.OutputObjectSchema {
                     `    export GITHUB_TOKEN=ghp_xxx\n\n` +
                     `  Or use a local path:\n` +
                     `    --output ./my-sdk`,
-                code: CliError.Code.InternalError
+                code: CliError.Code.ConfigError
             });
         }
         return {
