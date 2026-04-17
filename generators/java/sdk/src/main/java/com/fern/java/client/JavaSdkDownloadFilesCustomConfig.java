@@ -77,6 +77,12 @@ public interface JavaSdkDownloadFilesCustomConfig extends IDownloadFilesCustomCo
         return true;
     }
 
+    @Value.Default
+    @JsonProperty("generate-availability-annotations")
+    default Boolean generateAvailabilityAnnotations() {
+        return false;
+    }
+
     static ImmutableJavaSdkDownloadFilesCustomConfig.Builder builder() {
         return ImmutableJavaSdkDownloadFilesCustomConfig.builder();
     }
