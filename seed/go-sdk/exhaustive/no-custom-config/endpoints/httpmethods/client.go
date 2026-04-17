@@ -49,6 +49,7 @@ func (c *Client) TestGet(
 	return response.Body, nil
 }
 
+// Deprecated: This endpoint is deprecated.
 func (c *Client) TestPost(
 	ctx context.Context,
 	request *types.ObjectWithRequiredField,
@@ -65,6 +66,7 @@ func (c *Client) TestPost(
 	return response.Body, nil
 }
 
+// Deprecated: Use testPatch instead.
 func (c *Client) TestPut(
 	ctx context.Context,
 	id string,
@@ -83,6 +85,7 @@ func (c *Client) TestPut(
 	return response.Body, nil
 }
 
+// @beta This endpoint is in pre-release and may change.
 func (c *Client) TestPatch(
 	ctx context.Context,
 	id string,
@@ -101,6 +104,7 @@ func (c *Client) TestPatch(
 	return response.Body, nil
 }
 
+// @beta This endpoint is in development and may change.
 func (c *Client) TestDelete(
 	ctx context.Context,
 	id string,

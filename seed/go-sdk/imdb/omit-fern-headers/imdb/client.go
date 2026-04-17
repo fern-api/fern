@@ -34,6 +34,8 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Add a movie to the database using the movies/* /... path.
+//
+// @beta This endpoint is in pre-release and may change.
 func (c *Client) CreateMovie(
 	ctx context.Context,
 	request *fern.CreateMovieRequest,
@@ -50,6 +52,7 @@ func (c *Client) CreateMovie(
 	return response.Body, nil
 }
 
+// Deprecated: This endpoint is deprecated.
 func (c *Client) GetMovie(
 	ctx context.Context,
 	movieID fern.MovieID,

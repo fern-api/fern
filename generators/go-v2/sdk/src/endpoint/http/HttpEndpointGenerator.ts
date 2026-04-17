@@ -6,6 +6,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator.js";
 import { EndpointSignatureInfo } from "../EndpointSignatureInfo.js";
+import { combineDocsWithAvailability } from "../utils/getAvailabilityDocs.js";
 import { getPaginationInfo } from "../utils/getPaginationInfo.js";
 import { getResponseBodyType } from "../utils/getResponseBodyType.js";
 
@@ -58,7 +59,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 subpackage
             }),
             pointerReceiver: true,
-            docs: endpoint.docs
+            docs: combineDocsWithAvailability(endpoint.docs, endpoint.availability)
         });
     }
 
