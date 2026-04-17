@@ -86,7 +86,10 @@ export async function getIntermediateRepresentation({
         originGitCommit: getOriginGitCommit(),
         invokedBy: detectInvocationSource(),
         cliInvocation: getCliInvocation(),
-        requestedVersion: version,
+        // Preserve the raw user-provided `--version` value from the pre-generated IR if any;
+        // `version` here may have been resolved (e.g. via `computeSemanticVersion`) and is not
+        // necessarily the raw flag value.
+        requestedVersion: intermediateRepresentation.generationMetadata?.requestedVersion ?? version,
         ciEnvironment: detectCiEnvironmentMetadata()
     };
 
