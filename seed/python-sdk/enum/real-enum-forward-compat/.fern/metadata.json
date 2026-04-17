@@ -3,6 +3,7 @@
   "generatorName": "fernapi/fern-python-sdk",
   "generatorVersion": "local",
   "generatorConfig": {
+    "generate_availability_annotations": true,
     "pydantic_config": {
       "enum_type": "forward_compatible_python_enums"
     }

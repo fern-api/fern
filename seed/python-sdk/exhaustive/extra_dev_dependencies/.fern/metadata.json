@@ -3,6 +3,7 @@
   "generatorName": "fernapi/fern-python-sdk",
   "generatorVersion": "local",
   "generatorConfig": {
+    "generate_availability_annotations": true,
     "extra_dev_dependencies": {
       "requests_mock": "1.12.1"
     },

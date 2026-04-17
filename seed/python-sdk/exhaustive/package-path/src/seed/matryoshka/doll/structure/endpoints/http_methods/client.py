@@ -60,6 +60,8 @@ class HttpMethodsClient:
         self, *, string: str, request_options: typing.Optional[RequestOptions] = None
     ) -> ObjectWithOptionalField:
         """
+        @deprecated
+
         Parameters
         ----------
         string : str
@@ -90,6 +92,9 @@ class HttpMethodsClient:
         self, id: str, *, string: str, request_options: typing.Optional[RequestOptions] = None
     ) -> ObjectWithOptionalField:
         """
+        .. deprecated::
+            Use testPatch instead.
+
         Parameters
         ----------
         id : str
@@ -139,6 +144,8 @@ class HttpMethodsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ObjectWithOptionalField:
         """
+        @beta This endpoint is in pre-release and may change.
+
         Parameters
         ----------
         id : str
@@ -232,6 +239,8 @@ class HttpMethodsClient:
 
     def test_delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> bool:
         """
+        @beta This endpoint is in development and may change.
+
         Parameters
         ----------
         id : str
@@ -314,6 +323,8 @@ class AsyncHttpMethodsClient:
         self, *, string: str, request_options: typing.Optional[RequestOptions] = None
     ) -> ObjectWithOptionalField:
         """
+        @deprecated
+
         Parameters
         ----------
         string : str
@@ -352,6 +363,9 @@ class AsyncHttpMethodsClient:
         self, id: str, *, string: str, request_options: typing.Optional[RequestOptions] = None
     ) -> ObjectWithOptionalField:
         """
+        .. deprecated::
+            Use testPatch instead.
+
         Parameters
         ----------
         id : str
@@ -409,6 +423,8 @@ class AsyncHttpMethodsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ObjectWithOptionalField:
         """
+        @beta This endpoint is in pre-release and may change.
+
         Parameters
         ----------
         id : str
@@ -509,6 +525,8 @@ class AsyncHttpMethodsClient:
 
     async def test_delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> bool:
         """
+        @beta This endpoint is in development and may change.
+
         Parameters
         ----------
         id : str

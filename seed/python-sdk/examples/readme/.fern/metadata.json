@@ -3,6 +3,7 @@
   "generatorName": "fernapi/fern-python-sdk",
   "generatorVersion": "local",
   "generatorConfig": {
+    "generate_availability_annotations": true,
     "custom_readme_sections": [
       {
         "title": "Override Section",

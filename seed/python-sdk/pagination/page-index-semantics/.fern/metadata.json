@@ -3,6 +3,7 @@
   "generatorName": "fernapi/fern-python-sdk",
   "generatorVersion": "local",
   "generatorConfig": {
+    "generate_availability_annotations": true,
     "offsetSemantics": "page-index"
   },
   "originGitCommit": "DUMMY",

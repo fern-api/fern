@@ -12,6 +12,9 @@ buildScripts:
       - poetry run mypy .
       - PYTHONWARNINGS=error::SyntaxWarning python -m compileall -q -f .
 
+defaultCustomConfig:
+  generate_availability_annotations: true
+
 publish:
   workingDirectory: generators/python
   preBuildCommands:
@@ -297,9 +300,6 @@ fixtures:
     - customConfig:
         datetime_milliseconds: true
       outputFolder: datetime-milliseconds
-    - customConfig:
-        generate_availability_annotations: true
-      outputFolder: availability-annotations
   file-upload:
     - customConfig: null
       outputFolder: no-custom-config

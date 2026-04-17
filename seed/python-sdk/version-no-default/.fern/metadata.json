@@ -2,6 +2,9 @@
   "cliVersion": "DUMMY",
   "generatorName": "fernapi/fern-python-sdk",
   "generatorVersion": "local",
+  "generatorConfig": {
+    "generate_availability_annotations": true
+  },
   "originGitCommit": "DUMMY",
   "sdkVersion": "0.0.1"
 }

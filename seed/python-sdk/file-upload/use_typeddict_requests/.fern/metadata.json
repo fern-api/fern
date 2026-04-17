@@ -3,6 +3,7 @@
   "generatorName": "fernapi/fern-python-sdk",
   "generatorVersion": "local",
   "generatorConfig": {
+    "generate_availability_annotations": true,
     "use_typeddict_requests": true,
     "use_typeddict_requests_for_file_upload": true
   },

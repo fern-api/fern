@@ -27,6 +27,8 @@ class RawImdbClient:
         self, *, title: str, rating: float, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[MovieId]:
         """
+        @beta This endpoint is in pre-release and may change.
+
         Add a movie to the database using the movies/* /... path.
 
         Parameters
@@ -75,6 +77,8 @@ class RawImdbClient:
         self, movie_id: MovieId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[Movie]:
         """
+        @deprecated
+
         Parameters
         ----------
         movie_id : MovieId
@@ -130,6 +134,8 @@ class AsyncRawImdbClient:
         self, *, title: str, rating: float, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[MovieId]:
         """
+        @beta This endpoint is in pre-release and may change.
+
         Add a movie to the database using the movies/* /... path.
 
         Parameters
@@ -178,6 +184,8 @@ class AsyncRawImdbClient:
         self, movie_id: MovieId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[Movie]:
         """
+        @deprecated
+
         Parameters
         ----------
         movie_id : MovieId

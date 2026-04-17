@@ -3,6 +3,7 @@
   "generatorName": "fernapi/fern-python-sdk",
   "generatorVersion": "local",
   "generatorConfig": {
+    "generate_availability_annotations": true,
     "client": {
       "filename": "base_client.py",
       "class_name": "BaseSeedExhaustive",

@@ -3,6 +3,7 @@
   "generatorName": "fernapi/fern-python-sdk",
   "generatorVersion": "local",
   "generatorConfig": {
+    "generate_availability_annotations": true,
     "should_generate_websocket_clients": true,
     "pydantic_config": {
       "skip_validation": true
