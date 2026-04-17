@@ -1,0 +1,7 @@
+- type: feat
+  summary: |
+    Generated PHP SDK methods now surface endpoint availability
+    (deprecated / in-development / pre-release) using PHPDoc tags.
+    Deprecated endpoints are annotated with `@deprecated` (and the IR
+    `message`, when present). In-development and pre-release endpoints
+    receive a `@beta` warning in the method's PHPDoc block.

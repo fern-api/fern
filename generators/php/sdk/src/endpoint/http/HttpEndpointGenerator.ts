@@ -6,6 +6,7 @@ import { upperFirst } from "lodash-es";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator.js";
+import { getEndpointDocs } from "../utils/getAvailabilityDocs.js";
 import { getEndpointReturnType } from "../utils/getEndpointReturnType.js";
 
 type PagingEndpoint = FernIr.HttpEndpoint & { pagination: NonNullable<FernIr.HttpEndpoint["pagination"]> };
@@ -80,7 +81,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     name: this.context.getPagedEndpointMethodName(endpoint),
                     access: "public",
                     parameters,
-                    docs: endpoint.docs,
+                    docs: getEndpointDocs(endpoint),
                     return_,
                     noBody: true
                 })
@@ -92,7 +93,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     name: this.context.getEndpointMethodName(endpoint),
                     access: "public",
                     parameters,
-                    docs: endpoint.docs,
+                    docs: getEndpointDocs(endpoint),
                     return_,
                     noBody: true
                 })
@@ -127,7 +128,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 : this.context.getEndpointMethodName(endpoint),
             access: hasPagination ? "private" : "public",
             parameters,
-            docs: endpoint.docs,
+            docs: getEndpointDocs(endpoint),
             return_,
             throws: [this.context.getBaseExceptionClassReference(), this.context.getBaseApiExceptionClassReference()],
             body: php.codeblock((writer) => {
@@ -224,7 +225,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             name: this.context.getPagedEndpointMethodName(endpoint),
             access: "public",
             parameters,
-            docs: endpoint.docs,
+            docs: getEndpointDocs(endpoint),
             return_,
             body: php.codeblock((writer) => {
                 const requestParam = endpointSignatureInfo.requestParameter;
