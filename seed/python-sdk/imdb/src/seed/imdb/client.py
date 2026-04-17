@@ -31,6 +31,8 @@ class ImdbClient:
         self, *, title: str, rating: float, request_options: typing.Optional[RequestOptions] = None
     ) -> MovieId:
         """
+        @beta This endpoint is in pre-release and may change.
+
         Add a movie to the database using the movies/* /... path.
 
         Parameters
@@ -64,6 +66,8 @@ class ImdbClient:
 
     def get_movie(self, movie_id: MovieId, *, request_options: typing.Optional[RequestOptions] = None) -> Movie:
         """
+        @deprecated
+
         Parameters
         ----------
         movie_id : MovieId
@@ -110,6 +114,8 @@ class AsyncImdbClient:
         self, *, title: str, rating: float, request_options: typing.Optional[RequestOptions] = None
     ) -> MovieId:
         """
+        @beta This endpoint is in pre-release and may change.
+
         Add a movie to the database using the movies/* /... path.
 
         Parameters
@@ -151,6 +157,8 @@ class AsyncImdbClient:
 
     async def get_movie(self, movie_id: MovieId, *, request_options: typing.Optional[RequestOptions] = None) -> Movie:
         """
+        @deprecated
+
         Parameters
         ----------
         movie_id : MovieId

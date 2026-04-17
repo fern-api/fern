@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from typing import Dict, List, Optional, Set, Tuple, Union
 
 from ..core_utilities.client_wrapper_generator import ClientWrapperGenerator
+from .availability import get_availability_docs
 from .generated_root_client import GeneratedRootClient
 from .request_body_parameters import (
     AbstractRequestBodyParameters,
@@ -776,7 +777,14 @@ class EndpointFunctionGenerator:
         path_parameters: List[ir_types.PathParameter],
         snippet: Optional[AST.Expression],
     ) -> Optional[AST.CodeWriter]:
-        if snippet is None and endpoint.docs is None and len(named_parameters) == 0 and len(path_parameters) == 0:
+        availability_docs = get_availability_docs(endpoint)
+        if (
+            snippet is None
+            and endpoint.docs is None
+            and availability_docs is None
+            and len(named_parameters) == 0
+            and len(path_parameters) == 0
+        ):
             return None
 
         # Consolidate the named parameters and path parameters in a single list.
@@ -787,11 +795,16 @@ class EndpointFunctionGenerator:
         parameters.extend(named_parameters)
 
         def write(writer: AST.NodeWriter) -> None:
+            if availability_docs is not None:
+                for line in availability_docs.splitlines():
+                    writer.write_line(escape_docstring(line))
             if endpoint.docs is not None:
+                if availability_docs is not None:
+                    writer.write_line()
                 writer.write_line(escape_docstring(endpoint.docs))
             if len(parameters) == 0 and snippet is None:
                 return
-            if endpoint.docs is not None:
+            if endpoint.docs is not None or availability_docs is not None:
                 # Include a line between the endpoint docs and field docs.
                 writer.write_line()
             if len(parameters) > 0:
