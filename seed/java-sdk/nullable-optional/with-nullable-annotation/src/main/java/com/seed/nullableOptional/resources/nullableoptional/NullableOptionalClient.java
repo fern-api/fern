@@ -20,6 +20,7 @@ import com.seed.nullableOptional.resources.nullableoptional.types.SearchResult;
 import com.seed.nullableOptional.resources.nullableoptional.types.UpdateUserRequest;
 import com.seed.nullableOptional.resources.nullableoptional.types.UserResponse;
 import java.util.List;
+import org.jetbrains.annotations.Nullable;
 
 public class NullableOptionalClient {
     protected final ClientOptions clientOptions;
@@ -234,6 +235,7 @@ public class NullableOptionalClient {
     /**
      * Get notification settings which may be null
      */
+    @Nullable
     public NotificationMethod getNotificationSettings(String userId, RequestOptions requestOptions) {
         return this.rawClient.getNotificationSettings(userId, requestOptions).body();
     }
@@ -262,6 +264,7 @@ public class NullableOptionalClient {
     /**
      * Get search results with nullable unions
      */
+    @Nullable
     public List<SearchResult> getSearchResults(SearchRequest request, RequestOptions requestOptions) {
         return this.rawClient.getSearchResults(request, requestOptions).body();
     }

@@ -593,6 +593,20 @@ client.endpoints().httpMethods().testGet("id");
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+@deprecated
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -637,6 +651,20 @@ client.endpoints().httpMethods().testPost(
 <details><summary><code>client.endpoints.httpMethods.testPut(id, request) -> ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+@deprecated Use testPatch instead.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -691,6 +719,20 @@ client.endpoints().httpMethods().testPut(
 <details><summary><code>client.endpoints.httpMethods.testPatch(id, request) -> ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+@beta This endpoint is in pre-release and may change.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -769,6 +811,20 @@ client.endpoints().httpMethods().testPatch(
 <details><summary><code>client.endpoints.httpMethods.testDelete(id) -> Boolean</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+@beta This endpoint is in development and may change.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 

@@ -27,6 +27,7 @@ public class ImdbClient {
 
     /**
      * Add a movie to the database using the movies/* /... path.
+     * @beta This endpoint is in pre-release and may change.
      */
     public String createMovie(CreateMovieRequest request) {
         return this.rawClient.createMovie(request).body();
@@ -34,15 +35,24 @@ public class ImdbClient {
 
     /**
      * Add a movie to the database using the movies/* /... path.
+     * @beta This endpoint is in pre-release and may change.
      */
     public String createMovie(CreateMovieRequest request, RequestOptions requestOptions) {
         return this.rawClient.createMovie(request, requestOptions).body();
     }
 
+    /**
+     * @deprecated
+     */
+    @Deprecated
     public Movie getMovie(String movieId) {
         return this.rawClient.getMovie(movieId).body();
     }
 
+    /**
+     * @deprecated
+     */
+    @Deprecated
     public Movie getMovie(String movieId, RequestOptions requestOptions) {
         return this.rawClient.getMovie(movieId, requestOptions).body();
     }

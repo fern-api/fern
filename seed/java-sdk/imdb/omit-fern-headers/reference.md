@@ -13,6 +13,8 @@
 <dd>
 
 Add a movie to the database using the movies/* /... path.
+
+@beta This endpoint is in pre-release and may change.
 </dd>
 </dl>
 </dd>
@@ -63,6 +65,20 @@ client.imdb().createMovie(
 <details><summary><code>client.imdb.getMovie(movieId) -> Movie</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+@deprecated
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 

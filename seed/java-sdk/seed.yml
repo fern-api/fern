@@ -53,6 +53,8 @@ test:
 language: java
 generatorType: SDK
 defaultOutputMode: github
+defaultCustomConfig:
+  generate-availability-annotations: true
 fixtures:
   exhaustive:
     - customConfig:

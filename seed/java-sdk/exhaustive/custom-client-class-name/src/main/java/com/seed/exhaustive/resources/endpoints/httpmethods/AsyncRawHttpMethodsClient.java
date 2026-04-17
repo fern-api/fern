@@ -85,10 +85,18 @@ public class AsyncRawHttpMethodsClient {
         return future;
     }
 
+    /**
+     * @deprecated
+     */
+    @Deprecated
     public CompletableFuture<BestHttpResponse<ObjectWithOptionalField>> testPost(ObjectWithRequiredField request) {
         return testPost(request, null);
     }
 
+    /**
+     * @deprecated
+     */
+    @Deprecated
     public CompletableFuture<BestHttpResponse<ObjectWithOptionalField>> testPost(
             ObjectWithRequiredField request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -146,11 +154,19 @@ public class AsyncRawHttpMethodsClient {
         return future;
     }
 
+    /**
+     * @deprecated Use testPatch instead.
+     */
+    @Deprecated
     public CompletableFuture<BestHttpResponse<ObjectWithOptionalField>> testPut(
             String id, ObjectWithRequiredField request) {
         return testPut(id, request, null);
     }
 
+    /**
+     * @deprecated Use testPatch instead.
+     */
+    @Deprecated
     public CompletableFuture<BestHttpResponse<ObjectWithOptionalField>> testPut(
             String id, ObjectWithRequiredField request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -209,20 +225,32 @@ public class AsyncRawHttpMethodsClient {
         return future;
     }
 
+    /**
+     * @beta This endpoint is in pre-release and may change.
+     */
     public CompletableFuture<BestHttpResponse<ObjectWithOptionalField>> testPatch(String id) {
         return testPatch(id, ObjectWithOptionalField.builder().build());
     }
 
+    /**
+     * @beta This endpoint is in pre-release and may change.
+     */
     public CompletableFuture<BestHttpResponse<ObjectWithOptionalField>> testPatch(
             String id, RequestOptions requestOptions) {
         return testPatch(id, ObjectWithOptionalField.builder().build(), requestOptions);
     }
 
+    /**
+     * @beta This endpoint is in pre-release and may change.
+     */
     public CompletableFuture<BestHttpResponse<ObjectWithOptionalField>> testPatch(
             String id, ObjectWithOptionalField request) {
         return testPatch(id, request, null);
     }
 
+    /**
+     * @beta This endpoint is in pre-release and may change.
+     */
     public CompletableFuture<BestHttpResponse<ObjectWithOptionalField>> testPatch(
             String id, ObjectWithOptionalField request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -281,10 +309,16 @@ public class AsyncRawHttpMethodsClient {
         return future;
     }
 
+    /**
+     * @beta This endpoint is in development and may change.
+     */
     public CompletableFuture<BestHttpResponse<Boolean>> testDelete(String id) {
         return testDelete(id, null);
     }
 
+    /**
+     * @beta This endpoint is in development and may change.
+     */
     public CompletableFuture<BestHttpResponse<Boolean>> testDelete(String id, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()

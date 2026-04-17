@@ -21,6 +21,7 @@ import com.seed.nullableOptional.resources.nullableoptional.types.UpdateUserRequ
 import com.seed.nullableOptional.resources.nullableoptional.types.UserResponse;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import org.jetbrains.annotations.Nullable;
 
 public class AsyncNullableOptionalClient {
     protected final ClientOptions clientOptions;
@@ -240,6 +241,7 @@ public class AsyncNullableOptionalClient {
     /**
      * Get notification settings which may be null
      */
+    @Nullable
     public CompletableFuture<NotificationMethod> getNotificationSettings(String userId, RequestOptions requestOptions) {
         return this.rawClient.getNotificationSettings(userId, requestOptions).thenApply(response -> response.body());
     }
@@ -269,6 +271,7 @@ public class AsyncNullableOptionalClient {
     /**
      * Get search results with nullable unions
      */
+    @Nullable
     public CompletableFuture<List<SearchResult>> getSearchResults(
             SearchRequest request, RequestOptions requestOptions) {
         return this.rawClient.getSearchResults(request, requestOptions).thenApply(response -> response.body());

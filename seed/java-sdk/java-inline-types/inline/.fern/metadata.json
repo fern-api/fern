@@ -3,6 +3,7 @@
   "generatorName": "fernapi/fern-java-sdk",
   "generatorVersion": "local",
   "generatorConfig": {
+    "generate-availability-annotations": true,
     "enable-inline-types": true,
     "wrapped-aliases": true
   },

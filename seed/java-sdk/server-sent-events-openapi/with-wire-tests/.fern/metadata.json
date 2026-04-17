@@ -3,6 +3,7 @@
   "generatorName": "fernapi/fern-java-sdk",
   "generatorVersion": "local",
   "generatorConfig": {
+    "generate-availability-annotations": true,
     "enable_wire_tests": true
   },
   "originGitCommit": "DUMMY",

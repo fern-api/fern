@@ -9,6 +9,7 @@ import com.fern.sdk.core.RequestOptions;
 import com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;
 import com.fern.sdk.resources.types.object.types.ObjectWithRequiredField;
 import java.lang.Boolean;
+import java.lang.Deprecated;
 import java.lang.String;
 import java.util.concurrent.CompletableFuture;
 
@@ -37,48 +38,82 @@ public class AsyncHttpMethodsClient {
     return this.rawClient.testGet(id, requestOptions).thenApply(response -> response.body());
   }
 
+  /**
+   * @deprecated
+   */
+  @Deprecated
   public CompletableFuture<ObjectWithOptionalField> testPost(ObjectWithRequiredField request) {
     return this.rawClient.testPost(request).thenApply(response -> response.body());
   }
 
+  /**
+   * @deprecated
+   */
+  @Deprecated
   public CompletableFuture<ObjectWithOptionalField> testPost(ObjectWithRequiredField request,
       RequestOptions requestOptions) {
     return this.rawClient.testPost(request, requestOptions).thenApply(response -> response.body());
   }
 
+  /**
+   * @deprecated Use testPatch instead.
+   */
+  @Deprecated
   public CompletableFuture<ObjectWithOptionalField> testPut(String id,
       ObjectWithRequiredField request) {
     return this.rawClient.testPut(id, request).thenApply(response -> response.body());
   }
 
+  /**
+   * @deprecated Use testPatch instead.
+   */
+  @Deprecated
   public CompletableFuture<ObjectWithOptionalField> testPut(String id,
       ObjectWithRequiredField request, RequestOptions requestOptions) {
     return this.rawClient.testPut(id, request, requestOptions).thenApply(response -> response.body());
   }
 
+  /**
+   * @beta This endpoint is in pre-release and may change.
+   */
   public CompletableFuture<ObjectWithOptionalField> testPatch(String id) {
     return this.rawClient.testPatch(id).thenApply(response -> response.body());
   }
 
+  /**
+   * @beta This endpoint is in pre-release and may change.
+   */
   public CompletableFuture<ObjectWithOptionalField> testPatch(String id,
       RequestOptions requestOptions) {
     return this.rawClient.testPatch(id, requestOptions).thenApply(response -> response.body());
   }
 
+  /**
+   * @beta This endpoint is in pre-release and may change.
+   */
   public CompletableFuture<ObjectWithOptionalField> testPatch(String id,
       ObjectWithOptionalField request) {
     return this.rawClient.testPatch(id, request).thenApply(response -> response.body());
   }
 
+  /**
+   * @beta This endpoint is in pre-release and may change.
+   */
   public CompletableFuture<ObjectWithOptionalField> testPatch(String id,
       ObjectWithOptionalField request, RequestOptions requestOptions) {
     return this.rawClient.testPatch(id, request, requestOptions).thenApply(response -> response.body());
   }
 
+  /**
+   * @beta This endpoint is in development and may change.
+   */
   public CompletableFuture<Boolean> testDelete(String id) {
     return this.rawClient.testDelete(id).thenApply(response -> response.body());
   }
 
+  /**
+   * @beta This endpoint is in development and may change.
+   */
   public CompletableFuture<Boolean> testDelete(String id, RequestOptions requestOptions) {
     return this.rawClient.testDelete(id, requestOptions).thenApply(response -> response.body());
   }

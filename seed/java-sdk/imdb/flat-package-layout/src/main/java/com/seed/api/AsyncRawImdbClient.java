@@ -36,6 +36,7 @@ public class AsyncRawImdbClient {
 
     /**
      * Add a movie to the database using the movies/* /... path.
+     * @beta This endpoint is in pre-release and may change.
      */
     public CompletableFuture<SeedApiHttpResponse<String>> createMovie(CreateMovieRequest request) {
         return createMovie(request, null);
@@ -43,6 +44,7 @@ public class AsyncRawImdbClient {
 
     /**
      * Add a movie to the database using the movies/* /... path.
+     * @beta This endpoint is in pre-release and may change.
      */
     public CompletableFuture<SeedApiHttpResponse<String>> createMovie(
             CreateMovieRequest request, RequestOptions requestOptions) {
@@ -101,10 +103,18 @@ public class AsyncRawImdbClient {
         return future;
     }
 
+    /**
+     * @deprecated
+     */
+    @Deprecated
     public CompletableFuture<SeedApiHttpResponse<Movie>> getMovie(String movieId) {
         return getMovie(movieId, null);
     }
 
+    /**
+     * @deprecated
+     */
+    @Deprecated
     public CompletableFuture<SeedApiHttpResponse<Movie>> getMovie(String movieId, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()

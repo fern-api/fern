@@ -3,6 +3,7 @@
   "generatorName": "fernapi/fern-java-sdk",
   "generatorVersion": "local",
   "generatorConfig": {
+    "generate-availability-annotations": true,
     "inline-file-properties": true,
     "inline-path-parameters": true
   },

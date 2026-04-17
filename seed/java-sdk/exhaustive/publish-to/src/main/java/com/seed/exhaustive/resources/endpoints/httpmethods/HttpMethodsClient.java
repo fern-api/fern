@@ -33,43 +33,77 @@ public class HttpMethodsClient {
         return this.rawClient.testGet(id, requestOptions).body();
     }
 
+    /**
+     * @deprecated
+     */
+    @Deprecated
     public ObjectWithOptionalField testPost(ObjectWithRequiredField request) {
         return this.rawClient.testPost(request).body();
     }
 
+    /**
+     * @deprecated
+     */
+    @Deprecated
     public ObjectWithOptionalField testPost(ObjectWithRequiredField request, RequestOptions requestOptions) {
         return this.rawClient.testPost(request, requestOptions).body();
     }
 
+    /**
+     * @deprecated Use testPatch instead.
+     */
+    @Deprecated
     public ObjectWithOptionalField testPut(String id, ObjectWithRequiredField request) {
         return this.rawClient.testPut(id, request).body();
     }
 
+    /**
+     * @deprecated Use testPatch instead.
+     */
+    @Deprecated
     public ObjectWithOptionalField testPut(String id, ObjectWithRequiredField request, RequestOptions requestOptions) {
         return this.rawClient.testPut(id, request, requestOptions).body();
     }
 
+    /**
+     * @beta This endpoint is in pre-release and may change.
+     */
     public ObjectWithOptionalField testPatch(String id) {
         return this.rawClient.testPatch(id).body();
     }
 
+    /**
+     * @beta This endpoint is in pre-release and may change.
+     */
     public ObjectWithOptionalField testPatch(String id, RequestOptions requestOptions) {
         return this.rawClient.testPatch(id, requestOptions).body();
     }
 
+    /**
+     * @beta This endpoint is in pre-release and may change.
+     */
     public ObjectWithOptionalField testPatch(String id, ObjectWithOptionalField request) {
         return this.rawClient.testPatch(id, request).body();
     }
 
+    /**
+     * @beta This endpoint is in pre-release and may change.
+     */
     public ObjectWithOptionalField testPatch(
             String id, ObjectWithOptionalField request, RequestOptions requestOptions) {
         return this.rawClient.testPatch(id, request, requestOptions).body();
     }
 
+    /**
+     * @beta This endpoint is in development and may change.
+     */
     public boolean testDelete(String id) {
         return this.rawClient.testDelete(id).body();
     }
 
+    /**
+     * @beta This endpoint is in development and may change.
+     */
     public boolean testDelete(String id, RequestOptions requestOptions) {
         return this.rawClient.testDelete(id, requestOptions).body();
     }

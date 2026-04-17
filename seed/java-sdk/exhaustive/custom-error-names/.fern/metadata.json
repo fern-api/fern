@@ -3,6 +3,7 @@
   "generatorName": "fernapi/fern-java-sdk",
   "generatorVersion": "local",
   "generatorConfig": {
+    "generate-availability-annotations": true,
     "inline-path-parameters": true,
     "base-api-exception-class-name": "CustomApiException",
     "base-exception-class-name": "CustomException"

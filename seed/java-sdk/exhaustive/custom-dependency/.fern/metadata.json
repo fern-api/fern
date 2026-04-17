@@ -3,6 +3,7 @@
   "generatorName": "fernapi/fern-java-sdk",
   "generatorVersion": "local",
   "generatorConfig": {
+    "generate-availability-annotations": true,
     "inline-path-parameters": true,
     "custom-dependencies": [
       "implementation jakarta.websocket:jakarta.websocket-api:2.1.0"
