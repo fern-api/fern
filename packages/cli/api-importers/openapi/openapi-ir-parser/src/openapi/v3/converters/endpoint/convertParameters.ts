@@ -13,7 +13,7 @@ import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../../../getExtension.js";
 import { convertAvailability } from "../../../../schema/convertAvailability.js";
 import { convertSchema } from "../../../../schema/convertSchemas.js";
-import { getExamplesString } from "../../../../schema/examples/getExample.js";
+import { getExampleAsArray, getExamplesString } from "../../../../schema/examples/getExample.js";
 import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName.js";
 import { isReferenceObject } from "../../../../schema/utils/isReferenceObject.js";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext.js";
@@ -89,10 +89,7 @@ export function convertParameters({
                       context.namespace,
                       false,
                       new Set(),
-                      getExamplesString({
-                          schema: resolvedParameter,
-                          logger: context.logger
-                      })
+                      getParameterExample(resolvedParameter, context)
                   )
                 : isRequired
                   ? SchemaWithExample.primitive({
@@ -254,6 +251,22 @@ function getExplodeForQueryParameter(parameter: OpenAPIV3.ParameterObject): bool
 
     // For all other styles (spaceDelimited, pipeDelimited), default explode is false
     return explode === false ? undefined : explode;
+}
+
+/**
+ * Extracts the example value from a parameter, supporting both string and array examples.
+ * Array examples (e.g., from explode: false parameters) flow through to convertSchema
+ * so that generated wire tests exercise the array serialization path.
+ */
+function getParameterExample(
+    parameter: OpenAPIV3.ParameterObject,
+    context: AbstractOpenAPIV3ParserContext
+): string | number | boolean | unknown[] | undefined {
+    const arrayExample = getExampleAsArray({ schema: parameter, logger: context.logger });
+    if (arrayExample != null) {
+        return arrayExample;
+    }
+    return getExamplesString({ schema: parameter, logger: context.logger });
 }
 
 /**

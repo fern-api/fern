@@ -107,16 +107,6 @@ Generators are processes that take your API Definition as input and output artif
 | `fernapi/fern-swift-sdk`           | ![Swift Generator Version](https://img.shields.io/docker/v/fernapi/fern-swift-sdk)                | [Changelog](https://buildwithfern.com/learn/sdks/generators/swift/changelog)                                    |
 | `fernapi/fern-rust-sdk`            | ![Rust Generator Version](https://img.shields.io/docker/v/fernapi/fern-rust-sdk)                  | [Changelog](https://buildwithfern.com/learn/sdks/generators/rust/changelog)                                     |
 
-### Model Generators
-
-Fern's model generators will output schemas or types defined in your OpenAPI spec or Fern Definition.
-
-| Generator ID                  | Latest Version                                                                                   | Changelog                                                                     |
-| ----------------------------- | ------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------- |
-| `fernapi/fern-pydantic-model` | ![Pydantic Model Generator Version](https://img.shields.io/docker/v/fernapi/fern-pydantic-model) | [versions.yml](./generators/python/pydantic/versions.yml)                     |
-| `fernapi/fern-java-model`     | ![Java Model Generator Version](https://img.shields.io/docker/v/fernapi/fern-java-model)         | [versions.yml](./generators/java/model/versions.yml)                          |
-| `fernapi/fern-go-model`       | ![Go Model Generator Version](https://img.shields.io/docker/v/fernapi/fern-go-model)             | [versions.yml](./generators/go/model/versions.yml)                            |
-
 ### Spec Generators
 
 Fern's spec generators can output an OpenAPI spec.

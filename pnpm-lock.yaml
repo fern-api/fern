@@ -7814,8 +7814,8 @@ importers:
         specifier: workspace:*
         version: link:../commons/core-utils
       '@fern-api/replay':
-        specifier: 0.10.4
-        version: 0.10.4
+        specifier: 0.11.0
+        version: 0.11.0
       '@octokit/rest':
         specifier: 'catalog:'
         version: 22.0.1
@@ -9334,6 +9334,11 @@ packages:
 
   '@fern-api/replay@0.10.4':
     resolution: {integrity: sha512-j/stjn9QMrFPnuLy0KNCwb4rM8ruq7nPtem1ZD5d8E+T7q+yxx1R3QsIaKZcKwFp/LFoyf8PPLhOAa6H8il8WQ==}
+    engines: {node: '>=18'}
+    hasBin: true
+
+  '@fern-api/replay@0.11.0':
+    resolution: {integrity: sha512-RdJMZc3zpmYVHH5UM7ogstG28wycS74Vw8lInT4YD70bJ2LhjgmEnntWLtpHOBAaEhw3nCz8aTk8KUkTXTp4SA==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -11245,8 +11250,8 @@ packages:
     engines: {node: '>=6.0.0'}
     hasBin: true
 
-  basic-ftp@5.2.2:
-    resolution: {integrity: sha512-1tDrzKsdCg70WGvbFss/ulVAxupNauGnOlgpyjKzeQxzyllBLS0CGLV7tjIXTK3ZQA9/FBEm9qyFFN1bciA6pw==}
+  basic-ftp@5.3.0:
+    resolution: {integrity: sha512-5K9eNNn7ywHPsYnFwjKgYH8Hf8B5emh7JKcPaVjjrMJFQQwGpwowEnZNEtHs7DfR7hCZsmaK3VA4HUK0YarT+w==}
     engines: {node: '>=10.0.0'}
 
   before-after-hook@3.0.2:
@@ -16363,6 +16368,15 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@fern-api/replay@0.11.0':
+    dependencies:
+      minimatch: 10.2.5
+      node-diff3: 3.2.0
+      simple-git: 3.35.2
+      yaml: 2.8.3
+    transitivePeerDependencies:
+      - supports-color
+
   '@fern-api/ui-core-utils@0.145.12-b50d999d1':
     dependencies:
       date-fns: 4.1.0
@@ -18249,7 +18263,7 @@ snapshots:
 
   baseline-browser-mapping@2.10.16: {}
 
-  basic-ftp@5.2.2: {}
+  basic-ftp@5.3.0: {}
 
   before-after-hook@3.0.2: {}
 
@@ -19420,7 +19434,7 @@ snapshots:
 
   get-uri@6.0.5:
     dependencies:
-      basic-ftp: 5.2.2
+      basic-ftp: 5.3.0
       data-uri-to-buffer: 6.0.2
       debug: 4.4.3
     transitivePeerDependencies:
