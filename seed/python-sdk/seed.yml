@@ -297,6 +297,9 @@ fixtures:
     - customConfig:
         datetime_milliseconds: true
       outputFolder: datetime-milliseconds
+    - customConfig:
+        generate_endpoint_availability: true
+      outputFolder: generate-endpoint-availability
   file-upload:
     - customConfig: null
       outputFolder: no-custom-config

@@ -1,6 +1,11 @@
 - summary: |
-    Generated Python SDK methods now surface endpoint availability
-    (deprecated / in-development / pre-release) using the language's native
-    deprecation mechanism where one exists, and fall back to doc comments
-    otherwise.
+    Added an opt-in `generate_endpoint_availability` custom config option
+    (default `false`). When enabled, generated Python SDK methods surface
+    endpoint availability (`deprecated` / `in-development` / `pre-release`)
+    via `@deprecated` / `.. deprecated::` Sphinx blocks / `@beta` doc
+    comments that mirror the TypeScript SDK generator. Leaving the flag
+    unset preserves the previous output byte-for-byte so downstream
+    consumers that treat docstring or deprecation warnings as errors are
+    unaffected. The default will flip to `true` in the next major version
+    of this generator.
   type: feat

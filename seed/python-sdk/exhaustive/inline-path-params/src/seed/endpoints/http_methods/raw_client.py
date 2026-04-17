@@ -64,8 +64,6 @@ class RawHttpMethodsClient:
         self, *, string: str, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[ObjectWithOptionalField]:
         """
-        @deprecated
-
         Parameters
         ----------
         string : str
@@ -109,9 +107,6 @@ class RawHttpMethodsClient:
         self, *, id: str, string: str, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[ObjectWithOptionalField]:
         """
-        .. deprecated::
-            Use testPatch instead.
-
         Parameters
         ----------
         id : str
@@ -173,8 +168,6 @@ class RawHttpMethodsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ObjectWithOptionalField]:
         """
-        @beta This endpoint is in pre-release and may change.
-
         Parameters
         ----------
         id : str
@@ -255,8 +248,6 @@ class RawHttpMethodsClient:
 
     def test_delete(self, *, id: str, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[bool]:
         """
-        @beta This endpoint is in development and may change.
-
         Parameters
         ----------
         id : str
@@ -340,8 +331,6 @@ class AsyncRawHttpMethodsClient:
         self, *, string: str, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[ObjectWithOptionalField]:
         """
-        @deprecated
-
         Parameters
         ----------
         string : str
@@ -385,9 +374,6 @@ class AsyncRawHttpMethodsClient:
         self, *, id: str, string: str, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[ObjectWithOptionalField]:
         """
-        .. deprecated::
-            Use testPatch instead.
-
         Parameters
         ----------
         id : str
@@ -449,8 +435,6 @@ class AsyncRawHttpMethodsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ObjectWithOptionalField]:
         """
-        @beta This endpoint is in pre-release and may change.
-
         Parameters
         ----------
         id : str
@@ -533,8 +517,6 @@ class AsyncRawHttpMethodsClient:
         self, *, id: str, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[bool]:
         """
-        @beta This endpoint is in development and may change.
-
         Parameters
         ----------
         id : str

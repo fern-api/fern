@@ -777,7 +777,9 @@ class EndpointFunctionGenerator:
         path_parameters: List[ir_types.PathParameter],
         snippet: Optional[AST.Expression],
     ) -> Optional[AST.CodeWriter]:
-        availability_docs = get_availability_docs(endpoint)
+        availability_docs = (
+            get_availability_docs(endpoint) if self._context.custom_config.generate_endpoint_availability else None
+        )
         if (
             snippet is None
             and endpoint.docs is None

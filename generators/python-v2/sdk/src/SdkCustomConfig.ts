@@ -70,7 +70,17 @@ export const SdkCustomConfigSchema = z.object({
      * This also affects WireMock stubs and wire test verification code to ensure
      * all three components (SDK, stubs, tests) use the same datetime format.
      */
-    datetime_milliseconds: z.boolean().optional()
+    datetime_milliseconds: z.boolean().optional(),
+    /**
+     * When true, annotate generated endpoint docstrings and reference.md with
+     * the endpoint's availability status (deprecated / in-development /
+     * pre-release). Opt-in because downstream consumers that treat
+     * docstring/deprecation warnings as errors (-Werror, strict linters,
+     * etc.) would otherwise see a breaking change.
+     *
+     * TODO(next-major): flip default to true.
+     */
+    generate_endpoint_availability: z.boolean().optional()
 });
 
 export type SdkCustomConfigSchema = z.infer<typeof SdkCustomConfigSchema>;

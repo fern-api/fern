@@ -184,6 +184,14 @@ class SDKCustomConfig(pydantic.BaseModel):
     #   "all": defaults on query params, headers, request body params, and pydantic model fields
     use_request_defaults: Optional[Literal["none", "parameters", "all"]] = None
 
+    # If true, annotate generated endpoint docstrings and reference.md with the
+    # endpoint's availability status (deprecated / in-development / pre-release).
+    # Opt-in because downstream consumers that treat docstring/deprecation
+    # warnings as errors (-Werror, strict linters, etc.) would otherwise see a
+    # breaking change.
+    # TODO(next-major): flip default to true.
+    generate_endpoint_availability: bool = False
+
     class Config:
         extra = pydantic.Extra.forbid
 

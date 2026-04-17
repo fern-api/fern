@@ -127,13 +127,22 @@ function getEndpointReference({
             ],
             returnValue: returnTypeStr != null ? { text: returnTypeStr } : undefined
         },
-        description: buildEndpointDescription({ endpoint }),
+        description: buildEndpointDescription({ context, endpoint }),
         snippet,
         parameters
     };
 }
 
-function buildEndpointDescription({ endpoint }: { endpoint: FernIr.HttpEndpoint }): string | undefined {
+function buildEndpointDescription({
+    context,
+    endpoint
+}: {
+    context: SdkGeneratorContext;
+    endpoint: FernIr.HttpEndpoint;
+}): string | undefined {
+    if (context.customConfig.generate_endpoint_availability !== true) {
+        return endpoint.docs;
+    }
     const availabilityDocs = getAvailabilityDocs(endpoint);
     if (availabilityDocs == null) {
         return endpoint.docs;

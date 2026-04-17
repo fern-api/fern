@@ -12,8 +12,6 @@
 <dl>
 <dd>
 
-@beta This endpoint is in pre-release and may change.
-
 Add a movie to the database using the movies/* /... path.
 </dd>
 </dl>
@@ -78,20 +76,6 @@ client.imdb.create_movie(
 <details><summary><code>client.imdb.<a href="src/seed/imdb/client.py">get_movie</a>(...) -> Movie</code></summary>
 <dl>
 <dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-@deprecated
-</dd>
-</dl>
-</dd>
-</dl>
 
 #### 🔌 Usage
 

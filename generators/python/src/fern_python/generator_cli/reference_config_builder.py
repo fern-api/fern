@@ -180,7 +180,10 @@ class ReferenceConfigBuilder:
             if endpoint_metadata is not None and snippet is not None:
                 reference_section.add_endpoint(
                     endpoint_metadata=endpoint_metadata,
-                    description=_build_endpoint_description(endpoint),
+                    description=_build_endpoint_description(
+                        endpoint=endpoint,
+                        generate_endpoint_availability=self._context.custom_config.generate_endpoint_availability,
+                    ),
                     snippet=snippet,
                     parameters=parameters,
                 )
@@ -223,7 +226,11 @@ class ReferenceConfigBuilder:
         )
 
 
-def _build_endpoint_description(endpoint: ir_types.HttpEndpoint) -> Optional[str]:
+def _build_endpoint_description(
+    *, endpoint: ir_types.HttpEndpoint, generate_endpoint_availability: bool
+) -> Optional[str]:
+    if not generate_endpoint_availability:
+        return endpoint.docs
     availability_docs = get_availability_docs(endpoint)
     if availability_docs is None:
         return endpoint.docs
