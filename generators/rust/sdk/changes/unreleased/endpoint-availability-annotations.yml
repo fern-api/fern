@@ -1,6 +1,11 @@
 - type: feat
   summary: |
-    Generated Rust SDK methods now surface endpoint availability
-    (deprecated / in-development / pre-release) using the language's native
-    deprecation mechanism where one exists, and fall back to doc comments
-    otherwise.
+    Added a `generateEndpointAvailability` custom config flag (default `false`).
+    When enabled, generated Rust SDK methods surface endpoint availability:
+    `DEPRECATED` endpoints render `#[deprecated(note = "...")]`, and
+    `IN_DEVELOPMENT` / `PRE_RELEASE` endpoints get an `@beta` doc comment
+    matching the wording used by the TypeScript SDK generator. Because
+    `#[deprecated]` emits a compiler warning (and breaks downstream builds
+    compiled with `-D warnings`), the flag is opt-in until the next major
+    version bump. Enable it in `generators.yml` via
+    `generateEndpointAvailability: true`.

@@ -1054,7 +1054,9 @@ export class SubClientGenerator {
         ).await`;
     }
 
-    const availability = getAvailabilityAnnotations(endpoint.availability);
+    const availability = this.context.customConfig.generateEndpointAvailability
+      ? getAvailabilityAnnotations(endpoint.availability)
+      : {};
     const summary = [availability.docNote, endpoint.docs]
       .filter((s): s is string => s != null)
       .join("\n\n");
@@ -2138,7 +2140,9 @@ export class SubClientGenerator {
       requestBody,
     );
 
-    const availability = getAvailabilityAnnotations(endpoint.availability);
+    const availability = this.context.customConfig.generateEndpointAvailability
+      ? getAvailabilityAnnotations(endpoint.availability)
+      : {};
     const summary = [availability.docNote, endpoint.docs]
       .filter((s): s is string => s != null)
       .join("\n\n");
