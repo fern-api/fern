@@ -311,9 +311,11 @@ fixtures:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
-        pydantic_config:
-          use_provided_defaults: true
+        use_request_defaults: "all"
       outputFolder: with-defaults
+    - customConfig:
+        use_request_defaults: "parameters"
+      outputFolder: with-defaults-parameters
   literal:
     - customConfig: null
       outputFolder: no-custom-config

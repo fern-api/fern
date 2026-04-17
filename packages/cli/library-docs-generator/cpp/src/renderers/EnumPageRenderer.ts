@@ -24,6 +24,7 @@ import {
 } from "./DescriptionRenderer.js";
 import { renderBareCodeBlock } from "./SignatureRenderer.js";
 import {
+    escapeMdxText,
     escapeTableCell,
     renderDocstringCallouts,
     renderDocstringExamples,
@@ -115,7 +116,7 @@ function renderValuesExpanded(values: CppEnumValueIr[]): string {
     const sections: string[] = [];
 
     for (const v of values) {
-        sections.push(`### ${v.name}`);
+        sections.push(`### ${escapeMdxText(v.name)}`);
         sections.push("");
 
         // Summary

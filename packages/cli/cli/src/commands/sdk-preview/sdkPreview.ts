@@ -19,6 +19,7 @@ import { getPreviewId } from "./getPreviewId.js";
 import {
     getGithubOwnerRepo,
     isNpmGenerator,
+    overrideGroupOutputForDiffBranch,
     overrideGroupOutputForDownload,
     overrideGroupOutputForPreview,
     PREVIEW_REGISTRY_URL
@@ -241,66 +242,95 @@ export async function sdkPreview({
                 // token.value is the Fern org token (FERN_TOKEN) — the registry
                 // must accept this token for publish authentication.
                 const singleGeneratorGroup = { ...group, generators: [generator] };
+                const githubInfo = getGithubOwnerRepo(generator.outputMode);
+
                 // Warn if --push-diff was requested but the generator has no github config
-                if (pushDiff && useRemoteGeneration && getGithubOwnerRepo(generator.outputMode) == null) {
+                if (pushDiff && useRemoteGeneration && githubInfo == null) {
                     cliContext.logger.warn(
                         `Generator '${generator.name}' has no github output configuration. ` +
                             `--push-diff will be ignored; falling back to registry-only publish.`
                     );
                 }
 
-                let modifiedGroup: generatorsYml.GeneratorGroup;
+                // When --push-diff is active and the generator has GitHub config, we run
+                // two separate generation jobs:
+                //   Job 1 (publish): publishV2 mode with preview package name → npm publish
+                //   Job 2 (diff):    githubV2(push) with original package name → clean diff branch
+                // This ensures the diff branch shows real API changes without preview artifacts
+                // (e.g. no @org-preview/ package rename).
+                const shouldRunTwoJobs =
+                    pushDiff && useRemoteGeneration && publishToRegistry && registryUrl != null && githubInfo != null;
+
+                let publishGroup: generatorsYml.GeneratorGroup;
                 if (publishToRegistry && registryUrl != null) {
-                    modifiedGroup = overrideGroupOutputForPreview({
+                    publishGroup = overrideGroupOutputForPreview({
                         group: singleGeneratorGroup,
                         packageName: previewPackageName,
                         token: token.value,
-                        registryUrl,
-                        pushDiff: useRemoteGeneration ? pushDiff : undefined
+                        registryUrl
                     });
                 } else if (useRemoteGeneration) {
                     // Remote generation, disk-only (--output with no registry URL):
                     // override to downloadFiles so the generator doesn't try to publish
                     // using its original output mode.
-                    modifiedGroup = overrideGroupOutputForDownload({ group: singleGeneratorGroup });
+                    publishGroup = overrideGroupOutputForDownload({ group: singleGeneratorGroup });
                 } else {
-                    modifiedGroup = singleGeneratorGroup;
+                    publishGroup = singleGeneratorGroup;
                 }
 
                 if (useRemoteGeneration) {
-                    // Remote generation through Fiddle — matches the `fern generate` pattern.
-                    // Fiddle handles publishing to the preview registry server-side.
-                    // When absolutePathToOutput is set (--output), Fiddle uploads to S3 and
-                    // the CLI downloads the result to the specified path.
+                    const commonRemoteArgs = {
+                        projectConfig: project.config,
+                        organization: project.config.organization,
+                        workspace,
+                        shouldLogS3Url: false,
+                        token,
+                        whitelabel: workspace.generatorsConfiguration?.whitelabel,
+                        mode: undefined as "pull-request" | undefined,
+                        fernignorePath: undefined as string | undefined,
+                        skipFernignore: false,
+                        dynamicIrOnly: false,
+                        validateWorkspace: true,
+                        retryRateLimited: false,
+                        requireEnvVars: false
+                    };
+
+                    // Job 1: Publish preview package to registry.
                     await cliContext.runTaskForWorkspace(workspace, async (context) => {
                         await runRemoteGenerationForAPIWorkspace({
-                            projectConfig: project.config,
-                            organization: project.config.organization,
-                            workspace,
+                            ...commonRemoteArgs,
                             context,
-                            generatorGroup: modifiedGroup,
+                            generatorGroup: publishGroup,
                             version: previewVersion,
-                            shouldLogS3Url: false,
-                            token,
-                            whitelabel: workspace.generatorsConfiguration?.whitelabel,
                             absolutePathToPreview: absolutePathToOutput,
-                            // isPreview controls CLI-side behavior: lenient env var substitution,
-                            // skip version availability check, skip dynamic IR upload.
                             isPreview: true,
-                            // fiddlePreview controls what's sent to Fiddle as the `preview` flag.
-                            // We explicitly send false so Fiddle doesn't set dryRun=true (which
-                            // would cause `npm publish --dry-run` instead of actually publishing).
                             fiddlePreview: false,
-                            pushPreviewBranch: pushDiff,
-                            mode: undefined,
-                            fernignorePath: undefined,
-                            skipFernignore: false,
-                            dynamicIrOnly: false,
-                            validateWorkspace: true,
-                            retryRateLimited: false,
-                            requireEnvVars: false
+                            pushPreviewBranch: false
                         });
                     });
+
+                    // Job 2: Push clean diff branch with original package metadata.
+                    // Uses fiddlePreview=true so Fiddle sets dryRun=true, which prevents
+                    // the publish override from firing (see GeneratorExecConfigFactory).
+                    // The generator stays in github mode and produces clean output with
+                    // the original package name; Fiddle pushes it to the diff branch.
+                    if (shouldRunTwoJobs) {
+                        const diffGroup = overrideGroupOutputForDiffBranch({ group: singleGeneratorGroup });
+                        if (diffGroup.generators.length > 0) {
+                            await cliContext.runTaskForWorkspace(workspace, async (context) => {
+                                await runRemoteGenerationForAPIWorkspace({
+                                    ...commonRemoteArgs,
+                                    context,
+                                    generatorGroup: diffGroup,
+                                    version: previewVersion,
+                                    absolutePathToPreview: undefined,
+                                    isPreview: true,
+                                    fiddlePreview: true,
+                                    pushPreviewBranch: true
+                                });
+                            });
+                        }
+                    }
                 } else {
                     // Local generation via Docker — used when --local flag is provided.
                     // Docker must be installed. When absolutePathToOutput is set, generated
@@ -310,7 +340,7 @@ export async function sdkPreview({
                             token,
                             projectConfig: project.config,
                             workspace,
-                            generatorGroup: modifiedGroup,
+                            generatorGroup: publishGroup,
                             version: previewVersion,
                             keepDocker: false,
                             context,
@@ -338,7 +368,6 @@ export async function sdkPreview({
                         : undefined;
 
                 // Build the diff URL when --push-diff was used and the generator has GitHub config.
-                const githubInfo = getGithubOwnerRepo(generator.outputMode);
                 const previewBranch = `fern-preview-${previewVersion}`;
                 const diffUrl =
                     pushDiff && githubInfo != null

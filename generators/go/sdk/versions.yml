@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.34.8
+  changelogEntry:
+    - summary: |
+        Fix incorrect import paths in generated `_test.go` files for types
+        referencing nested cross-package types. Previously, only the leaf
+        package name was used (e.g., `fern/foo`), dropping intermediate path
+        segments. Now the full path is used (e.g., `fern/common/foo`),
+        matching the behavior of non-test generated files.
+      type: fix
+  createdAt: "2026-04-16"
+  irVersion: 66
 - version: 1.34.7
   changelogEntry:
     - summary: |

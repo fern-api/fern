@@ -181,9 +181,7 @@ function convertQueryParameterExample(
     const result: Record<string, RawSchemas.ExampleTypeReferenceSchema> = {};
     namedFullExamples.forEach((namedFullExample) => {
         const convertedExample = convertFullExample(namedFullExample.value);
-        if (Array.isArray(convertedExample)) {
-            result[namedFullExample.name] = convertedExample[0];
-        } else if (convertedExample != null) {
+        if (convertedExample != null) {
             result[namedFullExample.name] = convertedExample;
         }
     });

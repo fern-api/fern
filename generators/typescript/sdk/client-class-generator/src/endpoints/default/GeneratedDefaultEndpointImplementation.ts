@@ -827,6 +827,10 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             fetcherArgs.responseType = ts.factory.createStringLiteral("text");
         }
 
+        if (requestArgs.queryString != null) {
+            fetcherArgs.queryString = requestArgs.queryString;
+        }
+
         return ts.factory.createObjectLiteralExpression(
             Object.entries(fetcherArgs).map(([key, value]) =>
                 ts.factory.createPropertyAssignment(ts.factory.createIdentifier(key), value)
