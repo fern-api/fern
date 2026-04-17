@@ -79,7 +79,7 @@ export function parseOwnerRepo(githubRepo: string): { owner: string; repo: strin
     const parts = cleaned.split("/");
     const owner = parts[parts.length - 2];
     const repo = parts[parts.length - 1];
-    if (owner == null || repo == null) {
+    if (!owner || !repo) {
         throw new Error(`Could not parse owner/repo from: ${githubRepo}`);
     }
     return { owner, repo };
