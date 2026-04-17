@@ -72,15 +72,18 @@ export const SdkCustomConfigSchema = z.object({
      */
     datetime_milliseconds: z.boolean().optional(),
     /**
-     * When true, annotate generated endpoint docstrings and reference.md with
-     * the endpoint's availability status (deprecated / in-development /
-     * pre-release). Opt-in because downstream consumers that treat
-     * docstring/deprecation warnings as errors (-Werror, strict linters,
-     * etc.) would otherwise see a breaking change.
+     * When true, annotate generated SDK surfaces with their IR availability
+     * status (deprecated / in-development / pre-release). Today this only
+     * annotates endpoints, but the flag is intentionally named broadly so
+     * future availability surfaces (services, types, object properties, enum
+     * values, webhook payloads, WebSocket channels/messages, errors) can opt
+     * in through the same switch. Opt-in because downstream consumers that
+     * treat docstring/deprecation warnings as errors (-Werror, strict
+     * linters, etc.) would otherwise see a breaking change.
      *
      * TODO(next-major): flip default to true.
      */
-    generate_endpoint_availability: z.boolean().optional()
+    generate_availability_annotations: z.boolean().optional()
 });
 
 export type SdkCustomConfigSchema = z.infer<typeof SdkCustomConfigSchema>;

@@ -140,7 +140,7 @@ function buildEndpointDescription({
     context: SdkGeneratorContext;
     endpoint: FernIr.HttpEndpoint;
 }): string | undefined {
-    if (context.customConfig.generate_endpoint_availability !== true) {
+    if (context.customConfig.generate_availability_annotations !== true) {
         return endpoint.docs;
     }
     const availabilityDocs = getAvailabilityDocs(endpoint);

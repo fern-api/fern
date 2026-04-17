@@ -182,7 +182,7 @@ class ReferenceConfigBuilder:
                     endpoint_metadata=endpoint_metadata,
                     description=_build_endpoint_description(
                         endpoint=endpoint,
-                        generate_endpoint_availability=self._context.custom_config.generate_endpoint_availability,
+                        generate_availability_annotations=self._context.custom_config.generate_availability_annotations,
                     ),
                     snippet=snippet,
                     parameters=parameters,
@@ -227,9 +227,9 @@ class ReferenceConfigBuilder:
 
 
 def _build_endpoint_description(
-    *, endpoint: ir_types.HttpEndpoint, generate_endpoint_availability: bool
+    *, endpoint: ir_types.HttpEndpoint, generate_availability_annotations: bool
 ) -> Optional[str]:
-    if not generate_endpoint_availability:
+    if not generate_availability_annotations:
         return endpoint.docs
     availability_docs = get_availability_docs(endpoint)
     if availability_docs is None:

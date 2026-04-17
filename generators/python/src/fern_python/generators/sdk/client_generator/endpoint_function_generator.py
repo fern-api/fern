@@ -778,7 +778,7 @@ class EndpointFunctionGenerator:
         snippet: Optional[AST.Expression],
     ) -> Optional[AST.CodeWriter]:
         availability_docs = (
-            get_availability_docs(endpoint) if self._context.custom_config.generate_endpoint_availability else None
+            get_availability_docs(endpoint) if self._context.custom_config.generate_availability_annotations else None
         )
         if (
             snippet is None

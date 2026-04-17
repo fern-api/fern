@@ -1,0 +1,15 @@
+- summary: |
+    Added an opt-in `generate_availability_annotations` custom config option
+    (default `false`). When enabled, generated Python SDK surfaces annotate
+    their IR availability status (`deprecated` / `in-development` /
+    `pre-release`) via `@deprecated` / `.. deprecated::` Sphinx blocks /
+    `@beta` doc comments that mirror the TypeScript SDK generator. Today
+    this only covers `HttpEndpoint`; the flag is intentionally named
+    broadly so future availability surfaces (services, types, object
+    properties, enum values, webhook payloads, WebSocket channels /
+    messages, errors) can opt in through the same switch without a new
+    flag. Leaving the option unset preserves the previous output
+    byte-for-byte so downstream consumers that treat docstring or
+    deprecation warnings as errors are unaffected. The default will flip
+    to `true` in the next major version of this generator.
+  type: feat

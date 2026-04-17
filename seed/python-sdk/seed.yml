@@ -298,8 +298,8 @@ fixtures:
         datetime_milliseconds: true
       outputFolder: datetime-milliseconds
     - customConfig:
-        generate_endpoint_availability: true
-      outputFolder: generate-endpoint-availability
+        generate_availability_annotations: true
+      outputFolder: availability-annotations
   file-upload:
     - customConfig: null
       outputFolder: no-custom-config
