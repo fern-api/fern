@@ -12,6 +12,7 @@ import { AbstractEndpointGenerator } from "./AbstractEndpointGenerator.js";
 import { GrpcEndpointGenerator } from "./grpc/GrpcEndpointGenerator.js";
 import { HttpEndpointGenerator } from "./http/HttpEndpointGenerator.js";
 import { RawClient } from "./http/RawClient.js";
+import { getAvailabilityAnnotations, getEndpointSummary } from "./utils/getAvailabilityDocs.js";
 import { getEndpointReturnType } from "./utils/getEndpointReturnType.js";
 
 export class EndpointGenerator extends AbstractEndpointGenerator {
@@ -143,7 +144,8 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
         interface_.addMethod({
             name: this.context.getEndpointMethodName(endpoint),
             parameters,
-            summary: endpoint.docs,
+            summary: getEndpointSummary(endpoint),
+            annotations: getAvailabilityAnnotations({ csharp: this.csharp, endpoint }),
             return_,
             noBody: true
         });
@@ -181,7 +183,8 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
         interface_.addMethod({
             name: this.context.getEndpointMethodName(endpoint),
             parameters,
-            summary: endpoint.docs,
+            summary: getEndpointSummary(endpoint),
+            annotations: getAvailabilityAnnotations({ csharp: this.csharp, endpoint }),
             return_,
             noBody: true
         });

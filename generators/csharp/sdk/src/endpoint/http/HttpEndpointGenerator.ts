@@ -17,6 +17,7 @@ import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator.js";
 import { EndpointSignatureInfo } from "../EndpointSignatureInfo.js";
 import { SingleEndpointSnippet } from "../snippets/EndpointSnippetsGenerator.js";
+import { getAvailabilityAnnotations, getEndpointSummary } from "../utils/getAvailabilityDocs.js";
 import { getEndpointReturnType } from "../utils/getEndpointReturnType.js";
 import { RawClient } from "./RawClient.js";
 
@@ -173,7 +174,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             access: this.hasPagination(endpoint) ? ast.Access.Private : ast.Access.Public,
             isAsync: !isWithRawResponseTask,
             parameters,
-            summary: endpoint.docs,
+            summary: getEndpointSummary(endpoint),
+            annotations: getAvailabilityAnnotations({ csharp: this.csharp, endpoint }),
             return_,
             body: isWithRawResponseTask ? body : this.wrapWithExceptionHandler({ body, returnType: return_ }),
             codeExample: snippet?.endpointCall
@@ -1180,7 +1182,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             access: ast.Access.Public,
             isAsync: true,
             parameters,
-            summary: endpoint.docs,
+            summary: getEndpointSummary(endpoint),
+            annotations: getAvailabilityAnnotations({ csharp: this.csharp, endpoint }),
             return_,
             body: this.wrapWithExceptionHandler({ body, returnType: return_ }),
             codeExample: snippet?.endpointCall

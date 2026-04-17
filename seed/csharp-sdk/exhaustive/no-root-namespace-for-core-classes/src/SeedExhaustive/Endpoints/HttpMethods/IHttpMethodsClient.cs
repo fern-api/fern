@@ -12,12 +12,14 @@ public partial interface IHttpMethodsClient
         CancellationToken cancellationToken = default
     );
 
+    [Obsolete]
     WithRawResponseTask<ObjectWithOptionalField> TestPostAsync(
         ObjectWithRequiredField request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
+    [Obsolete("Use testPatch instead.")]
     WithRawResponseTask<ObjectWithOptionalField> TestPutAsync(
         string id,
         ObjectWithRequiredField request,
@@ -25,6 +27,9 @@ public partial interface IHttpMethodsClient
         CancellationToken cancellationToken = default
     );
 
+    /// <summary>
+    /// @beta This endpoint is in pre-release and may change.
+    /// </summary>
     WithRawResponseTask<ObjectWithOptionalField> TestPatchAsync(
         string id,
         ObjectWithOptionalField request,
@@ -32,6 +37,9 @@ public partial interface IHttpMethodsClient
         CancellationToken cancellationToken = default
     );
 
+    /// <summary>
+    /// @beta This endpoint is in development and may change.
+    /// </summary>
     WithRawResponseTask<bool> TestDeleteAsync(
         string id,
         RequestOptions? options = null,

@@ -10,6 +10,7 @@ import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator.js";
 import { EndpointSignatureInfo } from "../EndpointSignatureInfo.js";
 import { EndpointRequest } from "../request/EndpointRequest.js";
+import { getAvailabilityAnnotations, getEndpointSummary } from "../utils/getAvailabilityDocs.js";
 
 export declare namespace GrpcEndpointGenerator {
     export interface Args {
@@ -62,7 +63,8 @@ export class GrpcEndpointGenerator extends AbstractEndpointGenerator {
             access: ast.Access.Public,
             isAsync: true,
             parameters,
-            summary: endpoint.docs,
+            summary: getEndpointSummary(endpoint),
+            annotations: getAvailabilityAnnotations({ csharp: this.csharp, endpoint }),
             return_: endpointSignatureInfo.returnType,
             body: this.settings.includeExceptionHandler
                 ? this.wrapWithExceptionHandler({
