@@ -1,5 +1,6 @@
 import { ContainerRunner } from "@fern-api/core-utils";
 import { runContainer } from "@fern-api/docker-utils";
+import { CliError } from "@fern-api/task-context";
 import {
     CONTAINER_CODEGEN_OUTPUT_DIRECTORY,
     CONTAINER_GENERATOR_CONFIG_PATH,
@@ -79,15 +80,25 @@ export class ContainerExecutionEnvironment implements ExecutionEnvironment {
             ports[DEFAULT_NODE_DEBUG_PORT] = DEFAULT_NODE_DEBUG_PORT;
         }
 
-        await runContainer({
-            logger: context.logger,
-            imageName: this.containerImage,
-            args: [CONTAINER_GENERATOR_CONFIG_PATH],
-            binds,
-            envVars,
-            ports,
-            removeAfterCompletion: !this.keepContainer,
-            runner: this.runner ?? runner
-        });
+        try {
+            await runContainer({
+                logger: context.logger,
+                imageName: this.containerImage,
+                args: [CONTAINER_GENERATOR_CONFIG_PATH],
+                binds,
+                envVars,
+                ports,
+                removeAfterCompletion: !this.keepContainer,
+                runner: this.runner ?? runner
+            });
+        } catch (error) {
+            if (error instanceof CliError) {
+                throw error;
+            }
+            throw new CliError({
+                message: `Container execution failed: ${error instanceof Error ? error.message : String(error)}`,
+                code: CliError.Code.ContainerError
+            });
+        }
     }
 }

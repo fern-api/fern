@@ -8,6 +8,7 @@ import {
 } from "@fern-api/docker-utils";
 import { Logger, LogLevel } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
+import { CliError } from "@fern-api/task-context";
 import {
     CONTAINER_CODEGEN_OUTPUT_DIRECTORY,
     CONTAINER_FERN_DIRECTORY,
@@ -90,7 +91,13 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
             }
             this.containers = [];
             this.availableContainers = [];
-            throw error;
+            if (error instanceof CliError) {
+                throw error;
+            }
+            throw new CliError({
+                message: `Failed to start containers: ${error instanceof Error ? error.message : String(error)}`,
+                code: CliError.Code.ContainerError
+            });
         }
 
         if (isDebug) {
@@ -108,6 +115,14 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
         const containerId = await this.acquire();
         try {
             await this.doExecute(containerId, args);
+        } catch (error) {
+            if (error instanceof CliError) {
+                throw error;
+            }
+            throw new CliError({
+                message: `Container execution failed: ${error instanceof Error ? error.message : String(error)}`,
+                code: CliError.Code.ContainerError
+            });
         } finally {
             this.release(containerId);
         }
