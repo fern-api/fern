@@ -1054,7 +1054,7 @@ export class SubClientGenerator {
         ).await`;
     }
 
-    const availability = this.context.customConfig.generateEndpointAvailability
+    const availability = this.context.customConfig.generateAvailabilityAnnotations
       ? getAvailabilityAnnotations(endpoint.availability)
       : {};
     const summary = [availability.docNote, endpoint.docs]
@@ -2140,7 +2140,7 @@ export class SubClientGenerator {
       requestBody,
     );
 
-    const availability = this.context.customConfig.generateEndpointAvailability
+    const availability = this.context.customConfig.generateAvailabilityAnnotations
       ? getAvailabilityAnnotations(endpoint.availability)
       : {};
     const summary = [availability.docNote, endpoint.docs]

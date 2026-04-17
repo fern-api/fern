@@ -4,12 +4,16 @@ import { z } from "zod";
 export const SdkCustomConfigSchema = BaseRustCustomConfigSchema.extend({
     clientName: z.string().optional(),
     generateExamples: z.boolean().optional().default(true),
-    // Opt-in emission of endpoint availability annotations (`#[deprecated]` /
-    // `@beta` doc comments). Annotating endpoints can break downstream builds
-    // that treat warnings as errors (`RUSTFLAGS="-D warnings"`), so the flag
-    // defaults to `false` and must be flipped to `true` in `generators.yml`.
+    // Opt-in emission of availability annotations (`#[deprecated]` / `@beta`
+    // doc comments). Currently applies to HTTP endpoints, but the flag is
+    // named generically so future surfaces (services, types, properties, enum
+    // values, webhooks, WebSocket channels/messages, errors) can opt in under
+    // the same switch. Annotating with `#[deprecated]` can break downstream
+    // builds that treat warnings as errors (`RUSTFLAGS="-D warnings"`), so the
+    // flag defaults to `false` and must be flipped to `true` in
+    // `generators.yml`.
     // TODO(next-major): flip default to true.
-    generateEndpointAvailability: z.boolean().optional().default(false)
+    generateAvailabilityAnnotations: z.boolean().optional().default(false)
 });
 
 export type SdkCustomConfigSchema = z.infer<typeof SdkCustomConfigSchema>;

@@ -1,0 +1,14 @@
+- type: feat
+  summary: |
+    Added a `generateAvailabilityAnnotations` custom config flag (default
+    `false`) that governs emission of availability annotations across the
+    generated SDK. Today it applies to HTTP endpoints — `DEPRECATED`
+    endpoints render `#[deprecated(note = "...")]`, and `IN_DEVELOPMENT` /
+    `PRE_RELEASE` endpoints get an `@beta` doc comment matching the wording
+    used by the TypeScript SDK generator — and the same flag is intended to
+    gate future annotations on services, types, properties, enum values,
+    webhooks, WebSocket channels/messages, and errors without introducing a
+    second flag. Because `#[deprecated]` emits a compiler warning (and
+    breaks downstream builds compiled with `-D warnings`), the flag is
+    opt-in until the next major version bump. Enable it in `generators.yml`
+    via `generateAvailabilityAnnotations: true`.
