@@ -1,3 +1,4 @@
+import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 
 /**
@@ -29,7 +30,7 @@ export function getAvailabilityDocs(endpoint: FernIr.HttpEndpoint): string | und
         case FernIr.AvailabilityStatus.GeneralAvailability:
             return undefined;
         default:
-            return undefined;
+            assertNever(availability.status);
     }
 }
 
