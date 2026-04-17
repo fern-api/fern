@@ -395,9 +395,11 @@ export class HttpEndpointGenerator {
         if (endpoint.docs != null && endpoint.docs.length > 0) {
             parts.push(endpoint.docs);
         }
-        const availabilityDocs = getAvailabilityDocs(endpoint.availability);
-        if (availabilityDocs != null) {
-            parts.push(availabilityDocs);
+        if (this.context.customConfig.generateEndpointAvailability === true) {
+            const availabilityDocs = getAvailabilityDocs(endpoint.availability);
+            if (availabilityDocs != null) {
+                parts.push(availabilityDocs);
+            }
         }
         return parts.join("\n");
     }
