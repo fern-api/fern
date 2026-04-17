@@ -21,14 +21,14 @@ def get_availability_docs(endpoint: ir_types.HttpEndpoint) -> Optional[str]:
     message = availability.message
     status = availability.status
 
-    if status is ir_types.AvailabilityStatus.DEPRECATED:
+    if status == ir_types.AvailabilityStatus.DEPRECATED:
         if message is not None:
             return f".. deprecated::\n    {message}"
         return "@deprecated"
-    if status is ir_types.AvailabilityStatus.IN_DEVELOPMENT:
+    if status == ir_types.AvailabilityStatus.IN_DEVELOPMENT:
         warning = "@beta This endpoint is in development and may change."
         return f"{warning} {message}" if message is not None else warning
-    if status is ir_types.AvailabilityStatus.PRE_RELEASE:
+    if status == ir_types.AvailabilityStatus.PRE_RELEASE:
         warning = "@beta This endpoint is in pre-release and may change."
         return f"{warning} {message}" if message is not None else warning
     return None
