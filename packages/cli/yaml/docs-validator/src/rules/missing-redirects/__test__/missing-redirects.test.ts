@@ -269,3 +269,119 @@ describe("keepLatestEntryPerPageId", () => {
         ]);
     });
 });
+
+describe("integration: keepLatestEntryPerPageId + findRemovedSlugs", () => {
+    it("emits zero warnings when every stale row's pageId is at its latest slug locally", () => {
+        // Simulates the Close case: the slug table has accumulated multiple
+        // historical (pageId, slug) rows per pageId from past nav restructurings,
+        // but the customer has not changed anything since the most recent publish.
+        // After dedup, findRemovedSlugs should see one row per pageId at the
+        // current slug and produce zero warnings.
+        const published: MarkdownEntry[] = [
+            { pageId: "docs/api-clients.md", slug: "api-reference/getting-started/api-clients", lastUpdated: "2022-01-01T00:00:00.000Z" },
+            { pageId: "docs/api-clients.md", slug: "api/getting-started/api-clients", lastUpdated: "2023-06-01T00:00:00.000Z" },
+            { pageId: "docs/api-clients.md", slug: "api/overview/api-clients", lastUpdated: "2024-12-01T00:00:00.000Z" },
+            { pageId: "docs/intro.md", slug: "api-reference/getting-started/introduction", lastUpdated: "2022-01-01T00:00:00.000Z" },
+            { pageId: "docs/intro.md", slug: "api/overview", lastUpdated: "2024-12-01T00:00:00.000Z" }
+        ];
+        const local = new Map([
+            ["docs/api-clients.md", "api/overview/api-clients"],
+            ["docs/intro.md", "api/overview"]
+        ]);
+
+        const deduped = keepLatestEntryPerPageId(published);
+        const removed = findRemovedSlugs(deduped, local);
+
+        expect(removed).toEqual([]);
+    });
+
+    it("flags only the most recent slug when there are stale rows AND a real slug change", () => {
+        // The customer restructured the nav multiple times historically (all those
+        // old slugs linger as stale rows in FDR). They have also just moved a page
+        // one more time locally, without publishing yet. We want exactly ONE
+        // warning about the latest transition — not additional warnings for each
+        // ancient slug.
+        const published: MarkdownEntry[] = [
+            { pageId: "docs/guide.md", slug: "v1/guide", lastUpdated: "2022-01-01T00:00:00.000Z" },
+            { pageId: "docs/guide.md", slug: "v2/guide", lastUpdated: "2023-01-01T00:00:00.000Z" },
+            { pageId: "docs/guide.md", slug: "v3/guide", lastUpdated: "2024-06-01T00:00:00.000Z" }
+        ];
+        const local = new Map([["docs/guide.md", "v4/guide"]]);
+
+        const deduped = keepLatestEntryPerPageId(published);
+        const removed = findRemovedSlugs(deduped, local);
+
+        expect(removed).toEqual([
+            { pageId: "docs/guide.md", oldSlug: "v3/guide", newSlug: "v4/guide" }
+        ]);
+    });
+
+    it("flags the most recent slug when a pageId is removed entirely, ignoring stale history", () => {
+        // Similar to above but the page is fully gone locally, not just moved.
+        // Expect one warning about the most recent slug, not N warnings.
+        const published: MarkdownEntry[] = [
+            { pageId: "docs/deprecated.md", slug: "v1/deprecated", lastUpdated: "2022-01-01T00:00:00.000Z" },
+            { pageId: "docs/deprecated.md", slug: "v2/deprecated", lastUpdated: "2023-01-01T00:00:00.000Z" },
+            { pageId: "docs/deprecated.md", slug: "v3/deprecated", lastUpdated: "2024-06-01T00:00:00.000Z" }
+        ];
+        const local = new Map<string, string>();
+
+        const deduped = keepLatestEntryPerPageId(published);
+        const removed = findRemovedSlugs(deduped, local);
+
+        expect(removed).toEqual([
+            { pageId: "docs/deprecated.md", oldSlug: "v3/deprecated", newSlug: undefined }
+        ]);
+    });
+
+    it("emits zero warnings for a changelog whose parent slug has been renamed over time", () => {
+        // Direct analogue of Close's changelog situation: one row per entry per
+        // historical parent slug (api-reference/getting-started/changelog →
+        // api/getting-started/changelog → api/overview/changelog). Each row
+        // has a distinct pageId, so dedup alone doesn't collapse them — but
+        // the findRemovedSlugs activeSlugs skip does, because the current
+        // parent slug serves all entries.
+        const published: MarkdownEntry[] = [
+            { pageId: "changelog/2024-01.mdx", slug: "api-reference/getting-started/changelog", lastUpdated: "2022-01-01T00:00:00.000Z" },
+            { pageId: "changelog/2024-01.mdx", slug: "api/getting-started/changelog", lastUpdated: "2023-06-01T00:00:00.000Z" },
+            { pageId: "changelog/2024-01.mdx", slug: "api/overview/changelog", lastUpdated: "2024-12-01T00:00:00.000Z" },
+            { pageId: "changelog/2024-02.mdx", slug: "api/getting-started/changelog", lastUpdated: "2023-06-01T00:00:00.000Z" },
+            { pageId: "changelog/2024-02.mdx", slug: "api/overview/changelog", lastUpdated: "2024-12-01T00:00:00.000Z" }
+        ];
+        const local = new Map([
+            ["changelog/2024-01.mdx", "api/overview/changelog"],
+            ["changelog/2024-02.mdx", "api/overview/changelog"]
+        ]);
+
+        const deduped = keepLatestEntryPerPageId(published);
+        const removed = findRemovedSlugs(deduped, local);
+
+        expect(removed).toEqual([]);
+    });
+
+    it("handles a mix of stable pages, stale-only pages, and a real change in one table", () => {
+        // Realistic mixed scenario: most pages are stable, some have stale rows
+        // at their current slug (no-op), one page has a genuine pending move.
+        // The rule should fire exactly one warning — for the genuine move.
+        const published: MarkdownEntry[] = [
+            // Stable page, one row.
+            { pageId: "docs/a.md", slug: "a", lastUpdated: "2024-12-01T00:00:00.000Z" },
+            // Stable page but with historical stale rows.
+            { pageId: "docs/b.md", slug: "old-b", lastUpdated: "2022-01-01T00:00:00.000Z" },
+            { pageId: "docs/b.md", slug: "b", lastUpdated: "2024-12-01T00:00:00.000Z" },
+            // Pending move: last published slug is "c", but local has moved it to "new-c".
+            { pageId: "docs/c.md", slug: "ancient-c", lastUpdated: "2022-01-01T00:00:00.000Z" },
+            { pageId: "docs/c.md", slug: "c", lastUpdated: "2024-06-01T00:00:00.000Z" }
+        ];
+        const local = new Map([
+            ["docs/a.md", "a"],
+            ["docs/b.md", "b"],
+            ["docs/c.md", "new-c"]
+        ]);
+
+        const deduped = keepLatestEntryPerPageId(published);
+        const removed = findRemovedSlugs(deduped, local);
+
+        expect(removed).toEqual([{ pageId: "docs/c.md", oldSlug: "c", newSlug: "new-c" }]);
+    });
+});
