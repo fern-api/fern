@@ -154,11 +154,11 @@ public abstract class AbstractEndpointWriter {
         // Step 1: Populate JavaDoc
         Optional<String> availabilityDocs = AvailabilityUtils.getAvailabilityDocs(httpEndpoint);
         boolean isDeprecated = AvailabilityUtils.isDeprecated(httpEndpoint);
-        availabilityDocs.ifPresent(docs -> endpointMethodBuilder.addJavadoc("$L\n", docs));
         if (httpEndpoint.getDocs().isPresent()) {
             endpointMethodBuilder.addJavadoc(
                     JavaDocUtils.render(httpEndpoint.getDocs().get(), true));
         }
+        availabilityDocs.ifPresent(docs -> endpointMethodBuilder.addJavadoc("$L\n", docs));
         if (isDeprecated) {
             endpointMethodBuilder.addAnnotation(Deprecated.class);
         }
