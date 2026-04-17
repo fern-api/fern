@@ -99,6 +99,9 @@ paths:
             type: array
             items:
               type: string
+          example:
+            - ACCESS_GRANTED
+            - COPY
         - name: optionalTags
           in: query
           required: false
@@ -109,6 +112,9 @@ paths:
             type: array
             items:
               type: string
+          example:
+            - DELETE
+            - MOVE
         - name: neighbor
           in: query
           required: false
