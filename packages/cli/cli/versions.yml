@@ -1,4 +1,22 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.76.0
+  changelogEntry:
+    - summary: |
+        Replace fake time-based extraction progress bar with real file-count
+        tracking, and add a new progress bar for Windows symlink patching.
+      type: feat
+  createdAt: "2026-04-16"
+  irVersion: 66
+- version: 4.75.0
+  changelogEntry:
+    - summary: |
+        When using `fern sdk preview --push-diff`, the diff branch now uses the
+        original package name instead of the preview-scoped name. This makes the
+        diff show only real API changes without preview artifacts like package
+        name rewrites.
+      type: feat
+  createdAt: "2026-04-16"
+  irVersion: 66
 - version: 4.74.0
   changelogEntry:
     - summary: |

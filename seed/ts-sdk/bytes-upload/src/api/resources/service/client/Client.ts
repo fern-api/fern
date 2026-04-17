@@ -124,6 +124,11 @@ export class ServiceClient {
             headers: _headers,
             contentType: "application/octet-stream",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            queryString: core.url
+                .queryBuilder()
+                .addMany(_queryParams)
+                .mergeAdditional(requestOptions?.queryParams)
+                .build(),
             requestType: "bytes",
             duplex: "half",
             body: _binaryUploadRequest.body,

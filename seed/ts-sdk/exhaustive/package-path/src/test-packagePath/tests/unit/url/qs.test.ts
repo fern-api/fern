@@ -34,7 +34,7 @@ describe("Test qs toQueryString", () => {
         interface ArrayTestCase {
             description: string;
             input: any;
-            options?: { arrayFormat?: "repeat" | "indices" };
+            options?: { arrayFormat?: "repeat" | "indices" | "comma" };
             expected: string;
         }
 
@@ -150,7 +150,7 @@ describe("Test qs toQueryString", () => {
         interface MixedTestCase {
             description: string;
             input: any;
-            options?: { arrayFormat?: "repeat" | "indices" };
+            options?: { arrayFormat?: "repeat" | "indices" | "comma" };
             expected: string;
         }
 
@@ -241,11 +241,107 @@ describe("Test qs toQueryString", () => {
         });
     });
 
+    describe("Comma array format", () => {
+        interface CommaTestCase {
+            description: string;
+            input: any;
+            options?: { arrayFormat?: "comma"; encode?: boolean };
+            expected: string;
+        }
+
+        const commaTests: CommaTestCase[] = [
+            {
+                description: "should join array values with commas",
+                input: { event_type: ["ACCESS_GRANTED", "COPY", "DELETE"] },
+                options: { arrayFormat: "comma" },
+                expected: "event_type=ACCESS_GRANTED,COPY,DELETE",
+            },
+            {
+                description: "should handle single-element array",
+                input: { event_type: ["ACCESS_GRANTED"] },
+                options: { arrayFormat: "comma" },
+                expected: "event_type=ACCESS_GRANTED",
+            },
+            {
+                description: "should handle empty array",
+                input: { event_type: [] },
+                options: { arrayFormat: "comma" },
+                expected: "",
+            },
+            {
+                description: "should not percent-encode commas",
+                input: { items: ["a", "b", "c"] },
+                options: { arrayFormat: "comma" },
+                expected: "items=a,b,c",
+            },
+            {
+                description: "should encode values but not commas",
+                input: { items: ["a b", "c d"] },
+                options: { arrayFormat: "comma" },
+                expected: "items=a%20b,c%20d",
+            },
+            {
+                description: "should not encode when encode is false",
+                input: { items: ["a b", "c d"] },
+                options: { arrayFormat: "comma", encode: false },
+                expected: "items=a b,c d",
+            },
+            {
+                description: "should handle mixed parameters with comma and non-array values",
+                input: { event_type: ["ACCESS_GRANTED", "COPY", "DELETE"], limit: 10, offset: 0 },
+                options: { arrayFormat: "comma" },
+                expected: "event_type=ACCESS_GRANTED,COPY,DELETE&limit=10&offset=0",
+            },
+            {
+                description: "should handle numeric array values",
+                input: { ids: [1, 2, 3] },
+                options: { arrayFormat: "comma" },
+                expected: "ids=1,2,3",
+            },
+            {
+                description: "should handle boolean array values",
+                input: { flags: [true, false, true] },
+                options: { arrayFormat: "comma" },
+                expected: "flags=true,false,true",
+            },
+            {
+                description: "should skip null values in comma format",
+                input: { items: ["a", null, "c"] },
+                options: { arrayFormat: "comma" },
+                expected: "items=a,c",
+            },
+            {
+                description: "should skip undefined values in comma format",
+                input: { items: ["a", undefined, "c"] },
+                options: { arrayFormat: "comma" },
+                expected: "items=a,c",
+            },
+            {
+                description: "should produce empty string for all-null array in comma format",
+                input: { items: [null, undefined] },
+                options: { arrayFormat: "comma" },
+                expected: "",
+            },
+            {
+                description: "should encode commas within values while keeping separator commas literal",
+                input: { items: ["a,b", "c"] },
+                options: { arrayFormat: "comma" },
+                expected: "items=a%2Cb,c",
+            },
+        ];
+
+        commaTests.forEach(({ description, input, options, expected }) => {
+            it(description, () => {
+                expect(toQueryString(input, options)).toBe(expected);
+            });
+        });
+    });
+
     describe("Options combinations", () => {
         interface OptionsTestCase {
             description: string;
             input: any;
-            options?: { arrayFormat?: "repeat" | "indices"; encode?: boolean };
+            options?: { arrayFormat?: "repeat" | "indices" | "comma"; encode?: boolean };
             expected: string;
         }
 

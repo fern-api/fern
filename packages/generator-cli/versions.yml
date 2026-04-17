@@ -1,6 +1,20 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Only push the fern-generation-base tag when replay has unresolved conflicts, and skip syncFromDivergentMerge when the tag is not reachable from HEAD. Prevents stale tags from clean replay PRs from poisoning subsequent runs.
+      type: fix
+  createdAt: "2026-04-16"
+  version: 0.9.10
+
+- changelogEntry:
+    - summary: |
+        Upgrade @fern-api/replay to 0.11.0.
+      type: chore
+  createdAt: "2026-04-16"
+  version: 0.9.9
+
+- changelogEntry:
+    - summary: |
         Use commit SHA instead of branch name in changelog URL so the link
         remains valid after the PR branch is deleted or squash-merged.
       type: fix

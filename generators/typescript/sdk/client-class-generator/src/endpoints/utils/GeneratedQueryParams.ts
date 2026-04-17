@@ -269,6 +269,84 @@ export class GeneratedQueryParams {
         return mapExpression;
     }
 
+    /**
+     * Returns a ts.Expression that produces the final query string via the builder pattern.
+     *
+     * Emits:
+     *     core.url.queryBuilder()
+     *         .addMany(_queryParams)
+     *         .add("tags", _queryParams["tags"], { style: "comma" })
+     *         .mergeAdditional(requestOptions?.queryParams)
+     *         .build()
+     *
+     * Non-comma params are added in bulk via `.addMany()`, then comma-style params
+     * override their keys individually via `.add(..., { style: "comma" })`.
+     */
+    public getQueryStringExpression(context: FileContext): ts.Expression | undefined {
+        if (this.queryParameters == null || this.queryParameters.length === 0) {
+            return undefined;
+        }
+
+        const additionalQueryParams = ts.factory.createPropertyAccessChain(
+            ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
+            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+            ts.factory.createIdentifier(REQUEST_OPTIONS_ADDITIONAL_QUERY_PARAMETERS_PROPERTY_NAME)
+        );
+
+        const commaParams = this.queryParameters.filter((qp) => qp.explode === false);
+
+        // core.url.queryBuilder()
+        let chain: ts.Expression = context.coreUtilities.urlUtils.queryBuilder._invoke();
+
+        // .addMany(_queryParams) — adds all params with default "repeat" format
+        chain = ts.factory.createCallExpression(
+            ts.factory.createPropertyAccessExpression(chain, ts.factory.createIdentifier("addMany")),
+            undefined,
+            [ts.factory.createIdentifier(GeneratedQueryParams.QUERY_PARAMS_VARIABLE_NAME)]
+        );
+
+        // Override comma-style params individually
+        for (const queryParameter of commaParams) {
+            const wireValue = getWireValue(queryParameter.name);
+
+            const valueRef = ts.factory.createElementAccessExpression(
+                ts.factory.createIdentifier(GeneratedQueryParams.QUERY_PARAMS_VARIABLE_NAME),
+                ts.factory.createStringLiteral(wireValue)
+            );
+
+            chain = ts.factory.createCallExpression(
+                ts.factory.createPropertyAccessExpression(chain, ts.factory.createIdentifier("add")),
+                undefined,
+                [
+                    ts.factory.createStringLiteral(wireValue),
+                    valueRef,
+                    ts.factory.createObjectLiteralExpression([
+                        ts.factory.createPropertyAssignment(
+                            ts.factory.createIdentifier("style"),
+                            ts.factory.createStringLiteral("comma")
+                        )
+                    ])
+                ]
+            );
+        }
+
+        // .mergeAdditional(requestOptions?.queryParams)
+        chain = ts.factory.createCallExpression(
+            ts.factory.createPropertyAccessExpression(chain, ts.factory.createIdentifier("mergeAdditional")),
+            undefined,
+            [additionalQueryParams]
+        );
+
+        // .build()
+        chain = ts.factory.createCallExpression(
+            ts.factory.createPropertyAccessExpression(chain, ts.factory.createIdentifier("build")),
+            undefined,
+            []
+        );
+
+        return chain;
+    }
+
     public getReferenceTo(): ts.Expression | undefined {
         const getRequestOptionsAdditionalQueryParameters = ts.factory.createPropertyAccessChain(
             ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),

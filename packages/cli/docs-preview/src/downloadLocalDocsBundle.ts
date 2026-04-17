@@ -95,7 +95,12 @@ function isWithinOutputDir(resolvedPath: string, outputDir: string): boolean {
  * When a direct target doesn't exist, it falls back to searching the root
  * .pnpm store.
  */
-function resolveWindowsSymlinks(outputDir: string, symlinks: SymlinkEntry[], logger: Logger): void {
+function resolveWindowsSymlinks(
+    outputDir: string,
+    symlinks: SymlinkEntry[],
+    logger: Logger,
+    onProgress?: (resolved: number, total: number) => void
+): void {
     if (symlinks.length === 0) {
         return;
     }
@@ -178,6 +183,7 @@ function resolveWindowsSymlinks(outputDir: string, symlinks: SymlinkEntry[], log
             logger.debug(`Failed to resolve symlink ${symlinkPath}: ${error}`);
             failed++;
         }
+        onProgress?.(junctions + copies + alreadyExisted + failed, symlinks.length);
     }
 
     logger.debug(
@@ -384,7 +390,7 @@ export async function downloadBundle({
             });
             unzipProgressBar.start(100, 0);
 
-            const UNZIP_DURATION_MS = 30000;
+            const UNZIP_DURATION_MS = PLATFORM_IS_WINDOWS ? 60000 : 30000;
             const startTime = Date.now();
             unzipInterval = setInterval(() => {
                 const elapsed = Date.now() - startTime;
@@ -428,7 +434,26 @@ export async function downloadBundle({
 
         // Resolve symlinks via NTFS junctions on Windows
         if (PLATFORM_IS_WINDOWS && collectedSymlinks.length > 0) {
-            resolveWindowsSymlinks(absolutePathToBundleFolder, collectedSymlinks, logger);
+            let symlinkProgressBar: cliProgress.SingleBar | undefined;
+            if (app) {
+                symlinkProgressBar = new cliProgress.SingleBar({
+                    format: `${DOCS_PREFIX} ${formatProgressLabel("Patching symlinks")} [{bar}] {percentage}% | {value}/{total}`,
+                    barCompleteChar: "\u2588",
+                    barIncompleteChar: "\u2591",
+                    hideCursor: true
+                });
+                symlinkProgressBar.start(collectedSymlinks.length, 0);
+            }
+            resolveWindowsSymlinks(
+                absolutePathToBundleFolder,
+                collectedSymlinks,
+                logger,
+                symlinkProgressBar ? (resolved, total) => symlinkProgressBar?.update(resolved) : undefined
+            );
+            if (symlinkProgressBar) {
+                symlinkProgressBar.update(collectedSymlinks.length);
+                symlinkProgressBar.stop();
+            }
         }
 
         // write etag
