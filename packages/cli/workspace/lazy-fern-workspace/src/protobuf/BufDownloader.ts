@@ -1,5 +1,6 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
+import { CliError } from "@fern-api/task-context";
 import { access, chmod, copyFile, mkdir, readFile, rename, rm, writeFile } from "fs/promises";
 import os from "os";
 import path from "path";
@@ -39,7 +40,7 @@ function getPlatformInfo(): PlatformInfo {
             osName = "Windows";
             break;
         default:
-            throw new Error(`Unsupported platform: ${platform}`);
+            throw new CliError({ message: `Unsupported platform: ${platform}`, code: CliError.Code.EnvironmentError });
     }
 
     let archName: string;
@@ -52,7 +53,7 @@ function getPlatformInfo(): PlatformInfo {
             archName = platform === "linux" ? "aarch64" : "arm64";
             break;
         default:
-            throw new Error(`Unsupported architecture: ${arch}`);
+            throw new CliError({ message: `Unsupported architecture: ${arch}`, code: CliError.Code.EnvironmentError });
     }
 
     return {
@@ -145,7 +146,10 @@ async function acquireLock(logger: Logger): Promise<() => Promise<void>> {
                 await new Promise((resolve) => setTimeout(resolve, LOCK_RETRY_INTERVAL_MS));
             }
         }
-        throw new Error(`Failed to acquire buf lock after timeout and retry`);
+        throw new CliError({
+            message: `Failed to acquire buf lock after timeout and retry`,
+            code: CliError.Code.InternalError
+        });
     }
     return createLockReleaser(lockPath, logger);
 }
