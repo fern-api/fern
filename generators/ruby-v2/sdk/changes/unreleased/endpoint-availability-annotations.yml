@@ -1,9 +1,13 @@
 - summary: |
-    Added an opt-in `generateEndpointAvailability` custom config flag
-    (defaults to `false`). When enabled, generated Ruby v2 SDK methods
-    surface endpoint availability (deprecated / in-development /
-    pre-release) via YARD's native `@deprecated` tag where one exists,
-    and fall back to `@beta` doc comments otherwise. With the flag off,
-    the generator's output is byte-for-byte identical to previous
-    releases. The default will flip to `true` in the next major bump.
+    Added an opt-in `generateAvailabilityAnnotations` custom config flag
+    (defaults to `false`) that controls whether generated Ruby v2 SDK code
+    surfaces IR-level `availability` as YARD annotations. Today this
+    applies only to HTTP endpoint docstrings (deprecated / in-development /
+    pre-release) via YARD's native `@deprecated` tag where one exists, with
+    `@beta` doc comments as the fallback; the flag is named generically so
+    future availability surfaces (services, types, properties, enum values,
+    webhooks, websocket channels, errors) can opt in under the same flag
+    without introducing a new one. With the flag off, the generator's
+    output is byte-for-byte identical to previous releases. The default
+    will flip to `true` in the next major bump.
   type: feat

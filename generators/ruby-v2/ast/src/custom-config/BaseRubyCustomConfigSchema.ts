@@ -43,12 +43,15 @@ export const BaseRubyCustomConfigSchema = z.object({
     // - "error": reports violations as errors (used in seed to enforce rubocop)
     rubocopSeverity: z.enum(["info", "warning", "error"]).optional(),
     maxRetries: z.number().int().min(0).optional(),
-    // When true, generated endpoint docstrings include YARD availability tags
-    // (`@deprecated` / `@beta`) sourced from the IR's `availability` field.
+    // When true, generated SDK code surfaces IR-level `availability` via YARD
+    // annotations (`@deprecated` / `@beta`). Today this only applies to HTTP
+    // endpoint docstrings; the flag is named generically so future surfaces
+    // (services, types, properties, enum values, webhooks, websocket channels,
+    // errors) can opt in under the same flag.
     // Defaults to false to preserve byte-for-byte output for existing customers,
     // since YARD's `@deprecated` surfaces as a warning in strict lint setups.
     // TODO(next-major): flip default to true.
-    generateEndpointAvailability: z.boolean().optional()
+    generateAvailabilityAnnotations: z.boolean().optional()
 });
 
 export type BaseRubyCustomConfigSchema = z.infer<typeof BaseRubyCustomConfigSchema>;

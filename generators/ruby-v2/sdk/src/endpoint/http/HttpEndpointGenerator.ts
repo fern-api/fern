@@ -395,7 +395,7 @@ export class HttpEndpointGenerator {
         if (endpoint.docs != null && endpoint.docs.length > 0) {
             parts.push(endpoint.docs);
         }
-        if (this.context.customConfig.generateEndpointAvailability === true) {
+        if (this.context.customConfig.generateAvailabilityAnnotations === true) {
             const availabilityDocs = getAvailabilityDocs(endpoint.availability);
             if (availabilityDocs != null) {
                 parts.push(availabilityDocs);
