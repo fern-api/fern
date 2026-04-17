@@ -1,4 +1,10 @@
-import { FernWorkspace, getOriginGitCommit } from "@fern-api/api-workspace-commons";
+import {
+    detectCiEnvironmentMetadata,
+    detectInvocationSource,
+    FernWorkspace,
+    getCliInvocation,
+    getOriginGitCommit
+} from "@fern-api/api-workspace-commons";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { Audiences, generatorsYml } from "@fern-api/configuration";
 import { getIrVersionForGenerator } from "@fern-api/core";
@@ -62,7 +68,11 @@ export async function getIntermediateRepresentation({
                 generatorName: generatorInvocation.name,
                 generatorVersion: generatorInvocation.version,
                 generatorConfig: generatorInvocation.config,
-                originGitCommit: getOriginGitCommit()
+                originGitCommit: getOriginGitCommit(),
+                invokedBy: detectInvocationSource(),
+                cliInvocation: getCliInvocation(),
+                requestedVersion: version,
+                ciEnvironment: detectCiEnvironmentMetadata()
             }
         });
     if (sourceConfig != null) {
@@ -73,7 +83,11 @@ export async function getIntermediateRepresentation({
         generatorName: generatorInvocation.name,
         generatorVersion: generatorInvocation.version,
         generatorConfig: generatorInvocation.config,
-        originGitCommit: getOriginGitCommit()
+        originGitCommit: getOriginGitCommit(),
+        invokedBy: detectInvocationSource(),
+        cliInvocation: getCliInvocation(),
+        requestedVersion: version,
+        ciEnvironment: detectCiEnvironmentMetadata()
     };
 
     context.logger.debug("Generated IR");

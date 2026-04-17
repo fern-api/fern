@@ -111,7 +111,67 @@ types:
         docs: The custom configuration passed to the generator from generators.yml.
       originGitCommit:
         type: optional<string>
-        docs: The git commit hash of the origin repo at the time of generation.
+        docs: |
+          The git commit hash of the Fern configuration repository (the repo containing
+          the `fern/` directory) at the time of generation. Resolved via `git rev-parse HEAD`
+          from the CLI's working directory.
+      invokedBy:
+        type: optional<InvocationSource>
+        docs: |
+          Identifies who or what triggered the generation. Auto-detected from the
+          `FERN_INVOKER` environment variable when set, otherwise derived from common
+          CI environment variables.
+      cliInvocation:
+        type: optional<string>
+        docs: |
+          The CLI arguments passed to the Fern CLI (i.e. `process.argv.slice(2)` joined
+          by spaces). Useful for understanding exactly how generation was triggered
+          (e.g. whether `--version AUTO` was used).
+      requestedVersion:
+        type: optional<string>
+        docs: |
+          The raw value of the `--version` flag passed to the Fern CLI, if any.
+          A value of "AUTO" indicates automatic semantic versioning was requested.
+      ciEnvironment:
+        type: optional<CiEnvironmentMetadata>
+        docs: Structured metadata describing the CI environment the generation ran in, if any.
+
+  InvocationSource:
+    docs: |
+      The source that triggered a Fern CLI invocation. `autopilot` and `autorelease` are
+      set via the `FERN_INVOKER` environment variable by those systems. `ci` is inferred
+      from standard CI environment variables. `manual` is the fallback when no CI
+      signal is detected.
+    enum:
+      - autopilot
+      - autorelease
+      - ci
+      - manual
+
+  CiEnvironmentMetadata:
+    docs: Structured metadata about the CI environment that ran the generation.
+    properties:
+      provider:
+        type: string
+        docs: The CI provider (e.g. "github", "gitlab", "bitbucket").
+      repo:
+        type: optional<string>
+        docs: The repository slug (e.g. "owner/name").
+      runId:
+        type: optional<string>
+        docs: The CI run/pipeline identifier.
+      runUrl:
+        type: optional<string>
+        docs: A URL pointing to the CI run.
+      commitSha:
+        type: optional<string>
+        docs: The commit SHA the CI run is operating on.
+      branch:
+        type: optional<string>
+        docs: The branch or ref the CI run is operating on.
+      actor:
+        type: optional<string>
+        docs: The user or bot that triggered the CI run.
 
   ReadmeConfig:
     docs: |

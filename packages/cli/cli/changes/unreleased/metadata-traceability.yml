@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add more traceability to `.fern/metadata.json` so generator output makes it
+    clearer how and by whom the SDK was generated. The IR `generationMetadata`
+    object now carries four additional optional fields:
+      * `invokedBy`: source of the CLI invocation (`autopilot`, `autorelease`,
+        `ci`, or `manual`). Set explicitly via the `FERN_INVOKER` environment
+        variable, otherwise inferred from standard CI env vars.
+      * `cliInvocation`: the raw CLI arguments (e.g. `generate --version AUTO`).
+      * `requestedVersion`: the raw value passed to `--version` (e.g. `AUTO` or
+        `1.2.3`) so consumers can tell whether auto-versioning was requested.
+      * `ciEnvironment`: structured metadata about the CI provider, repo, run,
+        commit, branch, and actor when the CLI is running in CI.
+
+    The existing `originGitCommit` field continues to record the git commit of
+    the Fern configuration repository at the time of generation.
+  type: feat

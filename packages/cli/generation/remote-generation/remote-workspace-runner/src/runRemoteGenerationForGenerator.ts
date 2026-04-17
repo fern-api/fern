@@ -1,6 +1,9 @@
 import {
     checkVersionDoesNotAlreadyExist,
     computeSemanticVersion,
+    detectCiEnvironmentMetadata,
+    detectInvocationSource,
+    getCliInvocation,
     getOriginGitCommit
 } from "@fern-api/api-workspace-commons";
 import { FernToken } from "@fern-api/auth";
@@ -149,7 +152,11 @@ export async function runRemoteGenerationForGenerator({
             generatorName: generatorInvocation.name,
             generatorVersion: generatorInvocation.version,
             generatorConfig: generatorInvocation.config,
-            originGitCommit: getOriginGitCommit()
+            originGitCommit: getOriginGitCommit(),
+            invokedBy: detectInvocationSource(),
+            cliInvocation: getCliInvocation(),
+            requestedVersion: version,
+            ciEnvironment: detectCiEnvironmentMetadata()
         }
     });
 

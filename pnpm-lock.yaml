@@ -7371,6 +7371,9 @@ importers:
       '@fern-api/github':
         specifier: workspace:*
         version: link:../github
+      '@fern-api/ir-sdk':
+        specifier: workspace:*
+        version: link:../../ir-sdk
       '@fern-api/openapi-ir':
         specifier: workspace:*
         version: link:../../cli/api-importers/openapi/openapi-ir
