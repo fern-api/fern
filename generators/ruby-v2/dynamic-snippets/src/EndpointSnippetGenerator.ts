@@ -633,7 +633,6 @@ export class EndpointSnippetGenerator {
     }): ruby.KeywordArgument[] {
         const args: ruby.KeywordArgument[] = [];
         const record = this.context.getRecord(snippet.requestBody) ?? {};
-        const providedWireValues = new Set<string>(Object.keys(record));
 
         const bodyProperties = this.context.associateByWireValue({
             parameters: request.value,
@@ -651,25 +650,6 @@ export class EndpointSnippetGenerator {
                     value
                 })
             );
-        }
-
-        // Synthesize default values for required properties missing from the example
-        for (const property of request.value) {
-            if (providedWireValues.has(property.name.wireValue)) {
-                continue;
-            }
-            if (this.context.isOptional(property.typeReference) || this.context.isNullable(property.typeReference)) {
-                continue;
-            }
-            const defaultValue = this.context.dynamicTypeLiteralMapper.synthesizeDefaultValue(property.typeReference);
-            if (!ruby.TypeLiteral.isNop(defaultValue)) {
-                args.push(
-                    ruby.keywordArgument({
-                        name: this.context.getPropertyName(property.name.name),
-                        value: defaultValue
-                    })
-                );
-            }
         }
 
         return args;
@@ -880,8 +860,6 @@ export class EndpointSnippetGenerator {
         // Handle different type shapes
         switch (namedType.type) {
             case "object": {
-                const providedWireValues = new Set<string>(Object.keys(bodyRecord));
-
                 // For objects, convert each property to a keyword argument
                 for (const property of namedType.properties) {
                     const wireValue = property.name.wireValue;
@@ -905,29 +883,6 @@ export class EndpointSnippetGenerator {
                     }
                 }
 
-                // Synthesize default values for required properties missing from the example
-                for (const property of namedType.properties) {
-                    if (providedWireValues.has(property.name.wireValue)) {
-                        continue;
-                    }
-                    if (
-                        this.context.isOptional(property.typeReference) ||
-                        this.context.isNullable(property.typeReference)
-                    ) {
-                        continue;
-                    }
-                    const defaultValue = this.context.dynamicTypeLiteralMapper.synthesizeDefaultValue(
-                        property.typeReference
-                    );
-                    if (!ruby.TypeLiteral.isNop(defaultValue)) {
-                        args.push(
-                            ruby.keywordArgument({
-                                name: this.context.getPropertyName(property.name.name),
-                                value: defaultValue
-                            })
-                        );
-                    }
-                }
                 break;
             }
             case "alias":

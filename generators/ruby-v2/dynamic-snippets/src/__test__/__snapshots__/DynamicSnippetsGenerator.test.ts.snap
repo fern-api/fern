@@ -327,9 +327,7 @@ client.create_user(
       verified: "string"
     },
     ssn: "ssn"
-  },
-  id: "string",
-  email: "string"
+  }
 )
 "
 `;
@@ -348,8 +346,7 @@ client.create_user(
       verified: "string"
     },
     ssn: "ssn"
-  },
-  email: "string"
+  }
 )
 "
 `;
