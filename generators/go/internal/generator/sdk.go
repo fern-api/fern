@@ -1379,7 +1379,7 @@ func (f *fileWriter) WriteClient(
 	// Implement this service's methods.
 	for _, endpoint := range endpoints {
 		f.WriteDocs(endpoint.Docs)
-		if f.generateEndpointAvailability {
+		if f.generateAvailabilityAnnotations {
 			if availabilityLine := getAvailabilityDocs(endpoint.Availability); availabilityLine != "" {
 				if endpoint.Docs != nil && len(*endpoint.Docs) > 0 {
 					f.P("//")

@@ -7,7 +7,7 @@
     "packageName": "testPackageName",
     "errorCodes": "per-endpoint",
     "clientConstructorName": "NewIMDBClient",
-    "generateEndpointAvailability": true
+    "generateAvailabilityAnnotations": true
   },
   "originGitCommit": "DUMMY",
   "sdkVersion": "v0.0.1"

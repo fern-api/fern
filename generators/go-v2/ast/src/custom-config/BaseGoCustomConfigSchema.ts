@@ -22,7 +22,7 @@ export const baseGoCustomConfigSchema = z.strictObject({
     // and `// @beta ...` for IN_DEVELOPMENT / PRE_RELEASE). Gated behind a flag
     // because staticcheck/SA1019 treats `// Deprecated:` as a warning, which
     // breaks downstream builds that compile with warnings-as-errors.
-    generateEndpointAvailability: z.boolean().optional(),
+    generateAvailabilityAnnotations: z.boolean().optional(),
     includeLegacyClientOptions: z.boolean().optional(),
     inlinePathParameters: z.boolean().optional(),
     inlineFileProperties: z.boolean().optional(),

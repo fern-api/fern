@@ -59,7 +59,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 subpackage
             }),
             pointerReceiver: true,
-            docs: this.context.customConfig.generateEndpointAvailability
+            docs: this.context.customConfig.generateAvailabilityAnnotations
                 ? combineDocsWithAvailability(endpoint.docs, endpoint.availability)
                 : endpoint.docs
         });

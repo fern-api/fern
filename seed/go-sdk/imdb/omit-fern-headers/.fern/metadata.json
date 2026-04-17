@@ -6,7 +6,7 @@
     "enableWireTests": false,
     "omitFernHeaders": true,
     "maxRetries": 5,
-    "generateEndpointAvailability": true
+    "generateAvailabilityAnnotations": true
   },
   "originGitCommit": "DUMMY",
   "sdkVersion": "v0.0.1"

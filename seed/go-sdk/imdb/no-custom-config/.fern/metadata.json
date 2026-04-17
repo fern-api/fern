@@ -4,7 +4,7 @@
   "generatorVersion": "local",
   "generatorConfig": {
     "enableWireTests": false,
-    "generateEndpointAvailability": true
+    "generateAvailabilityAnnotations": true
   },
   "originGitCommit": "DUMMY",
   "sdkVersion": "v0.0.1"

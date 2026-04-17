@@ -66,7 +66,7 @@ type Config struct {
 	ExportAllRequestsAtRoot      bool
 	OmitEmptyRequestWrappers     bool
 	OmitFernHeaders              bool
-	GenerateEndpointAvailability bool
+	GenerateAvailabilityAnnotations bool
 	Organization                 string
 	CoordinatorURL               string
 	CoordinatorTaskID            string
@@ -240,7 +240,7 @@ func newConfig(configFilename string) (*Config, error) {
 		ExportAllRequestsAtRoot:      *customConfig.ExportAllRequestsAtRoot,
 		OmitEmptyRequestWrappers:     *customConfig.OmitEmptyRequestWrappers,
 		OmitFernHeaders:              *customConfig.OmitFernHeaders,
-		GenerateEndpointAvailability: *customConfig.GenerateEndpointAvailability,
+		GenerateAvailabilityAnnotations: *customConfig.GenerateAvailabilityAnnotations,
 		Organization:                 config.Organization,
 		AlwaysSendRequiredProperties: *customConfig.AlwaysSendRequiredProperties,
 		Whitelabel:                   config.Whitelabel,
@@ -308,7 +308,7 @@ type customConfig struct {
 	OmitEmptyRequestWrappers     *bool         `json:"omitEmptyRequestWrappers,omitempty"`
 	OmitFernHeaders              *bool         `json:"omitFernHeaders,omitempty"`
 	// TODO(next-major): flip default to true in applyCustomConfigDefaultsForV1.
-	GenerateEndpointAvailability *bool         `json:"generateEndpointAvailability,omitempty"`
+	GenerateAvailabilityAnnotations *bool         `json:"generateAvailabilityAnnotations,omitempty"`
 	ClientName                   string        `json:"clientName,omitempty"`
 	ClientConstructorName        string        `json:"clientConstructorName,omitempty"`
 	ImportPath                   string        `json:"importPath,omitempty"`
@@ -479,8 +479,8 @@ func applyCustomConfigDefaultsForV1(customConfig *customConfig) *customConfig {
 	if customConfig.OmitFernHeaders == nil {
 		customConfig.OmitFernHeaders = gospec.Ptr(false)
 	}
-	if customConfig.GenerateEndpointAvailability == nil {
-		customConfig.GenerateEndpointAvailability = gospec.Ptr(false)
+	if customConfig.GenerateAvailabilityAnnotations == nil {
+		customConfig.GenerateAvailabilityAnnotations = gospec.Ptr(false)
 	}
 	if customConfig.UnionVersion == "" {
 		customConfig.UnionVersion = "v1"
