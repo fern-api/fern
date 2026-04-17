@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `use_request_defaults` top-level config option with three modes: `"none"`,
+    `"parameters"` (query params and headers only), and `"all"` (query params, headers,
+    request body params, and pydantic model fields). This takes precedence over the
+    existing `pydantic_config.use_provided_defaults` boolean, which will be deprecated
+    in a future release.
+  type: feat

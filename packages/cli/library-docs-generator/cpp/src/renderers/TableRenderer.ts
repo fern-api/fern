@@ -17,19 +17,7 @@ import {
     renderTypeInfoForTable
 } from "./DescriptionRenderer.js";
 import { formatLinksJson } from "./SignatureRenderer.js";
-import { trimTrailingBlankLines } from "./shared.js";
-
-// ---------------------------------------------------------------------------
-// Markdown table cell escaping
-// ---------------------------------------------------------------------------
-
-/**
- * Escape a string for use in a markdown table cell.
- * Pipes must be escaped, and newlines replaced with spaces.
- */
-function escapeTableCell(value: string): string {
-    return value.replace(/\|/g, "\\|").replace(/\n/g, " ");
-}
+import { escapeMdxText, escapeTableCell, trimTrailingBlankLines } from "./shared.js";
 
 // ---------------------------------------------------------------------------
 // Typedef table
@@ -154,7 +142,7 @@ export function renderMemberVariableTable(variables: CppVariableIr[], ownerPath:
 export function renderInnerClass(innerClass: CppClassIr, ownerPath: string): string {
     const lines: string[] = [];
 
-    lines.push(`### ${innerClass.name}`);
+    lines.push(`### ${escapeMdxText(innerClass.name)}`);
     lines.push("");
 
     // Signature CodeBlock
@@ -289,7 +277,7 @@ export function renderEnum(enumIr: CppEnumIr): string {
     const lines: string[] = [];
 
     // Header
-    lines.push(`### ${enumIr.name}`);
+    lines.push(`### ${escapeMdxText(enumIr.name)}`);
     lines.push("");
 
     // Description
@@ -307,7 +295,7 @@ export function renderEnum(enumIr: CppEnumIr): string {
 
     for (const val of enumIr.values) {
         const name = `\`${val.name}\``;
-        const value = val.initializer ? escapeTableCell(val.initializer) : "";
+        const value = val.initializer ? escapeTableCell(`\`${val.initializer}\``) : "";
         const desc = val.docstring ? escapeTableCell(renderSegmentsTrimmed(val.docstring.summary)) : "";
         // Trim trailing spaces in empty cells
         const valueCell = value ? ` ${value} ` : " ";

@@ -97,20 +97,27 @@ export async function replayRun(params: ReplayRunParams): Promise<ReplayRunResul
         }
 
         if (shouldSync && tagSha != null) {
-            const syncService = new ReplayService(outputDir, { enabled: true });
-            await syncService.syncFromDivergentMerge(tagSha, {
-                cliVersion,
-                generatorVersions,
-                baseBranchHead: baseBranchHead ?? undefined
-            });
+            if (!isTagMergedIntoHead(outputDir, tagSha)) {
+                logger?.warn(
+                    `fern-generation-base tag ${tagSha} is not reachable from HEAD — skipping divergent-merge sync. ` +
+                        `The tag likely points at an unmerged generation (PR closed without merge).`
+                );
+            } else {
+                const syncService = new ReplayService(outputDir, { enabled: true });
+                await syncService.syncFromDivergentMerge(tagSha, {
+                    cliVersion,
+                    generatorVersions,
+                    baseBranchHead: baseBranchHead ?? undefined
+                });
 
-            try {
-                const freshLockManager = new LockfileManager(outputDir);
-                if (freshLockManager.exists()) {
-                    previousGenerationSha = freshLockManager.read().current_generation;
+                try {
+                    const freshLockManager = new LockfileManager(outputDir);
+                    if (freshLockManager.exists()) {
+                        previousGenerationSha = freshLockManager.read().current_generation;
+                    }
+                } catch {
+                    // proceed with original SHA
                 }
-            } catch {
-                // proceed with original SHA
             }
         }
     }
@@ -166,6 +173,43 @@ export async function replayRun(params: ReplayRunParams): Promise<ReplayRunResul
         currentGenerationSha,
         baseBranchHead: resolvedBaseBranchHead
     };
+}
+
+/**
+ * True when the tag's commit either is an ancestor of HEAD (fast-forward merge)
+ * or its tree matches a commit in HEAD's recent history (squash merge).
+ * False when the tag points at an orphaned synthetic commit — e.g. a clean-replay
+ * PR that was closed without merging.
+ *
+ * Bounded to 500 commits: tag merges are always recent relative to the current
+ * generation, and an unbounded `git log` on large repos is expensive.
+ *
+ * Exported for testing.
+ */
+export function isTagMergedIntoHead(cwd: string, tagSha: string): boolean {
+    try {
+        execFileSync("git", ["merge-base", "--is-ancestor", tagSha, "HEAD"], {
+            cwd,
+            stdio: "pipe"
+        });
+        return true;
+    } catch {
+        // not an ancestor — fall through to tree-identity check for squash merges
+    }
+    const tagTree = gitRevParse(cwd, `${tagSha}^{tree}`);
+    if (tagTree == null) {
+        return false;
+    }
+    try {
+        const trees = execFileSync("git", ["log", "HEAD", "--format=%T", "--max-count=500"], {
+            cwd,
+            encoding: "utf-8",
+            stdio: "pipe"
+        });
+        return trees.split("\n").some((t) => t.trim() === tagTree);
+    } catch {
+        return false;
+    }
 }
 
 function gitRevParse(cwd: string, rev: string): string | null {

@@ -123,7 +123,7 @@ jobs:
         uses: ./.github/actions/install
 
       - name: Cache Fern bin dependencies
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.fern/bin
           key: ${{ runner.os }}-fern-bin-${{ hashFiles('packages/cli/workspace/lazy-fern-workspace/src/protobuf/BufDownloader.ts', 'packages/cli/workspace/lazy-fern-workspace/src/protobuf/ProtocGenOpenAPIDownloader.ts') }}
@@ -181,7 +181,7 @@ jobs:
 
       - name: Log in to Docker Hub
         if: ${{ env.DOCKERHUB_USERNAME != '' }}
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         env:
           DOCKERHUB_USERNAME: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
         with:
@@ -193,7 +193,7 @@ jobs:
 
       - name: Cache Docker images
         id: docker-cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: /tmp/docker-cache
           key: ${{ runner.os }}-docker-ete-${{ hashFiles('**/Dockerfile*') }}
@@ -210,7 +210,7 @@ jobs:
         run: docker images -q | sort -u > /tmp/docker-images-before.txt
 
       - name: Cache Fern bin dependencies
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.fern/bin
           key: ${{ runner.os }}-fern-bin-${{ hashFiles('packages/cli/workspace/lazy-fern-workspace/src/protobuf/BufDownloader.ts', 'packages/cli/workspace/lazy-fern-workspace/src/protobuf/ProtocGenOpenAPIDownloader.ts') }}

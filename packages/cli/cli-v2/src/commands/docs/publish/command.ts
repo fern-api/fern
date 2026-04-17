@@ -15,6 +15,7 @@ import { LegacyDocsPublisher } from "../../../docs/publisher/LegacyDocsPublisher
 import type { DocsStageOverrides } from "../../../docs/task/DocsTaskGroup.js";
 import { DocsTaskGroup } from "../../../docs/task/DocsTaskGroup.js";
 import { ValidationError } from "../../../errors/ValidationError.js";
+import { promptSelect } from "../../../ui/promptSelect.js";
 import { command } from "../../_internal/command.js";
 export declare namespace PublishCommand {
     export interface Args extends GlobalArgs {
@@ -64,7 +65,8 @@ export class PublishCommand {
             });
         }
 
-        const instanceUrl = this.resolveInstanceUrl({
+        const instanceUrl = await this.resolveInstanceUrl({
+            context,
             instances: workspace.docs.raw.instances,
             instance: args.instance
         });
@@ -165,13 +167,15 @@ export class PublishCommand {
         }
     }
 
-    private resolveInstanceUrl({
+    private async resolveInstanceUrl({
+        context,
         instances,
         instance
     }: {
+        context: Context;
         instances: Array<{ url: string }>;
         instance: string | undefined;
-    }): string {
+    }): Promise<string> {
         if (instances.length === 0) {
             throw new CliError({
                 message: "No docs instances configured.\n\n  Add an instance to the 'docs:' section of your fern.yml.",
@@ -196,12 +200,15 @@ export class PublishCommand {
 
         if (instances.length > 1) {
             const available = instances.map((i) => `  - ${i.url}`).join("\n");
-            throw new CliError({
-                message:
+            return await promptSelect<string>({
+                isTTY: context.isTTY,
+                message: "Multiple docs instances configured. Select one:",
+                choices: instances.map((i) => ({ name: i.url, value: i.url })),
+                nonInteractiveError:
                     `Multiple docs instances configured. Please specify which instance to publish.\n\n` +
                     `Available instances:\n${available}\n\n` +
                     `  Use --instance <url> to select one.`,
-                code: CliError.Code.ConfigError
+                flagHint: (value) => `--instance ${value}`
             });
         }
 

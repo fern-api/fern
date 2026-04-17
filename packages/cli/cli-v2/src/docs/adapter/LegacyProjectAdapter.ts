@@ -21,10 +21,11 @@ export class LegacyProjectAdapter {
     public adapt(workspace: Workspace): Project {
         const apiWorkspaces = this.buildApiWorkspaces(workspace);
         const docsWorkspace =
-            workspace.docs != null && workspace.absoluteFilePath != null
+            workspace.docs != null
                 ? this.docsAdapter.adapt({
                       docsConfig: workspace.docs,
-                      absoluteFilePath: workspace.absoluteFilePath
+                      absoluteFilePath:
+                          workspace.docs.absoluteFilePath ?? workspace.absoluteFilePath ?? this.context.cwd
                   })
                 : undefined;
         return {

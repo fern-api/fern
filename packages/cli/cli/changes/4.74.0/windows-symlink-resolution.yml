@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Resolve Windows symlinks via NTFS junctions during bundle extraction instead
+    of running pnpm install in standalone. This enables docs preview on Windows
+    without elevated privileges.
+  type: feat
