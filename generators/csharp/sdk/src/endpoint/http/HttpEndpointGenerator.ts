@@ -169,13 +169,18 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             }
         });
 
+        const availabilityEnabled = this.settings.generateEndpointAvailability;
         const publicMethod = cls.addMethod({
             name: this.getUnpagedEndpointMethodName(endpoint),
             access: this.hasPagination(endpoint) ? ast.Access.Private : ast.Access.Public,
             isAsync: !isWithRawResponseTask,
             parameters,
-            summary: getEndpointSummary(endpoint),
-            annotations: getAvailabilityAnnotations({ csharp: this.csharp, endpoint }),
+            summary: getEndpointSummary({ endpoint, enabled: availabilityEnabled }),
+            annotations: getAvailabilityAnnotations({
+                csharp: this.csharp,
+                endpoint,
+                enabled: availabilityEnabled
+            }),
             return_,
             body: isWithRawResponseTask ? body : this.wrapWithExceptionHandler({ body, returnType: return_ }),
             codeExample: snippet?.endpointCall
@@ -1177,13 +1182,18 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     assertNever(endpoint.pagination);
             }
         });
+        const availabilityEnabled = this.settings.generateEndpointAvailability;
         return cls.addMethod({
             name: this.context.getEndpointMethodName(endpoint),
             access: ast.Access.Public,
             isAsync: true,
             parameters,
-            summary: getEndpointSummary(endpoint),
-            annotations: getAvailabilityAnnotations({ csharp: this.csharp, endpoint }),
+            summary: getEndpointSummary({ endpoint, enabled: availabilityEnabled }),
+            annotations: getAvailabilityAnnotations({
+                csharp: this.csharp,
+                endpoint,
+                enabled: availabilityEnabled
+            }),
             return_,
             body: this.wrapWithExceptionHandler({ body, returnType: return_ }),
             codeExample: snippet?.endpointCall

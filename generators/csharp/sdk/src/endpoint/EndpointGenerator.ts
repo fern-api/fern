@@ -141,11 +141,16 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
             return_ = this.System.Threading.Tasks.Task();
         }
 
+        const availabilityEnabled = this.settings.generateEndpointAvailability;
         interface_.addMethod({
             name: this.context.getEndpointMethodName(endpoint),
             parameters,
-            summary: getEndpointSummary(endpoint),
-            annotations: getAvailabilityAnnotations({ csharp: this.csharp, endpoint }),
+            summary: getEndpointSummary({ endpoint, enabled: availabilityEnabled }),
+            annotations: getAvailabilityAnnotations({
+                csharp: this.csharp,
+                endpoint,
+                enabled: availabilityEnabled
+            }),
             return_,
             noBody: true
         });
@@ -180,11 +185,16 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
         const rawReturn = this.getPagerReturnType(endpoint);
         const return_ = this.System.Threading.Tasks.Task(rawReturn);
 
+        const availabilityEnabled = this.settings.generateEndpointAvailability;
         interface_.addMethod({
             name: this.context.getEndpointMethodName(endpoint),
             parameters,
-            summary: getEndpointSummary(endpoint),
-            annotations: getAvailabilityAnnotations({ csharp: this.csharp, endpoint }),
+            summary: getEndpointSummary({ endpoint, enabled: availabilityEnabled }),
+            annotations: getAvailabilityAnnotations({
+                csharp: this.csharp,
+                endpoint,
+                enabled: availabilityEnabled
+            }),
             return_,
             noBody: true
         });

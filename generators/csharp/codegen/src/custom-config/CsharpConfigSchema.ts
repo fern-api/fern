@@ -115,7 +115,15 @@ export const CsharpConfigSchema = z.object({
     // .NET tooling or CI systems that do not yet support .slnx.
     // "slnx" (default) generates only the modern .slnx format.
     "sln-format": z.enum(["sln", "slnx"]).optional(),
-    maxRetries: z.number().int().min(0).optional()
+    maxRetries: z.number().int().min(0).optional(),
+
+    // When true, generated endpoint methods reflect each endpoint's availability:
+    // deprecated endpoints are marked with [System.ObsoleteAttribute], and in-development
+    // or pre-release endpoints get a `@beta` note prepended to their XML doc summary.
+    // Default false — annotations can be a breaking change for customers compiling with
+    // warnings-as-errors (e.g., `treatWarningsAsErrors`).
+    // TODO(next-major): flip default to true.
+    generateEndpointAvailability: z.boolean().optional()
 });
 
 export type CsharpConfigSchema = z.infer<typeof CsharpConfigSchema>;

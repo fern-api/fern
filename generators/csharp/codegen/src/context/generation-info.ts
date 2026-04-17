@@ -241,6 +241,13 @@ export class Generation {
         slnFormat: () => this.customConfig["sln-format"] ?? "slnx",
         /** When true, requires explicit namespace declarations instead of using file-scoped namespaces. Default: false. */
         explicitNamespaces: () => this.customConfig["explicit-namespaces"] === true,
+        /**
+         * When true, generated endpoint methods reflect each endpoint's availability
+         * (deprecated / in-development / pre-release) via `[System.ObsoleteAttribute]`
+         * or a `@beta` note in the XML doc summary. Default: false.
+         * TODO(next-major): flip default to true.
+         */
+        generateEndpointAvailability: () => this.customConfig.generateEndpointAvailability ?? false,
         /** Override the default max retries for the SDK client. Default: 2. */
         maxRetries: () => this.customConfig.maxRetries,
         /**

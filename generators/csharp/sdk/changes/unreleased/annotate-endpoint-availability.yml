@@ -1,8 +1,14 @@
 - type: feat
   summary: |
-    Generated C# SDK methods now surface endpoint availability
-    (deprecated / in-development / pre-release) using the language's native
-    deprecation mechanism where one exists, and fall back to doc comments
-    otherwise. Deprecated endpoints are emitted with
-    `[System.ObsoleteAttribute("message")]`; in-development and pre-release
-    endpoints get an `@beta` note prepended to the XML doc summary.
+    Added a new opt-in `generateEndpointAvailability` custom config option
+    (default `false`). When enabled, generated C# SDK methods surface each
+    endpoint's availability: deprecated endpoints are emitted with
+    `[System.ObsoleteAttribute("message")]`, and in-development / pre-release
+    endpoints get an `@beta` note prepended to their XML doc summary.
+
+    This is opt-in because annotations such as `[Obsolete]` are a breaking
+    change for customers compiling with warnings-as-errors
+    (`TreatWarningsAsErrors`). When the flag is `false`, generator output is
+    unchanged. Enable with `generateEndpointAvailability: true` under this
+    generator's `config:` block in `generators.yml`. The default will flip to
+    `true` in the next major version of this generator.

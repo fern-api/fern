@@ -208,6 +208,9 @@ fixtures:
     - customConfig:
         omit-fern-headers: true
       outputFolder: omit-fern-headers
+    - customConfig:
+        generateEndpointAvailability: true
+      outputFolder: endpoint-availability
   multi-url-environment:
     - customConfig:
         pascal-case-environments: false
@@ -234,6 +237,9 @@ fixtures:
     - customConfig:
         use-undiscriminated-unions: true
       outputFolder: use-undiscriminated-unions
+    - customConfig:
+        generateEndpointAvailability: true
+      outputFolder: endpoint-availability
   optional:
     - customConfig: null
       outputFolder: no-custom-config
