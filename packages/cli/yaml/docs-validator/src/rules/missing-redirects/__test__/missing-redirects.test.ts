@@ -29,7 +29,9 @@ describe("findRemovedSlugs", () => {
     });
 
     it("detects a moved page (same pageId, different slug)", () => {
-        const published: MarkdownEntry[] = [{ pageId: "docs/guide.mdx", slug: "getting-started", lastUpdated: "2024-01-01T00:00:00.000Z" }];
+        const published: MarkdownEntry[] = [
+            { pageId: "docs/guide.mdx", slug: "getting-started", lastUpdated: "2024-01-01T00:00:00.000Z" }
+        ];
         const local = new Map([["docs/guide.mdx", "guides/quickstart"]]);
         const removed = findRemovedSlugs(published, local);
         expect(removed).toEqual([
@@ -54,7 +56,9 @@ describe("findRemovedSlugs", () => {
     });
 
     it("ignores new pages that only exist locally", () => {
-        const published: MarkdownEntry[] = [{ pageId: "docs/existing.mdx", slug: "existing", lastUpdated: "2024-01-01T00:00:00.000Z" }];
+        const published: MarkdownEntry[] = [
+            { pageId: "docs/existing.mdx", slug: "existing", lastUpdated: "2024-01-01T00:00:00.000Z" }
+        ];
         const local = new Map([
             ["docs/existing.mdx", "existing"],
             ["docs/brand-new.mdx", "brand-new"]
@@ -80,7 +84,9 @@ describe("findRemovedSlugs", () => {
     });
 
     it("skips moved page when another local page still serves the old slug", () => {
-        const published: MarkdownEntry[] = [{ pageId: "docs/guide.mdx", slug: "shared-slug", lastUpdated: "2024-01-01T00:00:00.000Z" }];
+        const published: MarkdownEntry[] = [
+            { pageId: "docs/guide.mdx", slug: "shared-slug", lastUpdated: "2024-01-01T00:00:00.000Z" }
+        ];
         const local = new Map([
             ["docs/guide.mdx", "new-slug"],
             ["docs/other.mdx", "shared-slug"]
@@ -90,8 +96,16 @@ describe("findRemovedSlugs", () => {
 
     it("skips changelog entries that share their parent slug when entry is removed", () => {
         const published: MarkdownEntry[] = [
-            { pageId: "changelog/2024-01-15.mdx", slug: "whats-new/changelog", lastUpdated: "2024-01-01T00:00:00.000Z" },
-            { pageId: "changelog/2024-01-15-hotfix.mdx", slug: "whats-new/changelog", lastUpdated: "2024-01-01T00:00:00.000Z" },
+            {
+                pageId: "changelog/2024-01-15.mdx",
+                slug: "whats-new/changelog",
+                lastUpdated: "2024-01-01T00:00:00.000Z"
+            },
+            {
+                pageId: "changelog/2024-01-15-hotfix.mdx",
+                slug: "whats-new/changelog",
+                lastUpdated: "2024-01-01T00:00:00.000Z"
+            },
             { pageId: "changelog/2024-02-01.mdx", slug: "whats-new/changelog", lastUpdated: "2024-01-01T00:00:00.000Z" }
         ];
         const local = new Map([["changelog/2024-02-01.mdx", "whats-new/changelog"]]);
@@ -99,13 +113,17 @@ describe("findRemovedSlugs", () => {
     });
 
     it("skips published entries with empty slug when landing page serves root", () => {
-        const published: MarkdownEntry[] = [{ pageId: "changelog/2024-01-15.mdx", slug: "", lastUpdated: "2024-01-01T00:00:00.000Z" }];
+        const published: MarkdownEntry[] = [
+            { pageId: "changelog/2024-01-15.mdx", slug: "", lastUpdated: "2024-01-01T00:00:00.000Z" }
+        ];
         const local = new Map([["pages/landing.mdx", ""]]);
         expect(findRemovedSlugs(published, local)).toEqual([]);
     });
 
     it("still flags removed page when no local page serves the old slug", () => {
-        const published: MarkdownEntry[] = [{ pageId: "docs/old.mdx", slug: "unique-old-slug", lastUpdated: "2024-01-01T00:00:00.000Z" }];
+        const published: MarkdownEntry[] = [
+            { pageId: "docs/old.mdx", slug: "unique-old-slug", lastUpdated: "2024-01-01T00:00:00.000Z" }
+        ];
         const local = new Map([["docs/new.mdx", "different-slug"]]);
         const removed = findRemovedSlugs(published, local);
         expect(removed).toEqual([{ pageId: "docs/old.mdx", oldSlug: "unique-old-slug", newSlug: undefined }]);
@@ -278,10 +296,26 @@ describe("integration: keepLatestEntryPerPageId + findRemovedSlugs", () => {
         // After dedup, findRemovedSlugs should see one row per pageId at the
         // current slug and produce zero warnings.
         const published: MarkdownEntry[] = [
-            { pageId: "docs/api-clients.md", slug: "api-reference/getting-started/api-clients", lastUpdated: "2022-01-01T00:00:00.000Z" },
-            { pageId: "docs/api-clients.md", slug: "api/getting-started/api-clients", lastUpdated: "2023-06-01T00:00:00.000Z" },
-            { pageId: "docs/api-clients.md", slug: "api/overview/api-clients", lastUpdated: "2024-12-01T00:00:00.000Z" },
-            { pageId: "docs/intro.md", slug: "api-reference/getting-started/introduction", lastUpdated: "2022-01-01T00:00:00.000Z" },
+            {
+                pageId: "docs/api-clients.md",
+                slug: "api-reference/getting-started/api-clients",
+                lastUpdated: "2022-01-01T00:00:00.000Z"
+            },
+            {
+                pageId: "docs/api-clients.md",
+                slug: "api/getting-started/api-clients",
+                lastUpdated: "2023-06-01T00:00:00.000Z"
+            },
+            {
+                pageId: "docs/api-clients.md",
+                slug: "api/overview/api-clients",
+                lastUpdated: "2024-12-01T00:00:00.000Z"
+            },
+            {
+                pageId: "docs/intro.md",
+                slug: "api-reference/getting-started/introduction",
+                lastUpdated: "2022-01-01T00:00:00.000Z"
+            },
             { pageId: "docs/intro.md", slug: "api/overview", lastUpdated: "2024-12-01T00:00:00.000Z" }
         ];
         const local = new Map([
@@ -311,9 +345,7 @@ describe("integration: keepLatestEntryPerPageId + findRemovedSlugs", () => {
         const deduped = keepLatestEntryPerPageId(published);
         const removed = findRemovedSlugs(deduped, local);
 
-        expect(removed).toEqual([
-            { pageId: "docs/guide.md", oldSlug: "v3/guide", newSlug: "v4/guide" }
-        ]);
+        expect(removed).toEqual([{ pageId: "docs/guide.md", oldSlug: "v3/guide", newSlug: "v4/guide" }]);
     });
 
     it("flags the most recent slug when a pageId is removed entirely, ignoring stale history", () => {
@@ -329,9 +361,7 @@ describe("integration: keepLatestEntryPerPageId + findRemovedSlugs", () => {
         const deduped = keepLatestEntryPerPageId(published);
         const removed = findRemovedSlugs(deduped, local);
 
-        expect(removed).toEqual([
-            { pageId: "docs/deprecated.md", oldSlug: "v3/deprecated", newSlug: undefined }
-        ]);
+        expect(removed).toEqual([{ pageId: "docs/deprecated.md", oldSlug: "v3/deprecated", newSlug: undefined }]);
     });
 
     it("emits zero warnings for a changelog whose parent slug has been renamed over time", () => {
@@ -342,10 +372,26 @@ describe("integration: keepLatestEntryPerPageId + findRemovedSlugs", () => {
         // the findRemovedSlugs activeSlugs skip does, because the current
         // parent slug serves all entries.
         const published: MarkdownEntry[] = [
-            { pageId: "changelog/2024-01.mdx", slug: "api-reference/getting-started/changelog", lastUpdated: "2022-01-01T00:00:00.000Z" },
-            { pageId: "changelog/2024-01.mdx", slug: "api/getting-started/changelog", lastUpdated: "2023-06-01T00:00:00.000Z" },
-            { pageId: "changelog/2024-01.mdx", slug: "api/overview/changelog", lastUpdated: "2024-12-01T00:00:00.000Z" },
-            { pageId: "changelog/2024-02.mdx", slug: "api/getting-started/changelog", lastUpdated: "2023-06-01T00:00:00.000Z" },
+            {
+                pageId: "changelog/2024-01.mdx",
+                slug: "api-reference/getting-started/changelog",
+                lastUpdated: "2022-01-01T00:00:00.000Z"
+            },
+            {
+                pageId: "changelog/2024-01.mdx",
+                slug: "api/getting-started/changelog",
+                lastUpdated: "2023-06-01T00:00:00.000Z"
+            },
+            {
+                pageId: "changelog/2024-01.mdx",
+                slug: "api/overview/changelog",
+                lastUpdated: "2024-12-01T00:00:00.000Z"
+            },
+            {
+                pageId: "changelog/2024-02.mdx",
+                slug: "api/getting-started/changelog",
+                lastUpdated: "2023-06-01T00:00:00.000Z"
+            },
             { pageId: "changelog/2024-02.mdx", slug: "api/overview/changelog", lastUpdated: "2024-12-01T00:00:00.000Z" }
         ];
         const local = new Map([
