@@ -13,33 +13,27 @@ type HttpEndpoint = FernIr.HttpEndpoint;
  * equivalent native attribute, so we fall back to free-form doc text that mirrors the
  * wording used by the TypeScript generator.
  */
-export function getAvailabilityDocs(
-  endpoint: HttpEndpoint,
-): string | undefined {
-  const availability = endpoint.availability;
-  if (availability == null) {
-    return undefined;
-  }
+export function getAvailabilityDocs(endpoint: HttpEndpoint): string | undefined {
+    const availability = endpoint.availability;
+    if (availability == null) {
+        return undefined;
+    }
 
-  switch (availability.status) {
-    case FernIr.AvailabilityStatus.InDevelopment: {
-      const warning = "@beta This endpoint is in development and may change.";
-      return availability.message != null
-        ? `${warning} ${availability.message}`
-        : warning;
+    switch (availability.status) {
+        case FernIr.AvailabilityStatus.InDevelopment: {
+            const warning = "@beta This endpoint is in development and may change.";
+            return availability.message != null ? `${warning} ${availability.message}` : warning;
+        }
+        case FernIr.AvailabilityStatus.PreRelease: {
+            const warning = "@beta This endpoint is in pre-release and may change.";
+            return availability.message != null ? `${warning} ${availability.message}` : warning;
+        }
+        case FernIr.AvailabilityStatus.Deprecated:
+        case FernIr.AvailabilityStatus.GeneralAvailability:
+            return undefined;
+        default:
+            return undefined;
     }
-    case FernIr.AvailabilityStatus.PreRelease: {
-      const warning = "@beta This endpoint is in pre-release and may change.";
-      return availability.message != null
-        ? `${warning} ${availability.message}`
-        : warning;
-    }
-    case FernIr.AvailabilityStatus.Deprecated:
-    case FernIr.AvailabilityStatus.GeneralAvailability:
-      return undefined;
-    default:
-      return undefined;
-  }
 }
 
 /**
@@ -47,14 +41,14 @@ export function getAvailabilityDocs(
  * doc text that should be surfaced in the generated XML doc summary.
  */
 export function getEndpointSummary(endpoint: HttpEndpoint): string | undefined {
-  const availabilityDocs = getAvailabilityDocs(endpoint);
-  if (availabilityDocs == null) {
-    return endpoint.docs;
-  }
-  if (endpoint.docs == null) {
-    return availabilityDocs;
-  }
-  return `${availabilityDocs}\n\n${endpoint.docs}`;
+    const availabilityDocs = getAvailabilityDocs(endpoint);
+    if (availabilityDocs == null) {
+        return endpoint.docs;
+    }
+    if (endpoint.docs == null) {
+        return availabilityDocs;
+    }
+    return `${availabilityDocs}\n\n${endpoint.docs}`;
 }
 
 /**
@@ -63,29 +57,24 @@ export function getEndpointSummary(endpoint: HttpEndpoint): string | undefined {
  * endpoints (with the availability message as its argument when present).
  */
 export function getAvailabilityAnnotations({
-  csharp,
-  endpoint,
+    csharp,
+    endpoint
 }: {
-  csharp: CSharp;
-  endpoint: HttpEndpoint;
+    csharp: CSharp;
+    endpoint: HttpEndpoint;
 }): ast.Annotation[] {
-  if (endpoint.availability?.status !== FernIr.AvailabilityStatus.Deprecated) {
-    return [];
-  }
-  const reference = csharp.classReference({
-    name: "ObsoleteAttribute",
-    namespace: "System",
-  });
-  const message = endpoint.availability.message;
-  const argument =
-    message != null ? `"${escapeCsharpStringLiteral(message)}"` : undefined;
-  return [csharp.annotation({ reference, argument })];
+    if (endpoint.availability?.status !== FernIr.AvailabilityStatus.Deprecated) {
+        return [];
+    }
+    const reference = csharp.classReference({
+        name: "ObsoleteAttribute",
+        namespace: "System"
+    });
+    const message = endpoint.availability.message;
+    const argument = message != null ? `"${escapeCsharpStringLiteral(message)}"` : undefined;
+    return [csharp.annotation({ reference, argument })];
 }
 
 function escapeCsharpStringLiteral(value: string): string {
-  return value
-    .replace(/\\/g, "\\\\")
-    .replace(/"/g, '\\"')
-    .replace(/\r/g, "\\r")
-    .replace(/\n/g, "\\n");
+    return value.replace(/\\/g, "\\\\").replace(/"/g, '\\"').replace(/\r/g, "\\r").replace(/\n/g, "\\n");
 }
