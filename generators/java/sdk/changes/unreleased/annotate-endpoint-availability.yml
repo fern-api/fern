@@ -1,0 +1,7 @@
+- type: feat
+  summary: |
+    Generated Java SDK methods now surface endpoint availability
+    (deprecated / in-development / pre-release) using Java's native
+    @Deprecated annotation where applicable, and fall back to javadoc
+    comments for IN_DEVELOPMENT and PRE_RELEASE statuses matching the
+    wording used by the TypeScript SDK generator.

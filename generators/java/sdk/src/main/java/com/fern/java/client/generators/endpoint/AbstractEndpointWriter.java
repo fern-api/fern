@@ -30,6 +30,7 @@ import com.fern.java.client.generators.ClientOptionsGenerator;
 import com.fern.java.client.generators.endpoint.HttpUrlBuilder.PathParamInfo;
 import com.fern.java.client.generators.visitors.FilePropertyIsOptional;
 import com.fern.java.output.GeneratedObjectMapper;
+import com.fern.java.utils.AvailabilityUtils;
 import com.fern.java.utils.JavaDocUtils;
 import com.fern.java.utils.NameUtils;
 import com.fern.java.utils.TypeReferenceUtils;
@@ -151,9 +152,15 @@ public abstract class AbstractEndpointWriter {
 
     public final HttpEndpointMethodSpecs generate() {
         // Step 1: Populate JavaDoc
+        Optional<String> availabilityDocs = AvailabilityUtils.getAvailabilityDocs(httpEndpoint);
+        boolean isDeprecated = AvailabilityUtils.isDeprecated(httpEndpoint);
+        availabilityDocs.ifPresent(docs -> endpointMethodBuilder.addJavadoc("$L\n", docs));
         if (httpEndpoint.getDocs().isPresent()) {
             endpointMethodBuilder.addJavadoc(
                     JavaDocUtils.render(httpEndpoint.getDocs().get(), true));
+        }
+        if (isDeprecated) {
+            endpointMethodBuilder.addAnnotation(Deprecated.class);
         }
 
         // Step 2: Add additional parameters
@@ -259,6 +266,9 @@ public abstract class AbstractEndpointWriter {
                 .addParameters(variables.pathParameters)
                 .addParameters(additionalParameters)
                 .addJavadoc(endpointWithRequestOptions.javadoc);
+        if (isDeprecated) {
+            endpointWithoutRequestOptionsBuilder.addAnnotation(Deprecated.class);
+        }
 
         responseParserGenerator.addEndpointWithoutRequestOptionsReturnStatement(
                 endpointWithoutRequestOptionsBuilder, endpointWithRequestOptions, paramNames);
@@ -275,6 +285,9 @@ public abstract class AbstractEndpointWriter {
                     .addModifiers(Modifier.PUBLIC)
                     .addParameters(variables.pathParameters)
                     .returns(endpointWithoutRequestOptions.returnType);
+            if (isDeprecated) {
+                endpointWithoutRequestBuilder.addAnnotation(Deprecated.class);
+            }
             List<ParameterSpec> additionalParamsWithoutBody = additionalParameters.stream()
                     .filter(parameterSpec -> !parameterSpec.name.equals(
                             NameUtils.toName(variables.sdkRequest().get().getRequestParameterName())
@@ -318,6 +331,9 @@ public abstract class AbstractEndpointWriter {
                     .addModifiers(Modifier.PUBLIC)
                     .addParameters(variables.pathParameters)
                     .returns(endpointWithRequestOptions.returnType);
+            if (isDeprecated) {
+                endpointWithoutRequestWithRequestOptionsBuilder.addAnnotation(Deprecated.class);
+            }
             List<ParameterSpec> additionalParamsWithoutBody = additionalParameters.stream()
                     .filter(parameterSpec -> !parameterSpec.name.equals(
                             NameUtils.toName(variables.sdkRequest().get().getRequestParameterName())
@@ -383,6 +399,9 @@ public abstract class AbstractEndpointWriter {
                         .addParameters(variables.pathParameters)
                         .addParameter(bodyParam)
                         .returns(endpointWithoutRequestOptions.returnType);
+                if (isDeprecated) {
+                    bodyOnlyMethodBuilder.addAnnotation(Deprecated.class);
+                }
                 List<String> bodyOnlyParamNames = Stream.concat(variables.pathParameters.stream(), Stream.of(bodyParam))
                         .map(parameterSpec -> parameterSpec.name)
                         .collect(Collectors.toList());
@@ -402,6 +421,9 @@ public abstract class AbstractEndpointWriter {
                         .addParameters(variables.pathParameters)
                         .addParameter(bodyParam)
                         .returns(endpointWithRequestOptions.returnType);
+                if (isDeprecated) {
+                    bodyOnlyWithRequestOptionsMethodBuilder.addAnnotation(Deprecated.class);
+                }
                 if (httpEndpoint.getIdempotent()) {
                     bodyOnlyWithRequestOptionsMethodBuilder.addParameter(ParameterSpec.builder(
                                     clientGeneratorContext
@@ -439,13 +461,16 @@ public abstract class AbstractEndpointWriter {
             BytesRequest bytes = maybeBytes.get();
             ParameterSpec requestParameterSpec = variables.getBytesRequestParameterSpec(
                     bytes, variables.sdkRequest().get(), ArrayTypeName.of(byte.class));
-            MethodSpec byteArrayBaseMethodSpec = MethodSpec.methodBuilder(endpointWithRequestOptions.name)
+            MethodSpec.Builder byteArrayBaseMethodBuilder = MethodSpec.methodBuilder(endpointWithRequestOptions.name)
                     .addModifiers(Modifier.PUBLIC)
                     .addParameters(variables.pathParameters)
                     .addParameters(List.of(requestParameterSpec))
                     .addJavadoc(endpointWithRequestOptions.javadoc)
-                    .returns(endpointWithRequestOptions.returnType)
-                    .build();
+                    .returns(endpointWithRequestOptions.returnType);
+            if (isDeprecated) {
+                byteArrayBaseMethodBuilder.addAnnotation(Deprecated.class);
+            }
+            MethodSpec byteArrayBaseMethodSpec = byteArrayBaseMethodBuilder.build();
             Builder methodBodyBuilder = CodeBlock.builder();
             CodeBlock baseMethodBody = responseParserGenerator.getByteArrayEndpointBaseMethodBody(
                     methodBodyBuilder, byteArrayBaseMethodSpec, requestParameterSpec, endpointWithRequestOptions);
@@ -598,6 +623,9 @@ public abstract class AbstractEndpointWriter {
                                 .addParameter(streamParam)
                                 .addParameter(filenameParam)
                                 .returns(endpointWithRequestOptions.returnType);
+                        if (isDeprecated) {
+                            baseMethodBuilder.addAnnotation(Deprecated.class);
+                        }
 
                         CodeBlock.Builder methodBody = CodeBlock.builder()
                                 .add(generatedHttpUrlNoRequestOptions.initialization())
@@ -669,6 +697,9 @@ public abstract class AbstractEndpointWriter {
                                 .addParameter(filenameParam)
                                 .addParameter(mediaTypeParam)
                                 .returns(endpointWithRequestOptions.returnType);
+                        if (isDeprecated) {
+                            withMediaTypeBuilder.addAnnotation(Deprecated.class);
+                        }
 
                         CodeBlock.Builder withMediaTypeBody = CodeBlock.builder()
                                 .add(generatedHttpUrlNoRequestOptions.initialization())
@@ -742,6 +773,9 @@ public abstract class AbstractEndpointWriter {
                                 .addParameter(filenameParam)
                                 .addParameter(requestOptionsParameterSpec())
                                 .returns(endpointWithRequestOptions.returnType);
+                        if (isDeprecated) {
+                            withRequestOptionsBuilder.addAnnotation(Deprecated.class);
+                        }
 
                         CodeBlock.Builder withRequestOptionsBody = CodeBlock.builder()
                                 .add(generatedHttpUrl.initialization())
@@ -807,6 +841,9 @@ public abstract class AbstractEndpointWriter {
                                 .addParameter(mediaTypeParam)
                                 .addParameter(requestOptionsParameterSpec())
                                 .returns(endpointWithRequestOptions.returnType);
+                        if (isDeprecated) {
+                            withBothBuilder.addAnnotation(Deprecated.class);
+                        }
 
                         CodeBlock.Builder withBothBody = CodeBlock.builder()
                                 .add(generatedHttpUrl.initialization())
