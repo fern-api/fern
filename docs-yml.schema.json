@@ -5544,6 +5544,16 @@
             }
           ]
         },
+        "disable-environment-editing": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "disable-analytics": {
           "oneOf": [
             {
