@@ -3,6 +3,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { getAvailabilityDocs } from "../utils/getAvailabilityDocs.js";
 import { getEndpointRequest } from "../utils/getEndpointRequest.js";
 import { getEndpointReturnType } from "../utils/getEndpointReturnType.js";
 import { RAW_CLIENT_REQUEST_VARIABLE_NAME, RawClient } from "./RawClient.js";
@@ -390,7 +391,15 @@ export class HttpEndpointGenerator {
         endpoint: FernIr.HttpEndpoint;
         request: ReturnType<typeof getEndpointRequest>;
     }): string {
-        return endpoint.docs ?? "";
+        const parts: string[] = [];
+        if (endpoint.docs != null && endpoint.docs.length > 0) {
+            parts.push(endpoint.docs);
+        }
+        const availabilityDocs = getAvailabilityDocs(endpoint.availability);
+        if (availabilityDocs != null) {
+            parts.push(availabilityDocs);
+        }
+        return parts.join("\n");
     }
 
     private generateRequestOptionsDocs(): string[] {

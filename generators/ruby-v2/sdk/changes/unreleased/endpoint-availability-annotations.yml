@@ -1,0 +1,6 @@
+- summary: |
+    Generated Ruby v2 SDK methods now surface endpoint availability
+    (deprecated / in-development / pre-release) using YARD's native
+    `@deprecated` tag where one exists, and fall back to doc comments
+    otherwise.
+  type: feat
