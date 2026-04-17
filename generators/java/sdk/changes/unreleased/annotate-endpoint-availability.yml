@@ -1,7 +1,11 @@
 - type: feat
   summary: |
-    Generated Java SDK methods now surface endpoint availability
-    (deprecated / in-development / pre-release) using Java's native
-    @Deprecated annotation where applicable, and fall back to javadoc
-    comments for IN_DEVELOPMENT and PRE_RELEASE statuses matching the
-    wording used by the TypeScript SDK generator.
+    Added an opt-in `generate-endpoint-availability` custom config flag
+    (default false) that makes generated Java SDK methods surface endpoint
+    availability: DEPRECATED endpoints get Java's native `@Deprecated`
+    annotation plus a `@deprecated` Javadoc tag (with the IR message when
+    provided), and IN_DEVELOPMENT / PRE_RELEASE endpoints get a `@beta`
+    Javadoc note matching the wording used by the TypeScript SDK generator.
+    With the flag disabled, generator output is unchanged. The flag is
+    expected to flip to true in the next major version of the Java SDK
+    generator.

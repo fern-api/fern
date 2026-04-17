@@ -115,6 +115,19 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
         return false;
     }
 
+    /**
+     * If true, generated endpoint methods surface IR {@code availability} metadata via Java's native
+     * {@code @Deprecated} annotation and {@code @deprecated}/{@code @beta} Javadoc tags. Opting in is a breaking
+     * change for consumers that compile with warnings-as-errors, so the flag defaults to {@code false}.
+     *
+     * <p>TODO(next-major): flip default to true.
+     */
+    @Value.Default
+    @JsonProperty("generate-endpoint-availability")
+    default Boolean generateEndpointAvailability() {
+        return false;
+    }
+
     static ImmutableJavaSdkCustomConfig.Builder builder() {
         return ImmutableJavaSdkCustomConfig.builder();
     }

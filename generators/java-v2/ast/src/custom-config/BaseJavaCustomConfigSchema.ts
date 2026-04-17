@@ -34,6 +34,12 @@ export const BaseJavaCustomConfigSchema = z.object({
     "output-directory": z.enum(["source-root", "project-root"]).optional(),
     "custom-interceptors": z.boolean().optional(),
     "omit-fern-headers": z.boolean().optional(),
+    // If true, surface IR `availability` metadata on generated endpoint methods
+    // (Javadoc `@deprecated`/`@beta` tags and the Java `@Deprecated` annotation).
+    // Opting in is a breaking change for consumers that compile with
+    // warnings-as-errors, so this defaults to false.
+    // TODO(next-major): flip default to true.
+    "generate-endpoint-availability": z.boolean().optional(),
 
     // Hidden options (for debugging).
     "enable-gradle-profiling": z.boolean().optional(),
