@@ -1,4 +1,5 @@
 import { AstNode } from "./AstNode.js";
+import { Attribute } from "./Attribute.js";
 import { DocComment } from "./DocComment.js";
 import { Writer } from "./Writer.js";
 
@@ -27,6 +28,7 @@ export declare namespace Client {
         isAsync?: boolean;
         body?: string;
         docs?: DocComment;
+        attributes?: Attribute[];
     }
 }
 
@@ -95,6 +97,15 @@ export class Client extends AstNode {
         // Write method documentation first
         if (method.docs) {
             method.docs.write(writer);
+        }
+
+        // Write attributes (e.g. #[deprecated]) after the doc comment so they sit
+        // directly above the function signature.
+        if (method.attributes && method.attributes.length > 0) {
+            method.attributes.forEach((attribute) => {
+                attribute.write(writer);
+                writer.newLine();
+            });
         }
 
         const params = method.parameters?.join(", ") || "";

@@ -29,6 +29,7 @@ impl HttpMethodsClient {
             .await
     }
 
+    #[deprecated]
     pub async fn test_post(
         &self,
         request: &ObjectWithRequiredField,
@@ -45,6 +46,7 @@ impl HttpMethodsClient {
             .await
     }
 
+    #[deprecated(note = "Use testPatch instead.")]
     pub async fn test_put(
         &self,
         id: &str,
@@ -62,6 +64,15 @@ impl HttpMethodsClient {
             .await
     }
 
+    /// @beta This endpoint is in pre-release and may change.
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn test_patch(
         &self,
         id: &str,
@@ -79,6 +90,15 @@ impl HttpMethodsClient {
             .await
     }
 
+    /// @beta This endpoint is in development and may change.
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn test_delete(
         &self,
         id: &str,
