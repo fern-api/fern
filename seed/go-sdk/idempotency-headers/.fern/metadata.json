@@ -4,6 +4,7 @@
   "generatorVersion": "local",
   "generatorConfig": {
     "enableWireTests": false,
+    "generateAvailabilityAnnotations": true,
     "packageName": "fern",
     "module": {
       "path": "github.com/idempotency-headers/fern"

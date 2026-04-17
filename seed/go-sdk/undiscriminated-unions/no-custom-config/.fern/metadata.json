@@ -4,6 +4,7 @@
   "generatorVersion": "local",
   "generatorConfig": {
     "enableWireTests": false,
+    "generateAvailabilityAnnotations": true,
     "packageName": "undiscriminated",
     "module": {
       "path": "github.com/fern-api/undiscriminated-go"

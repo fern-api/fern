@@ -4,6 +4,7 @@
   "generatorVersion": "local",
   "generatorConfig": {
     "enableWireTests": true,
+    "generateAvailabilityAnnotations": true,
     "packageName": "fern",
     "module": {
       "path": "github.com/go-undiscriminated-union-wire-tests/fern"

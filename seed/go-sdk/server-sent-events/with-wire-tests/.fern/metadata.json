@@ -4,6 +4,7 @@
   "generatorVersion": "local",
   "generatorConfig": {
     "enableWireTests": true,
+    "generateAvailabilityAnnotations": true,
     "packageName": "sse",
     "module": {
       "path": "github.com/fern-api/sse-go"

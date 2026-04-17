@@ -4,9 +4,9 @@
   "generatorVersion": "local",
   "generatorConfig": {
     "enableWireTests": false,
+    "generateAvailabilityAnnotations": true,
     "omitFernHeaders": true,
-    "maxRetries": 5,
-    "generateAvailabilityAnnotations": true
+    "maxRetries": 5
   },
   "originGitCommit": "DUMMY",
   "sdkVersion": "v0.0.1"

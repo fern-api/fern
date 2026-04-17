@@ -4,8 +4,8 @@
   "generatorVersion": "local",
   "generatorConfig": {
     "enableWireTests": false,
-    "packagePath": "all/the/way/in/here/please",
-    "generateAvailabilityAnnotations": true
+    "generateAvailabilityAnnotations": true,
+    "packagePath": "all/the/way/in/here/please"
   },
   "originGitCommit": "DUMMY",
   "sdkVersion": "v0.0.1"

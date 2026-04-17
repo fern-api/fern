@@ -58,6 +58,9 @@ defaultOutputMode: github
 defaultCustomConfig:
   # wire tests cannot be run in seed containers due to docker-in-docker issues
   enableWireTests: false
+  # Exercise availability annotations in every fixture whose IR has `availability` set.
+  # The customer-facing default in the custom-config schema remains `false`.
+  generateAvailabilityAnnotations: true
 fixtures:
   examples:
     - outputFolder: no-custom-config
@@ -132,23 +135,18 @@ fixtures:
         packageName: testPackageName
         errorCodes: per-endpoint
         clientConstructorName: NewIMDBClient
-        generateAvailabilityAnnotations: true
     - outputFolder: no-custom-config
-      customConfig:
-        generateAvailabilityAnnotations: true
+      customConfig: null
     - outputFolder: package-path
       customConfig:
         packagePath: inhereplease
-        generateAvailabilityAnnotations: true
     - outputFolder: deep-package-path
       customConfig:
         packagePath: all/the/way/in/here/please
-        generateAvailabilityAnnotations: true
     - outputFolder: omit-fern-headers
       customConfig:
         omitFernHeaders: true
         maxRetries: 5
-        generateAvailabilityAnnotations: true
   undiscriminated-unions:
     - outputFolder: no-custom-config
       outputVersion: 0.0.1
@@ -285,17 +283,14 @@ fixtures:
       customConfig:
         enableWireTests: true
         exportAllRequestsAtRoot: true
-        generateAvailabilityAnnotations: true
   exhaustive:
     - outputFolder: no-custom-config
       customConfig:
         enableWireTests: true
-        generateAvailabilityAnnotations: true
     - outputFolder: omit-empty-request-wrappers
       customConfig:
         enableWireTests: true
         omitEmptyRequestWrappers: true
-        generateAvailabilityAnnotations: true
   inferred-auth-implicit:
     - outputFolder: .
       customConfig: null

@@ -3,7 +3,8 @@
   "generatorName": "fernapi/fern-go-sdk",
   "generatorVersion": "local",
   "generatorConfig": {
-    "enableWireTests": false
+    "enableWireTests": false,
+    "generateAvailabilityAnnotations": true
   },
   "originGitCommit": "DUMMY",
   "sdkVersion": "v0.0.1"

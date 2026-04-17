@@ -4,6 +4,7 @@
   "generatorVersion": "local",
   "generatorConfig": {
     "enableWireTests": false,
+    "generateAvailabilityAnnotations": true,
     "packageName": "upload",
     "module": {
       "path": "github.com/fern-api/file-upload-go"

@@ -4,6 +4,7 @@
   "generatorVersion": "local",
   "generatorConfig": {
     "enableWireTests": false,
+    "generateAvailabilityAnnotations": true,
     "alwaysSendRequiredProperties": true
   },
   "originGitCommit": "DUMMY",

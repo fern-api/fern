@@ -4,6 +4,7 @@
   "generatorVersion": "local",
   "generatorConfig": {
     "enableWireTests": false,
+    "generateAvailabilityAnnotations": true,
     "packageName": "unions",
     "module": {
       "path": "github.com/fern-api/unions-go"

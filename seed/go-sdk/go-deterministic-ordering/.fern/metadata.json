@@ -4,8 +4,8 @@
   "generatorVersion": "local",
   "generatorConfig": {
     "enableWireTests": true,
-    "exportAllRequestsAtRoot": true,
-    "generateAvailabilityAnnotations": true
+    "generateAvailabilityAnnotations": true,
+    "exportAllRequestsAtRoot": true
   },
   "originGitCommit": "DUMMY",
   "sdkVersion": "v0.0.1"
