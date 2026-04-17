@@ -3,6 +3,7 @@ from typing import List, Optional
 import generatorcli
 from fern_python.codegen import AST
 from fern_python.codegen.project import Project
+from fern_python.generators.sdk.client_generator.availability import get_availability_docs
 from fern_python.generators.sdk.client_generator.endpoint_metadata_collector import (
     EndpointMetadata,
     EndpointMetadataCollector,
@@ -179,7 +180,7 @@ class ReferenceConfigBuilder:
             if endpoint_metadata is not None and snippet is not None:
                 reference_section.add_endpoint(
                     endpoint_metadata=endpoint_metadata,
-                    description=endpoint.docs,
+                    description=_build_endpoint_description(endpoint),
                     snippet=snippet,
                     parameters=parameters,
                 )
@@ -220,3 +221,12 @@ class ReferenceConfigBuilder:
             sections=self.reference_config_sections,
             language="PYTHON",
         )
+
+
+def _build_endpoint_description(endpoint: ir_types.HttpEndpoint) -> Optional[str]:
+    availability_docs = get_availability_docs(endpoint)
+    if availability_docs is None:
+        return endpoint.docs
+    if endpoint.docs is None:
+        return availability_docs
+    return f"{availability_docs}\n\n{endpoint.docs}"

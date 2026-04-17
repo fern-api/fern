@@ -4,6 +4,7 @@ import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { getAvailabilityDocs } from "./getAvailabilityDocs.js";
 
 export function buildReference({
     context,
@@ -126,10 +127,21 @@ function getEndpointReference({
             ],
             returnValue: returnTypeStr != null ? { text: returnTypeStr } : undefined
         },
-        description: endpoint.docs,
+        description: buildEndpointDescription({ endpoint }),
         snippet,
         parameters
     };
+}
+
+function buildEndpointDescription({ endpoint }: { endpoint: FernIr.HttpEndpoint }): string | undefined {
+    const availabilityDocs = getAvailabilityDocs(endpoint);
+    if (availabilityDocs == null) {
+        return endpoint.docs;
+    }
+    if (endpoint.docs == null) {
+        return availabilityDocs;
+    }
+    return `${availabilityDocs}\n\n${endpoint.docs}`;
 }
 
 function getAccessFromRootClient({ service }: { service: FernIr.HttpService }): string {

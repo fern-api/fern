@@ -775,6 +775,20 @@ client.endpoints.http_methods.test_get(
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+@deprecated
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -832,6 +846,21 @@ client.endpoints.http_methods.test_post(
 <details><summary><code>client.endpoints.http_methods.<a href="src/seed/endpoints/http_methods/client.py">test_put</a>(...) -> ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+.. deprecated::
+    Use testPatch instead.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -899,6 +928,20 @@ client.endpoints.http_methods.test_put(
 <details><summary><code>client.endpoints.http_methods.<a href="src/seed/endpoints/http_methods/client.py">test_patch</a>(...) -> ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+@beta This endpoint is in pre-release and may change.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -987,6 +1030,20 @@ client.endpoints.http_methods.test_patch(
 <details><summary><code>client.endpoints.http_methods.<a href="src/seed/endpoints/http_methods/client.py">test_delete</a>(...) -> bool</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+@beta This endpoint is in development and may change.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
