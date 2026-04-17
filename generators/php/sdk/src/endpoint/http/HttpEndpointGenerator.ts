@@ -32,7 +32,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     }
 
     private getEndpointDocs(endpoint: FernIr.HttpEndpoint): string | undefined {
-        if (!this.context.customConfig.generateEndpointAvailability) {
+        if (!this.context.customConfig.generateAvailabilityAnnotations) {
             return endpoint.docs;
         }
         return computeEndpointDocsWithAvailability(endpoint);
