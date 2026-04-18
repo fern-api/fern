@@ -1869,10 +1869,16 @@ function addDocsPreviewDeleteCommand(cli: Argv<GlobalCliOptions>, cliContext: Cl
                 .check((argv) => {
                     const sources = [argv.target, argv.url, argv.id].filter(Boolean);
                     if (sources.length === 0) {
-                        throw new Error("Must provide a preview URL or --id.");
+                        throw new CliError({
+                            message: "Must provide a preview URL or --id.",
+                            code: CliError.Code.ConfigError
+                        });
                     }
                     if (sources.length > 1) {
-                        throw new Error("Provide only one of: [target], --url, or --id.");
+                        throw new CliError({
+                            message: "Provide only one of: [target], --url, or --id.",
+                            code: CliError.Code.ConfigError
+                        });
                     }
                     return true;
                 }),

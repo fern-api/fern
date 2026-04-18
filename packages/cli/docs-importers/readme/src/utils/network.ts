@@ -1,3 +1,4 @@
+import { CliError } from "@fern-api/task-context";
 import { Browser, launch } from "puppeteer";
 
 const userAgent =
@@ -34,7 +35,7 @@ export async function startPuppeteer(): Promise<Browser> {
     try {
         return await launch({ headless: true, args: ["--ignore-certificate-errors"] });
     } catch (error) {
-        throw new Error("Could not create a Puppeteer instance");
+        throw new CliError({ message: "Could not create a Puppeteer instance", code: CliError.Code.EnvironmentError });
     }
 }
 
@@ -63,7 +64,7 @@ export async function getHtmlWithPuppeteer(browser: Browser, url: string | URL):
         await page.close();
         return content;
     } catch (error) {
-        throw new Error("Failed to download page from Puppeteer");
+        throw new CliError({ message: "Failed to download page from Puppeteer", code: CliError.Code.NetworkError });
     }
 }
 
@@ -71,11 +72,11 @@ async function fetchPageResponse(url: string | URL): Promise<string> {
     try {
         const res = await fetch(url);
         if (!res.ok) {
-            throw new Error(`${res.status} ${res.statusText}`);
+            throw new CliError({ message: `${res.status} ${res.statusText}`, code: CliError.Code.NetworkError });
         }
         return await res.text();
     } catch (error) {
-        throw new Error("Failed to fetch page from source");
+        throw new CliError({ message: "Failed to fetch page from source", code: CliError.Code.NetworkError });
     }
 }
 
@@ -90,9 +91,12 @@ export async function fetchPageHtml({ url, browser }: { url: string | URL; brows
         if (res) {
             return res;
         }
-        throw new Error("An unknown error occurred.");
+        throw new CliError({ message: "An unknown error occurred.", code: CliError.Code.NetworkError });
     } catch (error) {
-        throw new Error(`Error retrieving HTML for ${url.toString()}`);
+        throw new CliError({
+            message: `Error retrieving HTML for ${url.toString()}`,
+            code: CliError.Code.NetworkError
+        });
     }
 }
 
@@ -100,7 +104,7 @@ export async function fetchImage(url: string): Promise<NodeJS.TypedArray> {
     try {
         const res = await exponentialBackoff(() => fetch(url));
         if (!res.ok) {
-            throw new Error(`${res.status} ${res.statusText}`);
+            throw new CliError({ message: `${res.status} ${res.statusText}`, code: CliError.Code.NetworkError });
         }
 
         const imageBuffer = await res.arrayBuffer();
@@ -108,6 +112,9 @@ export async function fetchImage(url: string): Promise<NodeJS.TypedArray> {
 
         return imageData;
     } catch (error) {
-        throw new Error(`Failed to retrieve image from source url ${url}`);
+        throw new CliError({
+            message: `Failed to retrieve image from source url ${url}`,
+            code: CliError.Code.NetworkError
+        });
     }
 }

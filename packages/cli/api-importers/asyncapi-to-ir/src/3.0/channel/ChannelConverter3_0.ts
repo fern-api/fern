@@ -1,5 +1,6 @@
 import { HttpHeader, PathParameter, QueryParameter, WebSocketMessage, WebSocketMessageBody } from "@fern-api/ir-sdk";
 import { constructHttpPath } from "@fern-api/ir-utils";
+import { CliError } from "@fern-api/task-context";
 import { Converters } from "@fern-api/v3-importer-commons";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractChannelConverter } from "../../converters/AbstractChannelConverter.js";
@@ -310,7 +311,10 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
 
     private getChannelPathFromOperation(operation: AsyncAPIV3.Operation): string {
         if (!operation.channel.$ref.startsWith(CHANNEL_REFERENCE_PREFIX)) {
-            throw new Error(`Failed to resolve channel path from operation ${operation.channel.$ref}`);
+            throw new CliError({
+                message: `Failed to resolve channel path from operation ${operation.channel.$ref}`,
+                code: CliError.Code.ReferenceError
+            });
         }
         return operation.channel.$ref.substring(CHANNEL_REFERENCE_PREFIX.length);
     }

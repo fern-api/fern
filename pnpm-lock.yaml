@@ -3680,6 +3680,9 @@ importers:
       '@fern-api/ir-utils':
         specifier: workspace:*
         version: link:../../../commons/ir-utils
+      '@fern-api/task-context':
+        specifier: workspace:*
+        version: link:../../task-context
       '@fern-api/v3-importer-commons':
         specifier: workspace:*
         version: link:../v3-importer-commons
@@ -3775,6 +3778,9 @@ importers:
       '@fern-api/importer-commons':
         specifier: workspace:*
         version: link:../../commons
+      '@fern-api/task-context':
+        specifier: workspace:*
+        version: link:../../../task-context
       js-yaml:
         specifier: 'catalog:'
         version: 4.1.1
@@ -4136,6 +4142,9 @@ importers:
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../logger
+      '@fern-api/task-context':
+        specifier: workspace:*
+        version: link:../../task-context
       js-yaml:
         specifier: 'catalog:'
         version: 4.1.1
@@ -6410,6 +6419,9 @@ importers:
       '@fern-api/fdr-sdk':
         specifier: 1.1.13-c1ad12a2b8
         version: 1.1.13-c1ad12a2b8(@opentelemetry/api@1.9.1)(typescript@5.9.3)
+      '@fern-api/task-context':
+        specifier: workspace:*
+        version: link:../task-context
       js-yaml:
         specifier: 'catalog:'
         version: 4.1.1
@@ -7328,6 +7340,10 @@ importers:
         version: 4.1.4(@opentelemetry/api@1.9.1)(@types/node@22.19.17)(@vitest/coverage-v8@4.1.4)(vite@7.3.2(@types/node@22.19.17)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/cli/yaml/loader:
+    dependencies:
+      '@fern-api/task-context':
+        specifier: workspace:*
+        version: link:../../task-context
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*

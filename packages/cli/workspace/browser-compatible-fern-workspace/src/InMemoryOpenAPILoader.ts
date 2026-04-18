@@ -1,8 +1,8 @@
 import { isOpenAPIV2 } from "@fern-api/api-workspace-commons";
 import { applyOpenAPIOverlay, mergeWithOverrides as coreMergeWithOverrides, type Overlay } from "@fern-api/core-utils";
 import { getParseOptions, OpenAPIDocument } from "@fern-api/openapi-ir-parser";
+import { CliError } from "@fern-api/task-context";
 import { OpenAPI, OpenAPIV3 } from "openapi-types";
-
 import { OpenAPIWorkspace } from "./OpenAPIWorkspace.js";
 
 export class InMemoryOpenAPILoader {
@@ -28,7 +28,10 @@ export class InMemoryOpenAPILoader {
         overlays: Overlay | undefined;
     }): OpenAPIV3.Document {
         if (isOpenAPIV2(openapi)) {
-            throw new Error("Swagger v2.0 is not supported in the browser");
+            throw new CliError({
+                message: "Swagger v2.0 is not supported in the browser",
+                code: CliError.Code.ConfigError
+            });
         }
         let result = openapi as OpenAPIV3.Document;
 
