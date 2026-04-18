@@ -10,6 +10,7 @@ import { addConfigCommand } from "./commands/config/index.js";
 import { addDocsCommand } from "./commands/docs/index.js";
 import { addInitCommand } from "./commands/init/index.js";
 import { addOrgCommand } from "./commands/org/index.js";
+import { addReplayCommand } from "./commands/replay/index.js";
 import { addSdkCommand } from "./commands/sdk/index.js";
 import { addTelemetryCommand } from "./commands/telemetry/index.js";
 import { GlobalArgs } from "./context/GlobalArgs.js";
@@ -57,6 +58,7 @@ function createCliV2(argv?: string[]): Argv<GlobalArgs> {
     addDocsCommand(cli);
     addInitCommand(cli);
     addOrgCommand(cli);
+    addReplayCommand(cli);
     addSdkCommand(cli);
     addTelemetryCommand(cli);
 

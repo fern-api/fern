@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.4.3
+  changelogEntry:
+    - summary: |
+        Fix Ruby dynamic snippet generation to synthesize default values for
+        required properties missing from examples. Previously, empty objects
+        and arrays were rendered as `{}` and `[{}]`; now required fields are
+        populated with reasonable placeholder values matching the behavior of
+        the Python generator.
+      type: fix
+  createdAt: "2026-04-17"
+  irVersion: 66
 - version: 1.4.2
   changelogEntry:
     - summary: |

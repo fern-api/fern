@@ -1,0 +1,14 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-python-sdk",
+  "generatorVersion": "local",
+  "generatorConfig": {
+    "enable_wire_tests": true,
+    "pydantic_config": {
+      "union_naming": "v1"
+    },
+    "use_inheritance_for_extended_models": false
+  },
+  "originGitCommit": "DUMMY",
+  "sdkVersion": "0.0.1"
+}

@@ -386,6 +386,12 @@ fixtures:
           union_naming: v1
         use_inheritance_for_extended_models: false
       outputFolder: union-naming-v1
+    - customConfig:
+        enable_wire_tests: true
+        pydantic_config:
+          union_naming: v1
+        use_inheritance_for_extended_models: false
+      outputFolder: union-naming-v1-wire-tests
   websocket:
     - outputFolder: websocket-base
     - customConfig:
@@ -475,3 +481,9 @@ allowedFailures:
   - server-sent-event-examples:with-wire-tests # TODO: update wiretests geranation then remove it
   - trace
   - multi-url-environment-reference
+  # The unions API has two services (`union` and `bigunion`) that both expose
+  # `GET /{id}` on the root base-path, which causes a WireMock stub collision at
+  # test runtime. Code generation and imports are verified; one wire test
+  # assertion fails due to the colliding mocks. This is pre-existing and unrelated
+  # to the union_naming v1 fix this fixture regression-tests.
+  - unions:union-naming-v1-wire-tests
