@@ -44,6 +44,7 @@ import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVers
 import { GlobalCliOptions, loadProjectAndRegisterWorkspacesWithContext } from "./cliCommons.js";
 import { addGeneratorCommands, addGetOrganizationCommand } from "./cliV2.js";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces.js";
+import { listPreviewGroups } from "./commands/automations/listPreviewGroups.js";
 import { diff } from "./commands/diff/diff.js";
 import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace.js";
 import { docsDiff } from "./commands/docs-diff/docsDiff.js";
@@ -71,7 +72,6 @@ import { mockServer } from "./commands/mock/mockServer.js";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1.js";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2.js";
 import { sdkDiffCommand } from "./commands/sdk-diff/sdkDiffCommand.js";
-import { isNpmGenerator } from "./commands/sdk-preview/overrideOutputForPreview.js";
 import { sdkPreview } from "./commands/sdk-preview/sdkPreview.js";
 import { selfUpdate } from "./commands/self-update/selfUpdate.js";
 import { testOutput } from "./commands/test/testOutput.js";
@@ -2411,35 +2411,10 @@ function addAutomationsListPreviewCommand(cli: Argv<GlobalCliOptions>, cliContex
                 defaultToAllApiWorkspaces: true
             });
 
-            const groups: Array<{ groupName: string; apiName: string | null; generator: string }> = [];
-
-            for (const workspace of project.apiWorkspaces) {
-                const generatorsConfiguration = workspace.generatorsConfiguration;
-                if (generatorsConfiguration == null) {
-                    continue;
-                }
-                for (const group of generatorsConfiguration.groups) {
-                    if (argv.group != null && group.groupName !== argv.group) {
-                        continue;
-                    }
-                    // Collect unique previewable generators per group.
-                    // A group is included once per matching generator (not once per group)
-                    // to support groups with mixed generator types.
-                    for (const generator of group.generators) {
-                        if (!generator.automation.preview) {
-                            continue;
-                        }
-                        if (!isNpmGenerator(generator.name)) {
-                            continue;
-                        }
-                        groups.push({
-                            groupName: group.groupName,
-                            apiName: workspace.workspaceName ?? null,
-                            generator: generator.name
-                        });
-                    }
-                }
-            }
+            const groups = listPreviewGroups({
+                workspaces: project.apiWorkspaces,
+                groupFilter: argv.group
+            });
 
             // Output JSON array to stdout for GitHub Actions consumption
             process.stdout.write(JSON.stringify(groups));
