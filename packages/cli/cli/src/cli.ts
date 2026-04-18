@@ -2342,16 +2342,17 @@ function addAutomationsListGenerateCommand(cli: Argv<GlobalCliOptions>, cliConte
 /**
  * `fern automations list preview`
  *
- * Discovers all previewable generator groups in the project and outputs a JSON
- * array of objects describing each group. Designed to be consumed by the
- * `fern-preview` GitHub Action (or any automation) to determine which groups
- * to run `fern sdk preview` against.
+ * Discovers all previewable generator groups in the project. Without `--json`,
+ * outputs one group per line (human-readable). With `--json`, outputs a JSON
+ * array for machine consumption (e.g. GitHub Actions).
  *
  * A generator is considered previewable when:
  * - It is a supported TypeScript/npm generator (fern-typescript-sdk, node-sdk, browser-sdk)
  * - `automation.preview` is not false in generators.yml
  *
- * Output format (stdout): JSON array of objects
+ * Returns one entry per unique (groupName, apiName) pair.
+ *
+ * JSON output format (--json):
  *   [
  *     { "groupName": "ts-sdk", "apiName": null, "generator": "fernapi/fern-typescript-sdk" },
  *     { "groupName": "node", "apiName": "bar", "generator": "fernapi/fern-typescript-node-sdk" }
@@ -2359,7 +2360,7 @@ function addAutomationsListGenerateCommand(cli: Argv<GlobalCliOptions>, cliConte
  *
  * Example GitHub Actions usage:
  *   - id: groups
- *     run: echo "groups=$(fern automations list preview)" >> $GITHUB_OUTPUT
+ *     run: echo "groups=$(fern automations list preview --json)" >> $GITHUB_OUTPUT
  *     env:
  *       FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
  */
