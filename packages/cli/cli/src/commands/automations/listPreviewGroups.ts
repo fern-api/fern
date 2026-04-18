@@ -1,4 +1,4 @@
-import type { generatorsYml } from "@fern-api/configuration-loader";
+import type { AbstractAPIWorkspace } from "@fern-api/api-workspace-commons";
 import { isNpmGenerator } from "../sdk-preview/overrideOutputForPreview.js";
 
 export interface PreviewGroup {
@@ -8,33 +8,22 @@ export interface PreviewGroup {
 }
 
 /**
- * Input representing a single API workspace's generators configuration.
- * Decoupled from the full workspace type so this function is easily testable.
- */
-export interface WorkspaceGeneratorsInfo {
-    workspaceName: string | undefined;
-    generatorsConfiguration:
-        | {
-              groups: generatorsYml.GeneratorGroup[];
-          }
-        | undefined;
-}
-
-/**
  * Discovers all previewable generator groups across workspaces.
  *
  * A generator is considered previewable when:
  * - `automation.preview` is not false in generators.yml
- * - It is a supported TypeScript/npm generator
+ * - It is a supported TypeScript/npm generator (fern-typescript-sdk, node-sdk, browser-sdk)
  *
- * Returns one entry per matching generator (not per group), to support
- * groups with mixed generator types.
+ * Returns one entry per unique (groupName, apiName) pair. When a group
+ * contains multiple matching generators, the first match is used for the
+ * `generator` field. This avoids duplicate `fern sdk preview --group` calls
+ * when the consuming action fans out by group.
  */
 export function listPreviewGroups({
     workspaces,
     groupFilter
 }: {
-    workspaces: WorkspaceGeneratorsInfo[];
+    workspaces: Pick<AbstractAPIWorkspace<unknown>, "workspaceName" | "generatorsConfiguration">[];
     groupFilter: string | undefined;
 }): PreviewGroup[] {
     const results: PreviewGroup[] = [];
@@ -48,17 +37,19 @@ export function listPreviewGroups({
             if (groupFilter != null && group.groupName !== groupFilter) {
                 continue;
             }
-            for (const generator of group.generators) {
-                if (!generator.automation.preview) {
-                    continue;
-                }
-                if (!isNpmGenerator(generator.name)) {
-                    continue;
-                }
+            // Find the first previewable generator in the group.
+            // One entry per (groupName, apiName) — the action calls
+            // `fern sdk preview --group <name>` which processes all
+            // generators in the group, so we only need to know *that*
+            // the group is previewable, not list every generator.
+            const firstPreviewable = group.generators.find(
+                (generator) => generator.automation.preview && isNpmGenerator(generator.name)
+            );
+            if (firstPreviewable != null) {
                 results.push({
                     groupName: group.groupName,
                     apiName: workspace.workspaceName ?? null,
-                    generator: generator.name
+                    generator: firstPreviewable.name
                 });
             }
         }

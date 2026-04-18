@@ -44,6 +44,7 @@ import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVers
 import { GlobalCliOptions, loadProjectAndRegisterWorkspacesWithContext } from "./cliCommons.js";
 import { addGeneratorCommands, addGetOrganizationCommand } from "./cliV2.js";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces.js";
+import { listGenerateCommands } from "./commands/automations/listGenerateCommands.js";
 import { listPreviewGroups } from "./commands/automations/listPreviewGroups.js";
 import { diff } from "./commands/diff/diff.js";
 import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace.js";
@@ -57,7 +58,6 @@ import { formatWorkspaces } from "./commands/format/formatWorkspaces.js";
 import { parseGeneratorArg } from "./commands/generate/filterGenerators.js";
 import { GenerationMode, generateAPIWorkspaces } from "./commands/generate/generateAPIWorkspaces.js";
 import { generateDocsWorkspace } from "./commands/generate/generateDocsWorkspace.js";
-import { shouldSkipGenerator } from "./commands/generate/shouldSkipGenerator.js";
 import { generateDynamicIrForWorkspaces } from "./commands/generate-dynamic-ir/generateDynamicIrForWorkspaces.js";
 import { generateFdrApiDefinitionForWorkspaces } from "./commands/generate-fdr/generateFdrApiDefinitionForWorkspaces.js";
 import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces.js";
@@ -2326,38 +2326,12 @@ function addAutomationsListGenerateCommand(cli: Argv<GlobalCliOptions>, cliConte
                 defaultToAllApiWorkspaces: true
             });
 
-            const commands: string[] = [];
-
-            for (const workspace of project.apiWorkspaces) {
-                const generatorsConfiguration = workspace.generatorsConfiguration;
-                const groups = generatorsConfiguration?.groups ?? [];
-                const rootAutorelease = generatorsConfiguration?.rawConfiguration.autorelease;
-                for (const group of groups) {
-                    if (argv.group != null && group.groupName !== argv.group) {
-                        continue;
-                    }
-                    for (let i = 0; i < group.generators.length; i++) {
-                        const generator = group.generators[i];
-                        if (generator == null || shouldSkipGenerator({ generator, rootAutorelease })) {
-                            continue;
-                        }
-
-                        const parts = ["fern", "automations", "generate"];
-                        if (workspace.workspaceName != null) {
-                            parts.push("--api", workspace.workspaceName);
-                        }
-                        parts.push("--group", group.groupName);
-                        parts.push("--generator", String(i));
-                        if (argv.version != null) {
-                            parts.push("--version", argv.version);
-                        }
-                        if (argv["auto-merge"]) {
-                            parts.push("--auto-merge");
-                        }
-                        commands.push(parts.join(" "));
-                    }
-                }
-            }
+            const commands = listGenerateCommands({
+                workspaces: project.apiWorkspaces,
+                groupFilter: argv.group,
+                version: argv.version,
+                autoMerge: argv["auto-merge"]
+            });
 
             // Output JSON array of commands to stdout for GitHub Actions consumption
             process.stdout.write(JSON.stringify(commands));
@@ -2404,6 +2378,12 @@ function addAutomationsListPreviewCommand(cli: Argv<GlobalCliOptions>, cliContex
                     description:
                         "Filter to a specific API in a multi-API repo (e.g. 'foo' for fern/apis/foo/). " +
                         "Omit to list all APIs."
+                })
+                .option("json", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Output as JSON array (for machine consumption). Without this flag, outputs one group per line."
                 }),
         async (argv) => {
             const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
@@ -2416,8 +2396,14 @@ function addAutomationsListPreviewCommand(cli: Argv<GlobalCliOptions>, cliContex
                 groupFilter: argv.group
             });
 
-            // Output JSON array to stdout for GitHub Actions consumption
-            process.stdout.write(JSON.stringify(groups));
+            if (argv.json) {
+                process.stdout.write(JSON.stringify(groups));
+            } else {
+                for (const group of groups) {
+                    const apiPart = group.apiName != null ? ` (api: ${group.apiName})` : "";
+                    process.stdout.write(`${group.groupName}${apiPart} — ${group.generator}\n`);
+                }
+            }
         }
     );
 }

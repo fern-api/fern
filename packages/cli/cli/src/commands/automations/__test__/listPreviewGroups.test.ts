@@ -1,7 +1,9 @@
+import type { AbstractAPIWorkspace } from "@fern-api/api-workspace-commons";
 import type { generatorsYml } from "@fern-api/configuration-loader";
 import { describe, expect, it } from "vitest";
-import type { WorkspaceGeneratorsInfo } from "../listPreviewGroups.js";
 import { listPreviewGroups } from "../listPreviewGroups.js";
+
+type WorkspaceInput = Pick<AbstractAPIWorkspace<unknown>, "workspaceName" | "generatorsConfiguration">;
 
 /** Creates a minimal GeneratorInvocation stub for testing. */
 function makeGenerator(
@@ -25,15 +27,12 @@ function makeGroup(groupName: string, generators: generatorsYml.GeneratorInvocat
     };
 }
 
-/** Creates a workspace info object for testing. */
-function makeWorkspace(
-    workspaceName: string | undefined,
-    groups: generatorsYml.GeneratorGroup[]
-): WorkspaceGeneratorsInfo {
+/** Creates a workspace stub for testing. */
+function makeWorkspace(workspaceName: string | undefined, groups: generatorsYml.GeneratorGroup[]): WorkspaceInput {
     return {
         workspaceName,
         generatorsConfiguration: { groups }
-    };
+    } as unknown as WorkspaceInput;
 }
 
 describe("listPreviewGroups", () => {
@@ -133,7 +132,7 @@ describe("listPreviewGroups", () => {
     });
 
     describe("mixed generator groups", () => {
-        it("includes only TypeScript generators from a group with mixed languages", () => {
+        it("includes only the first TypeScript generator from a group with mixed languages", () => {
             const workspace = makeWorkspace(undefined, [
                 makeGroup("all-sdks", [
                     makeGenerator("fernapi/fern-typescript-node-sdk"),
@@ -149,7 +148,7 @@ describe("listPreviewGroups", () => {
             ]);
         });
 
-        it("includes multiple TypeScript generators from the same group", () => {
+        it("deduplicates multiple TypeScript generators in the same group to one entry", () => {
             const workspace = makeWorkspace(undefined, [
                 makeGroup("ts", [
                     makeGenerator("fernapi/fern-typescript-node-sdk"),
@@ -159,8 +158,23 @@ describe("listPreviewGroups", () => {
 
             const result = listPreviewGroups({ workspaces: [workspace], groupFilter: undefined });
 
+            expect(result).toHaveLength(1);
+            expect(result).toEqual([{ groupName: "ts", apiName: null, generator: "fernapi/fern-typescript-node-sdk" }]);
+        });
+
+        it("picks the first previewable generator when non-previewable ones come first", () => {
+            const workspace = makeWorkspace(undefined, [
+                makeGroup("ts", [
+                    makeGenerator("fernapi/fern-typescript-node-sdk", {
+                        automation: { generate: true, upgrade: true, preview: false, verify: true }
+                    }),
+                    makeGenerator("fernapi/fern-typescript-browser-sdk")
+                ])
+            ]);
+
+            const result = listPreviewGroups({ workspaces: [workspace], groupFilter: undefined });
+
             expect(result).toEqual([
-                { groupName: "ts", apiName: null, generator: "fernapi/fern-typescript-node-sdk" },
                 { groupName: "ts", apiName: null, generator: "fernapi/fern-typescript-browser-sdk" }
             ]);
         });
@@ -253,10 +267,10 @@ describe("listPreviewGroups", () => {
         });
 
         it("skips workspaces with no generators configuration", () => {
-            const workspace: WorkspaceGeneratorsInfo = {
+            const workspace = {
                 workspaceName: undefined,
                 generatorsConfiguration: undefined
-            };
+            } as unknown as WorkspaceInput;
 
             const result = listPreviewGroups({ workspaces: [workspace], groupFilter: undefined });
 
