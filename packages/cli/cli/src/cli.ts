@@ -71,6 +71,7 @@ import { mockServer } from "./commands/mock/mockServer.js";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1.js";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2.js";
 import { sdkDiffCommand } from "./commands/sdk-diff/sdkDiffCommand.js";
+import { isNpmGenerator } from "./commands/sdk-preview/overrideOutputForPreview.js";
 import { sdkPreview } from "./commands/sdk-preview/sdkPreview.js";
 import { selfUpdate } from "./commands/self-update/selfUpdate.js";
 import { testOutput } from "./commands/test/testOutput.js";
@@ -2289,6 +2290,7 @@ function addAutomationsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
 function addAutomationsListCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command("list", false, (yargs) => {
         addAutomationsListGenerateCommand(yargs, cliContext);
+        addAutomationsListPreviewCommand(yargs, cliContext);
         return yargs.demandCommand();
     });
 }
@@ -2359,6 +2361,88 @@ function addAutomationsListGenerateCommand(cli: Argv<GlobalCliOptions>, cliConte
 
             // Output JSON array of commands to stdout for GitHub Actions consumption
             process.stdout.write(JSON.stringify(commands));
+        }
+    );
+}
+
+/**
+ * `fern automations list preview`
+ *
+ * Discovers all previewable generator groups in the project and outputs a JSON
+ * array of objects describing each group. Designed to be consumed by the
+ * `fern-preview` GitHub Action (or any automation) to determine which groups
+ * to run `fern sdk preview` against.
+ *
+ * A generator is considered previewable when:
+ * - It is a supported TypeScript/npm generator (fern-typescript-sdk, node-sdk, browser-sdk)
+ * - `automation.preview` is not false in generators.yml
+ *
+ * Output format (stdout): JSON array of objects
+ *   [
+ *     { "groupName": "ts-sdk", "apiName": null, "generator": "fernapi/fern-typescript-sdk" },
+ *     { "groupName": "node", "apiName": "bar", "generator": "fernapi/fern-typescript-node-sdk" }
+ *   ]
+ *
+ * Example GitHub Actions usage:
+ *   - id: groups
+ *     run: echo "groups=$(fern automations list preview)" >> $GITHUB_OUTPUT
+ *     env:
+ *       FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+ */
+function addAutomationsListPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "preview",
+        false, // hidden
+        (yargs) =>
+            yargs
+                .option("group", {
+                    type: "string",
+                    description: "Filter to a specific generator group (e.g. 'sdk'). Omit to list all groups."
+                })
+                .option("api", {
+                    type: "string",
+                    description:
+                        "Filter to a specific API in a multi-API repo (e.g. 'foo' for fern/apis/foo/). " +
+                        "Omit to list all APIs."
+                }),
+        async (argv) => {
+            const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                commandLineApiWorkspace: argv.api,
+                defaultToAllApiWorkspaces: true
+            });
+
+            const groups: Array<{ groupName: string; apiName: string | null; generator: string }> = [];
+
+            for (const workspace of project.apiWorkspaces) {
+                const generatorsConfiguration = workspace.generatorsConfiguration;
+                if (generatorsConfiguration == null) {
+                    continue;
+                }
+                for (const group of generatorsConfiguration.groups) {
+                    if (argv.group != null && group.groupName !== argv.group) {
+                        continue;
+                    }
+                    // Collect unique previewable generators per group.
+                    // A group is included once per matching generator (not once per group)
+                    // to support groups with mixed generator types.
+                    for (const generator of group.generators) {
+                        if (!generator.automation.preview) {
+                            continue;
+                        }
+                        if (!isNpmGenerator(generator.name)) {
+                            continue;
+                        }
+                        groups.push({
+                            groupName: group.groupName,
+                            apiName: workspace.workspaceName ?? null,
+                            generator: generator.name
+                        });
+                    }
+                }
+            }
+
+            // Output JSON array to stdout for GitHub Actions consumption
+            process.stdout.write(JSON.stringify(groups));
         }
     );
 }
