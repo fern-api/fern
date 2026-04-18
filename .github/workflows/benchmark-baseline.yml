@@ -46,7 +46,7 @@ jobs:
   # Run generator-only benchmarks (--skip-scripts) for all SDK generators on main.
   # This is the primary baseline that PR benchmarks compare against.
   baseline:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     timeout-minutes: 60
     needs: [fetch-specs]
     if: ${{ github.ref == 'refs/heads/main' }}
@@ -85,7 +85,7 @@ jobs:
   # These capture the complete customer-observable generation time including
   # npm install, compilation, and test execution.
   baseline-e2e:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     timeout-minutes: 120
     needs: [fetch-specs]
     if: ${{ github.ref == 'refs/heads/main' }}
@@ -122,7 +122,7 @@ jobs:
   # Run docs generation benchmark on main.
   # Uses --preview to create an ephemeral preview deployment (no production impact).
   docs-baseline:
-    runs-on: ubuntu-latest
+    runs-on: Seed
     timeout-minutes: 45
     needs: [fetch-specs]
     if: ${{ github.ref == 'refs/heads/main' }}
