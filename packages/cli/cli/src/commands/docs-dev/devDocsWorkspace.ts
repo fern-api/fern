@@ -1,6 +1,7 @@
 import { runAppPreviewServer, runPreviewServer } from "@fern-api/docs-preview";
 import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { Project } from "@fern-api/project-loader";
+import { CliError } from "@fern-api/task-context";
 
 import { CliContext } from "../../cli-context/CliContext.js";
 import { validateDocsWorkspaceWithoutExiting } from "../validate/validateDocsWorkspaceAndLogIssues.js";
@@ -27,6 +28,9 @@ export async function previewDocsWorkspace({
     const project = await loadProject();
     const docsWorkspace = project.docsWorkspaces;
     if (docsWorkspace == null) {
+        cliContext.failAndThrow("No docs.yml file found. Please make sure your project has one.", undefined, {
+            code: CliError.Code.ConfigError
+        });
         return;
     }
 
