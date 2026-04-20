@@ -9,7 +9,7 @@ import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-ap
 import { getGeneratorOutputSubfolder, runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
 import { askToLogin } from "@fern-api/login";
 import { runRemoteGenerationForAPIWorkspace } from "@fern-api/remote-workspace-runner";
-
+import { CliError } from "@fern-api/task-context";
 import fs from "fs/promises";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { loadProjectAndRegisterWorkspacesWithContext } from "../../cliCommons.js";
@@ -43,6 +43,7 @@ export interface SdkPreviewSuccess {
 export interface SdkPreviewError {
     status: "error";
     message: string;
+    code?: CliError.Code;
 }
 
 export type SdkPreviewResult = SdkPreviewSuccess | SdkPreviewError;
@@ -93,7 +94,11 @@ export async function sdkPreview({
             return askToLogin(context);
         });
         if (token == null) {
-            return { status: "error", message: "Authentication required. Run 'fern login' or set FERN_TOKEN." };
+            return {
+                status: "error",
+                message: "Authentication required. Run 'fern login' or set FERN_TOKEN.",
+                code: CliError.Code.AuthError
+            };
         }
 
         // 2. Load project
@@ -176,7 +181,8 @@ export async function sdkPreview({
             if (groupNameOrDefault == null) {
                 return {
                     status: "error",
-                    message: `No group specified. Use the --${GROUP_CLI_OPTION} option, or set "${DEFAULT_GROUP_GENERATORS_CONFIG_KEY}" in ${GENERATORS_CONFIGURATION_FILENAME}`
+                    message: `No group specified. Use the --${GROUP_CLI_OPTION} option, or set "${DEFAULT_GROUP_GENERATORS_CONFIG_KEY}" in ${GENERATORS_CONFIGURATION_FILENAME}`,
+                    code: CliError.Code.ConfigError
                 };
             }
 
@@ -184,7 +190,8 @@ export async function sdkPreview({
             if (group == null) {
                 return {
                     status: "error",
-                    message: `Group '${groupNameOrDefault}' does not exist in ${GENERATORS_CONFIGURATION_FILENAME}`
+                    message: `Group '${groupNameOrDefault}' does not exist in ${GENERATORS_CONFIGURATION_FILENAME}`,
+                    code: CliError.Code.ConfigError
                 };
             }
 
@@ -195,7 +202,8 @@ export async function sdkPreview({
             if (generatorFilter != null && generators.length === 0) {
                 return {
                     status: "error",
-                    message: `Generator '${generatorFilter}' not found in group '${groupNameOrDefault}' in ${GENERATORS_CONFIGURATION_FILENAME}`
+                    message: `Generator '${generatorFilter}' not found in group '${groupNameOrDefault}' in ${GENERATORS_CONFIGURATION_FILENAME}`,
+                    code: CliError.Code.ConfigError
                 };
             }
 
@@ -213,7 +221,8 @@ export async function sdkPreview({
                     status: "error",
                     message:
                         `No supported generators found in group '${groupNameOrDefault}'. ` +
-                        `SDK preview currently only supports TypeScript/npm generators.`
+                        `SDK preview currently only supports TypeScript/npm generators.`,
+                    code: CliError.Code.ConfigError
                 };
             }
 
@@ -224,7 +233,8 @@ export async function sdkPreview({
                         status: "error",
                         message:
                             `Could not determine package name for generator '${generator.name}'. ` +
-                            `Ensure 'output.package-name' is set in ${GENERATORS_CONFIGURATION_FILENAME}.`
+                            `Ensure 'output.package-name' is set in ${GENERATORS_CONFIGURATION_FILENAME}.`,
+                        code: CliError.Code.ConfigError
                     };
                 }
 

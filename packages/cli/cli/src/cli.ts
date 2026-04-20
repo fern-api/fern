@@ -2373,6 +2373,15 @@ function addAutomationsListGenerateCommand(cli: Argv<GlobalCliOptions>, cliConte
  *     env:
  *       FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
  */
+interface AutomationsPreviewGroupResult {
+    groupName: string;
+    apiName: string | null;
+    status: "success" | "error";
+    org?: string;
+    previews?: SdkPreviewSuccess["previews"];
+    error?: string;
+}
+
 function addAutomationsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "preview",
@@ -2424,15 +2433,6 @@ function addAutomationsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: C
                 `Found ${groups.length} previewable group(s): ${groups.map((g) => g.groupName).join(", ")}`
             );
 
-            interface AutomationsPreviewGroupResult {
-                groupName: string;
-                apiName: string | null;
-                status: "success" | "error";
-                org?: string;
-                previews?: SdkPreviewSuccess["previews"];
-                error?: string;
-            }
-
             const results: AutomationsPreviewGroupResult[] = [];
 
             for (const group of groups) {
@@ -2447,7 +2447,7 @@ function addAutomationsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: C
                         apiName: group.apiName ?? undefined,
                         output: undefined,
                         local: false,
-                        pushDiff: argv.pushDiff
+                        pushDiff: argv["push-diff"]
                     });
 
                     if (result.status === "success") {
@@ -2706,7 +2706,11 @@ function writeSdkPreviewOutput({
     }
 
     if (result.status === "error") {
-        return cliContext.failAndThrow(result.message);
+        return cliContext.failAndThrow(
+            result.message,
+            undefined,
+            result.code != null ? { code: result.code } : undefined
+        );
     }
 
     if (result.previews.length > 0) {
