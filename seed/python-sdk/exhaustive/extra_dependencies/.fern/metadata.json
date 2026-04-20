@@ -6,15 +6,15 @@
     "pyproject_python_version": "^3.8.1",
     "extra_dependencies": {
       "boto3": "1.28.57",
-      "langchain": {
-        "version": "^1.0",
+      "numpy": {
+        "version": "^2.0",
         "python": ">=3.10",
         "optional": true
       }
     },
     "extras": {
       "telemetry": [
-        "langchain",
+        "numpy",
         "boto3"
       ]
     }
