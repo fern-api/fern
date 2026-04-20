@@ -120,7 +120,7 @@ export async function runRemoteGenerationForAPIWorkspace({
                     automationMode,
                     autoMerge,
                     automation,
-                    snippetsProducedBy
+                    onSnippetsProduced: (invocation) => snippetsProducedBy.push(invocation)
                 })
             )
         )
@@ -166,7 +166,7 @@ async function generateOne({
     automationMode,
     autoMerge,
     automation,
-    snippetsProducedBy
+    onSnippetsProduced
 }: {
     generatorInvocation: generatorsYml.GeneratorInvocation;
     interactiveTaskContext: Parameters<Parameters<TaskContext["runInteractiveTask"]>[1]>[0];
@@ -193,8 +193,8 @@ async function generateOne({
     automationMode: boolean | undefined;
     autoMerge: boolean | undefined;
     automation: AutomationRunOptions | undefined;
-    /** Mutated: generators that created snippets are pushed here, post-success. */
-    snippetsProducedBy: generatorsYml.GeneratorInvocation[];
+    /** Invoked post-success when the generator produced snippets. */
+    onSnippetsProduced: (invocation: generatorsYml.GeneratorInvocation) => void;
 }): Promise<void> {
     const startedAt = Date.now();
     try {
@@ -274,7 +274,7 @@ async function generateOne({
         });
 
         if (remoteTaskHandlerResponse?.createdSnippets) {
-            snippetsProducedBy.push(generatorInvocation);
+            onSnippetsProduced(generatorInvocation);
 
             if (
                 generatorInvocation.absolutePathToLocalSnippets != null &&

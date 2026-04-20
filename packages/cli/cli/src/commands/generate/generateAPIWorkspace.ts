@@ -20,6 +20,7 @@ import { GenerationMode } from "./generateAPIWorkspaces.js";
 import { resolveGroupAlias } from "./resolveGroupAlias.js";
 import { resolveGroupNamesForGeneration } from "./resolveGroupNamesForGeneration.js";
 import { buildAutomationTargeting, selectGeneratorsForAutomation } from "./selectGeneratorsForAutomation.js";
+import { shouldSkipMissingGenerator } from "./shouldSkipMissingGenerator.js";
 
 export async function generateWorkspace({
     organization,
@@ -223,6 +224,9 @@ function resolveRunnableGroup({
         groupName: resolvedGroupName
     });
     if (!filterResult.ok) {
+        if (shouldSkipMissingGenerator({ automation, generatorName, generatorIndex })) {
+            return null;
+        }
         return context.failAndThrow(filterResult.error, undefined, { code: CliError.Code.ConfigError });
     }
     let filteredGenerators = filterResult.generators;
