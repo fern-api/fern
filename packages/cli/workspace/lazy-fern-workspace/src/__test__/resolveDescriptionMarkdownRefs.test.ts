@@ -102,7 +102,7 @@ describe("resolveDescriptionMarkdownRefs", () => {
         expect(warn.mock.calls[0]?.[0]).toContain("./does-not-exist.md");
     });
 
-    it("leaves JSON Pointer refs unchanged", async () => {
+    it("warns and coerces JSON Pointer refs to empty string", async () => {
         const doc = {
             info: { description: { $ref: "#/components/schemas/Foo" } }
         };
@@ -110,11 +110,13 @@ describe("resolveDescriptionMarkdownRefs", () => {
         const { context, warn } = createContextWithWarn();
         await resolveDescriptionMarkdownRefs(doc, tempDir, context);
 
-        expect((doc.info as Record<string, unknown>).description).toEqual({ $ref: "#/components/schemas/Foo" });
-        expect(warn).not.toHaveBeenCalled();
+        expect((doc.info as Record<string, unknown>).description).toBe("");
+        expect(warn).toHaveBeenCalledOnce();
+        expect(warn.mock.calls[0]?.[0]).toContain("info.description");
+        expect(warn.mock.calls[0]?.[0]).toContain("#/components/schemas/Foo");
     });
 
-    it("leaves URL refs unchanged", async () => {
+    it("warns and coerces URL refs to empty string", async () => {
         const doc = {
             info: { description: { $ref: "https://example.com/foo.md" } }
         };
@@ -122,13 +124,12 @@ describe("resolveDescriptionMarkdownRefs", () => {
         const { context, warn } = createContextWithWarn();
         await resolveDescriptionMarkdownRefs(doc, tempDir, context);
 
-        expect((doc.info as Record<string, unknown>).description).toEqual({
-            $ref: "https://example.com/foo.md"
-        });
-        expect(warn).not.toHaveBeenCalled();
+        expect((doc.info as Record<string, unknown>).description).toBe("");
+        expect(warn).toHaveBeenCalledOnce();
+        expect(warn.mock.calls[0]?.[0]).toContain("https://example.com/foo.md");
     });
 
-    it("leaves non-markdown file refs unchanged", async () => {
+    it("warns and coerces non-markdown file refs to empty string", async () => {
         const doc = {
             info: { description: { $ref: "./description.txt" } }
         };
@@ -136,11 +137,12 @@ describe("resolveDescriptionMarkdownRefs", () => {
         const { context, warn } = createContextWithWarn();
         await resolveDescriptionMarkdownRefs(doc, tempDir, context);
 
-        expect((doc.info as Record<string, unknown>).description).toEqual({ $ref: "./description.txt" });
-        expect(warn).not.toHaveBeenCalled();
+        expect((doc.info as Record<string, unknown>).description).toBe("");
+        expect(warn).toHaveBeenCalledOnce();
+        expect(warn.mock.calls[0]?.[0]).toContain("./description.txt");
     });
 
-    it("leaves $ref objects with sibling keys unchanged", async () => {
+    it("warns and coerces $ref objects with sibling keys to empty string", async () => {
         await writeFile(join(tempDir, "foo.md"), "ignored");
         const doc = {
             info: { description: { $ref: "./foo.md", summary: "other" } }
@@ -149,11 +151,10 @@ describe("resolveDescriptionMarkdownRefs", () => {
         const { context, warn } = createContextWithWarn();
         await resolveDescriptionMarkdownRefs(doc, tempDir, context);
 
-        expect((doc.info as Record<string, unknown>).description).toEqual({
-            $ref: "./foo.md",
-            summary: "other"
-        });
-        expect(warn).not.toHaveBeenCalled();
+        expect((doc.info as Record<string, unknown>).description).toBe("");
+        expect(warn).toHaveBeenCalledOnce();
+        expect(warn.mock.calls[0]?.[0]).toContain("sibling keys");
+        expect(warn.mock.calls[0]?.[0]).toContain("summary");
     });
 
     it("leaves string descriptions unchanged", async () => {
@@ -163,6 +164,39 @@ describe("resolveDescriptionMarkdownRefs", () => {
         await resolveDescriptionMarkdownRefs(doc, tempDir, context);
 
         expect(doc.info.description).toBe("already a string");
+        expect(warn).not.toHaveBeenCalled();
+    });
+
+    it("does not touch schema properties literally named 'description'", async () => {
+        const doc = {
+            components: {
+                schemas: {
+                    User: {
+                        type: "object",
+                        description: "A user",
+                        properties: {
+                            description: {
+                                type: "string",
+                                description: "The user-supplied description field"
+                            },
+                            otherField: { $ref: "#/components/schemas/Other" }
+                        }
+                    }
+                }
+            }
+        };
+
+        const { context, warn } = createContextWithWarn();
+        await resolveDescriptionMarkdownRefs(doc, tempDir, context);
+
+        const user = (doc.components as Record<string, Record<string, Record<string, unknown>>>).schemas?.User;
+        expect(user?.description).toBe("A user");
+        const props = user?.properties as Record<string, Record<string, unknown>>;
+        expect(props.description).toEqual({
+            type: "string",
+            description: "The user-supplied description field"
+        });
+        expect(props.otherField).toEqual({ $ref: "#/components/schemas/Other" });
         expect(warn).not.toHaveBeenCalled();
     });
 
