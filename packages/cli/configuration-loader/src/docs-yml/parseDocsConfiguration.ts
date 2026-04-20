@@ -148,18 +148,38 @@ export async function parseDocsConfiguration({
         absoluteFilepathToDocsConfig
     });
 
-    const [navigation, pages, typography, css, js, metadata, context7File, llmsTxtFile, llmsFullTxtFile] =
-        await Promise.all([
-            convertedNavigationPromise,
-            pagesPromise,
-            typographyPromise,
-            cssPromise,
-            jsPromise,
-            metadataPromise,
-            context7FilePromise,
-            llmsTxtFilePromise,
-            llmsFullTxtFilePromise
-        ]);
+    const translationPagesPromise = pagesPromise.then((resolvedPages) =>
+        loadTranslationPages({
+            translations: rawDocsConfiguration.translations,
+            pages: resolvedPages,
+            absolutePathToFernFolder,
+            context
+        })
+    );
+
+    const [
+        navigation,
+        pages,
+        typography,
+        css,
+        js,
+        metadata,
+        context7File,
+        llmsTxtFile,
+        llmsFullTxtFile,
+        translationPages
+    ] = await Promise.all([
+        convertedNavigationPromise,
+        pagesPromise,
+        typographyPromise,
+        cssPromise,
+        jsPromise,
+        metadataPromise,
+        context7FilePromise,
+        llmsTxtFilePromise,
+        llmsFullTxtFilePromise,
+        translationPagesPromise
+    ]);
 
     // Validate incompatible tabs configuration: sidebar placement + center alignment
     const resolvedTheme = convertThemeConfig(rawDocsConfiguration.theme);
@@ -184,6 +204,9 @@ export async function parseDocsConfiguration({
 
         /* filepath of page to contents */
         pages,
+
+        /* per-locale translated page content */
+        translationPages,
 
         /* navigation */
         landingPage,
@@ -1916,4 +1939,78 @@ function validateCollapsibleConfig({
             { code: CliError.Code.ConfigError }
         );
     }
+}
+
+/**
+ * Loads translated page content from `translations/<lang>/` directories.
+ *
+ * For each locale declared in `translations`, this function:
+ * 1. Checks that `translations/<lang>/` exists (errors if missing).
+ * 2. For each page referenced in the primary navigation, looks for the same
+ *    relative path under `translations/<lang>/`. Missing individual files are
+ *    reported as warnings (partial translations are allowed).
+ * 3. Returns a map of locale → { relativeFilePath → markdown content }.
+ */
+async function loadTranslationPages({
+    translations,
+    pages,
+    absolutePathToFernFolder,
+    context
+}: {
+    translations: docsYml.RawSchemas.TranslationConfig[] | undefined;
+    pages: Record<string, string>;
+    absolutePathToFernFolder: AbsoluteFilePath;
+    context: TaskContext;
+}): Promise<Record<string, Record<string, string>> | undefined> {
+    if (translations == null || translations.length === 0) {
+        return undefined;
+    }
+
+    const translationsRootDir = path.join(absolutePathToFernFolder, "translations") as AbsoluteFilePath;
+
+    const result: Record<string, Record<string, string>> = {};
+
+    await Promise.all(
+        translations.map(async ({ lang }) => {
+            const langDir = path.join(translationsRootDir, lang) as AbsoluteFilePath;
+
+            if (!(await doesPathExist(langDir))) {
+                context.failAndThrow(
+                    `Translation directory for locale "${lang}" not found.`,
+                    `Expected a directory at: ${langDir}\n` +
+                        `Create the directory and add translated versions of your documentation pages.\n` +
+                        `The directory should mirror the same relative paths referenced in your docs.yml navigation.\n` +
+                        `Example: if your docs.yml references "pages/getting-started.mdx", add a translated\n` +
+                        `version at "translations/${lang}/pages/getting-started.mdx".`
+                );
+                return;
+            }
+
+            const localePages: Record<string, string> = {};
+            const missingFiles: string[] = [];
+
+            await Promise.all(
+                Object.keys(pages).map(async (relativeFilePath) => {
+                    const translatedFilePath = path.join(langDir, relativeFilePath) as AbsoluteFilePath;
+                    if (await doesPathExist(translatedFilePath)) {
+                        localePages[relativeFilePath] = await readFile(translatedFilePath, "utf-8");
+                    } else {
+                        missingFiles.push(relativeFilePath);
+                    }
+                })
+            );
+
+            if (missingFiles.length > 0) {
+                context.logger.warn(
+                    `Translation for locale "${lang}" is missing ${missingFiles.length} page(s):\n` +
+                        missingFiles.map((f) => `  - translations/${lang}/${f}`).join("\n") +
+                        `\nThese pages will fall back to the default language content.`
+                );
+            }
+
+            result[lang] = localePages;
+        })
+    );
+
+    return result;
 }

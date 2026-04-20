@@ -251,6 +251,14 @@ export class DocsDefinitionResolver {
         }
         return this._parsedDocsConfig;
     }
+
+    /**
+     * Returns per-locale translated page content loaded from `translations/<lang>/` directories.
+     * Must be called after `resolve()`.
+     */
+    public getTranslationPages(): Record<string, Record<RelativeFilePath, string>> | undefined {
+        return this._parsedDocsConfig?.translationPages;
+    }
     private collectedFileIds = new Map<AbsoluteFilePath, string>();
     private markdownFilesToFullSlugs: Map<AbsoluteFilePath, string> = new Map();
     private markdownFilesToSidebarTitle: Map<AbsoluteFilePath, string> = new Map();

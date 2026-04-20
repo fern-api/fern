@@ -53,6 +53,9 @@ export interface ParsedDocsConfiguration {
     /* filepath of page to contents */
     pages: Record<RelativeFilePath, string>;
 
+    /* per-locale translated page content: locale → { relativeFilePath → markdown } */
+    translationPages: Record<string, Record<RelativeFilePath, string>> | undefined;
+
     /* RBAC declaration */
     roles: string[] | undefined;
 
