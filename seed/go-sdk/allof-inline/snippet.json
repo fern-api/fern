@@ -1,0 +1,59 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/entities",
+                "method": "GET",
+                "identifier_override": "endpoint_.getEntity"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/allof-inline/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.GetEntity(\n\tcontext.TODO(),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/organizations",
+                "method": "GET",
+                "identifier_override": "endpoint_.getOrganization"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/allof-inline/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.GetOrganization(\n\tcontext.TODO(),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/rule-types",
+                "method": "GET",
+                "identifier_override": "endpoint_.searchRuleTypes"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/allof-inline/fern\"\n\tfernclient \"github.com/allof-inline/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.SearchRuleTypes(\n\tcontext.TODO(),\n\t\u0026fern.SearchRuleTypesRequest{},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/rules",
+                "method": "POST",
+                "identifier_override": "endpoint_.createRule"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/allof-inline/fern\"\n\tfernclient \"github.com/allof-inline/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.CreateRule(\n\tcontext.TODO(),\n\t\u0026fern.RuleCreateRequest{\n\t\tName:             \"name\",\n\t\tExecutionContext: fern.RuleExecutionContextProd,\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_.listUsers"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/allof-inline/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.ListUsers(\n\tcontext.TODO(),\n)\n"
+            }
+        }
+    ]
+}

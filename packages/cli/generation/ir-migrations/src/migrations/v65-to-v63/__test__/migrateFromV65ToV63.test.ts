@@ -45,7 +45,8 @@ describe("migrateFromV65ToV63", () => {
                     v2Examples: undefined,
                     explode: undefined,
                     availability: undefined,
-                    docs: undefined
+                    docs: undefined,
+                    clientDefault: undefined
                 }),
                 propertyPath: []
             },
@@ -96,7 +97,8 @@ describe("migrateFromV65ToV63", () => {
                     v2Examples: undefined,
                     explode: undefined,
                     availability: undefined,
-                    docs: undefined
+                    docs: undefined,
+                    clientDefault: undefined
                 }),
                 propertyPath: []
             },

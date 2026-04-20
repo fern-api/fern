@@ -47,6 +47,7 @@ class CoreUtilities:
         self._use_str_enums = custom_config.pydantic_config.use_str_enums
         self._import_paths = custom_config.import_paths
         self._datetime_milliseconds = custom_config.datetime_milliseconds
+        self._default_max_retries = custom_config.default_max_retries
 
     def copy_to_project(self, *, project: Project) -> None:
         datetime_replacements = (
@@ -105,7 +106,7 @@ class CoreUtilities:
                 directories=self.filepath,
                 file=Filepath.FilepathPart(module_name="jsonable_encoder"),
             ),
-            exports={"jsonable_encoder"} if not self._exclude_types_from_init_exports else set(),
+            exports={"jsonable_encoder", "encode_path_param"} if not self._exclude_types_from_init_exports else set(),
         )
         self._copy_file_to_project(
             project=project,
@@ -327,6 +328,23 @@ class CoreUtilities:
         else:
             project.add_dependency(PYDANTIC_DEPENDENCY)
 
+    @staticmethod
+    def _resolve_core_utilities_path(relative_filepath: str) -> str:
+        """Resolve the core utilities source directory.
+
+        Supports FERN_CORE_UTILITIES_PATH env var with colon-separated paths
+        for local execution where sdk/ and shared/ are separate directories.
+        """
+        env_paths = os.environ.get("FERN_CORE_UTILITIES_PATH")
+        if env_paths is not None:
+            for source in env_paths.split(":"):
+                if os.path.exists(os.path.join(source, relative_filepath)):
+                    return source
+            return env_paths.split(":")[0]
+        if "PYTEST_CURRENT_TEST" in os.environ:
+            return os.path.join(os.path.dirname(__file__), "../../../../../core_utilities/sdk")
+        return "/assets/core_utilities"
+
     def _copy_file_to_project(
         self,
         *,
@@ -336,11 +354,7 @@ class CoreUtilities:
         exports: Set[str],
         string_replacements: Optional[dict[str, str]] = None,
     ) -> None:
-        source = (
-            os.path.join(os.path.dirname(__file__), "../../../../../core_utilities/sdk")
-            if "PYTEST_CURRENT_TEST" in os.environ
-            else "/assets/core_utilities"
-        )
+        source = self._resolve_core_utilities_path(relative_filepath_on_disk)
         SourceFileFactory.add_source_file_from_disk(
             project=project,
             path_on_disk=os.path.join(source, relative_filepath_on_disk),
@@ -351,11 +365,7 @@ class CoreUtilities:
 
     def _copy_http_sse_folder_to_project(self, *, project: Project) -> None:
         """Copy the http_sse folder using the same approach as individual file copying"""
-        source = (
-            os.path.join(os.path.dirname(__file__), "../../../../../core_utilities/sdk")
-            if "PYTEST_CURRENT_TEST" in os.environ
-            else "/assets/core_utilities"
-        )
+        source = self._resolve_core_utilities_path("http_sse")
         folder_path_on_disk = os.path.join(source, "http_sse")
 
         # Define exports for each file
@@ -612,6 +622,20 @@ class CoreUtilities:
             )
         )
 
+    def encode_path_param(self, obj: AST.Expression) -> AST.Expression:
+        return AST.Expression(
+            AST.FunctionInvocation(
+                function_definition=AST.Reference(
+                    qualified_name_excluding_import=(),
+                    import_=AST.ReferenceImport(
+                        module=AST.Module.local(*self._module_path, "jsonable_encoder"),
+                        named_import="encode_path_param",
+                    ),
+                ),
+                args=[obj],
+            )
+        )
+
     def serialize_datetime(self, datetime: AST.Expression) -> AST.Expression:
         return AST.Expression(
             AST.FunctionInvocation(
@@ -697,6 +721,8 @@ class CoreUtilities:
         ]
         if base_url is not None:
             func_args.append(("base_url", base_url))
+        if self._default_max_retries != 2:
+            func_args.append(("base_max_retries", AST.Expression(str(self._default_max_retries))))
         if is_async and async_base_headers is not None:
             func_args.append(("async_base_headers", async_base_headers))
         if logging_config is not None:

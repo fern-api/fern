@@ -25,7 +25,7 @@ describe("ImdbClient", () => {
             movie_title: "movie_title",
             movie_rating: 1.1,
         });
-        expect(response).toEqual("string");
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("get_movie (1)", async () => {
@@ -37,11 +37,7 @@ describe("ImdbClient", () => {
         server.mockEndpoint().get("/movies/movie_id").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.imdb.getMovie("movie_id");
-        expect(response).toEqual({
-            id: "id",
-            title: "title",
-            rating: 1.1,
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("get_movie (2)", async () => {

@@ -1,0 +1,50 @@
+{
+  "type": "object",
+  "properties": {
+    "foo": {
+      "type": "string"
+    },
+    "bar": {
+      "$ref": "#/definitions/UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1"
+    },
+    "ref": {
+      "$ref": "#/definitions/ReferenceType"
+    }
+  },
+  "required": [
+    "foo",
+    "bar",
+    "ref"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "ReferenceType": {
+      "type": "object",
+      "properties": {
+        "foo": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "foo"
+      ],
+      "additionalProperties": false
+    },
+    "UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1": {
+      "type": "object",
+      "properties": {
+        "foo": {
+          "type": "string"
+        },
+        "ref": {
+          "$ref": "#/definitions/ReferenceType"
+        }
+      },
+      "required": [
+        "foo",
+        "ref"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: dollar-string-examples
-  version: ''
+  version: 0.0.0
 paths: {}
 components:
   schemas:
@@ -14,8 +14,9 @@ components:
         currency:
           type: string
         description:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
       required:
         - amount
         - currency

@@ -1,3 +1,4 @@
+import { getOrCreateFernRunId } from "@fern-api/cli-telemetry";
 import type { Argv } from "yargs";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
@@ -9,12 +10,14 @@ import { addConfigCommand } from "./commands/config/index.js";
 import { addDocsCommand } from "./commands/docs/index.js";
 import { addInitCommand } from "./commands/init/index.js";
 import { addOrgCommand } from "./commands/org/index.js";
+import { addReplayCommand } from "./commands/replay/index.js";
 import { addSdkCommand } from "./commands/sdk/index.js";
 import { addTelemetryCommand } from "./commands/telemetry/index.js";
 import { GlobalArgs } from "./context/GlobalArgs.js";
 import { Version } from "./version.js";
 
 export async function runCliV2(argv?: string[]): Promise<void> {
+    getOrCreateFernRunId();
     const cli = createCliV2(argv);
     await cli.parse();
 }
@@ -55,6 +58,7 @@ function createCliV2(argv?: string[]): Argv<GlobalArgs> {
     addDocsCommand(cli);
     addInitCommand(cli);
     addOrgCommand(cli);
+    addReplayCommand(cli);
     addSdkCommand(cli);
     addTelemetryCommand(cli);
 

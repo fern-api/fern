@@ -90,8 +90,12 @@ public class BigunionWireTest {
     public void testUpdate() throws Exception {
         server.enqueue(new MockResponse().setResponseCode(200).setBody("true"));
         Boolean response = client.bigunion()
-                .update(BigUnion.normalSweet(
-                        NormalSweet.builder().value("value").build()));
+                .update(BigUnion.normalSweet(NormalSweet.builder()
+                        .value("value")
+                        .additionalProperty("id", "id")
+                        .additionalProperty("created-at", "2024-01-15T09:30:00Z")
+                        .additionalProperty("archived-at", "2024-01-15T09:30:00Z")
+                        .build()));
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("PATCH", request.getMethod());
@@ -165,10 +169,18 @@ public class BigunionWireTest {
         server.enqueue(new MockResponse().setResponseCode(200).setBody("{\"string\":true}"));
         Map<String, Boolean> response = client.bigunion()
                 .updateMany(Arrays.asList(
-                        BigUnion.normalSweet(
-                                NormalSweet.builder().value("value").build()),
-                        BigUnion.normalSweet(
-                                NormalSweet.builder().value("value").build())));
+                        BigUnion.normalSweet(NormalSweet.builder()
+                                .value("value")
+                                .additionalProperty("id", "id")
+                                .additionalProperty("created-at", "2024-01-15T09:30:00Z")
+                                .additionalProperty("archived-at", "2024-01-15T09:30:00Z")
+                                .build()),
+                        BigUnion.normalSweet(NormalSweet.builder()
+                                .value("value")
+                                .additionalProperty("id", "id")
+                                .additionalProperty("created-at", "2024-01-15T09:30:00Z")
+                                .additionalProperty("archived-at", "2024-01-15T09:30:00Z")
+                                .build())));
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("PATCH", request.getMethod());
@@ -263,7 +275,9 @@ public class BigunionWireTest {
             while (iter.hasNext()) {
                 java.util.Map.Entry<String, JsonNode> entry = iter.next();
                 JsonNode actualValue = actual.get(entry.getKey());
-                if (actualValue == null || !jsonEquals(entry.getValue(), actualValue)) return false;
+                if (actualValue == null) {
+                    if (!entry.getValue().isNull()) return false;
+                } else if (!jsonEquals(entry.getValue(), actualValue)) return false;
             }
             return true;
         }

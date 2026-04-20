@@ -32,7 +32,8 @@
     "test:update": "vitest --run -u"
   },
   "dependencies": {
-    "@fern-fern/ir-sdk": "^61.7.0"
+    "@fern-api/ir-utils": "workspace:*",
+    "@fern-fern/ir-sdk": "^66.0.0"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",

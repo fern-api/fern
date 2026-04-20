@@ -1,3 +1,5 @@
+import { CliError } from "@fern-api/task-context";
+
 /**
  * Redirects process.stdout to process.stderr.
  * Can be generalized to FileDescriptorRedirector or StreamRedirector
@@ -20,7 +22,10 @@ export class StdoutRedirector {
 
     public redirect(): void {
         if (this.redirected) {
-            throw new Error("StdoutRedirector: already redirected — did you forget to restore()?");
+            throw new CliError({
+                message: "StdoutRedirector: already redirected — did you forget to restore()?",
+                code: CliError.Code.InternalError
+            });
         }
         this.originalWrite = process.stdout.write;
         process.stdout.write = process.stderr.write.bind(process.stderr) as typeof process.stdout.write;

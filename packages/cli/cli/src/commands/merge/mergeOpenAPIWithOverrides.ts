@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
+import { CliError } from "@fern-api/task-context";
 import { readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
-
 import { CliContext } from "../../cli-context/CliContext.js";
 
 // biome-ignore lint/suspicious/noExplicitAny: OpenAPI specs can have any shape
@@ -35,10 +35,14 @@ export async function mergeOpenAPIWithOverrides({
     await cliContext.runTask(async (context) => {
         // Validate files exist
         if (!(await doesPathExist(openapiPath))) {
-            return context.failAndThrow(`OpenAPI spec file does not exist: ${openapiPath}`);
+            return context.failAndThrow(`OpenAPI spec file does not exist: ${openapiPath}`, undefined, {
+                code: CliError.Code.ConfigError
+            });
         }
         if (!(await doesPathExist(overridesPath))) {
-            return context.failAndThrow(`Overrides file does not exist: ${overridesPath}`);
+            return context.failAndThrow(`Overrides file does not exist: ${overridesPath}`, undefined, {
+                code: CliError.Code.ConfigError
+            });
         }
 
         context.logger.info(`Merging ${overridesPath} into ${openapiPath}`);
@@ -69,7 +73,9 @@ async function loadYamlOrJson(filepath: AbsoluteFilePath, context: any): Promise
         try {
             return yaml.load(contents) as OpenAPISpec;
         } catch (err) {
-            return context.failAndThrow(`Failed to parse file as JSON or YAML: ${filepath}`);
+            return context.failAndThrow(`Failed to parse file as JSON or YAML: ${filepath}`, undefined, {
+                code: CliError.Code.ParseError
+            });
         }
     }
 }

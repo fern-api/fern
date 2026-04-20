@@ -12,6 +12,7 @@ import { FernFileContext } from "../FernFileContext.js";
 import { EndpointResolver } from "../resolvers/EndpointResolver.js";
 import { PropertyResolver } from "../resolvers/PropertyResolver.js";
 import { ResolvedEndpoint } from "../resolvers/ResolvedEndpoint.js";
+import { TypeResolver } from "../resolvers/TypeResolver.js";
 import { createEndpointReference } from "../utils/createEndpointReference.js";
 import { convertOAuthClientCredentials } from "./convertOAuthClientCredentials.js";
 import { get0AuthTokenEndpoint, getRefreshTokenEndpoint } from "./convertOAuthUtils.js";
@@ -21,12 +22,14 @@ export function convertApiAuth({
     rawApiFileSchema,
     file,
     propertyResolver,
-    endpointResolver
+    endpointResolver,
+    typeResolver
 }: {
     rawApiFileSchema: RawSchemas.WithAuthSchema;
     file: FernFileContext;
     propertyResolver: PropertyResolver;
     endpointResolver: EndpointResolver;
+    typeResolver: TypeResolver;
 }): ApiAuth {
     if (rawApiFileSchema.auth == null) {
         return {
@@ -44,7 +47,8 @@ export function convertApiAuth({
                 authSchemeDeclarations: rawApiFileSchema["auth-schemes"],
                 file,
                 propertyResolver,
-                endpointResolver
+                endpointResolver,
+                typeResolver
             });
             return {
                 docs,
@@ -61,7 +65,8 @@ export function convertApiAuth({
                     authSchemeDeclarations: rawApiFileSchema["auth-schemes"],
                     file,
                     propertyResolver,
-                    endpointResolver
+                    endpointResolver,
+                    typeResolver
                 })
             )
         }),
@@ -74,7 +79,8 @@ export function convertApiAuth({
                     authSchemeDeclarations: rawApiFileSchema["auth-schemes"],
                     file,
                     propertyResolver,
-                    endpointResolver
+                    endpointResolver,
+                    typeResolver
                 })
             )
         })
@@ -86,13 +92,15 @@ function convertSchemeReference({
     authSchemeDeclarations,
     file,
     propertyResolver,
-    endpointResolver
+    endpointResolver,
+    typeResolver
 }: {
     reference: RawSchemas.AuthSchemeReferenceSchema | string;
     authSchemeDeclarations: Record<string, RawSchemas.AuthSchemeDeclarationSchema> | undefined;
     file: FernFileContext;
     propertyResolver: PropertyResolver;
     endpointResolver: EndpointResolver;
+    typeResolver: TypeResolver;
 }): AuthScheme {
     const convertNamedAuthSchemeReference = (reference: string, docs: string | undefined) => {
         const declaration = authSchemeDeclarations?.[reference];
@@ -142,7 +150,8 @@ function convertSchemeReference({
                     docs,
                     rawScheme,
                     propertyResolver,
-                    endpointResolver
+                    endpointResolver,
+                    typeResolver
                 })
         });
     };
@@ -171,7 +180,8 @@ function convertSchemeReference({
                 docs: undefined,
                 rawScheme: undefined,
                 propertyResolver,
-                endpointResolver
+                endpointResolver,
+                typeResolver
             });
         default:
             return convertNamedAuthSchemeReference(scheme, typeof reference !== "string" ? reference.docs : undefined);
@@ -226,7 +236,8 @@ function generateOAuth({
     docs,
     rawScheme,
     propertyResolver,
-    endpointResolver
+    endpointResolver,
+    typeResolver
 }: {
     key: string;
     file: FernFileContext;
@@ -234,6 +245,7 @@ function generateOAuth({
     rawScheme: RawSchemas.OAuthSchemeSchema | undefined;
     propertyResolver: PropertyResolver;
     endpointResolver: EndpointResolver;
+    typeResolver: TypeResolver;
 }): AuthScheme.Oauth {
     switch (rawScheme?.type) {
         case "client-credentials":
@@ -244,6 +256,7 @@ function generateOAuth({
                     convertOAuthClientCredentials({
                         propertyResolver,
                         endpointResolver,
+                        typeResolver,
                         file,
                         oauthScheme: rawScheme,
                         tokenEndpoint: get0AuthTokenEndpoint(rawScheme),

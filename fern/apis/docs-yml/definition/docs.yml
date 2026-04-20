@@ -145,6 +145,35 @@ types:
         docs: |
           Custom styling instructions for AI-generated examples. When provided, these instructions will guide the AI in generating examples that match your preferred style, naming conventions, or domain-specific terminology. Limited to 500 characters.
 
+  PageDescriptionSource:
+    enum:
+      - description
+      - subtitle
+
+  AgentsConfig:
+    properties:
+      page-directive:
+        type: optional<string>
+        docs: |
+          Text to prepend to each page when it is served through agent endpoints.
+      page-description-source:
+        type: optional<PageDescriptionSource>
+        docs: |
+          Controls which frontmatter field is preferred for one-line page descriptions
+          in llms.txt. Defaults to "description". If the preferred field is not present
+          in a page's frontmatter, falls back to other fields (description, subtitle,
+          og:description, headline, excerpt).
+      llms-txt:
+        type: optional<string>
+        docs: |
+          Relative filepath to a custom `llms.txt` file that Fern should host at `/llms.txt`,
+          overriding the auto-generated version. The file should follow the llmstxt.org specification.
+      llms-full-txt:
+        type: optional<string>
+        docs: |
+          Relative filepath to a custom `llms-full.txt` file that Fern should host at `/llms-full.txt`,
+          overriding the auto-generated version. The file should contain the full concatenated documentation content.
+
   CheckRuleSeverity:
     enum:
       - warn
@@ -170,6 +199,9 @@ types:
       valid-docs-endpoints:
         type: optional<CheckRuleSeverity>
         docs: Severity for docs endpoint URL validation. Default is warn.
+      missing-redirects:
+        type: optional<CheckRuleSeverity>
+        docs: Severity for detecting previously published URLs that disappeared without an explicit redirect. Default is warn.
 
   CheckConfig:
     docs: |
@@ -245,6 +277,11 @@ types:
         type: optional<AiExamplesConfig>
         docs: |
           Configure AI-powered example enhancement for API documentation. When enabled, API examples will be enhanced with AI-generated content to provide more comprehensive and realistic examples.
+
+      agents:
+        type: optional<AgentsConfig>
+        docs: |
+          Configuration for agent-serving endpoints.
 
       # seo
       metadata: optional<MetadataConfig>
@@ -468,10 +505,6 @@ types:
       "custom-domain":
         type: optional<CustomDomain>
         docs: The custom domain where your documentation is hosted. Learn more about setting up a custom domain.
-      private:
-        type: optional<boolean>
-        docs: This config option is no longer used. Please reach out to the Fern Team if you want to enable private docs.
-        availability: deprecated
       "edit-this-page":
         type: optional<EditThisPageConfig>
         docs: |
@@ -790,6 +823,12 @@ types:
         docs: |
           If `hide-feedback` is set to true, the feedback button will not be rendered. This can be overridden for a specific page using the frontmatter.
 
+      mobile-toc:
+        type: optional<boolean>
+        availability: in-development
+        docs: |
+          If `mobile-toc` is set to true, a sticky collapsible table of contents bar will be shown on mobile viewports for guide and overview layout pages.
+
   DocsSettingsConfig:
     properties:
       search-text:
@@ -844,6 +883,15 @@ types:
           If set to true, the API Explorer will bypass the proxy when sending requests directly to your API.
 
           When this feature is enabled, your API must have Cross-Origin Resource Sharing (CORS) enabled to allow requests from the documentation domain.
+
+          @default: false
+      disable-environment-editing:
+        type: optional<boolean>
+        docs: |
+          If set to true, the base URL (environment) shown in the endpoint header on API reference
+          docs pages will no longer be editable. Users will still be able to switch between configured
+          environments via the dropdown, but will not be able to double-click and type in a custom
+          URL. This does not affect the API Playground.
 
           @default: false
       disable-analytics: optional<boolean>
@@ -1973,6 +2021,11 @@ types:
   IntegrationsConfig:
     properties:
       intercom: optional<string>
+      context7:
+        type: optional<string>
+        docs: |
+          Relative filepath to a `context7.json` file that Fern should host at `/context7.json`.
+          Fern only checks that the file exists and is valid JSON, then passes it through as-is.
 
   ExperimentalConfig:
     properties:

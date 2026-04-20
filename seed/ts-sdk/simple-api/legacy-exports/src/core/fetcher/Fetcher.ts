@@ -22,6 +22,7 @@ export declare namespace Fetcher {
         contentType?: string;
         headers?: Record<string, unknown>;
         queryParameters?: Record<string, unknown>;
+        queryString?: string;
         body?: unknown;
         timeoutMs?: number;
         maxRetries?: number;
@@ -56,11 +57,13 @@ export declare namespace Fetcher {
 
     export interface TimeoutError {
         reason: "timeout";
+        cause?: unknown;
     }
 
     export interface UnknownError {
         reason: "unknown";
         errorMessage: string;
+        cause?: unknown;
     }
 }
 
@@ -249,7 +252,12 @@ async function getHeaders(args: Fetcher.Args): Promise<Headers> {
 }
 
 export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse<R, Fetcher.Error>> {
-    const url = createRequestUrl(args.url, args.queryParameters);
+    let url = args.url;
+    if (args.queryString != null && args.queryString.length > 0) {
+        url = `${url}?${args.queryString}`;
+    } else {
+        url = createRequestUrl(args.url, args.queryParameters);
+    }
     const requestBody: BodyInit | undefined = await getRequestBody({
         body: args.body,
         type: args.requestType ?? "other",
@@ -338,6 +346,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                 error: {
                     reason: "unknown",
                     errorMessage: "The user aborted a request",
+                    cause: error,
                 },
                 rawResponse: abortRawResponse,
             };
@@ -354,6 +363,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                 ok: false,
                 error: {
                     reason: "timeout",
+                    cause: error,
                 },
                 rawResponse: abortRawResponse,
             };
@@ -371,6 +381,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                 error: {
                     reason: "unknown",
                     errorMessage: error.message,
+                    cause: error,
                 },
                 rawResponse: unknownRawResponse,
             };
@@ -389,6 +400,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
             error: {
                 reason: "unknown",
                 errorMessage: toJson(error),
+                cause: error,
             },
             rawResponse: unknownRawResponse,
         };

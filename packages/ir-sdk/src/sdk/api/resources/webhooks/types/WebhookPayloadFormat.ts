@@ -11,4 +11,9 @@ export interface WebhookPayloadFormat {
     components: FernIr.WebhookPayloadComponent[];
     /** String used to join components. Use empty string for direct concatenation. */
     delimiter: string;
+    /**
+     * When set, POST body parameters are sorted before being concatenated
+     * into the signing payload. Required by providers like Twilio.
+     */
+    bodySort: FernIr.WebhookPayloadBodySort | undefined;
 }

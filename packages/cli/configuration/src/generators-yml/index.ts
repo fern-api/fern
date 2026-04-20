@@ -17,8 +17,10 @@ export {
     type GeneratorsConfiguration,
     getPackageName,
     type ProtoAPIDefinitionSchema,
+    type ResolvedAutomationConfig,
     type SingleNamespaceAPIDefinition
 } from "./GeneratorsConfiguration.js";
 export { isRawProtobufAPIDefinitionSchema } from "./isRawProtobufAPIDefinitionSchema.js";
+export { resolveAutomationConfig } from "./resolveAutomationConfig.js";
 export * from "./schemas/index.js";
 export * from "./utils/index.js";

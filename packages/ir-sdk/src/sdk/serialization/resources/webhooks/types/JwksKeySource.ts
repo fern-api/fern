@@ -3,17 +3,17 @@
 import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { NameAndWireValue } from "../../commons/types/NameAndWireValue.js";
+import { NameAndWireValueOrString } from "../../commons/types/NameAndWireValueOrString.js";
 
 export const JwksKeySource: core.serialization.ObjectSchema<serializers.JwksKeySource.Raw, FernIr.JwksKeySource> =
     core.serialization.objectWithoutOptionalProperties({
         url: core.serialization.string(),
-        keyIdHeader: NameAndWireValue.optional(),
+        keyIdHeader: NameAndWireValueOrString.optional(),
     });
 
 export declare namespace JwksKeySource {
     export interface Raw {
         url: string;
-        keyIdHeader?: NameAndWireValue.Raw | null;
+        keyIdHeader?: NameAndWireValueOrString.Raw | null;
     }
 }

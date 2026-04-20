@@ -9,12 +9,13 @@ import { ContainerRunner } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
 import { runRemoteGenerationForAPIWorkspace } from "@fern-api/remote-workspace-runner";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import chalk from "chalk";
 
 import { GROUP_CLI_OPTION } from "../../constants.js";
+import { filterGenerators } from "./filterGenerators.js";
 import { GenerationMode } from "./generateAPIWorkspaces.js";
 
 export async function generateWorkspace({
@@ -24,6 +25,7 @@ export async function generateWorkspace({
     context,
     groupName,
     generatorName,
+    generatorIndex,
     version,
     shouldLogS3Url,
     token,
@@ -39,7 +41,9 @@ export async function generateWorkspace({
     dynamicIrOnly,
     noReplay,
     retryRateLimited,
-    requireEnvVars
+    requireEnvVars,
+    automationMode,
+    autoMerge
 }: {
     organization: string;
     workspace: AbstractAPIWorkspace<unknown>;
@@ -48,6 +52,7 @@ export async function generateWorkspace({
     version: string | undefined;
     groupName: string | undefined;
     generatorName: string | undefined;
+    generatorIndex: number | undefined;
     shouldLogS3Url: boolean;
     token: FernToken | undefined;
     useLocalDocker: boolean;
@@ -63,6 +68,8 @@ export async function generateWorkspace({
     noReplay: boolean;
     retryRateLimited: boolean;
     requireEnvVars: boolean;
+    automationMode?: boolean;
+    autoMerge?: boolean;
 }): Promise<void> {
     if (workspace.generatorsConfiguration == null) {
         context.logger.warn("This workspaces has no generators.yml");
@@ -75,6 +82,11 @@ export async function generateWorkspace({
     }
 
     const groupNameOrDefault = groupName ?? workspace.generatorsConfiguration.defaultGroup;
+    if (groupName == null && groupNameOrDefault != null) {
+        context.logger.info(
+            chalk.dim(`Using default group '${groupNameOrDefault}' from ${GENERATORS_CONFIGURATION_FILENAME}`)
+        );
+    }
     if (groupNameOrDefault == null) {
         const groupNames = workspace.generatorsConfiguration.groups.map((g) => g.groupName);
         const longestGroupName = Math.max(...groupNames.map((name) => name.length));
@@ -87,7 +99,7 @@ export async function generateWorkspace({
                     return ` › ${chalk.bold(name.padEnd(longestGroupName))}  ${chalk.dim(suggestedCommand)}`;
                 })
                 .join("\n");
-        return context.failAndThrow(message);
+        return context.failAndThrow(message, undefined, { code: CliError.Code.NetworkError });
     }
 
     // Resolve group aliases - if the groupName is an alias, expand it to multiple groups
@@ -102,7 +114,7 @@ export async function generateWorkspace({
 
     // Pre-check token for remote generation before starting any work
     if (!useLocalDocker && !token) {
-        return context.failAndThrow("Please run fern login");
+        return context.failAndThrow("Please run fern login", undefined, { code: CliError.Code.AuthError });
     }
 
     // Run generation for all resolved groups in parallel
@@ -112,21 +124,22 @@ export async function generateWorkspace({
                 (otherGroup) => otherGroup.groupName === resolvedGroupName
             );
             if (group == null) {
-                return context.failAndThrow(`Group '${resolvedGroupName}' does not exist.`);
+                return context.failAndThrow(`Group '${resolvedGroupName}' does not exist.`, undefined, {
+                    code: CliError.Code.ConfigError
+                });
             }
 
-            // Filter to specific generator if --generator is specified
-            if (generatorName != null) {
-                const filteredGenerators = group.generators.filter((gen) => gen.name === generatorName);
-                if (filteredGenerators.length === 0) {
-                    const availableGenerators = group.generators.map((gen) => gen.name);
-                    return context.failAndThrow(
-                        `Generator '${generatorName}' not found in group '${resolvedGroupName}'. ` +
-                            `Available generators: ${availableGenerators.join(", ")}`
-                    );
-                }
-                group = { ...group, generators: filteredGenerators };
+            // Filter to specific generator by index or name
+            const filterResult = filterGenerators({
+                generators: group.generators,
+                generatorIndex,
+                generatorName,
+                groupName: resolvedGroupName
+            });
+            if (!filterResult.ok) {
+                return context.failAndThrow(filterResult.error, undefined, { code: CliError.Code.ConfigError });
             }
+            group = { ...group, generators: filterResult.generators };
 
             // Apply lfs-override if specified
             if (lfsOverride != null) {
@@ -154,9 +167,20 @@ export async function generateWorkspace({
                     noReplay,
                     validateWorkspace: true,
                     requireEnvVars,
-                    skipFernignore
+                    skipFernignore,
+                    automationMode,
+                    autoMerge
                 });
             } else if (token != null) {
+                // Block custom images for remote generation — only trusted images can run on Fiddle
+                const customImageGenerators = group.generators.filter((g) => g.containerImage != null);
+                if (customImageGenerators.length > 0) {
+                    const names = customImageGenerators.map((g) => g.name).join(", ");
+                    return context.failAndThrow(
+                        `Custom image configurations are only supported with local generation (--local). ` +
+                            `The following generators use custom images: ${names}`
+                    );
+                }
                 await runRemoteGenerationForAPIWorkspace({
                     projectConfig,
                     organization,
@@ -174,7 +198,9 @@ export async function generateWorkspace({
                     dynamicIrOnly,
                     validateWorkspace: true,
                     retryRateLimited,
-                    requireEnvVars
+                    requireEnvVars,
+                    automationMode,
+                    autoMerge
                 });
             }
         })
@@ -201,7 +227,9 @@ function resolveGroupAlias(
             if (!availableGroups.includes(groupName)) {
                 context.failAndThrow(
                     `Group alias '${groupNameOrAlias}' references non-existent group '${groupName}'. ` +
-                        `Available groups: ${availableGroups.join(", ")}`
+                        `Available groups: ${availableGroups.join(", ")}`,
+                    undefined,
+                    { code: CliError.Code.NetworkError }
                 );
             }
         }
@@ -219,7 +247,9 @@ function resolveGroupAlias(
     context.failAndThrow(
         `'${groupNameOrAlias}' is not a valid group or alias. ` +
             `Available groups: ${availableGroups.join(", ")}` +
-            (availableAliases.length > 0 ? `. Available aliases: ${availableAliases.join(", ")}` : "")
+            (availableAliases.length > 0 ? `. Available aliases: ${availableAliases.join(", ")}` : ""),
+        undefined,
+        { code: CliError.Code.NetworkError }
     );
     return []; // unreachable, but TypeScript needs this
 }

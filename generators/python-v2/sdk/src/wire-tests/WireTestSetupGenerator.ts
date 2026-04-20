@@ -1,7 +1,8 @@
-import { File } from "@fern-api/base-generator";
+import { File, getNameFromWireValue, getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMock, WireMockStubMapping } from "@fern-api/mock-utils";
+import { PYTHON_CASE_CONVERTER as caseConverter } from "@fern-api/python-base";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
@@ -97,7 +98,7 @@ export class WireTestSetupGenerator {
                 const datetimeParams = new Set<string>();
                 for (const qp of endpoint.queryParameters) {
                     if (WireTestSetupGenerator.isDatetimeTypeReference(qp.valueType)) {
-                        datetimeParams.add(qp.name.wireValue);
+                        datetimeParams.add(getWireValue(qp.name));
                     }
                 }
                 datetimeParamsByEndpoint.set(key, datetimeParams);
@@ -466,6 +467,26 @@ def _is_xdist_worker(config: pytest.Config) -> bool:
     return hasattr(config, "workerinput")
 
 
+def _has_httpx_aiohttp() -> bool:
+    """Check if httpx_aiohttp is importable."""
+    try:
+        import httpx_aiohttp  # type: ignore[import-not-found]  # noqa: F401
+
+        return True
+    except ImportError:
+        return False
+
+
+def pytest_collection_modifyitems(config: pytest.Config, items: list) -> None:
+    """Auto-skip @pytest.mark.aiohttp tests when httpx_aiohttp is not installed."""
+    if _has_httpx_aiohttp():
+        return
+    skip_aiohttp = pytest.mark.skip(reason="httpx_aiohttp not installed")
+    for item in items:
+        if "aiohttp" in item.keywords:
+            item.add_marker(skip_aiohttp)
+
+
 def pytest_configure(config: pytest.Config) -> None:
     """
     Pytest hook that runs during test session setup.
@@ -569,7 +590,7 @@ def pytest_unconfigure(config: pytest.Config) -> None:
 
             // Build kwargs for all base URLs using dynamic base_url variable
             const baseUrlKwargsDynamic = envConfig.baseUrls
-                .map((baseUrl) => `${baseUrl.name.snakeCase.safeName}=base_url`)
+                .map((baseUrl) => `${caseConverter.snakeSafe(baseUrl.name)}=base_url`)
                 .join(", ");
 
             return {
@@ -606,7 +627,7 @@ def pytest_unconfigure(config: pytest.Config) -> None:
         // Process global headers that might require values
         if (this.ir.headers) {
             for (const header of this.ir.headers) {
-                const paramName = header.name.name.snakeCase.safeName;
+                const paramName = caseConverter.snakeSafe(getNameFromWireValue(header.name));
                 // Only add if not already added by auth schemes
                 if (!params.some((p) => p.startsWith(`        ${paramName}=`))) {
                     params.push(`        ${paramName}="test_${paramName}",`);
@@ -626,19 +647,19 @@ def pytest_unconfigure(config: pytest.Config) -> None:
         switch (scheme.type) {
             case "bearer":
                 // Bearer auth uses a token parameter
-                params.push(`        ${scheme.token.snakeCase.safeName}="test_token",`);
+                params.push(`        ${caseConverter.snakeSafe(scheme.token)}="test_token",`);
                 break;
 
             case "basic":
                 // Basic auth uses username and password parameters
-                params.push(`        ${scheme.username.snakeCase.safeName}="test_username",`);
-                params.push(`        ${scheme.password.snakeCase.safeName}="test_password",`);
+                params.push(`        ${caseConverter.snakeSafe(scheme.username)}="test_username",`);
+                params.push(`        ${caseConverter.snakeSafe(scheme.password)}="test_password",`);
                 break;
 
             case "header":
                 // Header auth uses a custom header parameter
                 params.push(
-                    `        ${scheme.name.name.snakeCase.safeName}="test_${scheme.name.name.snakeCase.safeName}",`
+                    `        ${caseConverter.snakeSafe(getNameFromWireValue(scheme.name))}="test_${caseConverter.snakeSafe(getNameFromWireValue(scheme.name))}",`
                 );
                 break;
 

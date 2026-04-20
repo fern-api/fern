@@ -19,7 +19,7 @@ func do() {
             NormalSweet: &unions.NormalSweet{
                 Value: "value",
             },
-            Id: "id",
+            ID: "id",
             CreatedAt: unions.MustParseDateTime(
                 "2024-01-15T09:30:00Z",
             ),
@@ -33,7 +33,7 @@ func do() {
             NormalSweet: &unions.NormalSweet{
                 Value: "value",
             },
-            Id: "id",
+            ID: "id",
             CreatedAt: unions.MustParseDateTime(
                 "2024-01-15T09:30:00Z",
             ),

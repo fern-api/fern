@@ -20,8 +20,6 @@ describe("SeedApiClient", () => {
             .build();
 
         const response = await client.bulkUpdateTasks();
-        expect(response).toEqual({
-            updated_count: 1,
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

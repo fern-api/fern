@@ -11,6 +11,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { AIExampleEnhancerConfig, enhanceExamplesWithAI } from "./ai-example-enhancer/index.js";
 import { PlaygroundConfig } from "./ir-to-fdr-converter/convertAuth.js";
 import { convertIrToFdrApi } from "./ir-to-fdr-converter/convertIrToFdrApi.js";
+import { getOriginalName } from "./ir-to-fdr-converter/nameUtils.js";
 
 export async function registerApi({
     organization,
@@ -78,29 +79,20 @@ export async function registerApi({
             token,
             organization,
             openApiSources.length > 0 ? openApiSources : undefined,
-            ir.apiName.originalName
+            getOriginalName(ir.apiName)
         );
     }
 
-    const response = await fdrService.api.v1.register.registerApiDefinition({
-        orgId: FdrCjsSdk.OrgId(organization),
-        apiId: FdrCjsSdk.ApiId(ir.apiName.originalName),
-        definition: apiDefinition
-    });
+    try {
+        const response = await fdrService.api.register.registerApiDefinition({
+            orgId: FdrCjsSdk.OrgId(organization),
+            apiId: FdrCjsSdk.ApiId(getOriginalName(ir.apiName)),
+            definition: apiDefinition
+        });
 
-    if (response.ok) {
-        context.logger.debug(`Registered API Definition ${response.body.apiDefinitionId}`);
-        return { id: response.body.apiDefinitionId, ir };
-    } else {
-        switch (response.error.error) {
-            case "UnauthorizedError":
-            case "UserNotInOrgError": {
-                return context.failAndThrow(
-                    "You do not have permissions to register the docs. Reach out to support@buildwithfern.com"
-                );
-            }
-            default:
-                return context.failAndThrow("Failed to register API", response.error);
-        }
+        context.logger.debug(`Registered API Definition ${response.apiDefinitionId}`);
+        return { id: response.apiDefinitionId, ir };
+    } catch (error) {
+        return context.failAndThrow("Failed to register API", error);
     }
 }

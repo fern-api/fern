@@ -1,7 +1,10 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { describe, expect, it } from "vitest";
 import { EnvironmentGenerator } from "../environment/EnvironmentGenerator.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+
+const caseConverter = new CaseConverter({ generationLanguage: "rust", keywords: undefined, smartCasing: true });
 
 // Mock function to create IR with specific environment configurations
 function createMockIR(environmentsConfig?: FernIr.EnvironmentsConfig): FernIr.IntermediateRepresentation {
@@ -44,7 +47,7 @@ function createSingleBaseUrlEnvironment(name: string, url: string): FernIr.Singl
         displayName: name,
         url,
         docs: undefined
-    } as FernIr.SingleBaseUrlEnvironment;
+    } as unknown as FernIr.SingleBaseUrlEnvironment;
 }
 
 // Mock function to create environments union with _visit method
@@ -97,7 +100,7 @@ function createMultipleBaseUrlsEnvironment(name: string, urls: Record<string, st
         displayName: name,
         urls,
         docs: undefined
-    } as FernIr.MultipleBaseUrlsEnvironment;
+    } as unknown as FernIr.MultipleBaseUrlsEnvironment;
 }
 
 // Mock function to create environment base URL with ID
@@ -129,8 +132,12 @@ function createEnvironmentBaseUrl(id: string, name: string): FernIr.EnvironmentB
 function createMockContext(ir: FernIr.IntermediateRepresentation): SdkGeneratorContext {
     return {
         ir,
+        case: caseConverter,
         getClientName: () => "TestClient",
-        customConfig: {}
+        customConfig: {},
+        hasEnvironments: () => ir.environments?.environments != null,
+        hasMultipleBaseUrls: () => ir.environments?.environments?.type === "multipleBaseUrls",
+        getEnvironmentEnumName: () => "Environment"
     } as SdkGeneratorContext;
 }
 

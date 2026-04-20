@@ -3,7 +3,7 @@ import { CustomReadmeSectionSchema } from "./CustomReadmeSectionSchema.js";
 import { moduleConfigSchema } from "./ModuleConfigSchema.js";
 import { relativePathSchema } from "./RelativePathSchema.js";
 
-export const baseGoCustomConfigSchema = z.object({
+export const baseGoCustomConfigSchema = z.strictObject({
     module: moduleConfigSchema.optional(),
     packageName: z.string().optional(),
     packagePath: relativePathSchema.optional(),
@@ -18,6 +18,7 @@ export const baseGoCustomConfigSchema = z.object({
     includeLegacyClientOptions: z.boolean().optional(),
     inlinePathParameters: z.boolean().optional(),
     inlineFileProperties: z.boolean().optional(),
+    omitEmptyRequestWrappers: z.boolean().optional(),
     union: z.enum(["v0", "v1"]).optional(),
     useReaderForBytesRequest: z.boolean().optional(),
     useDefaultRequestParameterValues: z.boolean().optional(),
@@ -26,7 +27,8 @@ export const baseGoCustomConfigSchema = z.object({
     exportAllRequestsAtRoot: z.boolean().optional(),
     customReadmeSections: z.array(CustomReadmeSectionSchema).optional(),
     customPagerName: z.string().optional(),
-    omitFernHeaders: z.boolean().optional()
+    omitFernHeaders: z.boolean().optional(),
+    maxRetries: z.number().int().min(0).optional()
 });
 
 export type BaseGoCustomConfigSchema = z.infer<typeof baseGoCustomConfigSchema>;

@@ -3,7 +3,7 @@
 import type * as FernIr from "../../../index.js";
 
 export interface FilePropertyArray extends FernIr.WithDocs {
-    key: FernIr.NameAndWireValue;
+    key: FernIr.NameAndWireValueOrString;
     isOptional: boolean;
     contentType: string | undefined;
 }

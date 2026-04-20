@@ -1,4 +1,4 @@
-import { createOrganizationIfDoesNotExist, FernToken, FernUserToken } from "@fern-api/auth";
+import { createOrganizationIfDoesNotExist, FernToken, FernUserToken, getToken } from "@fern-api/auth";
 import { createFdrService } from "@fern-api/core";
 import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { Rules } from "@fern-api/docs-validator";
@@ -7,10 +7,10 @@ import { askToLogin } from "@fern-api/login";
 import { validateOSSWorkspace } from "@fern-api/oss-validator";
 import { Project } from "@fern-api/project-loader";
 import { runRemoteGenerationForDocsWorkspace } from "@fern-api/remote-workspace-runner";
+import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
-
 import { CliContext } from "../../cli-context/CliContext.js";
-import { detectCISource, isCI } from "../../utils/environment.js";
+import { detectCISource, detectDeployerAuthor, isCI } from "../../utils/environment.js";
 import { validateDocsWorkspaceAndLogIssues } from "../validate/validateDocsWorkspaceAndLogIssues.js";
 
 const DOMAIN_SUFFIX = "docs.buildwithfern.com";
@@ -52,7 +52,10 @@ function buildPreviewDomain({ orgId, previewId }: { orgId: string; previewId: st
 
     const minIdLength = 8;
     if (availableSpace < minIdLength) {
-        throw new Error(`Organization name "${orgId}" is too long to generate a valid preview URL`);
+        throw new CliError({
+            message: `Organization name "${orgId}" is too long to generate a valid preview URL`,
+            code: CliError.Code.InternalError
+        });
     }
 
     const truncatedId = sanitizedId.slice(0, availableSpace).replace(/-+$/, "");
@@ -86,7 +89,9 @@ export async function generateDocsWorkspace({
 }): Promise<void> {
     const docsWorkspace = project.docsWorkspaces;
     if (docsWorkspace == null) {
-        cliContext.failAndThrow("No docs.yml file found. Please make sure your project has one.");
+        cliContext.failAndThrow("No docs.yml file found. Please make sure your project has one.", undefined, {
+            code: CliError.Code.ConfigError
+        });
         return;
     }
     const hasFdrOriginOverride = !!process.env["FERN_FDR_ORIGIN"] || !!process.env["OVERRIDE_FDR_ORIGIN"];
@@ -107,15 +112,16 @@ export async function generateDocsWorkspace({
 
     let token: FernToken | null = null;
     if (hasFdrOriginOverride) {
-        const fernToken = process.env["FERN_TOKEN"];
+        const fernToken = await getToken();
         if (!fernToken) {
-            cliContext.failAndThrow("No token found. Please set the FERN_TOKEN environment variable.");
+            cliContext.failAndThrow(
+                "No token found. Please set the FERN_TOKEN environment variable or run `fern login`.",
+                undefined,
+                { code: CliError.Code.AuthError }
+            );
             return;
         }
-        token = {
-            type: "organization",
-            value: fernToken
-        };
+        token = fernToken;
     } else {
         token = await cliContext.runTask(async (context) => {
             return askToLogin(context);
@@ -137,8 +143,14 @@ export async function generateDocsWorkspace({
         const expectedDomain = buildPreviewDomain({ orgId: project.config.organization, previewId });
         const fdr = createFdrService({ token: token.value });
 
-        const metadataResponse = await fdr.docs.v2.read.getDocsUrlMetadata({ url: FdrAPI.Url(expectedDomain) });
-        if (metadataResponse.ok) {
+        let metadataExists = false;
+        try {
+            await fdr.docs.v2.read.getDocsUrlMetadata({ url: FdrAPI.Url(expectedDomain) });
+            metadataExists = true;
+        } catch {
+            // Preview doesn't exist yet, no need to prompt
+        }
+        if (metadataExists) {
             const shouldOverwrite = await cliContext.confirmPrompt(
                 `This preview ID already exists for ${chalk.bold(project.config.organization)} (${chalk.cyan(`https://${expectedDomain}`)}). Are you sure you want to overwrite this?`,
                 false
@@ -150,7 +162,7 @@ export async function generateDocsWorkspace({
         }
     }
 
-    await cliContext.instrumentPostHogEvent({
+    cliContext.instrumentPostHogEvent({
         orgId: project.config.organization,
         command: "fern generate --docs"
     });
@@ -177,7 +189,9 @@ export async function generateDocsWorkspace({
                 }
                 context.failAndThrow(
                     `OpenAPI spec validation failed with ${errors.length} error${errors.length !== 1 ? "s" : ""}. ` +
-                        "Fix the errors above before generating docs."
+                        "Fix the errors above before generating docs.",
+                    undefined,
+                    { code: CliError.Code.ValidationError }
                 );
             }
         }
@@ -205,7 +219,8 @@ export async function generateDocsWorkspace({
             disableTemplates,
             skipUpload,
             cliVersion: cliContext.environment.packageVersion,
-            ciSource: detectCISource()
+            ciSource: detectCISource(),
+            deployerAuthor: detectDeployerAuthor()
         });
         const generationTime = performance.now() - generationStart;
         context.logger.debug(`Remote docs generation completed in ${generationTime.toFixed(0)}ms`);

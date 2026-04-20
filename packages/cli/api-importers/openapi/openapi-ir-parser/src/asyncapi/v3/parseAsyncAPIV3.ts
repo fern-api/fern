@@ -34,6 +34,7 @@ import { AsyncAPIV3ParserContext } from "./AsyncAPIV3ParserContext.js";
 interface MessageWithMethodName {
     ref: OpenAPIV3.ReferenceObject;
     methodName: string | undefined;
+    displayName: string | undefined;
 }
 
 interface ChannelEvents {
@@ -207,17 +208,21 @@ export function parseAsyncAPIV3({
         // Extract method name from x-fern-sdk-method-name extension
         const methodName = getExtension<string>(operation, FernAsyncAPIExtension.FERN_SDK_METHOD_NAME);
 
+        // Extract display name from x-fern-display-name extension
+        const operationDisplayName = getExtension<string>(operation, FernAsyncAPIExtension.FERN_DISPLAY_NAME);
+
         // Skip operations without messages
         if (!operation.messages || !Array.isArray(operation.messages)) {
             continue;
         }
 
-        // Associate the method name with each message from this operation, filtering out invalid references
+        // Associate the method name and display name with each message from this operation, filtering out invalid references
         const messagesWithMethodName: MessageWithMethodName[] = operation.messages
             .filter((ref) => ref != null && ref.$ref != null)
             .map((ref) => ({
                 ref,
-                methodName
+                methodName,
+                displayName: operationDisplayName
             }));
 
         const channelEvent = channelEvents[channelPath];
@@ -353,7 +358,8 @@ export function parseAsyncAPIV3({
                     variableReference: undefined,
                     availability: convertAvailability(parameter),
                     source,
-                    explode: undefined
+                    explode: undefined,
+                    clientDefault: undefined
                 };
 
                 if (type === "header") {
@@ -401,7 +407,8 @@ export function parseAsyncAPIV3({
                         parameterNameOverride: undefined,
                         availability: convertAvailability(resolvedSchema),
                         source,
-                        explode: undefined
+                        explode: undefined,
+                        clientDefault: undefined
                     });
                     continue;
                 }
@@ -424,7 +431,8 @@ export function parseAsyncAPIV3({
                     parameterNameOverride: undefined,
                     availability: convertAvailability(schema),
                     source,
-                    explode: undefined
+                    explode: undefined,
+                    clientDefault: undefined
                 });
             }
         }
@@ -460,7 +468,8 @@ export function parseAsyncAPIV3({
                         parameterNameOverride: undefined,
                         env: undefined,
                         availability: convertAvailability(resolvedSchema),
-                        source
+                        source,
+                        clientDefault: undefined
                     });
                     continue;
                 }
@@ -483,7 +492,8 @@ export function parseAsyncAPIV3({
                     parameterNameOverride: undefined,
                     env: undefined,
                     availability: convertAvailability(schema),
-                    source
+                    source,
+                    clientDefault: undefined
                 });
             }
         }
@@ -711,6 +721,7 @@ function convertMessageReferencesToWebsocketSchemas({
                 results.push({
                     origin,
                     name: schemaId ?? `${origin}Message${i + 1}`,
+                    displayName: message.displayName,
                     body: convertSchemaWithExampleToSchema(schema),
                     methodName: message.methodName
                 });

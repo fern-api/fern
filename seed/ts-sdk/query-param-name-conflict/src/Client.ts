@@ -39,13 +39,7 @@ export class SeedApiClient {
         request: SeedApi.BulkUpdateTasksRequest = {},
         requestOptions?: SeedApiClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedApi.BulkUpdateTasksResponse>> {
-        const {
-            assigned_to: filterAssignedTo,
-            is_complete: filterIsComplete,
-            date: filterDate,
-            _fields: fields,
-            ..._body
-        } = request;
+        const { filterAssignedTo, filterIsComplete, filterDate, _fields: fields, ..._body } = request;
         const _queryParams: Record<string, unknown> = {
             assigned_to: filterAssignedTo,
             is_complete: filterIsComplete,
@@ -63,6 +57,11 @@ export class SeedApiClient {
             headers: _headers,
             contentType: "application/json",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            queryString: core.url
+                .queryBuilder()
+                .addMany(_queryParams)
+                .mergeAdditional(requestOptions?.queryParams)
+                .build(),
             requestType: "json",
             body: _body,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,

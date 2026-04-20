@@ -503,9 +503,9 @@ export class ExampleEndpointFactory {
                     ignoreOptionals: true
                 }
             });
-            if (example != null && !isExamplePrimitive(example)) {
+            if (example != null && !isExamplePrimitive(example) && example.type !== "array") {
                 this.logger.debug(
-                    `Expected a primitive example but got ${example.type} for query parameter ${
+                    `Expected a primitive or array example but got ${example.type} for query parameter ${
                         queryParameter.name
                     } for ${endpoint.method.toUpperCase()} ${endpoint.path}`
                 );

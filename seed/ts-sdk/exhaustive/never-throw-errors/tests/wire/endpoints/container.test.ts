@@ -21,7 +21,7 @@ describe("ContainerClient", () => {
 
         const response = await client.endpoints.container.getAndReturnListOfPrimitives(["string", "string"]);
         expect(response).toEqual({
-            body: ["string", "string"],
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -52,14 +52,7 @@ describe("ContainerClient", () => {
             },
         ]);
         expect(response).toEqual({
-            body: [
-                {
-                    string: "string",
-                },
-                {
-                    string: "string",
-                },
-            ],
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -83,7 +76,7 @@ describe("ContainerClient", () => {
 
         const response = await client.endpoints.container.getAndReturnSetOfPrimitives(["string"]);
         expect(response).toEqual({
-            body: ["string"],
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -111,11 +104,7 @@ describe("ContainerClient", () => {
             },
         ]);
         expect(response).toEqual({
-            body: [
-                {
-                    string: "string",
-                },
-            ],
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -141,9 +130,7 @@ describe("ContainerClient", () => {
             string: "string",
         });
         expect(response).toEqual({
-            body: {
-                string: "string",
-            },
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -171,11 +158,7 @@ describe("ContainerClient", () => {
             },
         });
         expect(response).toEqual({
-            body: {
-                string: {
-                    string: "string",
-                },
-            },
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -201,9 +184,7 @@ describe("ContainerClient", () => {
             string: 1.1,
         });
         expect(response).toEqual({
-            body: {
-                string: 1.1,
-            },
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -229,9 +210,7 @@ describe("ContainerClient", () => {
             string: "string",
         });
         expect(response).toEqual({
-            body: {
-                string: "string",
-            },
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),

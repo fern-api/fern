@@ -1,5 +1,5 @@
 displayName: C# SDK
-irVersion: v65
+irVersion: v66
 image: fernapi/fern-csharp-sdk
 changelogLocation: ../../generators/csharp/sdk/versions.yml
 
@@ -73,10 +73,10 @@ scripts:
 
           if [ "$skip" = false ]; then
             # Check 1: using directives — e.g. "using System.Linq;"
-            using_violations=$(grep -rn --include='*.cs' -P '^\s*using\s+System[.;]' . | grep -v 'global::System' | grep -v -P ':\s*//' | grep -v 'DynamicSnippets' || true)
+            using_violations=$(grep -rn --include='*.cs' -P '^\s*using\s+System[.;]' . | grep -v 'global::System' | grep -v -P ':\s*//' | grep -v 'DynamicSnippets' | grep -v './Snippets/' || true)
             # Check 2: inline references — e.g. "new System.Exception()", "System.Threading.Tasks.Task"
-            # Excludes using directives (already caught above), comments (// and ///), strings, and DynamicSnippets.
-            inline_violations=$(grep -rn --include='*.cs' -P '(?<!using |global::|\.| )System\.(Collections|IO|Linq|Net|Text|Threading|Runtime|Globalization|Diagnostics|Reflection)' . | grep -v 'global::System' | grep -v -P ':\s*//' | grep -v 'DynamicSnippets' | grep -v -P ':\s*using ' | grep -v '".*System\.' || true)
+            # Excludes using directives (already caught above), comments (// and ///), strings, DynamicSnippets, and Snippets.
+            inline_violations=$(grep -rn --include='*.cs' -P '(?<!using |global::|\.| )System\.(Collections|IO|Linq|Net|Text|Threading|Runtime|Globalization|Diagnostics|Reflection)' . | grep -v 'global::System' | grep -v -P ':\s*//' | grep -v 'DynamicSnippets' | grep -v './Snippets/' | grep -v -P ':\s*using ' | grep -v '".*System\.' || true)
             violations="${using_violations}${using_violations:+\n}${inline_violations}"
             # Trim whitespace
             violations=$(echo "$violations" | sed '/^$/d')
@@ -100,9 +100,13 @@ scripts:
           fi
 
           dotnet build "$solution_file" -c Release
-          dynamic_snippets="$(find src -maxdepth 2 -name '*DynamicSnippets*.csproj' | head -n 1)"
-          if [ -n "$dynamic_snippets" ]; then
-            dotnet build "$dynamic_snippets" -c Release
+          if [ -f "Snippets/Snippets.csproj" ]; then
+            dotnet build Snippets/Snippets.csproj -c Release
+          else
+            dynamic_snippets="$(find src -maxdepth 2 -name '*DynamicSnippets*.csproj' | head -n 1)"
+            if [ -n "$dynamic_snippets" ]; then
+              dotnet build "$dynamic_snippets" -c Release
+            fi
           fi
       test:
         - |
@@ -186,12 +190,17 @@ fixtures:
           Moq.Contrib.HttpClient: "1.4.0"
       outputFolder: extra-dependencies
     - customConfig:
+        extra-dependencies:
+          PolySharp: "1.14.0"
+      outputFolder: extra-dependencies-override
+    - customConfig:
         base-api-exception-class-name: CustomApiException
         base-exception-class-name: CustomException
       outputFolder: exception-class-names
     - customConfig:
         client-class-name: BaseClient
         exported-client-class-name: CustomClient
+        maxRetries: 5
       outputFolder: exported-client-class-name
     - customConfig:
         include-exception-handler: true
@@ -320,6 +329,16 @@ fixtures:
         explicit-namespaces: true
         experimental-fully-qualified-namespaces: true
       outputFolder: namespace-client-collision
+    - customConfig:
+        namespace: "Contoso.Net"
+        client-class-name: "Contoso"
+        explicit-namespaces: true
+      outputFolder: explicit-namespaces
+    - customConfig:
+        namespace: "Contoso.Net"
+        client-class-name: "ContosoClient"
+        explicit-namespaces: true
+      outputFolder: no-client-namespace-match
   csharp-namespace-conflict:
     - customConfig:
         namespace: Seed.CsharpNamespaceConflict
@@ -376,6 +395,11 @@ fixtures:
     - customConfig:
         use-undiscriminated-unions: true
       outputFolder: with-undiscriminated-unions
+  csharp-inline-types:
+    - customConfig:
+        enable-inline-types: true
+      outputFolder: inline-types
+      disableDynamicSnippetTests: true
   streaming:
     - customConfig: null
       outputFolder: no-custom-config
@@ -383,6 +407,8 @@ fixtures:
         redact-response-body-on-error: true
       outputFolder: redact-response-body-on-error
 allowedFailures:
+  - allof
+  - allof-inline
   - bytes-upload
   - enum:forward-compatible-enums
   - imdb:exported-client-class-name
@@ -396,10 +422,7 @@ allowedFailures:
   - package-yml
   - pagination-uri-path
   - property-access
-  - trace
   - unions:no-custom-config
   - unions-with-local-date
   - server-sent-event-examples
-  - oauth-client-credentials-openapi
   - server-sent-events-openapi
-  - streaming-parameter

@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: objects-with-imports
-  version: ''
+  version: 0.0.0
 paths: {}
 components:
   schemas:
@@ -11,13 +11,16 @@ components:
       properties:
         id:
           type: string
-          example: node-8dvgfja2
+          examples:
+            - node-8dvgfja2
         label:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         metadata:
-          $ref: '#/components/schemas/commonsMetadata'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/commonsMetadata'
+            - type: 'null'
       required:
         - id
     Tree:
@@ -25,22 +28,25 @@ components:
       type: object
       properties:
         nodes:
-          type: array
+          type:
+            - array
+            - 'null'
           items:
             $ref: '#/components/schemas/Node'
-          nullable: true
     commonsMetadata:
       title: commonsMetadata
       type: object
       properties:
         id:
           type: string
-          example: metadata-js8dg24b
+          examples:
+            - metadata-js8dg24b
         data:
-          type: object
+          type:
+            - object
+            - 'null'
           additionalProperties:
             type: string
-          nullable: true
       required:
         - id
     File:
@@ -49,10 +55,12 @@ components:
       properties:
         name:
           type: string
-          example: file.txt
+          examples:
+            - file.txt
         contents:
           type: string
-          example: ...
+          examples:
+            - ...
         info:
           $ref: '#/components/schemas/FileInfo'
       required:
@@ -71,17 +79,20 @@ components:
       properties:
         name:
           type: string
-          example: root
+          examples:
+            - root
         files:
-          type: array
+          type:
+            - array
+            - 'null'
           items:
             $ref: '#/components/schemas/File'
-          nullable: true
         directories:
-          type: array
+          type:
+            - array
+            - 'null'
           items:
             $ref: '#/components/schemas/fileDirectory'
-          nullable: true
       required:
         - name
   securitySchemes: {}

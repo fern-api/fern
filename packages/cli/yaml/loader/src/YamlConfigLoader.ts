@@ -21,6 +21,12 @@ export namespace YamlConfigLoader {
         absoluteFilePath: AbsoluteFilePath;
         /** The relative path to the loaded config file */
         relativeFilePath: RelativeFilePath;
+        /**
+         * Path mappings from `$ref` resolution — maps YAML path prefixes to the
+         * source document they came from. Useful for resolving file paths relative
+         * to the correct source file when a key was loaded via `$ref`.
+         */
+        pathMappings: ReferenceResolver.PathMapping[];
     }
 
     export interface Failure {
@@ -114,7 +120,8 @@ export class YamlConfigLoader {
             data: parseResult.data,
             sourced: sourceResolver.toSourced(parseResult.data),
             absoluteFilePath,
-            relativeFilePath: RelativeFilePath.of(relative(this.cwd, absoluteFilePath))
+            relativeFilePath: RelativeFilePath.of(relative(this.cwd, absoluteFilePath)),
+            pathMappings: resolved.pathMappings
         };
     }
 
@@ -194,7 +201,22 @@ export class YamlConfigLoader {
                 return `unknown key(s): ${issue.keys.join(", ")}`;
 
             case "invalid_union": {
-                // For union errors, collect unique expected types from nested errors
+                // Prefer surfacing unrecognized_keys errors — these occur when the input
+                // object matches a union variant structurally but has unknown fields. They
+                // give the user a much more actionable message than generic type errors.
+                const unknownKeys: string[] = [];
+                for (const errorGroup of issue.errors) {
+                    for (const err of errorGroup) {
+                        if (err.code === "unrecognized_keys") {
+                            unknownKeys.push(...err.keys);
+                        }
+                    }
+                }
+                if (unknownKeys.length > 0) {
+                    return `unknown key(s): ${[...new Set(unknownKeys)].join(", ")}`;
+                }
+
+                // Fall back to collecting unique expected types from nested invalid_type errors
                 const expectedTypes = new Set<string>();
                 for (const errorGroup of issue.errors) {
                     for (const err of errorGroup) {

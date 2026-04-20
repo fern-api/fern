@@ -9,7 +9,7 @@ from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.logging import LogConfig, Logger
 
 if typing.TYPE_CHECKING:
-    from .complex_.client import AsyncComplexClient, ComplexClient
+    from .complex.client import AsyncComplexClient, ComplexClient
     from .inline_users.client import AsyncInlineUsersClient, InlineUsersClient
     from .users.client import AsyncUsersClient, UsersClient
 
@@ -82,7 +82,7 @@ class SeedPagination:
     @property
     def complex_(self):
         if self._complex_ is None:
-            from .complex_.client import ComplexClient  # noqa: E402
+            from .complex.client import ComplexClient  # noqa: E402
 
             self._complex_ = ComplexClient(client_wrapper=self._client_wrapper)
         return self._complex_
@@ -102,6 +102,24 @@ class SeedPagination:
 
             self._users = UsersClient(client_wrapper=self._client_wrapper)
         return self._users
+
+
+def _make_default_async_client(
+    timeout: typing.Optional[float],
+    follow_redirects: typing.Optional[bool],
+) -> httpx.AsyncClient:
+    try:
+        import httpx_aiohttp  # type: ignore[import-not-found]
+    except ImportError:
+        pass
+    else:
+        if follow_redirects is not None:
+            return httpx_aiohttp.HttpxAiohttpClient(timeout=timeout, follow_redirects=follow_redirects)
+        return httpx_aiohttp.HttpxAiohttpClient(timeout=timeout)
+
+    if follow_redirects is not None:
+        return httpx.AsyncClient(timeout=timeout, follow_redirects=follow_redirects)
+    return httpx.AsyncClient(timeout=timeout)
 
 
 class AsyncSeedPagination:
@@ -164,9 +182,7 @@ class AsyncSeedPagination:
             async_token=async_token,
             httpx_client=httpx_client
             if httpx_client is not None
-            else httpx.AsyncClient(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
-            if follow_redirects is not None
-            else httpx.AsyncClient(timeout=_defaulted_timeout),
+            else _make_default_async_client(timeout=_defaulted_timeout, follow_redirects=follow_redirects),
             timeout=_defaulted_timeout,
             logging=logging,
         )
@@ -177,7 +193,7 @@ class AsyncSeedPagination:
     @property
     def complex_(self):
         if self._complex_ is None:
-            from .complex_.client import AsyncComplexClient  # noqa: E402
+            from .complex.client import AsyncComplexClient  # noqa: E402
 
             self._complex_ = AsyncComplexClient(client_wrapper=self._client_wrapper)
         return self._complex_

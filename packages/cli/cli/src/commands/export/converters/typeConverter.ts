@@ -18,9 +18,11 @@ import {
     UndiscriminatedUnionTypeDeclaration,
     UnionTypeDeclaration
 } from "@fern-api/ir-sdk";
+import { getOriginalName, getWireValue } from "@fern-api/ir-utils";
+import { CliError } from "@fern-api/task-context";
+
 import isEqual from "lodash-es/isEqual";
 import { OpenAPIV3 } from "openapi-types";
-
 import { convertObject } from "./convertObject.js";
 
 export interface ConvertedType {
@@ -54,7 +56,7 @@ export function convertType(typeDeclaration: TypeDeclaration, ir: IntermediateRe
                     let exampleProperty: ExampleObjectProperty | undefined = undefined;
                     if (exampleType != null && exampleType.shape.type === "object") {
                         exampleProperty = exampleType.shape.properties.find((example) => {
-                            return example.name.wireValue === property.name.wireValue;
+                            return getWireValue(example.name) === getWireValue(property.name);
                         });
                     } else if (exampleTypeFromEndpointRequest != null) {
                         if (
@@ -63,7 +65,7 @@ export function convertType(typeDeclaration: TypeDeclaration, ir: IntermediateRe
                             exampleTypeFromEndpointRequest.shape.shape.type === "object"
                         ) {
                             exampleProperty = exampleTypeFromEndpointRequest.shape.shape.properties.find((example) => {
-                                return example.name.wireValue === property.name.wireValue;
+                                return getWireValue(example.name) === getWireValue(property.name);
                             });
                         }
                     } else if (
@@ -76,7 +78,7 @@ export function convertType(typeDeclaration: TypeDeclaration, ir: IntermediateRe
                         ) {
                             exampleProperty = exampleTypeFromEndpointResponse.value.shape.shape.properties.find(
                                 (example) => {
-                                    return example.name.wireValue === property.name.wireValue;
+                                    return getWireValue(example.name) === getWireValue(property.name);
                                 }
                             );
                         }
@@ -99,7 +101,10 @@ export function convertType(typeDeclaration: TypeDeclaration, ir: IntermediateRe
             return convertUndiscriminatedUnion({ undiscriminatedUnionDeclaration, docs });
         },
         _other: () => {
-            throw new Error("Encountered unknown type: " + shape.type);
+            throw new CliError({
+                message: "Encountered unknown type: " + shape.type,
+                code: CliError.Code.InternalError
+            });
         }
     });
     return {
@@ -132,7 +137,7 @@ export function convertEnum({
     return {
         type: "string",
         enum: enumTypeDeclaration.values.map((enumValue) => {
-            return enumValue.name.wireValue;
+            return getWireValue(enumValue.name);
         }),
         description: docs
     };
@@ -147,24 +152,24 @@ export function convertUnion({
 }): OpenAPIV3.SchemaObject {
     const oneOfTypes: OpenAPIV3.SchemaObject[] = unionTypeDeclaration.types.map((singleUnionType) => {
         const discriminantProperty: OpenAPIV3.BaseSchemaObject["properties"] = {
-            [unionTypeDeclaration.discriminant.wireValue]: {
+            [getWireValue(unionTypeDeclaration.discriminant)]: {
                 type: "string",
-                enum: [singleUnionType.discriminantValue.wireValue]
+                enum: [getWireValue(singleUnionType.discriminantValue)]
             }
         };
         return SingleUnionTypeProperties._visit<OpenAPIV3.SchemaObject>(singleUnionType.shape, {
             noProperties: () => ({
                 type: "object",
                 properties: discriminantProperty,
-                required: [unionTypeDeclaration.discriminant.wireValue]
+                required: [getWireValue(unionTypeDeclaration.discriminant)]
             }),
             singleProperty: (singleProperty) => ({
                 type: "object",
                 properties: {
                     ...discriminantProperty,
-                    [singleProperty.name.wireValue]: convertTypeReference(singleProperty.type)
+                    [getWireValue(singleProperty.name)]: convertTypeReference(singleProperty.type)
                 },
-                required: [unionTypeDeclaration.discriminant.wireValue]
+                required: [getWireValue(unionTypeDeclaration.discriminant)]
             }),
             samePropertiesAsObject: (typeName) => ({
                 type: "object",
@@ -177,10 +182,13 @@ export function convertUnion({
                         $ref: getReferenceFromDeclaredTypeName(typeName)
                     }
                 ],
-                required: [unionTypeDeclaration.discriminant.wireValue]
+                required: [getWireValue(unionTypeDeclaration.discriminant)]
             }),
             _other: () => {
-                throw new Error("Unknown SingleUnionTypeProperties: " + singleUnionType.shape.propertiesType);
+                throw new CliError({
+                    message: "Unknown SingleUnionTypeProperties: " + singleUnionType.shape.propertiesType,
+                    code: CliError.Code.InternalError
+                });
             }
         });
     });
@@ -194,12 +202,12 @@ export function convertUnion({
         schema.properties = unionTypeDeclaration.baseProperties.reduce<
             Record<string, OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject>
         >((acc, property) => {
-            acc[property.name.wireValue] = {
+            acc[getWireValue(property.name)] = {
                 description: property.docs ?? undefined,
                 ...convertTypeReference(property.valueType)
             };
             if (!(property.valueType.type === "container" && property.valueType.container.type === "optional")) {
-                schema.required = [...(schema.required ?? []), property.name.wireValue];
+                schema.required = [...(schema.required ?? []), getWireValue(property.name)];
             }
             return acc;
         }, {});
@@ -241,7 +249,10 @@ export function convertTypeReference(typeReference: TypeReference): OpenApiCompo
             return {};
         },
         _other: () => {
-            throw new Error("Encountered unknown typeReference: " + typeReference.type);
+            throw new CliError({
+                message: "Encountered unknown typeReference: " + typeReference.type,
+                code: CliError.Code.InternalError
+            });
         }
     });
 }
@@ -328,7 +339,10 @@ function convertPrimitiveType(primitiveType: PrimitiveType): OpenAPIV3.NonArrayS
                     };
                 },
                 _other: () => {
-                    throw new Error("Encountered unknown primitiveType: " + primitiveType.v1);
+                    throw new CliError({
+                        message: "Encountered unknown primitiveType: " + primitiveType.v1,
+                        code: CliError.Code.InternalError
+                    });
                 }
             }) ?? {}
         );
@@ -419,7 +433,10 @@ function convertPrimitiveType(primitiveType: PrimitiveType): OpenAPIV3.NonArrayS
             };
         },
         _other: () => {
-            throw new Error("Encountered unknown primitiveType: " + primitiveType.v2);
+            throw new CliError({
+                message: "Encountered unknown primitiveType: " + primitiveType.v2,
+                code: CliError.Code.InternalError
+            });
         }
     });
 }
@@ -484,7 +501,10 @@ function convertContainerType(containerType: ContainerType): OpenApiComponentSch
             });
         },
         _other: () => {
-            throw new Error("Encountered unknown containerType: " + containerType.type);
+            throw new CliError({
+                message: "Encountered unknown containerType: " + containerType.type,
+                code: CliError.Code.InternalError
+            });
         }
     });
 }
@@ -495,8 +515,8 @@ export function getReferenceFromDeclaredTypeName(declaredTypeName: DeclaredTypeN
 
 export function getNameFromDeclaredTypeName(declaredTypeName: DeclaredTypeName): string {
     return [
-        ...declaredTypeName.fernFilepath.packagePath.map((part) => part.originalName),
-        declaredTypeName.name.originalName
+        ...declaredTypeName.fernFilepath.packagePath.map((part) => getOriginalName(part)),
+        getOriginalName(declaredTypeName.name)
     ].join("");
 }
 

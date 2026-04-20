@@ -15,6 +15,7 @@ function join(...segments: string[]): string {
     return segments.filter(Boolean).join("/");
 }
 
+import { CaseConverter } from "@fern-api/base-generator";
 import * as ast from "../ast/index.js";
 import { ClassReference } from "../ast/types/ClassReference.js";
 import { Type } from "../ast/types/IType.js";
@@ -89,6 +90,16 @@ export class Generation {
             getChildNamespaceSegments: (fernFilepath: FernFilepath) => []
         }
     ) {
+        // Initialize the CaseConverter from IR config
+        const irConfig = is.IR.IntermediateRepresentation(intermediateRepresentation)
+            ? intermediateRepresentation.casingsConfig
+            : undefined;
+        this.case = new CaseConverter({
+            generationLanguage: "csharp",
+            keywords: irConfig?.keywords,
+            smartCasing: irConfig?.smartCasing ?? true
+        });
+
         // Initialize the model navigator to traverse and query the IR
         this.model = new ModelNavigator(intermediateRepresentation, this);
 
@@ -120,6 +131,12 @@ export class Generation {
      * Provides access to types, endpoints, errors, and other IR elements.
      */
     public readonly model: ModelNavigator;
+
+    /**
+     * CaseConverter for converting names to C# casing conventions.
+     * Constructed from the IR's casingsConfig for proper keyword handling.
+     */
+    public readonly case: CaseConverter;
 
     /**
      * Manager for external dependencies and imports.
@@ -167,6 +184,8 @@ export class Generation {
         useDefaultRequestParameterValues: () => this.customConfig["use-default-request-parameter-values"] ?? false,
         /** When true, redacts the response body in deserialization error exceptions and adds a custom ToString override to the base API exception. Default: false. */
         redactResponseBodyOnError: () => this.customConfig["redact-response-body-on-error"] ?? false,
+        /** When true, generates inline types as nested classes inside a static Types class on the parent type, instead of as separate top-level files. Default: false. */
+        enableInlineTypes: () => this.customConfig["enable-inline-types"] ?? false,
         /** Temporary mapping of websocket environment configurations. Default: {}. */
         temporaryWebsocketEnvironments: () => this.customConfig["temporary-websocket-environments"] ?? {},
         /** Custom name for the base API exception class. Default: "" (auto-generated). */
@@ -222,6 +241,8 @@ export class Generation {
         slnFormat: () => this.customConfig["sln-format"] ?? "slnx",
         /** When true, requires explicit namespace declarations instead of using file-scoped namespaces. Default: false. */
         explicitNamespaces: () => this.customConfig["explicit-namespaces"] === true,
+        /** Override the default max retries for the SDK client. Default: 2. */
+        maxRetries: () => this.customConfig.maxRetries,
         /**
          * Output path configuration for generated files.
          * Returns normalized paths for library, test, solution, and other files.

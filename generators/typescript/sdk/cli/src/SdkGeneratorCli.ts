@@ -1,6 +1,7 @@
 import { FernGeneratorExec } from "@fern-api/base-generator";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { getOriginalName } from "@fern-api/ir-utils";
 import { Logger } from "@fern-api/logger";
 import { getNamespaceExport, resolveNaming } from "@fern-api/typescript-base";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -101,7 +102,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             generateSubpackageExports: parsed?.generateSubpackageExports ?? true,
             offsetSemantics: parsed?.offsetSemantics ?? "item-index",
             customPagerName: parsed?.customPagerName ?? "CustomPager",
-            resolveQueryParameterNameConflicts: parsed?.resolveQueryParameterNameConflicts ?? false
+            resolveQueryParameterNameConflicts: parsed?.resolveQueryParameterNameConflicts ?? false,
+            maxRetries: parsed?.maxRetries
         };
 
         if (parsed?.noSerdeLayer === false && typeof parsed?.enableInlineTypes === "undefined") {
@@ -186,7 +188,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             config: {
                 runScripts: !customConfig.noScripts,
                 organization: config.organization,
-                apiName: intermediateRepresentation.apiName.originalName,
+                apiName: getOriginalName(intermediateRepresentation.apiName),
                 whitelabel: config.whitelabel,
                 generateOAuthClients: config.generateOauthClients,
                 originalReadmeFilepath:
@@ -255,7 +257,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 generateSubpackageExports: customConfig.generateSubpackageExports ?? true,
                 offsetSemantics: customConfig.offsetSemantics,
                 customPagerName: customConfig.customPagerName ?? "CustomPager",
-                resolveQueryParameterNameConflicts: customConfig.resolveQueryParameterNameConflicts
+                resolveQueryParameterNameConflicts: customConfig.resolveQueryParameterNameConflicts,
+                maxRetries: customConfig.maxRetries
             }
         });
         const typescriptProject = await sdkGenerator.generate();

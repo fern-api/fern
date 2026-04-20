@@ -26,7 +26,7 @@ types:
         docs: The unique identifier for the API definition used within FDR. This is retrieved once a definition has been registered.
       apiVersion: optional<ApiVersionScheme>
       apiName:
-        type: commons.Name
+        type: commons.NameOrString
         docs: This is the human readable unique id for the API.
       apiDisplayName: optional<string>
       apiDocs: optional<string>
@@ -70,6 +70,27 @@ types:
       apiPlayground:
         type: optional<boolean>
         docs: Whether the API playground should be enabled. Defaults to true.
+      casingsConfig:
+        type: optional<CasingsConfig>
+        docs: |
+          Configuration used for generating names. Stored for backwards compatibility so that
+          IR migrations can reconstruct the correct CasingsGenerator when inflating compressed names.
+
+  CasingsConfig:
+    docs: |
+      Configuration for the name/casing generator. Stored in the IR for backwards compatibility
+      so that IR migrations can reconstruct the correct CasingsGenerator when inflating
+      compressed NameOrString values back to full Name objects.
+    properties:
+      generationLanguage:
+        type: optional<http.SupportedSdkLanguage>
+        docs: The target language, used to apply language-specific casing rules and reserved keywords.
+      keywords:
+        type: optional<list<string>>
+        docs: Reserved keywords for the target language. Names that match these will be escaped.
+      smartCasing:
+        type: boolean
+        docs: Whether to apply smart casing (e.g., capitalizing acronyms like HTTP → Http in camelCase).
 
   GenerationMetadata:
     docs: |
@@ -90,7 +111,46 @@ types:
         docs: The custom configuration passed to the generator from generators.yml.
       originGitCommit:
         type: optional<string>
-        docs: The git commit hash of the origin repo at the time of generation.
+        docs: |
+          The git commit hash of the Fern configuration repository (the repo containing
+          the `fern/` directory) at the time of generation. Resolved via `git rev-parse HEAD`
+          from the CLI's working directory.
+      originGitCommitIsDirty:
+        type: optional<boolean>
+        docs: |
+          Whether the Fern configuration repository had uncommitted changes at the time
+          of generation. When `true`, `originGitCommit` does not fully describe the
+          configuration that produced the SDK.
+      invokedBy:
+        type: optional<InvocationSource>
+        docs: |
+          Identifies who or what triggered the generation. Auto-detected from the
+          `FERN_INVOKER` environment variable when set, otherwise derived from common
+          CI environment variables.
+      requestedVersion:
+        type: optional<string>
+        docs: |
+          The raw value of the `--version` flag passed to the Fern CLI, if any.
+          A value of "AUTO" indicates automatic semantic versioning was requested.
+      ciProvider:
+        type: optional<string>
+        docs: |
+          The name of the CI provider the CLI is running in, if any (e.g. `github`,
+          `gitlab`, `bitbucket`, `circleci`). Only the provider name is recorded;
+          no repository, run, branch, or actor information is captured, as those
+          can leak private metadata.
+
+  InvocationSource:
+    docs: |
+      The source that triggered a Fern CLI invocation. `autopilot` and `autorelease` are
+      set via the `FERN_INVOKER` environment variable by those systems. `ci` is inferred
+      from standard CI environment variables. `manual` is the fallback when no CI
+      signal is detected.
+    enum:
+      - autopilot
+      - autorelease
+      - ci
+      - manual
 
   ReadmeConfig:
     docs: |
@@ -202,8 +262,8 @@ types:
       property: ErrorDiscriminationByPropertyStrategy
   ErrorDiscriminationByPropertyStrategy:
     properties:
-      discriminant: commons.NameAndWireValue
-      contentProperty: commons.NameAndWireValue
+      discriminant: commons.NameAndWireValueOrString
+      contentProperty: commons.NameAndWireValueOrString
   Package:
     extends: commons.WithDocs
     properties:
@@ -219,7 +279,7 @@ types:
   Subpackage:
     extends: Package
     properties:
-      name: commons.Name
+      name: commons.NameOrString
       displayName: optional<commons.DisplayName>
   PackageNavigationConfig:
     properties:

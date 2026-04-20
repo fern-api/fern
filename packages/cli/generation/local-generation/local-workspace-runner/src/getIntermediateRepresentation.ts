@@ -1,4 +1,10 @@
-import { FernWorkspace, getOriginGitCommit } from "@fern-api/api-workspace-commons";
+import {
+    detectCiProvider,
+    detectInvocationSource,
+    FernWorkspace,
+    getOriginGitCommit,
+    getOriginGitCommitIsDirty
+} from "@fern-api/api-workspace-commons";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { Audiences, generatorsYml } from "@fern-api/configuration";
 import { getIrVersionForGenerator } from "@fern-api/core";
@@ -62,7 +68,11 @@ export async function getIntermediateRepresentation({
                 generatorName: generatorInvocation.name,
                 generatorVersion: generatorInvocation.version,
                 generatorConfig: generatorInvocation.config,
-                originGitCommit: getOriginGitCommit()
+                originGitCommit: getOriginGitCommit(),
+                originGitCommitIsDirty: getOriginGitCommitIsDirty(),
+                invokedBy: detectInvocationSource(),
+                requestedVersion: version,
+                ciProvider: detectCiProvider()
             }
         });
     if (sourceConfig != null) {
@@ -73,7 +83,17 @@ export async function getIntermediateRepresentation({
         generatorName: generatorInvocation.name,
         generatorVersion: generatorInvocation.version,
         generatorConfig: generatorInvocation.config,
-        originGitCommit: getOriginGitCommit()
+        originGitCommit: getOriginGitCommit(),
+        originGitCommitIsDirty: getOriginGitCommitIsDirty(),
+        invokedBy: detectInvocationSource(),
+        // `requestedVersion` must reflect the raw `--version` flag passed by the user. The
+        // `version` parameter here may have been resolved (e.g. via `computeSemanticVersion`)
+        // so we never fall back to it. When the IR is freshly generated above, this field is
+        // populated with the raw flag value. When the IR is pre-generated, the caller is
+        // responsible for having set this correctly; a pre-existing `undefined` means the
+        // user did not pass `--version`.
+        requestedVersion: intermediateRepresentation.generationMetadata?.requestedVersion,
+        ciProvider: detectCiProvider()
     };
 
     context.logger.debug("Generated IR");

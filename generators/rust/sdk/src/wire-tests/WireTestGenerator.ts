@@ -248,8 +248,9 @@ export class WireTestGenerator {
                 if (inConfigStruct) {
                     lines.push(`        ..Default::default()`);
                     lines.push(`    };`);
-                    // Add base_url override after config creation
+                    // Override base_url and clear environment so requests go to WireMock
                     lines.push(`    config.base_url = wiremock_base_url.to_string();`);
+                    lines.push(`    config.environment = None;`);
                     inConfigStruct = false;
                 } else {
                     lines.push(`    ${trimmedLine}`);
@@ -474,7 +475,7 @@ export class WireTestGenerator {
     // =============================================================================
 
     private getTestFunctionName(endpoint: FernIr.HttpEndpoint, serviceName: string): string {
-        const endpointName = endpoint.name.snakeCase.safeName;
+        const endpointName = this.context.case.snakeSafe(endpoint.name);
         // Normalize service name to avoid double underscores (e.g., endpoints_union_ -> endpoints_union)
         const normalizedServiceName = serviceName.replace(/_+$/, "");
         return `test_${normalizedServiceName}_${endpointName}_with_wiremock`;
@@ -509,7 +510,7 @@ export class WireTestGenerator {
     }
 
     private getFormattedServiceName(service: FernIr.HttpService): string {
-        return service.name?.fernFilepath?.allParts?.map((part) => part.snakeCase.safeName).join("_") || "root";
+        return service.name?.fernFilepath?.allParts?.map((part) => this.context.case.snakeSafe(part)).join("_") || "root";
     }
 
     private wiremockMappingKey({

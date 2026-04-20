@@ -9,6 +9,7 @@ export declare namespace Fetcher {
         contentType?: string;
         headers?: Record<string, unknown>;
         queryParameters?: Record<string, unknown>;
+        queryString?: string;
         body?: unknown;
         timeoutMs?: number;
         maxRetries?: number;
@@ -38,10 +39,12 @@ export declare namespace Fetcher {
     }
     interface TimeoutError {
         reason: "timeout";
+        cause?: unknown;
     }
     interface UnknownError {
         reason: "unknown";
         errorMessage: string;
+        cause?: unknown;
     }
 }
 export declare function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse<R, Fetcher.Error>>;

@@ -20,7 +20,7 @@ describe("ContainerClient", () => {
             .build();
 
         const response = await client.endpoints.container.getAndReturnListOfPrimitives(["string", "string"]);
-        expect(response).toEqual(["string", "string"]);
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getAndReturnListOfObjects", async () => {
@@ -46,14 +46,7 @@ describe("ContainerClient", () => {
                 string: "string",
             },
         ]);
-        expect(response).toEqual([
-            {
-                string: "string",
-            },
-            {
-                string: "string",
-            },
-        ]);
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getAndReturnSetOfPrimitives", async () => {
@@ -72,7 +65,7 @@ describe("ContainerClient", () => {
             .build();
 
         const response = await client.endpoints.container.getAndReturnSetOfPrimitives(["string"]);
-        expect(response).toEqual(["string"]);
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getAndReturnSetOfObjects", async () => {
@@ -95,11 +88,7 @@ describe("ContainerClient", () => {
                 string: "string",
             },
         ]);
-        expect(response).toEqual([
-            {
-                string: "string",
-            },
-        ]);
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getAndReturnMapPrimToPrim", async () => {
@@ -120,9 +109,7 @@ describe("ContainerClient", () => {
         const response = await client.endpoints.container.getAndReturnMapPrimToPrim({
             string: "string",
         });
-        expect(response).toEqual({
-            string: "string",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getAndReturnMapOfPrimToObject", async () => {
@@ -145,11 +132,7 @@ describe("ContainerClient", () => {
                 string: "string",
             },
         });
-        expect(response).toEqual({
-            string: {
-                string: "string",
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getAndReturnMapOfPrimToUndiscriminatedUnion", async () => {
@@ -170,9 +153,7 @@ describe("ContainerClient", () => {
         const response = await client.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion({
             string: 1.1,
         });
-        expect(response).toEqual({
-            string: 1.1,
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getAndReturnOptional", async () => {
@@ -193,8 +174,6 @@ describe("ContainerClient", () => {
         const response = await client.endpoints.container.getAndReturnOptional({
             string: "string",
         });
-        expect(response).toEqual({
-            string: "string",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

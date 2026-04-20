@@ -2,25 +2,7 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": {
-        "originalName": "pagination",
-        "camelCase": {
-            "unsafeName": "pagination",
-            "safeName": "pagination"
-        },
-        "snakeCase": {
-            "unsafeName": "pagination",
-            "safeName": "pagination"
-        },
-        "screamingSnakeCase": {
-            "unsafeName": "PAGINATION",
-            "safeName": "PAGINATION"
-        },
-        "pascalCase": {
-            "unsafeName": "Pagination",
-            "safeName": "Pagination"
-        }
-    },
+    "apiName": "pagination",
     "apiDisplayName": null,
     "apiDocs": null,
     "auth": {
@@ -28,25 +10,7 @@
         "schemes": [
             {
                 "_type": "bearer",
-                "token": {
-                    "originalName": "token",
-                    "camelCase": {
-                        "unsafeName": "token",
-                        "safeName": "token"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "token",
-                        "safeName": "token"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "TOKEN",
-                        "safeName": "TOKEN"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "Token",
-                        "safeName": "Token"
-                    }
-                },
+                "token": "token",
                 "tokenEnvVar": null,
                 "key": "bearer",
                 "docs": null
@@ -57,93 +21,40 @@
     "headers": [],
     "idempotencyHeaders": [],
     "types": {
-        "type_:UsernameCursor": {
+        "type_:UsersListResponse": {
             "inline": null,
             "name": {
-                "name": {
-                    "originalName": "UsernameCursor",
-                    "camelCase": {
-                        "unsafeName": "usernameCursor",
-                        "safeName": "usernameCursor"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "username_cursor",
-                        "safeName": "username_cursor"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "USERNAME_CURSOR",
-                        "safeName": "USERNAME_CURSOR"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "UsernameCursor",
-                        "safeName": "UsernameCursor"
-                    }
-                },
+                "name": "UsersListResponse",
                 "fernFilepath": {
                     "allParts": [],
                     "packagePath": [],
                     "file": null
                 },
                 "displayName": null,
-                "typeId": "type_:UsernameCursor"
+                "typeId": "type_:UsersListResponse"
             },
             "shape": {
                 "_type": "object",
                 "extends": [],
                 "properties": [
                     {
-                        "name": {
-                            "name": {
-                                "originalName": "cursor",
-                                "camelCase": {
-                                    "unsafeName": "cursor",
-                                    "safeName": "cursor"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "cursor",
-                                    "safeName": "cursor"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "CURSOR",
-                                    "safeName": "CURSOR"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Cursor",
-                                    "safeName": "Cursor"
-                                }
-                            },
-                            "wireValue": "cursor"
-                        },
+                        "name": "limit",
                         "valueType": {
-                            "_type": "named",
-                            "name": {
-                                "originalName": "UsernamePage",
-                                "camelCase": {
-                                    "unsafeName": "usernamePage",
-                                    "safeName": "usernamePage"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "username_page",
-                                    "safeName": "username_page"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "USERNAME_PAGE",
-                                    "safeName": "USERNAME_PAGE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "UsernamePage",
-                                    "safeName": "UsernamePage"
+                            "_type": "container",
+                            "container": {
+                                "_type": "optional",
+                                "optional": {
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "INTEGER",
+                                        "v2": {
+                                            "type": "integer",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
                                 }
-                            },
-                            "fernFilepath": {
-                                "allParts": [],
-                                "packagePath": [],
-                                "file": null
-                            },
-                            "displayName": null,
-                            "typeId": "type_:UsernamePage",
-                            "default": null,
-                            "inline": null
+                            }
                         },
                         "propertyAccess": null,
                         "v2Examples": {
@@ -152,87 +63,96 @@
                         },
                         "availability": null,
                         "docs": null
-                    }
-                ],
-                "extra-properties": false,
-                "extendedProperties": []
-            },
-            "referencedTypes": [
-                "type_:UsernamePage"
-            ],
-            "encoding": {
-                "json": {},
-                "proto": null
-            },
-            "source": null,
-            "userProvidedExamples": [],
-            "autogeneratedExamples": [],
-            "v2Examples": null,
-            "availability": null,
-            "docs": null
-        },
-        "type_:UsernamePage": {
-            "inline": null,
-            "name": {
-                "name": {
-                    "originalName": "UsernamePage",
-                    "camelCase": {
-                        "unsafeName": "usernamePage",
-                        "safeName": "usernamePage"
                     },
-                    "snakeCase": {
-                        "unsafeName": "username_page",
-                        "safeName": "username_page"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "USERNAME_PAGE",
-                        "safeName": "USERNAME_PAGE"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "UsernamePage",
-                        "safeName": "UsernamePage"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": [],
-                    "file": null
-                },
-                "displayName": null,
-                "typeId": "type_:UsernamePage"
-            },
-            "shape": {
-                "_type": "object",
-                "extends": [],
-                "properties": [
                     {
-                        "name": {
-                            "name": {
-                                "originalName": "after",
-                                "camelCase": {
-                                    "unsafeName": "after",
-                                    "safeName": "after"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "after",
-                                    "safeName": "after"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "AFTER",
-                                    "safeName": "AFTER"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "After",
-                                    "safeName": "After"
-                                }
-                            },
-                            "wireValue": "after"
-                        },
+                        "name": "count",
                         "valueType": {
                             "_type": "container",
                             "container": {
                                 "_type": "optional",
                                 "optional": {
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "INTEGER",
+                                        "v2": {
+                                            "type": "integer",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "propertyAccess": null,
+                        "v2Examples": {
+                            "userSpecifiedExamples": {},
+                            "autogeneratedExamples": {}
+                        },
+                        "availability": null,
+                        "docs": null
+                    },
+                    {
+                        "name": "has_more",
+                        "valueType": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "optional",
+                                "optional": {
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "BOOLEAN",
+                                        "v2": {
+                                            "type": "boolean",
+                                            "default": null
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "propertyAccess": null,
+                        "v2Examples": {
+                            "userSpecifiedExamples": {},
+                            "autogeneratedExamples": {}
+                        },
+                        "availability": null,
+                        "docs": null
+                    },
+                    {
+                        "name": "links",
+                        "valueType": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "list",
+                                "list": {
+                                    "_type": "named",
+                                    "name": "Link",
+                                    "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": [],
+                                        "file": null
+                                    },
+                                    "displayName": null,
+                                    "typeId": "type_:Link",
+                                    "default": null,
+                                    "inline": null
+                                }
+                            }
+                        },
+                        "propertyAccess": null,
+                        "v2Examples": {
+                            "userSpecifiedExamples": {},
+                            "autogeneratedExamples": {}
+                        },
+                        "availability": null,
+                        "docs": null
+                    },
+                    {
+                        "name": "data",
+                        "valueType": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "list",
+                                "list": {
                                     "_type": "primitive",
                                     "primitive": {
                                         "v1": "STRING",
@@ -252,44 +172,93 @@
                         },
                         "availability": null,
                         "docs": null
+                    }
+                ],
+                "extra-properties": false,
+                "extendedProperties": []
+            },
+            "referencedTypes": [
+                "type_:Link"
+            ],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
+            "userProvidedExamples": [],
+            "autogeneratedExamples": [],
+            "v2Examples": null,
+            "availability": null,
+            "docs": null
+        },
+        "type_:Link": {
+            "inline": null,
+            "name": {
+                "name": "Link",
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                },
+                "displayName": null,
+                "typeId": "type_:Link"
+            },
+            "shape": {
+                "_type": "object",
+                "extends": [],
+                "properties": [
+                    {
+                        "name": "rel",
+                        "valueType": {
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
+                        },
+                        "propertyAccess": null,
+                        "v2Examples": {
+                            "userSpecifiedExamples": {},
+                            "autogeneratedExamples": {}
+                        },
+                        "availability": null,
+                        "docs": null
                     },
                     {
-                        "name": {
-                            "name": {
-                                "originalName": "data",
-                                "camelCase": {
-                                    "unsafeName": "data",
-                                    "safeName": "data"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "data",
-                                    "safeName": "data"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "DATA",
-                                    "safeName": "DATA"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Data",
-                                    "safeName": "Data"
-                                }
-                            },
-                            "wireValue": "data"
-                        },
+                        "name": "method",
                         "valueType": {
-                            "_type": "container",
-                            "container": {
-                                "_type": "list",
-                                "list": {
-                                    "_type": "primitive",
-                                    "primitive": {
-                                        "v1": "STRING",
-                                        "v2": {
-                                            "type": "string",
-                                            "default": null,
-                                            "validation": null
-                                        }
-                                    }
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
+                        },
+                        "propertyAccess": null,
+                        "v2Examples": {
+                            "userSpecifiedExamples": {},
+                            "autogeneratedExamples": {}
+                        },
+                        "availability": null,
+                        "docs": null
+                    },
+                    {
+                        "name": "href",
+                        "valueType": {
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
                                 }
                             }
                         },
@@ -325,46 +294,10 @@
             "name": {
                 "fernFilepath": {
                     "allParts": [
-                        {
-                            "originalName": "users",
-                            "camelCase": {
-                                "unsafeName": "users",
-                                "safeName": "users"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "users",
-                                "safeName": "users"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "USERS",
-                                "safeName": "USERS"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Users",
-                                "safeName": "Users"
-                            }
-                        }
+                        "users"
                     ],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "users",
-                        "camelCase": {
-                            "unsafeName": "users",
-                            "safeName": "users"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "users",
-                            "safeName": "users"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "USERS",
-                            "safeName": "USERS"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Users",
-                            "safeName": "Users"
-                        }
-                    }
+                    "file": "users"
                 }
             },
             "displayName": null,
@@ -383,26 +316,8 @@
             },
             "endpoints": [
                 {
-                    "id": "endpoint_users.listUsernamesCustom",
-                    "name": {
-                        "originalName": "listUsernamesCustom",
-                        "camelCase": {
-                            "unsafeName": "listUsernamesCustom",
-                            "safeName": "listUsernamesCustom"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "list_usernames_custom",
-                            "safeName": "list_usernames_custom"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "LIST_USERNAMES_CUSTOM",
-                            "safeName": "LIST_USERNAMES_CUSTOM"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "ListUsernamesCustom",
-                            "safeName": "ListUsernamesCustom"
-                        }
-                    },
+                    "id": "endpoint_users.listWithCustomPager",
+                    "name": "listWithCustomPager",
                     "displayName": null,
                     "auth": false,
                     "security": null,
@@ -423,28 +338,36 @@
                     "allPathParameters": [],
                     "queryParameters": [
                         {
-                            "name": {
-                                "name": {
-                                    "originalName": "starting_after",
-                                    "camelCase": {
-                                        "unsafeName": "startingAfter",
-                                        "safeName": "startingAfter"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "starting_after",
-                                        "safeName": "starting_after"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "STARTING_AFTER",
-                                        "safeName": "STARTING_AFTER"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "StartingAfter",
-                                        "safeName": "StartingAfter"
+                            "name": "limit",
+                            "valueType": {
+                                "_type": "container",
+                                "container": {
+                                    "_type": "optional",
+                                    "optional": {
+                                        "_type": "primitive",
+                                        "primitive": {
+                                            "v1": "INTEGER",
+                                            "v2": {
+                                                "type": "integer",
+                                                "default": null,
+                                                "validation": null
+                                            }
+                                        }
                                     }
-                                },
-                                "wireValue": "starting_after"
+                                }
                             },
+                            "allowMultiple": false,
+                            "clientDefault": null,
+                            "v2Examples": {
+                                "userSpecifiedExamples": {},
+                                "autogeneratedExamples": {}
+                            },
+                            "explode": null,
+                            "availability": null,
+                            "docs": "The maximum number of results to return."
+                        },
+                        {
+                            "name": "starting_after",
                             "valueType": {
                                 "_type": "container",
                                 "container": {
@@ -463,13 +386,14 @@
                                 }
                             },
                             "allowMultiple": false,
+                            "clientDefault": null,
                             "v2Examples": {
                                 "userSpecifiedExamples": {},
                                 "autogeneratedExamples": {}
                             },
                             "explode": null,
                             "availability": null,
-                            "docs": "The cursor used for pagination in order to fetch\nthe next page of results."
+                            "docs": "The cursor used for pagination."
                         }
                     ],
                     "headers": [],
@@ -478,66 +402,12 @@
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",
-                            "wrapperName": {
-                                "originalName": "ListUsernamesRequestCustom",
-                                "camelCase": {
-                                    "unsafeName": "listUsernamesRequestCustom",
-                                    "safeName": "listUsernamesRequestCustom"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "list_usernames_request_custom",
-                                    "safeName": "list_usernames_request_custom"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "LIST_USERNAMES_REQUEST_CUSTOM",
-                                    "safeName": "LIST_USERNAMES_REQUEST_CUSTOM"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "ListUsernamesRequestCustom",
-                                    "safeName": "ListUsernamesRequestCustom"
-                                }
-                            },
-                            "bodyKey": {
-                                "originalName": "body",
-                                "camelCase": {
-                                    "unsafeName": "body",
-                                    "safeName": "body"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "body",
-                                    "safeName": "body"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "BODY",
-                                    "safeName": "BODY"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Body",
-                                    "safeName": "Body"
-                                }
-                            },
+                            "wrapperName": "ListWithCustomPagerRequest",
+                            "bodyKey": "body",
                             "includePathParameters": false,
                             "onlyPathParameters": false
                         },
-                        "requestParameterName": {
-                            "originalName": "request",
-                            "camelCase": {
-                                "unsafeName": "request",
-                                "safeName": "request"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "request",
-                                "safeName": "request"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "REQUEST",
-                                "safeName": "REQUEST"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Request",
-                                "safeName": "Request"
-                            }
-                        },
+                        "requestParameterName": "request",
                         "streamParameter": null
                     },
                     "response": {
@@ -547,32 +417,14 @@
                                 "type": "response",
                                 "responseBodyType": {
                                     "_type": "named",
-                                    "name": {
-                                        "originalName": "UsernameCursor",
-                                        "camelCase": {
-                                            "unsafeName": "usernameCursor",
-                                            "safeName": "usernameCursor"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "username_cursor",
-                                            "safeName": "username_cursor"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "USERNAME_CURSOR",
-                                            "safeName": "USERNAME_CURSOR"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "UsernameCursor",
-                                            "safeName": "UsernameCursor"
-                                        }
-                                    },
+                                    "name": "UsersListResponse",
                                     "fernFilepath": {
                                         "allParts": [],
                                         "packagePath": [],
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "typeId": "type_:UsernameCursor",
+                                    "typeId": "type_:UsersListResponse",
                                     "default": null,
                                     "inline": null
                                 },
@@ -590,7 +442,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "9aef588a",
+                                "id": "562b74a9",
                                 "url": "/users",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -611,288 +463,453 @@
                                                     "type": "object",
                                                     "properties": [
                                                         {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "cursor",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "cursor",
-                                                                        "safeName": "cursor"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "cursor",
-                                                                        "safeName": "cursor"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "CURSOR",
-                                                                        "safeName": "CURSOR"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Cursor",
-                                                                        "safeName": "Cursor"
-                                                                    }
-                                                                },
-                                                                "wireValue": "cursor"
-                                                            },
+                                                            "name": "limit",
                                                             "originalTypeDeclaration": {
-                                                                "name": {
-                                                                    "originalName": "UsernameCursor",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "usernameCursor",
-                                                                        "safeName": "usernameCursor"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "username_cursor",
-                                                                        "safeName": "username_cursor"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "USERNAME_CURSOR",
-                                                                        "safeName": "USERNAME_CURSOR"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "UsernameCursor",
-                                                                        "safeName": "UsernameCursor"
-                                                                    }
-                                                                },
+                                                                "name": "UsersListResponse",
                                                                 "fernFilepath": {
                                                                     "allParts": [],
                                                                     "packagePath": [],
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_:UsernameCursor"
+                                                                "typeId": "type_:UsersListResponse"
                                                             },
                                                             "value": {
                                                                 "shape": {
-                                                                    "type": "named",
-                                                                    "shape": {
-                                                                        "type": "object",
-                                                                        "properties": [
-                                                                            {
-                                                                                "name": {
-                                                                                    "name": {
-                                                                                        "originalName": "after",
-                                                                                        "camelCase": {
-                                                                                            "unsafeName": "after",
-                                                                                            "safeName": "after"
-                                                                                        },
-                                                                                        "snakeCase": {
-                                                                                            "unsafeName": "after",
-                                                                                            "safeName": "after"
-                                                                                        },
-                                                                                        "screamingSnakeCase": {
-                                                                                            "unsafeName": "AFTER",
-                                                                                            "safeName": "AFTER"
-                                                                                        },
-                                                                                        "pascalCase": {
-                                                                                            "unsafeName": "After",
-                                                                                            "safeName": "After"
-                                                                                        }
-                                                                                    },
-                                                                                    "wireValue": "after"
-                                                                                },
-                                                                                "originalTypeDeclaration": {
-                                                                                    "name": {
-                                                                                        "originalName": "UsernamePage",
-                                                                                        "camelCase": {
-                                                                                            "unsafeName": "usernamePage",
-                                                                                            "safeName": "usernamePage"
-                                                                                        },
-                                                                                        "snakeCase": {
-                                                                                            "unsafeName": "username_page",
-                                                                                            "safeName": "username_page"
-                                                                                        },
-                                                                                        "screamingSnakeCase": {
-                                                                                            "unsafeName": "USERNAME_PAGE",
-                                                                                            "safeName": "USERNAME_PAGE"
-                                                                                        },
-                                                                                        "pascalCase": {
-                                                                                            "unsafeName": "UsernamePage",
-                                                                                            "safeName": "UsernamePage"
-                                                                                        }
-                                                                                    },
-                                                                                    "fernFilepath": {
-                                                                                        "allParts": [],
-                                                                                        "packagePath": [],
-                                                                                        "file": null
-                                                                                    },
-                                                                                    "displayName": null,
-                                                                                    "typeId": "type_:UsernamePage"
-                                                                                },
-                                                                                "value": {
-                                                                                    "shape": {
-                                                                                        "type": "container",
-                                                                                        "container": {
-                                                                                            "type": "optional",
-                                                                                            "optional": {
-                                                                                                "shape": {
-                                                                                                    "type": "primitive",
-                                                                                                    "primitive": {
-                                                                                                        "type": "string",
-                                                                                                        "string": {
-                                                                                                            "original": "after"
-                                                                                                        }
-                                                                                                    }
-                                                                                                },
-                                                                                                "jsonExample": "after"
-                                                                                            },
-                                                                                            "valueType": {
-                                                                                                "_type": "primitive",
-                                                                                                "primitive": {
-                                                                                                    "v1": "STRING",
-                                                                                                    "v2": {
-                                                                                                        "type": "string",
-                                                                                                        "default": null,
-                                                                                                        "validation": null
-                                                                                                    }
-                                                                                                }
-                                                                                            }
-                                                                                        }
-                                                                                    },
-                                                                                    "jsonExample": "after"
-                                                                                },
-                                                                                "propertyAccess": null
+                                                                    "type": "container",
+                                                                    "container": {
+                                                                        "type": "optional",
+                                                                        "optional": {
+                                                                            "shape": {
+                                                                                "type": "primitive",
+                                                                                "primitive": {
+                                                                                    "type": "integer",
+                                                                                    "integer": 1
+                                                                                }
                                                                             },
-                                                                            {
-                                                                                "name": {
-                                                                                    "name": {
-                                                                                        "originalName": "data",
-                                                                                        "camelCase": {
-                                                                                            "unsafeName": "data",
-                                                                                            "safeName": "data"
-                                                                                        },
-                                                                                        "snakeCase": {
-                                                                                            "unsafeName": "data",
-                                                                                            "safeName": "data"
-                                                                                        },
-                                                                                        "screamingSnakeCase": {
-                                                                                            "unsafeName": "DATA",
-                                                                                            "safeName": "DATA"
-                                                                                        },
-                                                                                        "pascalCase": {
-                                                                                            "unsafeName": "Data",
-                                                                                            "safeName": "Data"
-                                                                                        }
-                                                                                    },
-                                                                                    "wireValue": "data"
-                                                                                },
-                                                                                "originalTypeDeclaration": {
-                                                                                    "name": {
-                                                                                        "originalName": "UsernamePage",
-                                                                                        "camelCase": {
-                                                                                            "unsafeName": "usernamePage",
-                                                                                            "safeName": "usernamePage"
-                                                                                        },
-                                                                                        "snakeCase": {
-                                                                                            "unsafeName": "username_page",
-                                                                                            "safeName": "username_page"
-                                                                                        },
-                                                                                        "screamingSnakeCase": {
-                                                                                            "unsafeName": "USERNAME_PAGE",
-                                                                                            "safeName": "USERNAME_PAGE"
-                                                                                        },
-                                                                                        "pascalCase": {
-                                                                                            "unsafeName": "UsernamePage",
-                                                                                            "safeName": "UsernamePage"
-                                                                                        }
-                                                                                    },
-                                                                                    "fernFilepath": {
-                                                                                        "allParts": [],
-                                                                                        "packagePath": [],
-                                                                                        "file": null
-                                                                                    },
-                                                                                    "displayName": null,
-                                                                                    "typeId": "type_:UsernamePage"
-                                                                                },
-                                                                                "value": {
-                                                                                    "shape": {
-                                                                                        "type": "container",
-                                                                                        "container": {
-                                                                                            "type": "list",
-                                                                                            "list": [
-                                                                                                {
-                                                                                                    "shape": {
-                                                                                                        "type": "primitive",
-                                                                                                        "primitive": {
-                                                                                                            "type": "string",
-                                                                                                            "string": {
-                                                                                                                "original": "data"
-                                                                                                            }
-                                                                                                        }
-                                                                                                    },
-                                                                                                    "jsonExample": "data"
-                                                                                                },
-                                                                                                {
-                                                                                                    "shape": {
-                                                                                                        "type": "primitive",
-                                                                                                        "primitive": {
-                                                                                                            "type": "string",
-                                                                                                            "string": {
-                                                                                                                "original": "data"
-                                                                                                            }
-                                                                                                        }
-                                                                                                    },
-                                                                                                    "jsonExample": "data"
-                                                                                                }
-                                                                                            ],
-                                                                                            "itemType": {
-                                                                                                "_type": "primitive",
-                                                                                                "primitive": {
-                                                                                                    "v1": "STRING",
-                                                                                                    "v2": {
-                                                                                                        "type": "string",
-                                                                                                        "default": null,
-                                                                                                        "validation": null
-                                                                                                    }
-                                                                                                }
-                                                                                            }
-                                                                                        }
-                                                                                    },
-                                                                                    "jsonExample": [
-                                                                                        "data",
-                                                                                        "data"
-                                                                                    ]
-                                                                                },
-                                                                                "propertyAccess": null
-                                                                            }
-                                                                        ],
-                                                                        "extraProperties": null
-                                                                    },
-                                                                    "typeName": {
-                                                                        "name": {
-                                                                            "originalName": "UsernamePage",
-                                                                            "camelCase": {
-                                                                                "unsafeName": "usernamePage",
-                                                                                "safeName": "usernamePage"
-                                                                            },
-                                                                            "snakeCase": {
-                                                                                "unsafeName": "username_page",
-                                                                                "safeName": "username_page"
-                                                                            },
-                                                                            "screamingSnakeCase": {
-                                                                                "unsafeName": "USERNAME_PAGE",
-                                                                                "safeName": "USERNAME_PAGE"
-                                                                            },
-                                                                            "pascalCase": {
-                                                                                "unsafeName": "UsernamePage",
-                                                                                "safeName": "UsernamePage"
-                                                                            }
+                                                                            "jsonExample": 1
                                                                         },
-                                                                        "fernFilepath": {
-                                                                            "allParts": [],
-                                                                            "packagePath": [],
-                                                                            "file": null
-                                                                        },
-                                                                        "displayName": null,
-                                                                        "typeId": "type_:UsernamePage"
+                                                                        "valueType": {
+                                                                            "_type": "primitive",
+                                                                            "primitive": {
+                                                                                "v1": "INTEGER",
+                                                                                "v2": {
+                                                                                    "type": "integer",
+                                                                                    "default": null,
+                                                                                    "validation": null
+                                                                                }
+                                                                            }
+                                                                        }
                                                                     }
                                                                 },
-                                                                "jsonExample": {
-                                                                    "after": "after",
-                                                                    "data": [
-                                                                        "data",
-                                                                        "data"
-                                                                    ]
-                                                                }
+                                                                "jsonExample": 1
+                                                            },
+                                                            "propertyAccess": null
+                                                        },
+                                                        {
+                                                            "name": "count",
+                                                            "originalTypeDeclaration": {
+                                                                "name": "UsersListResponse",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "displayName": null,
+                                                                "typeId": "type_:UsersListResponse"
+                                                            },
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "container",
+                                                                    "container": {
+                                                                        "type": "optional",
+                                                                        "optional": {
+                                                                            "shape": {
+                                                                                "type": "primitive",
+                                                                                "primitive": {
+                                                                                    "type": "integer",
+                                                                                    "integer": 1
+                                                                                }
+                                                                            },
+                                                                            "jsonExample": 1
+                                                                        },
+                                                                        "valueType": {
+                                                                            "_type": "primitive",
+                                                                            "primitive": {
+                                                                                "v1": "INTEGER",
+                                                                                "v2": {
+                                                                                    "type": "integer",
+                                                                                    "default": null,
+                                                                                    "validation": null
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": 1
+                                                            },
+                                                            "propertyAccess": null
+                                                        },
+                                                        {
+                                                            "name": "has_more",
+                                                            "originalTypeDeclaration": {
+                                                                "name": "UsersListResponse",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "displayName": null,
+                                                                "typeId": "type_:UsersListResponse"
+                                                            },
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "container",
+                                                                    "container": {
+                                                                        "type": "optional",
+                                                                        "optional": {
+                                                                            "shape": {
+                                                                                "type": "primitive",
+                                                                                "primitive": {
+                                                                                    "type": "boolean",
+                                                                                    "boolean": true
+                                                                                }
+                                                                            },
+                                                                            "jsonExample": true
+                                                                        },
+                                                                        "valueType": {
+                                                                            "_type": "primitive",
+                                                                            "primitive": {
+                                                                                "v1": "BOOLEAN",
+                                                                                "v2": {
+                                                                                    "type": "boolean",
+                                                                                    "default": null
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": true
+                                                            },
+                                                            "propertyAccess": null
+                                                        },
+                                                        {
+                                                            "name": "links",
+                                                            "originalTypeDeclaration": {
+                                                                "name": "UsersListResponse",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "displayName": null,
+                                                                "typeId": "type_:UsersListResponse"
+                                                            },
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "container",
+                                                                    "container": {
+                                                                        "type": "list",
+                                                                        "list": [
+                                                                            {
+                                                                                "shape": {
+                                                                                    "type": "named",
+                                                                                    "shape": {
+                                                                                        "type": "object",
+                                                                                        "properties": [
+                                                                                            {
+                                                                                                "name": "rel",
+                                                                                                "originalTypeDeclaration": {
+                                                                                                    "name": "Link",
+                                                                                                    "fernFilepath": {
+                                                                                                        "allParts": [],
+                                                                                                        "packagePath": [],
+                                                                                                        "file": null
+                                                                                                    },
+                                                                                                    "displayName": null,
+                                                                                                    "typeId": "type_:Link"
+                                                                                                },
+                                                                                                "value": {
+                                                                                                    "shape": {
+                                                                                                        "type": "primitive",
+                                                                                                        "primitive": {
+                                                                                                            "type": "string",
+                                                                                                            "string": {
+                                                                                                                "original": "rel"
+                                                                                                            }
+                                                                                                        }
+                                                                                                    },
+                                                                                                    "jsonExample": "rel"
+                                                                                                },
+                                                                                                "propertyAccess": null
+                                                                                            },
+                                                                                            {
+                                                                                                "name": "method",
+                                                                                                "originalTypeDeclaration": {
+                                                                                                    "name": "Link",
+                                                                                                    "fernFilepath": {
+                                                                                                        "allParts": [],
+                                                                                                        "packagePath": [],
+                                                                                                        "file": null
+                                                                                                    },
+                                                                                                    "displayName": null,
+                                                                                                    "typeId": "type_:Link"
+                                                                                                },
+                                                                                                "value": {
+                                                                                                    "shape": {
+                                                                                                        "type": "primitive",
+                                                                                                        "primitive": {
+                                                                                                            "type": "string",
+                                                                                                            "string": {
+                                                                                                                "original": "method"
+                                                                                                            }
+                                                                                                        }
+                                                                                                    },
+                                                                                                    "jsonExample": "method"
+                                                                                                },
+                                                                                                "propertyAccess": null
+                                                                                            },
+                                                                                            {
+                                                                                                "name": "href",
+                                                                                                "originalTypeDeclaration": {
+                                                                                                    "name": "Link",
+                                                                                                    "fernFilepath": {
+                                                                                                        "allParts": [],
+                                                                                                        "packagePath": [],
+                                                                                                        "file": null
+                                                                                                    },
+                                                                                                    "displayName": null,
+                                                                                                    "typeId": "type_:Link"
+                                                                                                },
+                                                                                                "value": {
+                                                                                                    "shape": {
+                                                                                                        "type": "primitive",
+                                                                                                        "primitive": {
+                                                                                                            "type": "string",
+                                                                                                            "string": {
+                                                                                                                "original": "href"
+                                                                                                            }
+                                                                                                        }
+                                                                                                    },
+                                                                                                    "jsonExample": "href"
+                                                                                                },
+                                                                                                "propertyAccess": null
+                                                                                            }
+                                                                                        ],
+                                                                                        "extraProperties": null
+                                                                                    },
+                                                                                    "typeName": {
+                                                                                        "name": "Link",
+                                                                                        "fernFilepath": {
+                                                                                            "allParts": [],
+                                                                                            "packagePath": [],
+                                                                                            "file": null
+                                                                                        },
+                                                                                        "displayName": null,
+                                                                                        "typeId": "type_:Link"
+                                                                                    }
+                                                                                },
+                                                                                "jsonExample": {
+                                                                                    "rel": "rel",
+                                                                                    "method": "method",
+                                                                                    "href": "href"
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "shape": {
+                                                                                    "type": "named",
+                                                                                    "shape": {
+                                                                                        "type": "object",
+                                                                                        "properties": [
+                                                                                            {
+                                                                                                "name": "rel",
+                                                                                                "originalTypeDeclaration": {
+                                                                                                    "name": "Link",
+                                                                                                    "fernFilepath": {
+                                                                                                        "allParts": [],
+                                                                                                        "packagePath": [],
+                                                                                                        "file": null
+                                                                                                    },
+                                                                                                    "displayName": null,
+                                                                                                    "typeId": "type_:Link"
+                                                                                                },
+                                                                                                "value": {
+                                                                                                    "shape": {
+                                                                                                        "type": "primitive",
+                                                                                                        "primitive": {
+                                                                                                            "type": "string",
+                                                                                                            "string": {
+                                                                                                                "original": "rel"
+                                                                                                            }
+                                                                                                        }
+                                                                                                    },
+                                                                                                    "jsonExample": "rel"
+                                                                                                },
+                                                                                                "propertyAccess": null
+                                                                                            },
+                                                                                            {
+                                                                                                "name": "method",
+                                                                                                "originalTypeDeclaration": {
+                                                                                                    "name": "Link",
+                                                                                                    "fernFilepath": {
+                                                                                                        "allParts": [],
+                                                                                                        "packagePath": [],
+                                                                                                        "file": null
+                                                                                                    },
+                                                                                                    "displayName": null,
+                                                                                                    "typeId": "type_:Link"
+                                                                                                },
+                                                                                                "value": {
+                                                                                                    "shape": {
+                                                                                                        "type": "primitive",
+                                                                                                        "primitive": {
+                                                                                                            "type": "string",
+                                                                                                            "string": {
+                                                                                                                "original": "method"
+                                                                                                            }
+                                                                                                        }
+                                                                                                    },
+                                                                                                    "jsonExample": "method"
+                                                                                                },
+                                                                                                "propertyAccess": null
+                                                                                            },
+                                                                                            {
+                                                                                                "name": "href",
+                                                                                                "originalTypeDeclaration": {
+                                                                                                    "name": "Link",
+                                                                                                    "fernFilepath": {
+                                                                                                        "allParts": [],
+                                                                                                        "packagePath": [],
+                                                                                                        "file": null
+                                                                                                    },
+                                                                                                    "displayName": null,
+                                                                                                    "typeId": "type_:Link"
+                                                                                                },
+                                                                                                "value": {
+                                                                                                    "shape": {
+                                                                                                        "type": "primitive",
+                                                                                                        "primitive": {
+                                                                                                            "type": "string",
+                                                                                                            "string": {
+                                                                                                                "original": "href"
+                                                                                                            }
+                                                                                                        }
+                                                                                                    },
+                                                                                                    "jsonExample": "href"
+                                                                                                },
+                                                                                                "propertyAccess": null
+                                                                                            }
+                                                                                        ],
+                                                                                        "extraProperties": null
+                                                                                    },
+                                                                                    "typeName": {
+                                                                                        "name": "Link",
+                                                                                        "fernFilepath": {
+                                                                                            "allParts": [],
+                                                                                            "packagePath": [],
+                                                                                            "file": null
+                                                                                        },
+                                                                                        "displayName": null,
+                                                                                        "typeId": "type_:Link"
+                                                                                    }
+                                                                                },
+                                                                                "jsonExample": {
+                                                                                    "rel": "rel",
+                                                                                    "method": "method",
+                                                                                    "href": "href"
+                                                                                }
+                                                                            }
+                                                                        ],
+                                                                        "itemType": {
+                                                                            "_type": "named",
+                                                                            "name": "Link",
+                                                                            "fernFilepath": {
+                                                                                "allParts": [],
+                                                                                "packagePath": [],
+                                                                                "file": null
+                                                                            },
+                                                                            "displayName": null,
+                                                                            "typeId": "type_:Link",
+                                                                            "default": null,
+                                                                            "inline": null
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": [
+                                                                    {
+                                                                        "rel": "rel",
+                                                                        "method": "method",
+                                                                        "href": "href"
+                                                                    },
+                                                                    {
+                                                                        "rel": "rel",
+                                                                        "method": "method",
+                                                                        "href": "href"
+                                                                    }
+                                                                ]
+                                                            },
+                                                            "propertyAccess": null
+                                                        },
+                                                        {
+                                                            "name": "data",
+                                                            "originalTypeDeclaration": {
+                                                                "name": "UsersListResponse",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "displayName": null,
+                                                                "typeId": "type_:UsersListResponse"
+                                                            },
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "container",
+                                                                    "container": {
+                                                                        "type": "list",
+                                                                        "list": [
+                                                                            {
+                                                                                "shape": {
+                                                                                    "type": "primitive",
+                                                                                    "primitive": {
+                                                                                        "type": "string",
+                                                                                        "string": {
+                                                                                            "original": "data"
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                "jsonExample": "data"
+                                                                            },
+                                                                            {
+                                                                                "shape": {
+                                                                                    "type": "primitive",
+                                                                                    "primitive": {
+                                                                                        "type": "string",
+                                                                                        "string": {
+                                                                                            "original": "data"
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                "jsonExample": "data"
+                                                                            }
+                                                                        ],
+                                                                        "itemType": {
+                                                                            "_type": "primitive",
+                                                                            "primitive": {
+                                                                                "v1": "STRING",
+                                                                                "v2": {
+                                                                                    "type": "string",
+                                                                                    "default": null,
+                                                                                    "validation": null
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": [
+                                                                    "data",
+                                                                    "data"
+                                                                ]
                                                             },
                                                             "propertyAccess": null
                                                         }
@@ -900,42 +917,36 @@
                                                     "extraProperties": null
                                                 },
                                                 "typeName": {
-                                                    "name": {
-                                                        "originalName": "UsernameCursor",
-                                                        "camelCase": {
-                                                            "unsafeName": "usernameCursor",
-                                                            "safeName": "usernameCursor"
-                                                        },
-                                                        "snakeCase": {
-                                                            "unsafeName": "username_cursor",
-                                                            "safeName": "username_cursor"
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                            "unsafeName": "USERNAME_CURSOR",
-                                                            "safeName": "USERNAME_CURSOR"
-                                                        },
-                                                        "pascalCase": {
-                                                            "unsafeName": "UsernameCursor",
-                                                            "safeName": "UsernameCursor"
-                                                        }
-                                                    },
+                                                    "name": "UsersListResponse",
                                                     "fernFilepath": {
                                                         "allParts": [],
                                                         "packagePath": [],
                                                         "file": null
                                                     },
                                                     "displayName": null,
-                                                    "typeId": "type_:UsernameCursor"
+                                                    "typeId": "type_:UsersListResponse"
                                                 }
                                             },
                                             "jsonExample": {
-                                                "cursor": {
-                                                    "after": "after",
-                                                    "data": [
-                                                        "data",
-                                                        "data"
-                                                    ]
-                                                }
+                                                "limit": 1,
+                                                "count": 1,
+                                                "has_more": true,
+                                                "links": [
+                                                    {
+                                                        "rel": "rel",
+                                                        "method": "method",
+                                                        "href": "href"
+                                                    },
+                                                    {
+                                                        "rel": "rel",
+                                                        "method": "method",
+                                                        "href": "href"
+                                                    }
+                                                ],
+                                                "data": [
+                                                    "data",
+                                                    "data"
+                                                ]
                                             }
                                         }
                                     }
@@ -947,83 +958,9 @@
                     "pagination": {
                         "type": "custom",
                         "results": {
-                            "propertyPath": [
-                                {
-                                    "name": {
-                                        "originalName": "cursor",
-                                        "camelCase": {
-                                            "unsafeName": "cursor",
-                                            "safeName": "cursor"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "cursor",
-                                            "safeName": "cursor"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "CURSOR",
-                                            "safeName": "CURSOR"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Cursor",
-                                            "safeName": "Cursor"
-                                        }
-                                    },
-                                    "type": {
-                                        "_type": "named",
-                                        "name": {
-                                            "originalName": "UsernamePage",
-                                            "camelCase": {
-                                                "unsafeName": "usernamePage",
-                                                "safeName": "usernamePage"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "username_page",
-                                                "safeName": "username_page"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "USERNAME_PAGE",
-                                                "safeName": "USERNAME_PAGE"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "UsernamePage",
-                                                "safeName": "UsernamePage"
-                                            }
-                                        },
-                                        "fernFilepath": {
-                                            "allParts": [],
-                                            "packagePath": [],
-                                            "file": null
-                                        },
-                                        "displayName": null,
-                                        "typeId": "type_:UsernamePage",
-                                        "default": null,
-                                        "inline": null
-                                    }
-                                }
-                            ],
+                            "propertyPath": [],
                             "property": {
-                                "name": {
-                                    "name": {
-                                        "originalName": "data",
-                                        "camelCase": {
-                                            "unsafeName": "data",
-                                            "safeName": "data"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "data",
-                                            "safeName": "data"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "DATA",
-                                            "safeName": "DATA"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Data",
-                                            "safeName": "Data"
-                                        }
-                                    },
-                                    "wireValue": "data"
-                                },
+                                "name": "data",
                                 "valueType": {
                                     "_type": "container",
                                     "container": {
@@ -1066,28 +1003,7 @@
         }
     },
     "constants": {
-        "errorInstanceIdKey": {
-            "name": {
-                "originalName": "errorInstanceId",
-                "camelCase": {
-                    "unsafeName": "errorInstanceID",
-                    "safeName": "errorInstanceID"
-                },
-                "snakeCase": {
-                    "unsafeName": "error_instance_id",
-                    "safeName": "error_instance_id"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "ERROR_INSTANCE_ID",
-                    "safeName": "ERROR_INSTANCE_ID"
-                },
-                "pascalCase": {
-                    "unsafeName": "ErrorInstanceID",
-                    "safeName": "ErrorInstanceID"
-                }
-            },
-            "wireValue": "errorInstanceId"
-        }
+        "errorInstanceIdKey": "errorInstanceId"
     },
     "environments": null,
     "errorDiscriminationStrategy": {
@@ -1099,8 +1015,8 @@
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_users": [
-                "type_:UsernameCursor",
-                "type_:UsernamePage"
+                "type_:UsersListResponse",
+                "type_:Link"
             ]
         },
         "sharedTypes": []
@@ -1113,26 +1029,26 @@
     "dynamic": {
         "version": "1.0.0",
         "types": {
-            "type_:UsernameCursor": {
+            "type_:UsersListResponse": {
                 "type": "object",
                 "declaration": {
                     "name": {
-                        "originalName": "UsernameCursor",
+                        "originalName": "UsersListResponse",
                         "camelCase": {
-                            "unsafeName": "usernameCursor",
-                            "safeName": "usernameCursor"
+                            "unsafeName": "usersListResponse",
+                            "safeName": "usersListResponse"
                         },
                         "snakeCase": {
-                            "unsafeName": "username_cursor",
-                            "safeName": "username_cursor"
+                            "unsafeName": "users_list_response",
+                            "safeName": "users_list_response"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "USERNAME_CURSOR",
-                            "safeName": "USERNAME_CURSOR"
+                            "unsafeName": "USERS_LIST_RESPONSE",
+                            "safeName": "USERS_LIST_RESPONSE"
                         },
                         "pascalCase": {
-                            "unsafeName": "UsernameCursor",
-                            "safeName": "UsernameCursor"
+                            "unsafeName": "UsersListResponse",
+                            "safeName": "UsersListResponse"
                         }
                     },
                     "fernFilepath": {
@@ -1144,95 +1060,32 @@
                 "properties": [
                     {
                         "name": {
+                            "wireValue": "limit",
                             "name": {
-                                "originalName": "cursor",
+                                "originalName": "limit",
                                 "camelCase": {
-                                    "unsafeName": "cursor",
-                                    "safeName": "cursor"
+                                    "unsafeName": "limit",
+                                    "safeName": "limit"
                                 },
                                 "snakeCase": {
-                                    "unsafeName": "cursor",
-                                    "safeName": "cursor"
+                                    "unsafeName": "limit",
+                                    "safeName": "limit"
                                 },
                                 "screamingSnakeCase": {
-                                    "unsafeName": "CURSOR",
-                                    "safeName": "CURSOR"
+                                    "unsafeName": "LIMIT",
+                                    "safeName": "LIMIT"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "Cursor",
-                                    "safeName": "Cursor"
+                                    "unsafeName": "Limit",
+                                    "safeName": "Limit"
                                 }
-                            },
-                            "wireValue": "cursor"
-                        },
-                        "typeReference": {
-                            "type": "named",
-                            "value": "type_:UsernamePage"
-                        },
-                        "propertyAccess": null,
-                        "variable": null
-                    }
-                ],
-                "extends": null,
-                "additionalProperties": false
-            },
-            "type_:UsernamePage": {
-                "type": "object",
-                "declaration": {
-                    "name": {
-                        "originalName": "UsernamePage",
-                        "camelCase": {
-                            "unsafeName": "usernamePage",
-                            "safeName": "usernamePage"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "username_page",
-                            "safeName": "username_page"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "USERNAME_PAGE",
-                            "safeName": "USERNAME_PAGE"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "UsernamePage",
-                            "safeName": "UsernamePage"
-                        }
-                    },
-                    "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": [],
-                        "file": null
-                    }
-                },
-                "properties": [
-                    {
-                        "name": {
-                            "name": {
-                                "originalName": "after",
-                                "camelCase": {
-                                    "unsafeName": "after",
-                                    "safeName": "after"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "after",
-                                    "safeName": "after"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "AFTER",
-                                    "safeName": "AFTER"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "After",
-                                    "safeName": "After"
-                                }
-                            },
-                            "wireValue": "after"
+                            }
                         },
                         "typeReference": {
                             "type": "optional",
                             "value": {
                                 "type": "primitive",
-                                "value": "STRING"
+                                "value": "INTEGER"
                             }
                         },
                         "propertyAccess": null,
@@ -1240,6 +1093,106 @@
                     },
                     {
                         "name": {
+                            "wireValue": "count",
+                            "name": {
+                                "originalName": "count",
+                                "camelCase": {
+                                    "unsafeName": "count",
+                                    "safeName": "count"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "count",
+                                    "safeName": "count"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "COUNT",
+                                    "safeName": "COUNT"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Count",
+                                    "safeName": "Count"
+                                }
+                            }
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
+                                "type": "primitive",
+                                "value": "INTEGER"
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "wireValue": "has_more",
+                            "name": {
+                                "originalName": "has_more",
+                                "camelCase": {
+                                    "unsafeName": "hasMore",
+                                    "safeName": "hasMore"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "has_more",
+                                    "safeName": "has_more"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "HAS_MORE",
+                                    "safeName": "HAS_MORE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "HasMore",
+                                    "safeName": "HasMore"
+                                }
+                            }
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
+                                "type": "primitive",
+                                "value": "BOOLEAN"
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "wireValue": "links",
+                            "name": {
+                                "originalName": "links",
+                                "camelCase": {
+                                    "unsafeName": "links",
+                                    "safeName": "links"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "links",
+                                    "safeName": "links"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "LINKS",
+                                    "safeName": "LINKS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Links",
+                                    "safeName": "Links"
+                                }
+                            }
+                        },
+                        "typeReference": {
+                            "type": "list",
+                            "value": {
+                                "type": "named",
+                                "value": "type_:Link"
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "wireValue": "data",
                             "name": {
                                 "originalName": "data",
                                 "camelCase": {
@@ -1258,8 +1211,7 @@
                                     "unsafeName": "Data",
                                     "safeName": "Data"
                                 }
-                            },
-                            "wireValue": "data"
+                            }
                         },
                         "typeReference": {
                             "type": "list",
@@ -1274,11 +1226,134 @@
                 ],
                 "extends": null,
                 "additionalProperties": false
+            },
+            "type_:Link": {
+                "type": "object",
+                "declaration": {
+                    "name": {
+                        "originalName": "Link",
+                        "camelCase": {
+                            "unsafeName": "link",
+                            "safeName": "link"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "link",
+                            "safeName": "link"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "LINK",
+                            "safeName": "LINK"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Link",
+                            "safeName": "Link"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "properties": [
+                    {
+                        "name": {
+                            "wireValue": "rel",
+                            "name": {
+                                "originalName": "rel",
+                                "camelCase": {
+                                    "unsafeName": "rel",
+                                    "safeName": "rel"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "rel",
+                                    "safeName": "rel"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "REL",
+                                    "safeName": "REL"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Rel",
+                                    "safeName": "Rel"
+                                }
+                            }
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "wireValue": "method",
+                            "name": {
+                                "originalName": "method",
+                                "camelCase": {
+                                    "unsafeName": "method",
+                                    "safeName": "method"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "method",
+                                    "safeName": "method"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "METHOD",
+                                    "safeName": "METHOD"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Method",
+                                    "safeName": "Method"
+                                }
+                            }
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "wireValue": "href",
+                            "name": {
+                                "originalName": "href",
+                                "camelCase": {
+                                    "unsafeName": "href",
+                                    "safeName": "href"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "href",
+                                    "safeName": "href"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "HREF",
+                                    "safeName": "HREF"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Href",
+                                    "safeName": "Href"
+                                }
+                            }
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "extends": null,
+                "additionalProperties": false
             }
         },
         "headers": [],
         "endpoints": {
-            "endpoint_users.listUsernamesCustom": {
+            "endpoint_users.listWithCustomPager": {
                 "auth": {
                     "type": "bearer",
                     "token": {
@@ -1303,22 +1378,22 @@
                 },
                 "declaration": {
                     "name": {
-                        "originalName": "listUsernamesCustom",
+                        "originalName": "listWithCustomPager",
                         "camelCase": {
-                            "unsafeName": "listUsernamesCustom",
-                            "safeName": "listUsernamesCustom"
+                            "unsafeName": "listWithCustomPager",
+                            "safeName": "listWithCustomPager"
                         },
                         "snakeCase": {
-                            "unsafeName": "list_usernames_custom",
-                            "safeName": "list_usernames_custom"
+                            "unsafeName": "list_with_custom_pager",
+                            "safeName": "list_with_custom_pager"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "LIST_USERNAMES_CUSTOM",
-                            "safeName": "LIST_USERNAMES_CUSTOM"
+                            "unsafeName": "LIST_WITH_CUSTOM_PAGER",
+                            "safeName": "LIST_WITH_CUSTOM_PAGER"
                         },
                         "pascalCase": {
-                            "unsafeName": "ListUsernamesCustom",
-                            "safeName": "ListUsernamesCustom"
+                            "unsafeName": "ListWithCustomPager",
+                            "safeName": "ListWithCustomPager"
                         }
                     },
                     "fernFilepath": {
@@ -1373,22 +1448,22 @@
                     "type": "inlined",
                     "declaration": {
                         "name": {
-                            "originalName": "ListUsernamesRequestCustom",
+                            "originalName": "ListWithCustomPagerRequest",
                             "camelCase": {
-                                "unsafeName": "listUsernamesRequestCustom",
-                                "safeName": "listUsernamesRequestCustom"
+                                "unsafeName": "listWithCustomPagerRequest",
+                                "safeName": "listWithCustomPagerRequest"
                             },
                             "snakeCase": {
-                                "unsafeName": "list_usernames_request_custom",
-                                "safeName": "list_usernames_request_custom"
+                                "unsafeName": "list_with_custom_pager_request",
+                                "safeName": "list_with_custom_pager_request"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "LIST_USERNAMES_REQUEST_CUSTOM",
-                                "safeName": "LIST_USERNAMES_REQUEST_CUSTOM"
+                                "unsafeName": "LIST_WITH_CUSTOM_PAGER_REQUEST",
+                                "safeName": "LIST_WITH_CUSTOM_PAGER_REQUEST"
                             },
                             "pascalCase": {
-                                "unsafeName": "ListUsernamesRequestCustom",
-                                "safeName": "ListUsernamesRequestCustom"
+                                "unsafeName": "ListWithCustomPagerRequest",
+                                "safeName": "ListWithCustomPagerRequest"
                             }
                         },
                         "fernFilepath": {
@@ -1439,6 +1514,40 @@
                     "queryParameters": [
                         {
                             "name": {
+                                "wireValue": "limit",
+                                "name": {
+                                    "originalName": "limit",
+                                    "camelCase": {
+                                        "unsafeName": "limit",
+                                        "safeName": "limit"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "limit",
+                                        "safeName": "limit"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "LIMIT",
+                                        "safeName": "LIMIT"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Limit",
+                                        "safeName": "Limit"
+                                    }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "INTEGER"
+                                }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        },
+                        {
+                            "name": {
+                                "wireValue": "starting_after",
                                 "name": {
                                     "originalName": "starting_after",
                                     "camelCase": {
@@ -1457,8 +1566,7 @@
                                         "unsafeName": "StartingAfter",
                                         "safeName": "StartingAfter"
                                     }
-                                },
-                                "wireValue": "starting_after"
+                                }
                             },
                             "typeReference": {
                                 "type": "optional",
@@ -1492,70 +1600,21 @@
     "audiences": null,
     "generationMetadata": null,
     "apiPlayground": true,
+    "casingsConfig": {
+        "generationLanguage": null,
+        "keywords": null,
+        "smartCasing": true
+    },
     "subpackages": {
         "subpackage_users": {
-            "name": {
-                "originalName": "users",
-                "camelCase": {
-                    "unsafeName": "users",
-                    "safeName": "users"
-                },
-                "snakeCase": {
-                    "unsafeName": "users",
-                    "safeName": "users"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "USERS",
-                    "safeName": "USERS"
-                },
-                "pascalCase": {
-                    "unsafeName": "Users",
-                    "safeName": "Users"
-                }
-            },
+            "name": "users",
             "displayName": null,
             "fernFilepath": {
                 "allParts": [
-                    {
-                        "originalName": "users",
-                        "camelCase": {
-                            "unsafeName": "users",
-                            "safeName": "users"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "users",
-                            "safeName": "users"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "USERS",
-                            "safeName": "USERS"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Users",
-                            "safeName": "Users"
-                        }
-                    }
+                    "users"
                 ],
                 "packagePath": [],
-                "file": {
-                    "originalName": "users",
-                    "camelCase": {
-                        "unsafeName": "users",
-                        "safeName": "users"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "users",
-                        "safeName": "users"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "USERS",
-                        "safeName": "USERS"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "Users",
-                        "safeName": "Users"
-                    }
-                }
+                "file": "users"
             },
             "service": "service_users",
             "types": [],
@@ -1577,8 +1636,8 @@
         "websocket": null,
         "service": null,
         "types": [
-            "type_:UsernameCursor",
-            "type_:UsernamePage"
+            "type_:UsersListResponse",
+            "type_:Link"
         ],
         "errors": [],
         "subpackages": [

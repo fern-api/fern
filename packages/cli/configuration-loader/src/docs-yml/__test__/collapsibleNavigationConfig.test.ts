@@ -1,8 +1,9 @@
 import { docsYml } from "@fern-api/configuration";
 import { validateAgainstJsonSchema } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { createMockTaskContext, FernCliError } from "@fern-api/task-context";
+import { createMockTaskContext, TaskAbortSignal } from "@fern-api/task-context";
 import fs from "fs";
+import os from "os";
 import path from "path";
 import { describe, expect, it } from "vitest";
 
@@ -37,7 +38,7 @@ describe("docs.yml navigation collapsible config", () => {
                 absoluteFilepathToDocsConfig: AbsoluteFilePath.of("/tmp/docs.yml"),
                 context
             })
-        ).rejects.toBeInstanceOf(FernCliError);
+        ).rejects.toBeInstanceOf(TaskAbortSignal);
     });
 
     it("should throw if collapsible is used alongside deprecated collapsed", async () => {
@@ -63,7 +64,7 @@ describe("docs.yml navigation collapsible config", () => {
                 absoluteFilepathToDocsConfig: AbsoluteFilePath.of("/tmp/docs.yml"),
                 context
             })
-        ).rejects.toBeInstanceOf(FernCliError);
+        ).rejects.toBeInstanceOf(TaskAbortSignal);
     });
 
     it("should throw if collapsible is used alongside deprecated collapsed: open-by-default", async () => {
@@ -89,7 +90,7 @@ describe("docs.yml navigation collapsible config", () => {
                 absoluteFilepathToDocsConfig: AbsoluteFilePath.of("/tmp/docs.yml"),
                 context
             })
-        ).rejects.toBeInstanceOf(FernCliError);
+        ).rejects.toBeInstanceOf(TaskAbortSignal);
     });
 
     it("should accept open-by-default as a collapsed value on sections", async () => {
@@ -194,6 +195,58 @@ describe("docs.yml navigation collapsible config", () => {
                 }
             ]
         });
+    });
+
+    it("should accept a Context7 file that contains valid JSON", async () => {
+        const context = createMockTaskContext();
+        const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "fern-context7-valid-"));
+        const docsConfigPath = path.join(tempDir, "docs.yml");
+        const context7Path = path.join(tempDir, "context7.json");
+        fs.writeFileSync(context7Path, '{"public_key":"pk_test"}');
+
+        const rawDocsConfiguration: docsYml.RawSchemas.DocsConfiguration = {
+            instances: [],
+            title: "Test",
+            navigation: [],
+            integrations: {
+                context7: "./context7.json"
+            }
+        };
+
+        const parsed = await parseDocsConfiguration({
+            rawDocsConfiguration,
+            absolutePathToFernFolder: AbsoluteFilePath.of(tempDir),
+            absoluteFilepathToDocsConfig: AbsoluteFilePath.of(docsConfigPath),
+            context
+        });
+
+        expect(parsed.context7File).toBe(AbsoluteFilePath.of(context7Path));
+    });
+
+    it("should reject a Context7 file with invalid JSON", async () => {
+        const context = createMockTaskContext();
+        const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "fern-context7-invalid-"));
+        const docsConfigPath = path.join(tempDir, "docs.yml");
+        const context7Path = path.join(tempDir, "context7.json");
+        fs.writeFileSync(context7Path, "{not-valid-json}");
+
+        const rawDocsConfiguration: docsYml.RawSchemas.DocsConfiguration = {
+            instances: [],
+            title: "Test",
+            navigation: [],
+            integrations: {
+                context7: "./context7.json"
+            }
+        };
+
+        await expect(
+            parseDocsConfiguration({
+                rawDocsConfiguration,
+                absolutePathToFernFolder: AbsoluteFilePath.of(tempDir),
+                absoluteFilepathToDocsConfig: AbsoluteFilePath.of(docsConfigPath),
+                context
+            })
+        ).rejects.toBeInstanceOf(TaskAbortSignal);
     });
 });
 

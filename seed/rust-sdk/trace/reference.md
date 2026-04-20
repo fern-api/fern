@@ -1,6 +1,6 @@
 # Reference
 ## V2
-<details><summary><code>client.v_2.<a href="/src/api/resources/v_2/client.rs">test</a>() -> Result&lt;(), ApiError&gt;</code></summary>
+<details><summary><code>client.v2.<a href="/src/api/resources/v2/client.rs">test</a>() -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -22,7 +22,7 @@ async fn main() {
         ..Default::default()
     };
     let client = TraceClient::new(config).expect("Failed to build client");
-    client.v_2.test(None).await;
+    client.v2.test(None).await;
 }
 ```
 </dd>
@@ -447,7 +447,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/src/api/resources/admin/client.rs">store_traced_test_case_v_2</a>(submission_id: SubmissionId, test_case_id: TestCaseId, request: Vec&lt;TraceResponseV2&gt;) -> Result&lt;(), ApiError&gt;</code></summary>
+<details><summary><code>client.admin.<a href="/src/api/resources/admin/client.rs">store_traced_test_case_v2</a>(submission_id: SubmissionId, test_case_id: TestCaseId, request: Vec&lt;TraceResponseV2&gt;) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -471,7 +471,7 @@ async fn main() {
     let client = TraceClient::new(config).expect("Failed to build client");
     client
         .admin
-        .store_traced_test_case_v_2(
+        .store_traced_test_case_v2(
             &SubmissionId(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
             &TestCaseId("testCaseId".to_string()),
             &vec![
@@ -630,7 +630,7 @@ async fn main() {
             &SubmissionId(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
             &StoreTracedWorkspaceRequest {
                 workspace_run_details: WorkspaceRunDetails {
-                    exception_v_2: Some(ExceptionV2::Generic {
+                    exception_v2: Some(ExceptionV2::Generic {
                         data: ExceptionInfo {
                             exception_type: "exceptionType".to_string(),
                             exception_message: "exceptionMessage".to_string(),
@@ -774,7 +774,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/src/api/resources/admin/client.rs">store_traced_workspace_v_2</a>(submission_id: SubmissionId, request: Vec&lt;TraceResponseV2&gt;) -> Result&lt;(), ApiError&gt;</code></summary>
+<details><summary><code>client.admin.<a href="/src/api/resources/admin/client.rs">store_traced_workspace_v2</a>(submission_id: SubmissionId, request: Vec&lt;TraceResponseV2&gt;) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -798,7 +798,7 @@ async fn main() {
     let client = TraceClient::new(config).expect("Failed to build client");
     client
         .admin
-        .store_traced_workspace_v_2(
+        .store_traced_workspace_v2(
             &SubmissionId(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
             &vec![
                 TraceResponseV2 {
@@ -2278,7 +2278,7 @@ async fn main() {
 </details>
 
 ## V2 Problem
-<details><summary><code>client.v_2().problem.<a href="/src/api/resources/v_2/problem/client.rs">get_lightweight_problems</a>() -> Result&lt;Vec&lt;LightweightProblemInfoV2&gt;, ApiError&gt;</code></summary>
+<details><summary><code>client.v2().problem.<a href="/src/api/resources/v2/problem/client.rs">get_lightweight_problems</a>() -> Result&lt;Vec&lt;LightweightProblemInfoV2&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2314,7 +2314,7 @@ async fn main() {
         ..Default::default()
     };
     let client = TraceClient::new(config).expect("Failed to build client");
-    client.v_2.problem.get_lightweight_problems(None).await;
+    client.v2.problem.get_lightweight_problems(None).await;
 }
 ```
 </dd>
@@ -2327,7 +2327,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.v_2().problem.<a href="/src/api/resources/v_2/problem/client.rs">get_problems</a>() -> Result&lt;Vec&lt;ProblemInfoV2&gt;, ApiError&gt;</code></summary>
+<details><summary><code>client.v2().problem.<a href="/src/api/resources/v2/problem/client.rs">get_problems</a>() -> Result&lt;Vec&lt;ProblemInfoV2&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2363,7 +2363,7 @@ async fn main() {
         ..Default::default()
     };
     let client = TraceClient::new(config).expect("Failed to build client");
-    client.v_2.problem.get_problems(None).await;
+    client.v2.problem.get_problems(None).await;
 }
 ```
 </dd>
@@ -2376,7 +2376,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.v_2().problem.<a href="/src/api/resources/v_2/problem/client.rs">get_latest_problem</a>(problem_id: ProblemId) -> Result&lt;ProblemInfoV2, ApiError&gt;</code></summary>
+<details><summary><code>client.v2().problem.<a href="/src/api/resources/v2/problem/client.rs">get_latest_problem</a>(problem_id: ProblemId) -> Result&lt;ProblemInfoV2, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2413,7 +2413,7 @@ async fn main() {
     };
     let client = TraceClient::new(config).expect("Failed to build client");
     client
-        .v_2
+        .v2
         .problem
         .get_latest_problem(&ProblemId("problemId".to_string()), None)
         .await;
@@ -2444,7 +2444,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.v_2().problem.<a href="/src/api/resources/v_2/problem/client.rs">get_problem_version</a>(problem_id: ProblemId, problem_version: i64) -> Result&lt;ProblemInfoV2, ApiError&gt;</code></summary>
+<details><summary><code>client.v2().problem.<a href="/src/api/resources/v2/problem/client.rs">get_problem_version</a>(problem_id: ProblemId, problem_version: i64) -> Result&lt;ProblemInfoV2, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2481,7 +2481,7 @@ async fn main() {
     };
     let client = TraceClient::new(config).expect("Failed to build client");
     client
-        .v_2
+        .v2
         .problem
         .get_problem_version(&ProblemId("problemId".to_string()), 1, None)
         .await;
@@ -2521,7 +2521,7 @@ async fn main() {
 </details>
 
 ## V2 V3 Problem
-<details><summary><code>client.v_2().v_3().problem.<a href="/src/api/resources/v_2/v_3/problem/client.rs">get_lightweight_problems</a>() -> Result&lt;Vec&lt;LightweightProblemInfoV2&gt;, ApiError&gt;</code></summary>
+<details><summary><code>client.v2().v3().problem.<a href="/src/api/resources/v2/v3/problem/client.rs">get_lightweight_problems</a>() -> Result&lt;Vec&lt;LightweightProblemInfoV2&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2557,7 +2557,7 @@ async fn main() {
         ..Default::default()
     };
     let client = TraceClient::new(config).expect("Failed to build client");
-    client.v_2.problem.get_lightweight_problems(None).await;
+    client.v2.problem.get_lightweight_problems(None).await;
 }
 ```
 </dd>
@@ -2570,7 +2570,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.v_2().v_3().problem.<a href="/src/api/resources/v_2/v_3/problem/client.rs">get_problems</a>() -> Result&lt;Vec&lt;ProblemInfoV2&gt;, ApiError&gt;</code></summary>
+<details><summary><code>client.v2().v3().problem.<a href="/src/api/resources/v2/v3/problem/client.rs">get_problems</a>() -> Result&lt;Vec&lt;ProblemInfoV2&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2606,7 +2606,7 @@ async fn main() {
         ..Default::default()
     };
     let client = TraceClient::new(config).expect("Failed to build client");
-    client.v_2.problem.get_problems(None).await;
+    client.v2.problem.get_problems(None).await;
 }
 ```
 </dd>
@@ -2619,7 +2619,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.v_2().v_3().problem.<a href="/src/api/resources/v_2/v_3/problem/client.rs">get_latest_problem</a>(problem_id: ProblemId) -> Result&lt;ProblemInfoV2, ApiError&gt;</code></summary>
+<details><summary><code>client.v2().v3().problem.<a href="/src/api/resources/v2/v3/problem/client.rs">get_latest_problem</a>(problem_id: ProblemId) -> Result&lt;ProblemInfoV2, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2656,7 +2656,7 @@ async fn main() {
     };
     let client = TraceClient::new(config).expect("Failed to build client");
     client
-        .v_2
+        .v2
         .problem
         .get_latest_problem(&ProblemId("problemId".to_string()), None)
         .await;
@@ -2687,7 +2687,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.v_2().v_3().problem.<a href="/src/api/resources/v_2/v_3/problem/client.rs">get_problem_version</a>(problem_id: ProblemId, problem_version: i64) -> Result&lt;ProblemInfoV2, ApiError&gt;</code></summary>
+<details><summary><code>client.v2().v3().problem.<a href="/src/api/resources/v2/v3/problem/client.rs">get_problem_version</a>(problem_id: ProblemId, problem_version: i64) -> Result&lt;ProblemInfoV2, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2724,7 +2724,7 @@ async fn main() {
     };
     let client = TraceClient::new(config).expect("Failed to build client");
     client
-        .v_2
+        .v2
         .problem
         .get_problem_version(&ProblemId("problemId".to_string()), 1, None)
         .await;

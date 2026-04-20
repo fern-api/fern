@@ -45,6 +45,7 @@ import {
     getExampleAsNumber,
     getExamplesString
 } from "./examples/getExample.js";
+import { resolveDiscriminatorContext } from "./inferDiscriminatorContext.js";
 import type { SchemaParserContext } from "./SchemaParserContext.js";
 import { getBreadcrumbsFromReference } from "./utils/getBreadcrumbsFromReference.js";
 import { getGeneratedTypeName } from "./utils/getSchemaName.js";
@@ -113,7 +114,10 @@ function isInlinable(
         case undefined:
             return false;
         default:
-            // TODO(thomas): Handle null literal and type array that is not a SchemaObject and return to the promised land of assertNever
+            if ((resolvedSchema as OpenAPIV3.SchemaObject).type === ("null" as unknown)) {
+                return true;
+            }
+            // TODO(thomas): Handle type array that is not a SchemaObject and return to the promised land of assertNever
             // return assertNever(resolvedSchema);
             context.logger.warn("Unhandled schema type. Will not inline this schema", JSON.stringify(resolvedSchema));
             return false;
@@ -602,12 +606,15 @@ export function convertSchemaObject(
         // primitive types
         if (schema.type === "boolean") {
             const literalValue = getExtension<boolean>(schema, FernOpenAPIExtension.BOOLEAN_LITERAL);
-            if (literalValue != null) {
+            const resolvedLiteral =
+                literalValue ??
+                getSingleBooleanEnumValue(schema, blockConstCoercionToLiteral, context.options.coerceEnumsToLiterals);
+            if (resolvedLiteral != null) {
                 return wrapLiteral({
                     nameOverride,
                     generatedName,
                     title,
-                    literal: LiteralSchemaValue.boolean(literalValue),
+                    literal: LiteralSchemaValue.boolean(resolvedLiteral),
                     wrapAsOptional,
                     wrapAsNullable,
                     description,
@@ -931,7 +938,11 @@ export function convertSchemaObject(
         }
 
         if (schema.type === "object" && schema.discriminator != null && schema.discriminator.mapping != null) {
-            if (!context.options.discriminatedUnionV2) {
+            const objectDiscriminatorContext = resolveDiscriminatorContext({
+                discriminator: schema.discriminator,
+                context
+            });
+            if (!context.options.discriminatedUnionV2 || objectDiscriminatorContext === "protocol") {
                 return convertDiscriminatedOneOf({
                     nameOverride,
                     generatedName,
@@ -977,7 +988,14 @@ export function convertSchemaObject(
                 schema.discriminator.mapping != null &&
                 Object.keys(schema.discriminator.mapping).length > 0
             ) {
-                if (context.options.discriminatedUnionV2 || isUndiscriminated) {
+                const discriminatorContext = resolveDiscriminatorContext({
+                    discriminator: schema.discriminator,
+                    context
+                });
+                if (
+                    (context.options.discriminatedUnionV2 || isUndiscriminated) &&
+                    discriminatorContext !== "protocol"
+                ) {
                     return convertUndiscriminatedOneOfWithDiscriminant({
                         nameOverride,
                         generatedName,
@@ -1111,6 +1129,7 @@ export function convertSchemaObject(
                         wrapAsNullable,
                         discriminant: maybeDiscriminant.discriminant,
                         variants: maybeDiscriminant.schemas,
+                        defaultDiscriminantValue: maybeDiscriminant.defaultDiscriminantValue,
                         context,
                         namespace,
                         groupName,
@@ -1207,6 +1226,7 @@ export function convertSchemaObject(
                     wrapAsNullable,
                     discriminant: maybeDiscriminant.discriminant,
                     variants: maybeDiscriminant.schemas,
+                    defaultDiscriminantValue: maybeDiscriminant.defaultDiscriminantValue,
                     context,
                     namespace,
                     groupName,
@@ -1355,6 +1375,46 @@ export function convertSchemaObject(
             });
         }
 
+        // handle null type (OpenAPI 3.1)
+        // `type: "null"` means the value is always null.
+        // Represent as nullable wrapping an unknown inner type.
+        if ((schema.type as string) === "null") {
+            let result: SchemaWithExample = SchemaWithExample.nullable({
+                availability,
+                namespace,
+                groupName,
+                description,
+                generatedName,
+                inline: undefined,
+                nameOverride,
+                title,
+                value: SchemaWithExample.unknown({
+                    nameOverride,
+                    generatedName,
+                    title,
+                    description: undefined,
+                    availability: undefined,
+                    namespace,
+                    groupName,
+                    example: undefined
+                })
+            });
+            if (wrapAsOptional) {
+                result = SchemaWithExample.optional({
+                    availability,
+                    namespace,
+                    groupName,
+                    description,
+                    generatedName,
+                    inline: undefined,
+                    nameOverride,
+                    title,
+                    value: result
+                });
+            }
+            return result;
+        }
+
         // handle vanilla object
         if (schema.type === "object" && hasNoOneOf(schema) && hasNoAllOf(schema) && hasNoProperties(schema)) {
             return wrapMap({
@@ -1460,6 +1520,29 @@ export function convertSchemaObject(
             example: undefined
         });
     }
+}
+
+/**
+ * Extracts a boolean literal from a single-value enum (e.g. `type: boolean, enum: [true]`).
+ * Returns undefined if the schema doesn't match, if const-to-literal coercion is blocked,
+ * or if coerceEnumsToLiterals is false. This is consistent with the string enum path (line ~535)
+ * which also requires coerceEnumsToLiterals to be true.
+ */
+function getSingleBooleanEnumValue(
+    schema: OpenAPIV3.SchemaObject,
+    blockConstCoercionToLiteral: boolean,
+    coerceEnumsToLiterals: boolean
+): boolean | undefined {
+    if (blockConstCoercionToLiteral) {
+        return undefined;
+    }
+    if (!coerceEnumsToLiterals) {
+        return undefined;
+    }
+    if (schema.enum != null && schema.enum.length === 1 && typeof schema.enum[0] === "boolean") {
+        return schema.enum[0] as boolean;
+    }
+    return undefined;
 }
 
 function getBooleanFromDefault(defaultValue: unknown): boolean | undefined {
@@ -1734,6 +1817,7 @@ export function wrapPrimitive({
 interface DiscriminantProperty {
     discriminant: string;
     schemas: Record<string, OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject>;
+    defaultDiscriminantValue: string | undefined;
 }
 
 function getMaybeAllEnumValues({
@@ -1781,9 +1865,28 @@ function getDiscriminant({
     }
     for (const [discriminant, variants] of Object.entries(discriminantToVariants)) {
         if (Object.keys(variants).length === schemas.length) {
+            let defaultDiscriminantValue: string | undefined;
+            for (const [discriminantValue, variantSchema] of Object.entries(variants)) {
+                const resolved = isReferenceObject(variantSchema)
+                    ? context.resolveSchemaReference(variantSchema)
+                    : variantSchema;
+                const discriminantPropertySchema = resolved.properties?.[discriminant];
+                if (discriminantPropertySchema != null && !isReferenceObject(discriminantPropertySchema)) {
+                    const fernDefault = getExtension<string>(
+                        discriminantPropertySchema,
+                        FernOpenAPIExtension.FERN_DEFAULT
+                    );
+                    const defaultValue = fernDefault ?? discriminantPropertySchema.default;
+                    if (defaultValue === discriminantValue) {
+                        defaultDiscriminantValue = discriminantValue;
+                        break;
+                    }
+                }
+            }
             return {
                 discriminant,
-                schemas: variants
+                schemas: variants,
+                defaultDiscriminantValue
             };
         }
     }

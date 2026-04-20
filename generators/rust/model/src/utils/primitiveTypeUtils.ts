@@ -1,3 +1,4 @@
+import { getOriginalName, NameInput } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
@@ -22,6 +23,7 @@ export function isDateTimeType(typeRef: FernIr.TypeReference): boolean {
         bigInteger: () => false,
         date: () => true,
         dateTime: () => true,
+        dateTimeRfc2822: () => true,
         base64: () => false,
         uuid: () => false,
         _other: () => false
@@ -45,6 +47,7 @@ export function isDateType(typeRef: FernIr.TypeReference): boolean {
         bigInteger: () => false,
         date: () => true,
         dateTime: () => false,
+        dateTimeRfc2822: () => false,
         base64: () => false,
         uuid: () => false,
         _other: () => false
@@ -68,6 +71,7 @@ export function isDateTimeOnlyType(typeRef: FernIr.TypeReference): boolean {
         bigInteger: () => false,
         date: () => false,
         dateTime: () => true,
+        dateTimeRfc2822: () => true,
         base64: () => false,
         uuid: () => false,
         _other: () => false
@@ -91,6 +95,7 @@ export function isUuidType(typeRef: FernIr.TypeReference): boolean {
         bigInteger: () => false,
         date: () => false,
         dateTime: () => false,
+        dateTimeRfc2822: () => false,
         base64: () => false,
         uuid: () => true,
         _other: () => false
@@ -114,6 +119,7 @@ export function isBase64Type(typeRef: FernIr.TypeReference): boolean {
         bigInteger: () => false,
         date: () => false,
         dateTime: () => false,
+        dateTimeRfc2822: () => false,
         base64: () => true,
         uuid: () => false,
         _other: () => false
@@ -137,6 +143,7 @@ export function isBigIntType(typeRef: FernIr.TypeReference): boolean {
         bigInteger: () => true,
         date: () => false,
         dateTime: () => false,
+        dateTimeRfc2822: () => false,
         base64: () => false,
         uuid: () => false,
         _other: () => false
@@ -160,6 +167,7 @@ export function isChronoType(typeRef: FernIr.TypeReference): boolean {
         bigInteger: () => false,
         date: () => true,
         dateTime: () => true,
+        dateTimeRfc2822: () => true,
         base64: () => false,
         uuid: () => false,
         _other: () => false
@@ -324,6 +332,7 @@ export function isStringType(typeReference: FernIr.TypeReference): boolean {
                 bigInteger: () => false,
                 date: () => false,
                 dateTime: () => false,
+                dateTimeRfc2822: () => false,
                 base64: () => false,
                 uuid: () => false,
                 _other: () => false
@@ -351,6 +360,7 @@ export function primitiveSupportsPartialEq(primitive: FernIr.PrimitiveTypeV1): b
         bigInteger: () => true,
         date: () => true,
         dateTime: () => true,
+        dateTimeRfc2822: () => true,
         base64: () => true,
         uuid: () => true,
         _other: () => true // Be more permissive for PartialEq
@@ -373,6 +383,7 @@ export function primitiveSupportsHashAndEq(primitive: FernIr.PrimitiveTypeV1): b
         bigInteger: () => true,
         date: () => true,
         dateTime: () => true,
+        dateTimeRfc2822: () => true,
         base64: () => true,
         uuid: () => true,
         _other: () => false
@@ -395,6 +406,7 @@ export function isFloatingPointType(typeReference: FernIr.TypeReference): boolea
         bigInteger: () => false,
         date: () => false,
         dateTime: () => false,
+        dateTimeRfc2822: () => false,
         base64: () => false,
         uuid: () => false,
         _other: () => false
@@ -499,7 +511,7 @@ export function namedTypeSupportsPartialEq(
                     default: undefined,
                     inline: undefined,
                     fernFilepath: parentType.fernFilepath,
-                    displayName: parentType.name.originalName
+                    displayName: getOriginalName(parentType.name)
                 },
                 context,
                 analysisStack
@@ -562,7 +574,7 @@ export function namedTypeSupportsHashAndEq(
                     default: undefined,
                     inline: undefined,
                     fernFilepath: parentType.fernFilepath,
-                    displayName: parentType.name.originalName
+                    displayName: getOriginalName(parentType.name)
                 },
                 context,
                 analysisStack
@@ -587,20 +599,14 @@ export function namedTypeSupportsHashAndEq(
 
 export function extractNamedTypesFromTypeReference(
     typeRef: FernIr.TypeReference,
-    typeNames: {
-        snakeCase: { unsafeName: string };
-        pascalCase: { unsafeName: string };
-    }[],
+    typeNames: NameInput[],
     visited: Set<string>
 ): void {
     if (typeRef.type === "named") {
-        const typeName = typeRef.name.originalName;
+        const typeName = getOriginalName(typeRef.name);
         if (!visited.has(typeName)) {
             visited.add(typeName);
-            typeNames.push({
-                snakeCase: { unsafeName: typeRef.name.snakeCase.unsafeName },
-                pascalCase: { unsafeName: typeRef.name.pascalCase.unsafeName }
-            });
+            typeNames.push(typeRef.name);
         }
     } else if (typeRef.type === "container") {
         typeRef.container._visit({

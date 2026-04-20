@@ -1,0 +1,40 @@
+{
+  "type": "object",
+  "properties": {
+    "child_ref": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/common.ChildType"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "common.ChildType": {
+      "type": "object",
+      "properties": {
+        "child_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/common.ChildType"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "child_name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "child_name"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

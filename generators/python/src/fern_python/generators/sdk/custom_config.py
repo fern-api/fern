@@ -172,6 +172,18 @@ class SDKCustomConfig(pydantic.BaseModel):
     # X-Fern-Runtime, X-Fern-Platform, User-Agent) from generated SDK requests.
     omit_fern_headers: bool = False
 
+    # The default number of retries for failed requests in the generated SDK.
+    # Set to 0 to disable retries by default (useful for non-idempotent APIs).
+    # SDK users can still override this per-request via request_options.
+    default_max_retries: int = pydantic.Field(2, ge=0)
+
+    # Controls where OpenAPI/IR default values are applied in generated code.
+    # Takes precedence over pydantic_config.use_provided_defaults when set.
+    #   "none": no defaults applied anywhere
+    #   "parameters": defaults on query params and headers only
+    #   "all": defaults on query params, headers, request body params, and pydantic model fields
+    use_request_defaults: Optional[Literal["none", "parameters", "all"]] = None
+
     class Config:
         extra = pydantic.Extra.forbid
 
@@ -185,6 +197,8 @@ class SDKCustomConfig(pydantic.BaseModel):
                 obj["offset_semantics"] = obj.pop("offsetSemantics")
             if "omitFernHeaders" in obj and "omit_fern_headers" not in obj:
                 obj["omit_fern_headers"] = obj.pop("omitFernHeaders")
+            if "maxRetries" in obj and "default_max_retries" not in obj:
+                obj["default_max_retries"] = obj.pop("maxRetries")
 
         obj = super().parse_obj(obj)
 
@@ -198,3 +212,10 @@ class SDKCustomConfig(pydantic.BaseModel):
     def propagate_use_inheritance_for_extended_models(self) -> "SDKCustomConfig":
         self.pydantic_config.use_inheritance_for_extended_models = self.use_inheritance_for_extended_models
         return self
+
+    def get_resolved_defaults_mode(self) -> str:
+        """Resolve the effective defaults mode from use_request_defaults (takes precedence)
+        falling back to pydantic_config.use_provided_defaults for backward compatibility."""
+        if self.use_request_defaults is not None:
+            return self.use_request_defaults
+        return "parameters" if self.pydantic_config.use_provided_defaults else "none"

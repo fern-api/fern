@@ -1,3 +1,4 @@
+import { getOriginalName } from "@fern-api/ir-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { IntermediateRepresentation as IRSerializer } from "@fern-fern/ir-sdk/serialization";
 import { readFileSync } from "fs";
@@ -33,7 +34,7 @@ describe("new WireMock().convertToWireMock", () => {
         const endpointsByName = new Map<string, FernIr.HttpEndpoint>();
         for (const service of Object.values(ir.services)) {
             for (const endpoint of service.endpoints) {
-                const endpointName = endpoint.name.originalName;
+                const endpointName = getOriginalName(endpoint.name);
                 endpointsByName.set(endpointName, endpoint);
             }
         }
@@ -80,7 +81,7 @@ describe("new WireMock().convertToWireMock", () => {
 
                     // Check that all IR path parameters are present
                     for (const irParam of matchedEndpoint.pathParameters) {
-                        const paramName = irParam.name.originalName;
+                        const paramName = getOriginalName(irParam.name);
                         expect(mapping.request.pathParameters).toHaveProperty(paramName);
                         expect(mapping.request.pathParameters?.[paramName]).toHaveProperty("equalTo");
                     }

@@ -36,6 +36,7 @@ export function toPageNode({
     return {
         id: idgen.get(pageId),
         type: "page",
+        collapsed: undefined,
         pageId,
         title: page.title,
         slug: pageSlug.get(),

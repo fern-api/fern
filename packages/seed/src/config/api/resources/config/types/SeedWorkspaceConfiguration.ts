@@ -7,6 +7,12 @@ export interface SeedWorkspaceConfiguration {
     imageAliases?: string[] | undefined;
     displayName: string;
     irVersion: string;
+    /**
+     * If true, this generator workspace is disabled. Seed commands will skip it.
+     * Useful for retaining the workspace directory (and its `seed.yml`) for documentation
+     * purposes without running any tests, publishing, or builds against it.
+     */
+    disabled?: boolean | undefined;
     test: FernSeedConfig.TestConfiguration;
     publish: FernSeedConfig.PublishConfiguration;
     /** The location of the changelog file, the schema of which must follow FDR's `GeneratorReleaseRequest` object. */
@@ -19,7 +25,7 @@ export interface SeedWorkspaceConfiguration {
     /** Configuration that will be used for any custom fixture specified by --custom-fixture */
     customFixtureConfig?: FernSeedConfig.FixtureConfigurations | undefined;
     fixtures?: Record<string, FernSeedConfig.FixtureConfigurations[]> | undefined;
-    scripts?: FernSeedConfig.ContainerScriptConfig[] | undefined;
+    scripts?: FernSeedConfig.ScriptsConfiguration | undefined;
     /**
      * List any fixtures that are okay to fail. For normal fixtures
      * just list the fixture name. For configured fixture list {fixture}:{outputFolder}.

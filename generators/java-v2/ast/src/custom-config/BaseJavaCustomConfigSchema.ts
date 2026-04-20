@@ -39,7 +39,8 @@ export const BaseJavaCustomConfigSchema = z.object({
     "enable-gradle-profiling": z.boolean().optional(),
 
     // Deprecated.
-    "wrapped-aliases": z.boolean().optional()
+    "wrapped-aliases": z.boolean().optional(),
+    maxRetries: z.number().int().min(0).optional()
 });
 
 export type BaseJavaCustomConfigSchema = z.infer<typeof BaseJavaCustomConfigSchema>;

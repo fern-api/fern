@@ -3,6 +3,7 @@
 import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { WebhookPayloadBodySort } from "./WebhookPayloadBodySort.js";
 import { WebhookPayloadComponent } from "./WebhookPayloadComponent.js";
 
 export const WebhookPayloadFormat: core.serialization.ObjectSchema<
@@ -11,11 +12,13 @@ export const WebhookPayloadFormat: core.serialization.ObjectSchema<
 > = core.serialization.objectWithoutOptionalProperties({
     components: core.serialization.list(WebhookPayloadComponent),
     delimiter: core.serialization.string(),
+    bodySort: WebhookPayloadBodySort.optional(),
 });
 
 export declare namespace WebhookPayloadFormat {
     export interface Raw {
         components: WebhookPayloadComponent.Raw[];
         delimiter: string;
+        bodySort?: WebhookPayloadBodySort.Raw | null;
     }
 }

@@ -1,10 +1,11 @@
 import {
     AbstractDynamicSnippetsGeneratorContext,
-    FernGeneratorExec
+    type FernGeneratorExec,
+    getSdkVersion
 } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
-import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import { BaseGoCustomConfigSchema, go, goExportedFieldName, resolveRootImportPath } from "@fern-api/go-ast";
+import type { FernIr } from "@fern-api/dynamic-ir-sdk";
+import { type BaseGoCustomConfigSchema, go, goExportedFieldName, resolveRootImportPath } from "@fern-api/go-ast";
 
 import { DynamicTypeInstantiationMapper } from "./DynamicTypeInstantiationMapper.js";
 import { DynamicTypeMapper } from "./DynamicTypeMapper.js";
@@ -27,11 +28,15 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }) {
         super({ ir, config });
         this.ir = ir;
-        this.customConfig = config.customConfig != null ? (config.customConfig as BaseGoCustomConfigSchema) : undefined;
+        const effectiveConfig = this.buildEffectiveConfig({ ir, config });
+        this.customConfig =
+            effectiveConfig.customConfig != null
+                ? (effectiveConfig.customConfig as BaseGoCustomConfigSchema)
+                : undefined;
         this.dynamicTypeMapper = new DynamicTypeMapper({ context: this });
         this.dynamicTypeInstantiationMapper = new DynamicTypeInstantiationMapper({ context: this });
         this.filePropertyMapper = new FilePropertyMapper({ context: this });
-        this.rootImportPath = resolveRootImportPath({ config, customConfig: this.customConfig });
+        this.rootImportPath = resolveRootImportPath({ config: effectiveConfig, customConfig: this.customConfig });
     }
 
     public clone(): DynamicSnippetsGeneratorContext {
@@ -80,7 +85,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getImportPath(fernFilepath: FernIr.dynamic.FernFilepath): string {
-        const parts = fernFilepath.packagePath.map((path) => path.pascalCase.unsafeName.toLowerCase());
+        const parts = fernFilepath.packagePath.map((path) => path.camelCase.safeName.toLowerCase());
         return [this.rootImportPath, ...parts].join("/");
     }
 
@@ -181,6 +186,49 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             name: `Environments.${this.getTypeName(name)}`,
             importPath: this.rootImportPath
         });
+    }
+
+    /**
+     * Builds an effective FernGeneratorExec.GeneratorConfig by incorporating
+     * Go-specific publish info from the dynamic IR's generatorConfig.
+     *
+     * The dynamic IR contains the authoritative generator config (including
+     * repoUrl and version for Go). This method ensures the snippet generator
+     * uses that config directly, rather than depending on an external conversion
+     * layer (e.g. FDR) to correctly populate the FernGeneratorExec config.
+     */
+    private buildEffectiveConfig({
+        ir,
+        config
+    }: {
+        ir: FernIr.dynamic.DynamicIntermediateRepresentation;
+        config: FernGeneratorExec.GeneratorConfig;
+    }): FernGeneratorExec.GeneratorConfig {
+        const generatorConfig = ir.generatorConfig;
+        if (generatorConfig == null) {
+            return config;
+        }
+        if (generatorConfig.outputConfig.type !== "publish") {
+            return config;
+        }
+        const publishInfo = generatorConfig.outputConfig.value;
+        if (publishInfo.type !== "go") {
+            return config;
+        }
+        // Prefer --version flag over IR's publish version (which may be the generator version, not SDK version).
+        const originalVersion = getSdkVersion(config);
+        return {
+            ...config,
+            customConfig: generatorConfig.customConfig ?? config.customConfig,
+            output: {
+                ...config.output,
+                mode: {
+                    type: "github",
+                    version: originalVersion ?? publishInfo.version,
+                    repoUrl: publishInfo.repoUrl
+                } as FernGeneratorExec.OutputMode
+            }
+        };
     }
 
     public static chainMethods(

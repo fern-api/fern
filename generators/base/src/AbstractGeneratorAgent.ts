@@ -10,6 +10,7 @@ import { ReferenceConfigBuilder } from "./reference/index.js";
 import { RawGithubConfig, resolveGitHubConfig } from "./utils/index.js";
 
 const FEATURES_CONFIG_PATHS = [
+    ...(process.env.FERN_FEATURES_YML_PATH != null ? [process.env.FERN_FEATURES_YML_PATH] : []),
     "/assets/features.yml",
     path.join(__dirname, "./features.yml"),
     path.join(__dirname, "./assets/features.yml"),

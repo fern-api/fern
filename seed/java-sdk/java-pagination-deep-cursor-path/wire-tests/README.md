@@ -29,7 +29,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:java-pagination-deep-cursor-path'
+  implementation 'com.fern:java-pagination-deep-cursor-path:0.0.1'
 }
 ```
 

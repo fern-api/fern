@@ -4,7 +4,7 @@ import type * as FernIr from "../../../index.js";
 
 export interface ExampleEndpointCall extends FernIr.WithDocs {
     id: string | undefined;
-    name: FernIr.Name | undefined;
+    name: FernIr.NameOrString | undefined;
     url: string;
     rootPathParameters: FernIr.ExamplePathParameter[];
     servicePathParameters: FernIr.ExamplePathParameter[];

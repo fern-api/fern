@@ -29,8 +29,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 	if options.Token == "" {
 		options.Token = os.Getenv("MY_TOKEN")
 	}
-	if options.ApiKey == "" {
-		options.ApiKey = os.Getenv("MY_API_KEY")
+	if options.APIKey == "" {
+		options.APIKey = os.Getenv("MY_API_KEY")
 	}
 	if options.ClientID == "" {
 		options.ClientID = os.Getenv("MY_CLIENT_ID")
@@ -54,7 +54,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 	options.SetTokenGetter(func() (string, error) {
 		return inferredAuthProvider.GetOrFetch(func() (string, int, error) {
 			response, err := authClient.GetToken(context.Background(), &fern.GetTokenRequest{
-				ClientId:     options.ClientId,
+				ClientID:     options.ClientID,
 				ClientSecret: options.ClientSecret,
 			})
 			if err != nil {

@@ -1,0 +1,27 @@
+{
+  "anyOf": [
+    {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/OtherAliasVariant"
+      }
+    }
+  ],
+  "definitions": {
+    "OtherAliasVariantType": {
+      "type": "object",
+      "properties": {
+        "prop": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "prop"
+      ],
+      "additionalProperties": false
+    },
+    "OtherAliasVariant": {
+      "$ref": "#/definitions/OtherAliasVariantType"
+    }
+  }
+}

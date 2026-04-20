@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: query-parameters
-  version: ''
+  version: 0.0.0
 paths:
   /user:
     get:
@@ -54,9 +54,10 @@ paths:
           in: query
           required: false
           schema:
-            type: string
+            type:
+              - string
+              - 'null'
             format: date-time
-            nullable: true
         - name: keyValue
           in: query
           required: true
@@ -68,8 +69,9 @@ paths:
           in: query
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
         - name: nestedUser
           in: query
           required: true
@@ -79,8 +81,9 @@ paths:
           in: query
           required: false
           schema:
-            $ref: '#/components/schemas/User'
-            nullable: true
+            anyOf:
+              - $ref: '#/components/schemas/User'
+              - type: 'null'
         - name: excludeUser
           in: query
           required: true
@@ -97,7 +100,7 @@ paths:
               type: string
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:

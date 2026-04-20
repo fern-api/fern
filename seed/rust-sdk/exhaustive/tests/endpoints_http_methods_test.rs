@@ -15,6 +15,7 @@ async fn test_endpoints_http_methods_test_get_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -41,6 +42,7 @@ async fn test_endpoints_http_methods_test_post_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -73,6 +75,7 @@ async fn test_endpoints_http_methods_test_put_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -106,6 +109,7 @@ async fn test_endpoints_http_methods_test_patch_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -122,7 +126,7 @@ async fn test_endpoints_http_methods_test_patch_with_wiremock() {
                 datetime: Some(DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap()),
                 date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
                 uuid: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
-                base_64: Some(
+                base64: Some(
                     base64::engine::general_purpose::STANDARD
                         .decode("SGVsbG8gd29ybGQh")
                         .unwrap(),
@@ -155,6 +159,7 @@ async fn test_endpoints_http_methods_test_delete_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.environment = None;
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client

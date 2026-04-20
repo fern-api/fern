@@ -312,4 +312,73 @@ describe("loadOpenAPI", () => {
         const ownersPath = (result.paths as Record<string, Record<string, Record<string, unknown>>>)["/owners"];
         expect(ownersPath?.get?.operationId).toBe("listOwners");
     });
+
+    it("inlines description $refs pointing at markdown files", async () => {
+        const specPath = join(tempDir, "openapi.yml");
+        await mkdir(join(tempDir, "descriptions"), { recursive: true });
+        await writeFile(join(tempDir, "intro.md"), "Intro markdown for the API.");
+        await writeFile(join(tempDir, "descriptions", "listPets.md"), "Lists every pet in the store.");
+
+        await writeFile(
+            specPath,
+            yaml.dump({
+                openapi: "3.0.0",
+                info: {
+                    title: "Pet Store",
+                    version: "1.0.0",
+                    description: { $ref: "./intro.md" }
+                },
+                paths: {
+                    "/pets": {
+                        get: {
+                            operationId: "listPets",
+                            description: { $ref: "./descriptions/listPets.md" },
+                            responses: {
+                                "200": { description: "OK" }
+                            }
+                        }
+                    }
+                }
+            })
+        );
+
+        const result = await loadOpenAPI({
+            context,
+            absolutePathToOpenAPI: AbsoluteFilePath.of(specPath),
+            absolutePathToOpenAPIOverrides: undefined,
+            absolutePathToOpenAPIOverlays: undefined
+        });
+
+        expect(result.info.description).toBe("Intro markdown for the API.");
+        const listPetsOp = (result.paths as Record<string, Record<string, Record<string, unknown>>>)["/pets"]?.get;
+        expect(listPetsOp?.description).toBe("Lists every pet in the store.");
+    });
+
+    it("inlines description $refs introduced by an override, relative to the override's directory", async () => {
+        const specPath = join(tempDir, "openapi.yml");
+        await writeFile(specPath, yaml.dump(BASE_SPEC));
+
+        const overrideDir = join(tempDir, "overrides");
+        await mkdir(overrideDir, { recursive: true });
+        await writeFile(join(overrideDir, "intro.md"), "Intro from override.");
+
+        const overridePath = join(overrideDir, "override.yml");
+        await writeFile(
+            overridePath,
+            yaml.dump({
+                info: {
+                    description: { $ref: "./intro.md" }
+                }
+            })
+        );
+
+        const result = await loadOpenAPI({
+            context,
+            absolutePathToOpenAPI: AbsoluteFilePath.of(specPath),
+            absolutePathToOpenAPIOverrides: AbsoluteFilePath.of(overridePath),
+            absolutePathToOpenAPIOverlays: undefined
+        });
+
+        expect(result.info.description).toBe("Intro from override.");
+    });
 });

@@ -46,8 +46,14 @@ export interface GithubStepConfig {
     changelogEntry?: string;
     /** Structured PR description with Before/After code fences for breaking changes. Takes priority over changelogEntry for PR body. */
     prDescription?: string;
-    /** One-sentence justification for WHY the version bump was chosen. Prepended to PR body when present. */
+    /** One-sentence justification for WHY the version bump was chosen. Shown only for breaking changes. */
     versionBumpReason?: string;
+    /** The previous SDK version before this change (e.g. "1.2.3"). Used for version header in PR body. */
+    previousVersion?: string;
+    /** The new SDK version after this change (e.g. "1.3.0"). Used for version header in PR body. */
+    newVersion?: string;
+    /** The version bump level: MAJOR, MINOR, or PATCH. Used for version header formatting. */
+    versionBump?: string;
     /** Skip push/PR creation, just prepare branches locally */
     previewMode?: boolean;
     /** Generator name for namespaced fern-generation-base tag */
@@ -59,6 +65,16 @@ export interface GithubStepConfig {
         previousGenerationSha: string;
         currentGenerationSha: string;
     };
+    /** When true: separate PRs per generation, no-diff skip, automerge support, run_id in body */
+    automationMode?: boolean;
+    /** Enable GitHub automerge on the PR (only effective when automationMode && !hasBreakingChanges) */
+    autoMerge?: boolean;
+    /** Pre-computed: version bump is MAJOR (from --version AUTO AI analysis) */
+    hasBreakingChanges?: boolean;
+    /** Human-readable breaking changes summary for PR body (from autoVersioningPrDescription on MAJOR) */
+    breakingChangesSummary?: string;
+    /** FERN_RUN_ID for cross-repo correlation (set by GitHub Action) */
+    runId?: string;
 }
 
 export interface PipelineResult {
@@ -107,6 +123,10 @@ export interface GithubStepResult extends StepResult {
     prNumber?: number;
     updatedExistingPr?: boolean;
     generationBaseTagSha?: string;
+    /** True when generation produced no changes vs base branch — PR skipped */
+    skippedNoDiff?: boolean;
+    /** True when automerge was enabled on the PR */
+    autoMergeEnabled?: boolean;
 }
 
 export interface StepResult {

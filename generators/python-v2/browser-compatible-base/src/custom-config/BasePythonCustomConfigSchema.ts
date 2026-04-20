@@ -11,6 +11,7 @@ export const BasePythonCustomConfigSchema = z.object({
     client: ClientConfig.optional(),
     improved_imports: z.boolean().optional().default(true),
     package_name: z.string().optional(),
+    package_path: z.string().optional(),
     pydantic_config: PydanticConfig.optional(),
     use_typeddict_requests: z.boolean().optional(),
 
@@ -26,6 +27,7 @@ export const BasePythonCustomConfigSchema = z.object({
     should_generate_websocket_clients: z.boolean().optional(),
     skip_formatting: z.boolean().optional(),
     timeout_in_seconds: z.union([z.literal("infinity"), z.number()]).optional(),
+    use_request_defaults: z.enum(["none", "parameters", "all"]).optional(),
 
     // Deprecated.
     client_class_name: z.string().optional(),

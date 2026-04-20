@@ -9,6 +9,7 @@ import {
     visitExampleResponseSchema
 } from "@fern-api/fern-definition-schema";
 import {
+    ExampleContainer,
     ExampleEndpointCall,
     ExampleEndpointSuccessResponse,
     ExampleHeader,
@@ -18,9 +19,11 @@ import {
     ExampleQueryParameterShape,
     ExampleRequestBody,
     ExampleResponse,
-    Name
+    ExampleTypeReference,
+    ExampleTypeReferenceShape,
+    NameOrString
 } from "@fern-api/ir-sdk";
-import { hashJSON } from "@fern-api/ir-utils";
+import { getOriginalName, hashJSON } from "@fern-api/ir-utils";
 import urlJoin from "url-join";
 
 import { FernFileContext } from "../../FernFileContext.js";
@@ -88,6 +91,50 @@ export function convertExampleEndpointCall({
                       if (queryParameterDeclaration == null) {
                           throw new Error(`Query parameter ${wireKey} does not exist`);
                       }
+                      const isAllowMultiple =
+                          typeof queryParameterDeclaration !== "string" &&
+                          queryParameterDeclaration["allow-multiple"] === true;
+                      const rawType =
+                          typeof queryParameterDeclaration === "string"
+                              ? queryParameterDeclaration
+                              : queryParameterDeclaration.type;
+
+                      // For allow-multiple params with array examples, convert each element
+                      // individually and wrap in a list container.
+                      let convertedValue: ExampleTypeReference;
+                      if (isAllowMultiple && Array.isArray(value)) {
+                          const items = value.map((item) =>
+                              convertTypeReferenceExample({
+                                  example: item,
+                                  rawTypeBeingExemplified: rawType,
+                                  typeResolver,
+                                  exampleResolver,
+                                  fileContainingRawTypeReference: file,
+                                  fileContainingExample: file,
+                                  workspace
+                              })
+                          );
+                          convertedValue = {
+                              jsonExample: value,
+                              shape: ExampleTypeReferenceShape.container(
+                                  ExampleContainer.list({
+                                      list: items,
+                                      itemType: file.parseTypeReference(rawType)
+                                  })
+                              )
+                          };
+                      } else {
+                          convertedValue = convertTypeReferenceExample({
+                              example: value,
+                              rawTypeBeingExemplified: rawType,
+                              typeResolver,
+                              exampleResolver,
+                              fileContainingRawTypeReference: file,
+                              fileContainingExample: file,
+                              workspace
+                          });
+                      }
+
                       return {
                           name: file.casingsGenerator.generateNameAndWireValue({
                               name: getQueryParameterName({
@@ -96,18 +143,7 @@ export function convertExampleEndpointCall({
                               }).name,
                               wireValue: wireKey
                           }),
-                          value: convertTypeReferenceExample({
-                              example: value,
-                              rawTypeBeingExemplified:
-                                  typeof queryParameterDeclaration === "string"
-                                      ? queryParameterDeclaration
-                                      : queryParameterDeclaration.type,
-                              typeResolver,
-                              exampleResolver,
-                              fileContainingRawTypeReference: file,
-                              fileContainingExample: file,
-                              workspace
-                          }),
+                          value: convertedValue,
                           shape: getQueryParamaterDeclationShape({ queryParameter: queryParameterDeclaration })
                       };
                   })
@@ -161,7 +197,7 @@ function convertPathParameters({
         pathParameterDeclaration,
         examplePathParameter
     }: {
-        name: Name;
+        name: NameOrString;
         pathParameterDeclaration: RawSchemas.HttpPathParameterSchema;
         examplePathParameter: unknown;
     }) => {
@@ -650,7 +686,7 @@ function buildUrl({
             ...pathParams.rootPathParameters
         ]) {
             url = url.replaceAll(
-                `{${parameter.name.originalName}}`,
+                `{${getOriginalName(parameter.name)}}`,
                 encodeURIComponent(`${parameter.value.jsonExample}`)
             );
         }

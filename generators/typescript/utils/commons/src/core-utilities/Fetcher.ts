@@ -16,6 +16,7 @@ export interface Fetcher {
                 headers: "headers";
                 contentType: "contentType";
                 queryParameters: "queryParameters";
+                queryString: "queryString";
                 body: "body";
                 abortSignal: "abortSignal";
                 withCredentials: "withCredentials";
@@ -54,11 +55,13 @@ export interface Fetcher {
         TimeoutSdkError: {
             _getReferenceToType: () => ts.TypeNode;
             _reasonLiteralValue: "timeout";
+            cause: "cause";
         };
         UnknownError: {
             _getReferenceToType: () => ts.TypeNode;
             _reasonLiteralValue: "unknown";
             message: "errorMessage";
+            cause: "cause";
         };
     };
 
@@ -162,6 +165,7 @@ export declare namespace Fetcher {
         endpointMetadata?: ts.Expression;
         fetchFn?: ts.Expression;
         logging?: ts.Expression;
+        queryString?: ts.Expression;
     }
 }
 
@@ -223,6 +227,7 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                 headers: "headers",
                 contentType: "contentType",
                 queryParameters: "queryParameters",
+                queryString: "queryString",
                 maxRetries: "maxRetries",
                 body: "body",
                 timeoutMs: "timeoutMs",
@@ -261,12 +266,14 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
         },
         TimeoutSdkError: {
             _getReferenceToType: this.getReferenceToTypeInFetcherModule("TimeoutSdkError"),
-            _reasonLiteralValue: "timeout"
+            _reasonLiteralValue: "timeout",
+            cause: "cause"
         },
         UnknownError: {
             _getReferenceToType: this.getReferenceToTypeInFetcherModule("UnknownError"),
             _reasonLiteralValue: "unknown",
-            message: "errorMessage"
+            message: "errorMessage",
+            cause: "cause"
         }
     };
 
@@ -297,6 +304,11 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                         this.Fetcher.Args.properties.queryParameters,
                         args.queryParameters
                     )
+                );
+            }
+            if (args.queryString != null) {
+                properties.push(
+                    ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.queryString, args.queryString)
                 );
             }
             if (args.requestType != null && args.responseType !== "json") {

@@ -21,7 +21,7 @@ import {
     maxVersionBump
 } from "@fern-api/local-workspace-runner";
 import { Project } from "@fern-api/project-loader";
-import { FernCliError, TaskContext } from "@fern-api/task-context";
+import { CliError, TaskAbortSignal, TaskContext } from "@fern-api/task-context";
 import { exec } from "child_process";
 import { promisify } from "util";
 import { CliContext } from "../../cli-context/CliContext.js";
@@ -32,7 +32,7 @@ async function getClientRegistry(context: CliContext, project: Project): Promise
     // Get the first API workspace (or we could make this configurable)
     const workspace = project.apiWorkspaces[0];
     if (workspace == null) {
-        context.failAndThrow("No API workspaces found in the project.");
+        context.failAndThrow("No API workspaces found in the project.", undefined, { code: CliError.Code.ConfigError });
     }
 
     // Load generators configuration to get AI service settings
@@ -43,13 +43,19 @@ async function getClientRegistry(context: CliContext, project: Project): Promise
     });
 
     if (generatorsConfig == null) {
-        context.failAndThrow("Could not find generators.yml in the workspace. Is this a valid fern project?");
+        context.failAndThrow(
+            "Could not find generators.yml in the workspace. Is this a valid fern project?",
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
     }
 
     // Check if AI services configuration exists
     if (generatorsConfig.ai == null) {
         context.failAndThrow(
-            "No AI service configuration found in generators.yml. Please add an 'ai' section with provider and model."
+            "No AI service configuration found in generators.yml. Please add an 'ai' section with provider and model.",
+            undefined,
+            { code: CliError.Code.ConfigError }
         );
     }
 
@@ -81,13 +87,13 @@ export async function sdkDiffCommand({
 
     // Validate that both directories exist
     if (!(await doesPathExist(fromPath, "directory"))) {
-        context.failWithoutThrowing(`Directory not found: ${fromPath}`);
-        throw new FernCliError();
+        context.failWithoutThrowing(`Directory not found: ${fromPath}`, undefined, { code: CliError.Code.ConfigError });
+        throw new TaskAbortSignal();
     }
 
     if (!(await doesPathExist(toPath, "directory"))) {
-        context.failWithoutThrowing(`Directory not found: ${toPath}`);
-        throw new FernCliError();
+        context.failWithoutThrowing(`Directory not found: ${toPath}`, undefined, { code: CliError.Code.ConfigError });
+        throw new TaskAbortSignal();
     }
 
     const clientRegistry = await getClientRegistry(context, project);
@@ -116,7 +122,9 @@ export async function sdkDiffCommand({
     if (diffBytes > MAX_RAW_DIFF_BYTES) {
         return context.failAndThrow(
             `Diff too large for analysis (${(diffBytes / 1_000_000).toFixed(1)}MB, ` +
-                `limit ${MAX_RAW_DIFF_BYTES / 1_000_000}MB). Try excluding generated files or splitting the comparison.`
+                `limit ${MAX_RAW_DIFF_BYTES / 1_000_000}MB). Try excluding generated files or splitting the comparison.`,
+            undefined,
+            { code: CliError.Code.ConfigError }
         );
     }
 
@@ -201,10 +209,10 @@ export async function sdkDiffCommand({
         let versionBumpReason = bestVersionBumpReason;
         if (allChangelogEntries.length > 1) {
             // Consolidate repetitive multi-chunk entries via AI rollup
-            const rawEntries = allChangelogEntries.map((e) => (e.startsWith("- ") ? e : `- ${e}`)).join("\n");
+            const rawEntries = allChangelogEntries.join("\n\n");
             try {
                 context.logger.debug(`Consolidating ${allChangelogEntries.length} changelog entries via AI rollup`);
-                const rollup = await bamlClient.ConsolidateChangelog(rawEntries, bestBump, "unknown");
+                const rollup = await bamlClient.ConsolidateChangelog(rawEntries, bestBump, "unknown", "", "");
                 changelogEntry = rollup.consolidated_changelog?.trim() || rawEntries;
                 versionBumpReason = rollup.version_bump_reason?.trim() || "";
             } catch (rollupError) {
@@ -232,9 +240,11 @@ export async function sdkDiffCommand({
                 (cappedChunks.length > 1
                     ? `The diff was split into ${cappedChunks.length} chunks but analysis still failed. `
                     : "") +
-                `Error: ${errorMessage}`
+                `Error: ${errorMessage}`,
+            undefined,
+            { code: CliError.Code.NetworkError }
         );
-        throw new FernCliError();
+        throw new TaskAbortSignal();
     }
 }
 
@@ -273,6 +283,8 @@ async function generateDiff({
             return error.stdout;
         }
         // For other errors, throw
-        return context.failAndThrow(`Failed to generate diff: ${extractErrorMessage(error)}`);
+        return context.failAndThrow(`Failed to generate diff: ${extractErrorMessage(error)}`, undefined, {
+            code: CliError.Code.InternalError
+        });
     }
 }

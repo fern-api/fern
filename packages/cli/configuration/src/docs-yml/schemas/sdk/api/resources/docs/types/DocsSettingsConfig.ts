@@ -57,6 +57,15 @@ export interface DocsSettingsConfig {
      * @default: false
      */
     disableExplorerProxy?: boolean;
+    /**
+     * If set to true, the base URL (environment) shown in the endpoint header on API reference
+     * docs pages will no longer be editable. Users will still be able to switch between configured
+     * environments via the dropdown, but will not be able to double-click and type in a custom
+     * URL. This does not affect the API Playground.
+     *
+     * @default: false
+     */
+    disableEnvironmentEditing?: boolean;
     disableAnalytics?: boolean;
     language?: FernDocsConfig.Language;
     /**

@@ -1,8 +1,9 @@
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Union
 
 from .type_declaration_snippet_generator import TypeDeclarationSnippetGenerator
 from fern_python.codegen import AST
 from fern_python.generators.context.pydantic_generator_context import PydanticGeneratorContext
+from fern_python.utils import get_name_from_wire_value, resolve_name
 
 import fern.ir.resources as ir_types
 
@@ -42,7 +43,7 @@ class SnippetWriter:
                 module=AST.Module.snippet(
                     module_path=self.get_module_path_for_declared_type_name(name=name, as_request=as_request),
                 ),
-                named_import=name.name.pascal_case.safe_name,
+                named_import=resolve_name(name.name).pascal_case.safe_name,
             ),
         )
 
@@ -92,7 +93,7 @@ class SnippetWriter:
     def get_snippet_for_object_properties(
         self,
         example: ir_types.ExampleObjectType,
-        request_parameter_names: Dict[ir_types.Name, str],
+        request_parameter_names: Dict[Union[str, ir_types.Name], str],
         in_typeddict: bool,
         use_typeddict_request: bool,
         as_request: bool,
@@ -121,7 +122,8 @@ class SnippetWriter:
                 # TODO: we really need to centralize a lot of this logic,
                 # especially around renaming and models in general
                 maybe_rewritten_name = (
-                    request_parameter_names.get(property.name.name) or property.name.name.snake_case.safe_name
+                    request_parameter_names.get(get_name_from_wire_value(property.name))
+                    or resolve_name(get_name_from_wire_value(property.name)).snake_case.safe_name
                 )
                 if maybe_rewritten_name.startswith("_"):
                     maybe_rewritten_name = "f_" + maybe_rewritten_name.lstrip("_")

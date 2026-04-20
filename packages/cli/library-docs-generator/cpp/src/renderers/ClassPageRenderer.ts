@@ -36,7 +36,12 @@ import {
 } from "./MethodRenderer.js";
 import { renderClassTemplateParams } from "./ParamRenderer.js";
 import { renderBareCodeBlock, renderClassTemplateSignature } from "./SignatureRenderer.js";
-import { renderCallout, renderFrontmatter as renderFrontmatterLines, trimTrailingBlankLines } from "./shared.js";
+import {
+    escapeMdxText,
+    renderCallout,
+    renderFrontmatter as renderFrontmatterLines,
+    trimTrailingBlankLines
+} from "./shared.js";
 import { renderEnum, renderInnerClass, renderMemberVariableTable, renderTypedefTable } from "./TableRenderer.js";
 
 // ---------------------------------------------------------------------------
@@ -424,7 +429,7 @@ function categorizeMethodSections(cls: CppClassIr): MethodSection[] {
  */
 function renderMethodSection(label: string, methods: CppFunctionIr[], cls: CppClassIr, ctx: RenderContext): string {
     const lines: string[] = [];
-    lines.push(`## ${label}`);
+    lines.push(`## ${escapeMdxText(label)}`);
     lines.push("");
 
     const groups = groupFunctionsByName(methods);

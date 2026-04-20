@@ -11,12 +11,6 @@ async fn main() {
     client
         .endpoints
         .params
-        .get_with_path_and_query(
-            &"param".to_string(),
-            &GetWithPathAndQueryQueryRequest {
-                query: "query".to_string(),
-            },
-            None,
-        )
+        .get_with_path(&"param".to_string(), None)
         .await;
 }

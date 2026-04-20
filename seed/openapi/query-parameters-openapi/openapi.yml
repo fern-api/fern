@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: Query Parameters API
-  version: ''
+  version: 0.0.0
 paths:
   /user/getUsername:
     get:
@@ -47,57 +47,65 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/components/schemas/User'
-              nullable: true
+              anyOf:
+                - $ref: '#/components/schemas/User'
+                - type: 'null'
         - name: optionalDeadline
           in: query
           required: false
           schema:
-            type: string
+            type:
+              - string
+              - 'null'
             format: date-time
-            nullable: true
         - name: keyValue
           in: query
           required: false
           schema:
-            type: object
+            type:
+              - object
+              - 'null'
             additionalProperties:
               type: string
-            nullable: true
         - name: optionalString
           in: query
           required: false
           schema:
-            type: string
-            nullable: true
+            type:
+              - string
+              - 'null'
         - name: nestedUser
           in: query
           required: false
           schema:
-            $ref: '#/components/schemas/NestedUser'
-            nullable: true
+            anyOf:
+              - $ref: '#/components/schemas/NestedUser'
+              - type: 'null'
         - name: optionalUser
           in: query
           required: false
           schema:
-            $ref: '#/components/schemas/User'
-            nullable: true
+            anyOf:
+              - $ref: '#/components/schemas/User'
+              - type: 'null'
         - name: excludeUser
           in: query
           required: false
           schema:
             type: array
             items:
-              $ref: '#/components/schemas/User'
-              nullable: true
+              anyOf:
+                - $ref: '#/components/schemas/User'
+                - type: 'null'
         - name: filter
           in: query
           required: false
           schema:
             type: array
             items:
-              type: string
-              nullable: true
+              type:
+                - string
+                - 'null'
         - name: tags
           in: query
           description: List of tags. Serialized as a comma-separated list.
@@ -105,8 +113,9 @@ paths:
           schema:
             type: array
             items:
-              type: string
-              nullable: true
+              type:
+                - string
+                - 'null'
         - name: optionalTags
           in: query
           description: Optional list of tags. Serialized as a comma-separated list.
@@ -114,14 +123,16 @@ paths:
           schema:
             type: array
             items:
-              type: string
-              nullable: true
+              type:
+                - string
+                - 'null'
         - name: neighbor
           in: query
           required: false
           schema:
-            $ref: '#/components/schemas/SearchRequestNeighbor'
-            nullable: true
+            anyOf:
+              - $ref: '#/components/schemas/SearchRequestNeighbor'
+              - type: 'null'
         - name: neighborRequired
           in: query
           required: true
@@ -155,30 +166,35 @@ components:
       type: object
       properties:
         results:
-          type: array
+          type:
+            - array
+            - 'null'
           items:
             type: string
-          nullable: true
     User:
       title: User
       type: object
       properties:
         name:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         tags:
-          type: array
+          type:
+            - array
+            - 'null'
           items:
             type: string
-          nullable: true
     NestedUser:
       title: NestedUser
       type: object
       properties:
         name:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
         user:
-          $ref: '#/components/schemas/User'
-          nullable: true
+          anyOf:
+            - $ref: '#/components/schemas/User'
+            - type: 'null'
   securitySchemes: {}

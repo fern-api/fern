@@ -1,24 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api",
-    "camelCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "snakeCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    },
-    "pascalCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    }
-  },
+  "apiName": "api",
   "apiDisplayName": "URL Reference API",
   "auth": {
     "requirement": "ALL",
@@ -30,95 +12,20 @@
     "type_petowners:PetownersSubscribeParamsChannel": {
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "PetownersSubscribeParamsChannel",
-          "camelCase": {
-            "unsafeName": "petownersSubscribeParamsChannel",
-            "safeName": "petownersSubscribeParamsChannel"
-          },
-          "snakeCase": {
-            "unsafeName": "petowners_subscribe_params_channel",
-            "safeName": "petowners_subscribe_params_channel"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "PETOWNERS_SUBSCRIBE_PARAMS_CHANNEL",
-            "safeName": "PETOWNERS_SUBSCRIBE_PARAMS_CHANNEL"
-          },
-          "pascalCase": {
-            "unsafeName": "PetownersSubscribeParamsChannel",
-            "safeName": "PetownersSubscribeParamsChannel"
-          }
-        },
+        "name": "PetownersSubscribeParamsChannel",
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "petowners",
-              "camelCase": {
-                "unsafeName": "petowners",
-                "safeName": "petowners"
-              },
-              "snakeCase": {
-                "unsafeName": "petowners",
-                "safeName": "petowners"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "PETOWNERS",
-                "safeName": "PETOWNERS"
-              },
-              "pascalCase": {
-                "unsafeName": "Petowners",
-                "safeName": "Petowners"
-              }
-            }
+            "petowners"
           ],
           "packagePath": [],
-          "file": {
-            "originalName": "petowners",
-            "camelCase": {
-              "unsafeName": "petowners",
-              "safeName": "petowners"
-            },
-            "snakeCase": {
-              "unsafeName": "petowners",
-              "safeName": "petowners"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "PETOWNERS",
-              "safeName": "PETOWNERS"
-            },
-            "pascalCase": {
-              "unsafeName": "Petowners",
-              "safeName": "Petowners"
-            }
-          }
+          "file": "petowners"
         },
         "typeId": "type_petowners:PetownersSubscribeParamsChannel"
       },
       "shape": {
         "values": [
           {
-            "name": {
-              "name": {
-                "originalName": "petowners",
-                "camelCase": {
-                  "unsafeName": "petowners",
-                  "safeName": "petowners"
-                },
-                "snakeCase": {
-                  "unsafeName": "petowners",
-                  "safeName": "petowners"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "PETOWNERS",
-                  "safeName": "PETOWNERS"
-                },
-                "pascalCase": {
-                  "unsafeName": "Petowners",
-                  "safeName": "Petowners"
-                }
-              },
-              "wireValue": "petowners"
-            }
+            "name": "petowners"
           }
         ],
         "type": "enum"
@@ -133,67 +40,13 @@
     "type_petowners:PetownersSubscribeParamsData": {
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "PetownersSubscribeParamsData",
-          "camelCase": {
-            "unsafeName": "petownersSubscribeParamsData",
-            "safeName": "petownersSubscribeParamsData"
-          },
-          "snakeCase": {
-            "unsafeName": "petowners_subscribe_params_data",
-            "safeName": "petowners_subscribe_params_data"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "PETOWNERS_SUBSCRIBE_PARAMS_DATA",
-            "safeName": "PETOWNERS_SUBSCRIBE_PARAMS_DATA"
-          },
-          "pascalCase": {
-            "unsafeName": "PetownersSubscribeParamsData",
-            "safeName": "PetownersSubscribeParamsData"
-          }
-        },
+        "name": "PetownersSubscribeParamsData",
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "petowners",
-              "camelCase": {
-                "unsafeName": "petowners",
-                "safeName": "petowners"
-              },
-              "snakeCase": {
-                "unsafeName": "petowners",
-                "safeName": "petowners"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "PETOWNERS",
-                "safeName": "PETOWNERS"
-              },
-              "pascalCase": {
-                "unsafeName": "Petowners",
-                "safeName": "Petowners"
-              }
-            }
+            "petowners"
           ],
           "packagePath": [],
-          "file": {
-            "originalName": "petowners",
-            "camelCase": {
-              "unsafeName": "petowners",
-              "safeName": "petowners"
-            },
-            "snakeCase": {
-              "unsafeName": "petowners",
-              "safeName": "petowners"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "PETOWNERS",
-              "safeName": "PETOWNERS"
-            },
-            "pascalCase": {
-              "unsafeName": "Petowners",
-              "safeName": "Petowners"
-            }
-          }
+          "file": "petowners"
         },
         "typeId": "type_petowners:PetownersSubscribeParamsData"
       },
@@ -201,48 +54,9 @@
         "extends": [],
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "petOwner",
-                "camelCase": {
-                  "unsafeName": "petOwner",
-                  "safeName": "petOwner"
-                },
-                "snakeCase": {
-                  "unsafeName": "pet_owner",
-                  "safeName": "pet_owner"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "PET_OWNER",
-                  "safeName": "PET_OWNER"
-                },
-                "pascalCase": {
-                  "unsafeName": "PetOwner",
-                  "safeName": "PetOwner"
-                }
-              },
-              "wireValue": "petOwner"
-            },
+            "name": "petOwner",
             "valueType": {
-              "name": {
-                "originalName": "PetOwner",
-                "camelCase": {
-                  "unsafeName": "petOwner",
-                  "safeName": "petOwner"
-                },
-                "snakeCase": {
-                  "unsafeName": "pet_owner",
-                  "safeName": "pet_owner"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "PET_OWNER",
-                  "safeName": "PET_OWNER"
-                },
-                "pascalCase": {
-                  "unsafeName": "PetOwner",
-                  "safeName": "PetOwner"
-                }
-              },
+              "name": "PetOwner",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -270,67 +84,13 @@
     "type_petowners:PetownersSubscribeParams": {
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "PetownersSubscribeParams",
-          "camelCase": {
-            "unsafeName": "petownersSubscribeParams",
-            "safeName": "petownersSubscribeParams"
-          },
-          "snakeCase": {
-            "unsafeName": "petowners_subscribe_params",
-            "safeName": "petowners_subscribe_params"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "PETOWNERS_SUBSCRIBE_PARAMS",
-            "safeName": "PETOWNERS_SUBSCRIBE_PARAMS"
-          },
-          "pascalCase": {
-            "unsafeName": "PetownersSubscribeParams",
-            "safeName": "PetownersSubscribeParams"
-          }
-        },
+        "name": "PetownersSubscribeParams",
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "petowners",
-              "camelCase": {
-                "unsafeName": "petowners",
-                "safeName": "petowners"
-              },
-              "snakeCase": {
-                "unsafeName": "petowners",
-                "safeName": "petowners"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "PETOWNERS",
-                "safeName": "PETOWNERS"
-              },
-              "pascalCase": {
-                "unsafeName": "Petowners",
-                "safeName": "Petowners"
-              }
-            }
+            "petowners"
           ],
           "packagePath": [],
-          "file": {
-            "originalName": "petowners",
-            "camelCase": {
-              "unsafeName": "petowners",
-              "safeName": "petowners"
-            },
-            "snakeCase": {
-              "unsafeName": "petowners",
-              "safeName": "petowners"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "PETOWNERS",
-              "safeName": "PETOWNERS"
-            },
-            "pascalCase": {
-              "unsafeName": "Petowners",
-              "safeName": "Petowners"
-            }
-          }
+          "file": "petowners"
         },
         "typeId": "type_petowners:PetownersSubscribeParams"
       },
@@ -338,92 +98,17 @@
         "extends": [],
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "channel",
-                "camelCase": {
-                  "unsafeName": "channel",
-                  "safeName": "channel"
-                },
-                "snakeCase": {
-                  "unsafeName": "channel",
-                  "safeName": "channel"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "CHANNEL",
-                  "safeName": "CHANNEL"
-                },
-                "pascalCase": {
-                  "unsafeName": "Channel",
-                  "safeName": "Channel"
-                }
-              },
-              "wireValue": "channel"
-            },
+            "name": "channel",
             "valueType": {
               "container": {
                 "optional": {
-                  "name": {
-                    "originalName": "PetownersSubscribeParamsChannel",
-                    "camelCase": {
-                      "unsafeName": "petownersSubscribeParamsChannel",
-                      "safeName": "petownersSubscribeParamsChannel"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "petowners_subscribe_params_channel",
-                      "safeName": "petowners_subscribe_params_channel"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "PETOWNERS_SUBSCRIBE_PARAMS_CHANNEL",
-                      "safeName": "PETOWNERS_SUBSCRIBE_PARAMS_CHANNEL"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "PetownersSubscribeParamsChannel",
-                      "safeName": "PetownersSubscribeParamsChannel"
-                    }
-                  },
+                  "name": "PetownersSubscribeParamsChannel",
                   "fernFilepath": {
                     "allParts": [
-                      {
-                        "originalName": "petowners",
-                        "camelCase": {
-                          "unsafeName": "petowners",
-                          "safeName": "petowners"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "petowners",
-                          "safeName": "petowners"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "PETOWNERS",
-                          "safeName": "PETOWNERS"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "Petowners",
-                          "safeName": "Petowners"
-                        }
-                      }
+                      "petowners"
                     ],
                     "packagePath": [],
-                    "file": {
-                      "originalName": "petowners",
-                      "camelCase": {
-                        "unsafeName": "petowners",
-                        "safeName": "petowners"
-                      },
-                      "snakeCase": {
-                        "unsafeName": "petowners",
-                        "safeName": "petowners"
-                      },
-                      "screamingSnakeCase": {
-                        "unsafeName": "PETOWNERS",
-                        "safeName": "PETOWNERS"
-                      },
-                      "pascalCase": {
-                        "unsafeName": "Petowners",
-                        "safeName": "Petowners"
-                      }
-                    }
+                    "file": "petowners"
                   },
                   "typeId": "type_petowners:PetownersSubscribeParamsChannel",
                   "type": "named"
@@ -438,92 +123,17 @@
             }
           },
           {
-            "name": {
-              "name": {
-                "originalName": "data",
-                "camelCase": {
-                  "unsafeName": "data",
-                  "safeName": "data"
-                },
-                "snakeCase": {
-                  "unsafeName": "data",
-                  "safeName": "data"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "DATA",
-                  "safeName": "DATA"
-                },
-                "pascalCase": {
-                  "unsafeName": "Data",
-                  "safeName": "Data"
-                }
-              },
-              "wireValue": "data"
-            },
+            "name": "data",
             "valueType": {
               "container": {
                 "optional": {
-                  "name": {
-                    "originalName": "PetownersSubscribeParamsData",
-                    "camelCase": {
-                      "unsafeName": "petownersSubscribeParamsData",
-                      "safeName": "petownersSubscribeParamsData"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "petowners_subscribe_params_data",
-                      "safeName": "petowners_subscribe_params_data"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "PETOWNERS_SUBSCRIBE_PARAMS_DATA",
-                      "safeName": "PETOWNERS_SUBSCRIBE_PARAMS_DATA"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "PetownersSubscribeParamsData",
-                      "safeName": "PetownersSubscribeParamsData"
-                    }
-                  },
+                  "name": "PetownersSubscribeParamsData",
                   "fernFilepath": {
                     "allParts": [
-                      {
-                        "originalName": "petowners",
-                        "camelCase": {
-                          "unsafeName": "petowners",
-                          "safeName": "petowners"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "petowners",
-                          "safeName": "petowners"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "PETOWNERS",
-                          "safeName": "PETOWNERS"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "Petowners",
-                          "safeName": "Petowners"
-                        }
-                      }
+                      "petowners"
                     ],
                     "packagePath": [],
-                    "file": {
-                      "originalName": "petowners",
-                      "camelCase": {
-                        "unsafeName": "petowners",
-                        "safeName": "petowners"
-                      },
-                      "snakeCase": {
-                        "unsafeName": "petowners",
-                        "safeName": "petowners"
-                      },
-                      "screamingSnakeCase": {
-                        "unsafeName": "PETOWNERS",
-                        "safeName": "PETOWNERS"
-                      },
-                      "pascalCase": {
-                        "unsafeName": "Petowners",
-                        "safeName": "Petowners"
-                      }
-                    }
+                    "file": "petowners"
                   },
                   "typeId": "type_petowners:PetownersSubscribeParamsData",
                   "type": "named"
@@ -551,67 +161,13 @@
     },
     "type_petowners:PetownersSubscribe": {
       "name": {
-        "name": {
-          "originalName": "PetownersSubscribe",
-          "camelCase": {
-            "unsafeName": "petownersSubscribe",
-            "safeName": "petownersSubscribe"
-          },
-          "snakeCase": {
-            "unsafeName": "petowners_subscribe",
-            "safeName": "petowners_subscribe"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "PETOWNERS_SUBSCRIBE",
-            "safeName": "PETOWNERS_SUBSCRIBE"
-          },
-          "pascalCase": {
-            "unsafeName": "PetownersSubscribe",
-            "safeName": "PetownersSubscribe"
-          }
-        },
+        "name": "PetownersSubscribe",
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "petowners",
-              "camelCase": {
-                "unsafeName": "petowners",
-                "safeName": "petowners"
-              },
-              "snakeCase": {
-                "unsafeName": "petowners",
-                "safeName": "petowners"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "PETOWNERS",
-                "safeName": "PETOWNERS"
-              },
-              "pascalCase": {
-                "unsafeName": "Petowners",
-                "safeName": "Petowners"
-              }
-            }
+            "petowners"
           ],
           "packagePath": [],
-          "file": {
-            "originalName": "petowners",
-            "camelCase": {
-              "unsafeName": "petowners",
-              "safeName": "petowners"
-            },
-            "snakeCase": {
-              "unsafeName": "petowners",
-              "safeName": "petowners"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "PETOWNERS",
-              "safeName": "PETOWNERS"
-            },
-            "pascalCase": {
-              "unsafeName": "Petowners",
-              "safeName": "Petowners"
-            }
-          }
+          "file": "petowners"
         },
         "typeId": "type_petowners:PetownersSubscribe"
       },
@@ -619,92 +175,17 @@
         "extends": [],
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "params",
-                "camelCase": {
-                  "unsafeName": "params",
-                  "safeName": "params"
-                },
-                "snakeCase": {
-                  "unsafeName": "params",
-                  "safeName": "params"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "PARAMS",
-                  "safeName": "PARAMS"
-                },
-                "pascalCase": {
-                  "unsafeName": "Params",
-                  "safeName": "Params"
-                }
-              },
-              "wireValue": "params"
-            },
+            "name": "params",
             "valueType": {
               "container": {
                 "optional": {
-                  "name": {
-                    "originalName": "PetownersSubscribeParams",
-                    "camelCase": {
-                      "unsafeName": "petownersSubscribeParams",
-                      "safeName": "petownersSubscribeParams"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "petowners_subscribe_params",
-                      "safeName": "petowners_subscribe_params"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "PETOWNERS_SUBSCRIBE_PARAMS",
-                      "safeName": "PETOWNERS_SUBSCRIBE_PARAMS"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "PetownersSubscribeParams",
-                      "safeName": "PetownersSubscribeParams"
-                    }
-                  },
+                  "name": "PetownersSubscribeParams",
                   "fernFilepath": {
                     "allParts": [
-                      {
-                        "originalName": "petowners",
-                        "camelCase": {
-                          "unsafeName": "petowners",
-                          "safeName": "petowners"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "petowners",
-                          "safeName": "petowners"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "PETOWNERS",
-                          "safeName": "PETOWNERS"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "Petowners",
-                          "safeName": "Petowners"
-                        }
-                      }
+                      "petowners"
                     ],
                     "packagePath": [],
-                    "file": {
-                      "originalName": "petowners",
-                      "camelCase": {
-                        "unsafeName": "petowners",
-                        "safeName": "petowners"
-                      },
-                      "snakeCase": {
-                        "unsafeName": "petowners",
-                        "safeName": "petowners"
-                      },
-                      "screamingSnakeCase": {
-                        "unsafeName": "PETOWNERS",
-                        "safeName": "PETOWNERS"
-                      },
-                      "pascalCase": {
-                        "unsafeName": "Petowners",
-                        "safeName": "Petowners"
-                      }
-                    }
+                    "file": "petowners"
                   },
                   "typeId": "type_petowners:PetownersSubscribeParams",
                   "type": "named"
@@ -732,25 +213,7 @@
     },
     "type_:Mammal": {
       "name": {
-        "name": {
-          "originalName": "Mammal",
-          "camelCase": {
-            "unsafeName": "mammal",
-            "safeName": "mammal"
-          },
-          "snakeCase": {
-            "unsafeName": "mammal",
-            "safeName": "mammal"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "MAMMAL",
-            "safeName": "MAMMAL"
-          },
-          "pascalCase": {
-            "unsafeName": "Mammal",
-            "safeName": "Mammal"
-          }
-        },
+        "name": "Mammal",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -761,25 +224,7 @@
         "members": [
           {
             "type": {
-              "name": {
-                "originalName": "Pet",
-                "camelCase": {
-                  "unsafeName": "pet",
-                  "safeName": "pet"
-                },
-                "snakeCase": {
-                  "unsafeName": "pet",
-                  "safeName": "pet"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "PET",
-                  "safeName": "PET"
-                },
-                "pascalCase": {
-                  "unsafeName": "Pet",
-                  "safeName": "Pet"
-                }
-              },
+              "name": "Pet",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -791,25 +236,7 @@
           },
           {
             "type": {
-              "name": {
-                "originalName": "User",
-                "camelCase": {
-                  "unsafeName": "user",
-                  "safeName": "user"
-                },
-                "snakeCase": {
-                  "unsafeName": "user",
-                  "safeName": "user"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "USER",
-                  "safeName": "USER"
-                },
-                "pascalCase": {
-                  "unsafeName": "User",
-                  "safeName": "User"
-                }
-              },
+              "name": "User",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -833,25 +260,7 @@
       "docs": "pet status in the store",
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "PetStatus",
-          "camelCase": {
-            "unsafeName": "petStatus",
-            "safeName": "petStatus"
-          },
-          "snakeCase": {
-            "unsafeName": "pet_status",
-            "safeName": "pet_status"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "PET_STATUS",
-            "safeName": "PET_STATUS"
-          },
-          "pascalCase": {
-            "unsafeName": "PetStatus",
-            "safeName": "PetStatus"
-          }
-        },
+        "name": "PetStatus",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -861,76 +270,13 @@
       "shape": {
         "values": [
           {
-            "name": {
-              "name": {
-                "originalName": "available",
-                "camelCase": {
-                  "unsafeName": "available",
-                  "safeName": "available"
-                },
-                "snakeCase": {
-                  "unsafeName": "available",
-                  "safeName": "available"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "AVAILABLE",
-                  "safeName": "AVAILABLE"
-                },
-                "pascalCase": {
-                  "unsafeName": "Available",
-                  "safeName": "Available"
-                }
-              },
-              "wireValue": "available"
-            }
+            "name": "available"
           },
           {
-            "name": {
-              "name": {
-                "originalName": "pending",
-                "camelCase": {
-                  "unsafeName": "pending",
-                  "safeName": "pending"
-                },
-                "snakeCase": {
-                  "unsafeName": "pending",
-                  "safeName": "pending"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "PENDING",
-                  "safeName": "PENDING"
-                },
-                "pascalCase": {
-                  "unsafeName": "Pending",
-                  "safeName": "Pending"
-                }
-              },
-              "wireValue": "pending"
-            }
+            "name": "pending"
           },
           {
-            "name": {
-              "name": {
-                "originalName": "sold",
-                "camelCase": {
-                  "unsafeName": "sold",
-                  "safeName": "sold"
-                },
-                "snakeCase": {
-                  "unsafeName": "sold",
-                  "safeName": "sold"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "SOLD",
-                  "safeName": "SOLD"
-                },
-                "pascalCase": {
-                  "unsafeName": "Sold",
-                  "safeName": "Sold"
-                }
-              },
-              "wireValue": "sold"
-            }
+            "name": "sold"
           }
         ],
         "type": "enum"
@@ -945,25 +291,7 @@
     "type_:Pet": {
       "docs": "A pet for sale in the pet store",
       "name": {
-        "name": {
-          "originalName": "Pet",
-          "camelCase": {
-            "unsafeName": "pet",
-            "safeName": "pet"
-          },
-          "snakeCase": {
-            "unsafeName": "pet",
-            "safeName": "pet"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "PET",
-            "safeName": "PET"
-          },
-          "pascalCase": {
-            "unsafeName": "Pet",
-            "safeName": "Pet"
-          }
-        },
+        "name": "Pet",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -974,28 +302,7 @@
         "extends": [],
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "id",
-                "camelCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "snakeCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                },
-                "pascalCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                }
-              },
-              "wireValue": "id"
-            },
+            "name": "id",
             "valueType": {
               "container": {
                 "optional": {
@@ -1017,50 +324,11 @@
             }
           },
           {
-            "name": {
-              "name": {
-                "originalName": "category",
-                "camelCase": {
-                  "unsafeName": "category",
-                  "safeName": "category"
-                },
-                "snakeCase": {
-                  "unsafeName": "category",
-                  "safeName": "category"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "CATEGORY",
-                  "safeName": "CATEGORY"
-                },
-                "pascalCase": {
-                  "unsafeName": "Category",
-                  "safeName": "Category"
-                }
-              },
-              "wireValue": "category"
-            },
+            "name": "category",
             "valueType": {
               "container": {
                 "optional": {
-                  "name": {
-                    "originalName": "Category",
-                    "camelCase": {
-                      "unsafeName": "category",
-                      "safeName": "category"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "category",
-                      "safeName": "category"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "CATEGORY",
-                      "safeName": "CATEGORY"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Category",
-                      "safeName": "Category"
-                    }
-                  },
+                  "name": "Category",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -1078,28 +346,7 @@
             }
           },
           {
-            "name": {
-              "name": {
-                "originalName": "name",
-                "camelCase": {
-                  "unsafeName": "name",
-                  "safeName": "name"
-                },
-                "snakeCase": {
-                  "unsafeName": "name",
-                  "safeName": "name"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "NAME",
-                  "safeName": "NAME"
-                },
-                "pascalCase": {
-                  "unsafeName": "Name",
-                  "safeName": "Name"
-                }
-              },
-              "wireValue": "name"
-            },
+            "name": "name",
             "valueType": {
               "primitive": {
                 "v1": "STRING",
@@ -1115,28 +362,7 @@
             }
           },
           {
-            "name": {
-              "name": {
-                "originalName": "photoUrls",
-                "camelCase": {
-                  "unsafeName": "photoURLs",
-                  "safeName": "photoURLs"
-                },
-                "snakeCase": {
-                  "unsafeName": "photo_urls",
-                  "safeName": "photo_urls"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "PHOTO_URLS",
-                  "safeName": "PHOTO_URLS"
-                },
-                "pascalCase": {
-                  "unsafeName": "PhotoURLs",
-                  "safeName": "PhotoURLs"
-                }
-              },
-              "wireValue": "photoUrls"
-            },
+            "name": "photoUrls",
             "valueType": {
               "container": {
                 "list": {
@@ -1158,52 +384,13 @@
             }
           },
           {
-            "name": {
-              "name": {
-                "originalName": "tags",
-                "camelCase": {
-                  "unsafeName": "tags",
-                  "safeName": "tags"
-                },
-                "snakeCase": {
-                  "unsafeName": "tags",
-                  "safeName": "tags"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "TAGS",
-                  "safeName": "TAGS"
-                },
-                "pascalCase": {
-                  "unsafeName": "Tags",
-                  "safeName": "Tags"
-                }
-              },
-              "wireValue": "tags"
-            },
+            "name": "tags",
             "valueType": {
               "container": {
                 "optional": {
                   "container": {
                     "list": {
-                      "name": {
-                        "originalName": "Tag",
-                        "camelCase": {
-                          "unsafeName": "tag",
-                          "safeName": "tag"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "tag",
-                          "safeName": "tag"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "TAG",
-                          "safeName": "TAG"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "Tag",
-                          "safeName": "Tag"
-                        }
-                      },
+                      "name": "Tag",
                       "fernFilepath": {
                         "allParts": [],
                         "packagePath": []
@@ -1226,50 +413,11 @@
           },
           {
             "docs": "pet status in the store",
-            "name": {
-              "name": {
-                "originalName": "status",
-                "camelCase": {
-                  "unsafeName": "status",
-                  "safeName": "status"
-                },
-                "snakeCase": {
-                  "unsafeName": "status",
-                  "safeName": "status"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "STATUS",
-                  "safeName": "STATUS"
-                },
-                "pascalCase": {
-                  "unsafeName": "Status",
-                  "safeName": "Status"
-                }
-              },
-              "wireValue": "status"
-            },
+            "name": "status",
             "valueType": {
               "container": {
                 "optional": {
-                  "name": {
-                    "originalName": "PetStatus",
-                    "camelCase": {
-                      "unsafeName": "petStatus",
-                      "safeName": "petStatus"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "pet_status",
-                      "safeName": "pet_status"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "PET_STATUS",
-                      "safeName": "PET_STATUS"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "PetStatus",
-                      "safeName": "PetStatus"
-                    }
-                  },
+                  "name": "PetStatus",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -1300,25 +448,7 @@
     },
     "type_:PetOwner": {
       "name": {
-        "name": {
-          "originalName": "PetOwner",
-          "camelCase": {
-            "unsafeName": "petOwner",
-            "safeName": "petOwner"
-          },
-          "snakeCase": {
-            "unsafeName": "pet_owner",
-            "safeName": "pet_owner"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "PET_OWNER",
-            "safeName": "PET_OWNER"
-          },
-          "pascalCase": {
-            "unsafeName": "PetOwner",
-            "safeName": "PetOwner"
-          }
-        },
+        "name": "PetOwner",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -1345,25 +475,7 @@
       "docs": "Order Status",
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "OrderStatus",
-          "camelCase": {
-            "unsafeName": "orderStatus",
-            "safeName": "orderStatus"
-          },
-          "snakeCase": {
-            "unsafeName": "order_status",
-            "safeName": "order_status"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "ORDER_STATUS",
-            "safeName": "ORDER_STATUS"
-          },
-          "pascalCase": {
-            "unsafeName": "OrderStatus",
-            "safeName": "OrderStatus"
-          }
-        },
+        "name": "OrderStatus",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -1373,76 +485,13 @@
       "shape": {
         "values": [
           {
-            "name": {
-              "name": {
-                "originalName": "placed",
-                "camelCase": {
-                  "unsafeName": "placed",
-                  "safeName": "placed"
-                },
-                "snakeCase": {
-                  "unsafeName": "placed",
-                  "safeName": "placed"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "PLACED",
-                  "safeName": "PLACED"
-                },
-                "pascalCase": {
-                  "unsafeName": "Placed",
-                  "safeName": "Placed"
-                }
-              },
-              "wireValue": "placed"
-            }
+            "name": "placed"
           },
           {
-            "name": {
-              "name": {
-                "originalName": "approved",
-                "camelCase": {
-                  "unsafeName": "approved",
-                  "safeName": "approved"
-                },
-                "snakeCase": {
-                  "unsafeName": "approved",
-                  "safeName": "approved"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "APPROVED",
-                  "safeName": "APPROVED"
-                },
-                "pascalCase": {
-                  "unsafeName": "Approved",
-                  "safeName": "Approved"
-                }
-              },
-              "wireValue": "approved"
-            }
+            "name": "approved"
           },
           {
-            "name": {
-              "name": {
-                "originalName": "delivered",
-                "camelCase": {
-                  "unsafeName": "delivered",
-                  "safeName": "delivered"
-                },
-                "snakeCase": {
-                  "unsafeName": "delivered",
-                  "safeName": "delivered"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "DELIVERED",
-                  "safeName": "DELIVERED"
-                },
-                "pascalCase": {
-                  "unsafeName": "Delivered",
-                  "safeName": "Delivered"
-                }
-              },
-              "wireValue": "delivered"
-            }
+            "name": "delivered"
           }
         ],
         "type": "enum"
@@ -1457,25 +506,7 @@
     "type_:Order": {
       "docs": "An order for a pets from the pet store",
       "name": {
-        "name": {
-          "originalName": "Order",
-          "camelCase": {
-            "unsafeName": "order",
-            "safeName": "order"
-          },
-          "snakeCase": {
-            "unsafeName": "order",
-            "safeName": "order"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "ORDER",
-            "safeName": "ORDER"
-          },
-          "pascalCase": {
-            "unsafeName": "Order",
-            "safeName": "Order"
-          }
-        },
+        "name": "Order",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -1486,28 +517,7 @@
         "extends": [],
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "id",
-                "camelCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "snakeCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                },
-                "pascalCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                }
-              },
-              "wireValue": "id"
-            },
+            "name": "id",
             "valueType": {
               "container": {
                 "optional": {
@@ -1529,28 +539,7 @@
             }
           },
           {
-            "name": {
-              "name": {
-                "originalName": "petId",
-                "camelCase": {
-                  "unsafeName": "petID",
-                  "safeName": "petID"
-                },
-                "snakeCase": {
-                  "unsafeName": "pet_id",
-                  "safeName": "pet_id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "PET_ID",
-                  "safeName": "PET_ID"
-                },
-                "pascalCase": {
-                  "unsafeName": "PetID",
-                  "safeName": "PetID"
-                }
-              },
-              "wireValue": "petId"
-            },
+            "name": "petId",
             "valueType": {
               "container": {
                 "optional": {
@@ -1572,28 +561,7 @@
             }
           },
           {
-            "name": {
-              "name": {
-                "originalName": "quantity",
-                "camelCase": {
-                  "unsafeName": "quantity",
-                  "safeName": "quantity"
-                },
-                "snakeCase": {
-                  "unsafeName": "quantity",
-                  "safeName": "quantity"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "QUANTITY",
-                  "safeName": "QUANTITY"
-                },
-                "pascalCase": {
-                  "unsafeName": "Quantity",
-                  "safeName": "Quantity"
-                }
-              },
-              "wireValue": "quantity"
-            },
+            "name": "quantity",
             "valueType": {
               "container": {
                 "optional": {
@@ -1615,28 +583,7 @@
             }
           },
           {
-            "name": {
-              "name": {
-                "originalName": "shipDate",
-                "camelCase": {
-                  "unsafeName": "shipDate",
-                  "safeName": "shipDate"
-                },
-                "snakeCase": {
-                  "unsafeName": "ship_date",
-                  "safeName": "ship_date"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "SHIP_DATE",
-                  "safeName": "SHIP_DATE"
-                },
-                "pascalCase": {
-                  "unsafeName": "ShipDate",
-                  "safeName": "ShipDate"
-                }
-              },
-              "wireValue": "shipDate"
-            },
+            "name": "shipDate",
             "valueType": {
               "container": {
                 "optional": {
@@ -1656,50 +603,11 @@
           },
           {
             "docs": "Order Status",
-            "name": {
-              "name": {
-                "originalName": "status",
-                "camelCase": {
-                  "unsafeName": "status",
-                  "safeName": "status"
-                },
-                "snakeCase": {
-                  "unsafeName": "status",
-                  "safeName": "status"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "STATUS",
-                  "safeName": "STATUS"
-                },
-                "pascalCase": {
-                  "unsafeName": "Status",
-                  "safeName": "Status"
-                }
-              },
-              "wireValue": "status"
-            },
+            "name": "status",
             "valueType": {
               "container": {
                 "optional": {
-                  "name": {
-                    "originalName": "OrderStatus",
-                    "camelCase": {
-                      "unsafeName": "orderStatus",
-                      "safeName": "orderStatus"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "order_status",
-                      "safeName": "order_status"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "ORDER_STATUS",
-                      "safeName": "ORDER_STATUS"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "OrderStatus",
-                      "safeName": "OrderStatus"
-                    }
-                  },
+                  "name": "OrderStatus",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -1717,28 +625,7 @@
             }
           },
           {
-            "name": {
-              "name": {
-                "originalName": "complete",
-                "camelCase": {
-                  "unsafeName": "complete",
-                  "safeName": "complete"
-                },
-                "snakeCase": {
-                  "unsafeName": "complete",
-                  "safeName": "complete"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "COMPLETE",
-                  "safeName": "COMPLETE"
-                },
-                "pascalCase": {
-                  "unsafeName": "Complete",
-                  "safeName": "Complete"
-                }
-              },
-              "wireValue": "complete"
-            },
+            "name": "complete",
             "valueType": {
               "container": {
                 "optional": {
@@ -1775,25 +662,7 @@
     "type_:Category": {
       "docs": "A category for a pet",
       "name": {
-        "name": {
-          "originalName": "Category",
-          "camelCase": {
-            "unsafeName": "category",
-            "safeName": "category"
-          },
-          "snakeCase": {
-            "unsafeName": "category",
-            "safeName": "category"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "CATEGORY",
-            "safeName": "CATEGORY"
-          },
-          "pascalCase": {
-            "unsafeName": "Category",
-            "safeName": "Category"
-          }
-        },
+        "name": "Category",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -1804,28 +673,7 @@
         "extends": [],
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "id",
-                "camelCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "snakeCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                },
-                "pascalCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                }
-              },
-              "wireValue": "id"
-            },
+            "name": "id",
             "valueType": {
               "container": {
                 "optional": {
@@ -1847,28 +695,7 @@
             }
           },
           {
-            "name": {
-              "name": {
-                "originalName": "name",
-                "camelCase": {
-                  "unsafeName": "name",
-                  "safeName": "name"
-                },
-                "snakeCase": {
-                  "unsafeName": "name",
-                  "safeName": "name"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "NAME",
-                  "safeName": "NAME"
-                },
-                "pascalCase": {
-                  "unsafeName": "Name",
-                  "safeName": "Name"
-                }
-              },
-              "wireValue": "name"
-            },
+            "name": "name",
             "valueType": {
               "container": {
                 "optional": {
@@ -1904,25 +731,7 @@
     "type_:Tag": {
       "docs": "A tag for a pet",
       "name": {
-        "name": {
-          "originalName": "Tag",
-          "camelCase": {
-            "unsafeName": "tag",
-            "safeName": "tag"
-          },
-          "snakeCase": {
-            "unsafeName": "tag",
-            "safeName": "tag"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "TAG",
-            "safeName": "TAG"
-          },
-          "pascalCase": {
-            "unsafeName": "Tag",
-            "safeName": "Tag"
-          }
-        },
+        "name": "Tag",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -1933,28 +742,7 @@
         "extends": [],
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "id",
-                "camelCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "snakeCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                },
-                "pascalCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                }
-              },
-              "wireValue": "id"
-            },
+            "name": "id",
             "valueType": {
               "container": {
                 "optional": {
@@ -1976,28 +764,7 @@
             }
           },
           {
-            "name": {
-              "name": {
-                "originalName": "name",
-                "camelCase": {
-                  "unsafeName": "name",
-                  "safeName": "name"
-                },
-                "snakeCase": {
-                  "unsafeName": "name",
-                  "safeName": "name"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "NAME",
-                  "safeName": "NAME"
-                },
-                "pascalCase": {
-                  "unsafeName": "Name",
-                  "safeName": "Name"
-                }
-              },
-              "wireValue": "name"
-            },
+            "name": "name",
             "valueType": {
               "container": {
                 "optional": {
@@ -2033,25 +800,7 @@
     "type_:User": {
       "docs": "A User who is purchasing from the pet store",
       "name": {
-        "name": {
-          "originalName": "User",
-          "camelCase": {
-            "unsafeName": "user",
-            "safeName": "user"
-          },
-          "snakeCase": {
-            "unsafeName": "user",
-            "safeName": "user"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "USER",
-            "safeName": "USER"
-          },
-          "pascalCase": {
-            "unsafeName": "User",
-            "safeName": "User"
-          }
-        },
+        "name": "User",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -2062,28 +811,7 @@
         "extends": [],
         "properties": [
           {
-            "name": {
-              "name": {
-                "originalName": "id",
-                "camelCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "snakeCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                },
-                "pascalCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                }
-              },
-              "wireValue": "id"
-            },
+            "name": "id",
             "valueType": {
               "container": {
                 "optional": {
@@ -2105,28 +833,7 @@
             }
           },
           {
-            "name": {
-              "name": {
-                "originalName": "username",
-                "camelCase": {
-                  "unsafeName": "username",
-                  "safeName": "username"
-                },
-                "snakeCase": {
-                  "unsafeName": "username",
-                  "safeName": "username"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "USERNAME",
-                  "safeName": "USERNAME"
-                },
-                "pascalCase": {
-                  "unsafeName": "Username",
-                  "safeName": "Username"
-                }
-              },
-              "wireValue": "username"
-            },
+            "name": "username",
             "valueType": {
               "container": {
                 "optional": {
@@ -2148,28 +855,7 @@
             }
           },
           {
-            "name": {
-              "name": {
-                "originalName": "firstName",
-                "camelCase": {
-                  "unsafeName": "firstName",
-                  "safeName": "firstName"
-                },
-                "snakeCase": {
-                  "unsafeName": "first_name",
-                  "safeName": "first_name"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "FIRST_NAME",
-                  "safeName": "FIRST_NAME"
-                },
-                "pascalCase": {
-                  "unsafeName": "FirstName",
-                  "safeName": "FirstName"
-                }
-              },
-              "wireValue": "firstName"
-            },
+            "name": "firstName",
             "valueType": {
               "container": {
                 "optional": {
@@ -2191,28 +877,7 @@
             }
           },
           {
-            "name": {
-              "name": {
-                "originalName": "lastName",
-                "camelCase": {
-                  "unsafeName": "lastName",
-                  "safeName": "lastName"
-                },
-                "snakeCase": {
-                  "unsafeName": "last_name",
-                  "safeName": "last_name"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "LAST_NAME",
-                  "safeName": "LAST_NAME"
-                },
-                "pascalCase": {
-                  "unsafeName": "LastName",
-                  "safeName": "LastName"
-                }
-              },
-              "wireValue": "lastName"
-            },
+            "name": "lastName",
             "valueType": {
               "container": {
                 "optional": {
@@ -2234,28 +899,7 @@
             }
           },
           {
-            "name": {
-              "name": {
-                "originalName": "email",
-                "camelCase": {
-                  "unsafeName": "email",
-                  "safeName": "email"
-                },
-                "snakeCase": {
-                  "unsafeName": "email",
-                  "safeName": "email"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "EMAIL",
-                  "safeName": "EMAIL"
-                },
-                "pascalCase": {
-                  "unsafeName": "Email",
-                  "safeName": "Email"
-                }
-              },
-              "wireValue": "email"
-            },
+            "name": "email",
             "valueType": {
               "container": {
                 "optional": {
@@ -2277,28 +921,7 @@
             }
           },
           {
-            "name": {
-              "name": {
-                "originalName": "password",
-                "camelCase": {
-                  "unsafeName": "password",
-                  "safeName": "password"
-                },
-                "snakeCase": {
-                  "unsafeName": "password",
-                  "safeName": "password"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "PASSWORD",
-                  "safeName": "PASSWORD"
-                },
-                "pascalCase": {
-                  "unsafeName": "Password",
-                  "safeName": "Password"
-                }
-              },
-              "wireValue": "password"
-            },
+            "name": "password",
             "valueType": {
               "container": {
                 "optional": {
@@ -2320,28 +943,7 @@
             }
           },
           {
-            "name": {
-              "name": {
-                "originalName": "phone",
-                "camelCase": {
-                  "unsafeName": "phone",
-                  "safeName": "phone"
-                },
-                "snakeCase": {
-                  "unsafeName": "phone",
-                  "safeName": "phone"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "PHONE",
-                  "safeName": "PHONE"
-                },
-                "pascalCase": {
-                  "unsafeName": "Phone",
-                  "safeName": "Phone"
-                }
-              },
-              "wireValue": "phone"
-            },
+            "name": "phone",
             "valueType": {
               "container": {
                 "optional": {
@@ -2364,28 +966,7 @@
           },
           {
             "docs": "User Status",
-            "name": {
-              "name": {
-                "originalName": "userStatus",
-                "camelCase": {
-                  "unsafeName": "userStatus",
-                  "safeName": "userStatus"
-                },
-                "snakeCase": {
-                  "unsafeName": "user_status",
-                  "safeName": "user_status"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "USER_STATUS",
-                  "safeName": "USER_STATUS"
-                },
-                "pascalCase": {
-                  "unsafeName": "UserStatus",
-                  "safeName": "UserStatus"
-                }
-              },
-              "wireValue": "userStatus"
-            },
+            "name": "userStatus",
             "valueType": {
               "container": {
                 "optional": {
@@ -2425,46 +1006,10 @@
       "name": {
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "pet",
-              "camelCase": {
-                "unsafeName": "pet",
-                "safeName": "pet"
-              },
-              "snakeCase": {
-                "unsafeName": "pet",
-                "safeName": "pet"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "PET",
-                "safeName": "PET"
-              },
-              "pascalCase": {
-                "unsafeName": "Pet",
-                "safeName": "Pet"
-              }
-            }
+            "pet"
           ],
           "packagePath": [],
-          "file": {
-            "originalName": "pet",
-            "camelCase": {
-              "unsafeName": "pet",
-              "safeName": "pet"
-            },
-            "snakeCase": {
-              "unsafeName": "pet",
-              "safeName": "pet"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "PET",
-              "safeName": "PET"
-            },
-            "pascalCase": {
-              "unsafeName": "Pet",
-              "safeName": "Pet"
-            }
-          }
+          "file": "pet"
         }
       },
       "basePath": {
@@ -2482,25 +1027,7 @@
       "endpoints": [
         {
           "id": "endpoint_pet.updateAnExistingPet",
-          "name": {
-            "originalName": "updateAnExistingPet",
-            "camelCase": {
-              "unsafeName": "updateAnExistingPet",
-              "safeName": "updateAnExistingPet"
-            },
-            "snakeCase": {
-              "unsafeName": "update_an_existing_pet",
-              "safeName": "update_an_existing_pet"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "UPDATE_AN_EXISTING_PET",
-              "safeName": "UPDATE_AN_EXISTING_PET"
-            },
-            "pascalCase": {
-              "unsafeName": "UpdateAnExistingPet",
-              "safeName": "UpdateAnExistingPet"
-            }
-          },
+          "name": "updateAnExistingPet",
           "displayName": "Update an existing pet",
           "auth": false,
           "idempotent": false,
@@ -2519,25 +1046,7 @@
           "headers": [],
           "requestBody": {
             "requestBodyType": {
-              "name": {
-                "originalName": "Pet",
-                "camelCase": {
-                  "unsafeName": "pet",
-                  "safeName": "pet"
-                },
-                "snakeCase": {
-                  "unsafeName": "pet",
-                  "safeName": "pet"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "PET",
-                  "safeName": "PET"
-                },
-                "pascalCase": {
-                  "unsafeName": "Pet",
-                  "safeName": "Pet"
-                }
-              },
+              "name": "Pet",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -2552,25 +1061,7 @@
             "shape": {
               "value": {
                 "requestBodyType": {
-                  "name": {
-                    "originalName": "Pet",
-                    "camelCase": {
-                      "unsafeName": "pet",
-                      "safeName": "pet"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "pet",
-                      "safeName": "pet"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "PET",
-                      "safeName": "PET"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Pet",
-                      "safeName": "Pet"
-                    }
-                  },
+                  "name": "Pet",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -2582,50 +1073,14 @@
               },
               "type": "justRequestBody"
             },
-            "requestParameterName": {
-              "originalName": "request",
-              "camelCase": {
-                "unsafeName": "request",
-                "safeName": "request"
-              },
-              "snakeCase": {
-                "unsafeName": "request",
-                "safeName": "request"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "REQUEST",
-                "safeName": "REQUEST"
-              },
-              "pascalCase": {
-                "unsafeName": "Request",
-                "safeName": "Request"
-              }
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "A list of pets",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "Pet",
-                    "camelCase": {
-                      "unsafeName": "pet",
-                      "safeName": "pet"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "pet",
-                      "safeName": "pet"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "PET",
-                      "safeName": "PET"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Pet",
-                      "safeName": "Pet"
-                    }
-                  },
+                  "name": "Pet",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -2651,46 +1106,10 @@
       "name": {
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "order",
-              "camelCase": {
-                "unsafeName": "order",
-                "safeName": "order"
-              },
-              "snakeCase": {
-                "unsafeName": "order",
-                "safeName": "order"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "ORDER",
-                "safeName": "ORDER"
-              },
-              "pascalCase": {
-                "unsafeName": "Order",
-                "safeName": "Order"
-              }
-            }
+            "order"
           ],
           "packagePath": [],
-          "file": {
-            "originalName": "order",
-            "camelCase": {
-              "unsafeName": "order",
-              "safeName": "order"
-            },
-            "snakeCase": {
-              "unsafeName": "order",
-              "safeName": "order"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "ORDER",
-              "safeName": "ORDER"
-            },
-            "pascalCase": {
-              "unsafeName": "Order",
-              "safeName": "Order"
-            }
-          }
+          "file": "order"
         }
       },
       "basePath": {
@@ -2708,25 +1127,7 @@
       "endpoints": [
         {
           "id": "endpoint_order.getAnOrder",
-          "name": {
-            "originalName": "getAnOrder",
-            "camelCase": {
-              "unsafeName": "getAnOrder",
-              "safeName": "getAnOrder"
-            },
-            "snakeCase": {
-              "unsafeName": "get_an_order",
-              "safeName": "get_an_order"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "GET_AN_ORDER",
-              "safeName": "GET_AN_ORDER"
-            },
-            "pascalCase": {
-              "unsafeName": "GetAnOrder",
-              "safeName": "GetAnOrder"
-            }
-          },
+          "name": "getAnOrder",
           "displayName": "Get an order",
           "auth": false,
           "idempotent": false,
@@ -2748,25 +1149,7 @@
               "value": {
                 "docs": "An order object",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "Order",
-                    "camelCase": {
-                      "unsafeName": "order",
-                      "safeName": "order"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "order",
-                      "safeName": "order"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "ORDER",
-                      "safeName": "ORDER"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Order",
-                      "safeName": "Order"
-                    }
-                  },
+                  "name": "Order",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -2790,28 +1173,7 @@
     }
   },
   "constants": {
-    "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceID",
-          "safeName": "errorInstanceID"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceID",
-          "safeName": "ErrorInstanceID"
-        }
-      },
-      "wireValue": "errorInstanceId"
-    }
+    "errorInstanceIdKey": "errorInstanceId"
   },
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -2849,25 +1211,7 @@
         "parts": []
       },
       "auth": false,
-      "name": {
-        "originalName": "petowners",
-        "camelCase": {
-          "unsafeName": "petowners",
-          "safeName": "petowners"
-        },
-        "snakeCase": {
-          "unsafeName": "petowners",
-          "safeName": "petowners"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "PETOWNERS",
-          "safeName": "PETOWNERS"
-        },
-        "pascalCase": {
-          "unsafeName": "Petowners",
-          "safeName": "Petowners"
-        }
-      },
+      "name": "petowners",
       "headers": [],
       "docs": "Private websocket channel for receiving updates about pet owners and their pets",
       "pathParameters": [],
@@ -2878,67 +1222,13 @@
           "origin": "server",
           "body": {
             "bodyType": {
-              "name": {
-                "originalName": "PetownersSubscribe",
-                "camelCase": {
-                  "unsafeName": "petownersSubscribe",
-                  "safeName": "petownersSubscribe"
-                },
-                "snakeCase": {
-                  "unsafeName": "petowners_subscribe",
-                  "safeName": "petowners_subscribe"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "PETOWNERS_SUBSCRIBE",
-                  "safeName": "PETOWNERS_SUBSCRIBE"
-                },
-                "pascalCase": {
-                  "unsafeName": "PetownersSubscribe",
-                  "safeName": "PetownersSubscribe"
-                }
-              },
+              "name": "PetownersSubscribe",
               "fernFilepath": {
                 "allParts": [
-                  {
-                    "originalName": "petowners",
-                    "camelCase": {
-                      "unsafeName": "petowners",
-                      "safeName": "petowners"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "petowners",
-                      "safeName": "petowners"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "PETOWNERS",
-                      "safeName": "PETOWNERS"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Petowners",
-                      "safeName": "Petowners"
-                    }
-                  }
+                  "petowners"
                 ],
                 "packagePath": [],
-                "file": {
-                  "originalName": "petowners",
-                  "camelCase": {
-                    "unsafeName": "petowners",
-                    "safeName": "petowners"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "petowners",
-                    "safeName": "petowners"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "PETOWNERS",
-                    "safeName": "PETOWNERS"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Petowners",
-                    "safeName": "Petowners"
-                  }
-                }
+                "file": "petowners"
               },
               "typeId": "type_petowners:PetownersSubscribe",
               "type": "named"
@@ -2962,66 +1252,12 @@
                     "typeId": "type_petowners:PetownersSubscribe",
                     "fernFilepath": {
                       "allParts": [
-                        {
-                          "originalName": "petowners",
-                          "camelCase": {
-                            "unsafeName": "petowners",
-                            "safeName": "petowners"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "petowners",
-                            "safeName": "petowners"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "PETOWNERS",
-                            "safeName": "PETOWNERS"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "Petowners",
-                            "safeName": "Petowners"
-                          }
-                        }
+                        "petowners"
                       ],
                       "packagePath": [],
-                      "file": {
-                        "originalName": "petowners",
-                        "camelCase": {
-                          "unsafeName": "petowners",
-                          "safeName": "petowners"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "petowners",
-                          "safeName": "petowners"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "PETOWNERS",
-                          "safeName": "PETOWNERS"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "Petowners",
-                          "safeName": "Petowners"
-                        }
-                      }
+                      "file": "petowners"
                     },
-                    "name": {
-                      "originalName": "PetownersSubscribe",
-                      "camelCase": {
-                        "unsafeName": "petownersSubscribe",
-                        "safeName": "petownersSubscribe"
-                      },
-                      "snakeCase": {
-                        "unsafeName": "petowners_subscribe",
-                        "safeName": "petowners_subscribe"
-                      },
-                      "screamingSnakeCase": {
-                        "unsafeName": "PETOWNERS_SUBSCRIBE",
-                        "safeName": "PETOWNERS_SUBSCRIBE"
-                      },
-                      "pascalCase": {
-                        "unsafeName": "PetownersSubscribe",
-                        "safeName": "PetownersSubscribe"
-                      }
-                    }
+                    "name": "PetownersSubscribe"
                   },
                   "shape": {
                     "properties": [],
@@ -3112,6 +1348,7 @@
         },
         "values": [
           {
+            "wireValue": "petowners",
             "name": {
               "originalName": "petowners",
               "camelCase": {
@@ -3130,8 +1367,7 @@
                 "unsafeName": "Petowners",
                 "safeName": "Petowners"
               }
-            },
-            "wireValue": "petowners"
+            }
           }
         ],
         "type": "enum"
@@ -3204,6 +1440,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "petOwner",
               "name": {
                 "originalName": "petOwner",
                 "camelCase": {
@@ -3222,8 +1459,7 @@
                   "unsafeName": "PetOwner",
                   "safeName": "PetOwner"
                 }
-              },
-              "wireValue": "petOwner"
+              }
             },
             "typeReference": {
               "value": "type_:PetOwner",
@@ -3302,6 +1538,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "channel",
               "name": {
                 "originalName": "channel",
                 "camelCase": {
@@ -3320,8 +1557,7 @@
                   "unsafeName": "Channel",
                   "safeName": "Channel"
                 }
-              },
-              "wireValue": "channel"
+              }
             },
             "typeReference": {
               "value": {
@@ -3333,6 +1569,7 @@
           },
           {
             "name": {
+              "wireValue": "data",
               "name": {
                 "originalName": "data",
                 "camelCase": {
@@ -3351,8 +1588,7 @@
                   "unsafeName": "Data",
                   "safeName": "Data"
                 }
-              },
-              "wireValue": "data"
+              }
             },
             "typeReference": {
               "value": {
@@ -3434,6 +1670,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "params",
               "name": {
                 "originalName": "params",
                 "camelCase": {
@@ -3452,8 +1689,7 @@
                   "unsafeName": "Params",
                   "safeName": "Params"
                 }
-              },
-              "wireValue": "params"
+              }
             },
             "typeReference": {
               "value": {
@@ -3533,6 +1769,7 @@
         },
         "values": [
           {
+            "wireValue": "available",
             "name": {
               "originalName": "available",
               "camelCase": {
@@ -3551,10 +1788,10 @@
                 "unsafeName": "Available",
                 "safeName": "Available"
               }
-            },
-            "wireValue": "available"
+            }
           },
           {
+            "wireValue": "pending",
             "name": {
               "originalName": "pending",
               "camelCase": {
@@ -3573,10 +1810,10 @@
                 "unsafeName": "Pending",
                 "safeName": "Pending"
               }
-            },
-            "wireValue": "pending"
+            }
           },
           {
+            "wireValue": "sold",
             "name": {
               "originalName": "sold",
               "camelCase": {
@@ -3595,8 +1832,7 @@
                 "unsafeName": "Sold",
                 "safeName": "Sold"
               }
-            },
-            "wireValue": "sold"
+            }
           }
         ],
         "type": "enum"
@@ -3630,6 +1866,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -3648,8 +1885,7 @@
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
-              },
-              "wireValue": "id"
+              }
             },
             "typeReference": {
               "value": {
@@ -3661,6 +1897,7 @@
           },
           {
             "name": {
+              "wireValue": "category",
               "name": {
                 "originalName": "category",
                 "camelCase": {
@@ -3679,8 +1916,7 @@
                   "unsafeName": "Category",
                   "safeName": "Category"
                 }
-              },
-              "wireValue": "category"
+              }
             },
             "typeReference": {
               "value": {
@@ -3692,6 +1928,7 @@
           },
           {
             "name": {
+              "wireValue": "name",
               "name": {
                 "originalName": "name",
                 "camelCase": {
@@ -3710,8 +1947,7 @@
                   "unsafeName": "Name",
                   "safeName": "Name"
                 }
-              },
-              "wireValue": "name"
+              }
             },
             "typeReference": {
               "value": "STRING",
@@ -3720,6 +1956,7 @@
           },
           {
             "name": {
+              "wireValue": "photoUrls",
               "name": {
                 "originalName": "photoUrls",
                 "camelCase": {
@@ -3738,8 +1975,7 @@
                   "unsafeName": "PhotoURLs",
                   "safeName": "PhotoURLs"
                 }
-              },
-              "wireValue": "photoUrls"
+              }
             },
             "typeReference": {
               "value": {
@@ -3751,6 +1987,7 @@
           },
           {
             "name": {
+              "wireValue": "tags",
               "name": {
                 "originalName": "tags",
                 "camelCase": {
@@ -3769,8 +2006,7 @@
                   "unsafeName": "Tags",
                   "safeName": "Tags"
                 }
-              },
-              "wireValue": "tags"
+              }
             },
             "typeReference": {
               "value": {
@@ -3785,6 +2021,7 @@
           },
           {
             "name": {
+              "wireValue": "status",
               "name": {
                 "originalName": "status",
                 "camelCase": {
@@ -3803,8 +2040,7 @@
                   "unsafeName": "Status",
                   "safeName": "Status"
                 }
-              },
-              "wireValue": "status"
+              }
             },
             "typeReference": {
               "value": {
@@ -3877,6 +2113,7 @@
         },
         "values": [
           {
+            "wireValue": "placed",
             "name": {
               "originalName": "placed",
               "camelCase": {
@@ -3895,10 +2132,10 @@
                 "unsafeName": "Placed",
                 "safeName": "Placed"
               }
-            },
-            "wireValue": "placed"
+            }
           },
           {
+            "wireValue": "approved",
             "name": {
               "originalName": "approved",
               "camelCase": {
@@ -3917,10 +2154,10 @@
                 "unsafeName": "Approved",
                 "safeName": "Approved"
               }
-            },
-            "wireValue": "approved"
+            }
           },
           {
+            "wireValue": "delivered",
             "name": {
               "originalName": "delivered",
               "camelCase": {
@@ -3939,8 +2176,7 @@
                 "unsafeName": "Delivered",
                 "safeName": "Delivered"
               }
-            },
-            "wireValue": "delivered"
+            }
           }
         ],
         "type": "enum"
@@ -3974,6 +2210,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -3992,8 +2229,7 @@
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
-              },
-              "wireValue": "id"
+              }
             },
             "typeReference": {
               "value": {
@@ -4005,6 +2241,7 @@
           },
           {
             "name": {
+              "wireValue": "petId",
               "name": {
                 "originalName": "petId",
                 "camelCase": {
@@ -4023,8 +2260,7 @@
                   "unsafeName": "PetID",
                   "safeName": "PetID"
                 }
-              },
-              "wireValue": "petId"
+              }
             },
             "typeReference": {
               "value": {
@@ -4036,6 +2272,7 @@
           },
           {
             "name": {
+              "wireValue": "quantity",
               "name": {
                 "originalName": "quantity",
                 "camelCase": {
@@ -4054,8 +2291,7 @@
                   "unsafeName": "Quantity",
                   "safeName": "Quantity"
                 }
-              },
-              "wireValue": "quantity"
+              }
             },
             "typeReference": {
               "value": {
@@ -4067,6 +2303,7 @@
           },
           {
             "name": {
+              "wireValue": "shipDate",
               "name": {
                 "originalName": "shipDate",
                 "camelCase": {
@@ -4085,8 +2322,7 @@
                   "unsafeName": "ShipDate",
                   "safeName": "ShipDate"
                 }
-              },
-              "wireValue": "shipDate"
+              }
             },
             "typeReference": {
               "value": {
@@ -4098,6 +2334,7 @@
           },
           {
             "name": {
+              "wireValue": "status",
               "name": {
                 "originalName": "status",
                 "camelCase": {
@@ -4116,8 +2353,7 @@
                   "unsafeName": "Status",
                   "safeName": "Status"
                 }
-              },
-              "wireValue": "status"
+              }
             },
             "typeReference": {
               "value": {
@@ -4129,6 +2365,7 @@
           },
           {
             "name": {
+              "wireValue": "complete",
               "name": {
                 "originalName": "complete",
                 "camelCase": {
@@ -4147,8 +2384,7 @@
                   "unsafeName": "Complete",
                   "safeName": "Complete"
                 }
-              },
-              "wireValue": "complete"
+              }
             },
             "typeReference": {
               "value": {
@@ -4191,6 +2427,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -4209,8 +2446,7 @@
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
-              },
-              "wireValue": "id"
+              }
             },
             "typeReference": {
               "value": {
@@ -4222,6 +2458,7 @@
           },
           {
             "name": {
+              "wireValue": "name",
               "name": {
                 "originalName": "name",
                 "camelCase": {
@@ -4240,8 +2477,7 @@
                   "unsafeName": "Name",
                   "safeName": "Name"
                 }
-              },
-              "wireValue": "name"
+              }
             },
             "typeReference": {
               "value": {
@@ -4284,6 +2520,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -4302,8 +2539,7 @@
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
-              },
-              "wireValue": "id"
+              }
             },
             "typeReference": {
               "value": {
@@ -4315,6 +2551,7 @@
           },
           {
             "name": {
+              "wireValue": "name",
               "name": {
                 "originalName": "name",
                 "camelCase": {
@@ -4333,8 +2570,7 @@
                   "unsafeName": "Name",
                   "safeName": "Name"
                 }
-              },
-              "wireValue": "name"
+              }
             },
             "typeReference": {
               "value": {
@@ -4377,6 +2613,7 @@
         "properties": [
           {
             "name": {
+              "wireValue": "id",
               "name": {
                 "originalName": "id",
                 "camelCase": {
@@ -4395,8 +2632,7 @@
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
-              },
-              "wireValue": "id"
+              }
             },
             "typeReference": {
               "value": {
@@ -4408,6 +2644,7 @@
           },
           {
             "name": {
+              "wireValue": "username",
               "name": {
                 "originalName": "username",
                 "camelCase": {
@@ -4426,8 +2663,7 @@
                   "unsafeName": "Username",
                   "safeName": "Username"
                 }
-              },
-              "wireValue": "username"
+              }
             },
             "typeReference": {
               "value": {
@@ -4439,6 +2675,7 @@
           },
           {
             "name": {
+              "wireValue": "firstName",
               "name": {
                 "originalName": "firstName",
                 "camelCase": {
@@ -4457,8 +2694,7 @@
                   "unsafeName": "FirstName",
                   "safeName": "FirstName"
                 }
-              },
-              "wireValue": "firstName"
+              }
             },
             "typeReference": {
               "value": {
@@ -4470,6 +2706,7 @@
           },
           {
             "name": {
+              "wireValue": "lastName",
               "name": {
                 "originalName": "lastName",
                 "camelCase": {
@@ -4488,8 +2725,7 @@
                   "unsafeName": "LastName",
                   "safeName": "LastName"
                 }
-              },
-              "wireValue": "lastName"
+              }
             },
             "typeReference": {
               "value": {
@@ -4501,6 +2737,7 @@
           },
           {
             "name": {
+              "wireValue": "email",
               "name": {
                 "originalName": "email",
                 "camelCase": {
@@ -4519,8 +2756,7 @@
                   "unsafeName": "Email",
                   "safeName": "Email"
                 }
-              },
-              "wireValue": "email"
+              }
             },
             "typeReference": {
               "value": {
@@ -4532,6 +2768,7 @@
           },
           {
             "name": {
+              "wireValue": "password",
               "name": {
                 "originalName": "password",
                 "camelCase": {
@@ -4550,8 +2787,7 @@
                   "unsafeName": "Password",
                   "safeName": "Password"
                 }
-              },
-              "wireValue": "password"
+              }
             },
             "typeReference": {
               "value": {
@@ -4563,6 +2799,7 @@
           },
           {
             "name": {
+              "wireValue": "phone",
               "name": {
                 "originalName": "phone",
                 "camelCase": {
@@ -4581,8 +2818,7 @@
                   "unsafeName": "Phone",
                   "safeName": "Phone"
                 }
-              },
-              "wireValue": "phone"
+              }
             },
             "typeReference": {
               "value": {
@@ -4594,6 +2830,7 @@
           },
           {
             "name": {
+              "wireValue": "userStatus",
               "name": {
                 "originalName": "userStatus",
                 "camelCase": {
@@ -4612,8 +2849,7 @@
                   "unsafeName": "UserStatus",
                   "safeName": "UserStatus"
                 }
-              },
-              "wireValue": "userStatus"
+              }
             },
             "typeReference": {
               "value": {
@@ -4797,70 +3033,19 @@
     "pathParameters": []
   },
   "apiPlayground": true,
+  "casingsConfig": {
+    "smartCasing": true
+  },
   "subpackages": {
     "subpackage_pet": {
       "fernFilepath": {
         "allParts": [
-          {
-            "originalName": "pet",
-            "camelCase": {
-              "unsafeName": "pet",
-              "safeName": "pet"
-            },
-            "snakeCase": {
-              "unsafeName": "pet",
-              "safeName": "pet"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "PET",
-              "safeName": "PET"
-            },
-            "pascalCase": {
-              "unsafeName": "Pet",
-              "safeName": "Pet"
-            }
-          }
+          "pet"
         ],
         "packagePath": [],
-        "file": {
-          "originalName": "pet",
-          "camelCase": {
-            "unsafeName": "pet",
-            "safeName": "pet"
-          },
-          "snakeCase": {
-            "unsafeName": "pet",
-            "safeName": "pet"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "PET",
-            "safeName": "PET"
-          },
-          "pascalCase": {
-            "unsafeName": "Pet",
-            "safeName": "Pet"
-          }
-        }
+        "file": "pet"
       },
-      "name": {
-        "originalName": "pet",
-        "camelCase": {
-          "unsafeName": "pet",
-          "safeName": "pet"
-        },
-        "snakeCase": {
-          "unsafeName": "pet",
-          "safeName": "pet"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "PET",
-          "safeName": "PET"
-        },
-        "pascalCase": {
-          "unsafeName": "Pet",
-          "safeName": "Pet"
-        }
-      },
+      "name": "pet",
       "service": "service_pet",
       "types": [],
       "errors": [],
@@ -4870,66 +3055,12 @@
     "subpackage_order": {
       "fernFilepath": {
         "allParts": [
-          {
-            "originalName": "order",
-            "camelCase": {
-              "unsafeName": "order",
-              "safeName": "order"
-            },
-            "snakeCase": {
-              "unsafeName": "order",
-              "safeName": "order"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "ORDER",
-              "safeName": "ORDER"
-            },
-            "pascalCase": {
-              "unsafeName": "Order",
-              "safeName": "Order"
-            }
-          }
+          "order"
         ],
         "packagePath": [],
-        "file": {
-          "originalName": "order",
-          "camelCase": {
-            "unsafeName": "order",
-            "safeName": "order"
-          },
-          "snakeCase": {
-            "unsafeName": "order",
-            "safeName": "order"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "ORDER",
-            "safeName": "ORDER"
-          },
-          "pascalCase": {
-            "unsafeName": "Order",
-            "safeName": "Order"
-          }
-        }
+        "file": "order"
       },
-      "name": {
-        "originalName": "order",
-        "camelCase": {
-          "unsafeName": "order",
-          "safeName": "order"
-        },
-        "snakeCase": {
-          "unsafeName": "order",
-          "safeName": "order"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ORDER",
-          "safeName": "ORDER"
-        },
-        "pascalCase": {
-          "unsafeName": "Order",
-          "safeName": "Order"
-        }
-      },
+      "name": "order",
       "service": "service_order",
       "types": [],
       "errors": [],
@@ -4939,66 +3070,12 @@
     "subpackage_petowners": {
       "fernFilepath": {
         "allParts": [
-          {
-            "originalName": "petowners",
-            "camelCase": {
-              "unsafeName": "petowners",
-              "safeName": "petowners"
-            },
-            "snakeCase": {
-              "unsafeName": "petowners",
-              "safeName": "petowners"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "PETOWNERS",
-              "safeName": "PETOWNERS"
-            },
-            "pascalCase": {
-              "unsafeName": "Petowners",
-              "safeName": "Petowners"
-            }
-          }
+          "petowners"
         ],
         "packagePath": [],
-        "file": {
-          "originalName": "petowners",
-          "camelCase": {
-            "unsafeName": "petowners",
-            "safeName": "petowners"
-          },
-          "snakeCase": {
-            "unsafeName": "petowners",
-            "safeName": "petowners"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "PETOWNERS",
-            "safeName": "PETOWNERS"
-          },
-          "pascalCase": {
-            "unsafeName": "Petowners",
-            "safeName": "Petowners"
-          }
-        }
+        "file": "petowners"
       },
-      "name": {
-        "originalName": "petowners",
-        "camelCase": {
-          "unsafeName": "petowners",
-          "safeName": "petowners"
-        },
-        "snakeCase": {
-          "unsafeName": "petowners",
-          "safeName": "petowners"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "PETOWNERS",
-          "safeName": "PETOWNERS"
-        },
-        "pascalCase": {
-          "unsafeName": "Petowners",
-          "safeName": "Petowners"
-        }
-      },
+      "name": "petowners",
       "types": [
         "type_petowners:PetownersSubscribeParamsChannel",
         "type_petowners:PetownersSubscribeParamsData",

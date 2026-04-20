@@ -721,7 +721,68 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                 }
             }
 
-            if (apiToUrls.size > 0) {
+            // Check if endpoint-level servers reference top-level server names,
+            // indicating multiple base URLs within a single environment rather than
+            // separate environments (e.g., api.box.com + upload.box.com + dl.boxcloud.com)
+            const endpointServerNamesSet = new Set(apiToUrls.keys());
+            const topLevelServerNamesSet = new Set(Object.keys(topLevelServersWithName));
+            const endpointServersReferenceTopLevel =
+                endpointServerNamesSet.size > 0 &&
+                [...endpointServerNamesSet].every((name) => topLevelServerNamesSet.has(name));
+
+            if (apiToUrls.size > 0 && endpointServersReferenceTopLevel) {
+                // Top-level servers define different base URLs for a single API.
+                // Create one multi-URL environment with all servers as named URLs.
+                const entries = Object.entries(topLevelServersWithName);
+                const firstEntry = entries[0];
+                if (firstEntry) {
+                    const [envName, firstSchema] = firstEntry;
+                    const baseUrl =
+                        typeof firstSchema === "string"
+                            ? firstSchema
+                            : isRawMultipleBaseUrlsEnvironment(firstSchema)
+                              ? Object.values(firstSchema.urls)[0]
+                              : (firstSchema["default-url"] ?? firstSchema.url);
+
+                    const urls: Record<string, string> = {};
+                    if (baseUrl != null) {
+                        urls[DEFAULT_URL_NAME] = baseUrl;
+                        context.setUrlId(baseUrl, DEFAULT_URL_NAME);
+                    }
+
+                    // Add all other top-level servers as named URLs
+                    for (let i = 1; i < entries.length; i++) {
+                        const entry = entries[i];
+                        if (entry == null) {
+                            continue;
+                        }
+                        const [name, schema] = entry;
+                        const url =
+                            typeof schema === "string"
+                                ? schema
+                                : isRawMultipleBaseUrlsEnvironment(schema)
+                                  ? Object.values(schema.urls)[0]
+                                  : (schema["default-url"] ?? schema.url);
+                        if (url != null) {
+                            urls[name] = url;
+                            context.setUrlId(url, name);
+                        }
+                    }
+
+                    if (hasWebsocketServersWithName) {
+                        Object.assign(urls, extractUrlsFromEnvironmentSchema(websocketServersWithName));
+                    }
+
+                    context.builder.addEnvironment({
+                        name: envName,
+                        schema: { urls }
+                    });
+                    if (context.options.inferDefaultEnvironment !== false) {
+                        context.builder.setDefaultEnvironment(envName);
+                    }
+                    context.builder.setDefaultUrl(DEFAULT_URL_NAME);
+                }
+            } else if (apiToUrls.size > 0) {
                 let firstEnvironment = true;
 
                 for (const [envName, envSchema] of Object.entries(topLevelServersWithName)) {

@@ -1,6 +1,6 @@
 # Reference
 ## Organizations
-<details><summary><code>client.Organizations.GetOrganization(TenantId, OrganizationId) -> *fern.Organization</code></summary>
+<details><summary><code>client.Organizations.GetOrganization(TenantID, OrganizationID) -> *fern.Organization</code></summary>
 <dl>
 <dd>
 
@@ -33,7 +33,7 @@ client.Organizations.GetOrganization(
 <dl>
 <dd>
 
-**tenantId:** `string` 
+**tenantID:** `string` 
     
 </dd>
 </dl>
@@ -41,7 +41,7 @@ client.Organizations.GetOrganization(
 <dl>
 <dd>
 
-**organizationId:** `string` 
+**organizationID:** `string` 
     
 </dd>
 </dl>
@@ -53,7 +53,7 @@ client.Organizations.GetOrganization(
 </dl>
 </details>
 
-<details><summary><code>client.Organizations.GetOrganizationUser(TenantId, OrganizationId, UserId) -> *fern.User</code></summary>
+<details><summary><code>client.Organizations.GetOrganizationUser(TenantID, OrganizationID, UserID) -> *fern.User</code></summary>
 <dl>
 <dd>
 
@@ -87,7 +87,7 @@ client.Organizations.GetOrganizationUser(
 <dl>
 <dd>
 
-**tenantId:** `string` 
+**tenantID:** `string` 
     
 </dd>
 </dl>
@@ -95,7 +95,7 @@ client.Organizations.GetOrganizationUser(
 <dl>
 <dd>
 
-**organizationId:** `string` 
+**organizationID:** `string` 
     
 </dd>
 </dl>
@@ -103,7 +103,7 @@ client.Organizations.GetOrganizationUser(
 <dl>
 <dd>
 
-**userId:** `string` 
+**userID:** `string` 
     
 </dd>
 </dl>
@@ -115,7 +115,7 @@ client.Organizations.GetOrganizationUser(
 </dl>
 </details>
 
-<details><summary><code>client.Organizations.SearchOrganizations(TenantId, OrganizationId) -> []*fern.Organization</code></summary>
+<details><summary><code>client.Organizations.SearchOrganizations(TenantID, OrganizationID) -> []*fern.Organization</code></summary>
 <dl>
 <dd>
 
@@ -154,7 +154,7 @@ client.Organizations.SearchOrganizations(
 <dl>
 <dd>
 
-**tenantId:** `string` 
+**tenantID:** `string` 
     
 </dd>
 </dl>
@@ -162,7 +162,7 @@ client.Organizations.SearchOrganizations(
 <dl>
 <dd>
 
-**organizationId:** `string` 
+**organizationID:** `string` 
     
 </dd>
 </dl>
@@ -183,7 +183,7 @@ client.Organizations.SearchOrganizations(
 </details>
 
 ## User
-<details><summary><code>client.User.GetUser(TenantId, UserId) -> *fern.User</code></summary>
+<details><summary><code>client.User.GetUser(TenantID, UserID) -> *fern.User</code></summary>
 <dl>
 <dd>
 
@@ -216,7 +216,7 @@ client.User.GetUser(
 <dl>
 <dd>
 
-**tenantId:** `string` 
+**tenantID:** `string` 
     
 </dd>
 </dl>
@@ -224,7 +224,7 @@ client.User.GetUser(
 <dl>
 <dd>
 
-**userId:** `string` 
+**userID:** `string` 
     
 </dd>
 </dl>
@@ -236,7 +236,7 @@ client.User.GetUser(
 </dl>
 </details>
 
-<details><summary><code>client.User.CreateUser(TenantId, request) -> *fern.User</code></summary>
+<details><summary><code>client.User.CreateUser(TenantID, request) -> *fern.User</code></summary>
 <dl>
 <dd>
 
@@ -276,7 +276,7 @@ client.User.CreateUser(
 <dl>
 <dd>
 
-**tenantId:** `string` 
+**tenantID:** `string` 
     
 </dd>
 </dl>
@@ -296,7 +296,7 @@ client.User.CreateUser(
 </dl>
 </details>
 
-<details><summary><code>client.User.UpdateUser(TenantId, UserId, request) -> *fern.User</code></summary>
+<details><summary><code>client.User.UpdateUser(TenantID, UserID, request) -> *fern.User</code></summary>
 <dl>
 <dd>
 
@@ -339,7 +339,7 @@ client.User.UpdateUser(
 <dl>
 <dd>
 
-**tenantId:** `string` 
+**tenantID:** `string` 
     
 </dd>
 </dl>
@@ -347,7 +347,7 @@ client.User.UpdateUser(
 <dl>
 <dd>
 
-**userId:** `string` 
+**userID:** `string` 
     
 </dd>
 </dl>
@@ -367,7 +367,7 @@ client.User.UpdateUser(
 </dl>
 </details>
 
-<details><summary><code>client.User.SearchUsers(TenantId, UserId) -> []*fern.User</code></summary>
+<details><summary><code>client.User.SearchUsers(TenantID, UserID) -> []*fern.User</code></summary>
 <dl>
 <dd>
 
@@ -406,7 +406,7 @@ client.User.SearchUsers(
 <dl>
 <dd>
 
-**tenantId:** `string` 
+**tenantID:** `string` 
     
 </dd>
 </dl>
@@ -414,7 +414,7 @@ client.User.SearchUsers(
 <dl>
 <dd>
 
-**userId:** `string` 
+**userID:** `string` 
     
 </dd>
 </dl>
@@ -434,7 +434,7 @@ client.User.SearchUsers(
 </dl>
 </details>
 
-<details><summary><code>client.User.GetUserMetadata(TenantId, UserId, Version) -> *fern.User</code></summary>
+<details><summary><code>client.User.GetUserMetadata(TenantID, UserID, Version) -> *fern.User</code></summary>
 <dl>
 <dd>
 
@@ -482,7 +482,7 @@ client.User.GetUserMetadata(
 <dl>
 <dd>
 
-**tenantId:** `string` 
+**tenantID:** `string` 
     
 </dd>
 </dl>
@@ -490,7 +490,7 @@ client.User.GetUserMetadata(
 <dl>
 <dd>
 
-**userId:** `string` 
+**userID:** `string` 
     
 </dd>
 </dl>
@@ -510,7 +510,7 @@ client.User.GetUserMetadata(
 </dl>
 </details>
 
-<details><summary><code>client.User.GetUserSpecifics(TenantId, UserId, Version, Thought) -> *fern.User</code></summary>
+<details><summary><code>client.User.GetUserSpecifics(TenantID, UserID, Version, Thought) -> *fern.User</code></summary>
 <dl>
 <dd>
 
@@ -559,7 +559,7 @@ client.User.GetUserSpecifics(
 <dl>
 <dd>
 
-**tenantId:** `string` 
+**tenantID:** `string` 
     
 </dd>
 </dl>
@@ -567,7 +567,7 @@ client.User.GetUserSpecifics(
 <dl>
 <dd>
 
-**userId:** `string` 
+**userID:** `string` 
     
 </dd>
 </dl>
