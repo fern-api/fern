@@ -2,13 +2,13 @@ import {
     FernGeneratorExec,
     GeneratorNotificationService,
     NopGeneratorNotificationService,
-    parseGeneratorConfig,
-    parseIR
+    parseGeneratorConfig
 } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { CONSOLE_LOGGER, createLogger, Logger, LogLevel } from "@fern-api/logger";
-import { FernIr, serialization } from "@fern-fern/ir-sdk";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { readFile } from "fs/promises";
 import {
     constructNpmPackage,
     constructNpmPackageArgs,
@@ -73,10 +73,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             });
             const customConfig = this.parseCustomConfig(config.customConfig, logger);
 
-            const ir = await parseIR({
-                absolutePathToIR: AbsoluteFilePath.of(config.irFilepath),
-                parse: serialization.IntermediateRepresentation.parse
-            });
+            const ir = await fastParseIR(config.irFilepath);
 
             let npmPackage: NpmPackage | undefined;
             if (ir.selfHosted) {
@@ -397,5 +394,98 @@ class GeneratorContextImpl implements GeneratorContext {
 
     public didSucceed(): boolean {
         return this.isSuccess;
+    }
+}
+
+// Property renames that Zurg serialization applies (raw JSON key → TypeScript key).
+const PROPERTY_RENAMES: Record<string, string> = {
+    "extra-properties": "extraProperties",
+    "status-code": "statusCode",
+    package_description: "packageDescription",
+    publisher_email: "publisherEmail",
+    reference_url: "referenceUrl",
+    publisher_name: "publisherName",
+    baseURL: "baseUrl"
+};
+
+// Discriminant values where the variant has only a "value" property but uses
+// the spreading pattern (NOT wrapping). These are exceptions to the heuristic
+// that "only type+value keys → wrapped". Found by exhaustive search of ir-sdk
+// serialization schemas: ExampleTypeShape.enum, AuthValues.header, V2AuthValues.header.
+const SPREAD_VALUE_ONLY_DISCRIMINANTS = new Set(["enum", "header"]);
+
+/**
+ * Fast IR parser that bypasses the Zurg serializer (~9.5s) with a direct
+ * JSON.parse + tree walk (~0.5-1s). Zurg does four things beyond JSON.parse:
+ * 1. Renames `_type` → `type` on 7 discriminated unions
+ * 2. Adds `_visit` methods to all 69 discriminated union types
+ * 3. Renames ~10 properties (kebab-case/snake_case → camelCase)
+ * 4. Converts null → undefined for optional properties
+ * We replicate all four in a single O(n) tree walk.
+ */
+async function fastParseIR(irFilepath: string): Promise<FernIr.IntermediateRepresentation> {
+    const irString = await readFile(irFilepath, "utf-8");
+    const raw = JSON.parse(irString);
+    transformIRTree(raw);
+    return raw as FernIr.IntermediateRepresentation;
+}
+
+function transformIRTree(node: unknown): void {
+    if (node === null || typeof node !== "object") {
+        return;
+    }
+
+    if (Array.isArray(node)) {
+        for (let i = 0; i < node.length; i++) {
+            transformIRTree(node[i]);
+        }
+        return;
+    }
+
+    const obj = node as Record<string, unknown>;
+
+    // Convert null → undefined (Zurg's optional() does this)
+    for (const key in obj) {
+        if (Object.prototype.hasOwnProperty.call(obj, key) && obj[key] === null) {
+            obj[key] = undefined;
+        }
+    }
+
+    // Handle _type → type rename (7 unions use "_type" as raw discriminant)
+    if ("_type" in obj) {
+        obj.type = obj._type;
+        delete obj._type;
+    }
+
+    // Add _visit to any object with a string "type" field.
+    // Detect wrapping: if the only data key is "value" AND the discriminant is
+    // NOT in the known spread-value-only set, the visitor receives obj.value.
+    if (typeof obj.type === "string") {
+        const discriminant = obj.type as string;
+        const dataKeys = Object.keys(obj).filter((k) => k !== "type");
+        const isWrapped =
+            dataKeys.length === 1 && dataKeys[0] === "value" && !SPREAD_VALUE_ONLY_DISCRIMINANTS.has(discriminant);
+        obj._visit = function (visitor: Record<string, ((v: unknown) => unknown) | undefined>) {
+            const handler = visitor[discriminant];
+            if (handler) {
+                return handler(isWrapped ? obj.value : obj);
+            }
+            return visitor._other!(obj);
+        };
+    }
+
+    // Apply property renames
+    for (const rawKey in PROPERTY_RENAMES) {
+        if (rawKey in obj) {
+            obj[PROPERTY_RENAMES[rawKey]!] = obj[rawKey];
+            delete obj[rawKey];
+        }
+    }
+
+    // Recurse into all values
+    for (const key in obj) {
+        if (Object.prototype.hasOwnProperty.call(obj, key) && key !== "_visit") {
+            transformIRTree(obj[key]);
+        }
     }
 }
