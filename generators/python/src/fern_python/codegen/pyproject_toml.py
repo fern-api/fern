@@ -226,9 +226,10 @@ packages = [
             if self.enable_wire_tests:
                 wire_test_deps = 'requests = "^2.31.0"\ntypes-requests = "^2.31.0"\n'
 
-            # pytest-asyncio ^1.0.0 fixes Python 3.14+ deprecation warnings but
-            # requires pytest >= 8.2 and Python >= 3.9.  Fall back to the older
-            # pair when the project still supports Python 3.8.
+            # pytest >= 9.0.3 addresses CVE-2025-71176 (insecure tmpdir handling).
+            # pytest 9 requires Python >= 3.9, and pytest-asyncio ^1.0.0 requires
+            # pytest >= 8.2 and Python >= 3.9.  Fall back to the older pair when
+            # the project still supports Python 3.8.
             #
             # Extract the minimum minor version from the constraint string
             # (e.g. "^3.8" -> 8, "^3.8.1" -> 8, "^3.10" -> 10, ">=3.9" -> 9).
@@ -238,7 +239,7 @@ packages = [
                 min_minor = int(match.group(2))
 
             if min_minor >= 9:
-                pytest_version = "^8.2.0"
+                pytest_version = "^9.0.3"
                 pytest_asyncio_version = "^1.0.0"
             else:
                 pytest_version = "^7.4.0"
