@@ -1,4 +1,21 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.79.3
+  changelogEntry:
+    - summary: |
+        Support `x-fern-discriminator-context` extension on OpenAPI discriminator objects and auto-infer
+        `protocol` context for SSE-shaped discriminated unions.
+      type: fix
+  createdAt: "2026-04-20"
+  irVersion: 66
+- version: 4.79.2
+  changelogEntry:
+    - summary: |
+        Fix AsyncAPI bundler silently degrading typed models to `unknown` when
+        multi-file specs use file-local `$ref` pointers (e.g. `$ref: '#/Sibling'`)
+        inside schemas that are inlined from external files.
+      type: fix
+  createdAt: "2026-04-20"
+  irVersion: 66
 - version: 4.79.1
   changelogEntry:
     - summary: |

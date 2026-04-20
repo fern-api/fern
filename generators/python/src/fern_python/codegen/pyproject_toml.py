@@ -224,7 +224,7 @@ packages = [
             # Conditionally add requests and types-requests for wire tests
             wire_test_deps = ""
             if self.enable_wire_tests:
-                wire_test_deps = 'requests = "^2.31.0"\ntypes-requests = "^2.31.0"\n'
+                wire_test_deps = 'requests = "^2.33.0"\ntypes-requests = "^2.33.0"\n'
 
             # pytest >= 9.0.3 addresses CVE-2025-71176 (insecure tmpdir handling).
             # pytest 9 requires Python >= 3.9, and pytest-asyncio ^1.0.0 requires
@@ -245,6 +245,13 @@ packages = [
                 pytest_version = "^7.4.0"
                 pytest_asyncio_version = "^0.23.5"
 
+            # Exclude the vulnerable urllib3 range (>=2.0.0,<2.2.2) addressed by
+            # CVE-2024-37891 (GHSA-34jh-p97f-mpxf). Pinning as a dev dependency
+            # keeps urllib3 out of the SDK's runtime dependency set while
+            # constraining `poetry lock` resolution so the generated lock file
+            # can never pick up the vulnerable range — even when transitively
+            # pulled in by user-supplied `extra_dependencies` such as older
+            # pinned versions of boto3 whose botocore caps urllib3 at < 2.1.
             return f"""
 [tool.poetry.dependencies]
 python = "{self.python_version}"
@@ -256,6 +263,7 @@ pytest-asyncio = "{pytest_asyncio_version}"
 pytest-xdist = "^3.6.1"
 python-dateutil = "^2.9.0"
 types-python-dateutil = "^2.9.0.20240316"
+urllib3 = ">=1.26.19,<2.0.0 || >=2.2.2,<3.0.0"
 {wire_test_deps}{dev_deps}"""
 
     @dataclass(frozen=True)
