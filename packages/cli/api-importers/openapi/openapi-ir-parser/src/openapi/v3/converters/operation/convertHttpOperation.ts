@@ -409,7 +409,9 @@ function createOperationSdkMethodName({
 }
 
 function generateSecurity(operation: OpenAPIV3.OperationObject): EndpointSecurity | undefined {
-    return operation.security;
+    return operation.security?.map((requirement) =>
+        Object.fromEntries(Object.entries(requirement).map(([key, value]) => [key, value ?? []]))
+    );
 }
 
 function isEndpointAuthed(operation: OpenAPIV3.OperationObject, document: OpenAPIV3.Document): boolean {

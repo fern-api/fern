@@ -1,0 +1,2 @@
+commit	median_e2e_ms	median_gen_ms	baseline_e2e_ms	change_pct	status	description
+e9d9a1a	38596	18400	38596	0.0	keep	baseline (fix: sanitize null security scopes in Square spec)

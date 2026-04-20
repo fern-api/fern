@@ -94,7 +94,9 @@ export function generateIr({
             })
             .filter((entry): entry is [string, SecurityScheme] => entry !== null)
     );
-    const security: GlobalSecurity | undefined = openApi.security?.filter((requirement) => requirement != null);
+    const security: GlobalSecurity | undefined = openApi.security
+        ?.filter((requirement) => requirement != null)
+        .map((requirement) => Object.fromEntries(Object.entries(requirement).map(([key, value]) => [key, value ?? []])));
     const authHeaders = new Set(
         Object.entries(securitySchemes)
             .map(([_, securityScheme]) => {

@@ -545,8 +545,12 @@ export class OperationConverter extends AbstractOperationConverter {
             return this.getDefaultSecurityFromAuthOverrides();
         }
 
-        // Fall back to OpenAPI security
-        return this.operation.security ?? this.context.spec.security;
+        // Fall back to OpenAPI security.
+        // Sanitize: some specs (e.g. Square) use null instead of [] for scope-less security requirements.
+        const raw = this.operation.security ?? this.context.spec.security;
+        return raw?.map((requirement) =>
+            Object.fromEntries(Object.entries(requirement).map(([key, value]) => [key, value ?? []]))
+        );
     }
 
     /**
