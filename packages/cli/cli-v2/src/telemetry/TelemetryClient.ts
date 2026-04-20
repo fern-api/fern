@@ -179,13 +179,13 @@ export class TelemetryClient {
     }
 
     /**
-     * Returns true if telemetry should be disabled.
+     * Returns true if telemetry is enabled.
      *
      * Priority:
      *  1. FERN_TELEMETRY_DISABLED env var (any non-empty value)
      *  2. telemetry.enabled: false in ~/.fernrc
      */
-    private isTelemetryEnabled(): boolean {
+    public isTelemetryEnabled(): boolean {
         const envDisabled = process.env["FERN_TELEMETRY_DISABLED"];
         if (envDisabled != null && envDisabled.length > 0) {
             return false;

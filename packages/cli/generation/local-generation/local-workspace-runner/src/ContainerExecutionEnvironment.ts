@@ -15,17 +15,21 @@ export class ContainerExecutionEnvironment implements ExecutionEnvironment {
     private readonly containerImage: string;
     private readonly keepContainer: boolean;
     private readonly runner?: ContainerRunner;
+    private readonly disableTelemetry: boolean;
 
     constructor({
         containerImage,
         keepContainer,
         runner,
+        disableTelemetry,
         dockerImage,
         keepDocker
     }: {
         containerImage?: string;
         keepContainer?: boolean;
         runner?: ContainerRunner;
+        /** When true, disables telemetry collection inside the generator container. */
+        disableTelemetry?: boolean;
         /** @deprecated Use containerImage instead */
         dockerImage?: string;
         /** @deprecated Use keepContainer instead */
@@ -34,6 +38,7 @@ export class ContainerExecutionEnvironment implements ExecutionEnvironment {
         this.containerImage = containerImage ?? dockerImage ?? "";
         this.keepContainer = keepContainer ?? keepDocker ?? false;
         this.runner = runner;
+        this.disableTelemetry = disableTelemetry ?? false;
     }
 
     public async execute({
@@ -77,6 +82,9 @@ export class ContainerExecutionEnvironment implements ExecutionEnvironment {
         if (inspect) {
             envVars["NODE_OPTIONS"] = `--inspect-brk=0.0.0.0:${DEFAULT_NODE_DEBUG_PORT}`;
             ports[DEFAULT_NODE_DEBUG_PORT] = DEFAULT_NODE_DEBUG_PORT;
+        }
+        if (this.disableTelemetry) {
+            envVars["FERN_DISABLE_TELEMETRY"] = "true";
         }
 
         await runContainer({

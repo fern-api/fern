@@ -356,7 +356,8 @@ export async function sdkPreview({
                             noReplay: true,
                             validateWorkspace: true,
                             publishToRegistry,
-                            isPreview: true
+                            isPreview: true,
+                            disableTelemetry: process.env.FERN_DISABLE_TELEMETRY === "true"
                         });
                     });
                 }

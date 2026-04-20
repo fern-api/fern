@@ -149,7 +149,8 @@ export async function generateWorkspace({
                         requireEnvVars,
                         skipFernignore,
                         automationMode,
-                        autoMerge
+                        autoMerge,
+                        disableTelemetry: process.env.FERN_DISABLE_TELEMETRY === "true"
                     });
                 } else if (token != null) {
                     await runRemoteGenerationForAPIWorkspace({
