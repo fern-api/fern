@@ -20,9 +20,33 @@ export class SentryClient {
                 dsn: sentryDsn,
                 release,
                 environment: sentryEnvironment,
+                // Opt out of every built-in integration (HTTP tracing, local
+                // variables, console breadcrumbs, etc.) — error capture is all
+                // we need.
                 defaultIntegrations: false,
-                integrations: [Sentry.rewriteFramesIntegration()],
-                tracesSampleRate: 0
+                // Rewrite absolute frame paths to repo-root-relative paths so
+                // they align with the source maps uploaded at publish time.
+                // onUncaughtException / onUnhandledRejection catch errors that
+                // escape the CLI's top-level handler (fire-and-forget callbacks,
+                // unhandled rejections in background work, etc.).
+                // linkedErrors chains .cause so wrapped errors stay traceable.
+                // nodeContext adds Node.js version and OS to every event.
+                integrations: [
+                    Sentry.rewriteFramesIntegration(),
+                    Sentry.onUncaughtExceptionIntegration(),
+                    Sentry.onUnhandledRejectionIntegration(),
+                    Sentry.linkedErrorsIntegration(),
+                    Sentry.nodeContextIntegration()
+                ],
+                // The CLI doesn't emit transactions; disable performance
+                // sampling entirely.
+                tracesSampleRate: 0,
+                // Always attach a stack trace, even when the thrown value is
+                // not an Error instance (e.g. a plain string or object).
+                attachStacktrace: true,
+                // Suppress the client-report envelope Sentry sends when events
+                // are dropped (e.g. due to rate limits).
+                sendClientReports: false
             });
             setSentryRunIdTags();
         }
