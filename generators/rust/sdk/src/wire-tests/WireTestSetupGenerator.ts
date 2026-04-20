@@ -165,9 +165,14 @@ export class WireTestSetupGenerator {
             // Strip from query parameter matchers
             if (mapping.request.queryParameters) {
                 for (const [_key, matcher] of Object.entries(mapping.request.queryParameters)) {
-                    const m = matcher as { equalTo?: string };
-                    if (m.equalTo && WireTestSetupGenerator.DATETIME_WITH_ZERO_MILLIS_REGEX.test(m.equalTo)) {
-                        m.equalTo = m.equalTo.replace(".000", "");
+                    if (!("equalTo" in matcher)) {
+                        continue;
+                    }
+                    if (
+                        matcher.equalTo &&
+                        WireTestSetupGenerator.DATETIME_WITH_ZERO_MILLIS_REGEX.test(matcher.equalTo)
+                    ) {
+                        matcher.equalTo = matcher.equalTo.replace(".000", "");
                     }
                 }
             }
@@ -501,7 +506,7 @@ pub async fn reset_wiremock_requests() -> Result<(), Box<dyn std::error::Error>>
 pub async fn verify_request_count(
     method: &str,
     url_path: &str,
-    query_params: Option<HashMap<String, String>>,
+    query_params: Option<HashMap<String, serde_json::Value>>,
     expected: usize,
 ) -> Result<(), Box<dyn std::error::Error>> {
     let mut request_body = json!({
@@ -512,7 +517,21 @@ pub async fn verify_request_count(
     if let Some(params) = query_params {
         let query_parameters: Value = params
             .into_iter()
-            .map(|(k, v)| (k, json!({"equalTo": v})))
+            .map(|(k, v)| {
+                let matcher = if v.is_array() {
+                    let items: Vec<Value> = v.as_array().unwrap()
+                        .iter()
+                        .filter_map(|item| item.as_str())
+                        .map(|s| json!({"equalTo": s}))
+                        .collect();
+                    json!({"hasExactly": items})
+                } else if let Some(s) = v.as_str() {
+                    json!({"equalTo": s})
+                } else {
+                    json!({"equalTo": v.to_string()})
+                };
+                (k, matcher)
+            })
             .collect();
         request_body["queryParameters"] = query_parameters;
     }
