@@ -2,7 +2,6 @@ import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { NpmPackage } from "@fern-api/typescript-base";
 import { mkdir, writeFile } from "fs/promises";
-import Dirent from "memfs/lib/Dirent";
 import { Volume } from "memfs/lib/volume";
 import path from "path";
 import tmp from "tmp-promise";
@@ -191,20 +190,24 @@ export abstract class TypescriptProject {
         return exports;
     }
 
+    // When set, writeFileToVolume writes directly to disk instead of memfs
+    private targetDiskDirectory: string | undefined;
+
     public async persist(): Promise<PersistedTypescriptProject> {
-        // write to disk
         const directoryOnDiskToWriteTo = AbsoluteFilePath.of((await tmp.dir()).path);
         // biome-ignore lint/suspicious/noConsole: allow console
         console.log("Persisted typescript project to " + directoryOnDiskToWriteTo);
 
-        await this.writeSrcToVolume();
+        // Write directly to disk, bypassing the memfs intermediate volume
+        this.targetDiskDirectory = directoryOnDiskToWriteTo;
+
+        await this.writeSrcToDisk(directoryOnDiskToWriteTo);
 
         for (const [filepath, fileContents] of Object.entries(this.extraFiles)) {
             await this.writeFileToVolume(RelativeFilePath.of(filepath), fileContents);
         }
 
         await this.addFilesToVolume();
-        await this.writeVolumeToDisk(directoryOnDiskToWriteTo);
 
         return new PersistedTypescriptProject({
             runScripts: this.runScripts,
@@ -227,48 +230,43 @@ export abstract class TypescriptProject {
         });
     }
 
-    private async writeSrcToVolume(): Promise<void> {
+    private async writeSrcToDisk(targetDir: string): Promise<void> {
+        // Phase 1: Collect all source file data (getFullText is synchronous)
+        const files: { relativePath: string; content: string }[] = [];
         for (const file of this.tsMorphProject.getSourceFiles()) {
-            await this.writeFileToVolume(RelativeFilePath.of(file.getFilePath().slice(1)), file.getFullText());
+            files.push({
+                relativePath: file.getFilePath().slice(1),
+                content: file.getFullText()
+            });
+        }
+
+        // Phase 2: Pre-create all unique parent directories in parallel
+        const dirs = new Set<string>();
+        for (const { relativePath } of files) {
+            dirs.add(path.join(targetDir, path.dirname(relativePath)));
+        }
+        await Promise.all([...dirs].map((dir) => mkdir(dir, { recursive: true })));
+
+        // Phase 3: Write all files in parallel batches
+        const BATCH_SIZE = 128;
+        for (let i = 0; i < files.length; i += BATCH_SIZE) {
+            const batch = files.slice(i, i + BATCH_SIZE);
+            await Promise.all(
+                batch.map(({ relativePath, content }) => writeFile(path.join(targetDir, relativePath), content))
+            );
         }
     }
 
     protected async writeFileToVolume(filepath: RelativeFilePath, fileContents: string): Promise<void> {
+        if (this.targetDiskDirectory != null) {
+            const fullPath = path.join(this.targetDiskDirectory, filepath);
+            await mkdir(path.dirname(fullPath), { recursive: true });
+            await writeFile(fullPath, fileContents);
+            return;
+        }
         const absoluteFilepath = `/${filepath}`;
         await this.volume.promises.mkdir(path.dirname(absoluteFilepath), { recursive: true });
         await this.volume.promises.writeFile(absoluteFilepath, fileContents);
-    }
-
-    private async writeVolumeToDisk(directoryOnDiskToWriteTo: AbsoluteFilePath): Promise<void> {
-        await this.writeVolumeToDiskRecursive({
-            directoryOnDiskToWriteTo,
-            directoryInVolume: "/"
-        });
-    }
-
-    private async writeVolumeToDiskRecursive({
-        directoryOnDiskToWriteTo,
-        directoryInVolume
-    }: {
-        directoryOnDiskToWriteTo: string;
-        directoryInVolume: string;
-    }): Promise<void> {
-        const contents = (await this.volume.promises.readdir(directoryInVolume, { withFileTypes: true })) as Dirent[];
-        for (const file of contents) {
-            const fullPathInVolume = path.join(directoryInVolume, file.name.toString());
-            const fullPathOnDisk = path.join(directoryOnDiskToWriteTo, fullPathInVolume);
-            if (file.isDirectory()) {
-                await mkdir(fullPathOnDisk, { recursive: true });
-                await this.writeVolumeToDiskRecursive({
-                    directoryOnDiskToWriteTo,
-                    directoryInVolume: fullPathInVolume
-                });
-            } else {
-                const contents = await this.volume.promises.readFile(fullPathInVolume);
-                await mkdir(path.dirname(fullPathOnDisk), { recursive: true });
-                await writeFile(fullPathOnDisk, typeof contents === "string" ? contents : new Uint8Array(contents));
-            }
-        }
     }
 
     protected getCommonScripts(): Record<COMMON_SCRIPTS, string> {
