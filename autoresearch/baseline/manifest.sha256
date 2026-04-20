@@ -6,10 +6,10 @@ b1f6d674c14d2a5eedae59eca60452de32a225fd21c16bbd13862ec52e21f97a  ./.github/work
 382c3a7e1a924b42ab10ba8ee34af25972dcc5963de92ceda8f9761fb7bec343  ./package.json
 ce3f2b90d58cc554cb0a775550e553fb4b929ebab614796b87afcaddba358fd7  ./pnpm-lock.yaml
 451239a85d56c6006637b2e926c4e11bda96b0ce859ada49413d73eae87c4faa  ./pnpm-workspace.yaml
-db0f576176c227b99debb7815653b73a08d3d540002ccb2d9b890c06ac1fcb29  ./README.md
+8f2c4006e9df21573575f2dc093df2c61667707d52a89d63e734686a321ad5b9  ./README.md
 c6a83371e8a7fc650eeab4e7257ac87a6af97821582ac4ec8963d043c0531bb9  ./reference.md
 03636c221f73af16bf49c9891b1b4f117ce2a6ccbc8395690cf8654d21df9502  ./scripts/rename-to-esm-files.js
-587e8b05cf677fabd911e3afabf133d4e3efcd9509a9031e8b0569bf0dab3cf9  ./snippet.json
+418b6d80752bce3b95edf16906b3a768b8d3386d7920c6ed4b6b7f21e3d6ebdc  ./snippet.json
 36ad0f4eb54f41a485f7d3f9de8f5a40320fa1bc2031f852c9b9d767e4496251  ./src/api/index.ts
 b37d9076a48c1e287d2e807888c9e0cf4d327d1f9747248b9a53141c49d871cc  ./src/api/resources/applePay/client/Client.ts
 a656aabb44efa59dc2c362708cb0b215134baf5015b44002874221198b0b5ca4  ./src/api/resources/applePay/client/index.ts

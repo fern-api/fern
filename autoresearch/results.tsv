@@ -1,2 +1,13 @@
 commit	median_e2e_ms	median_gen_ms	baseline_e2e_ms	change_pct	status	description
 e9d9a1a	38596	18400	38596	0.0	keep	baseline (fix: sanitize null security scopes in Square spec)
+8363940	40062	19700	38596	+3.8	discard	exp-001: parallelize writeVolumeToDisk with batched file writes
+248e843	41734	20000	38596	+8.1	discard	exp-002: replace memfs with plain Map (eliminated memfs entirely)
+28aa387	34391	14100	38596	-10.9	keep	exp-003: replace ts-morph fixImportsForEsm with fast text processing
+8437b16	34512	13900	38596	-10.6	keep	exp-004: replace ts-morph convertJestImportsToVitest with text processing
+ffd9807	34804	13700	38596	-9.8	discard	exp-005: parallelize generateLockfile and checkFix (no improvement)
+65ad0d0	38966	14300	38596	+1.0	discard	exp-006: replace git-based deleteGitIgnoredFiles with direct rm (noise; ~200ms gain too small to measure)
+c2f020e	34941	13700	38596	-9.5	keep	exp-007: optimize fixImportsForEsm with parallel reads and narrower src/ walk
+f6bbcbd	35285	13500	38596	-8.6	keep	exp-008: parallelize generateLockfile with checkFix (gen improved 200ms, e2e noisy)
+7007938	35176	12800	38596	-8.9	keep	exp-009: replace addImportDeclaration AST with string-based insertion (gen -30.4%)
+f549a2b	37097	14600	38596	-3.9	discard	exp-010: merge header+imports into single insertText call (noise; no measurable gain)
+eaaa86f	34689	12200	38596	-10.1	keep	exp-011: bypass memfs, write directly to disk with parallel batched writes (gen -33.7%)

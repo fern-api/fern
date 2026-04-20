@@ -1825,7 +1825,7 @@ export class SdkGenerator {
 
         run({ sourceFile, importsManager });
 
-        if (sourceFile.getStatements().length === 0) {
+        if (sourceFile.getFullText().length === 0) {
             sourceFile.delete();
             this.context.logger.debug(`Skipping ${filepathStr} (no content)`);
         } else {
@@ -1842,15 +1842,10 @@ export class SdkGenerator {
 
             this.exportsManager.addExportsForFilepath(filepath, effectiveAddExportTypeModifier);
 
-            // this needs to be last.
+            // Header must be inserted last (after imports) so it ends up first.
             // https://github.com/dsherret/ts-morph/issues/189#issuecomment-414174283
-            sourceFile.insertText(0, (writer) => {
-                if (this.config.whitelabel) {
-                    writer.writeLine(WHITELABEL_FILE_HEADER);
-                } else {
-                    writer.writeLine(FILE_HEADER);
-                }
-            });
+            const header = this.config.whitelabel ? WHITELABEL_FILE_HEADER : FILE_HEADER;
+            sourceFile.insertText(0, header + "\n");
 
             this.context.logger.debug(`Generated ${filepathStr}`);
         }
