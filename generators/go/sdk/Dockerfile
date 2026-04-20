@@ -10,6 +10,13 @@ COPY generators/go-v2/sdk/dist/ /dist/
 # Stage 2: Final Go image
 FROM golang:1.26.2-alpine3.23
 
+ARG SENTRY_DSN
+ARG SENTRY_ENVIRONMENT=production
+ARG SENTRY_RELEASE
+ENV SENTRY_DSN=$SENTRY_DSN
+ENV SENTRY_ENVIRONMENT=$SENTRY_ENVIRONMENT
+ENV SENTRY_RELEASE=$SENTRY_RELEASE
+
 WORKDIR /workspace
 
 RUN apk add --no-cache ca-certificates git libstdc++

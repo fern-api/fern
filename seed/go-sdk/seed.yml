@@ -34,6 +34,13 @@ publish:
     file: ./generators/go/sdk/Dockerfile
     image: fernapi/fern-go-sdk
     context: .
+  sentry:
+    name: fern-go-sdk
+    project: go-sdk
+    # Go binary is the ENTRYPOINT, but the embedded /bin/go-v2 Node CLI
+    # is invoked for newer features; its source maps are uploaded here.
+    sourceMaps:
+      - dir: generators/go-v2/sdk/dist
 test:
   docker:
     image: fernapi/fern-go-sdk:latest

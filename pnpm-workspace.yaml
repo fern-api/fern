@@ -87,6 +87,7 @@ catalog:
   "@open-rpc/meta-schema": ^1.14.9
   "@redocly/openapi-core": ^1.4.1
   "@rolldown/binding-darwin-arm64": 1.0.0-rc.5
+  "@sentry/cli": ^2.42.2
   "@types/cli-progress": ^3.11.6
   "@types/cors": ^2.8.13
   "@types/decompress": ^4.2.7

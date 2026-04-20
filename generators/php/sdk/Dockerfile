@@ -2,6 +2,12 @@ FROM node:22.12-alpine3.20 AS node
 FROM composer:2.7.9
 
 ENV YARN_CACHE_FOLDER=/.yarn
+ARG SENTRY_DSN
+ARG SENTRY_ENVIRONMENT=production
+ARG SENTRY_RELEASE
+ENV SENTRY_DSN=$SENTRY_DSN
+ENV SENTRY_ENVIRONMENT=$SENTRY_ENVIRONMENT
+ENV SENTRY_RELEASE=$SENTRY_RELEASE
 
 RUN apk --no-cache add bash curl git zip
 RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \

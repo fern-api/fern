@@ -102,6 +102,13 @@ RUN cd / \
     && tar -xvf sdk.tar \
     && rm -rf sdk.tar
 
+ARG SENTRY_DSN
+ARG SENTRY_ENVIRONMENT=production
+ARG SENTRY_RELEASE
+ENV SENTRY_DSN=$SENTRY_DSN
+ENV SENTRY_ENVIRONMENT=$SENTRY_ENVIRONMENT
+ENV SENTRY_RELEASE=$SENTRY_RELEASE
+
 ENV JAVA_TOOL_OPTIONS="-Xmx4g -Dfile.encoding=UTF8"
 
 # Copy over node contents to be able to run the compiled CLI

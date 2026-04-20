@@ -4,6 +4,13 @@ FROM node:20.19.4-slim AS node
 # Stage 2: Base Python image with dependencies
 FROM python:3.13.7-slim AS python-base
 
+ARG SENTRY_DSN
+ARG SENTRY_ENVIRONMENT=production
+ARG SENTRY_RELEASE
+ENV SENTRY_DSN=$SENTRY_DSN
+ENV SENTRY_ENVIRONMENT=$SENTRY_ENVIRONMENT
+ENV SENTRY_RELEASE=$SENTRY_RELEASE
+
 # Copy Node.js and npm from the node stage
 COPY --from=node /usr/local/bin/node /usr/local/bin/node
 COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
