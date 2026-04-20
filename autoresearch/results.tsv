@@ -28,3 +28,5 @@ a85a06f	33847	11900	38596	-12.3	discard	exp-025: parallelize post-persist steps 
 4c6880d	34017	12000	38596	-11.9	discard	exp-026: skip dprint for test files (gen +6.2%, biome does more work)
 b6826a2	33981	11900	38596	-11.9	discard	exp-027: parallelize snippet+readme+reference (CPU-bound, no overlap)
 d18cbff777a	31358	11100	38596	-18.8	keep	exp-028: bypass Zurg snippet serializer with manual JSON construction (gen -1.8%)
+f43dc66	31115	11200	38596	-19.4	discard	exp-029: invoke biome directly instead of through pnpm script runner (no gain; checkFix parallel with slower generateLockfile)
+47e3bd6	32524	11100	38596	-15.7	discard	exp-030: bypass ts-morph AST round-trip in withSnippet (validation fail: README/reference differ)
