@@ -10,6 +10,7 @@ import {
 } from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import { FernDiscriminatedExtension } from "../../extensions/x-fern-discriminated.js";
+import { FernDiscriminatorContextExtension } from "../../extensions/x-fern-discriminator-context.js";
 import { FernEnumExtension } from "../../extensions/x-fern-enum.js";
 import { AbstractConverter, AbstractConverterContext } from "../../index.js";
 import { convertProperties } from "../../utils/ConvertProperties.js";
@@ -315,6 +316,12 @@ export class OneOfSchemaConverter extends AbstractConverter<
             referencedTypes.add(typeId);
         }
 
+        const discriminatorContextExtension = new FernDiscriminatorContextExtension({
+            context: this.context,
+            breadcrumbs: [...this.breadcrumbs, "discriminator"],
+            node: this.schema.discriminator
+        });
+
         return {
             type: Type.union({
                 baseProperties,
@@ -325,7 +332,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 extends: extends_,
                 types: unionTypes,
                 default: undefined,
-                discriminatorContext: undefined
+                discriminatorContext: discriminatorContextExtension.convert()
             }),
             referencedTypes,
             inlinedTypes: {
