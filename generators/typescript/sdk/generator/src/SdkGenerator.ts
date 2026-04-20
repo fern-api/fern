@@ -1809,12 +1809,12 @@ export class SdkGenerator {
         const statements = run({ sourceFile, importsManager });
         if (statements != null) {
             sourceFile.addStatements(statements.map((expression) => getTextOfTsNode(expression)));
-            if (includeImports) {
-                importsManager.writeImportsToSourceFile(sourceFile);
-            }
-            const text = sourceFile.getText();
+            // Get body text and import text separately to avoid insertText(0,...)
+            // which triggers a full AST re-parse on every snippet.
+            const importText = includeImports ? importsManager.buildImportText(sourceFile) : "";
+            const bodyText = sourceFile.getText();
             sourceFile.delete();
-            return text;
+            return importText + bodyText;
         }
         // Clean up the source file even if no statements were generated
         sourceFile.delete();
