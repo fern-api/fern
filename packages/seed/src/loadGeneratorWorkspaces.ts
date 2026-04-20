@@ -54,7 +54,9 @@ export async function loadGeneratorWorkspaces(): Promise<GeneratorWorkspace[]> {
             seedConfig.toString()
         ) as unknown as FernSeedConfig.SeedWorkspaceConfiguration;
         if (workspaceConfig.disabled === true) {
-            CONSOLE_LOGGER.debug(`Skipping ${workspace}: disabled in ${SEED_CONFIG_FILENAME}`);
+            // Use warn (stderr) so that commands emitting machine-readable output
+            // on stdout (e.g. `seed affected --json`) remain parseable.
+            CONSOLE_LOGGER.warn(`Skipping ${workspace}: disabled in ${SEED_CONFIG_FILENAME}`);
             continue;
         }
         workspaces.push({
