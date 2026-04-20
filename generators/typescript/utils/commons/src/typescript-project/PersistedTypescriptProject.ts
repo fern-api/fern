@@ -4,7 +4,7 @@ import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { PublishInfo } from "@fern-api/typescript-base";
 import { execFile } from "child_process";
 import decompress from "decompress";
-import { cp, readdir, rm, writeFile } from "fs/promises";
+import { cp, readdir, readFile, rm, writeFile } from "fs/promises";
 import tmp from "tmp-promise";
 import { promisify } from "util";
 
@@ -498,35 +498,53 @@ export class PersistedTypescriptProject {
     }
 
     public async deleteGitIgnoredFiles(logger: Logger): Promise<void> {
-        const git = createLoggingExecutable("git", {
-            cwd: this.directory,
-            logger
-        });
-        await git(["init"]);
-        // Disable auto-gc so that no background pack processes run during
-        // the subsequent add/commit/clean, which would race with the rm(.git) below.
-        await git(["config", "gc.auto", "0"]);
-        await git(["add", "."]);
-        await git([
-            "-c",
-            "user.name=fern",
-            "-c",
-            "user.email=hey@buildwithfern.com",
-            "-c",
-            "commit.gpgsign=false",
-            "commit",
-            "--no-verify",
-            "-m",
-            "Initial commit"
-        ]);
-        await git(["clean", "-fdx"]);
+        // Instead of spawning 5 git sub-processes (init, config, add, commit, clean)
+        // + rm .git, parse .gitignore and directly remove matching entries.
+        const gitignorePath = join(this.directory, RelativeFilePath.of(".gitignore"));
+        let gitignoreContent: string;
+        try {
+            gitignoreContent = await readFile(gitignorePath, "utf-8");
+        } catch {
+            logger.debug("No .gitignore found, nothing to clean");
+            return;
+        }
 
-        await rm(join(this.directory, RelativeFilePath.of(".git")), {
-            recursive: true,
-            force: true,
-            maxRetries: 3,
-            retryDelay: 100
-        });
+        const entries = await readdir(this.directory, { withFileTypes: true });
+        const patterns = gitignoreContent
+            .split("\n")
+            .map((line) => line.trim())
+            .filter((line) => line.length > 0 && !line.startsWith("#") && !line.startsWith("!"));
+
+        const toRemove: string[] = [];
+        for (const entry of entries) {
+            const name = entry.name;
+            for (const pattern of patterns) {
+                // Strip leading / and trailing / from pattern for matching
+                const cleanPattern = pattern.replace(/^\//, "").replace(/\/$/, "");
+                if (name === cleanPattern) {
+                    toRemove.push(name);
+                    break;
+                }
+                // Handle glob patterns like *.d.ts or .pnp.*
+                if (cleanPattern.includes("*")) {
+                    const regex = new RegExp("^" + cleanPattern.replace(/\./g, "\\.").replace(/\*/g, ".*") + "$");
+                    if (regex.test(name)) {
+                        toRemove.push(name);
+                        break;
+                    }
+                }
+            }
+        }
+
+        await Promise.all(
+            toRemove.map((name) => {
+                logger.debug(`Removing gitignored: ${name}`);
+                return rm(join(this.directory, RelativeFilePath.of(name)), {
+                    recursive: true,
+                    force: true
+                });
+            })
+        );
     }
 
     private async writeToolOutputToLogFile({
