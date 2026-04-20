@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.79.1
+  changelogEntry:
+    - summary: |
+        Fix auto-detected global headers generating type-incorrect example values. When headers like `Request-Timeout` (integer type) were auto-promoted to global headers, the example generator used the header name as a string value instead of skipping the example.
+      type: fix
+  createdAt: "2026-04-20"
+  irVersion: 66
 - version: 4.79.0
   changelogEntry:
     - summary: |

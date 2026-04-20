@@ -105,15 +105,18 @@ export function buildEndpointExample({
                 }
             }
 
-            // Skip if already in endpoint headers and no override value was found
+            // Skip if already in endpoint headers (use existing example value)
             if (endpointHeaderNames.has(header)) {
                 continue;
             }
 
-            // Adds a header example using the header name as the value when no type information is available
+            // Generate a type-appropriate placeholder example based on the header's
+            // declared type (unwrapping optional/nullable wrappers first).
+            const headerType =
+                info != null && typeof info === "object" ? info.type : typeof info === "string" ? info : undefined;
             namedFullExamples.push({
                 name: header,
-                value: FullExample.primitive(PrimitiveExample.string(header))
+                value: FullExample.primitive(buildPrimitiveExampleForType(unwrapType(headerType), header))
             });
         }
 
@@ -186,6 +189,44 @@ function convertQueryParameterExample(
         }
     });
     return result;
+}
+
+function unwrapType(type: string | undefined): string | undefined {
+    if (type == null) {
+        return undefined;
+    }
+    const match = type.match(/^(?:optional|nullable)<(.+)>$/);
+    return match != null ? unwrapType(match[1]) : type;
+}
+
+function buildPrimitiveExampleForType(headerType: string | undefined, headerName: string): PrimitiveExample {
+    switch (headerType) {
+        case "integer":
+        case "int":
+            return PrimitiveExample.int(0);
+        case "int64":
+        case "long":
+            return PrimitiveExample.int64(0);
+        case "uint":
+            return PrimitiveExample.uint(0);
+        case "uint64":
+            return PrimitiveExample.uint64(0);
+        case "float":
+            return PrimitiveExample.float(0.0);
+        case "double":
+            return PrimitiveExample.double(0.0);
+        case "boolean":
+            return PrimitiveExample.boolean(true);
+        case "date":
+            return PrimitiveExample.date("2024-01-01");
+        case "date-time":
+        case "datetime":
+            return PrimitiveExample.datetime("2024-01-01T00:00:00Z");
+        case "base64":
+            return PrimitiveExample.base64("SGVsbG8=");
+        default:
+            return PrimitiveExample.string(headerName);
+    }
 }
 
 function convertHeaderExamples({
