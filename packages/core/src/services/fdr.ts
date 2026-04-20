@@ -13,7 +13,7 @@ export function createFdrService({
     const overrideEnvironment = process.env.FERN_FDR_ORIGIN ?? process.env.OVERRIDE_FDR_ORIGIN;
     return new FdrClient({
         environment: overrideEnvironment ?? environment,
-        token,
+        token: typeof token === "function" ? token() : token,
         headers
     });
 }

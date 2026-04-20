@@ -5,7 +5,7 @@ import { getApiLatestToNavigationNodeUrlSlug } from "../utils/getApiLatestToNavi
 it.skip("generates slug for endpoint", () => {
     const endpoint: FdrAPI.api.latest.endpoint.EndpointDefinition = {
         id: FdrAPI.EndpointId("endpoint_users.create"),
-        namespace: [FdrAPI.api.v1.SubpackageId("apiService")],
+        namespace: [FdrAPI.SubpackageId("apiService")],
         method: "POST",
         path: [
             {
@@ -44,7 +44,7 @@ it.skip("generates slug for endpoint", () => {
 it.skip("generates slug for websocket", () => {
     const websocket: FdrAPI.api.latest.websocket.WebSocketChannel = {
         id: FdrAPI.WebSocketId("websocket_notifications.stream"),
-        namespace: [FdrAPI.api.v1.SubpackageId("realtime")],
+        namespace: [FdrAPI.SubpackageId("realtime")],
         displayName: "Notifications Stream",
         operationId: "notificationsStream",
         path: [
@@ -75,7 +75,7 @@ it.skip("generates slug for websocket", () => {
 it.skip("generates slug for webhook", () => {
     const webhook: FdrAPI.api.latest.webhook.WebhookDefinition = {
         id: FdrAPI.WebhookId("webhook_payment.completed"),
-        namespace: [FdrAPI.api.v1.SubpackageId("webhooks")],
+        namespace: [FdrAPI.SubpackageId("webhooks")],
         displayName: "Payment Completed",
         operationId: "paymentCompleted",
         method: "POST",

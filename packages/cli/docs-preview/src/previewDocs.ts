@@ -17,6 +17,7 @@ import {
     convertDbDocsConfigToRead,
     convertDocsDefinitionToDb,
     DocsV1Read,
+    DocsV1Write,
     FdrAPI,
     FernNavigation,
     SDKSnippetHolder
@@ -138,7 +139,7 @@ export async function getPreviewDocsDefinition({
 
         for (const absoluteFilePath of editedAbsoluteFilepaths) {
             const relativePath = relative(docsWorkspace.absoluteFilePath, absoluteFilePath);
-            const pageId = FdrAPI.PageId(relativePath);
+            const pageId = DocsV1Write.PageId(relativePath);
             const previousValue = previousDocsDefinition.pages[pageId];
 
             if (!(await doesPathExist(absoluteFilePath))) {
@@ -210,7 +211,7 @@ export async function getPreviewDocsDefinition({
 
             const fileIdsMap = new Map(
                 Object.entries(previousDocsDefinition.filesV2).map(([id, file]) => {
-                    const path = "/" + file.url.replace("/_local/", "");
+                    const path = "/" + (file?.url ?? "").replace("/_local/", "");
                     return [AbsoluteFilePath.of(path), id];
                 })
             );
@@ -240,8 +241,8 @@ export async function getPreviewDocsDefinition({
 
             previousDocsDefinition.pages[pageId] = {
                 markdown: stripMdxComments(finalMarkdown),
-                editThisPageUrl: previousValue.editThisPageUrl,
-                editThisPageLaunch: previousValue.editThisPageLaunch,
+                editThisPageUrl: previousValue?.editThisPageUrl,
+                editThisPageLaunch: previousValue?.editThisPageLaunch,
                 rawMarkdown: stripMdxComments(markdown)
             };
         }
@@ -295,7 +296,7 @@ export async function getPreviewDocsDefinition({
     frontmatterSidebarTitleCache.clear();
     frontmatterSlugCache.clear();
     for (const [pageId, page] of Object.entries(dbDocsDefinition.pages)) {
-        if (page.rawMarkdown != null) {
+        if (page != null && page.rawMarkdown != null) {
             const absolutePath = AbsoluteFilePath.of(`${docsWorkspace.absoluteFilePath}/${pageId.replace("api/", "")}`);
             const position = extractFrontmatterPosition(page.rawMarkdown);
             const sidebarTitle = extractFrontmatterSidebarTitle(page.rawMarkdown);

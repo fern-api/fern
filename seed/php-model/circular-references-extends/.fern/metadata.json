@@ -3,5 +3,9 @@
   "generatorName": "fernapi/fern-php-model",
   "generatorVersion": "local",
   "originGitCommit": "DUMMY",
+  "originGitCommitIsDirty": null,
+  "invokedBy": "manual",
+  "requestedVersion": "0.0.1",
+  "ciProvider": null,
   "sdkVersion": "0.0.1"
 }

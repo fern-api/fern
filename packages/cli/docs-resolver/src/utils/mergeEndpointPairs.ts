@@ -47,6 +47,7 @@ export function mergeEndpointPairs<EndpointType extends { method: string }>({
         const pairNode: FernNavigation.V1.EndpointPairNode = {
             id: FernNavigation.V1.NodeId(`${apiDefinitionId}:${nonStream.endpointId}+${stream.endpointId}`),
             type: "endpointPair",
+            collapsed: undefined,
             stream,
             nonStream
         };
