@@ -83,18 +83,28 @@ export class PersistedTypescriptProject {
             return;
         }
 
-        const npm = createLoggingExecutable("npm", {
-            cwd: this.directory,
-            logger
-        });
-
         try {
-            logger.debug("Running npm pkg fix to normalize package.json");
+            logger.debug("Normalizing package.json in-process");
             const startTime = Date.now();
-            await npm(["pkg", "fix"]);
+            const pkgPath = join(this.directory, RelativeFilePath.of("package.json"));
+            const raw = await readFile(pkgPath, "utf-8");
+            const pkg = JSON.parse(raw);
+            let changed = false;
+
+            // Normalize repository field (main npm pkg fix transform)
+            if (typeof pkg.repository === "string" && pkg.repository.length > 0) {
+                const url = pkg.repository.startsWith("git+") ? pkg.repository : `git+${pkg.repository}`;
+                const withSuffix = url.endsWith(".git") ? url : `${url}.git`;
+                pkg.repository = { type: "git", url: withSuffix };
+                changed = true;
+            }
+
+            if (changed) {
+                await writeFile(pkgPath, JSON.stringify(pkg, null, 2) + "\n");
+            }
             logger.debug(`[TIMING] fixPackageJson took ${Date.now() - startTime}ms`);
         } catch (e) {
-            logger.warn(`Failed to run npm pkg fix: ${e}`);
+            logger.warn(`Failed to normalize package.json: ${e}`);
         }
     }
 

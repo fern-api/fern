@@ -1,7 +1,7 @@
 import { buildGenerator, getDirname } from "@fern-api/configs/build-utils.mjs";
 
 await buildGenerator(getDirname(import.meta.url), {
-    tsupOptions: { minify: true },
+    tsupOptions: { minify: true, sourcemap: false },
     copy: [
         { from: "../features.yml", to: "./dist/assets/features.yml" },
         {

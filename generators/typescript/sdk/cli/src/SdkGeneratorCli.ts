@@ -330,15 +330,18 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
         _customConfig: SdkCustomConfig
     ): Promise<void> {
         const customConfig = this.customConfigWithOverrides(_customConfig);
-        if (customConfig.useLegacyExports === false) {
-            await fixImportsForEsm(persistedTypescriptProject.getRootDirectory());
-        }
-        if (customConfig.testFramework === "vitest") {
-            await convertJestImportsToVitest(
-                persistedTypescriptProject.getRootDirectory(),
-                persistedTypescriptProject.getTestDirectory()
-            );
-        }
+        // Run in parallel — they operate on different directories (src/ vs tests/)
+        await Promise.all([
+            customConfig.useLegacyExports === false
+                ? fixImportsForEsm(persistedTypescriptProject.getRootDirectory())
+                : undefined,
+            customConfig.testFramework === "vitest"
+                ? convertJestImportsToVitest(
+                      persistedTypescriptProject.getRootDirectory(),
+                      persistedTypescriptProject.getTestDirectory()
+                  )
+                : undefined
+        ]);
     }
 
     protected isPackagePrivate(_customConfig: SdkCustomConfig): boolean {
