@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="src/SeedMixedFileDirectory.Test/SeedMixedFileDirectory.Test.csproj" />
-  <Project Path="src/SeedMixedFileDirectory/SeedMixedFileDirectory.csproj" />
-</Solution>
