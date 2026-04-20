@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `python = ">=3.9"` marker to the generated `aiohttp` and `httpx-aiohttp`
+    optional dependencies so Poetry resolves a patched `aiohttp` (>= 3.13.4) on
+    Python 3.9+ while still allowing the SDK itself to support Python 3.8.
+    Resolves GHSA-c427-h43c-vf67 (CVE-2026-34525).
+  type: fix
