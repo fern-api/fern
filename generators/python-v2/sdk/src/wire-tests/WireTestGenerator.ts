@@ -692,9 +692,15 @@ export class WireTestGenerator {
 
         for (const [key, value] of Object.entries(queryParams)) {
             if (value != null) {
-                const isDatetimeTyped = this.isDatetimeTypedQueryParam(endpoint, key);
-                const normalized = this.normalizeDatetimeQueryParamValue(String(value), isDatetimeTyped);
-                entries.push(`"${this.escapeStringForPython(key)}": "${this.escapeStringForPython(normalized)}"`);
+                if (Array.isArray(value) && value.length > 1) {
+                    // Multi-value: emit as Python list
+                    const items = value.map((v: unknown) => `"${this.escapeStringForPython(String(v))}"`);
+                    entries.push(`"${this.escapeStringForPython(key)}": [${items.join(", ")}]`);
+                } else {
+                    const isDatetimeTyped = this.isDatetimeTypedQueryParam(endpoint, key);
+                    const normalized = this.normalizeDatetimeQueryParamValue(String(value), isDatetimeTyped);
+                    entries.push(`"${this.escapeStringForPython(key)}": "${this.escapeStringForPython(normalized)}"`);
+                }
             }
         }
 
