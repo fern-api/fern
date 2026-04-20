@@ -160,6 +160,10 @@ export class ImportsManager {
             compareModuleSpecifiers(a.moduleSpecifier, b.moduleSpecifier)
         );
 
+        // Build import block as a string instead of per-import AST manipulation.
+        // This avoids ~7 addImportDeclaration() calls per file × ~1987 files.
+        const importLines: string[] = [];
+
         for (const { moduleSpecifier, combinedImportDeclarations } of sortedImports) {
             const namespaceImports = [...combinedImportDeclarations.namespaceImports];
             if (namespaceImports.length > 1) {
@@ -175,10 +179,7 @@ export class ImportsManager {
 
             const namespaceImport = namespaceImports[0];
             if (namespaceImport != null) {
-                sourceFile.addImportDeclaration({
-                    moduleSpecifier,
-                    namespaceImport
-                });
+                importLines.push(`import * as ${namespaceImport} from "${moduleSpecifier}";`);
             }
 
             const defaultImport = [...combinedImportDeclarations.defaultImports][0];
@@ -186,21 +187,32 @@ export class ImportsManager {
                 const isRootTypeOnly = [defaultImport, ...combinedImportDeclarations.namedImports]
                     .filter<NamedImport | string>((i) => i != null)
                     .every(NamedImport.isTypeImport);
-                sourceFile.addImportDeclaration({
-                    isTypeOnly: isRootTypeOnly,
-                    moduleSpecifier,
-                    defaultImport,
-                    namedImports: [...combinedImportDeclarations.namedImports]
+
+                const typeKeyword = isRootTypeOnly ? "type " : "";
+                const parts: string[] = [];
+
+                if (defaultImport != null) {
+                    parts.push(defaultImport);
+                }
+
+                if (combinedImportDeclarations.namedImports.length > 0) {
+                    const namedParts = [...combinedImportDeclarations.namedImports]
                         .sort((a, b) => a.name.localeCompare(b.name))
-                        .map((namedImport) => ({
-                            name:
-                                !isRootTypeOnly && NamedImport.isTypeImport(namedImport)
-                                    ? `type ${namedImport.name}`
-                                    : namedImport.name,
-                            alias: namedImport.alias
-                        }))
-                });
+                        .map((namedImport) => {
+                            const typePrefix =
+                                !isRootTypeOnly && NamedImport.isTypeImport(namedImport) ? "type " : "";
+                            const name = `${typePrefix}${namedImport.name}`;
+                            return namedImport.alias != null ? `${name} as ${namedImport.alias}` : name;
+                        });
+                    parts.push(`{ ${namedParts.join(", ")} }`);
+                }
+
+                importLines.push(`import ${typeKeyword}${parts.join(", ")} from "${moduleSpecifier}";`);
             }
+        }
+
+        if (importLines.length > 0) {
+            sourceFile.insertText(0, importLines.join("\n") + "\n\n");
         }
     }
 }
