@@ -398,7 +398,12 @@ export class WireTestGenerator {
 
         for (const [key, value] of Object.entries(queryParams)) {
             if (value !== null && value !== undefined) {
-                entries.push(`'${this.escapeStringForPhp(key)}' => '${this.escapeStringForPhp(String(value))}'`);
+                if (Array.isArray(value) && value.length > 1) {
+                    const items = value.map((v: unknown) => `'${this.escapeStringForPhp(String(v))}'`);
+                    entries.push(`'${this.escapeStringForPhp(key)}' => [${items.join(", ")}]`);
+                } else {
+                    entries.push(`'${this.escapeStringForPhp(key)}' => '${this.escapeStringForPhp(String(value))}'`);
+                }
             }
         }
 

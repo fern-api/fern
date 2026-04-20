@@ -53,12 +53,14 @@ export class WireTestSetupGenerator {
         for (const mapping of stubMapping.mappings) {
             if (mapping.request.queryParameters) {
                 for (const [, value] of Object.entries(mapping.request.queryParameters)) {
-                    const paramValue = value as { equalTo: string };
+                    if (!("equalTo" in value)) {
+                        continue;
+                    }
                     if (
-                        paramValue.equalTo != null &&
-                        WireTestSetupGenerator.DATETIME_WITH_ZERO_MILLIS_REGEX.test(paramValue.equalTo)
+                        value.equalTo != null &&
+                        WireTestSetupGenerator.DATETIME_WITH_ZERO_MILLIS_REGEX.test(value.equalTo)
                     ) {
-                        paramValue.equalTo = paramValue.equalTo.replace(".000", "");
+                        value.equalTo = value.equalTo.replace(".000", "");
                     }
                 }
             }
@@ -181,7 +183,15 @@ abstract class WireMockTestCase extends TestCase
         if ($queryParams !== null && $queryParams !== []) {
             $body['queryParameters'] = [];
             foreach ($queryParams as $k => $v) {
-                $body['queryParameters'][$k] = ['equalTo' => (string) $v];
+                if (is_array($v)) {
+                    $matchers = [];
+                    foreach ($v as $item) {
+                        $matchers[] = ['equalTo' => (string) $item];
+                    }
+                    $body['queryParameters'][$k] = ['hasExactly' => $matchers];
+                } else {
+                    $body['queryParameters'][$k] = ['equalTo' => (string) $v];
+                }
             }
         }
 
