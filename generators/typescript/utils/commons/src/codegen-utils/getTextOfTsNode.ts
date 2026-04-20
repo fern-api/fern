@@ -6,6 +6,8 @@ const SOURCE_FILE = ts.factory.createSourceFile(
     ts.NodeFlags.None
 );
 
+const PRINTER = ts.createPrinter();
+
 export function getTextOfTsNode(node: ts.Node): string {
-    return ts.createPrinter().printNode(ts.EmitHint.Unspecified, node, SOURCE_FILE);
+    return PRINTER.printNode(ts.EmitHint.Unspecified, node, SOURCE_FILE);
 }
