@@ -4,15 +4,15 @@
 # and reports timing + correctness validation.
 #
 # Usage:
-#   ./autoresearch/benchmark.sh              # 3 runs (default)
-#   ./autoresearch/benchmark.sh 5            # 5 runs
+#   ./autoresearch/benchmark.sh              # 5 runs (default)
+#   ./autoresearch/benchmark.sh 3            # 3 runs
 #   ./autoresearch/benchmark.sh 1 --quick    # 1 run, skip validation
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$REPO_ROOT"
 
-NUM_RUNS=${1:-3}
+NUM_RUNS=${1:-5}
 QUICK_MODE="${2:-}"
 SPEC_PATH="benchmarks/fern/apis/square"
 GENERATOR="ts-sdk"
