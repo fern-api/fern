@@ -73,6 +73,7 @@ import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1.j
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2.js";
 import { sdkDiffCommand } from "./commands/sdk-diff/sdkDiffCommand.js";
 import { sdkPreview } from "./commands/sdk-preview/sdkPreview.js";
+import type { SdkPreviewResult, SdkPreviewSuccess } from "./commands/sdk-preview/sdkPreview.js";
 import { selfUpdate } from "./commands/self-update/selfUpdate.js";
 import { testOutput } from "./commands/test/testOutput.js";
 import { generateToken } from "./commands/token/token.js";
@@ -2231,6 +2232,7 @@ function addAutomationsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
     cli.command("automations", false, (yargs) => {
         addAutomationsListCommand(yargs, cliContext);
         addAutomationsGenerateCommand(yargs, cliContext);
+        addAutomationsPreviewCommand(yargs, cliContext);
         return yargs.demandCommand();
     });
 }
@@ -2290,7 +2292,6 @@ function addAutomationsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
 function addAutomationsListCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command("list", false, (yargs) => {
         addAutomationsListGenerateCommand(yargs, cliContext);
-        addAutomationsListPreviewCommand(yargs, cliContext);
         return yargs.demandCommand();
     });
 }
@@ -2340,31 +2341,39 @@ function addAutomationsListGenerateCommand(cli: Argv<GlobalCliOptions>, cliConte
 }
 
 /**
- * `fern automations list preview`
+ * `fern automations preview`
  *
- * Discovers all previewable generator groups in the project. Without `--json`,
- * outputs one group per line (human-readable). With `--json`, outputs a JSON
- * array for machine consumption (e.g. GitHub Actions).
+ * Runs SDK preview for all previewable generator groups in the project.
+ * Discovers eligible groups using the same criteria as `listPreviewGroups`,
+ * then calls `sdkPreview` for each one, aggregating results.
  *
  * A generator is considered previewable when:
  * - It is a supported TypeScript/npm generator (fern-typescript-sdk, node-sdk, browser-sdk)
  * - `automation.preview` is not false in generators.yml
  *
- * Returns one entry per unique (groupName, apiName) pair.
+ * One preview is run per unique (groupName, apiName) pair. Errors are
+ * isolated per group — a failure in one group does not block the others.
  *
  * JSON output format (--json):
- *   [
- *     { "groupName": "ts-sdk", "apiName": null, "generator": "fernapi/fern-typescript-sdk" },
- *     { "groupName": "node", "apiName": "bar", "generator": "fernapi/fern-typescript-node-sdk" }
- *   ]
+ *   {
+ *     "results": [
+ *       {
+ *         "groupName": "ts-sdk",
+ *         "apiName": null,
+ *         "status": "success",
+ *         "org": "acme",
+ *         "previews": [{ "preview_id": "...", "install": "...", ... }]
+ *       },
+ *       { "groupName": "node", "apiName": "bar", "status": "error", "error": "..." }
+ *     ]
+ *   }
  *
  * Example GitHub Actions usage:
- *   - id: groups
- *     run: echo "groups=$(fern automations list preview --json)" >> $GITHUB_OUTPUT
+ *   - run: fern automations preview --json --push-diff
  *     env:
  *       FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
  */
-function addAutomationsListPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+function addAutomationsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "preview",
         false, // hidden
@@ -2372,23 +2381,28 @@ function addAutomationsListPreviewCommand(cli: Argv<GlobalCliOptions>, cliContex
             yargs
                 .option("group", {
                     type: "string",
-                    description: "Filter to a specific generator group (e.g. 'sdk'). Omit to list all groups."
-                })
-                .option("api", {
-                    type: "string",
                     description:
-                        "Filter to a specific API in a multi-API repo (e.g. 'foo' for fern/apis/foo/). " +
-                        "Omit to list all APIs."
+                        "Filter to a specific generator group (e.g. 'sdk'). Omit to preview all eligible groups."
                 })
                 .option("json", {
                     boolean: true,
                     default: false,
+                    description: "Output results as JSON (for machine consumption)."
+                })
+                .option("push-diff", {
+                    boolean: true,
+                    default: false,
                     description:
-                        "Output as JSON array (for machine consumption). Without this flag, outputs one group per line."
+                        "Push a preview diff branch (fern-preview-{version}) to each SDK repo " +
+                        "in addition to publishing to the preview registry."
                 }),
         async (argv) => {
+            cliContext.instrumentPostHogEvent({
+                command: "fern automations preview"
+            });
+
             const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                commandLineApiWorkspace: argv.api,
+                commandLineApiWorkspace: undefined,
                 defaultToAllApiWorkspaces: true
             });
 
@@ -2397,13 +2411,92 @@ function addAutomationsListPreviewCommand(cli: Argv<GlobalCliOptions>, cliContex
                 groupFilter: argv.group
             });
 
-            if (argv.json) {
-                process.stdout.write(JSON.stringify(groups));
-            } else {
-                for (const group of groups) {
-                    const apiPart = group.apiName != null ? ` (api: ${group.apiName})` : "";
-                    process.stdout.write(`${group.groupName}${apiPart} — ${group.generator}\n`);
+            if (groups.length === 0) {
+                if (argv.json) {
+                    process.stdout.write(JSON.stringify({ results: [] }, null, 2) + "\n");
+                } else {
+                    cliContext.logger.info("No eligible generator groups found for preview.");
                 }
+                return;
+            }
+
+            cliContext.logger.info(
+                `Found ${groups.length} previewable group(s): ${groups.map((g) => g.groupName).join(", ")}`
+            );
+
+            interface AutomationsPreviewGroupResult {
+                groupName: string;
+                apiName: string | null;
+                status: "success" | "error";
+                org?: string;
+                previews?: SdkPreviewSuccess["previews"];
+                error?: string;
+            }
+
+            const results: AutomationsPreviewGroupResult[] = [];
+
+            for (const group of groups) {
+                const apiLabel = group.apiName != null ? ` (api: ${group.apiName})` : "";
+                cliContext.logger.info(`Running preview for ${group.groupName}${apiLabel}...`);
+
+                try {
+                    const result = await sdkPreview({
+                        cliContext,
+                        groupName: group.groupName,
+                        generatorFilter: undefined,
+                        apiName: group.apiName ?? undefined,
+                        output: undefined,
+                        local: false,
+                        pushDiff: argv.pushDiff
+                    });
+
+                    if (result.status === "success") {
+                        results.push({
+                            groupName: group.groupName,
+                            apiName: group.apiName,
+                            status: "success",
+                            org: result.org,
+                            previews: result.previews
+                        });
+                    } else {
+                        results.push({
+                            groupName: group.groupName,
+                            apiName: group.apiName,
+                            status: "error",
+                            error: result.message
+                        });
+                    }
+                } catch (error) {
+                    const message = error instanceof Error ? error.message : String(error);
+                    cliContext.logger.warn(`Preview failed for group '${group.groupName}': ${message}`);
+                    results.push({
+                        groupName: group.groupName,
+                        apiName: group.apiName,
+                        status: "error",
+                        error: message
+                    });
+                }
+            }
+
+            if (argv.json) {
+                process.stdout.write(JSON.stringify({ results }, null, 2) + "\n");
+            } else {
+                for (const groupResult of results) {
+                    if (groupResult.status === "success" && groupResult.previews != null) {
+                        for (const preview of groupResult.previews) {
+                            if (preview.install) {
+                                cliContext.logger.info(`${groupResult.groupName}: ${preview.install}`);
+                            }
+                        }
+                    } else if (groupResult.status === "error") {
+                        cliContext.logger.warn(`${groupResult.groupName}: ${groupResult.error}`);
+                    }
+                }
+            }
+
+            const hasErrors = results.some((r) => r.status === "error");
+            if (hasErrors) {
+                process.exitCode = 1;
             }
         }
     );
@@ -2581,18 +2674,73 @@ function addSdkPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
             });
             const generatorFilter =
                 argv.generator != null ? warnAndCorrectIncorrectDockerOrg(argv.generator, cliContext) : undefined;
-            await sdkPreview({
+            const result = await sdkPreview({
                 cliContext,
                 groupName: argv.group,
                 generatorFilter,
                 apiName: argv.api,
-                json: argv.json,
                 output: argv.output,
                 local: argv.local,
                 pushDiff: argv.pushDiff
             });
+            writeSdkPreviewOutput({ result, json: argv.json, cliContext });
         }
     );
+}
+
+function writeSdkPreviewOutput({
+    result,
+    json,
+    cliContext
+}: {
+    result: SdkPreviewResult;
+    json: boolean;
+    cliContext: CliContext;
+}): void {
+    if (json) {
+        process.stdout.write(JSON.stringify(result, null, 2) + "\n");
+        if (result.status === "error") {
+            process.exitCode = 1;
+        }
+        return;
+    }
+
+    if (result.status === "error") {
+        return cliContext.failAndThrow(result.message);
+    }
+
+    if (result.previews.length > 0) {
+        cliContext.logger.info("");
+        const hasRegistry = result.previews.some((p) => p.registry_url !== "");
+        if (hasRegistry) {
+            cliContext.logger.info(
+                `Published ${result.previews.length} preview package${result.previews.length > 1 ? "s" : ""}:`
+            );
+            for (const preview of result.previews) {
+                cliContext.logger.info("");
+                cliContext.logger.info(`  ${preview.package_name}@${preview.version}`);
+                cliContext.logger.info(`  Install: ${preview.install}`);
+                if (preview.diff_url) {
+                    cliContext.logger.info(`  Diff: ${preview.diff_url}`);
+                }
+                if (preview.output_path) {
+                    cliContext.logger.info(`  Output: ${preview.output_path}`);
+                }
+            }
+        } else {
+            cliContext.logger.info(
+                `Generated ${result.previews.length} preview SDK${result.previews.length > 1 ? "s" : ""}:`
+            );
+            for (const preview of result.previews) {
+                cliContext.logger.info("");
+                cliContext.logger.info(`  ${preview.package_name}@${preview.version}`);
+                if (preview.diff_url) {
+                    cliContext.logger.info(`  Diff: ${preview.diff_url}`);
+                }
+                cliContext.logger.info(`  Output: ${preview.output_path}`);
+            }
+        }
+    }
 }
 
 function addBetaCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {

@@ -1,8 +1,0 @@
-# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
-
-- summary: |
-    Add `fern automations list preview` subcommand that discovers previewable
-    generator groups and outputs a JSON array. Designed for consumption by the
-    `fern-preview` GitHub Action to replace client-side YAML parsing of
-    generators.yml.
-  type: feat
