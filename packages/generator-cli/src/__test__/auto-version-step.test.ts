@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { AutoVersionStep } from "../pipeline/steps/AutoVersionStep.js";
 import type { AutoVersionStepConfig, PipelineContext, PipelineLogger } from "../pipeline/index.js";
 import { PostGenerationPipeline } from "../pipeline/index.js";
+import { AutoVersionStep } from "../pipeline/steps/AutoVersionStep.js";
 
 const silentLogger: PipelineLogger = {
     debug: () => undefined,
