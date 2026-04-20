@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.5.3
+  changelogEntry:
+    - summary: |
+        Bump generated `pytest` dev dependency from `^8.2.0` to `^9.0.3` for SDKs
+        targeting Python 3.9+. This addresses CVE-2025-71176 (GHSA-6w46-j5rx-g56g),
+        a moderate-severity issue with insecure `/tmp/pytest-of-{user}` handling
+        on UNIX. Projects that still support Python 3.8 continue to use `pytest ^7.4.0`
+        since pytest 9 requires Python 3.9+.
+      type: chore
+  createdAt: "2026-04-20"
+  irVersion: 66
 - version: 5.5.2
   changelogEntry:
     - summary: |

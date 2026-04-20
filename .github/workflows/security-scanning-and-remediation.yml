@@ -50,11 +50,15 @@ jobs:
       - name: Fetch Dependabot alerts
         id: fetch-alerts
         uses: actions/github-script@v8
+        env:
+          ALERTS_FILE: ${{ runner.temp }}/dependabot-alerts.json
         with:
           github-token: ${{ secrets.FERN_GITHUB_TOKEN }}
           script: |
+            const fs = require('fs');
             const owner = context.repo.owner;
             const repo = context.repo.repo;
+            const alertsFile = process.env.ALERTS_FILE;
 
             // Fetch all open Dependabot alerts using FERN_GITHUB_TOKEN
             let alerts = [];
@@ -73,23 +77,23 @@ jobs:
                 console.log('2. The token does not have the required `security_events` scope');
                 console.log('');
                 console.log('To fix: Ensure FERN_GITHUB_TOKEN is a PAT (classic) with `security_events` scope');
-                core.setOutput('alerts_json', '[]');
+                fs.writeFileSync(alertsFile, '[]');
+                core.setOutput('alerts_count', '0');
                 return;
               }
               throw error;
             }
 
-            if (alerts.length === 0) {
-              console.log('No open Dependabot alerts found.');
-              core.setOutput('alerts_json', '[]');
-              return;
-            }
-
-            console.log(`Found ${alerts.length} open Dependabot alerts.`);
-            core.setOutput('alerts_json', JSON.stringify(alerts));
+            // Persist alerts to a file on disk rather than passing the JSON
+            // through step outputs/env vars. The full alert payload can exceed
+            // the OS exec arg/env size limit (E2BIG "Argument list too long")
+            // when there are many alerts or long advisory descriptions.
+            fs.writeFileSync(alertsFile, JSON.stringify(alerts));
+            console.log(`Found ${alerts.length} open Dependabot alerts. Wrote to ${alertsFile}.`);
+            core.setOutput('alerts_count', String(alerts.length));
       - name: Create PRs and send Slack notifications
         id: create-prs
-        if: ${{ steps.fetch-alerts.outputs.alerts_json != '[]' && inputs.scan_only != true }}
+        if: ${{ steps.fetch-alerts.outputs.alerts_count != '0' && inputs.scan_only != true }}
         uses: actions/github-script@v8
         env:
           # ============================================================
@@ -110,11 +114,12 @@ jobs:
             8. Update the PR title, if needed, to pass CI checks
 
             **Alert Details:**
-          ALERTS_JSON: ${{ steps.fetch-alerts.outputs.alerts_json }}
+          ALERTS_FILE: ${{ runner.temp }}/dependabot-alerts.json
           SLACK_TOKEN: ${{ secrets.DEVIN_AI_PR_BOT_SLACK_TOKEN }}
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
+            const fs = require('fs');
             const devinPrompt = process.env.DEVIN_PROMPT;
             const slackToken = process.env.SLACK_TOKEN;
             const slackChannelId = 'C0A23CZEFNF';
@@ -123,7 +128,10 @@ jobs:
             const repo = context.repo.repo;
             const baseBranch = 'main';
 
-            const alerts = JSON.parse(process.env.ALERTS_JSON || '[]');
+            const alertsFile = process.env.ALERTS_FILE;
+            const alerts = fs.existsSync(alertsFile)
+              ? JSON.parse(fs.readFileSync(alertsFile, 'utf8'))
+              : [];
             if (alerts.length === 0) {
               console.log('No alerts to process.');
               return;
