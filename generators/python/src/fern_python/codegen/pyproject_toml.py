@@ -224,7 +224,7 @@ packages = [
             # Conditionally add requests and types-requests for wire tests
             wire_test_deps = ""
             if self.enable_wire_tests:
-                wire_test_deps = 'requests = "^2.31.0"\ntypes-requests = "^2.31.0"\n'
+                wire_test_deps = 'requests = "^2.33.0"\ntypes-requests = "^2.33.0"\n'
 
             # pytest-asyncio ^1.0.0 fixes Python 3.14+ deprecation warnings but
             # requires pytest >= 8.2 and Python >= 3.9.  Fall back to the older
