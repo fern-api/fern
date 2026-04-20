@@ -73,6 +73,7 @@ const BASE_DEV_DEPENDENCIES: Dependency[] = [
     { name: "minitest-rg" },
     { name: "pry" },
     { name: "rake", versionConstraint: "~> 13.0" },
+    { name: "prism" },
     { name: "rubocop", versionConstraint: "~> 1.21" },
     { name: "rubocop-minitest" },
     { name: "webmock" }
@@ -718,7 +719,8 @@ class ModuleFile {
             this.baseContents +
             Array.from(relativeImportPaths)
                 .filter((importPath) => importPath.endsWith(".rb"))
-                .map((importPath) => `require_relative '${importPath.replaceAll(".rb", "")}'`)
+                .map((importPath) => `require_relative "${importPath.replaceAll(".rb", "")}"`)
+
                 .join("\n");
 
         // Add optional user require paths hook at the end (only if configured)

@@ -36,6 +36,7 @@ export class RubocopFile {
 
 AllCops:
   TargetRubyVersion: 3.3
+  ParserEngine: parser_prism
   NewCops: enable
 
 Style/StringLiterals:
