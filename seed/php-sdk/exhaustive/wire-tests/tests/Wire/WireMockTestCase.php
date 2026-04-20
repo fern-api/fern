@@ -45,7 +45,15 @@ abstract class WireMockTestCase extends TestCase
         if ($queryParams !== null && $queryParams !== []) {
             $body['queryParameters'] = [];
             foreach ($queryParams as $k => $v) {
-                $body['queryParameters'][$k] = ['equalTo' => (string) $v];
+                if (is_array($v)) {
+                    $matchers = [];
+                    foreach ($v as $item) {
+                        $matchers[] = ['equalTo' => (string) $item];
+                    }
+                    $body['queryParameters'][$k] = ['hasExactly' => $matchers];
+                } else {
+                    $body['queryParameters'][$k] = ['equalTo' => (string) $v];
+                }
             }
         }
 
