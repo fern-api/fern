@@ -105,118 +105,169 @@ export async function generateWorkspace({
         return context.failAndThrow("Please run fern login", undefined, { code: CliError.Code.AuthError });
     }
 
-    // Run generation for all resolved groups in parallel
+    // Resolve each group to its runnable state *before* opening the interactive subtask, so
+    // config errors (missing group, bad lfs, custom images, reject-opted-out) still abort the
+    // whole run rather than being swallowed as a "this subtask failed" signal. The per-group
+    // interactive task only wraps actual generation work.
+    const runnableGroups = resolvedGroupNames.flatMap((resolvedGroupName) => {
+        const runnable = resolveRunnableGroup({
+            resolvedGroupName,
+            workspace,
+            generatorIndex,
+            generatorName,
+            automation,
+            lfsOverride,
+            context,
+            useLocalDocker,
+            token
+        });
+        return runnable != null ? [{ resolvedGroupName, group: runnable }] : [];
+    });
+
+    // Run generation for each runnable group in parallel. Each becomes an interactive subtask
+    // of the workspace task so per-generator tasks opened downstream nest beneath it.
     await Promise.all(
-        resolvedGroupNames.map(async (resolvedGroupName) => {
-            let group = workspace.generatorsConfiguration?.groups.find(
-                (otherGroup) => otherGroup.groupName === resolvedGroupName
-            );
-            if (group == null) {
-                return context.failAndThrow(`Group '${resolvedGroupName}' does not exist.`, undefined, {
-                    code: CliError.Code.ConfigError
-                });
-            }
-
-            // Filter to specific generator by index or name
-            const filterResult = filterGenerators({
-                generators: group.generators,
-                generatorIndex,
-                generatorName,
-                groupName: resolvedGroupName
-            });
-            if (!filterResult.ok) {
-                return context.failAndThrow(filterResult.error, undefined, { code: CliError.Code.ConfigError });
-            }
-            let filteredGenerators = filterResult.generators;
-            if (automation != null) {
-                const selection = selectGeneratorsForAutomation({
-                    generators: filteredGenerators,
-                    rootAutorelease: workspace.generatorsConfiguration?.rawConfiguration.autorelease,
-                    targeting: buildAutomationTargeting({ generatorIndex, generatorName })
-                });
-                if (selection.type === "reject-opted-out") {
-                    return context.failAndThrow(
-                        `Generator '${selection.generatorName}' at index ${selection.index} in group '${resolvedGroupName}' is excluded from automation: ${selection.reason}. ` +
-                            `Target by name instead to have opt-outs filtered silently, ` +
-                            `drop the --generator flag to fan out across eligible generators, ` +
-                            `or re-enable automation for this generator in generators.yml.`,
-                        undefined,
-                        { code: CliError.Code.ConfigError }
-                    );
+        runnableGroups.map(({ resolvedGroupName, group }) =>
+            context.runInteractiveTask({ name: resolvedGroupName }, async (groupContext) => {
+                if (useLocalDocker) {
+                    await runLocalGenerationForWorkspace({
+                        token,
+                        projectConfig,
+                        workspace,
+                        generatorGroup: group,
+                        version,
+                        keepDocker,
+                        context: groupContext,
+                        runner,
+                        absolutePathToPreview,
+                        inspect,
+                        ai,
+                        replay,
+                        noReplay,
+                        validateWorkspace: true,
+                        requireEnvVars,
+                        skipFernignore,
+                        automationMode,
+                        autoMerge
+                    });
+                } else if (token != null) {
+                    await runRemoteGenerationForAPIWorkspace({
+                        projectConfig,
+                        organization,
+                        workspace,
+                        context: groupContext,
+                        generatorGroup: group,
+                        version,
+                        shouldLogS3Url,
+                        token,
+                        whitelabel: workspace.generatorsConfiguration?.whitelabel,
+                        absolutePathToPreview,
+                        mode,
+                        fernignorePath,
+                        skipFernignore,
+                        dynamicIrOnly,
+                        validateWorkspace: true,
+                        retryRateLimited,
+                        requireEnvVars,
+                        automationMode,
+                        autoMerge,
+                        automation
+                    });
                 }
-                if (selection.type === "empty-after-skip") {
-                    // Nothing to do in this group — leave silently; the recorder has no rows for it.
-                    return;
-                }
-                filteredGenerators = selection.generators;
-            }
-            group = { ...group, generators: filteredGenerators };
-
-            // Apply lfs-override if specified
-            if (lfsOverride != null) {
-                group = applyLfsOverride(group, lfsOverride, context);
-            }
-
-            if (resolvedGroupNames.length > 1) {
-                context.logger.info(`Running generation for group '${resolvedGroupName}'...`);
-            }
-
-            if (useLocalDocker) {
-                await runLocalGenerationForWorkspace({
-                    token,
-                    projectConfig,
-                    workspace,
-                    generatorGroup: group,
-                    version,
-                    keepDocker,
-                    context,
-                    runner,
-                    absolutePathToPreview,
-                    inspect,
-                    ai,
-                    replay,
-                    noReplay,
-                    validateWorkspace: true,
-                    requireEnvVars,
-                    skipFernignore,
-                    automationMode,
-                    autoMerge
-                });
-            } else if (token != null) {
-                // Block custom images for remote generation — only trusted images can run on Fiddle
-                const customImageGenerators = group.generators.filter((g) => g.containerImage != null);
-                if (customImageGenerators.length > 0) {
-                    const names = customImageGenerators.map((g) => g.name).join(", ");
-                    return context.failAndThrow(
-                        `Custom image configurations are only supported with local generation (--local). ` +
-                            `The following generators use custom images: ${names}`
-                    );
-                }
-                await runRemoteGenerationForAPIWorkspace({
-                    projectConfig,
-                    organization,
-                    workspace,
-                    context,
-                    generatorGroup: group,
-                    version,
-                    shouldLogS3Url,
-                    token,
-                    whitelabel: workspace.generatorsConfiguration?.whitelabel,
-                    absolutePathToPreview,
-                    mode,
-                    fernignorePath,
-                    skipFernignore,
-                    dynamicIrOnly,
-                    validateWorkspace: true,
-                    retryRateLimited,
-                    requireEnvVars,
-                    automationMode,
-                    autoMerge,
-                    automation
-                });
-            }
-        })
+            })
+        )
     );
+}
+
+/**
+ * Validates and narrows a group to the exact set of generators that should run. Throws via
+ * `context.failAndThrow` on misconfiguration (missing group, invalid --generator targeting,
+ * index-targeted generator opts out, custom images with remote generation, bad lfs override).
+ *
+ * Returns `null` when the group is silently skipped (empty-after-skip in automation fan-out).
+ */
+function resolveRunnableGroup({
+    resolvedGroupName,
+    workspace,
+    generatorIndex,
+    generatorName,
+    automation,
+    lfsOverride,
+    context,
+    useLocalDocker,
+    token
+}: {
+    resolvedGroupName: string;
+    workspace: AbstractAPIWorkspace<unknown>;
+    generatorIndex: number | undefined;
+    generatorName: string | undefined;
+    automation: AutomationRunOptions | undefined;
+    lfsOverride: string | undefined;
+    context: TaskContext;
+    useLocalDocker: boolean;
+    token: FernToken | undefined;
+}): generatorsYml.GeneratorGroup | null {
+    let group = workspace.generatorsConfiguration?.groups.find(
+        (otherGroup) => otherGroup.groupName === resolvedGroupName
+    );
+    if (group == null) {
+        return context.failAndThrow(`Group '${resolvedGroupName}' does not exist.`, undefined, {
+            code: CliError.Code.ConfigError
+        });
+    }
+
+    const filterResult = filterGenerators({
+        generators: group.generators,
+        generatorIndex,
+        generatorName,
+        groupName: resolvedGroupName
+    });
+    if (!filterResult.ok) {
+        return context.failAndThrow(filterResult.error, undefined, { code: CliError.Code.ConfigError });
+    }
+    let filteredGenerators = filterResult.generators;
+
+    if (automation != null) {
+        const selection = selectGeneratorsForAutomation({
+            generators: filteredGenerators,
+            rootAutorelease: workspace.generatorsConfiguration?.rawConfiguration.autorelease,
+            targeting: buildAutomationTargeting({ generatorIndex, generatorName })
+        });
+        if (selection.type === "reject-opted-out") {
+            return context.failAndThrow(
+                `Generator '${selection.generatorName}' at index ${selection.index} in group '${resolvedGroupName}' is excluded from automation: ${selection.reason}. ` +
+                    `Target by name instead to have opt-outs filtered silently, ` +
+                    `drop the --generator flag to fan out across eligible generators, ` +
+                    `or re-enable automation for this generator in generators.yml.`,
+                undefined,
+                { code: CliError.Code.ConfigError }
+            );
+        }
+        if (selection.type === "empty-after-skip") {
+            // Nothing to do in this group — leave silently; the recorder has no rows for it.
+            return null;
+        }
+        filteredGenerators = selection.generators;
+    }
+    group = { ...group, generators: filteredGenerators };
+
+    if (lfsOverride != null) {
+        group = applyLfsOverride(group, lfsOverride, context);
+    }
+
+    if (!useLocalDocker && token != null) {
+        // Block custom images for remote generation — only trusted images can run on Fiddle.
+        const customImageGenerators = group.generators.filter((g) => g.containerImage != null);
+        if (customImageGenerators.length > 0) {
+            const names = customImageGenerators.map((g) => g.name).join(", ");
+            return context.failAndThrow(
+                `Custom image configurations are only supported with local generation (--local). ` +
+                    `The following generators use custom images: ${names}`
+            );
+        }
+    }
+
+    return group;
 }
 
 /**
