@@ -5928,6 +5928,32 @@
       },
       "additionalProperties": false
     },
+    "docs.SearchSettingsConfig": {
+      "type": "object",
+      "properties": {
+        "prioritize-current-product": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "default-filter-by-current-product": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
     "docs.HttpSnippetLanguage": {
       "type": "string",
       "enum": [
@@ -5955,31 +5981,6 @@
           }
         }
       ]
-    },
-    "docs.SearchSettingsConfig": {
-      "type": "object",
-      "properties": {
-        "prioritize-current-product": {
-          "oneOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "default-filter-by-current-product": {
-          "oneOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        }
-      }
     },
     "docs.DocsSettingsConfig": {
       "type": "object",
