@@ -1,3 +1,5 @@
+import { TaskAbortSignal } from "@fern-api/task-context";
+
 import { CliContext } from "../../../cli-context/CliContext.js";
 import { loadProjectAndRegisterWorkspacesWithContext } from "../../../cliCommons.js";
 import { parseGeneratorArg } from "../../generate/filterGenerators.js";
@@ -35,6 +37,11 @@ export async function executeAutomationsGenerate({
     // Sentinel: the happy-path finally skips its write if a signal handler already flushed.
     // The sentinel also gates the signal handler itself so a second signal is a no-op.
     let outputsFlushed = false;
+    // When the outer task aborts (e.g. an invalid --group surfaced via failAndThrow), the per-
+    // workspace error was already logged and CliContext.didSucceed is false — we want to skip the
+    // "no eligible generators" empty-summary branch so the user doesn't see a misleading trailing
+    // message after the real error.
+    let taskAborted = false;
 
     const flushOnSignal = () => {
         if (outputsFlushed) {
@@ -79,13 +86,18 @@ export async function executeAutomationsGenerate({
                 automation: { recorder: collector }
             });
         });
+    } catch (error) {
+        if (!(error instanceof TaskAbortSignal)) {
+            throw error;
+        }
+        taskAborted = true;
     } finally {
         // `process.once` self-removes if fired; these are no-ops on the signal path.
         process.off("SIGINT", flushOnSignal);
         process.off("SIGTERM", flushOnSignal);
         if (!outputsFlushed) {
             outputsFlushed = true;
-            await reportFinalOutputs({ collector, jsonOutputPath });
+            await reportFinalOutputs({ collector, jsonOutputPath, taskAborted });
         }
         if (collector.hasFailures()) {
             process.exitCode = 1;
@@ -95,13 +107,21 @@ export async function executeAutomationsGenerate({
 
 async function reportFinalOutputs({
     collector,
-    jsonOutputPath
+    jsonOutputPath,
+    taskAborted
 }: {
     collector: GeneratorRunCollector;
     jsonOutputPath: string | undefined;
+    taskAborted: boolean;
 }): Promise<void> {
     const results = collector.results();
     if (results.length === 0) {
+        if (taskAborted) {
+            // The outer task failed before any generator ran (e.g. invalid --group). The real error
+            // was already logged per-workspace; printing the "no eligible generators" hint on top
+            // would be misleading.
+            return;
+        }
         // Nothing ran — a step summary with 0 rows and an empty JSON doc aren't useful.
         process.stdout.write(
             "No eligible generators ran in the selected APIs and groups — every candidate either " +
