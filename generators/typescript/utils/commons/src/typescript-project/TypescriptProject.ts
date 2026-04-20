@@ -230,7 +230,6 @@ export abstract class TypescriptProject {
             buildCommand: this.getBuildCommand(),
             formatCommand: this.getFormatCommand(),
             checkFixCommand: this.getCheckFixCommand(),
-            directCheckFixBinaryArgs: this.getDirectCheckFixBinaryArgs(),
             checkFixPackages: this.getCheckFixPackages(),
             checkFixToolBinaries: this.getCheckFixToolBinaries(),
             packageManager: this.packageManager
@@ -387,26 +386,6 @@ export abstract class TypescriptProject {
 
     protected getCheckFixCommand(): string[] {
         return [COMMON_SCRIPTS.CHECK_FIX];
-    }
-
-    /**
-     * Returns the check:fix command as a direct binary invocation (no pnpm
-     * script runner overhead).  Returns undefined when the command cannot be
-     * expressed as a single binary call.
-     */
-    protected getDirectCheckFixBinaryArgs(): string[] | undefined {
-        if (this.formatter === "biome" && this.linter === "biome") {
-            return [
-                "biome",
-                "check",
-                "--fix",
-                "--unsafe",
-                "--skip-parse-errors",
-                "--no-errors-on-unmatched",
-                "--max-diagnostics=none"
-            ];
-        }
-        return undefined;
     }
 
     /**
