@@ -76,6 +76,14 @@ export async function buildCli(config) {
         outDir,
         sourcemap: true,
         clean: true,
+        // Polyfill `navigator` before any bundled code runs.
+        // Some browser-targeting packages (e.g. jspm process polyfill bundled into
+        // @fern-api/fdr-sdk) access `navigator.language` at module-init time without
+        // a `typeof` guard, causing a ReferenceError on Node.js < 21 where the
+        // `navigator` global does not exist.
+        banner: {
+            js: `if (typeof globalThis.navigator === "undefined") { globalThis.navigator = { language: "en-US", userAgent: "node", platform: "linux" }; }`
+        },
         env: {
             ...env,
             CLI_VERSION: version

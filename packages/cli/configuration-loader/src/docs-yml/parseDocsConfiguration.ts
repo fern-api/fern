@@ -396,19 +396,19 @@ function convertPageActionOption(
 ): CjsFdrSdk.docs.v1.commons.PageActionOption {
     switch (option) {
         case "copy-page":
-            return CjsFdrSdk.docs.v1.commons.PageActionOption.CopyPage;
+            return "copyPage";
         case "view-as-markdown":
-            return CjsFdrSdk.docs.v1.commons.PageActionOption.ViewAsMarkdown;
+            return "viewAsMarkdown";
         case "ask-ai":
-            return CjsFdrSdk.docs.v1.commons.PageActionOption.AskAi;
+            return "askAi";
         case "chatgpt":
-            return CjsFdrSdk.docs.v1.commons.PageActionOption.OpenAi;
+            return "openAi";
         case "claude":
-            return CjsFdrSdk.docs.v1.commons.PageActionOption.Claude;
+            return "claude";
         case "cursor":
-            return CjsFdrSdk.docs.v1.commons.PageActionOption.Cursor;
+            return "cursor";
         case "vscode":
-            return CjsFdrSdk.docs.v1.commons.PageActionOption.Vscode;
+            return "vscode";
         default:
             assertNever(option);
     }
@@ -540,11 +540,7 @@ function convertLayoutConfig(
 
     // tabsPlacement: theme.tabs.placement overrides layout.tabs-placement.
     const resolvedTabsPlacement =
-        themeTabsPlacement === "header"
-            ? CjsFdrSdk.docs.v1.commons.TabsPlacement.Header
-            : themeTabsPlacement === "sidebar"
-              ? CjsFdrSdk.docs.v1.commons.TabsPlacement.Sidebar
-              : undefined;
+        themeTabsPlacement === "header" ? "HEADER" : themeTabsPlacement === "sidebar" ? "SIDEBAR" : undefined;
 
     if (layout == null) {
         // No layout section, but theme.tabs properties are set — return minimal layout.
@@ -563,27 +559,14 @@ function convertLayoutConfig(
 
         searchbarPlacement:
             layout.searchbarPlacement === "header"
-                ? CjsFdrSdk.docs.v1.commons.SearchbarPlacement.Header
+                ? "HEADER"
                 : layout.searchbarPlacement === "header-tabs"
-                  ? CjsFdrSdk.docs.v1.commons.SearchbarPlacement.HeaderTabs
-                  : CjsFdrSdk.docs.v1.commons.SearchbarPlacement.Sidebar,
-        switcherPlacement:
-            !layout.switcherPlacement || layout.switcherPlacement === "header"
-                ? CjsFdrSdk.docs.v1.commons.SwitcherPlacement.Header
-                : CjsFdrSdk.docs.v1.commons.SwitcherPlacement.Sidebar,
-        tabsPlacement:
-            resolvedTabsPlacement ??
-            (layout.tabsPlacement === "header"
-                ? CjsFdrSdk.docs.v1.commons.TabsPlacement.Header
-                : CjsFdrSdk.docs.v1.commons.TabsPlacement.Sidebar),
-        contentAlignment:
-            layout.contentAlignment === "left"
-                ? CjsFdrSdk.docs.v1.commons.ContentAlignment.Left
-                : CjsFdrSdk.docs.v1.commons.ContentAlignment.Center,
-        headerPosition:
-            layout.headerPosition === "static"
-                ? CjsFdrSdk.docs.v1.commons.HeaderPosition.Absolute
-                : CjsFdrSdk.docs.v1.commons.HeaderPosition.Fixed,
+                  ? "HEADER_TABS"
+                  : "SIDEBAR",
+        switcherPlacement: !layout.switcherPlacement || layout.switcherPlacement === "header" ? "HEADER" : "SIDEBAR",
+        tabsPlacement: resolvedTabsPlacement ?? (layout.tabsPlacement === "header" ? "HEADER" : "SIDEBAR"),
+        contentAlignment: layout.contentAlignment === "left" ? "LEFT" : "CENTER",
+        headerPosition: layout.headerPosition === "static" ? "ABSOLUTE" : "FIXED",
         disableHeader: layout.disableHeader ?? false,
         hideNavLinks: layout.hideNavLinks ?? false,
         hideFeedback: layout.hideFeedback ?? false,
@@ -1677,14 +1660,16 @@ function convertNavbarLinks(
     });
 }
 
-function convertRoleToRoleIds(role: docsYml.RawSchemas.Role | undefined): CjsFdrSdk.RoleId[] | undefined {
+function convertRoleToRoleIds(
+    role: docsYml.RawSchemas.Role | undefined
+): CjsFdrSdk.docs.v1.commons.RoleId[] | undefined {
     if (role == null) {
         return undefined;
     }
     if (Array.isArray(role)) {
-        return role.map((r) => CjsFdrSdk.RoleId(r));
+        return role.map((r) => CjsFdrSdk.docs.v1.commons.RoleId(r));
     }
-    return [CjsFdrSdk.RoleId(role)];
+    return [CjsFdrSdk.docs.v1.commons.RoleId(role)];
 }
 
 function convertFooterLinks(
@@ -1766,20 +1751,20 @@ async function convertFilepathOrUrl(
     return { type: "url", value };
 }
 
-function parseRoles(raw: string | string[] | undefined): CjsFdrSdk.RoleId[] | undefined {
+function parseRoles(raw: string | string[] | undefined): CjsFdrSdk.docs.v1.commons.RoleId[] | undefined {
     if (raw == null) {
         return undefined;
     }
 
     if (typeof raw === "string") {
-        return [CjsFdrSdk.RoleId(raw)];
+        return [CjsFdrSdk.docs.v1.commons.RoleId(raw)];
     }
 
     if (raw.length === 0) {
         return undefined;
     }
 
-    return raw.map(CjsFdrSdk.RoleId);
+    return raw.map(CjsFdrSdk.docs.v1.commons.RoleId);
 }
 
 export function parseAudiences(raw: string | string[] | undefined): string[] | undefined {

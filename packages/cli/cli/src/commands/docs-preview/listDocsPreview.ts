@@ -36,14 +36,17 @@ export async function listDocsPreview({
 
         const fdr = createFdrService({ token: token.value });
 
-        const listResponse = await fdr.docs.v2.read.listAllDocsUrls({
-            page,
-            limit: limit ?? 100,
-            preview: true
-        });
-
-        if (!listResponse.ok) {
-            switch (listResponse.error.error) {
+        let listResponse;
+        try {
+            listResponse = await fdr.docs.v2.read.listAllDocsUrls({
+                page,
+                limit: limit ?? 100,
+                preview: true
+            });
+        } catch (error) {
+            const errorObj = error as Record<string, unknown>;
+            const errorType = errorObj?.error as string | undefined;
+            switch (errorType) {
                 case "UnauthorizedError":
                     return context.failAndThrow(
                         "Unauthorized to list preview deployments. Please run 'fern login' to refresh your credentials, or set the FERN_TOKEN environment variable.",
@@ -51,16 +54,10 @@ export async function listDocsPreview({
                         { code: CliError.Code.NetworkError }
                     );
                 default: {
-                    const errorContent =
-                        listResponse.error.content != null &&
-                        typeof listResponse.error.content === "object" &&
-                        "body" in listResponse.error.content
-                            ? listResponse.error.content.body
-                            : listResponse.error.content;
-                    context.logger.debug(`Error fetching preview deployments: ${JSON.stringify(errorContent)}`);
+                    context.logger.debug(`Error fetching preview deployments: ${JSON.stringify(error)}`);
                     return context.failAndThrow(
                         "Failed to fetch preview deployments. Please ensure you are logged in with 'fern login' or have FERN_TOKEN set, then try again.",
-                        listResponse.error,
+                        error,
                         { code: CliError.Code.NetworkError }
                     );
                 }
@@ -71,7 +68,7 @@ export async function listDocsPreview({
         // The hash can be alphanumeric or a UUID with hyphens (e.g., 9b2b47f0-c44b-4338-b579-46872f33404a)
         const previewUrlPattern = /-preview-[a-f0-9-]+\.docs\.buildwithfern\.com$/;
 
-        const previewDeployments: PreviewDeployment[] = listResponse.body.urls
+        const previewDeployments: PreviewDeployment[] = listResponse.urls
             .filter((item) => previewUrlPattern.test(item.domain))
             .map((item) => ({
                 url: item.basePath != null ? `${item.domain}${item.basePath}` : item.domain,
