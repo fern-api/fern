@@ -619,8 +619,39 @@ export async function publishDocs({
     }
 }
 
+// The server currently returns DocsV1Write.FileS3UploadUrl ({ uploadUrl, fileId }) objects
+// as values in uploadUrls, but the oRPC contract types them as plain strings.
+// These helpers handle both formats for forward compatibility.
+function isLegacyUploadUrlObject(value: unknown): value is { uploadUrl: string; fileId: string } {
+    return (
+        typeof value === "object" &&
+        value !== null &&
+        "uploadUrl" in value &&
+        typeof (value as { uploadUrl: unknown }).uploadUrl === "string" &&
+        "fileId" in value &&
+        typeof (value as { fileId: unknown }).fileId === "string"
+    );
+}
+
+function extractUploadUrl(value: unknown): string {
+    if (typeof value === "string") {
+        return value;
+    }
+    if (isLegacyUploadUrlObject(value)) {
+        return value.uploadUrl;
+    }
+    throw new Error(`Unexpected upload URL value: ${JSON.stringify(value)}`);
+}
+
+function extractFileId(key: string, value: unknown): DocsV1Write.FileId {
+    if (isLegacyUploadUrlObject(value)) {
+        return DocsV1Write.FileId(value.fileId);
+    }
+    return DocsV1Write.FileId(key);
+}
+
 async function uploadFiles(
-    filesToUpload: Record<string, string>,
+    filesToUpload: Record<string, unknown>,
     docsWorkspacePath: AbsoluteFilePath,
     context: TaskContext,
     batchSize: number,
@@ -633,11 +664,12 @@ async function uploadFiles(
     let filesUploaded = 0;
     for (const chunkedFilepaths of chunkedFilepathsToUpload) {
         await Promise.all(
-            chunkedFilepaths.map(async ([key, uploadUrl]) => {
+            chunkedFilepaths.map(async ([key, urlValue]) => {
                 // Use the mapping to get the original absolute path instead of reconstructing from sanitized key
                 const absoluteFilePath =
                     sanitizedToAbsoluteMap.get(key) || resolve(docsWorkspacePath, RelativeFilePath.of(key));
                 try {
+                    const uploadUrl = extractUploadUrl(urlValue);
                     const mimeType = mime.lookup(absoluteFilePath);
                     await axios.put(uploadUrl, await readFile(absoluteFilePath), {
                         headers: {
@@ -661,19 +693,19 @@ async function uploadFiles(
 }
 
 function convertToFilePathPairs(
-    uploadUrls: Record<string, string>,
+    uploadUrls: Record<string, unknown>,
     docsWorkspacePath: AbsoluteFilePath,
     sanitizedToAbsoluteMap?: Map<string, AbsoluteFilePath>
 ): UploadedFile[] {
     const toRet: UploadedFile[] = [];
-    for (const [key, uploadUrl] of Object.entries(uploadUrls)) {
+    for (const [key, urlValue] of Object.entries(uploadUrls)) {
         const relativeFilePath = RelativeFilePath.of(key);
         // Use the mapping to get the original absolute path instead of reconstructing from sanitized key
         const absoluteFilePath = sanitizedToAbsoluteMap?.get(key) || resolve(docsWorkspacePath, relativeFilePath);
         toRet.push({
             relativeFilePath,
             absoluteFilePath,
-            fileId: DocsV1Write.FileId(key)
+            fileId: extractFileId(key, urlValue)
         });
     }
     return toRet;
