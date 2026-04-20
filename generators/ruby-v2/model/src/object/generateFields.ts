@@ -35,7 +35,6 @@ export function generateFields({
             if (wireValue !== fieldName) {
                 writer.write(`, api_name: "${wireValue}"`);
             }
-
         });
     });
 }
