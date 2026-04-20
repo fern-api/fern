@@ -25,9 +25,14 @@ export interface DocsSettingsConfig {
      * By default (`false`), search will display results for pages across all products and versions.
      * If set to true, search will display results for pages within the current product and version.
      *
+     * Preserved for backwards compatibility. Equivalent to
+     * `search.default-filter-by-current-product`.
+     *
      * @default: false
      */
     defaultSearchFilters?: boolean;
+    /** Controls product-aware search behavior. See `SearchSettingsConfig` for individual options. */
+    search?: FernDocsConfig.SearchSettingsConfig;
     /**
      * Controls the display of HTTP snippets in the API Reference. HTTP snippets are enabled by default for all languages.
      * - Set to `false` to disable HTTP snippets completely

@@ -5,6 +5,7 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { HttpSnippetsConfig } from "./HttpSnippetsConfig.js";
 import { Language } from "./Language.js";
+import { SearchSettingsConfig } from "./SearchSettingsConfig.js";
 import { TitleSource } from "./TitleSource.js";
 import { WebSocketOneofDisplay } from "./WebSocketOneofDisplay.js";
 
@@ -19,6 +20,7 @@ export const DocsSettingsConfig: core.serialization.ObjectSchema<
         "default-search-filters",
         core.serialization.boolean().optional(),
     ),
+    search: SearchSettingsConfig.optional(),
     httpSnippets: core.serialization.property("http-snippets", HttpSnippetsConfig.optional()),
     hide404Page: core.serialization.property("hide-404-page", core.serialization.boolean().optional()),
     useJavascriptAsTypescript: core.serialization.property(
@@ -46,6 +48,7 @@ export declare namespace DocsSettingsConfig {
         "disable-search"?: boolean | null;
         "dark-mode-code"?: boolean | null;
         "default-search-filters"?: boolean | null;
+        search?: SearchSettingsConfig.Raw | null;
         "http-snippets"?: HttpSnippetsConfig.Raw | null;
         "hide-404-page"?: boolean | null;
         "use-javascript-as-typescript"?: boolean | null;

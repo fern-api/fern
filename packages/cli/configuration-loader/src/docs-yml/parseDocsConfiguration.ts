@@ -518,9 +518,19 @@ function convertSettingsConfig(
         return undefined;
     }
 
+    // The legacy `default-search-filters` setting is preserved as an alias for
+    // `search.default-filter-by-current-product`. Either one enables the behavior.
+    const defaultFilterByCurrentProduct =
+        (settings.search?.defaultFilterByCurrentProduct ?? false) || (settings.defaultSearchFilters ?? false);
+    const prioritizeCurrentProduct = settings.search?.prioritizeCurrentProduct ?? false;
+
     return {
         darkModeCode: settings.darkModeCode ?? false,
-        defaultSearchFilters: settings.defaultSearchFilters ?? false,
+        defaultSearchFilters: defaultFilterByCurrentProduct,
+        search: {
+            prioritizeCurrentProduct,
+            defaultFilterByCurrentProduct
+        },
         language: settings.language ?? "en",
         disableSearch: settings.disableSearch ?? false,
         hide404Page: settings.hide404Page ?? false,

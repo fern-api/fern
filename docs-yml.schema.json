@@ -4146,7 +4146,6 @@
         "chatgpt",
         "claude",
         "cursor",
-        "claude-code",
         "vscode"
       ]
     },
@@ -4260,6 +4259,7 @@
           ],
           "description": "Controls the \"Open in Claude\" button, which sends the page content to Claude for further\nexploration and Q&A. Set to `false` to hide it.\n\n@default: true"
         },
+<<<<<<< HEAD
         "claude-code": {
           "oneOf": [
             {
@@ -4271,6 +4271,8 @@
           ],
           "description": "Controls the \"Connect to Claude Code\" button, which copies a `claude mcp add` command to the\nclipboard so users can register this docs site's MCP server with Claude Code. The button only\nrenders on docs sites that have Ask AI enabled; set to `false` to hide it on those sites.\n\n@default: true"
         },
+=======
+>>>>>>> d2b2b02bc02 (feat(cli): add settings.search.prioritize-current-product and default-filter-by-current-product)
         "cursor": {
           "oneOf": [
             {
@@ -4471,6 +4473,7 @@
       "type": "string",
       "description": "A BCP 47 language tag identifying a docs locale. Common shorthand codes\nlike \"en\", \"es\", \"ja\" are accepted, as well as regional variants such as\n\"ja-JP\", \"pt-BR\", \"zh-Hans\", and \"zh-Hans-CN\". See RFC 5646 for the full\ngrammar."
     },
+<<<<<<< HEAD
     "docs.TranslationConfigObject": {
       "type": "object",
       "properties": {
@@ -4505,6 +4508,8 @@
       ],
       "description": "Translation configuration can be either a language code string or an object with additional options.\nWhen using a string, it's equivalent to `{ lang: <string> }`."
     },
+=======
+>>>>>>> d2b2b02bc02 (feat(cli): add settings.search.prioritize-current-product and default-filter-by-current-product)
     "docs.AIChatModel": {
       "type": "string",
       "enum": [
@@ -4712,13 +4717,6 @@
         "player"
       ]
     },
-    "docs.OgDynamicLogoColor": {
-      "type": "string",
-      "enum": [
-        "dark",
-        "light"
-      ]
-    },
     "docs.MetadataConfig": {
       "type": "object",
       "properties": {
@@ -4919,6 +4917,7 @@
           ],
           "description": "A custom background image for dynamically generated OG images. Can be a URL or a file path."
         },
+<<<<<<< HEAD
         "og:dynamic:text-color": {
           "oneOf": [
             {
@@ -5007,6 +5006,8 @@
           ],
           "description": "Toggle visibility of the accent gradient overlay in dynamically generated OG images. Defaults to true when og:dynamic is enabled."
         },
+=======
+>>>>>>> d2b2b02bc02 (feat(cli): add settings.search.prioritize-current-product and default-filter-by-current-product)
         "canonical-host": {
           "oneOf": [
             {
@@ -5949,12 +5950,30 @@
         }
       ]
     },
-    "docs.WebSocketOneofDisplay": {
-      "type": "string",
-      "enum": [
-        "flat",
-        "grouped"
-      ]
+    "docs.SearchSettingsConfig": {
+      "type": "object",
+      "properties": {
+        "prioritize-current-product": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "default-filter-by-current-product": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
     },
     "docs.DocsSettingsConfig": {
       "type": "object",
@@ -6002,6 +6021,16 @@
             }
           ],
           "description": "By default (`false`), search will display results for pages across all products and versions.\nIf set to true, search will display results for pages within the current product and version.\n\n@default: false"
+        },
+        "search": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.SearchSettingsConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "http-snippets": {
           "oneOf": [
@@ -6097,6 +6126,7 @@
             {
               "type": "null"
             }
+<<<<<<< HEAD
           ],
           "description": "When true, substitutes ${ENV_VAR} expressions using environment variables across all files in the docs bundle,\nincluding markdown/MDX content. This is useful for injecting dynamic values like API keys or URLs.\nUse \\$\\{VAR\\} to escape and output literal ${VAR} without substitution.\n\n@default: false"
         },
@@ -6110,6 +6140,9 @@
             }
           ],
           "description": "Controls how WebSocket messages with oneOf bodies are displayed in the API Reference.\n- `flat` (default): Each variant in the oneOf is shown as a separate top-level entry.\n- `grouped`: Messages are shown as a single parent entry with nested variants.\n\n@default: flat"
+=======
+          ]
+>>>>>>> d2b2b02bc02 (feat(cli): add settings.search.prioritize-current-product and default-filter-by-current-product)
         }
       },
       "additionalProperties": false
@@ -6213,8 +6246,7 @@
       "type": "string",
       "enum": [
         "default",
-        "toggle",
-        "tabs"
+        "toggle"
       ]
     },
     "docs.ThemeConfig": {
