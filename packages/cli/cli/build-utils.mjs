@@ -1,5 +1,6 @@
 import { exec } from "child_process";
-import { writeFile } from "fs/promises";
+import { existsSync } from "fs";
+import { readdir, readFile, writeFile } from "fs/promises";
 import path from "path";
 import tsup from "tsup";
 import { fileURLToPath } from "url";
@@ -9,6 +10,42 @@ import packageJson from "./package.json" with { type: "json" };
 const execAsync = promisify(exec);
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const REPO_ROOT = path.resolve(__dirname, "../../..");
+
+/**
+ * Rewrite every .map file in absOutDir so each entry in `sources` is a clean
+ * path relative to the repo root (e.g. "packages/cli/cli/src/cli.ts") instead
+ * of a relative path like "../../src/cli.ts". This gives Sentry a tidy,
+ * already-normalised filename to display and lets a single repo-root-based
+ * code mapping resolve every frame regardless of package depth.
+ */
+async function rewriteSourceMapSources(absOutDir) {
+    if (!existsSync(absOutDir)) {
+        return;
+    }
+    const entries = await readdir(absOutDir, { withFileTypes: true });
+    for (const entry of entries) {
+        if (!entry.isFile() || !entry.name.endsWith(".map")) {
+            continue;
+        }
+        const mapPath = path.join(absOutDir, entry.name);
+        const mapDir = path.dirname(mapPath);
+        const map = JSON.parse(await readFile(mapPath, "utf8"));
+        if (!Array.isArray(map.sources)) {
+            continue;
+        }
+        map.sources = map.sources.map((src) => {
+            if (typeof src !== "string" || src === "" || src.startsWith("<") || src.startsWith("data:")) {
+                return src;
+            }
+            return path.relative(REPO_ROOT, path.resolve(mapDir, src));
+        });
+        if ("sourceRoot" in map) {
+            delete map.sourceRoot;
+        }
+        await writeFile(mapPath, JSON.stringify(map));
+    }
+}
 
 /**
  * Get a dependency version from package.json, preferring dependencies over devDependencies.
@@ -92,6 +129,11 @@ export async function buildCli(config) {
     });
 
     const outDirAbs = path.join(__dirname, outDir);
+
+    // Rewrite source map `sources` to repo-root-relative paths so Sentry
+    // displays clean filenames (e.g. "packages/cli/cli/src/cli.ts") and a
+    // single repo-root-based code mapping resolves every frame.
+    await rewriteSourceMapSources(outDirAbs);
 
     // Collect runtime dependencies
     const dependencies = {};
