@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.79.4
+  changelogEntry:
+    - summary: |
+        Resolve `$ref` pointers to external markdown files inside OpenAPI `description`
+        fields by inlining the file contents as a string at spec load time. Previously
+        such specs failed with `e.replace is not a function` during SDK generation.
+      type: fix
+  createdAt: "2026-04-20"
+  irVersion: 66
 - version: 4.79.3
   changelogEntry:
     - summary: |
