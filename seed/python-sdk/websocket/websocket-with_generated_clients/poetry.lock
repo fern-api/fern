@@ -1491,4 +1491,4 @@ aiohttp = ["aiohttp", "httpx-aiohttp"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "01276dd9d0c20fb382fd9ecfb2663dd551a018c6aa4c5c92bd57af455b9afa85"
+content-hash = "9815ecd03f1237ca99fb206d32d23b5885ad0150e8339bb54d3faff4f804b4f7"
