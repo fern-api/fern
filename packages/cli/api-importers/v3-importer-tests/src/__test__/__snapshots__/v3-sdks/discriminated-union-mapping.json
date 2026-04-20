@@ -130,6 +130,7 @@
         "extends": [],
         "types": [
           {
+            "docs": "A generic request type used throughout the API.\n",
             "discriminantValue": "request",
             "displayName": "A simple request title",
             "shape": {
@@ -144,6 +145,7 @@
             }
           },
           {
+            "docs": "A generic response type used throughout the API.\n",
             "discriminantValue": "response",
             "displayName": "A simple response title",
             "shape": {

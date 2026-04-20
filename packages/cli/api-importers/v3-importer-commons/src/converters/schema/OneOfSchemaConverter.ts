@@ -239,6 +239,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
 
                 // Extract schema title once for reuse
                 const schemaTitle = resolvedSchema.resolved ? resolvedSchema.value.title : undefined;
+                const schemaDescription = resolvedSchema.resolved ? resolvedSchema.value.description : undefined;
 
                 // Determine variant display name with fallback priority:
                 // 1. Schema's title field (explicit user intention)
@@ -253,7 +254,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 }
 
                 unionTypes.push({
-                    docs: undefined,
+                    docs: schemaDescription,
                     discriminantValue: nameAndWireValue,
                     availability: convertedSchema.availability,
                     displayName: variantDisplayName,
