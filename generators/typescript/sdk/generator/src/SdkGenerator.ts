@@ -3,7 +3,6 @@ import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/serialization";
 import { FernIr } from "@fern-fern/ir-sdk";
 import {
     AsIsManager,
@@ -716,13 +715,30 @@ export class SdkGenerator {
 
         if (this.config.snippetFilepath != null) {
             this.generateSnippets();
-            const snippets: FernGeneratorExec.Snippets = {
-                endpoints: this.endpointSnippets,
-                types: {}
-            };
+            // Serialize snippets manually instead of going through the Zurg
+            // serializer.  The only transforms jsonOrThrow applied were
+            // camelCase → snake_case renames (exampleIdentifier → example_identifier,
+            // identifierOverride → identifier_override).  Doing it inline avoids
+            // the recursive async validation overhead.
+            const serializedEndpoints = this.endpointSnippets.map((ep) => {
+                const entry: Record<string, unknown> = {
+                    id: {
+                        path: ep.id.path,
+                        method: ep.id.method,
+                        ...(ep.id.identifierOverride != null
+                            ? { identifier_override: ep.id.identifierOverride }
+                            : {})
+                    },
+                    snippet: ep.snippet
+                };
+                if (ep.exampleIdentifier != null) {
+                    entry.example_identifier = ep.exampleIdentifier;
+                }
+                return entry;
+            });
             await writeFile(
                 this.config.snippetFilepath,
-                JSON.stringify(await FernGeneratorExecSerializers.Snippets.jsonOrThrow(snippets), undefined, 4)
+                JSON.stringify({ types: {}, endpoints: serializedEndpoints }, undefined, 4)
             );
             this.context.logger.debug("Generated snippets");
 
