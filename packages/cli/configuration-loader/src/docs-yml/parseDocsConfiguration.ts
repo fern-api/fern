@@ -192,6 +192,7 @@ export async function parseDocsConfiguration({
         footerLinks: convertFooterLinks(footerLinks),
         defaultLanguage,
         languages: rawDocsConfiguration.languages,
+        translations: rawDocsConfiguration.translations,
         announcement: rawDocsConfiguration.announcement,
 
         /* seo */

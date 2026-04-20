@@ -14,6 +14,7 @@ import {
     PlaygroundSettings,
     Target,
     ThemeConfig,
+    TranslationConfig,
     VersionAvailability
 } from "./schemas/index.js";
 
@@ -80,6 +81,7 @@ export interface ParsedDocsConfiguration {
     llmsTxtFile: AbsoluteFilePath | undefined;
     llmsFullTxtFile: AbsoluteFilePath | undefined;
     languages: Language[] | undefined;
+    translations: TranslationConfig[] | undefined;
     defaultLanguage: CjsFdrSdk.docs.v1.commons.ProgrammingLanguage | undefined;
     analyticsConfig: CjsFdrSdk.docs.v1.commons.AnalyticsConfig | undefined;
     announcement: AnnouncementConfig | undefined;

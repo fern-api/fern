@@ -54,6 +54,7 @@ export interface DocsConfiguration {
      */
     defaultLanguage?: FernDocsConfig.ProgrammingLanguage;
     languages?: FernDocsConfig.Language[];
+    translations?: FernDocsConfig.TranslationConfig[];
     aiChat?: FernDocsConfig.AiChatConfig;
     aiSearch?: FernDocsConfig.AiChatConfig;
     /** Configure AI-powered example enhancement for API documentation. When enabled, API examples will be enhanced with AI-generated content to provide more comprehensive and realistic examples. */

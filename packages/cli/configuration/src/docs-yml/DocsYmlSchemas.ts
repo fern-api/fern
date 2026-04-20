@@ -944,6 +944,13 @@ export const ProductFileConfig = z.object({
     navigation: NavigationConfig
 });
 
+// ===== Translations =====
+
+export const TranslationConfig = z.object({
+    lang: Language,
+    default: z.boolean().optional()
+});
+
 // ===== Main DocsConfiguration =====
 
 export const DocsConfiguration = z.object({
@@ -964,6 +971,7 @@ export const DocsConfiguration = z.object({
     experimental: ExperimentalConfig.optional(),
     "default-language": ProgrammingLanguage.optional(),
     languages: z.array(Language).optional(),
+    translations: z.array(TranslationConfig).optional(),
     "ai-chat": AIChatConfig.optional(),
     "ai-search": AIChatConfig.optional(),
     "ai-examples": AiExamplesConfig.optional(),
