@@ -258,20 +258,17 @@ func splitWords(s string) []string {
 		if unicode.IsUpper(r) {
 			// Check if this is the start of a new word
 			if len(current) > 0 {
-				// Look ahead: if next char is lowercase, this uppercase starts a new word
-				// But if current is all uppercase and next is uppercase too, continue the run
+				// This mirrors lodash's words() regex pattern
+				// `[A-Z]+(?=[A-Z][a-z])|[A-Z]?[a-z]+`: every uppercase letter starts a new word,
+				// except within an all-uppercase run that is not followed by a lowercase letter.
 				if i+1 < len(runes) && unicode.IsLower(runes[i+1]) {
-					// If previous chars were uppercase run (like "HTTP"), flush entire run
-					if unicode.IsUpper(current[len(current)-1]) && len(current) > 1 {
-						words = append(words, string(current))
-						current = current[:0]
-					} else if unicode.IsUpper(current[len(current)-1]) {
-						// Single uppercase char before this - keep it as part of current
-					} else {
-						words = append(words, string(current))
-						current = current[:0]
-					}
+					// Next char is lowercase, so this uppercase starts a new word.
+					// Flush whatever is in `current` (uppercase run or lowercase word).
+					words = append(words, string(current))
+					current = current[:0]
 				} else if !unicode.IsUpper(current[len(current)-1]) {
+					// Next char is NOT lowercase, but the run would break here because
+					// the previous character was lowercase — flush the lowercase word.
 					words = append(words, string(current))
 					current = current[:0]
 				}
