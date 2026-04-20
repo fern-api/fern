@@ -22,3 +22,4 @@ a57d90f	34854	11800	38596	-9.7	discard	exp-018: defer ExportsManager replaceWith
 d611027	n/a	7100	38596	n/a	crash	exp-020: bypass Zurg IR serializer (crash: _visit methods missing)
 00bb9b3	34443	11300	38596	-10.8	keep	exp-021: replace deleteGitIgnoredFiles git commands with direct rm (gen -3.4%)
 n/a	n/a	7800	38596	n/a	crash	exp-022: bypass Zurg IR serializer with fast JSON.parse + tree walk (crash: _visit unwrapping varies per union type)
+n/a	n/a	7500	38596	n/a	crash	exp-023: bypass Zurg v3 — detect wrapping via key heuristic (crash: spread variants can also have only type+value keys)
