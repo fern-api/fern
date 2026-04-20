@@ -387,9 +387,16 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 }
 
                 if (maybeTypeReference.ok) {
+                    // Resolve the reference to get the actual schema's description
+                    const resolvedSchema = this.context.resolveReference<OpenAPIV3_1.SchemaObject>({
+                        reference: subSchema,
+                        breadcrumbs: this.breadcrumbs
+                    });
+                    const schemaDescription = resolvedSchema.resolved ? resolvedSchema.value.description : undefined;
+
                     unionTypes.push({
                         type: maybeTypeReference.reference,
-                        docs: subSchema.description
+                        docs: schemaDescription
                     });
                 }
                 const typeId = this.context.getTypeIdFromSchemaReference(subSchema);
