@@ -186,11 +186,18 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                             packageManager: this.getPackageManager(customConfig)
                         });
                     });
-                    await typescriptProject.generateLockfile(logger);
-                    if (!(await typescriptProject.areCheckFixToolsAvailable(logger))) {
-                        await typescriptProject.installCheckFixDependencies(logger);
-                    }
-                    await typescriptProject.checkFix(logger);
+                    // Run lockfile generation and check:fix in parallel — they
+                    // operate on different files (pnpm-lock.yaml vs source files)
+                    // so there's no conflict.
+                    await Promise.all([
+                        typescriptProject.generateLockfile(logger),
+                        (async () => {
+                            if (!(await typescriptProject.areCheckFixToolsAvailable(logger))) {
+                                await typescriptProject.installCheckFixDependencies(logger);
+                            }
+                            await typescriptProject.checkFix(logger);
+                        })()
+                    ]);
                     await typescriptProject.deleteGitIgnoredFiles(logger);
                     if (this.outputSrcOnly(customConfig)) {
                         await typescriptProject.copySrcContentsTo({
