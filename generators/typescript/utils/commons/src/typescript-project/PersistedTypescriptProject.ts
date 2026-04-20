@@ -17,6 +17,10 @@ export declare namespace PersistedTypescriptProject {
         buildCommand: string[];
         formatCommand: string[];
         checkFixCommand: string[];
+        /** Direct binary args for check:fix (e.g. ["biome", "check", "--fix", ...]).
+         *  When set and the binary is on PATH, checkFix() invokes this directly
+         *  instead of going through pnpm's script runner. */
+        directCheckFixBinaryArgs?: string[];
         /** Package specifiers needed for check:fix (e.g. ["@biomejs/biome@2.4.3"]) */
         checkFixPackages: string[];
         /** Binary names that must be on PATH for check:fix (e.g. ["biome"]) */
@@ -35,6 +39,7 @@ export class PersistedTypescriptProject {
     private buildCommand: string[];
     private formatCommand: string[];
     private checkFixCommand: string[];
+    private directCheckFixBinaryArgs: string[] | undefined;
     private checkFixPackages: string[];
     private checkFixToolBinaries: string[];
 
@@ -48,6 +53,7 @@ export class PersistedTypescriptProject {
         buildCommand,
         formatCommand,
         checkFixCommand,
+        directCheckFixBinaryArgs,
         checkFixPackages,
         checkFixToolBinaries,
         runScripts,
@@ -60,6 +66,7 @@ export class PersistedTypescriptProject {
         this.buildCommand = buildCommand;
         this.formatCommand = formatCommand;
         this.checkFixCommand = checkFixCommand;
+        this.directCheckFixBinaryArgs = directCheckFixBinaryArgs;
         this.checkFixPackages = checkFixPackages;
         this.checkFixToolBinaries = checkFixToolBinaries;
         this.runScripts = runScripts;
@@ -242,6 +249,45 @@ export class PersistedTypescriptProject {
     public async checkFix(logger: Logger): Promise<void> {
         if (!this.runScripts) {
             return;
+        }
+
+        // When a direct binary invocation is available and the tool is on PATH,
+        // bypass the pnpm script runner to avoid process spawn overhead.
+        if (this.directCheckFixBinaryArgs != null && this.directCheckFixBinaryArgs.length > 0) {
+            const [binary, ...args] = this.directCheckFixBinaryArgs;
+            if (binary != null) {
+                const execFileAsync = promisify(execFile);
+                try {
+                    const startTime = Date.now();
+                    const result = await execFileAsync(binary, args, {
+                        cwd: this.directory,
+                        maxBuffer: 50 * 1024 * 1024
+                    });
+                    await this.writeToolOutputToLogFile({
+                        step: "checkFix",
+                        stdout: result.stdout ?? "",
+                        stderr: result.stderr ?? "",
+                        logger
+                    });
+                    logger.debug(`[TIMING] checkFix (direct) took ${Date.now() - startTime}ms`);
+                    return;
+                } catch (e) {
+                    const error = e as { stdout?: string; stderr?: string; code?: string };
+                    // If the binary was not found, fall through to pnpm
+                    if (error.code === "ENOENT") {
+                        logger.debug(`Direct ${binary} not found, falling back to ${this.packageManager}`);
+                    } else {
+                        await this.writeToolOutputToLogFile({
+                            step: "checkFix",
+                            stdout: error.stdout ?? "",
+                            stderr: error.stderr ?? "",
+                            logger
+                        });
+                        logger.error(`Failed to format the generated project: ${e}`);
+                        return;
+                    }
+                }
+            }
         }
 
         const pm = createLoggingExecutable(this.packageManager, {
