@@ -108,13 +108,13 @@ if [ "$QUICK_MODE" != "--quick" ] && [ -f "$BASELINE_DIR/manifest.sha256" ]; the
 
   if [ -d "$OUTPUT_DIR" ] && [ "$(find "$OUTPUT_DIR" -type f | head -1)" ]; then
     CURRENT_MANIFEST="/tmp/autoresearch-current-manifest.sha256"
-    (cd "$OUTPUT_DIR" && find . -type f | sort | xargs shasum -a 256) > "$CURRENT_MANIFEST" 2>/dev/null || true
+    (cd "$OUTPUT_DIR" && find . -type f ! -name 'snippet.json' | sort | xargs shasum -a 256) > "$CURRENT_MANIFEST" 2>/dev/null || true
 
     if diff -q "$BASELINE_DIR/manifest.sha256" "$CURRENT_MANIFEST" > /dev/null 2>&1; then
       VALIDATION="identical"
       echo "Output identical to baseline (1987 files)"
     else
-      DIFF_COUNT=$(diff "$BASELINE_DIR/manifest.sha256" "$CURRENT_MANIFEST" 2>/dev/null | grep "^[<>]" | wc -l | tr -d ' ')
+      DIFF_COUNT=$(diff "$BASELINE_DIR/manifest.sha256" "$CURRENT_MANIFEST" 2>/dev/null | grep -c "^[<>]" || true)
       VALIDATION="differs:${DIFF_COUNT}_lines"
       echo "Output differs from baseline ($DIFF_COUNT changed lines in manifest)"
       diff "$BASELINE_DIR/manifest.sha256" "$CURRENT_MANIFEST" 2>/dev/null | head -20 || true

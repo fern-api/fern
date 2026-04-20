@@ -23,3 +23,8 @@ d611027	n/a	7100	38596	n/a	crash	exp-020: bypass Zurg IR serializer (crash: _vis
 00bb9b3	34443	11300	38596	-10.8	keep	exp-021: replace deleteGitIgnoredFiles git commands with direct rm (gen -3.4%)
 n/a	n/a	7800	38596	n/a	crash	exp-022: bypass Zurg IR serializer with fast JSON.parse + tree walk (crash: _visit unwrapping varies per union type)
 n/a	n/a	7500	38596	n/a	crash	exp-023: bypass Zurg v3 — detect wrapping via key heuristic (crash: spread variants can also have only type+value keys)
+2ef7e21	34854	11100	38596	-9.7	discard	exp-024: bypass Zurg IR serializer (tree walk ~9s, marginal gain)
+a85a06f	33847	11900	38596	-12.3	discard	exp-025: parallelize post-persist steps (gen +5.3%, e2e noise)
+4c6880d	34017	12000	38596	-11.9	discard	exp-026: skip dprint for test files (gen +6.2%, biome does more work)
+b6826a2	33981	11900	38596	-11.9	discard	exp-027: parallelize snippet+readme+reference (CPU-bound, no overlap)
+d18cbff777a	31358	11100	38596	-18.8	keep	exp-028: bypass Zurg snippet serializer with manual JSON construction (gen -1.8%)
