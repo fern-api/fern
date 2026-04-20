@@ -17,21 +17,9 @@ export class FernDiscriminatorContextExtension extends AbstractExtension<"data" 
 
     public convert(): "data" | "protocol" | undefined {
         const extensionValue = this.getExtensionValue(this.node);
-        if (extensionValue == null) {
-            return undefined;
+        if (extensionValue === "data" || extensionValue === "protocol") {
+            return extensionValue;
         }
-
-        if (typeof extensionValue !== "string") {
-            return undefined;
-        }
-
-        if (extensionValue === "protocol") {
-            return "protocol";
-        }
-        if (extensionValue === "data") {
-            return "data";
-        }
-
         return undefined;
     }
 }

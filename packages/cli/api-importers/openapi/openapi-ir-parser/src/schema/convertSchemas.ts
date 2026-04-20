@@ -45,7 +45,7 @@ import {
     getExampleAsNumber,
     getExamplesString
 } from "./examples/getExample.js";
-import { inferDiscriminatorContext } from "./inferDiscriminatorContext.js";
+import { resolveDiscriminatorContext } from "./inferDiscriminatorContext.js";
 import type { SchemaParserContext } from "./SchemaParserContext.js";
 import { getBreadcrumbsFromReference } from "./utils/getBreadcrumbsFromReference.js";
 import { getGeneratedTypeName } from "./utils/getSchemaName.js";
@@ -938,17 +938,10 @@ export function convertSchemaObject(
         }
 
         if (schema.type === "object" && schema.discriminator != null && schema.discriminator.mapping != null) {
-            const rawDiscriminatorContext = getExtension<string>(
-                schema.discriminator,
-                FernOpenAPIExtension.DISCRIMINATOR_CONTEXT
-            );
-            const objectDiscriminatorContext =
-                rawDiscriminatorContext === "data" || rawDiscriminatorContext === "protocol"
-                    ? rawDiscriminatorContext
-                    : inferDiscriminatorContext({
-                          discriminator: schema.discriminator,
-                          context
-                      });
+            const objectDiscriminatorContext = resolveDiscriminatorContext({
+                discriminator: schema.discriminator,
+                context
+            });
             if (!context.options.discriminatedUnionV2 || objectDiscriminatorContext === "protocol") {
                 return convertDiscriminatedOneOf({
                     nameOverride,
@@ -995,17 +988,10 @@ export function convertSchemaObject(
                 schema.discriminator.mapping != null &&
                 Object.keys(schema.discriminator.mapping).length > 0
             ) {
-                const rawContext = getExtension<string>(
-                    schema.discriminator,
-                    FernOpenAPIExtension.DISCRIMINATOR_CONTEXT
-                );
-                const discriminatorContext =
-                    rawContext === "data" || rawContext === "protocol"
-                        ? rawContext
-                        : inferDiscriminatorContext({
-                              discriminator: schema.discriminator,
-                              context
-                          });
+                const discriminatorContext = resolveDiscriminatorContext({
+                    discriminator: schema.discriminator,
+                    context
+                });
                 if (
                     (context.options.discriminatedUnionV2 || isUndiscriminated) &&
                     discriminatorContext !== "protocol"
