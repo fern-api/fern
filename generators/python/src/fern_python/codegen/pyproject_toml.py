@@ -251,8 +251,6 @@ packages = [
             # can never pick up the vulnerable range — even when transitively
             # pulled in by user-supplied `extra_dependencies` such as older
             # pinned versions of boto3 whose botocore caps urllib3 at < 2.1.
-            urllib3_dev_constraint = ">=1.26.19,<2.0.0 || >=2.2.2,<3.0.0"
-
             return f"""
 [tool.poetry.dependencies]
 python = "{self.python_version}"
@@ -264,7 +262,7 @@ pytest-asyncio = "{pytest_asyncio_version}"
 pytest-xdist = "^3.6.1"
 python-dateutil = "^2.9.0"
 types-python-dateutil = "^2.9.0.20240316"
-urllib3 = "{urllib3_dev_constraint}"
+urllib3 = ">=1.26.19,<2.0.0 || >=2.2.2,<3.0.0"
 {wire_test_deps}{dev_deps}"""
 
     @dataclass(frozen=True)
