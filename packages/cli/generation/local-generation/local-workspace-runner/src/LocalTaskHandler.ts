@@ -95,6 +95,8 @@ export class LocalTaskHandler {
         autoVersioningPrDescription?: string;
         autoVersioningVersionBumpReason?: string;
         autoVersioningVersionBump?: string;
+        autoVersioningNewVersion?: string;
+        autoVersioningPreviousVersion?: string;
     }> {
         const isFernIgnorePresent = this.skipFernignore ? false : await this.isFernIgnorePresent();
         const isExistingGitRepo = await this.isGitRepository();
@@ -173,7 +175,9 @@ export class LocalTaskHandler {
                 autoVersioningChangelogEntry: autoVersionResult.changelogEntry,
                 autoVersioningPrDescription: autoVersionResult.prDescription,
                 autoVersioningVersionBumpReason: autoVersionResult.versionBumpReason,
-                autoVersioningVersionBump: autoVersionResult.versionBump
+                autoVersioningVersionBump: autoVersionResult.versionBump,
+                autoVersioningNewVersion: autoVersionResult.version,
+                autoVersioningPreviousVersion: autoVersionResult.previousVersion
             };
         }
         return { shouldCommit: true, autoVersioningCommitMessage: undefined };
@@ -404,9 +408,7 @@ export class LocalTaskHandler {
                         let versionBumpReason: string | undefined = bestVersionBumpReason;
                         if (allChangelogEntries.length > 1) {
                             // Consolidate repetitive multi-chunk entries via AI rollup
-                            const rawEntries = allChangelogEntries
-                                .map((e) => (e.startsWith("- ") ? e : `- ${e}`))
-                                .join("\n");
+                            const rawEntries = allChangelogEntries.join("\n\n");
                             try {
                                 this.context.logger.debug(
                                     `Consolidating ${allChangelogEntries.length} changelog entries via AI rollup`
@@ -498,7 +500,8 @@ export class LocalTaskHandler {
                 changelogEntry,
                 prDescription,
                 versionBumpReason,
-                versionBump: finalBump
+                versionBump: finalBump,
+                previousVersion
             };
         } catch (error) {
             if (error instanceof AutoVersioningException) {

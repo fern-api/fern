@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix generated wire tests and dynamic snippets to honor `pydantic_config.union_naming: v1`.
+    Previously, variant class names in wire tests and README/reference snippets were always
+    emitted with the v0 suffix style (e.g. `UnionName_Variant`), causing import errors when
+    the SDK types were generated with v1 prefix-style names (e.g. `VariantUnionName`).
+  type: fix

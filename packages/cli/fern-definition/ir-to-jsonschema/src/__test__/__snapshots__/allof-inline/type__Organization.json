@@ -1,0 +1,50 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "metadata": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/OrganizationMetadata"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "name": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "name"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "OrganizationMetadata": {
+      "type": "object",
+      "properties": {
+        "region": {
+          "type": "string"
+        },
+        "domain": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "region"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

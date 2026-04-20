@@ -125,6 +125,9 @@ public final class MyUnion {
     @java.lang.Override
     public MyUnion deserialize(JsonParser p, DeserializationContext context) throws IOException {
       Object value = p.readValueAs(Object.class);
+      if (value instanceof Integer) {
+        return of((Integer) value);
+      }
       try {
         return of(ObjectMappers.JSON_MAPPER.convertValue(value, String.class));
       } catch(RuntimeException e) {
@@ -132,9 +135,6 @@ public final class MyUnion {
       try {
         return ofListOfString(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<List<String>>() {}));
       } catch(RuntimeException e) {
-      }
-      if (value instanceof Integer) {
-        return of((Integer) value);
       }
       try {
         return ofListOfInteger(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<List<Integer>>() {}));

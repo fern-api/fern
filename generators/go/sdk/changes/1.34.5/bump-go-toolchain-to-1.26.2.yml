@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Bump the Go toolchain in the generator Docker image from 1.23.8 to 1.26.2
+    (alpine3.23). This unblocks `go mod tidy` for generated SDKs whose modules
+    (or transitive dependencies) require a newer Go version, which previously
+    failed with `go.mod requires go >= X (running go 1.23.8; GOTOOLCHAIN=local)`.
+  type: fix

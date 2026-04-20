@@ -6,3 +6,4 @@
     Brief description of your change.
     You can use multiple lines for longer descriptions.
   type: feat  # Options: fix/chore (patch), feat/internal (minor), break (major)
+  # pre-release: rc  # Optional: alpha, beta, or rc (e.g., produces 1.2.0-rc.0)

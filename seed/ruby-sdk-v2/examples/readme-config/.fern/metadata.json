@@ -3,6 +3,7 @@
   "generatorName": "fernapi/fern-ruby-sdk-v2",
   "generatorVersion": "local",
   "generatorConfig": {
+    "rubocopSeverity": "error",
     "customReadmeSections": [
       {
         "title": "Override Section",
@@ -15,5 +16,9 @@
     ]
   },
   "originGitCommit": "DUMMY",
+  "originGitCommitIsDirty": null,
+  "invokedBy": "ci",
+  "requestedVersion": "0.0.1",
+  "ciProvider": "github",
   "sdkVersion": "0.0.1"
 }

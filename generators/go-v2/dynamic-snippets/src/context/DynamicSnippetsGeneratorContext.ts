@@ -1,6 +1,7 @@
 import {
     AbstractDynamicSnippetsGeneratorContext,
-    type FernGeneratorExec
+    type FernGeneratorExec,
+    getSdkVersion
 } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import type { FernIr } from "@fern-api/dynamic-ir-sdk";
@@ -214,6 +215,8 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         if (publishInfo.type !== "go") {
             return config;
         }
+        // Prefer --version flag over IR's publish version (which may be the generator version, not SDK version).
+        const originalVersion = getSdkVersion(config);
         return {
             ...config,
             customConfig: generatorConfig.customConfig ?? config.customConfig,
@@ -221,7 +224,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
                 ...config.output,
                 mode: {
                     type: "github",
-                    version: publishInfo.version,
+                    version: originalVersion ?? publishInfo.version,
                     repoUrl: publishInfo.repoUrl
                 } as FernGeneratorExec.OutputMode
             }

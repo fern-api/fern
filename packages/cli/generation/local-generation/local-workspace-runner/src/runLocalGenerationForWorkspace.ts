@@ -1,7 +1,10 @@
 import {
     checkVersionDoesNotAlreadyExist,
     computeSemanticVersion,
+    detectCiProvider,
+    detectInvocationSource,
     getOriginGitCommit,
+    getOriginGitCommitIsDirty,
     getPackageNameFromGeneratorConfig
 } from "@fern-api/api-workspace-commons";
 import { validateAPIWorkspaceAndLogIssues } from "@fern-api/api-workspace-validator";
@@ -163,7 +166,11 @@ export async function runLocalGenerationForWorkspace({
                         generatorName: generatorInvocation.name,
                         generatorVersion: generatorInvocation.version,
                         generatorConfig: generatorInvocation.config,
-                        originGitCommit: getOriginGitCommit()
+                        originGitCommit: getOriginGitCommit(),
+                        originGitCommitIsDirty: getOriginGitCommitIsDirty(),
+                        invokedBy: detectInvocationSource(),
+                        requestedVersion: userProvidedVersion,
+                        ciProvider: detectCiProvider()
                     }
                 });
 
@@ -325,7 +332,9 @@ export async function runLocalGenerationForWorkspace({
                     autoVersioningChangelogEntry,
                     autoVersioningPrDescription,
                     autoVersioningVersionBumpReason,
-                    autoVersioningVersionBump
+                    autoVersioningVersionBump,
+                    autoVersioningNewVersion,
+                    autoVersioningPreviousVersion
                 } = await writeFilesToDiskAndRunGenerator({
                     organization: projectConfig.organization,
                     absolutePathToFernConfig:
@@ -385,6 +394,9 @@ export async function runLocalGenerationForWorkspace({
                                 changelogEntry: autoVersioningChangelogEntry,
                                 prDescription: autoVersioningPrDescription,
                                 versionBumpReason: autoVersioningVersionBumpReason,
+                                previousVersion: autoVersioningPreviousVersion,
+                                newVersion: autoVersioningNewVersion,
+                                versionBump: autoVersioningVersionBump,
                                 previewMode: selfhostedGithubConfig.previewMode,
                                 generatorName: generatorInvocation.name,
                                 automationMode,

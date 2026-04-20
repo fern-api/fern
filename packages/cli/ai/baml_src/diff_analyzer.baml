@@ -17,7 +17,7 @@ class AnalyzeCommitDiffResponse {
         @description("Developer-facing git commit message. Use conventional commit format. Reference specific code symbols (function names, class names). Keep summary under 72 chars.")
 
     changelog_entry string
-        @description("User-facing release note for CHANGELOG.md and GitHub Releases. Describe the impact on SDK consumers, not implementation details. Include migration instructions for MAJOR. Use plain prose, not conventional commit format. Empty string for PATCH.")
+        @description("User-facing release note in Keep a Changelog format. Group under ### Breaking Changes, ### Added, ### Changed, ### Fixed section headers. Bold symbol names, one tight sentence per bullet. Prose only, no code fences. Append migration action inline for breaking changes. Empty string for PATCH.")
 
     version_bump VersionBump
         @description("The recommended semantic version bump: MAJOR for breaking changes, MINOR for new features, PATCH for bug fixes and other changes, NO_CHANGE for empty diffs")
@@ -609,27 +609,48 @@ function AnalyzeSdkDiff(
 
     Changelog Entry Guidelines:
     - Write for SDK consumers, not engineers reading the source code
-    - Prefix each entry with a category tag: [BREAKING], [ADDED], [CHANGED], or [FIXED]
-      - MAJOR changes MUST use [BREAKING]
-      - MINOR additions use [ADDED]
-      - MINOR behavioral changes use [CHANGED]
-      - PATCH fixes use [FIXED] (or empty string if trivial)
-    - For [BREAKING]: name the exact symbol, explain what broke, and give a one-line migration
-      Example: "[BREAKING] **`parserCreateJob`** now accepts `File[]` instead of `File`. Wrap single files in an array: `parserCreateJob([file], request)`."
-    - For [ADDED]: name the new capability in one sentence
-      Example: "[ADDED] **`LabAccountClient`** for managing team lab accounts."
+    - Structure the changelog entry using Keep a Changelog section headers, omitting empty sections:
+
+      ### Breaking Changes
+      - **`symbolName`** — what broke and how to migrate.
+
+      ### Added
+      - **`symbolName`** — what was added, one sentence.
+
+      ### Changed
+      - **`symbolName`** — what changed, one sentence.
+
+      ### Fixed
+      - **`symbolName`** — what was fixed, one sentence.
+
+    - Section mapping to version bumps:
+      - MAJOR changes go under ### Breaking Changes
+      - MINOR additions go under ### Added
+      - MINOR behavioral changes go under ### Changed
+      - PATCH fixes go under ### Fixed (or empty string if trivial)
+    - **Breaking Changes** section MUST come first when present
+    - Bold the symbol name, then a dash, then one tight sentence
+    - No code fences in the changelog — prose and backtick-wrapped symbols only
+    - One line per change, no multi-line bullets
+    - For Breaking Changes: name the exact symbol, explain what broke, and give a one-line migration
+      Example: "- **`parserCreateJob`** now accepts `File[]` instead of `File`. Wrap single files in an array: `parserCreateJob([file], request)`."
+    - For Added: name the new capability in one sentence
+      Example: "- **`LabAccountClient`** for managing team lab accounts."
     - Describe patterns once, not per-file. If the same method was added to 50 classes,
-      write ONE entry: "[ADDED] **`additionalProperty()`** and **`additionalProperties()`** builder methods on all request types."
+      write ONE entry: "- **`additionalProperty()`** and **`additionalProperties()`** builder methods on all request types."
       Do NOT write 50 separate entries.
     - NEVER silently drop a category of change. If new enum values were added, new clients were introduced,
       or fields were removed, each *category* must appear — but you don't need to list every individual value.
-      GOOD: "[ADDED] New enum values added across several types including `ProviderType` and `OrderStatus`."
+      GOOD: "- **New enum values** added across several types including `ProviderType` and `OrderStatus`."
       BAD:  listing every enum value
     - PATCH: leave empty string — patch changes don't warrant changelog entries
     - Do not use conventional commit prefixes (no "feat:", "fix:", etc.)
     - Write in third person present tense
     - Prefer fewer, richer entries over many thin ones. Aim for 3-5 entries per chunk by grouping related changes.
     - IMPORTANT: Wrap type references containing angle brackets in backticks (e.g., `Optional<String>`)
+    - **5-line limit per section**: Each section (### Breaking Changes, ### Added, ### Changed, ### Fixed)
+      MUST have at most 5 bullet points. If a section would have more than 5 bullets, keep the 5 most
+      important ones and add a final line: "- See full changelog for all changes"
 
     Remember again that YOU MUST return a structured JSON response with these four fields:
     - message: A git commit message formatted like the example previously provided
@@ -724,18 +745,13 @@ function ConsolidateChangelog(
     - Aim for 5-15 total bullets. Every *category* of change must be represented, but individual
       values/classes within a category can be summarized (e.g., "new enum values across several types").
     - One line per change, no multi-line bullets
+    - **5-line limit per section**: Each section (### Breaking Changes, ### Added, ### Changed, ### Fixed)
+      MUST have at most 5 bullet points. If a section would have more than 5 bullets, keep the 5 most
+      important ones and add a final line: "- See full changelog for all changes"
 
     ## Output 2: pr_description (PR body)
 
-    {% if previous_version and new_version %}
-    The PR description MUST start with a version summary block:
-
-    ## {{previous_version}} → {{new_version}} ({{version_bump}})
-
-    **Reason:** {version_bump_reason}
-
-    Then the breaking changes / what's new sections follow.
-    {% endif %}
+    Do NOT include a version header — the version header is added separately by the build system.
 
     If version_bump is MAJOR, start with:
 

@@ -78,13 +78,25 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest]
-        # TODO: re-enable windows-latest once bundle download speed is resolved
+        os: [ubuntu-latest, macos-latest, windows-latest]
         node-version: [20, 22, 24]
+        exclude:
+          # Node 20 lacks the `navigator` global (added in Node 21/22),
+          # which causes ReferenceError during SSR on Windows.
+          - os: windows-latest
+            node-version: 20
     runs-on: ${{ matrix.os }}
     timeout-minutes: 30
 
     steps:
+      - name: Enable long paths (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" -Name "LongPathsEnabled" -Value 1 -PropertyType DWORD -Force
+          git config --system core.longpaths true
+          echo "Long paths enabled (LongPathsEnabled=1, git core.longpaths=true)"
+
       - name: Check Node.js version availability
         id: node-check
         shell: bash
@@ -145,6 +157,7 @@ jobs:
       # Playwright in a separate step.
       - name: Start fern docs dev server (Unix)
         if: steps.node-check.outputs.available == 'true' && runner.os != 'Windows'
+        shell: bash
         run: |
           cd docs-preview-smoke-test/fern
           FERN_NO_VERSION_REDIRECTION=true fern docs dev \
@@ -323,7 +336,7 @@ jobs:
           retention-days: 7
 
       - name: Print fern docs dev logs
-        if: always() && steps.node-check.outputs.available == 'true'
+        if: failure() && steps.node-check.outputs.available == 'true'
         shell: bash
         run: cat /tmp/fern-docs-dev.log 2>/dev/null || echo "No dev server log found"
 

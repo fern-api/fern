@@ -40,6 +40,22 @@ RUN rm -f /opt/gradle/lib/jackson-core-*.jar && \
       -o /opt/gradle/lib/jackson-core-2.18.6.jar && \
     echo "e7e1bfa50f0a79db37e6aa37db111cf03aebf4a484b359d21127ab43ab2398c6  /opt/gradle/lib/jackson-core-2.18.6.jar" | sha256sum -c -
 
+# Replace vulnerable Bouncy Castle jars in Gradle distribution to fix CVE-2026-3505
+# (bcpg unbounded PGP AEAD chunk size leads to pre-auth resource exhaustion; fixed in 1.84).
+# bcprov and bcutil are upgraded in lockstep since bcpg 1.78+ requires a matching bcutil.
+RUN rm -f /opt/gradle/lib/plugins/bcpg-jdk18on-*.jar \
+          /opt/gradle/lib/plugins/bcprov-jdk18on-*.jar \
+          /opt/gradle/lib/plugins/bcutil-jdk18on-*.jar && \
+    curl -sL https://repo1.maven.org/maven2/org/bouncycastle/bcpg-jdk18on/1.84/bcpg-jdk18on-1.84.jar \
+      -o /opt/gradle/lib/plugins/bcpg-jdk18on-1.84.jar && \
+    echo "c0e6303a0d7589040f400950ecee87a14b81312e84ed15e5390ebb0c4566ddab  /opt/gradle/lib/plugins/bcpg-jdk18on-1.84.jar" | sha256sum -c - && \
+    curl -sL https://repo1.maven.org/maven2/org/bouncycastle/bcprov-jdk18on/1.84/bcprov-jdk18on-1.84.jar \
+      -o /opt/gradle/lib/plugins/bcprov-jdk18on-1.84.jar && \
+    echo "64d6c5a6121fcd927152dd182cbed39afe0fda641a970d9bcc0c9cb1858b2731  /opt/gradle/lib/plugins/bcprov-jdk18on-1.84.jar" | sha256sum -c - && \
+    curl -sL https://repo1.maven.org/maven2/org/bouncycastle/bcutil-jdk18on/1.84/bcutil-jdk18on-1.84.jar \
+      -o /opt/gradle/lib/plugins/bcutil-jdk18on-1.84.jar && \
+    echo "b374e16963421fb9cfb01cc20d7ad8fd2f8b8188e3eef0ec0a8965e245f7619a  /opt/gradle/lib/plugins/bcutil-jdk18on-1.84.jar" | sha256sum -c -
+
 # Update packages to get latest security fixes and remove unnecessary packages
 # Amazon Linux 2023 uses dnf instead of apt-get
 # Note: Amazon Linux 2023 has fewer pre-installed packages than Ubuntu, so we only
@@ -53,6 +69,10 @@ RUN rm -f /opt/gradle/lib/jackson-core-*.jar && \
 # CVE-2025-14819, CVE-2025-15079, CVE-2025-15224), alsa-lib (CVE-2026-25068),
 # expat (CVE-2026-25210), openssh/openssh-clients (CVE-2025-61984, CVE-2025-61985)
 # Security update 2026-03-30: add freetype (CVE-2026-23865, ALAS2023-2026-1486)
+# Security update 2026-04-15: add python3/python3-libs (ALAS2023-2026-1583,
+# CVE-2025-11468, CVE-2025-15282, CVE-2026-0672, CVE-2026-0865, CVE-2026-1299,
+# CVE-2026-2297, CVE-2026-4224, CVE-2026-4519),
+# libnghttp2 (ALAS2023-2026-1542, CVE-2026-27135)
 RUN dnf --releasever=latest update -y \
     openssl-fips-provider-latest \
     openssl-libs \
@@ -69,7 +89,10 @@ RUN dnf --releasever=latest update -y \
     expat \
     openssh \
     openssh-clients \
-    freetype && \
+    freetype \
+    python3 \
+    python3-libs \
+    libnghttp2 && \
     dnf remove -y git-lfs wget || true && \
     dnf clean all && \
     rm -rf /var/cache/dnf

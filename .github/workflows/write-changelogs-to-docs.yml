@@ -47,31 +47,31 @@ jobs:
           path: docs
 
       - name: update csharp-sdk changelog
-        run: rsync -av --delete "changelogs/csharp-sdk/" "docs/fern/products/sdks/overview/csharp/changelog"
+        run: rsync -av --delete "changelogs/csharp-sdk/" "docs/fern/products/sdks/generators/csharp/changelog"
 
       - name: update go-sdk changelog
-        run: rsync -av --delete "changelogs/go-sdk/" "docs/fern/products/sdks/overview/go/changelog"
+        run: rsync -av --delete "changelogs/go-sdk/" "docs/fern/products/sdks/generators/go/changelog"
 
       - name: update java-sdk changelog
-        run: rsync -av --delete "changelogs/java-sdk/" "docs/fern/products/sdks/overview/java/changelog"
+        run: rsync -av --delete "changelogs/java-sdk/" "docs/fern/products/sdks/generators/java/changelog"
 
       - name: update php-sdk changelog
-        run: rsync -av --delete "changelogs/php-sdk/" "docs/fern/products/sdks/overview/php/changelog"
+        run: rsync -av --delete "changelogs/php-sdk/" "docs/fern/products/sdks/generators/php/changelog"
 
       - name: update python-sdk changelog
-        run: rsync -av --delete "changelogs/python-sdk/" "docs/fern/products/sdks/overview/python/changelog"
+        run: rsync -av --delete "changelogs/python-sdk/" "docs/fern/products/sdks/generators/python/changelog"
 
       - name: update ruby-sdk changelog
-        run: rsync -av --delete "changelogs/ruby-sdk-v2/" "docs/fern/products/sdks/overview/ruby/changelog"
+        run: rsync -av --delete "changelogs/ruby-sdk-v2/" "docs/fern/products/sdks/generators/ruby/changelog"
 
       - name: update ts-sdk changelog
-        run: rsync -av --delete "changelogs/ts-sdk/" "docs/fern/products/sdks/overview/typescript/changelog"
+        run: rsync -av --delete "changelogs/ts-sdk/" "docs/fern/products/sdks/generators/typescript/changelog"
 
       - name: update rust-sdk changelog
-        run: rsync -av --delete "changelogs/rust-sdk/" "docs/fern/products/sdks/overview/rust/changelog"
+        run: rsync -av --delete "changelogs/rust-sdk/" "docs/fern/products/sdks/generators/rust/changelog"
 
       - name: update swift-sdk changelog
-        run: rsync -av --delete "changelogs/swift-sdk/" "docs/fern/products/sdks/overview/swift/changelog"
+        run: rsync -av --delete "changelogs/swift-sdk/" "docs/fern/products/sdks/generators/swift/changelog"
 
       - name: update cli changelog
         run: rsync -av --delete "changelogs/cli/" "docs/fern/products/cli-api-reference/cli-changelog"

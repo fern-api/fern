@@ -1,0 +1,4 @@
+- summary: |
+    Bump @fern-api/generator-cli to 0.9.10 which upgrades @fern-api/replay to 0.11.0
+    and only pushes the fern-generation-base tag when replay has unresolved conflicts.
+  type: chore

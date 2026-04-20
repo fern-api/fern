@@ -134,10 +134,6 @@ export function convertSdkTargets(options: ConvertSdkTargetsOptions): ConvertSdk
 
     const sdks: schemas.SdksSchema = { targets };
 
-    if (defaultGroup != null) {
-        sdks.defaultGroup = defaultGroup;
-    }
-
     if (autorelease != null) {
         sdks.autorelease = autorelease;
     }
@@ -207,13 +203,46 @@ function convertGeneratorToTarget(options: ConvertGeneratorOptions): ConvertGene
     if (generator.config != null) {
         target.config = generator.config as Record<string, unknown>;
     }
-    target.group = [groupName];
 
     // Convert output configuration
     const outputResult = convertOutputConfig(generator, warnings);
     target.output = outputResult.output;
     if (outputResult.publish != null) {
         target.publish = outputResult.publish;
+    }
+
+    // Migrate generator-level metadata.
+    if (generator.metadata != null) {
+        const meta = generator.metadata;
+        const targetMetadata: schemas.MetadataSchema = {};
+        if (meta["package-description"] != null) {
+            targetMetadata.description = meta["package-description"];
+        }
+        if (meta.author != null || meta.email != null) {
+            targetMetadata.authors = [{ name: meta.author ?? "", email: meta.email ?? "" }];
+        }
+        if (meta["reference-url"] != null) {
+            warnings.push({
+                type: "unsupported",
+                message: `metadata.reference-url is not supported in fern.yml`,
+                suggestion: "Remove reference-url from metadata"
+            });
+        }
+        if (meta.license != null && typeof target.output !== "string" && target.output.git != null) {
+            const license = meta.license;
+            target.output.git.license = typeof license === "string" ? license : (license as { custom: string }).custom;
+        }
+        if (targetMetadata.description != null || targetMetadata.authors != null) {
+            target.metadata = targetMetadata;
+        }
+    }
+
+    if ((generator as { "smart-casing"?: boolean })["smart-casing"] != null) {
+        warnings.push({
+            type: "unsupported",
+            message: `smart-casing is not supported in fern.yml`,
+            suggestion: "Remove smart-casing from your generator configuration"
+        });
     }
 
     if (generator["ir-version"] != null) {
@@ -518,9 +547,6 @@ export function convertSdkTargetsFromRaw(options: ConvertSdkTargetsFromRawOption
     }
 
     const sdks: schemas.SdksSchema = { targets };
-    if (defaultGroup != null) {
-        sdks.defaultGroup = defaultGroup;
-    }
     if (autorelease != null) {
         sdks.autorelease = autorelease;
     }
@@ -595,12 +621,54 @@ function convertRawGeneratorToTarget(options: ConvertRawGeneratorOptions): Conve
     if (generator.config != null) {
         target.config = generator.config as Record<string, unknown>;
     }
-    target.group = [groupName];
 
     const outputResult = convertRawOutputConfig(generator, warnings);
     target.output = outputResult.output;
     if (outputResult.publish != null) {
         target.publish = outputResult.publish;
+    }
+
+    // Migrate generator-level metadata to the new target metadata schema.
+    const generatorMetadata = generator.metadata as
+        | {
+              license?: string | { custom: string };
+              author?: string;
+              email?: string;
+              "package-description"?: string;
+              "reference-url"?: string;
+          }
+        | undefined;
+    if (generatorMetadata != null) {
+        const targetMetadata: schemas.MetadataSchema = {};
+        if (generatorMetadata["package-description"] != null) {
+            targetMetadata.description = generatorMetadata["package-description"];
+        }
+        if (generatorMetadata.author != null || generatorMetadata.email != null) {
+            targetMetadata.authors = [{ name: generatorMetadata.author ?? "", email: generatorMetadata.email ?? "" }];
+        }
+        if (generatorMetadata["reference-url"] != null) {
+            warnings.push({
+                type: "unsupported",
+                message: `metadata.reference-url is not supported in fern.yml`,
+                suggestion: "Remove reference-url from metadata"
+            });
+        }
+        // Migrate license to output.git.license if a git output is configured.
+        if (generatorMetadata.license != null && typeof target.output !== "string" && target.output.git != null) {
+            const license = generatorMetadata.license;
+            target.output.git.license = typeof license === "string" ? license : (license as { custom: string }).custom;
+        }
+        if (targetMetadata.description != null || targetMetadata.authors != null) {
+            target.metadata = targetMetadata;
+        }
+    }
+
+    if ((generator as { "smart-casing"?: boolean })["smart-casing"] != null) {
+        warnings.push({
+            type: "unsupported",
+            message: `smart-casing is not supported in fern.yml`,
+            suggestion: "Remove smart-casing from your generator configuration"
+        });
     }
 
     if (generator["ir-version"] != null) {

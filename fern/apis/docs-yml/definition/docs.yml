@@ -879,6 +879,15 @@ types:
           When this feature is enabled, your API must have Cross-Origin Resource Sharing (CORS) enabled to allow requests from the documentation domain.
 
           @default: false
+      disable-environment-editing:
+        type: optional<boolean>
+        docs: |
+          If set to true, the base URL (environment) shown in the endpoint header on API reference
+          docs pages will no longer be editable. Users will still be able to switch between configured
+          environments via the dropdown, but will not be able to double-click and type in a custom
+          URL. This does not affect the API Playground.
+
+          @default: false
       disable-analytics: optional<boolean>
       language: optional<Language>
       folder-title-source:

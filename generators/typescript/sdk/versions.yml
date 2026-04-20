@@ -1,4 +1,60 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.64.1
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.10 which upgrades @fern-api/replay to 0.11.0
+        and only pushes the fern-generation-base tag when replay has unresolved conflicts.
+      type: chore
+  createdAt: "2026-04-17"
+  irVersion: 66
+- version: 3.64.0
+  changelogEntry:
+    - summary: |
+        Add queryBuilder() for query parameter serialization with per-parameter format control.
+        The generator now emits a fluent builder pattern (`core.url.queryBuilder()`) for query string
+        construction, where each parameter's serialization format is decided at code-gen time via
+        `.add(key, value, { style: "comma" })`. OpenAPI query parameters with `explode: false` use
+        the comma style to produce comma-separated values (e.g., `tags=a,b,c`).
+      type: feat
+  createdAt: "2026-04-17"
+  irVersion: 66
+- version: 3.63.8
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.8. Changelog URLs in generated PRs
+        now use the commit SHA instead of the PR branch name, keeping the link
+        valid after the branch is deleted or squash-merged.
+      type: chore
+  createdAt: "2026-04-16"
+  irVersion: 66
+- version: 3.63.7
+  changelogEntry:
+    - summary: |
+        Fix per-endpoint server overrides being ignored when top-level servers
+        define multiple base URLs with x-fern-server-name. Endpoints now correctly
+        resolve to their specified server URL instead of always using the default.
+      type: fix
+  createdAt: "2026-04-15"
+  irVersion: 66
+- version: 3.63.6
+  changelogEntry:
+    - summary: |
+        Fix OAuth token request to include literal custom properties (e.g., grant_type)
+        from the token endpoint request. Previously, only client_id and client_secret
+        were passed, causing TypeScript compilation errors for APIs that require
+        additional literal properties like grant_type on the token request.
+      type: fix
+  createdAt: "2026-04-15"
+  irVersion: 66
+- version: 3.63.5
+  changelogEntry:
+    - summary: |
+        Support inferred OAuth auth with form-encoded (application/x-www-form-urlencoded) token endpoints.
+        Previously, the generator crashed with "Cannot get exported name for request wrapper" when the
+        token endpoint used a justRequestBody shape instead of a wrapper shape.
+      type: fix
+  createdAt: "2026-04-15"
+  irVersion: 66
 - version: 3.63.4
   changelogEntry:
     - summary: |

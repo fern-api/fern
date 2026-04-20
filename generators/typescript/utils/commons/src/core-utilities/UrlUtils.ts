@@ -12,6 +12,9 @@ export interface UrlUtils {
     encodePathParam: {
         _invoke: (arg: ts.Expression) => ts.CallExpression;
     };
+    queryBuilder: {
+        _invoke: () => ts.CallExpression;
+    };
 }
 
 export const MANIFEST: CoreUtility.Manifest = {
@@ -42,6 +45,12 @@ export class UrlUtilsImpl extends CoreUtility implements UrlUtils {
             "encodePathParam",
             (encodePathParam) => (arg: ts.Expression) =>
                 ts.factory.createCallExpression(encodePathParam.getExpression(), undefined, [arg])
+        )
+    };
+    public readonly queryBuilder = {
+        _invoke: this.withExportedName(
+            "queryBuilder",
+            (queryBuilder) => () => ts.factory.createCallExpression(queryBuilder.getExpression(), undefined, [])
         )
     };
 }

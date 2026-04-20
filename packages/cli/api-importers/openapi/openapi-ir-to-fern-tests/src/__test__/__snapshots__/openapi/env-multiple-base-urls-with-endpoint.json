@@ -1,0 +1,231 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "authorize": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "response": {
+                    "body": "string",
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/authorize",
+              "request": {
+                "name": "AuthorizeRequest",
+                "query-parameters": {
+                  "client_id": "optional<string>",
+                },
+              },
+              "response": {
+                "docs": "Authorization response",
+                "status-code": 200,
+                "type": "string",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+              "url": "Auth",
+            },
+            "downloadFile": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "path-parameters": {
+                    "id": "id",
+                  },
+                  "response": {
+                    "body": "string",
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/downloads/{id}/content",
+              "request": {
+                "name": "DownloadFileRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
+              },
+              "response": {
+                "docs": "Download response",
+                "status-code": 200,
+                "type": "string",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+              "url": "Download",
+            },
+            "listItems": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "response": {
+                    "body": "string",
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/items",
+              "response": {
+                "docs": "A list of items",
+                "status-code": 200,
+                "type": "string",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "uploadFile": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "response": {
+                    "body": "string",
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/files/content",
+              "response": {
+                "docs": "Upload response",
+                "status-code": 200,
+                "type": "string",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+              "url": "Upload",
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    listItems:
+      path: /items
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      response:
+        docs: A list of items
+        type: string
+        status-code: 200
+      examples:
+        - response:
+            body: string
+    authorize:
+      path: /authorize
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: AuthorizeRequest
+        query-parameters:
+          client_id: optional<string>
+      response:
+        docs: Authorization response
+        type: string
+        status-code: 200
+      url: Auth
+      examples:
+        - response:
+            body: string
+    uploadFile:
+      path: /files/content
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      response:
+        docs: Upload response
+        type: string
+        status-code: 200
+      url: Upload
+      examples:
+        - response:
+            body: string
+    downloadFile:
+      path: /downloads/{id}/content
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: DownloadFileRequest
+        path-parameters:
+          id: string
+      response:
+        docs: Download response
+        type: string
+        status-code: 200
+      url: Download
+      examples:
+        - path-parameters:
+            id: id
+          response:
+            body: string
+  source:
+    openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "default-environment": "Production",
+      "default-url": "Base",
+      "display-name": "Test API",
+      "environments": {
+        "Production": {
+          "urls": {
+            "Auth": "https://account.example.com/oauth2",
+            "Base": "https://api.example.com/2.0",
+            "Download": "https://dl.example.com/2.0",
+            "Upload": "https://upload.example.com/2.0",
+          },
+        },
+      },
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": "Base",
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Test API
+environments:
+  Production:
+    urls:
+      Base: https://api.example.com/2.0
+      Auth: https://account.example.com/oauth2
+      Upload: https://upload.example.com/2.0
+      Download: https://dl.example.com/2.0
+default-environment: Production
+default-url: Base
+",
+  },
+}

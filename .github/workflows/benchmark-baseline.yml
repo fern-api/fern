@@ -37,7 +37,7 @@ jobs:
         uses: ./.github/actions/fetch-benchmark-specs
 
       - name: Upload specs as shared artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: benchmark-specs
           path: benchmarks/fern/apis/*/openapi.json
@@ -63,7 +63,7 @@ jobs:
         uses: ./.github/actions/install
 
       - name: Download shared specs
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           name: benchmark-specs
           path: benchmarks/fern/apis
@@ -75,7 +75,7 @@ jobs:
           skip-scripts: "true"
 
       - name: Upload baseline results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: benchmark-baseline-${{ matrix.generator }}
           path: benchmark-results/
@@ -102,7 +102,7 @@ jobs:
         uses: ./.github/actions/install
 
       - name: Download shared specs
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           name: benchmark-specs
           path: benchmarks/fern/apis
@@ -113,7 +113,7 @@ jobs:
           generator: ${{ matrix.generator }}
 
       - name: Upload E2E results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: benchmark-e2e-${{ matrix.generator }}
           path: benchmark-results/
@@ -134,7 +134,7 @@ jobs:
         uses: ./.github/actions/install
 
       - name: Download shared specs
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           name: benchmark-specs
           path: benchmarks/fern/apis
@@ -145,7 +145,7 @@ jobs:
           fern-token: ${{ secrets.FERN_FERN_TOKEN }}
 
       - name: Upload docs baseline results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: benchmark-docs-baseline
           path: benchmark-results/
@@ -163,21 +163,21 @@ jobs:
     permissions: {}
     steps:
       - name: Download generator-only baseline artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           pattern: benchmark-baseline-*
           path: baseline-results
           merge-multiple: true
 
       - name: Download E2E baseline artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           pattern: benchmark-e2e-*
           path: e2e-results
           merge-multiple: true
 
       - name: Download docs baseline artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           pattern: benchmark-docs-baseline
           path: docs-results

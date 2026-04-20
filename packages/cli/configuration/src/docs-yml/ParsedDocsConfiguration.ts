@@ -39,6 +39,11 @@ export interface ParsedPageActionsConfig {
     };
 }
 
+// TODO(kafkas): Remove this when we upgrade the fdr-sdk to latest
+interface ParsedDocsSettingsConfig extends CjsFdrSdk.docs.v1.commons.DocsSettingsConfig {
+    disableEnvironmentEditing: boolean | undefined;
+}
+
 export interface ParsedDocsConfiguration {
     instances: DocsInstance[];
     title: string | undefined;
@@ -69,7 +74,7 @@ export interface ParsedDocsConfiguration {
     colors: CjsFdrSdk.docs.v1.write.ColorsConfigV3 | undefined;
     typography: TypographyConfig | undefined;
     layout: CjsFdrSdk.docs.v1.commons.DocsLayoutConfig | undefined;
-    settings: CjsFdrSdk.docs.v1.commons.DocsSettingsConfig | undefined;
+    settings: ParsedDocsSettingsConfig | undefined;
     context7File: AbsoluteFilePath | undefined;
     llmsTxtFile: AbsoluteFilePath | undefined;
     llmsFullTxtFile: AbsoluteFilePath | undefined;

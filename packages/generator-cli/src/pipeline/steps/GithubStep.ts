@@ -125,13 +125,17 @@ export class GithubStep extends BaseStep {
         });
         switch (branchAction) {
             case "replay-branch":
-                generationBaseSha = await createReplayBranch(
-                    repository,
-                    prBranch,
-                    this.config.commitMessage,
-                    replayConflictInfo,
-                    this.logger
-                );
+                if (shouldPushGenerationBaseTag(replayResult)) {
+                    generationBaseSha = await createReplayBranch(
+                        repository,
+                        prBranch,
+                        this.config.commitMessage,
+                        replayConflictInfo,
+                        this.logger
+                    );
+                } else {
+                    await repository.createBranchFromHead(prBranch);
+                }
                 break;
             case "create-from-head":
                 await repository.createBranchFromHead(prBranch);
@@ -199,11 +203,19 @@ export class GithubStep extends BaseStep {
         }
 
         const finalCommitMessage = this.config.commitMessage ?? "SDK Generation";
+        const headSha = await repository.getHeadSha();
+        const changelogUrl = this.config.changelogEntry
+            ? `https://github.com/${this.config.uri}/blob/${headSha}/changelog.md`
+            : undefined;
         const { prTitle, prBody } = parseCommitMessageForPR(
             finalCommitMessage,
             this.config.changelogEntry,
             this.config.prDescription,
-            this.config.versionBumpReason
+            this.config.versionBumpReason,
+            this.config.previousVersion,
+            this.config.newVersion,
+            this.config.versionBump,
+            changelogUrl
         );
         const replaySection = formatReplayPrBody(replayResult, { branchName: prBranch, repoUri: this.config.uri });
         let enrichedBody = replaySection != null ? prBody + "\n\n---\n\n" + replaySection : prBody;
@@ -391,6 +403,19 @@ export function shouldEnableAutomerge(config: {
     hasBreakingChanges?: boolean;
 }): boolean {
     return config.automationMode === true && config.autoMerge === true && config.hasBreakingChanges !== true;
+}
+
+/**
+ * The fern-generation-base tag only has a consumer (next run's syncFromDivergentMerge)
+ * when the current replay produced conflicts that a human will resolve during merge.
+ * On clean replays, pushing the tag creates a stale pointer that poisons subsequent runs
+ * if the PR is closed without merging — the forward-projected tree ends up diffed against
+ * the still-unmerged main HEAD, producing a "customer patch" that encodes a version
+ * downgrade as customization.
+ * Exported for testing.
+ */
+export function shouldPushGenerationBaseTag(replayResult: ReplayStepResult | undefined): boolean {
+    return (replayResult?.patchesWithConflicts ?? 0) > 0;
 }
 
 /**

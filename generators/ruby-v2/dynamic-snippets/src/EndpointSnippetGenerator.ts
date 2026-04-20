@@ -632,10 +632,11 @@ export class EndpointSnippetGenerator {
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): ruby.KeywordArgument[] {
         const args: ruby.KeywordArgument[] = [];
+        const record = this.context.getRecord(snippet.requestBody) ?? {};
 
         const bodyProperties = this.context.associateByWireValue({
             parameters: request.value,
-            values: this.context.getRecord(snippet.requestBody) ?? {}
+            values: record
         });
         for (const parameter of bodyProperties) {
             const value = this.context.dynamicTypeLiteralMapper.convert(parameter);
@@ -650,6 +651,7 @@ export class EndpointSnippetGenerator {
                 })
             );
         }
+
         return args;
     }
 
@@ -880,6 +882,7 @@ export class EndpointSnippetGenerator {
                         }
                     }
                 }
+
                 break;
             }
             case "alias":
