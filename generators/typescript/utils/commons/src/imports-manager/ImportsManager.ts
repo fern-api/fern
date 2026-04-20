@@ -144,7 +144,11 @@ export class ImportsManager {
         return relativePath;
     }
 
-    public writeImportsToSourceFile(sourceFile: SourceFile): void {
+    /**
+     * Builds the import block text for a source file without modifying the AST.
+     * Returns the import text string (with trailing newlines) or empty string if no imports.
+     */
+    public buildImportText(sourceFile: SourceFile): string {
         const sourceFileDirPath = sourceFile.getDirectoryPath();
         const sourcePathSegments = sourceFileDirPath.split("/").filter((segment) => segment.length > 0);
 
@@ -160,8 +164,6 @@ export class ImportsManager {
             compareModuleSpecifiers(a.moduleSpecifier, b.moduleSpecifier)
         );
 
-        // Build import block as a string instead of per-import AST manipulation.
-        // This avoids ~7 addImportDeclaration() calls per file × ~1987 files.
         const importLines: string[] = [];
 
         for (const { moduleSpecifier, combinedImportDeclarations } of sortedImports) {
@@ -212,7 +214,15 @@ export class ImportsManager {
         }
 
         if (importLines.length > 0) {
-            sourceFile.insertText(0, importLines.join("\n") + "\n\n");
+            return importLines.join("\n") + "\n\n";
+        }
+        return "";
+    }
+
+    public writeImportsToSourceFile(sourceFile: SourceFile): void {
+        const importText = this.buildImportText(sourceFile);
+        if (importText.length > 0) {
+            sourceFile.insertText(0, importText);
         }
     }
 }

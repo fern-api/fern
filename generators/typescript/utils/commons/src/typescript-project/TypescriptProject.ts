@@ -32,6 +32,9 @@ export declare namespace TypescriptProject {
         linter: "biome" | "oxlint" | "none";
         generateSubpackageExports?: boolean;
         subpackageExportPaths?: Array<{ key: string; relPath: string }>;
+        /** Map from ts-morph file path to text to prepend when writing to disk.
+         *  Used to avoid expensive insertText(0,...) AST re-parses during generation. */
+        filePrefixes?: Map<string, string>;
     }
 }
 
@@ -119,6 +122,7 @@ export abstract class TypescriptProject {
     private readonly linter: "biome" | "oxlint" | "none";
     protected readonly generateSubpackageExports: boolean;
     protected readonly subpackageExportPaths: Array<{ key: string; relPath: string }>;
+    private readonly filePrefixes: Map<string, string>;
 
     private readonly runScripts: boolean;
 
@@ -142,7 +146,8 @@ export abstract class TypescriptProject {
         formatter,
         linter,
         generateSubpackageExports,
-        subpackageExportPaths
+        subpackageExportPaths,
+        filePrefixes
     }: TypescriptProject.Init) {
         this.npmPackage = npmPackage;
         this.runScripts = runScripts;
@@ -164,6 +169,7 @@ export abstract class TypescriptProject {
         this.linter = linter;
         this.generateSubpackageExports = generateSubpackageExports ?? false;
         this.subpackageExportPaths = subpackageExportPaths ?? [];
+        this.filePrefixes = filePrefixes ?? new Map();
     }
 
     protected async addCommonFilesToVolume(): Promise<void> {
@@ -232,11 +238,15 @@ export abstract class TypescriptProject {
 
     private async writeSrcToDisk(targetDir: string): Promise<void> {
         // Phase 1: Collect all source file data (getFullText is synchronous)
+        // Prepend any stored file prefixes (header + imports) that were deferred
+        // to avoid expensive insertText(0,...) AST re-parses during generation.
         const files: { relativePath: string; content: string }[] = [];
         for (const file of this.tsMorphProject.getSourceFiles()) {
+            const filePath = file.getFilePath();
+            const prefix = this.filePrefixes.get(filePath) ?? "";
             files.push({
-                relativePath: file.getFilePath().slice(1),
-                content: file.getFullText()
+                relativePath: filePath.slice(1),
+                content: prefix + file.getFullText()
             });
         }
 

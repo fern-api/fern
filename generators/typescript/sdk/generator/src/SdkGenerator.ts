@@ -196,6 +196,8 @@ export class SdkGenerator {
     private snippetProject: Project | undefined;
     private snippetCounter = 0;
     private rootDirectory: Directory;
+    // Deferred file prefixes (header + imports) to avoid insertText AST re-parses
+    private filePrefixes: Map<string, string> = new Map();
     private exportsManager: ExportsManager;
     private readonly publicExportsManager: PublicExportsManager;
     private dependencyManager = new DependencyManager();
@@ -768,7 +770,8 @@ export class SdkGenerator {
                   linter: this.config.linter,
                   formatter: this.config.formatter,
                   generateSubpackageExports: this.config.generateSubpackageExports,
-                  subpackageExportPaths
+                  subpackageExportPaths,
+                  filePrefixes: this.filePrefixes
               })
             : new SimpleTypescriptProject({
                   npmPackage: this.npmPackage,
@@ -793,7 +796,8 @@ export class SdkGenerator {
                   linter: this.config.linter,
                   formatter: this.config.formatter,
                   generateSubpackageExports: this.config.generateSubpackageExports,
-                  subpackageExportPaths
+                  subpackageExportPaths,
+                  filePrefixes: this.filePrefixes
               });
     }
 
@@ -1829,7 +1833,8 @@ export class SdkGenerator {
             sourceFile.delete();
             this.context.logger.debug(`Skipping ${filepathStr} (no content)`);
         } else {
-            importsManager.writeImportsToSourceFile(sourceFile);
+            // Build import text without inserting into AST (avoids expensive re-parse)
+            const importText = importsManager.buildImportText(sourceFile);
 
             // Determine export type modifier dynamically if requested
             let effectiveAddExportTypeModifier = addExportTypeModifier;
@@ -1842,10 +1847,10 @@ export class SdkGenerator {
 
             this.exportsManager.addExportsForFilepath(filepath, effectiveAddExportTypeModifier);
 
-            // Header must be inserted last (after imports) so it ends up first.
-            // https://github.com/dsherret/ts-morph/issues/189#issuecomment-414174283
+            // Store prefix (header + imports) for prepending at disk-write time.
+            // This avoids ~3974 insertText(0,...) calls that each trigger full AST re-parses.
             const header = this.config.whitelabel ? WHITELABEL_FILE_HEADER : FILE_HEADER;
-            sourceFile.insertText(0, header + "\n");
+            this.filePrefixes.set(sourceFile.getFilePath(), header + "\n" + importText);
 
             this.context.logger.debug(`Generated ${filepathStr}`);
         }
