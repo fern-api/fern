@@ -35,25 +35,24 @@ async function walk(node: unknown, baseDir: string, context: TaskContext): Promi
     if (!isPlainObject(node)) {
         return;
     }
-    const record = node as Record<string, unknown>;
-    for (const [key, value] of Object.entries(record)) {
+    for (const [key, value] of Object.entries(node)) {
         if (key === "description" && isMarkdownFileRef(value)) {
-            record[key] = await readMarkdownRef((value as { $ref: string }).$ref, baseDir, context);
+            node[key] = await readMarkdownRef(value.$ref, baseDir, context);
         } else {
             await walk(value, baseDir, context);
         }
     }
 }
 
-function isMarkdownFileRef(value: unknown): boolean {
+function isMarkdownFileRef(value: unknown): value is { $ref: string } {
     if (!isPlainObject(value)) {
         return false;
     }
-    const keys = Object.keys(value as Record<string, unknown>);
+    const keys = Object.keys(value);
     if (keys.length !== 1 || keys[0] !== "$ref") {
         return false;
     }
-    const ref = (value as { $ref?: unknown }).$ref;
+    const ref = value.$ref;
     if (typeof ref !== "string" || ref.length === 0) {
         return false;
     }
