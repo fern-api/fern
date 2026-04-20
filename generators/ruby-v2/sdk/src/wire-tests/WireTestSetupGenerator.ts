@@ -1,6 +1,6 @@
 import { File } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { WireMock, WireMockStubMapping } from "@fern-api/mock-utils";
+import { isEqualToMatcher, WireMock, WireMockStubMapping } from "@fern-api/mock-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
@@ -52,13 +52,10 @@ export class WireTestSetupGenerator {
         for (const mapping of stubMapping.mappings) {
             if (mapping.request.queryParameters) {
                 for (const [, value] of Object.entries(mapping.request.queryParameters)) {
-                    if (!("equalTo" in value)) {
+                    if (!isEqualToMatcher(value)) {
                         continue;
                     }
-                    if (
-                        value.equalTo != null &&
-                        WireTestSetupGenerator.DATETIME_WITH_ZERO_MILLIS_REGEX.test(value.equalTo)
-                    ) {
+                    if (WireTestSetupGenerator.DATETIME_WITH_ZERO_MILLIS_REGEX.test(value.equalTo)) {
                         value.equalTo = value.equalTo.replace(".000", "");
                     }
                 }
