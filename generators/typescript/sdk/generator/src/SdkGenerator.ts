@@ -1808,12 +1808,13 @@ export class SdkGenerator {
         });
         const statements = run({ sourceFile, importsManager });
         if (statements != null) {
-            // Build the snippet text via string concatenation instead of
-            // round-tripping through ts-morph AST (addStatements + getText).
-            const stmtTexts = statements.map((expression) => getTextOfTsNode(expression));
-            const importText = includeImports ? importsManager.buildImportText(sourceFile) : "";
+            sourceFile.addStatements(statements.map((expression) => getTextOfTsNode(expression)));
+            if (includeImports) {
+                importsManager.writeImportsToSourceFile(sourceFile);
+            }
+            const text = sourceFile.getText();
             sourceFile.delete();
-            return (importText.length > 0 ? importText + "\n" : "") + stmtTexts.join("\n");
+            return text;
         }
         // Clean up the source file even if no statements were generated
         sourceFile.delete();
