@@ -13,8 +13,8 @@ import { TaskContext } from "@fern-api/task-context";
  * Lookup order:
  * 1. `output["package-name"]` — npm, PyPI, NuGet, RubyGems, crates.io
  * 2. `output.coordinate`      — Maven (Java)
- * 3. `config.packageJson.name` — TypeScript SDK generator (local-file-system)
- * 4. `config.package_name`    — fallback (some generators)
+ * 3. `config.package_name`    — fallback (some generators)
+ * 4. `config.packageJson.name` — TypeScript SDK generator (local-file-system)
  * 5. `config.module.path`     — Go SDK generator
  *
  * @internal Exported for testing and reuse in generation paths
