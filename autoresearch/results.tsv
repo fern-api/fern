@@ -44,3 +44,5 @@ d8c4b13	31550	11000	38596	-18.3	discard	exp-038: disable source maps (maps loade
 7d0b33c	30541	10700	38596	-20.9	keep	exp-042: eagerly extract file text and delete source files from ts-morph project (e2e -3.2%)
 e344512	30274	10700	38596	-21.6	keep	exp-043: bypass ts-morph replaceWithText re-parse for test files (return raw text from run)
 a6571a9	30712	10700	38596	-20.5	discard	exp-044: start lockfile generation early, overlap with post-persist steps (~283ms below noise floor)
+2a006eb	30703	10700	38596	-20.5	discard	exp-045: skip addStatements/getText round-trip in withSnippet (identical output, no gen improvement)
+4edf32f	n/a	n/a	38596	n/a	crash	exp-046: bypass Zurg IR deserializer with JSON.parse + Proxy (crash: SDK static _visit expects Zurg-transformed format)
