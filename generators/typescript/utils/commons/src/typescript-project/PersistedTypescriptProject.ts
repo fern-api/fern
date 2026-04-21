@@ -299,7 +299,8 @@ export class PersistedTypescriptProject {
         try {
             const raw = await readFile(pkgJsonPath, "utf-8");
             const pkgJson = JSON.parse(raw);
-            scriptContent = pkgJson.scripts?.[this.checkFixCommand[0]!];
+            const checkFixCmd = this.checkFixCommand[0];
+            scriptContent = checkFixCmd != null ? pkgJson.scripts?.[checkFixCmd] : undefined;
         } catch {
             // Fall through to fallback
         }
@@ -379,7 +380,8 @@ export class PersistedTypescriptProject {
         try {
             const raw = await readFile(pkgJsonPath, "utf-8");
             const pkgJson = JSON.parse(raw);
-            scriptContent = pkgJson.scripts?.[this.checkFixCommand[0]!];
+            const checkFixCmd = this.checkFixCommand[0];
+            scriptContent = checkFixCmd != null ? pkgJson.scripts?.[checkFixCmd] : undefined;
         } catch {
             // Fall through to fallback
         }
@@ -393,7 +395,13 @@ export class PersistedTypescriptProject {
 
         // Parse: "biome check --fix ..." → ["check", "--fix", ...]
         const args = scriptContent.trim().split(/\s+/).slice(1);
-        const pkg = this.checkFixPackages[0]!;
+        const pkg = this.checkFixPackages[0];
+        if (pkg == null) {
+            logger.debug("checkFixViaDlx: no packages configured, falling back to install");
+            await this.installCheckFixDependencies(logger);
+            await this.checkFix(logger);
+            return;
+        }
 
         const startTime = Date.now();
         const pm = createLoggingExecutable("pnpm", {

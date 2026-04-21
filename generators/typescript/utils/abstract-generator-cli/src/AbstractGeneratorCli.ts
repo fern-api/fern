@@ -13,7 +13,6 @@ import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { CONSOLE_LOGGER, createLogger, Logger, LogLevel } from "@fern-api/logger";
 import { FernIr } from "@fern-fern/ir-sdk";
-import { fastParseIR } from "./fastParseIR.js";
 import {
     constructNpmPackage,
     constructNpmPackageArgs,
@@ -25,6 +24,8 @@ import { GeneratorContext } from "@fern-typescript/contexts";
 import { execFile } from "child_process";
 import { copyFile, readFile, writeFile } from "fs/promises";
 import tmp from "tmp-promise";
+
+import { fastParseIR } from "./fastParseIR.js";
 import { publishPackage } from "./publishPackage.js";
 import { writeGenerationMetadata } from "./writeGenerationMetadata.js";
 import { writeGitHubWorkflows } from "./writeGitHubWorkflows.js";
@@ -88,9 +89,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             });
             const customConfig = this.parseCustomConfig(config.customConfig, logger);
 
-            const ir = await fastParseIR<FernIr.IntermediateRepresentation>(
-                AbsoluteFilePath.of(config.irFilepath)
-            );
+            const ir = await fastParseIR<FernIr.IntermediateRepresentation>(AbsoluteFilePath.of(config.irFilepath));
 
             // First try to construct the package from the IR's publishConfig. This is how
             // self-hosted setups thread package metadata through, and it also carries the
@@ -153,7 +152,13 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                             await new Promise<void>((resolve, reject) => {
                                 execFile(
                                     pm,
-                                    ["install", "--lockfile-only", "--ignore-scripts", "--prefer-offline", "--no-optional"],
+                                    [
+                                        "install",
+                                        "--lockfile-only",
+                                        "--ignore-scripts",
+                                        "--prefer-offline",
+                                        "--no-optional"
+                                    ],
                                     {
                                         cwd: tmpDir,
                                         env: { ...process.env, PNPM_FROZEN_LOCKFILE: "false" }
@@ -197,10 +202,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                             depsMatch(actualPkg.dependencies ?? {}, expectedConfig.dependencies ?? {}) &&
                             depsMatch(actualPkg.devDependencies ?? {}, expectedConfig.devDependencies)
                         ) {
-                            await copyFile(
-                                lockfilePath,
-                                `${typescriptProject.getRootDirectory()}/pnpm-lock.yaml`
-                            );
+                            await copyFile(lockfilePath, `${typescriptProject.getRootDirectory()}/pnpm-lock.yaml`);
                             lockfileReady = true;
                             logger.debug("[TIMING] early lockfile used successfully");
                         } else {
@@ -280,9 +282,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                     // pnpm script runner overhead).  Otherwise use pnpm dlx.
                     const toolsAvailable = await typescriptProject.areCheckFixToolsAvailable(logger);
                     await Promise.all([
-                        lockfileReady
-                            ? Promise.resolve()
-                            : typescriptProject.generateLockfile(logger),
+                        lockfileReady ? Promise.resolve() : typescriptProject.generateLockfile(logger),
                         toolsAvailable
                             ? typescriptProject.checkFixDirect(logger)
                             : typescriptProject.checkFixViaDlx(logger)
@@ -414,7 +414,9 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
      */
     protected getEarlyLockfileConfig(
         _customConfig: CustomConfig
-    ): { devDependencies: Record<string, string>; dependencies?: Record<string, string>; packageManager: string } | undefined {
+    ):
+        | { devDependencies: Record<string, string>; dependencies?: Record<string, string>; packageManager: string }
+        | undefined {
         return undefined;
     }
 
@@ -497,7 +499,12 @@ function depsMatch(actual: Record<string, string>, expected: Record<string, stri
         return false;
     }
     for (let i = 0; i < actualKeys.length; i++) {
-        if (actualKeys[i] !== expectedKeys[i] || actual[actualKeys[i]!] !== expected[expectedKeys[i]!]) {
+        const actualKey = actualKeys[i];
+        const expectedKey = expectedKeys[i];
+        if (
+            actualKey !== expectedKey ||
+            (actualKey != null && expectedKey != null && actual[actualKey] !== expected[expectedKey])
+        ) {
             return false;
         }
     }

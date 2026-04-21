@@ -106,18 +106,18 @@ const visitDescriptor: PropertyDescriptor = { value: visitFn, enumerable: false,
  * dispatch (`visitor.X(this.value)`), all others use SPREAD.
  */
 const WRAPPED_VARIANTS: ReadonlySet<string> = new Set([
-    "body",            // ExampleEndpointSuccessResponse
-    "error",           // V2HttpEndpointResponseBody
-    "file",            // FileUploadRequestProperty
-    "json",            // HttpResponseBody, NonStreamHttpResponseBody, V2HttpEndpointResponseBody
+    "body", // ExampleEndpointSuccessResponse
+    "error", // V2HttpEndpointResponseBody
+    "file", // FileUploadRequestProperty
+    "json", // HttpResponseBody, NonStreamHttpResponseBody, V2HttpEndpointResponseBody
     "justRequestBody", // SdkRequestShape
-    "ok",              // ExampleResponse
-    "property",        // ErrorDeclarationDiscriminantValue
-    "proto",           // Source
-    "sse",             // ExampleEndpointSuccessResponse
-    "stream",          // ExampleEndpointSuccessResponse, V2HttpEndpointResponseBody
-    "streaming",       // HttpResponseBody
-    "wellKnown",       // ProtobufType
+    "ok", // ExampleResponse
+    "property", // ErrorDeclarationDiscriminantValue
+    "proto", // Source
+    "sse", // ExampleEndpointSuccessResponse
+    "stream", // ExampleEndpointSuccessResponse, V2HttpEndpointResponseBody
+    "streaming", // HttpResponseBody
+    "wellKnown" // ProtobufType
 ]);
 
 /**
@@ -136,7 +136,7 @@ const WRAPPED_VARIANTS: ReadonlySet<string> = new Set([
  * variant name is in WRAPPED_VARIANTS. This handles the edge case where
  * SPREAD types have a "value" field (e.g., ExampleEnumExample).
  */
-function visitFn(this: Record<string, unknown>, visitor: Record<string, Function>): unknown {
+function visitFn(this: Record<string, unknown>, visitor: Record<string, (...args: unknown[]) => unknown>): unknown {
     const type = this.type as string;
     const handler = visitor[type];
     if (handler != null) {
