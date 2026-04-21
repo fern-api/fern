@@ -23,7 +23,7 @@ module Seed
       def get_token_with_client_credentials(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request_data = Seed::Auth::Types::GetTokenRequest.new(params).to_h
-        non_body_param_names = ["X-Api-Key"]
+        non_body_param_names = %w[X-Api-Key]
         body = request_data.except(*non_body_param_names)
 
         headers = {}
@@ -64,7 +64,7 @@ module Seed
       def refresh_token(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request_data = Seed::Auth::Types::RefreshTokenRequest.new(params).to_h
-        non_body_param_names = ["X-Api-Key"]
+        non_body_param_names = %w[X-Api-Key]
         body = request_data.except(*non_body_param_names)
 
         headers = {}

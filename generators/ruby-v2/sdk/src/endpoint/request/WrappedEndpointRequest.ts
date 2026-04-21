@@ -287,7 +287,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
 }
 
 function toExplicitArray(s: string[]): string {
-    if (s.every((item) => /^[a-zA-Z_]\w*$/.test(item))) {
+    if (s.every((item) => /^[^\s\]\\]+$/.test(item))) {
         return `%w[${s.join(" ")}]`;
     }
     return `["${s.join('", "')}"]`;
