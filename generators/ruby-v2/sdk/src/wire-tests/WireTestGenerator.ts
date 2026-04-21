@@ -156,7 +156,10 @@ export class WireTestGenerator {
         }
         for (let i = 0; i < testMethods.length; i++) {
             lines.push("");
-            lines.push(...testMethods[i]!);
+            const method = testMethods[i];
+            if (method != null) {
+                lines.push(...method);
+            }
         }
 
         lines.push("end");

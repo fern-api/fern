@@ -345,7 +345,8 @@ class GemspecFile {
             depsFromRecord(this.context.customConfig.extraDependencies)
         );
 
-        return dedent`
+        return (
+            dedent`
             # frozen_string_literal: true
 
             require_relative "lib/${moduleFolderName}/version"
@@ -381,7 +382,8 @@ ${dependencies.length > 0 ? "              " + dependencies.map(depToGemspecStri
               custom_gemspec_file = File.join(__dir__, "${CUSTOM_GEMSPEC_FILENAME}")
               add_custom_gemspec_data(spec) if File.exist?(custom_gemspec_file)
             end
-        ` + "\n";
+        ` + "\n"
+        );
     }
 }
 
@@ -402,7 +404,8 @@ class CustomGemspecFile {
     public async toString(): Promise<string> {
         const moduleName = this.context.getRootModuleName();
 
-        return dedent`
+        return (
+            dedent`
             # frozen_string_literal: true
 
             # Custom gemspec configuration file
@@ -419,7 +422,8 @@ class CustomGemspecFile {
               # spec.homepage = "https://github.com/your-org/${moduleName.toLowerCase()}-ruby"
               # spec.license = "Your license"
             end
-        ` + "\n";
+        ` + "\n"
+        );
     }
 }
 
@@ -442,7 +446,8 @@ class Gemfile {
             depsFromRecord(this.context.customConfig.extraDevDependencies)
         );
 
-        return dedent`
+        return (
+            dedent`
             # frozen_string_literal: true
 
             source "https://rubygems.org"
@@ -456,7 +461,8 @@ class Gemfile {
             # Load custom Gemfile configuration if it exists
             custom_gemfile = File.join(__dir__, "${CUSTOM_GEMFILE_FILENAME}")
             eval_gemfile(custom_gemfile) if File.exist?(custom_gemfile)
-        ` + "\n";
+        ` + "\n"
+        );
     }
 }
 
@@ -474,7 +480,8 @@ class CustomGemfile {
     }
 
     public async toString(): Promise<string> {
-        return dedent`
+        return (
+            dedent`
             # frozen_string_literal: true
 
             # Custom Gemfile configuration file
@@ -489,7 +496,8 @@ class CustomGemfile {
             # end
 
             # Add your custom gem dependencies here
-        ` + "\n";
+        ` + "\n"
+        );
     }
 }
 
@@ -507,7 +515,8 @@ class Rakefile {
     }
 
     public async toString(): Promise<string> {
-        return dedent`
+        return (
+            dedent`
             # frozen_string_literal: true
 
             require "bundler/gem_tasks"
@@ -528,7 +537,8 @@ class Rakefile {
               t.libs << "test"
               t.test_globs = ["test/${CUSTOM_TEST_FILENAME}"]
             end
-        ` + "\n";
+        ` + "\n"
+        );
     }
 }
 
@@ -553,7 +563,8 @@ class CustomTestFile {
     }
 
     public toString(): string {
-        return dedent`
+        return (
+            dedent`
             # frozen_string_literal: true
 
             # This is a custom test file, if you wish to add more tests
@@ -569,7 +580,8 @@ class CustomTestFile {
                 refute false
               end
             end
-        ` + "\n";
+        ` + "\n"
+        );
     }
 
     public async writeFile(): Promise<void> {
@@ -606,13 +618,15 @@ class VersionFile {
         const seedName = this.context.getRootModuleName();
         const version = this.context.getVersionFromConfig();
 
-        return dedent`
+        return (
+            dedent`
             # frozen_string_literal: true
 
             module ${seedName}
               VERSION = "${version}"
             end
-        ` + "\n";
+        ` + "\n"
+        );
     }
 
     public async writeFile(): Promise<void> {
