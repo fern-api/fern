@@ -23,6 +23,7 @@ export const LayoutConfig: core.serialization.ObjectSchema<serializers.LayoutCon
         disableHeader: core.serialization.property("disable-header", core.serialization.boolean().optional()),
         hideNavLinks: core.serialization.property("hide-nav-links", core.serialization.boolean().optional()),
         hideFeedback: core.serialization.property("hide-feedback", core.serialization.boolean().optional()),
+        mobileToc: core.serialization.property("mobile-toc", core.serialization.boolean().optional()),
     });
 
 export declare namespace LayoutConfig {
@@ -39,5 +40,6 @@ export declare namespace LayoutConfig {
         "disable-header"?: boolean | null;
         "hide-nav-links"?: boolean | null;
         "hide-feedback"?: boolean | null;
+        "mobile-toc"?: boolean | null;
     }
 }

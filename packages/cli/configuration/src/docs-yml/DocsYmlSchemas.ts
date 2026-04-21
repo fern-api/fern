@@ -307,7 +307,8 @@ export const LayoutConfig = z.object({
     "header-position": HeaderPosition.optional(),
     "disable-header": z.boolean().optional(),
     "hide-nav-links": z.boolean().optional(),
-    "hide-feedback": z.boolean().optional()
+    "hide-feedback": z.boolean().optional(),
+    "mobile-toc": z.boolean().optional()
 });
 
 // ===== Settings =====

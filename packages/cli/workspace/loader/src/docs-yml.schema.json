@@ -5429,6 +5429,16 @@
               "type": "null"
             }
           ]
+        },
+        "mobile-toc": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -5535,6 +5545,16 @@
           ]
         },
         "disable-explorer-proxy": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "disable-environment-editing": {
           "oneOf": [
             {
               "type": "boolean"

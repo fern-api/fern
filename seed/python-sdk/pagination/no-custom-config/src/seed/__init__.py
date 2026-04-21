@@ -7,10 +7,10 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import UsernameCursor, UsernamePage
-    from . import complex, inline_users, users
+    from . import complex_, inline_users, users
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncSeedPagination, SeedPagination
-    from .complex import (
+    from .complex_ import (
         Conversation,
         CursorPages,
         MultipleFilterSearchRequest,
@@ -47,8 +47,8 @@ if typing.TYPE_CHECKING:
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedPagination": ".client",
-    "Conversation": ".complex",
-    "CursorPages": ".complex",
+    "Conversation": ".complex_",
+    "CursorPages": ".complex_",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
     "ListUsersAliasedDataPaginationResponse": ".users",
@@ -58,19 +58,19 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListUsersOptionalDataPaginationResponse": ".users",
     "ListUsersPaginationResponse": ".users",
     "ListUsersTopLevelCursorPaginationResponse": ".users",
-    "MultipleFilterSearchRequest": ".complex",
-    "MultipleFilterSearchRequestOperator": ".complex",
-    "MultipleFilterSearchRequestValue": ".complex",
+    "MultipleFilterSearchRequest": ".complex_",
+    "MultipleFilterSearchRequestOperator": ".complex_",
+    "MultipleFilterSearchRequestValue": ".complex_",
     "NextPage": ".users",
     "Order": ".users",
     "Page": ".users",
-    "PaginatedConversationResponse": ".complex",
-    "SearchRequest": ".complex",
-    "SearchRequestQuery": ".complex",
+    "PaginatedConversationResponse": ".complex_",
+    "SearchRequest": ".complex_",
+    "SearchRequestQuery": ".complex_",
     "SeedPagination": ".client",
-    "SingleFilterSearchRequest": ".complex",
-    "SingleFilterSearchRequestOperator": ".complex",
-    "StartingAfterPaging": ".complex",
+    "SingleFilterSearchRequest": ".complex_",
+    "SingleFilterSearchRequestOperator": ".complex_",
+    "StartingAfterPaging": ".complex_",
     "User": ".users",
     "UserList": ".users",
     "UserListContainer": ".users",
@@ -83,7 +83,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WithCursor": ".users",
     "WithPage": ".users",
     "__version__": ".version",
-    "complex": ".complex",
+    "complex_": ".complex_",
     "inline_users": ".inline_users",
     "users": ".users",
 }
@@ -148,7 +148,7 @@ __all__ = [
     "WithCursor",
     "WithPage",
     "__version__",
-    "complex",
+    "complex_",
     "inline_users",
     "users",
 ]

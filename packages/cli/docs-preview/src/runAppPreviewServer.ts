@@ -19,6 +19,7 @@ import { WebSocket, WebSocketServer } from "ws";
 import { type BunServer, createBunServer } from "./createBunServer.js";
 import { DebugLogger } from "./DebugLogger.js";
 import { downloadBundle, getPathToBundleFolder, getPathToPreviewFolder } from "./downloadLocalDocsBundle.js";
+import { writeNodePolyfillScript } from "./nodePolyfills.js";
 import { getPreviewDocsDefinition } from "./previewDocs.js";
 
 const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
@@ -62,6 +63,12 @@ const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
     id: undefined,
     apiNameToId: {}
 };
+
+// The FDR SDK types config.root as {} via zod inference, but at runtime it is FernNavigation.V1.RootNode.
+// This type guard checks the "type" discriminant to safely narrow the type without a blind cast.
+function isV1RootNode(value: object): value is FernNavigation.V1.RootNode {
+    return "type" in value && (value as { type: unknown }).type === "root";
+}
 
 /**
  * Slug tracking system for navigation changes
@@ -145,11 +152,10 @@ class SlugChangeTracker {
 
         // Extract new slug mappings - use the FernNavigation root structure
         let newSlugMap: Map<string, string>;
-        if (docsDefinition.config.root) {
+        const configRoot = docsDefinition.config.root;
+        if (configRoot && isV1RootNode(configRoot)) {
             // Convert V1 navigation root to latest version
-            const migratedRoot = FernNavigation.migrate.FernNavigationV1ToLatest.create().root(
-                docsDefinition.config.root
-            );
+            const migratedRoot = FernNavigation.migrate.FernNavigationV1ToLatest.create().root(configRoot);
             newSlugMap = this.extractSlugsFromNavigationRoot(migratedRoot);
 
             // If this is the first time we have navigation root, treat all as "new" but don't report changes
@@ -179,11 +185,10 @@ class SlugChangeTracker {
      * Initialize slug mappings from a docs definition
      */
     initialize(docsDefinition: DocsV1Read.DocsDefinition): void {
-        if (docsDefinition.config.root) {
+        const configRoot = docsDefinition.config.root;
+        if (configRoot && isV1RootNode(configRoot)) {
             // Convert V1 navigation root to latest version
-            const migratedRoot = FernNavigation.migrate.FernNavigationV1ToLatest.create().root(
-                docsDefinition.config.root
-            );
+            const migratedRoot = FernNavigation.migrate.FernNavigationV1ToLatest.create().root(configRoot);
             this.pageSlugMap = this.extractSlugsFromNavigationRoot(migratedRoot);
         } else {
             // Initialize empty map, will be populated when navigation is ready during change detection
@@ -836,7 +841,12 @@ export async function runAppPreviewServer({
     // Clean Fern Docs cache from previous runs before starting the server
     await cleanFernDocsCache(bundleRoot, context);
 
+    // Write Node.js polyfills for older runtimes (e.g. Node 20) so the
+    // pre-built Next.js bundle can use APIs introduced in Node 22+.
+    const polyfillPath = writeNodePolyfillScript(bundleRoot);
+
     // Now start Next.js after backend is ready
+
     const env = {
         ...process.env,
         PORT: port.toString(),
@@ -848,7 +858,7 @@ export async function runAppPreviewServer({
         NEXT_DISABLE_CACHE: "1",
         NODE_ENV: "production",
         NODE_PATH: bundleRoot,
-        NODE_OPTIONS: "--max-old-space-size=8096 --enable-source-maps"
+        NODE_OPTIONS: `--max-old-space-size=8096 --enable-source-maps --require ${polyfillPath}`
     };
 
     // Track the current server process and the port it actually bound to
