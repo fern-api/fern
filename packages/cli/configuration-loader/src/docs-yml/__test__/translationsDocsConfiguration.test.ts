@@ -1,5 +1,5 @@
 import { docsYml } from "@fern-api/configuration";
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { mkdir, mkdtemp, rm, writeFile } from "fs/promises";
 import os from "os";
@@ -99,7 +99,7 @@ describe("parseDocsConfiguration — translation pages loading", () => {
         expect(parsed.translationPages).toBeDefined();
         const frPages = parsed.translationPages?.["fr"];
         expect(frPages).toBeDefined();
-        expect(frPages?.["pages/getting-started.mdx"]).toBe("# Démarrage rapide");
+        expect(frPages?.[RelativeFilePath.of("pages/getting-started.mdx")]).toBe("# Démarrage rapide");
     });
 
     it("should warn about missing translation files but still succeed", async () => {
@@ -180,7 +180,7 @@ describe("parseDocsConfiguration — translation pages loading", () => {
             context: createMockTaskContext()
         });
 
-        expect(parsed.translationPages?.["fr"]?.["pages/index.mdx"]).toBe("# Accueil");
-        expect(parsed.translationPages?.["ja"]?.["pages/index.mdx"]).toBe("# ホーム");
+        expect(parsed.translationPages?.["fr"]?.[RelativeFilePath.of("pages/index.mdx")]).toBe("# Accueil");
+        expect(parsed.translationPages?.["ja"]?.[RelativeFilePath.of("pages/index.mdx")]).toBe("# ホーム");
     });
 });

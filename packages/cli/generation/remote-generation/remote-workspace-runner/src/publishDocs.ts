@@ -80,35 +80,6 @@ async function unlockDeploy({
     }
 }
 
-async function registerTranslation({
-    fdrOrigin,
-    token,
-    domain,
-    orgId,
-    locale,
-    content,
-    context
-}: {
-    fdrOrigin: string;
-    token: string;
-    domain: string;
-    orgId: string;
-    locale: string;
-    content: Record<string, unknown>;
-    context: TaskContext;
-}): Promise<void> {
-    try {
-        await axios.post(
-            `${fdrOrigin}/v2/registry/docs/translations/register`,
-            { domain, orgId, locale, content },
-            { headers: { Authorization: `Bearer ${token}` } }
-        );
-        context.logger.debug(`Registered translations for locale "${locale}"`);
-    } catch (error) {
-        context.logger.warn(`Failed to register translations for locale "${locale}": ${String(error)}`);
-    }
-}
-
 interface FileWithMimeType {
     mediaType: string;
     absoluteFilePath: AbsoluteFilePath;
@@ -655,15 +626,17 @@ export async function publishDocs({
             context.logger.info(`Registering translations for ${Object.keys(translationPages).length} locale(s)...`);
             await Promise.all(
                 Object.entries(translationPages).map(async ([locale, localePages]) => {
-                    await registerTranslation({
-                        fdrOrigin,
-                        token: token.value,
-                        domain,
-                        orgId: organization,
-                        locale,
-                        content: localePages,
-                        context
-                    });
+                    try {
+                        await fdr.docs.v2.write.registerTranslation({
+                            domain,
+                            orgId: CjsFdrSdk.OrgId(organization),
+                            locale,
+                            content: localePages
+                        });
+                        context.logger.debug(`Registered translations for locale "${locale}"`);
+                    } catch (error) {
+                        context.logger.warn(`Failed to register translations for locale "${locale}": ${String(error)}`);
+                    }
                 })
             );
         }

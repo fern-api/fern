@@ -766,7 +766,7 @@ export class DocsDefinitionResolver {
                     ? {
                           model: this.parsedDocsConfig.aiChatConfig.model,
                           systemPrompt: this.parsedDocsConfig.aiChatConfig.systemPrompt,
-                          location: this.parsedDocsConfig.aiChatConfig.location,
+                          location: this.parsedDocsConfig.aiChatConfig.location as ("slack" | "docs")[] | undefined,
                           datasources: this.parsedDocsConfig.aiChatConfig.datasources?.map((ds) => ({
                               url: ds.url,
                               title: ds.title
@@ -816,7 +816,6 @@ export class DocsDefinitionResolver {
             settings: this.parsedDocsConfig.settings,
             css: this.parsedDocsConfig.css,
             js: this.convertJavascriptConfiguration(),
-            // @ts-expect-error - Remove this when the fdr-sdk upgraded to the latest version
             agents:
                 this.parsedDocsConfig.agents != null ||
                 this.parsedDocsConfig.llmsTxtFile != null ||

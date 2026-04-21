@@ -21,7 +21,9 @@
   "main": "lib/src/index.js",
   "source": "src/index.ts",
   "types": "lib/src/index.d.ts",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "clean": "rm -rf ./lib",
     "compile": "tsc",

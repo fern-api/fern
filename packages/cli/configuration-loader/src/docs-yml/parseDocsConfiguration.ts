@@ -1,9 +1,8 @@
 import { docsYml } from "@fern-api/configuration";
 import { assertNever, isPlainObject, sanitizeNullValues } from "@fern-api/core-utils";
 import { FdrAPI as CjsFdrSdk } from "@fern-api/fdr-sdk";
-import { AbsoluteFilePath, dirname, doesPathExist, listFiles, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, dirname, doesPathExist, listFiles, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { CliError, TaskContext } from "@fern-api/task-context";
-
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
@@ -273,6 +272,8 @@ export async function parseDocsConfiguration({
         /* integrations */
         integrations: {
             ...integrations,
+            // context7 is handled separately via context7File (resolved to AbsoluteFilePath)
+            context7: undefined,
             intercom: integrations?.intercom ? integrations.intercom : undefined
         },
 
@@ -1958,17 +1959,17 @@ async function loadTranslationPages({
     context
 }: {
     translations: docsYml.RawSchemas.TranslationConfig[] | undefined;
-    pages: Record<string, string>;
+    pages: Record<RelativeFilePath, string>;
     absolutePathToFernFolder: AbsoluteFilePath;
     context: TaskContext;
-}): Promise<Record<string, Record<string, string>> | undefined> {
+}): Promise<Record<string, Record<RelativeFilePath, string>> | undefined> {
     if (translations == null || translations.length === 0) {
         return undefined;
     }
 
     const translationsRootDir = path.join(absolutePathToFernFolder, "translations") as AbsoluteFilePath;
 
-    const result: Record<string, Record<string, string>> = {};
+    const result: Record<string, Record<RelativeFilePath, string>> = {};
 
     await Promise.all(
         translations.map(async ({ lang }) => {
@@ -1986,11 +1987,11 @@ async function loadTranslationPages({
                 return;
             }
 
-            const localePages: Record<string, string> = {};
-            const missingFiles: string[] = [];
+            const localePages: Record<RelativeFilePath, string> = {} as Record<RelativeFilePath, string>;
+            const missingFiles: RelativeFilePath[] = [];
 
             await Promise.all(
-                Object.keys(pages).map(async (relativeFilePath) => {
+                (Object.keys(pages) as RelativeFilePath[]).map(async (relativeFilePath) => {
                     const translatedFilePath = path.join(langDir, relativeFilePath) as AbsoluteFilePath;
                     if (await doesPathExist(translatedFilePath)) {
                         localePages[relativeFilePath] = await readFile(translatedFilePath, "utf-8");

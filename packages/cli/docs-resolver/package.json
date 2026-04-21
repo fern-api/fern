@@ -21,7 +21,9 @@
   "main": "lib/index.js",
   "source": "src/index.ts",
   "types": "lib/index.d.ts",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "clean": "rm -rf ./lib",
     "compile": "tsc",
@@ -37,6 +39,7 @@
     "@fern-api/configuration-loader": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/docs-markdown-utils": "workspace:*",
+    "@fern-api/docs-parsers": "catalog:",
     "@fern-api/fdr-sdk": "catalog:",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/graphql-to-fdr": "workspace:*",
