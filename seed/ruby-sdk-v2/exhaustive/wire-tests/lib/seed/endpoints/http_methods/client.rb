@@ -110,7 +110,7 @@ module Seed
           end
         end
 
-        # @beta This endpoint is in pre-release and may change.
+        # @note This endpoint is in pre-release and may change.
         #
         # @param request_options [Hash]
         # @param params [Seed::Types::Object_::Types::ObjectWithOptionalField]
@@ -145,7 +145,7 @@ module Seed
           end
         end
 
-        # @beta This endpoint is in development and may change.
+        # @note This endpoint is in development and may change.
         #
         # @param request_options [Hash]
         # @param params [Hash]

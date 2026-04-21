@@ -19,30 +19,52 @@ describe("getAvailabilityDocs", () => {
         );
     });
 
-    it("returns @beta for InDevelopment status without message", () => {
-        expect(getAvailabilityDocs({ status: FernIr.AvailabilityStatus.InDevelopment, message: undefined })).toBe(
-            "@beta This endpoint is in development and may change."
+    it("returns @deprecated (no trailing space) for deprecated status with empty-string message", () => {
+        expect(getAvailabilityDocs({ status: FernIr.AvailabilityStatus.Deprecated, message: "" })).toBe("@deprecated");
+    });
+
+    it("returns @deprecated (no trailing space) for deprecated status with whitespace-only message", () => {
+        expect(getAvailabilityDocs({ status: FernIr.AvailabilityStatus.Deprecated, message: "   " })).toBe(
+            "@deprecated"
         );
     });
 
-    it("returns @beta with message for InDevelopment status with message", () => {
+    it("returns @note for InDevelopment status without message", () => {
+        expect(getAvailabilityDocs({ status: FernIr.AvailabilityStatus.InDevelopment, message: undefined })).toBe(
+            "@note This endpoint is in development and may change."
+        );
+    });
+
+    it("returns @note with message for InDevelopment status with message", () => {
         expect(
             getAvailabilityDocs({
                 status: FernIr.AvailabilityStatus.InDevelopment,
                 message: "Expected Q3 release"
             })
-        ).toBe("@beta This endpoint is in development and may change. Expected Q3 release");
+        ).toBe("@note This endpoint is in development and may change. Expected Q3 release");
     });
 
-    it("returns @beta for PreRelease status without message", () => {
-        expect(getAvailabilityDocs({ status: FernIr.AvailabilityStatus.PreRelease, message: undefined })).toBe(
-            "@beta This endpoint is in pre-release and may change."
+    it("returns @note (no trailing space) for InDevelopment status with empty-string message", () => {
+        expect(getAvailabilityDocs({ status: FernIr.AvailabilityStatus.InDevelopment, message: "" })).toBe(
+            "@note This endpoint is in development and may change."
         );
     });
 
-    it("returns @beta with message for PreRelease status with message", () => {
+    it("returns @note for PreRelease status without message", () => {
+        expect(getAvailabilityDocs({ status: FernIr.AvailabilityStatus.PreRelease, message: undefined })).toBe(
+            "@note This endpoint is in pre-release and may change."
+        );
+    });
+
+    it("returns @note with message for PreRelease status with message", () => {
         expect(getAvailabilityDocs({ status: FernIr.AvailabilityStatus.PreRelease, message: "Beta 2" })).toBe(
-            "@beta This endpoint is in pre-release and may change. Beta 2"
+            "@note This endpoint is in pre-release and may change. Beta 2"
+        );
+    });
+
+    it("returns @note (no trailing space) for PreRelease status with empty-string message", () => {
+        expect(getAvailabilityDocs({ status: FernIr.AvailabilityStatus.PreRelease, message: "" })).toBe(
+            "@note This endpoint is in pre-release and may change."
         );
     });
 
