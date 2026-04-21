@@ -3,7 +3,7 @@ import * as fs from "fs/promises";
 import * as os from "os";
 import * as path from "path";
 import { afterEach, describe, expect, it } from "vitest";
-import { AutoVersioningService } from "../AutoVersioningService.js";
+import { AutoVersioningService } from "@fern-api/generator-cli/autoversion";
 
 /**
  * Integration tests for the auto-versioning fallback methods using REAL git repos.

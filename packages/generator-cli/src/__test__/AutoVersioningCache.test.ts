@@ -1,6 +1,6 @@
 import { VersionBump } from "@fern-api/cli-ai";
 import { describe, expect, it } from "vitest";
-import { AutoVersioningCache, CachedAnalysis } from "../AutoVersioningCache.js";
+import { AutoVersioningCache, CachedAnalysis } from "../autoversion/AutoVersioningCache.js";
 
 describe("AutoVersioningCache", () => {
     it("calls AI when no cache entry exists", async () => {

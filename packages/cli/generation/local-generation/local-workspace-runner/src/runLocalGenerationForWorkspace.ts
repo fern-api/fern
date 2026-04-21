@@ -31,10 +31,9 @@ import * as fs from "fs/promises";
 import os from "os";
 import path from "path";
 import tmp from "tmp-promise";
-import { AutoVersioningCache } from "./AutoVersioningCache.js";
+import { AutoVersioningCache, isAutoVersion } from "@fern-api/generator-cli/autoversion";
 import { getGeneratorOutputSubfolder } from "./getGeneratorOutputSubfolder.js";
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator.js";
-import { isAutoVersion } from "./VersionUtils.js";
 
 export async function runLocalGenerationForWorkspace({
     token,

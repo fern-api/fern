@@ -11,16 +11,21 @@ import { tmpdir } from "os";
 import { join as pathJoin } from "path";
 import semver from "semver";
 import tmp from "tmp-promise";
-import { AutoVersioningCache, CachedAnalysis } from "./AutoVersioningCache.js";
 import {
+    AutoVersioningCache,
     AutoVersioningException,
     AutoVersioningService,
     AutoVersionResult,
+    CachedAnalysis,
     countFilesInDiff,
-    formatSizeKB
-} from "./AutoVersioningService.js";
+    formatSizeKB,
+    isAutoVersion,
+    MAX_AI_DIFF_BYTES,
+    MAX_CHUNKS,
+    MAX_RAW_DIFF_BYTES,
+    maxVersionBump
+} from "@fern-api/generator-cli/autoversion";
 import { sanitizeChangelogEntry } from "./sanitizeChangelogEntry.js";
-import { isAutoVersion, MAX_AI_DIFF_BYTES, MAX_CHUNKS, MAX_RAW_DIFF_BYTES, maxVersionBump } from "./VersionUtils.js";
 export declare namespace LocalTaskHandler {
     export interface Init {
         context: TaskContext;

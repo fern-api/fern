@@ -10,7 +10,7 @@ import { mkdir, writeFile } from "fs/promises";
 import * as path from "path";
 import { join } from "path";
 import tmp, { DirectoryResult } from "tmp-promise";
-import { AutoVersioningCache } from "./AutoVersioningCache.js";
+import { AutoVersioningCache, extractLanguageFromGeneratorName, mapMagicVersionForLanguage } from "@fern-api/generator-cli/autoversion";
 import { ContainerExecutionEnvironment } from "./ContainerExecutionEnvironment.js";
 import {
     CODEGEN_OUTPUT_DIRECTORY_NAME,
@@ -27,7 +27,6 @@ import { ExecutionEnvironment } from "./ExecutionEnvironment.js";
 import { getGeneratorConfig, getLicensePathFromConfig } from "./getGeneratorConfig.js";
 import { getIntermediateRepresentation } from "./getIntermediateRepresentation.js";
 import { LocalTaskHandler } from "./LocalTaskHandler.js";
-import { extractLanguageFromGeneratorName, mapMagicVersionForLanguage } from "./VersionUtils.js";
 
 export interface GeneratorRunResponse {
     ir: IntermediateRepresentation;
