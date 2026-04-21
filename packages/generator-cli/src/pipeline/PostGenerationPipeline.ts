@@ -4,11 +4,13 @@ import { FERN_BOT_EMAIL, FERN_BOT_NAME } from "./github/constants";
 import { consolePipelineLogger, type PipelineLogger } from "./PipelineLogger";
 import { AutoVersionStep } from "./steps/AutoVersionStep";
 import { BaseStep } from "./steps/BaseStep";
+import { GenerationCommitStep } from "./steps/GenerationCommitStep";
 import { GithubStep } from "./steps/GithubStep";
 import { ReplayStep } from "./steps/ReplayStep";
 import type {
     AutoVersionStepResult,
     FernignoreStepResult,
+    GenerationCommitStepResult,
     GithubStepResult,
     PipelineConfig,
     PipelineContext,
@@ -23,24 +25,54 @@ export class PostGenerationPipeline {
         private readonly config: PipelineConfig,
         private readonly logger: PipelineLogger = consolePipelineLogger
     ) {
+        let replayEnabled = config.replay?.enabled ?? false;
+        let autoVersionEnabled = config.autoVersion?.enabled ?? false;
+
         // Disallow push mode + replay: push mode force-pushes to the base branch,
         // which is incompatible with replay's 3-way merge workflow.
-        if (config.replay?.enabled && config.github?.mode === "push") {
+        if (replayEnabled && config.github?.mode === "push") {
             this.logger.warn(
                 "Replay is not supported with GitHub push mode. Disabling replay to prevent force push to base branch."
             );
-            config.replay.enabled = false;
+            replayEnabled = false;
         }
 
-        // Runs between the generation commit and replay detect/apply so the autoversion diff
-        // sees only pure generator output on both sides (see FER-9978). Today the generation
-        // commit is made inside ReplayStep; FER-9980 extracts it so AutoVersionStep sits
-        // cleanly between them.
-        if (config.autoVersion?.enabled) {
+        // Autoversion travels with replay — it needs the two [fern-generated] SHAs
+        // that the replay prepare phase produces. Non-replay orgs keep fiddle-side
+        // autoversioning per the epic's non-goals (FER-9978).
+        if (autoVersionEnabled && !replayEnabled) {
+            this.logger.warn("AutoVersion requires Replay to be enabled. Disabling AutoVersion for this run.");
+            autoVersionEnabled = false;
+        }
+
+        // Split order:
+        //   GenerationCommitStep — replay prepare phase: commits [fern-generated],
+        //     produces the PreparedReplay handle + prev/current [fern-generated] SHAs.
+        //   AutoVersionStep — diffs prev vs current (pure generator output on both
+        //     sides), runs FAI, rewrites placeholder version, prepends changelog.md,
+        //     commits [fern-autoversion] between [fern-generated] and [fern-replay].
+        //   ReplayStep — replay apply phase: detect/apply patches using the handle.
+        //   GithubStep — push / PR.
+        //
+        // See FER-9978 (epic), FER-9980 (AutoVersionStep), FER-10001 (replay split).
+        if (replayEnabled && config.replay != null) {
+            this.steps.push(
+                new GenerationCommitStep(
+                    config.outputDir,
+                    this.logger,
+                    { enabled: true, skipApplication: config.replay.skipApplication },
+                    config.cliVersion,
+                    config.generatorVersions,
+                    config.generatorName
+                )
+            );
+        }
+
+        if (autoVersionEnabled && config.autoVersion != null) {
             this.steps.push(new AutoVersionStep(config.outputDir, this.logger, config.autoVersion));
         }
 
-        if (config.replay?.enabled) {
+        if (replayEnabled && config.replay != null) {
             this.steps.push(
                 new ReplayStep(
                     config.outputDir,
@@ -88,7 +120,10 @@ export class PostGenerationPipeline {
             try {
                 const stepResult = await step.execute(pipelineContext);
 
-                if (step.name === "replay") {
+                if (step.name === "generationCommit") {
+                    result.steps.generationCommit = stepResult as GenerationCommitStepResult;
+                    pipelineContext.previousStepResults.generationCommit = stepResult as GenerationCommitStepResult;
+                } else if (step.name === "replay") {
                     result.steps.replay = stepResult as ReplayStepResult;
                     pipelineContext.previousStepResults.replay = stepResult as ReplayStepResult;
                 } else if (step.name === "autoVersion") {
