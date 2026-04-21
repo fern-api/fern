@@ -298,8 +298,9 @@ public final class HttpUrlBuilder {
                             + "()";
                 }
                 if (typeNameIsOptional(poetPathParameter.poetParam().type)) {
-                    // Check for clientDefault on the path parameter
-                    Optional<CodeBlock> pathClientDefault = DefaultValueExtractor.extractClientDefault(
+                    // Use extractEffectiveDefault to check type compatibility before using clientDefault
+                    Optional<CodeBlock> pathClientDefault = defaultValueExtractor.extractEffectiveDefault(
+                            poetPathParameter.irParam().getValueType(),
                             poetPathParameter.irParam().getClientDefault());
 
                     if (pathClientDefault.isPresent()) {

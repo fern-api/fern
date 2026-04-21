@@ -9,7 +9,7 @@
         `clientDefault` become optional in the wrapped request and use
         `.orElse(defaultValue)` to apply the fallback.
       type: feat
-  createdAt: "2026-04-03"
+  createdAt: "2026-04-21"
   irVersion: 66
 - version: 4.2.3
   changelogEntry:
