@@ -64,7 +64,9 @@ impl HttpMethodsClient {
             .await
     }
 
-    /// @beta This endpoint is in pre-release and may change.
+    /// # Stability
+    ///
+    /// This endpoint is in pre-release and may change.
     ///
     /// # Arguments
     ///
@@ -90,7 +92,9 @@ impl HttpMethodsClient {
             .await
     }
 
-    /// @beta This endpoint is in development and may change.
+    /// # Stability
+    ///
+    /// This endpoint is in development and may change.
     ///
     /// # Arguments
     ///
