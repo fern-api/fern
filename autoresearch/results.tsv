@@ -58,3 +58,10 @@ ac56328c8f2	29011	9300	38596	-24.8	keep	exp-055: overlap lockfile generation wit
 n/a	n/a	n/a	38596	n/a	discard	exp-056: skip checkFix (biome) entirely — 2,856 changed lines in validation, biome makes real changes (import reordering, formatting)
 n/a	29596	9300	38596	+2.0	discard	exp-057: pre-warm biome in pnpm store during code gen via fire-and-forget pnpm dlx — no gain, resource competition with code gen
 n/a	29490	9300	38596	+1.7	discard	exp-058: merge two withSnippet calls into one for reference generation — no gain, metadata context overhead offsets savings
+7a5f0715fa8	28945	9200	38596	-25.0	keep	exp-059: replace Object.keys() with for...in in deepTransform (e2e -0.2%, gen -1.1%)
+n/a	n/a	n/a	38596	n/a	discard	exp-060 through exp-064: various discarded experiments (entries lost from previous session)
+bcbba2c8277	29100	9000	38596	-24.6	keep	exp-065: bypass addStatements+getText AST round-trip in withSnippet — join text directly (gen -2.2%)
+n/a	n/a	n/a	38596	n/a	discard	exp-066 through exp-067: discarded experiments (entries lost from previous session)
+6c7593b0042	29200	9100	38596	-24.3	keep	exp-068: invoke biome directly from PATH, bypass pnpm script runner overhead
+n/a	n/a	n/a	38596	n/a	discard	exp-069 through exp-073: discarded experiments (entries lost from previous session)
+c95f7a2bdcb	31000	9100	38596	-19.7	keep	exp-074: generate const instead of let for _headers variable (eliminates 327 biome useConst fixes)
