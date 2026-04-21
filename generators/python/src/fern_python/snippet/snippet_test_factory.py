@@ -229,12 +229,12 @@ class SnippetTestFactory:
         for pathpart in fern_filepath.package_path:
             directories += (
                 Filepath.DirectoryFilepathPart(
-                    module_name=resolve_name(pathpart).snake_case.unsafe_name,
+                    module_name=resolve_name(pathpart).snake_case.safe_name,
                 ),
             )
 
         module_name = (
-            resolve_name(fern_filepath.file).snake_case.unsafe_name if fern_filepath.file is not None else "root"
+            resolve_name(fern_filepath.file).snake_case.safe_name if fern_filepath.file is not None else "root"
         )
         return Filepath(
             directories=directories,

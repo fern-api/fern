@@ -13,7 +13,7 @@ import {
 } from "@fern-api/ir-sdk";
 import { constructHttpPath, getWireValue } from "@fern-api/ir-utils";
 import { FernOpenAPIExtension } from "@fern-api/openapi-ir-parser";
-import { AbstractConverter, Extensions, ServersConverter } from "@fern-api/v3-importer-commons";
+import { AbstractConverter, Extensions, ServersConverter, sanitizeSecurityScopes } from "@fern-api/v3-importer-commons";
 import { camelCase } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
 import { RedoclyCodeSamplesExtension } from "../../../extensions/x-code-samples.js";
@@ -546,7 +546,7 @@ export class OperationConverter extends AbstractOperationConverter {
         }
 
         // Fall back to OpenAPI security
-        return this.operation.security ?? this.context.spec.security;
+        return sanitizeSecurityScopes(this.operation.security ?? this.context.spec.security);
     }
 
     /**

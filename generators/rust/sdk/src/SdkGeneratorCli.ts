@@ -341,6 +341,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             lines.push("mod websocket;");
         }
         lines.push("mod utils;");
+        lines.push("pub mod pagination;");
         if (hasDateTime) {
             lines.push("pub mod flexible_datetime;");
         }
@@ -354,7 +355,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             lines.push("pub mod number_serializers;");
         }
         lines.push("");
-        lines.push("pub use http_client::{ByteStream, HttpClient, OAuthConfig};");
+        lines.push("pub use http_client::{ByteStream, HttpClient, OAuthConfig, RawResponse};");
         lines.push("pub use oauth_token_provider::OAuthTokenProvider;");
         lines.push("pub use request_options::RequestOptions;");
         lines.push("pub use query_parameter_builder::{QueryBuilder, QueryBuilderError, parse_structured_query};");
@@ -367,6 +368,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             lines.push("pub use websocket::{DisconnectInfo, WebSocketClient, WebSocketMessage, WebSocketOptions, WebSocketState};");
         }
         lines.push("pub use utils::join_url;");
+        lines.push("pub use pagination::{AsyncPaginator, SyncPaginator, PaginationResult};");
         lines.push("");
 
         return new RustFile({

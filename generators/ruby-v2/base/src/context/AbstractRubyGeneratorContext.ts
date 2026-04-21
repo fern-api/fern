@@ -145,11 +145,15 @@ export abstract class AbstractRubyGeneratorContext<
     }
 
     protected snakeNames(typeDeclaration: FernIr.TypeDeclaration): string[] {
-        return typeDeclaration.name.fernFilepath.allParts.map((path) => this.caseConverter.snakeSafe(path));
+        return typeDeclaration.name.fernFilepath.allParts
+            .filter((path): path is FernIr.NameOrString => path != null)
+            .map((path) => this.caseConverter.snakeSafe(typeof path === "string" ? path : path.originalName));
     }
 
     protected pascalNames(typeDeclaration: FernIr.TypeDeclaration): string[] {
-        return typeDeclaration.name.fernFilepath.allParts.map((path) => this.caseConverter.pascalSafe(path));
+        return typeDeclaration.name.fernFilepath.allParts
+            .filter((path): path is FernIr.NameOrString => path != null)
+            .map((path) => this.caseConverter.pascalSafe(typeof path === "string" ? path : path.originalName));
     }
 
     public abstract getAllTypeDeclarations(): FernIr.TypeDeclaration[];

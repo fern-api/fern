@@ -718,7 +718,8 @@ class ModuleFile {
             this.baseContents +
             Array.from(relativeImportPaths)
                 .filter((importPath) => importPath.endsWith(".rb"))
-                .map((importPath) => `require_relative '${importPath.replaceAll(".rb", "")}'`)
+                .map((importPath) => `require_relative "${importPath.replaceAll(".rb", "")}"`)
+
                 .join("\n");
 
         // Add optional user require paths hook at the end (only if configured)

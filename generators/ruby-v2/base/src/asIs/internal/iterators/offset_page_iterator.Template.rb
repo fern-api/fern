@@ -3,6 +3,10 @@ module <%= gem_namespace %>
     class OffsetPageIterator
       include Enumerable
 
+      # The raw HTTP response from the most recent page response.
+      # @return [Net::HTTPResponse, nil]
+      attr_reader :http_response
+
       # Instantiates an OffsetPageIterator, an Enumerable class which wraps calls to an offset-based paginated API and yields pages of items from it.
       #
       # @param initial_page [Integer] The initial page to use when iterating, if any.
@@ -10,6 +14,7 @@ module <%= gem_namespace %>
       # @param has_next_field [Symbol] The field to pull the boolean of whether a next page exists from, if any.
       # @param step [Boolean] If true, treats the page number as a true offset (i.e. increments the page number by the number of items returned from each call rather than just 1)
       # @param block [Proc] A block which is responsible for receiving a page number to use and returning the given page from the API.
+      #   The block should return a two-element array: [parsed_page, raw_http_response].
       # @return [<%= gem_namespace %>::Internal::OffsetPageIterator]
       def initialize(initial_page:, item_field:, has_next_field:, step:, &block)
         @page_number = initial_page || (step ? 0 : 1)
@@ -22,6 +27,8 @@ module <%= gem_namespace %>
         @next_page = nil
         # ...or the actual next page, preloaded, if it doesn't.
         @has_next_page = nil
+
+        @http_response = nil
       end
 
       # Iterates over each page returned by the API.
@@ -41,7 +48,7 @@ module <%= gem_namespace %>
         return @has_next_page unless @has_next_page.nil?
         return true if @next_page
 
-        fetched_page = @get_next_page.call(@page_number)
+        fetched_page = fetch_page(@page_number)
         fetched_page_items = fetched_page&.send(@item_field)
         if fetched_page_items.nil? || fetched_page_items.empty?
           @has_next_page = false
@@ -59,7 +66,7 @@ module <%= gem_namespace %>
           this_page = @next_page
           @next_page = nil
         else
-          this_page = @get_next_page.call(@page_number)
+          this_page = fetch_page(@page_number)
         end
 
         if @has_next_field
@@ -77,6 +84,19 @@ module <%= gem_namespace %>
         end
 
         this_page
+      end
+
+      private
+
+      def fetch_page(page_number)
+        result = @get_next_page.call(page_number)
+        if result.is_a?(Array)
+          fetched_page, raw_response = result
+          @http_response = raw_response
+          fetched_page
+        else
+          result
+        end
       end
     end
   end

@@ -270,7 +270,7 @@
         "variants": [
           {
             "availability": undefined,
-            "description": undefined,
+            "description": "AnyOf error variant A with title",
             "displayName": "Field Error",
             "type": {
               "default": undefined,
@@ -281,7 +281,7 @@
           },
           {
             "availability": undefined,
-            "description": undefined,
+            "description": "AnyOf error variant B with title",
             "displayName": "Format Error",
             "type": {
               "default": undefined,
@@ -359,7 +359,7 @@
         "variants": [
           {
             "availability": undefined,
-            "description": undefined,
+            "description": "First variant for anyOf with title",
             "displayName": "Option A",
             "type": {
               "default": undefined,
@@ -370,7 +370,7 @@
           },
           {
             "availability": undefined,
-            "description": undefined,
+            "description": "Second variant for anyOf with title",
             "displayName": "Option B",
             "type": {
               "default": undefined,

@@ -2,10 +2,12 @@ import { extractErrorMessage } from "@fern-api/core-utils";
 import { execFileSync } from "child_process";
 import { FERN_BOT_EMAIL, FERN_BOT_NAME } from "./github/constants";
 import { consolePipelineLogger, type PipelineLogger } from "./PipelineLogger";
+import { AutoVersionStep } from "./steps/AutoVersionStep";
 import { BaseStep } from "./steps/BaseStep";
 import { GithubStep } from "./steps/GithubStep";
 import { ReplayStep } from "./steps/ReplayStep";
 import type {
+    AutoVersionStepResult,
     FernignoreStepResult,
     GithubStepResult,
     PipelineConfig,
@@ -28,6 +30,14 @@ export class PostGenerationPipeline {
                 "Replay is not supported with GitHub push mode. Disabling replay to prevent force push to base branch."
             );
             config.replay.enabled = false;
+        }
+
+        // Runs between the generation commit and replay detect/apply so the autoversion diff
+        // sees only pure generator output on both sides (see FER-9978). Today the generation
+        // commit is made inside ReplayStep; FER-9980 extracts it so AutoVersionStep sits
+        // cleanly between them.
+        if (config.autoVersion?.enabled) {
+            this.steps.push(new AutoVersionStep(config.outputDir, this.logger, config.autoVersion));
         }
 
         if (config.replay?.enabled) {
@@ -81,6 +91,9 @@ export class PostGenerationPipeline {
                 if (step.name === "replay") {
                     result.steps.replay = stepResult as ReplayStepResult;
                     pipelineContext.previousStepResults.replay = stepResult as ReplayStepResult;
+                } else if (step.name === "autoVersion") {
+                    result.steps.autoVersion = stepResult as AutoVersionStepResult;
+                    pipelineContext.previousStepResults.autoVersion = stepResult as AutoVersionStepResult;
                 } else if (step.name === "fernignore") {
                     result.steps.fernignore = stepResult as FernignoreStepResult;
                 } else if (step.name === "github") {

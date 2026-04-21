@@ -239,6 +239,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
 
                 // Extract schema title once for reuse
                 const schemaTitle = resolvedSchema.resolved ? resolvedSchema.value.title : undefined;
+                const schemaDescription = resolvedSchema.resolved ? resolvedSchema.value.description : undefined;
 
                 // Determine variant display name with fallback priority:
                 // 1. Schema's title field (explicit user intention)
@@ -253,7 +254,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 }
 
                 unionTypes.push({
-                    docs: undefined,
+                    docs: schemaDescription,
                     discriminantValue: nameAndWireValue,
                     availability: convertedSchema.availability,
                     displayName: variantDisplayName,
@@ -386,9 +387,16 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 }
 
                 if (maybeTypeReference.ok) {
+                    // Resolve the reference to get the actual schema's description
+                    const resolvedSchema = this.context.resolveReference<OpenAPIV3_1.SchemaObject>({
+                        reference: subSchema,
+                        breadcrumbs: this.breadcrumbs
+                    });
+                    const schemaDescription = resolvedSchema.resolved ? resolvedSchema.value.description : undefined;
+
                     unionTypes.push({
                         type: maybeTypeReference.reference,
-                        docs: subSchema.description
+                        docs: schemaDescription
                     });
                 }
                 const typeId = this.context.getTypeIdFromSchemaReference(subSchema);

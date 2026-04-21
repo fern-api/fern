@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.5.6
+  changelogEntry:
+    - summary: |
+        Escape Python reserved keywords (e.g., `import`, `class`, `from`) when used
+        as subpackage names. Previously, a subpackage named after a Python keyword
+        would produce a broken `__init__.py` (e.g., `from .import.client import
+        ImportClient`) that fails to parse. Subpackage directories are now
+        generated using the casings-generator's `safe_name` (e.g., `import_`),
+        matching how other identifiers already handle reserved keywords.
+      type: fix
+  createdAt: "2026-04-20"
+  irVersion: 66
 - version: 5.5.5
   changelogEntry:
     - summary: |

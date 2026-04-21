@@ -32,6 +32,7 @@ import { convertSchemaWithExampleToSchema } from "../../schema/utils/convertSche
 import { getGeneratedTypeName } from "../../schema/utils/getSchemaName.js";
 import { isReferenceObject } from "../../schema/utils/isReferenceObject.js";
 import { getSchemas } from "../../utils/getSchemas.js";
+import { sanitizeSecurityScopes } from "../../utils/sanitizeSecurityScopes.js";
 import { createSchemaCollisionTracker } from "../../utils/schemaCollision.js";
 import { AbstractOpenAPIV3ParserContext } from "./AbstractOpenAPIV3ParserContext.js";
 import { convertPathItem, convertPathItemToWebhooks } from "./converters/convertPathItem.js";
@@ -94,7 +95,9 @@ export function generateIr({
             })
             .filter((entry): entry is [string, SecurityScheme] => entry !== null)
     );
-    const security: GlobalSecurity | undefined = openApi.security?.filter((requirement) => requirement != null);
+    const security: GlobalSecurity | undefined = sanitizeSecurityScopes(
+        openApi.security?.filter((requirement) => requirement != null)
+    );
     const authHeaders = new Set(
         Object.entries(securitySchemes)
             .map(([_, securityScheme]) => {
