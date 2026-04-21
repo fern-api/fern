@@ -177,7 +177,7 @@ public final class DefaultValueExtractor {
         if (!clientDefault.isPresent()) {
             return false;
         }
-        TypeReference innerType = unwrapContainers(typeReference);
+        TypeReference innerType = resolveToLeafType(typeReference);
         if (innerType.isPrimitive()) {
             PrimitiveType primitive = innerType.getPrimitive().get();
             boolean isString = clientDefault.get().isString()
@@ -187,6 +187,24 @@ public final class DefaultValueExtractor {
             return isString || isBoolean;
         }
         return false;
+    }
+
+    /**
+     * Unwraps optional/nullable containers and resolves named type aliases to get the leaf type reference. This ensures
+     * clientDefault compatibility checks work correctly for aliased String/Boolean types.
+     */
+    private TypeReference resolveToLeafType(TypeReference typeReference) {
+        TypeReference unwrapped = unwrapContainers(typeReference);
+        if (unwrapped.isNamed()) {
+            TypeId typeId = unwrapped.getNamed().get().getTypeId();
+            TypeDeclaration typeDeclaration = context.getTypeDeclarations().get(typeId);
+            if (typeDeclaration != null && typeDeclaration.getShape().isAlias()) {
+                AliasTypeDeclaration alias =
+                        typeDeclaration.getShape().getAlias().get();
+                return resolveToLeafType(alias.getAliasOf());
+            }
+        }
+        return unwrapped;
     }
 
     /** Unwraps optional and nullable containers to get the innermost type reference. */
