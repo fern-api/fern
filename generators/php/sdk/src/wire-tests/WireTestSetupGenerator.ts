@@ -156,7 +156,7 @@ abstract class WireMockTestCase extends TestCase
      * @param string $testId The test ID used to filter requests
      * @param string $method The HTTP method (GET, POST, etc.)
      * @param string $urlPath The URL path to match
-     * @param array<string, string>|null $queryParams Query parameters to match
+     * @param array<string, string|array<string>>|null $queryParams Query parameters to match
      * @param int $expected Expected number of requests
      */
     protected function verifyRequestCount(
