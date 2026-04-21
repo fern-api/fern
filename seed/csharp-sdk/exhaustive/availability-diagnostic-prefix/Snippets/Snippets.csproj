@@ -4,6 +4,7 @@
     <RootNamespace>Snippets</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <NoWarn>$(NoWarn);ACME0001;ACME0002</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\**\*.csproj" Exclude="..\**\*.Test.csproj;..\Snippets\*.csproj" />

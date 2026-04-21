@@ -1,0 +1,7 @@
+- summary: |
+    Suppress [Experimental] diagnostic IDs in the generated C# `Snippets.csproj` when
+    `generateAvailabilityAnnotations` is enabled in the C# SDK generator. Without
+    this, the snippet compilation test fails because the snippets exercise endpoints
+    marked with `[Experimental("{PREFIX}0001")]` / `[Experimental("{PREFIX}0002")]`.
+    Flag-off output is unchanged.
+  type: fix

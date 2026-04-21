@@ -1,4 +1,5 @@
 import { Style } from "@fern-api/browser-compatible-base-generator";
+import { resolveDiagnosticPrefix } from "@fern-api/csharp-codegen";
 import { Config, DynamicSnippetsGenerator } from "@fern-api/csharp-dynamic-snippets";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { dynamic } from "@fern-api/ir-sdk";
@@ -11,17 +12,20 @@ import { DynamicSnippetsTestRequest } from "../DynamicSnippetsTestSuite.js";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest.js";
 import { convertIr } from "../utils/convertIr.js";
 
-const PROJECT_FILE_CONTENT = `<Project Sdk="Microsoft.NET.Sdk">
+function buildProjectFileContent({ availabilityDiagnosticIds }: { availabilityDiagnosticIds: string }): string {
+    const noWarnLine = availabilityDiagnosticIds ? `\n    <NoWarn>$(NoWarn);${availabilityDiagnosticIds}</NoWarn>` : "";
+    return `<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <RootNamespace>Snippets</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <Nullable>enable</Nullable>${noWarnLine}
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\\**\\*.csproj" Exclude="..\\**\\*.Test.csproj;..\\Snippets\\*.csproj" />
   </ItemGroup>
 </Project>`;
+}
 
 export class DynamicSnippetsCsharpTestGenerator {
     private dynamicSnippetsGenerator: DynamicSnippetsGenerator;
@@ -91,9 +95,31 @@ export class DynamicSnippetsCsharpTestGenerator {
     private async initializeProject(outputDir: AbsoluteFilePath): Promise<AbsoluteFilePath> {
         const absolutePathToOutputDir = join(outputDir, RelativeFilePath.of("Snippets"));
         await mkdir(absolutePathToOutputDir, { recursive: true });
-        await writeFile(join(absolutePathToOutputDir, RelativeFilePath.of("Snippets.csproj")), PROJECT_FILE_CONTENT);
+        await writeFile(
+            join(absolutePathToOutputDir, RelativeFilePath.of("Snippets.csproj")),
+            buildProjectFileContent({ availabilityDiagnosticIds: this.getAvailabilityDiagnosticIds() })
+        );
 
         return absolutePathToOutputDir;
+    }
+
+    /**
+     * Mirrors {@link CsharpProject.getAvailabilityDiagnosticIds}: when availability
+     * annotations are enabled, returns the semicolon-delimited list of `[Experimental]`
+     * diagnostic IDs to suppress in the snippet project. Otherwise returns an empty
+     * string so `Snippets.csproj` output is unchanged (flag-off parity).
+     */
+    private getAvailabilityDiagnosticIds(): string {
+        const customConfig = this.generatorConfig.customConfig as Record<string, unknown> | undefined;
+        if (customConfig?.generateAvailabilityAnnotations !== true) {
+            return "";
+        }
+        const overrideRaw = customConfig.availabilityDiagnosticPrefix;
+        const override = typeof overrideRaw === "string" ? overrideRaw : undefined;
+        const namespaceRaw = customConfig.namespace;
+        const rootNamespace = typeof namespaceRaw === "string" ? namespaceRaw : "";
+        const prefix = resolveDiagnosticPrefix({ override, rootNamespace });
+        return `${prefix}0001;${prefix}0002`;
     }
 
     private getTestFilePath({
