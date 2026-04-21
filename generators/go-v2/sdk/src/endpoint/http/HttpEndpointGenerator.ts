@@ -778,9 +778,11 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 }
             }
         }
-        // Add clientDefault entries for string-typed query params that don't already have a default
+        // Add clientDefault entries for query params that don't already have a type-level default.
+        // Unlike path params and headers (which use the == "" zero-value pattern and require
+        // string types), query params use a defaults map so any literal type works here.
         for (const queryParameter of endpoint.queryParameters) {
-            if (queryParameter.clientDefault != null && isPlainStringType(queryParameter.valueType)) {
+            if (queryParameter.clientDefault != null) {
                 const wireValue = getWireValue(queryParameter.name);
                 if (!defaultedWireValues.has(wireValue)) {
                     const literalString =
