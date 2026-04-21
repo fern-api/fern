@@ -1863,10 +1863,13 @@ export class SdkGenerator {
 
             this.exportsManager.addExportsForFilepath(filepath, effectiveAddExportTypeModifier);
 
-            // Store prefix (header + imports) for prepending at disk-write time.
-            // This avoids ~3974 insertText(0,...) calls that each trigger full AST re-parses.
+            // Eagerly capture complete file content (header + imports + body) and delete
+            // the source file from the ts-morph project. This frees ~2000 AST nodes,
+            // reducing memory pressure and shrinking the project for writeExportsToProject.
             const header = this.config.whitelabel ? WHITELABEL_FILE_HEADER : FILE_HEADER;
-            this.filePrefixes.set(sourceFile.getFilePath(), header + "\n" + importText);
+            const bodyText = sourceFile.getFullText();
+            this.filePrefixes.set(sourceFile.getFilePath(), header + "\n" + importText + bodyText);
+            sourceFile.delete();
 
             this.context.logger.debug(`Generated ${filepathStr}`);
         }

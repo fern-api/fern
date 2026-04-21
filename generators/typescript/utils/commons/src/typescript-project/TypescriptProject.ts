@@ -237,17 +237,23 @@ export abstract class TypescriptProject {
     }
 
     private async writeSrcToDisk(targetDir: string): Promise<void> {
-        // Phase 1: Collect all source file data (getFullText is synchronous)
-        // Prepend any stored file prefixes (header + imports) that were deferred
-        // to avoid expensive insertText(0,...) AST re-parses during generation.
+        // Phase 1: Collect all source file data.
+        // filePrefixes entries contain complete file content (header + imports + body)
+        // for generated files that were eagerly extracted during withSourceFile.
+        // Remaining ts-morph source files (barrel files from writeExportsToProject)
+        // are read via getFullText().
         const files: { relativePath: string; content: string }[] = [];
+        for (const [filePath, content] of this.filePrefixes) {
+            files.push({ relativePath: filePath.slice(1), content });
+        }
         for (const file of this.tsMorphProject.getSourceFiles()) {
             const filePath = file.getFilePath();
-            const prefix = this.filePrefixes.get(filePath) ?? "";
-            files.push({
-                relativePath: filePath.slice(1),
-                content: prefix + file.getFullText()
-            });
+            if (!this.filePrefixes.has(filePath)) {
+                files.push({
+                    relativePath: filePath.slice(1),
+                    content: file.getFullText()
+                });
+            }
         }
 
         // Phase 2: Pre-create all unique parent directories in parallel
