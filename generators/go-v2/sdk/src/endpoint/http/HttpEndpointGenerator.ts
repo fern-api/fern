@@ -753,16 +753,27 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 });
             }
         }
+        // Track wire values that already have type-level defaults
+        const defaultedWireValues = new Set<string>();
+        if (this.context.customConfig.useDefaultRequestParameterValues) {
+            for (const queryParameter of endpoint.queryParameters) {
+                if (this.extractDefaultValue(queryParameter.valueType) != null) {
+                    defaultedWireValues.add(getWireValue(queryParameter.name));
+                }
+            }
+        }
+        // Add clientDefault entries for string-typed query params that don't already have a default
         for (const queryParameter of endpoint.queryParameters) {
             if (queryParameter.clientDefault != null && isPlainStringType(queryParameter.valueType)) {
                 const wireValue = getWireValue(queryParameter.name);
-                const alreadyHasDefault = defaults.some(
-                    (d) => d.key.toString() === go.TypeInstantiation.string(wireValue).toString()
-                );
-                if (!alreadyHasDefault) {
+                if (!defaultedWireValues.has(wireValue)) {
+                    const literalString =
+                        queryParameter.clientDefault.type === "string"
+                            ? queryParameter.clientDefault.string
+                            : String(queryParameter.clientDefault.boolean);
                     defaults.push({
                         key: go.TypeInstantiation.string(wireValue),
-                        value: this.context.getLiteralValue(queryParameter.clientDefault)
+                        value: go.TypeInstantiation.string(literalString)
                     });
                 }
             }
