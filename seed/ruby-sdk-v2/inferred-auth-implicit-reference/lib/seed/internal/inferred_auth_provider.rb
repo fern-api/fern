@@ -32,7 +32,7 @@ module Seed
       def auth_headers
         access_token = token
         {
-          "Authorization" => "Bearer #{access_token}",
+          "Authorization" => "Bearer #{access_token}"
         }
       end
 
@@ -50,8 +50,7 @@ module Seed
       #
       # @return [String]
       private def refresh
-        request_params = {
-        }
+        request_params = {}
 
         token_response = @auth_client.get_token_with_client_credentials(**request_params)
 

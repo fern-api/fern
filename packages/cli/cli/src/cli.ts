@@ -44,7 +44,6 @@ import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVers
 import { GlobalCliOptions, loadProjectAndRegisterWorkspacesWithContext } from "./cliCommons.js";
 import { addGeneratorCommands, addGetOrganizationCommand } from "./cliV2.js";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces.js";
-import { listGenerateCommands } from "./commands/automations/listGenerateCommands.js";
 import { listPreviewGroups } from "./commands/automations/listPreviewGroups.js";
 import { diff } from "./commands/diff/diff.js";
 import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace.js";
@@ -2230,114 +2229,10 @@ function addSdkCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 
 function addAutomationsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command("automations", false, (yargs) => {
-        addAutomationsListCommand(yargs, cliContext);
         addAutomationsGenerateCommand(yargs, cliContext);
         addAutomationsPreviewCommand(yargs, cliContext);
         return yargs.demandCommand();
     });
-}
-
-/**
- * `fern automations list generate`
- *
- * Discovers all generators in the project and outputs a JSON array of
- * `fern automations generate` commands — one per generator. Designed to be
- * consumed by a GitHub Actions matrix strategy to fan out generation jobs.
- *
- * Generators are excluded when any of the following is true:
- * - `automation.generate: false` in generators.yml
- * - Output is configured for `local-file-system` (cannot run remotely)
- * - `autorelease: false` at the generator or root level
- *
- * Arguments passed to `list` (--version, --auto-merge) are forwarded into
- * each generated command, so the caller doesn't need to re-specify them.
- *
- * Output format (stdout): JSON string array
- *   [
- *     "fern automations generate --api foo --group sdk --generator 0 --version AUTO --auto-merge",
- *     "fern automations generate --api foo --group sdk --generator 1 --version AUTO --auto-merge",
- *     "fern automations generate --api bar --group sdk --generator 0 --version AUTO --auto-merge"
- *   ]
- *
- * Example GitHub Actions usage:
- *   jobs:
- *     discover:
- *       runs-on: ubuntu-latest
- *       outputs:
- *         commands: ${{ steps.list.outputs.commands }}
- *       steps:
- *         - uses: actions/checkout@v4
- *         - uses: fern-api/setup-fern-cli@v1
- *         - id: list
- *           run: echo "commands=$(fern automations list generate --group sdk --version AUTO --auto-merge)" >> $GITHUB_OUTPUT
- *           env:
- *             FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
- *
- *     generate:
- *       needs: discover
- *       if: ${{ needs.discover.outputs.commands != '[]' }}
- *       strategy:
- *         fail-fast: false
- *         matrix:
- *           command: ${{ fromJson(needs.discover.outputs.commands) }}
- *       runs-on: ubuntu-latest
- *       steps:
- *         - uses: actions/checkout@v4
- *         - uses: fern-api/setup-fern-cli@v1
- *         - run: ${{ matrix.command }}
- *           env:
- *             FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
- *             FERN_RUN_ID: ${{ github.run_id }}-${{ strategy.job-index }}
- */
-function addAutomationsListCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
-    cli.command("list", false, (yargs) => {
-        addAutomationsListGenerateCommand(yargs, cliContext);
-        return yargs.demandCommand();
-    });
-}
-
-function addAutomationsListGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
-    cli.command(
-        "generate",
-        false, // hidden
-        (yargs) =>
-            yargs
-                .option("group", {
-                    type: "string",
-                    description: "Filter to a specific generator group (e.g. 'sdk'). Omit to list all groups."
-                })
-                .option("api", {
-                    type: "string",
-                    description:
-                        "Filter to a specific API in a multi-API repo (e.g. 'foo' for fern/apis/foo/). " +
-                        "Omit to list all APIs."
-                })
-                .option("version", {
-                    type: "string",
-                    description: "Version string to include in generated commands (e.g. 'AUTO' for AI-based versioning)"
-                })
-                .option("auto-merge", {
-                    boolean: true,
-                    default: false,
-                    description: "Include --auto-merge flag in generated commands"
-                }),
-        async (argv) => {
-            const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                commandLineApiWorkspace: argv.api,
-                defaultToAllApiWorkspaces: true
-            });
-
-            const commands = listGenerateCommands({
-                workspaces: project.apiWorkspaces,
-                groupFilter: argv.group,
-                version: argv.version,
-                autoMerge: argv["auto-merge"]
-            });
-
-            // Output JSON array of commands to stdout for GitHub Actions consumption
-            process.stdout.write(JSON.stringify(commands));
-        }
-    );
 }
 
 /**
@@ -2506,8 +2401,7 @@ function addAutomationsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: C
  * `fern automations generate`
  *
  * Runs SDK generation for a single generator in automation mode. This command
- * is designed to be called by the `fern-api/fern-generate` GitHub Action,
- * typically as one job in a matrix fanned out by `fern automations list generate`.
+ * is designed to be called by the `fern-api/fern-generate` GitHub Action.
  *
  * Automation mode enables the following behaviors:
  *   - **Separate PRs**: Each invocation creates its own PR (no reuse of existing fern-bot PRs).
@@ -2526,7 +2420,6 @@ function addAutomationsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: C
  *   `--generator` accepts either a 0-based index or a generator name.
  *   Index-based targeting is preferred because a group can contain multiple generators with the
  *   same name (e.g. two TypeScript SDK entries publishing to different repos).
- *   Use `fern automations list generate` to discover the correct indices.
  *
  * Environment variables:
  *   - FERN_TOKEN: Required. Authenticates with Fern services.

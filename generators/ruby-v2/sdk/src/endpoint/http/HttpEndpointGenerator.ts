@@ -102,10 +102,12 @@ export class HttpEndpointGenerator {
         });
 
         const isCustomPagination = endpoint.pagination?.type === "custom";
+        const isPaginated = endpoint.pagination != null;
         let requestStatements = this.generateRequestProcedure({
             endpoint,
             sendRequestCodeBlock,
-            storeResponseInVariable: isCustomPagination
+            storeResponseInVariable: isCustomPagination,
+            wrapWithHttpResponse: isPaginated && !isCustomPagination
         });
 
         const enhancedDocstring = this.generateEnhancedDocstring({ endpoint, request });
@@ -137,6 +139,10 @@ export class HttpEndpointGenerator {
                                 ruby.keywordArgument({
                                     name: "raw_client",
                                     value: ruby.codeblock("@client")
+                                }),
+                                ruby.keywordArgument({
+                                    name: "initial_http_response",
+                                    value: ruby.codeblock(HTTP_RESPONSE_VN)
                                 })
                             ]
                         })
@@ -273,11 +279,13 @@ export class HttpEndpointGenerator {
     private generateRequestProcedure({
         endpoint,
         sendRequestCodeBlock,
-        storeResponseInVariable
+        storeResponseInVariable,
+        wrapWithHttpResponse
     }: {
         endpoint: FernIr.HttpEndpoint;
         sendRequestCodeBlock?: ruby.CodeBlock;
         storeResponseInVariable?: boolean;
+        wrapWithHttpResponse?: boolean;
     }): ruby.AstNode[] {
         const statements: ruby.AstNode[] = [];
 
@@ -335,13 +343,33 @@ export class HttpEndpointGenerator {
                         condition: ruby.codeblock(`${CODE_VN}.between?(200, 299)`),
                         thenBody: [
                             ruby.codeblock((writer) => {
-                                this.loadResponseBodyFromJson({
-                                    writer,
-                                    typeReference: jsonResponseBody.responseBodyType,
-                                    storeInVariable: storeResponseInVariable
-                                });
+                                if (wrapWithHttpResponse) {
+                                    writer.writeLine(`parsed_response = nil`);
+                                    this.loadResponseBodyFromJson({
+                                        writer,
+                                        typeReference: jsonResponseBody.responseBodyType,
+                                        storeInVariable: true
+                                    });
+                                    writer.writeLine(`[parsed_response, ${HTTP_RESPONSE_VN}]`);
+                                } else {
+                                    this.loadResponseBodyFromJson({
+                                        writer,
+                                        typeReference: jsonResponseBody.responseBodyType,
+                                        storeInVariable: storeResponseInVariable
+                                    });
+                                }
                             })
                         ]
+                    },
+                    elseBody: errorBody
+                })
+            );
+        } else if (wrapWithHttpResponse) {
+            statements.push(
+                ruby.ifElse({
+                    if: {
+                        condition: ruby.codeblock(`${CODE_VN}.between?(200, 299)`),
+                        thenBody: [ruby.codeblock(`[nil, ${HTTP_RESPONSE_VN}]`)]
                     },
                     elseBody: errorBody
                 })

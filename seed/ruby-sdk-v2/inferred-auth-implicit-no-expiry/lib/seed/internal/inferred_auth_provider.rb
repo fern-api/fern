@@ -31,7 +31,7 @@ module Seed
       def auth_headers
         access_token = token
         {
-          "Authorization" => "Bearer #{access_token}",
+          "Authorization" => "Bearer #{access_token}"
         }
       end
 
@@ -45,7 +45,7 @@ module Seed
           client_secret: @options[:client_secret],
           audience: "https://api.example.com",
           grant_type: "client_credentials",
-          scope: @options[:scope],
+          scope: @options[:scope]
         }
 
         token_response = @auth_client.get_token_with_client_credentials(**request_params)

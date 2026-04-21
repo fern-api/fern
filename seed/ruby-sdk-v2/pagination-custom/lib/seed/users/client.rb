@@ -50,7 +50,8 @@ module Seed
         Seed::Internal::FooPager.new(
           parsed_response,
           item_field: :data,
-          raw_client: @client
+          raw_client: @client,
+          initial_http_response: response
         )
       end
     end

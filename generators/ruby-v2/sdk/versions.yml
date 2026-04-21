@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.5.0
+  changelogEntry:
+    - summary: |
+        Improve Ruby SDK generation performance by generating rubocop-compliant code directly.
+        Generator time reduced by ~49% on a large real-world OAS (122s → 62s) by fixing the
+        top rubocop offense categories so rubocop -A has very little to auto-correct.
+      type: feat
+  createdAt: "2026-04-21"
+  irVersion: 66
 - version: 1.4.4
   changelogEntry:
     - summary: |

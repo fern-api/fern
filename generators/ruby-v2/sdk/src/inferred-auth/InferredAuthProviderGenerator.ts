@@ -172,18 +172,26 @@ export class InferredAuthProviderGenerator extends FileGenerator<RubyFile, SdkCu
         method.addStatement(
             ruby.codeblock((writer) => {
                 // Build the request hash
-                writer.writeLine("request_params = {");
-                writer.indent();
-                for (const prop of requestProperties) {
-                    if (prop.literal != null) {
-                        // Emit the literal value directly
-                        writer.writeLine(`${prop.snakeName}: ${this.getLiteralAsRubyString(prop.literal)},`);
-                    } else {
-                        writer.writeLine(`${prop.snakeName}: @options[:${prop.snakeName}],`);
+                if (requestProperties.length === 0) {
+                    writer.writeLine("request_params = {}");
+                } else {
+                    writer.writeLine("request_params = {");
+                    writer.indent();
+                    for (let i = 0; i < requestProperties.length; i++) {
+                        const prop = requestProperties[i];
+                        if (prop == null) {
+                            continue;
+                        }
+                        const comma = i < requestProperties.length - 1 ? "," : "";
+                        if (prop.literal != null) {
+                            writer.writeLine(`${prop.snakeName}: ${this.getLiteralAsRubyString(prop.literal)}${comma}`);
+                        } else {
+                            writer.writeLine(`${prop.snakeName}: @options[:${prop.snakeName}]${comma}`);
+                        }
                     }
+                    writer.dedent();
+                    writer.writeLine("}");
                 }
-                writer.dedent();
-                writer.writeLine("}");
                 writer.newLine();
 
                 // Call the token endpoint
@@ -290,14 +298,19 @@ export class InferredAuthProviderGenerator extends FileGenerator<RubyFile, SdkCu
                 writer.writeLine("{");
                 writer.indent();
 
-                for (const header of authenticatedRequestHeaders) {
+                for (let i = 0; i < authenticatedRequestHeaders.length; i++) {
+                    const header = authenticatedRequestHeaders[i];
+                    if (header == null) {
+                        continue;
+                    }
                     const headerName = header.headerName;
                     const valuePrefix = header.valuePrefix;
+                    const comma = i < authenticatedRequestHeaders.length - 1 ? "," : "";
 
                     if (valuePrefix != null) {
-                        writer.writeLine(`"${headerName}" => "${valuePrefix}#{access_token}",`);
+                        writer.writeLine(`"${headerName}" => "${valuePrefix}#{access_token}"${comma}`);
                     } else {
-                        writer.writeLine(`"${headerName}" => access_token,`);
+                        writer.writeLine(`"${headerName}" => access_token${comma}`);
                     }
                 }
 
