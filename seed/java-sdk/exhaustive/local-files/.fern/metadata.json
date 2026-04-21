@@ -6,5 +6,9 @@
     "inline-path-parameters": true,
     "package-prefix": "com.fern.sdk"
   },
-  "originGitCommit": "DUMMY"
+  "originGitCommit": "DUMMY",
+  "originGitCommitIsDirty": null,
+  "invokedBy": "ci",
+  "requestedVersion": "0.0.1",
+  "ciProvider": "github"
 }

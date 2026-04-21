@@ -2129,7 +2129,19 @@ function inflateIr(
         dynamic: ir.dynamic != null ? inflateDynamicIr(ir.dynamic) : undefined,
         selfHosted: ir.selfHosted,
         audiences: ir.audiences,
-        generationMetadata: ir.generationMetadata,
+        // V65 only knows about cliVersion/generatorName/generatorVersion/generatorConfig/originGitCommit.
+        // Strip the V66-only fields (originGitCommitIsDirty, invokedBy, requestedVersion, ciProvider)
+        // to preserve the V65 contract for older generators.
+        generationMetadata:
+            ir.generationMetadata != null
+                ? {
+                      cliVersion: ir.generationMetadata.cliVersion,
+                      generatorName: ir.generationMetadata.generatorName,
+                      generatorVersion: ir.generationMetadata.generatorVersion,
+                      generatorConfig: ir.generationMetadata.generatorConfig,
+                      originGitCommit: ir.generationMetadata.originGitCommit
+                  }
+                : undefined,
         apiPlayground: ir.apiPlayground
     };
 }

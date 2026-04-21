@@ -121,7 +121,7 @@ runs:
             SNIPPET_PACKAGE="@fern-api/csharp-dynamic-snippets"
             SNIPPET_DIR="generators/csharp/dynamic-snippets"
             ;;
-          "ruby-sdk")
+          "ruby-sdk"|"ruby-sdk-v2")
             SNIPPET_PACKAGE="@fern-api/ruby-dynamic-snippets"
             SNIPPET_DIR="generators/ruby-v2/dynamic-snippets"
             ;;

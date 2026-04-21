@@ -1,4 +1,10 @@
-import { FernWorkspace, getOriginGitCommit } from "@fern-api/api-workspace-commons";
+import {
+    detectCiProvider,
+    detectInvocationSource,
+    FernWorkspace,
+    getOriginGitCommit,
+    getOriginGitCommitIsDirty
+} from "@fern-api/api-workspace-commons";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { generatorsYml, SNIPPET_JSON_FILENAME } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
@@ -175,7 +181,11 @@ export class GenerationRunner {
                 generatorName: generatorInvocation.name,
                 generatorVersion: generatorInvocation.version,
                 generatorConfig: generatorInvocation.config,
-                originGitCommit: getOriginGitCommit()
+                originGitCommit: getOriginGitCommit(),
+                originGitCommitIsDirty: getOriginGitCommitIsDirty(),
+                invokedBy: detectInvocationSource(),
+                requestedVersion: outputVersionOverride,
+                ciProvider: detectCiProvider()
             }
         });
 

@@ -1,0 +1,46 @@
+{
+  "type": "object",
+  "properties": {
+    "metadata": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/b.common.types.Metadata"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "tag": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "tag"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "b.common.types.Metadata": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "count": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "key"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

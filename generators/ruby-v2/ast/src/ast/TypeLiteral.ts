@@ -114,11 +114,7 @@ export class TypeLiteral extends AstNode {
         switch (this.internalType.type) {
             case "str": {
                 const value = this.internalType.value.replaceAll("\r\n", "\n");
-                if (value.includes('"') && !value.includes("'") && !value.includes("#")) {
-                    writer.write(`'${value}'`);
-                } else {
-                    writer.write(`"${value.replaceAll("\\", "\\\\").replaceAll('"', '\\"')}"`);
-                }
+                writer.write(`"${value.replaceAll("\\", "\\\\").replaceAll('"', '\\"')}"`);
                 break;
             }
             case "int": {
