@@ -12,6 +12,7 @@ type ServiceId = FernIr.ServiceId;
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { WrappedRequestGenerator } from "../wrapped-request/WrappedRequestGenerator.js";
 import { EndpointSignatureInfo } from "./EndpointSignatureInfo.js";
+import { resolveDiagnosticPrefix } from "./utils/getAvailabilityDiagnosticId.js";
 import { getEndpointRequest } from "./utils/getEndpointRequest.js";
 import { getEndpointReturnType } from "./utils/getEndpointReturnType.js";
 
@@ -27,6 +28,18 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
         super(context.generation);
         this.context = context;
         this.exampleGenerator = new ExampleGenerator(context);
+    }
+
+    /**
+     * Resolved diagnostic prefix used by `[Experimental("…")]` availability annotations.
+     * Prefers the customer-configured override and otherwise derives from the root namespace.
+     * See {@link resolveDiagnosticPrefix} for the resolution rules.
+     */
+    protected get availabilityDiagnosticPrefix(): string {
+        return resolveDiagnosticPrefix({
+            override: this.settings.availabilityDiagnosticPrefix,
+            rootNamespace: this.namespaces.root
+        });
     }
 
     public getEndpointSignatureInfo({

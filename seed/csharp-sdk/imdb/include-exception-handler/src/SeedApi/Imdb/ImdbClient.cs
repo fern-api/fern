@@ -1,3 +1,4 @@
+using global::System.Diagnostics.CodeAnalysis;
 using global::System.Text.Json;
 using SeedApi.Core;
 
@@ -183,13 +184,12 @@ public partial class ImdbClient : IImdbClient
     }
 
     /// <summary>
-    /// @beta This endpoint is in pre-release and may change.
-    ///
     /// Add a movie to the database using the movies/* /... path.
     /// </summary>
     /// <example><code>
     /// await client.Imdb.CreateMovieAsync(new CreateMovieRequest { Title = "title", Rating = 1.1 });
     /// </code></example>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("SEEDAP0002")]
     public WithRawResponseTask<string> CreateMovieAsync(
         CreateMovieRequest request,
         RequestOptions? options = null,
@@ -204,7 +204,7 @@ public partial class ImdbClient : IImdbClient
     /// <example><code>
     /// await client.Imdb.GetMovieAsync("movieId");
     /// </code></example>
-    [Obsolete]
+    [global::System.Obsolete]
     public WithRawResponseTask<Movie> GetMovieAsync(
         string movieId,
         RequestOptions? options = null,

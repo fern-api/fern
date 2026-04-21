@@ -1,0 +1,11 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-csharp-sdk",
+  "generatorVersion": "local",
+  "generatorConfig": {
+    "generateAvailabilityAnnotations": true,
+    "availabilityDiagnosticPrefix": "ACME"
+  },
+  "originGitCommit": "DUMMY",
+  "sdkVersion": "0.0.1"
+}

@@ -119,15 +119,36 @@ export const CsharpConfigSchema = z.object({
 
     // When true, generated code reflects availability metadata from the IR:
     // today this covers HTTP endpoints — deprecated endpoints are marked with
-    // [System.ObsoleteAttribute], and in-development or pre-release endpoints get a
-    // `@beta` note prepended to their XML doc summary. Future work may extend the
-    // same flag to services, types, properties, enum values, webhooks, WebSocket
-    // channels/messages, and errors.
+    // [System.ObsoleteAttribute], and in-development or pre-release endpoints are
+    // marked with [System.Diagnostics.CodeAnalysis.ExperimentalAttribute]. Future
+    // work may extend the same flag to services, types, properties, enum values,
+    // webhooks, WebSocket channels/messages, and errors.
     //
     // Default false — annotations can be a breaking change for customers compiling
     // with warnings-as-errors (e.g., `treatWarningsAsErrors`).
     // TODO(next-major): flip default to true.
-    generateAvailabilityAnnotations: z.boolean().optional()
+    generateAvailabilityAnnotations: z.boolean().optional(),
+
+    // Override the diagnostic ID prefix used when `generateAvailabilityAnnotations`
+    // is enabled. Must start with an uppercase letter A–Z and be 2–8 characters
+    // using only uppercase letters and digits (e.g. "ACME", "SQUARE1").
+    //
+    // When unset, the prefix is derived from the first segment of the generated
+    // C# root namespace (uppercased, alphanumeric-only, truncated to 6 chars).
+    // Falls back to "FERN" when the derived value fails the pattern.
+    //
+    // Pin this if you rename your root namespace — the derived value would shift
+    // and break existing <NoWarn> entries referencing the old diagnostic ID.
+    //
+    // In download-files / local mode, LangVersion is patched from 12 down to 11.
+    // PolySharp still polyfills the [Experimental] attribute so compilation
+    // succeeds, but the C# 12 compiler is what surfaces the EXPERIMENTAL call-site
+    // diagnostic — consumers on LangVersion 11 will not see warnings. Docker mode
+    // (the primary path) stays on LangVersion 12 and is unaffected.
+    availabilityDiagnosticPrefix: z
+        .string()
+        .regex(/^[A-Z][A-Z0-9]{1,7}$/)
+        .optional()
 });
 
 export type CsharpConfigSchema = z.infer<typeof CsharpConfigSchema>;

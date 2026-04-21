@@ -251,6 +251,14 @@ export class Generation {
          * TODO(next-major): flip default to true.
          */
         generateAvailabilityAnnotations: () => this.customConfig.generateAvailabilityAnnotations ?? false,
+        /**
+         * Optional override for the diagnostic ID prefix used by
+         * {@link generateAvailabilityAnnotations}. When unset, the prefix is
+         * derived from the first segment of the root namespace. See
+         * `resolveDiagnosticPrefix` in the SDK generator for the resolution
+         * logic.
+         */
+        availabilityDiagnosticPrefix: (): string | undefined => this.customConfig.availabilityDiagnosticPrefix,
         /** Override the default max retries for the SDK client. Default: 2. */
         maxRetries: () => this.customConfig.maxRetries,
         /**

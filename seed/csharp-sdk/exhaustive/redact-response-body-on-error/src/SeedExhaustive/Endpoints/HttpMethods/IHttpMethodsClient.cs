@@ -1,3 +1,4 @@
+using global::System.Diagnostics.CodeAnalysis;
 using SeedExhaustive;
 using SeedExhaustive.Types;
 
@@ -11,14 +12,14 @@ public partial interface IHttpMethodsClient
         CancellationToken cancellationToken = default
     );
 
-    [Obsolete]
+    [global::System.Obsolete]
     WithRawResponseTask<ObjectWithOptionalField> TestPostAsync(
         ObjectWithRequiredField request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    [Obsolete("Use testPatch instead.")]
+    [global::System.Obsolete("Use testPatch instead.")]
     WithRawResponseTask<ObjectWithOptionalField> TestPutAsync(
         string id,
         ObjectWithRequiredField request,
@@ -26,9 +27,7 @@ public partial interface IHttpMethodsClient
         CancellationToken cancellationToken = default
     );
 
-    /// <summary>
-    /// @beta This endpoint is in pre-release and may change.
-    /// </summary>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("SEEDEX0002")]
     WithRawResponseTask<ObjectWithOptionalField> TestPatchAsync(
         string id,
         ObjectWithOptionalField request,
@@ -36,9 +35,7 @@ public partial interface IHttpMethodsClient
         CancellationToken cancellationToken = default
     );
 
-    /// <summary>
-    /// @beta This endpoint is in development and may change.
-    /// </summary>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("SEEDEX0001")]
     WithRawResponseTask<bool> TestDeleteAsync(
         string id,
         RequestOptions? options = null,

@@ -239,6 +239,9 @@ fixtures:
     - customConfig:
         use-undiscriminated-unions: true
       outputFolder: use-undiscriminated-unions
+    - customConfig:
+        availabilityDiagnosticPrefix: ACME
+      outputFolder: availability-diagnostic-prefix
   optional:
     - customConfig: null
       outputFolder: no-custom-config

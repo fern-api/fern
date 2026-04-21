@@ -4,15 +4,36 @@
     (default `false`). When enabled, the generator surfaces availability
     metadata from the IR on generated code. Today this covers HTTP endpoints:
     deprecated endpoints are emitted with `[System.ObsoleteAttribute("message")]`,
-    and in-development / pre-release endpoints get an `@beta` note prepended to
-    their XML doc summary. The same flag is intended to govern availability
-    annotations on future surfaces (services, types, properties, enum values,
-    webhooks, WebSocket channels/messages, errors) without introducing
-    additional flags.
+    and in-development / pre-release endpoints get
+    `[System.Diagnostics.CodeAnalysis.ExperimentalAttribute("{PREFIX}{NNNN}")]`,
+    which Roslyn surfaces as a compile-time diagnostic at every call site until
+    consumers suppress the id via `<NoWarn>` or `#pragma warning disable`.
+    The same flag is intended to govern availability annotations on future
+    surfaces (services, types, properties, enum values, webhooks, WebSocket
+    channels/messages, errors) without introducing additional flags.
 
-    This is opt-in because annotations such as `[Obsolete]` are a breaking
-    change for customers compiling with warnings-as-errors
-    (`TreatWarningsAsErrors`). When the flag is `false`, generator output is
-    unchanged. Enable with `generateAvailabilityAnnotations: true` under this
-    generator's `config:` block in `generators.yml`. The default will flip to
-    `true` in the next major version of this generator.
+    Two stable, tier-based diagnostic ids are emitted: `{PREFIX}0001` for
+    `IN_DEVELOPMENT` and `{PREFIX}0002` for `PRE_RELEASE`. `PREFIX` defaults
+    to a value derived from the generated C# root namespace (uppercased,
+    alphanumeric-only, truncated to 6 characters; `FERN` when derivation
+    fails). A new `availabilityDiagnosticPrefix` config option lets you pin
+    the prefix explicitly (`^[A-Z][A-Z0-9]{1,7}$`) — recommended before
+    renaming a root namespace so existing `<NoWarn>` entries keep matching.
+
+    `[ExperimentalAttribute]` ships in .NET 8+ and is polyfilled by PolySharp
+    on earlier TFMs (`net462`, `netstandard2.0`); the generated csproj
+    already opts in via `PolySharpIncludeRuntimeSupportedAttributes=true`, so
+    no additional polyfill file is emitted. Caveat: in download-files / local
+    mode, `LangVersion` is patched down to 11; PolySharp still emits the
+    attribute type so compilation succeeds, but the C# 12 compiler is what
+    raises the call-site `EXPERIMENTAL` diagnostic — consumers on LangVersion
+    11 will not see the warning. Docker mode (the primary path) stays on
+    LangVersion 12 and behaves as expected.
+
+    This is opt-in because annotations such as `[Obsolete]` and
+    `[Experimental]` are a breaking change for customers compiling with
+    warnings-as-errors (`TreatWarningsAsErrors`). When the flag is `false`,
+    generator output is unchanged. Enable with
+    `generateAvailabilityAnnotations: true` under this generator's `config:`
+    block in `generators.yml`. The default will flip to `true` in the next
+    major version of this generator.

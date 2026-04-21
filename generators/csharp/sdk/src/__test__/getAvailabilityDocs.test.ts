@@ -15,6 +15,8 @@ function makeEndpoint(partial: Pick<HttpEndpoint, "availability" | "docs">): Htt
     return partial as unknown as HttpEndpoint;
 }
 
+const DEFAULT_PREFIX = "FERN";
+
 describe("getAvailabilityDocs", () => {
     it("returns undefined when availability is undefined", () => {
         expect(
@@ -25,109 +27,35 @@ describe("getAvailabilityDocs", () => {
         ).toBeUndefined();
     });
 
-    it("returns undefined for Deprecated (native [Obsolete] attribute is used instead)", () => {
-        expect(
-            getAvailabilityDocs({
-                endpoint: makeEndpoint({
-                    availability: {
-                        status: FernIr.AvailabilityStatus.Deprecated,
-                        message: undefined
-                    },
-                    docs: undefined
-                }),
-                enabled: true
-            })
-        ).toBeUndefined();
-        expect(
-            getAvailabilityDocs({
-                endpoint: makeEndpoint({
-                    availability: {
-                        status: FernIr.AvailabilityStatus.Deprecated,
-                        message: "Use v2 instead"
-                    },
-                    docs: undefined
-                }),
-                enabled: true
-            })
-        ).toBeUndefined();
+    it("returns undefined for every availability tier (attributes carry the signal)", () => {
+        for (const status of [
+            FernIr.AvailabilityStatus.Deprecated,
+            FernIr.AvailabilityStatus.InDevelopment,
+            FernIr.AvailabilityStatus.PreRelease,
+            FernIr.AvailabilityStatus.GeneralAvailability
+        ]) {
+            expect(
+                getAvailabilityDocs({
+                    endpoint: makeEndpoint({
+                        availability: { status, message: undefined },
+                        docs: undefined
+                    }),
+                    enabled: true
+                })
+            ).toBeUndefined();
+            expect(
+                getAvailabilityDocs({
+                    endpoint: makeEndpoint({
+                        availability: { status, message: "some message" },
+                        docs: undefined
+                    }),
+                    enabled: true
+                })
+            ).toBeUndefined();
+        }
     });
 
-    it("returns @beta warning for InDevelopment status without message", () => {
-        expect(
-            getAvailabilityDocs({
-                endpoint: makeEndpoint({
-                    availability: {
-                        status: FernIr.AvailabilityStatus.InDevelopment,
-                        message: undefined
-                    },
-                    docs: undefined
-                }),
-                enabled: true
-            })
-        ).toBe("@beta This endpoint is in development and may change.");
-    });
-
-    it("returns @beta warning with message for InDevelopment status with message", () => {
-        expect(
-            getAvailabilityDocs({
-                endpoint: makeEndpoint({
-                    availability: {
-                        status: FernIr.AvailabilityStatus.InDevelopment,
-                        message: "Expected Q3 release"
-                    },
-                    docs: undefined
-                }),
-                enabled: true
-            })
-        ).toBe("@beta This endpoint is in development and may change. Expected Q3 release");
-    });
-
-    it("returns @beta warning for PreRelease status without message", () => {
-        expect(
-            getAvailabilityDocs({
-                endpoint: makeEndpoint({
-                    availability: {
-                        status: FernIr.AvailabilityStatus.PreRelease,
-                        message: undefined
-                    },
-                    docs: undefined
-                }),
-                enabled: true
-            })
-        ).toBe("@beta This endpoint is in pre-release and may change.");
-    });
-
-    it("returns @beta warning with message for PreRelease status with message", () => {
-        expect(
-            getAvailabilityDocs({
-                endpoint: makeEndpoint({
-                    availability: {
-                        status: FernIr.AvailabilityStatus.PreRelease,
-                        message: "Beta 2"
-                    },
-                    docs: undefined
-                }),
-                enabled: true
-            })
-        ).toBe("@beta This endpoint is in pre-release and may change. Beta 2");
-    });
-
-    it("returns undefined for GeneralAvailability status", () => {
-        expect(
-            getAvailabilityDocs({
-                endpoint: makeEndpoint({
-                    availability: {
-                        status: FernIr.AvailabilityStatus.GeneralAvailability,
-                        message: undefined
-                    },
-                    docs: undefined
-                }),
-                enabled: true
-            })
-        ).toBeUndefined();
-    });
-
-    it("returns undefined when the flag is disabled, regardless of availability", () => {
+    it("returns undefined when the flag is disabled", () => {
         for (const status of [
             FernIr.AvailabilityStatus.Deprecated,
             FernIr.AvailabilityStatus.InDevelopment,
@@ -160,22 +88,26 @@ describe("getEndpointSummary", () => {
         ).toBe("Original docs");
     });
 
-    it("returns undefined when there are no docs and no availability note", () => {
-        expect(
-            getEndpointSummary({
-                endpoint: makeEndpoint({
-                    availability: {
-                        status: FernIr.AvailabilityStatus.GeneralAvailability,
-                        message: undefined
-                    },
-                    docs: undefined
-                }),
-                enabled: true
-            })
-        ).toBeUndefined();
+    it("returns the endpoint's docs unchanged for every availability tier", () => {
+        for (const status of [
+            FernIr.AvailabilityStatus.Deprecated,
+            FernIr.AvailabilityStatus.InDevelopment,
+            FernIr.AvailabilityStatus.PreRelease,
+            FernIr.AvailabilityStatus.GeneralAvailability
+        ]) {
+            expect(
+                getEndpointSummary({
+                    endpoint: makeEndpoint({
+                        availability: { status, message: undefined },
+                        docs: "Fetches a plant by id."
+                    }),
+                    enabled: true
+                })
+            ).toBe("Fetches a plant by id.");
+        }
     });
 
-    it("returns just the availability note when docs are missing", () => {
+    it("returns undefined when there are no docs and no availability note", () => {
         expect(
             getEndpointSummary({
                 endpoint: makeEndpoint({
@@ -187,37 +119,7 @@ describe("getEndpointSummary", () => {
                 }),
                 enabled: true
             })
-        ).toBe("@beta This endpoint is in development and may change.");
-    });
-
-    it("prefixes the endpoint's docs with the availability note when both are present", () => {
-        expect(
-            getEndpointSummary({
-                endpoint: makeEndpoint({
-                    availability: {
-                        status: FernIr.AvailabilityStatus.PreRelease,
-                        message: undefined
-                    },
-                    docs: "Fetches a plant by id."
-                }),
-                enabled: true
-            })
-        ).toBe("@beta This endpoint is in pre-release and may change.\n\nFetches a plant by id.");
-    });
-
-    it("returns docs unchanged for Deprecated (annotation handles the marker)", () => {
-        expect(
-            getEndpointSummary({
-                endpoint: makeEndpoint({
-                    availability: {
-                        status: FernIr.AvailabilityStatus.Deprecated,
-                        message: "Use v2 instead"
-                    },
-                    docs: "Fetches a plant by id."
-                }),
-                enabled: true
-            })
-        ).toBe("Fetches a plant by id.");
+        ).toBeUndefined();
     });
 
     it("returns docs unchanged when the flag is disabled, regardless of availability", () => {
@@ -254,11 +156,11 @@ describe("getAvailabilityAnnotations", () => {
     function makeCsharpStub() {
         const calls: {
             annotation: Array<{ reference: unknown; argument: unknown }>;
-            classReference: Array<{ name: string; namespace: string }>;
+            classReference: Array<{ name: string; namespace: string; fullyQualified?: boolean }>;
         } = { annotation: [], classReference: [] };
 
         const stub = {
-            classReference(args: { name: string; namespace: string }) {
+            classReference(args: { name: string; namespace: string; fullyQualified?: boolean }) {
                 calls.classReference.push(args);
                 return { __kind: "classReference", ...args } as unknown;
             },
@@ -276,13 +178,14 @@ describe("getAvailabilityAnnotations", () => {
         const result = getAvailabilityAnnotations({
             csharp: stub as never,
             endpoint: makeEndpoint({ availability: undefined, docs: undefined }),
-            enabled: true
+            enabled: true,
+            diagnosticPrefix: DEFAULT_PREFIX
         });
         expect(result).toEqual([]);
         expect(calls.annotation).toHaveLength(0);
     });
 
-    it("returns [Obsolete] with no argument for Deprecated without a message", () => {
+    it("returns [System.ObsoleteAttribute] with no argument for Deprecated without a message", () => {
         const { stub, calls } = makeCsharpStub();
         const result = getAvailabilityAnnotations({
             csharp: stub as never,
@@ -293,14 +196,17 @@ describe("getAvailabilityAnnotations", () => {
                 },
                 docs: undefined
             }),
-            enabled: true
+            enabled: true,
+            diagnosticPrefix: DEFAULT_PREFIX
         });
         expect(result).toHaveLength(1);
-        expect(calls.classReference).toEqual([{ name: "ObsoleteAttribute", namespace: "System" }]);
+        expect(calls.classReference).toEqual([
+            { name: "ObsoleteAttribute", namespace: "System", fullyQualified: true }
+        ]);
         expect(calls.annotation[0]?.argument).toBeUndefined();
     });
 
-    it('returns [Obsolete("message")] for Deprecated with a message', () => {
+    it('returns [System.ObsoleteAttribute("message")] for Deprecated with a message', () => {
         const { stub, calls } = makeCsharpStub();
         const result = getAvailabilityAnnotations({
             csharp: stub as never,
@@ -311,7 +217,8 @@ describe("getAvailabilityAnnotations", () => {
                 },
                 docs: undefined
             }),
-            enabled: true
+            enabled: true,
+            diagnosticPrefix: DEFAULT_PREFIX
         });
         expect(result).toHaveLength(1);
         expect(calls.annotation[0]?.argument).toBe('"Use v2 instead"');
@@ -328,46 +235,105 @@ describe("getAvailabilityAnnotations", () => {
                 },
                 docs: undefined
             }),
-            enabled: true
+            enabled: true,
+            diagnosticPrefix: DEFAULT_PREFIX
         });
         expect(calls.annotation[0]?.argument).toBe('"use \\"v2\\" with path C:\\\\api"');
     });
 
-    it("returns no annotation for non-Deprecated statuses", () => {
-        const { stub } = makeCsharpStub();
-        for (const status of [
-            FernIr.AvailabilityStatus.InDevelopment,
-            FernIr.AvailabilityStatus.PreRelease,
-            FernIr.AvailabilityStatus.GeneralAvailability
-        ]) {
-            expect(
-                getAvailabilityAnnotations({
-                    csharp: stub as never,
-                    endpoint: makeEndpoint({
-                        availability: { status, message: undefined },
-                        docs: undefined
-                    }),
-                    enabled: true
-                })
-            ).toEqual([]);
-        }
+    it('returns [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("…0001")] for InDevelopment', () => {
+        const { stub, calls } = makeCsharpStub();
+        const result = getAvailabilityAnnotations({
+            csharp: stub as never,
+            endpoint: makeEndpoint({
+                availability: {
+                    status: FernIr.AvailabilityStatus.InDevelopment,
+                    message: undefined
+                },
+                docs: undefined
+            }),
+            enabled: true,
+            diagnosticPrefix: "ACME"
+        });
+        expect(result).toHaveLength(1);
+        expect(calls.classReference).toEqual([
+            { name: "ExperimentalAttribute", namespace: "System.Diagnostics.CodeAnalysis", fullyQualified: true }
+        ]);
+        expect(calls.annotation[0]?.argument).toBe('"ACME0001"');
     });
 
-    it("returns [] when the flag is disabled, even for Deprecated", () => {
+    it('returns [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("…0002")] for PreRelease', () => {
+        const { stub, calls } = makeCsharpStub();
+        const result = getAvailabilityAnnotations({
+            csharp: stub as never,
+            endpoint: makeEndpoint({
+                availability: {
+                    status: FernIr.AvailabilityStatus.PreRelease,
+                    message: "Beta 2"
+                },
+                docs: undefined
+            }),
+            enabled: true,
+            diagnosticPrefix: "ACME"
+        });
+        expect(result).toHaveLength(1);
+        expect(calls.classReference).toEqual([
+            { name: "ExperimentalAttribute", namespace: "System.Diagnostics.CodeAnalysis", fullyQualified: true }
+        ]);
+        expect(calls.annotation[0]?.argument).toBe('"ACME0002"');
+    });
+
+    it("uses the provided diagnostic prefix when forming the Experimental id", () => {
+        const { stub, calls } = makeCsharpStub();
+        getAvailabilityAnnotations({
+            csharp: stub as never,
+            endpoint: makeEndpoint({
+                availability: {
+                    status: FernIr.AvailabilityStatus.InDevelopment,
+                    message: undefined
+                },
+                docs: undefined
+            }),
+            enabled: true,
+            diagnosticPrefix: "FERN"
+        });
+        expect(calls.annotation[0]?.argument).toBe('"FERN0001"');
+    });
+
+    it("returns [] for GeneralAvailability", () => {
         const { stub, calls } = makeCsharpStub();
         expect(
             getAvailabilityAnnotations({
                 csharp: stub as never,
                 endpoint: makeEndpoint({
                     availability: {
-                        status: FernIr.AvailabilityStatus.Deprecated,
-                        message: "Use v2 instead"
+                        status: FernIr.AvailabilityStatus.GeneralAvailability,
+                        message: undefined
                     },
                     docs: undefined
                 }),
-                enabled: false
+                enabled: true,
+                diagnosticPrefix: DEFAULT_PREFIX
             })
         ).toEqual([]);
+        expect(calls.annotation).toHaveLength(0);
+    });
+
+    it("returns [] when the flag is disabled, even for Deprecated or InDevelopment", () => {
+        const { stub, calls } = makeCsharpStub();
+        for (const status of [FernIr.AvailabilityStatus.Deprecated, FernIr.AvailabilityStatus.InDevelopment]) {
+            expect(
+                getAvailabilityAnnotations({
+                    csharp: stub as never,
+                    endpoint: makeEndpoint({
+                        availability: { status, message: "Use v2 instead" },
+                        docs: undefined
+                    }),
+                    enabled: false,
+                    diagnosticPrefix: DEFAULT_PREFIX
+                })
+            ).toEqual([]);
+        }
         expect(calls.annotation).toHaveLength(0);
         expect(calls.classReference).toHaveLength(0);
     });

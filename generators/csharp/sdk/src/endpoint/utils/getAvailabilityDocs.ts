@@ -2,17 +2,17 @@ import { assertNever } from "@fern-api/core-utils";
 import { ast, type CSharp } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 
+import { getDiagnosticId } from "./getAvailabilityDiagnosticId.js";
+
 type HttpEndpoint = FernIr.HttpEndpoint;
 
 /**
- * Returns a doc comment line that describes the endpoint's availability, or `undefined`
- * when no extra documentation should be emitted.
+ * Returns a doc line to prepend to the XML `<summary>` for an endpoint's availability,
+ * or `undefined` when no extra summary text should be emitted.
  *
- * C# uses the native `[Obsolete]` attribute for deprecated endpoints (see
- * {@link getAvailabilityAnnotations}), so the deprecated case intentionally returns
- * `undefined` from this helper. For in-development and pre-release endpoints C# has no
- * equivalent native attribute, so we fall back to free-form doc text that mirrors the
- * wording used by the TypeScript generator.
+ * All currently-recognized availability tiers are surfaced via attributes rather than
+ * doc text ({@link getAvailabilityAnnotations}), so this helper returns `undefined` for
+ * every tier and is kept for future availability-related summary annotations.
  *
  * Gated behind the `generateAvailabilityAnnotations` custom config flag — when disabled,
  * always returns `undefined` so the generator's output is unchanged.
@@ -33,14 +33,8 @@ export function getAvailabilityDocs({
     }
 
     switch (availability.status) {
-        case FernIr.AvailabilityStatus.InDevelopment: {
-            const warning = "@beta This endpoint is in development and may change.";
-            return availability.message != null ? `${warning} ${availability.message}` : warning;
-        }
-        case FernIr.AvailabilityStatus.PreRelease: {
-            const warning = "@beta This endpoint is in pre-release and may change.";
-            return availability.message != null ? `${warning} ${availability.message}` : warning;
-        }
+        case FernIr.AvailabilityStatus.InDevelopment:
+        case FernIr.AvailabilityStatus.PreRelease:
         case FernIr.AvailabilityStatus.Deprecated:
         case FernIr.AvailabilityStatus.GeneralAvailability:
             return undefined;
@@ -75,8 +69,13 @@ export function getEndpointSummary({
 
 /**
  * Returns annotations that should be applied to the generated method for this endpoint
- * based on its availability. Currently emits `[System.ObsoleteAttribute]` for deprecated
- * endpoints (with the availability message as its argument when present).
+ * based on its availability:
+ * - `Deprecated` → `[System.ObsoleteAttribute(message)]`
+ * - `InDevelopment` / `PreRelease` →
+ *   `[System.Diagnostics.CodeAnalysis.ExperimentalAttribute("{prefix}{NNNN}")]`
+ *
+ * Type names are emitted fully-qualified so the output is robust against customers that
+ * disable implicit usings.
  *
  * Gated behind the `generateAvailabilityAnnotations` custom config flag — when disabled,
  * always returns `[]` so the generator's output is unchanged.
@@ -84,25 +83,50 @@ export function getEndpointSummary({
 export function getAvailabilityAnnotations({
     csharp,
     endpoint,
-    enabled
+    enabled,
+    diagnosticPrefix
 }: {
     csharp: CSharp;
     endpoint: HttpEndpoint;
     enabled: boolean;
+    diagnosticPrefix: string;
 }): ast.Annotation[] {
     if (!enabled) {
         return [];
     }
-    if (endpoint.availability?.status !== FernIr.AvailabilityStatus.Deprecated) {
+    const availability = endpoint.availability;
+    if (availability == null) {
         return [];
     }
-    const reference = csharp.classReference({
-        name: "ObsoleteAttribute",
-        namespace: "System"
-    });
-    const message = endpoint.availability.message;
-    const argument = message != null ? `"${escapeCsharpStringLiteral(message)}"` : undefined;
-    return [csharp.annotation({ reference, argument })];
+    switch (availability.status) {
+        case FernIr.AvailabilityStatus.Deprecated: {
+            const reference = csharp.classReference({
+                name: "ObsoleteAttribute",
+                namespace: "System",
+                fullyQualified: true
+            });
+            const argument =
+                availability.message != null ? `"${escapeCsharpStringLiteral(availability.message)}"` : undefined;
+            return [csharp.annotation({ reference, argument })];
+        }
+        case FernIr.AvailabilityStatus.InDevelopment:
+        case FernIr.AvailabilityStatus.PreRelease: {
+            const diagnosticId = getDiagnosticId({ status: availability.status, prefix: diagnosticPrefix });
+            if (diagnosticId == null) {
+                return [];
+            }
+            const reference = csharp.classReference({
+                name: "ExperimentalAttribute",
+                namespace: "System.Diagnostics.CodeAnalysis",
+                fullyQualified: true
+            });
+            return [csharp.annotation({ reference, argument: `"${diagnosticId}"` })];
+        }
+        case FernIr.AvailabilityStatus.GeneralAvailability:
+            return [];
+        default:
+            assertNever(availability.status);
+    }
 }
 
 function escapeCsharpStringLiteral(value: string): string {

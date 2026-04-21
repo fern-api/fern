@@ -149,7 +149,8 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
             annotations: getAvailabilityAnnotations({
                 csharp: this.csharp,
                 endpoint,
-                enabled: availabilityEnabled
+                enabled: availabilityEnabled,
+                diagnosticPrefix: this.availabilityDiagnosticPrefix
             }),
             return_,
             noBody: true
@@ -193,7 +194,8 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
             annotations: getAvailabilityAnnotations({
                 csharp: this.csharp,
                 endpoint,
-                enabled: availabilityEnabled
+                enabled: availabilityEnabled,
+                diagnosticPrefix: this.availabilityDiagnosticPrefix
             }),
             return_,
             noBody: true

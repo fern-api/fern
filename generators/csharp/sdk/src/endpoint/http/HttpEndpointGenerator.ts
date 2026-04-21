@@ -179,7 +179,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             annotations: getAvailabilityAnnotations({
                 csharp: this.csharp,
                 endpoint,
-                enabled: availabilityEnabled
+                enabled: availabilityEnabled,
+                diagnosticPrefix: this.availabilityDiagnosticPrefix
             }),
             return_,
             body: isWithRawResponseTask ? body : this.wrapWithExceptionHandler({ body, returnType: return_ }),
@@ -1192,7 +1193,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             annotations: getAvailabilityAnnotations({
                 csharp: this.csharp,
                 endpoint,
-                enabled: availabilityEnabled
+                enabled: availabilityEnabled,
+                diagnosticPrefix: this.availabilityDiagnosticPrefix
             }),
             return_,
             body: this.wrapWithExceptionHandler({ body, returnType: return_ }),
