@@ -1196,11 +1196,12 @@ export class SdkGenerator {
             this.testGenerator.createWireTestDirectory();
             this.withSourceFile({
                 filepath: this.testGenerator.getMockAuthFilepath(),
-                run: ({ sourceFile, importsManager }) => {
+                run: ({ sourceFile, importsManager }): string | void => {
                     const context = this.generateFileContext({ sourceFile, importsManager });
                     const file = this.testGenerator.buildMockAuthFile({ context });
                     if (file) {
-                        sourceFile.replaceWithText(file.toString({ dprintOptions: { indentWidth: 4 } }));
+                        // Return text directly — bypasses ts-morph replaceWithText re-parse.
+                        return file.toString({ dprintOptions: { indentWidth: 4 } });
                     }
                 },
                 packagePath: this.getRelativeTestPath()
@@ -1213,7 +1214,7 @@ export class SdkGenerator {
 
             this.withSourceFile({
                 filepath: this.testGenerator.getTestFile(service),
-                run: ({ sourceFile, importsManager }) => {
+                run: ({ sourceFile, importsManager }): string | void => {
                     const context = this.generateFileContext({ sourceFile, importsManager });
                     const file = this.testGenerator.buildFile(
                         this.sdkClientClassDeclarationReferencer.getExportedName(packageId),
@@ -1223,7 +1224,8 @@ export class SdkGenerator {
                         context
                     );
                     if (file) {
-                        sourceFile.replaceWithText(file.toString({ dprintOptions: { indentWidth: 4 } }));
+                        // Return text directly — bypasses ts-morph replaceWithText re-parse.
+                        return file.toString({ dprintOptions: { indentWidth: 4 } });
                     }
                 },
                 packagePath: this.getRelativeTestPath()
@@ -1828,7 +1830,7 @@ export class SdkGenerator {
         dynamicExportTypeModifier,
         packagePath = this.relativePackagePath
     }: {
-        run: (args: { sourceFile: SourceFile; importsManager: ImportsManager }) => void;
+        run: (args: { sourceFile: SourceFile; importsManager: ImportsManager }) => string | void;
         filepath: ExportedFilePath;
         addExportTypeModifier?: boolean;
         dynamicExportTypeModifier?: boolean;
@@ -1843,9 +1845,12 @@ export class SdkGenerator {
             packagePath: this.relativePackagePath
         });
 
-        run({ sourceFile, importsManager });
+        // If run returns a string, use it directly (bypasses ts-morph replaceWithText re-parse).
+        // This is used by test files which build complete content via ts-poet.
+        const rawText = run({ sourceFile, importsManager });
+        const bodyText = typeof rawText === "string" ? rawText : sourceFile.getFullText();
 
-        if (sourceFile.getFullText().length === 0) {
+        if (bodyText.length === 0) {
             sourceFile.delete();
             this.context.logger.debug(`Skipping ${filepathStr} (no content)`);
         } else {
@@ -1863,11 +1868,9 @@ export class SdkGenerator {
 
             this.exportsManager.addExportsForFilepath(filepath, effectiveAddExportTypeModifier);
 
-            // Eagerly capture complete file content (header + imports + body) and delete
-            // the source file from the ts-morph project. This frees ~2000 AST nodes,
-            // reducing memory pressure and shrinking the project for writeExportsToProject.
+            // Store complete file content (header + imports + body) and delete
+            // the source file from the ts-morph project.
             const header = this.config.whitelabel ? WHITELABEL_FILE_HEADER : FILE_HEADER;
-            const bodyText = sourceFile.getFullText();
             this.filePrefixes.set(sourceFile.getFilePath(), header + "\n" + importText + bodyText);
             sourceFile.delete();
 
