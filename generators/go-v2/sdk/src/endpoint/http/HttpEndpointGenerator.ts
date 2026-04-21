@@ -638,7 +638,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         writer.writeLine(`${localVar} := ${ref}`);
                         writer.writeLine(`if ${localVar} == "" {`);
                         writer.indent();
-                        writer.writeLine(`${localVar} = ${this.context.getLiteralAsString(pathParameter.clientDefault)}`);
+                        writer.writeLine(
+                            `${localVar} = ${this.context.getLiteralAsString(pathParameter.clientDefault)}`
+                        );
                         writer.dedent();
                         writer.writeLine("}");
                         pathParamLocalVars[getOriginalName(pathParameter.name)] = localVar;
