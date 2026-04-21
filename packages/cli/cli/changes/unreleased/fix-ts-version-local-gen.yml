@@ -1,0 +1,9 @@
+- summary: |
+    Thread `--version` through to the TypeScript SDK when generating locally with
+    `output.location: local-file-system`. Previously, running
+    `fern generate --group <ts-group> --version <x.y.z> --local` would silently drop
+    the version and emit a `package.json` without a `version` field. The CLI now
+    populates `PublishingConfig.filesystem.publishTarget` with an npm target for
+    TypeScript generators so the generator can produce the correct
+    `package.json` and `X-Fern-SDK-Version` header.
+  type: fix

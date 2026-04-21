@@ -506,6 +506,17 @@ function getPublishConfig({
                 packageName
             });
             context.logger.debug(`Created PyPiPublishTarget: version ${version} package name: ${packageName}`);
+        } else if (generatorInvocation.language === "typescript") {
+            // The TypeScript generator reads the npm PublishTarget from the IR's
+            // PublishingConfig to populate package.json (name + version) and the
+            // X-Fern-SDK-Version header when generating to a local-file-system
+            // output. Without this, --version is silently dropped.
+            publishTarget = PublishTarget.npm({
+                version: version ?? "0.0.0",
+                packageName: packageName ?? "",
+                tokenEnvironmentVariable: ""
+            });
+            context.logger.debug(`Created NpmPublishTarget: version ${version} package name: ${packageName}`);
         } else if (generatorInvocation.language === "rust") {
             // Use Crates publish target for Rust (Cargo/crates.io)
             publishTarget = PublishTarget.crates({
