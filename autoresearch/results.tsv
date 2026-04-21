@@ -55,3 +55,6 @@ d1adc8deb08	30615	10100	38596	-20.7	keep	exp-051: use readFileSync for IR parsin
 362379791b2	29589	10300	38596	-23.3	keep	exp-053: use pnpm dlx for checkFix — bypass installCheckFixDependencies, run biome directly from pnpm store (e2e -3.4%)
 f9905e17c32	29567	9900	38596	-23.4	keep	exp-054: parallelize README/reference/contributing + skip optional deps in lockfile (gen -3.9%)
 ac56328c8f2	29011	9300	38596	-24.8	keep	exp-055: overlap lockfile generation with code generation via early dep prediction (e2e -1.9%, gen -6.1%)
+n/a	n/a	n/a	38596	n/a	discard	exp-056: skip checkFix (biome) entirely — 2,856 changed lines in validation, biome makes real changes (import reordering, formatting)
+n/a	29596	9300	38596	+2.0	discard	exp-057: pre-warm biome in pnpm store during code gen via fire-and-forget pnpm dlx — no gain, resource competition with code gen
+n/a	29490	9300	38596	+1.7	discard	exp-058: merge two withSnippet calls into one for reference generation — no gain, metadata context overhead offsets savings
