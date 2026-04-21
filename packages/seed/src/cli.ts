@@ -75,6 +75,7 @@ export async function tryRunCli(): Promise<void> {
     addImgCommand(cli);
     addGetAvailableFixturesCommand(cli);
     addListTestFixturesCommand(cli);
+    addListGeneratorsCommand(cli);
     addAffectedCommand(cli);
     addCleanCommand(cli);
     addRegisterCommands(cli);
@@ -797,6 +798,31 @@ function addListTestFixturesCommand(cli: Argv) {
 
             // Output JSON to stdout (can be piped or captured directly)
             console.log(JSON.stringify({ generators: result }));
+        }
+    );
+}
+
+function addListGeneratorsCommand(cli: Argv) {
+    cli.command(
+        "list-generators",
+        "List the active (non-disabled) generator workspaces. Intended to replace hardcoded generator lists in CI.",
+        (yargs) =>
+            yargs.option("json", {
+                type: "boolean",
+                demandOption: false,
+                default: false,
+                alias: "j",
+                description:
+                    "Emit a JSON array of workspace names. The default is a space-separated list suitable for shell consumption."
+            }),
+        async (argv) => {
+            const generators = await loadGeneratorWorkspaces();
+            const workspaceNames = generators.map((g) => g.workspaceName).sort();
+            if (argv.json) {
+                console.log(JSON.stringify(workspaceNames));
+            } else {
+                console.log(workspaceNames.join(" "));
+            }
         }
     );
 }

@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="src/SeedTrace.Test/SeedTrace.Test.csproj" />
-  <Project Path="src/SeedTrace/SeedTrace.csproj" />
-</Solution>

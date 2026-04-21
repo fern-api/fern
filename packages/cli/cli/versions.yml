@@ -1,4 +1,86 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.80.1
+  changelogEntry:
+    - summary: |
+        Display descriptions for discriminated and undiscriminated union variants.
+      type: fix
+  createdAt: "2026-04-21"
+  irVersion: 66
+- version: 4.80.0
+  changelogEntry:
+    - summary: |
+        Add `fern automations preview` command that discovers previewable generator
+        groups and runs SDK preview for each one, aggregating results. Replaces the
+        previous `fern automations list preview` listing-only command with a single
+        command that handles both discovery and execution. Designed for consumption
+        by the `fern-preview` GitHub Action.
+      type: feat
+  createdAt: "2026-04-21"
+  irVersion: 66
+- version: 4.79.4
+  changelogEntry:
+    - summary: |
+        Resolve `$ref` pointers to external markdown files inside OpenAPI `description`
+        fields by inlining the file contents as a string at spec load time. Previously
+        such specs failed with `e.replace is not a function` during SDK generation.
+      type: fix
+  createdAt: "2026-04-20"
+  irVersion: 66
+- version: 4.79.3
+  changelogEntry:
+    - summary: |
+        Support `x-fern-discriminator-context` extension on OpenAPI discriminator objects and auto-infer
+        `protocol` context for SSE-shaped discriminated unions.
+      type: fix
+  createdAt: "2026-04-20"
+  irVersion: 66
+- version: 4.79.2
+  changelogEntry:
+    - summary: |
+        Fix AsyncAPI bundler silently degrading typed models to `unknown` when
+        multi-file specs use file-local `$ref` pointers (e.g. `$ref: '#/Sibling'`)
+        inside schemas that are inlined from external files.
+      type: fix
+  createdAt: "2026-04-20"
+  irVersion: 66
+- version: 4.79.1
+  changelogEntry:
+    - summary: |
+        Fix auto-detected global headers generating type-incorrect example values. When headers like `Request-Timeout` (integer type) were auto-promoted to global headers, the example generator used the header name as a string value instead of skipping the example.
+      type: fix
+  createdAt: "2026-04-20"
+  irVersion: 66
+- version: 4.79.0
+  changelogEntry:
+    - summary: |
+        Add a docs.yml setting to disable editing the API reference environment URL.
+        This preserves the default editable behavior while allowing docs sites to lock the
+        displayed base URL when desired.
+      type: feat
+  createdAt: "2026-04-19"
+  irVersion: 66
+- version: 4.78.0
+  changelogEntry:
+    - summary: |
+        Add more traceability to `.fern/metadata.json` so generator output makes it
+        clearer how and by whom the SDK was generated. The IR `generationMetadata`
+        object now carries four additional optional fields:
+          * `invokedBy`: source of the CLI invocation (`autopilot`, `autorelease`,
+            `ci`, or `manual`). Set explicitly via the `FERN_INVOKER` environment
+            variable, otherwise inferred from standard CI env vars.
+          * `requestedVersion`: the raw value passed to `--version` (e.g. `AUTO` or
+            `1.2.3`) so consumers can tell whether auto-versioning was requested.
+          * `ciProvider`: the name of the CI provider (e.g. `github`, `gitlab`) when
+            running in CI. Only the provider name is recorded — no repo, run,
+            branch, commit, or actor metadata is captured.
+          * `originGitCommitIsDirty`: whether the Fern configuration repository had
+            uncommitted changes at the time of generation.
+
+        The existing `originGitCommit` field continues to record the git commit of
+        the Fern configuration repository at the time of generation.
+      type: feat
+  createdAt: "2026-04-17"
+  irVersion: 66
 - version: 4.77.0
   changelogEntry:
     - summary: |

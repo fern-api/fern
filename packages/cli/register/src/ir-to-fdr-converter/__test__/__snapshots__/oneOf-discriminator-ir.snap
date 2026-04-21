@@ -671,7 +671,7 @@
             "availability": undefined,
             "discriminantValue": "validation",
             "displayName": "validation",
-            "docs": undefined,
+            "docs": "Validation error with discriminator",
             "shape": {
               "_visit": [Function],
               "displayName": "validation",
@@ -689,7 +689,7 @@
             "availability": undefined,
             "discriminantValue": "invalidType",
             "displayName": "invalidType",
-            "docs": undefined,
+            "docs": "Invalid type error with discriminator",
             "shape": {
               "_visit": [Function],
               "displayName": "invalidType",
@@ -849,7 +849,7 @@
             "availability": undefined,
             "discriminantValue": "variantA",
             "displayName": "variantA",
-            "docs": undefined,
+            "docs": "First variant for discriminated oneOf",
             "shape": {
               "_visit": [Function],
               "displayName": "variantA",
@@ -867,7 +867,7 @@
             "availability": undefined,
             "discriminantValue": "variantB",
             "displayName": "variantB",
-            "docs": undefined,
+            "docs": "Second variant for discriminated oneOf",
             "shape": {
               "_visit": [Function],
               "displayName": "variantB",

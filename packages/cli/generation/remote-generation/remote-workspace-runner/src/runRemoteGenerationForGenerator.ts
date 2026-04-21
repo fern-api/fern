@@ -1,7 +1,10 @@
 import {
     checkVersionDoesNotAlreadyExist,
     computeSemanticVersion,
-    getOriginGitCommit
+    detectCiProvider,
+    detectInvocationSource,
+    getOriginGitCommit,
+    getOriginGitCommitIsDirty
 } from "@fern-api/api-workspace-commons";
 import { FernToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
@@ -151,7 +154,11 @@ export async function runRemoteGenerationForGenerator({
             generatorName: generatorInvocation.name,
             generatorVersion: generatorInvocation.version,
             generatorConfig: generatorInvocation.config,
-            originGitCommit: getOriginGitCommit()
+            originGitCommit: getOriginGitCommit(),
+            originGitCommitIsDirty: getOriginGitCommitIsDirty(),
+            invokedBy: detectInvocationSource(),
+            requestedVersion: version,
+            ciProvider: detectCiProvider()
         }
     });
 
@@ -189,25 +196,24 @@ export async function runRemoteGenerationForGenerator({
         },
         context: interactiveTaskContext
     });
-    const response = await fdr.api.v1.register.registerApiDefinition({
-        orgId: FdrAPI.OrgId(organization),
-        apiId: FdrAPI.ApiId(getOriginalName(ir.apiName)),
-        definition: apiDefinition,
-        sources: sources.length > 0 ? convertToFdrApiDefinitionSources(sources) : undefined
-    });
-
-    if (response.ok) {
-        fdrApiDefinitionId = response.body.apiDefinitionId;
-        sourceUploads = response.body.sources;
+    try {
+        const response = await fdr.api.register.registerApiDefinition({
+            orgId: FdrAPI.OrgId(organization),
+            apiId: FdrAPI.ApiId(getOriginalName(ir.apiName)),
+            definition: apiDefinition,
+            sources: sources.length > 0 ? convertToFdrApiDefinitionSources(sources) : undefined
+        });
+        fdrApiDefinitionId = response.apiDefinitionId;
+        sourceUploads = response.sources ?? undefined;
+    } catch (error) {
+        const sourceUploader = new SourceUploader(interactiveTaskContext, sources);
+        if (sourceUploader.sourceTypes.has("protobuf")) {
+            interactiveTaskContext.failAndThrow(`Failed to register API definition: ${JSON.stringify(error)}`);
+        }
     }
 
     const sourceUploader = new SourceUploader(interactiveTaskContext, sources);
     if (sourceUploads == null && sourceUploader.sourceTypes.has("protobuf")) {
-        if (!response.ok) {
-            interactiveTaskContext.failAndThrow(
-                `Failed to register API definition: ${JSON.stringify(response.error.content)}`
-            );
-        }
         interactiveTaskContext.failAndThrow("Did not successfully upload Protobuf source files.");
     }
 
@@ -433,21 +439,20 @@ async function uploadDynamicIRForSdkGeneration({
     context.logger.debug(`Uploading dynamic IR for ${language} SDK...`);
 
     // Get presigned upload URLs from FDR
-    const uploadUrlsResponse = await fdr.api.v1.register.getSdkDynamicIrUploadUrls({
-        orgId: FdrAPI.OrgId(organization),
-        version,
-        snippetConfiguration: {
-            [language]: packageName
-        }
-    });
-
-    if (!uploadUrlsResponse.ok) {
+    let uploadUrlsResponse;
+    try {
+        uploadUrlsResponse = await fdr.api.register.getSdkDynamicIrUploadUrls({
+            orgId: FdrAPI.OrgId(organization),
+            apiId: "",
+            irVersions: []
+        });
+    } catch (error) {
         // Log warning but don't fail the generation - dynamic IR upload is optional
-        context.logger.warn(`Failed to get dynamic IR upload URLs: ${uploadUrlsResponse.error.error}`);
+        context.logger.warn(`Failed to get dynamic IR upload URLs: ${error}`);
         return;
     }
 
-    const uploadUrl = uploadUrlsResponse.body.uploadUrls[language]?.uploadUrl;
+    const uploadUrl = uploadUrlsResponse.uploadUrls[language]?.uploadUrl;
     if (uploadUrl == null) {
         context.logger.warn(`No upload URL returned for ${language}`);
         return;

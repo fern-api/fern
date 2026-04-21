@@ -12,7 +12,7 @@ export interface SubpackageHolder {
     readonly endpoints: ReadonlyMap<APIV1Read.EndpointId, APIV1Read.EndpointDefinition>;
     readonly webSockets: ReadonlyMap<APIV1Read.WebSocketId, APIV1Read.WebSocketChannel>;
     readonly webhooks: ReadonlyMap<APIV1Read.WebhookId, APIV1Read.WebhookDefinition>;
-    readonly grpcs: ReadonlyMap<APIV1Read.GrpcId, APIV1Read.EndpointDefinition>;
+    readonly grpcs: ReadonlyMap<string, APIV1Read.EndpointDefinition>;
 }
 
 export const ROOT_PACKAGE_ID = "__package__" as const;
@@ -94,12 +94,12 @@ export class ApiDefinitionHolder {
                 endpoints: new Map<APIV1Read.EndpointId, APIV1Read.EndpointDefinition>(),
                 webSockets: new Map<APIV1Read.WebSocketId, APIV1Read.WebSocketChannel>(),
                 webhooks: new Map<APIV1Read.WebhookId, APIV1Read.WebhookDefinition>(),
-                grpcs: new Map<APIV1Read.GrpcId, APIV1Read.EndpointDefinition>()
+                grpcs: new Map<string, APIV1Read.EndpointDefinition>()
             };
             this.#subpackages.set(subpackageId, subpackageHolder);
             pkg.endpoints.forEach((endpoint) => {
                 if (endpoint.protocol?.type === "grpc") {
-                    subpackageHolder.grpcs.set(endpoint.id as unknown as APIV1Read.GrpcId, endpoint);
+                    subpackageHolder.grpcs.set(endpoint.id, endpoint);
                     const grpcId = ApiDefinitionHolder.createGrpcId(endpoint, subpackageId);
                     this.#grpcs.set(grpcId, endpoint);
                 } else {

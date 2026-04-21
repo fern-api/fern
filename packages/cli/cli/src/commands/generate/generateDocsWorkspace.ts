@@ -143,8 +143,14 @@ export async function generateDocsWorkspace({
         const expectedDomain = buildPreviewDomain({ orgId: project.config.organization, previewId });
         const fdr = createFdrService({ token: token.value });
 
-        const metadataResponse = await fdr.docs.v2.read.getDocsUrlMetadata({ url: FdrAPI.Url(expectedDomain) });
-        if (metadataResponse.ok) {
+        let metadataExists = false;
+        try {
+            await fdr.docs.v2.read.getDocsUrlMetadata({ url: FdrAPI.Url(expectedDomain) });
+            metadataExists = true;
+        } catch {
+            // Preview doesn't exist yet, no need to prompt
+        }
+        if (metadataExists) {
             const shouldOverwrite = await cliContext.confirmPrompt(
                 `This preview ID already exists for ${chalk.bold(project.config.organization)} (${chalk.cyan(`https://${expectedDomain}`)}). Are you sure you want to overwrite this?`,
                 false
