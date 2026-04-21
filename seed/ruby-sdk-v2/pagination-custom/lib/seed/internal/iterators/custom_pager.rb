@@ -15,18 +15,23 @@ module Seed
       # @return [Object] The current page response
       attr_reader :current
 
+      # The raw HTTP response from the most recent page response.
+      # @return [Net::HTTPResponse, nil]
+      attr_reader :http_response
+
       # Creates a new custom pager with the given initial response.
       #
       # @param initial [Object] The initial page response
       # @param item_field [Symbol, nil] The field name containing items for iteration
       # @param raw_client [Object, nil] The HTTP client for fetching additional pages
+      # @param initial_http_response [Net::HTTPResponse, nil] The raw HTTP response for the initial page
       # @param has_next_proc [Proc, nil] A proc that returns true if there's a next page
       # @param has_prev_proc [Proc, nil] A proc that returns true if there's a previous page
       # @param get_next_proc [Proc, nil] A proc that fetches the next page
       # @param get_prev_proc [Proc, nil] A proc that fetches the previous page
       # @return [Seed::Internal::FooPager]
-      def initialize(initial, item_field: nil, raw_client: nil, has_next_proc: nil, has_prev_proc: nil,
-                     get_next_proc: nil, get_prev_proc: nil)
+      def initialize(initial, item_field: nil, raw_client: nil, initial_http_response: nil, has_next_proc: nil,
+                     has_prev_proc: nil, get_next_proc: nil, get_prev_proc: nil)
         @current = initial
         @item_field = item_field
         @raw_client = raw_client
@@ -34,6 +39,7 @@ module Seed
         @has_prev_proc = has_prev_proc
         @get_next_proc = get_next_proc
         @get_prev_proc = get_prev_proc
+        @http_response = initial_http_response
       end
 
       # Returns true if there is a next page available.
