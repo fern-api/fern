@@ -1,5 +1,5 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-
+import { CliError } from "@fern-api/task-context";
 import { FernFileContext } from "../../FernFileContext.js";
 import { ResolvedType } from "../../resolvers/ResolvedType.js";
 import { TypeResolver } from "../../resolvers/TypeResolver.js";
@@ -83,7 +83,7 @@ export function getPaginationPropertyComponents(
             results: getResponsePropertyComponents(endpointPagination.results)
         };
     }
-    throw new Error("Invalid pagination schema");
+    throw new CliError({ message: "Invalid pagination schema", code: CliError.Code.ValidationError });
 }
 
 export function resolveResponseType({

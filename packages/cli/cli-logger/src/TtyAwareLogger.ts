@@ -9,6 +9,11 @@ import { Log } from "./Log.js";
 
 interface Task {
     printInteractiveTasks: ({ spinner }: { spinner: string }) => string;
+    /**
+     * Optional heading rendered inside the task's frame (e.g. the API workspace name).
+     * When omitted, the frame has no title row.
+     */
+    title?: string;
 }
 
 export class TtyAwareLogger {
@@ -118,31 +123,40 @@ export class TtyAwareLogger {
     private paint(): string {
         const spinnerFrame = this.spinner.frame();
 
-        const taskLines = [];
+        const frames: Array<{ title: string | undefined; body: string }> = [];
         for (const task of this.tasks) {
-            const paintForTask = task.printInteractiveTasks({ spinner: spinnerFrame });
-            if (paintForTask.length > 0) {
-                taskLines.push(paintForTask);
+            const body = task.printInteractiveTasks({ spinner: spinnerFrame });
+            if (body.length > 0) {
+                frames.push({ title: task.title, body });
             }
         }
 
-        if (taskLines.length === 0) {
+        if (frames.length === 0) {
             return "";
         }
 
         const spinnerStatus = process.env.FERN_SPINNER_STATUS;
-        if (spinnerStatus && taskLines.length > 0) {
-            taskLines[0] = `${taskLines[0]} - ${spinnerStatus}`;
+        if (spinnerStatus) {
+            const first = frames[0];
+            if (first != null) {
+                first.body = `${first.body} - ${spinnerStatus}`;
+            }
         }
 
+        // Frame each top-level task in its own box rather than a single box around all of them.
+        // When `fern generate` fans out across multiple API workspaces, this yields one box per
+        // API instead of a single megaframe containing every API, which reads better for
+        // multi-API fan-out runs. The task's optional `title` renders on the opening border.
         const paint =
-            [
-                "┌─",
-                ...taskLines.map((taskLine) =>
-                    addPrefixToString({ content: taskLine, prefix: "│ ", includePrefixOnAllLines: true })
-                ),
-                "└─"
-            ].join("\n") + "\n";
+            frames
+                .map(({ title, body }) =>
+                    [
+                        title != null ? `┌─ ${title} ─` : "┌─",
+                        addPrefixToString({ content: body, prefix: "│ ", includePrefixOnAllLines: true }),
+                        "└─"
+                    ].join("\n")
+                )
+                .join("\n") + "\n";
         this.lastPaint = paint;
         return paint;
     }

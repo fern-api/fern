@@ -1,6 +1,6 @@
 import { DeclaredTypeName } from "@fern-api/ir-sdk";
 import { IdGenerator } from "@fern-api/ir-utils";
-
+import { CliError } from "@fern-api/task-context";
 import { FernFileContext } from "../FernFileContext.js";
 import { convertToFernFilepath } from "./convertToFernFilepath.js";
 import { parseReferenceToTypeName } from "./parseReferenceToTypeName.js";
@@ -12,7 +12,7 @@ export function parseTypeName({ typeName, file }: { typeName: string; file: Fern
         imports: file.imports
     });
     if (reference == null) {
-        throw new Error("Failed to locate type: " + typeName);
+        throw new CliError({ message: "Failed to locate type: " + typeName, code: CliError.Code.ResolutionError });
     }
 
     const nameWithoutId = {

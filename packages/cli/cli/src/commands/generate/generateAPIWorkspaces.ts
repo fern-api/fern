@@ -4,12 +4,15 @@ import { ContainerRunner, Values } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
+import type { AutomationRunOptions } from "@fern-api/remote-workspace-runner";
 import { CliError } from "@fern-api/task-context";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { PREVIEW_DIRECTORY } from "../../constants.js";
 import { checkOutputDirectory } from "./checkOutputDirectory.js";
 import { filterGenerators } from "./filterGenerators.js";
 import { generateWorkspace } from "./generateAPIWorkspace.js";
+import { resolvePosthogCommandLabel } from "./resolvePosthogCommandLabel.js";
+import { shouldPreflightGenerator } from "./shouldPreflightGenerator.js";
 
 export const GenerationMode = {
     PullRequest: "pull-request"
@@ -41,7 +44,8 @@ export async function generateAPIWorkspaces({
     retryRateLimited,
     requireEnvVars,
     automationMode,
-    autoMerge
+    autoMerge,
+    automation
 }: {
     project: Project;
     cliContext: CliContext;
@@ -68,6 +72,10 @@ export async function generateAPIWorkspaces({
     requireEnvVars: boolean;
     automationMode?: boolean;
     autoMerge?: boolean;
+    /**
+     * When provided, this call runs in fan-out automation mode (see {@link AutomationRunOptions}).
+     */
+    automation?: AutomationRunOptions;
 }): Promise<void> {
     let token: FernToken | undefined = undefined;
 
@@ -87,58 +95,21 @@ export async function generateAPIWorkspaces({
         token = currentToken;
     }
 
-    for (const workspace of project.apiWorkspaces) {
-        const resolvedGroupNames = resolveGroupNamesForWorkspace(groupName, workspace.generatorsConfiguration);
-        for (const group of workspace.generatorsConfiguration?.groups.filter(
-            (group) => resolvedGroupNames == null || resolvedGroupNames.includes(group.groupName)
-        ) ?? []) {
-            const filterResult = filterGenerators({
-                generators: group.generators,
-                generatorIndex,
-                generatorName,
-                groupName: group.groupName
-            });
-            if (!filterResult.ok) {
-                continue;
-            }
-            for (const generator of filterResult.generators) {
-                const { shouldProceed } = await checkOutputDirectory(
-                    generator.absolutePathToLocalOutput,
-                    cliContext,
-                    force
-                );
-                if (!shouldProceed) {
-                    cliContext.failAndThrow("Generation cancelled", undefined, { code: CliError.Code.ConfigError });
-                }
-            }
-        }
-    }
+    await confirmOutputDirectoriesForEligibleGenerators({
+        project,
+        groupName,
+        generatorName,
+        generatorIndex,
+        automation,
+        cliContext,
+        force
+    });
 
     cliContext.instrumentPostHogEvent({
         orgId: project.config.organization,
-        command: "fern generate",
+        command: resolvePosthogCommandLabel(automation),
         properties: {
-            workspaces: project.apiWorkspaces.map((workspace) => {
-                const resolvedGroupNames = resolveGroupNamesForWorkspace(groupName, workspace.generatorsConfiguration);
-                return {
-                    name: workspace.workspaceName,
-                    group: groupName,
-                    generators: workspace.generatorsConfiguration?.groups
-                        .filter((group) => resolvedGroupNames == null || resolvedGroupNames.includes(group.groupName))
-                        .map((group) => {
-                            return group.generators
-                                .filter((generator) => generatorName == null || generator.name === generatorName)
-                                .map((generator) => {
-                                    return {
-                                        name: generator.name,
-                                        version: generator.version,
-                                        outputMode: generator.outputMode.type,
-                                        config: generator.config
-                                    };
-                                });
-                        })
-                };
-            })
+            workspaces: buildPosthogWorkspaces({ project, groupName, generatorName })
         }
     });
 
@@ -180,7 +151,8 @@ export async function generateAPIWorkspaces({
                     retryRateLimited,
                     requireEnvVars,
                     automationMode,
-                    autoMerge
+                    autoMerge,
+                    automation
                 });
             });
         })
@@ -188,11 +160,103 @@ export async function generateAPIWorkspaces({
 }
 
 /**
- * Resolves a group name to a list of group names, handling aliases.
- * Returns null if no group name is specified (meaning all groups should be included).
- * Returns the resolved list of group names if a group name or alias is specified.
+ * Walks the project's generators and prompts the user to confirm overwriting any local-file-system
+ * output directories that already exist. Skips generators that wouldn't run anyway (per
+ * {@link shouldPreflightGenerator}) to avoid noise when fanning out in automation mode.
+ *
+ * Throws via `cliContext.failAndThrow` if the user declines a prompt.
  */
-function resolveGroupNamesForWorkspace(
+async function confirmOutputDirectoriesForEligibleGenerators({
+    project,
+    groupName,
+    generatorName,
+    generatorIndex,
+    automation,
+    cliContext,
+    force
+}: {
+    project: Project;
+    groupName: string | undefined;
+    generatorName: string | undefined;
+    generatorIndex: number | undefined;
+    automation: AutomationRunOptions | undefined;
+    cliContext: CliContext;
+    force: boolean;
+}): Promise<void> {
+    for (const workspace of project.apiWorkspaces) {
+        const resolvedGroupNames = expandGroupFilter(groupName, workspace.generatorsConfiguration);
+        const rootAutorelease = workspace.generatorsConfiguration?.rawConfiguration.autorelease;
+        const groupsInScope =
+            workspace.generatorsConfiguration?.groups.filter(
+                (group) => resolvedGroupNames == null || resolvedGroupNames.includes(group.groupName)
+            ) ?? [];
+        for (const group of groupsInScope) {
+            const filterResult = filterGenerators({
+                generators: group.generators,
+                generatorIndex,
+                generatorName,
+                groupName: group.groupName
+            });
+            if (!filterResult.ok) {
+                continue;
+            }
+            for (const generator of filterResult.generators) {
+                if (!shouldPreflightGenerator({ generator, rootAutorelease, automation })) {
+                    continue;
+                }
+                const { shouldProceed } = await checkOutputDirectory(
+                    generator.absolutePathToLocalOutput,
+                    cliContext,
+                    force
+                );
+                if (!shouldProceed) {
+                    cliContext.failAndThrow("Generation cancelled", undefined, { code: CliError.Code.ConfigError });
+                }
+            }
+        }
+    }
+}
+
+/** Builds the `workspaces` array for the posthog event, honoring `--group` / `--generator` filters. */
+function buildPosthogWorkspaces({
+    project,
+    groupName,
+    generatorName
+}: {
+    project: Project;
+    groupName: string | undefined;
+    generatorName: string | undefined;
+}) {
+    return project.apiWorkspaces.map((workspace) => {
+        const resolvedGroupNames = expandGroupFilter(groupName, workspace.generatorsConfiguration);
+        return {
+            name: workspace.workspaceName,
+            group: groupName,
+            generators: workspace.generatorsConfiguration?.groups
+                .filter((group) => resolvedGroupNames == null || resolvedGroupNames.includes(group.groupName))
+                .map((group) =>
+                    group.generators
+                        .filter((generator) => generatorName == null || generator.name === generatorName)
+                        .map((generator) => ({
+                            name: generator.name,
+                            version: generator.version,
+                            outputMode: generator.outputMode.type,
+                            config: generator.config
+                        }))
+                )
+        };
+    });
+}
+
+/**
+ * Expands the caller's `--group` filter into a set of concrete group names.
+ *
+ * Returns null when no filter was supplied (meaning "match every group"), an alias's target
+ * list when the name is an alias, or `[groupName]` otherwise. Used only to pre-filter groups
+ * for the checkOutputDirectory pre-flight and posthog telemetry — the authoritative group
+ * resolution for generation lives in `resolveGroupNamesForGeneration`.
+ */
+function expandGroupFilter(
     groupName: string | undefined,
     generatorsConfiguration: generatorsYml.GeneratorsConfiguration | undefined
 ): string[] | null {

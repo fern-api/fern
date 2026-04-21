@@ -1,5 +1,5 @@
 import type { schemas } from "@fern-api/config";
-
+import { CliError } from "@fern-api/task-context";
 import { isGitUrl } from "../utils/gitUrl.js";
 
 /**
@@ -13,13 +13,15 @@ export function parseOutputArg(outputArg: string): schemas.OutputObjectSchema {
     if (isGitUrl(outputArg)) {
         const token = process.env.GITHUB_TOKEN ?? process.env.GIT_TOKEN;
         if (token == null) {
-            throw new Error(
-                `A git token is required when --output is a git URL.\n\n` +
+            throw new CliError({
+                message:
+                    `A git token is required when --output is a git URL.\n\n` +
                     `  Set GITHUB_TOKEN or GIT_TOKEN:\n` +
                     `    export GITHUB_TOKEN=ghp_xxx\n\n` +
                     `  Or use a local path:\n` +
-                    `    --output ./my-sdk`
-            );
+                    `    --output ./my-sdk`,
+                code: CliError.Code.ConfigError
+            });
         }
         return {
             git: {

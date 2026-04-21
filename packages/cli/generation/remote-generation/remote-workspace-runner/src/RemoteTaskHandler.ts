@@ -3,7 +3,7 @@ import { noop } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { LogLevel } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
-import { InteractiveTaskContext } from "@fern-api/task-context";
+import { CliError, InteractiveTaskContext } from "@fern-api/task-context";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import axios from "axios";
 import chalk from "chalk";
@@ -46,7 +46,9 @@ export class RemoteTaskHandler {
         remoteTask: FernFiddle.remoteGen.Task | undefined
     ): Promise<RemoteTaskHandler.Response | undefined> {
         if (remoteTask == null) {
-            this.context.failAndThrow("Task is missing on job status");
+            this.context.failAndThrow("Task is missing on job status", undefined, {
+                code: CliError.Code.InternalError
+            });
         }
 
         const coordinates = remoteTask.packages.map((p) => {
@@ -114,7 +116,7 @@ export class RemoteTaskHandler {
                 if (s3PreSignedReadUrl != null) {
                     logS3Url(s3PreSignedReadUrl);
                 }
-                this.context.failAndThrow(message);
+                this.context.failAndThrow(message, undefined, { code: CliError.Code.ContainerError });
             },
             finished: async (finishedStatus) => {
                 if (finishedStatus.s3PreSignedReadUrlV2 != null) {
@@ -212,7 +214,7 @@ async function downloadFilesForTask({
 
         context.logger.info(chalk.green(`Downloaded to ${absolutePathToLocalOutput}`));
     } catch (e) {
-        context.failAndThrow("Failed to download files", e);
+        context.failAndThrow("Failed to download files", e, { code: CliError.Code.NetworkError });
     }
 }
 

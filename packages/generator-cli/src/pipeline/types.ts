@@ -3,6 +3,7 @@ export interface PipelineConfig {
 
     // Step configs (optional, modular)
     replay?: ReplayStepConfig;
+    autoVersion?: AutoVersionStepConfig;
     fernignore?: FernignoreStepConfig; // PHASE 2: not implemented yet
     github?: GithubStepConfig;
 
@@ -15,6 +16,7 @@ export interface PipelineConfig {
 export interface PipelineContext {
     previousStepResults: {
         replay?: ReplayStepResult;
+        autoVersion?: AutoVersionStepResult;
         fernignore?: FernignoreStepResult;
     };
 }
@@ -23,6 +25,18 @@ export interface ReplayStepConfig {
     enabled: boolean;
     stageOnly?: boolean;
     skipApplication?: boolean;
+}
+
+export interface AutoVersionStepConfig {
+    enabled: boolean;
+    /** Generator language: typescript | python | java | go | ruby | csharp | php | swift | rust | kotlin */
+    language: string;
+    /** Existing changelog content passed to the AI for context. */
+    priorChangelog?: string;
+    /** Fallback version when no prior generation exists (first run). */
+    baseVersion?: string;
+    /** Fern token used to authorize the FAI (AnalyzeSdkDiff) call. */
+    fernToken: string;
 }
 
 export interface FernignoreStepConfig {
@@ -81,6 +95,7 @@ export interface PipelineResult {
     success: boolean;
     steps: {
         replay?: ReplayStepResult;
+        autoVersion?: AutoVersionStepResult;
         fernignore?: FernignoreStepResult;
         github?: GithubStepResult;
     };
@@ -114,6 +129,25 @@ export interface ReplayStepResult extends StepResult {
 
 export interface FernignoreStepResult extends StepResult {
     pathsPreserved?: string[];
+}
+
+export interface AutoVersionStepResult extends StepResult {
+    /** The new version to use (e.g. "1.2.3"). Field name matches fiddle's Java AutoVersionResult DTO. */
+    version?: string;
+    /** Commit subject for the `[fern-autoversion]` commit. */
+    commitMessage?: string;
+    /** User-facing changelog entry appended to changelog.md. */
+    changelogEntry?: string;
+    /** Prior SDK version before this change (e.g. "1.2.2"). */
+    previousVersion?: string;
+    /** The version bump level determined by FAI. */
+    versionBump?: "MAJOR" | "MINOR" | "PATCH" | "NO_CHANGE";
+    /** Structured PR description with Before/After code fences for breaking changes. */
+    prDescription?: string;
+    /** One-sentence justification for WHY the version bump was chosen. */
+    versionBumpReason?: string;
+    /** SHA of the `[fern-autoversion]` commit once it's been made. TS-only; no fiddle counterpart. */
+    commitSha?: string;
 }
 
 export interface GithubStepResult extends StepResult {
