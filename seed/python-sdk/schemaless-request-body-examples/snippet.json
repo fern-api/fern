@@ -1,0 +1,44 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/plants",
+                "method": "POST",
+                "identifier_override": "endpoint_.createPlant"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.create_plant(\n    request={\n        \"name\": \"Venus Flytrap\",\n        \"species\": \"Dionaea muscipula\",\n        \"care\": {\n            \"light\": \"full sun\",\n            \"water\": \"distilled only\",\n            \"humidity\": \"high\",\n        },\n        \"tags\": [\"carnivorous\", \"tropical\"],\n    },\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.create_plant(\n        request={\n            \"name\": \"Venus Flytrap\",\n            \"species\": \"Dionaea muscipula\",\n            \"care\": {\n                \"light\": \"full sun\",\n                \"water\": \"distilled only\",\n                \"humidity\": \"high\",\n            },\n            \"tags\": [\"carnivorous\", \"tropical\"],\n        },\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/plants/{plantId}",
+                "method": "PUT",
+                "identifier_override": "endpoint_.updatePlant"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.update_plant(\n    plant_id=\"plantId\",\n    request={\n        \"name\": \"Updated Venus Flytrap\",\n        \"care\": {\"light\": \"partial shade\"},\n    },\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.update_plant(\n        plant_id=\"plantId\",\n        request={\n            \"name\": \"Updated Venus Flytrap\",\n            \"care\": {\"light\": \"partial shade\"},\n        },\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/plants/with-schema",
+                "method": "POST",
+                "identifier_override": "endpoint_.createPlantWithSchema"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.create_plant_with_schema(\n    name=\"Sundew\",\n    species=\"Drosera capensis\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.create_plant_with_schema(\n        name=\"Sundew\",\n        species=\"Drosera capensis\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        }
+    ]
+}

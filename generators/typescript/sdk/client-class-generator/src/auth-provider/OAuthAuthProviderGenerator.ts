@@ -246,6 +246,8 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         const clientSecretProperty = this.getName(requestProperties.clientSecret.property.name, context);
         const endpointName = this.getName(endpoint.name, context);
 
+        const customPropertyAssignments = this.getCustomPropertyAssignments(requestProperties, endpoint, context);
+
         const accessTokenProperty = context.type.generateGetterForResponsePropertyAsString({
             property: responseProperties.accessToken,
             variable: this.neverThrowErrors ? "tokenResponse.body" : "tokenResponse"
@@ -348,7 +350,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                 const clientSecret = await this.clientSecretSupplier(${ENDPOINT_METADATA_ARG_NAME});
                 const tokenResponse = await this.${AUTH_CLIENT_FIELD_NAME}.${endpointName}({
                     ${clientIdProperty}: clientId,
-                    ${clientSecretProperty}: clientSecret,
+                    ${clientSecretProperty}: clientSecret,${customPropertyAssignments}
                 });
                 ${neverThrowErrorHandler}
                 this.${ACCESS_TOKEN_FIELD_NAME} = ${accessTokenProperty};
@@ -367,7 +369,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                 const clientSecret = await this.clientSecretSupplier(${ENDPOINT_METADATA_ARG_NAME});
                 const tokenResponse = await this.${AUTH_CLIENT_FIELD_NAME}.${endpointName}({
                     ${clientIdProperty}: clientId,
-                    ${clientSecretProperty}: clientSecret,
+                    ${clientSecretProperty}: clientSecret,${customPropertyAssignments}
                 });
                 ${neverThrowErrorHandler}
                 this.${ACCESS_TOKEN_FIELD_NAME} = ${accessTokenProperty};
@@ -860,6 +862,38 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         return core.EndpointSupplier.get(supplier, { endpointMetadata });
             `;
         }
+    }
+
+    private getCustomPropertyAssignments(
+        requestProperties: FernIr.OAuthAccessTokenRequestProperties,
+        endpoint: FernIr.HttpEndpoint,
+        context: FileContext
+    ): string {
+        // When the request body is inlined, the generated client method already
+        // injects literal properties into the body (via getLiteralProperties in
+        // GeneratedDefaultEndpointRequest). Including them again here would
+        // cause TypeScript excess-property errors because the generated request
+        // type excludes those literals. We only need to emit them when the
+        // request type keeps them as required fields (i.e. non-inlined bodies).
+        if (endpoint.requestBody?.type === "inlinedRequestBody") {
+            return "";
+        }
+        const assignments: string[] = [];
+        for (const customProperty of requestProperties.customProperties ?? []) {
+            const resolvedType = context.type.resolveTypeReference(customProperty.property.valueType);
+            if (resolvedType.type === "container" && resolvedType.container.type === "literal") {
+                const propertyName = this.getName(customProperty.property.name, context);
+                const literalValue = resolvedType.container.literal._visit<string>({
+                    string: (val: string) => JSON.stringify(val),
+                    boolean: (val: boolean) => `${val}`,
+                    _other: () => {
+                        throw new Error("Encountered non-boolean, non-string literal");
+                    }
+                });
+                assignments.push(`\n                    ${propertyName}: ${literalValue},`);
+            }
+        }
+        return assignments.join("");
     }
 
     private getName(name: FernIr.Name | FernIr.NameAndWireValue | string, context: FileContext): string {

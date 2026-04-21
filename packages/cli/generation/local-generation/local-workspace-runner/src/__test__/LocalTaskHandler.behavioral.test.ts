@@ -185,9 +185,14 @@ vi.mock("../AutoVersioningService.js", () => ({
         }
     },
     AutoVersioningException: class AutoVersioningException extends Error {
-        constructor(message: string) {
+        public readonly magicVersionAbsent: boolean;
+        constructor(message: string, options?: { cause?: Error; magicVersionAbsent?: boolean }) {
             super(message);
             this.name = "AutoVersioningException";
+            this.magicVersionAbsent = options?.magicVersionAbsent ?? false;
+            if (options?.cause) {
+                this.cause = options.cause;
+            }
         }
     },
     countFilesInDiff: (diff: string) => {
@@ -641,8 +646,8 @@ describe("LocalTaskHandler - Multi-Chunk Analysis", () => {
         expect(result).not.toBeNull();
         expect(result?.version).toBe("2.0.0");
         expect(result?.commitMessage).toContain("break: removed public API");
-        // Changelog aggregates all non-empty entries from every chunk
-        expect(result?.changelogEntry).toBe("- Public API removed. Migration guide: ...\n- Added new helper methods.");
+        // Changelog aggregates all non-empty entries from every chunk (double-newline separated, no bullet prefix)
+        expect(result?.changelogEntry).toBe("Public API removed. Migration guide: ...\n\nAdded new helper methods.");
         // All 4 chunks analyzed (no short-circuit)
         expect(mockAnalyzeSdkDiff).toHaveBeenCalledTimes(4);
     });
@@ -693,8 +698,8 @@ describe("LocalTaskHandler - Multi-Chunk Analysis", () => {
         expect(result?.version).toBe("2.0.0");
         // Commit message comes from highest-bump chunk (MAJOR)
         expect(result?.commitMessage).toContain("break: removed deprecated endpoint");
-        // Changelog aggregates entries from both chunks
-        expect(result?.changelogEntry).toBe("- New helper method added.\n- The deprecated endpoint has been removed.");
+        // Changelog aggregates entries from both chunks (double-newline separated, no bullet prefix)
+        expect(result?.changelogEntry).toBe("New helper method added.\n\nThe deprecated endpoint has been removed.");
     });
 
     it("handles mix of NO_CHANGE and non-null chunk results", async () => {

@@ -345,6 +345,22 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
             });
         }
 
+        // When generateLiterals is enabled, collect wire values of literal properties from
+        // the endpoint's inlined request body so we can skip them in the object initializer.
+        // Their default `= new()` already sets the correct value and assigning a plain string
+        // would cause a CS0029 compilation error.
+        const literalBodyPropertyWireValues = new Set<string>();
+        if (this.generation.settings.generateLiterals && this.endpoint.requestBody?.type === "inlinedRequestBody") {
+            for (const prop of [
+                ...this.endpoint.requestBody.properties,
+                ...(this.endpoint.requestBody.extendedProperties ?? [])
+            ]) {
+                if (this.context.isLiteralValue(prop.valueType)) {
+                    literalBodyPropertyWireValues.add(getWireValue(prop.name));
+                }
+            }
+        }
+
         example.request?._visit({
             reference: (reference) => {
                 orderedFields.push({
@@ -357,6 +373,9 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
             },
             inlinedRequestBody: (inlinedRequestBody) => {
                 for (const property of inlinedRequestBody.properties) {
+                    if (literalBodyPropertyWireValues.has(getWireValue(property.name))) {
+                        continue;
+                    }
                     orderedFields.push({
                         name: property.name,
                         value: this.exampleGenerator.getSnippetForTypeReference({

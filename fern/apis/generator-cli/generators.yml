@@ -37,7 +37,7 @@ groups:
           package_name: generatorcli
         smart-casing: false
       - name: fernapi/fern-go-sdk
-        version: 0.22.0
+        version: 1.33.2
         github:
           repository: fern-api/generator-cli-go
         config:

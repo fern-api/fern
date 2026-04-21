@@ -139,6 +139,32 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
         }
     }
 
+    /**
+     * Gets the base response type (unwrapped from WithRawResponseTask) for an endpoint.
+     * This is the inner T in WithRawResponseTask<T> or WithRawResponse<T>.
+     */
+    protected getBaseResponseType(endpoint: HttpEndpoint): ast.Type | undefined {
+        if (endpoint.response?.body == null) {
+            if (endpoint.method === FernIr.HttpMethod.Head) {
+                return this.System.Net.Http.HttpResponseHeaders;
+            }
+            return undefined;
+        }
+
+        return endpoint.response.body._visit<ast.Type | undefined>({
+            streaming: () => undefined, // Streaming endpoints don't use WithRawResponseTask
+            streamParameter: () => undefined,
+            fileDownload: () => this.System.IO.Stream.asFullyQualified(),
+            json: (reference) =>
+                this.context.csharpTypeMapper.convert({
+                    reference: reference.responseBodyType
+                }),
+            text: () => this.generation.Primitive.string,
+            bytes: () => undefined,
+            _other: () => undefined
+        });
+    }
+
     protected getPaginationItemType(endpoint: HttpEndpoint): ast.Type {
         this.assertHasPagination(endpoint);
         const listItemType = this.context.csharpTypeMapper.convert({

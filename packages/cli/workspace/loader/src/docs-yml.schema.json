@@ -511,16 +511,6 @@
             }
           ]
         },
-        "private": {
-          "oneOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "edit-this-page": {
           "oneOf": [
             {
@@ -4406,6 +4396,26 @@
               "type": "null"
             }
           ]
+        },
+        "llms-txt": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "llms-full-txt": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -5419,6 +5429,16 @@
               "type": "null"
             }
           ]
+        },
+        "mobile-toc": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -5525,6 +5545,16 @@
           ]
         },
         "disable-explorer-proxy": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "disable-environment-editing": {
           "oneOf": [
             {
               "type": "boolean"

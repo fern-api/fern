@@ -1,12 +1,16 @@
 {
   "cliVersion": "DUMMY",
   "generatorName": "fernapi/fern-go-sdk",
-  "generatorVersion": "latest",
+  "generatorVersion": "local",
   "generatorConfig": {
     "enableWireTests": false,
     "clientName": "Acme",
     "clientConstructorName": "New"
   },
   "originGitCommit": "DUMMY",
+  "originGitCommitIsDirty": null,
+  "invokedBy": "ci",
+  "requestedVersion": "0.0.1",
+  "ciProvider": "github",
   "sdkVersion": "v0.0.1"
 }

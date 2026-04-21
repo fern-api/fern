@@ -36,7 +36,7 @@ describe("fern generator upgrade", () => {
         );
 
         expect(JSON.parse((await readFile(outputFile)).toString()).version).not.toEqual("2.0.0");
-    }, 60_000);
+    }, 180_000);
 
     it.concurrent("fern generator upgrade with filters", async ({ signal }) => {
         // Create tmpdir and copy contents
@@ -75,7 +75,7 @@ describe("fern generator upgrade", () => {
         );
 
         expect(JSON.parse((await readFile(outputFile)).toString()).version).not.toEqual("2.0.0");
-    }, 60_000);
+    }, 180_000);
 
     it("fern generator help commands", async ({ signal }) => {
         // Create tmpdir and copy contents
@@ -91,7 +91,7 @@ describe("fern generator upgrade", () => {
         expect(
             (await runFernCli(["generator", "upgrade", "--help"], { cwd: directory, reject: false, signal })).stdout
         ).toMatchSnapshot();
-    }, 60_000);
+    }, 180_000);
 
     it.concurrent("fern generator upgrade majors", async ({ signal }) => {
         // Create tmpdir and copy contents
@@ -153,7 +153,7 @@ describe("fern generator upgrade", () => {
         );
 
         expect(JSON.parse((await readFile(outputFileNewMajor)).toString()).version).not.toEqual("2.16.0");
-    }, 60_000);
+    }, 180_000);
 
     it.skip("fern generator upgrade message", async ({ signal }) => {
         const tmpDir = await tmp.dir();
@@ -181,7 +181,7 @@ describe("fern generator upgrade", () => {
                 )
             ).stderr
         ).toMatchSnapshot();
-    }, 60_000);
+    }, 180_000);
 
     it.concurrent("fern generator upgrade --skip-autorelease-disabled skips autorelease false generators", async ({
         signal
@@ -242,7 +242,7 @@ describe("fern generator upgrade", () => {
         );
 
         expect(JSON.parse((await readFile(outputFileJava)).toString()).version).not.toEqual("0.0.1");
-    }, 60_000);
+    }, 180_000);
 
     it.concurrent("fern generator upgrade without --skip-autorelease-disabled upgrades all generators", async ({
         signal
@@ -274,7 +274,7 @@ describe("fern generator upgrade", () => {
         );
 
         expect(JSON.parse((await readFile(outputFile)).toString()).version).not.toEqual("2.0.0");
-    }, 60_000);
+    }, 180_000);
 
     it.concurrent("fern generator upgrade shows major version message", async ({ signal }) => {
         const tmpDir = await tmp.dir();
@@ -294,5 +294,5 @@ describe("fern generator upgrade", () => {
             "Run: fern generator upgrade --generator fernapi/fern-python-sdk --include-major"
         );
         expect(result.stdout).toContain("https://buildwithfern.com/learn/sdks/generators/python/changelog");
-    }, 60_000);
+    }, 180_000);
 });

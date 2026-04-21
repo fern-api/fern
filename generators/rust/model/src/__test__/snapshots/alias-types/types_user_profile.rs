@@ -3,7 +3,7 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
 pub struct UserProfile {
     #[serde(default)]
-    pub user_id: UserID,
+    pub user_id: UserId,
     #[serde(default)]
     pub email: UserEmail,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -21,14 +21,14 @@ impl UserProfile {
 #[derive(Clone, PartialEq, Default, Debug)]
 #[non_exhaustive]
 pub struct UserProfileBuilder {
-    user_id: Option<UserID>,
+    user_id: Option<UserId>,
     email: Option<UserEmail>,
     age: Option<UserAge>,
     tags: Option<UserTags>,
 }
 
 impl UserProfileBuilder {
-    pub fn user_id(mut self, value: UserID) -> Self {
+    pub fn user_id(mut self, value: UserId) -> Self {
         self.user_id = Some(value);
         self
     }

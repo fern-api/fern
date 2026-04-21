@@ -92,7 +92,7 @@ require "seed"
 
 client = Seed::MyClient.new(
     base_url: "https://example.com",
-    max_retries: 3  # Configure max retries (default is 2)
+    max_retries: 3  # Configure max retries (default is 5)
 )
 ```
 

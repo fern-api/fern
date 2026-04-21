@@ -82,26 +82,71 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
     }
 
     private maybeConvertSingularAllOfReferenceObject(): SchemaOrReferenceConverter.Output | undefined {
-        if (
-            this.context.isReferenceObject(this.schemaOrReference) ||
-            this.schemaOrReference.allOf == null ||
-            this.schemaOrReference.allOf.length !== 1
-        ) {
+        if (this.context.isReferenceObject(this.schemaOrReference) || this.schemaOrReference.allOf == null) {
             return undefined;
         }
-        const allOfReference = this.schemaOrReference.allOf[0];
-        if (this.context.isReferenceObject(allOfReference)) {
-            const response = this.context.convertReferenceToTypeReference({
-                reference: allOfReference,
+
+        // Single $ref allOf — convert directly as a type reference
+        if (this.schemaOrReference.allOf.length === 1) {
+            const allOfReference = this.schemaOrReference.allOf[0];
+            if (this.context.isReferenceObject(allOfReference)) {
+                const response = this.context.convertReferenceToTypeReference({
+                    reference: allOfReference,
+                    breadcrumbs: this.breadcrumbs
+                });
+                if (response.ok) {
+                    return {
+                        type: this.wrapTypeReference(response.reference),
+                        inlinedTypes: response.inlinedTypes ?? {}
+                    };
+                }
+            }
+            return undefined;
+        }
+
+        // When allOf has exactly one $ref to a non-object type (e.g. enum) and the
+        // remaining elements are inline primitive constraints (no properties, no enum,
+        // no composition keywords), reference the $ref type directly instead of
+        // creating a synthetic merged copy.
+        const refElements = this.schemaOrReference.allOf.filter((s) => this.context.isReferenceObject(s));
+        const inlineElements = this.schemaOrReference.allOf.filter(
+            (s) => !this.context.isReferenceObject(s)
+        ) as OpenAPIV3_1.SchemaObject[];
+        const singleRef = refElements.length === 1 ? refElements[0] : undefined;
+
+        if (
+            singleRef != null &&
+            inlineElements.every(
+                (s) => !s.properties && !s.enum && !s.oneOf && !s.anyOf && !s.allOf && !s.format && !("items" in s)
+            ) &&
+            !inlineElements.some((s) => s.type === "null" || (Array.isArray(s.type) && s.type.includes("null")))
+        ) {
+            const resolved = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                schemaOrReference: singleRef,
                 breadcrumbs: this.breadcrumbs
             });
-            if (response.ok) {
-                return {
-                    type: this.wrapTypeReference(response.reference),
-                    inlinedTypes: {}
-                };
+            if (
+                resolved != null &&
+                resolved.type !== "object" &&
+                !resolved.properties &&
+                !resolved.allOf &&
+                !resolved.oneOf &&
+                !resolved.anyOf &&
+                !resolved.format
+            ) {
+                const response = this.context.convertReferenceToTypeReference({
+                    reference: singleRef as OpenAPIV3_1.ReferenceObject,
+                    breadcrumbs: this.breadcrumbs
+                });
+                if (response.ok) {
+                    return {
+                        type: this.wrapTypeReference(response.reference),
+                        inlinedTypes: response.inlinedTypes ?? {}
+                    };
+                }
             }
         }
+
         return undefined;
     }
 

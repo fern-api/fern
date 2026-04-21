@@ -408,8 +408,8 @@ client.reference.send(
     container_object=ContainerObject(
         nested_objects=[
             NestedObjectWithLiterals(
-                literal_1="literal1",
-                literal_2="literal2",
+                literal1="literal1",
+                literal2="literal2",
                 str_prop="strProp",
             )
         ],

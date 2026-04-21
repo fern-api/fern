@@ -163,6 +163,16 @@ types:
           in llms.txt. Defaults to "description". If the preferred field is not present
           in a page's frontmatter, falls back to other fields (description, subtitle,
           og:description, headline, excerpt).
+      llms-txt:
+        type: optional<string>
+        docs: |
+          Relative filepath to a custom `llms.txt` file that Fern should host at `/llms.txt`,
+          overriding the auto-generated version. The file should follow the llmstxt.org specification.
+      llms-full-txt:
+        type: optional<string>
+        docs: |
+          Relative filepath to a custom `llms-full.txt` file that Fern should host at `/llms-full.txt`,
+          overriding the auto-generated version. The file should contain the full concatenated documentation content.
 
   CheckRuleSeverity:
     enum:
@@ -495,10 +505,6 @@ types:
       "custom-domain":
         type: optional<CustomDomain>
         docs: The custom domain where your documentation is hosted. Learn more about setting up a custom domain.
-      private:
-        type: optional<boolean>
-        docs: This config option is no longer used. Please reach out to the Fern Team if you want to enable private docs.
-        availability: deprecated
       "edit-this-page":
         type: optional<EditThisPageConfig>
         docs: |
@@ -817,6 +823,12 @@ types:
         docs: |
           If `hide-feedback` is set to true, the feedback button will not be rendered. This can be overridden for a specific page using the frontmatter.
 
+      mobile-toc:
+        type: optional<boolean>
+        availability: in-development
+        docs: |
+          If `mobile-toc` is set to true, a sticky collapsible table of contents bar will be shown on mobile viewports for guide and overview layout pages.
+
   DocsSettingsConfig:
     properties:
       search-text:
@@ -871,6 +883,15 @@ types:
           If set to true, the API Explorer will bypass the proxy when sending requests directly to your API.
 
           When this feature is enabled, your API must have Cross-Origin Resource Sharing (CORS) enabled to allow requests from the documentation domain.
+
+          @default: false
+      disable-environment-editing:
+        type: optional<boolean>
+        docs: |
+          If set to true, the base URL (environment) shown in the endpoint header on API reference
+          docs pages will no longer be editable. Users will still be able to switch between configured
+          environments via the dropdown, but will not be able to double-click and type in a custom
+          URL. This does not affect the API Playground.
 
           @default: false
       disable-analytics: optional<boolean>

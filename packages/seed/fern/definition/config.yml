@@ -17,6 +17,12 @@ types:
       imageAliases: optional<list<string>>
       displayName: string
       irVersion: string
+      disabled:
+        type: optional<boolean>
+        docs: |
+          If true, this generator workspace is disabled. Seed commands will skip it.
+          Useful for retaining the workspace directory (and its `seed.yml`) for documentation
+          purposes without running any tests, publishing, or builds against it.
       test: TestConfiguration
       publish: PublishConfiguration
       changelogLocation:
@@ -37,7 +43,7 @@ types:
           Configuration that will be used for any custom fixture specified by --custom-fixture
       fixtures:
         type: optional<map<string, list<FixtureConfigurations>>>
-      scripts: optional<list<ContainerScriptConfig>>
+      scripts: optional<ScriptsConfiguration>
       allowedFailures:
         type: optional<list<string>>
         docs: |
@@ -155,6 +161,25 @@ types:
     extends: Script
     properties:
       image: string
+
+  ScriptsConfiguration:
+    docs: |
+      Scripts can be specified as either a simple list of container script configs (legacy format),
+      or as an object with separate docker and local script arrays for multi-environment support.
+    discriminated: false
+    union:
+      - list<ContainerScriptConfig>
+      - ScriptsByEnvironment
+
+  ScriptsByEnvironment:
+    docs: Scripts separated by runtime environment (docker/local)
+    properties:
+      docker:
+        docs: Scripts to run in a Docker container
+        type: optional<list<ContainerScriptConfig>>
+      local:
+        docs: Scripts to run locally (without a container)
+        type: optional<list<Script>>
 
   Language:
     enum:

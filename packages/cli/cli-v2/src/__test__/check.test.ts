@@ -51,7 +51,7 @@ paths: {}
 `
         );
 
-        const { context, getStdout, getStderr } = createTestContextWithCapture({ cwd: testDir });
+        const { context, getStdout, getStderr } = await createTestContextWithCapture({ cwd: testDir });
         const cmd = new CheckCommand();
 
         // The sdk checker will find the defaultGroup violation, which causes an error exit.
@@ -129,7 +129,7 @@ paths: {}
 `
         );
 
-        const { context, getStdout, getStderr } = createTestContextWithCapture({ cwd: testDir });
+        const { context, getStdout, getStderr } = await createTestContextWithCapture({ cwd: testDir });
         const cmd = new SdkCheckCommand();
 
         try {

@@ -25,6 +25,44 @@ HTTPX_PRIMITIVE_DATA_TYPES: Set[ir_types.PrimitiveTypeV1] = {
 }
 
 
+def is_type_reference_string(
+    type_reference: ir_types.TypeReference,
+    get_type_declaration: Callable[[ir_types.TypeId], ir_types.TypeDeclaration],
+) -> bool:
+    """
+    Check if a type reference resolves to a string primitive.
+
+    Unwraps Optional, nullable, and alias types to find the underlying type.
+    Literal string types are also considered strings.
+    """
+
+    def check_type(tr: ir_types.TypeReference) -> bool:
+        type_union = tr.get_as_union()
+
+        if type_union.type == "primitive":
+            return type_union.primitive.v_1 == ir_types.PrimitiveTypeV1.STRING
+
+        if type_union.type == "container":
+            container = type_union.container.get_as_union()
+            if container.type == "optional":
+                return check_type(container.optional)
+            if container.type == "nullable":
+                return check_type(container.nullable)
+            if container.type == "literal":
+                return container.literal.get_as_union().type == "string"
+            return False
+
+        if type_union.type == "named":
+            shape = get_type_declaration(type_union.type_id).shape.get_as_union()
+            if shape.type == "alias":
+                return check_type(shape.alias_of)
+            return False
+
+        return False
+
+    return check_type(type_reference)
+
+
 def is_type_primitive_for_multipart(
     type_reference: ir_types.TypeReference,
     get_type_declaration: Callable[[ir_types.TypeId], ir_types.TypeDeclaration],

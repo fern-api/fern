@@ -144,7 +144,7 @@ func (e *Error) String() string {
 type ErrorCategory string
 
 const (
-	ErrorCategoryApiError            ErrorCategory = "API_ERROR"
+	ErrorCategoryAPIError            ErrorCategory = "API_ERROR"
 	ErrorCategoryAuthenticationError ErrorCategory = "AUTHENTICATION_ERROR"
 	ErrorCategoryInvalidRequestError ErrorCategory = "INVALID_REQUEST_ERROR"
 )
@@ -152,7 +152,7 @@ const (
 func NewErrorCategoryFromString(s string) (ErrorCategory, error) {
 	switch s {
 	case "API_ERROR":
-		return ErrorCategoryApiError, nil
+		return ErrorCategoryAPIError, nil
 	case "AUTHENTICATION_ERROR":
 		return ErrorCategoryAuthenticationError, nil
 	case "INVALID_REQUEST_ERROR":

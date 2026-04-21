@@ -247,7 +247,7 @@ export async function runPreviewServer({
         const allowedPaths = new Set<string>();
         if (docsDefinition?.filesV2) {
             for (const file of Object.values(docsDefinition.filesV2)) {
-                if (file.type === "url") {
+                if (file != null && file.type === "url") {
                     const urlPath = file.url.replace(/^\/_local/, "");
                     allowedPaths.add(urlPath);
                 }

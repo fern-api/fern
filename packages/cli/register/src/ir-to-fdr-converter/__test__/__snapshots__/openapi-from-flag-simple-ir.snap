@@ -63,7 +63,7 @@
       "type": {
         "_visit": [Function],
         "default": undefined,
-        "displayName": undefined,
+        "displayName": "Error",
         "fernFilepath": {
           "allParts": [],
           "file": undefined,
@@ -102,7 +102,7 @@
       "type": {
         "_visit": [Function],
         "default": undefined,
-        "displayName": undefined,
+        "displayName": "Error",
         "fernFilepath": {
           "allParts": [],
           "file": undefined,
@@ -141,7 +141,7 @@
       "type": {
         "_visit": [Function],
         "default": undefined,
-        "displayName": undefined,
+        "displayName": "Error",
         "fernFilepath": {
           "allParts": [],
           "file": undefined,
@@ -266,7 +266,7 @@
                 "responseBodyType": {
                   "_visit": [Function],
                   "default": undefined,
-                  "displayName": undefined,
+                  "displayName": "HealthResponse",
                   "fernFilepath": {
                     "allParts": [],
                     "file": undefined,
@@ -356,7 +356,7 @@
                     "responseBodyType": {
                       "_visit": [Function],
                       "default": undefined,
-                      "displayName": undefined,
+                      "displayName": "HealthResponse",
                       "fernFilepath": {
                         "allParts": [],
                         "file": undefined,
@@ -550,7 +550,7 @@
                 "responseBodyType": {
                   "_visit": [Function],
                   "default": undefined,
-                  "displayName": undefined,
+                  "displayName": "User",
                   "fernFilepath": {
                     "allParts": [],
                     "file": undefined,
@@ -648,7 +648,7 @@
                     "responseBodyType": {
                       "_visit": [Function],
                       "default": undefined,
-                      "displayName": undefined,
+                      "displayName": "User",
                       "fernFilepath": {
                         "allParts": [],
                         "file": undefined,
@@ -730,7 +730,7 @@
             "requestBodyType": {
               "_visit": [Function],
               "default": undefined,
-              "displayName": undefined,
+              "displayName": "CreateUserRequest",
               "fernFilepath": {
                 "allParts": [],
                 "file": undefined,
@@ -761,7 +761,7 @@
                 "responseBodyType": {
                   "_visit": [Function],
                   "default": undefined,
-                  "displayName": undefined,
+                  "displayName": "User",
                   "fernFilepath": {
                     "allParts": [],
                     "file": undefined,
@@ -853,7 +853,7 @@
                 "requestBodyType": {
                   "_visit": [Function],
                   "default": undefined,
-                  "displayName": undefined,
+                  "displayName": "CreateUserRequest",
                   "fernFilepath": {
                     "allParts": [],
                     "file": undefined,
@@ -888,7 +888,7 @@
                     "responseBodyType": {
                       "_visit": [Function],
                       "default": undefined,
-                      "displayName": undefined,
+                      "displayName": "User",
                       "fernFilepath": {
                         "allParts": [],
                         "file": undefined,

@@ -78,8 +78,11 @@ public class UnionWireTest {
     @Test
     public void testUpdate() throws Exception {
         server.enqueue(new MockResponse().setResponseCode(200).setBody("true"));
-        Boolean response =
-                client.union().update(Shape.circle(Circle.builder().radius(1.1).build()));
+        Boolean response = client.union()
+                .update(Shape.circle(Circle.builder()
+                        .radius(1.1)
+                        .additionalProperty("id", "id")
+                        .build()));
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("PATCH", request.getMethod());
@@ -164,7 +167,9 @@ public class UnionWireTest {
             while (iter.hasNext()) {
                 java.util.Map.Entry<String, JsonNode> entry = iter.next();
                 JsonNode actualValue = actual.get(entry.getKey());
-                if (actualValue == null || !jsonEquals(entry.getValue(), actualValue)) return false;
+                if (actualValue == null) {
+                    if (!entry.getValue().isNull()) return false;
+                } else if (!jsonEquals(entry.getValue(), actualValue)) return false;
             }
             return true;
         }

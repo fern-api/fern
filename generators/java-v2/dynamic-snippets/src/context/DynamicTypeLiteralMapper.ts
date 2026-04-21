@@ -1,5 +1,5 @@
 import { Severity } from "@fern-api/browser-compatible-base-generator";
-import { assertNever, extractErrorMessage } from "@fern-api/core-utils";
+import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { java } from "@fern-api/java-ast";
 
@@ -321,7 +321,8 @@ export class DynamicTypeLiteralMapper {
             case "discriminatedUnion":
                 return this.convertDiscriminatedUnion({
                     discriminatedUnion: named,
-                    value
+                    value,
+                    as
                 });
             case "enum":
                 return this.convertEnum({ enum_: named, value });
@@ -330,7 +331,7 @@ export class DynamicTypeLiteralMapper {
             case "undiscriminatedUnion":
                 // Don't pass inUndiscriminatedUnion here - we're AT the undiscriminated union level,
                 // not within it. The flag should only apply to the variants within the union.
-                return this.convertUndiscriminatedUnion({ undiscriminatedUnion: named, value });
+                return this.convertUndiscriminatedUnion({ undiscriminatedUnion: named, value, as });
             default:
                 assertNever(named);
         }
@@ -338,10 +339,12 @@ export class DynamicTypeLiteralMapper {
 
     private convertDiscriminatedUnion({
         discriminatedUnion,
-        value
+        value,
+        as
     }: {
         discriminatedUnion: FernIr.dynamic.DiscriminatedUnionType;
         value: unknown;
+        as?: DynamicTypeLiteralMapper.ConvertedAs;
     }): java.TypeLiteral {
         const classReference = this.context.getJavaClassReferenceFromDeclaration({
             declaration: discriminatedUnion.declaration
@@ -366,7 +369,7 @@ export class DynamicTypeLiteralMapper {
                     java.invokeMethod({
                         on: classReference,
                         method: this.context.getPropertyName(unionVariant.discriminantValue.name),
-                        arguments_: [this.convertNamed({ named, value: discriminatedUnionTypeInstance.value })]
+                        arguments_: [this.convertNamed({ named, value: discriminatedUnionTypeInstance.value, as })]
                     })
                 );
             }
@@ -386,7 +389,8 @@ export class DynamicTypeLiteralMapper {
                             arguments_: [
                                 this.convert({
                                     typeReference: unionVariant.typeReference,
-                                    value: record[propertyKey]
+                                    value: record[propertyKey],
+                                    as
                                 })
                             ]
                         })
@@ -419,9 +423,10 @@ export class DynamicTypeLiteralMapper {
         as?: DynamicTypeLiteralMapper.ConvertedAs;
         inUndiscriminatedUnion?: boolean;
     }): java.TypeLiteral {
+        const valueRecord = this.context.getRecord(value) ?? {};
         const properties = this.context.associateByWireValue({
             parameters: object_.properties,
-            values: this.context.getRecord(value) ?? {}
+            values: valueRecord
         });
         // Add missing required properties with default values to ensure valid staged builder code.
         // Java uses type-state staged builders where required fields must be set before build() can
@@ -449,8 +454,10 @@ export class DynamicTypeLiteralMapper {
         // Re-sort all properties (including newly added defaults) to match schema declaration order.
         // Java staged builders require method calls in the exact order defined by the schema.
         const paramOrderMap = new Map<string, number>();
+        const declaredWireValues = new Set<string>();
         object_.properties.forEach((param, index) => {
             paramOrderMap.set(param.name.wireValue, index);
+            declaredWireValues.add(param.name.wireValue);
         });
         properties.sort(
             (a, b) => (paramOrderMap.get(a.name.wireValue) ?? 0) - (paramOrderMap.get(b.name.wireValue) ?? 0)
@@ -486,12 +493,50 @@ export class DynamicTypeLiteralMapper {
                 this.context.errors.unscope();
             }
         }
+        // Handle extra properties not in the schema via .additionalProperty() builder
+        // calls so the serialized output matches the example data.
+        for (const [key, val] of Object.entries(valueRecord)) {
+            if (!declaredWireValues.has(key) && val !== undefined) {
+                const rawValue = this.convertToRawJavaLiteral(val);
+                if (rawValue != null) {
+                    builderParameters.push({
+                        name: "additionalProperty",
+                        value: java.TypeLiteral.raw(`"${this.escapeJavaString(key)}", ${rawValue}`)
+                    });
+                }
+            }
+        }
         return java.TypeLiteral.builder({
             classReference: this.context.getJavaClassReferenceFromDeclaration({
                 declaration: object_.declaration
             }),
             parameters: builderParameters
         });
+    }
+
+    private convertToRawJavaLiteral(value: unknown): string | null {
+        if (typeof value === "string") {
+            return `"${this.escapeJavaString(value)}"`;
+        }
+        if (typeof value === "number") {
+            return value.toString();
+        }
+        if (typeof value === "boolean") {
+            return value.toString();
+        }
+        if (value === null) {
+            return "null";
+        }
+        return null;
+    }
+
+    private escapeJavaString(s: string): string {
+        return s
+            .replace(/\\/g, "\\\\")
+            .replace(/"/g, '\\"')
+            .replace(/\n/g, "\\n")
+            .replace(/\t/g, "\\t")
+            .replace(/\r/g, "\\r");
     }
 
     private getDefaultValueForTypeReference(typeReference: FernIr.dynamic.TypeReference): unknown {
@@ -605,14 +650,17 @@ export class DynamicTypeLiteralMapper {
 
     private convertUndiscriminatedUnion({
         undiscriminatedUnion,
-        value
+        value,
+        as
     }: {
         undiscriminatedUnion: FernIr.dynamic.UndiscriminatedUnionType;
         value: unknown;
+        as?: DynamicTypeLiteralMapper.ConvertedAs;
     }): java.TypeLiteral {
         const result = this.findMatchingUndiscriminatedUnionType({
             undiscriminatedUnion,
-            value
+            value,
+            as
         });
         if (result == null) {
             return java.TypeLiteral.nop();
@@ -645,25 +693,24 @@ export class DynamicTypeLiteralMapper {
 
     private findMatchingUndiscriminatedUnionType({
         undiscriminatedUnion,
-        value
+        value,
+        as
     }: {
         undiscriminatedUnion: FernIr.dynamic.UndiscriminatedUnionType;
         value: unknown;
+        as?: DynamicTypeLiteralMapper.ConvertedAs;
     }): { valueTypeReference: FernIr.dynamic.TypeReference; typeInstantiation: java.TypeLiteral } | undefined {
-        const attemptedVariants: string[] = [];
-        const variantErrors: string[] = [];
-
         for (const typeReference of undiscriminatedUnion.types) {
             const errorsBefore = this.context.errors.size();
             try {
-                attemptedVariants.push(JSON.stringify(typeReference));
                 const typeInstantiation = this.convert({
                     typeReference,
                     value,
+                    as,
                     inUndiscriminatedUnion: true
                 });
 
-                if (java.TypeLiteral.isNop(typeInstantiation)) {
+                if (java.TypeLiteral.isNop(typeInstantiation) || this.context.errors.size() > errorsBefore) {
                     this.context.errors.truncate(errorsBefore);
                     continue;
                 }
@@ -671,26 +718,15 @@ export class DynamicTypeLiteralMapper {
                 return { valueTypeReference: typeReference, typeInstantiation };
             } catch (e) {
                 this.context.errors.truncate(errorsBefore);
-                variantErrors.push(`Type ${JSON.stringify(typeReference)}: ${extractErrorMessage(e)}`);
                 continue;
             }
         }
 
         this.context.errors.add({
             severity: Severity.Critical,
-            message: `None of the types in the undiscriminated union matched the given "${typeof value}" value. Tried ${attemptedVariants.length} variants. Errors: ${variantErrors.join("; ")}`
+            message: `None of the types in the undiscriminated union matched the given "${typeof value}" value`
         });
-
-        // Instead of returning undefined (which causes invalid code generation),
-        // throw an error to fail fast with a clear message
-        const unionName = undiscriminatedUnion.declaration.name ?? "UnknownUnion";
-        const detailedErrors = variantErrors.map((error, index) => `  ${index + 1}. ${error}`).join("\n");
-        throw new Error(
-            `Failed to match undiscriminated union "${unionName}" for ${typeof value} value.\n` +
-                `Value: ${JSON.stringify(value)}\n` +
-                `Attempted ${attemptedVariants.length} variants:\n${detailedErrors}\n\n` +
-                `This prevents invalid snippet code generation that would cause formatter errors.`
-        );
+        return undefined;
     }
 
     private getUndiscriminatedUnionFieldName({

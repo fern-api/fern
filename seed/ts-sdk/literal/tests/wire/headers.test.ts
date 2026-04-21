@@ -24,10 +24,6 @@ describe("HeadersClient", () => {
         const response = await client.headers.send({
             query: "What is the weather today",
         });
-        expect(response).toEqual({
-            message: "The weather is sunny",
-            status: 200,
-            success: true,
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

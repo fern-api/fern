@@ -1,6 +1,6 @@
 FROM node:22.12-alpine3.20 AS node
 
-FROM golang:1.23.8-alpine3.20
+FROM golang:1.26.2-alpine3.23
 
 ENV YARN_CACHE_FOLDER=/.yarn
 

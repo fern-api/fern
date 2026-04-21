@@ -637,11 +637,11 @@
         "_visit": [Function],
         "members": [
           {
-            "docs": undefined,
+            "docs": "Error variant A without discriminator",
             "type": {
               "_visit": [Function],
               "default": undefined,
-              "displayName": undefined,
+              "displayName": "ErrorVariantA",
               "fernFilepath": {
                 "allParts": [],
                 "file": undefined,
@@ -654,11 +654,11 @@
             },
           },
           {
-            "docs": undefined,
+            "docs": "Error variant B without discriminator",
             "type": {
               "_visit": [Function],
               "default": undefined,
-              "displayName": undefined,
+              "displayName": "ErrorVariantB",
               "fernFilepath": {
                 "allParts": [],
                 "file": undefined,
@@ -843,11 +843,11 @@
         "_visit": [Function],
         "members": [
           {
-            "docs": undefined,
+            "docs": "First variant for oneOf without discriminator",
             "type": {
               "_visit": [Function],
               "default": undefined,
-              "displayName": undefined,
+              "displayName": "OneOfVariantA",
               "fernFilepath": {
                 "allParts": [],
                 "file": undefined,
@@ -860,11 +860,11 @@
             },
           },
           {
-            "docs": undefined,
+            "docs": "Second variant for oneOf without discriminator",
             "type": {
               "_visit": [Function],
               "default": undefined,
-              "displayName": undefined,
+              "displayName": "OneOfVariantB",
               "fernFilepath": {
                 "allParts": [],
                 "file": undefined,

@@ -1,4 +1,4 @@
-irVersion: v53
+irVersion: v66
 displayName: OpenAPI
 image: fernapi/fern-openapi
 changelogLocation: ../../generators/openapi/versions.yml
@@ -33,8 +33,9 @@ fixtures:
       outputFolder: override
     - customConfig:
         customOverrides:
-          info: 
-            license: MIT
+          info:
+            license:
+              name: MIT
       outputFolder: custom-overrides
     - customConfig:
         filename: imdb.yaml
@@ -52,5 +53,4 @@ fixtures:
               Operand: 
                 type: null     
       outputFolder: custom-overrides
-allowedFailures:
-  - server-sent-events-openapi
+allowedFailures: []

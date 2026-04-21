@@ -1,3 +1,4 @@
+import { type CaseConverter, getWireValue } from "@fern-api/base-generator";
 import { visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { swift } from "@fern-api/swift-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -7,6 +8,7 @@ export declare namespace StringEnumGenerator {
         | {
               type: "ir";
               enumTypeDeclaration: FernIr.EnumTypeDeclaration;
+              caseConverter: CaseConverter;
           }
         | {
               type: "custom";
@@ -53,8 +55,8 @@ export class StringEnumGenerator {
             cases: visitDiscriminatedUnion(this.source, "type")._visit({
                 ir: (info) => {
                     return info.enumTypeDeclaration.values.map((val) => ({
-                        unsafeName: val.name.name.camelCase.unsafeName,
-                        rawValue: val.name.wireValue,
+                        unsafeName: info.caseConverter.camelUnsafe(val.name),
+                        rawValue: getWireValue(val.name),
                         docs: val.docs ? swift.docComment({ summary: val.docs }) : undefined
                     }));
                 },

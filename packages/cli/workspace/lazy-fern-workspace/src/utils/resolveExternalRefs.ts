@@ -107,6 +107,62 @@ function isExternalRefValue(value: unknown): boolean {
     return typeof ref === "string" && ref.length > 0 && !ref.startsWith("#") && !isUrlRef(ref);
 }
 
+interface SiblingResult {
+    siblingProperties: Record<string, unknown>;
+    hasSiblings: boolean;
+}
+
+/** Extract all properties from a $ref object other than `$ref` itself. */
+function collectSiblingProperties(record: Record<string, unknown>): SiblingResult {
+    const siblingProperties: Record<string, unknown> = {};
+    let hasSiblings = false;
+    for (const [key, value] of Object.entries(record)) {
+        if (key !== "$ref") {
+            siblingProperties[key] = value;
+            hasSiblings = true;
+        }
+    }
+    return { siblingProperties, hasSiblings };
+}
+
+/** Walk a parsed document to the node at the given JSON Pointer. */
+function navigateJsonPointer(root: unknown, pointer: string, filePath: string): unknown {
+    if (pointer === "") {
+        return root;
+    }
+    const segments = pointer.split("/").filter((k) => k !== "");
+    let current: unknown = root;
+    for (const segment of segments) {
+        const decodedKey = segment.replace(/~1/g, "/").replace(/~0/g, "~");
+        if (typeof current !== "object" || current == null) {
+            throw new Error(
+                `Cannot navigate JSON Pointer "${pointer}" in "${filePath}": ` +
+                    `expected an object but found ${typeof current} at key "${decodedKey}"`
+            );
+        }
+        const next = (current as Record<string, unknown>)[decodedKey];
+        if (next === undefined) {
+            throw new Error(
+                `Cannot navigate JSON Pointer "${pointer}" in "${filePath}": ` + `key "${decodedKey}" not found`
+            );
+        }
+        current = next;
+    }
+    return current;
+}
+
+/** Merge sibling properties onto resolved content (siblings take precedence). */
+function mergeWithSiblings(
+    resolved: unknown,
+    siblingProperties: Record<string, unknown>,
+    hasSiblings: boolean
+): unknown {
+    if (hasSiblings && resolved != null && typeof resolved === "object" && !Array.isArray(resolved)) {
+        return { ...(resolved as Record<string, unknown>), ...siblingProperties };
+    }
+    return resolved;
+}
+
 /**
  * Given a resolved absolute ref path + JSON pointer, check whether it should
  * become an internal `#/…` ref rather than be inlined:
@@ -162,7 +218,10 @@ function findInternalRef(
  * similar) document.
  *
  * **Behaviour**
- * - Internal refs (`#/…`) are always left unchanged.
+ * - Internal refs (`#/…`) in the main document are left unchanged.
+ * - Internal refs (`#/…`) inside content inlined from an external file are
+ *   rewritten via the registry (or inlined from the source file) because they
+ *   are file-local to the source, not the main document.
  * - External refs (`./foo.yml#/Bar`) are handled based on `applyRegistry`:
  *   - When `false` (top-level processing of the main document): always inline.
  *   - When `true` (inside a loaded external file): first try to convert to an
@@ -170,13 +229,16 @@ function findInternalRef(
  * - Transitive external refs inside loaded files are resolved recursively with
  *   `applyRegistry = true`.
  *
- * @param obj             - Document fragment to process
- * @param baseDir         - Absolute directory for resolving relative file refs
- * @param mainFileAbsPath - Absolute path to the root document being bundled
- * @param registry        - Ref registry built by `buildExternalRefRegistry`
- * @param applyRegistry   - Whether to attempt registry-based ref conversion
- * @param visited         - Cycle-detection set (do not pass externally)
- * @param fileCache       - Per-call file cache (do not pass externally)
+ * @param obj                - Document fragment to process
+ * @param baseDir            - Absolute directory for resolving relative file refs
+ * @param mainFileAbsPath    - Absolute path to the root document being bundled
+ * @param registry           - Ref registry built by `buildExternalRefRegistry`
+ * @param applyRegistry      - Whether to attempt registry-based ref conversion
+ * @param visited            - Cycle-detection set (do not pass externally)
+ * @param fileCache          - Per-call file cache (do not pass externally)
+ * @param sourceFileAbsPath  - When set, we are inside content inlined from this
+ *                             external file; file-local `#/` refs are resolved
+ *                             against it rather than left unchanged.
  */
 export async function resolveExternalRefs(
     obj: unknown,
@@ -185,7 +247,8 @@ export async function resolveExternalRefs(
     registry: Map<string, string>,
     applyRegistry = false,
     visited: Set<string> = new Set(),
-    fileCache: Map<string, unknown> = new Map()
+    fileCache: Map<string, unknown> = new Map(),
+    sourceFileAbsPath?: string
 ): Promise<unknown> {
     if (obj == null || typeof obj !== "object") {
         return obj;
@@ -194,7 +257,16 @@ export async function resolveExternalRefs(
     if (Array.isArray(obj)) {
         return Promise.all(
             obj.map((item) =>
-                resolveExternalRefs(item, baseDir, mainFileAbsPath, registry, applyRegistry, visited, fileCache)
+                resolveExternalRefs(
+                    item,
+                    baseDir,
+                    mainFileAbsPath,
+                    registry,
+                    applyRegistry,
+                    visited,
+                    fileCache,
+                    sourceFileAbsPath
+                )
             )
         );
     }
@@ -202,21 +274,48 @@ export async function resolveExternalRefs(
     const record = obj as Record<string, unknown>;
 
     const ref = record["$ref"];
+
+    // When inside content inlined from an external file, file-local refs
+    // (#/Foo) point to siblings in the *source* file, not the main document.
+    // Rewrite them via the registry or inline from the source file.
+    if (typeof ref === "string" && ref.startsWith("#") && sourceFileAbsPath != null) {
+        const pointer = ref.substring(1);
+        const { siblingProperties, hasSiblings } = collectSiblingProperties(record);
+
+        const internalRef = findInternalRef(sourceFileAbsPath, pointer, mainFileAbsPath, registry);
+        if (internalRef !== null) {
+            return hasSiblings ? { $ref: internalRef, ...siblingProperties } : { $ref: internalRef };
+        }
+
+        const cacheKey = `${sourceFileAbsPath}#${pointer}`;
+        if (visited.has(cacheKey)) {
+            throw new Error(`Circular $ref detected: "${ref}" (resolved to "${cacheKey}")`);
+        }
+        const newVisited = new Set(visited);
+        newVisited.add(cacheKey);
+
+        const fileContent = await readAndParseFile(sourceFileAbsPath, fileCache);
+        const parsed = navigateJsonPointer(fileContent, pointer, sourceFileAbsPath);
+
+        const refDir = dirname(sourceFileAbsPath);
+        const resolved = await resolveExternalRefs(
+            parsed,
+            refDir,
+            mainFileAbsPath,
+            registry,
+            true,
+            newVisited,
+            fileCache,
+            sourceFileAbsPath
+        );
+
+        return mergeWithSiblings(resolved, siblingProperties, hasSiblings);
+    }
+
     if (typeof ref === "string" && !ref.startsWith("#") && !isUrlRef(ref)) {
         const { jsonPointer, absolutePath: absoluteRefPath } = parseExternalRef(ref, baseDir);
+        const { siblingProperties, hasSiblings } = collectSiblingProperties(record);
 
-        // Collect sibling properties (keys other than $ref). AsyncAPI 3.x and
-        // OpenAPI 3.1+ allow meaningful sibling keywords alongside $ref (e.g.
-        // "description" overriding the referenced schema's description).
-        const siblingProperties: Record<string, unknown> = {};
-        for (const [key, value] of Object.entries(record)) {
-            if (key !== "$ref") {
-                siblingProperties[key] = value;
-            }
-        }
-        const hasSiblings = Object.keys(siblingProperties).length > 0;
-
-        // When inside a loaded file, prefer converting to an internal ref
         if (applyRegistry) {
             const internalRef = findInternalRef(absoluteRefPath, jsonPointer, mainFileAbsPath, registry);
             if (internalRef !== null) {
@@ -224,7 +323,6 @@ export async function resolveExternalRefs(
             }
         }
 
-        // Inline the referenced content
         const cacheKey = `${absoluteRefPath}#${jsonPointer}`;
         if (visited.has(cacheKey)) {
             throw new Error(`Circular $ref detected: "${ref}" (resolved to "${cacheKey}")`);
@@ -232,32 +330,9 @@ export async function resolveExternalRefs(
         const newVisited = new Set(visited);
         newVisited.add(cacheKey);
 
-        let parsed: unknown = await readAndParseFile(absoluteRefPath, fileCache);
+        const fileContent = await readAndParseFile(absoluteRefPath, fileCache);
+        const parsed = navigateJsonPointer(fileContent, jsonPointer, absoluteRefPath);
 
-        if (jsonPointer !== "") {
-            const keys = jsonPointer.split("/").filter((k) => k !== "");
-            let current: unknown = parsed;
-            for (const key of keys) {
-                const decodedKey = key.replace(/~1/g, "/").replace(/~0/g, "~");
-                if (typeof current !== "object" || current == null) {
-                    throw new Error(
-                        `Cannot navigate JSON Pointer "${jsonPointer}" in "${absoluteRefPath}": ` +
-                            `expected an object but found ${typeof current} at key "${decodedKey}"`
-                    );
-                }
-                const next = (current as Record<string, unknown>)[decodedKey];
-                if (next === undefined) {
-                    throw new Error(
-                        `Cannot navigate JSON Pointer "${jsonPointer}" in "${absoluteRefPath}": ` +
-                            `key "${decodedKey}" not found`
-                    );
-                }
-                current = next;
-            }
-            parsed = current;
-        }
-
-        // Recursively resolve the loaded content, now with registry active
         const refDir = dirname(absoluteRefPath);
         const resolved = await resolveExternalRefs(
             parsed,
@@ -266,15 +341,11 @@ export async function resolveExternalRefs(
             registry,
             true,
             newVisited,
-            fileCache
+            fileCache,
+            absoluteRefPath
         );
 
-        // Merge sibling properties onto the resolved content. Sibling props
-        // take precedence (they act as overrides per AsyncAPI 3.x / OAS 3.1).
-        if (hasSiblings && resolved != null && typeof resolved === "object" && !Array.isArray(resolved)) {
-            return { ...(resolved as Record<string, unknown>), ...siblingProperties };
-        }
-        return resolved;
+        return mergeWithSiblings(resolved, siblingProperties, hasSiblings);
     }
 
     // No external $ref — recursively process every property value
@@ -287,7 +358,8 @@ export async function resolveExternalRefs(
             registry,
             applyRegistry,
             visited,
-            fileCache
+            fileCache,
+            sourceFileAbsPath
         );
     }
     return result;

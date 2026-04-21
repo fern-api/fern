@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: any-auth
-  version: ''
+  version: 0.0.0
 paths:
   /token:
     post:
@@ -11,7 +11,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -46,7 +46,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -54,10 +54,11 @@ paths:
                 items:
                   $ref: '#/components/schemas/User'
       security:
-        - BearerAuth: []
-        - ApiKeyAuth: []
-        - BearerAuth: []
-        - BasicAuth: []
+        - Bearer: []
+        - APIKey: []
+        - OAuth: []
+        - Basic: []
+        - InferredAuth: []
   /admins:
     get:
       operationId: user_getAdmins
@@ -66,7 +67,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Success
           content:
             application/json:
               schema:
@@ -74,10 +75,11 @@ paths:
                 items:
                   $ref: '#/components/schemas/User'
       security:
-        - BearerAuth: []
-        - ApiKeyAuth: []
-        - BearerAuth: []
-        - BasicAuth: []
+        - Bearer: []
+        - APIKey: []
+        - OAuth: []
+        - Basic: []
+        - InferredAuth: []
 components:
   schemas:
     TokenResponse:
@@ -90,8 +92,9 @@ components:
         expires_in:
           type: integer
         refresh_token:
-          type: string
-          nullable: true
+          type:
+            - string
+            - 'null'
       required:
         - access_token
         - expires_in
@@ -107,13 +110,19 @@ components:
         - id
         - name
   securitySchemes:
-    BearerAuth:
+    Bearer:
       type: http
       scheme: bearer
-    ApiKeyAuth:
+    APIKey:
       type: apiKey
       in: header
       name: X-API-Key
-    BasicAuth:
+    OAuth:
+      type: http
+      scheme: bearer
+    Basic:
       type: http
       scheme: basic
+    InferredAuth:
+      type: http
+      scheme: bearer

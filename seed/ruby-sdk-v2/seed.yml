@@ -1,8 +1,10 @@
-irVersion: v61
+irVersion: v66
 displayName: Ruby SDK
 language: ruby
 generatorType: SDK
 defaultOutputMode: github
+defaultCustomConfig:
+  rubocopSeverity: error
 image: fernapi/fern-ruby-sdk-v2
 imageAliases: [fernapi/fern-ruby-sdk]
 changelogLocation: ../../generators/ruby-v2/sdk/versions.yml
@@ -22,6 +24,11 @@ test:
   podman:
     image: fernapi/fern-ruby-sdk-v2:latest
     command: pnpm turbo run podmanTagLatest --filter @fern-api/ruby-sdk
+  local:
+    workingDirectory: generators/ruby-v2
+    buildCommand:
+      - pnpm turbo run dist:cli --filter @fern-api/ruby-sdk
+    runCommand: node --enable-source-maps sdk/dist/cli.cjs {CONFIG_PATH}
 
 publish:
   preBuildCommands:
@@ -44,11 +51,16 @@ fixtures:
     - outputFolder: wire-tests
       customConfig:
         enableWireTests: true
+  basic-auth-pw-omitted:
+    - outputFolder: wire-tests
+      customConfig:
+        enableWireTests: true
   exhaustive:
     - outputFolder: wire-tests
       customConfig:
         enableWireTests: true
         clientModuleName: MyClient
+        maxRetries: 5
   pagination-custom:
     - customConfig:
         customPagerName: FooPager

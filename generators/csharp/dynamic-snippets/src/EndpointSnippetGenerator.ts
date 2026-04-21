@@ -26,7 +26,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
     }): Promise<string> {
         const code = this.buildCodeBlock({ endpoint, snippet: request, options });
         return code.toString({
-            namespace: "Usage",
+            namespace: "Examples",
             generation: this.generation,
             allNamespaceSegments: new Set(),
             allTypeClassReferences: new Map(),
@@ -49,7 +49,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
     }): string {
         const code = this.buildCodeBlock({ endpoint, snippet: request, options });
         return code.toString({
-            namespace: "Usage",
+            namespace: "Examples",
             generation: this.generation,
             allNamespaceSegments: new Set(),
             allTypeClassReferences: new Map(),
@@ -79,11 +79,13 @@ export class EndpointSnippetGenerator extends WithGeneration {
         snippet: FernIr.dynamic.EndpointSnippetRequest;
         options: Options;
     }): ast.AstNode {
-        // if we're actually passed the examples, we need to
-        // check that the endpoint that we're generating has an example that matches the snippet
+        // If we're passed endpoint examples and the snippet includes an id (i.e. it's an
+        // EndpointExample, not just an EndpointSnippetRequest), verify the id matches one of
+        // the examples. Snippets without an id are user-provided requests and skip this check.
         if (
             endpoint.examples &&
-            !endpoint.examples?.find((each) => is.DynamicIR.EndpointExample(snippet) && each.id === snippet.id)
+            is.DynamicIR.EndpointExample(snippet) &&
+            !endpoint.examples.find((each) => each.id === snippet.id)
         ) {
             // the dsg expects us to just throw when there is nothing to generate.
             throw new Error("Endpoint does not have an example that matches the snippet");
@@ -107,9 +109,12 @@ export class EndpointSnippetGenerator extends WithGeneration {
 
     private buildFullCodeBlock({ body, options }: { body: ast.CodeBlock; options: Options }): ast.AstNode {
         const config = this.getConfig(options);
+        const methodName = config.fullStyleMethodName ?? config.fullStyleClassName ?? "Example";
         const class_ = this.csharp.class_({
-            name: config.fullStyleClassName ?? "Example",
-            namespace: "Usage",
+            name: "Examples",
+            namespace: "Examples",
+            partial: true,
+            skipNamespaceDeclaration: true,
             access: ast.Access.Public
         });
 
@@ -118,7 +123,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
         class_.addNamespaceReference(this.Types.RootClientForSnippets.namespace);
 
         class_.addMethod({
-            name: "Do",
+            name: methodName,
             access: ast.Access.Public,
             isAsync: true,
             parameters: [],
@@ -385,16 +390,24 @@ export class EndpointSnippetGenerator extends WithGeneration {
         auth: FernIr.dynamic.BasicAuth;
         values: FernIr.dynamic.BasicAuthValues;
     }): NamedArgument[] {
-        return [
-            {
+        // usernameOmit/passwordOmit may exist in newer IR versions
+        const authRecord = auth as unknown as Record<string, unknown>;
+        const usernameOmitted = !!authRecord.usernameOmit;
+        const passwordOmitted = !!authRecord.passwordOmit;
+        const args: NamedArgument[] = [];
+        if (!usernameOmitted) {
+            args.push({
                 name: this.context.getParameterName(auth.username),
                 assignment: this.csharp.Literal.string(values.username)
-            },
-            {
+            });
+        }
+        if (!passwordOmitted) {
+            args.push({
                 name: this.context.getParameterName(auth.password),
                 assignment: this.csharp.Literal.string(values.password)
-            }
-        ];
+            });
+        }
+        return args;
     }
 
     private getConstructorBearerAuthArgs({

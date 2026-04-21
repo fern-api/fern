@@ -1,6 +1,9 @@
 irVersion: v66
 displayName: C# Model
 image: fernapi/fern-csharp-model
+# This generator is no longer actively supported. The workspace is retained for
+# historical reference but seed tests, publishing, and builds are skipped.
+disabled: true
 changelogLocation: ../../generators/csharp/model/versions.yml
 
 buildScripts:
@@ -53,6 +56,10 @@ fixtures:
     - customConfig:
         experimental-enable-forward-compatible-enums: false
       outputFolder: plain-enums
+  csharp-inline-types:
+    - customConfig:
+        enable-inline-types: true
+      outputFolder: inline-types
 scripts:
   - image: fernapi/csharp-seed
     commands:

@@ -6,7 +6,6 @@ generators/go-v2/* @amckinney
 generators/java/* @tstanmay13
 generators/openapi/* @dsinghvi @amckinney
 generators/php/* @amckinney
-generators/postman/* @dsinghvi @amckinney
 generators/python/* @amckinney
 generators/python-v2/* @amckinney
 generators/ruby-v2/* @iamnamananand996

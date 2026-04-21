@@ -6,7 +6,7 @@ import { getBasePath } from "./ApiDefinitionHolder.js";
 import { stringifyEndpointPathParts, stringifyEndpointPathParts2 } from "./utils/stringifyEndpointPathParts.js";
 
 export class ApiDefinitionHolderLatest {
-    #subpackagesByLocator: Record<string, FdrAPI.api.latest.SubpackageMetadata> = {};
+    #subpackagesByLocator: Record<string, FdrAPI.api.latest.LatestSubpackageMetadata> = {};
     #webhooksByLocator: Record<string, FdrAPI.api.latest.webhook.WebhookDefinition> = {};
     #endpointsByLocator: Record<string, FdrAPI.api.latest.endpoint.EndpointDefinition> = {};
     #websocketsByLocator: Record<string, FdrAPI.api.latest.websocket.WebSocketChannel> = {};
@@ -58,7 +58,7 @@ export class ApiDefinitionHolderLatest {
         }
     }
 
-    getSubpackageByLocator(locator: string): FdrAPI.api.latest.SubpackageMetadata | undefined {
+    getSubpackageByLocator(locator: string): FdrAPI.api.latest.LatestSubpackageMetadata | undefined {
         if (
             ["GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS", "CONNECT", "TRACE"].some((method) =>
                 locator.includes(method)

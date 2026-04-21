@@ -109,6 +109,9 @@ export declare namespace TestRunner {
 }
 
 const extractLicenseInfo = (license: unknown, absolutePathToApiDefinition: AbsoluteFilePath) => {
+    if (typeof license === "string") {
+        return license;
+    }
     if (license != null && typeof license === "object" && "custom" in license) {
         const licenseObj = license as { custom: string };
         const licensePath = licenseObj.custom;
@@ -129,7 +132,7 @@ export abstract class TestRunner {
     protected readonly lock: Semaphore;
     protected readonly taskContextFactory: TaskContextFactory;
     private readonly skipScripts: boolean;
-    private readonly keepContainer: boolean;
+    protected readonly keepContainer: boolean;
     private scriptRunner: ScriptRunner | undefined;
     private readonly workspaceCache: WorkspaceCache | undefined;
     protected readonly logLevel: LogLevel;

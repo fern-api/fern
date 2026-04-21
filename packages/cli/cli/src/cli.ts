@@ -2,6 +2,7 @@
 import type { ReadStream, WriteStream } from "node:tty";
 import { fromBinary, toBinary } from "@bufbuild/protobuf";
 import { CodeGeneratorRequestSchema, CodeGeneratorResponseSchema } from "@bufbuild/protobuf/wkt";
+import { getOrCreateFernRunId } from "@fern-api/cli-telemetry";
 import { runCliV2 } from "@fern-api/cli-v2";
 import {
     correctIncorrectDockerOrg,
@@ -21,7 +22,7 @@ import {
     undefinedIfSomeNullish
 } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, doesPathExist, isURL, resolve } from "@fern-api/fs-utils";
-import { formatBootstrapSummary, replayInit, replayResolve } from "@fern-api/generator-cli";
+import { formatBootstrapSummary, replayForget, replayInit, replayResolve, replayStatus } from "@fern-api/generator-cli";
 import {
     initializeAPI,
     initializeDocs,
@@ -33,7 +34,7 @@ import {
 import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { askToLogin, login, logout } from "@fern-api/login";
 import { protocGenFern } from "@fern-api/protoc-gen-fern";
-import { FernCliError, LoggableFernCliError } from "@fern-api/task-context";
+import { CliError } from "@fern-api/task-context";
 import getPort from "get-port";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
@@ -43,6 +44,7 @@ import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVers
 import { GlobalCliOptions, loadProjectAndRegisterWorkspacesWithContext } from "./cliCommons.js";
 import { addGeneratorCommands, addGetOrganizationCommand } from "./cliV2.js";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces.js";
+import { listPreviewGroups } from "./commands/automations/listPreviewGroups.js";
 import { diff } from "./commands/diff/diff.js";
 import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace.js";
 import { docsDiff } from "./commands/docs-diff/docsDiff.js";
@@ -52,6 +54,7 @@ import { listDocsPreview } from "./commands/docs-preview/listDocsPreview.js";
 import { downgrade } from "./commands/downgrade/downgrade.js";
 import { generateOpenAPIForWorkspaces } from "./commands/export/generateOpenAPIForWorkspaces.js";
 import { formatWorkspaces } from "./commands/format/formatWorkspaces.js";
+import { parseGeneratorArg } from "./commands/generate/filterGenerators.js";
 import { GenerationMode, generateAPIWorkspaces } from "./commands/generate/generateAPIWorkspaces.js";
 import { generateDocsWorkspace } from "./commands/generate/generateDocsWorkspace.js";
 import { generateDynamicIrForWorkspaces } from "./commands/generate-dynamic-ir/generateDynamicIrForWorkspaces.js";
@@ -68,6 +71,7 @@ import { mockServer } from "./commands/mock/mockServer.js";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1.js";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2.js";
 import { sdkDiffCommand } from "./commands/sdk-diff/sdkDiffCommand.js";
+import type { SdkPreviewResult, SdkPreviewSuccess } from "./commands/sdk-preview/sdkPreview.js";
 import { sdkPreview } from "./commands/sdk-preview/sdkPreview.js";
 import { selfUpdate } from "./commands/self-update/selfUpdate.js";
 import { testOutput } from "./commands/test/testOutput.js";
@@ -87,11 +91,11 @@ import { RUNTIME } from "./runtime.js";
 
 void runCli();
 
-const USE_NODE_18_OR_ABOVE_MESSAGE = "The Fern CLI requires Node 18+ or above.";
-
 async function runCli() {
+    getOrCreateFernRunId();
+
     const isLocal = process.argv.includes("--local");
-    const cliContext = new CliContext(process.stdout, process.stderr, { isLocal });
+    const cliContext = await CliContext.create(process.stdout, process.stderr, { isLocal });
 
     const exit = async () => {
         await cliContext.exit();
@@ -131,28 +135,7 @@ async function runCli() {
             });
         }
     } catch (error) {
-        await cliContext.instrumentPostHogEvent({
-            command: process.argv.join(" "),
-            properties: {
-                failed: true,
-                error
-            }
-        });
-        if ((error as Error)?.message.includes("globalThis")) {
-            cliContext.logger.error(USE_NODE_18_OR_ABOVE_MESSAGE);
-            cliContext.failWithoutThrowing();
-        } else if (error instanceof FernCliError) {
-            // thrower is responsible for logging, so we generally don't need to log here.
-            cliContext.failWithoutThrowing();
-        } else if (error instanceof LoggableFernCliError) {
-            cliContext.logger.error(`Failed. ${error.log}`);
-        } else {
-            // TODO: This is intentionally broad for initial rollout.
-            // We likely capture more than intended; narrow reporting with
-            // explicit error classification once we collect real-world signal.
-            await cliContext.captureException(error);
-            cliContext.failWithoutThrowing("Failed.", error);
-        }
+        cliContext.failWithoutThrowing(undefined, error);
     }
 
     await exit();
@@ -197,7 +180,7 @@ async function tryRunCli(cliContext: CliContext) {
                     cliContext.logger.info(cliContext.environment.packageVersion);
                 } else {
                     cli.showHelp();
-                    cliContext.failAndThrow();
+                    cliContext.failAndThrow(undefined, undefined, { code: CliError.Code.ConfigError });
                 }
             }
         )
@@ -248,6 +231,7 @@ async function tryRunCli(cliContext: CliContext) {
     addBetaCommand(cli, cliContext);
 
     addSdkCommand(cli, cliContext);
+    addAutomationsCommand(cli, cliContext);
 
     // CLI V2 Sanctioned Commands
     addGetOrganizationCommand(cli, cliContext);
@@ -343,14 +327,22 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 }
             }
             if (argv.api != null && argv.docs != null) {
-                return cliContext.failWithoutThrowing("Cannot specify both --api and --docs. Please choose one.");
+                return cliContext.failWithoutThrowing(
+                    "Cannot specify both --api and --docs. Please choose one.",
+                    undefined,
+                    { code: CliError.Code.ConfigError }
+                );
             } else if (argv.readme != null && argv.mintlify != null) {
                 return cliContext.failWithoutThrowing(
-                    "Cannot specify both --readme and --mintlify. Please choose one."
+                    "Cannot specify both --readme and --mintlify. Please choose one.",
+                    undefined,
+                    { code: CliError.Code.ConfigError }
                 );
             } else if (argv.openapi != null && argv["fern-definition"] === true) {
                 return cliContext.failWithoutThrowing(
-                    "Cannot specify both --openapi and --fern-definition. Please choose one."
+                    "Cannot specify both --openapi and --fern-definition. Please choose one.",
+                    undefined,
+                    { code: CliError.Code.ConfigError }
                 );
             } else if (argv.readme != null) {
                 await cliContext.runTask(async (context) => {
@@ -385,7 +377,9 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                         const result = await loadOpenAPIFromUrl({ url: argv.openapi, logger: cliContext.logger });
 
                         if (result.status === LoadOpenAPIStatus.Failure) {
-                            cliContext.failAndThrow(result.errorMessage);
+                            cliContext.failAndThrow(result.errorMessage, undefined, {
+                                code: CliError.Code.NetworkError
+                            });
                         }
 
                         const tmpFilepath = result.filePath;
@@ -395,7 +389,9 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     }
                     const pathExists = await doesPathExist(absoluteOpenApiPath);
                     if (!pathExists) {
-                        cliContext.failAndThrow(`${absoluteOpenApiPath} does not exist`);
+                        cliContext.failAndThrow(`${absoluteOpenApiPath} does not exist`, undefined, {
+                            code: CliError.Code.ConfigError
+                        });
                     }
                 }
                 await cliContext.runTask(async (context) => {
@@ -448,9 +444,11 @@ function addDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 })
                 .middleware((argv) => {
                     if (!haveSameNullishness(argv.fromGeneratorVersion, argv.toGeneratorVersion)) {
-                        throw new Error(
-                            "Both --from-generator-version and --to-generator-version must be provided together, or neither should be provided"
-                        );
+                        throw new CliError({
+                            message:
+                                "Both --from-generator-version and --to-generator-version must be provided together, or neither should be provided",
+                            code: CliError.Code.ValidationError
+                        });
                     }
                 }),
         async (argv) => {
@@ -532,7 +530,7 @@ function addSdkDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                     description: "Output result as JSON"
                 }),
         async (argv) => {
-            await cliContext.instrumentPostHogEvent({
+            cliContext.instrumentPostHogEvent({
                 command: "fern sdk-diff"
             });
 
@@ -767,53 +765,88 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
-                return cliContext.failWithoutThrowing("Cannot specify both --api and --docs. Please choose one.");
+                return cliContext.failWithoutThrowing(
+                    "Cannot specify both --api and --docs. Please choose one.",
+                    undefined,
+                    { code: CliError.Code.ConfigError }
+                );
             }
             if (argv.id != null && !argv.preview) {
-                return cliContext.failWithoutThrowing("The --id flag can only be used with --preview.");
+                return cliContext.failWithoutThrowing("The --id flag can only be used with --preview.", undefined, {
+                    code: CliError.Code.ConfigError
+                });
             }
             if (argv.id != null && argv.docs == null) {
-                return cliContext.failWithoutThrowing("The --id flag can only be used with --docs.");
+                return cliContext.failWithoutThrowing("The --id flag can only be used with --docs.", undefined, {
+                    code: CliError.Code.ConfigError
+                });
             }
             if (argv.skipUpload && !argv.preview) {
-                return cliContext.failWithoutThrowing("The --skip-upload flag can only be used with --preview.");
+                return cliContext.failWithoutThrowing(
+                    "The --skip-upload flag can only be used with --preview.",
+                    undefined,
+                    { code: CliError.Code.ConfigError }
+                );
             }
             if (argv.skipUpload && argv.docs == null) {
-                return cliContext.failWithoutThrowing("The --skip-upload flag can only be used with --docs.");
+                return cliContext.failWithoutThrowing(
+                    "The --skip-upload flag can only be used with --docs.",
+                    undefined,
+                    { code: CliError.Code.ConfigError }
+                );
             }
             if (argv.fernignore != null && (argv.local || argv.runner != null)) {
                 return cliContext.failWithoutThrowing(
-                    "The --fernignore flag is not supported with local generation (--local or --runner). It can only be used with remote generation."
+                    "The --fernignore flag is not supported with local generation (--local or --runner). It can only be used with remote generation.",
+                    undefined,
+                    { code: CliError.Code.ConfigError }
                 );
             }
             if (argv["skip-fernignore"] && argv.fernignore != null) {
                 return cliContext.failWithoutThrowing(
-                    "The --skip-fernignore and --fernignore flags cannot be used together."
+                    "The --skip-fernignore and --fernignore flags cannot be used together.",
+                    undefined,
+                    { code: CliError.Code.ConfigError }
                 );
             }
             if (argv["dynamic-ir-only"] && (argv.local || argv.runner != null)) {
                 return cliContext.failWithoutThrowing(
-                    "The --dynamic-ir-only flag is not supported with local generation (--local or --runner). It can only be used with remote generation."
+                    "The --dynamic-ir-only flag is not supported with local generation (--local or --runner). It can only be used with remote generation.",
+                    undefined,
+                    { code: CliError.Code.ConfigError }
                 );
             }
             if (argv["dynamic-ir-only"] && argv.version == null) {
                 return cliContext.failWithoutThrowing(
-                    "The --dynamic-ir-only flag requires a version to be specified with --version."
+                    "The --dynamic-ir-only flag requires a version to be specified with --version.",
+                    undefined,
+                    { code: CliError.Code.ConfigError }
                 );
             }
             if (argv["dynamic-ir-only"] && argv.docs != null) {
                 return cliContext.failWithoutThrowing(
-                    "The --dynamic-ir-only flag can only be used for API generation, not docs generation."
+                    "The --dynamic-ir-only flag can only be used for API generation, not docs generation.",
+                    undefined,
+                    { code: CliError.Code.ConfigError }
                 );
             }
             if (argv.output != null && !argv.preview) {
-                return cliContext.failWithoutThrowing("The --output flag currently only works with --preview.");
+                return cliContext.failWithoutThrowing(
+                    "The --output flag currently only works with --preview.",
+                    undefined,
+                    { code: CliError.Code.ConfigError }
+                );
             }
             if (argv.output != null && argv.docs != null) {
-                return cliContext.failWithoutThrowing("The --output flag is not supported for docs generation.");
+                return cliContext.failWithoutThrowing(
+                    "The --output flag is not supported for docs generation.",
+                    undefined,
+                    { code: CliError.Code.ConfigError }
+                );
             }
             const correctedGeneratorFilter =
                 argv.generator != null ? warnAndCorrectIncorrectDockerOrg(argv.generator, cliContext) : undefined;
+            const { generatorName, generatorIndex } = parseGeneratorArg(correctedGeneratorFilter);
             if (argv.api != null) {
                 return await generateAPIWorkspaces({
                     project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
@@ -823,7 +856,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     cliContext,
                     version: argv.version,
                     groupName: argv.group,
-                    generatorName: correctedGeneratorFilter,
+                    generatorName,
+                    generatorIndex,
                     shouldLogS3Url: argv.printZipUrl,
                     keepDocker: argv.keepDocker,
                     useLocalDocker: argv.local || argv.runner != null,
@@ -882,7 +916,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 cliContext,
                 version: argv.version,
                 groupName: argv.group,
-                generatorName: correctedGeneratorFilter,
+                generatorName,
+                generatorIndex,
                 shouldLogS3Url: argv.printZipUrl,
                 keepDocker: argv.keepDocker,
                 useLocalDocker: argv.local,
@@ -1347,7 +1382,7 @@ function addUpdateApiSpecCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
                     default: 2
                 }),
         async (argv) => {
-            await cliContext.instrumentPostHogEvent({
+            cliContext.instrumentPostHogEvent({
                 command: "fern api update"
             });
             await updateApiSpec({
@@ -1378,7 +1413,7 @@ function addSelfUpdateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                     default: false
                 }),
         async (argv) => {
-            await cliContext.instrumentPostHogEvent({
+            cliContext.instrumentPostHogEvent({
                 command: "fern self-update"
             });
             await selfUpdate({
@@ -1407,7 +1442,7 @@ function addLoginCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 }),
         async (argv) => {
             await cliContext.runTask(async (context) => {
-                await cliContext.instrumentPostHogEvent({
+                cliContext.instrumentPostHogEvent({
                     command: "fern login"
                 });
                 await login(context, { useDeviceCodeFlow: argv.deviceCode, email: argv.email });
@@ -1423,7 +1458,7 @@ function addLogoutCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         (yargs) => yargs,
         async () => {
             await cliContext.runTask(async (context) => {
-                await cliContext.instrumentPostHogEvent({
+                cliContext.instrumentPostHogEvent({
                     command: "fern logout"
                 });
                 await logout(context);
@@ -1448,7 +1483,7 @@ function addFormatCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     description: "Only run the command on the provided API"
                 }),
         async (argv) => {
-            await cliContext.instrumentPostHogEvent({
+            cliContext.instrumentPostHogEvent({
                 command: "fern format"
             });
             await formatWorkspaces({
@@ -1482,7 +1517,7 @@ function addTestCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     description: "Run the tests configured to a specific language"
                 }),
         async (argv) => {
-            await cliContext.instrumentPostHogEvent({
+            cliContext.instrumentPostHogEvent({
                 command: "fern test"
             });
             await testOutput({
@@ -1515,7 +1550,7 @@ function addMockCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     description: "The API to mock."
                 }),
         async (argv) => {
-            await cliContext.instrumentPostHogEvent({
+            cliContext.instrumentPostHogEvent({
                 command: "fern mock"
             });
             await mockServer({
@@ -1560,7 +1595,7 @@ function addOverridesCompareCommand(cli: Argv<GlobalCliOptions>, cliContext: Cli
                     description: "Path to write the overrides file (defaults to <original>-overrides.yml)"
                 }),
         async (argv) => {
-            await cliContext.instrumentPostHogEvent({
+            cliContext.instrumentPostHogEvent({
                 command: "fern overrides compare"
             });
             const originalPath = resolve(cwd(), argv.original as string);
@@ -1593,7 +1628,7 @@ function addOverridesWriteCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCo
             })
         ],
         async (argv) => {
-            await cliContext.instrumentPostHogEvent({
+            cliContext.instrumentPostHogEvent({
                 command: "fern overrides write"
             });
             await writeOverridesForWorkspaces({
@@ -1629,7 +1664,7 @@ function addWriteOverridesCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCo
         ],
         async (argv) => {
             cliContext.logger.warn("The 'write-overrides' command is deprecated. Use 'fern overrides write' instead.");
-            await cliContext.instrumentPostHogEvent({
+            cliContext.instrumentPostHogEvent({
                 command: "fern write-overrides"
             });
             await writeOverridesForWorkspaces({
@@ -1664,7 +1699,7 @@ function addWriteDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
                 }),
         async (argv) => {
             const preserveSchemaIds = argv.preserveSchemas != null;
-            await cliContext.instrumentPostHogEvent({
+            cliContext.instrumentPostHogEvent({
                 command: "fern write-definition"
             });
             await writeDefinitionForWorkspaces({
@@ -1713,7 +1748,7 @@ function addDocsMdGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCo
                 description: "Name of a specific library defined in docs.yml to generate docs for"
             }),
         async (argv) => {
-            await cliContext.instrumentPostHogEvent({
+            cliContext.instrumentPostHogEvent({
                 command: "fern docs md generate"
             });
 
@@ -1754,7 +1789,7 @@ function addDocsDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     description: "Output directory for diff images"
                 }),
         async (argv) => {
-            await cliContext.instrumentPostHogEvent({
+            cliContext.instrumentPostHogEvent({
                 command: "fern docs diff"
             });
 
@@ -1799,7 +1834,7 @@ function addDocsPreviewListCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
                     description: "Page number for pagination (starts at 1)"
                 }),
         async (argv) => {
-            await cliContext.instrumentPostHogEvent({
+            cliContext.instrumentPostHogEvent({
                 command: "fern docs preview list"
             });
             await listDocsPreview({
@@ -1813,22 +1848,42 @@ function addDocsPreviewListCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
 
 function addDocsPreviewDeleteCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
-        "delete <url>",
+        "delete [target]",
         "Delete a preview deployment",
         (yargs) =>
-            yargs.positional("url", {
-                type: "string",
-                description:
-                    "The FQDN of the preview deployment to delete (e.g. acme-preview-abc123.docs.buildwithfern.com)",
-                demandOption: true
-            }),
+            yargs
+                .positional("target", {
+                    type: "string",
+                    description: "A preview URL or ID (auto-detected)"
+                })
+                .option("url", {
+                    type: "string",
+                    description:
+                        "The FQDN of the preview deployment to delete (e.g. acme-preview-abc123.docs.buildwithfern.com)"
+                })
+                .option("id", {
+                    type: "string",
+                    description: "The preview ID to delete. Resolves the URL from the organization in fern.config.json."
+                })
+                .check((argv) => {
+                    const sources = [argv.target, argv.url, argv.id].filter(Boolean);
+                    if (sources.length === 0) {
+                        throw new Error("Must provide a preview URL or --id.");
+                    }
+                    if (sources.length > 1) {
+                        throw new Error("Provide only one of: [target], --url, or --id.");
+                    }
+                    return true;
+                }),
         async (argv) => {
-            await cliContext.instrumentPostHogEvent({
+            cliContext.instrumentPostHogEvent({
                 command: "fern docs preview delete"
             });
             await deleteDocsPreview({
                 cliContext,
-                previewUrl: argv.url
+                target: argv.target,
+                previewUrl: argv.url,
+                previewId: argv.id
             });
         }
     );
@@ -1881,18 +1936,27 @@ function addDocsDevCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
             }
 
             let port: number;
-            if (argv.port != null) {
-                port = argv.port;
-            } else {
-                port = await getPort({ port: [3000, 3001, 3002, 3003, 3004, 3005, 3006, 3007, 3008, 3009, 3010] });
-            }
-
             let backendPort: number;
-            if (argv.backendPort != null) {
-                backendPort = argv.backendPort;
-            } else {
-                backendPort = await getPort({
-                    port: [3001, 3002, 3003, 3004, 3005, 3006, 3007, 3008, 3009, 3010, 3011]
+            try {
+                if (argv.port != null) {
+                    port = argv.port;
+                } else {
+                    port = await getPort({
+                        port: [3000, 3001, 3002, 3003, 3004, 3005, 3006, 3007, 3008, 3009, 3010]
+                    });
+                }
+
+                if (argv.backendPort != null) {
+                    backendPort = argv.backendPort;
+                } else {
+                    backendPort = await getPort({
+                        port: [3001, 3002, 3003, 3004, 3005, 3006, 3007, 3008, 3009, 3010, 3011]
+                    });
+                }
+            } catch (error) {
+                throw new CliError({
+                    message: `Failed to find an available port: ${error instanceof Error ? error.message : String(error)}`,
+                    code: CliError.Code.EnvironmentError
                 });
             }
             const bundlePath: string | undefined = argv.bundlePath;
@@ -1942,7 +2006,7 @@ function addDocsMdCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
             // No additional options for this command
         },
         async () => {
-            await cliContext.instrumentPostHogEvent({
+            cliContext.instrumentPostHogEvent({
                 command: "fern docs md check"
             });
 
@@ -1952,7 +2016,7 @@ function addDocsMdCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
             });
 
             if (project.docsWorkspaces == null) {
-                cliContext.failAndThrow("No docs workspace found");
+                cliContext.failAndThrow("No docs workspace found", undefined, { code: CliError.Code.ConfigError });
             }
 
             const docsWorkspace = project.docsWorkspaces;
@@ -1971,7 +2035,7 @@ function addDocsMdCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
             });
 
             if (hasErrors) {
-                cliContext.failWithoutThrowing();
+                cliContext.failWithoutThrowing(undefined, undefined, { code: CliError.Code.ValidationError });
             }
         }
     );
@@ -1998,7 +2062,7 @@ function addGenerateJsonschemaCommand(cli: Argv<GlobalCliOptions>, cliContext: C
                     description: "The type to generate JSON Schema for (e.g. 'MySchema' or 'mypackage.MySchema')"
                 }),
         async (argv) => {
-            await cliContext.instrumentPostHogEvent({
+            cliContext.instrumentPostHogEvent({
                 command: "fern jsonschema",
                 properties: {
                     output: argv.output
@@ -2028,7 +2092,7 @@ function addWriteDocsDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: 
                 demandOption: true
             }),
         async (argv) => {
-            await cliContext.instrumentPostHogEvent({
+            cliContext.instrumentPostHogEvent({
                 command: "fern write-docs-definition",
                 properties: {
                     outputPath: argv.outputPath
@@ -2059,7 +2123,7 @@ function addWriteTranslationCommand(cli: Argv<GlobalCliOptions>, cliContext: Cli
                 description: "Return content as-is without calling the translation service"
             }),
         async (argv) => {
-            await cliContext.instrumentPostHogEvent({
+            cliContext.instrumentPostHogEvent({
                 command: "fern write-translation"
             });
 
@@ -2096,7 +2160,7 @@ function addExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     default: 2
                 }),
         async (argv) => {
-            await cliContext.instrumentPostHogEvent({
+            cliContext.instrumentPostHogEvent({
                 command: "fern export",
                 properties: {
                     outputPath: argv.outputPath
@@ -2119,7 +2183,7 @@ function addExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 function addEnrichCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "enrich <openapi>",
-        false, // Hidden from --help
+        "Merge an AI examples overrides file into an OpenAPI spec",
         (yargs) =>
             yargs
                 .positional("openapi", {
@@ -2140,7 +2204,7 @@ function addEnrichCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     demandOption: true
                 }),
         async (argv) => {
-            await cliContext.instrumentPostHogEvent({
+            cliContext.instrumentPostHogEvent({
                 command: "fern api enrich"
             });
             const openapiPath = resolve(cwd(), argv.openapi as string);
@@ -2161,6 +2225,290 @@ function addSdkCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         addSdkPreviewCommand(yargs, cliContext);
         return yargs.demandCommand();
     });
+}
+
+function addAutomationsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command("automations", false, (yargs) => {
+        addAutomationsGenerateCommand(yargs, cliContext);
+        addAutomationsPreviewCommand(yargs, cliContext);
+        return yargs.demandCommand();
+    });
+}
+
+/**
+ * `fern automations preview`
+ *
+ * Runs SDK preview for all previewable generator groups in the project.
+ * Discovers eligible groups using the same criteria as `listPreviewGroups`,
+ * then calls `sdkPreview` for each one, aggregating results.
+ *
+ * A generator is considered previewable when:
+ * - It is a supported TypeScript/npm generator (fern-typescript-sdk, node-sdk, browser-sdk)
+ * - `automation.preview` is not false in generators.yml
+ *
+ * One preview is run per unique (groupName, apiName) pair. Errors are
+ * isolated per group — a failure in one group does not block the others.
+ *
+ * JSON output format (--json):
+ *   {
+ *     "results": [
+ *       {
+ *         "groupName": "ts-sdk",
+ *         "apiName": null,
+ *         "status": "success",
+ *         "org": "acme",
+ *         "previews": [{ "preview_id": "...", "install": "...", ... }]
+ *       },
+ *       { "groupName": "node", "apiName": "bar", "status": "error", "error": "..." }
+ *     ]
+ *   }
+ *
+ * Example GitHub Actions usage:
+ *   - run: fern automations preview --json --push-diff
+ *     env:
+ *       FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+ */
+interface AutomationsPreviewGroupResult {
+    groupName: string;
+    apiName: string | null;
+    status: "success" | "error";
+    org?: string;
+    previews?: SdkPreviewSuccess["previews"];
+    error?: string;
+}
+
+function addAutomationsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "preview",
+        false, // hidden
+        (yargs) =>
+            yargs
+                .option("group", {
+                    type: "string",
+                    description:
+                        "Filter to a specific generator group (e.g. 'sdk'). Omit to preview all eligible groups."
+                })
+                .option("json", {
+                    boolean: true,
+                    default: false,
+                    description: "Output results as JSON (for machine consumption)."
+                })
+                .option("push-diff", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Push a preview diff branch (fern-preview-{version}) to each SDK repo " +
+                        "in addition to publishing to the preview registry."
+                }),
+        async (argv) => {
+            cliContext.instrumentPostHogEvent({
+                command: "fern automations preview"
+            });
+
+            const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                commandLineApiWorkspace: undefined,
+                defaultToAllApiWorkspaces: true
+            });
+
+            const groups = listPreviewGroups({
+                workspaces: project.apiWorkspaces,
+                groupFilter: argv.group
+            });
+
+            if (groups.length === 0) {
+                if (argv.json) {
+                    process.stdout.write(JSON.stringify({ results: [] }, null, 2) + "\n");
+                } else {
+                    cliContext.logger.info("No eligible generator groups found for preview.");
+                }
+                return;
+            }
+
+            cliContext.logger.info(
+                `Found ${groups.length} previewable group(s): ${groups.map((g) => g.groupName).join(", ")}`
+            );
+
+            const results: AutomationsPreviewGroupResult[] = [];
+
+            for (const group of groups) {
+                const apiLabel = group.apiName != null ? ` (api: ${group.apiName})` : "";
+                cliContext.logger.info(`Running preview for ${group.groupName}${apiLabel}...`);
+
+                try {
+                    const result = await sdkPreview({
+                        cliContext,
+                        groupName: group.groupName,
+                        generatorFilter: undefined,
+                        apiName: group.apiName ?? undefined,
+                        output: undefined,
+                        local: false,
+                        pushDiff: argv["push-diff"]
+                    });
+
+                    if (result.status === "success") {
+                        results.push({
+                            groupName: group.groupName,
+                            apiName: group.apiName,
+                            status: "success",
+                            org: result.org,
+                            previews: result.previews
+                        });
+                    } else {
+                        results.push({
+                            groupName: group.groupName,
+                            apiName: group.apiName,
+                            status: "error",
+                            error: result.message
+                        });
+                    }
+                } catch (error) {
+                    const message = error instanceof Error ? error.message : String(error);
+                    cliContext.logger.warn(`Preview failed for group '${group.groupName}': ${message}`);
+                    results.push({
+                        groupName: group.groupName,
+                        apiName: group.apiName,
+                        status: "error",
+                        error: message
+                    });
+                }
+            }
+
+            if (argv.json) {
+                process.stdout.write(JSON.stringify({ results }, null, 2) + "\n");
+            } else {
+                for (const groupResult of results) {
+                    if (groupResult.status === "success" && groupResult.previews != null) {
+                        for (const preview of groupResult.previews) {
+                            if (preview.install) {
+                                cliContext.logger.info(`${groupResult.groupName}: ${preview.install}`);
+                            }
+                        }
+                    } else if (groupResult.status === "error") {
+                        cliContext.logger.warn(`${groupResult.groupName}: ${groupResult.error}`);
+                    }
+                }
+            }
+
+            const hasErrors = results.some((r) => r.status === "error");
+            if (hasErrors) {
+                process.exitCode = 1;
+            }
+        }
+    );
+}
+
+/**
+ * `fern automations generate`
+ *
+ * Runs SDK generation for a single generator in automation mode. This command
+ * is designed to be called by the `fern-api/fern-generate` GitHub Action.
+ *
+ * Automation mode enables the following behaviors:
+ *   - **Separate PRs**: Each invocation creates its own PR (no reuse of existing fern-bot PRs).
+ *     This preserves 1:1 mapping between spec commits and SDK releases.
+ *   - **No-diff detection**: If generation produces output identical to the SDK repo's default
+ *     branch, the PR/push is skipped entirely.
+ *   - **Breaking change detection**: When `--version AUTO` determines a MAJOR bump, the PR body
+ *     includes a breaking changes section and automerge is not enabled.
+ *   - **Automerge** (with `--auto-merge`): Enables GitHub's automerge on the PR. The SDK repo's
+ *     own branch protection rules and required checks govern whether it actually merges.
+ *     Skipped when breaking changes are detected.
+ *   - **Run ID correlation**: If `FERN_RUN_ID` is set in the environment, it's included in the
+ *     PR body for cross-repo debugging and tracing.
+ *
+ * Generator targeting:
+ *   `--generator` accepts either a 0-based index or a generator name.
+ *   Index-based targeting is preferred because a group can contain multiple generators with the
+ *   same name (e.g. two TypeScript SDK entries publishing to different repos).
+ *
+ * Environment variables:
+ *   - FERN_TOKEN: Required. Authenticates with Fern services.
+ *   - FERN_RUN_ID: Optional. Correlation ID included in PR body for cross-repo tracing.
+ *     Typically set to `${{ github.run_id }}-${{ strategy.job-index }}` in GitHub Actions.
+ *
+ * Examples:
+ *   # Generate the first generator in the 'sdk' group with auto-versioning and automerge
+ *   fern automations generate --group sdk --generator 0 --version AUTO --auto-merge
+ *
+ *   # Generate a specific generator by name (selects ALL matching generators in the group)
+ *   fern automations generate --group sdk --generator fernapi/fern-python-sdk --version AUTO
+ *
+ *   # Multi-API repo: target a specific API
+ *   fern automations generate --api payments --group sdk --generator 0 --version AUTO
+ */
+function addAutomationsGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "generate",
+        false, // hidden
+        (yargs) =>
+            yargs
+                .option("api", {
+                    type: "string",
+                    description:
+                        "Target a specific API in a multi-API repo (e.g. 'foo' for fern/apis/foo/). " +
+                        "Required when the project has multiple APIs."
+                })
+                .option("group", {
+                    type: "string",
+                    description:
+                        "The generator group to run (e.g. 'sdk'). " +
+                        "Falls back to default-group in generators.yml if omitted."
+                })
+                .option("generator", {
+                    type: "string",
+                    description:
+                        "Target a specific generator by 0-based index (e.g. '0', '1') or by name. " +
+                        "Index is preferred for deterministic targeting when duplicate names exist."
+                })
+                .option("version", {
+                    type: "string",
+                    description:
+                        "Version for generated packages. Use 'AUTO' for AI-based semantic versioning " +
+                        "that analyzes the diff and determines MAJOR/MINOR/PATCH automatically."
+                })
+                .option("auto-merge", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Enable GitHub automerge on generated PRs. Automerge is skipped when " +
+                        "breaking changes (MAJOR bump) are detected, regardless of this flag."
+                }),
+        async (argv) => {
+            const { generatorName: genName, generatorIndex: genIndex } = parseGeneratorArg(argv.generator);
+
+            await cliContext.runTask(async () => {
+                await generateAPIWorkspaces({
+                    project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                        commandLineApiWorkspace: argv.api,
+                        defaultToAllApiWorkspaces: false
+                    }),
+                    cliContext,
+                    version: argv.version,
+                    groupName: argv.group,
+                    generatorName: genName,
+                    generatorIndex: genIndex,
+                    shouldLogS3Url: false,
+                    keepDocker: false,
+                    useLocalDocker: false,
+                    preview: false,
+                    mode: undefined,
+                    force: true,
+                    runner: undefined,
+                    inspect: false,
+                    lfsOverride: undefined,
+                    fernignorePath: undefined,
+                    skipFernignore: false,
+                    dynamicIrOnly: false,
+                    outputDir: undefined,
+                    noReplay: false,
+                    retryRateLimited: false,
+                    requireEnvVars: false,
+                    automationMode: true,
+                    autoMerge: argv["auto-merge"]
+                });
+            });
+        }
+    );
 }
 
 function addSdkPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
@@ -2185,22 +2533,111 @@ function addSdkPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                     boolean: true,
                     default: false,
                     description: "Output result as JSON"
+                })
+                .option("output", {
+                    type: "array",
+                    string: true,
+                    description:
+                        "Output targets: filesystem paths and/or registry URLs. " +
+                        "When omitted, publishes to the default preview registry via remote generation. " +
+                        "Examples: --output ./out (disk only), --output https://registry.example.com (registry only), " +
+                        "--output ./out --output https://registry.example.com (both)."
+                })
+                .option("local", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Run generation locally via Docker instead of remotely through Fiddle. " +
+                        "Requires Docker to be installed. " +
+                        "Can be combined with --output for local disk output."
+                })
+                .option("push-diff", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Push a preview diff branch (fern-preview-{version}) to the SDK repo " +
+                        "in addition to publishing to the preview registry. " +
+                        "Requires the generator to have github output configuration " +
+                        "and the Fern GitHub App installed on the target repo. " +
+                        "Cannot be combined with --local."
                 }),
         async (argv) => {
-            await cliContext.instrumentPostHogEvent({
+            cliContext.instrumentPostHogEvent({
                 command: "fern sdk preview"
             });
             const generatorFilter =
                 argv.generator != null ? warnAndCorrectIncorrectDockerOrg(argv.generator, cliContext) : undefined;
-            await sdkPreview({
+            const result = await sdkPreview({
                 cliContext,
                 groupName: argv.group,
                 generatorFilter,
                 apiName: argv.api,
-                json: argv.json
+                output: argv.output,
+                local: argv.local,
+                pushDiff: argv.pushDiff
             });
+            writeSdkPreviewOutput({ result, json: argv.json, cliContext });
         }
     );
+}
+
+function writeSdkPreviewOutput({
+    result,
+    json,
+    cliContext
+}: {
+    result: SdkPreviewResult;
+    json: boolean;
+    cliContext: CliContext;
+}): void {
+    if (json) {
+        process.stdout.write(JSON.stringify(result, null, 2) + "\n");
+        if (result.status === "error") {
+            process.exitCode = 1;
+        }
+        return;
+    }
+
+    if (result.status === "error") {
+        return cliContext.failAndThrow(
+            result.message,
+            undefined,
+            result.code != null ? { code: result.code } : undefined
+        );
+    }
+
+    if (result.previews.length > 0) {
+        cliContext.logger.info("");
+        const hasRegistry = result.previews.some((p) => p.registry_url !== "");
+        if (hasRegistry) {
+            cliContext.logger.info(
+                `Published ${result.previews.length} preview package${result.previews.length > 1 ? "s" : ""}:`
+            );
+            for (const preview of result.previews) {
+                cliContext.logger.info("");
+                cliContext.logger.info(`  ${preview.package_name}@${preview.version}`);
+                cliContext.logger.info(`  Install: ${preview.install}`);
+                if (preview.diff_url) {
+                    cliContext.logger.info(`  Diff: ${preview.diff_url}`);
+                }
+                if (preview.output_path) {
+                    cliContext.logger.info(`  Output: ${preview.output_path}`);
+                }
+            }
+        } else {
+            cliContext.logger.info(
+                `Generated ${result.previews.length} preview SDK${result.previews.length > 1 ? "s" : ""}:`
+            );
+            for (const preview of result.previews) {
+                cliContext.logger.info("");
+                cliContext.logger.info(`  ${preview.package_name}@${preview.version}`);
+                if (preview.diff_url) {
+                    cliContext.logger.info(`  Diff: ${preview.diff_url}`);
+                }
+                cliContext.logger.info(`  Output: ${preview.output_path}`);
+            }
+        }
+    }
 }
 
 function addBetaCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
@@ -2218,7 +2655,7 @@ function addBetaCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 await runCliV2(v2Args);
             } catch (error) {
                 cliContext.logger.error("CLI v2 failed:", String(error));
-                cliContext.failWithoutThrowing();
+                cliContext.failWithoutThrowing(undefined, error, { code: CliError.Code.InternalError });
             }
         }
     );
@@ -2299,6 +2736,8 @@ function addReplayCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         builder: (yargs) => {
             addReplayInitCommand(yargs, cliContext);
             addReplayResolveCommand(yargs, cliContext);
+            addReplayStatusCommand(yargs, cliContext);
+            addReplayForgetCommand(yargs, cliContext);
             return yargs;
         },
         handler: () => {
@@ -2344,7 +2783,7 @@ function addReplayInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                     description: "Overwrite existing lockfile if Replay is already initialized"
                 }),
         async (argv) => {
-            await cliContext.instrumentPostHogEvent({
+            cliContext.instrumentPostHogEvent({
                 command: "fern replay init"
             });
 
@@ -2359,12 +2798,20 @@ function addReplayInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                 token = token ?? resolved.token;
             }
 
-            if (githubRepo == null || token == null) {
-                const hint =
-                    githubRepo != null
-                        ? "Repository found but no token. Pass --token or set GITHUB_TOKEN environment variable."
-                        : "Either use --group to read from generators.yml, or provide --github and --token directly.";
-                return cliContext.failAndThrow(`Missing required github config. ${hint}`);
+            if (githubRepo == null) {
+                return cliContext.failAndThrow(
+                    "Missing required github config. Either use --group to read from generators.yml, or provide --github directly.",
+                    undefined,
+                    {
+                        code: CliError.Code.ConfigError
+                    }
+                );
+            }
+
+            if (token == null) {
+                cliContext.logger.warn(
+                    "No GitHub token found. Clone may fail for private repos. Set GITHUB_TOKEN or pass --token."
+                );
             }
 
             cliContext.logger.info(`Initializing Replay for: ${githubRepo}`);
@@ -2400,7 +2847,9 @@ function addReplayInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                 }
 
                 if (result.lockfileContent == null) {
-                    return cliContext.failAndThrow("Bootstrap succeeded but lockfile content is missing.");
+                    return cliContext.failAndThrow("Bootstrap succeeded but lockfile content is missing.", undefined, {
+                        code: CliError.Code.InternalError
+                    });
                 }
 
                 // Send lockfile to Fiddle for server-side PR creation
@@ -2428,18 +2877,24 @@ function addReplayInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                     if (response.status === 404) {
                         return cliContext.failAndThrow(
                             "The Fern GitHub App is not installed on this repository. " +
-                                "Install it at https://github.com/apps/fern-api to enable server-side PR creation."
+                                "Install it at https://github.com/apps/fern-api to enable server-side PR creation.",
+                            undefined,
+                            { code: CliError.Code.ConfigError }
                         );
                     }
                     const body = await response.text();
-                    return cliContext.failAndThrow(`Failed to create PR via Fern: ${body}`);
+                    return cliContext.failAndThrow(`Failed to create PR via Fern: ${body}`, undefined, {
+                        code: CliError.Code.NetworkError
+                    });
                 }
 
                 const data = (await response.json()) as { prUrl: string };
                 cliContext.logger.info(`\nPR created: ${data.prUrl}`);
                 cliContext.logger.info("Merge the PR to enable Replay for this repository.");
             } catch (error) {
-                cliContext.failAndThrow(`Failed to initialize Replay: ${extractErrorMessage(error)}`);
+                cliContext.failAndThrow(`Failed to initialize Replay: ${extractErrorMessage(error)}`, error, {
+                    code: CliError.Code.NetworkError
+                });
             }
         }
     );
@@ -2462,7 +2917,7 @@ function addReplayResolveCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
                     description: "Skip checking for remaining conflict markers before committing"
                 }),
         async (argv) => {
-            await cliContext.instrumentPostHogEvent({
+            cliContext.instrumentPostHogEvent({
                 command: "fern replay resolve"
             });
 
@@ -2506,12 +2961,263 @@ function addReplayResolveCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
                                 }
                                 cliContext.logger.warn(`Resolve them first, then run \`fern replay resolve\` again.`);
                             } else {
-                                cliContext.failAndThrow(`Resolve failed: ${result.reason ?? "unknown error"}`);
+                                cliContext.failAndThrow(
+                                    `Resolve failed: ${result.reason ?? "unknown error"}`,
+                                    undefined,
+                                    { code: CliError.Code.InternalError }
+                                );
                             }
                         }
                 }
             } catch (error) {
-                cliContext.failAndThrow(`Failed to resolve: ${extractErrorMessage(error)}`);
+                cliContext.failAndThrow(`Failed to resolve: ${extractErrorMessage(error)}`, error, {
+                    code: CliError.Code.InternalError
+                });
+            }
+        }
+    );
+}
+
+function addReplayStatusCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "status [directory]",
+        false, // hidden from --help
+        (yargs) =>
+            yargs
+                .positional("directory", {
+                    type: "string",
+                    default: ".",
+                    description: "SDK directory containing .fern/replay.lock"
+                })
+                .option("verbose", {
+                    type: "boolean",
+                    alias: "v",
+                    default: false,
+                    description: "Show all patches with full details"
+                }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern replay status"
+            });
+
+            const outputDir = resolve(cwd(), argv.directory ?? ".");
+
+            try {
+                const result = replayStatus({ outputDir });
+
+                if (!result.initialized) {
+                    cliContext.logger.info("Replay is not initialized. Run `fern replay init` to get started.");
+                    return;
+                }
+
+                // Header
+                cliContext.logger.info(
+                    `Replay: ${result.patches.length} customization(s) tracked, ${result.generationCount} generation(s)`
+                );
+
+                if (result.lastGeneration) {
+                    cliContext.logger.info(
+                        `Last generation: ${result.lastGeneration.sha} (${result.lastGeneration.timestamp})`
+                    );
+                }
+
+                if (result.patches.length === 0) {
+                    cliContext.logger.info("No customizations tracked.");
+                    return;
+                }
+
+                // Patches
+                const patchesToShow = argv.verbose ? result.patches : result.patches.slice(0, 10);
+                for (const patch of patchesToShow) {
+                    const statusTag = patch.status ? ` [${patch.status}]` : "";
+                    if (argv.verbose) {
+                        cliContext.logger.info(
+                            `\n  ${patch.id} (${patch.type})${statusTag}\n` +
+                                `    ${patch.message}\n` +
+                                `    Author: ${patch.author} (${patch.sha})\n` +
+                                `    Files (${patch.fileCount}): ${patch.files.join(", ")}`
+                        );
+                    } else {
+                        cliContext.logger.info(
+                            `  ${patch.id}: ${patch.message} (${patch.fileCount} file(s))${statusTag}`
+                        );
+                    }
+                }
+
+                if (!argv.verbose && result.patches.length > 10) {
+                    cliContext.logger.info(`  ... and ${result.patches.length - 10} more (use --verbose to see all)`);
+                }
+
+                if (result.unresolvedCount > 0) {
+                    cliContext.logger.warn(
+                        `\n${result.unresolvedCount} patch(es) have unresolved conflicts. Run \`fern replay resolve\` to fix.`
+                    );
+                }
+
+                if (result.excludePatterns.length > 0) {
+                    cliContext.logger.info(`\nExclude patterns: ${result.excludePatterns.join(", ")}`);
+                }
+            } catch (error) {
+                cliContext.failAndThrow(`Failed to get Replay status: ${extractErrorMessage(error)}`);
+            }
+        }
+    );
+}
+
+function addReplayForgetCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "forget [args..]",
+        false, // hidden from --help
+        (yargs) =>
+            yargs
+                .positional("args", {
+                    type: "string",
+                    array: true,
+                    description: "Patch IDs (e.g. patch-abc12345) or a search pattern"
+                })
+                .option("dry-run", {
+                    type: "boolean",
+                    default: false,
+                    description: "Show what would be removed without actually removing"
+                })
+                .option("yes", {
+                    type: "boolean",
+                    alias: "y",
+                    default: false,
+                    description: "Skip confirmation prompts"
+                })
+                .option("all", {
+                    type: "boolean",
+                    default: false,
+                    description: "Remove all tracked patches"
+                }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern replay forget"
+            });
+
+            const outputDir = resolve(cwd(), ".");
+            const args = argv.args ?? [];
+            const dryRun = argv.dryRun;
+
+            try {
+                // --all mode
+                if (argv.all) {
+                    const result = replayForget({ outputDir, options: { all: true, dryRun } });
+
+                    if (!result.initialized) {
+                        cliContext.logger.info("Replay is not initialized. Nothing to forget.");
+                        return;
+                    }
+
+                    if (result.removed.length === 0) {
+                        cliContext.logger.info("No patches to remove.");
+                        return;
+                    }
+
+                    if (dryRun) {
+                        cliContext.logger.info(`Would remove ${result.removed.length} patch(es):`);
+                    } else {
+                        cliContext.logger.info(`Removed ${result.removed.length} patch(es):`);
+                    }
+                    for (const patch of result.removed) {
+                        cliContext.logger.info(`  ${patch.id}: ${patch.message}`);
+                    }
+                    for (const warning of result.warnings) {
+                        cliContext.logger.warn(warning);
+                    }
+                    return;
+                }
+
+                // Patch ID mode: all args start with "patch-"
+                if (args.length > 0 && args.every((a) => a.startsWith("patch-"))) {
+                    const result = replayForget({ outputDir, options: { patchIds: args, dryRun } });
+
+                    if (!result.initialized) {
+                        cliContext.logger.info("Replay is not initialized. Nothing to forget.");
+                        return;
+                    }
+
+                    if (result.removed.length > 0) {
+                        const verb = dryRun ? "Would remove" : "Removed";
+                        for (const patch of result.removed) {
+                            cliContext.logger.info(`${verb}: ${patch.id} — ${patch.message}`);
+                        }
+                    }
+                    for (const id of result.alreadyForgotten) {
+                        cliContext.logger.info(`Already forgotten: ${id}`);
+                    }
+                    for (const warning of result.warnings) {
+                        cliContext.logger.warn(warning);
+                    }
+                    return;
+                }
+
+                // Search/pattern mode or no-args mode
+                const pattern = args.length === 1 ? args[0] : undefined;
+                const result = replayForget({ outputDir, options: { pattern } });
+
+                if (!result.initialized) {
+                    cliContext.logger.info("Replay is not initialized. Nothing to forget.");
+                    return;
+                }
+
+                const matched = result.matched ?? [];
+                if (matched.length === 0) {
+                    if (pattern) {
+                        cliContext.logger.info(`No patches matching "${pattern}".`);
+                    } else {
+                        cliContext.logger.info("No patches tracked.");
+                    }
+                    return;
+                }
+
+                // Show matched patches
+                cliContext.logger.info(`${matched.length} patch(es) matched:`);
+                for (const patch of matched) {
+                    const stat = `+${patch.diffstat.additions}/-${patch.diffstat.deletions}`;
+                    cliContext.logger.info(`  ${patch.id}: ${patch.message} (${stat})`);
+                }
+
+                if (dryRun) {
+                    cliContext.logger.info("\nDry run — no patches removed.");
+                    return;
+                }
+
+                if (!argv.yes) {
+                    if (!process.stdout.isTTY) {
+                        cliContext.failAndThrow(
+                            "Confirmation required. Use --yes to skip confirmation in non-interactive mode."
+                        );
+                        return;
+                    }
+
+                    // Simple y/N confirmation
+                    const readline = await import("readline");
+                    const rl = readline.createInterface({ input: process.stdin, output: process.stderr });
+                    const answer = await new Promise<string>((resolvePrompt) => {
+                        rl.question(`\nRemove ${matched.length} patch(es)? [y/N] `, resolvePrompt);
+                    });
+                    rl.close();
+
+                    if (answer.toLowerCase() !== "y") {
+                        cliContext.logger.info("Cancelled.");
+                        return;
+                    }
+                }
+
+                // Actually remove the matched patches
+                const patchIds = matched.map((p) => p.id);
+                const removeResult = replayForget({ outputDir, options: { patchIds, dryRun: false } });
+
+                cliContext.logger.info(
+                    `Removed ${removeResult.removed.length} patch(es). ${removeResult.remaining} remaining.`
+                );
+                for (const warning of removeResult.warnings) {
+                    cliContext.logger.warn(warning);
+                }
+            } catch (error) {
+                cliContext.failAndThrow(`Failed to forget patches: ${extractErrorMessage(error)}`);
             }
         }
     );
@@ -2526,7 +3232,10 @@ function parseOwnerRepo(githubRepo: string): { owner: string; repo: string } {
     const owner = parts[parts.length - 2];
     const repo = parts[parts.length - 1];
     if (owner == null || repo == null) {
-        throw new Error(`Could not parse owner/repo from: ${githubRepo}`);
+        throw new CliError({
+            message: `Could not parse owner/repo from: ${githubRepo}`,
+            code: CliError.Code.ParseError
+        });
     }
     return { owner, repo };
 }

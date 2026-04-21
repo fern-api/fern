@@ -1,3 +1,4 @@
+import { getNameFromWireValue, getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { BaseGoCustomConfigSchema, go } from "@fern-api/go-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -12,7 +13,7 @@ export declare namespace GoFieldMapper {
 
     interface Args {
         /* The name of the field. */
-        name: FernIr.NameAndWireValue;
+        name: FernIr.NameAndWireValueOrString;
         /* The type of the field. */
         reference: FernIr.TypeReference;
         /* The docs of the field, if any. */
@@ -30,6 +31,7 @@ export class GoFieldMapper {
     }
 
     public convert({ name, reference, docs, includeTags = ["json", "url"] }: GoFieldMapper.Args): go.Field {
+        const nameValue = getNameFromWireValue(name);
         switch (reference.type) {
             case "container":
                 return this.convertContainer({
@@ -43,7 +45,7 @@ export class GoFieldMapper {
             case "primitive":
             case "unknown":
                 return go.field({
-                    name: this.context.getFieldName(name.name),
+                    name: this.context.getFieldName(nameValue),
                     type: this.context.goTypeMapper.convert({ reference }),
                     tags: this.getTags({ name, reference, includeTags }),
                     docs
@@ -61,11 +63,12 @@ export class GoFieldMapper {
         includeTags
     }: {
         container: FernIr.ContainerType;
-        name: FernIr.NameAndWireValue;
+        name: FernIr.NameAndWireValueOrString;
         reference: FernIr.TypeReference;
         docs?: string;
         includeTags: GoFieldMapper.Tag[];
     }): go.Field {
+        const nameValue = getNameFromWireValue(name);
         switch (container.type) {
             case "literal":
                 return this.convertLiteral({ name, literal: container.literal });
@@ -75,7 +78,7 @@ export class GoFieldMapper {
             case "optional":
             case "nullable":
                 return go.field({
-                    name: this.context.getFieldName(name.name),
+                    name: this.context.getFieldName(nameValue),
                     type: this.context.goTypeMapper.convert({ reference }),
                     tags: this.getTags({ name, reference, includeTags }),
                     docs
@@ -85,16 +88,23 @@ export class GoFieldMapper {
         }
     }
 
-    private convertLiteral({ name, literal }: { name: FernIr.NameAndWireValue; literal: FernIr.Literal }): go.Field {
+    private convertLiteral({
+        name,
+        literal
+    }: {
+        name: FernIr.NameAndWireValueOrString;
+        literal: FernIr.Literal;
+    }): go.Field {
+        const nameValue = getNameFromWireValue(name);
         switch (literal.type) {
             case "boolean":
                 return go.field({
-                    name: this.context.getLiteralFieldName(name.name),
+                    name: this.context.getLiteralFieldName(nameValue),
                     type: go.Type.bool()
                 });
             case "string":
                 return go.field({
-                    name: this.context.getLiteralFieldName(name.name),
+                    name: this.context.getLiteralFieldName(nameValue),
                     type: go.Type.string()
                 });
             default:
@@ -107,7 +117,7 @@ export class GoFieldMapper {
         reference,
         includeTags
     }: {
-        name: FernIr.NameAndWireValue;
+        name: FernIr.NameAndWireValueOrString;
         reference: FernIr.TypeReference;
         includeTags: GoFieldMapper.Tag[];
     }): go.Field.Tag[] {
@@ -124,7 +134,7 @@ export class GoFieldMapper {
         includedTags,
         tag
     }: {
-        name: FernIr.NameAndWireValue;
+        name: FernIr.NameAndWireValueOrString;
         reference: FernIr.TypeReference;
         includedTags: Set<GoFieldMapper.Tag>;
         tag: GoFieldMapper.Tag;
@@ -135,16 +145,17 @@ export class GoFieldMapper {
                 value: IGNORE_TAG
             };
         }
+        const wireValue = getWireValue(name);
         const isOptional = this.context.isOptional(reference);
         if (isOptional) {
             return {
                 name: tag,
-                value: `${name.wireValue},${OMIT_EMPTY_TAG}`
+                value: `${wireValue},${OMIT_EMPTY_TAG}`
             };
         }
         return {
             name: tag,
-            value: name.wireValue
+            value: wireValue
         };
     }
 }

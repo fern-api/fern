@@ -19,28 +19,28 @@ export const V66_TO_V65_MIGRATION: IrMigration<
         [GeneratorName.TYPESCRIPT]: "3.61.0-rc.0",
         [GeneratorName.TYPESCRIPT_SDK]: "3.61.0-rc.0",
         [GeneratorName.TYPESCRIPT_EXPRESS]: "0.20.0-rc.0",
-        [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.JAVA_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.JAVA_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.JAVA]: "4.2.0-rc.0",
+        [GeneratorName.JAVA_MODEL]: "1.9.0-rc.0",
+        [GeneratorName.JAVA_SDK]: "4.2.0-rc.0",
         [GeneratorName.JAVA_SPRING]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.OPENAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.OPENAPI]: "0.4.0-rc.0",
         [GeneratorName.PYTHON_FASTAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PYTHON_PYDANTIC]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PYTHON_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.STOPLIGHT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.POSTMAN]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.GO_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.GO_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.RUBY_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.GO_MODEL]: "0.24.0-rc.0",
+        [GeneratorName.GO_SDK]: "1.34.0-rc.0",
+        [GeneratorName.RUBY_SDK]: "1.3.0-rc.0",
         [GeneratorName.CSHARP_MODEL]: "0.9.0-rc.0",
         [GeneratorName.CSHARP_SDK]: "2.57.0-rc.0",
         [GeneratorName.SWIFT_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.SWIFT_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.SWIFT_SDK]: "0.32.0-rc.0",
         [GeneratorName.PHP_MODEL]: "0.1.0-rc.0",
         [GeneratorName.PHP_SDK]: "2.3.2-rc.0",
-        [GeneratorName.RUST_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.RUST_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR
+        [GeneratorName.RUST_MODEL]: "0.5.0-rc.0",
+        [GeneratorName.RUST_SDK]: "0.32.0-rc.0"
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V65.IntermediateRepresentation.jsonOrThrow(ir, {
@@ -2129,7 +2129,19 @@ function inflateIr(
         dynamic: ir.dynamic != null ? inflateDynamicIr(ir.dynamic) : undefined,
         selfHosted: ir.selfHosted,
         audiences: ir.audiences,
-        generationMetadata: ir.generationMetadata,
+        // V65 only knows about cliVersion/generatorName/generatorVersion/generatorConfig/originGitCommit.
+        // Strip the V66-only fields (originGitCommitIsDirty, invokedBy, requestedVersion, ciProvider)
+        // to preserve the V65 contract for older generators.
+        generationMetadata:
+            ir.generationMetadata != null
+                ? {
+                      cliVersion: ir.generationMetadata.cliVersion,
+                      generatorName: ir.generationMetadata.generatorName,
+                      generatorVersion: ir.generationMetadata.generatorVersion,
+                      generatorConfig: ir.generationMetadata.generatorConfig,
+                      originGitCommit: ir.generationMetadata.originGitCommit
+                  }
+                : undefined,
         apiPlayground: ir.apiPlayground
     };
 }

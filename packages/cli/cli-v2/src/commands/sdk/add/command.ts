@@ -1,6 +1,8 @@
 import { schemas } from "@fern-api/config";
 import { getLatestGeneratorVersion } from "@fern-api/configuration-loader";
 import type { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { CliError } from "@fern-api/task-context";
+
 import chalk from "chalk";
 import inquirer from "inquirer";
 import type { Argv } from "yargs";
@@ -8,7 +10,6 @@ import { FERN_YML_FILENAME } from "../../../config/fern-yml/constants.js";
 import { FernYmlEditor } from "../../../config/fern-yml/FernYmlEditor.js";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
-import { CliError } from "../../../errors/CliError.js";
 import { SdkChecker } from "../../../sdk/checker/SdkChecker.js";
 import { LANGUAGE_TO_DOCKER_IMAGE } from "../../../sdk/config/converter/constants.js";
 import { LANGUAGE_DISPLAY_NAMES, LANGUAGE_ORDER, LANGUAGES, type Language } from "../../../sdk/config/Language.js";
@@ -45,14 +46,15 @@ export class AddCommand {
         const fernYmlPath = workspace.absoluteFilePath;
         if (fernYmlPath == null) {
             throw new CliError({
-                message: `No ${FERN_YML_FILENAME} found. Run 'fern init' to initialize a project.`
+                message: `No ${FERN_YML_FILENAME} found. Run 'fern init' to initialize a project.`,
+                code: CliError.Code.ConfigError
             });
         }
 
         const sdkChecker = new SdkChecker({ context });
         const sdkCheckResult = await sdkChecker.check({ workspace });
         if (sdkCheckResult.errorCount > 0) {
-            throw CliError.exit();
+            throw new CliError({ code: CliError.Code.ValidationError });
         }
 
         const existingTargets = workspace.sdks?.targets ?? [];
@@ -77,7 +79,8 @@ export class AddCommand {
     }): Promise<void> {
         if (args.target == null) {
             throw new CliError({
-                message: `Missing required flags:\n\n  --target <language>    SDK language (e.g. typescript, python, go)`
+                message: `Missing required flags:\n\n  --target <language>    SDK language (e.g. typescript, python, go)`,
+                code: CliError.Code.ConfigError
             });
         }
 
@@ -145,7 +148,8 @@ export class AddCommand {
                 message:
                     `"${value}" looks like a remote reference but is not a recognized git URL.\n\n` +
                     `  Please specify a local path (e.g. ./sdks/my-sdk) or a git URL:\n` +
-                    `    https://github.com/owner/repo`
+                    `    https://github.com/owner/repo`,
+                code: CliError.Code.ConfigError
             });
         }
 
@@ -178,7 +182,8 @@ export class AddCommand {
     private checkForDuplicate({ existingTargets, language }: { existingTargets: Target[]; language: Language }): void {
         if (existingTargets.some((t) => t.name === language)) {
             throw new CliError({
-                message: `Target '${language}' already exists in ${FERN_YML_FILENAME}.`
+                message: `Target '${language}' already exists in ${FERN_YML_FILENAME}.`,
+                code: CliError.Code.ConfigError
             });
         }
     }
@@ -247,7 +252,8 @@ export class AddCommand {
             return lang;
         }
         throw new CliError({
-            message: `"${target}" is not a supported language. Supported: ${LANGUAGES.join(", ")}`
+            message: `"${target}" is not a supported language. Supported: ${LANGUAGES.join(", ")}`,
+            code: CliError.Code.ConfigError
         });
     }
 }

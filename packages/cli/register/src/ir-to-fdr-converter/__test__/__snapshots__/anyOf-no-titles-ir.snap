@@ -554,11 +554,11 @@
         "_visit": [Function],
         "members": [
           {
-            "docs": undefined,
+            "docs": "AnyOf error variant A",
             "type": {
               "_visit": [Function],
               "default": undefined,
-              "displayName": undefined,
+              "displayName": "AnyOfErrorA",
               "fernFilepath": {
                 "allParts": [],
                 "file": undefined,
@@ -571,11 +571,11 @@
             },
           },
           {
-            "docs": undefined,
+            "docs": "AnyOf error variant B",
             "type": {
               "_visit": [Function],
               "default": undefined,
-              "displayName": undefined,
+              "displayName": "AnyOfErrorB",
               "fernFilepath": {
                 "allParts": [],
                 "file": undefined,
@@ -753,11 +753,11 @@
         "_visit": [Function],
         "members": [
           {
-            "docs": undefined,
+            "docs": "First variant for anyOf without title",
             "type": {
               "_visit": [Function],
               "default": undefined,
-              "displayName": undefined,
+              "displayName": "AnyOfVariantA",
               "fernFilepath": {
                 "allParts": [],
                 "file": undefined,
@@ -770,11 +770,11 @@
             },
           },
           {
-            "docs": undefined,
+            "docs": "Second variant for anyOf without title",
             "type": {
               "_visit": [Function],
               "default": undefined,
-              "displayName": undefined,
+              "displayName": "AnyOfVariantB",
               "fernFilepath": {
                 "allParts": [],
                 "file": undefined,

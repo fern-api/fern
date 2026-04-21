@@ -4,7 +4,6 @@ import { AbsoluteFilePath, dirname, join, RelativeFilePath, resolve } from "@fer
 import { parseRepository } from "@fern-api/github";
 import { TaskContext } from "@fern-api/task-context";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
-import { GithubPullRequestReviewer, OutputMetadata, PublishingMetadata, PypiMetadata } from "@fern-fern/fiddle-sdk/api";
 import { readFile } from "fs/promises";
 import path from "path";
 
@@ -85,6 +84,7 @@ export async function convertGeneratorsConfiguration({
                               group,
                               maybeTopLevelMetadata,
                               maybeTopLevelReviewers: rawGeneratorsConfiguration.reviewers,
+                              maybeRootAutomation: rawGeneratorsConfiguration.automation,
                               readme,
                               context
                           })
@@ -554,14 +554,16 @@ async function convertGroup({
     group,
     maybeTopLevelMetadata,
     maybeTopLevelReviewers,
+    maybeRootAutomation,
     readme,
     context
 }: {
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     groupName: string;
     group: generatorsYml.GeneratorGroupSchema;
-    maybeTopLevelMetadata: OutputMetadata | undefined;
+    maybeTopLevelMetadata: FernFiddle.OutputMetadata | undefined;
     maybeTopLevelReviewers: generatorsYml.ReviewersSchema | undefined;
+    maybeRootAutomation: generatorsYml.AutomationSchema | undefined;
     readme: generatorsYml.ReadmeSchema | undefined;
     context: TaskContext;
 }): Promise<generatorsYml.GeneratorGroup> {
@@ -579,6 +581,8 @@ async function convertGroup({
                     maybeGroupLevelMetadata,
                     maybeTopLevelReviewers,
                     maybeGroupLevelReviewers: group.reviewers,
+                    maybeRootAutomation,
+                    maybeGroupAutomation: group.automation,
                     readme,
                     context
                 })
@@ -622,21 +626,30 @@ async function convertGenerator({
     maybeTopLevelMetadata,
     maybeGroupLevelReviewers,
     maybeTopLevelReviewers,
+    maybeRootAutomation,
+    maybeGroupAutomation,
     readme,
     context
 }: {
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     generator: generatorsYml.GeneratorInvocationSchema;
-    maybeGroupLevelMetadata: OutputMetadata | undefined;
-    maybeTopLevelMetadata: OutputMetadata | undefined;
+    maybeGroupLevelMetadata: FernFiddle.OutputMetadata | undefined;
+    maybeTopLevelMetadata: FernFiddle.OutputMetadata | undefined;
     maybeGroupLevelReviewers: generatorsYml.ReviewersSchema | undefined;
     maybeTopLevelReviewers: generatorsYml.ReviewersSchema | undefined;
+    maybeRootAutomation: generatorsYml.AutomationSchema | undefined;
+    maybeGroupAutomation: generatorsYml.AutomationSchema | undefined;
     readme: generatorsYml.ReadmeSchema | undefined;
     context: TaskContext;
 }): Promise<generatorsYml.GeneratorInvocation> {
     const { normalizedName, containerImage } = getGeneratorNameAndImage(generator, context);
     return {
         raw: generator,
+        automation: generatorsYml.resolveAutomationConfig({
+            rootAutomation: maybeRootAutomation,
+            groupAutomation: maybeGroupAutomation,
+            generatorAutomation: generator.automation
+        }),
         name: normalizedName,
         containerImage,
         version: generator.version,
@@ -696,7 +709,7 @@ function getPublishMetadata({
     generatorInvocation
 }: {
     generatorInvocation: generatorsYml.GeneratorInvocationSchema;
-}): PublishingMetadata | undefined {
+}): FernFiddle.PublishingMetadata | undefined {
     const publishMetadata = generatorInvocation["publish-metadata"];
     if (publishMetadata != null) {
         return {
@@ -722,10 +735,10 @@ function _getPypiMetadata({
     maybeTopLevelMetadata
 }: {
     pypiOutputMetadata: generatorsYml.PypiOutputMetadataSchema | undefined;
-    maybeGroupLevelMetadata: OutputMetadata | undefined;
-    maybeTopLevelMetadata: OutputMetadata | undefined;
-}): PypiMetadata | undefined {
-    let maybePyPiMetadata: PypiMetadata | undefined;
+    maybeGroupLevelMetadata: FernFiddle.OutputMetadata | undefined;
+    maybeTopLevelMetadata: FernFiddle.OutputMetadata | undefined;
+}): FernFiddle.PypiMetadata | undefined {
+    let maybePyPiMetadata: FernFiddle.PypiMetadata | undefined;
     if (pypiOutputMetadata != null) {
         maybePyPiMetadata = getPyPiMetadata(pypiOutputMetadata);
         maybePyPiMetadata = { ...maybeTopLevelMetadata, ...maybeGroupLevelMetadata, ...maybePyPiMetadata };
@@ -741,11 +754,11 @@ function _getReviewers({
     topLevelReviewers: generatorsYml.ReviewersSchema | undefined;
     groupLevelReviewers: generatorsYml.ReviewersSchema | undefined;
     outputModeReviewers: generatorsYml.ReviewersSchema | undefined;
-}): GithubPullRequestReviewer[] {
+}): FernFiddle.GithubPullRequestReviewer[] {
     const teamNames = new Set<string>();
     const userNames = new Set<string>();
 
-    const reviewers: GithubPullRequestReviewer[] = [];
+    const reviewers: FernFiddle.GithubPullRequestReviewer[] = [];
 
     const allTeamReviewers = [
         ...(topLevelReviewers?.teams ?? []),
@@ -760,14 +773,14 @@ function _getReviewers({
 
     for (const team of allTeamReviewers) {
         if (!teamNames.has(team.name)) {
-            reviewers.push(GithubPullRequestReviewer.team({ name: team.name }));
+            reviewers.push(FernFiddle.GithubPullRequestReviewer.team({ name: team.name }));
             teamNames.add(team.name);
         }
     }
 
     for (const user of allUserReviewers) {
         if (!userNames.has(user.name)) {
-            reviewers.push(GithubPullRequestReviewer.user({ name: user.name }));
+            reviewers.push(FernFiddle.GithubPullRequestReviewer.user({ name: user.name }));
             userNames.add(user.name);
         }
     }
@@ -785,8 +798,8 @@ async function convertOutputMode({
 }: {
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     generator: generatorsYml.GeneratorInvocationSchema;
-    maybeGroupLevelMetadata: OutputMetadata | undefined;
-    maybeTopLevelMetadata: OutputMetadata | undefined;
+    maybeGroupLevelMetadata: FernFiddle.OutputMetadata | undefined;
+    maybeTopLevelMetadata: FernFiddle.OutputMetadata | undefined;
     maybeGroupLevelReviewers: generatorsYml.ReviewersSchema | undefined;
     maybeTopLevelReviewers: generatorsYml.ReviewersSchema | undefined;
 }): Promise<FernFiddle.OutputMode> {
@@ -977,8 +990,8 @@ async function getGithubLicense({
 // TODO: This is where we should add support for Go and PHP.
 function getGithubPublishInfo(
     output: generatorsYml.GeneratorOutputSchema,
-    maybeGroupLevelMetadata: OutputMetadata | undefined,
-    maybeTopLevelMetadata: OutputMetadata | undefined
+    maybeGroupLevelMetadata: FernFiddle.OutputMetadata | undefined,
+    maybeTopLevelMetadata: FernFiddle.OutputMetadata | undefined
 ): FernFiddle.GithubPublishInfo {
     switch (output.location) {
         case "local-file-system":
@@ -1107,7 +1120,9 @@ function getGithubLicenseSchema(
     return generator.github?.license;
 }
 
-function getOutputMetadata(metadata: generatorsYml.OutputMetadataSchema | undefined): OutputMetadata | undefined {
+function getOutputMetadata(
+    metadata: generatorsYml.OutputMetadataSchema | undefined
+): FernFiddle.OutputMetadata | undefined {
     return metadata != null
         ? {
               description: metadata.description,
@@ -1116,7 +1131,9 @@ function getOutputMetadata(metadata: generatorsYml.OutputMetadataSchema | undefi
         : undefined;
 }
 
-function getPyPiMetadata(metadata: generatorsYml.PypiOutputMetadataSchema | undefined): PypiMetadata | undefined {
+function getPyPiMetadata(
+    metadata: generatorsYml.PypiOutputMetadataSchema | undefined
+): FernFiddle.PypiMetadata | undefined {
     return metadata != null
         ? {
               description: metadata.description,

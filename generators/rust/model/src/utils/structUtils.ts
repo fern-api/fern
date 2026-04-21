@@ -1,3 +1,4 @@
+import { getWireValue, NameInput } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { Attribute, rust } from "@fern-api/rust-codegen";
 import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTypeReference.js";
@@ -183,15 +184,10 @@ export function hasFloatingPointSets(properties: (FernIr.ObjectProperty | FernIr
 
 export function getCustomTypesUsedInFields(
     properties: (FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty)[],
+    context: ModelGeneratorContext,
     currentTypeName?: string
-): {
-    snakeCase: { unsafeName: string };
-    pascalCase: { unsafeName: string };
-}[] {
-    const customTypeNames: {
-        snakeCase: { unsafeName: string };
-        pascalCase: { unsafeName: string };
-    }[] = [];
+): NameInput[] {
+    const customTypeNames: NameInput[] = [];
     const visited = new Set<string>();
 
     properties.forEach((property) => {
@@ -199,7 +195,7 @@ export function getCustomTypesUsedInFields(
     });
 
     // Filter out the current type itself to prevent self-imports
-    return customTypeNames.filter((typeName) => typeName.pascalCase.unsafeName !== currentTypeName);
+    return customTypeNames.filter((typeName) => context.case.pascalUnsafe(typeName) !== currentTypeName);
 }
 
 export function generateFieldType(
@@ -219,14 +215,14 @@ export function generateFieldType(
 
 export function generateFieldAttributes(
     property: FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty,
-    context?: ModelGeneratorContext,
+    context: ModelGeneratorContext,
     options?: { skipSerialization?: boolean }
 ): rust.Attribute[] {
     const attributes: rust.Attribute[] = [];
 
     // Add serde rename if the field name differs from wire name
-    if (property.name.name.snakeCase.unsafeName !== property.name.wireValue) {
-        attributes.push(Attribute.serde.rename(property.name.wireValue));
+    if (context.case.snakeUnsafe(property.name) !== getWireValue(property.name)) {
+        attributes.push(Attribute.serde.rename(getWireValue(property.name)));
     }
 
     // If the field is entirely skipped during serialization (e.g. query params sent
@@ -327,11 +323,11 @@ export function writeStructUseStatements(
     context: ModelGeneratorContext,
     currentTypeName?: string
 ): void {
-    const customTypes = getCustomTypesUsedInFields(properties, currentTypeName);
+    const customTypes = getCustomTypesUsedInFields(properties, context, currentTypeName);
     customTypes.forEach((typeName) => {
-        const modulePath = context.getModulePathForType(typeName.snakeCase.unsafeName);
+        const modulePath = context.getModulePathForType(context.case.snakeUnsafe(typeName));
         const moduleNameEscaped = context.escapeRustKeyword(modulePath);
-        writer.writeLine(`use crate::${moduleNameEscaped}::${typeName.pascalCase.unsafeName};`);
+        writer.writeLine(`use crate::${moduleNameEscaped}::${context.case.pascalUnsafe(typeName)};`);
     });
 
     // Add chrono imports based on specific types needed
@@ -392,7 +388,7 @@ export function writeStructUseStatements(
  */
 export function convertQueryParametersToProperties(
     queryParams: FernIr.QueryParameter[],
-    context: { escapeRustKeyword: (name: string) => string }
+    context: { escapeRustKeyword: (name: string) => string; case: { snakeUnsafe: (name: NameInput) => string } }
 ): { properties: FernIr.ObjectProperty[]; fieldNames: Set<string> } {
     const fieldNames = new Set<string>();
     const properties = queryParams.map((queryParam) => {
@@ -400,7 +396,7 @@ export function convertQueryParametersToProperties(
         if (queryParam.allowMultiple) {
             valueType = FernIr.TypeReference.container(FernIr.ContainerType.list(queryParam.valueType));
         }
-        fieldNames.add(context.escapeRustKeyword(queryParam.name.name.snakeCase.unsafeName));
+        fieldNames.add(context.escapeRustKeyword(context.case.snakeUnsafe(queryParam.name)));
         return {
             name: queryParam.name,
             valueType,

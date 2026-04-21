@@ -1,0 +1,74 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Test API
+servers:
+  - url: https://api.example.com/2.0
+    x-fern-server-name: Production
+  - url: https://account.example.com/oauth2
+    x-fern-server-name: Auth
+  - url: https://upload.example.com/2.0
+    x-fern-server-name: Upload
+  - url: https://dl.example.com/2.0
+    x-fern-server-name: Download
+paths:
+  /items:
+    get:
+      operationId: listItems
+      responses:
+        "200":
+          description: A list of items
+          content:
+            application/json:
+              schema:
+                type: string
+  /authorize:
+    get:
+      operationId: authorize
+      servers:
+        - url: https://account.example.com/oauth2
+          x-fern-server-name: Auth
+      parameters:
+        - name: client_id
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Authorization response
+          content:
+            application/json:
+              schema:
+                type: string
+  /files/content:
+    post:
+      operationId: uploadFile
+      servers:
+        - url: https://upload.example.com/2.0
+          x-fern-server-name: Upload
+      responses:
+        "200":
+          description: Upload response
+          content:
+            application/json:
+              schema:
+                type: string
+  /downloads/{id}/content:
+    get:
+      operationId: downloadFile
+      servers:
+        - url: https://dl.example.com/2.0
+          x-fern-server-name: Download
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Download response
+          content:
+            application/json:
+              schema:
+                type: string

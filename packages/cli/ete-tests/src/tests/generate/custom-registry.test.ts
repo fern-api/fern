@@ -5,7 +5,7 @@ import { createTempFixture } from "../../utils/createTempFixture.js";
 import { isDockerAvailable, type LocalRegistry, startLocalRegistry } from "../../utils/dockerRegistry.js";
 import { runFernCli } from "../../utils/runFernCli.js";
 
-const SOURCE_IMAGE = "fernapi/fern-typescript-sdk:3.60.9";
+const SOURCE_IMAGE = "fernapi/fern-typescript-sdk:3.63.3";
 
 const dockerAvailable = await isDockerAvailable();
 

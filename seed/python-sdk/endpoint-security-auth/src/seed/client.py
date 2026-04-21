@@ -6,7 +6,6 @@ import os
 import typing
 
 import httpx
-from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.logging import LogConfig, Logger
 from .core.oauth_token_provider import AsyncOAuthTokenProvider, OAuthTokenProvider
@@ -64,6 +63,8 @@ class SeedEndpointSecurityAuth:
 
     client = SeedEndpointSecurityAuth(
         base_url="YOUR_BASE_URL",
+        client_id="YOUR_CLIENT_ID",
+        client_secret="YOUR_CLIENT_SECRET",
     )
 
     # or ...
@@ -81,6 +82,7 @@ class SeedEndpointSecurityAuth:
         self,
         *,
         base_url: str,
+        api_key: typing.Optional[str] = os.getenv("MY_API_KEY"),
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -94,6 +96,7 @@ class SeedEndpointSecurityAuth:
         self,
         *,
         base_url: str,
+        api_key: typing.Optional[str] = os.getenv("MY_API_KEY"),
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -105,6 +108,7 @@ class SeedEndpointSecurityAuth:
         self,
         *,
         base_url: str,
+        api_key: typing.Optional[str] = os.getenv("MY_API_KEY"),
         headers: typing.Optional[typing.Dict[str, str]] = None,
         client_id: typing.Optional[str] = os.getenv("MY_CLIENT_ID"),
         client_secret: typing.Optional[str] = os.getenv("MY_CLIENT_SECRET"),
@@ -121,6 +125,7 @@ class SeedEndpointSecurityAuth:
         if token is not None:
             self._client_wrapper = SyncClientWrapper(
                 base_url=base_url,
+                api_key=api_key,
                 headers=headers,
                 httpx_client=httpx_client
                 if httpx_client is not None
@@ -137,6 +142,7 @@ class SeedEndpointSecurityAuth:
                 client_secret=client_secret,
                 client_wrapper=SyncClientWrapper(
                     base_url=base_url,
+                    api_key=api_key,
                     headers=headers,
                     httpx_client=httpx_client
                     if httpx_client is not None
@@ -149,6 +155,7 @@ class SeedEndpointSecurityAuth:
             )
             self._client_wrapper = SyncClientWrapper(
                 base_url=base_url,
+                api_key=api_key,
                 headers=headers,
                 token=_token_getter_override if _token_getter_override is not None else oauth_token_provider.get_token,
                 httpx_client=httpx_client
@@ -160,8 +167,17 @@ class SeedEndpointSecurityAuth:
                 logging=logging,
             )
         else:
-            raise ApiError(
-                body="The client must be instantiated with either 'token' or both 'client_id' and 'client_secret'"
+            self._client_wrapper = SyncClientWrapper(
+                base_url=base_url,
+                api_key=api_key,
+                headers=headers,
+                httpx_client=httpx_client
+                if httpx_client is not None
+                else httpx.Client(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
+                if follow_redirects is not None
+                else httpx.Client(timeout=_defaulted_timeout),
+                timeout=_defaulted_timeout,
+                logging=logging,
             )
         self._auth: typing.Optional[AuthClient] = None
         self._user: typing.Optional[UserClient] = None
@@ -249,6 +265,8 @@ class AsyncSeedEndpointSecurityAuth:
 
     client = AsyncSeedEndpointSecurityAuth(
         base_url="YOUR_BASE_URL",
+        client_id="YOUR_CLIENT_ID",
+        client_secret="YOUR_CLIENT_SECRET",
     )
 
     # or ...
@@ -266,6 +284,7 @@ class AsyncSeedEndpointSecurityAuth:
         self,
         *,
         base_url: str,
+        api_key: typing.Optional[str] = os.getenv("MY_API_KEY"),
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -279,6 +298,7 @@ class AsyncSeedEndpointSecurityAuth:
         self,
         *,
         base_url: str,
+        api_key: typing.Optional[str] = os.getenv("MY_API_KEY"),
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -290,6 +310,7 @@ class AsyncSeedEndpointSecurityAuth:
         self,
         *,
         base_url: str,
+        api_key: typing.Optional[str] = os.getenv("MY_API_KEY"),
         headers: typing.Optional[typing.Dict[str, str]] = None,
         client_id: typing.Optional[str] = os.getenv("MY_CLIENT_ID"),
         client_secret: typing.Optional[str] = os.getenv("MY_CLIENT_SECRET"),
@@ -306,6 +327,7 @@ class AsyncSeedEndpointSecurityAuth:
         if token is not None:
             self._client_wrapper = AsyncClientWrapper(
                 base_url=base_url,
+                api_key=api_key,
                 headers=headers,
                 httpx_client=httpx_client
                 if httpx_client is not None
@@ -320,6 +342,7 @@ class AsyncSeedEndpointSecurityAuth:
                 client_secret=client_secret,
                 client_wrapper=AsyncClientWrapper(
                     base_url=base_url,
+                    api_key=api_key,
                     headers=headers,
                     httpx_client=httpx_client
                     if httpx_client is not None
@@ -332,6 +355,7 @@ class AsyncSeedEndpointSecurityAuth:
             )
             self._client_wrapper = AsyncClientWrapper(
                 base_url=base_url,
+                api_key=api_key,
                 headers=headers,
                 token=_token_getter_override,
                 async_token=oauth_token_provider.get_token,
@@ -342,8 +366,15 @@ class AsyncSeedEndpointSecurityAuth:
                 logging=logging,
             )
         else:
-            raise ApiError(
-                body="The client must be instantiated with either 'token' or both 'client_id' and 'client_secret'"
+            self._client_wrapper = AsyncClientWrapper(
+                base_url=base_url,
+                api_key=api_key,
+                headers=headers,
+                httpx_client=httpx_client
+                if httpx_client is not None
+                else _make_default_async_client(timeout=_defaulted_timeout, follow_redirects=follow_redirects),
+                timeout=_defaulted_timeout,
+                logging=logging,
             )
         self._auth: typing.Optional[AsyncAuthClient] = None
         self._user: typing.Optional[AsyncUserClient] = None

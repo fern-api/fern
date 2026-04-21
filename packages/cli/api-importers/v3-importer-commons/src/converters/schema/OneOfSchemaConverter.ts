@@ -10,6 +10,7 @@ import {
 } from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import { FernDiscriminatedExtension } from "../../extensions/x-fern-discriminated.js";
+import { FernDiscriminatorContextExtension } from "../../extensions/x-fern-discriminator-context.js";
 import { FernEnumExtension } from "../../extensions/x-fern-enum.js";
 import { AbstractConverter, AbstractConverterContext } from "../../index.js";
 import { convertProperties } from "../../utils/ConvertProperties.js";
@@ -234,12 +235,29 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 });
 
                 // Extract raw schema name for display (not namespaced)
-                const rawSchemaName = reference.match(/\/schemas\/([^/]+)/)?.[1] ?? typeId;
+                const rawSchemaName = reference.split("/").pop() ?? typeId;
+
+                // Extract schema title once for reuse
+                const schemaTitle = resolvedSchema.resolved ? resolvedSchema.value.title : undefined;
+                const schemaDescription = resolvedSchema.resolved ? resolvedSchema.value.description : undefined;
+
+                // Determine variant display name with fallback priority:
+                // 1. Schema's title field (explicit user intention)
+                // 2. Discriminant key (e.g., "EMBEDDING_GENERATION")
+                // 3. Schema name from $ref or typeId (e.g., "CircleShape")
+                const variantDisplayName = schemaTitle ?? discriminant ?? rawSchemaName;
+
+                // Set displayName on the type declaration only when the schema has an explicit title.
+                // The discriminant key is context-specific to the union and should not be applied globally.
+                if (convertedSchema.schema?.typeDeclaration != null && schemaTitle != null) {
+                    convertedSchema.schema.typeDeclaration.name.displayName = schemaTitle;
+                }
+
                 unionTypes.push({
-                    docs: undefined,
+                    docs: schemaDescription,
                     discriminantValue: nameAndWireValue,
                     availability: convertedSchema.availability,
-                    displayName: discriminant,
+                    displayName: variantDisplayName,
                     shape: SingleUnionTypeProperties.samePropertiesAsObject({
                         typeId,
                         name: this.context.casingsGenerator.generateName(rawSchemaName),
@@ -248,7 +266,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
                             packagePath: [],
                             file: undefined
                         },
-                        displayName: discriminant
+                        displayName: variantDisplayName
                     })
                 });
                 inlinedTypes = {
@@ -299,6 +317,12 @@ export class OneOfSchemaConverter extends AbstractConverter<
             referencedTypes.add(typeId);
         }
 
+        const discriminatorContextExtension = new FernDiscriminatorContextExtension({
+            context: this.context,
+            breadcrumbs: [...this.breadcrumbs, "discriminator"],
+            node: this.schema.discriminator
+        });
+
         return {
             type: Type.union({
                 baseProperties,
@@ -308,7 +332,8 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 }),
                 extends: extends_,
                 types: unionTypes,
-                discriminatorContext: undefined
+                default: undefined,
+                discriminatorContext: discriminatorContextExtension.convert()
             }),
             referencedTypes,
             inlinedTypes: {
@@ -330,11 +355,6 @@ export class OneOfSchemaConverter extends AbstractConverter<
         const referencedTypes: Set<string> = new Set();
         let inlinedTypes: Record<TypeId, SchemaConverter.ConvertedSchema> = {};
 
-        // Collect all inlined object schemas for better naming
-        const allInlinedSchemas = [...(this.schema.oneOf ?? []), ...(this.schema.anyOf ?? [])].filter(
-            (schema) => !this.context.isReferenceObject(schema)
-        ) as OpenAPIV3_1.SchemaObject[];
-
         for (const [index, subSchema] of [
             ...(this.schema.oneOf ?? []).entries(),
             ...(this.schema.anyOf ?? []).entries()
@@ -349,25 +369,34 @@ export class OneOfSchemaConverter extends AbstractConverter<
                             subSchema.summary ?? subSchema.title ?? subSchema.name ?? subSchema.messageId,
                         displayNameOverrideSource: "reference_identifier"
                     });
-                } else if (this.getDiscriminatorKeyForRef(subSchema) != null) {
-                    const mappingEntry = this.getDiscriminatorKeyForRef(subSchema);
-                    maybeTypeReference = this.context.convertReferenceToTypeReference({
-                        reference: subSchema,
-                        displayNameOverride: mappingEntry,
-                        displayNameOverrideSource: "discriminator_key"
-                    });
                 } else {
-                    maybeTypeReference = this.context.convertReferenceToTypeReference({
-                        reference: subSchema,
-                        displayNameOverride: subSchema.$ref.split("/").pop(),
-                        displayNameOverrideSource: "schema_identifier"
-                    });
+                    const mappingEntry = this.getDiscriminatorKeyForRef(subSchema);
+                    if (mappingEntry != null) {
+                        maybeTypeReference = this.context.convertReferenceToTypeReference({
+                            reference: subSchema,
+                            displayNameOverride: mappingEntry,
+                            displayNameOverrideSource: "discriminator_key"
+                        });
+                    } else {
+                        // Standard schema reference - use internal extraction
+                        maybeTypeReference = this.context.convertReferenceToTypeReference({
+                            reference: subSchema,
+                            breadcrumbs: this.breadcrumbs
+                        });
+                    }
                 }
 
                 if (maybeTypeReference.ok) {
+                    // Resolve the reference to get the actual schema's description
+                    const resolvedSchema = this.context.resolveReference<OpenAPIV3_1.SchemaObject>({
+                        reference: subSchema,
+                        breadcrumbs: this.breadcrumbs
+                    });
+                    const schemaDescription = resolvedSchema.resolved ? resolvedSchema.value.description : undefined;
+
                     unionTypes.push({
                         type: maybeTypeReference.reference,
-                        docs: subSchema.description
+                        docs: schemaDescription
                     });
                 }
                 const typeId = this.context.getTypeIdFromSchemaReference(subSchema);

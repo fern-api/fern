@@ -40,7 +40,7 @@ func do() {
     client := client.NewClient()
     request := &fern.SearchRequest{
         Limit: 1,
-        Id: "id",
+        ID: "id",
         Date: fern.MustParseDate(
             "2023-01-15",
         ),

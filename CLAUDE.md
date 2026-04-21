@@ -103,7 +103,7 @@ Fern is a CLI tool for API-first development that transforms API definitions int
 Language-specific generators that consume IR and produce outputs:
 - **Pattern**: Each language has `base/`, `ast/`, `model/`, `sdk/`, sometimes `server/`
 - **Supported**: TypeScript, Python, Java, Go, C#, Ruby, PHP, Rust, Swift
-- **Special**: OpenAPI export, Postman collections, TypeScript MCP servers
+- **Special**: OpenAPI export
 
 ### 4. Testing (`/seed/`)
 Comprehensive generator testing with Docker-based fixtures across all supported languages.
@@ -161,6 +161,26 @@ pnpm seed run --generator go-sdk --path /path/to/project --skip-scripts
 4. Repeat until fixed
 
 **Output**: Seed test overwrites `/seed/<generator>/<fixture>/`, seed run writes to temp directory
+
+### Breaking Changes Policy (Generators)
+
+**Generators MUST NOT ship breaking changes to existing users without a migration path.** Autorelease cannot succeed if a generator silently changes default behavior, and on-call will page.
+
+When you need to change a generator default or behavior in a way that is not backwards compatible:
+
+1. **Gate the new behavior behind a config flag and keep the old behavior as the default.** Users opt in to the new behavior by setting the flag.
+2. **When you are ready to flip the default (major version bump of the generator), add a generator migration** under `packages/generator-migrations/src/generators/<generator>/migrations/<next-major>.0.0.ts`. The migration must set the old value for users who had not explicitly configured the field, so their existing `generators.yml` continues to produce the same output.
+3. **Register the migration** in the generator's `migrations/index.ts` and publish `@fern-api/generator-migrations`. Migrations run automatically via `fern generator upgrade --include-major`.
+
+See `packages/generator-migrations/src/generators/typescript/migrations/3.0.0.ts` for a reference example (switching TypeScript SDK defaults from `yarn`/`jest` to `pnpm`/`vitest`). See `packages/generator-migrations/README.md` for the full authoring guide.
+
+**Checklist for any generator-defaults PR:**
+- [ ] Is the new behavior gated so existing users are unaffected until they opt in or a major version lands?
+- [ ] If this is the major version flip, is there a corresponding migration file under `packages/generator-migrations/`?
+- [ ] Is the migration registered in `src/generators/<generator>/migrations/index.ts`?
+- [ ] Are there tests for the migration (see `packages/generator-migrations/src/__test__/`)?
+
+Skipping this process breaks autorelease for every customer pinned to the old major and will cause an on-call incident.
 
 ### Feature Addition Workflow (Generated Code)
 
@@ -318,7 +338,7 @@ When creating pull requests in this repository:
 
    **Allowed types**: `fix`, `feat`, `revert`, `break`, `chore`
 
-   **Allowed scopes**: `docs`, `changelog`, `internal`, `cli`, `typescript`, `python`, `java`, `csharp`, `go`, `php`, `ruby`, `seed`, `postman`, `ci`, `lint`, `fastapi`, `spring`, `express`, `openapi`, `deps`, `deps-dev`, `fiber`, `pydantic`, `ai-search`, `swift`, `rust`
+   **Allowed scopes**: `docs`, `changelog`, `internal`, `cli`, `typescript`, `python`, `java`, `csharp`, `go`, `php`, `ruby`, `seed`, `ci`, `lint`, `fastapi`, `spring`, `openapi`, `deps`, `deps-dev`, `pydantic`, `ai-search`, `swift`, `rust`
 
    **Examples**: `chore(docs): update guidelines`, `feat(python): add new feature`, `fix(cli): resolve config loading bug`
 

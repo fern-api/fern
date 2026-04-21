@@ -34,9 +34,13 @@ export async function createAndStartJob({
     whitelabel,
     irVersionOverride,
     absolutePathToPreview,
+    fiddlePreview,
+    pushPreviewBranch,
     fernignorePath,
     skipFernignore,
-    retryRateLimited
+    retryRateLimited,
+    automationMode,
+    autoMerge
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     workspace: FernWorkspace;
@@ -50,9 +54,15 @@ export async function createAndStartJob({
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
     irVersionOverride: string | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
+    /** When provided, overrides the `preview` flag sent to Fiddle. When omitted, falls back to absolutePathToPreview != null. */
+    fiddlePreview?: boolean;
+    /** When true, tells Fiddle to push a preview branch to the SDK repo. Requires fiddle-sdk with pushPreviewBranch support. */
+    pushPreviewBranch?: boolean;
     fernignorePath: string | undefined;
     skipFernignore?: boolean;
     retryRateLimited: boolean;
+    automationMode?: boolean;
+    autoMerge?: boolean;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     // Determine fernignore contents:
     // - If --skip-fernignore is set, upload an empty .fernignore so nothing is ignored
@@ -82,7 +92,11 @@ export async function createAndStartJob({
                 token,
                 whitelabel,
                 absolutePathToPreview,
-                fernignoreContents
+                fiddlePreview,
+                pushPreviewBranch,
+                fernignoreContents,
+                automationMode,
+                autoMerge
             }),
         retryRateLimited,
         logger: context.logger,
@@ -106,6 +120,8 @@ async function createJob({
     token,
     whitelabel,
     absolutePathToPreview,
+    fiddlePreview,
+    pushPreviewBranch,
     fernignoreContents
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
@@ -118,7 +134,13 @@ async function createJob({
     token: FernToken;
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
+    /** When provided, overrides the `preview` flag sent to Fiddle. When omitted, falls back to absolutePathToPreview != null. */
+    fiddlePreview?: boolean;
+    /** When true, tells Fiddle to push a preview branch to the SDK repo. Requires fiddle-sdk with pushPreviewBranch support. */
+    pushPreviewBranch?: boolean;
     fernignoreContents: string | undefined;
+    automationMode?: boolean;
+    autoMerge?: boolean;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     const remoteGenerationService = createFiddleService({ token: token.value });
 
@@ -142,8 +164,22 @@ async function createJob({
             shouldLogS3Url
         }),
         whitelabel,
-        preview: absolutePathToPreview != null,
+        // fiddlePreview overrides what we send to Fiddle as `preview`.
+        // For sdk preview: fiddlePreview=false so Fiddle doesn't set dryRun=true
+        //   (Fiddle uses `dryRun = generatePreview`, so preview=false → actual publish).
+        // For fern generate --preview: fiddlePreview is undefined, falls back to
+        //   absolutePathToPreview != null (true) → Fiddle sets dryRun=true → npm publish --dry-run.
+        // This is the only mechanism preventing dryRun for sdk preview jobs;
+        // Fiddle's dryRun logic is intentionally unchanged.
+        preview: fiddlePreview ?? absolutePathToPreview != null,
+        pushPreviewBranch,
         fernignoreContents
+        // TODO(FER-9671): Pass automation flags to Fiddle once its API is updated:
+        //   automationMode,
+        //   autoMerge,
+        //   runId: process.env.FERN_RUN_ID
+        // Fiddle will use these for server-side no-diff detection, separate PRs,
+        // automerge, run_id correlation, and breaking change handling.
     });
 
     if (!createResponse.ok) {
@@ -200,6 +236,11 @@ async function createJob({
                 return context.failAndThrow(
                     `Branch ${value.branch} does not exist in repository ${value.repositoryOwner}/${value.repositoryName}`
                 );
+            },
+            rateLimitExceeded: () => {
+                // Rate limits are normally caught by the raw 429 status code check above (line 191).
+                // This handler satisfies the exhaustive visitor type and acts as a fallback.
+                throw new TooManyRequestsError();
             },
             _other: (content) => {
                 context.logger.debug(`Failed to create job: ${JSON.stringify(content)}`);

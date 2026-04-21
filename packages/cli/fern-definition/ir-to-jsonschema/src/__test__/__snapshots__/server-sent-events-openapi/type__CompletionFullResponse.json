@@ -1,0 +1,36 @@
+{
+  "type": "object",
+  "properties": {
+    "answer": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "finishReason": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/CompletionFullResponseFinishReason"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "CompletionFullResponseFinishReason": {
+      "type": "string",
+      "enum": [
+        "complete",
+        "length",
+        "error"
+      ]
+    }
+  }
+}

@@ -4,17 +4,18 @@ package foldera
 
 import (
 	json "encoding/json"
+	folderb "github.com/audiences/fern/folderb"
 	assert "github.com/stretchr/testify/assert"
 	require "github.com/stretchr/testify/require"
 	testing "testing"
 )
 
 func TestSettersGetDirectThreadRequest(t *testing.T) {
-	t.Run("SetIds", func(t *testing.T) {
+	t.Run("SetIDs", func(t *testing.T) {
 		obj := &GetDirectThreadRequest{}
-		var fernTestValueIds []string
-		obj.SetIds(fernTestValueIds)
-		assert.Equal(t, fernTestValueIds, obj.Ids)
+		var fernTestValueIDs []string
+		obj.SetIDs(fernTestValueIDs)
+		assert.Equal(t, fernTestValueIDs, obj.IDs)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -29,14 +30,14 @@ func TestSettersGetDirectThreadRequest(t *testing.T) {
 }
 
 func TestSettersMarkExplicitGetDirectThreadRequest(t *testing.T) {
-	t.Run("SetIds_MarksExplicit", func(t *testing.T) {
+	t.Run("SetIDs_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetDirectThreadRequest{}
-		var fernTestValueIds []string
+		var fernTestValueIDs []string
 
 		// Act
-		obj.SetIds(fernTestValueIds)
+		obj.SetIDs(fernTestValueIDs)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -68,6 +69,87 @@ func TestSettersMarkExplicitGetDirectThreadRequest(t *testing.T) {
 
 		// Act
 		obj.SetTags(fernTestValueTags)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersResponse(t *testing.T) {
+	t.Run("SetFoo", func(t *testing.T) {
+		obj := &Response{}
+		var fernTestValueFoo *folderb.Foo
+		obj.SetFoo(fernTestValueFoo)
+		assert.Equal(t, fernTestValueFoo, obj.Foo)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersResponse(t *testing.T) {
+	t.Run("GetFoo", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Response{}
+		var expected *folderb.Foo
+		obj.Foo = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetFoo(), "getter should return the property value")
+	})
+
+	t.Run("GetFoo_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Response{}
+		obj.Foo = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetFoo(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetFoo_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *Response
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetFoo() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitResponse(t *testing.T) {
+	t.Run("SetFoo_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Response{}
+		var fernTestValueFoo *folderb.Foo
+
+		// Act
+		obj.SetFoo(fernTestValueFoo)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)

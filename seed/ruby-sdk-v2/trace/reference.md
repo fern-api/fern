@@ -1,6 +1,6 @@
 # Reference
 ## V2
-<details><summary><code>client.v_2.<a href="/lib/seed/v_2/client.rb">test</a>() -> </code></summary>
+<details><summary><code>client.v2.<a href="/lib/seed/v2/client.rb">test</a>() -> </code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.v_2.test
+client.v2.test
 ```
 </dd>
 </dl>
@@ -415,7 +415,7 @@ client.admin.store_traced_test_case(
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/lib/seed/admin/client.rb">store_traced_test_case_v_2</a>(submission_id, test_case_id, request) -> </code></summary>
+<details><summary><code>client.admin.<a href="/lib/seed/admin/client.rb">store_traced_test_case_v2</a>(submission_id, test_case_id, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -428,7 +428,7 @@ client.admin.store_traced_test_case(
 <dd>
 
 ```ruby
-client.admin.store_traced_test_case_v_2(
+client.admin.store_traced_test_case_v2(
   submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
   test_case_id: "testCaseId",
   request: [{
@@ -666,7 +666,7 @@ client.admin.store_traced_workspace(
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/lib/seed/admin/client.rb">store_traced_workspace_v_2</a>(submission_id, request) -> </code></summary>
+<details><summary><code>client.admin.<a href="/lib/seed/admin/client.rb">store_traced_workspace_v2</a>(submission_id, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -679,7 +679,7 @@ client.admin.store_traced_workspace(
 <dd>
 
 ```ruby
-client.admin.store_traced_workspace_v_2(
+client.admin.store_traced_workspace_v2(
   submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
   request: [{
     submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -2058,7 +2058,7 @@ client.sysprop.get_num_warm_instances
 </details>
 
 ## V2 Problem
-<details><summary><code>client.v_2.problem.<a href="/lib/seed/v_2/problem/client.rb">get_lightweight_problems</a>() -> Internal::Types::Array[Seed::V2::Problem::Types::LightweightProblemInfoV2]</code></summary>
+<details><summary><code>client.v2.problem.<a href="/lib/seed/v2/problem/client.rb">get_lightweight_problems</a>() -> Internal::Types::Array[Seed::V2::Problem::Types::LightweightProblemInfoV2]</code></summary>
 <dl>
 <dd>
 
@@ -2085,7 +2085,7 @@ Returns lightweight versions of all problems
 <dd>
 
 ```ruby
-client.v_2.problem.get_lightweight_problems
+client.v2.problem.get_lightweight_problems
 ```
 </dd>
 </dl>
@@ -2112,7 +2112,7 @@ client.v_2.problem.get_lightweight_problems
 </dl>
 </details>
 
-<details><summary><code>client.v_2.problem.<a href="/lib/seed/v_2/problem/client.rb">get_problems</a>() -> Internal::Types::Array[Seed::V2::Problem::Types::ProblemInfoV2]</code></summary>
+<details><summary><code>client.v2.problem.<a href="/lib/seed/v2/problem/client.rb">get_problems</a>() -> Internal::Types::Array[Seed::V2::Problem::Types::ProblemInfoV2]</code></summary>
 <dl>
 <dd>
 
@@ -2139,7 +2139,7 @@ Returns latest versions of all problems
 <dd>
 
 ```ruby
-client.v_2.problem.get_problems
+client.v2.problem.get_problems
 ```
 </dd>
 </dl>
@@ -2166,7 +2166,7 @@ client.v_2.problem.get_problems
 </dl>
 </details>
 
-<details><summary><code>client.v_2.problem.<a href="/lib/seed/v_2/problem/client.rb">get_latest_problem</a>(problem_id) -> Seed::V2::Problem::Types::ProblemInfoV2</code></summary>
+<details><summary><code>client.v2.problem.<a href="/lib/seed/v2/problem/client.rb">get_latest_problem</a>(problem_id) -> Seed::V2::Problem::Types::ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -2193,7 +2193,7 @@ Returns latest version of a problem
 <dd>
 
 ```ruby
-client.v_2.problem.get_latest_problem(problem_id: "problemId")
+client.v2.problem.get_latest_problem(problem_id: "problemId")
 ```
 </dd>
 </dl>
@@ -2228,7 +2228,7 @@ client.v_2.problem.get_latest_problem(problem_id: "problemId")
 </dl>
 </details>
 
-<details><summary><code>client.v_2.problem.<a href="/lib/seed/v_2/problem/client.rb">get_problem_version</a>(problem_id, problem_version) -> Seed::V2::Problem::Types::ProblemInfoV2</code></summary>
+<details><summary><code>client.v2.problem.<a href="/lib/seed/v2/problem/client.rb">get_problem_version</a>(problem_id, problem_version) -> Seed::V2::Problem::Types::ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -2255,7 +2255,7 @@ Returns requested version of a problem
 <dd>
 
 ```ruby
-client.v_2.problem.get_problem_version(
+client.v2.problem.get_problem_version(
   problem_id: "problemId",
   problem_version: 1
 )
@@ -2302,7 +2302,7 @@ client.v_2.problem.get_problem_version(
 </details>
 
 ## V2 V3 Problem
-<details><summary><code>client.v_2.v_3.problem.<a href="/lib/seed/v_2/v_3/problem/client.rb">get_lightweight_problems</a>() -> Internal::Types::Array[Seed::V2::V3::Problem::Types::LightweightProblemInfoV2]</code></summary>
+<details><summary><code>client.v2.v3.problem.<a href="/lib/seed/v2/v3/problem/client.rb">get_lightweight_problems</a>() -> Internal::Types::Array[Seed::V2::V3::Problem::Types::LightweightProblemInfoV2]</code></summary>
 <dl>
 <dd>
 
@@ -2329,7 +2329,7 @@ Returns lightweight versions of all problems
 <dd>
 
 ```ruby
-client.v_2.problem.get_lightweight_problems
+client.v2.problem.get_lightweight_problems
 ```
 </dd>
 </dl>
@@ -2356,7 +2356,7 @@ client.v_2.problem.get_lightweight_problems
 </dl>
 </details>
 
-<details><summary><code>client.v_2.v_3.problem.<a href="/lib/seed/v_2/v_3/problem/client.rb">get_problems</a>() -> Internal::Types::Array[Seed::V2::V3::Problem::Types::ProblemInfoV2]</code></summary>
+<details><summary><code>client.v2.v3.problem.<a href="/lib/seed/v2/v3/problem/client.rb">get_problems</a>() -> Internal::Types::Array[Seed::V2::V3::Problem::Types::ProblemInfoV2]</code></summary>
 <dl>
 <dd>
 
@@ -2383,7 +2383,7 @@ Returns latest versions of all problems
 <dd>
 
 ```ruby
-client.v_2.problem.get_problems
+client.v2.problem.get_problems
 ```
 </dd>
 </dl>
@@ -2410,7 +2410,7 @@ client.v_2.problem.get_problems
 </dl>
 </details>
 
-<details><summary><code>client.v_2.v_3.problem.<a href="/lib/seed/v_2/v_3/problem/client.rb">get_latest_problem</a>(problem_id) -> Seed::V2::V3::Problem::Types::ProblemInfoV2</code></summary>
+<details><summary><code>client.v2.v3.problem.<a href="/lib/seed/v2/v3/problem/client.rb">get_latest_problem</a>(problem_id) -> Seed::V2::V3::Problem::Types::ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -2437,7 +2437,7 @@ Returns latest version of a problem
 <dd>
 
 ```ruby
-client.v_2.problem.get_latest_problem(problem_id: "problemId")
+client.v2.problem.get_latest_problem(problem_id: "problemId")
 ```
 </dd>
 </dl>
@@ -2472,7 +2472,7 @@ client.v_2.problem.get_latest_problem(problem_id: "problemId")
 </dl>
 </details>
 
-<details><summary><code>client.v_2.v_3.problem.<a href="/lib/seed/v_2/v_3/problem/client.rb">get_problem_version</a>(problem_id, problem_version) -> Seed::V2::V3::Problem::Types::ProblemInfoV2</code></summary>
+<details><summary><code>client.v2.v3.problem.<a href="/lib/seed/v2/v3/problem/client.rb">get_problem_version</a>(problem_id, problem_version) -> Seed::V2::V3::Problem::Types::ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -2499,7 +2499,7 @@ Returns requested version of a problem
 <dd>
 
 ```ruby
-client.v_2.problem.get_problem_version(
+client.v2.problem.get_problem_version(
   problem_id: "problemId",
   problem_version: 1
 )

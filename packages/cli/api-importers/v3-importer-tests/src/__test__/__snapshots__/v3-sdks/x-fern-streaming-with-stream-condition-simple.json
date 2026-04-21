@@ -437,6 +437,7 @@
                   "name": "StreamedResponse",
                   "typeId": "StreamedResponse",
                   "inline": false,
+                  "displayName": "StreamedResponse",
                   "type": "named"
                 },
                 "type": "json"
@@ -483,6 +484,7 @@
                       "name": "StreamedResponse",
                       "typeId": "StreamedResponse",
                       "inline": false,
+                      "displayName": "StreamedResponse",
                       "type": "named"
                     },
                     "type": "json"
@@ -788,6 +790,7 @@
                   "name": "FullResponse",
                   "typeId": "FullResponse",
                   "inline": false,
+                  "displayName": "FullResponse",
                   "type": "named"
                 },
                 "docs": "",
@@ -834,6 +837,7 @@
                       "name": "FullResponse",
                       "typeId": "FullResponse",
                       "inline": false,
+                      "displayName": "FullResponse",
                       "type": "named"
                     },
                     "docs": "",

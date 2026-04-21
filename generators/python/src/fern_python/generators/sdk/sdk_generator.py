@@ -39,7 +39,8 @@ from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
 )
 from fern_python.snippet import SnippetRegistry, SnippetWriter
 from fern_python.snippet.snippet_test_factory import SnippetTestFactory
-from fern_python.utils import build_snippet_writer
+from fern_python.utils import resolve_name
+from fern_python.utils.build_snippet_writer import build_snippet_writer
 
 import fern.ir.resources as ir_types
 from fern.generator_exec import GeneratorUpdate, LogLevel, LogUpdate, Snippets
@@ -83,7 +84,7 @@ class SdkGenerator(AbstractGenerator):
         return (
             (
                 cleaned_org_name,
-                ir.api_name.snake_case.safe_name,
+                resolve_name(ir.api_name).snake_case.safe_name,
             )
             if custom_config.use_api_name_in_package
             else (cleaned_org_name,)
@@ -110,12 +111,13 @@ class SdkGenerator(AbstractGenerator):
 
         for dep, value in custom_config.extra_dependencies.items():
             if type(value) is str:
-                project.add_dependency(dependency=AST.Dependency(name=dep, version=value))
+                project.add_dependency(dependency=AST.Dependency(name=dep, version=value), is_user_override=True)
             elif isinstance(value, DependencyCustomConfig):
                 project.add_dependency(
                     dependency=AST.Dependency(
                         name=dep, version=value.version, optional=value.optional, python=value.python
-                    )
+                    ),
+                    is_user_override=True,
                 )
 
         # Merge user-defined extras with the built-in aiohttp extra
@@ -125,20 +127,30 @@ class SdkGenerator(AbstractGenerator):
         extras["aiohttp"] = list(dict.fromkeys(existing + aiohttp_deps))
         project.add_extra(extras)
 
-        # Add optional dependencies for aiohttp support
-        project.add_dependency(dependency=AST.Dependency(name="httpx-aiohttp", version="0.1.8", optional=True))
-        project.add_dependency(dependency=AST.Dependency(name="aiohttp", version=">=3.10.0,<4", optional=True))
+        # Add optional dependencies for aiohttp support.
+        # aiohttp >= 3.13 dropped Python 3.8 support, so the marker restricts install
+        # to Python 3.9+; SDKs that still support 3.8 fall back to not installing the
+        # extra rather than pinning to an older vulnerable aiohttp.
+        project.add_dependency(
+            dependency=AST.Dependency(name="httpx-aiohttp", version="0.1.8", optional=True, python=">=3.9")
+        )
+        project.add_dependency(
+            dependency=AST.Dependency(name="aiohttp", version=">=3.13.4,<4", optional=True, python=">=3.9")
+        )
 
         for dep, bas_dep_value in custom_config.extra_dev_dependencies.items():
             if type(bas_dep_value) is str:
-                project.add_dev_dependency(dependency=AST.Dependency(name=dep, version=bas_dep_value))
+                project.add_dev_dependency(
+                    dependency=AST.Dependency(name=dep, version=bas_dep_value), is_user_override=True
+                )
             elif isinstance(bas_dep_value, BaseDependencyCustomConfig):
                 project.add_dev_dependency(
                     dependency=AST.Dependency(
                         name=dep,
                         version=bas_dep_value.version,
                         extras=tuple(bas_dep_value.extras) if bas_dep_value.extras is not None else None,
-                    )
+                    ),
+                    is_user_override=True,
                 )
 
         # Export from root init
@@ -601,6 +613,23 @@ class SdkGenerator(AbstractGenerator):
         root_client: "RootClient",
     ) -> AST.ClassDeclaration:
         params = root_client.init_parameters if root_client.init_parameters is not None else root_client.parameters
+
+        if root_client.constructor_overloads is not None:
+            # When the base class has overloaded __init__ (e.g. OAuth + token),
+            # mirror the overloads on the wrapper and use **kwargs pass-through
+            # so the call to super().__init__() satisfies mypy without type: ignore.
+            def write_kwargs_super_init(writer: AST.NodeWriter) -> None:
+                writer.write_line("super().__init__(**kwargs)")
+
+            return AST.ClassDeclaration(
+                name=class_name,
+                extends=[base_class_ref],
+                constructor=AST.ClassConstructor(
+                    signature=AST.FunctionSignature(include_kwargs=True),
+                    body=AST.CodeWriter(write_kwargs_super_init),
+                    overloads=root_client.constructor_overloads,
+                ),
+            )
 
         named_params = [
             AST.NamedFunctionParameter(

@@ -22,7 +22,7 @@ This repository contains the source for the [Fern](https://www.buildwithfern.com
 
 - `fernapi/fern-openapi`
 
-The generator is written in TypeScript and produces an OpenAPI `3.0.0` specification. If you have a need for Fern to generate a more recent specification version, let us know in [this issue](https://github.com/fern-api/fern-openapi/issues/65).
+The generator is written in TypeScript and produces an OpenAPI `3.1.0` specification. If you have a need for Fern to generate a more recent specification version, let us know in [this issue](https://github.com/fern-api/fern-openapi/issues/65).
 
 Fern handles transforming a Fern specification into Fern _intermediate representation_. IR is a normalized, Fern-specific definition of an API containing its endpoints, models, errors, authentication scheme, version, and more. Then the OpenAPI generator takes over and turns the IR into a production-ready OpenAPI specification.
 

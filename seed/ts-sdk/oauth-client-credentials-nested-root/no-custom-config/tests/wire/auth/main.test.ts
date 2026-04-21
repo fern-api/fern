@@ -38,10 +38,6 @@ describe("AuthClient", () => {
             client_secret: "client_secret",
             scope: "scope",
         });
-        expect(response).toEqual({
-            access_token: "access_token",
-            expires_in: 1,
-            refresh_token: "refresh_token",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

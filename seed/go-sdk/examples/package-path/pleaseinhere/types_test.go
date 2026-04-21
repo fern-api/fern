@@ -5,6 +5,7 @@ package examples
 import (
 	json "encoding/json"
 	commons "github.com/examples/fern/pleaseinhere/commons"
+	uuid "github.com/google/uuid"
 	assert "github.com/stretchr/testify/assert"
 	require "github.com/stretchr/testify/require"
 	testing "testing"
@@ -407,11 +408,11 @@ func TestSettersActor(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetId", func(t *testing.T) {
+	t.Run("SetID", func(t *testing.T) {
 		obj := &Actor{}
-		var fernTestValueId string
-		obj.SetId(fernTestValueId)
-		assert.Equal(t, fernTestValueId, obj.Id)
+		var fernTestValueID string
+		obj.SetID(fernTestValueID)
+		assert.Equal(t, fernTestValueID, obj.ID)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -441,18 +442,18 @@ func TestGettersActor(t *testing.T) {
 		_ = obj.GetName() // Should return zero value
 	})
 
-	t.Run("GetId", func(t *testing.T) {
+	t.Run("GetID", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &Actor{}
 		var expected string
-		obj.Id = expected
+		obj.ID = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetId(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetID(), "getter should return the property value")
 	})
 
-	t.Run("GetId_NilReceiver", func(t *testing.T) {
+	t.Run("GetID_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *Actor
 		// Should not panic - getters should handle nil receiver gracefully
@@ -461,7 +462,7 @@ func TestGettersActor(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetId() // Should return zero value
+		_ = obj.GetID() // Should return zero value
 	})
 
 }
@@ -498,14 +499,14 @@ func TestSettersMarkExplicitActor(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetId_MarksExplicit", func(t *testing.T) {
+	t.Run("SetID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &Actor{}
-		var fernTestValueId string
+		var fernTestValueID string
 
 		// Act
-		obj.SetId(fernTestValueId)
+		obj.SetID(fernTestValueID)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -540,11 +541,11 @@ func TestSettersActress(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetId", func(t *testing.T) {
+	t.Run("SetID", func(t *testing.T) {
 		obj := &Actress{}
-		var fernTestValueId string
-		obj.SetId(fernTestValueId)
-		assert.Equal(t, fernTestValueId, obj.Id)
+		var fernTestValueID string
+		obj.SetID(fernTestValueID)
+		assert.Equal(t, fernTestValueID, obj.ID)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -574,18 +575,18 @@ func TestGettersActress(t *testing.T) {
 		_ = obj.GetName() // Should return zero value
 	})
 
-	t.Run("GetId", func(t *testing.T) {
+	t.Run("GetID", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &Actress{}
 		var expected string
-		obj.Id = expected
+		obj.ID = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetId(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetID(), "getter should return the property value")
 	})
 
-	t.Run("GetId_NilReceiver", func(t *testing.T) {
+	t.Run("GetID_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *Actress
 		// Should not panic - getters should handle nil receiver gracefully
@@ -594,7 +595,7 @@ func TestGettersActress(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetId() // Should return zero value
+		_ = obj.GetID() // Should return zero value
 	})
 
 }
@@ -631,14 +632,14 @@ func TestSettersMarkExplicitActress(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetId_MarksExplicit", func(t *testing.T) {
+	t.Run("SetID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &Actress{}
-		var fernTestValueId string
+		var fernTestValueID string
 
 		// Act
-		obj.SetId(fernTestValueId)
+		obj.SetID(fernTestValueID)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -2418,17 +2419,17 @@ func TestSettersMarkExplicitExceptionInfo(t *testing.T) {
 }
 
 func TestSettersExtendedMovie(t *testing.T) {
-	t.Run("SetId", func(t *testing.T) {
+	t.Run("SetID", func(t *testing.T) {
 		obj := &ExtendedMovie{}
-		var fernTestValueId MovieId
-		obj.SetId(fernTestValueId)
-		assert.Equal(t, fernTestValueId, obj.Id)
+		var fernTestValueID MovieID
+		obj.SetID(fernTestValueID)
+		assert.Equal(t, fernTestValueID, obj.ID)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
 	t.Run("SetPrequel", func(t *testing.T) {
 		obj := &ExtendedMovie{}
-		var fernTestValuePrequel *MovieId
+		var fernTestValuePrequel *MovieID
 		obj.SetPrequel(fernTestValuePrequel)
 		assert.Equal(t, fernTestValuePrequel, obj.Prequel)
 		assert.NotNil(t, obj.explicitFields)
@@ -2501,18 +2502,18 @@ func TestSettersExtendedMovie(t *testing.T) {
 }
 
 func TestGettersExtendedMovie(t *testing.T) {
-	t.Run("GetId", func(t *testing.T) {
+	t.Run("GetID", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &ExtendedMovie{}
-		var expected MovieId
-		obj.Id = expected
+		var expected MovieID
+		obj.ID = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetId(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetID(), "getter should return the property value")
 	})
 
-	t.Run("GetId_NilReceiver", func(t *testing.T) {
+	t.Run("GetID_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *ExtendedMovie
 		// Should not panic - getters should handle nil receiver gracefully
@@ -2521,14 +2522,14 @@ func TestGettersExtendedMovie(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetId() // Should return zero value
+		_ = obj.GetID() // Should return zero value
 	})
 
 	t.Run("GetPrequel", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &ExtendedMovie{}
-		var expected *MovieId
+		var expected *MovieID
 		obj.Prequel = expected
 
 		// Act & Assert
@@ -2774,14 +2775,14 @@ func TestGettersExtendedMovie(t *testing.T) {
 }
 
 func TestSettersMarkExplicitExtendedMovie(t *testing.T) {
-	t.Run("SetId_MarksExplicit", func(t *testing.T) {
+	t.Run("SetID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &ExtendedMovie{}
-		var fernTestValueId MovieId
+		var fernTestValueID MovieID
 
 		// Act
-		obj.SetId(fernTestValueId)
+		obj.SetID(fernTestValueID)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -2809,7 +2810,7 @@ func TestSettersMarkExplicitExtendedMovie(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &ExtendedMovie{}
-		var fernTestValuePrequel *MovieId
+		var fernTestValuePrequel *MovieID
 
 		// Act
 		obj.SetPrequel(fernTestValuePrequel)
@@ -3309,18 +3310,18 @@ func TestGettersMetadata(t *testing.T) {
 		_ = obj.GetTags() // Should return zero value
 	})
 
-	t.Run("GetHtml", func(t *testing.T) {
+	t.Run("GetHTML", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &Metadata{}
 		var expected string
-		obj.Html = expected
+		obj.HTML = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetHtml(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetHTML(), "getter should return the property value")
 	})
 
-	t.Run("GetHtml_NilReceiver", func(t *testing.T) {
+	t.Run("GetHTML_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *Metadata
 		// Should not panic - getters should handle nil receiver gracefully
@@ -3329,7 +3330,7 @@ func TestGettersMetadata(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetHtml() // Should return zero value
+		_ = obj.GetHTML() // Should return zero value
 	})
 
 	t.Run("GetMarkdown", func(t *testing.T) {
@@ -3491,6 +3492,14 @@ func TestSettersMarkExplicitMigration(t *testing.T) {
 }
 
 func TestSettersMoment(t *testing.T) {
+	t.Run("SetID", func(t *testing.T) {
+		obj := &Moment{}
+		var fernTestValueID uuid.UUID
+		obj.SetID(fernTestValueID)
+		assert.Equal(t, fernTestValueID, obj.ID)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetDate", func(t *testing.T) {
 		obj := &Moment{}
 		var fernTestValueDate time.Time
@@ -3510,6 +3519,29 @@ func TestSettersMoment(t *testing.T) {
 }
 
 func TestGettersMoment(t *testing.T) {
+	t.Run("GetID", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Moment{}
+		var expected uuid.UUID
+		obj.ID = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetID(), "getter should return the property value")
+	})
+
+	t.Run("GetID_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *Moment
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetID() // Should return zero value
+	})
+
 	t.Run("GetDate", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -3559,6 +3591,37 @@ func TestGettersMoment(t *testing.T) {
 }
 
 func TestSettersMarkExplicitMoment(t *testing.T) {
+	t.Run("SetID_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Moment{}
+		var fernTestValueID uuid.UUID
+
+		// Act
+		obj.SetID(fernTestValueID)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetDate_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -3624,17 +3687,17 @@ func TestSettersMarkExplicitMoment(t *testing.T) {
 }
 
 func TestSettersMovie(t *testing.T) {
-	t.Run("SetId", func(t *testing.T) {
+	t.Run("SetID", func(t *testing.T) {
 		obj := &Movie{}
-		var fernTestValueId MovieId
-		obj.SetId(fernTestValueId)
-		assert.Equal(t, fernTestValueId, obj.Id)
+		var fernTestValueID MovieID
+		obj.SetID(fernTestValueID)
+		assert.Equal(t, fernTestValueID, obj.ID)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
 	t.Run("SetPrequel", func(t *testing.T) {
 		obj := &Movie{}
-		var fernTestValuePrequel *MovieId
+		var fernTestValuePrequel *MovieID
 		obj.SetPrequel(fernTestValuePrequel)
 		assert.Equal(t, fernTestValuePrequel, obj.Prequel)
 		assert.NotNil(t, obj.explicitFields)
@@ -3699,18 +3762,18 @@ func TestSettersMovie(t *testing.T) {
 }
 
 func TestGettersMovie(t *testing.T) {
-	t.Run("GetId", func(t *testing.T) {
+	t.Run("GetID", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &Movie{}
-		var expected MovieId
-		obj.Id = expected
+		var expected MovieID
+		obj.ID = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetId(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetID(), "getter should return the property value")
 	})
 
-	t.Run("GetId_NilReceiver", func(t *testing.T) {
+	t.Run("GetID_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *Movie
 		// Should not panic - getters should handle nil receiver gracefully
@@ -3719,14 +3782,14 @@ func TestGettersMovie(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetId() // Should return zero value
+		_ = obj.GetID() // Should return zero value
 	})
 
 	t.Run("GetPrequel", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &Movie{}
-		var expected *MovieId
+		var expected *MovieID
 		obj.Prequel = expected
 
 		// Act & Assert
@@ -3939,14 +4002,14 @@ func TestGettersMovie(t *testing.T) {
 }
 
 func TestSettersMarkExplicitMovie(t *testing.T) {
-	t.Run("SetId_MarksExplicit", func(t *testing.T) {
+	t.Run("SetID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &Movie{}
-		var fernTestValueId MovieId
+		var fernTestValueID MovieID
 
 		// Act
-		obj.SetId(fernTestValueId)
+		obj.SetID(fernTestValueID)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -3974,7 +4037,7 @@ func TestSettersMarkExplicitMovie(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &Movie{}
-		var fernTestValuePrequel *MovieId
+		var fernTestValuePrequel *MovieID
 
 		// Act
 		obj.SetPrequel(fernTestValuePrequel)
@@ -4436,29 +4499,29 @@ func TestSettersMarkExplicitNode(t *testing.T) {
 }
 
 func TestSettersRefreshTokenRequest(t *testing.T) {
-	t.Run("SetTtl", func(t *testing.T) {
+	t.Run("SetTTL", func(t *testing.T) {
 		obj := &RefreshTokenRequest{}
-		var fernTestValueTtl int
-		obj.SetTtl(fernTestValueTtl)
-		assert.Equal(t, fernTestValueTtl, obj.Ttl)
+		var fernTestValueTTL int
+		obj.SetTTL(fernTestValueTTL)
+		assert.Equal(t, fernTestValueTTL, obj.TTL)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
 }
 
 func TestGettersRefreshTokenRequest(t *testing.T) {
-	t.Run("GetTtl", func(t *testing.T) {
+	t.Run("GetTTL", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &RefreshTokenRequest{}
 		var expected int
-		obj.Ttl = expected
+		obj.TTL = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetTtl(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetTTL(), "getter should return the property value")
 	})
 
-	t.Run("GetTtl_NilReceiver", func(t *testing.T) {
+	t.Run("GetTTL_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *RefreshTokenRequest
 		// Should not panic - getters should handle nil receiver gracefully
@@ -4467,20 +4530,20 @@ func TestGettersRefreshTokenRequest(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetTtl() // Should return zero value
+		_ = obj.GetTTL() // Should return zero value
 	})
 
 }
 
 func TestSettersMarkExplicitRefreshTokenRequest(t *testing.T) {
-	t.Run("SetTtl_MarksExplicit", func(t *testing.T) {
+	t.Run("SetTTL_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &RefreshTokenRequest{}
-		var fernTestValueTtl int
+		var fernTestValueTTL int
 
 		// Act
-		obj.SetTtl(fernTestValueTtl)
+		obj.SetTTL(fernTestValueTTL)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -4810,11 +4873,11 @@ func TestSettersStuntDouble(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetActorOrActressId", func(t *testing.T) {
+	t.Run("SetActorOrActressID", func(t *testing.T) {
 		obj := &StuntDouble{}
-		var fernTestValueActorOrActressId string
-		obj.SetActorOrActressId(fernTestValueActorOrActressId)
-		assert.Equal(t, fernTestValueActorOrActressId, obj.ActorOrActressId)
+		var fernTestValueActorOrActressID string
+		obj.SetActorOrActressID(fernTestValueActorOrActressID)
+		assert.Equal(t, fernTestValueActorOrActressID, obj.ActorOrActressID)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -4844,18 +4907,18 @@ func TestGettersStuntDouble(t *testing.T) {
 		_ = obj.GetName() // Should return zero value
 	})
 
-	t.Run("GetActorOrActressId", func(t *testing.T) {
+	t.Run("GetActorOrActressID", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &StuntDouble{}
 		var expected string
-		obj.ActorOrActressId = expected
+		obj.ActorOrActressID = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetActorOrActressId(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetActorOrActressID(), "getter should return the property value")
 	})
 
-	t.Run("GetActorOrActressId_NilReceiver", func(t *testing.T) {
+	t.Run("GetActorOrActressID_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *StuntDouble
 		// Should not panic - getters should handle nil receiver gracefully
@@ -4864,7 +4927,7 @@ func TestGettersStuntDouble(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetActorOrActressId() // Should return zero value
+		_ = obj.GetActorOrActressID() // Should return zero value
 	})
 
 }
@@ -4901,14 +4964,14 @@ func TestSettersMarkExplicitStuntDouble(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetActorOrActressId_MarksExplicit", func(t *testing.T) {
+	t.Run("SetActorOrActressID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &StuntDouble{}
-		var fernTestValueActorOrActressId string
+		var fernTestValueActorOrActressID string
 
 		// Act
-		obj.SetActorOrActressId(fernTestValueActorOrActressId)
+		obj.SetActorOrActressID(fernTestValueActorOrActressID)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)

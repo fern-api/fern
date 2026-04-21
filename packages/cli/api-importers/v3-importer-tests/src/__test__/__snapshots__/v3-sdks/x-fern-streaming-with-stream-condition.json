@@ -546,6 +546,7 @@
                   "name": "ChatStreamedResponse",
                   "typeId": "ChatStreamedResponse",
                   "inline": false,
+                  "displayName": "ChatStreamedResponse",
                   "type": "named"
                 },
                 "type": "json"
@@ -594,6 +595,7 @@
                       "name": "ChatStreamedResponse",
                       "typeId": "ChatStreamedResponse",
                       "inline": false,
+                      "displayName": "ChatStreamedResponse",
                       "type": "named"
                     },
                     "type": "json"
@@ -1031,6 +1033,7 @@
                   "name": "ChatFullResponse",
                   "typeId": "ChatFullResponse",
                   "inline": false,
+                  "displayName": "ChatFullResponse",
                   "type": "named"
                 },
                 "docs": "",
@@ -1079,6 +1082,7 @@
                       "name": "ChatFullResponse",
                       "typeId": "ChatFullResponse",
                       "inline": false,
+                      "displayName": "ChatFullResponse",
                       "type": "named"
                     },
                     "docs": "",

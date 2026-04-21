@@ -17,6 +17,7 @@ export const UnionTypeDeclaration: core.serialization.ObjectSchema<
     extends: core.serialization.list(DeclaredTypeName),
     types: core.serialization.list(SingleUnionType),
     baseProperties: core.serialization.list(ObjectProperty),
+    default: SingleUnionType.optional(),
     discriminatorContext: UnionDiscriminatorContext.optional(),
 });
 
@@ -26,6 +27,7 @@ export declare namespace UnionTypeDeclaration {
         extends: DeclaredTypeName.Raw[];
         types: SingleUnionType.Raw[];
         baseProperties: ObjectProperty.Raw[];
+        default?: SingleUnionType.Raw | null;
         discriminatorContext?: UnionDiscriminatorContext.Raw | null;
     }
 }

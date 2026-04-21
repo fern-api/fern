@@ -30,10 +30,6 @@ describe("UserClient", () => {
             age: 30,
             location: "Wonderland",
         });
-        expect(response).toEqual({
-            name: "Alice",
-            age: 30,
-            location: "Wonderland",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

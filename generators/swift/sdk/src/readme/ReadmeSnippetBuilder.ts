@@ -361,10 +361,11 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         if (defaultEnvId != null) {
             const defaultEnv = envs.find((e) => e.id === defaultEnvId);
             if (defaultEnv != null) {
-                return defaultEnv.name.camelCase.unsafeName;
+                return this.context.caseConverter.camelUnsafe(defaultEnv.name);
             }
         }
-        return envs[0]?.name.camelCase.unsafeName;
+        const firstName = envs[0]?.name;
+        return firstName != null ? this.context.caseConverter.camelUnsafe(firstName) : undefined;
     }
 
     private getUsageSnippetForEndpoint(endpointId: string) {

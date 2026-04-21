@@ -360,6 +360,18 @@
                 "type": "csharp",
                 "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nvar items = await client.Users.ListWithOptionalDataAsync(new ListUsersOptionalDataRequest { Page = 1 });\n\nawait foreach (var item in items)\n{\n    // do something with item\n}\n"
             }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users/aliased-data",
+                "method": "GET",
+                "identifier_override": "endpoint_users.listWithAliasedData"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nvar items = await client.Users.ListWithAliasedDataAsync(\n    new ListUsersAliasedDataRequest\n    {\n        Page = 1,\n        PerPage = 1,\n        StartingAfter = \"starting_after\",\n    }\n);\n\nawait foreach (var item in items)\n{\n    // do something with item\n}\n"
+            }
         }
     ]
 }

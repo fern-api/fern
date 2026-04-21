@@ -37,12 +37,12 @@ func (l *ListUserEventsRequest) SetLimit(limit *int) {
 }
 
 var (
-	eventFieldId   = big.NewInt(1 << 0)
+	eventFieldID   = big.NewInt(1 << 0)
 	eventFieldName = big.NewInt(1 << 1)
 )
 
 type Event struct {
-	Id   fern.Id `json:"id" url:"id"`
+	ID   fern.ID `json:"id" url:"id"`
 	Name string  `json:"name" url:"name"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -52,11 +52,11 @@ type Event struct {
 	rawJSON         json.RawMessage
 }
 
-func (e *Event) GetId() fern.Id {
+func (e *Event) GetID() fern.ID {
 	if e == nil {
 		return ""
 	}
-	return e.Id
+	return e.ID
 }
 
 func (e *Event) GetName() string {
@@ -80,11 +80,11 @@ func (e *Event) require(field *big.Int) {
 	e.explicitFields.Or(e.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *Event) SetId(id fern.Id) {
-	e.Id = id
-	e.require(eventFieldId)
+func (e *Event) SetID(id fern.ID) {
+	e.ID = id
+	e.require(eventFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;

@@ -26,6 +26,7 @@ from fern_python.generators.sdk.client_generator.pagination.uri import (
 from fern_python.generators.sdk.client_generator.streaming.utilities import (
     StreamingParameterType,
 )
+from fern_python.utils.name_resolver import get_name_from_wire_value, get_wire_value, resolve_name
 
 import fern.ir.resources as ir_types
 
@@ -353,7 +354,7 @@ class EndpointResponseCodeWriter:
             response_body: ir_types.TypeReference = response_union.response_body_type
             response_body_union = response_body.get_as_union()
             response_property = (
-                response_union.response_property.name.name.snake_case.safe_name
+                resolve_name(get_name_from_wire_value(response_union.response_property.name)).snake_case.safe_name
                 if response_union.response_property is not None
                 else None
             )
@@ -763,14 +764,14 @@ class EndpointResponseCodeWriter:
 
         if len(self._errors) > 0:
             writer.write_line(
-                f'if "{strategy.discriminant.wire_value}" in {EndpointResponseCodeWriter.RESPONSE_JSON_VARIABLE}:'
+                f'if "{get_wire_value(strategy.discriminant)}" in {EndpointResponseCodeWriter.RESPONSE_JSON_VARIABLE}:'
             )
             with writer.indent():
                 for error in self._errors:
                     error_declaration = self._context.ir.errors[error.error.error_id]
 
                     writer.write_line(
-                        f'if {EndpointResponseCodeWriter.RESPONSE_JSON_VARIABLE}["{strategy.discriminant.wire_value}"] == "{error_declaration.discriminant_value.wire_value}":'
+                        f'if {EndpointResponseCodeWriter.RESPONSE_JSON_VARIABLE}["{get_wire_value(strategy.discriminant)}"] == "{get_wire_value(error_declaration.discriminant_value)}":'
                     )
                     with writer.indent():
                         writer.write("raise ")
@@ -786,7 +787,7 @@ class EndpointResponseCodeWriter:
                                                 error_declaration.type
                                             ),
                                             AST.Expression(
-                                                f'{EndpointResponseCodeWriter.RESPONSE_JSON_VARIABLE}["{strategy.content_property.wire_value}"]'
+                                                f'{EndpointResponseCodeWriter.RESPONSE_JSON_VARIABLE}["{get_wire_value(strategy.content_property)}"]'
                                             ),
                                         ),
                                     ),

@@ -45,6 +45,7 @@ import {
     getExampleAsNumber,
     getExamplesString
 } from "./examples/getExample.js";
+import { resolveDiscriminatorContext } from "./inferDiscriminatorContext.js";
 import type { SchemaParserContext } from "./SchemaParserContext.js";
 import { getBreadcrumbsFromReference } from "./utils/getBreadcrumbsFromReference.js";
 import { getGeneratedTypeName } from "./utils/getSchemaName.js";
@@ -605,7 +606,9 @@ export function convertSchemaObject(
         // primitive types
         if (schema.type === "boolean") {
             const literalValue = getExtension<boolean>(schema, FernOpenAPIExtension.BOOLEAN_LITERAL);
-            const resolvedLiteral = literalValue ?? getSingleBooleanEnumValue(schema, blockConstCoercionToLiteral);
+            const resolvedLiteral =
+                literalValue ??
+                getSingleBooleanEnumValue(schema, blockConstCoercionToLiteral, context.options.coerceEnumsToLiterals);
             if (resolvedLiteral != null) {
                 return wrapLiteral({
                     nameOverride,
@@ -935,7 +938,11 @@ export function convertSchemaObject(
         }
 
         if (schema.type === "object" && schema.discriminator != null && schema.discriminator.mapping != null) {
-            if (!context.options.discriminatedUnionV2) {
+            const objectDiscriminatorContext = resolveDiscriminatorContext({
+                discriminator: schema.discriminator,
+                context
+            });
+            if (!context.options.discriminatedUnionV2 || objectDiscriminatorContext === "protocol") {
                 return convertDiscriminatedOneOf({
                     nameOverride,
                     generatedName,
@@ -981,7 +988,14 @@ export function convertSchemaObject(
                 schema.discriminator.mapping != null &&
                 Object.keys(schema.discriminator.mapping).length > 0
             ) {
-                if (context.options.discriminatedUnionV2 || isUndiscriminated) {
+                const discriminatorContext = resolveDiscriminatorContext({
+                    discriminator: schema.discriminator,
+                    context
+                });
+                if (
+                    (context.options.discriminatedUnionV2 || isUndiscriminated) &&
+                    discriminatorContext !== "protocol"
+                ) {
                     return convertUndiscriminatedOneOfWithDiscriminant({
                         nameOverride,
                         generatedName,
@@ -1115,6 +1129,7 @@ export function convertSchemaObject(
                         wrapAsNullable,
                         discriminant: maybeDiscriminant.discriminant,
                         variants: maybeDiscriminant.schemas,
+                        defaultDiscriminantValue: maybeDiscriminant.defaultDiscriminantValue,
                         context,
                         namespace,
                         groupName,
@@ -1211,6 +1226,7 @@ export function convertSchemaObject(
                     wrapAsNullable,
                     discriminant: maybeDiscriminant.discriminant,
                     variants: maybeDiscriminant.schemas,
+                    defaultDiscriminantValue: maybeDiscriminant.defaultDiscriminantValue,
                     context,
                     namespace,
                     groupName,
@@ -1508,13 +1524,19 @@ export function convertSchemaObject(
 
 /**
  * Extracts a boolean literal from a single-value enum (e.g. `type: boolean, enum: [true]`).
- * Returns undefined if the schema doesn't match or if const-to-literal coercion is blocked.
+ * Returns undefined if the schema doesn't match, if const-to-literal coercion is blocked,
+ * or if coerceEnumsToLiterals is false. This is consistent with the string enum path (line ~535)
+ * which also requires coerceEnumsToLiterals to be true.
  */
 function getSingleBooleanEnumValue(
     schema: OpenAPIV3.SchemaObject,
-    blockConstCoercionToLiteral: boolean
+    blockConstCoercionToLiteral: boolean,
+    coerceEnumsToLiterals: boolean
 ): boolean | undefined {
     if (blockConstCoercionToLiteral) {
+        return undefined;
+    }
+    if (!coerceEnumsToLiterals) {
         return undefined;
     }
     if (schema.enum != null && schema.enum.length === 1 && typeof schema.enum[0] === "boolean") {
@@ -1795,6 +1817,7 @@ export function wrapPrimitive({
 interface DiscriminantProperty {
     discriminant: string;
     schemas: Record<string, OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject>;
+    defaultDiscriminantValue: string | undefined;
 }
 
 function getMaybeAllEnumValues({
@@ -1842,9 +1865,28 @@ function getDiscriminant({
     }
     for (const [discriminant, variants] of Object.entries(discriminantToVariants)) {
         if (Object.keys(variants).length === schemas.length) {
+            let defaultDiscriminantValue: string | undefined;
+            for (const [discriminantValue, variantSchema] of Object.entries(variants)) {
+                const resolved = isReferenceObject(variantSchema)
+                    ? context.resolveSchemaReference(variantSchema)
+                    : variantSchema;
+                const discriminantPropertySchema = resolved.properties?.[discriminant];
+                if (discriminantPropertySchema != null && !isReferenceObject(discriminantPropertySchema)) {
+                    const fernDefault = getExtension<string>(
+                        discriminantPropertySchema,
+                        FernOpenAPIExtension.FERN_DEFAULT
+                    );
+                    const defaultValue = fernDefault ?? discriminantPropertySchema.default;
+                    if (defaultValue === discriminantValue) {
+                        defaultDiscriminantValue = discriminantValue;
+                        break;
+                    }
+                }
+            }
             return {
                 discriminant,
-                schemas: variants
+                schemas: variants,
+                defaultDiscriminantValue
             };
         }
     }
