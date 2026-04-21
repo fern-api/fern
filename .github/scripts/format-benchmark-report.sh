@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Formats benchmark results into a markdown PR comment.
-# Usage: format-benchmark-report.sh <pr-results-dir> <main-results-dir>
+# Usage: format-benchmark-report.sh <pr-results-dir> <main-results-dir> [pr-e2e-results-dir]
 #
 # Each directory contains .jsonl files with one JSON object per line:
 #   {"generator":"ts-sdk","spec":"square","duration_seconds":45}
@@ -11,11 +11,16 @@
 #   - A history/ subdirectory with dated run folders, each containing .jsonl files.
 #     When history exists, the median of all historical runs is used as the baseline.
 #     E2E results are stored in history/<run>/e2e/ subdirectories.
+#
+# The optional pr-e2e-results-dir contains full E2E results from the PR branch
+# (run without --skip-scripts). When provided, a PR (E2E) column and E2E Delta
+# are included in the report.
 
 set -euo pipefail
 
-PR_DIR="${1:?Usage: format-benchmark-report.sh <pr-results-dir> <main-results-dir>}"
-MAIN_DIR="${2:?Usage: format-benchmark-report.sh <pr-results-dir> <main-results-dir>}"
+PR_DIR="${1:?Usage: format-benchmark-report.sh <pr-results-dir> <main-results-dir> [pr-e2e-results-dir]}"
+MAIN_DIR="${2:?Usage: format-benchmark-report.sh <pr-results-dir> <main-results-dir> [pr-e2e-results-dir]}"
+PR_E2E_DIR="${3:-}"
 
 # Compute median of a list of numbers (one per line on stdin)
 compute_median() {
@@ -128,8 +133,13 @@ echo ""
 echo "<details>"
 echo "<summary>Full benchmark table (click to expand)</summary>"
 echo ""
-echo "| Generator | Spec | main (generator) | main (E2E) | PR (generator) | Delta |"
-echo "|-----------|------|------------------|------------|----------------|-------|"
+if [ -n "$PR_E2E_DIR" ] && [ -d "$PR_E2E_DIR" ]; then
+  echo "| Generator | Spec | main (generator) | main (E2E) | PR (generator) | PR (E2E) | Gen Delta | E2E Delta |"
+  echo "|-----------|------|------------------|------------|----------------|----------|-----------|-----------|"  
+else
+  echo "| Generator | Spec | main (generator) | main (E2E) | PR (generator) | Delta |"
+  echo "|-----------|------|------------------|------------|----------------|----------|"  
+fi
 
 # Collect all results from the PR directory, then sort rows by generator name for
 # deterministic output regardless of filesystem glob order or artifact download timing.
@@ -178,10 +188,41 @@ for PR_FILE in "${PR_DIR}"/*.jsonl; do
       E2E_DISPLAY="N/A"
     fi
 
+    # Look up PR E2E duration if the PR E2E directory is provided
+    PR_E2E_VAL="N/A"
+    E2E_DELTA="N/A"
+    if [ -n "$PR_E2E_DIR" ] && [ -d "$PR_E2E_DIR" ]; then
+      local_e2e_file="${PR_E2E_DIR}/${GENERATOR}.jsonl"
+      if [ -f "$local_e2e_file" ]; then
+        PR_E2E_VAL=$(jq -r --arg spec "$SPEC" 'select(.spec == $spec) | .duration_seconds' "$local_e2e_file" 2>/dev/null || true)
+        PR_E2E_EXIT=$(jq -r --arg spec "$SPEC" 'select(.spec == $spec) | .exit_code // 0' "$local_e2e_file" 2>/dev/null || true)
+        if [ -z "$PR_E2E_VAL" ] || [ "$PR_E2E_VAL" = "null" ]; then
+          PR_E2E_VAL="N/A"
+        fi
+      fi
+
+      # Compute E2E delta against E2E baseline
+      if [ "$PR_E2E_VAL" != "N/A" ] && [ "$E2E_BASELINE_VAL" != "N/A" ] && [ "$E2E_BASELINE_VAL" != "0" ]; then
+        E2E_DIFF=$(( PR_E2E_VAL - E2E_BASELINE_VAL ))
+        if [ "$E2E_BASELINE_VAL" -gt 0 ] 2>/dev/null; then
+          E2E_PCT=$(awk "BEGIN {printf \"%.1f\", ($E2E_DIFF / $E2E_BASELINE_VAL) * 100}")
+          if [ "$E2E_DIFF" -ge 0 ]; then
+            E2E_DELTA="+${E2E_DIFF}s (+${E2E_PCT}%)"
+          else
+            E2E_DELTA="${E2E_DIFF}s (${E2E_PCT}%)"
+          fi
+        fi
+      fi
+    fi
+
     # Check if this spec was skipped (fetch failure)
     PR_SKIPPED=$(echo "$LINE" | jq -r '.skipped // false')
     if [ "$PR_SKIPPED" = "true" ]; then
-      TABLE_ROWS+="| ${GENERATOR} | ${SPEC} | — | — | ⏭️ skipped | — |\n"
+      if [ -n "$PR_E2E_DIR" ] && [ -d "$PR_E2E_DIR" ]; then
+        TABLE_ROWS+="| ${GENERATOR} | ${SPEC} | — | — | ⏭️ skipped | — | — | — |\n"
+      else
+        TABLE_ROWS+="| ${GENERATOR} | ${SPEC} | — | — | ⏭️ skipped | — |\n"
+      fi
       continue
     fi
 
@@ -190,7 +231,20 @@ for PR_FILE in "${PR_DIR}"/*.jsonl; do
       PR_DISPLAY="${PR_DURATION}s ⚠️"
     fi
 
-    TABLE_ROWS+="| ${GENERATOR} | ${SPEC} | ${MAIN_DISPLAY} | ${E2E_DISPLAY} | ${PR_DISPLAY} | ${DELTA} |\n"
+    # Format PR E2E display
+    PR_E2E_DISPLAY="N/A"
+    if [ "$PR_E2E_VAL" != "N/A" ]; then
+      PR_E2E_DISPLAY="${PR_E2E_VAL}s"
+      if [ -n "${PR_E2E_EXIT:-}" ] && [ "$PR_E2E_EXIT" != "0" ] && [ "$PR_E2E_EXIT" != "null" ]; then
+        PR_E2E_DISPLAY="${PR_E2E_VAL}s ⚠️"
+      fi
+    fi
+
+    if [ -n "$PR_E2E_DIR" ] && [ -d "$PR_E2E_DIR" ]; then
+      TABLE_ROWS+="| ${GENERATOR} | ${SPEC} | ${MAIN_DISPLAY} | ${E2E_DISPLAY} | ${PR_DISPLAY} | ${PR_E2E_DISPLAY} | ${DELTA} | ${E2E_DELTA} |\n"
+    else
+      TABLE_ROWS+="| ${GENERATOR} | ${SPEC} | ${MAIN_DISPLAY} | ${E2E_DISPLAY} | ${PR_DISPLAY} | ${DELTA} |\n"
+    fi
   done < "$PR_FILE"
 done
 
@@ -200,7 +254,11 @@ printf '%b' "$TABLE_ROWS" | sort -t'|' -k2,2
 echo ""
 echo "</details>"
 echo ""
-echo "_**main (generator)**: generator-only time via --skip-scripts (includes Docker image build, container startup, IR parsing, and code generation — this is the same Docker-based flow customers use via \`fern generate\`). **main (E2E)**: full customer-observable time including build/test scripts (nightly baseline, informational). **Delta** is computed against generator-only baseline._"
+if [ -n "$PR_E2E_DIR" ] && [ -d "$PR_E2E_DIR" ]; then
+  echo "_**main (generator)**: generator-only time via --skip-scripts. **main (E2E)**: full customer-observable time including build/test scripts (nightly baseline). **PR (generator)**: generator-only time on this PR. **PR (E2E)**: full E2E time on this PR. **Gen Delta**: PR vs main generator-only. **E2E Delta**: PR vs main E2E._"
+else
+  echo "_**main (generator)**: generator-only time via --skip-scripts (includes Docker image build, container startup, IR parsing, and code generation — this is the same Docker-based flow customers use via \`fern generate\`). **main (E2E)**: full customer-observable time including build/test scripts (nightly baseline, informational). **Delta** is computed against generator-only baseline._"
+fi
 echo "_⚠️ = generation exited with a non-zero exit code (timing may not reflect a successful run)._"
 if [ -n "${BASELINE_TIMESTAMP:-}" ]; then
   echo "_Baseline from nightly runs on \`main\` (latest: ${BASELINE_TIMESTAMP}). Trigger [benchmark-baseline](../actions/workflows/benchmark-baseline.yml) to refresh._"
