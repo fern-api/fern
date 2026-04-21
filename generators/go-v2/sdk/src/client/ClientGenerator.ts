@@ -915,7 +915,9 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         writer.writeLine(' == "" {');
         writer.indent();
         writer.writeNode(propertyReference);
-        writer.writeLine(` = ${this.context.getLiteralAsString(clientDefault)}`);
+        writer.write(" = ");
+        writer.writeNode(this.context.getLiteralValue(clientDefault));
+        writer.newLine();
         writer.dedent();
         writer.writeLine("}");
     }

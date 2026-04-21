@@ -638,9 +638,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         writer.writeLine(`${localVar} := ${ref}`);
                         writer.writeLine(`if ${localVar} == "" {`);
                         writer.indent();
-                        writer.writeLine(
-                            `${localVar} = ${this.context.getLiteralAsString(pathParameter.clientDefault)}`
-                        );
+                        writer.write(`${localVar} = `);
+                        writer.writeNode(this.context.getLiteralValue(pathParameter.clientDefault));
+                        writer.newLine();
                         writer.dedent();
                         writer.writeLine("}");
                         pathParamLocalVars[getOriginalName(pathParameter.name)] = localVar;
@@ -914,7 +914,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.writeLine(`${localVar} := ${headerField}`);
                     writer.writeLine(`if ${localVar} == "" {`);
                     writer.indent();
-                    writer.writeLine(`${localVar} = ${this.context.getLiteralAsString(header.clientDefault)}`);
+                    writer.write(`${localVar} = `);
+                    writer.writeNode(this.context.getLiteralValue(header.clientDefault));
+                    writer.newLine();
                     writer.dedent();
                     writer.writeLine("}");
                     writer.writeNode(
