@@ -97,10 +97,12 @@ export class HttpEndpointGenerator {
         });
 
         const isCustomPagination = endpoint.pagination?.type === "custom";
+        const isPaginated = endpoint.pagination != null;
         let requestStatements = this.generateRequestProcedure({
             endpoint,
             sendRequestCodeBlock,
-            storeResponseInVariable: isCustomPagination
+            storeResponseInVariable: isCustomPagination,
+            wrapWithHttpResponse: isPaginated && !isCustomPagination
         });
 
         const enhancedDocstring = this.generateEnhancedDocstring({ endpoint, request });
@@ -132,6 +134,10 @@ export class HttpEndpointGenerator {
                                 ruby.keywordArgument({
                                     name: "raw_client",
                                     value: ruby.codeblock("@client")
+                                }),
+                                ruby.keywordArgument({
+                                    name: "initial_http_response",
+                                    value: ruby.codeblock(HTTP_RESPONSE_VN)
                                 })
                             ]
                         })
@@ -268,11 +274,13 @@ export class HttpEndpointGenerator {
     private generateRequestProcedure({
         endpoint,
         sendRequestCodeBlock,
-        storeResponseInVariable
+        storeResponseInVariable,
+        wrapWithHttpResponse
     }: {
         endpoint: FernIr.HttpEndpoint;
         sendRequestCodeBlock?: ruby.CodeBlock;
         storeResponseInVariable?: boolean;
+        wrapWithHttpResponse?: boolean;
     }): ruby.AstNode[] {
         const statements: ruby.AstNode[] = [];
 
@@ -316,11 +324,20 @@ export class HttpEndpointGenerator {
                             } else {
                                 switch (endpoint.response.body.type) {
                                     case "json":
-                                        this.loadResponseBodyFromJson({
-                                            writer,
-                                            typeReference: endpoint.response.body.value.responseBodyType,
-                                            storeInVariable: storeResponseInVariable
-                                        });
+                                        if (wrapWithHttpResponse) {
+                                            this.loadResponseBodyFromJson({
+                                                writer,
+                                                typeReference: endpoint.response.body.value.responseBodyType,
+                                                storeInVariable: true
+                                            });
+                                            writer.writeLine(`[parsed_response, ${HTTP_RESPONSE_VN}]`);
+                                        } else {
+                                            this.loadResponseBodyFromJson({
+                                                writer,
+                                                typeReference: endpoint.response.body.value.responseBodyType,
+                                                storeInVariable: storeResponseInVariable
+                                            });
+                                        }
                                         break;
                                     default:
                                         break;

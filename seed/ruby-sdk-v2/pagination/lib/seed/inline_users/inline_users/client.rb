@@ -54,7 +54,8 @@ module Seed
             end
             code = response.code.to_i
             if code.between?(200, 299)
-              Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse.load(response.body)
+              parsed_response = Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse.load(response.body)
+              [parsed_response, response]
             else
               error_class = Seed::Errors::ResponseError.subclass_for_code(code)
               raise error_class.new(response.body, code: code)
@@ -99,7 +100,8 @@ module Seed
             end
             code = response.code.to_i
             if code.between?(200, 299)
-              Seed::InlineUsers::InlineUsers::Types::ListUsersMixedTypePaginationResponse.load(response.body)
+              parsed_response = Seed::InlineUsers::InlineUsers::Types::ListUsersMixedTypePaginationResponse.load(response.body)
+              [parsed_response, response]
             else
               error_class = Seed::Errors::ResponseError.subclass_for_code(code)
               raise error_class.new(response.body, code: code)
@@ -138,7 +140,8 @@ module Seed
             end
             code = response.code.to_i
             if code.between?(200, 299)
-              Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse.load(response.body)
+              parsed_response = Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse.load(response.body)
+              [parsed_response, response]
             else
               error_class = Seed::Errors::ResponseError.subclass_for_code(code)
               raise error_class.new(response.body, code: code)
@@ -190,7 +193,8 @@ module Seed
             end
             code = response.code.to_i
             if code.between?(200, 299)
-              Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse.load(response.body)
+              parsed_response = Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse.load(response.body)
+              [parsed_response, response]
             else
               error_class = Seed::Errors::ResponseError.subclass_for_code(code)
               raise error_class.new(response.body, code: code)
@@ -242,7 +246,8 @@ module Seed
             end
             code = response.code.to_i
             if code.between?(200, 299)
-              Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse.load(response.body)
+              parsed_response = Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse.load(response.body)
+              [parsed_response, response]
             else
               error_class = Seed::Errors::ResponseError.subclass_for_code(code)
               raise error_class.new(response.body, code: code)
@@ -282,7 +287,8 @@ module Seed
             end
             code = response.code.to_i
             if code.between?(200, 299)
-              Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse.load(response.body)
+              parsed_response = Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse.load(response.body)
+              [parsed_response, response]
             else
               error_class = Seed::Errors::ResponseError.subclass_for_code(code)
               raise error_class.new(response.body, code: code)
@@ -332,7 +338,8 @@ module Seed
             end
             code = response.code.to_i
             if code.between?(200, 299)
-              Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse.load(response.body)
+              parsed_response = Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse.load(response.body)
+              [parsed_response, response]
             else
               error_class = Seed::Errors::ResponseError.subclass_for_code(code)
               raise error_class.new(response.body, code: code)
@@ -382,7 +389,8 @@ module Seed
             end
             code = response.code.to_i
             if code.between?(200, 299)
-              Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse.load(response.body)
+              parsed_response = Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse.load(response.body)
+              [parsed_response, response]
             else
               error_class = Seed::Errors::ResponseError.subclass_for_code(code)
               raise error_class.new(response.body, code: code)
@@ -427,7 +435,8 @@ module Seed
             end
             code = response.code.to_i
             if code.between?(200, 299)
-              Seed::InlineUsers::InlineUsers::Types::ListUsersExtendedResponse.load(response.body)
+              parsed_response = Seed::InlineUsers::InlineUsers::Types::ListUsersExtendedResponse.load(response.body)
+              [parsed_response, response]
             else
               error_class = Seed::Errors::ResponseError.subclass_for_code(code)
               raise error_class.new(response.body, code: code)
@@ -472,7 +481,8 @@ module Seed
             end
             code = response.code.to_i
             if code.between?(200, 299)
-              Seed::InlineUsers::InlineUsers::Types::ListUsersExtendedOptionalListResponse.load(response.body)
+              parsed_response = Seed::InlineUsers::InlineUsers::Types::ListUsersExtendedOptionalListResponse.load(response.body)
+              [parsed_response, response]
             else
               error_class = Seed::Errors::ResponseError.subclass_for_code(code)
               raise error_class.new(response.body, code: code)
@@ -517,7 +527,8 @@ module Seed
             end
             code = response.code.to_i
             if code.between?(200, 299)
-              Seed::Types::UsernameCursor.load(response.body)
+              parsed_response = Seed::Types::UsernameCursor.load(response.body)
+              [parsed_response, response]
             else
               error_class = Seed::Errors::ResponseError.subclass_for_code(code)
               raise error_class.new(response.body, code: code)
@@ -563,7 +574,8 @@ module Seed
             end
             code = response.code.to_i
             if code.between?(200, 299)
-              Seed::InlineUsers::InlineUsers::Types::UsernameContainer.load(response.body)
+              parsed_response = Seed::InlineUsers::InlineUsers::Types::UsernameContainer.load(response.body)
+              [parsed_response, response]
             else
               error_class = Seed::Errors::ResponseError.subclass_for_code(code)
               raise error_class.new(response.body, code: code)
