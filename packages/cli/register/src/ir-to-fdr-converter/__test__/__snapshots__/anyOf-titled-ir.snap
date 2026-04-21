@@ -554,7 +554,7 @@
         "_visit": [Function],
         "members": [
           {
-            "docs": undefined,
+            "docs": "AnyOf error variant A with title",
             "type": {
               "_visit": [Function],
               "default": undefined,
@@ -571,7 +571,7 @@
             },
           },
           {
-            "docs": undefined,
+            "docs": "AnyOf error variant B with title",
             "type": {
               "_visit": [Function],
               "default": undefined,
@@ -753,7 +753,7 @@
         "_visit": [Function],
         "members": [
           {
-            "docs": undefined,
+            "docs": "First variant for anyOf with title",
             "type": {
               "_visit": [Function],
               "default": undefined,
@@ -770,7 +770,7 @@
             },
           },
           {
-            "docs": undefined,
+            "docs": "Second variant for anyOf with title",
             "type": {
               "_visit": [Function],
               "default": undefined,

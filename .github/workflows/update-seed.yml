@@ -309,8 +309,13 @@ jobs:
         run: |
           SELECTED_FIXTURE="${{ needs.setup.outputs.selected-fixture }}"
           
-          # List of all generators
-          GENERATORS="ruby-sdk-v2 pydantic python-sdk openapi java-sdk java-model ts-sdk go-model go-sdk csharp-model csharp-sdk php-model php-sdk swift-sdk rust-model rust-sdk"
+          # List of all generators.
+          # Retired generators (pydantic v1 and the standalone *-model generators) are
+          # marked `disabled: true` in their seed.yml and are intentionally omitted here
+          # so the seed CLI does not error with "Generators X not found" when building
+          # the test matrix. Their per-generator seed-update jobs below are already
+          # gated with `if: false # generator not actively supported`.
+          GENERATORS="ruby-sdk-v2 python-sdk openapi java-sdk ts-sdk go-sdk csharp-sdk php-sdk swift-sdk rust-sdk"
           
           # Process each generator and set its output
           for GEN in $GENERATORS; do

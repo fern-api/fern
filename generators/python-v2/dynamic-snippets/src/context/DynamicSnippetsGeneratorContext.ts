@@ -101,12 +101,16 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         discriminantValue: FernIr.dynamic.NameAndWireValue;
     }): python.Reference {
         const unionClassName = this.getClassName(unionDeclaration.name);
-        const variantSuffix = discriminantValue.name.pascalCase.safeName;
+        const variantName = discriminantValue.name.pascalCase.safeName;
         const modulePath = [
             ...this.getRootModulePath(),
             ...unionDeclaration.fernFilepath.allParts.map((part) => part.snakeCase.safeName)
         ];
-        return python.reference({ name: `${unionClassName}_${variantSuffix}`, modulePath });
+        const name =
+            this.customConfig.pydantic_config?.union_naming === "v1"
+                ? `${variantName}${unionClassName}`
+                : `${unionClassName}_${variantName}`;
+        return python.reference({ name, modulePath });
     }
 
     public useTypedDictRequests(): boolean {

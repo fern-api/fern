@@ -5,23 +5,20 @@
 
 set -e
 
-# Run all validations in parallel and collect errors
+# Run all validations in parallel and collect errors.
+# Retired generators (pydantic v1 and the standalone *-model generators) are
+# marked `disabled: true` in their seed.yml and are intentionally omitted here
+# so the seed CLI does not error with "Generators X not found".
 generators=(
     ruby-sdk-v2
-    pydantic
     python-sdk
     openapi
     java-sdk
-    java-model
     ts-sdk
-    go-model
     go-sdk
-    csharp-model
     csharp-sdk
-    php-model
     php-sdk
     swift-sdk
-    rust-model
     rust-sdk
 )
 

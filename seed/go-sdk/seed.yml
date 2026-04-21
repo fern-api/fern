@@ -307,6 +307,9 @@ fixtures:
   go-nested-cross-package:
     - outputFolder: .
       customConfig: null
+  go-subpackage-collision:
+    - outputFolder: .
+      customConfig: null
 scripts:
   - image: fernapi/go-seed:2.0.0
     commands:

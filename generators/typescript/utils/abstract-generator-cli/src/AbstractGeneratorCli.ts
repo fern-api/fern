@@ -78,20 +78,15 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 parse: serialization.IntermediateRepresentation.parse
             });
 
-            let npmPackage: NpmPackage | undefined;
-            if (ir.selfHosted) {
-                // Try to construct package from publish config
-                npmPackage = constructNpmPackageFromArgs(
-                    npmPackageInfoFromPublishConfig(config, ir.publishConfig, this.isPackagePrivate(customConfig))
-                );
-                // Fall back to generator config if publish config doesn't have the necessary info
-                if (npmPackage == null) {
-                    npmPackage = constructNpmPackage({
-                        generatorConfig: config,
-                        isPackagePrivate: this.isPackagePrivate(customConfig)
-                    });
-                }
-            } else {
+            // First try to construct the package from the IR's publishConfig. This is how
+            // self-hosted setups thread package metadata through, and it also carries the
+            // version + package name for local-file-system output (where the generator
+            // exec output mode is `downloadFiles` and does not itself carry a version).
+            let npmPackage: NpmPackage | undefined = constructNpmPackageFromArgs(
+                npmPackageInfoFromPublishConfig(config, ir.publishConfig, this.isPackagePrivate(customConfig))
+            );
+            // Fall back to deriving the package from the generator exec config (github/publish modes).
+            if (npmPackage == null) {
                 npmPackage = constructNpmPackage({
                     generatorConfig: config,
                     isPackagePrivate: this.isPackagePrivate(customConfig)
@@ -105,12 +100,13 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 })
             );
 
-            const version = config.output?.mode._visit({
-                downloadFiles: () => undefined,
-                github: (github) => github.version,
-                publish: (publish) => publish.version,
-                _other: () => undefined
-            });
+            const version =
+                config.output?.mode._visit({
+                    downloadFiles: () => undefined,
+                    github: (github) => github.version,
+                    publish: (publish) => publish.version,
+                    _other: () => undefined
+                }) ?? npmPackage?.version;
 
             const generatorContext = new GeneratorContextImpl(logger, version);
             const codeGenStartTime = Date.now();

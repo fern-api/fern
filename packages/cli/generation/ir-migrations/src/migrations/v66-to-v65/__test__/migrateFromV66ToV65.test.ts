@@ -901,4 +901,43 @@ describe("migrateFromV66ToV65", () => {
             }
         });
     });
+
+    describe("generationMetadata migration", () => {
+        it("strips V66-only fields from generationMetadata so V65 generators do not see them", () => {
+            const v66IR = createMinimalV66IR({
+                generationMetadata: {
+                    cliVersion: "1.2.3",
+                    generatorName: "fernapi/fern-typescript-sdk",
+                    generatorVersion: "4.5.6",
+                    generatorConfig: { foo: "bar" },
+                    originGitCommit: "deadbeef",
+                    originGitCommitIsDirty: true,
+                    invokedBy: IrVersions.V66.InvocationSource.Manual,
+                    requestedVersion: "AUTO",
+                    ciProvider: "github"
+                }
+            });
+            const v65IR = V66_TO_V65_MIGRATION.migrateBackwards(v66IR, mockContext);
+
+            expect(v65IR.generationMetadata).toBeDefined();
+            expect(v65IR.generationMetadata).toEqual({
+                cliVersion: "1.2.3",
+                generatorName: "fernapi/fern-typescript-sdk",
+                generatorVersion: "4.5.6",
+                generatorConfig: { foo: "bar" },
+                originGitCommit: "deadbeef"
+            });
+            // The V66-only fields must not leak into V65 IR.
+            expect(v65IR.generationMetadata).not.toHaveProperty("originGitCommitIsDirty");
+            expect(v65IR.generationMetadata).not.toHaveProperty("invokedBy");
+            expect(v65IR.generationMetadata).not.toHaveProperty("requestedVersion");
+            expect(v65IR.generationMetadata).not.toHaveProperty("ciProvider");
+        });
+
+        it("returns undefined generationMetadata when V66 has none", () => {
+            const v66IR = createMinimalV66IR({ generationMetadata: undefined });
+            const v65IR = V66_TO_V65_MIGRATION.migrateBackwards(v66IR, mockContext);
+            expect(v65IR.generationMetadata).toBeUndefined();
+        });
+    });
 });

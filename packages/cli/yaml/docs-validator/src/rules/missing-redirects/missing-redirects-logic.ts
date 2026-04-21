@@ -3,6 +3,25 @@ import { match } from "path-to-regexp";
 export interface MarkdownEntry {
     pageId: string;
     slug: string;
+    lastUpdated: string;
+}
+
+/**
+ * FDR's slug table may contain multiple (pageId, slug) rows per pageId —
+ * either as the tail of a past slug change, or deliberately as part of future
+ * docs-site versioning. The missing-redirects check only needs the most recent
+ * row per pageId; older rows describe an older published state and would
+ * otherwise produce false positives.
+ */
+export function keepLatestEntryPerPageId(entries: MarkdownEntry[]): MarkdownEntry[] {
+    const latestByPageId = new Map<string, MarkdownEntry>();
+    for (const entry of entries) {
+        const existing = latestByPageId.get(entry.pageId);
+        if (existing == null || Date.parse(entry.lastUpdated) >= Date.parse(existing.lastUpdated)) {
+            latestByPageId.set(entry.pageId, entry);
+        }
+    }
+    return Array.from(latestByPageId.values());
 }
 
 export interface RemovedSlug {
