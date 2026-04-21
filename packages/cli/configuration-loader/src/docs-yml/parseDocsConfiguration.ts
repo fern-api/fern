@@ -147,9 +147,13 @@ export async function parseDocsConfiguration({
         absoluteFilepathToDocsConfig
     });
 
+    const defaultLocale =
+        rawDocsConfiguration.translations?.find((t) => t.default === true)?.lang ??
+        rawDocsConfiguration.translations?.[0]?.lang;
     const translationPagesPromise = pagesPromise.then((resolvedPages) =>
         loadTranslationPages({
             translations: rawDocsConfiguration.translations,
+            defaultLocale,
             pages: resolvedPages,
             absolutePathToFernFolder,
             context
@@ -1954,11 +1958,13 @@ function validateCollapsibleConfig({
  */
 async function loadTranslationPages({
     translations,
+    defaultLocale,
     pages,
     absolutePathToFernFolder,
     context
 }: {
     translations: docsYml.RawSchemas.TranslationConfig[] | undefined;
+    defaultLocale: string | undefined;
     pages: Record<RelativeFilePath, string>;
     absolutePathToFernFolder: AbsoluteFilePath;
     context: TaskContext;
@@ -1976,6 +1982,11 @@ async function loadTranslationPages({
             const langDir = path.join(translationsRootDir, lang) as AbsoluteFilePath;
 
             if (!(await doesPathExist(langDir))) {
+                // The default locale's pages live in the top-level `pages/` directory,
+                // not in `translations/<lang>/`. Skip it silently.
+                if (lang === defaultLocale) {
+                    return;
+                }
                 context.failAndThrow(
                     `Translation directory for locale "${lang}" not found.`,
                     `Expected a directory at: ${langDir}\n` +
