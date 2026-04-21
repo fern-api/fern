@@ -52,6 +52,15 @@ import { hasIncompleteExample } from "./hasIncompleteExample.js";
 import { OpenAPIV3ParserContext } from "./OpenAPIV3ParserContext.js";
 import { runResolutions } from "./runResolutions.js";
 
+function sanitizeSecurityScopes<T extends Record<string, unknown>>(security: T[] | undefined): T[] | undefined {
+    if (security == null) {
+        return undefined;
+    }
+    return security.map(
+        (requirement) => Object.fromEntries(Object.entries(requirement).map(([key, value]) => [key, value ?? []])) as T
+    );
+}
+
 export function generateIr({
     openApi,
     taskContext,
@@ -94,7 +103,9 @@ export function generateIr({
             })
             .filter((entry): entry is [string, SecurityScheme] => entry !== null)
     );
-    const security: GlobalSecurity | undefined = openApi.security?.filter((requirement) => requirement != null);
+    const security: GlobalSecurity | undefined = sanitizeSecurityScopes(
+        openApi.security?.filter((requirement) => requirement != null)
+    );
     const authHeaders = new Set(
         Object.entries(securitySchemes)
             .map(([_, securityScheme]) => {

@@ -408,8 +408,17 @@ function createOperationSdkMethodName({
     };
 }
 
+function sanitizeSecurityScopes<T extends Record<string, unknown>>(security: T[] | undefined): T[] | undefined {
+    if (security == null) {
+        return undefined;
+    }
+    return security.map(
+        (requirement) => Object.fromEntries(Object.entries(requirement).map(([key, value]) => [key, value ?? []])) as T
+    );
+}
+
 function generateSecurity(operation: OpenAPIV3.OperationObject): EndpointSecurity | undefined {
-    return operation.security;
+    return sanitizeSecurityScopes(operation.security);
 }
 
 function isEndpointAuthed(operation: OpenAPIV3.OperationObject, document: OpenAPIV3.Document): boolean {
