@@ -201,8 +201,7 @@ export class ImportsManager {
                     const namedParts = [...combinedImportDeclarations.namedImports]
                         .sort((a, b) => a.name.localeCompare(b.name))
                         .map((namedImport) => {
-                            const typePrefix =
-                                !isRootTypeOnly && NamedImport.isTypeImport(namedImport) ? "type " : "";
+                            const typePrefix = !isRootTypeOnly && NamedImport.isTypeImport(namedImport) ? "type " : "";
                             const name = `${typePrefix}${namedImport.name}`;
                             return namedImport.alias != null ? `${name} as ${namedImport.alias}` : name;
                         });
