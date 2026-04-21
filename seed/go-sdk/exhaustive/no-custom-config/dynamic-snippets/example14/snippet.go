@@ -45,7 +45,7 @@ func do() {
                 "2023-01-15",
             ),
         ),
-        UUID: fern.UUID(
+        Uuid: fern.UUID(
             uuid.MustParse(
                 "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             ),
@@ -67,7 +67,7 @@ func do() {
             "1000000",
         ),
     }
-    client.Endpoints.HTTPMethods.TestPatch(
+    client.Endpoints.HttpMethods.TestPatch(
         context.TODO(),
         "id",
         request,

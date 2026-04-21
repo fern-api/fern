@@ -726,7 +726,7 @@ var (
 	objectWithOptionalFieldFieldBool        = big.NewInt(1 << 4)
 	objectWithOptionalFieldFieldDatetime    = big.NewInt(1 << 5)
 	objectWithOptionalFieldFieldDate        = big.NewInt(1 << 6)
-	objectWithOptionalFieldFieldUUID        = big.NewInt(1 << 7)
+	objectWithOptionalFieldFieldUuid        = big.NewInt(1 << 7)
 	objectWithOptionalFieldFieldBase64      = big.NewInt(1 << 8)
 	objectWithOptionalFieldFieldList        = big.NewInt(1 << 9)
 	objectWithOptionalFieldFieldSet         = big.NewInt(1 << 10)
@@ -743,7 +743,7 @@ type ObjectWithOptionalField struct {
 	Bool        *bool          `json:"bool,omitempty" url:"bool,omitempty"`
 	Datetime    *time.Time     `json:"datetime,omitempty" url:"datetime,omitempty"`
 	Date        *time.Time     `json:"date,omitempty" url:"date,omitempty" format:"date"`
-	UUID        *uuid.UUID     `json:"uuid,omitempty" url:"uuid,omitempty"`
+	Uuid        *uuid.UUID     `json:"uuid,omitempty" url:"uuid,omitempty"`
 	Base64      *[]byte        `json:"base64,omitempty" url:"base64,omitempty"`
 	List        []string       `json:"list,omitempty" url:"list,omitempty"`
 	Set         []string       `json:"set,omitempty" url:"set,omitempty"`
@@ -806,11 +806,11 @@ func (o *ObjectWithOptionalField) GetDate() *time.Time {
 	return o.Date
 }
 
-func (o *ObjectWithOptionalField) GetUUID() *uuid.UUID {
+func (o *ObjectWithOptionalField) GetUuid() *uuid.UUID {
 	if o == nil {
 		return nil
 	}
-	return o.UUID
+	return o.Uuid
 }
 
 func (o *ObjectWithOptionalField) GetBase64() *[]byte {
@@ -911,11 +911,11 @@ func (o *ObjectWithOptionalField) SetDate(date *time.Time) {
 	o.require(objectWithOptionalFieldFieldDate)
 }
 
-// SetUUID sets the UUID field and marks it as non-optional;
+// SetUuid sets the Uuid field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (o *ObjectWithOptionalField) SetUUID(uuid *uuid.UUID) {
-	o.UUID = uuid
-	o.require(objectWithOptionalFieldFieldUUID)
+func (o *ObjectWithOptionalField) SetUuid(uuid *uuid.UUID) {
+	o.Uuid = uuid
+	o.require(objectWithOptionalFieldFieldUuid)
 }
 
 // SetBase64 sets the Base64 field and marks it as non-optional;

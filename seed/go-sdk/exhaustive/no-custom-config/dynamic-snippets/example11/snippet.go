@@ -16,7 +16,7 @@ func do() {
             "<token>",
         ),
     )
-    client.Endpoints.HTTPMethods.TestGet(
+    client.Endpoints.HttpMethods.TestGet(
         context.TODO(),
         "id",
     )

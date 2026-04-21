@@ -16,7 +16,7 @@ func do() {
             "<token>",
         ),
     )
-    client.Endpoints.HTTPMethods.TestDelete(
+    client.Endpoints.HttpMethods.TestDelete(
         context.TODO(),
         "id",
     )

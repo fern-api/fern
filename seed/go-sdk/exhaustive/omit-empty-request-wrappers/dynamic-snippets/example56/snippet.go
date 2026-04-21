@@ -16,7 +16,7 @@ func do() {
             "<token>",
         ),
     )
-    client.Endpoints.URLs.WithMixedCase(
+    client.Endpoints.Urls.WithMixedCase(
         context.TODO(),
     )
 }
