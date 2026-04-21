@@ -853,13 +853,11 @@ export class WireTestGenerator {
             }
         }
 
-        let hasArrayParam = false;
         const queryParamEntries: string[] = [];
         for (const [paramName, paramValue] of Object.entries(dynamicEndpointExample.queryParameters)) {
             if (paramValue != null) {
                 const key = JSON.stringify(paramName);
                 if (Array.isArray(paramValue) && paramValue.length > 1) {
-                    hasArrayParam = true;
                     const items = paramValue.map((v: unknown) => JSON.stringify(String(v)));
                     queryParamEntries.push(`${key}: []string{${items.join(", ")}}`);
                 } else {
@@ -882,8 +880,7 @@ export class WireTestGenerator {
             return "nil";
         }
 
-        const mapType = hasArrayParam ? "map[string]interface{}" : "map[string]string";
-        return `${mapType}{${queryParamEntries.join(", ")}}`;
+        return `map[string]interface{}{${queryParamEntries.join(", ")}}`;
     }
 
     private getDynamicEndpointExample(endpoint: FernIr.HttpEndpoint): FernIr.dynamic.EndpointExample | null {

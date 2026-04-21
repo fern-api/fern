@@ -106,5 +106,5 @@ func TestEndpointsPaginationListItemsWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestEndpointsPaginationListItemsWithWireMock", "GET", "/pagination", map[string]string{"cursor": "cursor", "limit": "1"}, 1)
+	VerifyRequestCount(t, "TestEndpointsPaginationListItemsWithWireMock", "GET", "/pagination", map[string]interface{}{"cursor": "cursor", "limit": "1"}, 1)
 }
