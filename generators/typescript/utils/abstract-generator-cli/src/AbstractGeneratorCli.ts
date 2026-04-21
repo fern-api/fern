@@ -2,13 +2,13 @@ import {
     FernGeneratorExec,
     GeneratorNotificationService,
     NopGeneratorNotificationService,
-    parseGeneratorConfig,
-    parseIR
+    parseGeneratorConfig
 } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { CONSOLE_LOGGER, createLogger, Logger, LogLevel } from "@fern-api/logger";
-import { FernIr, serialization } from "@fern-fern/ir-sdk";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { fastParseIR } from "./fastParseIR.js";
 import {
     constructNpmPackage,
     constructNpmPackageArgs,
@@ -73,10 +73,9 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             });
             const customConfig = this.parseCustomConfig(config.customConfig, logger);
 
-            const ir = await parseIR({
-                absolutePathToIR: AbsoluteFilePath.of(config.irFilepath),
-                parse: serialization.IntermediateRepresentation.parse
-            });
+            const ir = await fastParseIR<FernIr.IntermediateRepresentation>(
+                AbsoluteFilePath.of(config.irFilepath)
+            );
 
             let npmPackage: NpmPackage | undefined;
             if (ir.selfHosted) {
