@@ -208,6 +208,7 @@ export async function runLocalGenerationForWorkspace({
                     generatorInvocation,
                     org: organization.ok ? organization.body : undefined,
                     version,
+                    userProvidedVersion,
                     packageName,
                     context: interactiveTaskContext
                 });
@@ -473,12 +474,14 @@ function getPublishConfig({
     generatorInvocation,
     org,
     version,
+    userProvidedVersion,
     packageName,
     context
 }: {
     generatorInvocation: generatorsYml.GeneratorInvocation;
     org?: FernVenusApi.Organization;
     version?: string;
+    userProvidedVersion?: string;
     packageName?: string;
     context: TaskContext;
 }): FernIr.PublishingConfig | undefined {
@@ -506,6 +509,27 @@ function getPublishConfig({
                 packageName
             });
             context.logger.debug(`Created PyPiPublishTarget: version ${version} package name: ${packageName}`);
+        } else if (generatorInvocation.language === "typescript") {
+            // Only populate the npm publish target when the user explicitly passed
+            // `--version`. We intentionally do NOT thread auto-computed versions or
+            // package names on their own — doing so would cause unrelated behavior
+            // changes (e.g. auto-bumping a version from the npm registry) for users
+            // who rely on managing `package.json` themselves.
+            if (userProvidedVersion != null) {
+                const tsPackageName =
+                    packageName ??
+                    (typeof generatorInvocation.raw?.config === "object" && generatorInvocation.raw?.config !== null
+                        ? (generatorInvocation.raw.config as { packageJson?: { name?: string } }).packageJson?.name
+                        : undefined);
+                publishTarget = PublishTarget.npm({
+                    version: userProvidedVersion,
+                    packageName: tsPackageName,
+                    tokenEnvironmentVariable: ""
+                });
+                context.logger.debug(
+                    `Created NpmPublishTarget: version ${userProvidedVersion} package name: ${tsPackageName}`
+                );
+            }
         } else if (generatorInvocation.language === "rust") {
             // Use Crates publish target for Rust (Cargo/crates.io)
             publishTarget = PublishTarget.crates({
@@ -513,6 +537,33 @@ function getPublishConfig({
                 packageName
             });
             context.logger.debug(`Created CratesPublishTarget: version ${version} package name: ${packageName}`);
+        } else if (generatorInvocation.language === "go") {
+            // Only populate the go publish target when the user explicitly passed
+            // `--version`. We intentionally do NOT thread auto-computed versions
+            // here — Go SDKs do not ship a version file managed by the generator
+            // (module versions are set via git tags), so the only reason to
+            // populate this is when the user asked us to stamp the SDK with a
+            // specific version (e.g. for the `X-Fern-SDK-Version` header).
+            if (userProvidedVersion != null) {
+                const goModulePath = (() => {
+                    const config = generatorInvocation.raw?.config;
+                    if (typeof config !== "object" || config === null) {
+                        return undefined;
+                    }
+                    const module = (config as { module?: { path?: unknown } }).module;
+                    if (module == null || typeof module.path !== "string") {
+                        return undefined;
+                    }
+                    return module.path;
+                })();
+                publishTarget = PublishTarget.go({
+                    version: userProvidedVersion,
+                    modulePath: goModulePath
+                });
+                context.logger.debug(
+                    `Created GoPublishTarget: version ${userProvidedVersion} module path: ${goModulePath}`
+                );
+            }
         } else if (generatorInvocation.language === "java") {
             const config = generatorInvocation.raw?.config;
 

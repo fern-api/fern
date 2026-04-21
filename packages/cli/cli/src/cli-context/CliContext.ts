@@ -279,9 +279,8 @@ export class CliContext {
     public readonly stderr = createLogger((level, ...args) => this.logStderr(level, ...args));
 
     private constructTaskInitForWorkspace(workspace: Workspace): TaskContextImpl.Init {
-        const prefixWithoutPadding = wrapWorkspaceNameForPrefix(
-            workspace.type === "docs" ? "docs" : (workspace.workspaceName ?? "api")
-        );
+        const workspaceName = workspace.type === "docs" ? "docs" : (workspace.workspaceName ?? "api");
+        const prefixWithoutPadding = wrapWorkspaceNameForPrefix(workspaceName);
 
         // we want all the prefixes to be the same length, so use this.longestWorkspaceName
         // if it's defined. (+1 so there's a space after the prefix)
@@ -299,7 +298,8 @@ export class CliContext {
         const prefixWithColor = chalk.hex(colorForWorkspace)(prefix);
         return {
             ...this.constructTaskInit(),
-            logPrefix: prefixWithColor
+            logPrefix: prefixWithColor,
+            title: chalk.hex(colorForWorkspace).bold(workspaceName)
         };
     }
 
