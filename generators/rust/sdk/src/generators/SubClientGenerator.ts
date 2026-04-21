@@ -1971,13 +1971,14 @@ export class SubClientGenerator {
                     ${this.generateCapturedVariableCloningForAsyncMove(params)}
                     
                     Box::pin(async move {
-                        let response: serde_json::Value = client.execute_request(
+                        let raw_response = client.execute_request_raw::<serde_json::Value>(
                             Method::${httpMethod},
                             ${this.buildPathExpressionForAsyncMove(pathExpression, params)},
                             ${this.buildRequestBodyForAsyncMove(requestBody, params)},
                             Some(query_params),
                             options_for_request,
                         ).await?;
+                        let response = raw_response.body;
                         
                         // Extract pagination info from response
                         ${this.generatePaginationExtraction(endpoint, false)}
@@ -1986,6 +1987,9 @@ export class SubClientGenerator {
                             items,
                             next_cursor,
                             has_next_page,
+                            response: Some(response),
+                            status_code: raw_response.status_code,
+                            headers: raw_response.headers,
                         })
                     })
                 },
@@ -2032,13 +2036,14 @@ export class SubClientGenerator {
                     ${this.generateCapturedVariableCloningForAsyncMove(params)}
                     
                     Box::pin(async move {
-                        let response: serde_json::Value = client.execute_request(
+                        let raw_response = client.execute_request_raw::<serde_json::Value>(
                             Method::${httpMethod},
                             ${this.buildPathExpressionForAsyncMove(pathExpression, params)},
                             ${this.buildRequestBodyForAsyncMove(requestBody, params)},
                             Some(query_params),
                             options_for_request,
                         ).await?;
+                        let response = raw_response.body;
                         
                         // Extract pagination info from response
                         ${this.generatePaginationExtraction(endpoint, true)}
@@ -2047,6 +2052,9 @@ export class SubClientGenerator {
                             items,
                             next_cursor,
                             has_next_page,
+                            response: Some(response),
+                            status_code: raw_response.status_code,
+                            headers: raw_response.headers,
                         })
                     })
                 },
@@ -2086,13 +2094,14 @@ export class SubClientGenerator {
                     ${this.generateCapturedVariableCloningForAsyncMove(params)}
                     
                     Box::pin(async move {
-                        let response: serde_json::Value = client.execute_request(
+                        let raw_response = client.execute_request_raw::<serde_json::Value>(
                             Method::${httpMethod},
                             ${this.buildPathExpressionForAsyncMove(pathExpression, params)},
                             ${this.buildRequestBodyForAsyncMove(requestBody, params)},
                             query_params,
                             options_for_request,
                         ).await?;
+                        let response = raw_response.body;
                         
                         // Custom extraction logic would go here
                         ${this.generatePaginationExtraction(endpoint)}
@@ -2101,6 +2110,9 @@ export class SubClientGenerator {
                             items,
                             next_cursor,
                             has_next_page,
+                            response: Some(response),
+                            status_code: raw_response.status_code,
+                            headers: raw_response.headers,
                         })
                     })
                 },
