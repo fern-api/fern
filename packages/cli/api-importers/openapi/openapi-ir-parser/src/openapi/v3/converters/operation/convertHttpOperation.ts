@@ -1,5 +1,4 @@
 import { generatorsYml } from "@fern-api/configuration";
-import { sanitizeSecurityScopes } from "../../../../utils/sanitizeSecurityScopes.js";
 import { assertNever } from "@fern-api/core-utils";
 import {
     EndpointSdkName,
@@ -15,6 +14,7 @@ import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../../../getExtension.js";
 import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName.js";
 import { isReferenceObject } from "../../../../schema/utils/isReferenceObject.js";
+import { sanitizeSecurityScopes } from "../../../../utils/sanitizeSecurityScopes.js";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext.js";
 import { DummyOpenAPIV3ParserContext } from "../../DummyOpenAPIV3ParserContext.js";
 import { OpenAPIExtension } from "../../extensions/extensions.js";

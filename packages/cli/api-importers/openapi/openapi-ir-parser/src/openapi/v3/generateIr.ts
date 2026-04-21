@@ -21,7 +21,6 @@ import {
     WebhookWithExample
 } from "@fern-api/openapi-ir";
 import { TaskContext } from "@fern-api/task-context";
-import { sanitizeSecurityScopes } from "../../utils/sanitizeSecurityScopes.js";
 import { mapValues } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../getExtension.js";
@@ -33,6 +32,7 @@ import { convertSchemaWithExampleToSchema } from "../../schema/utils/convertSche
 import { getGeneratedTypeName } from "../../schema/utils/getSchemaName.js";
 import { isReferenceObject } from "../../schema/utils/isReferenceObject.js";
 import { getSchemas } from "../../utils/getSchemas.js";
+import { sanitizeSecurityScopes } from "../../utils/sanitizeSecurityScopes.js";
 import { createSchemaCollisionTracker } from "../../utils/schemaCollision.js";
 import { AbstractOpenAPIV3ParserContext } from "./AbstractOpenAPIV3ParserContext.js";
 import { convertPathItem, convertPathItemToWebhooks } from "./converters/convertPathItem.js";
