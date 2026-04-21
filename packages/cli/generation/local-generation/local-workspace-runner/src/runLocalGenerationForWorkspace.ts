@@ -1,7 +1,10 @@
 import {
     checkVersionDoesNotAlreadyExist,
     computeSemanticVersion,
+    detectCiProvider,
+    detectInvocationSource,
     getOriginGitCommit,
+    getOriginGitCommitIsDirty,
     getPackageNameFromGeneratorConfig
 } from "@fern-api/api-workspace-commons";
 import { validateAPIWorkspaceAndLogIssues } from "@fern-api/api-workspace-validator";
@@ -163,7 +166,11 @@ export async function runLocalGenerationForWorkspace({
                         generatorName: generatorInvocation.name,
                         generatorVersion: generatorInvocation.version,
                         generatorConfig: generatorInvocation.config,
-                        originGitCommit: getOriginGitCommit()
+                        originGitCommit: getOriginGitCommit(),
+                        originGitCommitIsDirty: getOriginGitCommitIsDirty(),
+                        invokedBy: detectInvocationSource(),
+                        requestedVersion: userProvidedVersion,
+                        ciProvider: detectCiProvider()
                     }
                 });
 
@@ -201,6 +208,7 @@ export async function runLocalGenerationForWorkspace({
                     generatorInvocation,
                     org: organization.ok ? organization.body : undefined,
                     version,
+                    userProvidedVersion,
                     packageName,
                     context: interactiveTaskContext
                 });
@@ -466,12 +474,14 @@ function getPublishConfig({
     generatorInvocation,
     org,
     version,
+    userProvidedVersion,
     packageName,
     context
 }: {
     generatorInvocation: generatorsYml.GeneratorInvocation;
     org?: FernVenusApi.Organization;
     version?: string;
+    userProvidedVersion?: string;
     packageName?: string;
     context: TaskContext;
 }): FernIr.PublishingConfig | undefined {
@@ -499,6 +509,27 @@ function getPublishConfig({
                 packageName
             });
             context.logger.debug(`Created PyPiPublishTarget: version ${version} package name: ${packageName}`);
+        } else if (generatorInvocation.language === "typescript") {
+            // Only populate the npm publish target when the user explicitly passed
+            // `--version`. We intentionally do NOT thread auto-computed versions or
+            // package names on their own — doing so would cause unrelated behavior
+            // changes (e.g. auto-bumping a version from the npm registry) for users
+            // who rely on managing `package.json` themselves.
+            if (userProvidedVersion != null) {
+                const tsPackageName =
+                    packageName ??
+                    (typeof generatorInvocation.raw?.config === "object" && generatorInvocation.raw?.config !== null
+                        ? (generatorInvocation.raw.config as { packageJson?: { name?: string } }).packageJson?.name
+                        : undefined);
+                publishTarget = PublishTarget.npm({
+                    version: userProvidedVersion,
+                    packageName: tsPackageName,
+                    tokenEnvironmentVariable: ""
+                });
+                context.logger.debug(
+                    `Created NpmPublishTarget: version ${userProvidedVersion} package name: ${tsPackageName}`
+                );
+            }
         } else if (generatorInvocation.language === "rust") {
             // Use Crates publish target for Rust (Cargo/crates.io)
             publishTarget = PublishTarget.crates({

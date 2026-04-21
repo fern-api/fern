@@ -823,6 +823,12 @@ types:
         docs: |
           If `hide-feedback` is set to true, the feedback button will not be rendered. This can be overridden for a specific page using the frontmatter.
 
+      mobile-toc:
+        type: optional<boolean>
+        availability: in-development
+        docs: |
+          If `mobile-toc` is set to true, a sticky collapsible table of contents bar will be shown on mobile viewports for guide and overview layout pages.
+
   DocsSettingsConfig:
     properties:
       search-text:
@@ -877,6 +883,15 @@ types:
           If set to true, the API Explorer will bypass the proxy when sending requests directly to your API.
 
           When this feature is enabled, your API must have Cross-Origin Resource Sharing (CORS) enabled to allow requests from the documentation domain.
+
+          @default: false
+      disable-environment-editing:
+        type: optional<boolean>
+        docs: |
+          If set to true, the base URL (environment) shown in the endpoint header on API reference
+          docs pages will no longer be editable. Users will still be able to switch between configured
+          environments via the dropdown, but will not be able to double-click and type in a custom
+          URL. This does not affect the API Playground.
 
           @default: false
       disable-analytics: optional<boolean>

@@ -203,8 +203,11 @@ jobs:
         id: create-dynamic-matrix
         shell: bash
         run: |
-          # List of all generators
-          GENERATORS="ruby-sdk-v2 pydantic python-sdk openapi java-sdk java-model ts-sdk go-model go-sdk csharp-model csharp-sdk php-model php-sdk swift-sdk rust-model rust-sdk"
+          # List of active (non-disabled) generators, sourced from the seed CLI so
+          # that this list cannot drift when a workspace is disabled via its
+          # `seed.yml` (`disabled: true`).
+          GENERATORS=$(node --enable-source-maps packages/seed/dist/cli.cjs list-generators)
+          echo "Active generators: $GENERATORS"
 
           # Read affected detection result
           AFFECTED_JSON=$(cat /tmp/affected.json)

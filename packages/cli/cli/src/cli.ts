@@ -44,6 +44,7 @@ import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVers
 import { GlobalCliOptions, loadProjectAndRegisterWorkspacesWithContext } from "./cliCommons.js";
 import { addGeneratorCommands, addGetOrganizationCommand } from "./cliV2.js";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces.js";
+import { listPreviewGroups } from "./commands/automations/listPreviewGroups.js";
 import { diff } from "./commands/diff/diff.js";
 import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace.js";
 import { docsDiff } from "./commands/docs-diff/docsDiff.js";
@@ -56,7 +57,6 @@ import { formatWorkspaces } from "./commands/format/formatWorkspaces.js";
 import { parseGeneratorArg } from "./commands/generate/filterGenerators.js";
 import { GenerationMode, generateAPIWorkspaces } from "./commands/generate/generateAPIWorkspaces.js";
 import { generateDocsWorkspace } from "./commands/generate/generateDocsWorkspace.js";
-import { shouldSkipGenerator } from "./commands/generate/shouldSkipGenerator.js";
 import { generateDynamicIrForWorkspaces } from "./commands/generate-dynamic-ir/generateDynamicIrForWorkspaces.js";
 import { generateFdrApiDefinitionForWorkspaces } from "./commands/generate-fdr/generateFdrApiDefinitionForWorkspaces.js";
 import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces.js";
@@ -71,6 +71,7 @@ import { mockServer } from "./commands/mock/mockServer.js";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1.js";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2.js";
 import { sdkDiffCommand } from "./commands/sdk-diff/sdkDiffCommand.js";
+import type { SdkPreviewResult, SdkPreviewSuccess } from "./commands/sdk-preview/sdkPreview.js";
 import { sdkPreview } from "./commands/sdk-preview/sdkPreview.js";
 import { selfUpdate } from "./commands/self-update/selfUpdate.js";
 import { testOutput } from "./commands/test/testOutput.js";
@@ -2228,137 +2229,170 @@ function addSdkCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 
 function addAutomationsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command("automations", false, (yargs) => {
-        addAutomationsListCommand(yargs, cliContext);
         addAutomationsGenerateCommand(yargs, cliContext);
+        addAutomationsPreviewCommand(yargs, cliContext);
         return yargs.demandCommand();
     });
 }
 
 /**
- * `fern automations list generate`
+ * `fern automations preview`
  *
- * Discovers all generators in the project and outputs a JSON array of
- * `fern automations generate` commands — one per generator. Designed to be
- * consumed by a GitHub Actions matrix strategy to fan out generation jobs.
+ * Runs SDK preview for all previewable generator groups in the project.
+ * Discovers eligible groups using the same criteria as `listPreviewGroups`,
+ * then calls `sdkPreview` for each one, aggregating results.
  *
- * Generators are excluded when any of the following is true:
- * - `automation.generate: false` in generators.yml
- * - Output is configured for `local-file-system` (cannot run remotely)
- * - `autorelease: false` at the generator or root level
+ * A generator is considered previewable when:
+ * - It is a supported TypeScript/npm generator (fern-typescript-sdk, node-sdk, browser-sdk)
+ * - `automation.preview` is not false in generators.yml
  *
- * Arguments passed to `list` (--version, --auto-merge) are forwarded into
- * each generated command, so the caller doesn't need to re-specify them.
+ * One preview is run per unique (groupName, apiName) pair. Errors are
+ * isolated per group — a failure in one group does not block the others.
  *
- * Output format (stdout): JSON string array
- *   [
- *     "fern automations generate --api foo --group sdk --generator 0 --version AUTO --auto-merge",
- *     "fern automations generate --api foo --group sdk --generator 1 --version AUTO --auto-merge",
- *     "fern automations generate --api bar --group sdk --generator 0 --version AUTO --auto-merge"
- *   ]
+ * JSON output format (--json):
+ *   {
+ *     "results": [
+ *       {
+ *         "groupName": "ts-sdk",
+ *         "apiName": null,
+ *         "status": "success",
+ *         "org": "acme",
+ *         "previews": [{ "preview_id": "...", "install": "...", ... }]
+ *       },
+ *       { "groupName": "node", "apiName": "bar", "status": "error", "error": "..." }
+ *     ]
+ *   }
  *
  * Example GitHub Actions usage:
- *   jobs:
- *     discover:
- *       runs-on: ubuntu-latest
- *       outputs:
- *         commands: ${{ steps.list.outputs.commands }}
- *       steps:
- *         - uses: actions/checkout@v4
- *         - uses: fern-api/setup-fern-cli@v1
- *         - id: list
- *           run: echo "commands=$(fern automations list generate --group sdk --version AUTO --auto-merge)" >> $GITHUB_OUTPUT
- *           env:
- *             FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
- *
- *     generate:
- *       needs: discover
- *       if: ${{ needs.discover.outputs.commands != '[]' }}
- *       strategy:
- *         fail-fast: false
- *         matrix:
- *           command: ${{ fromJson(needs.discover.outputs.commands) }}
- *       runs-on: ubuntu-latest
- *       steps:
- *         - uses: actions/checkout@v4
- *         - uses: fern-api/setup-fern-cli@v1
- *         - run: ${{ matrix.command }}
- *           env:
- *             FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
- *             FERN_RUN_ID: ${{ github.run_id }}-${{ strategy.job-index }}
+ *   - run: fern automations preview --json --push-diff
+ *     env:
+ *       FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
  */
-function addAutomationsListCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
-    cli.command("list", false, (yargs) => {
-        addAutomationsListGenerateCommand(yargs, cliContext);
-        return yargs.demandCommand();
-    });
+interface AutomationsPreviewGroupResult {
+    groupName: string;
+    apiName: string | null;
+    status: "success" | "error";
+    org?: string;
+    previews?: SdkPreviewSuccess["previews"];
+    error?: string;
 }
 
-function addAutomationsListGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+function addAutomationsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
-        "generate",
+        "preview",
         false, // hidden
         (yargs) =>
             yargs
                 .option("group", {
                     type: "string",
-                    description: "Filter to a specific generator group (e.g. 'sdk'). Omit to list all groups."
-                })
-                .option("api", {
-                    type: "string",
                     description:
-                        "Filter to a specific API in a multi-API repo (e.g. 'foo' for fern/apis/foo/). " +
-                        "Omit to list all APIs."
+                        "Filter to a specific generator group (e.g. 'sdk'). Omit to preview all eligible groups."
                 })
-                .option("version", {
-                    type: "string",
-                    description: "Version string to include in generated commands (e.g. 'AUTO' for AI-based versioning)"
-                })
-                .option("auto-merge", {
+                .option("json", {
                     boolean: true,
                     default: false,
-                    description: "Include --auto-merge flag in generated commands"
+                    description: "Output results as JSON (for machine consumption)."
+                })
+                .option("push-diff", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Push a preview diff branch (fern-preview-{version}) to each SDK repo " +
+                        "in addition to publishing to the preview registry."
                 }),
         async (argv) => {
+            cliContext.instrumentPostHogEvent({
+                command: "fern automations preview"
+            });
+
             const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                commandLineApiWorkspace: argv.api,
+                commandLineApiWorkspace: undefined,
                 defaultToAllApiWorkspaces: true
             });
 
-            const commands: string[] = [];
+            const groups = listPreviewGroups({
+                workspaces: project.apiWorkspaces,
+                groupFilter: argv.group
+            });
 
-            for (const workspace of project.apiWorkspaces) {
-                const generatorsConfiguration = workspace.generatorsConfiguration;
-                const groups = generatorsConfiguration?.groups ?? [];
-                const rootAutorelease = generatorsConfiguration?.rawConfiguration.autorelease;
-                for (const group of groups) {
-                    if (argv.group != null && group.groupName !== argv.group) {
-                        continue;
+            if (groups.length === 0) {
+                if (argv.json) {
+                    process.stdout.write(JSON.stringify({ results: [] }, null, 2) + "\n");
+                } else {
+                    cliContext.logger.info("No eligible generator groups found for preview.");
+                }
+                return;
+            }
+
+            cliContext.logger.info(
+                `Found ${groups.length} previewable group(s): ${groups.map((g) => g.groupName).join(", ")}`
+            );
+
+            const results: AutomationsPreviewGroupResult[] = [];
+
+            for (const group of groups) {
+                const apiLabel = group.apiName != null ? ` (api: ${group.apiName})` : "";
+                cliContext.logger.info(`Running preview for ${group.groupName}${apiLabel}...`);
+
+                try {
+                    const result = await sdkPreview({
+                        cliContext,
+                        groupName: group.groupName,
+                        generatorFilter: undefined,
+                        apiName: group.apiName ?? undefined,
+                        output: undefined,
+                        local: false,
+                        pushDiff: argv["push-diff"]
+                    });
+
+                    if (result.status === "success") {
+                        results.push({
+                            groupName: group.groupName,
+                            apiName: group.apiName,
+                            status: "success",
+                            org: result.org,
+                            previews: result.previews
+                        });
+                    } else {
+                        results.push({
+                            groupName: group.groupName,
+                            apiName: group.apiName,
+                            status: "error",
+                            error: result.message
+                        });
                     }
-                    for (let i = 0; i < group.generators.length; i++) {
-                        const generator = group.generators[i];
-                        if (generator == null || shouldSkipGenerator({ generator, rootAutorelease })) {
-                            continue;
-                        }
+                } catch (error) {
+                    const message = error instanceof Error ? error.message : String(error);
+                    cliContext.logger.warn(`Preview failed for group '${group.groupName}': ${message}`);
+                    results.push({
+                        groupName: group.groupName,
+                        apiName: group.apiName,
+                        status: "error",
+                        error: message
+                    });
+                }
+            }
 
-                        const parts = ["fern", "automations", "generate"];
-                        if (workspace.workspaceName != null) {
-                            parts.push("--api", workspace.workspaceName);
+            if (argv.json) {
+                process.stdout.write(JSON.stringify({ results }, null, 2) + "\n");
+            } else {
+                for (const groupResult of results) {
+                    if (groupResult.status === "success" && groupResult.previews != null) {
+                        for (const preview of groupResult.previews) {
+                            if (preview.install) {
+                                cliContext.logger.info(`${groupResult.groupName}: ${preview.install}`);
+                            }
                         }
-                        parts.push("--group", group.groupName);
-                        parts.push("--generator", String(i));
-                        if (argv.version != null) {
-                            parts.push("--version", argv.version);
-                        }
-                        if (argv["auto-merge"]) {
-                            parts.push("--auto-merge");
-                        }
-                        commands.push(parts.join(" "));
+                    } else if (groupResult.status === "error") {
+                        cliContext.logger.warn(`${groupResult.groupName}: ${groupResult.error}`);
                     }
                 }
             }
 
-            // Output JSON array of commands to stdout for GitHub Actions consumption
-            process.stdout.write(JSON.stringify(commands));
+            const hasErrors = results.some((r) => r.status === "error");
+            if (hasErrors) {
+                process.exitCode = 1;
+            }
         }
     );
 }
@@ -2367,8 +2401,7 @@ function addAutomationsListGenerateCommand(cli: Argv<GlobalCliOptions>, cliConte
  * `fern automations generate`
  *
  * Runs SDK generation for a single generator in automation mode. This command
- * is designed to be called by the `fern-api/fern-generate` GitHub Action,
- * typically as one job in a matrix fanned out by `fern automations list generate`.
+ * is designed to be called by the `fern-api/fern-generate` GitHub Action.
  *
  * Automation mode enables the following behaviors:
  *   - **Separate PRs**: Each invocation creates its own PR (no reuse of existing fern-bot PRs).
@@ -2387,7 +2420,6 @@ function addAutomationsListGenerateCommand(cli: Argv<GlobalCliOptions>, cliConte
  *   `--generator` accepts either a 0-based index or a generator name.
  *   Index-based targeting is preferred because a group can contain multiple generators with the
  *   same name (e.g. two TypeScript SDK entries publishing to different repos).
- *   Use `fern automations list generate` to discover the correct indices.
  *
  * Environment variables:
  *   - FERN_TOKEN: Required. Authenticates with Fern services.
@@ -2535,18 +2567,77 @@ function addSdkPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
             });
             const generatorFilter =
                 argv.generator != null ? warnAndCorrectIncorrectDockerOrg(argv.generator, cliContext) : undefined;
-            await sdkPreview({
+            const result = await sdkPreview({
                 cliContext,
                 groupName: argv.group,
                 generatorFilter,
                 apiName: argv.api,
-                json: argv.json,
                 output: argv.output,
                 local: argv.local,
                 pushDiff: argv.pushDiff
             });
+            writeSdkPreviewOutput({ result, json: argv.json, cliContext });
         }
     );
+}
+
+function writeSdkPreviewOutput({
+    result,
+    json,
+    cliContext
+}: {
+    result: SdkPreviewResult;
+    json: boolean;
+    cliContext: CliContext;
+}): void {
+    if (json) {
+        process.stdout.write(JSON.stringify(result, null, 2) + "\n");
+        if (result.status === "error") {
+            process.exitCode = 1;
+        }
+        return;
+    }
+
+    if (result.status === "error") {
+        return cliContext.failAndThrow(
+            result.message,
+            undefined,
+            result.code != null ? { code: result.code } : undefined
+        );
+    }
+
+    if (result.previews.length > 0) {
+        cliContext.logger.info("");
+        const hasRegistry = result.previews.some((p) => p.registry_url !== "");
+        if (hasRegistry) {
+            cliContext.logger.info(
+                `Published ${result.previews.length} preview package${result.previews.length > 1 ? "s" : ""}:`
+            );
+            for (const preview of result.previews) {
+                cliContext.logger.info("");
+                cliContext.logger.info(`  ${preview.package_name}@${preview.version}`);
+                cliContext.logger.info(`  Install: ${preview.install}`);
+                if (preview.diff_url) {
+                    cliContext.logger.info(`  Diff: ${preview.diff_url}`);
+                }
+                if (preview.output_path) {
+                    cliContext.logger.info(`  Output: ${preview.output_path}`);
+                }
+            }
+        } else {
+            cliContext.logger.info(
+                `Generated ${result.previews.length} preview SDK${result.previews.length > 1 ? "s" : ""}:`
+            );
+            for (const preview of result.previews) {
+                cliContext.logger.info("");
+                cliContext.logger.info(`  ${preview.package_name}@${preview.version}`);
+                if (preview.diff_url) {
+                    cliContext.logger.info(`  Diff: ${preview.diff_url}`);
+                }
+                cliContext.logger.info(`  Output: ${preview.output_path}`);
+            }
+        }
+    }
 }
 
 function addBetaCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {

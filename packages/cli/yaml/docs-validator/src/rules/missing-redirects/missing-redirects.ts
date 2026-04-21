@@ -8,9 +8,20 @@ import { createMockTaskContext } from "@fern-api/task-context";
 import { Rule } from "../../Rule.js";
 import { getInstanceUrls, toBaseUrl } from "../valid-markdown-link/url-utils.js";
 import { buildPageIdToSlugMap } from "./buildPageIdToSlugMap.js";
-import { checkMissingRedirects, findRemovedSlugs, type MarkdownEntry } from "./missing-redirects-logic.js";
+import {
+    checkMissingRedirects,
+    findRemovedSlugs,
+    keepLatestEntryPerPageId,
+    type MarkdownEntry
+} from "./missing-redirects-logic.js";
 
 const NOOP_CONTEXT = createMockTaskContext({ logger: createLogger(noop) });
+
+// The FDR SDK types config.root as {} via zod inference, but at runtime it is FernNavigation.V1.RootNode.
+// This type guard checks the "type" discriminant to safely narrow the type without a blind cast.
+function isV1RootNode(value: object): value is FernNavigation.V1.RootNode {
+    return "type" in value && (value as { type: unknown }).type === "root";
+}
 
 type FetchResult =
     | { type: "success"; entries: MarkdownEntry[] }
@@ -46,13 +57,10 @@ async function fetchMarkdownEntries(
             return { error: `FDR returned ${response.status}` };
         }
         const data = (await response.json()) as {
-            entries?: Array<{ pageId: string; slug: string }>;
+            entries: MarkdownEntry[];
         };
         return {
-            entries: (data.entries ?? []).map((entry) => ({
-                pageId: entry.pageId,
-                slug: entry.slug
-            }))
+            entries: data.entries
         };
     } catch (error) {
         const message = error instanceof Error ? error.message : String(error);
@@ -108,13 +116,15 @@ export const MissingRedirectsRule: Rule = {
         });
 
         const resolvedDocsDefinition = await docsDefinitionResolver.resolve();
-        if (!resolvedDocsDefinition.config.root) {
+        const configRoot = resolvedDocsDefinition.config.root;
+        if (!configRoot || !isV1RootNode(configRoot)) {
             return {};
         }
 
-        const root = FernNavigation.migrate.FernNavigationV1ToLatest.create().root(resolvedDocsDefinition.config.root);
+        const root = FernNavigation.migrate.FernNavigationV1ToLatest.create().root(configRoot);
         const localPageIdToSlug = buildPageIdToSlugMap(root);
-        const removedSlugs = findRemovedSlugs(result.entries, localPageIdToSlug);
+        const latestEntries = keepLatestEntryPerPageId(result.entries);
+        const removedSlugs = findRemovedSlugs(latestEntries, localPageIdToSlug);
 
         if (removedSlugs.length === 0) {
             return {};

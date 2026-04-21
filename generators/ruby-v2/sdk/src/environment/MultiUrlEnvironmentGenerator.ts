@@ -45,12 +45,6 @@ export class MultiUrlEnvironmentGenerator extends FileGenerator<RubyFile, SdkCus
                 );
             }
         }
-        class_.addStatement(
-            ruby.codeblock((writer) => {
-                writer.newLine();
-            })
-        );
-
         const rootModule = this.context.getRootModule();
         rootModule.addStatement(class_);
 

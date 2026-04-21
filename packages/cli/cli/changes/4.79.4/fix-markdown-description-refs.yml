@@ -1,0 +1,5 @@
+- summary: |
+    Resolve `$ref` pointers to external markdown files inside OpenAPI `description`
+    fields by inlining the file contents as a string at spec load time. Previously
+    such specs failed with `e.replace is not a function` during SDK generation.
+  type: fix

@@ -6,5 +6,9 @@
     "package-prefix": "com.test.sdk",
     "output-directory": "project-root"
   },
-  "originGitCommit": "DUMMY"
+  "originGitCommit": "DUMMY",
+  "originGitCommitIsDirty": null,
+  "invokedBy": "ci",
+  "requestedVersion": "0.0.1",
+  "ciProvider": "github"
 }

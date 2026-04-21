@@ -17,6 +17,12 @@ types:
       imageAliases: optional<list<string>>
       displayName: string
       irVersion: string
+      disabled:
+        type: optional<boolean>
+        docs: |
+          If true, this generator workspace is disabled. Seed commands will skip it.
+          Useful for retaining the workspace directory (and its `seed.yml`) for documentation
+          purposes without running any tests, publishing, or builds against it.
       test: TestConfiguration
       publish: PublishConfiguration
       changelogLocation:
