@@ -244,7 +244,7 @@ func newConfig(configFilename string) (*Config, error) {
 		Whitelabel:                   config.Whitelabel,
 		CoordinatorURL:               coordinatorURL,
 		CoordinatorTaskID:            coordinatorTaskID,
-		Version:                      outputVersionFromGeneratorConfig(config),
+		Version:                      versionFromConfigOrIr(config),
 		IrFilepath:                   config.IrFilepath,
 		SnippetFilepath:              snippetFilepath,
 		ClientName:                   customConfig.ClientName,
@@ -440,6 +440,57 @@ func outputVersionFromGeneratorConfig(c *generatorexec.GeneratorConfig) string {
 		return visitor.value
 	}
 	return ""
+}
+
+// versionFromConfigOrIr returns the version from the generator config's output
+// mode when available. For local-file-system output (downloadFiles) the output
+// mode carries no version, so we fall back to the IR's publishConfig when the
+// user explicitly passed --version to the CLI — the CLI populates the Go
+// PublishTarget in that case.
+func versionFromConfigOrIr(c *generatorexec.GeneratorConfig) string {
+	if v := outputVersionFromGeneratorConfig(c); v != "" {
+		return v
+	}
+	return readGoVersionFromIr(c.IrFilepath)
+}
+
+// readGoVersionFromIr extracts the user-provided version from the IR file's
+// publishConfig (specifically the Go PublishTarget) when present. Returns "" if
+// the IR cannot be read, has no publishConfig, or the publishTarget is not a
+// Go target. This is intentionally narrow: we only read the version, and we
+// tolerate all errors — the caller treats "" as "no version available".
+func readGoVersionFromIr(irFilepath string) string {
+	if irFilepath == "" {
+		return ""
+	}
+	data, err := os.ReadFile(irFilepath)
+	if err != nil {
+		return ""
+	}
+	// Parse only the fields we need to avoid coupling to the full IR shape.
+	// Fern's IR serializes discriminated unions as flat objects with a `type`
+	// discriminant — so publishConfig with variant `filesystem` has `type` and
+	// `publishTarget` as siblings (not nested under a `filesystem` key).
+	var partial struct {
+		PublishConfig *struct {
+			Type          string `json:"type"`
+			PublishTarget *struct {
+				Type    string  `json:"type"`
+				Version *string `json:"version"`
+			} `json:"publishTarget"`
+		} `json:"publishConfig"`
+	}
+	if err := json.Unmarshal(data, &partial); err != nil {
+		return ""
+	}
+	if partial.PublishConfig == nil || partial.PublishConfig.Type != "filesystem" {
+		return ""
+	}
+	target := partial.PublishConfig.PublishTarget
+	if target == nil || target.Type != "go" || target.Version == nil {
+		return ""
+	}
+	return *target.Version
 }
 
 // applyCustomConfigDefaultsForV1 applies the default values for the custom

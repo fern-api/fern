@@ -4,6 +4,7 @@ import * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { CratesPublishTarget } from "./CratesPublishTarget.js";
+import { GoPublishTarget } from "./GoPublishTarget.js";
 import { MavenPublishTarget } from "./MavenPublishTarget.js";
 import { NpmPublishTarget } from "./NpmPublishTarget.js";
 import { PostmanPublishTarget } from "./PostmanPublishTarget.js";
@@ -17,6 +18,7 @@ export const PublishTarget: core.serialization.Schema<serializers.PublishTarget.
             maven: MavenPublishTarget,
             pypi: PypiPublishTarget,
             crates: CratesPublishTarget,
+            go: GoPublishTarget,
         })
         .transform<FernIr.PublishTarget>({
             transform: (value) => {
@@ -31,6 +33,8 @@ export const PublishTarget: core.serialization.Schema<serializers.PublishTarget.
                         return FernIr.PublishTarget.pypi(value);
                     case "crates":
                         return FernIr.PublishTarget.crates(value);
+                    case "go":
+                        return FernIr.PublishTarget.go(value);
                     default:
                         return value as FernIr.PublishTarget;
                 }
@@ -44,7 +48,8 @@ export declare namespace PublishTarget {
         | PublishTarget.Npm
         | PublishTarget.Maven
         | PublishTarget.Pypi
-        | PublishTarget.Crates;
+        | PublishTarget.Crates
+        | PublishTarget.Go;
 
     export interface Postman extends PostmanPublishTarget.Raw {
         type: "postman";
@@ -64,5 +69,9 @@ export declare namespace PublishTarget {
 
     export interface Crates extends CratesPublishTarget.Raw {
         type: "crates";
+    }
+
+    export interface Go extends GoPublishTarget.Raw {
+        type: "go";
     }
 }
