@@ -115,14 +115,12 @@ module Seed
       def search_resources(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request_data = Seed::Service::Types::SearchResourcesRequest.new(params).to_h
-        non_body_param_names = ["limit", "offset"]
+        non_body_param_names = %w[limit offset]
         body = request_data.except(*non_body_param_names)
 
-        query_param_names = %i[limit offset]
         query_params = {}
         query_params["limit"] = params[:limit] if params.key?(:limit)
         query_params["offset"] = params[:offset] if params.key?(:offset)
-        params = params.except(*query_param_names)
 
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],

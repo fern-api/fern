@@ -278,7 +278,7 @@ module Seed
       def update_complex_profile(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request_data = Seed::NullableOptional::Types::UpdateComplexProfileRequest.new(params).to_h
-        non_body_param_names = ["profileId"]
+        non_body_param_names = %w[profileId]
         body = request_data.except(*non_body_param_names)
 
         request = Seed::Internal::JSON::Request.new(
@@ -422,7 +422,7 @@ module Seed
       def update_tags(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request_data = Seed::NullableOptional::Types::UpdateTagsRequest.new(params).to_h
-        non_body_param_names = ["userId"]
+        non_body_param_names = %w[userId]
         body = request_data.except(*non_body_param_names)
 
         request = Seed::Internal::JSON::Request.new(

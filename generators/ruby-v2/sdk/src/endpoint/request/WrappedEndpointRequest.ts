@@ -63,9 +63,19 @@ export class WrappedEndpointRequest extends EndpointRequest {
 
         const hasRequestBody = this.endpoint.requestBody != null;
 
+        // When the body is built via request_data.except(*non_body_param_names), the body
+        // code block already handles excluding non-body params, so stripping query params
+        // from `params` would be a useless assignment (Lint/UselessAssignment).
+        const bodyHandlesParamExclusion =
+            hasRequestBody &&
+            this.endpoint.requestBody?.type === "inlinedRequestBody" &&
+            this.getNonBodyParameterWireNames().length > 0;
+
+        const needsParamsExcept = hasRequestBody && !bodyHandlesParamExclusion;
+
         return {
             code: ruby.codeblock((writer) => {
-                if (hasRequestBody) {
+                if (needsParamsExcept) {
                     writer.write(`${QUERY_PARAM_NAMES_VN} = `);
                     writer.writeLine(`${toRubySymbolArray(this.getQueryParameterNames())}`);
                 }
@@ -89,7 +99,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                         );
                     }
                 }
-                if (hasRequestBody) {
+                if (needsParamsExcept) {
                     writer.writeLine(`params = params.except(*${QUERY_PARAM_NAMES_VN})`);
                 }
             }),
@@ -277,6 +287,9 @@ export class WrappedEndpointRequest extends EndpointRequest {
 }
 
 function toExplicitArray(s: string[]): string {
+    if (s.every((item) => /^[a-zA-Z_]\w*$/.test(item))) {
+        return `%w[${s.join(" ")}]`;
+    }
     return `["${s.join('", "')}"]`;
 }
 

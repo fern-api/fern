@@ -22,7 +22,7 @@ module Seed
       def post(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
-        
+
         if params[:maybe_string]
           body.add(
             name: "maybe_string",
@@ -133,7 +133,7 @@ module Seed
       def just_file(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
-        
+
         if params[:file]
           body.add_part(params[:file].to_form_data_part(name: "file"))
         end
@@ -174,7 +174,7 @@ module Seed
       def just_file_with_query_params(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
-        
+
         if params[:file]
           body.add_part(params[:file].to_form_data_part(name: "file"))
         end
@@ -212,7 +212,7 @@ module Seed
       def just_file_with_optional_query_params(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
-        
+
         if params[:file]
           body.add_part(params[:file].to_form_data_part(name: "file"))
         end
@@ -248,7 +248,7 @@ module Seed
       def with_content_type(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
-        
+
         if params[:file]
           body.add_part(params[:file].to_form_data_part(name: "file"))
         end
@@ -304,20 +304,20 @@ module Seed
       def with_form_encoding(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
-        
+
         if params[:file]
           body.add_part(params[:file].to_form_data_part(name: "file"))
         end
         if params[:foo]
           body.add(
             name: "foo",
-            value: 
+            value: params[:foo]
           )
         end
         if params[:bar]
           body.add(
             name: "bar",
-            value: 
+            value: params[:bar]
           )
         end
 
@@ -352,17 +352,17 @@ module Seed
       def with_form_encoded_containers(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
-        
+
         if params[:maybe_string]
           body.add(
             name: "maybe_string",
-            value: 
+            value: params[:maybe_string]
           )
         end
         if params[:integer]
           body.add(
             name: "integer",
-            value: 
+            value: params[:integer]
           )
         end
         if params[:file]
@@ -380,61 +380,61 @@ module Seed
         if params[:maybe_integer]
           body.add(
             name: "maybe_integer",
-            value: 
+            value: params[:maybe_integer]
           )
         end
         if params[:optional_list_of_strings]
           body.add(
             name: "optional_list_of_strings",
-            value: 
+            value: params[:optional_list_of_strings]
           )
         end
         if params[:list_of_objects]
           body.add(
             name: "list_of_objects",
-            value: 
+            value: params[:list_of_objects]
           )
         end
         if params[:optional_metadata]
           body.add(
             name: "optional_metadata",
-            value: 
+            value: params[:optional_metadata]
           )
         end
         if params[:optional_object_type]
           body.add(
             name: "optional_object_type",
-            value: 
+            value: params[:optional_object_type]
           )
         end
         if params[:optional_id]
           body.add(
             name: "optional_id",
-            value: 
+            value: params[:optional_id]
           )
         end
         if params[:list_of_objects_with_optionals]
           body.add(
             name: "list_of_objects_with_optionals",
-            value: 
+            value: params[:list_of_objects_with_optionals]
           )
         end
         if params[:alias_object]
           body.add(
             name: "alias_object",
-            value: 
+            value: params[:alias_object]
           )
         end
         if params[:list_of_alias_object]
           body.add(
             name: "list_of_alias_object",
-            value: 
+            value: params[:list_of_alias_object]
           )
         end
         if params[:alias_list_of_object]
           body.add(
             name: "alias_list_of_object",
-            value: 
+            value: params[:alias_list_of_object]
           )
         end
 
@@ -469,7 +469,7 @@ module Seed
       def optional_args(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
-        
+
         if params[:image_file]
           body.add_part(params[:image_file].to_form_data_part(name: "image_file"))
         end
@@ -512,7 +512,7 @@ module Seed
       def with_inline_type(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
-        
+
         if params[:file]
           body.add_part(params[:file].to_form_data_part(name: "file"))
         end
@@ -554,7 +554,7 @@ module Seed
       def with_json_property(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
-        
+
         if params[:file]
           body.add_part(params[:file].to_form_data_part(name: "file"))
         end
@@ -624,7 +624,7 @@ module Seed
       def with_literal_and_enum_types(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
-        
+
         if params[:file]
           body.add_part(params[:file].to_form_data_part(name: "file"))
         end

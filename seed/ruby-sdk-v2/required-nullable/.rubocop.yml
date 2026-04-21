@@ -85,3 +85,7 @@ Lint/DuplicateHashKey:
 # Single path-parameter URLs produce "#{expr}" which is equivalent to expr.to_s.
 Style/RedundantInterpolation:
   Enabled: false
+
+# Generated code uses multi-line if blocks for clarity; modifier form is a style preference.
+Style/IfUnlessModifier:
+  Enabled: false
