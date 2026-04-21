@@ -1,7 +1,8 @@
 import { FernToken } from "@fern-api/auth";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { isNetworkError } from "@fern-api/lazy-fern-workspace";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
+
 import { AIExampleEnhancerConfig, ExampleEnhancementRequest, ExampleEnhancementResponse } from "./types.js";
 
 // Configuration constants for AI enhancement
@@ -40,9 +41,11 @@ export class LambdaExampleEnhancer {
         // Get Lambda origin - throw error if not configured
         const lambdaOrigin = process.env.DEFAULT_FDR_LAMBDA_DOCS_ORIGIN;
         if (!lambdaOrigin) {
-            throw new Error(
-                "DEFAULT_FDR_LAMBDA_DOCS_ORIGIN environment variable is not set. AI example enhancement requires this to be configured."
-            );
+            throw new CliError({
+                message:
+                    "DEFAULT_FDR_LAMBDA_DOCS_ORIGIN environment variable is not set. AI example enhancement requires this to be configured.",
+                code: CliError.Code.EnvironmentError
+            });
         }
         this.lambdaOrigin = lambdaOrigin;
 
@@ -122,7 +125,10 @@ export class LambdaExampleEnhancer {
 
         if (!response.ok) {
             const errorText = await response.text();
-            throw new Error(`Failed to fetch JWT from Venus: ${response.status} ${errorText || response.statusText}`);
+            throw new CliError({
+                message: `Failed to fetch JWT from Venus: ${response.status} ${errorText || response.statusText}`,
+                code: CliError.Code.NetworkError
+            });
         }
 
         const result = (await response.json()) as VenusJwtResponse;
@@ -209,7 +215,10 @@ export class LambdaExampleEnhancer {
 
                 if (!response.ok) {
                     const errorText = await response.text();
-                    throw new Error(`Lambda returned ${response.status}: ${errorText || response.statusText}`);
+                    throw new CliError({
+                        message: `Lambda returned ${response.status}: ${errorText || response.statusText}`,
+                        code: CliError.Code.NetworkError
+                    });
                 }
 
                 const result = await response.json();

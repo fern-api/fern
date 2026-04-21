@@ -799,7 +799,8 @@ describe("GeneratedSdkClientClassImpl", () => {
                         env: undefined,
                         docs: undefined,
                         availability: undefined,
-                        v2Examples: undefined
+                        v2Examples: undefined,
+                        clientDefault: undefined
                     }
                 ],
                 authRequirement: "ALL",

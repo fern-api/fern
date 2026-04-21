@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.65.0
+  changelogEntry:
+    - summary: |
+        Add `clientDefault` support for headers, query parameters, and path
+        parameters. When a parameter has a `clientDefault` value (set via the
+        `x-fern-default` OpenAPI extension), the generated SDK uses that value
+        as a fallback when the caller does not provide one. Parameters with
+        `clientDefault` become optional in the client constructor and endpoint
+        signatures.
+      type: feat
+  createdAt: "2026-04-21"
+  irVersion: 66
 - version: 3.64.2
   changelogEntry:
     - summary: |
