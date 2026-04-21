@@ -3,6 +3,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { go } from "@fern-api/go-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 
+import { isPlainStringType } from "../../authUtils.js";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator.js";
 import { EndpointSignatureInfo } from "../EndpointSignatureInfo.js";
@@ -625,6 +626,19 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 writer.write(baseUrl);
                 return;
             }
+            // Apply clientDefault fallback for path parameters before URL encoding
+            for (const pathParameter of endpoint.allPathParameters) {
+                if (pathParameter.clientDefault != null && isPlainStringType(pathParameter.valueType)) {
+                    const ref = signature.pathParameterReferences[getOriginalName(pathParameter.name)];
+                    if (ref != null) {
+                        writer.writeLine(`if ${ref} == "" {`);
+                        writer.indent();
+                        writer.writeLine(`${ref} = ${this.context.getLiteralAsString(pathParameter.clientDefault)}`);
+                        writer.dedent();
+                        writer.writeLine("}");
+                    }
+                }
+            }
             const pathParameterReferences: go.AstNode[] = [];
             for (const pathParameter of endpoint.allPathParameters) {
                 const pathParameterReference = signature.pathParameterReferences[getOriginalName(pathParameter.name)];
@@ -725,7 +739,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             return undefined;
         }
 
-        // extract and populate defaults
+        // extract and populate defaults (from type-level defaults and clientDefault)
         const defaults = [];
         if (this.context.customConfig.useDefaultRequestParameterValues) {
             for (const queryParameter of endpoint.queryParameters) {
@@ -737,6 +751,20 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     key: go.TypeInstantiation.string(getWireValue(queryParameter.name)),
                     value: defaultValue
                 });
+            }
+        }
+        for (const queryParameter of endpoint.queryParameters) {
+            if (queryParameter.clientDefault != null && isPlainStringType(queryParameter.valueType)) {
+                const wireValue = getWireValue(queryParameter.name);
+                const alreadyHasDefault = defaults.some(
+                    (d) => d.key.toString() === go.TypeInstantiation.string(wireValue).toString()
+                );
+                if (!alreadyHasDefault) {
+                    defaults.push({
+                        key: go.TypeInstantiation.string(wireValue),
+                        value: this.context.getLiteralValue(queryParameter.clientDefault)
+                    });
+                }
             }
         }
         const defaults_map = go.TypeInstantiation.map({
@@ -848,6 +876,15 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.dedent();
                     writer.writeLine("}");
                     continue;
+                }
+                // Apply clientDefault fallback for non-optional string headers
+                if (header.clientDefault != null && isPlainStringType(header.valueType)) {
+                    writer.writeNewLineIfLastLineNot();
+                    writer.writeLine(`if ${headerField} == "" {`);
+                    writer.indent();
+                    writer.writeLine(`${headerField} = ${this.context.getLiteralAsString(header.clientDefault)}`);
+                    writer.dedent();
+                    writer.writeLine("}");
                 }
                 writer.writeNode(
                     this.addHeaderValue({ wireValue: getWireValue(header.name), value: format.formatted })
