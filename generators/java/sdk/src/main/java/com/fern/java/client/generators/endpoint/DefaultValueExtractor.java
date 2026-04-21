@@ -168,10 +168,10 @@ public final class DefaultValueExtractor {
     }
 
     /**
-     * Checks whether the clientDefault literal type is compatible with the parameter's resolved type.
-     * A String literal is only compatible with string-typed parameters, and a Boolean literal
-     * is only compatible with boolean-typed parameters. For other types (enums, integers, etc.),
-     * clientDefault cannot be used directly and must fall through to type-level defaults.
+     * Checks whether the clientDefault literal type is compatible with the parameter's resolved type. A String literal
+     * is only compatible with string-typed parameters, and a Boolean literal is only compatible with boolean-typed
+     * parameters. For other types (enums, integers, etc.), clientDefault cannot be used directly and must fall through
+     * to type-level defaults.
      */
     private boolean isClientDefaultCompatible(TypeReference typeReference, Optional<Literal> clientDefault) {
         if (!clientDefault.isPresent()) {
