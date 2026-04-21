@@ -283,6 +283,71 @@ export class PersistedTypescriptProject {
     }
 
     /**
+     * Runs check:fix by invoking the tool binary directly from PATH,
+     * bypassing the pnpm script runner overhead.  When biome (or another
+     * tool) is globally installed, this avoids ~100-200ms of pnpm startup
+     * + package.json script lookup + child process spawning.
+     */
+    public async checkFixDirect(logger: Logger): Promise<void> {
+        if (!this.runScripts) {
+            return;
+        }
+
+        // Read the check:fix script from package.json to get the actual command
+        const pkgJsonPath = join(this.directory, RelativeFilePath.of("package.json"));
+        let scriptContent: string | undefined;
+        try {
+            const raw = await readFile(pkgJsonPath, "utf-8");
+            const pkgJson = JSON.parse(raw);
+            scriptContent = pkgJson.scripts?.[this.checkFixCommand[0]!];
+        } catch {
+            // Fall through to fallback
+        }
+
+        if (typeof scriptContent !== "string" || /[;&|]/.test(scriptContent)) {
+            logger.debug("checkFixDirect: compound script or missing, falling back to pnpm");
+            return this.checkFix(logger);
+        }
+
+        // Parse: "biome check --fix ..." → command="biome", args=["check", "--fix", ...]
+        const parts = scriptContent.trim().split(/\s+/);
+        const command = parts[0];
+        const args = parts.slice(1);
+        if (command == null) {
+            return this.checkFix(logger);
+        }
+
+        const startTime = Date.now();
+        const exe = createLoggingExecutable(command, {
+            cwd: this.directory,
+            logger,
+            reject: false,
+            doNotPipeOutput: true
+        });
+
+        try {
+            const result = await exe(args);
+            await this.writeToolOutputToLogFile({
+                step: "checkFixDirect",
+                stdout: result.stdout,
+                stderr: result.stderr,
+                logger
+            });
+            logger.debug(`[TIMING] checkFixDirect took ${Date.now() - startTime}ms`);
+        } catch (e) {
+            const error = e as { stdout?: string; stderr?: string };
+            await this.writeToolOutputToLogFile({
+                step: "checkFixDirect",
+                stdout: error.stdout ?? "",
+                stderr: error.stderr ?? "",
+                logger
+            });
+            logger.warn(`checkFixDirect failed (${Date.now() - startTime}ms), falling back to pnpm`);
+            await this.checkFix(logger);
+        }
+    }
+
+    /**
      * Runs check:fix using `pnpm dlx` to execute the tool directly from
      * the pnpm store, without installing it into node_modules. This is
      * significantly faster than installCheckFixDependencies + checkFix
