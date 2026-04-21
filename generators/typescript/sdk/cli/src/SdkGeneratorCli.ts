@@ -408,4 +408,72 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
     protected getPackageManager(customConfig: SdkCustomConfig): "pnpm" | "yarn" {
         return customConfig.packageManager;
     }
+
+    protected getEarlyLockfileConfig(
+        _customConfig: SdkCustomConfig
+    ):
+        | { devDependencies: Record<string, string>; dependencies?: Record<string, string>; packageManager: string }
+        | undefined {
+        const customConfig = this.customConfigWithOverrides(_customConfig);
+        const pm = customConfig.packageManager ?? "pnpm";
+        // Only pnpm lockfile is pre-computable (yarn has a different format)
+        if (pm !== "pnpm") {
+            return undefined;
+        }
+
+        const devDependencies: Record<string, string> = {
+            "@types/node": "^18.19.70",
+            typescript: "~5.9.3"
+        };
+
+        // Linter/formatter
+        if (customConfig.linter === "biome" || customConfig.formatter === "biome") {
+            devDependencies["@biomejs/biome"] = "2.4.10";
+        }
+
+        // Core utility deps (Fetcher always adds webpack + ts-loader)
+        devDependencies["webpack"] = "^5.105.4";
+        devDependencies["ts-loader"] = "^9.5.4";
+
+        // Test deps
+        const isVitest = (customConfig.testFramework ?? "vitest") === "vitest";
+        if (isVitest) {
+            devDependencies["vitest"] = "^4.1.1";
+        } else {
+            devDependencies["jest"] = "^29.7.0";
+            devDependencies["@jest/globals"] = "^29.7.0";
+            devDependencies["ts-jest"] = "^29.1.1";
+            devDependencies["jest-environment-jsdom"] = "^29.7.0";
+        }
+        devDependencies["msw"] = "2.11.2";
+
+        // Extra dev deps from config
+        if (customConfig.extraDevDependencies) {
+            Object.assign(devDependencies, customConfig.extraDevDependencies);
+        }
+
+        // Conditional prod deps
+        const dependencies: Record<string, string> = {};
+        if (customConfig.formDataSupport === "Node16") {
+            dependencies["form-data"] = "^4.0.4";
+            dependencies["formdata-node"] = "^6.0.3";
+        }
+        if (customConfig.fetchSupport === "node-fetch") {
+            dependencies["node-fetch"] = "^2.7.0";
+            devDependencies["@types/node-fetch"] = "^2.6.12";
+        }
+        if (customConfig.streamType === "wrapper") {
+            dependencies["readable-stream"] = "^4.7.0";
+            devDependencies["@types/readable-stream"] = "^4.0.23";
+        }
+        if (customConfig.extraDependencies) {
+            Object.assign(dependencies, customConfig.extraDependencies);
+        }
+
+        return {
+            devDependencies,
+            ...(Object.keys(dependencies).length > 0 ? { dependencies } : {}),
+            packageManager: "pnpm@10.33.0"
+        };
+    }
 }
