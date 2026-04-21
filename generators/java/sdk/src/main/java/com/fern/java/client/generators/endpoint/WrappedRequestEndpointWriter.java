@@ -564,7 +564,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
     private Optional<CodeBlock> findHeaderClientDefault(String headerWireValue) {
         // Endpoint headers first so findFirst() prefers endpoint overrides over service headers
         return java.util.stream.Stream.concat(httpEndpoint.getHeaders().stream(), httpService.getHeaders().stream())
-                .filter(h -> h.getName().getWireValue().equals(headerWireValue))
+                .filter(h -> NameUtils.getWireValue(h.getName()).equals(headerWireValue))
                 .findFirst()
                 .flatMap(HttpHeader::getClientDefault)
                 .flatMap(literal -> DefaultValueExtractor.extractClientDefault(Optional.of(literal)));

@@ -402,7 +402,7 @@ public final class HttpUrlBuilder {
     /** Finds the clientDefault for a query parameter by matching on wire key. */
     private Optional<Literal> findQueryParamClientDefault(String wireKey) {
         return httpEndpoint.getQueryParameters().stream()
-                .filter(qp -> qp.getName().getWireValue().equals(wireKey))
+                .filter(qp -> NameUtils.getWireValue(qp.getName()).equals(wireKey))
                 .findFirst()
                 .flatMap(QueryParameter::getClientDefault);
     }
