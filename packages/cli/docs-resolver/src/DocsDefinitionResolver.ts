@@ -54,6 +54,17 @@ interface LibraryNavNode {
     children?: LibraryNavNode[];
 }
 
+interface DocsTranslationsConfig {
+    defaultLocale: string;
+    translations: string[] | undefined;
+}
+
+// TODO: Remove this shim once the published @fern-api/fdr-sdk type for
+// DocsV1Write.DocsConfig includes the translations field.
+interface DocsConfigWithTranslations extends DocsV1Write.DocsConfig {
+    translations: DocsTranslationsConfig | undefined;
+}
+
 import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter.js";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter.js";
 import { NodeIdGenerator } from "./NodeIdGenerator.js";
@@ -258,6 +269,23 @@ export class DocsDefinitionResolver {
      */
     public getTranslationPages(): Record<string, Record<RelativeFilePath, string>> | undefined {
         return this._parsedDocsConfig?.translationPages;
+    }
+
+    private getDocsTranslationsConfig(): DocsConfigWithTranslations["translations"] {
+        const translations = this.parsedDocsConfig.translations;
+        if (translations == null || translations.length === 0) {
+            return undefined;
+        }
+
+        const defaultTranslation = translations.find((translation) => translation.default === true) ?? translations[0];
+        if (defaultTranslation == null) {
+            return undefined;
+        }
+
+        return {
+            defaultLocale: defaultTranslation.lang,
+            translations: translations.map((translation) => translation.lang)
+        };
     }
     private collectedFileIds = new Map<AbsoluteFilePath, string>();
     private markdownFilesToFullSlugs: Map<AbsoluteFilePath, string> = new Map();
@@ -760,7 +788,7 @@ export class DocsDefinitionResolver {
                       context7: this.getFileId(this.parsedDocsConfig.context7File)
                   } as DocsV1Write.DocsConfig["integrations"])
                 : undefined;
-        const config: DocsV1Write.DocsConfig = {
+        const config: DocsConfigWithTranslations = {
             aiChatConfig:
                 this.parsedDocsConfig.aiChatConfig != null
                     ? {
@@ -835,6 +863,7 @@ export class DocsDefinitionResolver {
             })),
             defaultLanguage: this.parsedDocsConfig.defaultLanguage,
             languages: this.parsedDocsConfig.languages,
+            translations: this.getDocsTranslationsConfig(),
             analyticsConfig: {
                 ...this.parsedDocsConfig.analyticsConfig,
                 segment: this.parsedDocsConfig.analyticsConfig?.segment,
