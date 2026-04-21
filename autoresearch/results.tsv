@@ -42,3 +42,4 @@ d8c4b13	31550	11000	38596	-18.3	discard	exp-038: disable source maps (maps loade
 903c45e	31934	10800	38596	-17.3	discard	exp-040: cache getAllPackageIds + single-pass moduleHasValueDeclarations (no gain)
 9482127	31151	10700	38596	-19.2	discard	exp-041: replace localeCompare with raw string comparison (no gen improvement)
 7d0b33c	30541	10700	38596	-20.9	keep	exp-042: eagerly extract file text and delete source files from ts-morph project (e2e -3.2%)
+e344512	30274	10700	38596	-21.6	keep	exp-043: bypass ts-morph replaceWithText re-parse for test files (return raw text from run)
