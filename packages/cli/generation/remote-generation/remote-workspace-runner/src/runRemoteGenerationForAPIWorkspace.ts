@@ -4,7 +4,7 @@ import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
-import { TaskContext } from "@fern-api/task-context";
+import { TaskAbortSignal, TaskContext } from "@fern-api/task-context";
 import {
     AbstractAPIWorkspace,
     getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation
@@ -297,6 +297,22 @@ async function generateOne({
         });
     } catch (error) {
         if (automation == null) {
+            throw error;
+        }
+        // A TaskAbortSignal means the task already logged its real error and marked
+        // itself failed via `failAndThrow`. Pull the original message off the context
+        // for the summary, then re-throw so it propagates up to `runInteractiveTask`,
+        // which silently swallows it (see TaskContextImpl.failWithoutThrowing).
+        // Re-logging here would produce `[object Object]` since `TaskAbortSignal`
+        // isn't an `Error` and has no serializable message.
+        if (error instanceof TaskAbortSignal) {
+            automation.recorder.recordFailure({
+                apiName: workspace.workspaceName,
+                groupName: generatorGroup.groupName,
+                generatorName: generatorInvocation.name,
+                errorMessage: interactiveTaskContext.getLastFailureMessage() ?? "Generator failed",
+                durationMs: Date.now() - startedAt
+            });
             throw error;
         }
         const message = extractErrorMessage(error);
