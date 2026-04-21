@@ -14,8 +14,7 @@ import { TaskContext } from "@fern-api/task-context";
  * 1. `output["package-name"]` — npm, PyPI, NuGet, RubyGems, crates.io
  * 2. `output.coordinate`      — Maven (Java)
  * 3. `config.package_name`    — fallback (some generators)
- * 4. `config.packageJson.name` — TypeScript SDK generator (local-file-system)
- * 5. `config.module.path`     — Go SDK generator
+ * 4. `config.module.path`     — Go SDK generator
  *
  * @internal Exported for testing and reuse in generation paths
  */
@@ -36,18 +35,11 @@ export function getPackageNameFromGeneratorConfig(
         }
     }
 
-    // Check config.package_name / config.packageJson.name if output.package-name is not set
+    // Check config.package_name if output.package-name is not set
     if (typeof generatorInvocation.raw?.config === "object" && generatorInvocation.raw?.config !== null) {
         const packageName = (generatorInvocation.raw.config as { package_name?: string }).package_name;
         if (packageName != null) {
             return packageName;
-        }
-
-        // typescript-sdk generator uses packageJson.name for the npm package name
-        const packageJsonName = (generatorInvocation.raw.config as { packageJson?: { name?: string } }).packageJson
-            ?.name;
-        if (packageJsonName != null) {
-            return packageJsonName;
         }
 
         // go-sdk generator uses module.path to set the package name
