@@ -626,22 +626,35 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 writer.write(baseUrl);
                 return;
             }
-            // Apply clientDefault fallback for path parameters before URL encoding
+            // Apply clientDefault fallback for path parameters before URL encoding.
+            // Use local variables to avoid mutating the caller's request struct when
+            // path params come from a wrapped request (e.g., request.Region).
+            const pathParamLocalVars: Record<string, string> = {};
             for (const pathParameter of endpoint.allPathParameters) {
                 if (pathParameter.clientDefault != null && isPlainStringType(pathParameter.valueType)) {
                     const ref = signature.pathParameterReferences[getOriginalName(pathParameter.name)];
                     if (ref != null) {
-                        writer.writeLine(`if ${ref} == "" {`);
+                        const localVar = `_${getOriginalName(pathParameter.name)}`;
+                        writer.writeLine(`${localVar} := ${ref}`);
+                        writer.writeLine(`if ${localVar} == "" {`);
                         writer.indent();
-                        writer.writeLine(`${ref} = ${this.context.getLiteralAsString(pathParameter.clientDefault)}`);
+                        writer.writeLine(`${localVar} = ${this.context.getLiteralAsString(pathParameter.clientDefault)}`);
                         writer.dedent();
                         writer.writeLine("}");
+                        pathParamLocalVars[getOriginalName(pathParameter.name)] = localVar;
                     }
                 }
             }
             const pathParameterReferences: go.AstNode[] = [];
             for (const pathParameter of endpoint.allPathParameters) {
-                const pathParameterReference = signature.pathParameterReferences[getOriginalName(pathParameter.name)];
+                const originalName = getOriginalName(pathParameter.name);
+                // Use the local variable if we created one for clientDefault
+                const localVar = pathParamLocalVars[originalName];
+                if (localVar != null) {
+                    pathParameterReferences.push(go.codeblock(localVar));
+                    continue;
+                }
+                const pathParameterReference = signature.pathParameterReferences[originalName];
                 if (pathParameterReference == null) {
                     continue;
                 }
@@ -888,18 +901,25 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.writeLine("}");
                     continue;
                 }
-                // Apply clientDefault fallback for non-optional string headers
+                // Apply clientDefault fallback for non-optional string headers.
+                // Use a local variable to avoid mutating the caller's request struct.
                 if (header.clientDefault != null && isPlainStringType(header.valueType)) {
+                    const localVar = `_${this.context.getFieldName(headerNameVal)}`;
                     writer.writeNewLineIfLastLineNot();
-                    writer.writeLine(`if ${headerField} == "" {`);
+                    writer.writeLine(`${localVar} := ${headerField}`);
+                    writer.writeLine(`if ${localVar} == "" {`);
                     writer.indent();
-                    writer.writeLine(`${headerField} = ${this.context.getLiteralAsString(header.clientDefault)}`);
+                    writer.writeLine(`${localVar} = ${this.context.getLiteralAsString(header.clientDefault)}`);
                     writer.dedent();
                     writer.writeLine("}");
+                    writer.writeNode(
+                        this.addHeaderValue({ wireValue: getWireValue(header.name), value: go.codeblock(localVar) })
+                    );
+                } else {
+                    writer.writeNode(
+                        this.addHeaderValue({ wireValue: getWireValue(header.name), value: format.formatted })
+                    );
                 }
-                writer.writeNode(
-                    this.addHeaderValue({ wireValue: getWireValue(header.name), value: format.formatted })
-                );
             }
             const acceptHeader = this.getAcceptHeaderValue({ endpoint });
             if (acceptHeader != null) {
