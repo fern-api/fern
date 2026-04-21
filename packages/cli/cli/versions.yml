@@ -1,4 +1,20 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.80.3
+  changelogEntry:
+    - summary: |
+        Thread the explicit `--version` flag through to the TypeScript SDK when
+        generating locally with `output.location: local-file-system`. Previously,
+        running `fern generate --group <ts-group> --version <x.y.z> --local` would
+        silently drop the version and emit a `package.json` without a `version`
+        field. The CLI now populates `PublishingConfig.filesystem.publishTarget`
+        with an npm target (carrying the user-provided version and the
+        `config.packageJson.name`) so the generator can produce the correct
+        `package.json` and `X-Fern-SDK-Version` header. Only `--version` that was
+        explicitly passed is threaded through; auto-computed versions are not, to
+        avoid behavior changes for users who manage `package.json` themselves.
+      type: fix
+  createdAt: "2026-04-21"
+  irVersion: 66
 - version: 4.80.2
   changelogEntry:
     - summary: |
