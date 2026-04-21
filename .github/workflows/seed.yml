@@ -967,98 +967,10 @@ jobs:
           path: benchmark-results/
           retention-days: 5
 
-  # Full E2E benchmarks for PR branches — runs the same generators WITHOUT --skip-scripts
-  # to capture the complete customer-observable generation time (Docker build + generation +
-  # npm install/compilation/test). Runs in parallel with the generator-only benchmark job.
-  benchmark-e2e:
-    runs-on: Seed
-    timeout-minutes: 120
-    needs: [get-all-test-matrices, benchmark-setup]
-    if: >-
-      ${{
-        github.event_name == 'pull_request'
-        && needs.get-all-test-matrices.outputs.benchmark-generators != ''
-        && github.event.pull_request.draft == false
-      }}
-    strategy:
-      fail-fast: false
-      matrix:
-        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.benchmark-generators) }}
-    steps:
-      - name: Checkout PR branch
-        uses: actions/checkout@v6
-
-      - name: Install
-        uses: ./.github/actions/install
-
-      - name: Log in to Docker Hub
-        if: ${{ env.DOCKERHUB_USERNAME != '' }}
-        uses: docker/login-action@v4
-        env:
-          DOCKERHUB_USERNAME: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
-        with:
-          username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
-          password: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
-
-      - name: Clear stale Docker image cache
-        run: rm -rf /tmp/docker-cache
-
-      - name: Cache Docker images
-        id: docker-cache
-        uses: actions/cache@v5
-        with:
-          path: /tmp/docker-cache
-          key: ${{ runner.os }}-docker-${{ matrix.generator }}-${{ hashFiles('**/Dockerfile*') }}
-          restore-keys: |
-            ${{ runner.os }}-docker-${{ matrix.generator }}-
-
-      - name: Load cached Docker images
-        run: |
-          for f in /tmp/docker-cache/*.tar; do
-            [ -f "$f" ] && docker load -i "$f" || true
-          done
-
-      - name: Record pre-existing Docker images
-        run: docker images -q | sort -u > /tmp/docker-images-before.txt
-
-      - name: Download shared specs
-        uses: actions/download-artifact@v7
-        with:
-          name: benchmark-specs
-          path: benchmarks/fern/apis
-
-      - name: Run benchmark (PR branch, full E2E)
-        uses: ./.github/actions/run-benchmark
-        with:
-          generator: ${{ matrix.generator }}
-
-      - name: Save Docker images for cache
-        if: always()
-        run: |
-          if [ ! -f /tmp/docker-images-before.txt ]; then
-            echo "Skipping cache save: docker-images-before.txt not found"
-            exit 0
-          fi
-          mkdir -p /tmp/docker-cache
-          comm -13 /tmp/docker-images-before.txt <(docker images -q | sort -u) | while read -r id; do
-            img=$(docker inspect --format '{{index .RepoTags 0}}' "$id" 2>/dev/null || true)
-            [ -z "$img" ] && continue
-            fname=$(echo "$img" | tr '/:' '_')
-            docker save "$img" -o "/tmp/docker-cache/${fname}.tar" 2>/dev/null || true
-          done
-
-      - name: Upload PR E2E results
-        if: always()
-        uses: actions/upload-artifact@v6
-        with:
-          name: benchmark-e2e-pr-${{ matrix.generator }}
-          path: benchmark-results/
-          retention-days: 5
-
   benchmark-report:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    needs: [benchmark, benchmark-e2e]
+    needs: [benchmark]
     if: >-
       ${{
         always() && !cancelled()
@@ -1074,18 +986,11 @@ jobs:
         with:
           sparse-checkout: .github/scripts
 
-      - name: Download all PR benchmark artifacts (generator-only)
+      - name: Download all PR benchmark artifacts
         uses: actions/download-artifact@v7
         with:
           pattern: benchmark-pr-*
           path: benchmark-pr-results
-          merge-multiple: true
-
-      - name: Download all PR E2E benchmark artifacts
-        uses: actions/download-artifact@v7
-        with:
-          pattern: benchmark-e2e-pr-*
-          path: benchmark-e2e-pr-results
           merge-multiple: true
 
       - name: Download baseline from recent nightly artifacts
@@ -1172,8 +1077,7 @@ jobs:
 
           REPORT=$(bash .github/scripts/format-benchmark-report.sh \
             benchmark-pr-results \
-            benchmark-baseline-results \
-            benchmark-e2e-pr-results)
+            benchmark-baseline-results)
           # Write to file for the comment action (printf avoids echo mangling special chars)
           printf '%s\n' "$REPORT" > benchmark-comment.md
           echo "Generated benchmark report"
@@ -1243,59 +1147,6 @@ jobs:
                 --argjson exit_code "$ec" \
                 --argjson skipped "$skip" \
                 --arg mode "generator-only" \
-                --arg branch "$PR_BRANCH" \
-                --argjson pr_number "$PR_NUMBER" \
-                --arg commit_sha "$PR_SHA" \
-                --arg run_id "$RUN_ID" \
-                --arg run_url "$RUN_URL" \
-                '{
-                  api_key: $api_key,
-                  event: $event,
-                  distinct_id: $distinct_id,
-                  timestamp: $timestamp,
-                  properties: {
-                    generator: $generator,
-                    spec: $spec,
-                    duration_seconds: $duration_seconds,
-                    exit_code: $exit_code,
-                    skipped: $skipped,
-                    mode: $mode,
-                    branch: $branch,
-                    pr_number: $pr_number,
-                    commit_sha: $commit_sha,
-                    run_id: $run_id,
-                    run_url: $run_url
-                  }
-                }')
-              if ! curl -sf --max-time 10 -X POST https://us.i.posthog.com/capture/ \
-                -H "Content-Type: application/json" \
-                -d "$payload" 2>/dev/null; then
-                FAILED=$((FAILED + 1))
-              else
-                SENT=$((SENT + 1))
-              fi
-            done < "$f"
-          done
-          # Also send PR E2E benchmark results if available
-          for f in benchmark-e2e-pr-results/*.jsonl; do
-            [ -f "$f" ] || continue
-            while IFS= read -r line; do
-              gen=$(echo "$line" | jq -r '.generator')
-              spec=$(echo "$line" | jq -r '.spec')
-              dur=$(echo "$line" | jq -r '.duration_seconds')
-              ec=$(echo "$line" | jq -r '.exit_code // 0')
-              skip=$(echo "$line" | jq -r '.skipped // false')
-              payload=$(jq -n \
-                --arg api_key "$POSTHOG_API_KEY" \
-                --arg event "benchmark-pr-result" \
-                --arg distinct_id "fern-ci-benchmark" \
-                --arg timestamp "$TIMESTAMP" \
-                --arg generator "$gen" \
-                --arg spec "$spec" \
-                --argjson duration_seconds "$dur" \
-                --argjson exit_code "$ec" \
-                --argjson skipped "$skip" \
-                --arg mode "e2e" \
                 --arg branch "$PR_BRANCH" \
                 --argjson pr_number "$PR_NUMBER" \
                 --arg commit_sha "$PR_SHA" \
