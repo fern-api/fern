@@ -31,14 +31,14 @@ export class SeedApiClient {
      *     })
      */
     public testGet(
-        request: SeedApi.TestGetRequest,
+        request: SeedApi.TestGetRequest = {},
         requestOptions?: SeedApiClient.RequestOptions,
     ): core.HttpResponsePromise<SeedApi.TestGetResponse> {
         return core.HttpResponsePromise.fromPromise(this.__testGet(request, requestOptions));
     }
 
     private async __testGet(
-        request: SeedApi.TestGetRequest,
+        request: SeedApi.TestGetRequest = {},
         requestOptions?: SeedApiClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedApi.TestGetResponse>> {
         const { region, limit } = request;
