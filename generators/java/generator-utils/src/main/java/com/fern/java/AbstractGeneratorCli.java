@@ -362,6 +362,18 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
         DefaultGeneratorExecClient generatorExecClient = new DefaultGeneratorExecClient(generatorConfig);
         try {
             log(generatorExecClient, "Starting Java SDK generation");
+
+            // Start v2 generator asynchronously — it reads the config/IR independently
+            // and generates docs (README, reference, snippets) which don't depend on v1 output.
+            Thread v2Thread = new Thread(() -> {
+                try {
+                    runV2Generator(generatorExecClient, args);
+                } catch (Exception e) {
+                    throw new RuntimeException("V2 generator failed", e);
+                }
+            }, "java-v2-generator");
+            v2Thread.start();
+
             IntermediateRepresentation ir = getIr(generatorConfig);
             this.outputDirectory = Paths.get(generatorConfig.getOutput().getPath());
             generatorConfig
@@ -399,7 +411,13 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                         }
                     });
             log(generatorExecClient, "Completed Java v1 SDK generation");
-            runV2Generator(generatorExecClient, args);
+
+            // Wait for v2 to complete
+            v2Thread.join(300_000); // 5 minute timeout
+            if (v2Thread.isAlive()) {
+                throw new RuntimeException("V2 generator timed out after 5 minutes");
+            }
+
             generatorExecClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(
                     ExitStatusUpdate.successful(SuccessfulStatusUpdate.builder().build())));
         } catch (Exception e) {
