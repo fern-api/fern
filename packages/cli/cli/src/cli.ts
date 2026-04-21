@@ -2394,7 +2394,7 @@ function addAutomationsListGenerateCommand(cli: Argv<GlobalCliOptions>, cliConte
  *   - stdout: one `X succeeded · Y skipped · Z failed` line at the end.
  *   - Markdown summary: auto-appended to `$GITHUB_STEP_SUMMARY` when that env var is set
  *     (GitHub Actions sets it; any other CI can opt in by setting it to a writable path).
- *   - `--json <path>`: CI-neutral JSON file with per-generator status, version, and error.
+ *   - `--json-file-output <path>`: CI-neutral JSON file with per-generator status, version, and error.
  *   - Exit code: non-zero iff any generator fails. Siblings keep running past a failure.
  *
  * Environment:
@@ -2407,7 +2407,7 @@ function addAutomationsListGenerateCommand(cli: Argv<GlobalCliOptions>, cliConte
  *   fern automations generate --version AUTO --auto-merge
  *
  *   # Restrict to one API and emit a JSON summary for a non-GitHub CI.
- *   fern automations generate --api payments --version AUTO --json ./fern-report.json
+ *   fern automations generate --api payments --version AUTO --json-file-output ./fern-report.json
  */
 function addAutomationsGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
@@ -2449,7 +2449,7 @@ function addAutomationsGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: 
                         "Enable GitHub automerge on generated PRs. Automerge is skipped when " +
                         "breaking changes (MAJOR bump) are detected, regardless of this flag."
                 })
-                .option("json", {
+                .option("json-file-output", {
                     type: "string",
                     description:
                         "Write a JSON summary of per-generator results to the given path. " +
@@ -2464,7 +2464,7 @@ function addAutomationsGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: 
                     generator: argv.generator,
                     version: argv.version,
                     autoMerge: argv["auto-merge"],
-                    jsonOutputPath: argv.json
+                    jsonOutputPath: argv["json-file-output"]
                 }
             });
         }

@@ -130,7 +130,7 @@ function useTempDirAndEnv(): { getTmpDir: () => string } {
 describe("writeResults (happy path)", () => {
     const { getTmpDir } = useTempDirAndEnv();
 
-    it("writes JSON to the requested path when --json is set", async () => {
+    it("writes JSON to the requested path when --json-file-output is set", async () => {
         const jsonPath = join(getTmpDir(), "out.json");
         await writeResults({ results: [successResult()], jsonOutputPath: jsonPath });
         const parsed = JSON.parse(readFileSync(jsonPath, "utf8"));
@@ -155,7 +155,7 @@ describe("writeResults (happy path)", () => {
         await expect(writeResults({ results: [successResult()], jsonOutputPath: undefined })).resolves.toBeUndefined();
     });
 
-    it("rejects when the JSON path is unwritable so the user sees --json failures", async () => {
+    it("rejects when the JSON path is unwritable so the user sees --json-file-output failures", async () => {
         // /dev/null/<anything> is never writable as a file on POSIX systems.
         const badPath = "/dev/null/fern-automations-write-failure";
         await expect(writeResults({ results: [successResult()], jsonOutputPath: badPath })).rejects.toBeDefined();
