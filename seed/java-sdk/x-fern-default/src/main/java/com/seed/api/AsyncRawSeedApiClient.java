@@ -51,10 +51,7 @@ public class AsyncRawSeedApiClient {
                 .addPathSegments("test")
                 .addPathSegment(region)
                 .addPathSegments("resource");
-        if (request.getLimit().isPresent()) {
-            QueryStringMapper.addQueryParameter(
-                    httpUrl, "limit", request.getLimit().get(), false);
-        }
+        QueryStringMapper.addQueryParameter(httpUrl, "limit", request.getLimit().orElse("100"), false);
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
