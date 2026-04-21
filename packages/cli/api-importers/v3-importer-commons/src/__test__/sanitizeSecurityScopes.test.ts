@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { sanitizeSecurityScopes } from "../openapi/v3/converters/operation/convertHttpOperation.js";
+import { sanitizeSecurityScopes } from "../utils/sanitizeSecurityScopes.js";
 
 describe("sanitizeSecurityScopes", () => {
     it("should return undefined for undefined input", () => {

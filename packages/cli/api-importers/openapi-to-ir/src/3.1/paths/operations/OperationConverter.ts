@@ -13,7 +13,7 @@ import {
 } from "@fern-api/ir-sdk";
 import { constructHttpPath, getWireValue } from "@fern-api/ir-utils";
 import { FernOpenAPIExtension } from "@fern-api/openapi-ir-parser";
-import { AbstractConverter, Extensions, ServersConverter } from "@fern-api/v3-importer-commons";
+import { AbstractConverter, Extensions, sanitizeSecurityScopes, ServersConverter } from "@fern-api/v3-importer-commons";
 import { camelCase } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
 import { RedoclyCodeSamplesExtension } from "../../../extensions/x-code-samples.js";
@@ -23,15 +23,6 @@ import { FernStreamingExtension } from "../../../extensions/x-fern-streaming.js"
 import { ResponseBodyConverter } from "../ResponseBodyConverter.js";
 import { ResponseErrorConverter } from "../ResponseErrorConverter.js";
 import { AbstractOperationConverter } from "./AbstractOperationConverter.js";
-
-function sanitizeSecurityScopes<T extends Record<string, unknown>>(security: T[] | undefined): T[] | undefined {
-    if (security == null) {
-        return undefined;
-    }
-    return security.map(
-        (requirement) => Object.fromEntries(Object.entries(requirement).map(([key, value]) => [key, value ?? []])) as T
-    );
-}
 
 export declare namespace OperationConverter {
     export interface Args extends AbstractOperationConverter.Args {
@@ -554,7 +545,7 @@ export class OperationConverter extends AbstractOperationConverter {
             return this.getDefaultSecurityFromAuthOverrides();
         }
 
-        // Fall back to OpenAPI security, sanitizing null scope values to empty arrays
+        // Fall back to OpenAPI security
         return sanitizeSecurityScopes(this.operation.security ?? this.context.spec.security);
     }
 

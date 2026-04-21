@@ -1,4 +1,5 @@
 import { generatorsYml } from "@fern-api/configuration";
+import { sanitizeSecurityScopes } from "../../../../utils/sanitizeSecurityScopes.js";
 import { assertNever } from "@fern-api/core-utils";
 import {
     EndpointSdkName,
@@ -406,15 +407,6 @@ function createOperationSdkMethodName({
         groupName: [],
         methodName: request.sdkMethodName
     };
-}
-
-export function sanitizeSecurityScopes<T extends Record<string, unknown>>(security: T[] | undefined): T[] | undefined {
-    if (security == null) {
-        return undefined;
-    }
-    return security.map(
-        (requirement) => Object.fromEntries(Object.entries(requirement).map(([key, value]) => [key, value ?? []])) as T
-    );
 }
 
 function generateSecurity(operation: OpenAPIV3.OperationObject): EndpointSecurity | undefined {

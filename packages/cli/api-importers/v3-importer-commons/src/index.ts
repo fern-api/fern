@@ -20,3 +20,4 @@ export { validateDescription, validateOpenApiSpec, validateTagNames } from "./Op
 export type { FernEnumConfig } from "./types/FernEnumConfig.js";
 export { convertNumberToSnakeCase } from "./utils/ConvertNumberToSnakeCase.js";
 export { ERROR_NAMES, ERROR_NAMES_BY_STATUS_CODE } from "./utils/ErrorNames.js";
+export { sanitizeSecurityScopes } from "./utils/sanitizeSecurityScopes.js";

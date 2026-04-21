@@ -21,6 +21,7 @@ import {
     WebhookWithExample
 } from "@fern-api/openapi-ir";
 import { TaskContext } from "@fern-api/task-context";
+import { sanitizeSecurityScopes } from "../../utils/sanitizeSecurityScopes.js";
 import { mapValues } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../getExtension.js";
@@ -51,15 +52,6 @@ import { getWebhooksPathsObject } from "./getWebhookPathsObject.js";
 import { hasIncompleteExample } from "./hasIncompleteExample.js";
 import { OpenAPIV3ParserContext } from "./OpenAPIV3ParserContext.js";
 import { runResolutions } from "./runResolutions.js";
-
-function sanitizeSecurityScopes<T extends Record<string, unknown>>(security: T[] | undefined): T[] | undefined {
-    if (security == null) {
-        return undefined;
-    }
-    return security.map(
-        (requirement) => Object.fromEntries(Object.entries(requirement).map(([key, value]) => [key, value ?? []])) as T
-    );
-}
 
 export function generateIr({
     openApi,
