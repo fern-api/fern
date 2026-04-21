@@ -2,13 +2,13 @@ import {
     FernGeneratorExec,
     GeneratorNotificationService,
     NopGeneratorNotificationService,
-    parseGeneratorConfig,
-    parseIR
+    parseGeneratorConfig
 } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { CONSOLE_LOGGER, createLogger, Logger, LogLevel } from "@fern-api/logger";
-import { FernIr, serialization } from "@fern-fern/ir-sdk";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { fastParseIR } from "./fastParseIR.js";
 import {
     constructNpmPackage,
     constructNpmPackageArgs,
@@ -17,6 +17,9 @@ import {
     PersistedTypescriptProject
 } from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
+import { execFile } from "child_process";
+import { copyFile, readFile, writeFile } from "fs/promises";
+import tmp from "tmp-promise";
 import { publishPackage } from "./publishPackage.js";
 import { writeGenerationMetadata } from "./writeGenerationMetadata.js";
 import { writeGitHubWorkflows } from "./writeGitHubWorkflows.js";
@@ -73,10 +76,9 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             });
             const customConfig = this.parseCustomConfig(config.customConfig, logger);
 
-            const ir = await parseIR({
-                absolutePathToIR: AbsoluteFilePath.of(config.irFilepath),
-                parse: serialization.IntermediateRepresentation.parse
-            });
+            const ir = await fastParseIR<FernIr.IntermediateRepresentation>(
+                AbsoluteFilePath.of(config.irFilepath)
+            );
 
             let npmPackage: NpmPackage | undefined;
             if (ir.selfHosted) {
@@ -113,6 +115,53 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             });
 
             const generatorContext = new GeneratorContextImpl(logger, version);
+
+            // Start lockfile generation early for GitHub mode to overlap with code generation.
+            // The lockfile only depends on dependency specifiers, which are deterministic
+            // from the generator config. By starting it before generate(), we overlap
+            // ~1.5s of pnpm resolution with ~1.5s of code generation.
+            let earlyLockfilePromise: Promise<string | undefined> | undefined;
+            if (config.output.mode.type === "github") {
+                const lockfileConfig = this.getEarlyLockfileConfig(customConfig);
+                if (lockfileConfig) {
+                    earlyLockfilePromise = (async () => {
+                        try {
+                            const tmpDir = (await tmp.dir()).path;
+                            const minimalPkg = {
+                                name: "lockfile-gen",
+                                version: "0.0.0",
+                                private: true,
+                                ...(lockfileConfig.dependencies != null &&
+                                Object.keys(lockfileConfig.dependencies).length > 0
+                                    ? { dependencies: lockfileConfig.dependencies }
+                                    : {}),
+                                devDependencies: lockfileConfig.devDependencies,
+                                packageManager: lockfileConfig.packageManager
+                            };
+                            await writeFile(`${tmpDir}/package.json`, JSON.stringify(minimalPkg, null, 2));
+                            await writeFile(`${tmpDir}/pnpm-workspace.yaml`, "packages: ['.']");
+
+                            const pm = lockfileConfig.packageManager.split("@")[0] ?? "pnpm";
+                            await new Promise<void>((resolve, reject) => {
+                                execFile(
+                                    pm,
+                                    ["install", "--lockfile-only", "--ignore-scripts", "--prefer-offline", "--no-optional"],
+                                    {
+                                        cwd: tmpDir,
+                                        env: { ...process.env, PNPM_FROZEN_LOCKFILE: "false" }
+                                    },
+                                    (error) => (error ? reject(error) : resolve())
+                                );
+                            });
+                            return `${tmpDir}/pnpm-lock.yaml`;
+                        } catch (e) {
+                            logger.debug(`Early lockfile generation failed: ${e}`);
+                            return undefined;
+                        }
+                    })();
+                }
+            }
+
             const codeGenStartTime = Date.now();
             const typescriptProject = await this.generateTypescriptProject({
                 config,
@@ -122,6 +171,38 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 intermediateRepresentation: ir
             });
             logger.debug(`[TIMING] code generation took ${Date.now() - codeGenStartTime}ms`);
+
+            // Try to use the early-generated lockfile
+            let lockfileReady = false;
+            if (earlyLockfilePromise) {
+                const lockfilePath = await earlyLockfilePromise;
+                if (lockfilePath) {
+                    try {
+                        // Verify the actual deps match our prediction by comparing
+                        // the dependency specifiers from the generated package.json
+                        const actualPkg = JSON.parse(
+                            await readFile(`${typescriptProject.getRootDirectory()}/package.json`, "utf-8")
+                        );
+                        const expectedConfig = this.getEarlyLockfileConfig(customConfig);
+                        if (
+                            expectedConfig &&
+                            depsMatch(actualPkg.dependencies ?? {}, expectedConfig.dependencies ?? {}) &&
+                            depsMatch(actualPkg.devDependencies ?? {}, expectedConfig.devDependencies)
+                        ) {
+                            await copyFile(
+                                lockfilePath,
+                                `${typescriptProject.getRootDirectory()}/pnpm-lock.yaml`
+                            );
+                            lockfileReady = true;
+                            logger.debug("[TIMING] early lockfile used successfully");
+                        } else {
+                            logger.debug("[TIMING] early lockfile deps mismatch, will regenerate");
+                        }
+                    } catch (e) {
+                        logger.debug(`Early lockfile copy failed: ${e}`);
+                    }
+                }
+            }
             if (!generatorContext.didSucceed()) {
                 throw new Error("Failed to generate TypeScript project.");
             }
@@ -186,11 +267,18 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                             packageManager: this.getPackageManager(customConfig)
                         });
                     });
-                    await typescriptProject.generateLockfile(logger);
-                    if (!(await typescriptProject.areCheckFixToolsAvailable(logger))) {
-                        await typescriptProject.installCheckFixDependencies(logger);
-                    }
-                    await typescriptProject.checkFix(logger);
+                    // Run lockfile generation and check:fix in parallel.
+                    // When tools are on PATH, invoke them directly (bypasses
+                    // pnpm script runner overhead).  Otherwise use pnpm dlx.
+                    const toolsAvailable = await typescriptProject.areCheckFixToolsAvailable(logger);
+                    await Promise.all([
+                        lockfileReady
+                            ? Promise.resolve()
+                            : typescriptProject.generateLockfile(logger),
+                        toolsAvailable
+                            ? typescriptProject.checkFixDirect(logger)
+                            : typescriptProject.checkFixViaDlx(logger)
+                    ]);
                     await typescriptProject.deleteGitIgnoredFiles(logger);
                     if (this.outputSrcOnly(customConfig)) {
                         await typescriptProject.copySrcContentsTo({
@@ -304,6 +392,17 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
     protected abstract shouldTolerateRepublish(customConfig: CustomConfig): boolean;
     protected abstract shouldSkipNpmPkgFix(customConfig: CustomConfig): boolean;
 
+    /**
+     * Override to return the expected dependencies for early lockfile generation.
+     * When provided, lockfile generation starts in parallel with code generation
+     * for GitHub mode, saving ~1-2s of wall clock time.
+     */
+    protected getEarlyLockfileConfig(
+        _customConfig: CustomConfig
+    ): { devDependencies: Record<string, string>; dependencies?: Record<string, string>; packageManager: string } | undefined {
+        return undefined;
+    }
+
     private shouldGenerateFullProject(ir: FernIr.IntermediateRepresentation): boolean {
         const publishConfig = ir.publishConfig;
         if (publishConfig == null) {
@@ -374,6 +473,20 @@ function npmPackageInfoFromPublishConfig(
         ...args,
         isPackagePrivate
     };
+}
+
+function depsMatch(actual: Record<string, string>, expected: Record<string, string>): boolean {
+    const actualKeys = Object.keys(actual).sort();
+    const expectedKeys = Object.keys(expected).sort();
+    if (actualKeys.length !== expectedKeys.length) {
+        return false;
+    }
+    for (let i = 0; i < actualKeys.length; i++) {
+        if (actualKeys[i] !== expectedKeys[i] || actual[actualKeys[i]!] !== expected[expectedKeys[i]!]) {
+            return false;
+        }
+    }
+    return true;
 }
 
 class GeneratorContextImpl implements GeneratorContext {

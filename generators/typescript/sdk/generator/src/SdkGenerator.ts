@@ -3,7 +3,6 @@ import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/serialization";
 import { FernIr } from "@fern-fern/ir-sdk";
 import {
     AsIsManager,
@@ -196,6 +195,8 @@ export class SdkGenerator {
     private snippetProject: Project | undefined;
     private snippetCounter = 0;
     private rootDirectory: Directory;
+    // Deferred file prefixes (header + imports) to avoid insertText AST re-parses
+    private filePrefixes: Map<string, string> = new Map();
     private exportsManager: ExportsManager;
     private readonly publicExportsManager: PublicExportsManager;
     private dependencyManager = new DependencyManager();
@@ -714,35 +715,46 @@ export class SdkGenerator {
 
         if (this.config.snippetFilepath != null) {
             this.generateSnippets();
-            const snippets: FernGeneratorExec.Snippets = {
-                endpoints: this.endpointSnippets,
-                types: {}
-            };
+            // Serialize snippets manually instead of going through the Zurg
+            // serializer.  The only transforms jsonOrThrow applied were
+            // camelCase → snake_case renames (exampleIdentifier → example_identifier,
+            // identifierOverride → identifier_override).  Doing it inline avoids
+            // the recursive async validation overhead.
+            const serializedEndpoints = this.endpointSnippets.map((ep) => {
+                const entry: Record<string, unknown> = {
+                    id: {
+                        path: ep.id.path,
+                        method: ep.id.method,
+                        ...(ep.id.identifierOverride != null ? { identifier_override: ep.id.identifierOverride } : {})
+                    },
+                    snippet: ep.snippet
+                };
+                if (ep.exampleIdentifier != null) {
+                    entry.example_identifier = ep.exampleIdentifier;
+                }
+                return entry;
+            });
             await writeFile(
                 this.config.snippetFilepath,
-                JSON.stringify(await FernGeneratorExecSerializers.Snippets.jsonOrThrow(snippets), undefined, 4)
+                JSON.stringify({ types: {}, endpoints: serializedEndpoints }, undefined, 4)
             );
             this.context.logger.debug("Generated snippets");
 
-            try {
-                await this.generateReadme();
-            } catch (e) {
-                throw new Error(`Failed to generate README.md: ${extractErrorMessage(e)}`);
-            }
-
-            try {
-                await this.generateReference();
-            } catch (e) {
-                throw new Error(`Failed to generate reference.md: ${extractErrorMessage(e)}`);
-            }
-
-            if (!this.config.whitelabel) {
-                try {
-                    await this.generateContributing();
-                } catch (e) {
-                    throw new Error(`Failed to generate CONTRIBUTING.md: ${extractErrorMessage(e)}`);
-                }
-            }
+            // Generate README, reference, and contributing docs in parallel —
+            // they write to separate files and share no mutable state.
+            await Promise.all([
+                this.generateReadme().catch((e) => {
+                    throw new Error(`Failed to generate README.md: ${extractErrorMessage(e)}`);
+                }),
+                this.generateReference().catch((e) => {
+                    throw new Error(`Failed to generate reference.md: ${extractErrorMessage(e)}`);
+                }),
+                !this.config.whitelabel
+                    ? this.generateContributing().catch((e) => {
+                          throw new Error(`Failed to generate CONTRIBUTING.md: ${extractErrorMessage(e)}`);
+                      })
+                    : undefined
+            ]);
         }
 
         const subpackageExportPaths = this.config.generateSubpackageExports ? this.getSubpackageExportPaths() : [];
@@ -768,7 +780,8 @@ export class SdkGenerator {
                   linter: this.config.linter,
                   formatter: this.config.formatter,
                   generateSubpackageExports: this.config.generateSubpackageExports,
-                  subpackageExportPaths
+                  subpackageExportPaths,
+                  filePrefixes: this.filePrefixes
               })
             : new SimpleTypescriptProject({
                   npmPackage: this.npmPackage,
@@ -793,7 +806,8 @@ export class SdkGenerator {
                   linter: this.config.linter,
                   formatter: this.config.formatter,
                   generateSubpackageExports: this.config.generateSubpackageExports,
-                  subpackageExportPaths
+                  subpackageExportPaths,
+                  filePrefixes: this.filePrefixes
               });
     }
 
@@ -1176,11 +1190,12 @@ export class SdkGenerator {
             this.testGenerator.createWireTestDirectory();
             this.withSourceFile({
                 filepath: this.testGenerator.getMockAuthFilepath(),
-                run: ({ sourceFile, importsManager }) => {
+                run: ({ sourceFile, importsManager }): string | void => {
                     const context = this.generateFileContext({ sourceFile, importsManager });
                     const file = this.testGenerator.buildMockAuthFile({ context });
                     if (file) {
-                        sourceFile.replaceWithText(file.toString({ dprintOptions: { indentWidth: 4 } }));
+                        // Return text directly — bypasses ts-morph replaceWithText re-parse.
+                        return file.toString({ dprintOptions: { indentWidth: 4 } });
                     }
                 },
                 packagePath: this.getRelativeTestPath()
@@ -1193,7 +1208,7 @@ export class SdkGenerator {
 
             this.withSourceFile({
                 filepath: this.testGenerator.getTestFile(service),
-                run: ({ sourceFile, importsManager }) => {
+                run: ({ sourceFile, importsManager }): string | void => {
                     const context = this.generateFileContext({ sourceFile, importsManager });
                     const file = this.testGenerator.buildFile(
                         this.sdkClientClassDeclarationReferencer.getExportedName(packageId),
@@ -1203,7 +1218,8 @@ export class SdkGenerator {
                         context
                     );
                     if (file) {
-                        sourceFile.replaceWithText(file.toString({ dprintOptions: { indentWidth: 4 } }));
+                        // Return text directly — bypasses ts-morph replaceWithText re-parse.
+                        return file.toString({ dprintOptions: { indentWidth: 4 } });
                     }
                 },
                 packagePath: this.getRelativeTestPath()
@@ -1788,13 +1804,13 @@ export class SdkGenerator {
         });
         const statements = run({ sourceFile, importsManager });
         if (statements != null) {
-            sourceFile.addStatements(statements.map((expression) => getTextOfTsNode(expression)));
-            if (includeImports) {
-                importsManager.writeImportsToSourceFile(sourceFile);
-            }
-            const text = sourceFile.getText();
+            // Build body text directly from statement text, bypassing addStatements +
+            // getText AST round-trip.  getTextOfTsNode already produces the final text;
+            // joining avoids the parse→serialize overhead for each snippet.
+            const bodyText = statements.map((expression) => getTextOfTsNode(expression)).join("\n") + "\n";
+            const importText = includeImports ? importsManager.buildImportText(sourceFile) : "";
             sourceFile.delete();
-            return text;
+            return importText + bodyText;
         }
         // Clean up the source file even if no statements were generated
         sourceFile.delete();
@@ -1808,7 +1824,7 @@ export class SdkGenerator {
         dynamicExportTypeModifier,
         packagePath = this.relativePackagePath
     }: {
-        run: (args: { sourceFile: SourceFile; importsManager: ImportsManager }) => void;
+        run: (args: { sourceFile: SourceFile; importsManager: ImportsManager }) => string | void;
         filepath: ExportedFilePath;
         addExportTypeModifier?: boolean;
         dynamicExportTypeModifier?: boolean;
@@ -1823,13 +1839,17 @@ export class SdkGenerator {
             packagePath: this.relativePackagePath
         });
 
-        run({ sourceFile, importsManager });
+        // If run returns a string, use it directly (bypasses ts-morph replaceWithText re-parse).
+        // This is used by test files which build complete content via ts-poet.
+        const rawText = run({ sourceFile, importsManager });
+        const bodyText = typeof rawText === "string" ? rawText : sourceFile.getFullText();
 
-        if (sourceFile.getStatements().length === 0) {
+        if (bodyText.length === 0) {
             sourceFile.delete();
             this.context.logger.debug(`Skipping ${filepathStr} (no content)`);
         } else {
-            importsManager.writeImportsToSourceFile(sourceFile);
+            // Build import text without inserting into AST (avoids expensive re-parse)
+            const importText = importsManager.buildImportText(sourceFile);
 
             // Determine export type modifier dynamically if requested
             let effectiveAddExportTypeModifier = addExportTypeModifier;
@@ -1842,15 +1862,11 @@ export class SdkGenerator {
 
             this.exportsManager.addExportsForFilepath(filepath, effectiveAddExportTypeModifier);
 
-            // this needs to be last.
-            // https://github.com/dsherret/ts-morph/issues/189#issuecomment-414174283
-            sourceFile.insertText(0, (writer) => {
-                if (this.config.whitelabel) {
-                    writer.writeLine(WHITELABEL_FILE_HEADER);
-                } else {
-                    writer.writeLine(FILE_HEADER);
-                }
-            });
+            // Store complete file content (header + imports + body) and delete
+            // the source file from the ts-morph project.
+            const header = this.config.whitelabel ? WHITELABEL_FILE_HEADER : FILE_HEADER;
+            this.filePrefixes.set(sourceFile.getFilePath(), header + "\n" + importText + bodyText);
+            sourceFile.delete();
 
             this.context.logger.debug(`Generated ${filepathStr}`);
         }

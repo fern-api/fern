@@ -4,7 +4,7 @@ import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { PublishInfo } from "@fern-api/typescript-base";
 import { execFile } from "child_process";
 import decompress from "decompress";
-import { cp, readdir, rm, writeFile } from "fs/promises";
+import { cp, readdir, readFile, rm, writeFile } from "fs/promises";
 import tmp from "tmp-promise";
 import { promisify } from "util";
 
@@ -83,18 +83,28 @@ export class PersistedTypescriptProject {
             return;
         }
 
-        const npm = createLoggingExecutable("npm", {
-            cwd: this.directory,
-            logger
-        });
-
         try {
-            logger.debug("Running npm pkg fix to normalize package.json");
+            logger.debug("Normalizing package.json in-process");
             const startTime = Date.now();
-            await npm(["pkg", "fix"]);
+            const pkgPath = join(this.directory, RelativeFilePath.of("package.json"));
+            const raw = await readFile(pkgPath, "utf-8");
+            const pkg = JSON.parse(raw);
+            let changed = false;
+
+            // Normalize repository field (main npm pkg fix transform)
+            if (typeof pkg.repository === "string" && pkg.repository.length > 0) {
+                const url = pkg.repository.startsWith("git+") ? pkg.repository : `git+${pkg.repository}`;
+                const withSuffix = url.endsWith(".git") ? url : `${url}.git`;
+                pkg.repository = { type: "git", url: withSuffix };
+                changed = true;
+            }
+
+            if (changed) {
+                await writeFile(pkgPath, JSON.stringify(pkg, null, 2) + "\n");
+            }
             logger.debug(`[TIMING] fixPackageJson took ${Date.now() - startTime}ms`);
         } catch (e) {
-            logger.warn(`Failed to run npm pkg fix: ${e}`);
+            logger.warn(`Failed to normalize package.json: ${e}`);
         }
     }
 
@@ -116,7 +126,7 @@ export class PersistedTypescriptProject {
                       YARN_ENABLE_IMMUTABLE_INSTALLS: "false"
                   }
               })
-            : pm(["install", "--lockfile-only", "--ignore-scripts", "--prefer-offline"], {
+            : pm(["install", "--lockfile-only", "--ignore-scripts", "--prefer-offline", "--no-optional"], {
                   env: {
                       // allow modifying pnpm-lock.yaml, even when in CI
                       PNPM_FROZEN_LOCKFILE: "false"
@@ -269,6 +279,150 @@ export class PersistedTypescriptProject {
                 logger
             });
             logger.error(`Failed to format the generated project: ${e}`);
+        }
+    }
+
+    /**
+     * Runs check:fix by invoking the tool binary directly from PATH,
+     * bypassing the pnpm script runner overhead.  When biome (or another
+     * tool) is globally installed, this avoids ~100-200ms of pnpm startup
+     * + package.json script lookup + child process spawning.
+     */
+    public async checkFixDirect(logger: Logger): Promise<void> {
+        if (!this.runScripts) {
+            return;
+        }
+
+        // Read the check:fix script from package.json to get the actual command
+        const pkgJsonPath = join(this.directory, RelativeFilePath.of("package.json"));
+        let scriptContent: string | undefined;
+        try {
+            const raw = await readFile(pkgJsonPath, "utf-8");
+            const pkgJson = JSON.parse(raw);
+            scriptContent = pkgJson.scripts?.[this.checkFixCommand[0]!];
+        } catch {
+            // Fall through to fallback
+        }
+
+        if (typeof scriptContent !== "string" || /[;&|]/.test(scriptContent)) {
+            logger.debug("checkFixDirect: compound script or missing, falling back to pnpm");
+            return this.checkFix(logger);
+        }
+
+        // Parse: "biome check --fix ..." → command="biome", args=["check", "--fix", ...]
+        const parts = scriptContent.trim().split(/\s+/);
+        const command = parts[0];
+        const args = parts.slice(1);
+        if (command == null) {
+            return this.checkFix(logger);
+        }
+
+        const startTime = Date.now();
+        const exe = createLoggingExecutable(command, {
+            cwd: this.directory,
+            logger,
+            reject: false,
+            doNotPipeOutput: true
+        });
+
+        try {
+            const result = await exe(args);
+            await this.writeToolOutputToLogFile({
+                step: "checkFixDirect",
+                stdout: result.stdout,
+                stderr: result.stderr,
+                logger
+            });
+            logger.debug(`[TIMING] checkFixDirect took ${Date.now() - startTime}ms`);
+        } catch (e) {
+            const error = e as { stdout?: string; stderr?: string };
+            await this.writeToolOutputToLogFile({
+                step: "checkFixDirect",
+                stdout: error.stdout ?? "",
+                stderr: error.stderr ?? "",
+                logger
+            });
+            logger.warn(`checkFixDirect failed (${Date.now() - startTime}ms), falling back to pnpm`);
+            await this.checkFix(logger);
+        }
+    }
+
+    /**
+     * Runs check:fix using `pnpm dlx` to execute the tool directly from
+     * the pnpm store, without installing it into node_modules. This is
+     * significantly faster than installCheckFixDependencies + checkFix
+     * because pnpm dlx:
+     * - Only resolves and caches the single tool package (not the full dep tree)
+     * - Doesn't modify package.json or the lockfile
+     * - Reuses the pnpm store cache across runs
+     *
+     * Falls back to installCheckFixDependencies + checkFix if:
+     * - Multiple check:fix packages are needed
+     * - The check:fix script is a compound command (&&, ||, ;)
+     */
+    public async checkFixViaDlx(logger: Logger): Promise<void> {
+        if (!this.runScripts) {
+            return;
+        }
+
+        // Only use dlx for simple single-package cases
+        if (this.checkFixPackages.length !== 1 || this.checkFixCommand.length !== 1) {
+            logger.debug("checkFixViaDlx: complex config, falling back to install");
+            await this.installCheckFixDependencies(logger);
+            await this.checkFix(logger);
+            return;
+        }
+
+        // Read the check:fix script from package.json
+        const pkgJsonPath = join(this.directory, RelativeFilePath.of("package.json"));
+        let scriptContent: string | undefined;
+        try {
+            const raw = await readFile(pkgJsonPath, "utf-8");
+            const pkgJson = JSON.parse(raw);
+            scriptContent = pkgJson.scripts?.[this.checkFixCommand[0]!];
+        } catch {
+            // Fall through to fallback
+        }
+
+        if (typeof scriptContent !== "string" || /[;&|]/.test(scriptContent)) {
+            logger.debug("checkFixViaDlx: compound script or missing, falling back to install");
+            await this.installCheckFixDependencies(logger);
+            await this.checkFix(logger);
+            return;
+        }
+
+        // Parse: "biome check --fix ..." → ["check", "--fix", ...]
+        const args = scriptContent.trim().split(/\s+/).slice(1);
+        const pkg = this.checkFixPackages[0]!;
+
+        const startTime = Date.now();
+        const pm = createLoggingExecutable("pnpm", {
+            cwd: this.directory,
+            logger,
+            reject: false,
+            doNotPipeOutput: true
+        });
+
+        try {
+            const result = await pm(["dlx", pkg, ...args]);
+            await this.writeToolOutputToLogFile({
+                step: "checkFixDlx",
+                stdout: result.stdout,
+                stderr: result.stderr,
+                logger
+            });
+            logger.debug(`[TIMING] checkFixViaDlx took ${Date.now() - startTime}ms`);
+        } catch (e) {
+            const error = e as { stdout?: string; stderr?: string };
+            await this.writeToolOutputToLogFile({
+                step: "checkFixDlx",
+                stdout: error.stdout ?? "",
+                stderr: error.stderr ?? "",
+                logger
+            });
+            logger.warn(`checkFixViaDlx failed (${Date.now() - startTime}ms), falling back to install`);
+            await this.installCheckFixDependencies(logger);
+            await this.checkFix(logger);
         }
     }
 
@@ -498,35 +652,53 @@ export class PersistedTypescriptProject {
     }
 
     public async deleteGitIgnoredFiles(logger: Logger): Promise<void> {
-        const git = createLoggingExecutable("git", {
-            cwd: this.directory,
-            logger
-        });
-        await git(["init"]);
-        // Disable auto-gc so that no background pack processes run during
-        // the subsequent add/commit/clean, which would race with the rm(.git) below.
-        await git(["config", "gc.auto", "0"]);
-        await git(["add", "."]);
-        await git([
-            "-c",
-            "user.name=fern",
-            "-c",
-            "user.email=hey@buildwithfern.com",
-            "-c",
-            "commit.gpgsign=false",
-            "commit",
-            "--no-verify",
-            "-m",
-            "Initial commit"
-        ]);
-        await git(["clean", "-fdx"]);
+        // Instead of spawning 5 git sub-processes (init, config, add, commit, clean)
+        // + rm .git, parse .gitignore and directly remove matching entries.
+        const gitignorePath = join(this.directory, RelativeFilePath.of(".gitignore"));
+        let gitignoreContent: string;
+        try {
+            gitignoreContent = await readFile(gitignorePath, "utf-8");
+        } catch {
+            logger.debug("No .gitignore found, nothing to clean");
+            return;
+        }
 
-        await rm(join(this.directory, RelativeFilePath.of(".git")), {
-            recursive: true,
-            force: true,
-            maxRetries: 3,
-            retryDelay: 100
-        });
+        const entries = await readdir(this.directory, { withFileTypes: true });
+        const patterns = gitignoreContent
+            .split("\n")
+            .map((line) => line.trim())
+            .filter((line) => line.length > 0 && !line.startsWith("#") && !line.startsWith("!"));
+
+        const toRemove: string[] = [];
+        for (const entry of entries) {
+            const name = entry.name;
+            for (const pattern of patterns) {
+                // Strip leading / and trailing / from pattern for matching
+                const cleanPattern = pattern.replace(/^\//, "").replace(/\/$/, "");
+                if (name === cleanPattern) {
+                    toRemove.push(name);
+                    break;
+                }
+                // Handle glob patterns like *.d.ts or .pnp.*
+                if (cleanPattern.includes("*")) {
+                    const regex = new RegExp("^" + cleanPattern.replace(/\./g, "\\.").replace(/\*/g, ".*") + "$");
+                    if (regex.test(name)) {
+                        toRemove.push(name);
+                        break;
+                    }
+                }
+            }
+        }
+
+        await Promise.all(
+            toRemove.map((name) => {
+                logger.debug(`Removing gitignored: ${name}`);
+                return rm(join(this.directory, RelativeFilePath.of(name)), {
+                    recursive: true,
+                    force: true
+                });
+            })
+        );
     }
 
     private async writeToolOutputToLogFile({
