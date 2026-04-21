@@ -9,6 +9,7 @@ import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
 import { LogLevel } from "@fern-api/logger";
 import { getTokenFromAuth0 } from "@fern-api/login";
+import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
 import { execSync } from "child_process";
 import inquirer from "inquirer";
@@ -711,7 +712,10 @@ export class Wizard {
     private async fetchApiFromUrl(url: string, specFormat: FernYmlBuilder.SpecFormat): Promise<Wizard.ApiSource> {
         const response = await fetch(url, { signal: AbortSignal.timeout(FETCH_API_SPEC_REQUEST_TIMEOUT_MS) });
         if (!response.ok) {
-            throw new Error(`HTTP ${response.status} ${response.statusText}`);
+            throw new CliError({
+                message: `HTTP ${response.status} ${response.statusText}`,
+                code: CliError.Code.NetworkError
+            });
         }
         const content = await response.text();
         const filename = this.resolveFilenameFromUrl({ url, specFormat });

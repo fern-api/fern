@@ -11,9 +11,9 @@ import {
     type SdkGroupName,
     type Source
 } from "@fern-api/openapi-ir";
+import { CliError } from "@fern-api/task-context";
 import { size } from "lodash-es";
 import type { OpenAPIV3 } from "openapi-types";
-
 import { getExtension } from "../getExtension.js";
 import { OpenAPIExtension } from "../openapi/v3/extensions/extensions.js";
 import { FernOpenAPIExtension } from "../openapi/v3/extensions/fernExtensions.js";
@@ -1586,7 +1586,10 @@ export function convertToReferencedSchema(
 
     const schemaId = getSchemaIdFromReference(schema);
     if (schemaId == null) {
-        throw new Error(`Invalid schema reference ${JSON.stringify(schema)}`);
+        throw new CliError({
+            message: `Invalid schema reference ${JSON.stringify(schema)}`,
+            code: CliError.Code.ReferenceError
+        });
     }
 
     return Schema.reference({

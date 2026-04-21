@@ -1,7 +1,7 @@
 import { docsYml } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
 import { FdrAPI as CjsFdrSdk } from "@fern-api/fdr-sdk";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import tinycolor from "tinycolor2";
 
 export function convertColorsConfiguration(
@@ -176,7 +176,9 @@ export function getColorInstanceFromRawConfigOrThrow(
     const instance = tinycolor(color);
     if (!instance.isValid()) {
         context.failAndThrow(
-            `'${typeof raw === "string" ? key : `colors.${key}.${theme}`}' should be a hex color of the format #FFFFFF`
+            `'${typeof raw === "string" ? key : `colors.${key}.${theme}`}' should be a hex color of the format #FFFFFF`,
+            undefined,
+            { code: CliError.Code.ConfigError }
         );
     }
     return instance;

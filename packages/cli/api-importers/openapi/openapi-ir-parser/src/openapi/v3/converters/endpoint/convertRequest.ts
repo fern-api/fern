@@ -8,6 +8,8 @@ import {
     SchemaWithExample,
     Source
 } from "@fern-api/openapi-ir";
+import { CliError } from "@fern-api/task-context";
+
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../../../getExtension.js";
 import { isAdditionalPropertiesAny } from "../../../../schema/convertAdditionalProperties.js";
@@ -476,15 +478,24 @@ interface ResolvedSchema {
 // Hack: update to call context.resolveSchema()
 function resolveSchema(schema: OpenAPIV3.ReferenceObject, document: OpenAPIV3.Document): ResolvedSchema {
     if (!schema.$ref.startsWith(SCHEMA_REFERENCE_PREFIX)) {
-        throw new Error(`Failed to resolve schema reference because of unsupported prefix: ${schema.$ref}`);
+        throw new CliError({
+            message: `Failed to resolve schema reference because of unsupported prefix: ${schema.$ref}`,
+            code: CliError.Code.ReferenceError
+        });
     }
     const schemaId = getSchemaIdFromReference(schema);
     if (schemaId == null) {
-        throw new Error(`Failed to resolve schema reference because missing schema id: ${schema.$ref}`);
+        throw new CliError({
+            message: `Failed to resolve schema reference because missing schema id: ${schema.$ref}`,
+            code: CliError.Code.ReferenceError
+        });
     }
     const resolvedSchema = document.components?.schemas?.[schemaId];
     if (resolvedSchema == null) {
-        throw new Error(`Failed to resolve schema reference because missing: ${schema.$ref}`);
+        throw new CliError({
+            message: `Failed to resolve schema reference because missing: ${schema.$ref}`,
+            code: CliError.Code.ReferenceError
+        });
     }
     if (isReferenceObject(resolvedSchema)) {
         return resolveSchema(resolvedSchema, document);

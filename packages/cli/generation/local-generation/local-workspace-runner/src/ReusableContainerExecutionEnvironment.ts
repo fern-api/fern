@@ -8,6 +8,7 @@ import {
 } from "@fern-api/docker-utils";
 import { Logger, LogLevel } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
+import { CliError } from "@fern-api/task-context";
 import {
     CONTAINER_CODEGEN_OUTPUT_DIRECTORY,
     CONTAINER_FERN_DIRECTORY,
@@ -90,7 +91,13 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
             }
             this.containers = [];
             this.availableContainers = [];
-            throw error;
+            if (error instanceof CliError) {
+                throw error;
+            }
+            throw new CliError({
+                message: `Failed to start containers: ${error instanceof Error ? error.message : String(error)}`,
+                code: CliError.Code.ContainerError
+            });
         }
 
         if (isDebug) {
@@ -102,12 +109,23 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
 
     public async execute(args: ExecutionEnvironment.ExecuteArgs): Promise<void> {
         if (this.containers.length === 0 || this.entrypoint == null) {
-            throw new Error("Containers not started. Call start() before execute().");
+            throw new CliError({
+                message: "Containers not started. Call start() before execute().",
+                code: CliError.Code.InternalError
+            });
         }
 
         const containerId = await this.acquire();
         try {
             await this.doExecute(containerId, args);
+        } catch (error) {
+            if (error instanceof CliError) {
+                throw error;
+            }
+            throw new CliError({
+                message: `Container execution failed: ${error instanceof Error ? error.message : String(error)}`,
+                code: CliError.Code.ContainerError
+            });
         } finally {
             this.release(containerId);
         }
@@ -159,7 +177,10 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
             );
         }
         if (this.entrypoint == null) {
-            throw new Error("Containers not started. Call start() before execute().");
+            throw new CliError({
+                message: "Containers not started. Call start() before execute().",
+                code: CliError.Code.InternalError
+            });
         }
         const entrypoint = this.entrypoint;
         const logger = context.logger;
@@ -332,7 +353,10 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
         );
 
         if (exitCode !== 0) {
-            throw new Error(`Failed to inspect image ${this.imageName} (exit code ${exitCode}).\n${stderr || stdout}`);
+            throw new CliError({
+                message: `Failed to inspect image ${this.imageName} (exit code ${exitCode}).\n${stderr || stdout}`,
+                code: CliError.Code.ContainerError
+            });
         }
 
         try {
@@ -344,9 +368,11 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
             logger?.warn(`Failed to parse entrypoint for image ${this.imageName}: ${e}`);
         }
 
-        throw new Error(
-            `Could not determine entrypoint for image ${this.imageName}. ` +
-                `The image must have an ENTRYPOINT defined to be used with reusable containers.`
-        );
+        throw new CliError({
+            message:
+                `Could not determine entrypoint for image ${this.imageName}. ` +
+                `The image must have an ENTRYPOINT defined to be used with reusable containers.`,
+            code: CliError.Code.ContainerError
+        });
     }
 }

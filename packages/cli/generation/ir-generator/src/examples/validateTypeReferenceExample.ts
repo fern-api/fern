@@ -10,7 +10,7 @@ import {
     PrimitiveTypeV2,
     StringValidationRules
 } from "@fern-api/ir-sdk";
-
+import { CliError } from "@fern-api/task-context";
 import { FernFileContext } from "../FernFileContext.js";
 import { ExampleResolver } from "../resolvers/ExampleResolver.js";
 import { ResolvedType } from "../resolvers/ResolvedType.js";
@@ -294,7 +294,10 @@ function validatePrimitiveExample({
             base64: () => validateString(example),
             bigInteger: () => validateString(example),
             _other: () => {
-                throw new Error("Unknown primitive type v2: " + primitiveType.v2);
+                throw new CliError({
+                    message: "Unknown primitive type v2: " + primitiveType.v2,
+                    code: CliError.Code.InternalError
+                });
             }
         });
     }
@@ -314,7 +317,10 @@ function validatePrimitiveExample({
         base64: () => validateString(example),
         bigInteger: () => validateString(example),
         _other: () => {
-            throw new Error("Unknown primitive type: " + primitiveType.v1);
+            throw new CliError({
+                message: "Unknown primitive type: " + primitiveType.v1,
+                code: CliError.Code.InternalError
+            });
         }
     });
 }

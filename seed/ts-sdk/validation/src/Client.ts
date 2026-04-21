@@ -104,7 +104,7 @@ export class SeedValidationClient {
         const _queryParams: Record<string, unknown> = {
             decimal,
             even,
-            name,
+            name: name ?? "fern",
         };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({

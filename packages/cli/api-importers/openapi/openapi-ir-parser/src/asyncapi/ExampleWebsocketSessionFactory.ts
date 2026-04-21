@@ -7,7 +7,7 @@ import {
     WebsocketMessageExample,
     WebsocketSessionExample
 } from "@fern-api/openapi-ir";
-
+import { CliError } from "@fern-api/task-context";
 import { isExamplePrimitive } from "../openapi/v3/converters/ExampleEndpointFactory.js";
 import { convertSchema } from "../schema/convertSchemas.js";
 import { ExampleTypeFactory } from "../schema/examples/ExampleTypeFactory.js";
@@ -245,7 +245,10 @@ export class ExampleWebsocketSessionFactory {
         while (schema.type === "reference") {
             const resolvedSchema = this.schemas[schema.schema];
             if (resolvedSchema == null) {
-                throw new Error(`Unexpected error: Failed to resolve schema reference: ${schema.schema}`);
+                throw new CliError({
+                    message: `Unexpected error: Failed to resolve schema reference: ${schema.schema}`,
+                    code: CliError.Code.InternalError
+                });
             }
             schema = resolvedSchema;
         }

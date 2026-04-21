@@ -41,6 +41,7 @@ types:
       maven: MavenPublishTarget
       pypi: PypiPublishTarget
       crates: CratesPublishTarget
+      go: GoPublishTarget
 
   PostmanPublishTarget:
     properties:
@@ -71,3 +72,8 @@ types:
     properties:
       version: optional<string>
       packageName: optional<string>
+
+  GoPublishTarget:
+    properties:
+      version: optional<string>
+      modulePath: optional<string>

@@ -20,7 +20,7 @@ import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { FernIr, PublishTarget } from "@fern-api/ir-sdk";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { getDynamicGeneratorConfig } from "@fern-api/remote-workspace-runner";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskAbortSignal, TaskContext } from "@fern-api/task-context";
 import type { FernVenusApi } from "@fern-api/venus-api-sdk";
 import {
     AbstractAPIWorkspace,
@@ -57,7 +57,8 @@ export async function runLocalGenerationForWorkspace({
     isPreview: isPreviewOverride,
     automationMode,
     autoMerge,
-    skipIfNoDiff
+    skipIfNoDiff,
+    disableTelemetry
 }: {
     token: FernToken | undefined;
     projectConfig: fernConfigJson.ProjectConfig;
@@ -80,6 +81,7 @@ export async function runLocalGenerationForWorkspace({
     automationMode?: boolean;
     autoMerge?: boolean;
     skipIfNoDiff?: boolean;
+    disableTelemetry?: boolean;
 }): Promise<void> {
     // Fail fast: check all generators for version conflicts BEFORE starting any IR generation.
     // This avoids wasted work when one generator would fail the version check.
@@ -114,7 +116,9 @@ export async function runLocalGenerationForWorkspace({
                         {
                             onError: (e) => {
                                 if (!isPreview && (requireEnvVars ?? true)) {
-                                    interactiveTaskContext.failAndThrow(e);
+                                    interactiveTaskContext.failAndThrow(e, undefined, {
+                                        code: CliError.Code.EnvironmentError
+                                    });
                                 }
                             }
                         },
@@ -181,7 +185,11 @@ export async function runLocalGenerationForWorkspace({
                 if (generatorInvocation.absolutePathToLocalOutput == null) {
                     token ??= await getAccessToken();
                     if (token == null) {
-                        interactiveTaskContext.failWithoutThrowing("Please provide a FERN_TOKEN in your environment.");
+                        interactiveTaskContext.failWithoutThrowing(
+                            "Please provide a FERN_TOKEN in your environment.",
+                            undefined,
+                            { code: CliError.Code.AuthError }
+                        );
                         return;
                     }
                 }
@@ -190,7 +198,9 @@ export async function runLocalGenerationForWorkspace({
 
                 if (generatorInvocation.absolutePathToLocalOutput == null && !organization.ok) {
                     interactiveTaskContext.failWithoutThrowing(
-                        `Failed to load details for organization ${projectConfig.organization}.`
+                        `Failed to load details for organization ${projectConfig.organization}.`,
+                        undefined,
+                        { code: CliError.Code.NetworkError }
                     );
                     return;
                 }
@@ -247,7 +257,9 @@ export async function runLocalGenerationForWorkspace({
                                 `    github:\n` +
                                 `      uri: your-org/your-sdk-repo\n` +
                                 `      token: \${GITHUB_TOKEN}\n` +
-                                `      mode: pull-request\n`
+                                `      mode: pull-request\n`,
+                            undefined,
+                            { code: CliError.Code.ConfigError }
                         );
                     }
                 }
@@ -301,7 +313,9 @@ export async function runLocalGenerationForWorkspace({
                                 if (!branchExists) {
                                     const parsedRepo = parseRepository(selfhostedGithubConfig.uri);
                                     interactiveTaskContext.failAndThrow(
-                                        `Branch ${selfhostedGithubConfig.branch} does not exist in repository ${parsedRepo.owner}/${parsedRepo.repo}`
+                                        `Branch ${selfhostedGithubConfig.branch} does not exist in repository ${parsedRepo.owner}/${parsedRepo.repo}`,
+                                        undefined,
+                                        { code: CliError.Code.ConfigError }
                                     );
                                 }
                             }
@@ -309,7 +323,9 @@ export async function runLocalGenerationForWorkspace({
                         }
                     } catch (error) {
                         interactiveTaskContext.failAndThrow(
-                            `Failed to clone GitHub repository ${selfhostedGithubConfig.uri}: ${extractErrorMessage(error)}`
+                            `Failed to clone GitHub repository ${selfhostedGithubConfig.uri}: ${extractErrorMessage(error)}`,
+                            undefined,
+                            { code: CliError.Code.NetworkError }
                         );
                     }
                 }
@@ -367,7 +383,8 @@ export async function runLocalGenerationForWorkspace({
                     ai,
                     autoVersioningCache,
                     absolutePathToSpecRepo: dirname(workspace.absoluteFilePath),
-                    skipFernignore
+                    skipFernignore,
+                    disableTelemetry
                 });
 
                 interactiveTaskContext.logger.info(chalk.green("Wrote files to " + absolutePathToLocalOutput));
@@ -440,7 +457,9 @@ export async function runLocalGenerationForWorkspace({
 
                     if (!pipelineResult.success) {
                         interactiveTaskContext.failAndThrow(
-                            `Post-generation pipeline failed: ${pipelineResult.errors?.join(", ")}`
+                            `Post-generation pipeline failed: ${pipelineResult.errors?.join(", ")}`,
+                            undefined,
+                            { code: CliError.Code.UserError }
                         );
                     }
                 }
@@ -449,7 +468,7 @@ export async function runLocalGenerationForWorkspace({
     );
 
     if (results.some((didSucceed) => !didSucceed)) {
-        context.failAndThrow();
+        throw new TaskAbortSignal();
     }
 }
 
@@ -540,6 +559,33 @@ function getPublishConfig({
                 packageName
             });
             context.logger.debug(`Created CratesPublishTarget: version ${version} package name: ${packageName}`);
+        } else if (generatorInvocation.language === "go") {
+            // Only populate the go publish target when the user explicitly passed
+            // `--version`. We intentionally do NOT thread auto-computed versions
+            // here — Go SDKs do not ship a version file managed by the generator
+            // (module versions are set via git tags), so the only reason to
+            // populate this is when the user asked us to stamp the SDK with a
+            // specific version (e.g. for the `X-Fern-SDK-Version` header).
+            if (userProvidedVersion != null) {
+                const goModulePath = (() => {
+                    const config = generatorInvocation.raw?.config;
+                    if (typeof config !== "object" || config === null) {
+                        return undefined;
+                    }
+                    const module = (config as { module?: { path?: unknown } }).module;
+                    if (module == null || typeof module.path !== "string") {
+                        return undefined;
+                    }
+                    return module.path;
+                })();
+                publishTarget = PublishTarget.go({
+                    version: userProvidedVersion,
+                    modulePath: goModulePath
+                });
+                context.logger.debug(
+                    `Created GoPublishTarget: version ${userProvidedVersion} module path: ${goModulePath}`
+                );
+            }
         } else if (generatorInvocation.language === "java") {
             const config = generatorInvocation.raw?.config;
 

@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Forward the CLI's telemetry setting to local generator containers. When the CLI
+    has telemetry disabled (via FERN_DISABLE_TELEMETRY, FERN_TELEMETRY_DISABLED, or
+    `fern telemetry disable`), `fern generate --local` now sets
+    FERN_DISABLE_TELEMETRY=true inside the generator container so the generator
+    runtime's Sentry client is disabled too. Remote generation is unaffected.
+  type: feat

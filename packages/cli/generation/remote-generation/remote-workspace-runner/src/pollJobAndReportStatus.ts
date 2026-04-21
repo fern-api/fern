@@ -1,4 +1,4 @@
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 
@@ -39,7 +39,13 @@ export function pollJobAndReportStatus({
                 if (taskStatus == null) {
                     numConsecutiveFailed++;
                     if (numConsecutiveFailed === MAX_UNSUCCESSFUL_ATTEMPTS) {
-                        context.failAndThrow(`Failed to get job status after ${numConsecutiveFailed} attempts.`);
+                        context.failAndThrow(
+                            `Failed to get job status after ${numConsecutiveFailed} attempts.`,
+                            undefined,
+                            {
+                                code: CliError.Code.NetworkError
+                            }
+                        );
                     }
                     // eslint-disable-next-line @typescript-eslint/no-misused-promises
                     setTimeout(pollForStatus, 2_000 + 1_000 * numConsecutiveFailed);
