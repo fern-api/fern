@@ -341,6 +341,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             lines.push("mod websocket;");
         }
         lines.push("mod utils;");
+        lines.push("pub mod pagination;");
         if (hasDateTime) {
             lines.push("pub mod flexible_datetime;");
         }
@@ -358,6 +359,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         lines.push("pub use oauth_token_provider::OAuthTokenProvider;");
         lines.push("pub use request_options::RequestOptions;");
         lines.push("pub use query_parameter_builder::{QueryBuilder, QueryBuilderError, parse_structured_query};");
+        lines.push("pub use pagination::{AsyncPaginator, SyncPaginator, PaginationResult};")
         if (hasStreaming) {
             lines.push('#[cfg(feature = "sse")]');
             lines.push("pub use sse_stream::SseStream;");

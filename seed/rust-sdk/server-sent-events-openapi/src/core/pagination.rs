@@ -5,16 +5,24 @@ use std::sync::Arc;
 use std::task::{Context, Poll};
 
 use futures::Stream;
+use reqwest::header::HeaderMap;
+use reqwest::StatusCode;
 use serde_json::Value;
 
 use crate::{ApiError, HttpClient};
 
-/// Result of a pagination request
+/// Result of a pagination request, including HTTP response metadata.
 #[derive(Debug)]
 pub struct PaginationResult<T> {
     pub items: Vec<T>,
     pub next_cursor: Option<String>,
     pub has_next_page: bool,
+    /// The full parsed response body for this page.
+    pub response: Option<Value>,
+    /// The HTTP status code of the response that produced this page.
+    pub status_code: Option<StatusCode>,
+    /// The HTTP response headers from the response that produced this page.
+    pub headers: Option<HeaderMap>,
 }
 
 /// Async paginator that implements Stream for iterating over paginated results
@@ -34,6 +42,9 @@ pub struct AsyncPaginator<T> {
     has_next_page: bool,
     loading_next:
         Option<Pin<Box<dyn Future<Output = Result<PaginationResult<T>, ApiError>> + Send>>>,
+    last_response: Option<Value>,
+    last_status_code: Option<StatusCode>,
+    last_headers: Option<HeaderMap>,
 }
 
 impl<T> AsyncPaginator<T> {
@@ -53,6 +64,9 @@ impl<T> AsyncPaginator<T> {
             current_cursor: initial_cursor,
             has_next_page: true, // Assume true initially, will be updated after first request
             loading_next: None,
+            last_response: None,
+            last_status_code: None,
+            last_headers: None,
         })
     }
 
@@ -72,8 +86,51 @@ impl<T> AsyncPaginator<T> {
 
         self.current_cursor = result.next_cursor;
         self.has_next_page = result.has_next_page;
+        self.last_response = result.response;
+        self.last_status_code = result.status_code;
+        self.last_headers = result.headers;
 
         Ok(result.items)
+    }
+
+    /// Load the next page and return the full pagination result including HTTP metadata.
+    pub async fn next_page_with_response(&mut self) -> Result<PaginationResult<T>, ApiError> {
+        if !self.has_next_page {
+            return Ok(PaginationResult {
+                items: Vec::new(),
+                next_cursor: None,
+                has_next_page: false,
+                response: None,
+                status_code: None,
+                headers: None,
+            });
+        }
+
+        let result =
+            (self.page_loader)(self.http_client.clone(), self.current_cursor.clone()).await?;
+
+        self.current_cursor = result.next_cursor.clone();
+        self.has_next_page = result.has_next_page;
+        self.last_response = result.response.clone();
+        self.last_status_code = result.status_code;
+        self.last_headers = result.headers.clone();
+
+        Ok(result)
+    }
+
+    /// The full parsed response body from the most recently loaded page.
+    pub fn last_response(&self) -> Option<&Value> {
+        self.last_response.as_ref()
+    }
+
+    /// The HTTP status code from the most recently loaded page.
+    pub fn last_status_code(&self) -> Option<StatusCode> {
+        self.last_status_code
+    }
+
+    /// The HTTP response headers from the most recently loaded page.
+    pub fn last_headers(&self) -> Option<&HeaderMap> {
+        self.last_headers.as_ref()
     }
 }
 
@@ -96,6 +153,9 @@ where
                     self.current_page.extend(result.items);
                     self.current_cursor = result.next_cursor;
                     self.has_next_page = result.has_next_page;
+                    self.last_response = result.response;
+                    self.last_status_code = result.status_code;
+                    self.last_headers = result.headers;
                     self.loading_next = None;
 
                     // Try to get the next item from the newly loaded page
@@ -130,6 +190,9 @@ where
                     self.current_page.extend(result.items);
                     self.current_cursor = result.next_cursor;
                     self.has_next_page = result.has_next_page;
+                    self.last_response = result.response;
+                    self.last_status_code = result.status_code;
+                    self.last_headers = result.headers;
                     self.loading_next = None;
 
                     if let Some(item) = self.current_page.pop_front() {
@@ -165,6 +228,9 @@ pub struct SyncPaginator<T> {
     current_page: VecDeque<T>,
     current_cursor: Option<String>,
     has_next_page: bool,
+    last_response: Option<Value>,
+    last_status_code: Option<StatusCode>,
+    last_headers: Option<HeaderMap>,
 }
 
 impl<T> SyncPaginator<T> {
@@ -185,6 +251,9 @@ impl<T> SyncPaginator<T> {
             current_page: VecDeque::new(),
             current_cursor: initial_cursor,
             has_next_page: true, // Assume true initially
+            last_response: None,
+            last_status_code: None,
+            last_headers: None,
         })
     }
 
@@ -203,8 +272,50 @@ impl<T> SyncPaginator<T> {
 
         self.current_cursor = result.next_cursor;
         self.has_next_page = result.has_next_page;
+        self.last_response = result.response;
+        self.last_status_code = result.status_code;
+        self.last_headers = result.headers;
 
         Ok(result.items)
+    }
+
+    /// Load the next page and return the full pagination result including HTTP metadata.
+    pub fn next_page_with_response(&mut self) -> Result<PaginationResult<T>, ApiError> {
+        if !self.has_next_page {
+            return Ok(PaginationResult {
+                items: Vec::new(),
+                next_cursor: None,
+                has_next_page: false,
+                response: None,
+                status_code: None,
+                headers: None,
+            });
+        }
+
+        let result = (self.page_loader)(self.http_client.clone(), self.current_cursor.clone())?;
+
+        self.current_cursor = result.next_cursor.clone();
+        self.has_next_page = result.has_next_page;
+        self.last_response = result.response.clone();
+        self.last_status_code = result.status_code;
+        self.last_headers = result.headers.clone();
+
+        Ok(result)
+    }
+
+    /// The full parsed response body from the most recently loaded page.
+    pub fn last_response(&self) -> Option<&Value> {
+        self.last_response.as_ref()
+    }
+
+    /// The HTTP status code from the most recently loaded page.
+    pub fn last_status_code(&self) -> Option<StatusCode> {
+        self.last_status_code
+    }
+
+    /// The HTTP response headers from the most recently loaded page.
+    pub fn last_headers(&self) -> Option<&HeaderMap> {
+        self.last_headers.as_ref()
     }
 
     /// Get all remaining items by loading all pages
@@ -246,6 +357,9 @@ impl<T> Iterator for SyncPaginator<T> {
                 self.current_page.extend(result.items);
                 self.current_cursor = result.next_cursor;
                 self.has_next_page = result.has_next_page;
+                self.last_response = result.response;
+                self.last_status_code = result.status_code;
+                self.last_headers = result.headers;
 
                 // Return the first item from the newly loaded page
                 self.current_page.pop_front().map(Ok)
@@ -287,7 +401,9 @@ mod tests {
     use crate::ClientConfig;
 
     fn make_http_client() -> Arc<HttpClient> {
-        Arc::new(HttpClient::new(ClientConfig::default()).expect("Failed to create test HttpClient"))
+        Arc::new(
+            HttpClient::new(ClientConfig::default()).expect("Failed to create test HttpClient"),
+        )
     }
 
     // ===========================
@@ -297,26 +413,42 @@ mod tests {
     #[test]
     fn test_sync_paginator_has_next_page_initially() {
         let client = make_http_client();
-        let paginator = SyncPaginator::<String>::new(client, |_client, _cursor| {
-            Ok(PaginationResult {
-                items: vec![],
-                next_cursor: None,
-                has_next_page: false,
-            })
-        }, None).unwrap();
+        let paginator = SyncPaginator::<String>::new(
+            client,
+            |_client, _cursor| {
+                Ok(PaginationResult {
+                    items: vec![],
+                    next_cursor: None,
+                    has_next_page: false,
+                    response: None,
+                    status_code: None,
+                    headers: None,
+                })
+            },
+            None,
+        )
+        .unwrap();
         assert!(paginator.has_next_page());
     }
 
     #[test]
     fn test_sync_paginator_single_page() {
         let client = make_http_client();
-        let mut paginator = SyncPaginator::new(client, |_client, _cursor| {
-            Ok(PaginationResult {
-                items: vec!["a".to_string(), "b".to_string()],
-                next_cursor: None,
-                has_next_page: false,
-            })
-        }, None).unwrap();
+        let mut paginator = SyncPaginator::new(
+            client,
+            |_client, _cursor| {
+                Ok(PaginationResult {
+                    items: vec!["a".to_string(), "b".to_string()],
+                    next_cursor: None,
+                    has_next_page: false,
+                    response: None,
+                    status_code: None,
+                    headers: None,
+                })
+            },
+            None,
+        )
+        .unwrap();
 
         let page = paginator.next_page().unwrap();
         assert_eq!(page, vec!["a".to_string(), "b".to_string()]);
@@ -326,13 +458,21 @@ mod tests {
     #[test]
     fn test_sync_paginator_exhausted_returns_empty() {
         let client = make_http_client();
-        let mut paginator = SyncPaginator::new(client, |_client, _cursor| {
-            Ok(PaginationResult {
-                items: vec!["a".to_string()],
-                next_cursor: None,
-                has_next_page: false,
-            })
-        }, None).unwrap();
+        let mut paginator = SyncPaginator::new(
+            client,
+            |_client, _cursor| {
+                Ok(PaginationResult {
+                    items: vec!["a".to_string()],
+                    next_cursor: None,
+                    has_next_page: false,
+                    response: None,
+                    status_code: None,
+                    headers: None,
+                })
+            },
+            None,
+        )
+        .unwrap();
 
         let _ = paginator.next_page().unwrap();
         let empty = paginator.next_page().unwrap();
@@ -345,28 +485,39 @@ mod tests {
         let call_count = Arc::new(std::sync::atomic::AtomicUsize::new(0));
         let count = call_count.clone();
 
-        let mut paginator = SyncPaginator::new(client, move |_client, cursor| {
-            let call = count.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
-            match call {
-                0 => {
-                    assert!(cursor.is_none());
-                    Ok(PaginationResult {
-                        items: vec![1, 2],
-                        next_cursor: Some("page2".to_string()),
-                        has_next_page: true,
-                    })
+        let mut paginator = SyncPaginator::new(
+            client,
+            move |_client, cursor| {
+                let call = count.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
+                match call {
+                    0 => {
+                        assert!(cursor.is_none());
+                        Ok(PaginationResult {
+                            items: vec![1, 2],
+                            next_cursor: Some("page2".to_string()),
+                            has_next_page: true,
+                            response: None,
+                            status_code: None,
+                            headers: None,
+                        })
+                    }
+                    1 => {
+                        assert_eq!(cursor, Some("page2".to_string()));
+                        Ok(PaginationResult {
+                            items: vec![3, 4],
+                            next_cursor: None,
+                            has_next_page: false,
+                            response: None,
+                            status_code: None,
+                            headers: None,
+                        })
+                    }
+                    _ => panic!("Unexpected call"),
                 }
-                1 => {
-                    assert_eq!(cursor, Some("page2".to_string()));
-                    Ok(PaginationResult {
-                        items: vec![3, 4],
-                        next_cursor: None,
-                        has_next_page: false,
-                    })
-                }
-                _ => panic!("Unexpected call"),
-            }
-        }, None).unwrap();
+            },
+            None,
+        )
+        .unwrap();
 
         let page1 = paginator.next_page().unwrap();
         assert_eq!(page1, vec![1, 2]);
@@ -383,22 +534,33 @@ mod tests {
         let call_count = Arc::new(std::sync::atomic::AtomicUsize::new(0));
         let count = call_count.clone();
 
-        let mut paginator = SyncPaginator::new(client, move |_client, _cursor| {
-            let call = count.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
-            match call {
-                0 => Ok(PaginationResult {
-                    items: vec![1, 2],
-                    next_cursor: Some("next".to_string()),
-                    has_next_page: true,
-                }),
-                1 => Ok(PaginationResult {
-                    items: vec![3],
-                    next_cursor: None,
-                    has_next_page: false,
-                }),
-                _ => panic!("Unexpected call"),
-            }
-        }, None).unwrap();
+        let mut paginator = SyncPaginator::new(
+            client,
+            move |_client, _cursor| {
+                let call = count.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
+                match call {
+                    0 => Ok(PaginationResult {
+                        items: vec![1, 2],
+                        next_cursor: Some("next".to_string()),
+                        has_next_page: true,
+                        response: None,
+                        status_code: None,
+                        headers: None,
+                    }),
+                    1 => Ok(PaginationResult {
+                        items: vec![3],
+                        next_cursor: None,
+                        has_next_page: false,
+                        response: None,
+                        status_code: None,
+                        headers: None,
+                    }),
+                    _ => panic!("Unexpected call"),
+                }
+            },
+            None,
+        )
+        .unwrap();
 
         let all = paginator.collect_all().unwrap();
         assert_eq!(all, vec![1, 2, 3]);
@@ -410,22 +572,33 @@ mod tests {
         let call_count = Arc::new(std::sync::atomic::AtomicUsize::new(0));
         let count = call_count.clone();
 
-        let paginator = SyncPaginator::new(client, move |_client, _cursor| {
-            let call = count.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
-            match call {
-                0 => Ok(PaginationResult {
-                    items: vec![10, 20],
-                    next_cursor: Some("p2".to_string()),
-                    has_next_page: true,
-                }),
-                1 => Ok(PaginationResult {
-                    items: vec![30],
-                    next_cursor: None,
-                    has_next_page: false,
-                }),
-                _ => panic!("Unexpected call"),
-            }
-        }, None).unwrap();
+        let paginator = SyncPaginator::new(
+            client,
+            move |_client, _cursor| {
+                let call = count.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
+                match call {
+                    0 => Ok(PaginationResult {
+                        items: vec![10, 20],
+                        next_cursor: Some("p2".to_string()),
+                        has_next_page: true,
+                        response: None,
+                        status_code: None,
+                        headers: None,
+                    }),
+                    1 => Ok(PaginationResult {
+                        items: vec![30],
+                        next_cursor: None,
+                        has_next_page: false,
+                        response: None,
+                        status_code: None,
+                        headers: None,
+                    }),
+                    _ => panic!("Unexpected call"),
+                }
+            },
+            None,
+        )
+        .unwrap();
 
         let items: Vec<i32> = paginator.map(|r| r.unwrap()).collect();
         assert_eq!(items, vec![10, 20, 30]);
@@ -434,9 +607,12 @@ mod tests {
     #[test]
     fn test_sync_paginator_error_propagation() {
         let client = make_http_client();
-        let mut paginator = SyncPaginator::<String>::new(client, |_client, _cursor| {
-            Err(ApiError::Serialization("test error".to_string()))
-        }, None).unwrap();
+        let mut paginator = SyncPaginator::<String>::new(
+            client,
+            |_client, _cursor| Err(ApiError::Serialization("test error".to_string())),
+            None,
+        )
+        .unwrap();
 
         let result = paginator.next_page();
         assert!(result.is_err());
@@ -445,9 +621,12 @@ mod tests {
     #[test]
     fn test_sync_paginator_iterator_error() {
         let client = make_http_client();
-        let mut paginator = SyncPaginator::<String>::new(client, |_client, _cursor| {
-            Err(ApiError::Serialization("test error".to_string()))
-        }, None).unwrap();
+        let mut paginator = SyncPaginator::<String>::new(
+            client,
+            |_client, _cursor| Err(ApiError::Serialization("test error".to_string())),
+            None,
+        )
+        .unwrap();
 
         let item = paginator.next();
         assert!(item.is_some());
@@ -457,14 +636,22 @@ mod tests {
     #[test]
     fn test_sync_paginator_with_initial_cursor() {
         let client = make_http_client();
-        let mut paginator = SyncPaginator::new(client, |_client, cursor| {
-            assert_eq!(cursor, Some("start_here".to_string()));
-            Ok(PaginationResult {
-                items: vec!["item".to_string()],
-                next_cursor: None,
-                has_next_page: false,
-            })
-        }, Some("start_here".to_string())).unwrap();
+        let mut paginator = SyncPaginator::new(
+            client,
+            |_client, cursor| {
+                assert_eq!(cursor, Some("start_here".to_string()));
+                Ok(PaginationResult {
+                    items: vec!["item".to_string()],
+                    next_cursor: None,
+                    has_next_page: false,
+                    response: None,
+                    status_code: None,
+                    headers: None,
+                })
+            },
+            Some("start_here".to_string()),
+        )
+        .unwrap();
 
         let page = paginator.next_page().unwrap();
         assert_eq!(page, vec!["item".to_string()]);
@@ -480,10 +667,81 @@ mod tests {
             items: vec![1, 2, 3],
             next_cursor: Some("abc".to_string()),
             has_next_page: true,
+            response: Some(serde_json::json!({"data": [1, 2, 3]})),
+            status_code: Some(StatusCode::OK),
+            headers: Some(HeaderMap::new()),
         };
         assert_eq!(result.items.len(), 3);
         assert_eq!(result.next_cursor, Some("abc".to_string()));
         assert!(result.has_next_page);
+        assert!(result.response.is_some());
+        assert_eq!(result.status_code, Some(StatusCode::OK));
+        assert!(result.headers.is_some());
+    }
+
+    #[test]
+    fn test_sync_paginator_metadata_tracking() {
+        let client = make_http_client();
+        let call_count = Arc::new(std::sync::atomic::AtomicUsize::new(0));
+        let count = call_count.clone();
+
+        let mut paginator = SyncPaginator::new(
+            client,
+            move |_client, _cursor| {
+                let call = count.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
+                match call {
+                    0 => Ok(PaginationResult {
+                        items: vec!["a".to_string()],
+                        next_cursor: Some("next".to_string()),
+                        has_next_page: true,
+                        response: Some(serde_json::json!({"data": ["a"]})),
+                        status_code: Some(StatusCode::OK),
+                        headers: Some(HeaderMap::new()),
+                    }),
+                    _ => Ok(PaginationResult {
+                        items: vec!["b".to_string()],
+                        next_cursor: None,
+                        has_next_page: false,
+                        response: Some(serde_json::json!({"data": ["b"]})),
+                        status_code: Some(StatusCode::OK),
+                        headers: Some(HeaderMap::new()),
+                    }),
+                }
+            },
+            None,
+        )
+        .unwrap();
+
+        assert!(paginator.last_status_code().is_none());
+        let _ = paginator.next_page().unwrap();
+        assert_eq!(paginator.last_status_code(), Some(StatusCode::OK));
+        assert!(paginator.last_response().is_some());
+        assert!(paginator.last_headers().is_some());
+    }
+
+    #[test]
+    fn test_sync_paginator_next_page_with_response() {
+        let client = make_http_client();
+        let mut paginator = SyncPaginator::new(
+            client,
+            |_client, _cursor| {
+                Ok(PaginationResult {
+                    items: vec!["x".to_string()],
+                    next_cursor: None,
+                    has_next_page: false,
+                    response: Some(serde_json::json!({"data": ["x"], "total": 1})),
+                    status_code: Some(StatusCode::OK),
+                    headers: Some(HeaderMap::new()),
+                })
+            },
+            None,
+        )
+        .unwrap();
+
+        let result = paginator.next_page_with_response().unwrap();
+        assert_eq!(result.items, vec!["x".to_string()]);
+        assert_eq!(result.status_code, Some(StatusCode::OK));
+        assert!(result.response.is_some());
     }
 
     // ===========================

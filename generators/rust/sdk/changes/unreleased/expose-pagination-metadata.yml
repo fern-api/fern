@@ -1,0 +1,7 @@
+- summary: |
+    Expose HTTP status code, headers, and full response on paginated results
+    for feature parity with Go and C# SDKs. Paginated endpoints now generate
+    an additional `_paginated` method returning an `AsyncPaginator` that
+    provides access to response metadata via `last_response()`,
+    `last_status_code()`, and `last_headers()` accessors.
+  type: feat

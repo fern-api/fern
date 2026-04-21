@@ -1,8 +1,8 @@
 use crate::{join_url, ApiError, ClientConfig, OAuthTokenProvider, RequestOptions};
 use futures::{Stream, StreamExt};
 use reqwest::{
-    header::{HeaderName, HeaderValue},
-    Client, Method, Request, Response,
+    header::{HeaderMap, HeaderName, HeaderValue},
+    Client, Method, Request, Response, StatusCode,
 };
 use serde::de::DeserializeOwned;
 
@@ -238,6 +238,51 @@ impl HttpClient {
 
         let response = self.execute_with_retries(req, &options).await?;
         self.parse_response(response).await
+    }
+
+    /// Execute a request and return the parsed body along with HTTP status code and headers.
+    ///
+    /// Unlike `execute_request`, this method preserves the response metadata (status code
+    /// and headers) alongside the deserialized body, which is useful for pagination and
+    /// other cases where callers need access to HTTP-level information.
+    pub async fn execute_request_returning_response<T>(
+        &self,
+        method: Method,
+        path: &str,
+        body: Option<serde_json::Value>,
+        query_params: Option<Vec<(String, String)>>,
+        options: Option<RequestOptions>,
+    ) -> Result<(T, StatusCode, HeaderMap), ApiError>
+    where
+        T: DeserializeOwned,
+    {
+        let url = join_url(&self.config.base_url, path);
+        let mut request = self.client.request(method, &url);
+
+        if let Some(params) = query_params {
+            request = request.query(&params);
+        }
+
+        if let Some(opts) = &options {
+            if !opts.additional_query_params.is_empty() {
+                request = request.query(&opts.additional_query_params);
+            }
+        }
+
+        if let Some(body) = body {
+            request = request.json(&body);
+        }
+
+        let mut req = request.build().map_err(|e| ApiError::Network(e))?;
+
+        self.apply_auth_headers(&mut req, &options).await?;
+        self.apply_custom_headers(&mut req, &options)?;
+
+        let response = self.execute_with_retries(req, &options).await?;
+        let status_code = response.status();
+        let headers = response.headers().clone();
+        let parsed: T = self.parse_response(response).await?;
+        Ok((parsed, status_code, headers))
     }
 
     /// Execute a request with a raw bytes body (application/octet-stream).

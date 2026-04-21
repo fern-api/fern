@@ -228,6 +228,11 @@ export class SubClientGenerator {
             crateItems.push("RequestOptions");
         }
 
+        // Add pagination types if we have paginated endpoints
+        if (this.hasPaginatedEndpoints()) {
+            crateItems.push("AsyncPaginator", "PaginationResult");
+        }
+
         // Add ByteStream if we have binary endpoints (file downloads)
         if (hasBinaryEndpoints) {
             crateItems.push("ByteStream");
@@ -852,6 +857,7 @@ export class SubClientGenerator {
 
         for (const endpoint of endpoints) {
             methods.push(this.generateHttpMethod(endpoint));
+            methods.push(...this.generatePaginatedMethods(endpoint));
         }
 
         return methods;
@@ -1901,7 +1907,7 @@ export class SubClientGenerator {
         const paginationLogic = this.generatePaginationLogic(endpoint, httpMethod, pathExpression, requestBody);
 
         return {
-            name: baseName,
+            name: `${baseName}_paginated`,
             parameters,
             returnType: returnType.toString(),
             isAsync: true,
@@ -1971,7 +1977,7 @@ export class SubClientGenerator {
                     ${this.generateCapturedVariableCloningForAsyncMove(params)}
                     
                     Box::pin(async move {
-                        let response: serde_json::Value = client.execute_request(
+                        let (response, _status_code, _headers): (serde_json::Value, reqwest::StatusCode, reqwest::header::HeaderMap) = client.execute_request_returning_response(
                             Method::${httpMethod},
                             ${this.buildPathExpressionForAsyncMove(pathExpression, params)},
                             ${this.buildRequestBodyForAsyncMove(requestBody, params)},
@@ -1986,6 +1992,9 @@ export class SubClientGenerator {
                             items,
                             next_cursor,
                             has_next_page,
+                            response: Some(response),
+                            status_code: Some(_status_code),
+                            headers: Some(_headers),
                         })
                     })
                 },
@@ -2032,7 +2041,7 @@ export class SubClientGenerator {
                     ${this.generateCapturedVariableCloningForAsyncMove(params)}
                     
                     Box::pin(async move {
-                        let response: serde_json::Value = client.execute_request(
+                        let (response, _status_code, _headers): (serde_json::Value, reqwest::StatusCode, reqwest::header::HeaderMap) = client.execute_request_returning_response(
                             Method::${httpMethod},
                             ${this.buildPathExpressionForAsyncMove(pathExpression, params)},
                             ${this.buildRequestBodyForAsyncMove(requestBody, params)},
@@ -2047,6 +2056,9 @@ export class SubClientGenerator {
                             items,
                             next_cursor,
                             has_next_page,
+                            response: Some(response),
+                            status_code: Some(_status_code),
+                            headers: Some(_headers),
                         })
                     })
                 },
@@ -2086,7 +2098,7 @@ export class SubClientGenerator {
                     ${this.generateCapturedVariableCloningForAsyncMove(params)}
                     
                     Box::pin(async move {
-                        let response: serde_json::Value = client.execute_request(
+                        let (response, _status_code, _headers): (serde_json::Value, reqwest::StatusCode, reqwest::header::HeaderMap) = client.execute_request_returning_response(
                             Method::${httpMethod},
                             ${this.buildPathExpressionForAsyncMove(pathExpression, params)},
                             ${this.buildRequestBodyForAsyncMove(requestBody, params)},
@@ -2101,6 +2113,9 @@ export class SubClientGenerator {
                             items,
                             next_cursor,
                             has_next_page,
+                            response: Some(response),
+                            status_code: Some(_status_code),
+                            headers: Some(_headers),
                         })
                     })
                 },
