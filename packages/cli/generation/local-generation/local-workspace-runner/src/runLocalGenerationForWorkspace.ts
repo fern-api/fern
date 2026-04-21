@@ -517,9 +517,7 @@ function getPublishConfig({
                     packageName,
                     tokenEnvironmentVariable: ""
                 });
-                context.logger.debug(
-                    `Created NpmPublishTarget: version ${version} package name: ${packageName}`
-                );
+                context.logger.debug(`Created NpmPublishTarget: version ${version} package name: ${packageName}`);
             }
         } else if (generatorInvocation.language === "rust") {
             // Use Crates publish target for Rust (Cargo/crates.io)
