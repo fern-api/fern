@@ -3,7 +3,12 @@ import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { docsYml, generatorsYml } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
 import { MediaType, replaceEnvVariables } from "@fern-api/core-utils";
-import { DocsDefinitionResolver, UploadedFile, wrapWithHttps } from "@fern-api/docs-resolver";
+import {
+    applyTranslatedFrontmatterToNavTree,
+    DocsDefinitionResolver,
+    UploadedFile,
+    wrapWithHttps
+} from "@fern-api/docs-resolver";
 import { APIV1Write, FdrAPI as CjsFdrSdk, DocsV1Write, DocsV2Write, FdrClient } from "@fern-api/fdr-sdk";
 
 type DynamicIr = APIV1Write.DynamicIr;
@@ -627,12 +632,53 @@ export async function publishDocs({
             await Promise.all(
                 Object.entries(translationPages).map(async ([locale, localePages]) => {
                     try {
-                        await fdr.docs.v2.write.registerTranslation({
-                            domain,
-                            orgId: CjsFdrSdk.OrgId(organization),
-                            locale,
-                            content: localePages
+                        // Build a translated DocsDefinition by taking the base definition,
+                        // overriding translated pages, and updating the nav tree to reflect
+                        // any sidebar-title / slug frontmatter in the translated pages.
+                        const translatedPages = {
+                            ...docsDefinition.pages,
+                            ...Object.fromEntries(
+                                Object.entries(localePages).map(([path, markdown]) => [
+                                    path,
+                                    { markdown, rawMarkdown: markdown }
+                                ])
+                            )
+                        };
+                        const updatedRoot = applyTranslatedFrontmatterToNavTree(
+                            docsDefinition.config.root,
+                            // localePages is Record<RelativeFilePath, string> (path -> raw markdown)
+                            localePages as Record<string, string>
+                        );
+                        const translatedDefinition: DocsDefinition = {
+                            ...docsDefinition,
+                            pages: translatedPages,
+                            config: {
+                                ...docsDefinition.config,
+                                root: updatedRoot
+                            }
+                        };
+                        context.logger.info(
+                            `Sending translation for locale "${locale}": pages=${JSON.stringify(Object.keys(localePages))}`
+                        );
+                        // Use a raw fetch instead of the oRPC client to send `docsDefinition`
+                        // (the live server expects that field; the published fdr-sdk still uses `content`).
+                        const translationResponse = await fetch(`${fdrOrigin}/v2/registry/docs/translations/register`, {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                Authorization: `Bearer ${token.value}`
+                            },
+                            body: JSON.stringify({
+                                domain,
+                                orgId: organization,
+                                locale,
+                                docsDefinition: translatedDefinition
+                            })
                         });
+                        if (!translationResponse.ok) {
+                            const body = await translationResponse.text();
+                            throw new Error(`HTTP ${translationResponse.status}: ${body}`);
+                        }
                         context.logger.debug(`Registered translations for locale "${locale}"`);
                     } catch (error) {
                         context.logger.warn(`Failed to register translations for locale "${locale}": ${String(error)}`);
