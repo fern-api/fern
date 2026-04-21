@@ -1804,11 +1804,11 @@ export class SdkGenerator {
         });
         const statements = run({ sourceFile, importsManager });
         if (statements != null) {
-            sourceFile.addStatements(statements.map((expression) => getTextOfTsNode(expression)));
-            // Get body text and import text separately to avoid insertText(0,...)
-            // which triggers a full AST re-parse on every snippet.
+            // Build body text directly from statement text, bypassing addStatements +
+            // getText AST round-trip.  getTextOfTsNode already produces the final text;
+            // joining avoids the parse→serialize overhead for each snippet.
+            const bodyText = statements.map((expression) => getTextOfTsNode(expression)).join("\n") + "\n";
             const importText = includeImports ? importsManager.buildImportText(sourceFile) : "";
-            const bodyText = sourceFile.getText();
             sourceFile.delete();
             return importText + bodyText;
         }
