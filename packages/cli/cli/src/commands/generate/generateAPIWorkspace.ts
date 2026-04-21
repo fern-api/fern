@@ -15,6 +15,7 @@ import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import chalk from "chalk";
 
 import { GROUP_CLI_OPTION } from "../../constants.js";
+import { isTelemetryDisabled } from "../../telemetry/isTelemetryDisabled.js";
 import { filterGenerators } from "./filterGenerators.js";
 import { GenerationMode } from "./generateAPIWorkspaces.js";
 import { resolveGroupAlias } from "./resolveGroupAlias.js";
@@ -150,7 +151,7 @@ export async function generateWorkspace({
                         skipFernignore,
                         automationMode,
                         autoMerge,
-                        disableTelemetry: process.env.FERN_DISABLE_TELEMETRY === "true"
+                        disableTelemetry: isTelemetryDisabled()
                     });
                 } else if (token != null) {
                     await runRemoteGenerationForAPIWorkspace({

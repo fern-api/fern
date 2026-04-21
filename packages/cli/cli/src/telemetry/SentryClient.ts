@@ -2,13 +2,14 @@ import { setSentryRunIdTags } from "@fern-api/cli-telemetry";
 import { CliError } from "@fern-api/task-context";
 import * as Sentry from "@sentry/node";
 
+import { isTelemetryDisabled } from "./isTelemetryDisabled.js";
+
 export class SentryClient {
     private readonly sentry: Sentry.NodeClient | undefined;
 
     constructor({ release }: { release: string }) {
-        const isTelemetryEnabled = process.env.FERN_DISABLE_TELEMETRY !== "true";
         const sentryDsn = process.env.SENTRY_DSN;
-        if (isTelemetryEnabled && sentryDsn != null && sentryDsn.length > 0) {
+        if (!isTelemetryDisabled() && sentryDsn != null && sentryDsn.length > 0) {
             const sentryEnvironment = process.env.SENTRY_ENVIRONMENT;
             if (sentryEnvironment == null || sentryEnvironment.length === 0) {
                 throw new CliError({

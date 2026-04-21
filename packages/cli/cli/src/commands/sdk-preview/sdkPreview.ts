@@ -14,6 +14,7 @@ import fs from "fs/promises";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { loadProjectAndRegisterWorkspacesWithContext } from "../../cliCommons.js";
 import { GROUP_CLI_OPTION } from "../../constants.js";
+import { isTelemetryDisabled } from "../../telemetry/isTelemetryDisabled.js";
 import { computePreviewVersion } from "./computePreviewVersion.js";
 import { getPreviewId } from "./getPreviewId.js";
 import {
@@ -357,7 +358,7 @@ export async function sdkPreview({
                             validateWorkspace: true,
                             publishToRegistry,
                             isPreview: true,
-                            disableTelemetry: process.env.FERN_DISABLE_TELEMETRY === "true"
+                            disableTelemetry: isTelemetryDisabled()
                         });
                     });
                 }
