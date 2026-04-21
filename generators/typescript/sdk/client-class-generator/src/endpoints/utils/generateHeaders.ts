@@ -349,8 +349,9 @@ function getOverridableRootHeaders({
 
                     // If clientDefault is set, chain it as final fallback:
                     // requestOptions?.header ?? this._options?.header ?? "clientDefault"
+                    // Skip when the type is nullable — explicit null means "don't send the header".
                     const clientDefaultVal = getClientDefaultValue(header.clientDefault);
-                    if (clientDefaultVal != null) {
+                    if (clientDefaultVal != null && !typeContainsNullable(header.valueType, context)) {
                         if (typeof clientDefaultVal === "boolean") {
                             const booleanLiteral = clientDefaultVal
                                 ? ts.factory.createTrue()
@@ -419,7 +420,7 @@ function getOptionKeyForHeader(header: FernIr.HttpHeader, context: FileContext):
     return context.case.camelUnsafe(header.name);
 }
 
-function typeContainsNullable(type: FernIr.TypeReference, context: FileContext): boolean {
+export function typeContainsNullable(type: FernIr.TypeReference, context: FileContext): boolean {
     switch (type.type) {
         case "container":
             switch (type.container.type) {

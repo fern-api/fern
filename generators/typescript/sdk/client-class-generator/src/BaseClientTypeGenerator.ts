@@ -4,7 +4,7 @@ import type { FernIr } from "@fern-fern/ir-sdk";
 import { getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
 import type { FileContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
-import { getClientDefaultValue, getLiteralValueForHeader } from "./endpoints/utils/index.js";
+import { getClientDefaultValue, getLiteralValueForHeader, typeContainsNullable } from "./endpoints/utils/index.js";
 import type { GeneratedHeader } from "./GeneratedHeader.js";
 
 export declare namespace BaseClientTypeGenerator {
@@ -477,7 +477,7 @@ function withNoOpAuthProvider<T extends BaseClientOptions = BaseClientOptions>(
                         }
                     } else {
                         const clientDefaultVal = getClientDefaultValue(header.clientDefault);
-                        if (clientDefaultVal != null) {
+                        if (clientDefaultVal != null && !typeContainsNullable(header.valueType, context)) {
                             if (typeof clientDefaultVal === "boolean") {
                                 const booleanLiteral = clientDefaultVal
                                     ? ts.factory.createTrue()

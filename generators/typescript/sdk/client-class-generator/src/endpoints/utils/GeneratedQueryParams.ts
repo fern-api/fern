@@ -183,7 +183,7 @@ export class GeneratedQueryParams {
                         breadcrumbsPrefix: ["request", paramName],
                         omitUndefined: context.omitUndefined
                     });
-                if (this.isOptional(queryParameter.valueType)) {
+                if (this.isOptional(queryParameter.valueType) || queryParameter.clientDefault != null) {
                     return ts.factory.createConditionalExpression(
                         ts.factory.createBinaryExpression(
                             referenceToQueryParameter,
