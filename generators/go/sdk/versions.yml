@@ -10,7 +10,7 @@
         signatures.
       type: feat
   createdAt: "2026-04-03"
-  irVersion: 61
+  irVersion: 66
 - version: 1.34.9
   changelogEntry:
     - summary: |

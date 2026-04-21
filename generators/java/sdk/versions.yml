@@ -10,7 +10,7 @@
         `.orElse(defaultValue)` to apply the fallback.
       type: feat
   createdAt: "2026-04-03"
-  irVersion: 65
+  irVersion: 66
 - version: 4.2.3
   changelogEntry:
     - summary: |
