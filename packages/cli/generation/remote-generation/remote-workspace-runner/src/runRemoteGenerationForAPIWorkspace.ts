@@ -168,6 +168,7 @@ async function generateOne({
     requireEnvVars,
     automationMode,
     autoMerge,
+    skipIfNoDiff,
     automation,
     onSnippetsProduced
 }: {
@@ -195,6 +196,7 @@ async function generateOne({
     requireEnvVars: boolean;
     automationMode: boolean | undefined;
     autoMerge: boolean | undefined;
+    skipIfNoDiff: boolean | undefined;
     automation: AutomationRunOptions | undefined;
     /** Invoked post-success when the generator produced snippets. */
     onSnippetsProduced: (invocation: generatorsYml.GeneratorInvocation) => void;
@@ -273,7 +275,8 @@ async function generateOne({
             retryRateLimited,
             requireEnvVars,
             automationMode,
-            autoMerge
+            autoMerge,
+            skipIfNoDiff
         });
 
         if (remoteTaskHandlerResponse?.createdSnippets) {
