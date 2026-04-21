@@ -740,25 +740,21 @@ export class SdkGenerator {
             );
             this.context.logger.debug("Generated snippets");
 
-            try {
-                await this.generateReadme();
-            } catch (e) {
-                throw new Error(`Failed to generate README.md: ${extractErrorMessage(e)}`);
-            }
-
-            try {
-                await this.generateReference();
-            } catch (e) {
-                throw new Error(`Failed to generate reference.md: ${extractErrorMessage(e)}`);
-            }
-
-            if (!this.config.whitelabel) {
-                try {
-                    await this.generateContributing();
-                } catch (e) {
-                    throw new Error(`Failed to generate CONTRIBUTING.md: ${extractErrorMessage(e)}`);
-                }
-            }
+            // Generate README, reference, and contributing docs in parallel —
+            // they write to separate files and share no mutable state.
+            await Promise.all([
+                this.generateReadme().catch((e) => {
+                    throw new Error(`Failed to generate README.md: ${extractErrorMessage(e)}`);
+                }),
+                this.generateReference().catch((e) => {
+                    throw new Error(`Failed to generate reference.md: ${extractErrorMessage(e)}`);
+                }),
+                !this.config.whitelabel
+                    ? this.generateContributing().catch((e) => {
+                          throw new Error(`Failed to generate CONTRIBUTING.md: ${extractErrorMessage(e)}`);
+                      })
+                    : undefined
+            ]);
         }
 
         const subpackageExportPaths = this.config.generateSubpackageExports ? this.getSubpackageExportPaths() : [];

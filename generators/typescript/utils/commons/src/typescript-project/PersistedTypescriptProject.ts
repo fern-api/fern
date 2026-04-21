@@ -126,7 +126,7 @@ export class PersistedTypescriptProject {
                       YARN_ENABLE_IMMUTABLE_INSTALLS: "false"
                   }
               })
-            : pm(["install", "--lockfile-only", "--ignore-scripts", "--prefer-offline"], {
+            : pm(["install", "--lockfile-only", "--ignore-scripts", "--prefer-offline", "--no-optional"], {
                   env: {
                       // allow modifying pnpm-lock.yaml, even when in CI
                       PNPM_FROZEN_LOCKFILE: "false"
