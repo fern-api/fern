@@ -11,5 +11,5 @@ export function sanitizeSecurityScopes(
     }
     return security.map((requirement) =>
         Object.fromEntries(Object.entries(requirement).map(([key, value]) => [key, value ?? []]))
-    ) as Record<string, string[]>[];
+    ) as Record<string, string[]>[]; // safe: OpenAPI scopes are always string[] or null
 }
