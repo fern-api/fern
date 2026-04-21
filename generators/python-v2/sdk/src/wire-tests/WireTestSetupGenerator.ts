@@ -1,7 +1,7 @@
 import { File, getNameFromWireValue, getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { isEqualToMatcher, WireMock, WireMockStubMapping } from "@fern-api/mock-utils";
+import { WireMock, WireMockStubMapping } from "@fern-api/mock-utils";
 import { PYTHON_CASE_CONVERTER as caseConverter } from "@fern-api/python-base";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
@@ -54,10 +54,13 @@ export class WireTestSetupGenerator {
             // Strip from query parameters
             if (mapping.request.queryParameters) {
                 for (const [, value] of Object.entries(mapping.request.queryParameters)) {
-                    if (!isEqualToMatcher(value)) {
+                    if (!("equalTo" in value)) {
                         continue;
                     }
-                    if (WireTestSetupGenerator.DATETIME_WITH_ZERO_MILLIS_REGEX.test(value.equalTo)) {
+                    if (
+                        value.equalTo != null &&
+                        WireTestSetupGenerator.DATETIME_WITH_ZERO_MILLIS_REGEX.test(value.equalTo)
+                    ) {
                         value.equalTo = value.equalTo.replace(".000", "");
                     }
                 }

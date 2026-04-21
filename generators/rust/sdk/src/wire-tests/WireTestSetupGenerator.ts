@@ -1,7 +1,7 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { File } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { isEqualToMatcher, WireMock, WireMockMapping, WireMockStubMapping } from "@fern-api/mock-utils";
+import { WireMock, WireMockMapping, WireMockStubMapping } from "@fern-api/mock-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
@@ -165,10 +165,13 @@ export class WireTestSetupGenerator {
             // Strip from query parameter matchers
             if (mapping.request.queryParameters) {
                 for (const [_key, matcher] of Object.entries(mapping.request.queryParameters)) {
-                    if (!isEqualToMatcher(matcher)) {
+                    if (!("equalTo" in matcher)) {
                         continue;
                     }
-                    if (WireTestSetupGenerator.DATETIME_WITH_ZERO_MILLIS_REGEX.test(matcher.equalTo)) {
+                    if (
+                        matcher.equalTo &&
+                        WireTestSetupGenerator.DATETIME_WITH_ZERO_MILLIS_REGEX.test(matcher.equalTo)
+                    ) {
                         matcher.equalTo = matcher.equalTo.replace(".000", "");
                     }
                 }

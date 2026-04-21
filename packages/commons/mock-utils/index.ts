@@ -11,10 +11,6 @@ export interface WireMockStubMapping {
 
 export type QueryParameterMatcher = { equalTo: string } | { hasExactly: Array<{ equalTo: string }> };
 
-export function isEqualToMatcher(matcher: QueryParameterMatcher): matcher is { equalTo: string } {
-    return "equalTo" in matcher;
-}
-
 export interface WireMockMapping {
     id: string;
     name: string;
