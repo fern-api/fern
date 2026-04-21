@@ -126,8 +126,18 @@ export class GeneratedQueryParams {
             context
         });
 
+        // For allowMultiple params, apply clientDefault fallback to the scalar branch
+        const scalarWithDefault =
+            clientDefaultVal != null && !typeContainsNullable(queryParameter.valueType, context)
+                ? ts.factory.createBinaryExpression(
+                      scalarExpression,
+                      ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                      ts.factory.createStringLiteral(clientDefaultVal.toString())
+                  )
+                : scalarExpression;
+
         if (!needsArrayCheck) {
-            return scalarExpression;
+            return scalarWithDefault;
         }
 
         return ts.factory.createConditionalExpression(
@@ -142,7 +152,7 @@ export class GeneratedQueryParams {
             ts.factory.createToken(ts.SyntaxKind.QuestionToken),
             arrayExpression,
             ts.factory.createToken(ts.SyntaxKind.ColonToken),
-            scalarExpression
+            scalarWithDefault
         );
     }
 

@@ -221,7 +221,8 @@ export class BaseClientContextImpl implements BaseClientContext {
                         caseConverter: this.case
                     })
                 ),
-                type: getTextOfTsNode(context.type.getReferenceToType(pathParameter.valueType).typeNode)
+                type: getTextOfTsNode(context.type.getReferenceToType(pathParameter.valueType).typeNode),
+                hasQuestionToken: pathParameter.clientDefault != null
             });
         }
 
@@ -243,7 +244,7 @@ export class BaseClientContextImpl implements BaseClientContext {
                     kind: StructureKind.PropertySignature,
                     name: getPropertyKey(this.getOptionKeyForHeader(header)),
                     type: getTextOfTsNode(context.coreUtilities.fetcher.Supplier._getReferenceToType(type.typeNode)),
-                    hasQuestionToken: type.isOptional,
+                    hasQuestionToken: type.isOptional || header.clientDefault != null,
                     docs: [`Override the ${getWireValue(header.name)} header`]
                 });
             }
