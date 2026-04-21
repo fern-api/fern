@@ -408,7 +408,7 @@ function createOperationSdkMethodName({
     };
 }
 
-function sanitizeSecurityScopes<T extends Record<string, unknown>>(security: T[] | undefined): T[] | undefined {
+export function sanitizeSecurityScopes<T extends Record<string, unknown>>(security: T[] | undefined): T[] | undefined {
     if (security == null) {
         return undefined;
     }
