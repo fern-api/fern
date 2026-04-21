@@ -2,11 +2,11 @@
 
 module Seed
   class Client
-    # @param base_url [String, nil]
     # @param client_id [String]
     # @param client_secret [String]
-    # @param scope [String, nil]
     # @param x_api_key [String]
+    # @param base_url [String, nil]
+    # @param scope [String, nil]
     #
     # @return [void]
     def initialize(client_id:, client_secret:, x_api_key:, base_url: nil, scope: nil)

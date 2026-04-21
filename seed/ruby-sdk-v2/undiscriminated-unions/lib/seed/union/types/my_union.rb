@@ -8,10 +8,15 @@ module Seed
         extend Seed::Internal::Types::Union
 
         member -> { String }
+
         member -> { Internal::Types::Array[String] }
+
         member -> { Integer }
+
         member -> { Internal::Types::Array[Integer] }
+
         member -> { Internal::Types::Array[Internal::Types::Array[Integer]] }
+
         member -> { Internal::Types::Array[String] }
       end
     end

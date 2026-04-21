@@ -9,6 +9,7 @@ module Seed
         discriminant :type
 
         member -> { Seed::Submission::Types::TestCaseHiddenGrade }, key: "HIDDEN"
+
         member -> { Seed::Submission::Types::TestCaseNonHiddenGrade }, key: "NON_HIDDEN"
       end
     end

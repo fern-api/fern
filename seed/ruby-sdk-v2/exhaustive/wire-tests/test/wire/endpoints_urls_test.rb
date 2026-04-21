@@ -16,10 +16,10 @@ class EndpointsUrlsWireTest < WireMockTestCase
     test_id = "endpoints.urls.with_mixed_case.0"
 
     @client.endpoints.urls.with_mixed_case(request_options: {
-                                             additional_headers: {
-                                               "X-Test-Id" => "endpoints.urls.with_mixed_case.0"
-                                             }
-                                           })
+      additional_headers: {
+        "X-Test-Id" => "endpoints.urls.with_mixed_case.0"
+      }
+    })
 
     verify_request_count(
       test_id: test_id,
@@ -34,10 +34,10 @@ class EndpointsUrlsWireTest < WireMockTestCase
     test_id = "endpoints.urls.no_ending_slash.0"
 
     @client.endpoints.urls.no_ending_slash(request_options: {
-                                             additional_headers: {
-                                               "X-Test-Id" => "endpoints.urls.no_ending_slash.0"
-                                             }
-                                           })
+      additional_headers: {
+        "X-Test-Id" => "endpoints.urls.no_ending_slash.0"
+      }
+    })
 
     verify_request_count(
       test_id: test_id,
@@ -52,10 +52,10 @@ class EndpointsUrlsWireTest < WireMockTestCase
     test_id = "endpoints.urls.with_ending_slash.0"
 
     @client.endpoints.urls.with_ending_slash(request_options: {
-                                               additional_headers: {
-                                                 "X-Test-Id" => "endpoints.urls.with_ending_slash.0"
-                                               }
-                                             })
+      additional_headers: {
+        "X-Test-Id" => "endpoints.urls.with_ending_slash.0"
+      }
+    })
 
     verify_request_count(
       test_id: test_id,
@@ -70,10 +70,10 @@ class EndpointsUrlsWireTest < WireMockTestCase
     test_id = "endpoints.urls.with_underscores.0"
 
     @client.endpoints.urls.with_underscores(request_options: {
-                                              additional_headers: {
-                                                "X-Test-Id" => "endpoints.urls.with_underscores.0"
-                                              }
-                                            })
+      additional_headers: {
+        "X-Test-Id" => "endpoints.urls.with_underscores.0"
+      }
+    })
 
     verify_request_count(
       test_id: test_id,

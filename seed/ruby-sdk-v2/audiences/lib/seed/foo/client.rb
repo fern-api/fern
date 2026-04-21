@@ -29,7 +29,7 @@ module Seed
         query_param_names = %i[optional_string]
         query_params = {}
         query_params["optionalString"] = params[:optional_string] if params.key?(:optional_string)
-        params.except(*query_param_names)
+        params = params.except(*query_param_names)
 
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],

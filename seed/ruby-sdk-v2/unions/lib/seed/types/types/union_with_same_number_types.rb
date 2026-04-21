@@ -9,7 +9,9 @@ module Seed
         discriminant :type
 
         member -> { Integer }, key: "POSITIVE_INT"
+
         member -> { Integer }, key: "NEGATIVE_INT"
+
         member -> { Integer }, key: "ANY_NUMBER"
       end
     end

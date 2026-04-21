@@ -9,7 +9,9 @@ module Seed
         discriminant :type
 
         member -> { Object }, key: "ACTIVE"
+
         member -> { String }, key: "ARCHIVED"
+
         member -> { String }, key: "SOFT_DELETED"
       end
     end

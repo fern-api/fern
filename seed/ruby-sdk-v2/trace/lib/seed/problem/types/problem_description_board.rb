@@ -9,7 +9,9 @@ module Seed
         discriminant :type
 
         member -> { String }, key: "HTML"
+
         member -> { Seed::Commons::Types::VariableValue }, key: "VARIABLE"
+
         member -> { String }, key: "TEST_CASE_ID"
       end
     end

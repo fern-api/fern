@@ -8,10 +8,15 @@ export interface NamedValue {
     value: AstNode;
 }
 
-type InternalTypeLiteral = Str | Int | Float | Bool | Hash | Set_ | List_ | Nop | Nil;
+type InternalTypeLiteral = Str | InterpolatedStr | Int | Float | Bool | Hash | Set_ | List_ | Nop | Nil;
 
 interface Str {
     type: "str";
+    value: string;
+}
+
+interface InterpolatedStr {
+    type: "interpolatedStr";
     value: string;
 }
 
@@ -67,6 +72,10 @@ export class TypeLiteral extends AstNode {
         return new this({ type: "str", value });
     }
 
+    public static interpolatedString(value: string): TypeLiteral {
+        return new this({ type: "interpolatedStr", value });
+    }
+
     public static integer(value: number): TypeLiteral {
         return new this({ type: "int", value });
     }
@@ -114,11 +123,18 @@ export class TypeLiteral extends AstNode {
         switch (this.internalType.type) {
             case "str": {
                 const value = this.internalType.value.replaceAll("\r\n", "\n");
+                writer.write(
+                    `"${value.replaceAll("\\", "\\\\").replaceAll('"', '\\"').replace(/#(?=[{$@])/g, "\\#")}"`
+                );
+                break;
+            }
+            case "interpolatedStr": {
+                const value = this.internalType.value.replaceAll("\r\n", "\n");
                 writer.write(`"${value.replaceAll("\\", "\\\\").replaceAll('"', '\\"')}"`);
                 break;
             }
             case "int": {
-                writer.write(this.internalType.value.toString());
+                writer.write(formatRubyInteger(this.internalType.value));
                 break;
             }
             case "float": {
@@ -224,6 +240,16 @@ export class TypeLiteral extends AstNode {
                 assertNever(this.internalType);
         }
     }
+}
+
+function formatRubyInteger(value: number): string {
+    const str = Math.abs(value).toString();
+    if (str.length <= 4) {
+        return value.toString();
+    }
+    const sign = value < 0 ? "-" : "";
+    const formatted = str.replace(/\B(?=(\d{3})+(?!\d))/g, "_");
+    return `${sign}${formatted}`;
 }
 
 export { Type };

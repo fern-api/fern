@@ -90,6 +90,7 @@ class CursorItemIteratorTest < Minitest::Test
 
       assert_equal expected_times_called, @times_called
       assert_equal item != NUMBERS.last, iterator.next?, "#{item} #{iterator}"
+
       items.push(item)
     end
 
@@ -139,6 +140,7 @@ class CursorItemIteratorTest < Minitest::Test
     iterator = make_iterator(initial_cursor: 0).pages
 
     assert_equal 0, @times_called
+
     iterator.first
 
     assert_equal 1, @times_called
@@ -170,6 +172,7 @@ class CursorItemIteratorTest < Minitest::Test
       expected_times_called += 1
 
       assert_equal expected_times_called, @times_called
+
       lengths.push(page.cards.length)
     end
 

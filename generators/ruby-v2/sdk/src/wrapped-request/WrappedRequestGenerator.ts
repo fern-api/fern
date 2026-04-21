@@ -100,7 +100,7 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
 
         return new RubyFile({
             node: ruby.codeblock((writer) => {
-                ruby.comment({ docs: "frozen_string_literal: true" });
+                ruby.comment({ docs: "frozen_string_literal: true" }).write(writer);
                 writer.newLine();
                 ruby.wrapInModules(class_, this.context.getModulesForServiceId(this.serviceId)).write(writer);
             }),

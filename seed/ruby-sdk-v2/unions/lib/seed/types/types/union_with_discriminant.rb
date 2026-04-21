@@ -9,6 +9,7 @@ module Seed
         discriminant :type
 
         member -> { Seed::Types::Types::Foo }, key: "FOO"
+
         member -> { Seed::Types::Types::Bar }, key: "BAR"
       end
     end

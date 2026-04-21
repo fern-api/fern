@@ -5,6 +5,7 @@ module Seed
     module Types
       class ListWithCustomPagerRequest < Internal::Types::Model
         field :limit, -> { Integer }, optional: true, nullable: false
+
         field :starting_after, -> { String }, optional: true, nullable: false
       end
     end

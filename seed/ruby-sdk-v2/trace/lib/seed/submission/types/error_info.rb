@@ -9,7 +9,9 @@ module Seed
         discriminant :type
 
         member -> { Seed::Submission::Types::CompileError }, key: "COMPILE_ERROR"
+
         member -> { Seed::Submission::Types::RuntimeError }, key: "RUNTIME_ERROR"
+
         member -> { Seed::Submission::Types::InternalError }, key: "INTERNAL_ERROR"
       end
     end

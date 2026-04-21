@@ -11,7 +11,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Hash]
+      # @param _params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -23,8 +23,7 @@ module Seed
       # @option params [Seed::Types::ColorOrOperand, nil] :maybe_operand_or_color
       #
       # @return [untyped]
-      def send_(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+      def send_(request_options: {}, **_params)
         headers = {}
         headers["operand"] = params[:operand] if params[:operand]
         headers["maybeOperand"] = params[:maybe_operand] if params[:maybe_operand]

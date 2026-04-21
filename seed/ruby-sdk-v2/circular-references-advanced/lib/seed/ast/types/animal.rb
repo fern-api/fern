@@ -7,6 +7,7 @@ module Seed
         extend Seed::Internal::Types::Union
 
         member -> { Seed::Ast::Types::Cat }
+
         member -> { Seed::Ast::Types::Dog }
       end
     end

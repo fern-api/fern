@@ -8,8 +8,11 @@ module Seed
         extend Seed::Internal::Types::Union
 
         member -> { Integer }
+
         member -> { Internal::Types::Array[String] }
+
         member -> { Internal::Types::Array[String] }
+
         member -> { Seed::Union::Types::NestedUnionL2 }
       end
     end

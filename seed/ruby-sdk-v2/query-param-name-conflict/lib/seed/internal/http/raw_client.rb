@@ -152,8 +152,9 @@ module Seed
           return if url.scheme != "http"
           return if LOCALHOST_HOSTS.include?(url.host)
 
-          raise ArgumentError, "Refusing to send request to non-HTTPS URL: #{url}. " \
-                               "HTTP is only allowed for localhost. Use HTTPS or pass a localhost URL."
+          raise ArgumentError,
+                "Refusing to send request to non-HTTPS URL: #{url}. " \
+                "HTTP is only allowed for localhost. Use HTTPS or pass a localhost URL."
         end
 
         # @param url [URI::Generic] The url to the resource.

@@ -24,14 +24,16 @@ module Seed
       def upload_file(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
-
+        
         if params[:name]
           body.add(
             name: "name",
             value: params[:name]
           )
         end
-        body.add_part(params[:file].to_form_data_part(name: "file")) if params[:file]
+        if params[:file]
+          body.add_part(params[:file].to_form_data_part(name: "file"))
+        end
 
         request = Seed::Internal::Multipart::Request.new(
           base_url: request_options[:base_url],

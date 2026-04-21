@@ -43,7 +43,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Seed::Types::Types::Movie]
+      # @param _params [Seed::Types::Types::Movie]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -51,8 +51,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [String]
-      def create_movie(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+      def create_movie(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
@@ -88,11 +87,9 @@ module Seed
       # @return [Seed::Types::Types::Metadata]
       def get_metadata(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        query_param_names = %i[shallow tag]
         query_params = {}
         query_params["shallow"] = params[:shallow] if params.key?(:shallow)
         query_params["tag"] = params[:tag] if params.key?(:tag)
-        params = params.except(*query_param_names)
 
         headers = {}
         headers["X-API-Version"] = params[:x_api_version] if params[:x_api_version]
@@ -120,7 +117,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Seed::Types::Types::BigEntity]
+      # @param _params [Seed::Types::Types::BigEntity]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -128,8 +125,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Seed::Types::Types::Response]
-      def create_big_entity(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+      def create_big_entity(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
@@ -152,7 +148,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Hash]
+      # @param _params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -160,8 +156,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [untyped]
-      def refresh_token(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+      def refresh_token(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",

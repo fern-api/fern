@@ -42,7 +42,7 @@ module Seed
         end
 
         # @param request_options [Hash]
-        # @param params [Seed::Types::Object_::Types::ObjectWithRequiredField]
+        # @param _params [Seed::Types::Object_::Types::ObjectWithRequiredField]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
         # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -50,8 +50,7 @@ module Seed
         # @option request_options [Integer] :timeout_in_seconds
         #
         # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]
-        def test_post(request_options: {}, **params)
-          params = Seed::Internal::Types::Utils.normalize_keys(params)
+        def test_post(request_options: {}, **_params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",

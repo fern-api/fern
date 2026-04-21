@@ -6,6 +6,7 @@ module Seed
       extend Seed::Internal::Types::Union
 
       member -> { Seed::Types::Color }
+
       member -> { Seed::Types::Operand }
     end
   end

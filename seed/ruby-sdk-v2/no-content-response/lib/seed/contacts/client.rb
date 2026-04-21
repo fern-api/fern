@@ -13,7 +13,7 @@ module Seed
       # Creates a new contact. Returns 200 with the contact or 204 with no content.
       #
       # @param request_options [Hash]
-      # @param params [Seed::Contacts::Types::CreateContactRequest]
+      # @param _params [Seed::Contacts::Types::CreateContactRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -21,8 +21,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Seed::Types::Contact, nil]
-      def create(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+      def create(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",

@@ -2,8 +2,8 @@
 
 module Seed
   class Client
-    # @param base_url [String, nil]
     # @param header_token_auth [String]
+    # @param base_url [String, nil]
     #
     # @return [void]
     def initialize(header_token_auth:, base_url: nil)

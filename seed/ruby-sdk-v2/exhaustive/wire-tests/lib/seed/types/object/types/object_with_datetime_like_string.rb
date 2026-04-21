@@ -9,6 +9,7 @@ module Seed
         # should preserve its exact value even if it looks like a datetime.
         class ObjectWithDatetimeLikeString < Internal::Types::Model
           field :datetime_like_string, -> { String }, optional: false, nullable: false, api_name: "datetimeLikeString"
+
           field :actual_datetime, -> { String }, optional: false, nullable: false, api_name: "actualDatetime"
         end
       end

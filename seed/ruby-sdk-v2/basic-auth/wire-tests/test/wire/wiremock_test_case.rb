@@ -12,14 +12,12 @@ require "seed"
 # This class provides helper methods for verifying requests made to WireMock
 # and manages the test lifecycle for integration tests.
 class WireMockTestCase < Minitest::Test
-  WIREMOCK_BASE_URL = ENV["WIREMOCK_URL"] || "http://localhost:8080"
+  WIREMOCK_BASE_URL = (ENV.fetch("WIREMOCK_URL", nil) || "http://localhost:8080").freeze
   WIREMOCK_ADMIN_URL = "#{WIREMOCK_BASE_URL}/__admin".freeze
 
   def setup
     super
-    return if ENV["RUN_WIRE_TESTS"] == "true"
-
-    skip "Wire tests are disabled by default. Set RUN_WIRE_TESTS=true to enable them."
+    skip "Wire tests are disabled by default. Set RUN_WIRE_TESTS=true to enable them." unless ENV["RUN_WIRE_TESTS"] == "true"
   end
 
   # Verifies the number of requests made to WireMock filtered by test ID for concurrency safety.

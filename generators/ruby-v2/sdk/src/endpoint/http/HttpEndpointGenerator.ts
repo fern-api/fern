@@ -52,38 +52,43 @@ export class HttpEndpointGenerator {
 
         const statements: ruby.AstNode[] = [];
 
-        // Normalize params to convert camelCase keys to snake_case
-        // This allows SDK methods to accept both snake_case and camelCase keys
-        statements.push(
-            ruby.codeblock((writer) => {
-                writer.write(`${PARAMS_VN} = `);
-                ruby.invokeMethod({
-                    on: ruby.classReference({
-                        name: "Utils",
-                        modules: [this.context.getRootModuleName(), "Internal", "Types"]
-                    }),
-                    method: "normalize_keys",
-                    arguments_: [ruby.codeblock(PARAMS_VN)]
-                }).write(writer);
-            })
-        );
-
         const requestBodyCodeBlock = request?.getRequestBodyCodeBlock();
+        const queryParameterCodeBlock = request?.getQueryParameterCodeBlock(QUERY_PARAMETER_BAG_NAME);
+        const headerParameterCodeBlock = request?.getHeaderParameterCodeBlock();
+        const pathParameterReferences = this.getPathParameterReferences({ endpoint });
+
+        const paramsUsed =
+            requestBodyCodeBlock?.code != null ||
+            queryParameterCodeBlock?.code != null ||
+            Object.keys(pathParameterReferences).length > 0;
+
+        if (paramsUsed) {
+            statements.push(
+                ruby.codeblock((writer) => {
+                    writer.write(`${PARAMS_VN} = `);
+                    ruby.invokeMethod({
+                        on: ruby.classReference({
+                            name: "Utils",
+                            modules: [this.context.getRootModuleName(), "Internal", "Types"]
+                        }),
+                        method: "normalize_keys",
+                        arguments_: [ruby.codeblock(PARAMS_VN)]
+                    }).write(writer);
+                })
+            );
+        }
+
         if (requestBodyCodeBlock?.code != null) {
             statements.push(requestBodyCodeBlock.code);
         }
 
-        const queryParameterCodeBlock = request?.getQueryParameterCodeBlock(QUERY_PARAMETER_BAG_NAME);
         if (queryParameterCodeBlock?.code != null) {
             statements.push(queryParameterCodeBlock.code);
         }
 
-        const headerParameterCodeBlock = request?.getHeaderParameterCodeBlock();
         if (headerParameterCodeBlock?.code != null) {
             statements.push(headerParameterCodeBlock.code);
         }
-
-        const pathParameterReferences = this.getPathParameterReferences({ endpoint });
         const baseUrlName = this.getBaseUrlNameForEndpoint(endpoint);
         const sendRequestCodeBlock = rawClient.sendRequest({
             baseUrl: ruby.codeblock(""),
@@ -256,7 +261,7 @@ export class HttpEndpointGenerator {
                     })
                 ],
                 keywordSplat: ruby.parameters.keywordSplat({
-                    name: PARAMS_VN,
+                    name: paramsUsed ? PARAMS_VN : `_${PARAMS_VN}`,
                     type: request?.getParameterType() ?? ruby.Type.hash(ruby.Type.untyped(), ruby.Type.untyped())
                 })
             },
@@ -305,42 +310,46 @@ export class HttpEndpointGenerator {
 
         statements.push(ruby.codeblock(`${CODE_VN} = ${HTTP_RESPONSE_VN}.code.to_i`));
 
-        statements.push(
-            ruby.ifElse({
-                if: {
-                    condition: ruby.codeblock(`${CODE_VN}.between?(200, 299)`),
-                    thenBody: [
-                        ruby.codeblock((writer) => {
-                            if (endpoint.response?.body == null) {
-                                writer.writeLine(`return`);
-                            } else {
-                                switch (endpoint.response.body.type) {
-                                    case "json":
-                                        this.loadResponseBodyFromJson({
-                                            writer,
-                                            typeReference: endpoint.response.body.value.responseBodyType,
-                                            storeInVariable: storeResponseInVariable
-                                        });
-                                        break;
-                                    default:
-                                        break;
-                                }
-                            }
-                        })
-                    ]
-                },
-                elseBody: ruby.codeblock((writer) => {
-                    const rootModuleName = this.context.getRootModuleName();
-                    writer.writeLine(
-                        `${ERROR_CLASS_VN} = ${rootModuleName}::Errors::ResponseError.subclass_for_code(${CODE_VN})`
-                    );
+        const jsonResponseBody =
+            endpoint.response?.body != null &&
+            endpoint.response.body.type === "json" &&
+            endpoint.response.body.value.responseBodyType.type === "named"
+                ? endpoint.response.body.value
+                : undefined;
 
-                    ruby.raise({
-                        errorClass: ruby.codeblock(`${ERROR_CLASS_VN}.new(${HTTP_RESPONSE_VN}.body, code: ${CODE_VN})`)
-                    }).write(writer);
+        const errorBody = ruby.codeblock((writer) => {
+            const rootModuleName = this.context.getRootModuleName();
+            writer.writeLine(
+                `${ERROR_CLASS_VN} = ${rootModuleName}::Errors::ResponseError.subclass_for_code(${CODE_VN})`
+            );
+
+            ruby.raise({
+                errorClass: ruby.codeblock(`${ERROR_CLASS_VN}.new(${HTTP_RESPONSE_VN}.body, code: ${CODE_VN})`)
+            }).write(writer);
+        });
+
+        if (jsonResponseBody != null) {
+            statements.push(
+                ruby.ifElse({
+                    if: {
+                        condition: ruby.codeblock(`${CODE_VN}.between?(200, 299)`),
+                        thenBody: [
+                            ruby.codeblock((writer) => {
+                                this.loadResponseBodyFromJson({
+                                    writer,
+                                    typeReference: jsonResponseBody.responseBodyType,
+                                    storeInVariable: storeResponseInVariable
+                                });
+                            })
+                        ]
+                    },
+                    elseBody: errorBody
                 })
-            })
-        );
+            );
+        } else {
+            statements.push(ruby.codeblock(`return if ${CODE_VN}.between?(200, 299)\n`));
+            statements.push(errorBody);
+        }
 
         return statements;
     }

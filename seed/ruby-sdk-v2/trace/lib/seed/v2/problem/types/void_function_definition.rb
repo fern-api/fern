@@ -6,6 +6,7 @@ module Seed
       module Types
         class VoidFunctionDefinition < Internal::Types::Model
           field :parameters, -> { Internal::Types::Array[Seed::V2::Problem::Types::Parameter] }, optional: false, nullable: false
+
           field :code, -> { Seed::V2::Problem::Types::FunctionImplementationForMultipleLanguages }, optional: false, nullable: false
         end
       end

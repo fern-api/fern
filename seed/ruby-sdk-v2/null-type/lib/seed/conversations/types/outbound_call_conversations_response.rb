@@ -5,6 +5,7 @@ module Seed
     module Types
       class OutboundCallConversationsResponse < Internal::Types::Model
         field :conversation_id, -> { Object }, optional: false, nullable: true
+
         field :dry_run, -> { Internal::Types::Boolean }, optional: false, nullable: false
       end
     end

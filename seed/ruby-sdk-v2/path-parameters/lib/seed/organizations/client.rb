@@ -91,10 +91,8 @@ module Seed
       # @return [Array[Seed::Organizations::Types::Organization]]
       def search_organizations(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        query_param_names = %i[limit]
         query_params = {}
         query_params["limit"] = params[:limit] if params.key?(:limit)
-        params = params.except(*query_param_names)
 
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],

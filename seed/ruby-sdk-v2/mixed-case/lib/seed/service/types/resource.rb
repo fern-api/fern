@@ -9,6 +9,7 @@ module Seed
         discriminant :resource_type
 
         member -> { Seed::Service::Types::User }, key: "USER"
+
         member -> { Seed::Service::Types::Organization }, key: "ORGANIZATION"
       end
     end

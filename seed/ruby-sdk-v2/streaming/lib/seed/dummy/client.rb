@@ -11,7 +11,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Seed::Dummy::Types::GenerateStreamRequest]
+      # @param _params [Seed::Dummy::Types::GenerateStreamRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -19,8 +19,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [untyped]
-      def generate_stream(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+      def generate_stream(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
@@ -41,7 +40,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Seed::Dummy::Types::Generateequest]
+      # @param _params [Seed::Dummy::Types::Generateequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -49,8 +48,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Seed::Dummy::Types::StreamResponse]
-      def generate(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+      def generate(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",

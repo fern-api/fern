@@ -10,6 +10,7 @@ module Seed
           discriminant :animal
 
           member -> { Seed::Types::Union::Types::Dog }, key: "DOG"
+
           member -> { Seed::Types::Union::Types::Cat }, key: "CAT"
         end
       end

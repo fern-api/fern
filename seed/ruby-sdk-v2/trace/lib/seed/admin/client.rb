@@ -148,7 +148,7 @@ module Seed
       def store_traced_test_case(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request_data = Seed::Admin::Types::StoreTracedTestCaseRequest.new(params).to_h
-        non_body_param_names = %w[submissionId testCaseId]
+        non_body_param_names = ["submissionId", "testCaseId"]
         body = request_data.except(*non_body_param_names)
 
         request = Seed::Internal::JSON::Request.new(

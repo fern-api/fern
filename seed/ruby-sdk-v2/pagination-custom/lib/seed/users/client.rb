@@ -23,11 +23,9 @@ module Seed
       # @return [Seed::Types::UsersListResponse]
       def list_with_custom_pager(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        query_param_names = %i[limit starting_after]
         query_params = {}
         query_params["limit"] = params[:limit] if params.key?(:limit)
         query_params["starting_after"] = params[:starting_after] if params.key?(:starting_after)
-        params.except(*query_param_names)
 
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],

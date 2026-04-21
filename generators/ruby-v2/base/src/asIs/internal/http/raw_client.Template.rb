@@ -89,7 +89,6 @@ module <%= gem_namespace %>
             return [delay, MAX_RETRY_DELAY].min if delay&.positive?
           end
 
-
           # Exponential backoff with jitter: base_delay * 2^attempt
           base_delay = INITIAL_RETRY_DELAY * (2**attempt)
           add_jitter([base_delay, MAX_RETRY_DELAY].min)
@@ -153,8 +152,9 @@ module <%= gem_namespace %>
           return if url.scheme != "http"
           return if LOCALHOST_HOSTS.include?(url.host)
 
-          raise ArgumentError, "Refusing to send request to non-HTTPS URL: #{url}. " \
-            "HTTP is only allowed for localhost. Use HTTPS or pass a localhost URL."
+          raise ArgumentError,
+                "Refusing to send request to non-HTTPS URL: #{url}. " \
+                "HTTP is only allowed for localhost. Use HTTPS or pass a localhost URL."
         end
 
         # @param url [URI::Generic] The url to the resource.
@@ -199,7 +199,7 @@ module <%= gem_namespace %>
           http = Net::HTTP.new(url.host, port)
           http.use_ssl = is_https
           http.verify_mode = OpenSSL::SSL::VERIFY_PEER if is_https
-          # Note: We handle retries at the application level with HTTP status code awareness,
+          # NOTE: We handle retries at the application level with HTTP status code awareness,
           # so we set max_retries to 0 to disable Net::HTTP's built-in network-level retries.
           http.max_retries = 0
           http
@@ -212,4 +212,4 @@ module <%= gem_namespace %>
       end
     end
   end
-end                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+end

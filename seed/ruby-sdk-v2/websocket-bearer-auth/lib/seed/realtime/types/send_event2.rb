@@ -5,6 +5,7 @@ module Seed
     module Types
       class SendEvent2 < Internal::Types::Model
         field :send_text2, -> { String }, optional: false, nullable: false, api_name: "sendText2"
+
         field :send_param2, -> { Internal::Types::Boolean }, optional: false, nullable: false, api_name: "sendParam2"
       end
     end

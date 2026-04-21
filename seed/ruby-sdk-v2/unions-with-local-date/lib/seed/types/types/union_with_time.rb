@@ -9,7 +9,9 @@ module Seed
         discriminant :type
 
         member -> { Integer }, key: "VALUE"
+
         member -> { String }, key: "DATE"
+
         member -> { String }, key: "DATETIME"
       end
     end

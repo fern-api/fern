@@ -41,11 +41,11 @@ module <%= gem_namespace %>
         # @return [Hash] The merged headers.
         def merge_additional_headers(sdk_headers, protected_keys: [])
           additional_headers = @request_options&.dig(:additional_headers) || @request_options&.dig("additional_headers") || {}
-          all_protected = (sdk_headers.keys + protected_keys).map { |k| k.to_s.downcase }.to_set
+          all_protected = (sdk_headers.keys + protected_keys).to_set { |k| k.to_s.downcase }
           filtered = additional_headers.reject { |key, _| all_protected.include?(key.to_s.downcase) }
           sdk_headers.merge(filtered)
         end
       end
     end
   end
-end  
+end

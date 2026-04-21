@@ -26,7 +26,7 @@ module <%= gem_namespace %>
           type.is_a?(Proc) ? type.call : type
         end
 
-        def self.coerce(target, value, strict: false) # rubocop:disable Metrics/CyclomaticComplexity
+        def self.coerce(target, value, strict: false)
           type = unwrap_type(target)
 
           case type
@@ -113,4 +113,4 @@ module <%= gem_namespace %>
       end
     end
   end
-end   
+end

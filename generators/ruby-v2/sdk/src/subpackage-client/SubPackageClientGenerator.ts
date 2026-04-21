@@ -95,7 +95,7 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
 
         return new RubyFile({
             node: ruby.codeblock((writer) => {
-                ruby.comment({ docs: "frozen_string_literal: true" });
+                ruby.comment({ docs: "frozen_string_literal: true" }).write(writer);
                 writer.newLine();
                 ruby.wrapInModules(clientClass, modules).write(writer);
             }),

@@ -25,13 +25,11 @@ module Seed
       # @return [Seed::Users::Types::ListUsersPaginationResponse]
       def list_with_cursor_pagination(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        query_param_names = %i[page per_page order starting_after]
         query_params = {}
         query_params["page"] = params[:page] if params.key?(:page)
         query_params["per_page"] = params[:per_page] if params.key?(:per_page)
         query_params["order"] = params[:order] if params.key?(:order)
         query_params["starting_after"] = params[:starting_after] if params.key?(:starting_after)
-        params.except(*query_param_names)
 
         Seed::Internal::CursorItemIterator.new(
           cursor_field: :starting_after,
@@ -73,10 +71,8 @@ module Seed
       # @return [Seed::Users::Types::ListUsersMixedTypePaginationResponse]
       def list_with_mixed_type_cursor_pagination(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        query_param_names = %i[cursor]
         query_params = {}
         query_params["cursor"] = params[:cursor] if params.key?(:cursor)
-        params.except(*query_param_names)
 
         Seed::Internal::CursorItemIterator.new(
           cursor_field: :next_,
@@ -107,7 +103,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Seed::Users::Types::ListUsersBodyCursorPaginationRequest]
+      # @param _params [Seed::Users::Types::ListUsersBodyCursorPaginationRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -115,8 +111,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Seed::Users::Types::ListUsersPaginationResponse]
-      def list_with_body_cursor_pagination(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+      def list_with_body_cursor_pagination(request_options: {}, **_params)
         Seed::Internal::CursorItemIterator.new(
           cursor_field: :starting_after,
           item_field: :data,
@@ -150,7 +145,7 @@ module Seed
       # when getNextPage() is called with a different cursor value.
       #
       # @param request_options [Hash]
-      # @param params [Seed::Users::Types::ListUsersTopLevelBodyCursorPaginationRequest]
+      # @param _params [Seed::Users::Types::ListUsersTopLevelBodyCursorPaginationRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -158,8 +153,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Seed::Users::Types::ListUsersTopLevelCursorPaginationResponse]
-      def list_with_top_level_body_cursor_pagination(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+      def list_with_top_level_body_cursor_pagination(request_options: {}, **_params)
         Seed::Internal::CursorItemIterator.new(
           cursor_field: :next_cursor,
           item_field: :data,
@@ -203,13 +197,11 @@ module Seed
       # @return [Seed::Users::Types::ListUsersPaginationResponse]
       def list_with_offset_pagination(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        query_param_names = %i[page per_page order starting_after]
         query_params = {}
         query_params["page"] = params[:page] if params.key?(:page)
         query_params["per_page"] = params[:per_page] if params.key?(:per_page)
         query_params["order"] = params[:order] if params.key?(:order)
         query_params["starting_after"] = params[:starting_after] if params.key?(:starting_after)
-        params.except(*query_param_names)
 
         Seed::Internal::OffsetItemIterator.new(
           initial_page: query_params["page"],
@@ -255,13 +247,11 @@ module Seed
       # @return [Seed::Users::Types::ListUsersPaginationResponse]
       def list_with_double_offset_pagination(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        query_param_names = %i[page per_page order starting_after]
         query_params = {}
         query_params["page"] = params[:page] if params.key?(:page)
         query_params["per_page"] = params[:per_page] if params.key?(:per_page)
         query_params["order"] = params[:order] if params.key?(:order)
         query_params["starting_after"] = params[:starting_after] if params.key?(:starting_after)
-        params.except(*query_param_names)
 
         Seed::Internal::OffsetItemIterator.new(
           initial_page: query_params["page"],
@@ -293,7 +283,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Seed::Users::Types::ListUsersBodyOffsetPaginationRequest]
+      # @param _params [Seed::Users::Types::ListUsersBodyOffsetPaginationRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -301,8 +291,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Seed::Users::Types::ListUsersPaginationResponse]
-      def list_with_body_offset_pagination(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+      def list_with_body_offset_pagination(request_options: {}, **_params)
         Seed::Internal::OffsetItemIterator.new(
           initial_page: query_params["page"],
           item_field: :data,
@@ -346,12 +335,10 @@ module Seed
       # @return [Seed::Users::Types::ListUsersPaginationResponse]
       def list_with_offset_step_pagination(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        query_param_names = %i[page limit order]
         query_params = {}
         query_params["page"] = params[:page] if params.key?(:page)
         query_params["limit"] = params[:limit] if params.key?(:limit)
         query_params["order"] = params[:order] if params.key?(:order)
-        params.except(*query_param_names)
 
         Seed::Internal::OffsetItemIterator.new(
           initial_page: query_params["page"],
@@ -396,12 +383,10 @@ module Seed
       # @return [Seed::Users::Types::ListUsersPaginationResponse]
       def list_with_offset_pagination_has_next_page(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        query_param_names = %i[page limit order]
         query_params = {}
         query_params["page"] = params[:page] if params.key?(:page)
         query_params["limit"] = params[:limit] if params.key?(:limit)
         query_params["order"] = params[:order] if params.key?(:order)
-        params.except(*query_param_names)
 
         Seed::Internal::OffsetItemIterator.new(
           initial_page: query_params["page"],
@@ -444,10 +429,8 @@ module Seed
       # @return [Seed::Users::Types::ListUsersExtendedResponse]
       def list_with_extended_results(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        query_param_names = %i[cursor]
         query_params = {}
         query_params["cursor"] = params[:cursor] if params.key?(:cursor)
-        params.except(*query_param_names)
 
         Seed::Internal::CursorItemIterator.new(
           cursor_field: :next_,
@@ -489,10 +472,8 @@ module Seed
       # @return [Seed::Users::Types::ListUsersExtendedOptionalListResponse]
       def list_with_extended_results_and_optional_data(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        query_param_names = %i[cursor]
         query_params = {}
         query_params["cursor"] = params[:cursor] if params.key?(:cursor)
-        params.except(*query_param_names)
 
         Seed::Internal::CursorItemIterator.new(
           cursor_field: :next_,
@@ -534,10 +515,8 @@ module Seed
       # @return [Seed::Types::UsernameCursor]
       def list_usernames(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        query_param_names = %i[starting_after]
         query_params = {}
         query_params["starting_after"] = params[:starting_after] if params.key?(:starting_after)
-        params.except(*query_param_names)
 
         Seed::Internal::CursorItemIterator.new(
           cursor_field: :after,
@@ -579,10 +558,8 @@ module Seed
       # @return [Seed::Types::UsernameCursor, nil]
       def list_usernames_with_optional_response(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        query_param_names = %i[starting_after]
         query_params = {}
         query_params["starting_after"] = params[:starting_after] if params.key?(:starting_after)
-        params.except(*query_param_names)
 
         Seed::Internal::CursorItemIterator.new(
           cursor_field: :after,
@@ -603,10 +580,9 @@ module Seed
             raise Seed::Errors::TimeoutError
           end
           code = response.code.to_i
-          unless code.between?(200, 299)
-            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-            raise error_class.new(response.body, code: code)
-          end
+          return if code.between?(200, 299)
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(response.body, code: code)
         end
       end
 
@@ -622,10 +598,8 @@ module Seed
       # @return [Seed::Users::Types::UsernameContainer]
       def list_with_global_config(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        query_param_names = %i[offset]
         query_params = {}
         query_params["offset"] = params[:offset] if params.key?(:offset)
-        params.except(*query_param_names)
 
         Seed::Internal::OffsetItemIterator.new(
           initial_page: query_params["offset"],
@@ -668,10 +642,8 @@ module Seed
       # @return [Seed::Users::Types::ListUsersOptionalDataPaginationResponse]
       def list_with_optional_data(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        query_param_names = %i[page]
         query_params = {}
         query_params["page"] = params[:page] if params.key?(:page)
-        params.except(*query_param_names)
 
         Seed::Internal::OffsetItemIterator.new(
           initial_page: query_params["page"],
@@ -716,12 +688,10 @@ module Seed
       # @return [Seed::Users::Types::ListUsersAliasedDataPaginationResponse]
       def list_with_aliased_data(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        query_param_names = %i[page per_page starting_after]
         query_params = {}
         query_params["page"] = params[:page] if params.key?(:page)
         query_params["per_page"] = params[:per_page] if params.key?(:per_page)
         query_params["starting_after"] = params[:starting_after] if params.key?(:starting_after)
-        params.except(*query_param_names)
 
         Seed::Internal::CursorItemIterator.new(
           cursor_field: :starting_after,

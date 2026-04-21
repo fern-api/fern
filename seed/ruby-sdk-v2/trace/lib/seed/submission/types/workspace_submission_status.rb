@@ -9,9 +9,13 @@ module Seed
         discriminant :type
 
         member -> { Object }, key: "STOPPED"
+
         member -> { Seed::Submission::Types::ErrorInfo }, key: "ERRORED"
+
         member -> { Seed::Submission::Types::RunningSubmissionState }, key: "RUNNING"
+
         member -> { Seed::Submission::Types::WorkspaceRunDetails }, key: "RAN"
+
         member -> { Seed::Submission::Types::WorkspaceRunDetails }, key: "TRACED"
       end
     end

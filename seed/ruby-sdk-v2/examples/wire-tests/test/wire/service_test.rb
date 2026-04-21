@@ -236,10 +236,10 @@ class ServiceWireTest < WireMockTestCase
     test_id = "service.refresh_token.0"
 
     @client.service.refresh_token(request_options: {
-                                    additional_headers: {
-                                      "X-Test-Id" => "service.refresh_token.0"
-                                    }
-                                  })
+      additional_headers: {
+        "X-Test-Id" => "service.refresh_token.0"
+      }
+    })
 
     verify_request_count(
       test_id: test_id,

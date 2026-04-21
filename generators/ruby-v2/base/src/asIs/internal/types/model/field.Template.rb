@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module <%= gem_namespace %>
   module Internal
     module Types
@@ -34,4 +35,4 @@ module <%= gem_namespace %>
       end
     end
   end
-end  
+end

@@ -9,6 +9,7 @@ module Seed
         discriminant :event
 
         member -> { Seed::Completions::Types::CompletionEvent }, key: "COMPLETION"
+
         member -> { Seed::Completions::Types::ErrorEvent }, key: "ERROR"
       end
     end

@@ -5,7 +5,9 @@ module Seed
     module Types
       class ListUsersAliasedDataRequest < Internal::Types::Model
         field :page, -> { Integer }, optional: true, nullable: false
+
         field :per_page, -> { Integer }, optional: true, nullable: false
+
         field :starting_after, -> { String }, optional: true, nullable: false
       end
     end

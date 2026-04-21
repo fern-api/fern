@@ -26,14 +26,12 @@ module Seed
       # @return [Array[Seed::Nullable::Types::User]]
       def get_users(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        query_param_names = %i[usernames avatar activated tags extra]
         query_params = {}
         query_params["usernames"] = params[:usernames] if params.key?(:usernames)
         query_params["avatar"] = params[:avatar] if params.key?(:avatar)
         query_params["activated"] = params[:activated] if params.key?(:activated)
         query_params["tags"] = params[:tags] if params.key?(:tags)
         query_params["extra"] = params[:extra] if params.key?(:extra)
-        params.except(*query_param_names)
 
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
@@ -55,7 +53,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Seed::Nullable::Types::CreateUserRequest]
+      # @param _params [Seed::Nullable::Types::CreateUserRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -63,8 +61,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Seed::Nullable::Types::User]
-      def create_user(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+      def create_user(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
@@ -87,7 +84,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Seed::Nullable::Types::DeleteUserRequest]
+      # @param _params [Seed::Nullable::Types::DeleteUserRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -95,8 +92,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Boolean]
-      def delete_user(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+      def delete_user(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "DELETE",

@@ -47,7 +47,7 @@ module Seed
       # Create a new user
       #
       # @param request_options [Hash]
-      # @param params [Seed::NullableOptional::Types::CreateUserRequest]
+      # @param _params [Seed::NullableOptional::Types::CreateUserRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -55,8 +55,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Seed::NullableOptional::Types::UserResponse]
-      def create_user(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+      def create_user(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
@@ -130,13 +129,11 @@ module Seed
       # @return [Array[Seed::NullableOptional::Types::UserResponse]]
       def list_users(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        query_param_names = %i[limit offset include_deleted sort_by]
         query_params = {}
         query_params["limit"] = params[:limit] if params.key?(:limit)
         query_params["offset"] = params[:offset] if params.key?(:offset)
         query_params["includeDeleted"] = params[:include_deleted] if params.key?(:include_deleted)
         query_params["sortBy"] = params[:sort_by] if params.key?(:sort_by)
-        params.except(*query_param_names)
 
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
@@ -174,13 +171,11 @@ module Seed
       # @return [Array[Seed::NullableOptional::Types::UserResponse]]
       def search_users(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        query_param_names = %i[query department role is_active]
         query_params = {}
         query_params["query"] = params[:query] if params.key?(:query)
         query_params["department"] = params[:department] if params.key?(:department)
         query_params["role"] = params[:role] if params.key?(:role)
         query_params["isActive"] = params[:is_active] if params.key?(:is_active)
-        params.except(*query_param_names)
 
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
@@ -204,7 +199,7 @@ module Seed
       # Create a complex profile to test nullable enums and unions
       #
       # @param request_options [Hash]
-      # @param params [Seed::NullableOptional::Types::ComplexProfile]
+      # @param _params [Seed::NullableOptional::Types::ComplexProfile]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -212,8 +207,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Seed::NullableOptional::Types::ComplexProfile]
-      def create_complex_profile(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+      def create_complex_profile(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
@@ -311,7 +305,7 @@ module Seed
       # Test endpoint for validating null deserialization
       #
       # @param request_options [Hash]
-      # @param params [Seed::NullableOptional::Types::DeserializationTestRequest]
+      # @param _params [Seed::NullableOptional::Types::DeserializationTestRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -319,8 +313,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Seed::NullableOptional::Types::DeserializationTestResponse]
-      def test_deserialization(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+      def test_deserialization(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
@@ -358,12 +351,10 @@ module Seed
       # @return [Array[Seed::NullableOptional::Types::UserResponse]]
       def filter_by_role(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        query_param_names = %i[role status secondary_role]
         query_params = {}
         query_params["role"] = params[:role] if params.key?(:role)
         query_params["status"] = params[:status] if params.key?(:status)
         query_params["secondaryRole"] = params[:secondary_role] if params.key?(:secondary_role)
-        params.except(*query_param_names)
 
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
@@ -456,7 +447,7 @@ module Seed
       # Get search results with nullable unions
       #
       # @param request_options [Hash]
-      # @param params [Seed::NullableOptional::Types::SearchRequest]
+      # @param _params [Seed::NullableOptional::Types::SearchRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -464,8 +455,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Array[Seed::NullableOptional::Types::SearchResult], nil]
-      def get_search_results(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+      def get_search_results(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",

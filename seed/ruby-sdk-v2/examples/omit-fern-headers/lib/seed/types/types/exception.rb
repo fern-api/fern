@@ -9,6 +9,7 @@ module Seed
         discriminant :type
 
         member -> { Seed::Types::Types::ExceptionInfo }, key: "GENERIC"
+
         member -> { Object }, key: "TIMEOUT"
       end
     end

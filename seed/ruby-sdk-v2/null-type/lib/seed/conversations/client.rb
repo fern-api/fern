@@ -13,7 +13,7 @@ module Seed
       # Place an outbound call or validate call setup with dry_run.
       #
       # @param request_options [Hash]
-      # @param params [Seed::Conversations::Types::OutboundCallConversationsRequest]
+      # @param _params [Seed::Conversations::Types::OutboundCallConversationsRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -21,8 +21,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Seed::Conversations::Types::OutboundCallConversationsResponse]
-      def outbound_call(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+      def outbound_call(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",

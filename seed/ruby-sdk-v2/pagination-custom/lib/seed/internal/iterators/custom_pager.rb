@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Seed
   module Internal
     # FooPager wraps a paginated response and provides navigation methods.
@@ -41,7 +39,6 @@ module Seed
       # @return [Boolean]
       def next_page?
         return false if @has_next_proc.nil?
-
         @has_next_proc.call(@current)
       end
 
@@ -50,7 +47,6 @@ module Seed
       # @return [Boolean]
       def prev_page?
         return false if @has_prev_proc.nil?
-
         @has_prev_proc.call(@current)
       end
 
@@ -60,7 +56,6 @@ module Seed
       def next_page
         return nil unless next_page?
         return nil if @get_next_proc.nil?
-
         @current = @get_next_proc.call(@current)
         @current
       end
@@ -71,7 +66,6 @@ module Seed
       def prev_page
         return nil unless prev_page?
         return nil if @get_prev_proc.nil?
-
         @current = @get_prev_proc.call(@current)
         @current
       end
@@ -85,7 +79,6 @@ module Seed
         loop do
           block.call(page)
           break unless next_page?
-
           page = next_page
           break if page.nil?
         end

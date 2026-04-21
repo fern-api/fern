@@ -12,7 +12,7 @@ module Seed
         end
 
         # @param request_options [Hash]
-        # @param params [Hash]
+        # @param _params [Hash]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
         # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -20,8 +20,7 @@ module Seed
         # @option request_options [Integer] :timeout_in_seconds
         #
         # @return [String]
-        def with_mixed_case(request_options: {}, **params)
-          Seed::Internal::Types::Utils.normalize_keys(params)
+        def with_mixed_case(request_options: {}, **_params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
@@ -41,7 +40,7 @@ module Seed
         end
 
         # @param request_options [Hash]
-        # @param params [Hash]
+        # @param _params [Hash]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
         # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -49,8 +48,7 @@ module Seed
         # @option request_options [Integer] :timeout_in_seconds
         #
         # @return [String]
-        def no_ending_slash(request_options: {}, **params)
-          Seed::Internal::Types::Utils.normalize_keys(params)
+        def no_ending_slash(request_options: {}, **_params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
@@ -70,7 +68,7 @@ module Seed
         end
 
         # @param request_options [Hash]
-        # @param params [Hash]
+        # @param _params [Hash]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
         # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -78,8 +76,7 @@ module Seed
         # @option request_options [Integer] :timeout_in_seconds
         #
         # @return [String]
-        def with_ending_slash(request_options: {}, **params)
-          Seed::Internal::Types::Utils.normalize_keys(params)
+        def with_ending_slash(request_options: {}, **_params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
@@ -99,7 +96,7 @@ module Seed
         end
 
         # @param request_options [Hash]
-        # @param params [Hash]
+        # @param _params [Hash]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
         # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -107,8 +104,7 @@ module Seed
         # @option request_options [Integer] :timeout_in_seconds
         #
         # @return [String]
-        def with_underscores(request_options: {}, **params)
-          Seed::Internal::Types::Utils.normalize_keys(params)
+        def with_underscores(request_options: {}, **_params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",

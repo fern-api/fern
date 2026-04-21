@@ -6,6 +6,7 @@ module Seed
       module Types
         class NonVoidFunctionSignature < Internal::Types::Model
           field :parameters, -> { Internal::Types::Array[Seed::V2::Problem::Types::Parameter] }, optional: false, nullable: false
+
           field :return_type, -> { Seed::Commons::Types::VariableType }, optional: false, nullable: false, api_name: "returnType"
         end
       end

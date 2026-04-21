@@ -77,11 +77,18 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         const authenticationParameters = this.getAuthenticationParameters();
         parameters.push(...authenticationParameters);
 
+        // Sort parameters: required (no initializer) before optional (with initializer)
+        const sortedParameters = [...parameters].sort((a, b) => {
+            const aOptional = a.initializer != null ? 1 : 0;
+            const bOptional = b.initializer != null ? 1 : 0;
+            return aOptional - bOptional;
+        });
+
         const method = ruby.method({
             name: "initialize",
             kind: ruby.MethodKind.Instance,
             parameters: {
-                keyword: parameters
+                keyword: sortedParameters
             },
             returnType: ruby.Type.void()
         });
@@ -517,7 +524,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 case "bearer":
                     headers.push({
                         key: ruby.TypeLiteral.string("Authorization"),
-                        value: ruby.TypeLiteral.string(`Bearer #{${TOKEN_PARAMETER_NAME}}`)
+                        value: ruby.TypeLiteral.interpolatedString(`Bearer #{${TOKEN_PARAMETER_NAME}}`)
                     });
                     break;
                 case "header": {
@@ -527,7 +534,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                         header.prefix != null ? `${header.prefix} #{${headerParamName}}` : `#{${headerParamName}}`;
                     headers.push({
                         key: ruby.TypeLiteral.string(headerName),
-                        value: ruby.TypeLiteral.string(headerValue)
+                        value: ruby.TypeLiteral.interpolatedString(headerValue)
                     });
                     break;
                 }

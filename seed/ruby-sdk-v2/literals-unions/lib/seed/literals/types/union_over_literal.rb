@@ -8,6 +8,7 @@ module Seed
         extend Seed::Internal::Types::Union
 
         member -> { String }
+
         member -> { String }
       end
     end

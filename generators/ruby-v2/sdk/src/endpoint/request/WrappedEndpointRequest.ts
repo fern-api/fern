@@ -61,10 +61,14 @@ export class WrappedEndpointRequest extends EndpointRequest {
             ? new DefaultValueExtractor(this.context)
             : undefined;
 
+        const hasRequestBody = this.endpoint.requestBody != null;
+
         return {
             code: ruby.codeblock((writer) => {
-                writer.write(`${QUERY_PARAM_NAMES_VN} = `);
-                writer.writeLine(`${toRubySymbolArray(this.getQueryParameterNames())}`);
+                if (hasRequestBody) {
+                    writer.write(`${QUERY_PARAM_NAMES_VN} = `);
+                    writer.writeLine(`${toRubySymbolArray(this.getQueryParameterNames())}`);
+                }
                 writer.writeLine(`${queryParameterBagName} = {}`);
                 for (const queryParam of this.endpoint.queryParameters) {
                     const snakeCaseName = this.case.snakeSafe(queryParam.name);
@@ -85,7 +89,9 @@ export class WrappedEndpointRequest extends EndpointRequest {
                         );
                     }
                 }
-                writer.writeLine(`params = params.except(*${QUERY_PARAM_NAMES_VN})`);
+                if (hasRequestBody) {
+                    writer.writeLine(`params = params.except(*${QUERY_PARAM_NAMES_VN})`);
+                }
             }),
             queryParameterBagReference: queryParameterBagName
         };

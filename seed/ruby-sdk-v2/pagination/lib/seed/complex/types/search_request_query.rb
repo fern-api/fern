@@ -7,6 +7,7 @@ module Seed
         extend Seed::Internal::Types::Union
 
         member -> { Seed::Complex::Types::SingleFilterSearchRequest }
+
         member -> { Seed::Complex::Types::MultipleFilterSearchRequest }
       end
     end

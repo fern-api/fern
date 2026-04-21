@@ -8,7 +8,9 @@ module Seed
         extend Seed::Internal::Types::Union
 
         member -> { String }
+
         member -> { Internal::Types::Array[String] }
+
         member -> { Seed::Union::Types::NestedUnionL1 }
       end
     end

@@ -47,7 +47,7 @@ module Seed
       # This endpoint is used to create a new user.
       #
       # @param request_options [Hash]
-      # @param params [Seed::User::Types::CreateUserRequest]
+      # @param _params [Seed::User::Types::CreateUserRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -55,8 +55,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Seed::User::Types::User]
-      def create_user(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+      def create_user(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",

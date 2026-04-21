@@ -84,8 +84,8 @@ class EndpointsContainerWireTest < WireMockTestCase
 
     @client.endpoints.container.get_and_return_set_of_objects(
       request: Set.new([{
-                         string: "string"
-                       }]),
+        string: "string"
+      }]),
       request_options: {
         additional_headers: {
           "X-Test-Id" => "endpoints.container.get_and_return_set_of_objects.0"

@@ -6,6 +6,7 @@ module Seed
       extend Seed::Internal::Types::Union
 
       member -> { Seed::Types::DocumentMetadata }
+
       member -> { Seed::Types::DocumentUploadResult }
     end
   end

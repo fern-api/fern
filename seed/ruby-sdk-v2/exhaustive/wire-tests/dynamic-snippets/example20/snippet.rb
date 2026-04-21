@@ -11,7 +11,7 @@ client.endpoints.object.get_and_return_nested_with_required_field(
   nested_object: {
     string: "string",
     integer: 1,
-    long: 1000000,
+    long: 1_000_000,
     double: 1.1,
     bool: true,
     datetime: "2024-01-15T09:30:00Z",

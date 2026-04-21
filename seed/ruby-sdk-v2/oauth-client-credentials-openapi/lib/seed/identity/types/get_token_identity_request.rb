@@ -5,6 +5,7 @@ module Seed
     module Types
       class GetTokenIdentityRequest < Internal::Types::Model
         field :username, -> { String }, optional: false, nullable: false
+
         field :password, -> { String }, optional: false, nullable: false
       end
     end

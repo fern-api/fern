@@ -9,6 +9,7 @@ module Seed
         discriminant :type
 
         member -> { Internal::Types::Array[Seed::Ast::Types::FieldValue] }, key: "LIST"
+
         member -> { Seed::Ast::Types::FieldValue }, key: "OPTIONAL"
       end
     end

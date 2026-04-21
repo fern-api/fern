@@ -11,7 +11,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Hash]
+      # @param _params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -20,8 +20,7 @@ module Seed
       # @option params [String] :x_test_endpoint_header
       #
       # @return [untyped]
-      def get_with_custom_header(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+      def get_with_custom_header(request_options: {}, **_params)
         headers = {}
         headers["X-TEST-ENDPOINT-HEADER"] = params[:x_test_endpoint_header] if params[:x_test_endpoint_header]
 

@@ -15,7 +15,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Seed::Ec2::Types::BootInstanceRequest]
+      # @param _params [Seed::Ec2::Types::BootInstanceRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -23,8 +23,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [untyped]
-      def boot_instance(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+      def boot_instance(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url] || @base_url || @environment&.dig(:ec2),
           method: "POST",

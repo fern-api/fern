@@ -68,24 +68,25 @@ export class Class_ extends Module_ {
             return;
         }
 
-        if (this.statements.length) {
+        if (this.statements.length || this.methods.length) {
             writer.newLine();
             writer.indent();
 
             this.statements.forEach((statement, index) => {
                 statement.write(writer);
-                writer.newLine();
+                writer.writeNewLineIfLastLineNot();
+                if (index < this.statements.length - 1) {
+                    writer.newLine();
+                }
             });
 
-            writer.dedent();
-        }
-
-        if (this.methods.length) {
-            writer.newLine();
-            writer.indent();
-            this.methods.forEach((method) => {
+            this.methods.forEach((method, index) => {
+                if (index > 0 || this.statements.length > 0) {
+                    writer.newLine();
+                }
                 method.write(writer);
             });
+
             writer.dedent();
         }
 

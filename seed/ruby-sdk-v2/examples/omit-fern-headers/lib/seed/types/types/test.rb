@@ -9,6 +9,7 @@ module Seed
         discriminant :type
 
         member -> { Internal::Types::Boolean }, key: "AND"
+
         member -> { Internal::Types::Boolean }, key: "OR"
       end
     end

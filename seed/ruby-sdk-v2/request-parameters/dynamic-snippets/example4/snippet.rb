@@ -35,6 +35,6 @@ client.user.get_username(
     name: "name",
     tags: %w[tags tags]
   },
-  long_param: 1000000,
+  long_param: 1_000_000,
   big_int_param: "1000000"
 )

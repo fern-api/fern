@@ -8,7 +8,9 @@ module Seed
         extend Seed::Internal::Types::Union
 
         member -> { Internal::Types::Boolean }
+
         member -> { Internal::Types::Array[String] }
+
         member -> { Internal::Types::Array[String] }
       end
     end

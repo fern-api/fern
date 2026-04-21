@@ -6,6 +6,7 @@ module Seed
       extend Seed::Internal::Types::Union
 
       member -> { Seed::Types::BasicType }
+
       member -> { Seed::Types::ComplexType }
     end
   end

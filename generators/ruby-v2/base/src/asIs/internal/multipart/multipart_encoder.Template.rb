@@ -138,4 +138,4 @@ module <%= gem_namespace %>
       end
     end
   end
-end 
+end

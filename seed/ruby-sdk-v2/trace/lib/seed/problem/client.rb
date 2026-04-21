@@ -13,7 +13,7 @@ module Seed
       # Creates a problem
       #
       # @param request_options [Hash]
-      # @param params [Seed::Problem::Types::CreateProblemRequest]
+      # @param _params [Seed::Problem::Types::CreateProblemRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -21,8 +21,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Seed::Problem::Types::CreateProblemResponse]
-      def create_problem(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+      def create_problem(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
@@ -114,7 +113,7 @@ module Seed
       # Returns default starter files for problem
       #
       # @param request_options [Hash]
-      # @param params [Seed::Problem::Types::GetDefaultStarterFilesRequest]
+      # @param _params [Seed::Problem::Types::GetDefaultStarterFilesRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -122,8 +121,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Seed::Problem::Types::GetDefaultStarterFilesResponse]
-      def get_default_starter_files(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+      def get_default_starter_files(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",

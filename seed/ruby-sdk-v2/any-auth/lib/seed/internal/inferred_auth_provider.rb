@@ -32,9 +32,10 @@ module Seed
       def auth_headers
         access_token = token
         {
-          "Authorization" => "Bearer #{access_token}"
+          "Authorization" => "Bearer #{access_token}",
         }
       end
+
       # Checks if the token needs to be refreshed.
       # Returns true if the token will expire within the buffer period.
       #
@@ -44,6 +45,7 @@ module Seed
 
         Time.now >= (@expires_at - BUFFER_IN_SECONDS)
       end
+
       # Refreshes the access token by calling the token endpoint.
       #
       # @return [String]
@@ -52,7 +54,7 @@ module Seed
           client_id: @options[:client_id],
           client_secret: @options[:client_secret],
           audience: "https://api.example.com",
-          grant_type: "client_credentials"
+          grant_type: "client_credentials",
         }
 
         token_response = @auth_client.get_token(**request_params)

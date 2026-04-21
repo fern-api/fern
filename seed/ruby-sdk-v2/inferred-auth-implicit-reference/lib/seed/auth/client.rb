@@ -11,7 +11,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Seed::Auth::Types::GetTokenRequest]
+      # @param _params [Seed::Auth::Types::GetTokenRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -19,8 +19,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Seed::Auth::Types::TokenResponse]
-      def get_token_with_client_credentials(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+      def get_token_with_client_credentials(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
@@ -43,7 +42,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Seed::Auth::Types::RefreshTokenRequest]
+      # @param _params [Seed::Auth::Types::RefreshTokenRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -51,8 +50,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Seed::Auth::Types::TokenResponse]
-      def refresh_token(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+      def refresh_token(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",

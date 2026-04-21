@@ -2,8 +2,8 @@
 
 module Seed
   class MyClient
-    # @param base_url [String, nil]
     # @param token [String]
+    # @param base_url [String, nil]
     #
     # @return [void]
     def initialize(token:, base_url: nil)

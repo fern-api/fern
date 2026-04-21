@@ -2,13 +2,13 @@
 
 module Seed
   class Client
+    # @param client_id [String]
+    # @param client_secret [String]
     # @param base_url [String, nil]
     # @param token [String]
     # @param api_key [String]
     # @param username [String]
     # @param password [String]
-    # @param client_id [String]
-    # @param client_secret [String]
     #
     # @return [void]
     def initialize(client_id:, client_secret:, base_url: nil, token: ENV.fetch("MY_TOKEN", nil), api_key: ENV.fetch("MY_API_KEY", nil), username: ENV.fetch("MY_USERNAME", nil), password: ENV.fetch("MY_PASSWORD", nil))
@@ -35,9 +35,11 @@ module Seed
         "User-Agent" => "fern_endpoint-security-auth/0.0.1",
         "X-Fern-Language" => "Ruby",
         Authorization: "Bearer #{token}",
-        "X-API-Key" => api_key.to_s
+        "X-API-Key" => "#{api_key}"
       }
-      headers["Authorization"] = "Basic #{Base64.strict_encode64("#{username}:#{password}")}" if !username.nil? && !password.nil?
+      if !username.nil? && !password.nil?
+        headers["Authorization"] = "Basic #{Base64.strict_encode64("#{username}:#{password}")}"
+      end
       @raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: headers.merge(@auth_provider.auth_headers)

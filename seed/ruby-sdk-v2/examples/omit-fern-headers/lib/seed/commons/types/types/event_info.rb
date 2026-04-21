@@ -10,6 +10,7 @@ module Seed
           discriminant :type
 
           member -> { Seed::Commons::Types::Types::Metadata }, key: "METADATA"
+
           member -> { String }, key: "TAG"
         end
       end

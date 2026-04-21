@@ -43,7 +43,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Seed::Union::Types::Shape]
+      # @param _params [Seed::Union::Types::Shape]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -51,8 +51,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Boolean]
-      def update(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+      def update(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PATCH",

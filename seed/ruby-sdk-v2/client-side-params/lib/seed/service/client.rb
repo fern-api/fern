@@ -30,7 +30,6 @@ module Seed
       # @return [Array[Seed::Types::Types::Resource]]
       def list_resources(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        query_param_names = %i[page per_page sort order include_totals fields search]
         query_params = {}
         query_params["page"] = params[:page] if params.key?(:page)
         query_params["per_page"] = params[:per_page] if params.key?(:per_page)
@@ -39,7 +38,6 @@ module Seed
         query_params["include_totals"] = params[:include_totals] if params.key?(:include_totals)
         query_params["fields"] = params[:fields] if params.key?(:fields)
         query_params["search"] = params[:search] if params.key?(:search)
-        params.except(*query_param_names)
 
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
@@ -76,11 +74,9 @@ module Seed
       # @return [Seed::Types::Types::Resource]
       def get_resource(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        query_param_names = %i[include_metadata format]
         query_params = {}
         query_params["include_metadata"] = params[:include_metadata] if params.key?(:include_metadata)
         query_params["format"] = params[:format] if params.key?(:format)
-        params = params.except(*query_param_names)
 
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
@@ -119,14 +115,14 @@ module Seed
       def search_resources(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request_data = Seed::Service::Types::SearchResourcesRequest.new(params).to_h
-        non_body_param_names = %w[limit offset]
+        non_body_param_names = ["limit", "offset"]
         body = request_data.except(*non_body_param_names)
 
         query_param_names = %i[limit offset]
         query_params = {}
         query_params["limit"] = params[:limit] if params.key?(:limit)
         query_params["offset"] = params[:offset] if params.key?(:offset)
-        params.except(*query_param_names)
+        params = params.except(*query_param_names)
 
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
@@ -171,7 +167,6 @@ module Seed
       # @return [Seed::Types::Types::PaginatedUserResponse]
       def list_users(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        query_param_names = %i[page per_page include_totals sort connection q search_engine fields]
         query_params = {}
         query_params["page"] = params[:page] if params.key?(:page)
         query_params["per_page"] = params[:per_page] if params.key?(:per_page)
@@ -181,7 +176,6 @@ module Seed
         query_params["q"] = params[:q] if params.key?(:q)
         query_params["search_engine"] = params[:search_engine] if params.key?(:search_engine)
         query_params["fields"] = params[:fields] if params.key?(:fields)
-        params.except(*query_param_names)
 
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
@@ -220,11 +214,9 @@ module Seed
       # @return [Seed::Types::Types::User]
       def get_user_by_id(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        query_param_names = %i[fields include_fields]
         query_params = {}
         query_params["fields"] = params[:fields] if params.key?(:fields)
         query_params["include_fields"] = params[:include_fields] if params.key?(:include_fields)
-        params = params.except(*query_param_names)
 
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
@@ -250,7 +242,7 @@ module Seed
       # Create a new user
       #
       # @param request_options [Hash]
-      # @param params [Seed::Types::Types::CreateUserRequest]
+      # @param _params [Seed::Types::Types::CreateUserRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -258,8 +250,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Seed::Types::Types::User]
-      def create_user(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.normalize_keys(params)
+      def create_user(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
@@ -364,12 +355,10 @@ module Seed
       # @return [Array[Seed::Types::Types::Connection]]
       def list_connections(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        query_param_names = %i[strategy name fields]
         query_params = {}
         query_params["strategy"] = params[:strategy] if params.key?(:strategy)
         query_params["name"] = params[:name] if params.key?(:name)
         query_params["fields"] = params[:fields] if params.key?(:fields)
-        params.except(*query_param_names)
 
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
@@ -405,10 +394,8 @@ module Seed
       # @return [Seed::Types::Types::Connection]
       def get_connection(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        query_param_names = %i[fields]
         query_params = {}
         query_params["fields"] = params[:fields] if params.key?(:fields)
-        params = params.except(*query_param_names)
 
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
@@ -452,7 +439,6 @@ module Seed
       # @return [Seed::Types::Types::PaginatedClientResponse]
       def list_clients(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        query_param_names = %i[fields include_fields page per_page include_totals is_global is_first_party app_type]
         query_params = {}
         query_params["fields"] = params[:fields] if params.key?(:fields)
         query_params["include_fields"] = params[:include_fields] if params.key?(:include_fields)
@@ -462,7 +448,6 @@ module Seed
         query_params["is_global"] = params[:is_global] if params.key?(:is_global)
         query_params["is_first_party"] = params[:is_first_party] if params.key?(:is_first_party)
         query_params["app_type"] = params[:app_type] if params.key?(:app_type)
-        params.except(*query_param_names)
 
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
@@ -501,11 +486,9 @@ module Seed
       # @return [Seed::Types::Types::Client]
       def get_client(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        query_param_names = %i[fields include_fields]
         query_params = {}
         query_params["fields"] = params[:fields] if params.key?(:fields)
         query_params["include_fields"] = params[:include_fields] if params.key?(:include_fields)
-        params = params.except(*query_param_names)
 
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],

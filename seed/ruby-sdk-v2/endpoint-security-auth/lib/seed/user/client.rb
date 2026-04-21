@@ -11,7 +11,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Hash]
+      # @param _params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -19,8 +19,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Array[Seed::User::Types::User]]
-      def get_with_bearer(request_options: {}, **params)
-        Seed::Internal::Types::Utils.normalize_keys(params)
+      def get_with_bearer(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
@@ -40,7 +39,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Hash]
+      # @param _params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -48,8 +47,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Array[Seed::User::Types::User]]
-      def get_with_api_key(request_options: {}, **params)
-        Seed::Internal::Types::Utils.normalize_keys(params)
+      def get_with_api_key(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
@@ -69,7 +67,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Hash]
+      # @param _params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -77,8 +75,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Array[Seed::User::Types::User]]
-      def get_with_o_auth(request_options: {}, **params)
-        Seed::Internal::Types::Utils.normalize_keys(params)
+      def get_with_o_auth(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
@@ -98,7 +95,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Hash]
+      # @param _params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -106,8 +103,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Array[Seed::User::Types::User]]
-      def get_with_basic(request_options: {}, **params)
-        Seed::Internal::Types::Utils.normalize_keys(params)
+      def get_with_basic(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
@@ -127,7 +123,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Hash]
+      # @param _params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -135,8 +131,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Array[Seed::User::Types::User]]
-      def get_with_inferred_auth(request_options: {}, **params)
-        Seed::Internal::Types::Utils.normalize_keys(params)
+      def get_with_inferred_auth(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
@@ -156,7 +151,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Hash]
+      # @param _params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -164,8 +159,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Array[Seed::User::Types::User]]
-      def get_with_any_auth(request_options: {}, **params)
-        Seed::Internal::Types::Utils.normalize_keys(params)
+      def get_with_any_auth(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
@@ -185,7 +179,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Hash]
+      # @param _params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -193,8 +187,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Array[Seed::User::Types::User]]
-      def get_with_all_auth(request_options: {}, **params)
-        Seed::Internal::Types::Utils.normalize_keys(params)
+      def get_with_all_auth(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",

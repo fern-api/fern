@@ -7,6 +7,7 @@ module Seed
         extend Seed::Internal::Types::Union
 
         member -> { Seed::Ast::Types::BranchNode }
+
         member -> { Seed::Ast::Types::LeafNode }
       end
     end

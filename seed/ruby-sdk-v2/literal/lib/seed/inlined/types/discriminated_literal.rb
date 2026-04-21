@@ -9,8 +9,11 @@ module Seed
         discriminant :type
 
         member -> { String }, key: "CUSTOM_NAME"
+
         member -> { String }, key: "DEFAULT_NAME"
+
         member -> { Internal::Types::Boolean }, key: "GEORGE"
+
         member -> { Internal::Types::Boolean }, key: "LITERAL_GEORGE"
       end
     end

@@ -9,6 +9,7 @@ module Seed
         discriminant :type
 
         member -> { Seed::Types::Types::FirstItemType }, key: "FIRST_ITEM_TYPE"
+
         member -> { Seed::Types::Types::SecondItemType }, key: "SECOND_ITEM_TYPE"
       end
     end

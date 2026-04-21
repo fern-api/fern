@@ -8,8 +8,11 @@ module Seed
       discriminant :event
 
       member -> { Seed::Types::ProtocolHeartbeat }, key: "HEARTBEAT"
+
       member -> { Seed::Types::ProtocolStringEvent }, key: "STRING_DATA"
+
       member -> { Seed::Types::ProtocolNumberEvent }, key: "NUMBER_DATA"
+
       member -> { Seed::Types::ProtocolObjectEvent }, key: "OBJECT_DATA"
     end
   end

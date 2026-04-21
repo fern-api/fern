@@ -21,7 +21,7 @@ client.service.create_big_entity(
     tag: "tag",
     book: "book",
     metadata: {},
-    revenue: 1000000
+    revenue: 1_000_000
   },
   entity: {
     type: "primitive",

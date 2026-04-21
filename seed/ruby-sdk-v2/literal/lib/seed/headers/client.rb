@@ -24,7 +24,7 @@ module Seed
       def send_(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request_data = Seed::Headers::Types::SendLiteralsInHeadersRequest.new(params).to_h
-        non_body_param_names = %w[X-Endpoint-Version X-Async]
+        non_body_param_names = ["X-Endpoint-Version", "X-Async"]
         body = request_data.except(*non_body_param_names)
 
         headers = {}

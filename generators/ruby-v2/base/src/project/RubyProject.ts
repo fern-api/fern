@@ -349,40 +349,39 @@ class GemspecFile {
             # frozen_string_literal: true
 
             require_relative "lib/${moduleFolderName}/version"
-            require_relative "${CUSTOM_GEMSPEC_FILENAME}"
+            require_relative "${CUSTOM_GEMSPEC_FILENAME.replace(".rb", "")}"
 
-            # Note: A handful of these fields are required as part of the Ruby specification.
+            # NOTE: A handful of these fields are required as part of the Ruby specification.
             #       You can change them here or overwrite them in the custom gemspec file.
             Gem::Specification.new do |spec|
-            spec.name = "${gemName}"
-            spec.authors = ["${moduleName}"]
-            spec.version = ${moduleName}::VERSION
-            spec.summary = "Ruby client library for the ${moduleName} API"
-            spec.description = "The ${moduleName} Ruby library provides convenient access to the ${moduleName} API from Ruby."
-            spec.required_ruby_version = ">= 3.3.0"
-            spec.metadata["rubygems_mfa_required"] = "true"
+              spec.name = "${gemName}"
+              spec.authors = ["${moduleName}"]
+              spec.version = ${moduleName}::VERSION
+              spec.summary = "Ruby client library for the ${moduleName} API"
+              spec.description = "The ${moduleName} Ruby library provides convenient access to the ${moduleName} API from Ruby."
+              spec.required_ruby_version = ">= 3.3.0"
+              spec.metadata["rubygems_mfa_required"] = "true"
 
-            # Specify which files should be added to the gem when it is released.
-            # The \`git ls-files -z\` loads the files in the RubyGem that have been added into git.
-            gemspec = File.basename(__FILE__)
-            spec.files = IO.popen(%w[git ls-files -z], chdir: __dir__, err: IO::NULL) do |ls|
+              # Specify which files should be added to the gem when it is released.
+              # The \`git ls-files -z\` loads the files in the RubyGem that have been added into git.
+              gemspec = File.basename(__FILE__)
+              spec.files = IO.popen(%w[git ls-files -z], chdir: __dir__, err: IO::NULL) do |ls|
                 ls.readlines("\x0", chomp: true).reject do |f|
-                (f == gemspec) ||
+                  (f == gemspec) ||
                     f.start_with?(*%w[bin/ test/ spec/ features/ .git appveyor Gemfile])
                 end
+              end
+              spec.bindir = "exe"
+              spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
+              spec.require_paths = ["lib"]
+${dependencies.length > 0 ? "              " + dependencies.map(depToGemspecString).join("\n              ") + "\n" : ""}              # For more information and examples about making a new gem, check out our
+              # guide at: https://bundler.io/guides/creating_gem.html
+
+              # Load custom gemspec configuration if it exists
+              custom_gemspec_file = File.join(__dir__, "${CUSTOM_GEMSPEC_FILENAME}")
+              add_custom_gemspec_data(spec) if File.exist?(custom_gemspec_file)
             end
-            spec.bindir = "exe"
-            spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
-            spec.require_paths = ["lib"]
-            ${dependencies.map(depToGemspecString).join("\n            ")}
-            # For more information and examples about making a new gem, check out our
-            # guide at: https://bundler.io/guides/creating_gem.html
-            
-            # Load custom gemspec configuration if it exists
-            custom_gemspec_file = File.join(__dir__, "${CUSTOM_GEMSPEC_FILENAME}")
-            add_custom_gemspec_data(spec) if File.exist?(custom_gemspec_file)
-            end
-        `;
+        ` + "\n";
     }
 }
 
@@ -407,20 +406,20 @@ class CustomGemspecFile {
             # frozen_string_literal: true
 
             # Custom gemspec configuration file
-            # This file is automatically loaded by the main gemspec file. The 'spec' variable is available 
-            # in this context from the main gemspec file. You can modify this file to add custom metadata, 
+            # This file is automatically loaded by the main gemspec file. The 'spec' variable is available
+            # in this context from the main gemspec file. You can modify this file to add custom metadata,
             # dependencies, or other gemspec configurations. If you do make changes to this file, you will
             # need to add it to the .fernignore file to prevent your changes from being overwritten.
 
             def add_custom_gemspec_data(spec)
-                # Example custom configurations (uncomment and modify as needed)
+              # Example custom configurations (uncomment and modify as needed)
 
-                # spec.authors = ["Your name"]
-                # spec.email = ["your.email@example.com"]
-                # spec.homepage = "https://github.com/your-org/${moduleName.toLowerCase()}-ruby"
-                # spec.license = "Your license"
+              # spec.authors = ["Your name"]
+              # spec.email = ["your.email@example.com"]
+              # spec.homepage = "https://github.com/your-org/${moduleName.toLowerCase()}-ruby"
+              # spec.license = "Your license"
             end
-        `;
+        ` + "\n";
     }
 }
 
@@ -448,17 +447,16 @@ class Gemfile {
 
             source "https://rubygems.org"
 
-                gemspec
+            gemspec
 
-                group :test, :development do
-
-                ${devDependencies.map(depToGemfileString).join("\n                ")}
+            group :test, :development do
+              ${devDependencies.map(depToGemfileString).join("\n              ")}
             end
 
             # Load custom Gemfile configuration if it exists
             custom_gemfile = File.join(__dir__, "${CUSTOM_GEMFILE_FILENAME}")
             eval_gemfile(custom_gemfile) if File.exist?(custom_gemfile)
-        `;
+        ` + "\n";
     }
 }
 
@@ -491,7 +489,7 @@ class CustomGemfile {
             # end
 
             # Add your custom gem dependencies here
-        `;
+        ` + "\n";
     }
 }
 
@@ -527,10 +525,10 @@ class Rakefile {
 
             # Run only the custom test file
             Minitest::TestTask.create(:customtest) do |t|
-            t.libs << "test"
-            t.test_globs = ["test/${CUSTOM_TEST_FILENAME}"]
+              t.libs << "test"
+              t.test_globs = ["test/${CUSTOM_TEST_FILENAME}"]
             end
-        `;
+        ` + "\n";
     }
 }
 
@@ -558,22 +556,20 @@ class CustomTestFile {
         return dedent`
             # frozen_string_literal: true
 
-            =begin
-            This is a custom test file, if you wish to add more tests
-            to your SDK.
-            Be sure to mark this file in \`.fernignore\`.
-            
-            If you include example requests/responses in your fern definition,
-            you will have tests automatically generated for you.
-            =end
+            # This is a custom test file, if you wish to add more tests
+            # to your SDK.
+            # Be sure to mark this file in \`.fernignore\`.
+            #
+            # If you include example requests/responses in your fern definition,
+            # you will have tests automatically generated for you.
 
             # This test is run via command line: rake customtest
             describe "Custom Test" do
-                it "Default" do
-                    refute false
-                end
+              it "Default" do
+                refute false
+              end
             end
-        `;
+        ` + "\n";
     }
 
     public async writeFile(): Promise<void> {
@@ -614,9 +610,9 @@ class VersionFile {
             # frozen_string_literal: true
 
             module ${seedName}
-                VERSION = "${version}"
+              VERSION = "${version}"
             end
-        `;
+        ` + "\n";
     }
 
     public async writeFile(): Promise<void> {
@@ -719,7 +715,6 @@ class ModuleFile {
             Array.from(relativeImportPaths)
                 .filter((importPath) => importPath.endsWith(".rb"))
                 .map((importPath) => `require_relative "${importPath.replaceAll(".rb", "")}"`)
-
                 .join("\n");
 
         // Add optional user require paths hook at the end (only if configured)
@@ -739,10 +734,10 @@ class ModuleFile {
   require_relative relative_path if File.exist?(absolute_path)
 end`;
 
-            return dedent`${contents}` + requirePathsHook;
+            return dedent`${contents}` + requirePathsHook + "\n";
         }
 
-        return dedent`${contents}`;
+        return dedent`${contents}` + "\n";
     }
 
     public async writeFile(): Promise<void> {

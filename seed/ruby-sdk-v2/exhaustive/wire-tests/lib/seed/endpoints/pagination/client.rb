@@ -26,11 +26,9 @@ module Seed
         # @return [Seed::Endpoints::Pagination::Types::PaginatedResponse]
         def list_items(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
-          query_param_names = %i[cursor limit]
           query_params = {}
           query_params["cursor"] = params[:cursor] if params.key?(:cursor)
           query_params["limit"] = params[:limit] if params.key?(:limit)
-          params.except(*query_param_names)
 
           Seed::Internal::CursorItemIterator.new(
             cursor_field: :next_,
