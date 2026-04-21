@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix AI example enhancement overwriting native OpenAPI `examples:` on
+    schema-backed request and response bodies. These examples are populated
+    into v2RequestBodies[i].v2Examples.userSpecifiedExamples (or the
+    equivalent field on response bodies) rather than endpoint-level
+    v2Examples. The AI enhancer's detection now checks all three levels so
+    endpoints that already have user-authored examples are skipped.
+  type: fix
