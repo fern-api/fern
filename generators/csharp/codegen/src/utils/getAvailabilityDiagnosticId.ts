@@ -1,6 +1,8 @@
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 
+import { camelCase, upperFirst } from "./text.js";
+
 type AvailabilityStatus = FernIr.AvailabilityStatus;
 
 /**
@@ -56,6 +58,27 @@ export function resolveDiagnosticPrefix(args: { override: string | undefined; ro
         return derived;
     }
     return FALLBACK_DIAGNOSTIC_PREFIX;
+}
+
+/**
+ * Mirrors the root-namespace derivation used by {@link Generation.settings.namespace} in
+ * `generation-info.ts`: if the customer supplied an explicit namespace, use it verbatim;
+ * otherwise combine `organization` + `workspaceName` and normalize to PascalCase.
+ *
+ * Consumers that only know the generator-exec-config (e.g., the CLI's dynamic-snippets
+ * runner) use this helper to compute the same prefix the SDK generator itself emits,
+ * keeping `[Experimental]` diagnostic IDs in sync between SDK code and suppressing
+ * `<NoWarn>` lists in adjacent projects.
+ */
+export function deriveRootNamespace(args: {
+    explicitNamespace: string | undefined;
+    organization: string;
+    workspaceName: string;
+}): string {
+    if (args.explicitNamespace != null && args.explicitNamespace.length > 0) {
+        return args.explicitNamespace;
+    }
+    return upperFirst(camelCase(`${args.organization}_${args.workspaceName}`));
 }
 
 /**

@@ -1,5 +1,5 @@
 import { Style } from "@fern-api/browser-compatible-base-generator";
-import { resolveDiagnosticPrefix } from "@fern-api/csharp-codegen";
+import { deriveRootNamespace, resolveDiagnosticPrefix } from "@fern-api/csharp-codegen";
 import { Config, DynamicSnippetsGenerator } from "@fern-api/csharp-dynamic-snippets";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { dynamic } from "@fern-api/ir-sdk";
@@ -116,8 +116,13 @@ export class DynamicSnippetsCsharpTestGenerator {
         }
         const overrideRaw = customConfig.availabilityDiagnosticPrefix;
         const override = typeof overrideRaw === "string" ? overrideRaw : undefined;
-        const namespaceRaw = customConfig.namespace;
-        const rootNamespace = typeof namespaceRaw === "string" ? namespaceRaw : "";
+        const explicitNamespaceRaw = customConfig.namespace;
+        const explicitNamespace = typeof explicitNamespaceRaw === "string" ? explicitNamespaceRaw : undefined;
+        const rootNamespace = deriveRootNamespace({
+            explicitNamespace,
+            organization: this.generatorConfig.organization ?? "",
+            workspaceName: this.generatorConfig.workspaceName ?? ""
+        });
         const prefix = resolveDiagnosticPrefix({ override, rootNamespace });
         return `${prefix}0001;${prefix}0002`;
     }

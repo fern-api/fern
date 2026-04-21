@@ -4,7 +4,7 @@
     <RootNamespace>Snippets</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <NoWarn>$(NoWarn);FERN0001;FERN0002</NoWarn>
+    <NoWarn>$(NoWarn);SEEDDO0001;SEEDDO0002</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\**\*.csproj" Exclude="..\**\*.Test.csproj;..\Snippets\*.csproj" />

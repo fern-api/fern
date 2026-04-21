@@ -15,6 +15,7 @@ export { CsharpConfigSchema } from "./custom-config/index.js";
 export { escapeForCSharpString } from "./utils/escapeForCSharpString.js";
 export {
     DIAGNOSTIC_PREFIX_PATTERN,
+    deriveRootNamespace,
     FALLBACK_DIAGNOSTIC_PREFIX,
     getDiagnosticId,
     resolveDiagnosticPrefix
