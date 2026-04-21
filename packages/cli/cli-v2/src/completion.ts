@@ -57,6 +57,10 @@ interface RawFernYml {
         | string;
 }
 
+function isRawFernYml(value: unknown): value is RawFernYml {
+    return value != null && typeof value === "object";
+}
+
 /**
  * Walk up from `start` looking for fern.yml and parse it as untyped YAML.
  * Returns undefined if not found or unparseable.
@@ -68,10 +72,10 @@ async function readFernYmlRaw(start: string): Promise<RawFernYml | undefined> {
         try {
             const content = await readFile(candidate, "utf-8");
             const parsed = yaml.load(content);
-            if (parsed != null && typeof parsed === "object") {
-                return parsed as RawFernYml;
+            if (isRawFernYml(parsed)) {
+                return parsed;
             }
-            return undefined;
+            // file found but not an object — continue walking up
         } catch {
             // file not found or unreadable — walk up
         }
@@ -127,5 +131,5 @@ function extractInstances(raw: RawFernYml): string[] {
     if (!Array.isArray(raw.docs.instances)) {
         return [];
     }
-    return raw.docs.instances.filter((inst) => typeof inst?.url === "string").map((inst) => inst.url as string);
+    return raw.docs.instances.flatMap((inst) => (typeof inst?.url === "string" ? [inst.url] : []));
 }

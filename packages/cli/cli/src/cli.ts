@@ -91,13 +91,15 @@ import { RUNTIME } from "./runtime.js";
 void runCli();
 
 async function runCli() {
-    getOrCreateFernRunId();
-
     // Shell completion must be fast and side-effect-free. When the shell
     // invokes `fern --get-yargs-completions …` we skip version redirection
     // (network call) and suppress upgrade notices so TAB never produces
     // extraneous output.
     const isCompletion = process.argv.includes("--get-yargs-completions");
+
+    if (!isCompletion) {
+        getOrCreateFernRunId();
+    }
 
     const isLocal = process.argv.includes("--local");
     const cliContext = await CliContext.create(process.stdout, process.stderr, { isLocal });

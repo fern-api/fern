@@ -44,15 +44,17 @@ function completionHandler(
     const prev = args[args.length - 2];
 
     if (prev === "--group" || prev === "--api" || prev === "--instance") {
-        void getCompletionValues(process.cwd()).then((values) => {
-            if (prev === "--group") {
-                done(values.groups);
-            } else if (prev === "--api") {
-                done(values.apis);
-            } else {
-                done(values.instances);
-            }
-        });
+        void getCompletionValues(process.cwd())
+            .then((values) => {
+                if (prev === "--group") {
+                    done(values.groups);
+                } else if (prev === "--api") {
+                    done(values.apis);
+                } else {
+                    done(values.instances);
+                }
+            })
+            .catch(() => done([]));
         return;
     }
 
