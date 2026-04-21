@@ -1679,10 +1679,4 @@ aiohttp = ["aiohttp", "httpx-aiohttp"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-<<<<<<< HEAD
 content-hash = "ad45540d28406394547ed6dac25dbfdfadc283992602e4cfc5b293b051a9ecf4"
-||||||| parent of 81484d932b2 (fix(python): bump pytest to ^9.0.3 in generated SDK pyproject.toml)
-content-hash = "cdde23ef42dd3499ec0bb7a747ed4029d24e426bfe00e6819f9b3712c56d4927"
-=======
-content-hash = "aa5da99fca94fdbb7238e5b1ce36b4385be7b2b60a377eea10d37b56fa581676"
->>>>>>> 81484d932b2 (fix(python): bump pytest to ^9.0.3 in generated SDK pyproject.toml)
