@@ -1043,8 +1043,8 @@ jobs:
               [ -f "$f" ] && cp "$f" "${RUN_DIR}/e2e/"
             done
 
-            # Remove empty run directories
-            if ! ls "${RUN_DIR}"/*.jsonl 1>/dev/null 2>&1; then
+            # Remove empty run directories (check both generator and E2E artifacts)
+            if ! ls "${RUN_DIR}"/*.jsonl 1>/dev/null 2>&1 && ! ls "${RUN_DIR}"/e2e/*.jsonl 1>/dev/null 2>&1; then
               echo "::warning::No artifacts found for run ${RUN_ID}, skipping"
               rm -rf "${RUN_DIR}"
             fi
