@@ -152,16 +152,55 @@ public final class DefaultValueExtractor {
 
     /** Extracts the effective default value for a parameter, preferring clientDefault over type-level defaults. */
     public Optional<CodeBlock> extractEffectiveDefault(TypeReference typeReference, Optional<Literal> clientDefault) {
-        Optional<CodeBlock> clientDefaultValue = extractClientDefault(clientDefault);
-        if (clientDefaultValue.isPresent()) {
-            return clientDefaultValue;
+        if (isClientDefaultCompatible(typeReference, clientDefault)) {
+            Optional<CodeBlock> clientDefaultValue = extractClientDefault(clientDefault);
+            if (clientDefaultValue.isPresent()) {
+                return clientDefaultValue;
+            }
         }
         return extractDefaultValue(typeReference);
     }
 
     /** Checks whether a parameter has any default (clientDefault or type-level). */
     public boolean hasAnyDefault(TypeReference typeReference, Optional<Literal> clientDefault) {
-        return hasClientDefault(clientDefault) || hasDefaultValue(typeReference);
+        return (hasClientDefault(clientDefault) && isClientDefaultCompatible(typeReference, clientDefault))
+                || hasDefaultValue(typeReference);
+    }
+
+    /**
+     * Checks whether the clientDefault literal type is compatible with the parameter's resolved type.
+     * A String literal is only compatible with string-typed parameters, and a Boolean literal
+     * is only compatible with boolean-typed parameters. For other types (enums, integers, etc.),
+     * clientDefault cannot be used directly and must fall through to type-level defaults.
+     */
+    private boolean isClientDefaultCompatible(TypeReference typeReference, Optional<Literal> clientDefault) {
+        if (!clientDefault.isPresent()) {
+            return false;
+        }
+        TypeReference innerType = unwrapContainers(typeReference);
+        if (innerType.isPrimitive()) {
+            PrimitiveType primitive = innerType.getPrimitive().get();
+            boolean isString = clientDefault.get().isString()
+                    && primitive.getV1().equals(com.fern.ir.model.types.PrimitiveTypeV1.STRING);
+            boolean isBoolean = clientDefault.get().isBoolean()
+                    && primitive.getV1().equals(com.fern.ir.model.types.PrimitiveTypeV1.BOOLEAN);
+            return isString || isBoolean;
+        }
+        return false;
+    }
+
+    /** Unwraps optional and nullable containers to get the innermost type reference. */
+    private static TypeReference unwrapContainers(TypeReference typeReference) {
+        if (typeReference.isContainer()) {
+            ContainerType container = typeReference.getContainer().get();
+            if (container.isOptional()) {
+                return unwrapContainers(container.getOptional().get());
+            }
+            if (container.isNullable()) {
+                return unwrapContainers(container.getNullable().get());
+            }
+        }
+        return typeReference;
     }
 
     private Optional<CodeBlock> extractDefaultValueInternal(TypeReference typeReference) {
