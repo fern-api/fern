@@ -1,5 +1,5 @@
 import { addPrefixToString } from "@fern-api/core-utils";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import path from "path";
 import { z } from "zod";
 
@@ -31,7 +31,7 @@ export async function validateSchema<T>({
         "\n"
     );
 
-    return context.failAndThrow(errorMessage);
+    return context.failAndThrow(errorMessage, undefined, { code: CliError.Code.ConfigError });
 }
 
 // copied from https://github.com/causaly/zod-validation-error/blob/main/lib/utils/joinPath.ts

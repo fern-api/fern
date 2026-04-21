@@ -1,4 +1,5 @@
 import { loggingExeca, runExeca } from "@fern-api/logging-execa";
+import { CliError } from "@fern-api/task-context";
 
 /**
  * Platform-specific keyring access via CLI subprocesses.
@@ -35,7 +36,10 @@ export class PlatformKeyring {
                 await this.setPasswordWindows(service, account, password);
                 break;
             default:
-                throw new Error(`Unsupported platform: ${process.platform}`);
+                throw new CliError({
+                    message: `Unsupported platform: ${process.platform}`,
+                    code: CliError.Code.EnvironmentError
+                });
         }
     }
 
@@ -48,7 +52,10 @@ export class PlatformKeyring {
             case "win32":
                 return this.getPasswordWindows(service, account);
             default:
-                throw new Error(`Unsupported platform: ${process.platform}`);
+                throw new CliError({
+                    message: `Unsupported platform: ${process.platform}`,
+                    code: CliError.Code.EnvironmentError
+                });
         }
     }
 
@@ -61,7 +68,10 @@ export class PlatformKeyring {
             case "win32":
                 return this.deletePasswordWindows(service, account);
             default:
-                throw new Error(`Unsupported platform: ${process.platform}`);
+                throw new CliError({
+                    message: `Unsupported platform: ${process.platform}`,
+                    code: CliError.Code.EnvironmentError
+                });
         }
     }
 
@@ -74,7 +84,10 @@ export class PlatformKeyring {
             case "win32":
                 return this.findCredentialsWindows(service);
             default:
-                throw new Error(`Unsupported platform: ${process.platform}`);
+                throw new CliError({
+                    message: `Unsupported platform: ${process.platform}`,
+                    code: CliError.Code.EnvironmentError
+                });
         }
     }
 

@@ -24,7 +24,8 @@ function createHeader(valueType?: FernIr.TypeReference): FernIr.HttpHeader {
         env: undefined,
         availability: undefined,
         docs: undefined,
-        v2Examples: undefined
+        v2Examples: undefined,
+        clientDefault: undefined
     };
 }
 

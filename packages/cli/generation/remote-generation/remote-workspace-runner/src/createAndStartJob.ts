@@ -7,7 +7,7 @@ import {
     migrateIntermediateRepresentationToVersionForGenerator
 } from "@fern-api/ir-migrations";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import { FernDefinition, FernWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import axios, { AxiosError } from "axios";
@@ -75,7 +75,9 @@ export async function createAndStartJob({
         try {
             fernignoreContents = await readFile(fernignorePath, "utf-8");
         } catch (error) {
-            context.failAndThrow(`Failed to read fernignore file at ${fernignorePath}: ${error}`);
+            context.failAndThrow(`Failed to read fernignore file at ${fernignorePath}: ${error}`, undefined, {
+                code: CliError.Code.ConfigError
+            });
         }
     }
 
@@ -102,7 +104,9 @@ export async function createAndStartJob({
         logger: context.logger,
         onRateLimitedWithoutRetry: () =>
             context.failAndThrow(
-                "Received 429 Too Many Requests. Re-run with --retry-rate-limited to automatically retry."
+                "Received 429 Too Many Requests. Re-run with --retry-rate-limited to automatically retry.",
+                undefined,
+                { code: CliError.Code.NetworkError }
             )
     });
     await startJob({ intermediateRepresentation, job, context, generatorInvocation, irVersionOverride });
@@ -193,24 +197,36 @@ async function createJob({
         }
         return convertCreateJobError(rawError)._visit({
             illegalApiNameError: () => {
-                return context.failAndThrow("API name is invalid: " + workspace.definition.rootApiFile.contents.name);
+                return context.failAndThrow(
+                    "API name is invalid: " + workspace.definition.rootApiFile.contents.name,
+                    undefined,
+                    { code: CliError.Code.ConfigError }
+                );
             },
             illegalApiVersionError: () => {
-                return context.failAndThrow("API version is invalid: " + version);
+                return context.failAndThrow("API version is invalid: " + version, undefined, {
+                    code: CliError.Code.ConfigError
+                });
             },
             cannotPublishToNpmScope: ({ validScope, invalidScope }) => {
                 return context.failAndThrow(
-                    `You do not have permission to publish to ${invalidScope} (expected ${validScope})`
+                    `You do not have permission to publish to ${invalidScope} (expected ${validScope})`,
+                    undefined,
+                    { code: CliError.Code.AuthError }
                 );
             },
             cannotPublishToMavenGroup: ({ validGroup, invalidGroup }) => {
                 return context.failAndThrow(
-                    `You do not have permission to publish to ${invalidGroup} (expected ${validGroup})`
+                    `You do not have permission to publish to ${invalidGroup} (expected ${validGroup})`,
+                    undefined,
+                    { code: CliError.Code.AuthError }
                 );
             },
             cannotPublishPypiPackage: ({ validPrefix, invalidPackageName }) => {
                 return context.failAndThrow(
-                    `You do not have permission to publish to ${invalidPackageName} (expected ${validPrefix})`
+                    `You do not have permission to publish to ${invalidPackageName} (expected ${validPrefix})`,
+                    undefined,
+                    { code: CliError.Code.AuthError }
                 );
             },
             generatorsDoNotExistError: (value) => {
@@ -218,23 +234,31 @@ async function createJob({
                     "Generators do not exist: " +
                         value.nonExistentGenerators
                             .map((generator) => `${generator.id}@${generator.version}`)
-                            .join(", ")
+                            .join(", "),
+                    undefined,
+                    { code: CliError.Code.ConfigError }
                 );
             },
             insufficientPermissions: () => {
                 return context.failAndThrow(
                     `You do not have permission to run this generator for organization '${organization}'. Please run 'fern login' to ensure you are logged in with the correct account.\n\n` +
-                        "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not."
+                        "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not.",
+                    undefined,
+                    { code: CliError.Code.AuthError }
                 );
             },
             orgNotConfiguredForWhitelabel: () => {
                 return context.failAndThrow(
-                    "Your org is not configured for white-labeling. Please reach out to support@buildwithfern.com."
+                    "Your org is not configured for white-labeling. Please reach out to support@buildwithfern.com.",
+                    undefined,
+                    { code: CliError.Code.AuthError }
                 );
             },
             branchDoesNotExist: (value) => {
                 return context.failAndThrow(
-                    `Branch ${value.branch} does not exist in repository ${value.repositoryOwner}/${value.repositoryName}`
+                    `Branch ${value.branch} does not exist in repository ${value.repositoryOwner}/${value.repositoryName}`,
+                    undefined,
+                    { code: CliError.Code.ConfigError }
                 );
             },
             rateLimitExceeded: () => {
@@ -247,10 +271,12 @@ async function createJob({
                 // Try to extract a descriptive error message from the response body
                 const errorMessage = extractErrorMessage(content);
                 if (errorMessage != null) {
-                    return context.failAndThrow(errorMessage);
+                    return context.failAndThrow(errorMessage, undefined, { code: CliError.Code.NetworkError });
                 }
                 return context.failAndThrow(
-                    "Failed to create job. Please try again or contact support@buildwithfern.com for assistance."
+                    "Failed to create job. Please try again or contact support@buildwithfern.com for assistance.",
+                    undefined,
+                    { code: CliError.Code.NetworkError }
                 );
             }
         });
@@ -358,7 +384,7 @@ async function startJob({
     } catch (error) {
         const errorBody = error instanceof AxiosError ? error.response?.data : error;
         context.logger.debug(`POST ${url} failed with ${JSON.stringify(error)}`);
-        context.failAndThrow("Failed to start job", errorBody);
+        context.failAndThrow("Failed to start job", errorBody, { code: CliError.Code.NetworkError });
     }
 }
 

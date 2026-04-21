@@ -1,4 +1,5 @@
 import type { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { CliError } from "@fern-api/task-context";
 import yaml from "js-yaml";
 import type { ApiSpecType } from "../config/ApiSpec.js";
 
@@ -25,29 +26,34 @@ export class ApiSpecDetector {
     public async detect({ absoluteFilePath, reference, content }: ApiSpecDetector.Args): Promise<ApiSpecType> {
         const parsed = this.parseOrThrow({ content, reference });
         if (typeof parsed !== "object" || parsed == null) {
-            throw new Error(
-                `Could not determine API type for "${reference}". ` +
-                    `File must contain a top-level "openapi" or "asyncapi" key.`
-            );
+            throw new CliError({
+                message:
+                    `Could not determine API type for "${reference}". ` +
+                    `File must contain a top-level "openapi" or "asyncapi" key.`,
+                code: CliError.Code.InternalError
+            });
         }
         for (const specType of DETECTABLE_SPEC_TYPES) {
             if (specType in parsed) {
                 return specType;
             }
         }
-        throw new Error(
-            `Could not determine API type for "${reference}". ` +
-                `File must contain a top-level "openapi" or "asyncapi" key.`
-        );
+        throw new CliError({
+            message:
+                `Could not determine API type for "${reference}". ` +
+                `File must contain a top-level "openapi" or "asyncapi" key.`,
+            code: CliError.Code.InternalError
+        });
     }
 
     private parseOrThrow({ content, reference }: { content: string; reference: string }): unknown {
         try {
             return yaml.load(content);
         } catch {
-            throw new Error(
-                `Could not parse "${reference}" as YAML or JSON. Ensure the file is a valid OpenAPI or AsyncAPI specification.`
-            );
+            throw new CliError({
+                message: `Could not parse "${reference}" as YAML or JSON. Ensure the file is a valid OpenAPI or AsyncAPI specification.`,
+                code: CliError.Code.ParseError
+            });
         }
     }
 }

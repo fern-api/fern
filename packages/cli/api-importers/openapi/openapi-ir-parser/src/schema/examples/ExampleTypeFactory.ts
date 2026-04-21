@@ -11,7 +11,7 @@ import {
     SchemaId,
     SchemaWithExample
 } from "@fern-api/openapi-ir";
-
+import { CliError } from "@fern-api/task-context";
 import { SchemaParserContext } from "../SchemaParserContext.js";
 import { convertToFullExample } from "./convertToFullExample.js";
 import { getFullExampleAsArray, getFullExampleAsObject } from "./getFullExample.js";
@@ -894,7 +894,10 @@ export class ExampleTypeFactory {
         while (schema.type === "reference") {
             const resolvedSchema = this.schemas[schema.schema];
             if (resolvedSchema == null) {
-                throw new Error(`Unexpected error: Failed to resolve schema reference: ${schema.schema}`);
+                throw new CliError({
+                    message: `Unexpected error: Failed to resolve schema reference: ${schema.schema}`,
+                    code: CliError.Code.InternalError
+                });
             }
             schema = resolvedSchema;
         }

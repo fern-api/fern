@@ -58,6 +58,7 @@ export namespace CliError {
         NetworkError: "NETWORK_ERROR",
         AuthError: "AUTH_ERROR",
         ConfigError: "CONFIG_ERROR",
+        UserError: "USER_ERROR",
         Unclassified: "UNCLASSIFIED"
     } as const;
 }
@@ -75,6 +76,7 @@ const SENTRY_REPORTABLE: Record<CliError.Code, boolean> = {
     [CliError.Code.NetworkError]: false,
     [CliError.Code.AuthError]: false,
     [CliError.Code.ConfigError]: false,
+    [CliError.Code.UserError]: false,
     [CliError.Code.Unclassified]: false
 };
 
