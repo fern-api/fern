@@ -1,5 +1,5 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { readFile } from "fs/promises";
+import { readFileSync } from "fs";
 
 /**
  * Fast IR parser that bypasses the Zurg serialization layer.
@@ -21,7 +21,9 @@ import { readFile } from "fs/promises";
  */
 export async function fastParseIR<IR>(absolutePathToIR: AbsoluteFilePath): Promise<IR> {
     const t0 = Date.now();
-    const raw = await readFile(absolutePathToIR, "utf-8");
+    // Synchronous read: nothing else runs in parallel at this point,
+    // and sync avoids event loop + promise overhead for the ~30MB IR file.
+    const raw = readFileSync(absolutePathToIR, "utf-8");
     const t1 = Date.now();
     const parsed = JSON.parse(raw);
     const t2 = Date.now();
