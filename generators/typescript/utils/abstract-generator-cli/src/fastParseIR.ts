@@ -60,13 +60,12 @@ function deepTransform(value: unknown): void {
     }
 
     const obj = value as Record<string, unknown>;
-    const keys = Object.keys(obj);
 
     // Transform nested values first (depth-first).
     // Convert null → undefined to match Zurg's .optional() behavior,
     // which converts wire null to parsed undefined.
-    for (let i = 0; i < keys.length; i++) {
-        const key = keys[i]!;
+    // Use for...in to avoid Object.keys() array allocation on millions of objects.
+    for (const key in obj) {
         const v = obj[key];
         if (v === null) {
             obj[key] = undefined;
