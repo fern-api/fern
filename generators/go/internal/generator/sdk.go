@@ -1331,11 +1331,11 @@ func (f *fileWriter) WriteClient(
 			f.P("options. ", header.Name.Name.PascalCase.UnsafeName, ` = os.Getenv("`, *header.Env, `")`)
 			f.P("}")
 		}
-				if header.ClientDefault != nil && isStringType(header.ValueType) {
-				f.P("if options.", header.Name.Name.PascalCase.UnsafeName, ` == "" {`)
-				f.P("options. ", header.Name.Name.PascalCase.UnsafeName, ` = fmt.Sprintf("%v", `, literalToValue(header.ClientDefault), `)`)
-				f.P("}")
-			}
+		if header.ClientDefault != nil && isStringType(header.ValueType) {
+			f.P("if options.", header.Name.Name.PascalCase.UnsafeName, ` == "" {`)
+			f.P("options. ", header.Name.Name.PascalCase.UnsafeName, ` = fmt.Sprintf("%v", `, literalToValue(header.ClientDefault), `)`)
+			f.P("}")
+		}
 	}
 	if oauthClientCredentials != nil {
 		f.P("oauthTokenProvider := core.NewTokenProvider(0)")
