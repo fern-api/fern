@@ -28,12 +28,12 @@ describe("getAvailabilityDocs", () => {
         expect(getAvailabilityDocs(endpoint)).toBe("@deprecated Use v2 instead");
     });
 
-    it("returns @beta warning for IN_DEVELOPMENT", () => {
+    it("returns @apiNote warning for IN_DEVELOPMENT", () => {
         const endpoint = buildEndpoint({
             status: FernIr.AvailabilityStatus.InDevelopment,
             message: undefined
         });
-        expect(getAvailabilityDocs(endpoint)).toBe("@beta This endpoint is in development and may change.");
+        expect(getAvailabilityDocs(endpoint)).toBe("@apiNote This endpoint is in development and may change.");
     });
 
     it("appends message for IN_DEVELOPMENT", () => {
@@ -41,15 +41,15 @@ describe("getAvailabilityDocs", () => {
             status: FernIr.AvailabilityStatus.InDevelopment,
             message: "Alpha 1"
         });
-        expect(getAvailabilityDocs(endpoint)).toBe("@beta This endpoint is in development and may change. Alpha 1");
+        expect(getAvailabilityDocs(endpoint)).toBe("@apiNote This endpoint is in development and may change. Alpha 1");
     });
 
-    it("returns @beta warning for PRE_RELEASE", () => {
+    it("returns @apiNote warning for PRE_RELEASE", () => {
         const endpoint = buildEndpoint({
             status: FernIr.AvailabilityStatus.PreRelease,
             message: undefined
         });
-        expect(getAvailabilityDocs(endpoint)).toBe("@beta This endpoint is in pre-release and may change.");
+        expect(getAvailabilityDocs(endpoint)).toBe("@apiNote This endpoint is in pre-release and may change.");
     });
 
     it("appends message for PRE_RELEASE", () => {
@@ -57,7 +57,7 @@ describe("getAvailabilityDocs", () => {
             status: FernIr.AvailabilityStatus.PreRelease,
             message: "Beta 2"
         });
-        expect(getAvailabilityDocs(endpoint)).toBe("@beta This endpoint is in pre-release and may change. Beta 2");
+        expect(getAvailabilityDocs(endpoint)).toBe("@apiNote This endpoint is in pre-release and may change. Beta 2");
     });
 
     it("returns undefined for GENERAL_AVAILABILITY", () => {

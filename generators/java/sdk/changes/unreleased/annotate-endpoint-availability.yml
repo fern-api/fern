@@ -4,8 +4,8 @@
     (default false) that makes generated Java code surface IR `availability`
     metadata: DEPRECATED endpoints get Java's native `@Deprecated` annotation
     plus a `@deprecated` Javadoc tag (with the IR message when provided),
-    and IN_DEVELOPMENT / PRE_RELEASE endpoints get a `@beta` Javadoc note
-    matching the wording used by the TypeScript SDK generator. Today only
+    and IN_DEVELOPMENT / PRE_RELEASE endpoints get a standard Javadoc
+    `@apiNote` block tag describing the status. Today only
     HTTP endpoint methods are annotated; the flag is intentionally named so
     future releases can extend it to services, types, object properties,
     enum values, webhook payloads, WebSocket channels/messages, and errors

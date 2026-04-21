@@ -117,10 +117,10 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
 
     /**
      * If true, generated code surfaces IR {@code availability} metadata via Java's native {@code @Deprecated}
-     * annotation and {@code @deprecated}/{@code @beta} Javadoc tags. Today this only applies to HTTP endpoint methods;
-     * future releases may extend the same flag to services, types, object properties, enum values, webhook payloads,
-     * WebSocket channels/messages, and errors. Opting in is a breaking change for consumers that compile with
-     * warnings-as-errors, so the flag defaults to {@code false}.
+     * annotation and {@code @deprecated}/{@code @apiNote} Javadoc tags. Today this only applies to HTTP endpoint
+     * methods; future releases may extend the same flag to services, types, object properties, enum values, webhook
+     * payloads, WebSocket channels/messages, and errors. Opting in is a breaking change for consumers that compile
+     * with warnings-as-errors, so the flag defaults to {@code false}.
      *
      * <p>TODO(next-major): flip default to true.
      */

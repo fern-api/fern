@@ -28,7 +28,7 @@ public class AsyncImdbClient {
 
     /**
      * Add a movie to the database using the movies/* /... path.
-     * @beta This endpoint is in pre-release and may change.
+     * @apiNote This endpoint is in pre-release and may change.
      */
     public CompletableFuture<String> createMovie(CreateMovieRequest request) {
         return this.rawClient.createMovie(request).thenApply(response -> response.body());
@@ -36,7 +36,7 @@ public class AsyncImdbClient {
 
     /**
      * Add a movie to the database using the movies/* /... path.
-     * @beta This endpoint is in pre-release and may change.
+     * @apiNote This endpoint is in pre-release and may change.
      */
     public CompletableFuture<String> createMovie(CreateMovieRequest request, RequestOptions requestOptions) {
         return this.rawClient.createMovie(request, requestOptions).thenApply(response -> response.body());

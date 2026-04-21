@@ -6,14 +6,15 @@ import com.fern.ir.model.http.HttpEndpoint;
 import java.util.Optional;
 
 /**
- * Helpers for translating the IR {@link Availability} metadata on endpoints into Java deprecation/beta annotations and
+ * Helpers for translating the IR {@link Availability} metadata on endpoints into Java deprecation annotations and
  * Javadoc. Mirrors the TypeScript {@code getAvailabilityDocs} helper so Java SDKs surface endpoint availability
- * consistently with other generators.
+ * consistently with other generators. Non-deprecated availability is emitted as a standard Javadoc {@code @apiNote}
+ * block tag (introduced in Java 9) so {@code javadoc} and IDEs render it in a dedicated "API Note:" section.
  */
 public final class AvailabilityUtils {
 
-    static final String IN_DEVELOPMENT_DOCS = "@beta This endpoint is in development and may change.";
-    static final String PRE_RELEASE_DOCS = "@beta This endpoint is in pre-release and may change.";
+    static final String IN_DEVELOPMENT_DOCS = "@apiNote This endpoint is in development and may change.";
+    static final String PRE_RELEASE_DOCS = "@apiNote This endpoint is in pre-release and may change.";
     static final String DEPRECATED_DOCS = "@deprecated";
 
     private AvailabilityUtils() {}

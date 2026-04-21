@@ -35,7 +35,7 @@ export const BaseJavaCustomConfigSchema = z.object({
     "custom-interceptors": z.boolean().optional(),
     "omit-fern-headers": z.boolean().optional(),
     // If true, surface IR `availability` metadata on generated code via
-    // Javadoc `@deprecated`/`@beta` tags and the Java `@Deprecated` annotation.
+    // Javadoc `@deprecated`/`@apiNote` tags and the Java `@Deprecated` annotation.
     // Today this only affects HTTP endpoint methods (and the reference.md they
     // drive); future releases may extend the same flag to services, types,
     // object properties, enum values, webhook payloads, WebSocket

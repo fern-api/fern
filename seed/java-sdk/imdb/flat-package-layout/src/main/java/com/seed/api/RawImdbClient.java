@@ -32,7 +32,7 @@ public class RawImdbClient {
 
     /**
      * Add a movie to the database using the movies/* /... path.
-     * @beta This endpoint is in pre-release and may change.
+     * @apiNote This endpoint is in pre-release and may change.
      */
     public SeedApiHttpResponse<String> createMovie(CreateMovieRequest request) {
         return createMovie(request, null);
@@ -40,7 +40,7 @@ public class RawImdbClient {
 
     /**
      * Add a movie to the database using the movies/* /... path.
-     * @beta This endpoint is in pre-release and may change.
+     * @apiNote This endpoint is in pre-release and may change.
      */
     public SeedApiHttpResponse<String> createMovie(CreateMovieRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())

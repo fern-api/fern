@@ -69,28 +69,28 @@ public class AsyncHttpMethodsClient {
     }
 
     /**
-     * @beta This endpoint is in pre-release and may change.
+     * @apiNote This endpoint is in pre-release and may change.
      */
     public CompletableFuture<ObjectWithOptionalField> testPatch(String id) {
         return this.rawClient.testPatch(id).thenApply(response -> response.body());
     }
 
     /**
-     * @beta This endpoint is in pre-release and may change.
+     * @apiNote This endpoint is in pre-release and may change.
      */
     public CompletableFuture<ObjectWithOptionalField> testPatch(String id, RequestOptions requestOptions) {
         return this.rawClient.testPatch(id, requestOptions).thenApply(response -> response.body());
     }
 
     /**
-     * @beta This endpoint is in pre-release and may change.
+     * @apiNote This endpoint is in pre-release and may change.
      */
     public CompletableFuture<ObjectWithOptionalField> testPatch(String id, ObjectWithOptionalField request) {
         return this.rawClient.testPatch(id, request).thenApply(response -> response.body());
     }
 
     /**
-     * @beta This endpoint is in pre-release and may change.
+     * @apiNote This endpoint is in pre-release and may change.
      */
     public CompletableFuture<ObjectWithOptionalField> testPatch(
             String id, ObjectWithOptionalField request, RequestOptions requestOptions) {
@@ -98,14 +98,14 @@ public class AsyncHttpMethodsClient {
     }
 
     /**
-     * @beta This endpoint is in development and may change.
+     * @apiNote This endpoint is in development and may change.
      */
     public CompletableFuture<Boolean> testDelete(String id) {
         return this.rawClient.testDelete(id).thenApply(response -> response.body());
     }
 
     /**
-     * @beta This endpoint is in development and may change.
+     * @apiNote This endpoint is in development and may change.
      */
     public CompletableFuture<Boolean> testDelete(String id, RequestOptions requestOptions) {
         return this.rawClient.testDelete(id, requestOptions).thenApply(response -> response.body());

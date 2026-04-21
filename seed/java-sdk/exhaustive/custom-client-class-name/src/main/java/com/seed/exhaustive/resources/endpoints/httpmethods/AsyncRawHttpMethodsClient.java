@@ -226,14 +226,14 @@ public class AsyncRawHttpMethodsClient {
     }
 
     /**
-     * @beta This endpoint is in pre-release and may change.
+     * @apiNote This endpoint is in pre-release and may change.
      */
     public CompletableFuture<BestHttpResponse<ObjectWithOptionalField>> testPatch(String id) {
         return testPatch(id, ObjectWithOptionalField.builder().build());
     }
 
     /**
-     * @beta This endpoint is in pre-release and may change.
+     * @apiNote This endpoint is in pre-release and may change.
      */
     public CompletableFuture<BestHttpResponse<ObjectWithOptionalField>> testPatch(
             String id, RequestOptions requestOptions) {
@@ -241,7 +241,7 @@ public class AsyncRawHttpMethodsClient {
     }
 
     /**
-     * @beta This endpoint is in pre-release and may change.
+     * @apiNote This endpoint is in pre-release and may change.
      */
     public CompletableFuture<BestHttpResponse<ObjectWithOptionalField>> testPatch(
             String id, ObjectWithOptionalField request) {
@@ -249,7 +249,7 @@ public class AsyncRawHttpMethodsClient {
     }
 
     /**
-     * @beta This endpoint is in pre-release and may change.
+     * @apiNote This endpoint is in pre-release and may change.
      */
     public CompletableFuture<BestHttpResponse<ObjectWithOptionalField>> testPatch(
             String id, ObjectWithOptionalField request, RequestOptions requestOptions) {
@@ -310,14 +310,14 @@ public class AsyncRawHttpMethodsClient {
     }
 
     /**
-     * @beta This endpoint is in development and may change.
+     * @apiNote This endpoint is in development and may change.
      */
     public CompletableFuture<BestHttpResponse<Boolean>> testDelete(String id) {
         return testDelete(id, null);
     }
 
     /**
-     * @beta This endpoint is in development and may change.
+     * @apiNote This endpoint is in development and may change.
      */
     public CompletableFuture<BestHttpResponse<Boolean>> testDelete(String id, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())

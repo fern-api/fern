@@ -14,7 +14,7 @@
 
 Add a movie to the database using the movies/* /... path.
 
-@beta This endpoint is in pre-release and may change.
+@apiNote This endpoint is in pre-release and may change.
 </dd>
 </dl>
 </dd>

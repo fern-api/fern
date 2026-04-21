@@ -728,7 +728,7 @@ client.endpoints().httpMethods().testPut(
 <dl>
 <dd>
 
-@beta This endpoint is in pre-release and may change.
+@apiNote This endpoint is in pre-release and may change.
 </dd>
 </dl>
 </dd>
@@ -820,7 +820,7 @@ client.endpoints().httpMethods().testPatch(
 <dl>
 <dd>
 
-@beta This endpoint is in development and may change.
+@apiNote This endpoint is in development and may change.
 </dd>
 </dl>
 </dd>

@@ -52,7 +52,7 @@ public class AvailabilityUtilsTest {
                     .status(AvailabilityStatus.IN_DEVELOPMENT)
                     .build();
             assertThat(AvailabilityUtils.getAvailabilityDocs(Optional.of(availability)))
-                    .contains("@beta This endpoint is in development and may change.");
+                    .contains("@apiNote This endpoint is in development and may change.");
         }
 
         @Test
@@ -62,7 +62,7 @@ public class AvailabilityUtilsTest {
                     .message("Expected Q3 release")
                     .build();
             assertThat(AvailabilityUtils.getAvailabilityDocs(Optional.of(availability)))
-                    .contains("@beta This endpoint is in development and may change. Expected Q3 release");
+                    .contains("@apiNote This endpoint is in development and may change. Expected Q3 release");
         }
 
         @Test
@@ -71,7 +71,7 @@ public class AvailabilityUtilsTest {
                     .status(AvailabilityStatus.PRE_RELEASE)
                     .build();
             assertThat(AvailabilityUtils.getAvailabilityDocs(Optional.of(availability)))
-                    .contains("@beta This endpoint is in pre-release and may change.");
+                    .contains("@apiNote This endpoint is in pre-release and may change.");
         }
 
         @Test
@@ -81,7 +81,7 @@ public class AvailabilityUtilsTest {
                     .message("Beta 2")
                     .build();
             assertThat(AvailabilityUtils.getAvailabilityDocs(Optional.of(availability)))
-                    .contains("@beta This endpoint is in pre-release and may change. Beta 2");
+                    .contains("@apiNote This endpoint is in pre-release and may change. Beta 2");
         }
     }
 
