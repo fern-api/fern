@@ -960,6 +960,7 @@ jobs:
           done
 
       - name: Upload PR results
+        if: always()
         uses: actions/upload-artifact@v6
         with:
           name: benchmark-pr-${{ matrix.generator }}
