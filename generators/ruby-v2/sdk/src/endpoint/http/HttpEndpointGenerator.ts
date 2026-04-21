@@ -344,7 +344,9 @@ export class HttpEndpointGenerator {
                         thenBody: [
                             ruby.codeblock((writer) => {
                                 if (wrapWithHttpResponse) {
-                                    writer.writeLine(`parsed_response = nil`);
+                                    if (jsonResponseBody.responseBodyType.type !== "named") {
+                                        writer.writeLine(`parsed_response = nil`);
+                                    }
                                     this.loadResponseBodyFromJson({
                                         writer,
                                         typeReference: jsonResponseBody.responseBodyType,

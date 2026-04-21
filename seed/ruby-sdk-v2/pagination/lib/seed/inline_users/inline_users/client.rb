@@ -52,7 +52,6 @@ module Seed
             end
             code = response.code.to_i
             if code.between?(200, 299)
-              parsed_response = nil
               parsed_response = Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse.load(response.body)
               [parsed_response, response]
             else
@@ -97,7 +96,6 @@ module Seed
             end
             code = response.code.to_i
             if code.between?(200, 299)
-              parsed_response = nil
               parsed_response = Seed::InlineUsers::InlineUsers::Types::ListUsersMixedTypePaginationResponse.load(response.body)
               [parsed_response, response]
             else
@@ -137,7 +135,6 @@ module Seed
             end
             code = response.code.to_i
             if code.between?(200, 299)
-              parsed_response = nil
               parsed_response = Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse.load(response.body)
               [parsed_response, response]
             else
@@ -189,7 +186,6 @@ module Seed
             end
             code = response.code.to_i
             if code.between?(200, 299)
-              parsed_response = nil
               parsed_response = Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse.load(response.body)
               [parsed_response, response]
             else
@@ -241,7 +237,6 @@ module Seed
             end
             code = response.code.to_i
             if code.between?(200, 299)
-              parsed_response = nil
               parsed_response = Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse.load(response.body)
               [parsed_response, response]
             else
@@ -282,7 +277,6 @@ module Seed
             end
             code = response.code.to_i
             if code.between?(200, 299)
-              parsed_response = nil
               parsed_response = Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse.load(response.body)
               [parsed_response, response]
             else
@@ -332,7 +326,6 @@ module Seed
             end
             code = response.code.to_i
             if code.between?(200, 299)
-              parsed_response = nil
               parsed_response = Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse.load(response.body)
               [parsed_response, response]
             else
@@ -382,7 +375,6 @@ module Seed
             end
             code = response.code.to_i
             if code.between?(200, 299)
-              parsed_response = nil
               parsed_response = Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse.load(response.body)
               [parsed_response, response]
             else
@@ -427,7 +419,6 @@ module Seed
             end
             code = response.code.to_i
             if code.between?(200, 299)
-              parsed_response = nil
               parsed_response = Seed::InlineUsers::InlineUsers::Types::ListUsersExtendedResponse.load(response.body)
               [parsed_response, response]
             else
@@ -472,7 +463,6 @@ module Seed
             end
             code = response.code.to_i
             if code.between?(200, 299)
-              parsed_response = nil
               parsed_response = Seed::InlineUsers::InlineUsers::Types::ListUsersExtendedOptionalListResponse.load(response.body)
               [parsed_response, response]
             else
@@ -517,7 +507,6 @@ module Seed
             end
             code = response.code.to_i
             if code.between?(200, 299)
-              parsed_response = nil
               parsed_response = Seed::Types::UsernameCursor.load(response.body)
               [parsed_response, response]
             else
@@ -563,7 +552,6 @@ module Seed
             end
             code = response.code.to_i
             if code.between?(200, 299)
-              parsed_response = nil
               parsed_response = Seed::InlineUsers::InlineUsers::Types::UsernameContainer.load(response.body)
               [parsed_response, response]
             else

@@ -50,7 +50,6 @@ module Seed
             end
             code = response.code.to_i
             if code.between?(200, 299)
-              parsed_response = nil
               parsed_response = Seed::Endpoints::Pagination::Types::PaginatedResponse.load(response.body)
               [parsed_response, response]
             else
