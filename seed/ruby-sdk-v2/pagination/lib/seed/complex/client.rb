@@ -42,6 +42,7 @@ module Seed
           end
           code = response.code.to_i
           if code.between?(200, 299)
+            nil
             parsed_response = Seed::Complex::Types::PaginatedConversationResponse.load(response.body)
             [parsed_response, response]
           else

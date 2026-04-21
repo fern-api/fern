@@ -13,14 +13,6 @@ module <%= gem_namespace %>
       # @return [Object] The current page response
       attr_reader :current
 
-      # The HTTP status code from the most recent page response.
-      # @return [Integer, nil]
-      attr_reader :status_code
-
-      # The HTTP response headers from the most recent page response.
-      # @return [Hash{String => String}, nil]
-      attr_reader :headers
-
       # The raw HTTP response from the most recent page response.
       # @return [Net::HTTPResponse, nil]
       attr_reader :http_response
@@ -46,8 +38,6 @@ module <%= gem_namespace %>
         @get_next_proc = get_next_proc
         @get_prev_proc = get_prev_proc
         @http_response = initial_http_response
-        @status_code = initial_http_response&.code&.to_i
-        @headers = initial_http_response&.each_header&.to_h
       end
 
       # Returns true if there is a next page available.

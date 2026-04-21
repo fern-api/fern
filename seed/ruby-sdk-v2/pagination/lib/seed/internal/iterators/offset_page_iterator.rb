@@ -5,14 +5,6 @@ module Seed
     class OffsetPageIterator
       include Enumerable
 
-      # The HTTP status code from the most recent page response.
-      # @return [Integer, nil]
-      attr_reader :status_code
-
-      # The HTTP response headers from the most recent page response.
-      # @return [Hash{String => String}, nil]
-      attr_reader :headers
-
       # The raw HTTP response from the most recent page response.
       # @return [Net::HTTPResponse, nil]
       attr_reader :http_response
@@ -38,8 +30,6 @@ module Seed
         # ...or the actual next page, preloaded, if it doesn't.
         @has_next_page = nil
 
-        @status_code = nil
-        @headers = nil
         @http_response = nil
       end
 
@@ -103,8 +93,6 @@ module Seed
         if result.is_a?(Array)
           fetched_page, raw_response = result
           @http_response = raw_response
-          @status_code = raw_response&.code&.to_i
-          @headers = raw_response&.each_header&.to_h
           fetched_page
         else
           result

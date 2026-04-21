@@ -3,18 +3,6 @@ module <%= gem_namespace %>
     class ItemIterator
       include Enumerable
 
-      # The HTTP status code from the most recent page response.
-      # @return [Integer, nil]
-      def status_code
-        @page_iterator&.status_code
-      end
-
-      # The HTTP response headers from the most recent page response.
-      # @return [Hash{String => String}, nil]
-      def headers
-        @page_iterator&.headers
-      end
-
       # The raw HTTP response from the most recent page response.
       # @return [Net::HTTPResponse, nil]
       def http_response
