@@ -725,9 +725,7 @@ export class SdkGenerator {
                     id: {
                         path: ep.id.path,
                         method: ep.id.method,
-                        ...(ep.id.identifierOverride != null
-                            ? { identifier_override: ep.id.identifierOverride }
-                            : {})
+                        ...(ep.id.identifierOverride != null ? { identifier_override: ep.id.identifierOverride } : {})
                     },
                     snippet: ep.snippet
                 };

@@ -32,10 +32,7 @@ export async function convertJestImportsToVitest(
         let modified = false;
 
         // 0. Replace import from "@jest/globals" with "vitest"
-        const jestGlobalsReplaced = content.replace(
-            /(from\s+["'])@jest\/globals(["'])/g,
-            "$1vitest$2"
-        );
+        const jestGlobalsReplaced = content.replace(/(from\s+["'])@jest\/globals(["'])/g, "$1vitest$2");
         if (jestGlobalsReplaced !== content) {
             content = jestGlobalsReplaced;
             modified = true;
@@ -68,7 +65,11 @@ export async function convertJestImportsToVitest(
             // Find existing vitest import and add to it
             const vitestImportMatch = content.match(/import\s*\{([^}]*)\}\s*from\s*["']vitest["']/);
             if (vitestImportMatch) {
-                const existingImports = vitestImportMatch[1]!.split(",").map((s) => s.trim()).filter(Boolean);
+                const existingImports =
+                    vitestImportMatch[1]
+                        ?.split(",")
+                        .map((s) => s.trim())
+                        .filter(Boolean) ?? [];
                 const newImports = importsToAdd.filter((i) => !existingImports.includes(i));
                 if (newImports.length > 0) {
                     const allImports = [...existingImports, ...newImports].join(", ");
