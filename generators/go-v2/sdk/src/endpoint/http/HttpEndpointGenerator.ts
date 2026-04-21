@@ -621,8 +621,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         const pathSuffix = this.getPathSuffix({ endpoint });
         const baseUrl = pathSuffix.length === 0 ? "baseURL" : `baseURL + "/${pathSuffix}"`;
         return go.codeblock((writer) => {
-            writer.write("endpointURL := ");
             if (endpoint.allPathParameters.length === 0) {
+                writer.write("endpointURL := ");
                 writer.write(baseUrl);
                 return;
             }
@@ -662,6 +662,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 }
                 pathParameterReferences.push(go.codeblock(pathParameterReference));
             }
+            writer.write("endpointURL := ");
             writer.writeNode(this.context.callEncodeUrl([go.codeblock(baseUrl), ...pathParameterReferences]));
         });
     }
