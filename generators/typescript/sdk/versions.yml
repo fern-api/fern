@@ -9,7 +9,7 @@
         `clientDefault` become optional in the client constructor and endpoint
         signatures.
       type: feat
-  createdAt: "2026-04-03"
+  createdAt: "2026-04-21"
   irVersion: 66
 - version: 3.64.2
   changelogEntry:
