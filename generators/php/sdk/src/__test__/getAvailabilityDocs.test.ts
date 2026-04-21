@@ -27,14 +27,28 @@ describe("getAvailabilityDocs", () => {
         expect(getAvailabilityDocs(endpoint)).toBe("@deprecated Use v2 instead");
     });
 
-    it("returns @beta for InDevelopment status without message", () => {
+    it("returns @deprecated without trailing space for empty-string message", () => {
+        const endpoint = buildEndpoint({
+            availability: { status: FernIr.AvailabilityStatus.Deprecated, message: "" }
+        });
+        expect(getAvailabilityDocs(endpoint)).toBe("@deprecated");
+    });
+
+    it("returns @deprecated without trailing space for whitespace-only message", () => {
+        const endpoint = buildEndpoint({
+            availability: { status: FernIr.AvailabilityStatus.Deprecated, message: "   " }
+        });
+        expect(getAvailabilityDocs(endpoint)).toBe("@deprecated");
+    });
+
+    it("returns @experimental for InDevelopment status without message", () => {
         const endpoint = buildEndpoint({
             availability: { status: FernIr.AvailabilityStatus.InDevelopment, message: undefined }
         });
-        expect(getAvailabilityDocs(endpoint)).toBe("@beta This endpoint is in development and may change.");
+        expect(getAvailabilityDocs(endpoint)).toBe("@experimental This endpoint is in development and may change.");
     });
 
-    it("returns @beta with message for InDevelopment status with message", () => {
+    it("returns @experimental with message for InDevelopment status with message", () => {
         const endpoint = buildEndpoint({
             availability: {
                 status: FernIr.AvailabilityStatus.InDevelopment,
@@ -42,22 +56,38 @@ describe("getAvailabilityDocs", () => {
             }
         });
         expect(getAvailabilityDocs(endpoint)).toBe(
-            "@beta This endpoint is in development and may change. Expected Q3 release"
+            "@experimental This endpoint is in development and may change. Expected Q3 release"
         );
     });
 
-    it("returns @beta for PreRelease status without message", () => {
+    it("returns @experimental without trailing space for empty-string message on InDevelopment", () => {
+        const endpoint = buildEndpoint({
+            availability: { status: FernIr.AvailabilityStatus.InDevelopment, message: "" }
+        });
+        expect(getAvailabilityDocs(endpoint)).toBe("@experimental This endpoint is in development and may change.");
+    });
+
+    it("returns @experimental for PreRelease status without message", () => {
         const endpoint = buildEndpoint({
             availability: { status: FernIr.AvailabilityStatus.PreRelease, message: undefined }
         });
-        expect(getAvailabilityDocs(endpoint)).toBe("@beta This endpoint is in pre-release and may change.");
+        expect(getAvailabilityDocs(endpoint)).toBe("@experimental This endpoint is in pre-release and may change.");
     });
 
-    it("returns @beta with message for PreRelease status with message", () => {
+    it("returns @experimental with message for PreRelease status with message", () => {
         const endpoint = buildEndpoint({
             availability: { status: FernIr.AvailabilityStatus.PreRelease, message: "Beta 2" }
         });
-        expect(getAvailabilityDocs(endpoint)).toBe("@beta This endpoint is in pre-release and may change. Beta 2");
+        expect(getAvailabilityDocs(endpoint)).toBe(
+            "@experimental This endpoint is in pre-release and may change. Beta 2"
+        );
+    });
+
+    it("returns @experimental without trailing space for empty-string message on PreRelease", () => {
+        const endpoint = buildEndpoint({
+            availability: { status: FernIr.AvailabilityStatus.PreRelease, message: "" }
+        });
+        expect(getAvailabilityDocs(endpoint)).toBe("@experimental This endpoint is in pre-release and may change.");
     });
 
     it("returns undefined for GeneralAvailability status", () => {

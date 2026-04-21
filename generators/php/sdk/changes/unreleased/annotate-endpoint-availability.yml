@@ -3,7 +3,7 @@
     Add an opt-in `generateAvailabilityAnnotations` custom config flag
     that emits PHPDoc availability annotations on generated SDK surfaces.
     Today this covers HTTP endpoint methods: `@deprecated` (with the IR
-    `message`, when present) for deprecated endpoints, and `@beta`
+    `message`, when present) for deprecated endpoints, and `@experimental`
     warnings for in-development / pre-release endpoints. The flag is
     intentionally named generically so future work can extend coverage
     to other surfaces (services, types, properties, enum values,

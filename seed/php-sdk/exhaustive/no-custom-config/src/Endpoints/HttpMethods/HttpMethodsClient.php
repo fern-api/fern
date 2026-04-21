@@ -196,7 +196,7 @@ class HttpMethodsClient
     }
 
     /**
-     * @beta This endpoint is in pre-release and may change.
+     * @experimental This endpoint is in pre-release and may change.
      *
      * @param string $id
      * @param ObjectWithOptionalField $request
@@ -246,7 +246,7 @@ class HttpMethodsClient
     }
 
     /**
-     * @beta This endpoint is in development and may change.
+     * @experimental This endpoint is in development and may change.
      *
      * @param string $id
      * @param ?array{

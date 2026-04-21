@@ -53,7 +53,7 @@ class ImdbClient
     /**
      * Add a movie to the database using the movies/* /... path.
      *
-     * @beta This endpoint is in pre-release and may change.
+     * @experimental This endpoint is in pre-release and may change.
      *
      * @param CreateMovieRequest $request
      * @param ?array{

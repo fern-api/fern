@@ -13,7 +13,7 @@ export const SdkCustomConfigSchema = z
         useDefaultRequestParameterValues: z.boolean().optional(),
         // Generate interfaces for all SDK client classes to enable mocking and DI
         generateClientInterfaces: z.boolean().optional(),
-        // Emit PHPDoc availability annotations (@deprecated / @beta) on generated SDK surfaces.
+        // Emit PHPDoc availability annotations (@deprecated / @experimental) on generated SDK surfaces.
         // Today this covers endpoint methods; future work may extend it to services, types,
         // properties, enum values, webhooks, etc. under the same flag.
         // TODO(next-major): flip default to true.

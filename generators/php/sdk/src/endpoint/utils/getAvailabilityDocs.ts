@@ -4,8 +4,8 @@ import { FernIr } from "@fern-fern/ir-sdk";
 /**
  * Returns PHPDoc lines for the endpoint's availability status.
  * - DEPRECATED -> @deprecated tag (with optional message)
- * - IN_DEVELOPMENT -> @beta warning
- * - PRE_RELEASE -> @beta warning
+ * - IN_DEVELOPMENT -> @experimental warning
+ * - PRE_RELEASE -> @experimental warning
  * - GENERAL_AVAILABILITY or undefined -> no additional docs
  */
 export function getAvailabilityDocs(endpoint: FernIr.HttpEndpoint): string | undefined {
@@ -14,18 +14,19 @@ export function getAvailabilityDocs(endpoint: FernIr.HttpEndpoint): string | und
         return undefined;
     }
 
+    const message = availability.message?.trim();
+
     switch (availability.status) {
         case FernIr.AvailabilityStatus.Deprecated: {
-            const message = availability.message;
-            return message != null ? `@deprecated ${message}` : "@deprecated";
+            return message ? `@deprecated ${message}` : "@deprecated";
         }
         case FernIr.AvailabilityStatus.InDevelopment: {
-            const warning = "@beta This endpoint is in development and may change.";
-            return availability.message != null ? `${warning} ${availability.message}` : warning;
+            const warning = "@experimental This endpoint is in development and may change.";
+            return message ? `${warning} ${message}` : warning;
         }
         case FernIr.AvailabilityStatus.PreRelease: {
-            const warning = "@beta This endpoint is in pre-release and may change.";
-            return availability.message != null ? `${warning} ${availability.message}` : warning;
+            const warning = "@experimental This endpoint is in pre-release and may change.";
+            return message ? `${warning} ${message}` : warning;
         }
         case FernIr.AvailabilityStatus.GeneralAvailability:
             return undefined;
