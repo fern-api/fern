@@ -5,8 +5,10 @@
     Go SDK. When `generateAvailabilityAnnotations: true` is set in
     `generators.yml`, deprecated endpoints emit a `// Deprecated: <message>`
     paragraph (recognized by `go doc` and staticcheck's SA1019), and
-    in-development / pre-release endpoints emit a `// @beta` doc comment
-    matching the wording used by the TypeScript SDK generator.
+    in-development / pre-release endpoints emit an `// Experimental:`
+    doc comment that mirrors the shape of Go's native `// Deprecated:`
+    convention (the most idiomatic Go option, since the language has no
+    standard "experimental" marker).
     `GENERAL_AVAILABILITY` endpoints are unaffected. Today the flag only
     governs `HttpEndpoint` annotations; it is named generically so future
     surfaces (services, types, object properties, enum values, webhooks,

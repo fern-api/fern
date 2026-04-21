@@ -85,7 +85,7 @@ func (c *Client) TestPut(
 	return response.Body, nil
 }
 
-// @beta This endpoint is in pre-release and may change.
+// Experimental: This endpoint is in pre-release and may change.
 func (c *Client) TestPatch(
 	ctx context.Context,
 	id string,
@@ -104,7 +104,7 @@ func (c *Client) TestPatch(
 	return response.Body, nil
 }
 
-// @beta This endpoint is in development and may change.
+// Experimental: This endpoint is in development and may change.
 func (c *Client) TestDelete(
 	ctx context.Context,
 	id string,

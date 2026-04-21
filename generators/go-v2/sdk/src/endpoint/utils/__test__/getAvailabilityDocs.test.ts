@@ -26,40 +26,40 @@ describe("getAvailabilityDocs", () => {
         ).toBe("Deprecated: Use v2 instead");
     });
 
-    it("returns the @beta in-development note without a message", () => {
+    it("returns the Experimental: in-development note without a message", () => {
         expect(
             getAvailabilityDocs({
                 status: FernIr.AvailabilityStatus.InDevelopment,
                 message: undefined
             })
-        ).toBe("@beta This endpoint is in development and may change.");
+        ).toBe("Experimental: This endpoint is in development and may change.");
     });
 
-    it("appends the message to the @beta in-development note", () => {
+    it("appends the message to the Experimental: in-development note", () => {
         expect(
             getAvailabilityDocs({
                 status: FernIr.AvailabilityStatus.InDevelopment,
                 message: "Expected Q3 release"
             })
-        ).toBe("@beta This endpoint is in development and may change. Expected Q3 release");
+        ).toBe("Experimental: This endpoint is in development and may change. Expected Q3 release");
     });
 
-    it("returns the @beta pre-release note without a message", () => {
+    it("returns the Experimental: pre-release note without a message", () => {
         expect(
             getAvailabilityDocs({
                 status: FernIr.AvailabilityStatus.PreRelease,
                 message: undefined
             })
-        ).toBe("@beta This endpoint is in pre-release and may change.");
+        ).toBe("Experimental: This endpoint is in pre-release and may change.");
     });
 
-    it("appends the message to the @beta pre-release note", () => {
+    it("appends the message to the Experimental: pre-release note", () => {
         expect(
             getAvailabilityDocs({
                 status: FernIr.AvailabilityStatus.PreRelease,
                 message: "Beta 2"
             })
-        ).toBe("@beta This endpoint is in pre-release and may change. Beta 2");
+        ).toBe("Experimental: This endpoint is in pre-release and may change. Beta 2");
     });
 
     it("returns undefined for GeneralAvailability", () => {
@@ -69,6 +69,24 @@ describe("getAvailabilityDocs", () => {
                 message: undefined
             })
         ).toBeUndefined();
+    });
+
+    it("collapses embedded newlines in the message to a single space to prevent comment break-out", () => {
+        expect(
+            getAvailabilityDocs({
+                status: FernIr.AvailabilityStatus.Deprecated,
+                message: "Use v2.\n\nfunc init() { os.Exit(1) }\n// "
+            })
+        ).toBe("Deprecated: Use v2.  func init() { os.Exit(1) } // ");
+    });
+
+    it("collapses \\r\\n sequences in the message to a single space", () => {
+        expect(
+            getAvailabilityDocs({
+                status: FernIr.AvailabilityStatus.InDevelopment,
+                message: "Line 1\r\nLine 2"
+            })
+        ).toBe("Experimental: This endpoint is in development and may change. Line 1 Line 2");
     });
 });
 

@@ -37,11 +37,11 @@ func TestGetAvailabilityDocs(t *testing.T) {
 			expected: "Deprecated: Use v2 instead",
 		},
 		{
-			name: "in-development without message falls back to @beta note",
+			name: "in-development without message falls back to Experimental: note",
 			availability: &ir.Availability{
 				Status: ir.AvailabilityStatusInDevelopment,
 			},
-			expected: "@beta This endpoint is in development and may change.",
+			expected: "Experimental: This endpoint is in development and may change.",
 		},
 		{
 			name: "in-development with message appends the message",
@@ -49,14 +49,14 @@ func TestGetAvailabilityDocs(t *testing.T) {
 				Status:  ir.AvailabilityStatusInDevelopment,
 				Message: stringPtr("Expected Q3 release"),
 			},
-			expected: "@beta This endpoint is in development and may change. Expected Q3 release",
+			expected: "Experimental: This endpoint is in development and may change. Expected Q3 release",
 		},
 		{
-			name: "pre-release without message falls back to @beta note",
+			name: "pre-release without message falls back to Experimental: note",
 			availability: &ir.Availability{
 				Status: ir.AvailabilityStatusPreRelease,
 			},
-			expected: "@beta This endpoint is in pre-release and may change.",
+			expected: "Experimental: This endpoint is in pre-release and may change.",
 		},
 		{
 			name: "pre-release with message appends the message",
@@ -64,7 +64,7 @@ func TestGetAvailabilityDocs(t *testing.T) {
 				Status:  ir.AvailabilityStatusPreRelease,
 				Message: stringPtr("Beta 2"),
 			},
-			expected: "@beta This endpoint is in pre-release and may change. Beta 2",
+			expected: "Experimental: This endpoint is in pre-release and may change. Beta 2",
 		},
 		{
 			name: "general-availability returns empty string",
@@ -72,6 +72,22 @@ func TestGetAvailabilityDocs(t *testing.T) {
 				Status: ir.AvailabilityStatusGeneralAvailability,
 			},
 			expected: "",
+		},
+		{
+			name: "deprecated with multi-line message collapses newlines to spaces to prevent comment break-out",
+			availability: &ir.Availability{
+				Status:  ir.AvailabilityStatusDeprecated,
+				Message: stringPtr("Use v2.\n\nfunc init() { os.Exit(1) }\n// "),
+			},
+			expected: "Deprecated: Use v2.  func init() { os.Exit(1) } // ",
+		},
+		{
+			name: "in-development with \\r\\n message collapses newlines to spaces",
+			availability: &ir.Availability{
+				Status:  ir.AvailabilityStatusInDevelopment,
+				Message: stringPtr("Line 1\r\nLine 2"),
+			},
+			expected: "Experimental: This endpoint is in development and may change. Line 1 Line 2",
 		},
 	}
 	for _, tc := range tests {

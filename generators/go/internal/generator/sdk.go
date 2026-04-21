@@ -1384,7 +1384,9 @@ func (f *fileWriter) WriteClient(
 				if endpoint.Docs != nil && len(*endpoint.Docs) > 0 {
 					f.P("//")
 				}
-				f.P("// ", availabilityLine)
+				for _, line := range strings.Split(availabilityLine, "\n") {
+					f.P("// " + line)
+				}
 			}
 		}
 		f.P("func (", receiver, " *", clientName, ") ", endpoint.Name.PascalCase.UnsafeName, "(")

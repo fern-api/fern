@@ -35,7 +35,7 @@ func NewClient(options *core.RequestOptions) *Client {
 
 // Add a movie to the database using the movies/* /... path.
 //
-// @beta This endpoint is in pre-release and may change.
+// Experimental: This endpoint is in pre-release and may change.
 func (c *Client) CreateMovie(
 	ctx context.Context,
 	request *testPackageName.CreateMovieRequest,
