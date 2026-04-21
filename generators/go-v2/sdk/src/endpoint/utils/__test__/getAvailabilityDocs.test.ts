@@ -62,6 +62,27 @@ describe("getAvailabilityDocs", () => {
         ).toBe("Experimental: This endpoint is in pre-release and may change. Beta 2");
     });
 
+    it("treats an empty-string message as if it were undefined", () => {
+        expect(
+            getAvailabilityDocs({
+                status: FernIr.AvailabilityStatus.Deprecated,
+                message: ""
+            })
+        ).toBe("Deprecated: This endpoint is deprecated.");
+        expect(
+            getAvailabilityDocs({
+                status: FernIr.AvailabilityStatus.InDevelopment,
+                message: ""
+            })
+        ).toBe("Experimental: This endpoint is in development and may change.");
+        expect(
+            getAvailabilityDocs({
+                status: FernIr.AvailabilityStatus.PreRelease,
+                message: ""
+            })
+        ).toBe("Experimental: This endpoint is in pre-release and may change.");
+    });
+
     it("returns undefined for GeneralAvailability", () => {
         expect(
             getAvailabilityDocs({

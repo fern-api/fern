@@ -50,7 +50,7 @@ export function getAvailabilityDocs(availability: FernIr.Availability | undefine
 }
 
 function sanitizeAvailabilityMessage(message: string | undefined): string | undefined {
-    if (message == null) {
+    if (message == null || message.length === 0) {
         return undefined;
     }
     return message.replace(/\r\n|\r|\n/g, " ");
