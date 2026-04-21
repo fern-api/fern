@@ -1,5 +1,5 @@
 import { AbstractProject, FernGeneratorExec, File, SourceFetcher } from "@fern-api/base-generator";
-import { Generation, WithGeneration } from "@fern-api/csharp-codegen";
+import { Generation, resolveDiagnosticPrefix, WithGeneration } from "@fern-api/csharp-codegen";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { createHash } from "crypto";
@@ -426,7 +426,8 @@ dotnet_diagnostic.IDE0005.severity = error
         const testCsProjContents = eta.renderString(testCsProjTemplateContents, {
             projectName: this.name,
             testProjectName,
-            projectReferencePath: projectReferenceRelativePath
+            projectReferencePath: projectReferenceRelativePath,
+            availabilityDiagnosticIds: this.getAvailabilityDiagnosticIds()
         });
         const testCsprojPath = join(absolutePathToTestProject, RelativeFilePath.of(`${testProjectName}.csproj`));
         await writeFile(testCsprojPath, testCsProjContents);
@@ -436,6 +437,25 @@ dotnet_diagnostic.IDE0005.severity = error
         );
 
         return absolutePathToTestProject;
+    }
+
+    /**
+     * Returns a semicolon-delimited list of `[Experimental]` diagnostic IDs to suppress
+     * in the generated test project when availability annotations are enabled. Empty
+     * string when disabled (preserves byte-for-byte parity with pre-flag output). The
+     * generated mock-server tests exercise every endpoint, including in-development /
+     * pre-release ones — without suppression the consumer-facing errors surface inside
+     * our own generated test assembly.
+     */
+    private getAvailabilityDiagnosticIds(): string {
+        if (!this.settings.generateAvailabilityAnnotations) {
+            return "";
+        }
+        const prefix = resolveDiagnosticPrefix({
+            override: this.settings.availabilityDiagnosticPrefix,
+            rootNamespace: this.settings.namespace
+        });
+        return `${prefix}0001;${prefix}0002`;
     }
 
     /**

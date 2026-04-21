@@ -1,13 +1,12 @@
-import { CsharpConfigSchema } from "@fern-api/csharp-codegen";
-import { FernIr } from "@fern-fern/ir-sdk";
-import { describe, expect, it } from "vitest";
-
 import {
+    CsharpConfigSchema,
     DIAGNOSTIC_PREFIX_PATTERN,
     FALLBACK_DIAGNOSTIC_PREFIX,
     getDiagnosticId,
     resolveDiagnosticPrefix
-} from "../endpoint/utils/getAvailabilityDiagnosticId.js";
+} from "@fern-api/csharp-codegen";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { describe, expect, it } from "vitest";
 
 describe("resolveDiagnosticPrefix", () => {
     it("prefers an override that matches the prefix pattern", () => {

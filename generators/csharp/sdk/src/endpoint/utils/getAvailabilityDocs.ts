@@ -1,8 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
-import { ast, type CSharp } from "@fern-api/csharp-codegen";
+import { ast, type CSharp, getDiagnosticId } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
-
-import { getDiagnosticId } from "./getAvailabilityDiagnosticId.js";
 
 type HttpEndpoint = FernIr.HttpEndpoint;
 

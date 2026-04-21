@@ -13,6 +13,12 @@ export { NameRegistry } from "./context/name-registry.js";
 export { CSharp } from "./csharp.js";
 export { CsharpConfigSchema } from "./custom-config/index.js";
 export { escapeForCSharpString } from "./utils/escapeForCSharpString.js";
+export {
+    DIAGNOSTIC_PREFIX_PATTERN,
+    FALLBACK_DIAGNOSTIC_PREFIX,
+    getDiagnosticId,
+    resolveDiagnosticPrefix
+} from "./utils/getAvailabilityDiagnosticId.js";
 export { type LazyResult, lazy } from "./utils/lazy.js";
 export * as text from "./utils/text.js";
 export { camelCase } from "./utils/text.js";

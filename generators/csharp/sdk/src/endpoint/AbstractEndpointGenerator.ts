@@ -9,10 +9,10 @@ type HttpEndpoint = FernIr.HttpEndpoint;
 type PathParameter = FernIr.PathParameter;
 type ServiceId = FernIr.ServiceId;
 
+import { resolveDiagnosticPrefix } from "@fern-api/csharp-codegen";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { WrappedRequestGenerator } from "../wrapped-request/WrappedRequestGenerator.js";
 import { EndpointSignatureInfo } from "./EndpointSignatureInfo.js";
-import { resolveDiagnosticPrefix } from "./utils/getAvailabilityDiagnosticId.js";
 import { getEndpointRequest } from "./utils/getEndpointRequest.js";
 import { getEndpointReturnType } from "./utils/getEndpointReturnType.js";
 
