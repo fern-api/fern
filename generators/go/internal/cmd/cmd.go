@@ -468,23 +468,25 @@ func readGoVersionFromIr(irFilepath string) string {
 		return ""
 	}
 	// Parse only the fields we need to avoid coupling to the full IR shape.
+	// Fern's IR serializes discriminated unions as flat objects with a `type`
+	// discriminant — so publishConfig with variant `filesystem` has `type` and
+	// `publishTarget` as siblings (not nested under a `filesystem` key).
 	var partial struct {
 		PublishConfig *struct {
-			Filesystem *struct {
-				PublishTarget *struct {
-					Type string  `json:"type"`
-					Version *string `json:"version"`
-				} `json:"publishTarget"`
-			} `json:"filesystem"`
+			Type          string `json:"type"`
+			PublishTarget *struct {
+				Type    string  `json:"type"`
+				Version *string `json:"version"`
+			} `json:"publishTarget"`
 		} `json:"publishConfig"`
 	}
 	if err := json.Unmarshal(data, &partial); err != nil {
 		return ""
 	}
-	if partial.PublishConfig == nil || partial.PublishConfig.Filesystem == nil {
+	if partial.PublishConfig == nil || partial.PublishConfig.Type != "filesystem" {
 		return ""
 	}
-	target := partial.PublishConfig.Filesystem.PublishTarget
+	target := partial.PublishConfig.PublishTarget
 	if target == nil || target.Type != "go" || target.Version == nil {
 		return ""
 	}
