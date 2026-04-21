@@ -144,7 +144,11 @@ export class ImportsManager {
         return relativePath;
     }
 
-    public writeImportsToSourceFile(sourceFile: SourceFile): void {
+    /**
+     * Builds the import block text for a source file without modifying the AST.
+     * Returns the import text string (with trailing newlines) or empty string if no imports.
+     */
+    public buildImportText(sourceFile: SourceFile): string {
         const sourceFileDirPath = sourceFile.getDirectoryPath();
         const sourcePathSegments = sourceFileDirPath.split("/").filter((segment) => segment.length > 0);
 
@@ -159,6 +163,8 @@ export class ImportsManager {
         const sortedImports = importsWithResolvedSpecifiers.sort((a, b) =>
             compareModuleSpecifiers(a.moduleSpecifier, b.moduleSpecifier)
         );
+
+        const importLines: string[] = [];
 
         for (const { moduleSpecifier, combinedImportDeclarations } of sortedImports) {
             const namespaceImports = [...combinedImportDeclarations.namespaceImports];
@@ -175,10 +181,7 @@ export class ImportsManager {
 
             const namespaceImport = namespaceImports[0];
             if (namespaceImport != null) {
-                sourceFile.addImportDeclaration({
-                    moduleSpecifier,
-                    namespaceImport
-                });
+                importLines.push(`import * as ${namespaceImport} from "${moduleSpecifier}";`);
             }
 
             const defaultImport = [...combinedImportDeclarations.defaultImports][0];
@@ -186,21 +189,40 @@ export class ImportsManager {
                 const isRootTypeOnly = [defaultImport, ...combinedImportDeclarations.namedImports]
                     .filter<NamedImport | string>((i) => i != null)
                     .every(NamedImport.isTypeImport);
-                sourceFile.addImportDeclaration({
-                    isTypeOnly: isRootTypeOnly,
-                    moduleSpecifier,
-                    defaultImport,
-                    namedImports: [...combinedImportDeclarations.namedImports]
+
+                const typeKeyword = isRootTypeOnly ? "type " : "";
+                const parts: string[] = [];
+
+                if (defaultImport != null) {
+                    parts.push(defaultImport);
+                }
+
+                if (combinedImportDeclarations.namedImports.length > 0) {
+                    const namedParts = [...combinedImportDeclarations.namedImports]
                         .sort((a, b) => a.name.localeCompare(b.name))
-                        .map((namedImport) => ({
-                            name:
-                                !isRootTypeOnly && NamedImport.isTypeImport(namedImport)
-                                    ? `type ${namedImport.name}`
-                                    : namedImport.name,
-                            alias: namedImport.alias
-                        }))
-                });
+                        .map((namedImport) => {
+                            const typePrefix =
+                                !isRootTypeOnly && NamedImport.isTypeImport(namedImport) ? "type " : "";
+                            const name = `${typePrefix}${namedImport.name}`;
+                            return namedImport.alias != null ? `${name} as ${namedImport.alias}` : name;
+                        });
+                    parts.push(`{ ${namedParts.join(", ")} }`);
+                }
+
+                importLines.push(`import ${typeKeyword}${parts.join(", ")} from "${moduleSpecifier}";`);
             }
+        }
+
+        if (importLines.length > 0) {
+            return importLines.join("\n") + "\n\n";
+        }
+        return "";
+    }
+
+    public writeImportsToSourceFile(sourceFile: SourceFile): void {
+        const importText = this.buildImportText(sourceFile);
+        if (importText.length > 0) {
+            sourceFile.insertText(0, importText);
         }
     }
 }
