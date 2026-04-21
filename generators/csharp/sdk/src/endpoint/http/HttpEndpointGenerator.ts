@@ -170,18 +170,28 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         });
 
         const availabilityEnabled = this.settings.generateAvailabilityAnnotations;
+        const isPrivatePaginationHelper = this.hasPagination(endpoint);
         const publicMethod = cls.addMethod({
             name: this.getUnpagedEndpointMethodName(endpoint),
-            access: this.hasPagination(endpoint) ? ast.Access.Private : ast.Access.Public,
+            access: isPrivatePaginationHelper ? ast.Access.Private : ast.Access.Public,
             isAsync: !isWithRawResponseTask,
             parameters,
-            summary: getEndpointSummary({ endpoint, enabled: availabilityEnabled }),
-            annotations: getAvailabilityAnnotations({
-                csharp: this.csharp,
-                endpoint,
-                enabled: availabilityEnabled,
-                diagnosticPrefix: this.availabilityDiagnosticPrefix
-            }),
+            // Availability annotations are only applied to the public-facing method. When this
+            // method is the private `…InternalAsync` helper invoked by `generatePagerMethod`,
+            // annotating it would emit Obsolete / Experimental diagnostics at the generated
+            // pager call site (breaking builds with TreatWarningsAsErrors). The public pager
+            // method applies its own annotations in `generatePagerMethod`.
+            summary: isPrivatePaginationHelper
+                ? endpoint.docs
+                : getEndpointSummary({ endpoint, enabled: availabilityEnabled }),
+            annotations: isPrivatePaginationHelper
+                ? []
+                : getAvailabilityAnnotations({
+                      csharp: this.csharp,
+                      endpoint,
+                      enabled: availabilityEnabled,
+                      diagnosticPrefix: this.availabilityDiagnosticPrefix
+                  }),
             return_,
             body: isWithRawResponseTask ? body : this.wrapWithExceptionHandler({ body, returnType: return_ }),
             codeExample: snippet?.endpointCall
