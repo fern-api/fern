@@ -62,6 +62,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
     private final ClientGeneratorContext clientGeneratorContext;
     private final SdkRequest sdkRequest;
     private final String requestParameterName;
+    private final DefaultValueExtractor defaultValueExtractor;
 
     public WrappedRequestEndpointWriter(
             HttpService httpService,
@@ -99,6 +100,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
         this.requestParameterName = NameUtils.toName(sdkRequest.getRequestParameterName())
                 .getCamelCase()
                 .getSafeName();
+        this.defaultValueExtractor = new DefaultValueExtractor(clientGeneratorContext);
     }
 
     @SuppressWarnings("checkstyle:CyclomaticComplexity")
@@ -563,11 +565,11 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
     /** Finds the clientDefault for a header by matching on wire value across service and endpoint headers. */
     private Optional<CodeBlock> findHeaderClientDefault(String headerWireValue) {
         // Endpoint headers first so findFirst() prefers endpoint overrides over service headers
-        DefaultValueExtractor extractor = new DefaultValueExtractor(clientGeneratorContext);
         return java.util.stream.Stream.concat(httpEndpoint.getHeaders().stream(), httpService.getHeaders().stream())
                 .filter(h -> NameUtils.getWireValue(h.getName()).equals(headerWireValue))
                 .findFirst()
-                .flatMap(header -> extractor.extractEffectiveDefault(header.getValueType(), header.getClientDefault()));
+                .flatMap(header -> defaultValueExtractor.extractEffectiveDefault(
+                        header.getValueType(), header.getClientDefault()));
     }
 
     private static boolean typeNameIsOptional(TypeName typeName) {
