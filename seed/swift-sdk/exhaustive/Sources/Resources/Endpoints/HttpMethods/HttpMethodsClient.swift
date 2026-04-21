@@ -36,7 +36,7 @@ public final class HttpMethodsClient: Sendable {
         )
     }
 
-    /// @beta This endpoint is in pre-release and may change.
+    /// - Warning: This endpoint is in pre-release and may change.
     ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func testPatch(id: String, request: ObjectWithOptionalField, requestOptions: RequestOptions? = nil) async throws -> ObjectWithOptionalField {
@@ -49,7 +49,7 @@ public final class HttpMethodsClient: Sendable {
         )
     }
 
-    /// @beta This endpoint is in development and may change.
+    /// - Warning: This endpoint is in development and may change.
     ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func testDelete(id: String, requestOptions: RequestOptions? = nil) async throws -> Bool {

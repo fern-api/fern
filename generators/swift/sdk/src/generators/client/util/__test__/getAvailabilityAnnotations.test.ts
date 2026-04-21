@@ -48,39 +48,39 @@ describe("getAvailabilityAnnotations", () => {
         expect(messageArg?.toString()).toBe('message: "Use \\"v2\\" instead"');
     });
 
-    it("returns @beta doc comment for InDevelopment status without message", () => {
+    it("returns - Warning: doc comment for InDevelopment status without message", () => {
         const result = getAvailabilityAnnotations({
             status: FernIr.AvailabilityStatus.InDevelopment,
             message: undefined
         });
         expect(result?.attribute).toBeUndefined();
-        expect(result?.docs).toBe("@beta This endpoint is in development and may change.");
+        expect(result?.docs).toBe("- Warning: This endpoint is in development and may change.");
     });
 
-    it("returns @beta doc comment with message for InDevelopment status with message", () => {
+    it("returns - Warning: doc comment with message for InDevelopment status with message", () => {
         const result = getAvailabilityAnnotations({
             status: FernIr.AvailabilityStatus.InDevelopment,
             message: "Expected Q3 release"
         });
         expect(result?.attribute).toBeUndefined();
-        expect(result?.docs).toBe("@beta This endpoint is in development and may change. Expected Q3 release");
+        expect(result?.docs).toBe("- Warning: This endpoint is in development and may change. Expected Q3 release");
     });
 
-    it("returns @beta doc comment for PreRelease status without message", () => {
+    it("returns - Warning: doc comment for PreRelease status without message", () => {
         const result = getAvailabilityAnnotations({
             status: FernIr.AvailabilityStatus.PreRelease,
             message: undefined
         });
         expect(result?.attribute).toBeUndefined();
-        expect(result?.docs).toBe("@beta This endpoint is in pre-release and may change.");
+        expect(result?.docs).toBe("- Warning: This endpoint is in pre-release and may change.");
     });
 
-    it("returns @beta doc comment with message for PreRelease status with message", () => {
+    it("returns - Warning: doc comment with message for PreRelease status with message", () => {
         const result = getAvailabilityAnnotations({
             status: FernIr.AvailabilityStatus.PreRelease,
             message: "Beta 2"
         });
         expect(result?.attribute).toBeUndefined();
-        expect(result?.docs).toBe("@beta This endpoint is in pre-release and may change. Beta 2");
+        expect(result?.docs).toBe("- Warning: This endpoint is in pre-release and may change. Beta 2");
     });
 });

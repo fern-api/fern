@@ -7,7 +7,7 @@ public final class ImdbClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    /// @beta This endpoint is in pre-release and may change.
+    /// - Warning: This endpoint is in pre-release and may change.
     ///
     /// Add a movie to the database using the movies/* /... path.
     ///

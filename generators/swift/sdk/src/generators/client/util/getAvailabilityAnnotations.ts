@@ -21,8 +21,8 @@ export interface SwiftAvailabilityAnnotations {
  * for an endpoint's availability.
  *
  * - `DEPRECATED` -> `@available(*, deprecated, message: "...")` attribute.
- * - `IN_DEVELOPMENT` -> `@beta` doc comment warning.
- * - `PRE_RELEASE` -> `@beta` doc comment warning.
+ * - `IN_DEVELOPMENT` -> `- Warning:` DocC callout.
+ * - `PRE_RELEASE` -> `- Warning:` DocC callout.
  * - `GENERAL_AVAILABILITY` (or undefined) -> no annotations.
  */
 export function getAvailabilityAnnotations(
@@ -54,13 +54,13 @@ export function getAvailabilityAnnotations(
             };
         }
         case FernIr.AvailabilityStatus.InDevelopment: {
-            const warning = "@beta This endpoint is in development and may change.";
+            const warning = "- Warning: This endpoint is in development and may change.";
             return {
                 docs: availability.message != null ? `${warning} ${availability.message}` : warning
             };
         }
         case FernIr.AvailabilityStatus.PreRelease: {
-            const warning = "@beta This endpoint is in pre-release and may change.";
+            const warning = "- Warning: This endpoint is in pre-release and may change.";
             return {
                 docs: availability.message != null ? `${warning} ${availability.message}` : warning
             };
