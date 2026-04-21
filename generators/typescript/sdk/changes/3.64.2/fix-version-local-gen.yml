@@ -1,0 +1,8 @@
+- summary: |
+    Read the SDK version and package name from the IR's `publishConfig` when
+    available, not just for self-hosted orgs. This lets `--version` flow through
+    to the generated `package.json` and `X-Fern-SDK-Version` header when the
+    generator is invoked with `output.location: local-file-system` (where the
+    generator exec output mode is `downloadFiles` and does not itself carry a
+    version).
+  type: fix

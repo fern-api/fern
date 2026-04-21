@@ -1,7 +1,7 @@
 use crate::{join_url, ApiError, ClientConfig, OAuthTokenProvider, RequestOptions};
 use futures::{Stream, StreamExt};
 use reqwest::{
-    header::{HeaderName, HeaderValue},
+    header::{HeaderMap, HeaderName, HeaderValue},
     Client, Method, Request, Response,
 };
 use serde::de::DeserializeOwned;
@@ -12,6 +12,18 @@ use std::{
     sync::Arc,
     task::{Context, Poll},
 };
+
+/// A parsed HTTP response that includes the deserialized body along with
+/// the HTTP status code and response headers.
+#[derive(Debug)]
+pub struct RawResponse<T> {
+    /// The deserialized response body.
+    pub body: T,
+    /// The HTTP status code of the response.
+    pub status_code: u16,
+    /// The HTTP response headers.
+    pub headers: HeaderMap,
+}
 
 /// A streaming byte stream for downloading files efficiently
 pub struct ByteStream {
@@ -152,6 +164,48 @@ impl HttpClient {
     /// Returns a reference to the client configuration.
     pub fn config(&self) -> &ClientConfig {
         &self.config
+    }
+
+    /// Execute a request and return the parsed body along with HTTP status code and headers.
+    ///
+    /// Unlike `execute_request`, this method preserves the HTTP metadata from the response,
+    /// which is useful for paginated endpoints where callers need access to status codes
+    /// and headers alongside the deserialized body.
+    pub async fn execute_request_raw<T>(
+        &self,
+        method: Method,
+        path: &str,
+        body: Option<serde_json::Value>,
+        query_params: Option<Vec<(String, String)>>,
+        options: Option<RequestOptions>,
+    ) -> Result<RawResponse<T>, ApiError>
+    where
+        T: DeserializeOwned,
+    {
+        let url = join_url(&self.config.base_url, path);
+        let mut request = self.client.request(method, &url);
+
+        if let Some(params) = query_params {
+            request = request.query(&params);
+        }
+
+        if let Some(opts) = &options {
+            if !opts.additional_query_params.is_empty() {
+                request = request.query(&opts.additional_query_params);
+            }
+        }
+
+        if let Some(body) = body {
+            request = request.json(&body);
+        }
+
+        let mut req = request.build().map_err(|e| ApiError::Network(e))?;
+
+        self.apply_auth_headers(&mut req, &options).await?;
+        self.apply_custom_headers(&mut req, &options)?;
+
+        let response = self.execute_with_retries(req, &options).await?;
+        self.parse_response_raw(response).await
     }
 
     /// Execute a request with the given method, path, and options
@@ -430,6 +484,29 @@ impl HttpClient {
         }
 
         serde_json::from_str(&text).map_err(ApiError::Serialization)
+    }
+
+    async fn parse_response_raw<T>(&self, response: Response) -> Result<RawResponse<T>, ApiError>
+    where
+        T: DeserializeOwned,
+    {
+        let status_code = response.status().as_u16();
+        let headers = response.headers().clone();
+        let text = response.text().await.map_err(ApiError::Network)?;
+
+        if text.is_empty() {
+            return Err(ApiError::Http {
+                status: status_code,
+                message: String::new(),
+            });
+        }
+
+        let body: T = serde_json::from_str(&text).map_err(ApiError::Serialization)?;
+        Ok(RawResponse {
+            body,
+            status_code,
+            headers,
+        })
     }
 
 

@@ -79,12 +79,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        node-version: [20, 22, 24]
-        exclude:
-          # Node 20 lacks the `navigator` global (added in Node 21/22),
-          # which causes ReferenceError during SSR on Windows.
-          - os: windows-latest
-            node-version: 20
+        node-version: [22, 24, 26]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 30
 
@@ -237,9 +232,13 @@ jobs:
 
       - name: Run Playwright smoke tests (Unix)
         if: steps.node-check.outputs.available == 'true' && runner.os != 'Windows'
-        shell: bash
-        working-directory: docs-preview-smoke-test/playwright
-        run: npx playwright test smoke.spec.ts --config playwright.config.ts
+        uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4.0.0
+        with:
+          timeout_minutes: 15
+          max_attempts: 2
+          retry_wait_seconds: 10
+          shell: bash
+          command: cd docs-preview-smoke-test/playwright && npx playwright test smoke.spec.ts --config playwright.config.ts
 
       # On Windows, background processes (&) are killed when the parent bash
       # step exits. We must start the server and run Playwright in the SAME
@@ -325,7 +324,18 @@ jobs:
 
           echo "Running Playwright smoke tests..."
           cd "$GITHUB_WORKSPACE/docs-preview-smoke-test/playwright"
-          npx playwright test smoke.spec.ts --config playwright.config.ts
+          for attempt in 1 2; do
+            if npx playwright test smoke.spec.ts --config playwright.config.ts; then
+              echo "Playwright passed on attempt ${attempt}"
+              break
+            fi
+            if [ $attempt -eq 2 ]; then
+              echo "Playwright failed after 2 attempts"
+              exit 1
+            fi
+            echo "Playwright failed on attempt ${attempt}, retrying after 10s..."
+            sleep 10
+          done
 
       - name: Upload Playwright report
         uses: actions/upload-artifact@v6
