@@ -82,9 +82,7 @@ describe("InteractiveTaskContextImpl.finish", () => {
         // Simulate runInteractiveTask's `finally { subtask.finish() }`
         subtask.finish();
 
-        const failedLogs = getLogs().filter(
-            (log) => log.level === LogLevel.Error && log.parts.join(" ") === "Failed."
-        );
+        const failedLogs = getLogs().filter((log) => log.level === LogLevel.Error && log.parts.join(" ") === "Failed.");
         expect(failedLogs).toHaveLength(1);
         expect(subtask.getResult()).toBe(TaskResult.Failure);
     });
