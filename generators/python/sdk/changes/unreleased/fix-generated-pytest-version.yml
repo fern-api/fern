@@ -1,0 +1,6 @@
+- summary: |
+    Bump pytest from `^8.2.0` to `^9.0.3` in generated `pyproject.toml` for
+    projects targeting Python >= 3.9. The previous 5.3.14 release only bumped
+    pytest in the generator's own dev dependencies but did not update the
+    version written into generated SDKs.
+  type: fix
