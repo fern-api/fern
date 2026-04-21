@@ -3,6 +3,7 @@
 import type * as FernDocsConfig from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { OgDynamicLogoColor } from "./OgDynamicLogoColor.js";
 import { TwitterCardSetting } from "./TwitterCardSetting.js";
 
 export const MetadataConfig: core.serialization.ObjectSchema<
@@ -29,6 +30,7 @@ export const MetadataConfig: core.serialization.ObjectSchema<
     ogBackgroundImage: core.serialization.property("og:background-image", core.serialization.string().optional()),
     ogDynamicTextColor: core.serialization.property("og:dynamic:text-color", core.serialization.string().optional()),
     ogDynamicBackgroundColor: core.serialization.property("og:dynamic:background-color", core.serialization.string().optional()),
+    ogDynamicLogoColor: core.serialization.property("og:dynamic:logo-color", OgDynamicLogoColor.optional()),
     ogDynamicShowLogo: core.serialization.property("og:dynamic:show-logo", core.serialization.boolean().optional()),
     ogDynamicShowSection: core.serialization.property("og:dynamic:show-section", core.serialization.boolean().optional()),
     ogDynamicShowDescription: core.serialization.property("og:dynamic:show-description", core.serialization.boolean().optional()),
@@ -59,6 +61,7 @@ export declare namespace MetadataConfig {
         "og:background-image"?: string | null;
         "og:dynamic:text-color"?: string | null;
         "og:dynamic:background-color"?: string | null;
+        "og:dynamic:logo-color"?: OgDynamicLogoColor.Raw | null;
         "og:dynamic:show-logo"?: boolean | null;
         "og:dynamic:show-section"?: boolean | null;
         "og:dynamic:show-description"?: boolean | null;

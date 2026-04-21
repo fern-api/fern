@@ -1726,6 +1726,7 @@ async function convertMetadata(
         "og:background-image": await convertFilepathOrUrl(metadata.ogBackgroundImage, absoluteFilepathToDocsConfig),
         "og:dynamic:text-color": metadata.ogDynamicTextColor,
         "og:dynamic:background-color": metadata.ogDynamicBackgroundColor,
+        "og:dynamic:logo-color": metadata.ogDynamicLogoColor,
         "og:dynamic:show-logo": metadata.ogDynamicShowLogo,
         "og:dynamic:show-section": metadata.ogDynamicShowSection,
         "og:dynamic:show-description": metadata.ogDynamicShowDescription,

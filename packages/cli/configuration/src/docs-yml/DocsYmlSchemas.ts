@@ -562,6 +562,7 @@ export const MetadataConfig = z.object({
     "og:background-image": z.string().optional(),
     "og:dynamic:text-color": z.string().optional(),
     "og:dynamic:background-color": z.string().optional(),
+    "og:dynamic:logo-color": z.enum(["dark", "light"]).optional(),
     "og:dynamic:show-logo": z.boolean().optional(),
     "og:dynamic:show-section": z.boolean().optional(),
     "og:dynamic:show-description": z.boolean().optional(),

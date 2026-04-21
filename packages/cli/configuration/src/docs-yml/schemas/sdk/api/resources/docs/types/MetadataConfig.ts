@@ -46,6 +46,8 @@ export interface MetadataConfig {
     ogDynamicTextColor?: string;
     /** Override the background color for dynamically generated OG images. Accepts any valid CSS color value (e.g., "#ffffff"). */
     ogDynamicBackgroundColor?: string;
+    /** Choose which logo variant from docs.yml to render in dynamically generated OG images. Defaults to `dark`. */
+    ogDynamicLogoColor?: FernDocsConfig.OgDynamicLogoColor;
     /** Toggle visibility of the logo in dynamically generated OG images. Defaults to true when og:dynamic is enabled. */
     ogDynamicShowLogo?: boolean;
     /** Toggle visibility of the section title in dynamically generated OG images. Defaults to true when og:dynamic is enabled. */

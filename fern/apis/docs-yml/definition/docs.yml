@@ -1962,6 +1962,9 @@ types:
       "og:dynamic:background-color":
         type: optional<string>
         docs: Override the background color for dynamically generated OG images. Accepts any valid CSS color value (e.g., "#ffffff").
+      "og:dynamic:logo-color":
+        type: optional<OgDynamicLogoColor>
+        docs: Choose which logo variant from docs.yml to render in dynamically generated OG images. Defaults to `dark`.
       "og:dynamic:show-logo":
         type: optional<boolean>
         docs: Toggle visibility of the logo in dynamically generated OG images. Defaults to true when og:dynamic is enabled.
@@ -1989,6 +1992,11 @@ types:
       - summary_large_image
       - app
       - player
+
+  OgDynamicLogoColor:
+    enum:
+      - dark
+      - light
 
   RedirectConfig:
     availability: in-development

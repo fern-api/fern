@@ -132,6 +132,7 @@ export * from "./Target.js";
 export * from "./ThemeConfig.js";
 export * from "./TitleSource.js";
 export * from "./TwitterCardSetting.js";
+export * from "./OgDynamicLogoColor.js";
 export * from "./UntabbedNavigationConfig.js";
 export * from "./VersionAvailability.js";
 export * from "./VersionConfig.js";

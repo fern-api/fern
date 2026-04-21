@@ -131,6 +131,7 @@ export interface ParsedMetadataConfig
     "og:background-image": FilepathOrUrl | undefined;
     "og:dynamic:text-color": string | undefined;
     "og:dynamic:background-color": string | undefined;
+    "og:dynamic:logo-color": "dark" | "light" | undefined;
     "og:dynamic:show-logo": boolean | undefined;
     "og:dynamic:show-section": boolean | undefined;
     "og:dynamic:show-description": boolean | undefined;
