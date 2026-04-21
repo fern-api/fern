@@ -53,3 +53,4 @@ n/a	33491	10400	38596	-13.2	discard	exp-050: iterative deepTransform in fastPars
 d1adc8deb08	30615	10100	38596	-20.7	keep	exp-051: use readFileSync for IR parsing (avoid async overhead for 30MB file)
 6a9036a8f12	30878	10200	38596	-19.8	discard	exp-052: eliminate redundant lockfile generation when checkFix tools need installing (no gain; installCheckFix already bottleneck)
 362379791b2	29589	10300	38596	-23.3	keep	exp-053: use pnpm dlx for checkFix — bypass installCheckFixDependencies, run biome directly from pnpm store (e2e -3.4%)
+f9905e17c32	29567	9900	38596	-23.4	keep	exp-054: parallelize README/reference/contributing + skip optional deps in lockfile (gen -3.9%)
