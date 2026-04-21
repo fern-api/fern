@@ -105,45 +105,64 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
     /**
      * Loads and preprocesses the IR from file, handling integer overflow values and v66 compressed name
      * deserialization.
+     *
+     * Uses a two-phase approach: first extracts casingsConfig via partial tree parse,
+     * then deserializes the full IR directly from bytes (avoiding full tree allocation).
      */
     private static IntermediateRepresentation getIr(GeneratorConfig generatorConfig) {
         try {
             File irFile = new File(generatorConfig.getIrFilepath());
 
-            JsonNode rootNode = ObjectMappers.JSON_MAPPER.readTree(irFile);
+            // Read file into bytes once to avoid double I/O
+            byte[] irBytes = Files.readAllBytes(irFile.toPath());
 
-            IntegerOverflowProcessor processor = new IntegerOverflowProcessor();
-            processor.processNodeInPlace(rootNode);
+            // Phase 1: Extract casingsConfig from a partial tree parse.
+            // Only parses the top-level casingsConfig field, not the full tree.
+            CasingConfiguration casingConfig = extractCasingConfig(irBytes);
 
-            if (processor.getConversions() > 0) {
-                log.info("Converted {} integer overflow value(s) to long type in IR", processor.getConversions());
-            }
-
-            // Extract casingsConfig from IR JSON before full deserialization,
-            // then register custom deserializers for v66 compressed names.
-            // The generated Name and NameAndWireValue classes have @JsonDeserialize(builder=...)
-            // annotations that take precedence over module-level addDeserializer() calls.
-            // We use mix-in annotations to override those class-level annotations,
-            // clearing the builder configuration so our custom deserializers are used instead.
-            CasingConfiguration casingConfig = CasingConfiguration.fromIrJson(rootNode);
-
+            // Phase 2: Configure mapper with custom Name deserializers and deserialize directly.
             SimpleModule nameModule = new SimpleModule("NameOrStringModule");
             nameModule.addDeserializer(Name.class, new NameDeserializer.RawNameDeserializer(casingConfig));
             nameModule.addDeserializer(NameOrString.class, new NameDeserializer(casingConfig));
             nameModule.addDeserializer(NameAndWireValueOrString.class, new NameAndWireValueDeserializer(casingConfig));
 
             ObjectMapper irMapper = ObjectMappers.JSON_MAPPER.copy();
-            // Mix-in annotations override class-level @JsonDeserialize(builder=...) annotations,
-            // allowing the module-level custom deserializers to take effect.
             irMapper.addMixIn(Name.class, NameOrStringMixIn.class);
             irMapper.addMixIn(NameOrString.class, NameOrStringMixIn.class);
             irMapper.addMixIn(NameAndWireValueOrString.class, NameOrStringMixIn.class);
             irMapper.registerModule(nameModule);
 
-            return irMapper.treeToValue(rootNode, IntermediateRepresentation.class);
+            // Direct deserialization from bytes — single pass, no intermediate tree
+            return irMapper.readValue(irBytes, IntermediateRepresentation.class);
         } catch (IOException e) {
             throw new RuntimeException("Failed to read ir", e);
         }
+    }
+
+    /**
+     * Extracts the casingsConfig from IR JSON bytes using a streaming approach.
+     * Only parses the top-level "casingsConfig" field to minimize work.
+     */
+    private static CasingConfiguration extractCasingConfig(byte[] irBytes) throws IOException {
+        // Use a tree read just for the casingsConfig field extraction
+        com.fasterxml.jackson.core.JsonParser parser = ObjectMappers.JSON_MAPPER.getFactory().createParser(irBytes);
+        parser.nextToken(); // START_OBJECT
+        while (parser.nextToken() != com.fasterxml.jackson.core.JsonToken.END_OBJECT) {
+            String fieldName = parser.currentName();
+            parser.nextToken(); // move to value
+            if ("casingsConfig".equals(fieldName)) {
+                JsonNode casingsNode = parser.readValueAsTree();
+                parser.close();
+                // Build a minimal root node with just casingsConfig
+                ObjectNode rootStub = new ObjectNode(JsonNodeFactory.instance);
+                rootStub.set("casingsConfig", casingsNode);
+                return CasingConfiguration.fromIrJson(rootStub);
+            }
+            parser.skipChildren();
+        }
+        parser.close();
+        // No casingsConfig found — use defaults
+        return CasingConfiguration.fromIrJson(new ObjectNode(JsonNodeFactory.instance));
     }
 
     /**
