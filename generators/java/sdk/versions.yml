@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.2.3
+  changelogEntry:
+    - summary: |
+        Bump Bouncy Castle jars bundled with the Gradle base image from 1.78.1 to
+        1.84 to address CVE-2026-3505 (unbounded PGP AEAD chunk size in bcpg leading
+        to pre-auth resource exhaustion).
+      type: chore
+  createdAt: "2026-04-20"
+  irVersion: 66
 - version: 4.2.2
   changelogEntry:
     - summary: |

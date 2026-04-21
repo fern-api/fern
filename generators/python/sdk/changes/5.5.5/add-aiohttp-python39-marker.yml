@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Raise the generated `aiohttp` optional-dependency lower bound from
+    `>=3.10.0,<4` to `>=3.13.4,<4` and add a `python = ">=3.9"` marker on
+    both `aiohttp` and `httpx-aiohttp` so the aiohttp extra is only installed
+    on Python 3.9+ while still allowing the SDK itself to support Python 3.8.
+    Enforces the patched minimum version for GHSA-c427-h43c-vf67
+    (CVE-2026-34525) at the dependency spec level.
+  type: fix

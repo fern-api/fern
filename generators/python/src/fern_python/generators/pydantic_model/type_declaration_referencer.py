@@ -45,7 +45,7 @@ class TypeDeclarationReferencer(AbstractDeclarationReferencer[ir_types.DeclaredT
                 export_strategy=ExportStrategy(export_all=True),
             ),
             Filepath.DirectoryFilepathPart(
-                module_name=resolve_name(fern_filepath_part).snake_case.unsafe_name,
+                module_name=resolve_name(fern_filepath_part).snake_case.safe_name,
                 export_strategy=export_strategy,
             ),
         )

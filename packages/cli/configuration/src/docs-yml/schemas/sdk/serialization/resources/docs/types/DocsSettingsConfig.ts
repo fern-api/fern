@@ -28,6 +28,10 @@ export const DocsSettingsConfig: core.serialization.ObjectSchema<
         "disable-explorer-proxy",
         core.serialization.boolean().optional(),
     ),
+    disableEnvironmentEditing: core.serialization.property(
+        "disable-environment-editing",
+        core.serialization.boolean().optional(),
+    ),
     disableAnalytics: core.serialization.property("disable-analytics", core.serialization.boolean().optional()),
     language: Language.optional(),
     folderTitleSource: core.serialization.property("folder-title-source", TitleSource.optional()),
@@ -44,6 +48,7 @@ export declare namespace DocsSettingsConfig {
         "hide-404-page"?: boolean | null;
         "use-javascript-as-typescript"?: boolean | null;
         "disable-explorer-proxy"?: boolean | null;
+        "disable-environment-editing"?: boolean | null;
         "disable-analytics"?: boolean | null;
         language?: Language.Raw | null;
         "folder-title-source"?: TitleSource.Raw | null;

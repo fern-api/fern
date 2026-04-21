@@ -637,7 +637,7 @@
         "_visit": [Function],
         "members": [
           {
-            "docs": undefined,
+            "docs": "Error variant A without discriminator",
             "type": {
               "_visit": [Function],
               "default": undefined,
@@ -654,7 +654,7 @@
             },
           },
           {
-            "docs": undefined,
+            "docs": "Error variant B without discriminator",
             "type": {
               "_visit": [Function],
               "default": undefined,
@@ -843,7 +843,7 @@
         "_visit": [Function],
         "members": [
           {
-            "docs": undefined,
+            "docs": "First variant for oneOf without discriminator",
             "type": {
               "_visit": [Function],
               "default": undefined,
@@ -860,7 +860,7 @@
             },
           },
           {
-            "docs": undefined,
+            "docs": "Second variant for oneOf without discriminator",
             "type": {
               "_visit": [Function],
               "default": undefined,
