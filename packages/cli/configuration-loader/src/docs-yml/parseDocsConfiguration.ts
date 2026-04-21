@@ -1797,9 +1797,7 @@ function warnOnMetadataConflicts(metadata: docsYml.RawSchemas.MetadataConfig, co
 
     // 5: orphan og:image dimensions
     if (metadata.ogImage == null && (metadata.ogImageWidth != null || metadata.ogImageHeight != null)) {
-        context.logger.warn(
-            "[metadata] `og:image:width` / `og:image:height` have no effect without `og:image`."
-        );
+        context.logger.warn("[metadata] `og:image:width` / `og:image:height` have no effect without `og:image`.");
     }
 
     // 6: text-color and background-color identical would make text invisible

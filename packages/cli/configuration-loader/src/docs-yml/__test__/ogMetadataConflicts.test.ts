@@ -87,9 +87,9 @@ describe("docs.yml metadata conflict warnings", () => {
             ogDynamicShowLogo: false,
             ogDynamicLogoColor: "dark"
         });
-        expect(
-            warnings.some((w) => w.includes("`og:dynamic:logo-color`") && w.includes("show-logo: false"))
-        ).toBe(true);
+        expect(warnings.some((w) => w.includes("`og:dynamic:logo-color`") && w.includes("show-logo: false"))).toBe(
+            true
+        );
     });
 
     it("warns when og:image:width is set without og:image", async () => {
