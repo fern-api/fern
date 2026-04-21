@@ -634,7 +634,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 if (pathParameter.clientDefault != null && isPlainStringType(pathParameter.valueType)) {
                     const ref = signature.pathParameterReferences[getOriginalName(pathParameter.name)];
                     if (ref != null) {
-                        const localVar = `_${getOriginalName(pathParameter.name)}`;
+                        const localVar = `_${this.context.getFieldName(pathParameter.name)}`;
                         writer.writeLine(`${localVar} := ${ref}`);
                         writer.writeLine(`if ${localVar} == "" {`);
                         writer.indent();
