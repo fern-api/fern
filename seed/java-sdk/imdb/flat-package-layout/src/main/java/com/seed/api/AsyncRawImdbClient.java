@@ -36,6 +36,7 @@ public class AsyncRawImdbClient {
 
     /**
      * Add a movie to the database using the movies/* /... path.
+     *
      * @apiNote This endpoint is in pre-release and may change.
      */
     public CompletableFuture<SeedApiHttpResponse<String>> createMovie(CreateMovieRequest request) {
@@ -44,6 +45,7 @@ public class AsyncRawImdbClient {
 
     /**
      * Add a movie to the database using the movies/* /... path.
+     *
      * @apiNote This endpoint is in pre-release and may change.
      */
     public CompletableFuture<SeedApiHttpResponse<String>> createMovie(

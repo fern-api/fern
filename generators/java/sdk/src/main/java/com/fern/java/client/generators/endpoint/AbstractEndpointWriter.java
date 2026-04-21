@@ -160,7 +160,15 @@ public abstract class AbstractEndpointWriter {
             endpointMethodBuilder.addJavadoc(
                     JavaDocUtils.render(httpEndpoint.getDocs().get(), true));
         }
-        availabilityDocs.ifPresent(docs -> endpointMethodBuilder.addJavadoc("$L\n", docs));
+        availabilityDocs.ifPresent(docs -> {
+            // Javadoc block tags (@deprecated, @apiNote, ...) must be separated from
+            // the description by a blank line, otherwise tooling parses them as
+            // continuation text rather than block tags.
+            if (httpEndpoint.getDocs().isPresent()) {
+                endpointMethodBuilder.addJavadoc("\n");
+            }
+            endpointMethodBuilder.addJavadoc("$L\n", docs);
+        });
         if (isDeprecated) {
             endpointMethodBuilder.addAnnotation(Deprecated.class);
         }

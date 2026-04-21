@@ -27,6 +27,7 @@ public class ImdbClient {
 
     /**
      * Add a movie to the database using the movies/* /... path.
+     *
      * @apiNote This endpoint is in pre-release and may change.
      */
     public String createMovie(CreateMovieRequest request) {
@@ -35,6 +36,7 @@ public class ImdbClient {
 
     /**
      * Add a movie to the database using the movies/* /... path.
+     *
      * @apiNote This endpoint is in pre-release and may change.
      */
     public String createMovie(CreateMovieRequest request, RequestOptions requestOptions) {
