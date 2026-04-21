@@ -69,6 +69,9 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
     }
 
     public finish(): void {
+        if (this.status === "finished") {
+            return;
+        }
         this.status = "finished";
         this.flushLogs();
         this.onResult?.(this.getResult());
@@ -222,6 +225,9 @@ export class InteractiveTaskContextImpl
     }
 
     public finish(): void {
+        if (this.status === "finished") {
+            return;
+        }
         if (this.result === TaskResult.Success) {
             this.logAtLevelWithOverrides(LogLevel.Info, ["Finished."], {
                 omitOnTTY: true
