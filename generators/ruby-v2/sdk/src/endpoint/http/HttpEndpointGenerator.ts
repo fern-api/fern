@@ -320,11 +320,19 @@ export class HttpEndpointGenerator {
                     thenBody: [
                         ruby.codeblock((writer) => {
                             if (endpoint.response?.body == null) {
-                                writer.writeLine(`return`);
+                                if (wrapWithHttpResponse) {
+                                    writer.writeLine(`[nil, ${HTTP_RESPONSE_VN}]`);
+                                } else {
+                                    writer.writeLine(`return`);
+                                }
                             } else {
                                 switch (endpoint.response.body.type) {
                                     case "json":
                                         if (wrapWithHttpResponse) {
+                                            // Initialize parsed_response to nil so it is always defined,
+                                            // even when loadResponseBodyFromJson does not write an assignment
+                                            // (e.g. for container/optional type references).
+                                            writer.writeLine(`parsed_response = nil`);
                                             this.loadResponseBodyFromJson({
                                                 writer,
                                                 typeReference: endpoint.response.body.value.responseBodyType,
