@@ -185,17 +185,16 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                             packageManager: this.getPackageManager(customConfig)
                         });
                     });
-                    // Run lockfile generation and check:fix in parallel — they
-                    // operate on different files (pnpm-lock.yaml vs source files)
-                    // so there's no conflict.
+                    // Run lockfile generation and check:fix in parallel.
+                    // When tools aren't on PATH, use pnpm dlx to run them
+                    // directly from the store — much faster than installing
+                    // via pnpm add (avoids full dependency tree resolution).
+                    const toolsAvailable = await typescriptProject.areCheckFixToolsAvailable(logger);
                     await Promise.all([
                         typescriptProject.generateLockfile(logger),
-                        (async () => {
-                            if (!(await typescriptProject.areCheckFixToolsAvailable(logger))) {
-                                await typescriptProject.installCheckFixDependencies(logger);
-                            }
-                            await typescriptProject.checkFix(logger);
-                        })()
+                        toolsAvailable
+                            ? typescriptProject.checkFix(logger)
+                            : typescriptProject.checkFixViaDlx(logger)
                     ]);
                     await typescriptProject.deleteGitIgnoredFiles(logger);
                     if (this.outputSrcOnly(customConfig)) {

@@ -282,6 +282,85 @@ export class PersistedTypescriptProject {
         }
     }
 
+    /**
+     * Runs check:fix using `pnpm dlx` to execute the tool directly from
+     * the pnpm store, without installing it into node_modules. This is
+     * significantly faster than installCheckFixDependencies + checkFix
+     * because pnpm dlx:
+     * - Only resolves and caches the single tool package (not the full dep tree)
+     * - Doesn't modify package.json or the lockfile
+     * - Reuses the pnpm store cache across runs
+     *
+     * Falls back to installCheckFixDependencies + checkFix if:
+     * - Multiple check:fix packages are needed
+     * - The check:fix script is a compound command (&&, ||, ;)
+     */
+    public async checkFixViaDlx(logger: Logger): Promise<void> {
+        if (!this.runScripts) {
+            return;
+        }
+
+        // Only use dlx for simple single-package cases
+        if (this.checkFixPackages.length !== 1 || this.checkFixCommand.length !== 1) {
+            logger.debug("checkFixViaDlx: complex config, falling back to install");
+            await this.installCheckFixDependencies(logger);
+            await this.checkFix(logger);
+            return;
+        }
+
+        // Read the check:fix script from package.json
+        const pkgJsonPath = join(this.directory, RelativeFilePath.of("package.json"));
+        let scriptContent: string | undefined;
+        try {
+            const raw = await readFile(pkgJsonPath, "utf-8");
+            const pkgJson = JSON.parse(raw);
+            scriptContent = pkgJson.scripts?.[this.checkFixCommand[0]!];
+        } catch {
+            // Fall through to fallback
+        }
+
+        if (typeof scriptContent !== "string" || /[;&|]/.test(scriptContent)) {
+            logger.debug("checkFixViaDlx: compound script or missing, falling back to install");
+            await this.installCheckFixDependencies(logger);
+            await this.checkFix(logger);
+            return;
+        }
+
+        // Parse: "biome check --fix ..." → ["check", "--fix", ...]
+        const args = scriptContent.trim().split(/\s+/).slice(1);
+        const pkg = this.checkFixPackages[0]!;
+
+        const startTime = Date.now();
+        const pm = createLoggingExecutable("pnpm", {
+            cwd: this.directory,
+            logger,
+            reject: false,
+            doNotPipeOutput: true
+        });
+
+        try {
+            const result = await pm(["dlx", pkg, ...args]);
+            await this.writeToolOutputToLogFile({
+                step: "checkFixDlx",
+                stdout: result.stdout,
+                stderr: result.stderr,
+                logger
+            });
+            logger.debug(`[TIMING] checkFixViaDlx took ${Date.now() - startTime}ms`);
+        } catch (e) {
+            const error = e as { stdout?: string; stderr?: string };
+            await this.writeToolOutputToLogFile({
+                step: "checkFixDlx",
+                stdout: error.stdout ?? "",
+                stderr: error.stderr ?? "",
+                logger
+            });
+            logger.warn(`checkFixViaDlx failed (${Date.now() - startTime}ms), falling back to install`);
+            await this.installCheckFixDependencies(logger);
+            await this.checkFix(logger);
+        }
+    }
+
     public async build(logger: Logger): Promise<void> {
         if (!this.runScripts) {
             return;
