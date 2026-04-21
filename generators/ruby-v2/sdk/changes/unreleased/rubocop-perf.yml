@@ -1,6 +1,6 @@
 - summary: |
-    Improve rubocop performance by generating lint-compliant code and enabling Prism parser.
-    Generated code now produces 98.6% fewer rubocop offenses, reducing rubocop runtime from
-    ~255s to ~19s on large specs (Stripe OAS). Combined with Prism parser engine, total
-    generation time drops ~73% (314s → 84s on Stripe).
+    Improve Ruby SDK generation performance by generating rubocop-compliant code directly.
+    Generated code now produces 98.6% fewer rubocop offenses, eliminating the need for
+    rubocop auto-correction during generation. On large specs (Stripe OAS, 11K files),
+    total generation time drops from ~314s to ~49s.
   type: feat

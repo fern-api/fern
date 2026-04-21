@@ -73,7 +73,6 @@ const BASE_DEV_DEPENDENCIES: Dependency[] = [
     { name: "minitest-rg" },
     { name: "pry" },
     { name: "rake", versionConstraint: "~> 13.0" },
-    { name: "prism" },
     { name: "rubocop", versionConstraint: "~> 1.21" },
     { name: "rubocop-minitest" },
     { name: "webmock" }
