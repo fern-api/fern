@@ -601,7 +601,7 @@ client.endpoints().httpMethods().testGet("id");
 <dl>
 <dd>
 
-@deprecated
+**Deprecated**
 </dd>
 </dl>
 </dd>
@@ -660,7 +660,7 @@ client.endpoints().httpMethods().testPost(
 <dl>
 <dd>
 
-@deprecated Use testPatch instead.
+**Deprecated:** Use testPatch instead.
 </dd>
 </dl>
 </dd>
@@ -728,7 +728,7 @@ client.endpoints().httpMethods().testPut(
 <dl>
 <dd>
 
-@apiNote This endpoint is in pre-release and may change.
+**Note:** This endpoint is in pre-release and may change.
 </dd>
 </dl>
 </dd>
@@ -820,7 +820,7 @@ client.endpoints().httpMethods().testPatch(
 <dl>
 <dd>
 
-@apiNote This endpoint is in development and may change.
+**Note:** This endpoint is in development and may change.
 </dd>
 </dl>
 </dd>

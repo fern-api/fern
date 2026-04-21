@@ -12,28 +12,28 @@ describe("getAvailabilityDocs", () => {
         expect(getAvailabilityDocs(buildEndpoint(undefined))).toBeUndefined();
     });
 
-    it("returns @deprecated with no message", () => {
+    it("returns **Deprecated** with no message", () => {
         const endpoint = buildEndpoint({
             status: FernIr.AvailabilityStatus.Deprecated,
             message: undefined
         });
-        expect(getAvailabilityDocs(endpoint)).toBe("@deprecated");
+        expect(getAvailabilityDocs(endpoint)).toBe("**Deprecated**");
     });
 
-    it("returns @deprecated with message", () => {
+    it("returns **Deprecated:** with message", () => {
         const endpoint = buildEndpoint({
             status: FernIr.AvailabilityStatus.Deprecated,
             message: "Use v2 instead"
         });
-        expect(getAvailabilityDocs(endpoint)).toBe("@deprecated Use v2 instead");
+        expect(getAvailabilityDocs(endpoint)).toBe("**Deprecated:** Use v2 instead");
     });
 
-    it("returns @apiNote warning for IN_DEVELOPMENT", () => {
+    it("returns **Note:** warning for IN_DEVELOPMENT", () => {
         const endpoint = buildEndpoint({
             status: FernIr.AvailabilityStatus.InDevelopment,
             message: undefined
         });
-        expect(getAvailabilityDocs(endpoint)).toBe("@apiNote This endpoint is in development and may change.");
+        expect(getAvailabilityDocs(endpoint)).toBe("**Note:** This endpoint is in development and may change.");
     });
 
     it("appends message for IN_DEVELOPMENT", () => {
@@ -41,15 +41,15 @@ describe("getAvailabilityDocs", () => {
             status: FernIr.AvailabilityStatus.InDevelopment,
             message: "Alpha 1"
         });
-        expect(getAvailabilityDocs(endpoint)).toBe("@apiNote This endpoint is in development and may change. Alpha 1");
+        expect(getAvailabilityDocs(endpoint)).toBe("**Note:** This endpoint is in development and may change. Alpha 1");
     });
 
-    it("returns @apiNote warning for PRE_RELEASE", () => {
+    it("returns **Note:** warning for PRE_RELEASE", () => {
         const endpoint = buildEndpoint({
             status: FernIr.AvailabilityStatus.PreRelease,
             message: undefined
         });
-        expect(getAvailabilityDocs(endpoint)).toBe("@apiNote This endpoint is in pre-release and may change.");
+        expect(getAvailabilityDocs(endpoint)).toBe("**Note:** This endpoint is in pre-release and may change.");
     });
 
     it("appends message for PRE_RELEASE", () => {
@@ -57,7 +57,7 @@ describe("getAvailabilityDocs", () => {
             status: FernIr.AvailabilityStatus.PreRelease,
             message: "Beta 2"
         });
-        expect(getAvailabilityDocs(endpoint)).toBe("@apiNote This endpoint is in pre-release and may change. Beta 2");
+        expect(getAvailabilityDocs(endpoint)).toBe("**Note:** This endpoint is in pre-release and may change. Beta 2");
     });
 
     it("returns undefined for GENERAL_AVAILABILITY", () => {

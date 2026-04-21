@@ -14,7 +14,7 @@
 
 Add a movie to the database using the movies/* /... path.
 
-@apiNote This endpoint is in pre-release and may change.
+**Note:** This endpoint is in pre-release and may change.
 </dd>
 </dl>
 </dd>
@@ -74,7 +74,7 @@ client.imdb().createMovie(
 <dl>
 <dd>
 
-@deprecated
+**Deprecated**
 </dd>
 </dl>
 </dd>
