@@ -6,13 +6,10 @@ import fern.ir.resources as ir_types
 def get_availability_docs(endpoint: ir_types.HttpEndpoint) -> Optional[str]:
     """Return a docstring prefix describing the endpoint's availability.
 
-    Mirrors ``getAvailabilityDocs`` in the TypeScript SDK generator. Python does
-    not have a built-in annotation that is both widely recognized and usable on
-    pre-3.13 interpreters, so in-development and pre-release statuses fall back
-    to the TypeScript generator's ``@beta`` wording. Deprecated endpoints use
-    the ``.. deprecated::`` Sphinx directive when a message is present and fall
-    back to a plain ``@deprecated`` tag otherwise so documentation tooling and
-    human readers both see the annotation.
+    Uses Sphinx admonition directives so documentation tooling (PyCharm Quick
+    Documentation, VSCode Pylance, mkdocstrings, Sphinx itself) renders the
+    annotation consistently. Deprecated endpoints use ``.. deprecated::``;
+    in-development and pre-release endpoints use ``.. warning::``.
     """
     availability = endpoint.availability
     if availability is None:
@@ -26,9 +23,11 @@ def get_availability_docs(endpoint: ir_types.HttpEndpoint) -> Optional[str]:
             return f".. deprecated::\n    {message}"
         return "@deprecated"
     if status == ir_types.AvailabilityStatus.IN_DEVELOPMENT:
-        warning = "@beta This endpoint is in development and may change."
-        return f"{warning} {message}" if message is not None else warning
+        base = "This endpoint is in development and may change."
+        body = f"{base} {message}" if message is not None else base
+        return f".. warning::\n    {body}"
     if status == ir_types.AvailabilityStatus.PRE_RELEASE:
-        warning = "@beta This endpoint is in pre-release and may change."
-        return f"{warning} {message}" if message is not None else warning
+        base = "This endpoint is in pre-release and may change."
+        body = f"{base} {message}" if message is not None else base
+        return f".. warning::\n    {body}"
     return None

@@ -41,29 +41,29 @@ describe("getAvailabilityDocs", () => {
         ).toBe(".. deprecated::\n    use getMovieV2 instead");
     });
 
-    it("returns the in-development beta warning with no message", () => {
+    it("returns a GitHub alert callout for in-development with no message", () => {
         expect(
             getAvailabilityDocs(makeEndpoint({ status: FernIr.AvailabilityStatus.InDevelopment, message: undefined }))
-        ).toBe("@beta This endpoint is in development and may change.");
+        ).toBe("> [!WARNING]\n> This endpoint is in development and may change.");
     });
 
-    it("appends the message to the in-development beta warning when provided", () => {
+    it("appends the message to the in-development GitHub alert callout when provided", () => {
         expect(
             getAvailabilityDocs(
                 makeEndpoint({ status: FernIr.AvailabilityStatus.InDevelopment, message: "schema will change" })
             )
-        ).toBe("@beta This endpoint is in development and may change. schema will change");
+        ).toBe("> [!WARNING]\n> This endpoint is in development and may change. schema will change");
     });
 
-    it("returns the pre-release beta warning with no message", () => {
+    it("returns a GitHub alert callout for pre-release with no message", () => {
         expect(
             getAvailabilityDocs(makeEndpoint({ status: FernIr.AvailabilityStatus.PreRelease, message: undefined }))
-        ).toBe("@beta This endpoint is in pre-release and may change.");
+        ).toBe("> [!WARNING]\n> This endpoint is in pre-release and may change.");
     });
 
-    it("appends the message to the pre-release beta warning when provided", () => {
+    it("appends the message to the pre-release GitHub alert callout when provided", () => {
         expect(
             getAvailabilityDocs(makeEndpoint({ status: FernIr.AvailabilityStatus.PreRelease, message: "expect bugs" }))
-        ).toBe("@beta This endpoint is in pre-release and may change. expect bugs");
+        ).toBe("> [!WARNING]\n> This endpoint is in pre-release and may change. expect bugs");
     });
 });

@@ -31,7 +31,8 @@ class ImdbClient:
         self, *, title: str, rating: float, request_options: typing.Optional[RequestOptions] = None
     ) -> MovieId:
         """
-        @beta This endpoint is in pre-release and may change.
+        .. warning::
+            This endpoint is in pre-release and may change.
 
         Add a movie to the database using the movies/* /... path.
 
@@ -114,7 +115,8 @@ class AsyncImdbClient:
         self, *, title: str, rating: float, request_options: typing.Optional[RequestOptions] = None
     ) -> MovieId:
         """
-        @beta This endpoint is in pre-release and may change.
+        .. warning::
+            This endpoint is in pre-release and may change.
 
         Add a movie to the database using the movies/* /... path.
 

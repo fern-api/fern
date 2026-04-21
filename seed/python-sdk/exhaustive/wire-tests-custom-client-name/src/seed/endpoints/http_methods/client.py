@@ -144,7 +144,8 @@ class HttpMethodsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ObjectWithOptionalField:
         """
-        @beta This endpoint is in pre-release and may change.
+        .. warning::
+            This endpoint is in pre-release and may change.
 
         Parameters
         ----------
@@ -239,7 +240,8 @@ class HttpMethodsClient:
 
     def test_delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> bool:
         """
-        @beta This endpoint is in development and may change.
+        .. warning::
+            This endpoint is in development and may change.
 
         Parameters
         ----------
@@ -423,7 +425,8 @@ class AsyncHttpMethodsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ObjectWithOptionalField:
         """
-        @beta This endpoint is in pre-release and may change.
+        .. warning::
+            This endpoint is in pre-release and may change.
 
         Parameters
         ----------
@@ -525,7 +528,8 @@ class AsyncHttpMethodsClient:
 
     async def test_delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> bool:
         """
-        @beta This endpoint is in development and may change.
+        .. warning::
+            This endpoint is in development and may change.
 
         Parameters
         ----------

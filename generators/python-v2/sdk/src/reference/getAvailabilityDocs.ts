@@ -1,14 +1,13 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 
 /**
- * Return a docstring prefix describing the endpoint's availability.
+ * Return a description prefix for the endpoint's reference.md entry.
  *
- * Mirrors the `get_availability_docs` helper in the v1 Python generator so
- * both the Python docstrings (v1) and the `reference.md` description (v2)
- * surface the same annotation wording. The v2 generator ultimately emits
- * markdown into `reference.md`, but the wording is intentionally shared with
- * v1 so developers see consistent annotations regardless of which surface
- * they look at.
+ * The v2 generator writes to markdown reference.md files, so in-development
+ * and pre-release endpoints use GitHub-flavored alert callouts (`> [!WARNING]`)
+ * which render as styled callouts on GitHub and in markdown viewers that
+ * support the syntax. Deprecated endpoints keep the Sphinx `.. deprecated::`
+ * directive, which matches v1 behavior and is already idiomatic.
  */
 export function getAvailabilityDocs(endpoint: FernIr.HttpEndpoint): string | undefined {
     const availability = endpoint.availability;
@@ -24,12 +23,14 @@ export function getAvailabilityDocs(endpoint: FernIr.HttpEndpoint): string | und
             return "@deprecated";
         }
         case FernIr.AvailabilityStatus.InDevelopment: {
-            const warning = "@beta This endpoint is in development and may change.";
-            return message != null ? `${warning} ${message}` : warning;
+            const base = "This endpoint is in development and may change.";
+            const body = message != null ? `${base} ${message}` : base;
+            return `> [!WARNING]\n> ${body}`;
         }
         case FernIr.AvailabilityStatus.PreRelease: {
-            const warning = "@beta This endpoint is in pre-release and may change.";
-            return message != null ? `${warning} ${message}` : warning;
+            const base = "This endpoint is in pre-release and may change.";
+            const body = message != null ? `${base} ${message}` : base;
+            return `> [!WARNING]\n> ${body}`;
         }
         case FernIr.AvailabilityStatus.GeneralAvailability:
             return undefined;

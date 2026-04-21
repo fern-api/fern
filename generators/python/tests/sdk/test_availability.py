@@ -52,7 +52,7 @@ def test_get_availability_docs_in_development_without_message() -> None:
     availability = ir_types.Availability(status=ir_types.AvailabilityStatus.IN_DEVELOPMENT)
     assert (
         get_availability_docs(_make_endpoint(availability))
-        == "@beta This endpoint is in development and may change."
+        == ".. warning::\n    This endpoint is in development and may change."
     )
 
 
@@ -63,7 +63,7 @@ def test_get_availability_docs_in_development_with_message() -> None:
     )
     assert (
         get_availability_docs(_make_endpoint(availability))
-        == "@beta This endpoint is in development and may change. schema will change"
+        == ".. warning::\n    This endpoint is in development and may change. schema will change"
     )
 
 
@@ -71,7 +71,7 @@ def test_get_availability_docs_pre_release_without_message() -> None:
     availability = ir_types.Availability(status=ir_types.AvailabilityStatus.PRE_RELEASE)
     assert (
         get_availability_docs(_make_endpoint(availability))
-        == "@beta This endpoint is in pre-release and may change."
+        == ".. warning::\n    This endpoint is in pre-release and may change."
     )
 
 
@@ -82,7 +82,7 @@ def test_get_availability_docs_pre_release_with_message() -> None:
     )
     assert (
         get_availability_docs(_make_endpoint(availability))
-        == "@beta This endpoint is in pre-release and may change. expect bugs"
+        == ".. warning::\n    This endpoint is in pre-release and may change. expect bugs"
     )
 
 

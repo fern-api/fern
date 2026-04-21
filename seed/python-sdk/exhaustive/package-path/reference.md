@@ -937,7 +937,8 @@ client.endpoints.http_methods.test_put(
 <dl>
 <dd>
 
-@beta This endpoint is in pre-release and may change.
+> [!WARNING]
+> This endpoint is in pre-release and may change.
 </dd>
 </dl>
 </dd>
@@ -1039,7 +1040,8 @@ client.endpoints.http_methods.test_patch(
 <dl>
 <dd>
 
-@beta This endpoint is in development and may change.
+> [!WARNING]
+> This endpoint is in development and may change.
 </dd>
 </dl>
 </dd>
