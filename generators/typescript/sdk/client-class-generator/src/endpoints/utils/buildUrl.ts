@@ -6,6 +6,7 @@ import { FileContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
 import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl.js";
+import { getClientDefaultValue } from "./isLiteralHeader.js";
 
 export type GetReferenceToPathParameterVariableFromRequest = (pathParameter: FernIr.PathParameter) => ts.Expression;
 
@@ -75,6 +76,17 @@ export function buildUrl({
                         breadcrumbsPrefix: [],
                         omitUndefined
                     });
+            }
+
+            // Apply clientDefault fallback AFTER serialization so the serializer
+            // only operates on properly-typed values.
+            const clientDefaultVal = getClientDefaultValue(pathParameter.clientDefault);
+            if (clientDefaultVal != null) {
+                referenceToPathParameterValue = ts.factory.createBinaryExpression(
+                    referenceToPathParameterValue,
+                    ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                    ts.factory.createStringLiteral(clientDefaultVal.toString())
+                );
             }
 
             return ts.factory.createTemplateSpan(
