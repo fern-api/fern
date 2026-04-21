@@ -22,6 +22,14 @@ inputs:
   docker-pwd:
     description: PW for fernapi dockerhub user
     required: true
+  sentry-auth-token:
+    description: Sentry auth token used to upload generator source maps
+    required: false
+    default: ""
+  sentry-dsn:
+    description: Sentry DSN used to report generator errors
+    required: false
+    default: ""
 
 runs:
   using: "composite"
@@ -55,6 +63,8 @@ runs:
         DOCKER_USERNAME: fernapi
         FERN_TOKEN: ${{ inputs.fern-token }}
         DOCKER_PASSWORD: ${{ inputs.docker-pwd }}
+        SENTRY_AUTH_TOKEN: ${{ inputs.sentry-auth-token }}
+        SENTRY_DSN: ${{ inputs.sentry-dsn }}
         VERSIONS_FILE: ${{ inputs.version-file }}
       run: |
         echo $VERSIONS_FILE
@@ -89,6 +99,8 @@ runs:
         DOCKER_USERNAME: fernapi
         FERN_TOKEN: ${{ inputs.fern-token }}
         DOCKER_PASSWORD: ${{ inputs.docker-pwd }}
+        SENTRY_AUTH_TOKEN: ${{ inputs.sentry-auth-token }}
+        SENTRY_DSN: ${{ inputs.sentry-dsn }}
       run: |
         node --enable-source-maps packages/seed/dist/cli.cjs publish generator ${{ inputs.generator-name }} --ver ${{ inputs.version }} --log-level debug
         node --enable-source-maps packages/seed/dist/cli.cjs register generator --generators ${{ inputs.generator-name }}

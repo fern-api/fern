@@ -9,6 +9,7 @@ import {
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
+import { SentryClient } from "./telemetry/SentryClient.js";
 
 export declare namespace AbstractGeneratorCli {
     interface Options {
@@ -27,10 +28,15 @@ export abstract class AbstractGeneratorCli<
 
     public async run(options: AbstractGeneratorCli.Options = {}): Promise<void> {
         const config = await getGeneratorConfig();
-        const generatorNotificationService = options.disableNotifications
+        let sentryClient: SentryClient | undefined;
+        let generatorNotificationService: AbstractGeneratorNotificationService = options.disableNotifications
             ? new NopGeneratorNotificationService()
             : new GeneratorNotificationService(config.environment);
         try {
+            sentryClient = new SentryClient({
+                workspaceName: config.workspaceName,
+                organization: config.organization
+            });
             await generatorNotificationService.sendUpdate(
                 FernGeneratorExec.GeneratorUpdate.initV2({
                     publishingToRegistry: "MAVEN"
@@ -71,14 +77,19 @@ export abstract class AbstractGeneratorCli<
                 FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(FernGeneratorExec.ExitStatusUpdate.successful({}))
             );
         } catch (e) {
-            await generatorNotificationService.sendUpdate(
-                FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(
-                    FernGeneratorExec.ExitStatusUpdate.error({
-                        message: e instanceof Error ? e.message : "Encountered error"
-                    })
-                )
-            );
+            await sentryClient?.captureException(e);
+            if (generatorNotificationService != null) {
+                await generatorNotificationService.sendUpdate(
+                    FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(
+                        FernGeneratorExec.ExitStatusUpdate.error({
+                            message: e instanceof Error ? e.message : "Encountered error"
+                        })
+                    )
+                );
+            }
             throw e;
+        } finally {
+            await sentryClient?.flush();
         }
     }
 
