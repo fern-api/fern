@@ -51,7 +51,7 @@ describe("getAvailabilityAnnotations", () => {
 
       expect(attribute).toBeUndefined();
       expect(docNote).toBe(
-        "@beta This endpoint is in development and may change.",
+        "# Stability\n\nThis endpoint is in development and may change.",
       );
     });
 
@@ -63,7 +63,7 @@ describe("getAvailabilityAnnotations", () => {
 
       expect(attribute).toBeUndefined();
       expect(docNote).toBe(
-        "@beta This endpoint is in development and may change. Expect breaking changes.",
+        "# Stability\n\nThis endpoint is in development and may change. Expect breaking changes.",
       );
     });
   });
@@ -77,7 +77,7 @@ describe("getAvailabilityAnnotations", () => {
 
       expect(attribute).toBeUndefined();
       expect(docNote).toBe(
-        "@beta This endpoint is in pre-release and may change.",
+        "# Stability\n\nThis endpoint is in pre-release and may change.",
       );
     });
 
@@ -89,7 +89,7 @@ describe("getAvailabilityAnnotations", () => {
 
       expect(attribute).toBeUndefined();
       expect(docNote).toBe(
-        "@beta This endpoint is in pre-release and may change. Contact support before depending on this.",
+        "# Stability\n\nThis endpoint is in pre-release and may change. Contact support before depending on this.",
       );
     });
   });

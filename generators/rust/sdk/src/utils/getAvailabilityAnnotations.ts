@@ -9,8 +9,9 @@ export interface AvailabilityAnnotations {
   attribute?: Attribute;
   /**
    * Free-form documentation note to prepend to the doc comment summary when
-   * Rust does not have a first-class attribute for the availability status
-   * (e.g. `@beta This endpoint is in pre-release and may change.`).
+   * Rust does not have a first-class attribute for the availability status.
+   * Rendered as a top-level rustdoc `# Stability` section, grouped with the
+   * standard `# Examples` / `# Errors` / `# Panics` / `# Safety` headers.
    */
   docNote?: string;
 }
@@ -18,8 +19,7 @@ export interface AvailabilityAnnotations {
 /**
  * Maps an endpoint's availability to Rust annotations. Deprecated endpoints
  * are surfaced via Rust's built-in `#[deprecated]` attribute. In-development
- * and pre-release endpoints fall back to a `@beta` doc comment matching the
- * wording used by the TypeScript SDK generator.
+ * and pre-release endpoints use an idiomatic rustdoc `# Stability` section.
  */
 export function getAvailabilityAnnotations(
   availability: FernIr.Availability | undefined,
@@ -37,16 +37,14 @@ export function getAvailabilityAnnotations(
       return { attribute: rust.attribute({ name: "deprecated", args }) };
     },
     inDevelopment: () => {
-      const warning = "@beta This endpoint is in development and may change.";
-      return {
-        docNote: availability.message != null ? `${warning} ${availability.message}` : warning,
-      };
+      const warning = "This endpoint is in development and may change.";
+      const body = availability.message != null ? `${warning} ${availability.message}` : warning;
+      return { docNote: `# Stability\n\n${body}` };
     },
     preRelease: () => {
-      const warning = "@beta This endpoint is in pre-release and may change.";
-      return {
-        docNote: availability.message != null ? `${warning} ${availability.message}` : warning,
-      };
+      const warning = "This endpoint is in pre-release and may change.";
+      const body = availability.message != null ? `${warning} ${availability.message}` : warning;
+      return { docNote: `# Stability\n\n${body}` };
     },
     generalAvailability: () => ({}),
     // Forward-compatible: unknown availability statuses from newer IR versions
