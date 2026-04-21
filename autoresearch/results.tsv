@@ -43,3 +43,4 @@ d8c4b13	31550	11000	38596	-18.3	discard	exp-038: disable source maps (maps loade
 9482127	31151	10700	38596	-19.2	discard	exp-041: replace localeCompare with raw string comparison (no gen improvement)
 7d0b33c	30541	10700	38596	-20.9	keep	exp-042: eagerly extract file text and delete source files from ts-morph project (e2e -3.2%)
 e344512	30274	10700	38596	-21.6	keep	exp-043: bypass ts-morph replaceWithText re-parse for test files (return raw text from run)
+a6571a9	30712	10700	38596	-20.5	discard	exp-044: start lockfile generation early, overlap with post-persist steps (~283ms below noise floor)
