@@ -786,8 +786,7 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                             }
                             if (urls[wsName] != null && urls[wsName] !== wsUrl) {
                                 const wsProtocol = getProtocol(wsUrl);
-                                const dedupedName =
-                                    wsProtocol != null ? `${wsName}_${wsProtocol}` : wsName;
+                                const dedupedName = wsProtocol != null ? `${wsName}_${wsProtocol}` : wsName;
                                 urls[dedupedName] = wsUrl;
                                 context.setUrlId(wsUrl, dedupedName);
                             } else {
