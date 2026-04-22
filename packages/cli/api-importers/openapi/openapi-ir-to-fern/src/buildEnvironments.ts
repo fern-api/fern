@@ -161,7 +161,7 @@ function mergeWebsocketUrlsWithoutOverwriting(
         }
         if (urls[wsName] != null && urls[wsName] !== wsUrl) {
             const wsProtocol = getProtocol(wsUrl);
-            const dedupedName = wsProtocol != null ? `${wsName}_${wsProtocol}` : wsName;
+            const dedupedName = wsProtocol != null ? `${wsName}_${wsProtocol}` : `${wsName}_ws`;
             urls[dedupedName] = wsUrl;
             context.setUrlId(wsUrl, dedupedName);
         } else {
@@ -850,25 +850,17 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                             apiUrlMap.get(envSuffix) || apiUrlMap.get("production") || apiUrlMap.values().next().value;
                         if (apiUrl) {
                             urls[apiName] = apiUrl;
-                            // Register the named URL id so that when `buildEndpoint`
-                            // resolves an endpoint-level server override, the URL
-                            // resolves to its named id (e.g. `Agent`) rather than to
-                            // `Base` (which may have been registered for the same URL
-                            // during the current or a prior environment iteration).
-                            context.setUrlId(apiUrl, apiName);
                         }
                     }
 
                     // Include websocket servers when we have multi-API grouping.
-                    // Preserve HTTP URLs when a WebSocket server shares the same
-                    // x-fern-server-name by suffixing the WebSocket entry with its
-                    // protocol (e.g. `Agent_wss`).
+                    // Matches historical behavior: when a WebSocket server shares an
+                    // `x-fern-server-name` with an HTTP server, the WebSocket URL
+                    // silently overwrites the HTTP URL under that name. The
+                    // protocol-suffixed disambiguation lives only in the opt-in
+                    // consolidated branch (`group-servers-as-environment-urls: true`).
                     if (hasWebsocketServersWithName) {
-                        mergeWebsocketUrlsWithoutOverwriting(
-                            urls,
-                            extractUrlsFromEnvironmentSchema(websocketServersWithName),
-                            context
-                        );
+                        Object.assign(urls, extractUrlsFromEnvironmentSchema(websocketServersWithName));
                     }
 
                     if (Object.keys(urls).length > 1) {

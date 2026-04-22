@@ -30,7 +30,7 @@
               "source": {
                 "openapi": "../openapi.yml",
               },
-              "url": "Agent",
+              "url": "Base",
             },
             "getStatus": {
               "auth": undefined,
@@ -85,7 +85,7 @@
         docs: Agent think models
         type: string
         status-code: 200
-      url: Agent
+      url: Base
       examples:
         - response:
             body: string
@@ -115,12 +115,12 @@
             },
           },
           "path": "/v1/agent/converse",
-          "url": "Agent_wss",
+          "url": "Agent",
         },
       },
       "rawContents": "channel:
   path: /v1/agent/converse
-  url: Agent_wss
+  url: Agent
   auth: false
   messages:
     converse:
@@ -181,16 +181,14 @@
       "environments": {
         "Agent": {
           "urls": {
-            "Agent": "https://agent.example.com",
-            "Agent_wss": "wss://agent.example.com",
+            "Agent": "wss://agent.example.com",
             "Base": "https://agent.example.com",
             "Production": "wss://api.example.com",
           },
         },
         "Production": {
           "urls": {
-            "Agent": "https://agent.example.com",
-            "Agent_wss": "wss://agent.example.com",
+            "Agent": "wss://agent.example.com",
             "Base": "https://api.example.com",
             "Production": "wss://api.example.com",
           },
@@ -210,15 +208,13 @@ environments:
   Production:
     urls:
       Base: https://api.example.com
-      Agent: https://agent.example.com
+      Agent: wss://agent.example.com
       Production: wss://api.example.com
-      Agent_wss: wss://agent.example.com
   Agent:
     urls:
       Base: https://agent.example.com
-      Agent: https://agent.example.com
+      Agent: wss://agent.example.com
       Production: wss://api.example.com
-      Agent_wss: wss://agent.example.com
 default-environment: Production
 default-url: Base
 ",
