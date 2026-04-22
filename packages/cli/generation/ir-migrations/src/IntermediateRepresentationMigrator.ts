@@ -176,7 +176,8 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
                 jsonify: () =>
                     Promise.resolve().then(() =>
                         IrSerialization.IntermediateRepresentation.jsonOrThrow(intermediateRepresentation, {
-                            unrecognizedObjectKeys: "strip"
+                            unrecognizedObjectKeys: "strip",
+                            skipValidation: true
                         })
                     )
             };

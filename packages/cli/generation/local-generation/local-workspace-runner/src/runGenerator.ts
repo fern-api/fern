@@ -124,7 +124,11 @@ export async function writeFilesToDiskAndRunGenerator({
     autoVersioningNewVersion?: string;
     autoVersioningPreviousVersion?: string;
 }> {
-    const { latest, migrated } = await getIntermediateRepresentation({
+    // Strip examples from the raw IR BEFORE migration so jsonOrThrow runs on ~5MB
+    // instead of ~57MB. Examples comprise ~97% of IR size but v1 doesn't use them.
+    const strippedRawIr = stripExamplesFromIr(ir) as IntermediateRepresentation;
+
+    const { migrated } = await getIntermediateRepresentation({
         workspace,
         audiences,
         generatorInvocation,
@@ -134,28 +138,31 @@ export async function writeFilesToDiskAndRunGenerator({
         version: version ?? outputVersionOverride,
         sourceConfig: getSourceConfig(workspace, executionEnvironment?.usesContainerPaths ?? true),
         includeOptionalRequestPropertyExamples,
-        ir
+        ir: strippedRawIr
     });
 
-    // Write a stripped IR (no examples) for the v1 generator which doesn't use them.
-    // Examples comprise ~97% of the IR size for large APIs (57MB → 5MB for Square).
-    // The full IR is written separately for the v2 generator which needs examples.
-    const strippedIr = stripExamplesFromIr(migrated);
+    // Copy sourceConfig and generationMetadata from the mutated stripped IR to the full IR
+    // (getIntermediateRepresentation only mutated strippedRawIr, not the original ir)
+    ir.sourceConfig = strippedRawIr.sourceConfig;
+    ir.generationMetadata = strippedRawIr.generationMetadata;
+
+    // Write stripped migrated IR for v1 (already stripped before migration)
     const absolutePathToIr = await writeIrToFile({
         workspaceTempDir,
         filename: IR_FILENAME,
         context,
-        ir: strippedIr
+        ir: migrated
     });
     context.logger.debug("Wrote stripped IR to: " + absolutePathToIr);
 
-    // Write full IR (with examples) for the v2 generator
+    // Write full raw IR (camelCase, with examples) for v2 — avoids expensive jsonOrThrow
+    // on the 57MB full IR. v2 reads this directly without Zod parsing.
     const fullIrFilename = "ir-full.json";
     const absolutePathToFullIr = await writeIrToFile({
         workspaceTempDir,
         filename: fullIrFilename,
         context,
-        ir: migrated
+        ir
     });
     context.logger.debug("Wrote full IR to: " + absolutePathToFullIr);
 
@@ -288,7 +295,7 @@ export async function writeFilesToDiskAndRunGenerator({
     const generatedFilesResult = await taskHandler.copyGeneratedFiles();
 
     return {
-        ir: latest,
+        ir,
         generatorConfig: config,
         ...generatedFilesResult
     };
