@@ -3,14 +3,6 @@ import { b as BamlClient, configureBamlClient, VersionBump } from "@fern-api/cli
 import { FERNIGNORE_FILENAME, generatorsYml, getFernIgnorePaths } from "@fern-api/configuration";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { loggingExeca } from "@fern-api/logging-execa";
-import { TaskContext } from "@fern-api/task-context";
-import decompress from "decompress";
-import { cp, readdir, readFile, rm } from "fs/promises";
-import { tmpdir } from "os";
-import { join as pathJoin } from "path";
-import semver from "semver";
-import tmp from "tmp-promise";
 import {
     AutoVersioningCache,
     AutoVersioningException,
@@ -25,6 +17,14 @@ import {
     MAX_RAW_DIFF_BYTES,
     maxVersionBump
 } from "@fern-api/generator-cli/autoversion";
+import { loggingExeca } from "@fern-api/logging-execa";
+import { TaskContext } from "@fern-api/task-context";
+import decompress from "decompress";
+import { cp, readdir, readFile, rm } from "fs/promises";
+import { tmpdir } from "os";
+import { join as pathJoin } from "path";
+import semver from "semver";
+import tmp from "tmp-promise";
 import { sanitizeChangelogEntry } from "./sanitizeChangelogEntry.js";
 export declare namespace LocalTaskHandler {
     export interface Init {

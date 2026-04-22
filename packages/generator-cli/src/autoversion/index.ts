@@ -1,11 +1,11 @@
+export { AutoVersioningCache, type CachedAnalysis } from "./AutoVersioningCache.js";
 export {
     AutoVersioningException,
     AutoVersioningService,
+    type AutoVersionResult,
     countFilesInDiff,
-    formatSizeKB,
-    type AutoVersionResult
+    formatSizeKB
 } from "./AutoVersioningService.js";
-export { AutoVersioningCache, type CachedAnalysis } from "./AutoVersioningCache.js";
 export {
     AUTO_VERSION,
     extractLanguageFromGeneratorName,
@@ -14,10 +14,10 @@ export {
     isAutoVersion,
     MAGIC_VERSION,
     MAGIC_VERSION_PYTHON,
-    mapMagicVersionForLanguage,
     MAX_AI_DIFF_BYTES,
     MAX_CHUNKS,
     MAX_RAW_DIFF_BYTES,
+    mapMagicVersionForLanguage,
     maxVersionBump,
     VersionBump
 } from "./VersionUtils.js";
