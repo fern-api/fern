@@ -1957,6 +1957,30 @@ types:
       "og:background-image":
         type: optional<string>
         docs: A custom background image for dynamically generated OG images. Can be a URL or a file path.
+      "og:dynamic:text-color":
+        type: optional<string>
+        docs: Override the text color for dynamically generated OG images. Accepts any valid CSS color value (e.g., "#1a1a1a").
+      "og:dynamic:background-color":
+        type: optional<string>
+        docs: Override the background color for dynamically generated OG images. Accepts any valid CSS color value (e.g., "#ffffff").
+      "og:dynamic:logo-color":
+        type: optional<OgDynamicLogoColor>
+        docs: Choose which logo variant from docs.yml to render in dynamically generated OG images. Defaults to `dark`.
+      "og:dynamic:show-logo":
+        type: optional<boolean>
+        docs: Toggle visibility of the logo in dynamically generated OG images. Defaults to true when og:dynamic is enabled.
+      "og:dynamic:show-section":
+        type: optional<boolean>
+        docs: Toggle visibility of the section title in dynamically generated OG images. Defaults to true when og:dynamic is enabled.
+      "og:dynamic:show-description":
+        type: optional<boolean>
+        docs: Toggle visibility of the page description in dynamically generated OG images. Defaults to true when og:dynamic is enabled.
+      "og:dynamic:show-url":
+        type: optional<boolean>
+        docs: Toggle visibility of the page URL in dynamically generated OG images. Defaults to true when og:dynamic is enabled.
+      "og:dynamic:show-gradient":
+        type: optional<boolean>
+        docs: Toggle visibility of the accent gradient overlay in dynamically generated OG images. Defaults to true when og:dynamic is enabled.
       canonical-host:
         type: optional<string>
         docs: |
@@ -1969,6 +1993,11 @@ types:
       - summary_large_image
       - app
       - player
+
+  OgDynamicLogoColor:
+    enum:
+      - dark
+      - light
 
   RedirectConfig:
     availability: in-development
