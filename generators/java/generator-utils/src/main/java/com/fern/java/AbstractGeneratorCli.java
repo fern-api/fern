@@ -365,13 +365,15 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
 
             // Start v2 generator asynchronously — it reads the config/IR independently
             // and generates docs (README, reference, snippets) which don't depend on v1 output.
-            Thread v2Thread = new Thread(() -> {
-                try {
-                    runV2Generator(generatorExecClient, args);
-                } catch (Exception e) {
-                    throw new RuntimeException("V2 generator failed", e);
-                }
-            }, "java-v2-generator");
+            Thread v2Thread = new Thread(
+                    () -> {
+                        try {
+                            runV2Generator(generatorExecClient, args);
+                        } catch (Exception e) {
+                            throw new RuntimeException("V2 generator failed", e);
+                        }
+                    },
+                    "java-v2-generator");
             v2Thread.start();
 
             IntermediateRepresentation ir = getIr(generatorConfig);
