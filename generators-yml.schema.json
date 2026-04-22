@@ -814,6 +814,13 @@
         "spec-order"
       ]
     },
+    "generators.MultiServerStrategy": {
+      "type": "string",
+      "enum": [
+        "environment-per-server",
+        "urls-per-environment"
+      ]
+    },
     "generators.APIDefinitionSettingsSchema": {
       "type": "object",
       "properties": {
@@ -917,10 +924,10 @@
             }
           ]
         },
-        "group-servers-as-environment-urls": {
+        "multi-server-strategy": {
           "oneOf": [
             {
-              "type": "boolean"
+              "$ref": "#/definitions/generators.MultiServerStrategy"
             },
             {
               "type": "null"
@@ -1978,10 +1985,10 @@
             }
           ]
         },
-        "group-servers-as-environment-urls": {
+        "multi-server-strategy": {
           "oneOf": [
             {
-              "type": "boolean"
+              "$ref": "#/definitions/generators.MultiServerStrategy"
             },
             {
               "type": "null"
@@ -2366,10 +2373,10 @@
             }
           ]
         },
-        "group-servers-as-environment-urls": {
+        "multi-server-strategy": {
           "oneOf": [
             {
-              "type": "boolean"
+              "$ref": "#/definitions/generators.MultiServerStrategy"
             },
             {
               "type": "null"
@@ -2884,10 +2891,10 @@
             }
           ]
         },
-        "group-servers-as-environment-urls": {
+        "multi-server-strategy": {
           "oneOf": [
             {
-              "type": "boolean"
+              "$ref": "#/definitions/generators.MultiServerStrategy"
             },
             {
               "type": "null"

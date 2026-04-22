@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { MultiServerStrategySchema } from "./MultiServerStrategySchema.js";
 import { PathParameterOrderSchema } from "./PathParameterOrderSchema.js";
 import { RemoveDiscriminantsFromSchemasSchema } from "./RemoveDiscriminantsFromSchemasSchema.js";
 
@@ -48,15 +49,15 @@ export const BaseApiSettingsSchema = z.object({
     groupEnvironmentsByHost: z.boolean().optional(),
 
     /**
-     * If true, when top-level OpenAPI servers each declare an `x-fern-server-name` and endpoint-level
-     * `servers:` overrides reference those names, collapse all top-level servers into a single
-     * environment with each server exposed as a named URL. This is useful for APIs that expose
-     * multiple base hosts that together form a single logical environment (e.g. `api.box.com`,
-     * `upload.box.com`, and `dl.boxcloud.com`).
-     * If false, emit one environment per top-level server.
-     * Defaults to false.
+     * Controls how multiple top-level OpenAPI servers are mapped to environments in the generated
+     * Fern definition, when those servers each declare an `x-fern-server-name` and endpoint-level
+     * `servers:` overrides reference those names.
+     * - `environmentPerServer`: emit one environment per top-level server (each `x-fern-server-name`
+     *   becomes its own environment constant in generated SDKs). This is the default.
+     * - `urlsPerEnvironment`: collapse all top-level servers into a single environment with each
+     *   server exposed as a named URL.
      */
-    groupServersAsEnvironmentUrls: z.boolean().optional(),
+    multiServerStrategy: MultiServerStrategySchema.optional(),
 
     /**
      * If `always`, remove discriminant properties from schemas when generating types, unless the schema is also used outside of a discriminated union.

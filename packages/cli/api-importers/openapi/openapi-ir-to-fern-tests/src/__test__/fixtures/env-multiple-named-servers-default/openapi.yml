@@ -7,8 +7,9 @@ info:
 # into a single multi-URL environment by default - they should remain distinct
 # environments (e.g. Environment.PRODUCTION and Environment.AGENT).
 #
-# The new "group-servers-as-environment-urls" setting (default false) opts in to
-# collapsing instead; this fixture exercises the default behavior.
+# The `multi-server-strategy: urls-per-environment` setting opts in to collapsing
+# all top-level servers into a single environment instead; this fixture exercises
+# the default `environment-per-server` behavior.
 servers:
   - url: https://api.example.com
     x-fern-server-name: Production

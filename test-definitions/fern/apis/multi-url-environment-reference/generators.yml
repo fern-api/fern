@@ -3,4 +3,4 @@ api:
   specs:
     - openapi: ./openapi.yml
       settings:
-        group-servers-as-environment-urls: true
+        multi-server-strategy: urls-per-environment

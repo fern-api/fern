@@ -758,7 +758,7 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                 [...endpointServerNamesSet].every((name) => topLevelServerNamesSet.has(name));
 
             if (
-                context.options.groupServersAsEnvironmentUrls &&
+                context.options.multiServerStrategy === "urls-per-environment" &&
                 apiToUrls.size > 0 &&
                 endpointServersReferenceTopLevel
             ) {
@@ -858,7 +858,7 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                     // `x-fern-server-name` with an HTTP server, the WebSocket URL
                     // silently overwrites the HTTP URL under that name. The
                     // protocol-suffixed disambiguation lives only in the opt-in
-                    // consolidated branch (`group-servers-as-environment-urls: true`).
+                    // consolidated branch (`multi-server-strategy: urls-per-environment`).
                     if (hasWebsocketServersWithName) {
                         Object.assign(urls, extractUrlsFromEnvironmentSchema(websocketServersWithName));
                     }
