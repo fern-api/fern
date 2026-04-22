@@ -646,8 +646,10 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
         (yargs) =>
             yargs
                 .option("api", {
-                    string: true,
-                    description: "If multiple APIs, specify the name with --api <name>. Otherwise, just --api."
+                    type: "string",
+                    array: true,
+                    description:
+                        "If multiple APIs, specify the name with --api <name>. Pass --api multiple times to generate for several APIs at once."
                 })
                 .option("docs", {
                     string: true,
@@ -792,7 +794,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                         "Skip opening a PR / pushing when the generated output has no diff from the base branch."
                 }),
         async (argv) => {
-            if (argv.api != null && argv.docs != null) {
+            if (argv.api != null && argv.api.length > 0 && argv.docs != null) {
                 return cliContext.failWithoutThrowing(
                     "Cannot specify both --api and --docs. Please choose one.",
                     undefined,
@@ -875,7 +877,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
             const correctedGeneratorFilter =
                 argv.generator != null ? warnAndCorrectIncorrectDockerOrg(argv.generator, cliContext) : undefined;
             const { generatorName, generatorIndex } = parseGeneratorArg(correctedGeneratorFilter);
-            if (argv.api != null) {
+            if (argv.api != null && argv.api.length > 0) {
                 return await generateAPIWorkspaces({
                     project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                         commandLineApiWorkspace: argv.api,
