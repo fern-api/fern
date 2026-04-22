@@ -11,9 +11,9 @@ import {
     type SdkGroupName,
     type Source
 } from "@fern-api/openapi-ir";
+import { CliError } from "@fern-api/task-context";
 import { size } from "lodash-es";
 import type { OpenAPIV3 } from "openapi-types";
-
 import { getExtension } from "../getExtension.js";
 import { OpenAPIExtension } from "../openapi/v3/extensions/extensions.js";
 import { FernOpenAPIExtension } from "../openapi/v3/extensions/fernExtensions.js";
@@ -45,6 +45,7 @@ import {
     getExampleAsNumber,
     getExamplesString
 } from "./examples/getExample.js";
+import { resolveDiscriminatorContext } from "./inferDiscriminatorContext.js";
 import type { SchemaParserContext } from "./SchemaParserContext.js";
 import { getBreadcrumbsFromReference } from "./utils/getBreadcrumbsFromReference.js";
 import { getGeneratedTypeName } from "./utils/getSchemaName.js";
@@ -913,9 +914,10 @@ export function convertSchemaObject(
             });
         }
 
+        const isDiscriminated = getExtension<boolean>(schema, FernOpenAPIExtension.IS_DISCRIMINATED);
+
         // handle oneOf with IS_DISCRIMINATED extension
         if (schema.oneOf != null && schema.oneOf.length > 0) {
-            const isDiscriminated = getExtension<boolean>(schema, FernOpenAPIExtension.IS_DISCRIMINATED);
             if (isDiscriminated === false) {
                 return convertUndiscriminatedOneOf({
                     nameOverride,
@@ -937,7 +939,15 @@ export function convertSchemaObject(
         }
 
         if (schema.type === "object" && schema.discriminator != null && schema.discriminator.mapping != null) {
-            if (!context.options.discriminatedUnionV2) {
+            const objectDiscriminatorContext = resolveDiscriminatorContext({
+                discriminator: schema.discriminator,
+                context
+            });
+            if (
+                isDiscriminated === true ||
+                !context.options.discriminatedUnionV2 ||
+                objectDiscriminatorContext === "protocol"
+            ) {
                 return convertDiscriminatedOneOf({
                     nameOverride,
                     generatedName,
@@ -983,7 +993,15 @@ export function convertSchemaObject(
                 schema.discriminator.mapping != null &&
                 Object.keys(schema.discriminator.mapping).length > 0
             ) {
-                if (context.options.discriminatedUnionV2 || isUndiscriminated) {
+                const discriminatorContext = resolveDiscriminatorContext({
+                    discriminator: schema.discriminator,
+                    context
+                });
+                if (
+                    isDiscriminated !== true &&
+                    (context.options.discriminatedUnionV2 || isUndiscriminated) &&
+                    discriminatorContext !== "protocol"
+                ) {
                     return convertUndiscriminatedOneOfWithDiscriminant({
                         nameOverride,
                         generatedName,
@@ -1103,7 +1121,10 @@ export function convertSchemaObject(
                 }
 
                 const maybeDiscriminant = getDiscriminant({ schemas: schema.oneOf, context });
-                if (maybeDiscriminant != null && !context.options.discriminatedUnionV2 && !isUndiscriminated) {
+                if (
+                    maybeDiscriminant != null &&
+                    (isDiscriminated === true || (!context.options.discriminatedUnionV2 && !isUndiscriminated))
+                ) {
                     return convertDiscriminatedOneOfWithVariants({
                         nameOverride,
                         generatedName,
@@ -1574,7 +1595,10 @@ export function convertToReferencedSchema(
 
     const schemaId = getSchemaIdFromReference(schema);
     if (schemaId == null) {
-        throw new Error(`Invalid schema reference ${JSON.stringify(schema)}`);
+        throw new CliError({
+            message: `Invalid schema reference ${JSON.stringify(schema)}`,
+            code: CliError.Code.ReferenceError
+        });
     }
 
     return Schema.reference({

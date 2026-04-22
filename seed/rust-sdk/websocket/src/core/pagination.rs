@@ -5,16 +5,23 @@ use std::sync::Arc;
 use std::task::{Context, Poll};
 
 use futures::Stream;
+use reqwest::header::HeaderMap;
 use serde_json::Value;
 
 use crate::{ApiError, HttpClient};
 
-/// Result of a pagination request
+/// Result of a pagination request, including HTTP metadata from the response.
 #[derive(Debug)]
 pub struct PaginationResult<T> {
     pub items: Vec<T>,
     pub next_cursor: Option<String>,
     pub has_next_page: bool,
+    /// The full parsed response body as a JSON value.
+    pub response: Option<Value>,
+    /// The HTTP status code of the response.
+    pub status_code: u16,
+    /// The HTTP response headers.
+    pub headers: HeaderMap,
 }
 
 /// Async paginator that implements Stream for iterating over paginated results
@@ -34,6 +41,9 @@ pub struct AsyncPaginator<T> {
     has_next_page: bool,
     loading_next:
         Option<Pin<Box<dyn Future<Output = Result<PaginationResult<T>, ApiError>> + Send>>>,
+    last_response: Option<Value>,
+    last_status_code: u16,
+    last_headers: HeaderMap,
 }
 
 impl<T> AsyncPaginator<T> {
@@ -53,12 +63,30 @@ impl<T> AsyncPaginator<T> {
             current_cursor: initial_cursor,
             has_next_page: true, // Assume true initially, will be updated after first request
             loading_next: None,
+            last_response: None,
+            last_status_code: 0,
+            last_headers: HeaderMap::new(),
         })
     }
 
     /// Check if there are more pages available
     pub fn has_next_page(&self) -> bool {
         !self.current_page.is_empty() || self.has_next_page
+    }
+
+    /// The full parsed response from the most recent page load.
+    pub fn response(&self) -> Option<&Value> {
+        self.last_response.as_ref()
+    }
+
+    /// The HTTP status code from the most recent page load.
+    pub fn status_code(&self) -> u16 {
+        self.last_status_code
+    }
+
+    /// The HTTP response headers from the most recent page load.
+    pub fn headers(&self) -> &HeaderMap {
+        &self.last_headers
     }
 
     /// Load the next page explicitly
@@ -72,6 +100,9 @@ impl<T> AsyncPaginator<T> {
 
         self.current_cursor = result.next_cursor;
         self.has_next_page = result.has_next_page;
+        self.last_response = result.response;
+        self.last_status_code = result.status_code;
+        self.last_headers = result.headers;
 
         Ok(result.items)
     }
@@ -96,6 +127,9 @@ where
                     self.current_page.extend(result.items);
                     self.current_cursor = result.next_cursor;
                     self.has_next_page = result.has_next_page;
+                    self.last_response = result.response;
+                    self.last_status_code = result.status_code;
+                    self.last_headers = result.headers;
                     self.loading_next = None;
 
                     // Try to get the next item from the newly loaded page
@@ -130,6 +164,9 @@ where
                     self.current_page.extend(result.items);
                     self.current_cursor = result.next_cursor;
                     self.has_next_page = result.has_next_page;
+                    self.last_response = result.response;
+                    self.last_status_code = result.status_code;
+                    self.last_headers = result.headers;
                     self.loading_next = None;
 
                     if let Some(item) = self.current_page.pop_front() {
@@ -165,6 +202,9 @@ pub struct SyncPaginator<T> {
     current_page: VecDeque<T>,
     current_cursor: Option<String>,
     has_next_page: bool,
+    last_response: Option<Value>,
+    last_status_code: u16,
+    last_headers: HeaderMap,
 }
 
 impl<T> SyncPaginator<T> {
@@ -185,12 +225,30 @@ impl<T> SyncPaginator<T> {
             current_page: VecDeque::new(),
             current_cursor: initial_cursor,
             has_next_page: true, // Assume true initially
+            last_response: None,
+            last_status_code: 0,
+            last_headers: HeaderMap::new(),
         })
     }
 
     /// Check if there are more pages available
     pub fn has_next_page(&self) -> bool {
         !self.current_page.is_empty() || self.has_next_page
+    }
+
+    /// The full parsed response from the most recent page load.
+    pub fn response(&self) -> Option<&Value> {
+        self.last_response.as_ref()
+    }
+
+    /// The HTTP status code from the most recent page load.
+    pub fn status_code(&self) -> u16 {
+        self.last_status_code
+    }
+
+    /// The HTTP response headers from the most recent page load.
+    pub fn headers(&self) -> &HeaderMap {
+        &self.last_headers
     }
 
     /// Load the next page explicitly
@@ -203,6 +261,9 @@ impl<T> SyncPaginator<T> {
 
         self.current_cursor = result.next_cursor;
         self.has_next_page = result.has_next_page;
+        self.last_response = result.response;
+        self.last_status_code = result.status_code;
+        self.last_headers = result.headers;
 
         Ok(result.items)
     }
@@ -246,6 +307,9 @@ impl<T> Iterator for SyncPaginator<T> {
                 self.current_page.extend(result.items);
                 self.current_cursor = result.next_cursor;
                 self.has_next_page = result.has_next_page;
+                self.last_response = result.response;
+                self.last_status_code = result.status_code;
+                self.last_headers = result.headers;
 
                 // Return the first item from the newly loaded page
                 self.current_page.pop_front().map(Ok)
@@ -302,6 +366,9 @@ mod tests {
                 items: vec![],
                 next_cursor: None,
                 has_next_page: false,
+                response: None,
+                status_code: 200,
+                headers: HeaderMap::new(),
             })
         }, None).unwrap();
         assert!(paginator.has_next_page());
@@ -315,6 +382,9 @@ mod tests {
                 items: vec!["a".to_string(), "b".to_string()],
                 next_cursor: None,
                 has_next_page: false,
+                response: None,
+                status_code: 200,
+                headers: HeaderMap::new(),
             })
         }, None).unwrap();
 
@@ -331,6 +401,9 @@ mod tests {
                 items: vec!["a".to_string()],
                 next_cursor: None,
                 has_next_page: false,
+                response: None,
+                status_code: 200,
+                headers: HeaderMap::new(),
             })
         }, None).unwrap();
 
@@ -354,6 +427,9 @@ mod tests {
                         items: vec![1, 2],
                         next_cursor: Some("page2".to_string()),
                         has_next_page: true,
+                        response: None,
+                        status_code: 200,
+                        headers: HeaderMap::new(),
                     })
                 }
                 1 => {
@@ -362,6 +438,9 @@ mod tests {
                         items: vec![3, 4],
                         next_cursor: None,
                         has_next_page: false,
+                        response: None,
+                        status_code: 200,
+                        headers: HeaderMap::new(),
                     })
                 }
                 _ => panic!("Unexpected call"),
@@ -390,11 +469,17 @@ mod tests {
                     items: vec![1, 2],
                     next_cursor: Some("next".to_string()),
                     has_next_page: true,
+                    response: None,
+                    status_code: 200,
+                    headers: HeaderMap::new(),
                 }),
                 1 => Ok(PaginationResult {
                     items: vec![3],
                     next_cursor: None,
                     has_next_page: false,
+                    response: None,
+                    status_code: 200,
+                    headers: HeaderMap::new(),
                 }),
                 _ => panic!("Unexpected call"),
             }
@@ -417,11 +502,17 @@ mod tests {
                     items: vec![10, 20],
                     next_cursor: Some("p2".to_string()),
                     has_next_page: true,
+                    response: None,
+                    status_code: 200,
+                    headers: HeaderMap::new(),
                 }),
                 1 => Ok(PaginationResult {
                     items: vec![30],
                     next_cursor: None,
                     has_next_page: false,
+                    response: None,
+                    status_code: 200,
+                    headers: HeaderMap::new(),
                 }),
                 _ => panic!("Unexpected call"),
             }
@@ -463,6 +554,9 @@ mod tests {
                 items: vec!["item".to_string()],
                 next_cursor: None,
                 has_next_page: false,
+                response: None,
+                status_code: 200,
+                headers: HeaderMap::new(),
             })
         }, Some("start_here".to_string())).unwrap();
 
@@ -480,6 +574,9 @@ mod tests {
             items: vec![1, 2, 3],
             next_cursor: Some("abc".to_string()),
             has_next_page: true,
+            response: None,
+            status_code: 200,
+            headers: HeaderMap::new(),
         };
         assert_eq!(result.items.len(), 3);
         assert_eq!(result.next_cursor, Some("abc".to_string()));

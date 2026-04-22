@@ -1,0 +1,5 @@
+- summary: |
+    Fix "Expected list. Received null." error when importing OpenAPI specs with null security scopes.
+    Some real-world specs use `{oauth2: null}` instead of `{oauth2: []}` in security requirement
+    objects. The OpenAPI importers now sanitize null scope values to empty arrays.
+  type: fix

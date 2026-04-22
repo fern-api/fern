@@ -34,16 +34,20 @@ jobs:
         if: ${{ github.event_name == 'push' }}
         uses: ./.github/actions/publish-generator
         with:
-          generator-name: "ruby-sdk"
+          generator-name: "ruby-sdk-v2"
           version-file: "generators/ruby-v2/sdk/versions.yml"
           fern-token: ${{ secrets.FERN_TOKEN }}
           docker-pwd: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+          sentry-auth-token: ${{ secrets.FERN_SENTRY_AUTH_TOKEN }}
+          sentry-dsn: ${{ secrets.SENTRY_DSN_RUBY_SDK }}
       - name: manual publish
         if: ${{ github.event_name == 'workflow_dispatch' }}
         uses: ./.github/actions/publish-generator
         with:
-          generator-name: "ruby-sdk"
+          generator-name: "ruby-sdk-v2"
           version: ${{ inputs.version }}
           manual-trigger: "true"
           fern-token: ${{ secrets.FERN_TOKEN }}
           docker-pwd: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+          sentry-auth-token: ${{ secrets.FERN_SENTRY_AUTH_TOKEN }}
+          sentry-dsn: ${{ secrets.SENTRY_DSN_RUBY_SDK }}

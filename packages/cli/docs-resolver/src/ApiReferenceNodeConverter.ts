@@ -2,7 +2,7 @@ import { docsYml } from "@fern-api/configuration-loader";
 import { isNonNullish, titleCase } from "@fern-api/core-utils";
 import { APIV1Read, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import { camelCase, kebabCase } from "lodash-es";
@@ -126,14 +126,12 @@ export class ApiReferenceNodeConverter {
             this.#idgen
         ).orUndefined();
 
-        // When no explicit overview is set, inherit the first apiPackage child's overview page (e.g., tag description).
-        // This works for both flattened and non-flattened cases:
-        // - Flattened: The section will inherit this overview page via DocsDefinitionResolver.toSectionNode()
-        // - Non-flattened: The API Reference itself will show the tag description when clicked
-        // We search through all children to find an apiPackage with an overviewPageId, rather than assuming
-        // the first child is an apiPackage (which may not be true when endpoints are explicitly listed in the layout).
+        // When no explicit overview is set and tag-description-pages is NOT enabled,
+        // inherit the first apiPackage child's overview page. When tag-description-pages
+        // IS enabled, the child overview pages belong to the individual tag sections and
+        // should not bubble up to make the top-level API reference title clickable.
         let overviewPageId = this.#overviewPageId;
-        if (overviewPageId == null) {
+        if (overviewPageId == null && !this.apiSection.tagDescriptionPages) {
             const apiPackageWithOverview = this.#children.find(
                 (child): child is FernNavigation.V1.ApiPackageNode =>
                     child.type === "apiPackage" && child.overviewPageId != null
@@ -240,6 +238,7 @@ export class ApiReferenceNodeConverter {
                     link: (link) => ({
                         id: this.#idgen.get(link.url),
                         type: "link",
+                        collapsed: undefined,
                         title: link.text,
                         icon: this.resolveIconFileId(link.icon),
                         url: FernNavigation.Url(link.url),
@@ -332,6 +331,7 @@ export class ApiReferenceNodeConverter {
             return {
                 id: subpackageNodeId,
                 type: "apiPackage",
+                collapsed: undefined,
                 children: convertedItems,
                 title:
                     pkg.title ??
@@ -368,6 +368,7 @@ export class ApiReferenceNodeConverter {
             return {
                 id: this.#idgen.get(explicitOverviewPageId ?? `${this.apiDefinitionId}:${kebabCase(pkg.package)}`),
                 type: "apiPackage",
+                collapsed: undefined,
                 children: convertedItems,
                 title: pkg.title ?? pkg.package,
                 slug: slug.get(),
@@ -501,6 +502,7 @@ export class ApiReferenceNodeConverter {
             return {
                 id: subpackageNodeId,
                 type: "apiPackage",
+                collapsed: undefined,
                 children: [],
                 title: isSubpackage(subpackage)
                     ? (subpackage.displayName ?? titleCase(subpackage.name))
@@ -574,6 +576,7 @@ export class ApiReferenceNodeConverter {
                 return {
                     id: this.#idgen.get(`${this.apiDefinitionId}:${endpointId}`),
                     type: "endpoint",
+                    collapsed: undefined,
                     method: endpoint.method,
                     endpointId,
                     apiDefinitionId: this.apiDefinitionId,
@@ -620,6 +623,7 @@ export class ApiReferenceNodeConverter {
                 return {
                     id: this.#idgen.get(`${this.apiDefinitionId}:${webSocketId}`),
                     type: "webSocket",
+                    collapsed: undefined,
                     webSocketId,
                     title: endpointItem.title ?? webSocket.name ?? stringifyEndpointPathParts(webSocket.path.parts),
                     slug: (endpointItem.slug != null
@@ -661,6 +665,7 @@ export class ApiReferenceNodeConverter {
                 return {
                     id: this.#idgen.get(`${this.apiDefinitionId}:${webhookId}`),
                     type: "webhook",
+                    collapsed: undefined,
                     webhookId,
                     method: webhook.method,
                     title: endpointItem.title ?? webhook.name ?? urlJoin("/", ...webhook.path),
@@ -706,6 +711,7 @@ export class ApiReferenceNodeConverter {
             return {
                 id: this.#idgen.get(`${this.apiDefinitionId}:${operationId}`),
                 type: "graphql" as const,
+                collapsed: undefined,
                 operationType: graphqlOperation.operationType,
                 graphqlOperationId: APIV1Read.GraphQlOperationId(graphqlOperation.id),
                 apiDefinitionId: this.apiDefinitionId,
@@ -857,6 +863,7 @@ export class ApiReferenceNodeConverter {
         return {
             id: this.#idgen.get(`${this.apiDefinitionId}:${operationId}`),
             type: "graphql" as const,
+            collapsed: undefined,
             operationType: graphqlOperation.operationType,
             graphqlOperationId: APIV1Read.GraphQlOperationId(graphqlOperation.id),
             apiDefinitionId: this.apiDefinitionId,
@@ -928,6 +935,7 @@ export class ApiReferenceNodeConverter {
                 additionalChildren.push({
                     id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${grpcId}`),
                     type: "grpc",
+                    collapsed: undefined,
                     grpcId,
                     title: endpoint.name ?? stringifyEndpointPathParts(endpoint.path.parts),
                     method: endpoint.protocol?.methodType ?? "UNARY",
@@ -957,6 +965,7 @@ export class ApiReferenceNodeConverter {
                 additionalChildren.push({
                     id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${endpointId}`),
                     type: "endpoint",
+                    collapsed: undefined,
                     method: endpoint.method,
                     endpointId,
                     apiDefinitionId: this.apiDefinitionId,
@@ -987,6 +996,7 @@ export class ApiReferenceNodeConverter {
             additionalChildren.push({
                 id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${webSocketId}`),
                 type: "webSocket",
+                collapsed: undefined,
                 webSocketId,
                 title: webSocket.name ?? stringifyEndpointPathParts(webSocket.path.parts),
                 slug: parentSlug.apply(webSocket).get(),
@@ -1014,6 +1024,7 @@ export class ApiReferenceNodeConverter {
             additionalChildren.push({
                 id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${webhookId}`),
                 type: "webhook",
+                collapsed: undefined,
                 webhookId,
                 method: webhook.method,
                 title: webhook.name ?? titleCase(webhook.id),
@@ -1065,6 +1076,7 @@ export class ApiReferenceNodeConverter {
                 additionalChildren.push({
                     id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${subpackageId}`),
                     type: "apiPackage",
+                    collapsed: undefined,
                     children: subpackageChildren,
                     title: isSubpackage(subpackage)
                         ? (subpackage.displayName ?? titleCase(subpackage.name))
@@ -1174,6 +1186,7 @@ export class ApiReferenceNodeConverter {
                     return {
                         id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${operation.id}`),
                         type: "graphql" as const,
+                        collapsed: undefined,
                         operationType: operation.operationType,
                         graphqlOperationId: APIV1Read.GraphQlOperationId(operation.id),
                         apiDefinitionId: this.apiDefinitionId,
@@ -1193,6 +1206,7 @@ export class ApiReferenceNodeConverter {
                 const sectionNode = {
                     id: this.#idgen.get(`${this.apiDefinitionId}:graphql:${namespace}:${operationType}`),
                     type: "apiPackage",
+                    collapsed: undefined,
                     children,
                     title: sectionTitle,
                     slug: sectionSlug.get(),
@@ -1219,6 +1233,7 @@ export class ApiReferenceNodeConverter {
             const namespaceNode = {
                 id: this.#idgen.get(`${this.apiDefinitionId}:graphql:namespace:${namespace}`),
                 type: "apiPackage",
+                collapsed: undefined,
                 children: namespaceChildren,
                 title: titleCase(namespace),
                 slug: namespaceSlug.get(),
@@ -1256,6 +1271,7 @@ export class ApiReferenceNodeConverter {
                 return {
                     id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${operation.id}`),
                     type: "graphql" as const,
+                    collapsed: undefined,
                     operationType: operation.operationType,
                     graphqlOperationId: APIV1Read.GraphQlOperationId(operation.id),
                     apiDefinitionId: this.apiDefinitionId,
@@ -1275,6 +1291,7 @@ export class ApiReferenceNodeConverter {
             const sectionNode = {
                 id: this.#idgen.get(`${this.apiDefinitionId}:graphql:${operationType}`),
                 type: "apiPackage",
+                collapsed: undefined,
                 children,
                 title: sectionTitle,
                 slug: sectionSlug.get(),
@@ -1339,7 +1356,9 @@ export class ApiReferenceNodeConverter {
     private getFileId(filepath: AbsoluteFilePath): string {
         const fileId = this.collectedFileIds.get(filepath);
         if (fileId == null) {
-            return this.taskContext.failAndThrow("Failed to locate file after uploading: " + filepath);
+            return this.taskContext.failAndThrow("Failed to locate file after uploading: " + filepath, undefined, {
+                code: CliError.Code.InternalError
+            });
         }
         return fileId;
     }

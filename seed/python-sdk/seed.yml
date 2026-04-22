@@ -212,18 +212,19 @@ fixtures:
         pyproject_python_version: "^3.8.1"
         extra_dependencies:
           boto3: 1.28.57
-          langchain:
-            version: "^0.1.20"
+          numpy:
+            version: "^2.0"
+            python: ">=3.10"
             optional: true
         extras:
-          telemetry: ["langchain", "boto3"]
+          telemetry: ["numpy", "boto3"]
       outputFolder: extra_dependencies
     - customConfig:
         pyproject_python_version: "^3.8.1"
         extra_dev_dependencies:
-          langchain: "^0.1.3"
-          openai: "^1.9.0"
-          langchain-openai: "^0.0.3"
+          langchain: "^1.2.15"
+          openai: "^2.26.0"
+          langchain-openai: "^1.1.14"
           covcheck:
             version: "^0.4.3"
             extras: ["toml"]
@@ -311,9 +312,11 @@ fixtures:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
-        pydantic_config:
-          use_provided_defaults: true
+        use_request_defaults: "all"
       outputFolder: with-defaults
+    - customConfig:
+        use_request_defaults: "parameters"
+      outputFolder: with-defaults-parameters
   literal:
     - customConfig: null
       outputFolder: no-custom-config
@@ -384,6 +387,12 @@ fixtures:
           union_naming: v1
         use_inheritance_for_extended_models: false
       outputFolder: union-naming-v1
+    - customConfig:
+        enable_wire_tests: true
+        pydantic_config:
+          union_naming: v1
+        use_inheritance_for_extended_models: false
+      outputFolder: union-naming-v1-wire-tests
   websocket:
     - outputFolder: websocket-base
     - customConfig:
@@ -472,3 +481,10 @@ allowedFailures:
   - streaming-parameter
   - server-sent-event-examples:with-wire-tests # TODO: update wiretests geranation then remove it
   - trace
+  - multi-url-environment-reference
+  # The unions API has two services (`union` and `bigunion`) that both expose
+  # `GET /{id}` on the root base-path, which causes a WireMock stub collision at
+  # test runtime. Code generation and imports are verified; one wire test
+  # assertion fails due to the colliding mocks. This is pre-existing and unrelated
+  # to the union_naming v1 fix this fixture regression-tests.
+  - unions:union-naming-v1-wire-tests

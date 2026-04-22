@@ -1,0 +1,4 @@
+- summary: |
+    Fix the missing-redirects check to ignore stale historical slug-table rows
+    and only compare against the most recent published slug per page.
+  type: fix

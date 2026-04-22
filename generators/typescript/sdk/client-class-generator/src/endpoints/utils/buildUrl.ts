@@ -6,6 +6,7 @@ import { FileContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
 import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl.js";
+import { getClientDefaultValue } from "./isLiteralHeader.js";
 
 export type GetReferenceToPathParameterVariableFromRequest = (pathParameter: FernIr.PathParameter) => ts.Expression;
 
@@ -62,8 +63,10 @@ export function buildUrl({
                 getReferenceToPathParameterVariableFromRequest
             });
 
+            const clientDefaultVal = getClientDefaultValue(pathParameter.clientDefault);
+
             if (includeSerdeLayer && pathParameter.valueType.type === "named") {
-                referenceToPathParameterValue = context.typeSchema
+                const serializerCall = context.typeSchema
                     .getSchemaOfNamedType(pathParameter.valueType, {
                         isGeneratingSchema: false
                     })
@@ -75,6 +78,30 @@ export function buildUrl({
                         breadcrumbsPrefix: [],
                         omitUndefined
                     });
+                if (clientDefaultVal != null) {
+                    // When clientDefault is set the param is optional, so guard
+                    // the serializer with a null check to avoid passing undefined.
+                    referenceToPathParameterValue = ts.factory.createConditionalExpression(
+                        ts.factory.createBinaryExpression(
+                            referenceToPathParameterValue,
+                            ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                            ts.factory.createNull()
+                        ),
+                        ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                        serializerCall,
+                        ts.factory.createToken(ts.SyntaxKind.ColonToken),
+                        ts.factory.createStringLiteral(clientDefaultVal.toString())
+                    );
+                } else {
+                    referenceToPathParameterValue = serializerCall;
+                }
+            } else if (clientDefaultVal != null) {
+                // No serde layer or not a named type — simple ?? fallback.
+                referenceToPathParameterValue = ts.factory.createBinaryExpression(
+                    referenceToPathParameterValue,
+                    ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                    ts.factory.createStringLiteral(clientDefaultVal.toString())
+                );
             }
 
             return ts.factory.createTemplateSpan(

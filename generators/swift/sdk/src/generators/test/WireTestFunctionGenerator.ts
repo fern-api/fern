@@ -1,4 +1,4 @@
-import { getWireValue } from "@fern-api/base-generator";
+import { GeneratorError, getWireValue } from "@fern-api/base-generator";
 import { assertDefined } from "@fern-api/core-utils";
 import { LiteralEnum, Referencer, swift } from "@fern-api/swift-codegen";
 import { EndpointSnippetGenerator } from "@fern-api/swift-dynamic-snippets";
@@ -623,6 +623,6 @@ export class WireTestFunctionGenerator {
                 multiline: true
             });
         }
-        throw new Error(`Unknown value: ${JSON.stringify(val)}`);
+        throw GeneratorError.internalError(`Unknown value: ${JSON.stringify(val)}`);
     }
 }

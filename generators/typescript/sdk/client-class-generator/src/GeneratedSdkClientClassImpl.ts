@@ -48,7 +48,7 @@ import { GeneratedThrowingEndpointResponse } from "./endpoints/default/endpoint-
 import { GeneratedDefaultEndpointImplementation } from "./endpoints/default/GeneratedDefaultEndpointImplementation.js";
 import { GeneratedFileDownloadEndpointImplementation } from "./endpoints/GeneratedFileDownloadEndpointImplementation.js";
 import { GeneratedStreamingEndpointImplementation } from "./endpoints/GeneratedStreamingEndpointImplementation.js";
-import { isLiteralHeader } from "./endpoints/utils/isLiteralHeader.js";
+import { getClientDefaultValue, isLiteralHeader } from "./endpoints/utils/isLiteralHeader.js";
 import { GeneratedWrappedService } from "./GeneratedWrappedService.js";
 import { GeneratedDefaultWebsocketImplementation } from "./websocket/GeneratedDefaultWebsocketImplementation.js";
 
@@ -1077,10 +1077,15 @@ return core.makePassthroughRequest(input, init, {
 
         for (const header of this.intermediateRepresentation.headers) {
             if (!isLiteralHeader(header, context)) {
+                const clientDefaultVal = getClientDefaultValue(header.clientDefault);
+                const snippetValue =
+                    clientDefaultVal != null
+                        ? ts.factory.createStringLiteral(clientDefaultVal.toString())
+                        : ts.factory.createStringLiteral(`YOUR_${this.case.screamingSnakeUnsafe(header.name)}`);
                 properties.push(
                     ts.factory.createPropertyAssignment(
                         getPropertyKey(this.getOptionKeyForHeader(header)),
-                        ts.factory.createStringLiteral(`YOUR_${this.case.screamingSnakeUnsafe(header.name)}`)
+                        snippetValue
                     )
                 );
             }

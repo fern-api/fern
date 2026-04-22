@@ -33,6 +33,7 @@
   },
   "dependencies": {
     "@fern-api/fdr-sdk": "catalog:",
+    "@fern-api/task-context": "workspace:*",
     "js-yaml": "catalog:"
   },
   "devDependencies": {

@@ -1,3 +1,4 @@
+import { GeneratorError } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 
 type HttpEndpoint = FernIr.HttpEndpoint;
@@ -12,7 +13,7 @@ export function getContentTypeFromRequestBody(endpoint: HttpEndpoint): string | 
         fileUpload: (_) => undefined,
         bytes: (body) => body.contentType,
         _other: (body) => {
-            throw new Error(`Unexpected request body type: ${body.type}`);
+            throw GeneratorError.internalError(`Unexpected request body type: ${body.type}`);
         }
     });
 }

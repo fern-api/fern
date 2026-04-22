@@ -16,6 +16,7 @@ import {
     WebSocketMessageBody
 } from "@fern-api/ir-sdk";
 import { constructHttpPath, getOriginalName } from "@fern-api/ir-utils";
+import { CliError } from "@fern-api/task-context";
 import { FernFileContext } from "../FernFileContext.js";
 import { getHeaderName } from "../index.js";
 import { ExampleResolver } from "../resolvers/ExampleResolver.js";
@@ -135,7 +136,10 @@ export function convertChannel({
                         ? Object.entries(example["query-parameters"]).map(([wireKey, value]) => {
                               const queryParameterDeclaration = channel["query-parameters"]?.[wireKey];
                               if (queryParameterDeclaration == null) {
-                                  throw new Error(`Query parameter ${wireKey} does not exist`);
+                                  throw new CliError({
+                                      message: `Query parameter ${wireKey} does not exist`,
+                                      code: CliError.Code.ReferenceError
+                                  });
                               }
                               return {
                                   name: file.casingsGenerator.generateNameAndWireValue({
@@ -164,7 +168,10 @@ export function convertChannel({
                 messages: example.messages.map((messageExample): ExampleWebSocketMessage => {
                     const message = channel.messages?.[messageExample.type];
                     if (message == null) {
-                        throw new Error(`Message ${messageExample.type} does not exist`);
+                        throw new CliError({
+                            message: `Message ${messageExample.type} does not exist`,
+                            code: CliError.Code.ReferenceError
+                        });
                     }
                     return {
                         type: messageExample.type,
@@ -225,7 +232,7 @@ function convertExampleWebSocketMessageBody({
     }
 
     if (!isPlainObject(example)) {
-        throw new Error("Example must be an object");
+        throw new CliError({ message: "Example must be an object", code: CliError.Code.ValidationError });
     }
 
     const exampleProperties: ExampleInlinedRequestBodyProperty[] = [];
@@ -259,7 +266,10 @@ function convertExampleWebSocketMessageBody({
                 file
             });
             if (originalTypeDeclaration == null) {
-                throw new Error("Could not find original type declaration for property: " + wireKey);
+                throw new CliError({
+                    message: "Could not find original type declaration for property: " + wireKey,
+                    code: CliError.Code.ResolutionError
+                });
             }
             exampleProperties.push({
                 name: file.casingsGenerator.generateNameAndWireValue({
@@ -391,7 +401,10 @@ function convertChannelPathParameters({
                     })
                 );
             } else {
-                throw new Error(`Path parameter ${key} does not exist`);
+                throw new CliError({
+                    message: `Path parameter ${key} does not exist`,
+                    code: CliError.Code.ReferenceError
+                });
             }
         }
     }

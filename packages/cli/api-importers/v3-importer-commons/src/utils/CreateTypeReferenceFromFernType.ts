@@ -1,5 +1,6 @@
 import { recursivelyVisitRawTypeReference } from "@fern-api/fern-definition-schema";
 import * as FernIr from "@fern-api/ir-sdk";
+import { CliError } from "@fern-api/task-context";
 
 export function createTypeReferenceFromFernType(fernType: string): FernIr.TypeReference | undefined {
     return recursivelyVisitRawTypeReference<FernIr.TypeReference | undefined>({
@@ -153,7 +154,10 @@ export function createTypeReferenceFromFernType(fernType: string): FernIr.TypeRe
                             string: (value) => FernIr.Literal.string(value),
                             boolean: (value) => FernIr.Literal.boolean(value),
                             _other: () => {
-                                throw new Error("Unexpected literal type");
+                                throw new CliError({
+                                    message: "Unexpected literal type",
+                                    code: CliError.Code.InternalError
+                                });
                             }
                         })
                     )

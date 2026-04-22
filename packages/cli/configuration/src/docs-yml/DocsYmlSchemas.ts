@@ -97,7 +97,7 @@ export const ContentAlignment = z.enum(["center", "left"]);
 
 export const HeaderPosition = z.enum(["fixed", "static"]);
 
-export const ProductSwitcherThemeConfig = z.enum(["default", "toggle"]);
+export const ProductSwitcherThemeConfig = z.enum(["default", "toggle", "tabs"]);
 
 export const LanguageSwitcherThemeConfig = z.enum(["default", "minimal"]);
 
@@ -307,7 +307,8 @@ export const LayoutConfig = z.object({
     "header-position": HeaderPosition.optional(),
     "disable-header": z.boolean().optional(),
     "hide-nav-links": z.boolean().optional(),
-    "hide-feedback": z.boolean().optional()
+    "hide-feedback": z.boolean().optional(),
+    "mobile-toc": z.boolean().optional()
 });
 
 // ===== Settings =====

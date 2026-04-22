@@ -1,6 +1,7 @@
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath, relative } from "@fern-api/fs-utils";
 import { type Sourced, SourceLocation } from "@fern-api/source";
+import { CliError } from "@fern-api/task-context";
 import { z } from "zod";
 import { deepStrict } from "./deepStrict.js";
 import { ReferenceResolver } from "./ReferenceResolver.js";
@@ -8,6 +9,7 @@ import { ValidationIssue } from "./ValidationIssue.js";
 import type { YamlDocument } from "./YamlDocument.js";
 import { YamlParser } from "./YamlParser.js";
 import { YamlSourceResolver } from "./YamlSourceResolver.js";
+
 export namespace YamlConfigLoader {
     export type Result<T> = Success<T> | Failure;
 
@@ -21,6 +23,12 @@ export namespace YamlConfigLoader {
         absoluteFilePath: AbsoluteFilePath;
         /** The relative path to the loaded config file */
         relativeFilePath: RelativeFilePath;
+        /**
+         * Path mappings from `$ref` resolution — maps YAML path prefixes to the
+         * source document they came from. Useful for resolving file paths relative
+         * to the correct source file when a key was loaded via `$ref`.
+         */
+        pathMappings: ReferenceResolver.PathMapping[];
     }
 
     export interface Failure {
@@ -114,7 +122,8 @@ export class YamlConfigLoader {
             data: parseResult.data,
             sourced: sourceResolver.toSourced(parseResult.data),
             absoluteFilePath,
-            relativeFilePath: RelativeFilePath.of(relative(this.cwd, absoluteFilePath))
+            relativeFilePath: RelativeFilePath.of(relative(this.cwd, absoluteFilePath)),
+            pathMappings: resolved.pathMappings
         };
     }
 
@@ -122,7 +131,10 @@ export class YamlConfigLoader {
         try {
             return await this.parser.parseDocument({ absoluteFilePath, cwd: this.cwd });
         } catch (err) {
-            throw new Error(`Failed to parse YAML file ${absoluteFilePath}: ${extractErrorMessage(err)}`);
+            throw new CliError({
+                message: `Failed to parse YAML file ${absoluteFilePath}: ${extractErrorMessage(err)}`,
+                code: CliError.Code.ParseError
+            });
         }
     }
 
@@ -194,7 +206,22 @@ export class YamlConfigLoader {
                 return `unknown key(s): ${issue.keys.join(", ")}`;
 
             case "invalid_union": {
-                // For union errors, collect unique expected types from nested errors
+                // Prefer surfacing unrecognized_keys errors — these occur when the input
+                // object matches a union variant structurally but has unknown fields. They
+                // give the user a much more actionable message than generic type errors.
+                const unknownKeys: string[] = [];
+                for (const errorGroup of issue.errors) {
+                    for (const err of errorGroup) {
+                        if (err.code === "unrecognized_keys") {
+                            unknownKeys.push(...err.keys);
+                        }
+                    }
+                }
+                if (unknownKeys.length > 0) {
+                    return `unknown key(s): ${[...new Set(unknownKeys)].join(", ")}`;
+                }
+
+                // Fall back to collecting unique expected types from nested invalid_type errors
                 const expectedTypes = new Set<string>();
                 for (const errorGroup of issue.errors) {
                     for (const err of errorGroup) {

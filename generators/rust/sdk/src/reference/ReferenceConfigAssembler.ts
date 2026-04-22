@@ -1,4 +1,4 @@
-import { ReferenceConfigBuilder } from "@fern-api/base-generator";
+import { ReferenceConfigBuilder, GeneratorError } from "@fern-api/base-generator";
 import { DynamicSnippetsGenerator } from "@fern-api/rust-dynamic-snippets";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -18,7 +18,7 @@ export class ReferenceConfigAssembler {
     private buildDynamicSnippetsGenerator(): DynamicSnippetsGenerator {
         const dynamicIr = this.context.ir.dynamic;
         if (!dynamicIr) {
-            throw new Error("Cannot generate dynamic snippets without dynamic IR");
+            throw GeneratorError.internalError("Cannot generate dynamic snippets without dynamic IR");
         }
         return new DynamicSnippetsGenerator({
             ir: convertIr(dynamicIr),

@@ -125,13 +125,17 @@ export class GithubStep extends BaseStep {
         });
         switch (branchAction) {
             case "replay-branch":
-                generationBaseSha = await createReplayBranch(
-                    repository,
-                    prBranch,
-                    this.config.commitMessage,
-                    replayConflictInfo,
-                    this.logger
-                );
+                if (shouldPushGenerationBaseTag(replayResult)) {
+                    generationBaseSha = await createReplayBranch(
+                        repository,
+                        prBranch,
+                        this.config.commitMessage,
+                        replayConflictInfo,
+                        this.logger
+                    );
+                } else {
+                    await repository.createBranchFromHead(prBranch);
+                }
                 break;
             case "create-from-head":
                 await repository.createBranchFromHead(prBranch);
@@ -154,11 +158,11 @@ export class GithubStep extends BaseStep {
             this.logger.debug(`Committed changes to local copy of GitHub repository at ${this.outputDir}`);
         }
 
-        // In automation mode, detect no-diff before pushing.
+        // When skipIfNoDiff is enabled, detect no-diff before pushing.
         // --version AUTO already returns shouldCommit=false for NO_CHANGE, which prevents the
         // pipeline from running at all. This tree-hash check is a safety net for edge cases
         // where the version changes but the generated output doesn't.
-        if (this.config.automationMode) {
+        if (shouldCheckNoDiff(this.config)) {
             const noDiff = await repository.treeHashEquals(`origin/${baseBranch}`);
             if (noDiff) {
                 this.logger.info("No changes detected after generation — skipping PR creation");
@@ -199,8 +203,9 @@ export class GithubStep extends BaseStep {
         }
 
         const finalCommitMessage = this.config.commitMessage ?? "SDK Generation";
+        const headSha = await repository.getHeadSha();
         const changelogUrl = this.config.changelogEntry
-            ? `https://github.com/${this.config.uri}/blob/${prBranch}/changelog.md`
+            ? `https://github.com/${this.config.uri}/blob/${headSha}/changelog.md`
             : undefined;
         const { prTitle, prBody } = parseCommitMessageForPR(
             finalCommitMessage,
@@ -299,8 +304,8 @@ export class GithubStep extends BaseStep {
         await repository.commitAllChanges(finalCommitMessage);
         this.logger.debug(`Committed changes to local copy of GitHub repository at ${this.outputDir}`);
 
-        // In automation mode, detect no-diff before pushing
-        if (this.config.automationMode) {
+        // When skipIfNoDiff is enabled, detect no-diff before pushing
+        if (shouldCheckNoDiff(this.config)) {
             const noDiff = await repository.treeHashEquals(`origin/${baseBranch}`);
             if (noDiff) {
                 this.logger.info("No changes detected after generation — skipping push");
@@ -398,6 +403,28 @@ export function shouldEnableAutomerge(config: {
     hasBreakingChanges?: boolean;
 }): boolean {
     return config.automationMode === true && config.autoMerge === true && config.hasBreakingChanges !== true;
+}
+
+/**
+ * Determines whether the no-diff tree-hash check should run before push/PR creation.
+ * Independent of automationMode: callers opt into this behavior explicitly via skipIfNoDiff.
+ * Exported for testing.
+ */
+export function shouldCheckNoDiff(config: { skipIfNoDiff?: boolean }): boolean {
+    return config.skipIfNoDiff === true;
+}
+
+/**
+ * The fern-generation-base tag only has a consumer (next run's syncFromDivergentMerge)
+ * when the current replay produced conflicts that a human will resolve during merge.
+ * On clean replays, pushing the tag creates a stale pointer that poisons subsequent runs
+ * if the PR is closed without merging — the forward-projected tree ends up diffed against
+ * the still-unmerged main HEAD, producing a "customer patch" that encodes a version
+ * downgrade as customization.
+ * Exported for testing.
+ */
+export function shouldPushGenerationBaseTag(replayResult: ReplayStepResult | undefined): boolean {
+    return (replayResult?.patchesWithConflicts ?? 0) > 0;
 }
 
 /**

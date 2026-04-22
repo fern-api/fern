@@ -203,10 +203,12 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
 
     public getFetcherRequestArgs(
         context: FileContext
-    ): Pick<Fetcher.Args, "headers" | "queryParameters" | "body" | "contentType" | "requestType"> {
+    ): Pick<Fetcher.Args, "headers" | "queryParameters" | "body" | "contentType" | "requestType" | "queryString"> {
+        const queryParams = this.getQueryParams(context);
         return {
             headers: ts.factory.createIdentifier(HEADERS_VAR_NAME),
-            queryParameters: this.getQueryParams(context).getReferenceTo(),
+            queryParameters: queryParams.getReferenceTo(),
+            queryString: queryParams.getQueryStringExpression(context),
             body: this.getSerializedRequestBodyWithNullCheck(context),
             contentType: this.requestBody?.contentType ?? this.getFallbackContentType(),
             requestType: this.getRequestType()

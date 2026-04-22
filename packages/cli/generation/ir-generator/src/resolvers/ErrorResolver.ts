@@ -1,6 +1,6 @@
 import { FernWorkspace, getDefinitionFile } from "@fern-api/api-workspace-commons";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-
+import { CliError } from "@fern-api/task-context";
 import { constructFernFileContext, FernFileContext } from "../FernFileContext.js";
 import { parseReferenceToTypeName } from "../utils/parseReferenceToTypeName.js";
 
@@ -24,7 +24,10 @@ export class ErrorResolverImpl implements ErrorResolver {
     ): { declaration: RawSchemas.ErrorDeclarationSchema; file: FernFileContext } {
         const declaration = this.getDeclaration(referenceToError, file);
         if (declaration == null) {
-            throw new Error("Error does not exist: " + referenceToError);
+            throw new CliError({
+                message: "Error does not exist: " + referenceToError,
+                code: CliError.Code.ResolutionError
+            });
         }
         return declaration;
     }

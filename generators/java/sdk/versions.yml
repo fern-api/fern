@@ -1,4 +1,52 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.4.0
+  changelogEntry:
+    - summary: |
+        Add `offset-semantics` config option. When set to `"item-index"`, offset pagination increments by the number of items returned each page instead of by 1 (`"page-index"`, the default).
+      type: feat
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 4.3.1
+  changelogEntry:
+    - summary: |
+        Add crash reporting via Sentry to the generator runtime, and classify
+        thrown errors using the new shared `GeneratorError` taxonomy so user-facing
+        failures (config, validation, auth, network, environment) are kept distinct
+        from internal Fern bugs — only the latter are forwarded to Sentry. No
+        change to generated output.
+      type: chore
+  createdAt: "2026-04-22"
+  irVersion: 66
+- version: 4.3.0
+  changelogEntry:
+    - summary: |
+        Add `clientDefault` support for headers, query parameters, and path
+        parameters. When a parameter has a `clientDefault` value (set via the
+        `x-fern-default` OpenAPI extension), the generated SDK uses that value
+        as a fallback when the caller does not provide one. Parameters with
+        `clientDefault` become optional in the wrapped request and use
+        `.orElse(defaultValue)` to apply the fallback.
+      type: feat
+  createdAt: "2026-04-21"
+  irVersion: 66
+- version: 4.2.3
+  changelogEntry:
+    - summary: |
+        Bump Bouncy Castle jars bundled with the Gradle base image from 1.78.1 to
+        1.84 to address CVE-2026-3505 (unbounded PGP AEAD chunk size in bcpg leading
+        to pre-auth resource exhaustion).
+      type: chore
+  createdAt: "2026-04-20"
+  irVersion: 66
+- version: 4.2.2
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.8. Changelog URLs in generated PRs
+        now use the commit SHA instead of the PR branch name, keeping the link
+        valid after the branch is deleted or squash-merged.
+      type: chore
+  createdAt: "2026-04-16"
+  irVersion: 66
 - version: 4.2.1
   changelogEntry:
     - summary: |

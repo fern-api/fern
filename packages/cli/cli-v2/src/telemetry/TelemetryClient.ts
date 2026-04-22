@@ -1,5 +1,6 @@
 import { setSentryRunIdTags } from "@fern-api/cli-telemetry";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { CliError } from "@fern-api/task-context";
 import * as Sentry from "@sentry/node";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import IS_CI from "is-ci";
@@ -43,7 +44,10 @@ export class TelemetryClient {
         if (sentryDsn != null && sentryDsn.length > 0 && isTelemetryEnabled) {
             const sentryEnvironment = process.env.SENTRY_ENVIRONMENT;
             if (sentryEnvironment == null || sentryEnvironment.length === 0) {
-                throw new Error("SENTRY_ENVIRONMENT must be set when SENTRY_DSN is configured");
+                throw new CliError({
+                    message: "SENTRY_ENVIRONMENT must be set when SENTRY_DSN is configured",
+                    code: CliError.Code.ConfigError
+                });
             }
             this.sentry = Sentry.init({
                 dsn: sentryDsn,
@@ -179,13 +183,13 @@ export class TelemetryClient {
     }
 
     /**
-     * Returns true if telemetry should be disabled.
+     * Returns true if telemetry is enabled.
      *
      * Priority:
      *  1. FERN_TELEMETRY_DISABLED env var (any non-empty value)
      *  2. telemetry.enabled: false in ~/.fernrc
      */
-    private isTelemetryEnabled(): boolean {
+    public isTelemetryEnabled(): boolean {
         const envDisabled = process.env["FERN_TELEMETRY_DISABLED"];
         if (envDisabled != null && envDisabled.length > 0) {
             return false;

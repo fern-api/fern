@@ -1,4 +1,4 @@
-import { CaseConverter, File, getWireValue } from "@fern-api/base-generator";
+import { CaseConverter, File, GeneratorError, getWireValue } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMockMapping } from "@fern-api/mock-utils";
 import { ruby } from "@fern-api/ruby-ast";
@@ -37,7 +37,7 @@ export class WireTestGenerator {
         this.case = context.caseConverter;
         const dynamicIr = ir.dynamic;
         if (!dynamicIr) {
-            throw new Error("Cannot generate wire tests without FernIr.dynamic IR");
+            throw GeneratorError.internalError("Cannot generate wire tests without FernIr.dynamic IR");
         }
         this.dynamicIr = dynamicIr;
         this.dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
@@ -446,8 +446,13 @@ export class WireTestGenerator {
             // but prioritize required params to avoid verifying optional params
             if (paramValue != null && requiredQueryParamNames.has(paramName)) {
                 const key = JSON.stringify(paramName);
-                const value = JSON.stringify(String(paramValue));
-                queryParamEntries.push(`${key} => ${value}`);
+                if (Array.isArray(paramValue) && paramValue.length > 1) {
+                    const items = paramValue.map((v: unknown) => JSON.stringify(String(v)));
+                    queryParamEntries.push(`${key} => [${items.join(", ")}]`);
+                } else {
+                    const value = JSON.stringify(String(paramValue));
+                    queryParamEntries.push(`${key} => ${value}`);
+                }
             }
         }
 

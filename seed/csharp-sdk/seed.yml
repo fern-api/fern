@@ -33,6 +33,11 @@ publish:
     file: ./generators/csharp/sdk/Dockerfile
     image: fernapi/fern-csharp-sdk
     context: .
+  sentry:
+    name: fern-csharp-sdk
+    project: csharp-sdk
+    sourceMaps:
+      - dir: generators/csharp/sdk/dist
 test:
   docker:
     image: fernapi/fern-csharp-sdk:latest
@@ -152,6 +157,9 @@ fixtures:
         custom-pager-name: MyPager
         include-exception-handler: true
       outputFolder: custom-pager-with-exception-handler
+    - customConfig:
+        offset-semantics: "page-index"
+      outputFolder: page-index-semantics
   examples:
     - customConfig: null
       outputFolder: no-custom-config
