@@ -115,12 +115,12 @@
             },
           },
           "path": "/v1/agent/converse",
-          "url": "Agent",
+          "url": "Agent_wss",
         },
       },
       "rawContents": "channel:
   path: /v1/agent/converse
-  url: Agent
+  url: Agent_wss
   auth: false
   messages:
     converse:

@@ -251,12 +251,12 @@
             },
           },
           "path": "/v1/uploads",
-          "url": "Upload",
+          "url": "Upload_wss",
         },
       },
       "rawContents": "channel:
   path: /v1/uploads
-  url: Upload
+  url: Upload_wss
   auth: false
   messages:
     uploadProgress:

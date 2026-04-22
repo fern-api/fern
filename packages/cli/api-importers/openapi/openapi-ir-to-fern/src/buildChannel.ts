@@ -26,15 +26,24 @@ export function buildChannel({
     // WebSocket server — buildEnvironments creates a single-URL environment in that case,
     // so a baseUrlId on the channel would be meaningless and can cause generator issues.
     const hasSingleWebsocketServerOnly = context.ir.servers.length === 0 && context.ir.websocketServers.length <= 1;
-    // Generate URL ID based on feature flag:
-    // - If groupEnvironmentsByHost is enabled, look up the collision-aware URL ID from the map
-    // - Otherwise, use simple server name for backward compatibility
-    // - Skip entirely for single-WebSocket-server-only specs (no multi-URL environment)
+    // Resolve the channel's url id:
+    // - Always consult the URL-id map first. buildEnvironments records URL ids
+    //   there, including protocol-suffixed names (e.g. `Agent_wss`) emitted to
+    //   avoid silently overwriting an HTTP URL that shares the same
+    //   `x-fern-server-name`. Using `firstServer.name` here would point the
+    //   channel at the HTTP URL instead of the WebSocket URL.
+    // - If `groupEnvironmentsByHost` is enabled and the URL id is not in the
+    //   map, synthesize one from the WebSocket url (preserves pre-existing
+    //   behavior of that flag).
+    // - Skip entirely for single-WebSocket-server-only specs (no multi-URL
+    //   environment is emitted, so a baseUrlId would be meaningless).
+    const resolvedUrlIdFromMap = firstServer != null ? context.getUrlId(firstServer.url) : undefined;
     const urlId =
         firstServer != null && !hasSingleWebsocketServerOnly
-            ? context.options.groupEnvironmentsByHost
-                ? (context.getUrlId(firstServer.url) ?? generateWebsocketUrlId(firstServer.name, firstServer.url, true))
-                : firstServer.name
+            ? (resolvedUrlIdFromMap ??
+              (context.options.groupEnvironmentsByHost
+                  ? generateWebsocketUrlId(firstServer.name, firstServer.url, true)
+                  : firstServer.name))
             : undefined;
 
     context.logger.debug(
