@@ -1,5 +1,4 @@
 import { createOrganizationIfDoesNotExist, FernToken } from "@fern-api/auth";
-import { generatorsYml } from "@fern-api/configuration-loader";
 import { ContainerRunner, Values } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
@@ -9,6 +8,7 @@ import { CliError } from "@fern-api/task-context";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { PREVIEW_DIRECTORY } from "../../constants.js";
 import { checkOutputDirectory } from "./checkOutputDirectory.js";
+import { expandGroupFilter } from "./expandGroupFilter.js";
 import { filterGenerators } from "./filterGenerators.js";
 import { generateWorkspace } from "./generateAPIWorkspace.js";
 import { resolvePosthogCommandLabel } from "./resolvePosthogCommandLabel.js";
@@ -250,33 +250,4 @@ function buildPosthogWorkspaces({
                 )
         };
     });
-}
-
-/**
- * Expands the caller's `--group` filters into a set of concrete group names.
- *
- * Returns null when no filter was supplied (meaning "match every group"). Otherwise expands each
- * requested name through the alias table (when one is configured) and unions the results,
- * preserving order and de-duplicating. Used only to pre-filter groups for the
- * checkOutputDirectory pre-flight and posthog telemetry — the authoritative group resolution
- * for generation lives in `resolveGroupNamesForGeneration`.
- */
-function expandGroupFilter(
-    groupNames: string[] | undefined,
-    generatorsConfiguration: generatorsYml.GeneratorsConfiguration | undefined
-): string[] | null {
-    if (groupNames == null || groupNames.length === 0) {
-        return null; // No filter - include all groups
-    }
-
-    const expanded: string[] = [];
-    for (const name of groupNames) {
-        const aliasGroups = generatorsConfiguration?.groupAliases[name];
-        for (const resolved of aliasGroups ?? [name]) {
-            if (!expanded.includes(resolved)) {
-                expanded.push(resolved);
-            }
-        }
-    }
-    return expanded;
 }
