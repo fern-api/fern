@@ -11,6 +11,13 @@
       type: feat
   createdAt: "2026-04-21"
   irVersion: 66
+- version: 1.34.12
+  changelogEntry:
+    - summary: |
+        Fix wire test verification for endpoints with multi-value array query parameters.
+      type: fix
+  createdAt: "2026-04-22"
+  irVersion: 66
 - version: 1.34.11
   changelogEntry:
     - summary: |

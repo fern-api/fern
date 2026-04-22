@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.33.2
+  changelogEntry:
+    - summary: |
+        Fix wire test verification for endpoints with multi-value array query parameters.
+      type: fix
+  createdAt: "2026-04-22"
+  irVersion: 66
 - version: 0.33.1
   changelogEntry:
     - summary: |
