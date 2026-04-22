@@ -245,7 +245,7 @@ export class WireTestGenerator {
                     }),
                     go.parameter({
                         name: "queryParams",
-                        type: go.Type.map(go.Type.string(), go.Type.string())
+                        type: go.Type.map(go.Type.string(), go.Type.any())
                     }),
                     go.parameter({
                         name: "expected",
@@ -296,11 +296,39 @@ export class WireTestGenerator {
                     writer.newLine();
                     writer.writeNode(go.codeblock("        reqBody.WriteString(key)"));
                     writer.newLine();
-                    writer.writeNode(go.codeblock('        reqBody.WriteString(`":{"equalTo":"`)'));
+                    writer.writeNode(go.codeblock("        switch v := value.(type) {"));
                     writer.newLine();
-                    writer.writeNode(go.codeblock("        reqBody.WriteString(value)"));
+                    writer.writeNode(go.codeblock("        case string:"));
                     writer.newLine();
-                    writer.writeNode(go.codeblock('        reqBody.WriteString(`"}`)'));
+                    writer.writeNode(go.codeblock('            reqBody.WriteString(`":{"equalTo":"`)'));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock("            reqBody.WriteString(v)"));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock('            reqBody.WriteString(`"}`)'));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock("        case []string:"));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock('            reqBody.WriteString(`":{"hasExactly":[`)'));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock("            for i, item := range v {"));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock("                if i > 0 {"));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock('                    reqBody.WriteString(",")'));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock("                }"));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock('                reqBody.WriteString(`{"equalTo":"`)'));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock("                reqBody.WriteString(item)"));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock('                reqBody.WriteString(`"}`)'));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock("            }"));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock("            reqBody.WriteString(`]}`)"));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock("        }"));
                     writer.newLine();
                     writer.writeNode(go.codeblock("        first = false"));
                     writer.newLine();
@@ -829,17 +857,22 @@ export class WireTestGenerator {
         for (const [paramName, paramValue] of Object.entries(dynamicEndpointExample.queryParameters)) {
             if (paramValue != null) {
                 const key = JSON.stringify(paramName);
-                let stringValue = String(paramValue);
-                // Normalize datetime values to always include milliseconds, matching the
-                // Go SDK's RFC3339Milli format ("2006-01-02T15:04:05.000Z07:00").
-                if (datetimeQueryParams.has(paramName)) {
-                    const date = new Date(stringValue);
-                    if (!isNaN(date.getTime())) {
-                        stringValue = date.toISOString();
+                if (Array.isArray(paramValue) && paramValue.length > 1) {
+                    const items = paramValue.map((v: unknown) => JSON.stringify(String(v)));
+                    queryParamEntries.push(`${key}: []string{${items.join(", ")}}`);
+                } else {
+                    let stringValue = String(paramValue);
+                    // Normalize datetime values to always include milliseconds, matching the
+                    // Go SDK's RFC3339Milli format ("2006-01-02T15:04:05.000Z07:00").
+                    if (datetimeQueryParams.has(paramName)) {
+                        const date = new Date(stringValue);
+                        if (!isNaN(date.getTime())) {
+                            stringValue = date.toISOString();
+                        }
                     }
+                    const value = JSON.stringify(stringValue);
+                    queryParamEntries.push(`${key}: ${value}`);
                 }
-                const value = JSON.stringify(stringValue);
-                queryParamEntries.push(`${key}: ${value}`);
             }
         }
 
@@ -847,7 +880,7 @@ export class WireTestGenerator {
             return "nil";
         }
 
-        return `map[string]string{${queryParamEntries.join(", ")}}`;
+        return `map[string]interface{}{${queryParamEntries.join(", ")}}`;
     }
 
     private getDynamicEndpointExample(endpoint: FernIr.HttpEndpoint): FernIr.dynamic.EndpointExample | null {

@@ -30,6 +30,7 @@ export function createMockTaskContext({ logger = CONSOLE_LOGGER }: { logger?: Lo
             // no-op in mock context
         },
         getResult: () => TaskResult.Success,
+        getLastFailureMessage: () => undefined,
         addInteractiveTask: () => {
             throw new Error("Not implemented");
         },
