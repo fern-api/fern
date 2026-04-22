@@ -144,6 +144,33 @@ function extractUrlsFromEnvironmentSchema(
     }, {});
 }
 
+/**
+ * Merge WebSocket URLs onto an environment's URL map without letting a WebSocket
+ * URL that shares an `x-fern-server-name` with an existing HTTP URL silently
+ * overwrite it. On collision, the WebSocket URL is keyed with its protocol
+ * appended (e.g. `Agent_wss`) so both URLs remain addressable.
+ */
+function mergeWebsocketUrlsWithoutOverwriting(
+    urls: Record<string, string>,
+    websocketUrls: Record<string, string>,
+    context: OpenApiIrConverterContext
+): void {
+    for (const [wsName, wsUrl] of Object.entries(websocketUrls)) {
+        if (wsUrl == null) {
+            continue;
+        }
+        if (urls[wsName] != null && urls[wsName] !== wsUrl) {
+            const wsProtocol = getProtocol(wsUrl);
+            const dedupedName = wsProtocol != null ? `${wsName}_${wsProtocol}` : wsName;
+            urls[dedupedName] = wsUrl;
+            context.setUrlId(wsUrl, dedupedName);
+        } else {
+            urls[wsName] = wsUrl;
+            context.setUrlId(wsUrl, wsName);
+        }
+    }
+}
+
 export function buildEnvironments(context: OpenApiIrConverterContext): void {
     if (context.environmentOverrides != null) {
         for (const [environment, environmentDeclaration] of Object.entries(
@@ -779,21 +806,11 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                         // already placed on this environment. When names collide, fall
                         // back to a protocol-suffixed key (e.g. `Agent_wss`) so both
                         // URLs remain addressable.
-                        const wsUrls = extractUrlsFromEnvironmentSchema(websocketServersWithName);
-                        for (const [wsName, wsUrl] of Object.entries(wsUrls)) {
-                            if (wsUrl == null) {
-                                continue;
-                            }
-                            if (urls[wsName] != null && urls[wsName] !== wsUrl) {
-                                const wsProtocol = getProtocol(wsUrl);
-                                const dedupedName = wsProtocol != null ? `${wsName}_${wsProtocol}` : wsName;
-                                urls[dedupedName] = wsUrl;
-                                context.setUrlId(wsUrl, dedupedName);
-                            } else {
-                                urls[wsName] = wsUrl;
-                                context.setUrlId(wsUrl, wsName);
-                            }
-                        }
+                        mergeWebsocketUrlsWithoutOverwriting(
+                            urls,
+                            extractUrlsFromEnvironmentSchema(websocketServersWithName),
+                            context
+                        );
                     }
 
                     context.builder.addEnvironment({
@@ -836,9 +853,16 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                         }
                     }
 
-                    // Include websocket servers when we have multi-API grouping
+                    // Include websocket servers when we have multi-API grouping.
+                    // Preserve HTTP URLs when a WebSocket server shares the same
+                    // x-fern-server-name by suffixing the WebSocket entry with its
+                    // protocol (e.g. `Agent_wss`).
                     if (hasWebsocketServersWithName) {
-                        Object.assign(urls, extractUrlsFromEnvironmentSchema(websocketServersWithName));
+                        mergeWebsocketUrlsWithoutOverwriting(
+                            urls,
+                            extractUrlsFromEnvironmentSchema(websocketServersWithName),
+                            context
+                        );
                     }
 
                     if (Object.keys(urls).length > 1) {

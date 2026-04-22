@@ -93,6 +93,84 @@
     openapi: ../openapi.yml
 ",
     },
+    "agentChannel.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "channel": {
+          "auth": false,
+          "examples": [
+            {
+              "messages": [
+                {
+                  "body": "string",
+                  "type": "converse",
+                },
+              ],
+            },
+          ],
+          "messages": {
+            "converse": {
+              "body": "string",
+              "origin": "client",
+            },
+          },
+          "path": "/v1/agent/converse",
+          "url": "Agent",
+        },
+      },
+      "rawContents": "channel:
+  path: /v1/agent/converse
+  url: Agent
+  auth: false
+  messages:
+    converse:
+      origin: client
+      body: string
+  examples:
+    - messages:
+        - type: converse
+          body: string
+",
+    },
+    "transcriptionChannel.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "channel": {
+          "auth": false,
+          "examples": [
+            {
+              "messages": [
+                {
+                  "body": "string",
+                  "type": "transcribe",
+                },
+              ],
+            },
+          ],
+          "messages": {
+            "transcribe": {
+              "body": "string",
+              "origin": "client",
+            },
+          },
+          "path": "/v1/listen",
+          "url": "Production",
+        },
+      },
+      "rawContents": "channel:
+  path: /v1/listen
+  url: Production
+  auth: false
+  messages:
+    transcribe:
+      origin: client
+      body: string
+  examples:
+    - messages:
+        - type: transcribe
+          body: string
+",
+    },
   },
   "packageMarkers": {},
   "rootApiFile": {
@@ -104,13 +182,17 @@
         "Agent": {
           "urls": {
             "Agent": "https://agent.example.com",
+            "Agent_wss": "wss://agent.example.com",
             "Base": "https://agent.example.com",
+            "Production": "wss://api.example.com",
           },
         },
         "Production": {
           "urls": {
             "Agent": "https://agent.example.com",
+            "Agent_wss": "wss://agent.example.com",
             "Base": "https://api.example.com",
+            "Production": "wss://api.example.com",
           },
         },
       },
@@ -129,10 +211,14 @@ environments:
     urls:
       Base: https://api.example.com
       Agent: https://agent.example.com
+      Production: wss://api.example.com
+      Agent_wss: wss://agent.example.com
   Agent:
     urls:
       Base: https://agent.example.com
       Agent: https://agent.example.com
+      Production: wss://api.example.com
+      Agent_wss: wss://agent.example.com
 default-environment: Production
 default-url: Base
 ",

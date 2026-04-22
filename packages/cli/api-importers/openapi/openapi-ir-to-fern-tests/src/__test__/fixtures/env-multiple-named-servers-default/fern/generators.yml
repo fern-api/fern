@@ -2,3 +2,4 @@
 api:
   specs:
     - openapi: ../openapi.yml
+    - asyncapi: ../asyncapi.yml

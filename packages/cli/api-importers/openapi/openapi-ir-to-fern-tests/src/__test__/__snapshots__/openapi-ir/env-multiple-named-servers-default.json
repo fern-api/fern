@@ -10,7 +10,16 @@
       "name": "Agent"
     }
   ],
-  "websocketServers": [],
+  "websocketServers": [
+    {
+      "name": "Production",
+      "url": "wss://api.example.com"
+    },
+    {
+      "name": "Agent",
+      "url": "wss://agent.example.com"
+    }
+  ],
   "tags": {
     "tagsById": {}
   },
@@ -133,7 +142,116 @@
     }
   ],
   "webhooks": [],
-  "channels": {},
+  "channels": {
+    "transcriptionChannel": {
+      "audiences": [],
+      "handshake": {
+        "headers": [],
+        "queryParameters": [],
+        "pathParameters": []
+      },
+      "groupName": [
+        "transcriptionChannel"
+      ],
+      "messages": [
+        {
+          "origin": "client",
+          "name": "transcribe",
+          "body": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "Transcribe",
+            "groupName": [],
+            "type": "primitive"
+          }
+        }
+      ],
+      "servers": [
+        {
+          "name": "Production",
+          "url": "wss://api.example.com"
+        }
+      ],
+      "path": "/v1/listen",
+      "examples": [
+        {
+          "queryParameters": [],
+          "headers": [],
+          "messages": [
+            {
+              "messageType": "transcribe",
+              "payload": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
+        }
+      ],
+      "source": {
+        "file": "../asyncapi.yml",
+        "type": "openapi"
+      }
+    },
+    "agentChannel": {
+      "audiences": [],
+      "handshake": {
+        "headers": [],
+        "queryParameters": [],
+        "pathParameters": []
+      },
+      "groupName": [
+        "agentChannel"
+      ],
+      "messages": [
+        {
+          "origin": "client",
+          "name": "converse",
+          "body": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "Converse",
+            "groupName": [],
+            "type": "primitive"
+          }
+        }
+      ],
+      "servers": [
+        {
+          "name": "Agent",
+          "url": "wss://agent.example.com"
+        }
+      ],
+      "path": "/v1/agent/converse",
+      "examples": [
+        {
+          "queryParameters": [],
+          "headers": [],
+          "messages": [
+            {
+              "messageType": "converse",
+              "payload": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
+        }
+      ],
+      "source": {
+        "file": "../asyncapi.yml",
+        "type": "openapi"
+      }
+    }
+  },
   "groupedSchemas": {
     "rootSchemas": {},
     "namespacedSchemas": {}

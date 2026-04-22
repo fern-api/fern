@@ -4,3 +4,6 @@ api:
     - openapi: ../openapi.yml
       settings:
         group-servers-as-environment-urls: true
+    - asyncapi: ../asyncapi.yml
+      settings:
+        group-servers-as-environment-urls: true
