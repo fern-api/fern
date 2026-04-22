@@ -13,6 +13,7 @@ import (
 	"net/http"
 	"strconv"
 	"sync"
+	"sync/atomic"
 	"time"
 )
 
@@ -65,6 +66,10 @@ type Stream[T any] struct {
 	stopFunc func() bool
 	ctx      context.Context
 
+	// sseReader caches the sseEventReader type assertion to avoid
+	// per-event interface checks on the hot path.
+	sseReader sseEventReader
+
 	// Reconnection fields (active when reconnectFn != nil).
 	reconnectFn func(lastEventID string) (*Stream[T], error)
 	maxAttempts int
@@ -72,7 +77,7 @@ type Stream[T any] struct {
 	serverRetry time.Duration
 	lastEventID string
 	cancel      context.CancelFunc
-	closed      bool
+	closed      atomic.Bool
 	mu          sync.Mutex
 }
 
@@ -169,11 +174,14 @@ func NewStream[T any](ctx context.Context, response *http.Response, opts ...Stre
 	stop := context.AfterFunc(ctx, func() {
 		_ = closer.Close()
 	})
+	reader := newStreamReader(response.Body, options)
+	sseReader, _ := reader.(sseEventReader)
 	return &Stream[T]{
-		reader:   newStreamReader(response.Body, options),
-		closer:   closer,
-		stopFunc: stop,
-		ctx:      ctx,
+		reader:    reader,
+		sseReader: sseReader,
+		closer:    closer,
+		stopFunc:  stop,
+		ctx:       ctx,
 	}
 }
 
@@ -181,6 +189,9 @@ func NewStream[T any](ctx context.Context, response *http.Response, opts ...Stre
 // The reconnectFn is called with the last event ID to establish a new connection.
 // Set maxAttempts to 0 to disable reconnection.
 func (s *Stream[T]) ConfigureReconnect(reconnectFn func(lastEventID string) (*Stream[T], error), maxAttempts int) {
+	if maxAttempts <= 0 {
+		return
+	}
 	s.reconnectFn = reconnectFn
 	s.maxAttempts = maxAttempts
 	s.ctx, s.cancel = context.WithCancel(s.ctx)
@@ -266,22 +277,18 @@ func (s *Stream[T]) RecvEventRaw() (StreamEventRaw, error) {
 
 // Close closes the Stream.
 func (s *Stream[T]) Close() error {
-	if s.reconnectFn != nil {
-		s.mu.Lock()
-		s.closed = true
-		stopFunc := s.stopFunc
-		closer := s.closer
-		s.mu.Unlock()
+	s.closed.Store(true)
+	if s.cancel != nil {
 		s.cancel()
-		if stopFunc != nil {
-			stopFunc()
-		}
-		return closer.Close()
 	}
-	if s.stopFunc != nil {
-		s.stopFunc()
+	s.mu.Lock()
+	stopFunc := s.stopFunc
+	closer := s.closer
+	s.mu.Unlock()
+	if stopFunc != nil {
+		stopFunc()
 	}
-	return s.closer.Close()
+	return closer.Close()
 }
 
 // LastEventID returns the most recently received non-empty event ID.
@@ -296,8 +303,8 @@ func (s *Stream[T]) LastEventID() string {
 		defer s.mu.Unlock()
 		return s.lastEventID
 	}
-	if reader, ok := s.reader.(sseEventReader); ok {
-		return reader.LastEventID()
+	if s.sseReader != nil {
+		return s.sseReader.LastEventID()
 	}
 	return ""
 }
@@ -305,8 +312,8 @@ func (s *Stream[T]) LastEventID() string {
 // Terminated reports whether the stream ended due to a terminator match
 // rather than a connection drop or normal EOF.
 func (s *Stream[T]) Terminated() bool {
-	if reader, ok := s.reader.(sseEventReader); ok {
-		return reader.Terminated()
+	if s.sseReader != nil {
+		return s.sseReader.Terminated()
 	}
 	return false
 }
@@ -314,8 +321,8 @@ func (s *Stream[T]) Terminated() bool {
 // ServerRetry returns the most recently received retry interval from the server.
 // Returns 0 if no retry field has been received.
 func (s *Stream[T]) ServerRetry() time.Duration {
-	if reader, ok := s.reader.(sseEventReader); ok {
-		return reader.ServerRetry()
+	if s.sseReader != nil {
+		return s.sseReader.ServerRetry()
 	}
 	return 0
 }
@@ -345,8 +352,8 @@ func (s *Stream[T]) recvRawOnce() ([]byte, error) {
 // recvSseEvent reads the next SSE event with metadata, falling back to
 // ReadFromStream for non-SSE readers.
 func (s *Stream[T]) recvSseEvent() (*SseEvent, error) {
-	if reader, ok := s.reader.(sseEventReader); ok {
-		return reader.ReadEvent()
+	if s.sseReader != nil {
+		return s.sseReader.ReadEvent()
 	}
 	data, err := s.reader.ReadFromStream()
 	if err != nil {
@@ -385,19 +392,16 @@ func (s *Stream[T]) recvEventRawOnce() (StreamEventRaw, error) {
 func (s *Stream[T]) recvReconnect(readFn func() (T, []byte, error)) (T, []byte, error) {
 	var zero T
 	for {
-		s.mu.Lock()
-		if s.closed {
-			s.mu.Unlock()
+		if s.closed.Load() {
 			return zero, nil, io.EOF
 		}
-		s.mu.Unlock()
 
 		val, raw, err := readFn()
 		if err == nil {
 			s.mu.Lock()
-			if reader, ok := s.reader.(sseEventReader); ok {
-				s.lastEventID = reader.LastEventID()
-				if retry := reader.ServerRetry(); retry > 0 {
+			if s.sseReader != nil {
+				s.lastEventID = s.sseReader.LastEventID()
+				if retry := s.sseReader.ServerRetry(); retry > 0 {
 					s.serverRetry = retry
 				}
 			}
@@ -414,11 +418,7 @@ func (s *Stream[T]) recvReconnect(readFn func() (T, []byte, error)) (T, []byte, 
 			return zero, nil, s.ctx.Err()
 		}
 
-		if !isIOError(err) {
-			return zero, nil, err
-		}
-
-		if s.maxAttempts <= 0 {
+		if !isRetryableStreamError(err) {
 			return zero, nil, err
 		}
 
@@ -467,16 +467,28 @@ func (s *Stream[T]) reconnect() error {
 			continue
 		}
 
+		// Deregister the new stream's context.AfterFunc before transplanting
+		// its internals, so we don't accumulate orphaned goroutines.
+		if newStream.stopFunc != nil {
+			newStream.stopFunc()
+		}
+
 		s.mu.Lock()
 		s.reader = newStream.reader
+		s.sseReader = newStream.sseReader
 		s.closer = newStream.closer
-		s.stopFunc = newStream.stopFunc
+		s.stopFunc = context.AfterFunc(s.ctx, func() {
+			_ = newStream.closer.Close()
+		})
 		s.mu.Unlock()
 		return nil
 	}
 }
 
-func isIOError(err error) bool {
+// isRetryableStreamError returns true for transient I/O and network errors
+// that warrant a reconnection attempt. Unknown error types default to
+// non-retryable to avoid spurious reconnection on application-level errors.
+func isRetryableStreamError(err error) bool {
 	if errors.Is(err, io.EOF) || errors.Is(err, io.ErrUnexpectedEOF) {
 		return true
 	}
@@ -484,15 +496,7 @@ func isIOError(err error) bool {
 	if errors.As(err, &netErr) {
 		return true
 	}
-	var jsonErr *json.SyntaxError
-	if errors.As(err, &jsonErr) {
-		return false
-	}
-	var jsonTypeErr *json.UnmarshalTypeError
-	if errors.As(err, &jsonTypeErr) {
-		return false
-	}
-	return true
+	return false
 }
 
 func backoffDelay(attempt int, serverRetry time.Duration) time.Duration {

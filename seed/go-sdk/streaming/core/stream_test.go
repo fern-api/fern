@@ -1200,7 +1200,7 @@ func TestBackoffDelay(t *testing.T) {
 	assert.InDelta(t, float64(2*time.Second), float64(d0sr), float64(200*time.Millisecond)+1)
 }
 
-func TestIsIOError(t *testing.T) {
+func TestIsRetryableStreamError(t *testing.T) {
 	tests := []struct {
 		name     string
 		err      error
@@ -1211,11 +1211,11 @@ func TestIsIOError(t *testing.T) {
 		{"net.Error timeout", &net.DNSError{IsTimeout: true}, true},
 		{"json.SyntaxError", &json.SyntaxError{}, false},
 		{"json.UnmarshalTypeError", &json.UnmarshalTypeError{}, false},
-		{"unknown error defaults to retryable", errors.New("connection reset"), true},
+		{"unknown error defaults to non-retryable", errors.New("application error"), false},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			assert.Equal(t, tt.expected, isIOError(tt.err))
+			assert.Equal(t, tt.expected, isRetryableStreamError(tt.err))
 		})
 	}
 }

@@ -934,7 +934,7 @@ func TestStream_TransparentReconnection(t *testing.T) {
 		}
 		return newReconnectSSEStream[TestMessage](ctx, ""), nil
 	}, 10)
-	defer initial.Close()
+	defer func() { _ = initial.Close() }()
 
 	msg1, err := initial.Recv()
 	require.NoError(t, err)
@@ -956,7 +956,7 @@ func TestStream_LastEventIDSentOnReconnect(t *testing.T) {
 		receivedLastEventID = lastEventID
 		return newReconnectSSEStream[TestMessage](ctx, "data: {\"content\":\"after\",\"done\":true}\n\n"), nil
 	}, 10)
-	defer initial.Close()
+	defer func() { _ = initial.Close() }()
 
 	event1, err := initial.RecvEvent()
 	require.NoError(t, err)
@@ -977,7 +977,7 @@ func TestStream_MaxReconnectAttemptsExhausted(t *testing.T) {
 		attempts++
 		return nil, io.ErrUnexpectedEOF
 	}, 1)
-	defer initial.Close()
+	defer func() { _ = initial.Close() }()
 
 	_, err := initial.Recv()
 	require.Error(t, err)
@@ -996,7 +996,7 @@ func TestStream_ReconnectDisabledWithZeroAttempts(t *testing.T) {
 		t.Fatal("reconnect should not be called")
 		return nil, nil
 	}, 0)
-	defer initial.Close()
+	defer func() { _ = initial.Close() }()
 
 	_, err := initial.Recv()
 	assert.ErrorIs(t, err, io.EOF)
@@ -1010,7 +1010,7 @@ func TestStream_ReconnectContextCancellation(t *testing.T) {
 		cancel()
 		return nil, io.ErrUnexpectedEOF
 	}, 10)
-	defer initial.Close()
+	defer func() { _ = initial.Close() }()
 
 	_, err := initial.Recv()
 	assert.ErrorIs(t, err, context.Canceled)
@@ -1050,7 +1050,7 @@ func TestStream_TerminatorStopsReconnection(t *testing.T) {
 		t.Fatal("reconnect should not be called after terminator")
 		return nil, nil
 	}, 10)
-	defer initial.Close()
+	defer func() { _ = initial.Close() }()
 
 	msg, err := initial.Recv()
 	require.NoError(t, err)
@@ -1068,7 +1068,7 @@ func TestStream_JSONUnmarshalErrorNotRetryable(t *testing.T) {
 		t.Fatal("reconnect should not be called for JSON errors")
 		return nil, nil
 	}, 10)
-	defer initial.Close()
+	defer func() { _ = initial.Close() }()
 
 	_, err := initial.Recv()
 	require.Error(t, err)
@@ -1085,7 +1085,7 @@ func TestStream_ServerRetryPersistsAcrossReconnections(t *testing.T) {
 		callCount++
 		return newReconnectSSEStream[TestMessage](ctx, "data: {\"content\":\"resumed\",\"done\":true}\n\n"), nil
 	}, 3)
-	defer initial.Close()
+	defer func() { _ = initial.Close() }()
 
 	event, err := initial.RecvEvent()
 	require.NoError(t, err)
@@ -1132,7 +1132,7 @@ func TestStream_MultipleConsecutiveReconnections(t *testing.T) {
 			return newReconnectSSEStream[TestMessage](ctx, ""), nil
 		}
 	}, 10)
-	defer initial.Close()
+	defer func() { _ = initial.Close() }()
 
 	msgs := make([]string, 0, 3)
 	for i := 0; i < 3; i++ {
@@ -1151,7 +1151,7 @@ func TestStream_RecvRawWithReconnection(t *testing.T) {
 	initial.ConfigureReconnect(func(lastEventID string) (*Stream[TestMessage], error) {
 		return newReconnectSSEStream[TestMessage](ctx, "data: {\"content\":\"second\",\"done\":true}\n\n"), nil
 	}, 10)
-	defer initial.Close()
+	defer func() { _ = initial.Close() }()
 
 	raw1, err := initial.RecvRaw()
 	require.NoError(t, err)
@@ -1169,7 +1169,7 @@ func TestStream_RecvEventRawWithReconnection(t *testing.T) {
 	initial.ConfigureReconnect(func(lastEventID string) (*Stream[TestMessage], error) {
 		return newReconnectSSEStream[TestMessage](ctx, "id: e2\ndata: {\"content\":\"two\",\"done\":true}\n\n"), nil
 	}, 10)
-	defer initial.Close()
+	defer func() { _ = initial.Close() }()
 
 	event1, err := initial.RecvEventRaw()
 	require.NoError(t, err)
@@ -1200,7 +1200,7 @@ func TestBackoffDelay(t *testing.T) {
 	assert.InDelta(t, float64(2*time.Second), float64(d0sr), float64(200*time.Millisecond)+1)
 }
 
-func TestIsIOError(t *testing.T) {
+func TestIsRetryableStreamError(t *testing.T) {
 	tests := []struct {
 		name     string
 		err      error
@@ -1211,11 +1211,11 @@ func TestIsIOError(t *testing.T) {
 		{"net.Error timeout", &net.DNSError{IsTimeout: true}, true},
 		{"json.SyntaxError", &json.SyntaxError{}, false},
 		{"json.UnmarshalTypeError", &json.UnmarshalTypeError{}, false},
-		{"unknown error defaults to retryable", errors.New("connection reset"), true},
+		{"unknown error defaults to non-retryable", errors.New("application error"), false},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			assert.Equal(t, tt.expected, isIOError(tt.err))
+			assert.Equal(t, tt.expected, isRetryableStreamError(tt.err))
 		})
 	}
 }
@@ -1232,7 +1232,7 @@ func TestStream_ReconnectSucceedsOnThirdAttempt(t *testing.T) {
 		}
 		return newReconnectSSEStream[TestMessage](ctx, "data: {\"content\":\"recovered\",\"done\":true}\n\n"), nil
 	}, 5)
-	defer initial.Close()
+	defer func() { _ = initial.Close() }()
 
 	msg, err := initial.Recv()
 	require.NoError(t, err)
@@ -1252,7 +1252,7 @@ func TestStream_LastEventIDOverwrittenByLaterEvent(t *testing.T) {
 		receivedLastEventID = lastEventID
 		return newReconnectSSEStream[TestMessage](ctx, "data: {\"content\":\"c\",\"done\":true}\n\n"), nil
 	}, 10)
-	defer initial.Close()
+	defer func() { _ = initial.Close() }()
 
 	_, err := initial.Recv()
 	require.NoError(t, err)
@@ -1275,7 +1275,7 @@ func TestStream_RecvEventMetadataAfterReconnect(t *testing.T) {
 	initial.ConfigureReconnect(func(lastEventID string) (*Stream[TestMessage], error) {
 		return newReconnectSSEStream[TestMessage](ctx, "id: e2\nevent: pong\nretry: 5000\ndata: {\"content\":\"after\",\"done\":true}\n\n"), nil
 	}, 10)
-	defer initial.Close()
+	defer func() { _ = initial.Close() }()
 
 	event1, err := initial.RecvEvent()
 	require.NoError(t, err)
@@ -1307,7 +1307,7 @@ func TestStream_BareFieldNamesWithoutColon(t *testing.T) {
 		WithFormat(StreamFormatSSE),
 		WithPrefix(""),
 	)
-	defer stream.Close()
+	defer func() { _ = stream.Close() }()
 
 	event1, err := stream.RecvEvent()
 	require.NoError(t, err)
