@@ -7,8 +7,8 @@ import type * as serializers from "../../../index.js";
 export const ProductSwitcherThemeConfig: core.serialization.Schema<
     serializers.ProductSwitcherThemeConfig.Raw,
     FernDocsConfig.ProductSwitcherThemeConfig
-> = core.serialization.enum_(["default", "toggle"]);
+> = core.serialization.enum_(["default", "toggle", "tabs"]);
 
 export declare namespace ProductSwitcherThemeConfig {
-    export type Raw = "default" | "toggle";
+    export type Raw = "default" | "toggle" | "tabs";
 }

@@ -227,6 +227,18 @@ types:
           - Add path segment if collision (e.g., "prod: https://api.com/foo" -> "foo")
           - Add protocol if still collision (e.g., "prod: wss://api.com/foo" -> "foo_wss", only for non-HTTPS protocols)
         default: false
+      multi-server-strategy:
+        type: optional<MultiServerStrategy>
+        docs: |
+          Controls how multiple top-level OpenAPI servers are mapped to environments in the generated
+          Fern definition, when those servers each declare an `x-fern-server-name` and endpoint-level
+          `servers:` overrides reference those names.
+          - `environment-per-server`: emit one environment per top-level server (each `x-fern-server-name`
+            becomes its own environment constant in generated SDKs, e.g. `Environment.PRODUCTION` and
+            `Environment.AGENT`). This is the default.
+          - `urls-per-environment`: collapse all top-level servers into a single environment with each
+            server exposed as a named URL. Useful for APIs that expose multiple base hosts that together
+            form a single logical environment (e.g. `api.box.com`, `upload.box.com`, `dl.boxcloud.com`).
       remove-discriminants-from-schemas:
         type: optional<RemoveDiscriminantsFromSchemas>
         docs: |
@@ -240,6 +252,15 @@ types:
           - `url-order`: Use the order path parameters appear in the URL path (e.g., /users/{userId}/posts/{postId})
           - `spec-order`: Use the order path parameters are defined in the spec
           Defaults to `url-order`.
+
+  MultiServerStrategy:
+    docs: |
+      Controls how multiple top-level OpenAPI servers map to environments in the generated Fern definition.
+    enum:
+      - name: environmentPerServer
+        value: environment-per-server
+      - name: urlsPerEnvironment
+        value: urls-per-environment
 
   RemoveDiscriminantsFromSchemas:
     docs: |
@@ -395,6 +416,18 @@ types:
           - Add path segment if collision (e.g., "prod: https://api.com/foo" -> "foo")
           - Add protocol if still collision (e.g., "prod: wss://api.com/foo" -> "foo_wss", only for non-HTTPS protocols)
         default: false
+      multi-server-strategy:
+        type: optional<MultiServerStrategy>
+        docs: |
+          Controls how multiple top-level OpenAPI servers are mapped to environments in the generated
+          Fern definition, when those servers each declare an `x-fern-server-name` and endpoint-level
+          `servers:` overrides reference those names.
+          - `environment-per-server`: emit one environment per top-level server (each `x-fern-server-name`
+            becomes its own environment constant in generated SDKs, e.g. `Environment.PRODUCTION` and
+            `Environment.AGENT`). This is the default.
+          - `urls-per-environment`: collapse all top-level servers into a single environment with each
+            server exposed as a named URL. Useful for APIs that expose multiple base hosts that together
+            form a single logical environment (e.g. `api.box.com`, `upload.box.com`, `dl.boxcloud.com`).
       remove-discriminants-from-schemas:
         type: optional<RemoveDiscriminantsFromSchemas>
         docs: |

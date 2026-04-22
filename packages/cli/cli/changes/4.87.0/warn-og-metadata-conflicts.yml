@@ -1,0 +1,12 @@
+- summary: |
+    Emit non-fatal warnings during `fern check` / `fern docs dev` when `docs.yml`
+    metadata settings silently conflict. Covered cases:
+    - `og:dynamic: true` combined with `og:image` or `twitter:image` (the static
+      images only apply to the homepage once dynamic generation is enabled).
+    - `og:dynamic:*` sub-settings or `og:background-image` set without
+      `og:dynamic: true` (they are ignored).
+    - `og:dynamic:logo-color` set with `og:dynamic:show-logo: false` (no effect).
+    - `og:image:width` / `og:image:height` set without `og:image`.
+    - `og:dynamic:text-color` equal to `og:dynamic:background-color`
+      (text is invisible).
+  type: chore

@@ -27,6 +27,7 @@ export const baseGoCustomConfigSchema = z.strictObject({
     exportAllRequestsAtRoot: z.boolean().optional(),
     customReadmeSections: z.array(CustomReadmeSectionSchema).optional(),
     customPagerName: z.string().optional(),
+    offsetSemantics: z.enum(["item-index", "page-index"]).optional(),
     omitFernHeaders: z.boolean().optional(),
     maxRetries: z.number().int().min(0).optional()
 });

@@ -130,7 +130,7 @@ export async function parseDocsConfiguration({
     const cssPromise = convertCssConfig(rawCssConfig, absoluteFilepathToDocsConfig);
     const jsPromise = convertJsConfig(rawJsConfig, absoluteFilepathToDocsConfig);
 
-    const metadataPromise = convertMetadata(rawMetadata, absoluteFilepathToDocsConfig);
+    const metadataPromise = convertMetadata(rawMetadata, absoluteFilepathToDocsConfig, context);
 
     const context7FilePromise = parseContext7File({
         rawPath: rawDocsConfiguration.integrations?.context7,
@@ -1713,11 +1713,14 @@ function convertFooterLinks(
 
 async function convertMetadata(
     metadata: docsYml.RawSchemas.MetadataConfig | undefined,
-    absoluteFilepathToDocsConfig: AbsoluteFilePath
+    absoluteFilepathToDocsConfig: AbsoluteFilePath,
+    context: TaskContext
 ): Promise<docsYml.ParsedMetadataConfig | undefined> {
     if (metadata == null) {
         return undefined;
     }
+
+    warnOnMetadataConflicts(metadata, context);
 
     return {
         "og:site_name": metadata.ogSiteName,
@@ -1738,10 +1741,90 @@ async function convertMetadata(
         "twitter:card": metadata.twitterCard,
         "og:dynamic": metadata.ogDynamic,
         "og:background-image": await convertFilepathOrUrl(metadata.ogBackgroundImage, absoluteFilepathToDocsConfig),
+        "og:dynamic:text-color": metadata.ogDynamicTextColor,
+        "og:dynamic:background-color": metadata.ogDynamicBackgroundColor,
+        "og:dynamic:logo-color": metadata.ogDynamicLogoColor,
+        "og:dynamic:show-logo": metadata.ogDynamicShowLogo,
+        "og:dynamic:show-section": metadata.ogDynamicShowSection,
+        "og:dynamic:show-description": metadata.ogDynamicShowDescription,
+        "og:dynamic:show-url": metadata.ogDynamicShowUrl,
+        "og:dynamic:show-gradient": metadata.ogDynamicShowGradient,
         nofollow: undefined,
         noindex: undefined,
         canonicalHost: metadata.canonicalHost
     };
+}
+
+/**
+ * Emits non-fatal warnings when metadata settings in docs.yml interact in
+ * ways that silently discard user intent (e.g. `og:image` being ignored on
+ * non-homepage routes when `og:dynamic` is enabled).
+ *
+ * See seo.ts and og/route.tsx in fern-platform for the runtime behavior
+ * these warnings describe.
+ */
+function warnOnMetadataConflicts(metadata: docsYml.RawSchemas.MetadataConfig, context: TaskContext): void {
+    const dynamicEnabled = metadata.ogDynamic === true;
+
+    const dynamicSettings: Array<[string, unknown]> = [
+        ["og:background-image", metadata.ogBackgroundImage],
+        ["og:dynamic:text-color", metadata.ogDynamicTextColor],
+        ["og:dynamic:background-color", metadata.ogDynamicBackgroundColor],
+        ["og:dynamic:logo-color", metadata.ogDynamicLogoColor],
+        ["og:dynamic:show-logo", metadata.ogDynamicShowLogo],
+        ["og:dynamic:show-section", metadata.ogDynamicShowSection],
+        ["og:dynamic:show-description", metadata.ogDynamicShowDescription],
+        ["og:dynamic:show-url", metadata.ogDynamicShowUrl],
+        ["og:dynamic:show-gradient", metadata.ogDynamicShowGradient]
+    ];
+
+    // 1 + 2: og:dynamic overrides og:image / twitter:image on non-home pages
+    if (dynamicEnabled && metadata.ogImage != null) {
+        context.logger.warn(
+            "[metadata] `og:image` is only applied to the homepage when `og:dynamic: true`. All other pages show the dynamically generated image. Remove `og:image` to rely entirely on dynamic generation, or set `og:dynamic: false` to use `og:image` site-wide."
+        );
+    }
+    if (dynamicEnabled && metadata.twitterImage != null) {
+        context.logger.warn(
+            "[metadata] `twitter:image` is only applied to the homepage when `og:dynamic: true`. All other pages show the dynamically generated image."
+        );
+    }
+
+    // 3: og:dynamic sub-settings require og:dynamic: true
+    if (!dynamicEnabled) {
+        const ignored = dynamicSettings.filter(([, value]) => value != null).map(([key]) => key);
+        if (ignored.length > 0) {
+            context.logger.warn(
+                `[metadata] The following settings require \`og:dynamic: true\` and will be ignored: ${ignored
+                    .map((k) => `\`${k}\``)
+                    .join(", ")}.`
+            );
+        }
+    }
+
+    // 4: logo-color is meaningless when logo is hidden
+    if (dynamicEnabled && metadata.ogDynamicShowLogo === false && metadata.ogDynamicLogoColor != null) {
+        context.logger.warn(
+            "[metadata] `og:dynamic:logo-color` has no effect because `og:dynamic:show-logo: false`. Remove one or the other."
+        );
+    }
+
+    // 5: orphan og:image dimensions
+    if (metadata.ogImage == null && (metadata.ogImageWidth != null || metadata.ogImageHeight != null)) {
+        context.logger.warn("[metadata] `og:image:width` / `og:image:height` have no effect without `og:image`.");
+    }
+
+    // 6: text-color and background-color identical would make text invisible
+    if (
+        dynamicEnabled &&
+        typeof metadata.ogDynamicTextColor === "string" &&
+        typeof metadata.ogDynamicBackgroundColor === "string" &&
+        metadata.ogDynamicTextColor.trim().toLowerCase() === metadata.ogDynamicBackgroundColor.trim().toLowerCase()
+    ) {
+        context.logger.warn(
+            `[metadata] \`og:dynamic:text-color\` and \`og:dynamic:background-color\` are both set to \`${metadata.ogDynamicTextColor}\`, which will make text invisible in generated OG images.`
+        );
+    }
 }
 
 async function convertFilepathOrUrl(

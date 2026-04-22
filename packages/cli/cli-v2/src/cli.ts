@@ -13,13 +13,55 @@ import { addOrgCommand } from "./commands/org/index.js";
 import { addReplayCommand } from "./commands/replay/index.js";
 import { addSdkCommand } from "./commands/sdk/index.js";
 import { addTelemetryCommand } from "./commands/telemetry/index.js";
+import { getCompletionValues, isCompletionMode } from "./completion.js";
 import { GlobalArgs } from "./context/GlobalArgs.js";
 import { Version } from "./version.js";
 
 export async function runCliV2(argv?: string[]): Promise<void> {
-    getOrCreateFernRunId();
+    // Skip telemetry setup during shell completion so TAB stays fast
+    // and side-effect-free.
+    if (!isCompletionMode(argv)) {
+        getOrCreateFernRunId();
+    }
     const cli = createCliV2(argv);
     await cli.parse();
+}
+
+/**
+ * Content-aware shell completion handler.
+ *
+ * When the previous token is a flag that accepts workspace-derived values
+ * (e.g. `--group`, `--api`, `--instance`) we do a lightweight fern.yml
+ * parse and return matching entries. Otherwise we fall back to default
+ * yargs completions (commands, other flags, etc.).
+ */
+function completionHandler(
+    _current: string,
+    _argv: Record<string, unknown>,
+    defaultCompletionsFn: (onCompleted?: (err: Error | null, completions: string[] | undefined) => void) => void,
+    done: (completions: string[]) => void
+): void {
+    const args = process.argv;
+    const prev = args[args.length - 2];
+
+    if (prev === "--group" || prev === "--api" || prev === "--instance") {
+        void getCompletionValues(process.cwd())
+            .then((values) => {
+                if (prev === "--group") {
+                    done(values.groups);
+                } else if (prev === "--api") {
+                    done(values.apis);
+                } else {
+                    done(values.instances);
+                }
+            })
+            .catch(() => done([]));
+        return;
+    }
+
+    defaultCompletionsFn((_err, defaults) => {
+        done(defaults ?? []);
+    });
 }
 
 function createCliV2(argv?: string[]): Argv<GlobalArgs> {
@@ -35,6 +77,7 @@ function createCliV2(argv?: string[]): Argv<GlobalArgs> {
             choices: ["debug", "info", "warn", "error"] as const,
             default: "info"
         })
+        .completion("completion", "Generate shell completion script", completionHandler)
         .strict()
         .demandCommand()
         .recommendCommands()

@@ -397,12 +397,24 @@ async function startJob({
 /**
  * Attempts to extract a human-readable error message from the raw error response body.
  * Fiddle's ErrorBody serializes as { error: "...", content: { message: "..." } }.
- * The SDK wraps this as { content: { reason: "status-code", body: <ErrorBody> } }.
+ *
+ * Two shapes are supported because this helper is reachable from two call sites:
+ *   1. The `_other` visitor callback, which receives `core.Fetcher.Error` directly:
+ *        { reason: "status-code", statusCode: N, body: <ErrorBody> }
+ *   2. The raw `createResponse.error` wrapper from the SDK, before it is unpacked:
+ *        { content: { reason: "status-code", statusCode: N, body: <ErrorBody> } }
+ *
  * Returns undefined if no message could be extracted.
  */
 // biome-ignore lint/suspicious/noExplicitAny: the error shape from the SDK is not well-typed
-function extractErrorMessage(error: any): string | undefined {
-    const body = error?.content?.reason === "status-code" ? error.content.body : undefined;
+export function extractErrorMessage(error: any): string | undefined {
+    // biome-ignore lint/suspicious/noExplicitAny: intentional dynamic navigation
+    let body: any;
+    if (error?.reason === "status-code") {
+        body = error.body;
+    } else if (error?.content?.reason === "status-code") {
+        body = error.content.body;
+    }
     if (typeof body?.content?.message === "string") {
         return body.content.message;
     }
