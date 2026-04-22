@@ -926,6 +926,7 @@ types:
     enum:
       - default
       - toggle
+      - tabs
 
   LanguageSwitcherThemeConfig:
     enum:

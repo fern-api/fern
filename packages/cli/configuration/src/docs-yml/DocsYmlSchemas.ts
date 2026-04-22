@@ -97,7 +97,7 @@ export const ContentAlignment = z.enum(["center", "left"]);
 
 export const HeaderPosition = z.enum(["fixed", "static"]);
 
-export const ProductSwitcherThemeConfig = z.enum(["default", "toggle"]);
+export const ProductSwitcherThemeConfig = z.enum(["default", "toggle", "tabs"]);
 
 export const LanguageSwitcherThemeConfig = z.enum(["default", "minimal"]);
 

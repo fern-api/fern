@@ -5706,7 +5706,8 @@
       "type": "string",
       "enum": [
         "default",
-        "toggle"
+        "toggle",
+        "tabs"
       ]
     },
     "docs.ThemeConfig": {
