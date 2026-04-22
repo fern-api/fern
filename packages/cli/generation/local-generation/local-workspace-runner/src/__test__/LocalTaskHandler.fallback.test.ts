@@ -180,10 +180,9 @@ vi.mock("semver", () => ({
 // pass through VersionUtils helpers, override isAutoVersion. extractPreviousVersion
 // is configurable per test via mockExtractPreviousVersion.
 vi.mock("@fern-api/generator-cli/autoversion", async () => {
-    const actual =
-        await vi.importActual<typeof import("@fern-api/generator-cli/autoversion")>(
-            "@fern-api/generator-cli/autoversion"
-        );
+    const actual = await vi.importActual<typeof import("@fern-api/generator-cli/autoversion")>(
+        "@fern-api/generator-cli/autoversion"
+    );
     return {
         ...actual,
         AutoVersioningService: class MockAutoVersioningService {

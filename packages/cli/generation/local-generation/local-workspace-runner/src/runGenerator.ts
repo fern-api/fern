@@ -10,7 +10,11 @@ import { mkdir, writeFile } from "fs/promises";
 import * as path from "path";
 import { join } from "path";
 import tmp, { DirectoryResult } from "tmp-promise";
-import { AutoVersioningCache, extractLanguageFromGeneratorName, mapMagicVersionForLanguage } from "@fern-api/generator-cli/autoversion";
+import {
+    AutoVersioningCache,
+    extractLanguageFromGeneratorName,
+    mapMagicVersionForLanguage
+} from "@fern-api/generator-cli/autoversion";
 import { ContainerExecutionEnvironment } from "./ContainerExecutionEnvironment.js";
 import {
     CODEGEN_OUTPUT_DIRECTORY_NAME,

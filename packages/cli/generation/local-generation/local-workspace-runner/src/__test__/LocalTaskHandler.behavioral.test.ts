@@ -171,10 +171,9 @@ vi.mock("semver", () => ({
 // Mock the autoversion subpath — replace AutoVersioningService/Cache with stubs,
 // pass through VersionUtils helpers (constants, maxVersionBump, etc.), override isAutoVersion.
 vi.mock("@fern-api/generator-cli/autoversion", async () => {
-    const actual =
-        await vi.importActual<typeof import("@fern-api/generator-cli/autoversion")>(
-            "@fern-api/generator-cli/autoversion"
-        );
+    const actual = await vi.importActual<typeof import("@fern-api/generator-cli/autoversion")>(
+        "@fern-api/generator-cli/autoversion"
+    );
     return {
         ...actual,
         AutoVersioningService: class MockAutoVersioningService {
