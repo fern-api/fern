@@ -1,5 +1,5 @@
 import { AbstractProject, FernGeneratorExec, File, SourceFetcher } from "@fern-api/base-generator";
-import { Generation, resolveDiagnosticPrefix, WithGeneration } from "@fern-api/csharp-codegen";
+import { Generation, WithGeneration } from "@fern-api/csharp-codegen";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { createHash } from "crypto";
@@ -451,10 +451,7 @@ dotnet_diagnostic.IDE0005.severity = error
         if (!this.settings.generateAvailabilityAnnotations) {
             return "";
         }
-        const prefix = resolveDiagnosticPrefix({
-            override: this.settings.availabilityDiagnosticPrefix,
-            rootNamespace: this.settings.namespace
-        });
+        const prefix = this.generation.resolveAvailabilityDiagnosticPrefix();
         return `${prefix}0001;${prefix}0002`;
     }
 

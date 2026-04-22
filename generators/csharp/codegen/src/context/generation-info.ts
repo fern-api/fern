@@ -23,6 +23,7 @@ import { Collection, Primitive, Value } from "../ast/types/Type.js";
 import { CSharp } from "../csharp.js";
 import { type CsharpConfigSchema } from "../custom-config/index.js";
 import { is, text } from "../index.js";
+import { resolveDiagnosticPrefix } from "../utils/getAvailabilityDiagnosticId.js";
 import { lazy } from "../utils/lazy.js";
 import { camelCase, upperFirst } from "../utils/text.js";
 
@@ -294,6 +295,21 @@ export class Generation {
             };
         }
     });
+
+    /**
+     * Resolves the diagnostic prefix used to build `[Experimental("…")]` IDs, using this
+     * generation's custom-config override, root namespace, and the organization /
+     * workspace name that drive the fallback derivation. See {@link resolveDiagnosticPrefix}
+     * for the resolution rules.
+     */
+    public resolveAvailabilityDiagnosticPrefix(): string {
+        return resolveDiagnosticPrefix({
+            override: this.settings.availabilityDiagnosticPrefix,
+            rootNamespace: this.settings.namespace,
+            organization: this.generatorConfig.organization,
+            workspaceName: this.generatorConfig.workspaceName
+        });
+    }
 
     public readonly constants = {
         folders: lazy({

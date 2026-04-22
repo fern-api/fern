@@ -9,7 +9,6 @@ type HttpEndpoint = FernIr.HttpEndpoint;
 type PathParameter = FernIr.PathParameter;
 type ServiceId = FernIr.ServiceId;
 
-import { resolveDiagnosticPrefix } from "@fern-api/csharp-codegen";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { WrappedRequestGenerator } from "../wrapped-request/WrappedRequestGenerator.js";
 import { EndpointSignatureInfo } from "./EndpointSignatureInfo.js";
@@ -32,14 +31,11 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
 
     /**
      * Resolved diagnostic prefix used by `[Experimental("…")]` availability annotations.
-     * Prefers the customer-configured override and otherwise derives from the root namespace.
-     * See {@link resolveDiagnosticPrefix} for the resolution rules.
+     * Prefers the customer-configured override and otherwise derives from the root namespace,
+     * falling back to `organization` + `workspaceName` before throwing.
      */
     protected get availabilityDiagnosticPrefix(): string {
-        return resolveDiagnosticPrefix({
-            override: this.settings.availabilityDiagnosticPrefix,
-            rootNamespace: this.namespaces.root
-        });
+        return this.generation.resolveAvailabilityDiagnosticPrefix();
     }
 
     public getEndpointSignatureInfo({

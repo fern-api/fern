@@ -6,12 +6,6 @@ import { camelCase, upperFirst } from "./text.js";
 type AvailabilityStatus = FernIr.AvailabilityStatus;
 
 /**
- * Fallback diagnostic prefix used when no override is provided and the namespace-derived
- * value fails {@link DIAGNOSTIC_PREFIX_PATTERN}.
- */
-export const FALLBACK_DIAGNOSTIC_PREFIX = "FERN";
-
-/**
  * Maximum number of characters taken from the root namespace when deriving a default prefix.
  * Leaves room for the 4-digit suffix (e.g. "0001") within the 8-character cap enforced by
  * {@link DIAGNOSTIC_PREFIX_PATTERN}.
@@ -36,28 +30,70 @@ const TIER_SUFFIX: Record<"inDevelopment" | "preRelease", string> = {
 };
 
 /**
+ * Derives a diagnostic prefix candidate from an arbitrary namespace-like string.
+ *
+ * Strategy:
+ * 1. Uppercase and strip all non-alphanumeric characters.
+ * 2. Strip any leading digits until the first letter (diagnostic IDs must start with a letter).
+ * 3. Truncate to {@link MAX_DERIVED_PREFIX_LENGTH}.
+ * 4. If the result is a single letter, duplicate it to satisfy the minimum 2-char pattern.
+ *
+ * Returns `undefined` when sanitization produces an empty string or the result still fails
+ * {@link DIAGNOSTIC_PREFIX_PATTERN}.
+ */
+function derivePrefixFromNamespace(namespace: string): string | undefined {
+    const sanitized = namespace
+        .toUpperCase()
+        .replace(/[^A-Z0-9]/g, "")
+        .replace(/^[0-9]+/, "");
+    if (sanitized.length === 0) {
+        return undefined;
+    }
+    const truncated = sanitized.slice(0, MAX_DERIVED_PREFIX_LENGTH);
+    const padded = truncated.length === 1 ? `${truncated}${truncated}` : truncated;
+    return DIAGNOSTIC_PREFIX_PATTERN.test(padded) ? padded : undefined;
+}
+
+/**
  * Resolves the diagnostic prefix used to build `[Experimental("…")]` IDs.
  *
  * Resolution order:
  * 1. `override` (already validated by zod if sourced from customer config).
- * 2. First segment of `rootNamespace` — uppercased, alphanumerics only, truncated to
- *    {@link MAX_DERIVED_PREFIX_LENGTH} chars.
- * 3. {@link FALLBACK_DIAGNOSTIC_PREFIX} when step 2 fails {@link DIAGNOSTIC_PREFIX_PATTERN}
- *    (empty root namespace, leading digits, sub-2-char segments, etc.).
+ * 2. Derived from the full `rootNamespace` via {@link derivePrefixFromNamespace}.
+ * 3. Derived from `organization` + `workspaceName` (the same inputs
+ *    {@link deriveRootNamespace} uses to synthesize a default namespace).
+ * 4. Throws — the generator refuses to emit a Fern-branded literal. Customers in this
+ *    (practically unreachable) state must set `availabilityDiagnosticPrefix` explicitly
+ *    in their generator config.
  */
-export function resolveDiagnosticPrefix(args: { override: string | undefined; rootNamespace: string }): string {
+export function resolveDiagnosticPrefix(args: {
+    override: string | undefined;
+    rootNamespace: string;
+    organization: string;
+    workspaceName: string;
+}): string {
     if (args.override != null && DIAGNOSTIC_PREFIX_PATTERN.test(args.override)) {
         return args.override;
     }
-    const firstSegment = args.rootNamespace.split(".")[0] ?? "";
-    const derived = firstSegment
-        .toUpperCase()
-        .replace(/[^A-Z0-9]/g, "")
-        .slice(0, MAX_DERIVED_PREFIX_LENGTH);
-    if (DIAGNOSTIC_PREFIX_PATTERN.test(derived)) {
-        return derived;
+    const fromRootNamespace = derivePrefixFromNamespace(args.rootNamespace);
+    if (fromRootNamespace != null) {
+        return fromRootNamespace;
     }
-    return FALLBACK_DIAGNOSTIC_PREFIX;
+    const fallbackNamespace = deriveRootNamespace({
+        explicitNamespace: undefined,
+        organization: args.organization,
+        workspaceName: args.workspaceName
+    });
+    const fromFallback = derivePrefixFromNamespace(fallbackNamespace);
+    if (fromFallback != null) {
+        return fromFallback;
+    }
+    throw new Error(
+        `Unable to derive a C# availability diagnostic prefix from rootNamespace "${args.rootNamespace}", ` +
+            `organization "${args.organization}", or workspaceName "${args.workspaceName}". ` +
+            "Set `availabilityDiagnosticPrefix` explicitly in your generators.yml custom config " +
+            "(must match /^[A-Z][A-Z0-9]{1,7}$/)."
+    );
 }
 
 /**

@@ -295,9 +295,9 @@ describe("getAvailabilityAnnotations", () => {
                 docs: undefined
             }),
             enabled: true,
-            diagnosticPrefix: "FERN"
+            diagnosticPrefix: "XYZ"
         });
-        expect(calls.annotation[0]?.argument).toBe('"FERN0001"');
+        expect(calls.annotation[0]?.argument).toBe('"XYZ0001"');
     });
 
     it("returns [] for GeneralAvailability", () => {

@@ -118,12 +118,14 @@ export class DynamicSnippetsCsharpTestGenerator {
         const override = typeof overrideRaw === "string" ? overrideRaw : undefined;
         const explicitNamespaceRaw = customConfig.namespace;
         const explicitNamespace = typeof explicitNamespaceRaw === "string" ? explicitNamespaceRaw : undefined;
+        const organization = this.generatorConfig.organization ?? "";
+        const workspaceName = this.generatorConfig.workspaceName ?? "";
         const rootNamespace = deriveRootNamespace({
             explicitNamespace,
-            organization: this.generatorConfig.organization ?? "",
-            workspaceName: this.generatorConfig.workspaceName ?? ""
+            organization,
+            workspaceName
         });
-        const prefix = resolveDiagnosticPrefix({ override, rootNamespace });
+        const prefix = resolveDiagnosticPrefix({ override, rootNamespace, organization, workspaceName });
         return `${prefix}0001;${prefix}0002`;
     }
 

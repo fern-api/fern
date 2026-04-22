@@ -15,10 +15,14 @@
     Two stable, tier-based diagnostic ids are emitted: `{PREFIX}0001` for
     `IN_DEVELOPMENT` and `{PREFIX}0002` for `PRE_RELEASE`. `PREFIX` defaults
     to a value derived from the generated C# root namespace (uppercased,
-    alphanumeric-only, truncated to 6 characters; `FERN` when derivation
-    fails). A new `availabilityDiagnosticPrefix` config option lets you pin
-    the prefix explicitly (`^[A-Z][A-Z0-9]{1,7}$`) — recommended before
-    renaming a root namespace so existing `<NoWarn>` entries keep matching.
+    stripped of non-alphanumerics and leading digits, then truncated to 6
+    characters); if that yields nothing, the generator falls back to a value
+    derived from `organization` + `workspaceName`, and if that also fails it
+    raises a generator-time error instructing you to set
+    `availabilityDiagnosticPrefix` explicitly. A new
+    `availabilityDiagnosticPrefix` config option lets you pin the prefix
+    explicitly (`^[A-Z][A-Z0-9]{1,7}$`) — recommended before renaming a
+    root namespace so existing `<NoWarn>` entries keep matching.
 
     `[ExperimentalAttribute]` ships in .NET 8+ and is polyfilled by PolySharp
     on earlier TFMs (`net462`, `netstandard2.0`); the generated csproj

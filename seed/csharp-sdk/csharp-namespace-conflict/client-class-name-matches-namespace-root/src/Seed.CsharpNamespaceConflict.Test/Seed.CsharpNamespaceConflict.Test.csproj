@@ -7,7 +7,7 @@
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
     <PolySharpIncludeRuntimeSupportedAttributes>true</PolySharpIncludeRuntimeSupportedAttributes>
-    <NoWarn>$(NoWarn);SEED0001;SEED0002</NoWarn>
+    <NoWarn>$(NoWarn);SEEDCS0001;SEEDCS0002</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

@@ -16,7 +16,6 @@ export { escapeForCSharpString } from "./utils/escapeForCSharpString.js";
 export {
     DIAGNOSTIC_PREFIX_PATTERN,
     deriveRootNamespace,
-    FALLBACK_DIAGNOSTIC_PREFIX,
     getDiagnosticId,
     resolveDiagnosticPrefix
 } from "./utils/getAvailabilityDiagnosticId.js";
