@@ -1,7 +1,8 @@
 import { DOCS_CONFIGURATION_FILENAME, docsYml } from "@fern-api/configuration-loader";
 import { extractErrorMessage, sanitizeNullValues, validateAgainstJsonSchema } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
+
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 
@@ -90,9 +91,15 @@ export async function loadRawDocsConfiguration({
             context.logger.error(`Parsing failed even after sanitization: ${extractErrorMessage(err)}`);
             // Log the JSON structure to debug
             context.logger.debug(`Sanitized JSON structure: ${JSON.stringify(sanitizedJson, null, 2)}`);
-            throw new Error(`Failed to parse ${absolutePathOfConfiguration}: ${extractErrorMessage(err)}`);
+            throw new CliError({
+                message: `Failed to parse ${absolutePathOfConfiguration}: ${extractErrorMessage(err)}`,
+                code: CliError.Code.ParseError
+            });
         }
     } else {
-        throw new Error(`Failed to parse docs.yml:\n${result.error?.message ?? "Unknown error"}`);
+        throw new CliError({
+            message: `Failed to parse docs.yml:\n${result.error?.message ?? "Unknown error"}`,
+            code: CliError.Code.ParseError
+        });
     }
 }

@@ -57,6 +57,7 @@ export async function runLocalGenerationForWorkspace({
     isPreview: isPreviewOverride,
     automationMode,
     autoMerge,
+    skipIfNoDiff,
     disableTelemetry
 }: {
     token: FernToken | undefined;
@@ -79,6 +80,7 @@ export async function runLocalGenerationForWorkspace({
     isPreview?: boolean;
     automationMode?: boolean;
     autoMerge?: boolean;
+    skipIfNoDiff?: boolean;
     disableTelemetry?: boolean;
 }): Promise<void> {
     // Fail fast: check all generators for version conflicts BEFORE starting any IR generation.
@@ -419,6 +421,7 @@ export async function runLocalGenerationForWorkspace({
                                 generatorName: generatorInvocation.name,
                                 automationMode,
                                 autoMerge,
+                                skipIfNoDiff,
                                 hasBreakingChanges,
                                 breakingChangesSummary: hasBreakingChanges ? autoVersioningPrDescription : undefined,
                                 runId: process.env.FERN_RUN_ID

@@ -4,7 +4,8 @@ import { FdrAPI } from "@fern-api/fdr-sdk";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { OpenAPI3_1Converter, OpenAPIConverterContext3_1 } from "@fern-api/openapi-to-ir";
 import { convertIrToFdrApi } from "@fern-api/register";
-import { createMockTaskContext } from "@fern-api/task-context";
+import { CliError, createMockTaskContext } from "@fern-api/task-context";
+
 import { ErrorCollector } from "@fern-api/v3-importer-commons";
 import { OpenAPIV3_1 } from "openapi-types";
 
@@ -98,7 +99,10 @@ async function convertOpenApiSpecToIr({
     const result = await converter.convert();
 
     if (result == null) {
-        throw new Error("Failed to convert OpenAPI spec to intermediate representation");
+        throw new CliError({
+            message: "Failed to convert OpenAPI spec to intermediate representation",
+            code: CliError.Code.IrConversionError
+        });
     }
 
     if (errorCollector.hasErrors()) {

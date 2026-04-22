@@ -45,6 +45,7 @@ export async function generateAPIWorkspaces({
     requireEnvVars,
     automationMode,
     autoMerge,
+    skipIfNoDiff,
     automation
 }: {
     project: Project;
@@ -72,6 +73,7 @@ export async function generateAPIWorkspaces({
     requireEnvVars: boolean;
     automationMode?: boolean;
     autoMerge?: boolean;
+    skipIfNoDiff?: boolean;
     /**
      * When provided, this call runs in fan-out automation mode (see {@link AutomationRunOptions}).
      */
@@ -152,6 +154,7 @@ export async function generateAPIWorkspaces({
                     requireEnvVars,
                     automationMode,
                     autoMerge,
+                    skipIfNoDiff,
                     automation
                 });
             });
