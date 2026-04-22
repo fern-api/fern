@@ -1,6 +1,12 @@
 import { constructFullCasingsGenerator, FullCasingsGenerator } from "@fern-api/casings-generator";
 import { generatorsYml } from "@fern-api/configuration";
-import { Name, NameAndWireValue, NameAndWireValueOrString, NameOrString, SafeAndUnsafeString } from "@fern-api/ir-sdk";
+import type {
+    Name,
+    NameAndWireValue,
+    NameAndWireValueOrString,
+    NameOrString,
+    SafeAndUnsafeString
+} from "@fern-api/ir-sdk";
 
 export { getNameFromWireValue, getOriginalName, getWireValue } from "./NameHelpers.js";
 

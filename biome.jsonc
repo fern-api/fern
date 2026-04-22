@@ -309,6 +309,28 @@
             }
         },
         {
+            // Codegen packages are bundled into dynamic-snippets, which must be
+            // browser-compatible. Importing @fern-api/base-generator pulls in
+            // Node-only dependencies (e.g. @sentry/node -> import-in-the-middle
+            // -> worker_threads) that break the esbuild browser bundle. Use
+            // @fern-api/browser-compatible-base-generator instead.
+            "includes": ["generators/*/codegen/**/*.ts", "generators/*/codegen/**/*.tsx"],
+            "linter": {
+                "rules": {
+                    "style": {
+                        "noRestrictedImports": {
+                            "level": "error",
+                            "options": {
+                                "paths": {
+                                    "@fern-api/base-generator": "Codegen packages are bundled into browser-compatible dynamic-snippets. Import from @fern-api/browser-compatible-base-generator instead of @fern-api/base-generator."
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
             "includes": ["*.ts", "*.tsx", "*.mts", "*.cts"],
             "linter": {
                 "rules": {

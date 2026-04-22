@@ -744,6 +744,12 @@ importers:
 
   generators/browser-compatible-base:
     dependencies:
+      '@fern-api/casings-generator':
+        specifier: workspace:*
+        version: link:../../packages/commons/casings-generator
+      '@fern-api/configuration':
+        specifier: workspace:*
+        version: link:../../packages/cli/configuration
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../packages/commons/core-utils
@@ -753,6 +759,9 @@ importers:
       '@fern-api/fern-definition-schema':
         specifier: workspace:*
         version: link:../../packages/cli/fern-definition/schema
+      '@fern-api/ir-sdk':
+        specifier: workspace:*
+        version: link:../../packages/ir-sdk
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../packages/cli/logger
@@ -820,9 +829,6 @@ importers:
 
   generators/csharp/codegen:
     dependencies:
-      '@fern-api/base-generator':
-        specifier: workspace:*
-        version: link:../../base
       '@fern-api/browser-compatible-base-generator':
         specifier: workspace:*
         version: link:../../browser-compatible-base
