@@ -274,9 +274,8 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         writer: go.Writer;
         scheme: FernIr.BasicAuthScheme;
     }): void {
-        const schemeRecord = scheme as unknown as Record<string, unknown>;
-        const usernameOmitted = !!schemeRecord.usernameOmit;
-        const passwordOmitted = !!schemeRecord.passwordOmit;
+        const usernameOmitted = !!scheme.usernameOmit;
+        const passwordOmitted = !!scheme.passwordOmit;
         if (scheme.usernameEnvVar != null && !usernameOmitted) {
             this.writeEnvConditional({
                 writer,

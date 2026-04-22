@@ -672,9 +672,8 @@ export class WireTestGenerator {
                             );
                             break;
                         case "basic": {
-                            const schemeRecord = scheme as unknown as Record<string, unknown>;
-                            const usernameOmitted = !!schemeRecord.usernameOmit;
-                            const passwordOmitted = !!schemeRecord.passwordOmit;
+                            const usernameOmitted = !!scheme.usernameOmit;
+                            const passwordOmitted = !!scheme.passwordOmit;
                             if (!usernameOmitted || !passwordOmitted) {
                                 const basicAuthArgs: go.AstNode[] = [];
                                 if (!usernameOmitted) {
