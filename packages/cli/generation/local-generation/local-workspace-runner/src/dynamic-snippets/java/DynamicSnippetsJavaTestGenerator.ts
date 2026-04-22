@@ -71,38 +71,43 @@ export class DynamicSnippetsJavaTestGenerator {
                 );
             }
         }
-        this.context.logger.debug("Dynamic snippets test files generated, running spotlessApply...");
-        const gradlewPath = join(outputDir, RelativeFilePath.of("gradlew"));
-        const gradlewExists = await doesPathExist(gradlewPath, "file");
-        if (gradlewExists) {
-            try {
-                const customConfig = this.generatorConfig.customConfig as Record<string, unknown> | undefined;
-                const enableProfiling = customConfig?.["enable-gradle-profiling"] === true;
-                const gradleArgs = [":spotlessApply"];
-                if (enableProfiling) {
-                    gradleArgs.push("--profile");
-                    this.context.logger.info("Running spotlessApply with profiling enabled");
-                }
-                await loggingExeca(this.context.logger, "./gradlew", gradleArgs, {
-                    doNotPipeOutput: false,
-                    cwd: outputDir
-                });
-                this.context.logger.debug("Successfully ran spotlessApply");
-                if (enableProfiling) {
-                    // Copy build/reports/ to reports/ at the root so it's not gitignored
-                    const buildReportsPath = join(outputDir, RelativeFilePath.of("build/reports"));
-                    const reportsPath = join(outputDir, RelativeFilePath.of("reports"));
-                    const buildReportsExists = await doesPathExist(buildReportsPath, "directory");
-                    if (buildReportsExists) {
-                        await cp(buildReportsPath, reportsPath, { recursive: true });
-                        this.context.logger.info("Gradle profiling report copied to reports/");
-                    } else {
-                        this.context.logger.info("No profiling report found in build/reports/");
+        const customConfig = this.generatorConfig.customConfig as Record<string, unknown> | undefined;
+        const enableSpotless = customConfig?.["format-dynamic-snippets"] === true;
+        if (enableSpotless) {
+            this.context.logger.debug("Dynamic snippets test files generated, running spotlessApply...");
+            const gradlewPath = join(outputDir, RelativeFilePath.of("gradlew"));
+            const gradlewExists = await doesPathExist(gradlewPath, "file");
+            if (gradlewExists) {
+                try {
+                    const enableProfiling = customConfig?.["enable-gradle-profiling"] === true;
+                    const gradleArgs = [":spotlessApply"];
+                    if (enableProfiling) {
+                        gradleArgs.push("--profile");
+                        this.context.logger.info("Running spotlessApply with profiling enabled");
                     }
+                    await loggingExeca(this.context.logger, "./gradlew", gradleArgs, {
+                        doNotPipeOutput: false,
+                        cwd: outputDir
+                    });
+                    this.context.logger.debug("Successfully ran spotlessApply");
+                    if (enableProfiling) {
+                        // Copy build/reports/ to reports/ at the root so it's not gitignored
+                        const buildReportsPath = join(outputDir, RelativeFilePath.of("build/reports"));
+                        const reportsPath = join(outputDir, RelativeFilePath.of("reports"));
+                        const buildReportsExists = await doesPathExist(buildReportsPath, "directory");
+                        if (buildReportsExists) {
+                            await cp(buildReportsPath, reportsPath, { recursive: true });
+                            this.context.logger.info("Gradle profiling report copied to reports/");
+                        } else {
+                            this.context.logger.info("No profiling report found in build/reports/");
+                        }
+                    }
+                } catch (e) {
+                    this.context.failAndThrow("Failed to run spotlessApply", e, { code: CliError.Code.InternalError });
                 }
-            } catch (e) {
-                this.context.failAndThrow("Failed to run spotlessApply", e, { code: CliError.Code.InternalError });
             }
+        } else {
+            this.context.logger.debug("Skipping spotlessApply (set format-dynamic-snippets: true to enable)");
         }
         this.context.logger.debug("Done generating dynamic snippet tests");
     }
