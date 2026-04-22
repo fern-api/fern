@@ -29,12 +29,10 @@ export function loadDotenvFile(envFilePath: string | undefined, logDebug?: (msg:
     const result = dotenvConfig({ path: resolved, override: false });
 
     if (logDebug != null && result.parsed != null) {
-        const keys = Object.keys(result.parsed);
-        if (keys.length > 0) {
-            // Never log values — use <SET> so the user knows a key was loaded
+        for (const key of Object.keys(result.parsed)) {
+            // Never log values — use **** so the user knows a key was loaded
             // without revealing the value or its length.
-            const redacted = keys.map((k) => `${k}=<SET>`).join(", ");
-            logDebug(`Loaded from ${resolved}: ${redacted}`);
+            logDebug(`${key}=****`);
         }
     }
 }

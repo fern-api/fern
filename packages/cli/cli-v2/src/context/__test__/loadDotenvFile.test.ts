@@ -88,13 +88,12 @@ describe("loadDotenvFile", () => {
 
             loadDotenvFile(envFile, logDebug);
 
-            expect(logDebug).toHaveBeenCalledOnce();
-            const [msg] = logDebug.mock.calls[0] as [string];
-            expect(msg).toContain("SECRET_KEY=<SET>");
-            expect(msg).toContain("ANOTHER=<SET>");
+            const calls = logDebug.mock.calls.map(([msg]: [string]) => msg);
+            expect(calls).toContain("SECRET_KEY=****");
+            expect(calls).toContain("ANOTHER=****");
             // Values must never appear
-            expect(msg).not.toContain("super-secret");
-            expect(msg).not.toContain("also-secret");
+            expect(calls.join("")).not.toContain("super-secret");
+            expect(calls.join("")).not.toContain("also-secret");
         });
 
         it("does not call logDebug when no logDebug is provided", () => {
