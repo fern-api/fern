@@ -1,0 +1,5 @@
+- summary: |
+    Allow skipping spotlessApply for Java dynamic snippet tests via
+    `skip-format-dynamic-snippets: true` custom config flag. This can
+    save ~30s of JVM startup and formatting time during Java SDK generation.
+  type: feat

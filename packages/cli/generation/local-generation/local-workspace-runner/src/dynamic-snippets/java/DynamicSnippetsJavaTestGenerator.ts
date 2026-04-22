@@ -72,8 +72,10 @@ export class DynamicSnippetsJavaTestGenerator {
             }
         }
         const customConfig = this.generatorConfig.customConfig as Record<string, unknown> | undefined;
-        const enableSpotless = customConfig?.["format-dynamic-snippets"] === true;
-        if (enableSpotless) {
+        const skipSpotless = customConfig?.["skip-format-dynamic-snippets"] === true;
+        if (skipSpotless) {
+            this.context.logger.debug("Skipping spotlessApply (skip-format-dynamic-snippets is set)");
+        } else {
             this.context.logger.debug("Dynamic snippets test files generated, running spotlessApply...");
             const gradlewPath = join(outputDir, RelativeFilePath.of("gradlew"));
             const gradlewExists = await doesPathExist(gradlewPath, "file");
@@ -106,8 +108,6 @@ export class DynamicSnippetsJavaTestGenerator {
                     this.context.failAndThrow("Failed to run spotlessApply", e, { code: CliError.Code.InternalError });
                 }
             }
-        } else {
-            this.context.logger.debug("Skipping spotlessApply (set format-dynamic-snippets: true to enable)");
         }
         this.context.logger.debug("Done generating dynamic snippet tests");
     }
