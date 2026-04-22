@@ -5,8 +5,8 @@ generatorType: SDK
 defaultOutputMode: github
 defaultCustomConfig:
   rubocopSeverity: error
-image: fernapi/fern-ruby-sdk-v2
-imageAliases: [fernapi/fern-ruby-sdk]
+image: fernapi/fern-ruby-sdk
+imageAliases: [fernapi/fern-ruby-sdk-v2]
 changelogLocation: ../../generators/ruby-v2/sdk/versions.yml
 
 buildScripts:
@@ -35,7 +35,9 @@ publish:
     - pnpm turbo run dist:cli --filter @fern-api/ruby-sdk
   docker:
     file: ./generators/ruby-v2/sdk/Dockerfile
-    image: fernapi/fern-ruby-sdk-v2
+    image: fernapi/fern-ruby-sdk
+    aliases:
+      - fernapi/fern-ruby-sdk-v2
     context: .
   sentry:
     name: fern-ruby-sdk-v2
