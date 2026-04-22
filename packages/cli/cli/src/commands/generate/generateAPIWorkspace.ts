@@ -8,7 +8,13 @@ import {
 import { ContainerRunner } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
-import { AutomationRunOptions, runRemoteGenerationForAPIWorkspace } from "@fern-api/remote-workspace-runner";
+import {
+    AutomationRunOptions,
+    findGeneratorLineNumber,
+    GeneratorOccurrenceTracker,
+    getOutputRepoUrl,
+    runRemoteGenerationForAPIWorkspace
+} from "@fern-api/remote-workspace-runner";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
@@ -106,6 +112,16 @@ export async function generateWorkspace({
         return context.failAndThrow("Please run fern login", undefined, { code: CliError.Code.AuthError });
     }
 
+    // One tracker per workspace so duplicate generator names in the same generators.yml get
+    // distinct occurrence indices. We stamp every generator with its declaration-order index
+    // here so later `lookup` calls return the correct index regardless of whether the skip
+    // pass or the run pass consumes it first.
+    const occurrenceTracker = new GeneratorOccurrenceTracker();
+    for (const group of workspace.generatorsConfiguration.groups) {
+        occurrenceTracker.recordOccurrences(group.generators);
+    }
+    const generatorsYmlAbsolutePath = workspace.generatorsConfiguration.absolutePathToConfiguration;
+
     // Resolve each group to its runnable state *before* opening the interactive subtask, so
     // config errors (missing group, bad lfs, custom images, reject-opted-out) still abort the
     // whole run rather than being swallowed as a "this subtask failed" signal. The per-group
@@ -120,7 +136,9 @@ export async function generateWorkspace({
             lfsOverride,
             context,
             useLocalDocker,
-            token
+            token,
+            occurrenceTracker,
+            generatorsYmlAbsolutePath
         });
         return runnable != null ? [{ resolvedGroupName, group: runnable }] : [];
     });
@@ -172,7 +190,8 @@ export async function generateWorkspace({
                         requireEnvVars,
                         automationMode,
                         autoMerge,
-                        automation
+                        automation,
+                        occurrenceTracker
                     });
                 }
             })
@@ -196,7 +215,9 @@ function resolveRunnableGroup({
     lfsOverride,
     context,
     useLocalDocker,
-    token
+    token,
+    occurrenceTracker,
+    generatorsYmlAbsolutePath
 }: {
     resolvedGroupName: string;
     workspace: AbstractAPIWorkspace<unknown>;
@@ -207,6 +228,8 @@ function resolveRunnableGroup({
     context: TaskContext;
     useLocalDocker: boolean;
     token: FernToken | undefined;
+    occurrenceTracker: GeneratorOccurrenceTracker;
+    generatorsYmlAbsolutePath: AbsoluteFilePath;
 }): generatorsYml.GeneratorGroup | null {
     let group = workspace.generatorsConfiguration?.groups.find(
         (otherGroup) => otherGroup.groupName === resolvedGroupName
@@ -247,8 +270,26 @@ function resolveRunnableGroup({
                 { code: CliError.Code.ConfigError }
             );
         }
+        // Record every opted-out generator (both on the happy path and when nothing is left
+        // to run) so the automation step summary shows a row for it. The tracker was primed
+        // in declaration order at the top of the workspace, so lookup resolves to the correct
+        // line regardless of whether a sibling ran or was skipped.
+        for (const skipped of selection.skipped) {
+            automation.recorder.recordSkipped({
+                apiName: workspace.workspaceName,
+                groupName: resolvedGroupName,
+                generatorName: skipped.generator.name,
+                reason: skipped.reason,
+                outputRepoUrl: getOutputRepoUrl(skipped.generator),
+                generatorsYmlAbsolutePath,
+                generatorsYmlLineNumber: findGeneratorLineNumber(
+                    generatorsYmlAbsolutePath,
+                    skipped.generator.name,
+                    occurrenceTracker.lookup(skipped.generator)
+                )
+            });
+        }
         if (selection.type === "empty-after-skip") {
-            // Nothing to do in this group — leave silently; the recorder has no rows for it.
             return null;
         }
         filteredGenerators = selection.generators;

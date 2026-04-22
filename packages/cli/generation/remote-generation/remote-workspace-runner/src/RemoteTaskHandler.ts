@@ -15,6 +15,8 @@ import terminalLink from "terminal-link";
 import tmp from "tmp-promise";
 import yauzl from "yauzl";
 
+import { extractPublishTarget, PublishTarget } from "./publishTarget.js";
+
 export declare namespace RemoteTaskHandler {
     export interface Init {
         job: FernFiddle.remoteGen.CreateJobResponse;
@@ -27,6 +29,23 @@ export declare namespace RemoteTaskHandler {
         createdSnippets: boolean;
         snippetsS3PreSignedReadUrl: string | undefined;
         actualVersion: string | undefined;
+        /**
+         * Populated by Fiddle when it opens a pull request for the generated SDK. The field is
+         * stubbed until Fiddle adds it to {@link FernFiddle.remoteGen.FinishedTaskStatus}; until
+         * then it's always undefined and automation-mode callers render the row without a PR link.
+         */
+        pullRequestUrl: string | undefined;
+        /**
+         * True when Fiddle determined the generated output is identical to the current SDK repo
+         * contents. Stubbed pending Fiddle exposing the flag on FinishedTaskStatus.
+         */
+        noChangesDetected: boolean | undefined;
+        /**
+         * Where the SDK was published, derived from `remoteTask.packages[0].coordinate`. Undefined
+         * for GitHub-only output modes (PR / push / commit-and-release without a registry) and for
+         * local-file-system downloads.
+         */
+        publishTarget: PublishTarget | undefined;
     }
 }
 
@@ -72,6 +91,13 @@ export class RemoteTaskHandler {
                 crates: (cratesPackage) => cratesPackage.version,
                 _other: () => undefined
             });
+        }
+
+        // Structured publish target for the automation step summary. Computed lazily — only the
+        // first coordinate we see wins, so if Fiddle reports additional coordinates in later
+        // polls (rare, but possible with multi-registry publishes) we keep the primary one.
+        if (this.#publishTarget == null) {
+            this.#publishTarget = extractPublishTarget(remoteTask.packages);
         }
 
         if (this.absolutePathToPreview == null) {
@@ -146,7 +172,11 @@ export class RemoteTaskHandler {
             ? {
                   createdSnippets: this.#createdSnippets,
                   snippetsS3PreSignedReadUrl: this.#snippetsS3PreSignedReadUrl,
-                  actualVersion: this.#actualVersion
+                  actualVersion: this.#actualVersion,
+                  // Stubs: Fiddle will populate these once the FinishedTaskStatus schema is extended.
+                  pullRequestUrl: undefined,
+                  noChangesDetected: undefined,
+                  publishTarget: this.#publishTarget
               }
             : undefined;
     }
@@ -175,6 +205,11 @@ export class RemoteTaskHandler {
     #actualVersion: string | undefined = undefined;
     public get actualVersion(): string | undefined {
         return this.#actualVersion;
+    }
+
+    #publishTarget: PublishTarget | undefined = undefined;
+    public get publishTarget(): PublishTarget | undefined {
+        return this.#publishTarget;
     }
 }
 

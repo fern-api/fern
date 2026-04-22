@@ -1,16 +1,32 @@
-import type { RemoteGeneratorRunRecorder } from "@fern-api/remote-workspace-runner";
+import type { GeneratorSkipReason, PublishTarget, RemoteGeneratorRunRecorder } from "@fern-api/remote-workspace-runner";
 
-export type GeneratorStatus = "success" | "failed" | "skipped_no_diff";
+export type { GeneratorSkipReason, PublishTarget };
+
+export type GeneratorStatus = "success" | "failed" | "skipped";
 
 export interface GeneratorRunResult {
     apiName: string | undefined;
     groupName: string;
     generatorName: string;
     status: GeneratorStatus;
+    /** Only present when status === "skipped". */
+    skipReason: GeneratorSkipReason | null;
     version: string | null;
     pullRequestUrl: string | null;
+    /** Whether Fiddle reported zero diff against the SDK repo. Stub — always false until Fiddle surfaces it. */
+    noChangesDetected: boolean;
+    /** Where the SDK was published. Null for GitHub-only / local-filesystem targets. */
+    publishTarget: PublishTarget | null;
     errorMessage: string | null;
     durationMs: number;
+    /** `https://github.com/{owner}/{repo}` when the generator targets a GitHub repo. */
+    sdkRepoUrl: string | null;
+    /**
+     * URL to the exact line in generators.yml that declared this generator. Composed from
+     * GITHUB_SERVER_URL + GITHUB_REPOSITORY + GITHUB_REF_NAME + workspace-relative path + `#L{n}`.
+     * Null when any part is unresolvable (non-GH-Actions env, detached HEAD, etc.).
+     */
+    generatorsYmlUrl: string | null;
 }
 
 export interface GeneratorRunCounts {
@@ -32,12 +48,40 @@ export function countResults(results: readonly GeneratorRunResult[]): GeneratorR
             case "failed":
                 failed++;
                 break;
-            case "skipped_no_diff":
+            case "skipped":
                 skipped++;
                 break;
         }
     }
     return { succeeded, failed, skipped };
+}
+
+/**
+ * Composes the blob URL for a `generators.yml` line using GitHub Actions env vars. Returns null
+ * when any required variable is missing or when the absolute path falls outside the workspace
+ * checkout (the subtraction below would produce an absolute-looking relative path).
+ *
+ * Exported only for testing — callers inside this module use it implicitly via the record methods.
+ */
+export function buildGeneratorsYmlUrl(absolutePath: string | undefined, lineNumber: number | undefined): string | null {
+    if (absolutePath == null) {
+        return null;
+    }
+    const serverUrl = process.env.GITHUB_SERVER_URL;
+    const repository = process.env.GITHUB_REPOSITORY;
+    const refName = process.env.GITHUB_REF_NAME;
+    const workspace = process.env.GITHUB_WORKSPACE;
+    if (serverUrl == null || repository == null || refName == null || workspace == null) {
+        return null;
+    }
+    // GITHUB_WORKSPACE is the checkout root. `absolutePath` is guaranteed absolute.
+    const workspaceWithSlash = workspace.endsWith("/") ? workspace : `${workspace}/`;
+    if (!absolutePath.startsWith(workspaceWithSlash)) {
+        return null;
+    }
+    const relativePath = absolutePath.slice(workspaceWithSlash.length);
+    const anchor = lineNumber != null ? `#L${lineNumber}` : "";
+    return `${serverUrl}/${repository}/blob/${refName}/${relativePath}${anchor}`;
 }
 
 export class GeneratorRunCollector implements RemoteGeneratorRunRecorder {
@@ -49,16 +93,27 @@ export class GeneratorRunCollector implements RemoteGeneratorRunRecorder {
         generatorName: string;
         version: string | null;
         durationMs: number;
+        pullRequestUrl: string | undefined;
+        noChangesDetected: boolean | undefined;
+        publishTarget: PublishTarget | undefined;
+        outputRepoUrl: string | undefined;
+        generatorsYmlAbsolutePath: string | undefined;
+        generatorsYmlLineNumber: number | undefined;
     }): void {
         this.#results.push({
             apiName: args.apiName,
             groupName: args.groupName,
             generatorName: args.generatorName,
             status: "success",
+            skipReason: null,
             version: args.version,
-            pullRequestUrl: null,
+            pullRequestUrl: args.pullRequestUrl ?? null,
+            noChangesDetected: args.noChangesDetected ?? false,
+            publishTarget: args.publishTarget ?? null,
             errorMessage: null,
-            durationMs: args.durationMs
+            durationMs: args.durationMs,
+            sdkRepoUrl: args.outputRepoUrl ?? null,
+            generatorsYmlUrl: buildGeneratorsYmlUrl(args.generatorsYmlAbsolutePath, args.generatorsYmlLineNumber)
         });
     }
 
@@ -68,16 +123,50 @@ export class GeneratorRunCollector implements RemoteGeneratorRunRecorder {
         generatorName: string;
         errorMessage: string;
         durationMs: number;
+        outputRepoUrl: string | undefined;
+        generatorsYmlAbsolutePath: string | undefined;
+        generatorsYmlLineNumber: number | undefined;
     }): void {
         this.#results.push({
             apiName: args.apiName,
             groupName: args.groupName,
             generatorName: args.generatorName,
             status: "failed",
+            skipReason: null,
             version: null,
             pullRequestUrl: null,
+            noChangesDetected: false,
+            publishTarget: null,
             errorMessage: args.errorMessage,
-            durationMs: args.durationMs
+            durationMs: args.durationMs,
+            sdkRepoUrl: args.outputRepoUrl ?? null,
+            generatorsYmlUrl: buildGeneratorsYmlUrl(args.generatorsYmlAbsolutePath, args.generatorsYmlLineNumber)
+        });
+    }
+
+    public recordSkipped(args: {
+        apiName: string | undefined;
+        groupName: string;
+        generatorName: string;
+        reason: GeneratorSkipReason;
+        outputRepoUrl: string | undefined;
+        generatorsYmlAbsolutePath: string | undefined;
+        generatorsYmlLineNumber: number | undefined;
+    }): void {
+        this.#results.push({
+            apiName: args.apiName,
+            groupName: args.groupName,
+            generatorName: args.generatorName,
+            status: "skipped",
+            skipReason: args.reason,
+            version: null,
+            pullRequestUrl: null,
+            noChangesDetected: args.reason === "no_diff",
+            publishTarget: null,
+            errorMessage: null,
+            durationMs: 0,
+            sdkRepoUrl: args.outputRepoUrl ?? null,
+            generatorsYmlUrl: buildGeneratorsYmlUrl(args.generatorsYmlAbsolutePath, args.generatorsYmlLineNumber)
         });
     }
 
