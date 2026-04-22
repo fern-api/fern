@@ -297,6 +297,48 @@ export class ClonedRepository {
         return result.trim();
     }
 
+    public async getHeadCommitMessage(): Promise<string> {
+        await this.git.cwd(this.clonePath);
+        const result = await this.git.raw(["log", "-1", "--format=%B", "HEAD"]);
+        // git log appends a trailing newline; strip exactly one to preserve any intentional blank lines.
+        return result.replace(/\n$/, "");
+    }
+
+    public async getHeadParents(): Promise<string[]> {
+        await this.git.cwd(this.clonePath);
+        // `git rev-list --parents -n 1 HEAD` prints "<commit> <parent1> <parent2> ..." (empty parents for root commit).
+        const result = await this.git.raw(["rev-list", "--parents", "-n", "1", "HEAD"]);
+        const parts = result.trim().split(/\s+/);
+        return parts.slice(1);
+    }
+
+    /**
+     * Pushes a specific object (commit SHA) to a remote ref.
+     * Used to upload tree and blob objects to the remote without moving a branch.
+     */
+    public async pushObjectToRef(localSha: string, remoteRef: string): Promise<void> {
+        await this.git.cwd(this.clonePath);
+        await this.git.raw(["push", "origin", `${localSha}:${remoteRef}`]);
+    }
+
+    /**
+     * Resets the current branch HEAD to the given SHA. After fetching a newly-created remote
+     * signed commit, use this to align the local branch so subsequent operations (tag push,
+     * getHeadSha(), etc.) see the signed SHA.
+     */
+    public async resetHardToSha(sha: string): Promise<void> {
+        await this.git.cwd(this.clonePath);
+        await this.git.raw(["reset", "--hard", sha]);
+    }
+
+    /**
+     * Rebases the current branch onto the given remote branch (`git pull --rebase origin <branch>`).
+     */
+    public async pullWithRebase(branch: string): Promise<void> {
+        await this.git.cwd(this.clonePath);
+        await this.git.raw(["pull", "origin", branch, "--rebase"]);
+    }
+
     public async getCommitTreeHash(commitSha: string): Promise<string> {
         await this.git.cwd(this.clonePath);
         const result = await this.git.raw(["rev-parse", `${commitSha}^{tree}`]);
