@@ -1,3 +1,4 @@
+import { GeneratorError } from "@fern-api/base-generator";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
@@ -72,11 +73,11 @@ export class SubPackageClientInterfaceGenerator extends FileGenerator<CSharpFile
     private generateEndpointSignatures(interface_: ast.Interface): void {
         const service = this.service;
         if (!service) {
-            throw new Error("Internal error; Service is not defined");
+            throw GeneratorError.internalError("Internal error; Service is not defined");
         }
         const serviceId = this.serviceId;
         if (!serviceId) {
-            throw new Error("Internal error; ServiceId is not defined");
+            throw GeneratorError.internalError("Internal error; ServiceId is not defined");
         }
         const grpcClientInfo = this.context.getGrpcClientInfoForServiceId(serviceId);
         for (const endpoint of service.endpoints) {

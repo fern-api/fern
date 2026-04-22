@@ -2,7 +2,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { isRawObjectDefinition, RawSchemas } from "@fern-api/fern-definition-schema";
 import { ObjectProperty } from "@fern-api/ir-sdk";
 import { getOriginalName } from "@fern-api/ir-utils";
-
+import { CliError } from "@fern-api/task-context";
 import { FernFileContext } from "../../FernFileContext.js";
 import { ResolvedType } from "../../resolvers/ResolvedType.js";
 import { TypeResolver } from "../../resolvers/TypeResolver.js";
@@ -46,7 +46,10 @@ export function getObjectPropertyFromResolvedType({
         default:
             assertNever(resolvedType);
     }
-    throw new Error("Internal error; response must be an object in order to return a property as a response");
+    throw new CliError({
+        message: "Internal error; response must be an object in order to return a property as a response",
+        code: CliError.Code.InternalError
+    });
 }
 
 export function getObjectPropertyFromObjectSchema({
@@ -63,7 +66,10 @@ export function getObjectPropertyFromObjectSchema({
     const properties = getAllPropertiesForRawObjectSchema(objectSchema, file, typeResolver);
     const objectProperty = properties[property];
     if (objectProperty == null) {
-        throw new Error(`Object does not have a property named ${property}.`);
+        throw new CliError({
+            message: `Object does not have a property named ${property}.`,
+            code: CliError.Code.ReferenceError
+        });
     }
     return objectProperty;
 }
@@ -110,5 +116,8 @@ function getAllPropertiesForExtendedType(
         return getAllPropertiesForRawObjectSchema(resolvedType.declaration, file, typeResolver);
     }
     // This should be unreachable; extended types must be named objects.
-    throw new Error(`Extended type ${extendedType} must be another named type`);
+    throw new CliError({
+        message: `Extended type ${extendedType} must be another named type`,
+        code: CliError.Code.InternalError
+    });
 }

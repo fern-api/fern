@@ -1,4 +1,4 @@
-import { File, GeneratorNotificationService } from "@fern-api/base-generator";
+import { File, GeneratorError, GeneratorNotificationService } from "@fern-api/base-generator";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbstractCsharpGeneratorCli, CsharpConfigSchema, TestFileGenerator } from "@fern-api/csharp-base";
 import {
@@ -70,13 +70,15 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
             baseApiExceptionClassName &&
             baseExceptionClassName === baseApiExceptionClassName
         ) {
-            throw new Error("The 'base-api-exception-class-name' and 'base-exception-class-name' cannot be the same.");
+            throw GeneratorError.internalError(
+                "The 'base-api-exception-class-name' and 'base-exception-class-name' cannot be the same."
+            );
         }
         return customConfig;
     }
 
     protected async publishPackage(context: SdkGeneratorContext): Promise<void> {
-        throw new Error("Method not implemented.");
+        throw GeneratorError.internalError("Method not implemented.");
     }
 
     protected async writeForGithub(context: SdkGeneratorContext): Promise<void> {
@@ -292,13 +294,13 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
                     endpointSnippets: snippets.endpoints
                 });
             } catch (e) {
-                throw new Error(`Failed to generate README.md: ${extractErrorMessage(e)}`);
+                throw GeneratorError.internalError(`Failed to generate README.md: ${extractErrorMessage(e)}`);
             }
 
             try {
                 await this.generateReference({ context });
             } catch (e) {
-                throw new Error(`Failed to generate reference.md: ${extractErrorMessage(e)}`);
+                throw GeneratorError.internalError(`Failed to generate reference.md: ${extractErrorMessage(e)}`);
             }
         }
         context.logger.debug(`[TIMING] code generation took ${Date.now() - generateStartTime}ms`);

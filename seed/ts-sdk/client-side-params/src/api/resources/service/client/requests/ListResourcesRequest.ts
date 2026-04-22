@@ -18,11 +18,11 @@ export interface ListResourcesRequest {
     /** Number of items per page */
     per_page: number;
     /** Sort field */
-    sort: string;
+    sort?: string;
     /** Sort order (asc or desc) */
-    order: string;
+    order?: string;
     /** Whether to include total count */
-    include_totals: boolean;
+    include_totals?: boolean;
     /** Comma-separated list of fields to include */
     fields?: string;
     /** Search query */

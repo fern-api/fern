@@ -25,7 +25,8 @@ import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { getSnakeCaseUnsafe } from "@fern-api/ir-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
+
 import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
@@ -246,7 +247,7 @@ export class DocsDefinitionResolver {
     private _parsedDocsConfig: WithoutQuestionMarks<docsYml.ParsedDocsConfiguration> | undefined;
     private get parsedDocsConfig(): WithoutQuestionMarks<docsYml.ParsedDocsConfiguration> {
         if (this._parsedDocsConfig == null) {
-            throw new Error("parsedDocsConfig is not set");
+            throw new CliError({ message: "parsedDocsConfig is not set", code: CliError.Code.InternalError });
         }
         return this._parsedDocsConfig;
     }
@@ -912,7 +913,7 @@ export class DocsDefinitionResolver {
         const errorMessage = apiSection.apiName
             ? `Failed to load API Definition '${apiSection.apiName}' referenced in docs.\nA valid API configuration was not found at the path: fern/apis/${apiSection.apiName}.\nLearn more about project structure:\nhttps://buildwithfern.com/learn/docs/getting-started/project-structure#api-definitions`
             : "Failed to load API Definition referenced in docs.\nLearn more about project structure:\nhttps://buildwithfern.com/learn/docs/getting-started/project-structure#api-definitions";
-        throw new Error(errorMessage);
+        throw new CliError({ message: errorMessage, code: CliError.Code.ConfigError });
     }
 
     private getOpenApiWorkspaceForApiSection(apiSection: docsYml.DocsNavigationItem.ApiSection): OSSWorkspace {
@@ -927,7 +928,7 @@ export class DocsDefinitionResolver {
         const errorMessage = apiSection.apiName
             ? `Failed to load API Definition '${apiSection.apiName}' referenced in docs.\nA valid API configuration was not found at the path: fern/apis/${apiSection.apiName}.\nLearn more about project structure:\nhttps://buildwithfern.com/learn/docs/getting-started/project-structure#api-definitions`
             : "Failed to load API Definition referenced in docs.\nLearn more about project structure:\nhttps://buildwithfern.com/learn/docs/getting-started/project-structure#api-definitions";
-        throw new Error(errorMessage);
+        throw new CliError({ message: errorMessage, code: CliError.Code.ConfigError });
     }
 
     private async toRootNode(): Promise<FernNavigation.V1.RootNode> {
@@ -1035,9 +1036,10 @@ export class DocsDefinitionResolver {
 
         const defaultVersion = versioned.versions[0];
         if (defaultVersion?.hidden === true) {
-            throw new Error(
-                `The default version "${defaultVersion.version}" cannot be hidden. Please set a non-hidden version as the first version in your versions list, or remove the hidden flag from the default version.`
-            );
+            throw new CliError({
+                message: `The default version "${defaultVersion.version}" cannot be hidden. Please set a non-hidden version as the first version in your versions list, or remove the hidden flag from the default version.`,
+                code: CliError.Code.ConfigError
+            });
         }
 
         // Process versions in batches to reduce memory usage for customers with many API versions.
@@ -1469,7 +1471,11 @@ export class DocsDefinitionResolver {
                 ir,
                 {
                     onError: (e) =>
-                        this.taskContext.failAndThrow(`Error substituting environment variables in API spec: ${e}`)
+                        this.taskContext.failAndThrow(
+                            `Error substituting environment variables in API spec: ${e}`,
+                            undefined,
+                            { code: CliError.Code.EnvironmentError }
+                        )
                 },
                 { substituteAsEmpty: false }
             );
@@ -2096,7 +2102,9 @@ export class DocsDefinitionResolver {
         }
         const fileId = this.collectedFileIds.get(filepath);
         if (fileId == null) {
-            return this.taskContext.failAndThrow("Failed to locate file after uploading: " + filepath);
+            return this.taskContext.failAndThrow("Failed to locate file after uploading: " + filepath, undefined, {
+                code: CliError.Code.InternalError
+            });
         }
         return DocsV1Write.FileId(fileId);
     }
@@ -2282,7 +2290,10 @@ export class DocsDefinitionResolver {
                 value: this.getFileId(value)
             }),
             url: ({ value }) => ({ type: "url", value: DocsV1Write.Url(value) }),
-            _other: () => this.taskContext.failAndThrow("Invalid metadata configuration")
+            _other: () =>
+                this.taskContext.failAndThrow("Invalid metadata configuration", undefined, {
+                    code: CliError.Code.ConfigError
+                })
         });
     }
 

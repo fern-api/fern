@@ -6,7 +6,7 @@ import { ts } from "ts-morph";
 import { GeneratedHeader } from "../../GeneratedHeader.js";
 import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl.js";
 import { RequestParameter } from "../../request-parameter/RequestParameter.js";
-import { getLiteralValueForHeader } from "./isLiteralHeader.js";
+import { getClientDefaultValue, getLiteralValueForHeader } from "./isLiteralHeader.js";
 import { REQUEST_OPTIONS_PARAMETER_NAME } from "./requestOptionsParameter.js";
 
 export const HEADERS_VAR_NAME = "_headers";
@@ -204,6 +204,26 @@ function getValueExpressionForHeader({
                 { includeNullCheckIfOptional: true }
             );
         }
+        // If clientDefault is set, add a fallback: value ?? "clientDefault"
+        // Skip when the type is nullable — explicit null means "don't send the header",
+        // and ?? would replace null with the clientDefault, preventing intentional omission.
+        const clientDefaultVal = getClientDefaultValue(header.clientDefault);
+        if (clientDefaultVal != null && !typeContainsNullable(header.valueType, context)) {
+            valueExpression = ts.factory.createBinaryExpression(
+                valueExpression,
+                ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                typeof clientDefaultVal === "boolean"
+                    ? ts.factory.createCallExpression(
+                          ts.factory.createPropertyAccessExpression(
+                              clientDefaultVal ? ts.factory.createTrue() : ts.factory.createFalse(),
+                              ts.factory.createIdentifier("toString")
+                          ),
+                          undefined,
+                          []
+                      )
+                    : ts.factory.createStringLiteral(clientDefaultVal.toString())
+            );
+        }
         // If the header type is nullable, convert null to undefined using ?? undefined.
         // HTTP headers don't have a "null" concept — they're either present with a value
         // or absent. This ensures null values are treated as "don't send the header".
@@ -317,18 +337,52 @@ function getOverridableRootHeaders({
                     );
 
                     // Add nullish coalescing with this._options.{header}
+                    let fallbackExpr: ts.Expression = ts.factory.createPropertyAccessChain(
+                        ts.factory.createPropertyAccessChain(
+                            ts.factory.createThis(),
+                            undefined,
+                            GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER
+                        ),
+                        ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                        ts.factory.createIdentifier(getOptionKeyForHeader(header, context))
+                    );
+
+                    // If clientDefault is set, chain it as final fallback:
+                    // requestOptions?.header ?? this._options?.header ?? "clientDefault"
+                    // Skip when the type is nullable — explicit null means "don't send the header".
+                    const clientDefaultVal = getClientDefaultValue(header.clientDefault);
+                    if (clientDefaultVal != null && !typeContainsNullable(header.valueType, context)) {
+                        if (typeof clientDefaultVal === "boolean") {
+                            const booleanLiteral = clientDefaultVal
+                                ? ts.factory.createTrue()
+                                : ts.factory.createFalse();
+                            fallbackExpr = ts.factory.createCallExpression(
+                                ts.factory.createPropertyAccessExpression(
+                                    ts.factory.createParenthesizedExpression(
+                                        ts.factory.createBinaryExpression(
+                                            fallbackExpr,
+                                            ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                                            booleanLiteral
+                                        )
+                                    ),
+                                    ts.factory.createIdentifier("toString")
+                                ),
+                                undefined,
+                                []
+                            );
+                        } else {
+                            fallbackExpr = ts.factory.createBinaryExpression(
+                                fallbackExpr,
+                                ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                                ts.factory.createStringLiteral(clientDefaultVal.toString())
+                            );
+                        }
+                    }
+
                     value = ts.factory.createBinaryExpression(
                         originalExpr,
                         ts.SyntaxKind.QuestionQuestionToken,
-                        ts.factory.createPropertyAccessChain(
-                            ts.factory.createPropertyAccessChain(
-                                ts.factory.createThis(),
-                                undefined,
-                                GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER
-                            ),
-                            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                            ts.factory.createIdentifier(getOptionKeyForHeader(header, context))
-                        )
+                        fallbackExpr
                     );
                 }
 
@@ -366,7 +420,7 @@ function getOptionKeyForHeader(header: FernIr.HttpHeader, context: FileContext):
     return context.case.camelUnsafe(header.name);
 }
 
-function typeContainsNullable(type: FernIr.TypeReference, context: FileContext): boolean {
+export function typeContainsNullable(type: FernIr.TypeReference, context: FileContext): boolean {
     switch (type.type) {
         case "container":
             switch (type.container.type) {

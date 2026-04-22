@@ -1,4 +1,4 @@
-import { AbstractReadmeSnippetBuilder, getWireValue } from "@fern-api/base-generator";
+import { AbstractReadmeSnippetBuilder, GeneratorError, getWireValue } from "@fern-api/base-generator";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -368,7 +368,9 @@ ${enumName} ${enumCamelCaseName}FromString = (${enumName})"${firstEnumValueWire}
         const snippets: Record<EndpointId, string> = {};
         for (const endpointSnippet of Object.values(endpointSnippets)) {
             if (endpointSnippet.id.identifierOverride == null) {
-                throw new Error("Internal error; snippets must define the endpoint id to generate README.md");
+                throw GeneratorError.internalError(
+                    "Internal error; snippets must define the endpoint id to generate README.md"
+                );
             }
             snippets[endpointSnippet.id.identifierOverride] = this.getEndpointSnippetString(endpointSnippet);
         }
@@ -378,7 +380,7 @@ ${enumName} ${enumCamelCaseName}FromString = (${enumName})"${firstEnumValueWire}
     private getSnippetForEndpointId(endpointId: EndpointId): string {
         const snippet = this.snippets[endpointId];
         if (snippet == null) {
-            throw new Error(`Internal error; missing snippet for endpoint ${endpointId}`);
+            throw GeneratorError.internalError(`Internal error; missing snippet for endpoint ${endpointId}`);
         }
         return snippet;
     }
@@ -396,7 +398,7 @@ ${enumName} ${enumCamelCaseName}FromString = (${enumName})"${firstEnumValueWire}
         return endpointIds.map((endpointId) => {
             const endpoint = this.endpoints[endpointId];
             if (endpoint == null) {
-                throw new Error(`Internal error; missing endpoint ${endpointId}`);
+                throw GeneratorError.internalError(`Internal error; missing endpoint ${endpointId}`);
             }
             return endpoint;
         });
@@ -404,7 +406,9 @@ ${enumName} ${enumCamelCaseName}FromString = (${enumName})"${firstEnumValueWire}
 
     private getEndpointSnippetString(endpoint: FernGeneratorExec.Endpoint): string {
         if (endpoint.snippet.type !== "csharp") {
-            throw new Error(`Internal error; expected csharp snippet but got: ${endpoint.snippet.type}`);
+            throw GeneratorError.internalError(
+                `Internal error; expected csharp snippet but got: ${endpoint.snippet.type}`
+            );
         }
         return endpoint.snippet.client;
     }

@@ -9,12 +9,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.validation.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import org.jetbrains.annotations.NotNull;
+import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GetRequest.Builder.class)
@@ -23,11 +24,11 @@ public final class GetRequest {
 
     private final int even;
 
-    private final String name;
+    private final Optional<String> name;
 
     private final Map<String, Object> additionalProperties;
 
-    private GetRequest(double decimal, int even, String name, Map<String, Object> additionalProperties) {
+    private GetRequest(double decimal, int even, Optional<String> name, Map<String, Object> additionalProperties) {
         this.decimal = decimal;
         this.even = even;
         this.name = name;
@@ -45,7 +46,7 @@ public final class GetRequest {
     }
 
     @JsonIgnore
-    public String getName() {
+    public Optional<String> getName() {
         return name;
     }
 
@@ -85,11 +86,7 @@ public final class GetRequest {
     }
 
     public interface EvenStage {
-        NameStage even(int even);
-    }
-
-    public interface NameStage {
-        _FinalStage name(@NotNull String name);
+        _FinalStage even(int even);
     }
 
     public interface _FinalStage {
@@ -98,15 +95,19 @@ public final class GetRequest {
         _FinalStage additionalProperty(String key, Object value);
 
         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
+        _FinalStage name(Optional<String> name);
+
+        _FinalStage name(String name);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements DecimalStage, EvenStage, NameStage, _FinalStage {
+    public static final class Builder implements DecimalStage, EvenStage, _FinalStage {
         private double decimal;
 
         private int even;
 
-        private String name;
+        private Optional<String> name = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -130,15 +131,21 @@ public final class GetRequest {
 
         @java.lang.Override
         @JsonSetter("even")
-        public NameStage even(int even) {
+        public _FinalStage even(int even) {
             this.even = even;
             return this;
         }
 
         @java.lang.Override
-        @JsonSetter("name")
-        public _FinalStage name(@NotNull String name) {
-            this.name = Objects.requireNonNull(name, "name must not be null");
+        public _FinalStage name(String name) {
+            this.name = Optional.ofNullable(name);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "name", nulls = Nulls.SKIP)
+        public _FinalStage name(Optional<String> name) {
+            this.name = name;
             return this;
         }
 

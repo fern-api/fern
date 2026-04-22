@@ -1,4 +1,4 @@
-import { File, GeneratorNotificationService } from "@fern-api/base-generator";
+import { File, GeneratorError, GeneratorNotificationService } from "@fern-api/base-generator";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractPhpGeneratorCli } from "@fern-api/php-base";
@@ -45,7 +45,7 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
     }
 
     protected async publishPackage(context: SdkGeneratorContext): Promise<void> {
-        throw new Error("Method not implemented.");
+        throw GeneratorError.internalError("Method not implemented.");
     }
 
     protected async writeForGithub(context: SdkGeneratorContext): Promise<void> {
@@ -80,14 +80,14 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
                     endpointSnippets: snippets
                 });
             } catch (e) {
-                throw new Error(`Failed to generate README.md: ${extractErrorMessage(e)}`);
+                throw GeneratorError.internalError(`Failed to generate README.md: ${extractErrorMessage(e)}`);
             }
 
             try {
                 await context.snippetGenerator.populateSnippetsCache();
                 await this.generateReference({ context });
             } catch (e) {
-                throw new Error(`Failed to generate reference.md: ${extractErrorMessage(e)}`);
+                throw GeneratorError.internalError(`Failed to generate reference.md: ${extractErrorMessage(e)}`);
             }
         }
 
@@ -249,7 +249,7 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
         const dynamicIr = context.ir.dynamic;
 
         if (!dynamicIr) {
-            throw new Error("Cannot generate dynamic snippets without dynamic IR");
+            throw GeneratorError.internalError("Cannot generate dynamic snippets without dynamic IR");
         }
 
         const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({

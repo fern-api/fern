@@ -1,4 +1,4 @@
-import { getOriginalName } from "@fern-api/base-generator";
+import { GeneratorError, getOriginalName } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { ast, is, Writer } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -668,7 +668,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     private writeErrorCase(error: ResponseError, writer: Writer) {
         const fullError = this.context.ir.errors[error.error.errorId];
         if (fullError == null) {
-            throw new Error(`Unexpected no error found for error id: ${error.error.errorId}`);
+            throw GeneratorError.internalError(`Unexpected no error found for error id: ${error.error.errorId}`);
         }
         writer.writeLine(`case ${fullError.statusCode}:`);
         writer.indent();
@@ -1125,7 +1125,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             // because the pager lambdas work with the actual response data, not the task wrapper
             const unpagedEndpointResponseType = this.getBaseResponseType(endpoint);
             if (!unpagedEndpointResponseType) {
-                throw new Error("Internal error; a response type is required for pagination endpoints");
+                throw GeneratorError.internalError(
+                    "Internal error; a response type is required for pagination endpoints"
+                );
             }
 
             switch (endpoint.pagination.type) {
@@ -1168,7 +1170,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     break;
                 case "uri":
                 case "path":
-                    throw new Error(
+                    throw GeneratorError.internalError(
                         `'${endpoint.pagination.type}' pagination is not supported in C# and should have been skipped.`
                     );
                 default:
@@ -1211,7 +1213,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         serviceId: ServiceId;
     }) {
         if (!requestParameter) {
-            throw new Error("Request parameter is required for pagination");
+            throw GeneratorError.validationError("Request parameter is required for pagination");
         }
 
         if (requestParameter.type.isOptional) {
@@ -1360,7 +1362,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         serviceId: ServiceId;
     }) {
         if (!requestParameter) {
-            throw new Error("Request parameter is required for pagination");
+            throw GeneratorError.validationError("Request parameter is required for pagination");
         }
 
         writer.writeLine("if (request is not null)");
@@ -1471,7 +1473,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         // because the pager lambdas work with the actual response data, not the task wrapper
         const unpagedEndpointResponseType = this.getBaseResponseType(endpoint);
         if (!unpagedEndpointResponseType) {
-            throw new Error("Internal error; a response type is required for pagination endpoints");
+            throw GeneratorError.internalError("Internal error; a response type is required for pagination endpoints");
         }
 
         const queryParameterCodeBlock = endpointSignatureInfo.request?.getQueryParameterCodeBlock();

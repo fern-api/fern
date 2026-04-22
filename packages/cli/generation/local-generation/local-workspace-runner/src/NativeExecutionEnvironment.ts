@@ -1,6 +1,6 @@
 import { loggingExeca } from "@fern-api/logging-execa";
+import { CliError } from "@fern-api/task-context";
 import { copyFile, rm } from "fs/promises";
-
 import { ExecutionEnvironment } from "./ExecutionEnvironment.js";
 
 const LICENSE_MOUNT_PATH = "/tmp/LICENSE";
@@ -101,14 +101,20 @@ export class NativeExecutionEnvironment implements ExecutionEnvironment {
                     const args = parts.slice(1);
 
                     if (!program) {
-                        throw new Error(`Invalid command: ${processedCommand}`);
+                        throw new CliError({
+                            message: `Invalid command: ${processedCommand}`,
+                            code: CliError.Code.InternalError
+                        });
                     }
 
                     result = await loggingExeca(context.logger, program, args, execOptions);
                 }
 
                 if (result.failed) {
-                    throw new Error(`Command failed: ${processedCommand}\n${result.stderr || result.stdout}`);
+                    throw new CliError({
+                        message: `Command failed: ${processedCommand}\n${result.stderr || result.stdout}`,
+                        code: CliError.Code.InternalError
+                    });
                 }
             }
         } finally {

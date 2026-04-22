@@ -1,4 +1,4 @@
-import { File, GeneratorNotificationService, getWireValue } from "@fern-api/base-generator";
+import { File, GeneratorError, GeneratorNotificationService, getWireValue } from "@fern-api/base-generator";
 import { assertNever, entries, extractErrorMessage, noop } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractSwiftGeneratorCli, SourceTemplateFiles, TestTemplateFiles } from "@fern-api/swift-base";
@@ -55,7 +55,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     }
 
     protected async publishPackage(_context: SdkGeneratorContext): Promise<void> {
-        throw new Error("Method not implemented.");
+        throw GeneratorError.internalError("Method not implemented.");
     }
 
     protected async writeForGithub(context: SdkGeneratorContext): Promise<void> {
@@ -79,7 +79,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
         // and symbol registration between README and Reference generation.
         const dynamicIr = context.ir.dynamic;
         if (!dynamicIr) {
-            throw new Error("Cannot generate dynamic snippets without dynamic IR");
+            throw GeneratorError.internalError("Cannot generate dynamic snippets without dynamic IR");
         }
         const sharedSnippetsGenerator = new DynamicSnippetsGenerator({
             ir: convertIr(dynamicIr),
@@ -117,7 +117,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
             });
             context.project.addRootFiles(new File("README.md", RelativeFilePath.of(""), content));
         } catch (e) {
-            throw new Error(`Failed to generate README.md: ${extractErrorMessage(e)}`);
+            throw GeneratorError.internalError(`Failed to generate README.md: ${extractErrorMessage(e)}`);
         }
     }
 
@@ -130,7 +130,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
             const content = await context.generatorAgent.generateReference(builder);
             context.project.addRootFiles(new File("reference.md", RelativeFilePath.of(""), content));
         } catch (e) {
-            throw new Error(`Failed to generate reference.md: ${extractErrorMessage(e)}`);
+            throw GeneratorError.internalError(`Failed to generate reference.md: ${extractErrorMessage(e)}`);
         }
     }
 

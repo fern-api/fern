@@ -1,4 +1,4 @@
-import { CaseConverter } from "@fern-api/base-generator";
+import { CaseConverter, GeneratorError } from "@fern-api/base-generator";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FileGenerator, PhpFile } from "@fern-api/php-base";
 import { php } from "@fern-api/php-codegen";
@@ -32,7 +32,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
 
         const service = this.context.ir.services[this.tokenEndpointReference.serviceId];
         if (service == null) {
-            throw new Error(`Service with id ${this.tokenEndpointReference.serviceId} not found`);
+            throw GeneratorError.referenceError(`Service with id ${this.tokenEndpointReference.serviceId} not found`);
         }
         this.tokenEndpointHttpService = service;
 
@@ -40,7 +40,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
             (e) => e.id === this.tokenEndpointReference.endpointId
         );
         if (endpoint == null) {
-            throw new Error(`Endpoint with id ${this.tokenEndpointReference.endpointId} not found`);
+            throw GeneratorError.referenceError(`Endpoint with id ${this.tokenEndpointReference.endpointId} not found`);
         }
         this.tokenEndpoint = endpoint;
     }

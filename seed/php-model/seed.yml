@@ -12,6 +12,11 @@ publish:
     file: ./generators/php/model/Dockerfile
     image: fernapi/fern-php-model
     context: .
+  sentry:
+    name: fern-php-model
+    project: php-sdk
+    sourceMaps:
+      - dir: generators/php/model/dist
 test:
   docker:
     image: fernapi/fern-php-model:latest

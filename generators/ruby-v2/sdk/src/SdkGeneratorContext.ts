@@ -1,4 +1,4 @@
-import { GeneratorNotificationService, NameInput } from "@fern-api/base-generator";
+import { GeneratorError, GeneratorNotificationService, NameInput } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/path-utils";
 import { ClassReference, ruby } from "@fern-api/ruby-ast";
@@ -121,12 +121,12 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
             case "text":
                 return ruby.Type.string();
             case "bytes":
-                throw new Error("Returning bytes is not supported");
+                throw GeneratorError.internalError("Returning bytes is not supported");
             case "streaming":
             case "streamParameter": {
                 const streamingResponse = this.getStreamingResponse(httpEndpoint);
                 if (!streamingResponse) {
-                    throw new Error(
+                    throw GeneratorError.internalError(
                         `Unable to parse streaming response for endpoint ${this.caseConverter.camelSafe(httpEndpoint.name)}`
                     );
                 }
@@ -172,7 +172,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
     public getSubpackageOrThrow(subpackageId: FernIr.SubpackageId): FernIr.Subpackage {
         const subpackage = this.ir.subpackages[subpackageId];
         if (subpackage == null) {
-            throw new Error(`Subpackage with id ${subpackageId} not found`);
+            throw GeneratorError.internalError(`Subpackage with id ${subpackageId} not found`);
         }
         return subpackage;
     }
@@ -180,7 +180,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
     public getHttpServiceOrThrow(serviceId: FernIr.ServiceId): FernIr.HttpService {
         const service = this.ir.services[serviceId];
         if (service == null) {
-            throw new Error(`Service with id ${serviceId} not found`);
+            throw GeneratorError.internalError(`Service with id ${serviceId} not found`);
         }
         return service;
     }
@@ -191,7 +191,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
                 return subpackage;
             }
         }
-        throw new Error(`No subpackage found for service ${serviceId}`);
+        throw GeneratorError.internalError(`No subpackage found for service ${serviceId}`);
     }
 
     /**

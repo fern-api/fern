@@ -18,6 +18,7 @@ import {
 } from "@fern-api/ir-sdk";
 import { constructHttpPath, IdGenerator } from "@fern-api/ir-utils";
 import { SourceResolver } from "@fern-api/source-resolver";
+import { CliError } from "@fern-api/task-context";
 import urlJoin from "url-join";
 import { FernFileContext } from "../../FernFileContext.js";
 import { ErrorResolver } from "../../resolvers/ErrorResolver.js";
@@ -372,7 +373,7 @@ export function resolvePathParameterOrThrow({
         file
     });
     if (resolved == null) {
-        throw new Error("Cannot resolve path parameter");
+        throw new CliError({ message: "Cannot resolve path parameter", code: CliError.Code.InternalError });
     }
     return resolved;
 }

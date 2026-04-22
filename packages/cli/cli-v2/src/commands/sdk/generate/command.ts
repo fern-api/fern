@@ -198,7 +198,7 @@ export class GenerateCommand {
         forceLocal: boolean;
     }): Promise<void> {
         if (workspace.sdks == null) {
-            throw new Error("No SDKs configured");
+            throw new CliError({ message: "No SDKs configured", code: CliError.Code.InternalError });
         }
 
         // Check that the APIs referenced by each target are valid.
