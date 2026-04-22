@@ -12,7 +12,7 @@ import { checkOutputDirectory } from "./checkOutputDirectory.js";
 import { expandGroupFilter } from "./expandGroupFilter.js";
 import { filterGenerators } from "./filterGenerators.js";
 import { generateWorkspace } from "./generateAPIWorkspace.js";
-import { resolveGroupsOrFail } from "./resolveGroupsOrFail.js";
+import { resolveGroupsForWorkspace } from "./resolveGroupsForWorkspace.js";
 import { resolvePosthogCommandLabel } from "./resolvePosthogCommandLabel.js";
 import { shouldPreflightGenerator } from "./shouldPreflightGenerator.js";
 
@@ -206,19 +206,15 @@ async function resolveGroupsForAllWorkspaces({
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
-                if (
-                    workspace.generatorsConfiguration == null ||
-                    workspace.generatorsConfiguration.groups.length === 0
-                ) {
-                    return;
-                }
-                const resolved = resolveGroupsOrFail({
+                const resolved = resolveGroupsForWorkspace({
+                    workspace,
                     groupNames,
-                    generatorsConfiguration: workspace.generatorsConfiguration,
                     isAutomation: automation != null,
                     context
                 });
-                resolvedGroupNamesByWorkspace.set(workspace, resolved);
+                if (resolved != null) {
+                    resolvedGroupNamesByWorkspace.set(workspace, resolved);
+                }
             });
         })
     );

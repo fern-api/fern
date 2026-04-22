@@ -18,6 +18,7 @@ import { handleFailedWorkspaceParserResult, loadAPIWorkspace, loadDocsWorkspace 
 import chalk from "chalk";
 import { readdir } from "fs/promises";
 
+import { normalizeCommandLineApiWorkspace } from "./normalizeCommandLineApiWorkspace.js";
 import { Project } from "./Project.js";
 
 export declare namespace loadProject {
@@ -147,14 +148,7 @@ export async function loadApis({
     // strings narrows to the named workspace(s). Passing `--api` multiple times produces an
     // array (e.g. `fern generate --api foo --api bar`); callers that still take a single
     // `--api` pass a single string.
-    const commandLineApiWorkspaceNames: string[] | undefined =
-        commandLineApiWorkspace == null
-            ? undefined
-            : Array.isArray(commandLineApiWorkspace)
-              ? commandLineApiWorkspace.length === 0
-                  ? undefined
-                  : Array.from(new Set(commandLineApiWorkspace))
-              : [commandLineApiWorkspace];
+    const commandLineApiWorkspaceNames = normalizeCommandLineApiWorkspace(commandLineApiWorkspace);
 
     const apisDirectory = join(fernDirectory, RelativeFilePath.of(APIS_DIRECTORY));
     const apisDirectoryExists = await doesPathExist(apisDirectory);
