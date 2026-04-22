@@ -47,6 +47,7 @@
   "pathParameters": [],
   "publishConfig": undefined,
   "readmeConfig": undefined,
+  "roles": undefined,
   "rootPackage": {
     "docs": undefined,
     "errors": [],
@@ -909,6 +910,7 @@
   "webhookGroups": {
     "Documents": [
       {
+        "audiences": undefined,
         "availability": {
           "message": undefined,
           "status": "PRE_RELEASE",
@@ -1184,10 +1186,12 @@
             },
           },
         },
+        "viewers": undefined,
       },
     ],
     "Payment Sessions": [
       {
+        "audiences": undefined,
         "availability": {
           "message": undefined,
           "status": "DEPRECATED",
@@ -1293,6 +1297,7 @@
             },
           },
         },
+        "viewers": undefined,
       },
     ],
   },

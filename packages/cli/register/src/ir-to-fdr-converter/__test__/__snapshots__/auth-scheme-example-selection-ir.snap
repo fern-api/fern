@@ -147,6 +147,7 @@
   "pathParameters": [],
   "publishConfig": undefined,
   "readmeConfig": undefined,
+  "roles": undefined,
   "rootPackage": {
     "docs": undefined,
     "errors": [],
@@ -426,6 +427,7 @@ Examples should use the first available auth scheme (admin).
               },
             ],
           },
+          "viewers": undefined,
         },
       ],
       "headers": [],
@@ -438,6 +440,7 @@ Examples should use the first available auth scheme (admin).
       },
       "pathParameters": [],
       "transport": undefined,
+      "viewers": undefined,
     },
   },
   "sourceConfig": undefined,

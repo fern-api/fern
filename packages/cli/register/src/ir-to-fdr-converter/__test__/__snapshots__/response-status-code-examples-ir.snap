@@ -206,6 +206,7 @@
   "pathParameters": [],
   "publishConfig": undefined,
   "readmeConfig": undefined,
+  "roles": undefined,
   "rootPackage": {
     "docs": undefined,
     "errors": [],
@@ -519,6 +520,7 @@
               },
             ],
           },
+          "viewers": undefined,
         },
       ],
       "headers": [],
@@ -533,6 +535,7 @@
       },
       "pathParameters": [],
       "transport": undefined,
+      "viewers": undefined,
     },
   },
   "sourceConfig": undefined,

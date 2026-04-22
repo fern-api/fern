@@ -29,6 +29,7 @@
   "pathParameters": [],
   "publishConfig": undefined,
   "readmeConfig": undefined,
+  "roles": undefined,
   "rootPackage": {
     "docs": undefined,
     "errors": [],
@@ -354,6 +355,7 @@ func main() {
               },
             ],
           },
+          "viewers": undefined,
         },
       ],
       "headers": [],
@@ -366,6 +368,7 @@ func main() {
       },
       "pathParameters": [],
       "transport": undefined,
+      "viewers": undefined,
     },
   },
   "sourceConfig": undefined,

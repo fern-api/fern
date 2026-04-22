@@ -47,6 +47,7 @@
   "pathParameters": [],
   "publishConfig": undefined,
   "readmeConfig": undefined,
+  "roles": undefined,
   "rootPackage": {
     "docs": undefined,
     "errors": [],
@@ -534,6 +535,7 @@
   "webhookGroups": {
     "Document Management": [
       {
+        "audiences": undefined,
         "availability": undefined,
         "displayName": "Document uploaded webhook",
         "docs": "Webhook with multipart form data including file uploads",
@@ -885,6 +887,7 @@
           },
           "userSpecifiedExamples": {},
         },
+        "viewers": undefined,
       },
     ],
   },
