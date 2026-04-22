@@ -32,7 +32,7 @@ export function loadDotenvFile(envFilePath: string | undefined, logDebug?: (msg:
         for (const key of Object.keys(result.parsed)) {
             // Never log values — use **** so the user knows a key was loaded
             // without revealing the value or its length.
-            logDebug(`${key}=****`);
+            logDebug(`Loaded from --env: ${key}=****`);
         }
     }
 }
