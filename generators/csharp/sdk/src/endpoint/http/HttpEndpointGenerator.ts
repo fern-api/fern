@@ -1281,7 +1281,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         writer.popScope();
                     }),
                     this.csharp.codeblock(
-                        pagination.step
+                        pagination.step && !this.settings.usePageIndexSemantics
                             ? `request => ${this.getPropertyWithDefault(requestParameter.type, "request", pagination.step, 0)}`
                             : "null"
                     ),
