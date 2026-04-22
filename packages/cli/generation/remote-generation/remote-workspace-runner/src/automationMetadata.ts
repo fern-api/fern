@@ -1,5 +1,5 @@
 import { generatorsYml } from "@fern-api/configuration";
-import { readFileSync } from "fs";
+import { readFile } from "fs/promises";
 
 /**
  * Returns `https://github.com/{owner}/{repo}` when a generator's output targets a GitHub repo,
@@ -38,14 +38,14 @@ export function getOutputRepoUrl(generatorInvocation: generatorsYml.GeneratorInv
  * Returns undefined when the path isn't readable or no match is found. Callers treat an absent
  * line number as "link to the file without an anchor."
  */
-export function findGeneratorLineNumber(
+export async function findGeneratorLineNumber(
     absolutePathToGeneratorsYml: string,
     generatorName: string,
     occurrenceIndex: number
-): number | undefined {
+): Promise<number | undefined> {
     let content: string;
     try {
-        content = readFileSync(absolutePathToGeneratorsYml, "utf8");
+        content = await readFile(absolutePathToGeneratorsYml, "utf8");
     } catch {
         return undefined;
     }

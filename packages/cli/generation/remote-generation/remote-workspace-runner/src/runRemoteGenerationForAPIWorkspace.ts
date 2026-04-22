@@ -316,7 +316,7 @@ async function generateOne({
         if (automation != null) {
             const lineNumber =
                 generatorsYmlAbsolutePath != null
-                    ? findGeneratorLineNumber(
+                    ? await findGeneratorLineNumber(
                           generatorsYmlAbsolutePath,
                           generatorInvocation.name,
                           occurrenceTracker.lookup(generatorInvocation)
@@ -343,7 +343,7 @@ async function generateOne({
         const message = extractErrorMessage(error);
         const lineNumber =
             generatorsYmlAbsolutePath != null
-                ? findGeneratorLineNumber(
+                ? await findGeneratorLineNumber(
                       generatorsYmlAbsolutePath,
                       generatorInvocation.name,
                       occurrenceTracker.lookup(generatorInvocation)

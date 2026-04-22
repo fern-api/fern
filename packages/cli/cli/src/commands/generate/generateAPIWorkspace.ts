@@ -126,8 +126,13 @@ export async function generateWorkspace({
     // config errors (missing group, bad lfs, custom images, reject-opted-out) still abort the
     // whole run rather than being swallowed as a "this subtask failed" signal. The per-group
     // interactive task only wraps actual generation work.
-    const runnableGroups = resolvedGroupNames.flatMap((resolvedGroupName) => {
-        const runnable = resolveRunnableGroup({
+    // Async because `resolveRunnableGroup` now reads `generators.yml` off disk (via
+    // `findGeneratorLineNumber`) to compute recordSkipped line anchors. Sequential resolution
+    // is intentional — the config errors inside must still abort the whole run deterministically,
+    // before any generation work starts.
+    const runnableGroups: Array<{ resolvedGroupName: string; group: generatorsYml.GeneratorGroup }> = [];
+    for (const resolvedGroupName of resolvedGroupNames) {
+        const runnable = await resolveRunnableGroup({
             resolvedGroupName,
             workspace,
             generatorIndex,
@@ -140,8 +145,10 @@ export async function generateWorkspace({
             occurrenceTracker,
             generatorsYmlAbsolutePath
         });
-        return runnable != null ? [{ resolvedGroupName, group: runnable }] : [];
-    });
+        if (runnable != null) {
+            runnableGroups.push({ resolvedGroupName, group: runnable });
+        }
+    }
 
     // Run generation for each runnable group in parallel. Each becomes an interactive subtask
     // of the workspace task so per-generator tasks opened downstream nest beneath it.
@@ -206,7 +213,7 @@ export async function generateWorkspace({
  *
  * Returns `null` when the group is silently skipped (empty-after-skip in automation fan-out).
  */
-function resolveRunnableGroup({
+async function resolveRunnableGroup({
     resolvedGroupName,
     workspace,
     generatorIndex,
@@ -230,7 +237,7 @@ function resolveRunnableGroup({
     token: FernToken | undefined;
     occurrenceTracker: GeneratorOccurrenceTracker;
     generatorsYmlAbsolutePath: AbsoluteFilePath;
-}): generatorsYml.GeneratorGroup | null {
+}): Promise<generatorsYml.GeneratorGroup | null> {
     let group = workspace.generatorsConfiguration?.groups.find(
         (otherGroup) => otherGroup.groupName === resolvedGroupName
     );
@@ -282,7 +289,7 @@ function resolveRunnableGroup({
                 reason: skipped.reason,
                 outputRepoUrl: getOutputRepoUrl(skipped.generator),
                 generatorsYmlAbsolutePath,
-                generatorsYmlLineNumber: findGeneratorLineNumber(
+                generatorsYmlLineNumber: await findGeneratorLineNumber(
                     generatorsYmlAbsolutePath,
                     skipped.generator.name,
                     occurrenceTracker.lookup(skipped.generator)
