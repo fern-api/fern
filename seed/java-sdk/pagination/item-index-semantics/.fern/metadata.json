@@ -3,7 +3,8 @@
   "generatorName": "fernapi/fern-java-sdk",
   "generatorVersion": "local",
   "generatorConfig": {
-    "enable-wire-tests": true
+    "enable-wire-tests": true,
+    "offset-semantics": "item-index"
   },
   "originGitCommit": "DUMMY",
   "originGitCommitIsDirty": null,

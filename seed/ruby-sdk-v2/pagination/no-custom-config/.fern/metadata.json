@@ -1,9 +1,9 @@
 {
   "cliVersion": "DUMMY",
-  "generatorName": "fernapi/fern-java-sdk",
+  "generatorName": "fernapi/fern-ruby-sdk-v2",
   "generatorVersion": "local",
   "generatorConfig": {
-    "enable-wire-tests": true
+    "rubocopSeverity": "error"
   },
   "originGitCommit": "DUMMY",
   "originGitCommitIsDirty": null,
