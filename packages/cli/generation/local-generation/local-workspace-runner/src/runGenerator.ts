@@ -130,9 +130,7 @@ export async function writeFilesToDiskAndRunGenerator({
     const generatorLanguage =
         generatorInvocation.language ?? extractLanguageFromGeneratorName(generatorInvocation.name);
     const isJavaGenerator = generatorLanguage === "java";
-    const irForMigration = isJavaGenerator
-        ? (stripExamplesFromIr(ir) as IntermediateRepresentation)
-        : ir;
+    const irForMigration = isJavaGenerator ? (stripExamplesFromIr(ir) as IntermediateRepresentation) : ir;
 
     const { latest, migrated } = await getIntermediateRepresentation({
         workspace,
