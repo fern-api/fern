@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Wire the generator runtime into Sentry so internal generator errors are
+    reported with full context. User-facing failures (config, validation, auth,
+    network, environment) remain unreported. No change to generated output.
+  type: chore

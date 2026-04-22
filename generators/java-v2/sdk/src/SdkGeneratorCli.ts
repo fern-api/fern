@@ -1,4 +1,4 @@
-import { File, GeneratorNotificationService } from "@fern-api/base-generator";
+import { File, GeneratorError, GeneratorNotificationService } from "@fern-api/base-generator";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractJavaGeneratorCli } from "@fern-api/java-base";
@@ -50,7 +50,7 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
         if (context.config.output.snippetFilepath != null) {
             const dynamicIr = context.ir.dynamic;
             if (!dynamicIr) {
-                throw new Error("Cannot generate dynamic snippets without dynamic IR");
+                throw GeneratorError.internalError("Cannot generate dynamic snippets without dynamic IR");
             }
 
             // Single IR conversion and generator instance shared across all snippet consumers.
@@ -95,7 +95,7 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
                 docErrors.push(`reference.md: ${extractErrorMessage(referenceResult.reason)}`);
             }
             if (docErrors.length > 0) {
-                throw new Error(`Failed to generate documentation:\n${docErrors.join("\n")}`);
+                throw GeneratorError.internalError(`Failed to generate documentation:\n${docErrors.join("\n")}`);
             }
             context.logger.debug("Successfully generated README.md and reference.md");
 

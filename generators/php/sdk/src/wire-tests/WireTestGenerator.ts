@@ -1,4 +1,4 @@
-import { CaseConverter, File } from "@fern-api/base-generator";
+import { CaseConverter, File, GeneratorError } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMockMapping } from "@fern-api/mock-utils";
 import { php } from "@fern-api/php-codegen";
@@ -29,7 +29,7 @@ export class WireTestGenerator {
         this.case = context.case;
         const dynamicIr = ir.dynamic;
         if (!dynamicIr) {
-            throw new Error("Cannot generate wire tests without FernIr.dynamic IR");
+            throw GeneratorError.internalError("Cannot generate wire tests without FernIr.dynamic IR");
         }
         this.dynamicIr = dynamicIr;
         this.wireMockConfigContent = this.getWireMockConfigContent();

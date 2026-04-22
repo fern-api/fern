@@ -1,4 +1,4 @@
-import { File } from "@fern-api/base-generator";
+import { File, GeneratorError } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMock, WireMockStubMapping } from "@fern-api/mock-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -177,7 +177,7 @@ export class WireTestSetupGenerator {
         const byte8 = bytes[8];
 
         if (byte6 === undefined || byte8 === undefined) {
-            throw new Error("Invalid byte array: missing required bytes");
+            throw GeneratorError.internalError("Invalid byte array: missing required bytes");
         }
 
         bytes[6] = (byte6 & 0x0f) | 0x40;

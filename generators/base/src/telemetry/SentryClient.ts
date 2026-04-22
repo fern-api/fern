@@ -1,4 +1,5 @@
 import * as Sentry from "@sentry/node";
+import { resolveErrorCode } from "../GeneratorError.js";
 
 export class SentryClient {
     private readonly sentry: Sentry.NodeClient | undefined;
@@ -64,11 +65,12 @@ export class SentryClient {
         }
     }
 
-    public async captureException(error: unknown): Promise<void> {
+    public async captureException(error: unknown, { errorCode }: { errorCode?: string } = {}): Promise<void> {
         if (this.sentry == null) {
             return;
         }
         try {
+            Sentry.setTag("error_code", errorCode ?? resolveErrorCode(error));
             this.sentry.captureException(error);
         } catch {
             // no-op

@@ -22,6 +22,7 @@ vi.mock("@sentry/node", () => ({
     setTag: mockSentrySetTag
 }));
 
+import { GeneratorError } from "../GeneratorError.js";
 import { SentryClient } from "../telemetry/SentryClient.js";
 
 const DEFAULT_ARGS = {
@@ -102,5 +103,16 @@ describe("SentryClient (base-generator)", () => {
                 release: "fern-go-sdk:2.1.0"
             })
         );
+    });
+
+    it("sets the provided error_code tag when capturing exception", async () => {
+        const client = new SentryClient(DEFAULT_ARGS);
+
+        await client.captureException(new GeneratorError({ message: "bad config", code: "CONFIG_ERROR" }), {
+            errorCode: "CONFIG_ERROR"
+        });
+
+        expect(mockSentrySetTag).toHaveBeenCalledWith("error_code", "CONFIG_ERROR");
+        expect(mockSentryCaptureException).toHaveBeenCalledOnce();
     });
 });

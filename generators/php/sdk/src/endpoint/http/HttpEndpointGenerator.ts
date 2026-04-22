@@ -1,4 +1,4 @@
-import { Arguments, getOriginalName, NameInput, UnnamedArgument } from "@fern-api/base-generator";
+import { Arguments, GeneratorError, getOriginalName, NameInput, UnnamedArgument } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { php } from "@fern-api/php-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -229,12 +229,14 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             body: php.codeblock((writer) => {
                 const requestParam = endpointSignatureInfo.requestParameter;
                 if (!requestParam) {
-                    throw new Error("Request parameter is required for pagination");
+                    throw GeneratorError.validationError("Request parameter is required for pagination");
                 }
                 const unpagedEndpointMethodName = this.context.getUnpagedEndpointMethodName(endpoint);
                 const unpagedEndpointResponseType = getEndpointReturnType({ context: this.context, endpoint });
                 if (!unpagedEndpointResponseType) {
-                    throw new Error("Internal error; a response type is required for pagination endpoints");
+                    throw GeneratorError.internalError(
+                        "Internal error; a response type is required for pagination endpoints"
+                    );
                 }
                 const requestParamVar = php.variable(requestParam.name);
                 if (
@@ -594,7 +596,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     case "uri":
                     case "path":
                         // unreachable: hasPagination() returns false for uri/path
-                        throw new Error(`Pagination type ${endpoint.pagination.type} is not supported`);
+                        throw GeneratorError.validationError(
+                            `Pagination type ${endpoint.pagination.type} is not supported`
+                        );
                     default:
                         assertNever(endpoint.pagination);
                 }
@@ -606,7 +610,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 return listItemType.internalType.value.internalType.value;
             }
 
-            throw new Error(
+            throw GeneratorError.internalError(
                 `Pagination result type for endpoint ${getOriginalName(endpoint.name)} must be an array, but is an optional ${listItemType.internalType.value.internalType.type}.`
             );
         }
@@ -615,7 +619,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             return listItemType.internalType.value;
         }
 
-        throw new Error(
+        throw GeneratorError.internalError(
             `Pagination result type for endpoint ${getOriginalName(endpoint.name)} must be an array, but is ${listItemType.internalType.type}.`
         );
     }
@@ -643,7 +647,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         if (this.hasPagination(endpoint)) {
             return;
         }
-        throw new Error(`Endpoint ${getOriginalName(endpoint.name)} is not a paginated endpoint`);
+        throw GeneratorError.internalError(`Endpoint ${getOriginalName(endpoint.name)} is not a paginated endpoint`);
     }
 
     private getRequestTypeClassReference(requestBody: FernIr.HttpRequestBody): php.ClassReference {
@@ -812,7 +816,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             case "optional":
             case "null":
             case "typeDict":
-                throw new Error(`Internal error; '${internalType.type}' type is not a supported return type`);
+                throw GeneratorError.internalError(
+                    `Internal error; '${internalType.type}' type is not a supported return type`
+                );
             default:
                 assertNever(internalType);
         }

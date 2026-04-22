@@ -1,4 +1,4 @@
-import { getOriginalName } from "@fern-api/base-generator";
+import { GeneratorError, getOriginalName } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { ast, is, WithGeneration } from "@fern-api/csharp-codegen";
 import { ExampleGenerator } from "@fern-api/fern-csharp-model";
@@ -131,7 +131,7 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
                 return this.Types.CustomPagerClass(itemType);
             case "uri":
             case "path":
-                throw new Error(
+                throw GeneratorError.internalError(
                     `'${endpoint.pagination.type}' pagination is not supported in C# and should have been skipped.`
                 );
             default:
@@ -178,7 +178,7 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
                         return endpoint.pagination.results.property.valueType;
                     case "uri":
                     case "path":
-                        throw new Error(
+                        throw GeneratorError.internalError(
                             `'${endpoint.pagination.type}' pagination is not supported in C# and should have been skipped.`
                         );
                     default:
@@ -191,7 +191,7 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
         if (is.Collection.list(listItemType)) {
             return listItemType.getCollectionItemType();
         }
-        throw new Error(
+        throw GeneratorError.internalError(
             `Pagination result type for endpoint ${getOriginalName(endpoint.name)} must be a list, but is ${listItemType.fullyQualifiedName}.`
         );
     }
@@ -242,7 +242,7 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
         if (this.hasPagination(endpoint)) {
             return;
         }
-        throw new Error(`Endpoint ${getOriginalName(endpoint.name)} is not a paginated endpoint`);
+        throw GeneratorError.internalError(`Endpoint ${getOriginalName(endpoint.name)} is not a paginated endpoint`);
     }
 
     protected generateEndpointSnippet({
@@ -263,7 +263,7 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
     }): ast.MethodInvocation | undefined {
         const service = this.context.ir.services[serviceId];
         if (service == null) {
-            throw new Error(`Unexpected no service with id ${serviceId}`);
+            throw GeneratorError.internalError(`Unexpected no service with id ${serviceId}`);
         }
         const serviceFilePath = service.name.fernFilepath;
 
@@ -388,7 +388,7 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
         parseDatetimes: boolean
     ): ast.CodeBlock {
         if (exampleRequestBody.type === "inlinedRequestBody") {
-            throw new Error("Unexpected inlinedRequestBody"); // should be a wrapped request and already handled
+            throw GeneratorError.internalError("Unexpected inlinedRequestBody"); // should be a wrapped request and already handled
         }
         return this.exampleGenerator.getSnippetForTypeReference({
             exampleTypeReference: exampleRequestBody,
