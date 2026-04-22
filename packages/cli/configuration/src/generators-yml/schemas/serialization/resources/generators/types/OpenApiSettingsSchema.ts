@@ -3,6 +3,7 @@
 import type * as GeneratorsYml from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { AdditionalPropertiesOnOneOf } from "./AdditionalPropertiesOnOneOf.js";
 import { BaseApiSettingsSchema } from "./BaseApiSettingsSchema.js";
 import { DefaultIntegerFormat } from "./DefaultIntegerFormat.js";
 import { FormParameterEncoding } from "./FormParameterEncoding.js";
@@ -32,6 +33,7 @@ export const OpenApiSettingsSchema: core.serialization.ObjectSchema<
         "resolve-aliases": ResolveAliases.optional(),
         "group-multi-api-environments": core.serialization.boolean().optional(),
         "default-integer-format": DefaultIntegerFormat.optional(),
+        "additional-properties-on-one-of": AdditionalPropertiesOnOneOf.optional(),
     })
     .extend(BaseApiSettingsSchema);
 
@@ -54,5 +56,6 @@ export declare namespace OpenApiSettingsSchema {
         "resolve-aliases"?: ResolveAliases.Raw | null;
         "group-multi-api-environments"?: boolean | null;
         "default-integer-format"?: DefaultIntegerFormat.Raw | null;
+        "additional-properties-on-one-of"?: AdditionalPropertiesOnOneOf.Raw | null;
     }
 }

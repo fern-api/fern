@@ -131,6 +131,13 @@ export interface ParseOpenAPIOptions {
      * instead of a plain string. Defaults to false.
      */
     respectByteFormat: boolean;
+
+    /**
+     * Controls how `additionalProperties` is handled on `oneOf`/`anyOf` schemas.
+     * - `map`: Collapse the union to a map type (default, preserves existing behavior).
+     * - `ignore`: Preserve the typed union and ignore `additionalProperties` on the union container.
+     */
+    additionalPropertiesOnOneOf: generatorsYml.AdditionalPropertiesOnOneOf;
 }
 
 export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
@@ -169,7 +176,8 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     resolveSchemaCollisions: false,
     inferForwardCompatible: false,
     coerceConstsTo: "enums-coerceable-to-literals",
-    respectByteFormat: false
+    respectByteFormat: false,
+    additionalPropertiesOnOneOf: generatorsYml.AdditionalPropertiesOnOneOf.Map
 };
 
 function mergeOptions<T extends object>(params: {

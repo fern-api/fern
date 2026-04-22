@@ -1,3 +1,4 @@
+export * from "./AdditionalPropertiesOnOneOf.js";
 export * from "./ApiConfigurationSchema.js";
 export * from "./ApiConfigurationSchemaInternal.js";
 export * from "./ApiConfigurationV2Schema.js";

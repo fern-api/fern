@@ -891,7 +891,9 @@ export function convertSchemaObject(
             schema.additionalProperties != null &&
             schema.additionalProperties !== false &&
             hasNoProperties(schema) &&
-            hasNoAllOf(schema)
+            hasNoAllOf(schema) &&
+            (context.options.additionalPropertiesOnOneOf !== "ignore" ||
+                (hasNoOneOf(schema) && (schema.anyOf == null || schema.anyOf.length === 0)))
         ) {
             return convertAdditionalProperties({
                 nameOverride,

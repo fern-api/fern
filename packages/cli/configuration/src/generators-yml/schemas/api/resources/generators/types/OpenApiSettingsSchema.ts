@@ -58,4 +58,10 @@ export interface OpenApiSettingsSchema extends GeneratorsYml.BaseApiSettingsSche
      * Defaults to int32.
      */
     "default-integer-format"?: GeneratorsYml.DefaultIntegerFormat;
+    /**
+     * Controls how `additionalProperties` is handled on `oneOf`/`anyOf` schemas.
+     * - `map`: Collapse the union to a map type (default, preserves existing behavior).
+     * - `ignore`: Preserve the typed union and ignore `additionalProperties` on the union container.
+     */
+    "additional-properties-on-one-of"?: GeneratorsYml.AdditionalPropertiesOnOneOf;
 }

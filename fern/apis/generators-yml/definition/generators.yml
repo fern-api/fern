@@ -476,6 +476,12 @@ types:
       - name: enumsCoerceableToLiterals
         value: enums-coerceable-to-literals
 
+  AdditionalPropertiesOnOneOf:
+    docs: Controls how `additionalProperties` is handled on `oneOf`/`anyOf` schemas.
+    enum:
+      - map
+      - ignore
+
   OpenAPISettingsSchema:
     extends:
       - BaseAPISettingsSchema
@@ -552,6 +558,13 @@ types:
           The default format to use for integer types when no format is specified in the OpenAPI schema.
           Defaults to int32.
         default: int32
+      additional-properties-on-one-of:
+        type: optional<AdditionalPropertiesOnOneOf>
+        docs: |
+          Controls how `additionalProperties` is handled on `oneOf`/`anyOf` schemas.
+          - `map`: Collapse the union to a map type (default, preserves existing behavior).
+          - `ignore`: Preserve the typed union and ignore `additionalProperties` on the union container.
+        default: map
 
   ResolveAliases:
     discriminated: false

@@ -1,0 +1,6 @@
+- summary: |
+    Add `additional-properties-on-one-of` setting to control how `additionalProperties`
+    is handled on `oneOf`/`anyOf` schemas. When set to `ignore`, the parser preserves
+    typed unions instead of collapsing them to `map[string]any`. Defaults to `map`
+    for backwards compatibility.
+  type: feat
