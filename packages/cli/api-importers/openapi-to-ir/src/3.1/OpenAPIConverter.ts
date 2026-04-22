@@ -110,21 +110,34 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
     }
 
     private convertSecuritySchemes(): void {
+        const openApiSchemes = this.convertOpenApiSecuritySchemes();
+
         if (this.context.authOverrides) {
-            const overrideAuth = convertApiAuth({
-                rawApiFileSchema: this.context.authOverrides,
+            const descriptions = new Map(openApiSchemes.map((scheme) => [scheme.key, scheme.docs]));
+            const enriched = {
+                ...this.context.authOverrides,
+                "auth-schemes": { ...this.context.authOverrides["auth-schemes"] }
+            };
+
+            for (const [schemeId, scheme] of Object.entries(enriched["auth-schemes"])) {
+                if (!scheme.docs && descriptions.has(schemeId)) {
+                    scheme.docs = descriptions.get(schemeId);
+                }
+            }
+
+            const auth = convertApiAuth({
+                rawApiFileSchema: enriched,
                 casingsGenerator: this.context.casingsGenerator
             });
 
             this.addAuthToIR({
-                requirement: overrideAuth.requirement,
-                schemes: overrideAuth.schemes,
-                docs: overrideAuth.docs
+                requirement: auth.requirement,
+                schemes: auth.schemes,
+                docs: auth.docs
             });
             return;
         }
 
-        const openApiSchemes = this.convertOpenApiSecuritySchemes();
         if (openApiSchemes.length > 0) {
             this.addAuthToIR({
                 requirement: openApiSchemes.length === 1 ? "ALL" : "ANY",
@@ -333,14 +346,8 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             return;
         }
 
-        if (!this.context.spec.components) {
-            this.context.spec.components = {};
-        }
-        this.context.spec.components.securitySchemes = {};
-
         const securityRequirement: OpenAPIV3_1.SecurityRequirementObject = {};
         for (const schemeId of Object.keys(this.context.authOverrides["auth-schemes"])) {
-            this.context.spec.components.securitySchemes[schemeId] = { type: "http", scheme: "bearer" };
             securityRequirement[schemeId] = [];
         }
 

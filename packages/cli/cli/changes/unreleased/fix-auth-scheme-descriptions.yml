@@ -1,0 +1,6 @@
+- summary: |
+    Fix auth scheme descriptions being lost when using generators.yml auth-schemes.
+    When security schemes are overridden in generators.yml, Fern now preserves the
+    descriptions from the OpenAPI spec's components.securitySchemes instead of using
+    generic placeholder text.
+  type: fix
