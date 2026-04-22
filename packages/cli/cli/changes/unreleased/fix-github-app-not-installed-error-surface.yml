@@ -7,4 +7,4 @@
     receives `core.Fetcher.Error` directly (`{ reason, statusCode, body }`), but
     `extractErrorMessage` was looking one level too deep under `.content`, so
     the descriptive message was never extracted.
-  type: fix
+  type: chore
