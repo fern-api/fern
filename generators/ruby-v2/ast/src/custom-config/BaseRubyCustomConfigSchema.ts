@@ -7,6 +7,7 @@ export const BaseRubyCustomConfigSchema = z.object({
     clientModuleName: z.optional(z.string()),
     customReadmeSections: z.optional(z.array(CustomReadmeSectionSchema)),
     customPagerName: z.optional(z.string()),
+    offsetSemantics: z.enum(["item-index", "page-index"]).optional(),
     // Generate wire tests for serialization/deserialization
     enableWireTests: z.boolean().optional(),
     // Extra dependencies to add to the gemspec (e.g., { "my-gem": "~> 6.0" })

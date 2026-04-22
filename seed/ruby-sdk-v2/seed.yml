@@ -61,6 +61,12 @@ fixtures:
         enableWireTests: true
         clientModuleName: MyClient
         maxRetries: 5
+  pagination:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        offsetSemantics: "page-index"
+      outputFolder: page-index-semantics
   pagination-custom:
     - customConfig:
         customPagerName: FooPager
