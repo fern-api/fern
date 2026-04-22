@@ -1,0 +1,14 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 884da712b73..4dda1c84817 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-python-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "use_inheritance_for_extended_models": false
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "manual",

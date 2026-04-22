@@ -1,0 +1,157 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 200d96787a2..99574c8e89e 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,7 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-csharp-sdk",
+   "generatorVersion": "local",
+-  "generatorConfig": {},
++  "generatorConfig": {
++    "environment-class-name": "CustomEnvironment"
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "manual",
+diff --git a/README.md b/README.md
+index 38ea3df72bd..2b1196c643d 100644
+--- a/README.md
++++ b/README.md
+@@ -55,7 +55,7 @@ using SeedMultiUrlEnvironment;
+ 
+ var client = new SeedMultiUrlEnvironmentClient(new ClientOptions
+ {
+-    Environment = SeedMultiUrlEnvironmentEnvironment.Production
++    Environment = CustomEnvironment.Production
+ });
+ ```
+ 
+diff --git a/src/SeedMultiUrlEnvironment/Core/Public/ClientOptions.cs b/src/SeedMultiUrlEnvironment/Core/Public/ClientOptions.cs
+index c958379d2af..58bd9017edc 100644
+--- a/src/SeedMultiUrlEnvironment/Core/Public/ClientOptions.cs
++++ b/src/SeedMultiUrlEnvironment/Core/Public/ClientOptions.cs
+@@ -13,13 +13,13 @@ public partial class ClientOptions
+     /// <summary>
+     /// The Environment for the API.
+     /// </summary>
+-    public SeedMultiUrlEnvironmentEnvironment Environment { get;
++    public CustomEnvironment Environment { get;
+ #if NET5_0_OR_GREATER
+         init;
+ #else
+         set;
+ #endif
+-    } = SeedMultiUrlEnvironmentEnvironment.Production;
++    } = CustomEnvironment.Production;
+ 
+     /// <summary>
+     /// The http client used to make requests.
+diff --git a/src/SeedMultiUrlEnvironment/Core/Public/CustomEnvironment.cs b/src/SeedMultiUrlEnvironment/Core/Public/CustomEnvironment.cs
+new file mode 100644
+index 00000000000..dcc3ced7e1d
+--- /dev/null
++++ b/src/SeedMultiUrlEnvironment/Core/Public/CustomEnvironment.cs
+@@ -0,0 +1,39 @@
++namespace SeedMultiUrlEnvironment;
++
++[Serializable]
++public class CustomEnvironment
++{
++    public static readonly CustomEnvironment Production = new CustomEnvironment
++    {
++        Ec2 = "https://ec2.aws.com",
++        S3 = "https://s3.aws.com",
++    };
++
++    public static readonly CustomEnvironment Staging = new CustomEnvironment
++    {
++        Ec2 = "https://staging.ec2.aws.com",
++        S3 = "https://staging.s3.aws.com",
++    };
++
++    /// <summary>
++    /// URL for the ec2 service
++    /// </summary>
++    public string Ec2 { get;
++#if NET5_0_OR_GREATER
++        init;
++#else
++        set;
++#endif
++    }
++
++    /// <summary>
++    /// URL for the s3 service
++    /// </summary>
++    public string S3 { get;
++#if NET5_0_OR_GREATER
++        init;
++#else
++        set;
++#endif
++    }
++}
+diff --git a/src/SeedMultiUrlEnvironment/Core/Public/SeedMultiUrlEnvironmentEnvironment.cs b/src/SeedMultiUrlEnvironment/Core/Public/SeedMultiUrlEnvironmentEnvironment.cs
+deleted file mode 100644
+index dc9f6504fcb..00000000000
+--- a/src/SeedMultiUrlEnvironment/Core/Public/SeedMultiUrlEnvironmentEnvironment.cs
++++ /dev/null
+@@ -1,41 +0,0 @@
+-namespace SeedMultiUrlEnvironment;
+-
+-[Serializable]
+-public class SeedMultiUrlEnvironmentEnvironment
+-{
+-    public static readonly SeedMultiUrlEnvironmentEnvironment Production =
+-        new SeedMultiUrlEnvironmentEnvironment
+-        {
+-            Ec2 = "https://ec2.aws.com",
+-            S3 = "https://s3.aws.com",
+-        };
+-
+-    public static readonly SeedMultiUrlEnvironmentEnvironment Staging =
+-        new SeedMultiUrlEnvironmentEnvironment
+-        {
+-            Ec2 = "https://staging.ec2.aws.com",
+-            S3 = "https://staging.s3.aws.com",
+-        };
+-
+-    /// <summary>
+-    /// URL for the ec2 service
+-    /// </summary>
+-    public string Ec2 { get;
+-#if NET5_0_OR_GREATER
+-        init;
+-#else
+-        set;
+-#endif
+-    }
+-
+-    /// <summary>
+-    /// URL for the s3 service
+-    /// </summary>
+-    public string S3 { get;
+-#if NET5_0_OR_GREATER
+-        init;
+-#else
+-        set;
+-#endif
+-    }
+-}
+diff --git a/src/SeedMultiUrlEnvironment.Test/Unit/MockServer/BaseMockServerTest.cs b/src/SeedMultiUrlEnvironment.Test/Unit/MockServer/BaseMockServerTest.cs
+index e5335ddda7f..776a4eaecec 100644
+--- a/src/SeedMultiUrlEnvironment.Test/Unit/MockServer/BaseMockServerTest.cs
++++ b/src/SeedMultiUrlEnvironment.Test/Unit/MockServer/BaseMockServerTest.cs
+@@ -27,11 +27,7 @@ public class BaseMockServerTest
+             "TOKEN",
+             clientOptions: new ClientOptions
+             {
+-                Environment = new SeedMultiUrlEnvironmentEnvironment
+-                {
+-                    Ec2 = Server.Urls[0],
+-                    S3 = Server.Urls[0],
+-                },
++                Environment = new CustomEnvironment { Ec2 = Server.Urls[0], S3 = Server.Urls[0] },
+                 MaxRetries = 0,
+             }
+         );

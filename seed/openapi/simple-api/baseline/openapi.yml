@@ -1,0 +1,50 @@
+openapi: 3.1.0
+info:
+  title: simple-api
+  version: 0.0.0
+paths:
+  /users/{id}:
+    get:
+      operationId: user_get
+      tags:
+        - User
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      security:
+        - Bearer: []
+components:
+  schemas:
+    User:
+      title: User
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+      required:
+        - id
+        - name
+        - email
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer
+servers:
+  - url: https://api.example.com
+    description: Production
+  - url: https://staging-api.example.com
+    description: Staging

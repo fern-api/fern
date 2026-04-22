@@ -1,0 +1,3 @@
+rootProject.name = 'required-nullable'
+
+include 'sample-app'

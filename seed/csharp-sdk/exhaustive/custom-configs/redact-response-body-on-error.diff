@@ -1,0 +1,571 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 200d96787a2..39dc6b28609 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,7 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-csharp-sdk",
+   "generatorVersion": "local",
+-  "generatorConfig": {},
++  "generatorConfig": {
++    "redact-response-body-on-error": true
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "manual",
+diff --git a/src/SeedExhaustive/Core/Public/SeedExhaustiveApiException.cs b/src/SeedExhaustive/Core/Public/SeedExhaustiveApiException.cs
+index 5b8ef1fd9ea..9eb5668e127 100644
+--- a/src/SeedExhaustive/Core/Public/SeedExhaustiveApiException.cs
++++ b/src/SeedExhaustive/Core/Public/SeedExhaustiveApiException.cs
+@@ -19,4 +19,22 @@ public class SeedExhaustiveApiException(
+     /// The body of the response that triggered the exception.
+     /// </summary>
+     public object Body => body;
++
++    public override string ToString()
++    {
++        var sb = new System.Text.StringBuilder();
++        sb.Append(GetType().FullName);
++        sb.Append($": {Message}");
++        sb.Append($" (Status Code: {StatusCode})");
++        if (InnerException != null)
++        {
++            sb.Append($"\n ---> {InnerException}");
++            sb.Append("\n --- End of inner exception stack trace ---");
++        }
++        if (StackTrace != null)
++        {
++            sb.Append($"\n{StackTrace}");
++        }
++        return sb.ToString();
++    }
+ }
+diff --git a/src/SeedExhaustive/Endpoints/Container/ContainerClient.cs b/src/SeedExhaustive/Endpoints/Container/ContainerClient.cs
+index e184a577e18..6c189e27f4e 100644
+--- a/src/SeedExhaustive/Endpoints/Container/ContainerClient.cs
++++ b/src/SeedExhaustive/Endpoints/Container/ContainerClient.cs
+@@ -64,7 +64,7 @@ public partial class ContainerClient : IContainerClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+@@ -134,7 +134,7 @@ public partial class ContainerClient : IContainerClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+@@ -200,7 +200,7 @@ public partial class ContainerClient : IContainerClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+@@ -270,7 +270,7 @@ public partial class ContainerClient : IContainerClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+@@ -338,7 +338,7 @@ public partial class ContainerClient : IContainerClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+@@ -408,7 +408,7 @@ public partial class ContainerClient : IContainerClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+@@ -480,7 +480,7 @@ public partial class ContainerClient : IContainerClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+@@ -546,7 +546,7 @@ public partial class ContainerClient : IContainerClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+diff --git a/src/SeedExhaustive/Endpoints/Enum/EnumClient.cs b/src/SeedExhaustive/Endpoints/Enum/EnumClient.cs
+index 3b887f91cc2..675725e7302 100644
+--- a/src/SeedExhaustive/Endpoints/Enum/EnumClient.cs
++++ b/src/SeedExhaustive/Endpoints/Enum/EnumClient.cs
+@@ -63,7 +63,7 @@ public partial class EnumClient : IEnumClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+diff --git a/src/SeedExhaustive/Endpoints/HttpMethods/HttpMethodsClient.cs b/src/SeedExhaustive/Endpoints/HttpMethods/HttpMethodsClient.cs
+index 023a5ddad85..6b0f8dec661 100644
+--- a/src/SeedExhaustive/Endpoints/HttpMethods/HttpMethodsClient.cs
++++ b/src/SeedExhaustive/Endpoints/HttpMethods/HttpMethodsClient.cs
+@@ -65,7 +65,7 @@ public partial class HttpMethodsClient : IHttpMethodsClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+@@ -131,7 +131,7 @@ public partial class HttpMethodsClient : IHttpMethodsClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+@@ -201,7 +201,7 @@ public partial class HttpMethodsClient : IHttpMethodsClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+@@ -271,7 +271,7 @@ public partial class HttpMethodsClient : IHttpMethodsClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+@@ -339,7 +339,7 @@ public partial class HttpMethodsClient : IHttpMethodsClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+diff --git a/src/SeedExhaustive/Endpoints/Object/ObjectClient.cs b/src/SeedExhaustive/Endpoints/Object/ObjectClient.cs
+index 421a4b32212..02b6c1b0fef 100644
+--- a/src/SeedExhaustive/Endpoints/Object/ObjectClient.cs
++++ b/src/SeedExhaustive/Endpoints/Object/ObjectClient.cs
+@@ -65,7 +65,7 @@ public partial class ObjectClient : IObjectClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+@@ -133,7 +133,7 @@ public partial class ObjectClient : IObjectClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+@@ -199,7 +199,7 @@ public partial class ObjectClient : IObjectClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+@@ -269,7 +269,7 @@ public partial class ObjectClient : IObjectClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+@@ -343,7 +343,7 @@ public partial class ObjectClient : IObjectClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+@@ -413,7 +413,7 @@ public partial class ObjectClient : IObjectClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+@@ -481,7 +481,7 @@ public partial class ObjectClient : IObjectClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+@@ -551,7 +551,7 @@ public partial class ObjectClient : IObjectClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+@@ -621,7 +621,7 @@ public partial class ObjectClient : IObjectClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+@@ -691,7 +691,7 @@ public partial class ObjectClient : IObjectClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+@@ -761,7 +761,7 @@ public partial class ObjectClient : IObjectClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+@@ -831,7 +831,7 @@ public partial class ObjectClient : IObjectClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+diff --git a/src/SeedExhaustive/Endpoints/Pagination/PaginationClient.cs b/src/SeedExhaustive/Endpoints/Pagination/PaginationClient.cs
+index a5879a7627c..42453dc250d 100644
+--- a/src/SeedExhaustive/Endpoints/Pagination/PaginationClient.cs
++++ b/src/SeedExhaustive/Endpoints/Pagination/PaginationClient.cs
+@@ -82,7 +82,7 @@ public partial class PaginationClient : IPaginationClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+diff --git a/src/SeedExhaustive/Endpoints/Params/ParamsClient.cs b/src/SeedExhaustive/Endpoints/Params/ParamsClient.cs
+index d1be38c929f..5487059febc 100644
+--- a/src/SeedExhaustive/Endpoints/Params/ParamsClient.cs
++++ b/src/SeedExhaustive/Endpoints/Params/ParamsClient.cs
+@@ -65,7 +65,7 @@ public partial class ParamsClient : IParamsClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+@@ -133,7 +133,7 @@ public partial class ParamsClient : IParamsClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+@@ -203,7 +203,7 @@ public partial class ParamsClient : IParamsClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+@@ -272,7 +272,7 @@ public partial class ParamsClient : IParamsClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+@@ -342,7 +342,7 @@ public partial class ParamsClient : IParamsClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+@@ -410,7 +410,7 @@ public partial class ParamsClient : IParamsClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+@@ -478,7 +478,7 @@ public partial class ParamsClient : IParamsClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+diff --git a/src/SeedExhaustive/Endpoints/Primitive/PrimitiveClient.cs b/src/SeedExhaustive/Endpoints/Primitive/PrimitiveClient.cs
+index 85de178d641..5ea2d06d8a6 100644
+--- a/src/SeedExhaustive/Endpoints/Primitive/PrimitiveClient.cs
++++ b/src/SeedExhaustive/Endpoints/Primitive/PrimitiveClient.cs
+@@ -62,7 +62,7 @@ public partial class PrimitiveClient : IPrimitiveClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+@@ -128,7 +128,7 @@ public partial class PrimitiveClient : IPrimitiveClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+@@ -194,7 +194,7 @@ public partial class PrimitiveClient : IPrimitiveClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+@@ -260,7 +260,7 @@ public partial class PrimitiveClient : IPrimitiveClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+@@ -326,7 +326,7 @@ public partial class PrimitiveClient : IPrimitiveClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+@@ -392,7 +392,7 @@ public partial class PrimitiveClient : IPrimitiveClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+@@ -458,7 +458,7 @@ public partial class PrimitiveClient : IPrimitiveClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+@@ -524,7 +524,7 @@ public partial class PrimitiveClient : IPrimitiveClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+@@ -590,7 +590,7 @@ public partial class PrimitiveClient : IPrimitiveClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+diff --git a/src/SeedExhaustive/Endpoints/Put/PutClient.cs b/src/SeedExhaustive/Endpoints/Put/PutClient.cs
+index 4e0cbc21022..c89cefaf82e 100644
+--- a/src/SeedExhaustive/Endpoints/Put/PutClient.cs
++++ b/src/SeedExhaustive/Endpoints/Put/PutClient.cs
+@@ -61,7 +61,7 @@ public partial class PutClient : IPutClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+diff --git a/src/SeedExhaustive/Endpoints/Union/UnionClient.cs b/src/SeedExhaustive/Endpoints/Union/UnionClient.cs
+index 73f19bbecdf..14758ca8ee0 100644
+--- a/src/SeedExhaustive/Endpoints/Union/UnionClient.cs
++++ b/src/SeedExhaustive/Endpoints/Union/UnionClient.cs
+@@ -63,7 +63,7 @@ public partial class UnionClient : IUnionClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+diff --git a/src/SeedExhaustive/Endpoints/Urls/UrlsClient.cs b/src/SeedExhaustive/Endpoints/Urls/UrlsClient.cs
+index 87879096243..8ff36b6d172 100644
+--- a/src/SeedExhaustive/Endpoints/Urls/UrlsClient.cs
++++ b/src/SeedExhaustive/Endpoints/Urls/UrlsClient.cs
+@@ -60,7 +60,7 @@ public partial class UrlsClient : IUrlsClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+@@ -124,7 +124,7 @@ public partial class UrlsClient : IUrlsClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+@@ -188,7 +188,7 @@ public partial class UrlsClient : IUrlsClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+@@ -252,7 +252,7 @@ public partial class UrlsClient : IUrlsClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+diff --git a/src/SeedExhaustive/InlinedRequests/InlinedRequestsClient.cs b/src/SeedExhaustive/InlinedRequests/InlinedRequestsClient.cs
+index 2ca49d24baf..56c76381a67 100644
+--- a/src/SeedExhaustive/InlinedRequests/InlinedRequestsClient.cs
++++ b/src/SeedExhaustive/InlinedRequests/InlinedRequestsClient.cs
+@@ -64,7 +64,7 @@ public partial class InlinedRequestsClient : IInlinedRequestsClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+diff --git a/src/SeedExhaustive/NoAuth/NoAuthClient.cs b/src/SeedExhaustive/NoAuth/NoAuthClient.cs
+index 05380906360..247c5cb11a5 100644
+--- a/src/SeedExhaustive/NoAuth/NoAuthClient.cs
++++ b/src/SeedExhaustive/NoAuth/NoAuthClient.cs
+@@ -61,7 +61,7 @@ public partial class NoAuthClient : INoAuthClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+diff --git a/src/SeedExhaustive/NoReqBody/NoReqBodyClient.cs b/src/SeedExhaustive/NoReqBody/NoReqBodyClient.cs
+index 835387c9298..176cde8c6c7 100644
+--- a/src/SeedExhaustive/NoReqBody/NoReqBodyClient.cs
++++ b/src/SeedExhaustive/NoReqBody/NoReqBodyClient.cs
+@@ -60,7 +60,7 @@ public partial class NoReqBodyClient : INoReqBodyClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }
+@@ -124,7 +124,7 @@ public partial class NoReqBodyClient : INoReqBodyClient
+                 throw new SeedExhaustiveApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+-                    responseBody,
++                    null,
+                     e
+                 );
+             }

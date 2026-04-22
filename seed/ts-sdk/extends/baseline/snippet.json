@@ -1,0 +1,16 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/extends/extended-inline-request-body",
+                "method": "POST",
+                "identifier_override": "endpoint_.extendedInlineRequestBody"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedExtendsClient } from \"@fern/extends\";\n\nconst client = new SeedExtendsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.extendedInlineRequestBody({\n    unique: \"unique\",\n    name: \"name\",\n    docs: \"docs\"\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}

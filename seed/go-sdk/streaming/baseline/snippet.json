@@ -1,0 +1,26 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/generate-stream",
+                "method": "POST",
+                "identifier_override": "endpoint_dummy.generate-stream"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/streaming/fern\"\n\tfernclient \"github.com/streaming/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Dummy.GenerateStream(\n\tcontext.TODO(),\n\t\u0026fern.GenerateStreamRequest{},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/generate",
+                "method": "POST",
+                "identifier_override": "endpoint_dummy.generate"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/streaming/fern\"\n\tfernclient \"github.com/streaming/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Dummy.Generate(\n\tcontext.TODO(),\n\t\u0026fern.Generateequest{},\n)\n"
+            }
+        }
+    ]
+}

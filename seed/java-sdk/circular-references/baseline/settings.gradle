@@ -1,0 +1,3 @@
+rootProject.name = 'circular-references'
+
+include 'sample-app'

@@ -1,0 +1,76 @@
+openapi: 3.1.0
+info:
+  title: extends
+  version: 0.0.0
+paths:
+  /extends/extended-inline-request-body:
+    post:
+      operationId: extendedInlineRequestBody
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '204':
+          description: No content
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                unique:
+                  type: string
+              required:
+                - unique
+              allOf:
+                - $ref: '#/components/schemas/ExampleType'
+components:
+  schemas:
+    ExampleType:
+      title: ExampleType
+      type: object
+      properties:
+        name:
+          type: string
+          examples:
+            - Example
+      required:
+        - name
+      allOf:
+        - $ref: '#/components/schemas/Docs'
+    NestedType:
+      title: NestedType
+      type: object
+      properties:
+        name:
+          type: string
+          examples:
+            - NestedExample
+      required:
+        - name
+      allOf:
+        - $ref: '#/components/schemas/JSON'
+    Docs:
+      title: Docs
+      type: object
+      properties:
+        docs:
+          type: string
+          examples:
+            - Types extend this type to include a docs property.
+      required:
+        - docs
+    JSON:
+      title: JSON
+      type: object
+      properties:
+        raw:
+          type: string
+          examples:
+            - '{"docs": true, "json": true}'
+      required:
+        - raw
+      allOf:
+        - $ref: '#/components/schemas/Docs'
+  securitySchemes: {}

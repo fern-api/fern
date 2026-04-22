@@ -1,0 +1,49 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/token",
+                "method": "POST",
+                "identifier_override": "endpoint_auth.getToken"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedInferredAuthImplicitApiKeyClient } from \"@fern/inferred-auth-implicit-api-key\";\n\nconst client = new SeedInferredAuthImplicitApiKeyClient({ environment: \"YOUR_BASE_URL\" });\nawait client.auth.getToken({\n    \"X-Api-Key\": \"api_key\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/nested-no-auth/get-something",
+                "method": "GET",
+                "identifier_override": "endpoint_nested-no-auth/api.getSomething"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedInferredAuthImplicitApiKeyClient } from \"@fern/inferred-auth-implicit-api-key\";\n\nconst client = new SeedInferredAuthImplicitApiKeyClient({ environment: \"YOUR_BASE_URL\" });\nawait client.nestedNoAuth.api.getSomething();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/nested/get-something",
+                "method": "GET",
+                "identifier_override": "endpoint_nested/api.getSomething"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedInferredAuthImplicitApiKeyClient } from \"@fern/inferred-auth-implicit-api-key\";\n\nconst client = new SeedInferredAuthImplicitApiKeyClient({ environment: \"YOUR_BASE_URL\" });\nawait client.nested.api.getSomething();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/get-something",
+                "method": "GET",
+                "identifier_override": "endpoint_simple.getSomething"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedInferredAuthImplicitApiKeyClient } from \"@fern/inferred-auth-implicit-api-key\";\n\nconst client = new SeedInferredAuthImplicitApiKeyClient({ environment: \"YOUR_BASE_URL\" });\nawait client.simple.getSomething();\n"
+            }
+        }
+    ],
+    "types": {}
+}

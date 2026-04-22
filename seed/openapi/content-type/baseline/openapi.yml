@@ -1,0 +1,221 @@
+openapi: 3.1.0
+info:
+  title: content-types
+  version: 0.0.0
+paths:
+  /:
+    patch:
+      operationId: service_patch
+      tags:
+        - Service
+      parameters: []
+      responses:
+        '204':
+          description: No content
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                application:
+                  type:
+                    - string
+                    - 'null'
+                require_auth:
+                  type:
+                    - boolean
+                    - 'null'
+              required:
+                - application
+                - require_auth
+  /complex/{id}:
+    patch:
+      description: |-
+        Update with JSON merge patch - complex types.
+        This endpoint demonstrates the distinction between:
+        - optional<T> fields (can be present or absent, but not null)
+        - optional<nullable<T>> fields (can be present, absent, or null)
+      operationId: service_patchComplex
+      tags:
+        - Service
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No content
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type:
+                    - string
+                    - 'null'
+                age:
+                  type:
+                    - integer
+                    - 'null'
+                active:
+                  type:
+                    - boolean
+                    - 'null'
+                metadata:
+                  type:
+                    - object
+                    - 'null'
+                tags:
+                  type:
+                    - array
+                    - 'null'
+                  items:
+                    type: string
+                email:
+                  type:
+                    - string
+                    - 'null'
+                nickname:
+                  type:
+                    - string
+                    - 'null'
+                bio:
+                  type:
+                    - string
+                    - 'null'
+                profileImageUrl:
+                  type:
+                    - string
+                    - 'null'
+                settings:
+                  type:
+                    - object
+                    - 'null'
+  /named-mixed/{id}:
+    patch:
+      description: >-
+        Named request with mixed optional/nullable fields and merge-patch
+        content type.
+
+        This should trigger the NPE issue when optional fields aren't
+        initialized.
+      operationId: service_namedPatchWithMixed
+      tags:
+        - Service
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No content
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                appId:
+                  type:
+                    - string
+                    - 'null'
+                instructions:
+                  type:
+                    - string
+                    - 'null'
+                active:
+                  type:
+                    - boolean
+                    - 'null'
+              required:
+                - instructions
+                - active
+  /optional-merge-patch-test:
+    patch:
+      description: >-
+        Test endpoint to verify Optional field initialization and JsonSetter
+        with Nulls.SKIP.
+
+        This endpoint should:
+
+        1. Not NPE when fields are not provided (tests initialization)
+
+        2. Not NPE when fields are explicitly null in JSON (tests Nulls.SKIP)
+      operationId: service_optionalMergePatchTest
+      tags:
+        - Service
+      parameters: []
+      responses:
+        '204':
+          description: No content
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                requiredField:
+                  type: string
+                optionalString:
+                  type:
+                    - string
+                    - 'null'
+                optionalInteger:
+                  type:
+                    - integer
+                    - 'null'
+                optionalBoolean:
+                  type:
+                    - boolean
+                    - 'null'
+                nullableString:
+                  type:
+                    - string
+                    - 'null'
+              required:
+                - requiredField
+                - nullableString
+  /regular/{id}:
+    patch:
+      description: Regular PATCH endpoint without merge-patch semantics
+      operationId: service_regularPatch
+      tags:
+        - Service
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No content
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                field1:
+                  type:
+                    - string
+                    - 'null'
+                field2:
+                  type:
+                    - integer
+                    - 'null'
+components:
+  schemas: {}
+  securitySchemes: {}

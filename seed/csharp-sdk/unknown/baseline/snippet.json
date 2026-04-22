@@ -1,0 +1,29 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/",
+                "method": "POST",
+                "identifier_override": "endpoint_unknown.post"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedUnknownAsAny;\n\nvar client = new SeedUnknownAsAnyClient();\nawait client.Unknown.PostAsync(new Dictionary<object, object?>() { { \"key\", \"value\" } });\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/with-object",
+                "method": "POST",
+                "identifier_override": "endpoint_unknown.postObject"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedUnknownAsAny;\n\nvar client = new SeedUnknownAsAnyClient();\nawait client.Unknown.PostObjectAsync(\n    new MyObject { Unknown = new Dictionary<object, object?>() { { \"key\", \"value\" } } }\n);\n"
+            }
+        }
+    ]
+}

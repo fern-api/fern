@@ -1,0 +1,29 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/{id}/",
+                "method": "POST",
+                "identifier_override": "endpoint_.echo"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedPackageYml;\n\nvar client = new SeedPackageYmlClient();\nawait client.EchoAsync(\"id-ksfd9c1\", new EchoRequest { Name = \"Hello world!\", Size = 20 });\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/{id}/{nestedId}",
+                "method": "GET",
+                "identifier_override": "endpoint_service.nop"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedPackageYml;\n\nvar client = new SeedPackageYmlClient();\nawait client.Service.NopAsync(\"id-a2ijs82\", \"id-219xca8\");\n"
+            }
+        }
+    ]
+}

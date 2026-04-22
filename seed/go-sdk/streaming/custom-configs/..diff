@@ -1,0 +1,520 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index cef89e12341..7c73e5fa88b 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -3,12 +3,16 @@
+   "generatorName": "fernapi/fern-go-sdk",
+   "generatorVersion": "local",
+   "generatorConfig": {
+-    "enableWireTests": false
++    "enableWireTests": false,
++    "packageName": "stream",
++    "module": {
++      "path": "github.com/fern-api/stream-go"
++    }
+   },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "manual",
+-  "requestedVersion": "0.0.1",
++  "requestedVersion": "v2.0.0",
+   "ciProvider": null,
+-  "sdkVersion": "v0.0.1"
++  "sdkVersion": "v2.0.0"
+ }
+\ No newline at end of file
+diff --git a/README.md b/README.md
+index 33ba2ad5542..d9230e9549e 100644
+--- a/README.md
++++ b/README.md
+@@ -32,13 +32,13 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/streaming/fern"
+-    client "github.com/streaming/fern/client"
++    stream "github.com/fern-api/stream-go/v2"
++    client "github.com/fern-api/stream-go/v2/client"
+ )
+ 
+ func do() {
+     client := client.NewClient()
+-    request := &fern.GenerateStreamRequest{
++    request := &stream.GenerateStreamRequest{
+         NumEvents: 1,
+     }
+     client.Dummy.GenerateStream(
+diff --git a/client/client.go b/client/client.go
+index 55e0b13f67a..902525e7321 100644
+--- a/client/client.go
++++ b/client/client.go
+@@ -3,10 +3,10 @@
+ package client
+ 
+ import (
+-	core "github.com/streaming/fern/core"
+-	dummy "github.com/streaming/fern/dummy"
+-	internal "github.com/streaming/fern/internal"
+-	option "github.com/streaming/fern/option"
++	core "github.com/fern-api/stream-go/v2/core"
++	dummy "github.com/fern-api/stream-go/v2/dummy"
++	internal "github.com/fern-api/stream-go/v2/internal"
++	option "github.com/fern-api/stream-go/v2/option"
+ )
+ 
+ type Client struct {
+diff --git a/client/client_test.go b/client/client_test.go
+index 62da4e6e6cf..6b0ee5caf60 100644
+--- a/client/client_test.go
++++ b/client/client_test.go
+@@ -3,7 +3,7 @@
+ package client
+ 
+ import (
+-	option "github.com/streaming/fern/option"
++	option "github.com/fern-api/stream-go/v2/option"
+ 	assert "github.com/stretchr/testify/assert"
+ 	http "net/http"
+ 	testing "testing"
+diff --git a/core/request_option.go b/core/request_option.go
+index 766967ff20d..20735b187e7 100644
+--- a/core/request_option.go
++++ b/core/request_option.go
+@@ -49,9 +49,9 @@ func (r *RequestOptions) ToHeader() http.Header { return r.cloneHeader() }
+ func (r *RequestOptions) cloneHeader() http.Header {
+ 	headers := r.HTTPHeader.Clone()
+ 	headers.Set("X-Fern-Language", "Go")
+-	headers.Set("X-Fern-SDK-Name", "github.com/streaming/fern")
+-	headers.Set("X-Fern-SDK-Version", "v0.0.1")
+-	headers.Set("User-Agent", "github.com/streaming/fern/0.0.1")
++	headers.Set("X-Fern-SDK-Name", "github.com/fern-api/stream-go/v2")
++	headers.Set("X-Fern-SDK-Version", "v2.0.0")
++	headers.Set("User-Agent", "github.com/streaming/fern/v2.0.0")
+ 	return headers
+ }
+ 
+diff --git a/dummy/client.go b/dummy/client.go
+index 08e395ed466..b267826144e 100644
+--- a/dummy/client.go
++++ b/dummy/client.go
+@@ -6,10 +6,10 @@ import (
+ 	context "context"
+ 	http "net/http"
+ 
+-	fern "github.com/streaming/fern"
+-	core "github.com/streaming/fern/core"
+-	internal "github.com/streaming/fern/internal"
+-	option "github.com/streaming/fern/option"
++	stream "github.com/fern-api/stream-go/v2"
++	core "github.com/fern-api/stream-go/v2/core"
++	internal "github.com/fern-api/stream-go/v2/internal"
++	option "github.com/fern-api/stream-go/v2/option"
+ )
+ 
+ type Client struct {
+@@ -36,9 +36,9 @@ func NewClient(options *core.RequestOptions) *Client {
+ 
+ func (c *Client) GenerateStream(
+ 	ctx context.Context,
+-	request *fern.GenerateStreamRequest,
++	request *stream.GenerateStreamRequest,
+ 	opts ...option.RequestOption,
+-) (*core.Stream[fern.StreamResponse], error) {
++) (*core.Stream[stream.StreamResponse], error) {
+ 	options := core.NewRequestOptions(opts...)
+ 	baseURL := internal.ResolveBaseURL(
+ 		options.BaseURL,
+@@ -50,7 +50,7 @@ func (c *Client) GenerateStream(
+ 		c.options.ToHeader(),
+ 		options.ToHeader(),
+ 	)
+-	streamer := internal.NewStreamer[fern.StreamResponse](c.caller)
++	streamer := internal.NewStreamer[stream.StreamResponse](c.caller)
+ 	return streamer.Stream(
+ 		ctx,
+ 		&internal.StreamParams{
+@@ -63,16 +63,16 @@ func (c *Client) GenerateStream(
+ 			Client:          options.HTTPClient,
+ 			MaxBufSize:      options.MaxBufSize,
+ 			Request:         request,
+-			ErrorDecoder:    internal.NewErrorDecoder(fern.ErrorCodes),
++			ErrorDecoder:    internal.NewErrorDecoder(stream.ErrorCodes),
+ 		},
+ 	)
+ }
+ 
+ func (c *Client) Generate(
+ 	ctx context.Context,
+-	request *fern.Generateequest,
++	request *stream.Generateequest,
+ 	opts ...option.RequestOption,
+-) (*fern.StreamResponse, error) {
++) (*stream.StreamResponse, error) {
+ 	response, err := c.WithRawResponse.Generate(
+ 		ctx,
+ 		request,
+diff --git a/dummy/raw_client.go b/dummy/raw_client.go
+index d5a401c67cc..3817f1ba9b4 100644
+--- a/dummy/raw_client.go
++++ b/dummy/raw_client.go
+@@ -6,10 +6,10 @@ import (
+ 	context "context"
+ 	http "net/http"
+ 
+-	fern "github.com/streaming/fern"
+-	core "github.com/streaming/fern/core"
+-	internal "github.com/streaming/fern/internal"
+-	option "github.com/streaming/fern/option"
++	stream "github.com/fern-api/stream-go/v2"
++	core "github.com/fern-api/stream-go/v2/core"
++	internal "github.com/fern-api/stream-go/v2/internal"
++	option "github.com/fern-api/stream-go/v2/option"
+ )
+ 
+ type RawClient struct {
+@@ -33,9 +33,9 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
+ 
+ func (r *RawClient) Generate(
+ 	ctx context.Context,
+-	request *fern.Generateequest,
++	request *stream.Generateequest,
+ 	opts ...option.RequestOption,
+-) (*core.Response[*fern.StreamResponse], error) {
++) (*core.Response[*stream.StreamResponse], error) {
+ 	options := core.NewRequestOptions(opts...)
+ 	baseURL := internal.ResolveBaseURL(
+ 		options.BaseURL,
+@@ -47,7 +47,7 @@ func (r *RawClient) Generate(
+ 		r.options.ToHeader(),
+ 		options.ToHeader(),
+ 	)
+-	var response *fern.StreamResponse
++	var response *stream.StreamResponse
+ 	raw, err := r.caller.Call(
+ 		ctx,
+ 		&internal.CallParams{
+@@ -65,7 +65,7 @@ func (r *RawClient) Generate(
+ 	if err != nil {
+ 		return nil, err
+ 	}
+-	return &core.Response[*fern.StreamResponse]{
++	return &core.Response[*stream.StreamResponse]{
+ 		StatusCode: raw.StatusCode,
+ 		Header:     raw.Header,
+ 		Body:       response,
+diff --git a/dummy.go b/dummy.go
+index 99f7b334c50..5b835191bf9 100644
+--- a/dummy.go
++++ b/dummy.go
+@@ -1,11 +1,11 @@
+ // Code generated by Fern. DO NOT EDIT.
+ 
+-package streaming
++package stream
+ 
+ import (
+ 	json "encoding/json"
+ 	fmt "fmt"
+-	internal "github.com/streaming/fern/internal"
++	internal "github.com/fern-api/stream-go/v2/internal"
+ 	big "math/big"
+ )
+ 
+diff --git a/dummy_test.go b/dummy_test.go
+index b9d5008186b..c7ad96ec965 100644
+--- a/dummy_test.go
++++ b/dummy_test.go
+@@ -1,6 +1,6 @@
+ // Code generated by Fern. DO NOT EDIT.
+ 
+-package streaming
++package stream
+ 
+ import (
+ 	json "encoding/json"
+diff --git a/dynamic-snippets/example0/snippet.go b/dynamic-snippets/example0/snippet.go
+index 3faecc8b693..b81286eb6bf 100644
+--- a/dynamic-snippets/example0/snippet.go
++++ b/dynamic-snippets/example0/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/streaming/fern"
+-    client "github.com/streaming/fern/client"
+-    option "github.com/streaming/fern/option"
++    stream "github.com/fern-api/stream-go/v2"
++    client "github.com/fern-api/stream-go/v2/client"
++    option "github.com/fern-api/stream-go/v2/option"
+ )
+ 
+ func do() {
+@@ -14,7 +14,7 @@ func do() {
+             "https://api.fern.com",
+         ),
+     )
+-    request := &fern.GenerateStreamRequest{
++    request := &stream.GenerateStreamRequest{
+         NumEvents: 1,
+     }
+     client.Dummy.GenerateStream(
+diff --git a/dynamic-snippets/example1/snippet.go b/dynamic-snippets/example1/snippet.go
+index 960ef90822d..c5570cfb5a7 100644
+--- a/dynamic-snippets/example1/snippet.go
++++ b/dynamic-snippets/example1/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/streaming/fern"
+-    client "github.com/streaming/fern/client"
+-    option "github.com/streaming/fern/option"
++    stream "github.com/fern-api/stream-go/v2"
++    client "github.com/fern-api/stream-go/v2/client"
++    option "github.com/fern-api/stream-go/v2/option"
+ )
+ 
+ func do() {
+@@ -14,7 +14,7 @@ func do() {
+             "https://api.fern.com",
+         ),
+     )
+-    request := &fern.Generateequest{
++    request := &stream.Generateequest{
+         NumEvents: 5,
+     }
+     client.Dummy.Generate(
+diff --git a/dynamic-snippets/example2/snippet.go b/dynamic-snippets/example2/snippet.go
+index 128fdd0b894..b24bbe7682a 100644
+--- a/dynamic-snippets/example2/snippet.go
++++ b/dynamic-snippets/example2/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/streaming/fern"
+-    client "github.com/streaming/fern/client"
+-    option "github.com/streaming/fern/option"
++    stream "github.com/fern-api/stream-go/v2"
++    client "github.com/fern-api/stream-go/v2/client"
++    option "github.com/fern-api/stream-go/v2/option"
+ )
+ 
+ func do() {
+@@ -14,7 +14,7 @@ func do() {
+             "https://api.fern.com",
+         ),
+     )
+-    request := &fern.Generateequest{
++    request := &stream.Generateequest{
+         NumEvents: 1,
+     }
+     client.Dummy.Generate(
+diff --git a/error_codes.go b/error_codes.go
+index 55f7139e6d2..fd0d4a5da6d 100644
+--- a/error_codes.go
++++ b/error_codes.go
+@@ -1,9 +1,9 @@
+ // Code generated by Fern. DO NOT EDIT.
+ 
+-package streaming
++package stream
+ 
+ import (
+-	internal "github.com/streaming/fern/internal"
++	internal "github.com/fern-api/stream-go/v2/internal"
+ )
+ 
+ var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{}
+diff --git a/file_param.go b/file_param.go
+index 17e612d089e..fb9b382e728 100644
+--- a/file_param.go
++++ b/file_param.go
+@@ -1,4 +1,4 @@
+-package streaming
++package stream
+ 
+ import (
+ 	"io"
+diff --git a/go.mod b/go.mod
+index 34de15e5679..b7fa6c1b699 100644
+--- a/go.mod
++++ b/go.mod
+@@ -1,4 +1,4 @@
+-module github.com/streaming/fern
++module github.com/fern-api/stream-go/v2
+ 
+ go 1.21
+ 
+diff --git a/internal/caller.go b/internal/caller.go
+index bbc3f408087..3f62d9e9cc4 100644
+--- a/internal/caller.go
++++ b/internal/caller.go
+@@ -12,7 +12,7 @@ import (
+ 	"reflect"
+ 	"strings"
+ 
+-	"github.com/streaming/fern/core"
++	"github.com/fern-api/stream-go/v2/core"
+ )
+ 
+ const (
+diff --git a/internal/caller_test.go b/internal/caller_test.go
+index f858b50de56..9c9fff8783a 100644
+--- a/internal/caller_test.go
++++ b/internal/caller_test.go
+@@ -14,7 +14,7 @@ import (
+ 	"strings"
+ 	"testing"
+ 
+-	"github.com/streaming/fern/core"
++	"github.com/fern-api/stream-go/v2/core"
+ 	"github.com/stretchr/testify/assert"
+ 	"github.com/stretchr/testify/require"
+ )
+diff --git a/internal/error_decoder.go b/internal/error_decoder.go
+index 34c3f2a4917..e04ba809306 100644
+--- a/internal/error_decoder.go
++++ b/internal/error_decoder.go
+@@ -8,7 +8,7 @@ import (
+ 	"io"
+ 	"net/http"
+ 
+-	"github.com/streaming/fern/core"
++	"github.com/fern-api/stream-go/v2/core"
+ )
+ 
+ // ErrorCodes maps HTTP status codes to error constructors.
+diff --git a/internal/error_decoder_test.go b/internal/error_decoder_test.go
+index adea667ecae..604c09120ac 100644
+--- a/internal/error_decoder_test.go
++++ b/internal/error_decoder_test.go
+@@ -6,7 +6,7 @@ import (
+ 	"net/http"
+ 	"testing"
+ 
+-	"github.com/streaming/fern/core"
++	"github.com/fern-api/stream-go/v2/core"
+ 	"github.com/stretchr/testify/assert"
+ )
+ 
+diff --git a/internal/retrier_test.go b/internal/retrier_test.go
+index 160d2da2d69..4f10958caec 100644
+--- a/internal/retrier_test.go
++++ b/internal/retrier_test.go
+@@ -10,7 +10,7 @@ import (
+ 	"testing"
+ 	"time"
+ 
+-	"github.com/streaming/fern/core"
++	"github.com/fern-api/stream-go/v2/core"
+ 	"github.com/stretchr/testify/assert"
+ 	"github.com/stretchr/testify/require"
+ )
+diff --git a/internal/streamer.go b/internal/streamer.go
+index fc7dc82aaf8..bf9346fbc5c 100644
+--- a/internal/streamer.go
++++ b/internal/streamer.go
+@@ -5,7 +5,7 @@ import (
+ 	"net/http"
+ 	"net/url"
+ 
+-	"github.com/streaming/fern/core"
++	"github.com/fern-api/stream-go/v2/core"
+ )
+ 
+ const (
+diff --git a/option/request_option.go b/option/request_option.go
+index 0a6cf9dac7c..f011f7aed71 100644
+--- a/option/request_option.go
++++ b/option/request_option.go
+@@ -3,7 +3,7 @@
+ package option
+ 
+ import (
+-	core "github.com/streaming/fern/core"
++	core "github.com/fern-api/stream-go/v2/core"
+ 	http "net/http"
+ 	url "net/url"
+ )
+diff --git a/pointer.go b/pointer.go
+index 96c165d6ebf..1fad7c230cb 100644
+--- a/pointer.go
++++ b/pointer.go
+@@ -1,4 +1,4 @@
+-package streaming
++package stream
+ 
+ import (
+ 	"time"
+diff --git a/pointer_test.go b/pointer_test.go
+index 0c3551c51c6..973091c2ff2 100644
+--- a/pointer_test.go
++++ b/pointer_test.go
+@@ -1,4 +1,4 @@
+-package streaming
++package stream
+ 
+ import (
+ 	"testing"
+diff --git a/reference.md b/reference.md
+index ba553389e78..e3af823a919 100644
+--- a/reference.md
++++ b/reference.md
+@@ -1,6 +1,6 @@
+ # Reference
+ ## Dummy
+-<details><summary><code>client.Dummy.GenerateStream(request) -> fern.StreamResponse</code></summary>
++<details><summary><code>client.Dummy.GenerateStream(request) -> stream.StreamResponse</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -13,7 +13,7 @@
+ <dd>
+ 
+ ```go
+-request := &fern.GenerateStreamRequest{
++request := &stream.GenerateStreamRequest{
+         NumEvents: 1,
+     }
+ client.Dummy.GenerateStream(
+@@ -55,7 +55,7 @@ client.Dummy.GenerateStream(
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.Dummy.Generate(request) -> *fern.StreamResponse</code></summary>
++<details><summary><code>client.Dummy.Generate(request) -> *stream.StreamResponse</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -68,7 +68,7 @@ client.Dummy.GenerateStream(
+ <dd>
+ 
+ ```go
+-request := &fern.Generateequest{
++request := &stream.Generateequest{
+         NumEvents: 5,
+     }
+ client.Dummy.Generate(
+diff --git a/snippet.json b/snippet.json
+index 870f5184f03..889c9ac5904 100644
+--- a/snippet.json
++++ b/snippet.json
+@@ -8,7 +8,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/streaming/fern\"\n\tfernclient \"github.com/streaming/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Dummy.GenerateStream(\n\tcontext.TODO(),\n\t\u0026fern.GenerateStreamRequest{},\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\tv2 \"github.com/fern-api/stream-go/v2\"\n\tv2client \"github.com/fern-api/stream-go/v2/client\"\n)\n\nclient := v2client.NewClient()\nresponse, err := client.Dummy.GenerateStream(\n\tcontext.TODO(),\n\t\u0026v2.GenerateStreamRequest{},\n)\n"
+             }
+         },
+         {
+@@ -19,7 +19,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/streaming/fern\"\n\tfernclient \"github.com/streaming/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Dummy.Generate(\n\tcontext.TODO(),\n\t\u0026fern.Generateequest{},\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\tv2 \"github.com/fern-api/stream-go/v2\"\n\tv2client \"github.com/fern-api/stream-go/v2/client\"\n)\n\nclient := v2client.NewClient()\nresponse, err := client.Dummy.Generate(\n\tcontext.TODO(),\n\t\u0026v2.Generateequest{},\n)\n"
+             }
+         }
+     ]

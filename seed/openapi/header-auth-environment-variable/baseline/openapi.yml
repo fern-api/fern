@@ -1,0 +1,28 @@
+openapi: 3.1.0
+info:
+  title: header-token-environment-variable
+  version: 0.0.0
+paths:
+  /apiKey:
+    get:
+      description: GET request with custom api key
+      operationId: service_getWithBearerToken
+      tags:
+        - Service
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: string
+      security:
+        - Header: []
+components:
+  schemas: {}
+  securitySchemes:
+    Header:
+      type: apiKey
+      in: header
+      name: x-api-key

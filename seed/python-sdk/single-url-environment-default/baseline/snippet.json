@@ -1,0 +1,18 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/dummy",
+                "method": "GET",
+                "identifier_override": "endpoint_dummy.getDummy"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedSingleUrlEnvironmentDefault\n\nclient = SeedSingleUrlEnvironmentDefault(\n    token=\"YOUR_TOKEN\",\n)\nclient.dummy.get_dummy()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedSingleUrlEnvironmentDefault\n\nclient = AsyncSeedSingleUrlEnvironmentDefault(\n    token=\"YOUR_TOKEN\",\n)\n\n\nasync def main() -> None:\n    await client.dummy.get_dummy()\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        }
+    ]
+}

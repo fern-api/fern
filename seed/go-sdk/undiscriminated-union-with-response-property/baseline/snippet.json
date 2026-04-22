@@ -1,0 +1,26 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/union",
+                "method": "GET",
+                "identifier_override": "endpoint_.getUnion"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/undiscriminated-union-with-response-property/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.GetUnion(\n\tcontext.TODO(),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/unions",
+                "method": "GET",
+                "identifier_override": "endpoint_.listUnions"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/undiscriminated-union-with-response-property/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.ListUnions(\n\tcontext.TODO(),\n)\n"
+            }
+        }
+    ]
+}

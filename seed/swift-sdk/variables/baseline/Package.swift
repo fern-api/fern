@@ -1,0 +1,31 @@
+// swift-tools-version: 5.7
+
+import PackageDescription
+
+let package = Package(
+    name: "Variables",
+    platforms: [
+        .iOS(.v15),
+        .macOS(.v12),
+        .tvOS(.v15),
+        .watchOS(.v8)
+    ],
+    products: [
+        .library(
+            name: "Variables",
+            targets: ["Variables"]
+        )
+    ],
+    dependencies: [],
+    targets: [
+        .target(
+            name: "Variables",
+            path: "Sources"
+        ),
+        .testTarget(
+            name: "VariablesTests",
+            dependencies: ["Variables"],
+            path: "Tests"
+        )
+    ]
+)

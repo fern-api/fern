@@ -1,0 +1,62 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 200d96787a2..4819d29235a 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,7 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-csharp-sdk",
+   "generatorVersion": "local",
+-  "generatorConfig": {},
++  "generatorConfig": {
++    "pascal-case-environments": false
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "manual",
+diff --git a/README.md b/README.md
+index 38ea3df72bd..be0d1c59919 100644
+--- a/README.md
++++ b/README.md
+@@ -55,7 +55,7 @@ using SeedMultiUrlEnvironment;
+ 
+ var client = new SeedMultiUrlEnvironmentClient(new ClientOptions
+ {
+-    Environment = SeedMultiUrlEnvironmentEnvironment.Production
++    Environment = SeedMultiUrlEnvironmentEnvironment.PRODUCTION
+ });
+ ```
+ 
+diff --git a/src/SeedMultiUrlEnvironment/Core/Public/ClientOptions.cs b/src/SeedMultiUrlEnvironment/Core/Public/ClientOptions.cs
+index c958379d2af..c728eee9a28 100644
+--- a/src/SeedMultiUrlEnvironment/Core/Public/ClientOptions.cs
++++ b/src/SeedMultiUrlEnvironment/Core/Public/ClientOptions.cs
+@@ -19,7 +19,7 @@ public partial class ClientOptions
+ #else
+         set;
+ #endif
+-    } = SeedMultiUrlEnvironmentEnvironment.Production;
++    } = SeedMultiUrlEnvironmentEnvironment.PRODUCTION;
+ 
+     /// <summary>
+     /// The http client used to make requests.
+diff --git a/src/SeedMultiUrlEnvironment/Core/Public/SeedMultiUrlEnvironmentEnvironment.cs b/src/SeedMultiUrlEnvironment/Core/Public/SeedMultiUrlEnvironmentEnvironment.cs
+index dc9f6504fcb..9d547a92bba 100644
+--- a/src/SeedMultiUrlEnvironment/Core/Public/SeedMultiUrlEnvironmentEnvironment.cs
++++ b/src/SeedMultiUrlEnvironment/Core/Public/SeedMultiUrlEnvironmentEnvironment.cs
+@@ -3,14 +3,14 @@ namespace SeedMultiUrlEnvironment;
+ [Serializable]
+ public class SeedMultiUrlEnvironmentEnvironment
+ {
+-    public static readonly SeedMultiUrlEnvironmentEnvironment Production =
++    public static readonly SeedMultiUrlEnvironmentEnvironment PRODUCTION =
+         new SeedMultiUrlEnvironmentEnvironment
+         {
+             Ec2 = "https://ec2.aws.com",
+             S3 = "https://s3.aws.com",
+         };
+ 
+-    public static readonly SeedMultiUrlEnvironmentEnvironment Staging =
++    public static readonly SeedMultiUrlEnvironmentEnvironment STAGING =
+         new SeedMultiUrlEnvironmentEnvironment
+         {
+             Ec2 = "https://staging.ec2.aws.com",

@@ -1,0 +1,41 @@
+using SeedAudiences.Core;
+using SeedAudiences.FolderA;
+using SeedAudiences.FolderD;
+
+namespace SeedAudiences;
+
+public partial class SeedAudiencesClient : ISeedAudiencesClient
+{
+    private readonly RawClient _client;
+
+    public SeedAudiencesClient(ClientOptions? clientOptions = null)
+    {
+        clientOptions ??= new ClientOptions();
+        var platformHeaders = new Headers(
+            new Dictionary<string, string>()
+            {
+                { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedAudiences" },
+                { "X-Fern-SDK-Version", Version.Current },
+                { "User-Agent", "Fernaudiences/0.0.1" },
+            }
+        );
+        foreach (var header in platformHeaders)
+        {
+            if (!clientOptions.Headers.ContainsKey(header.Key))
+            {
+                clientOptions.Headers[header.Key] = header.Value;
+            }
+        }
+        _client = new RawClient(clientOptions);
+        FolderA = new FolderAClient(_client);
+        FolderD = new FolderDClient(_client);
+        Foo = new FooClient(_client);
+    }
+
+    public IFolderAClient FolderA { get; }
+
+    public IFolderDClient FolderD { get; }
+
+    public IFooClient Foo { get; }
+}

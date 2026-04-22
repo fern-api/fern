@@ -1,0 +1,129 @@
+diff --git a/dynamic-snippets/example0/snippet.go b/dynamic-snippets/example0/snippet.go
+deleted file mode 100644
+index 09b1b2609e5..00000000000
+--- a/dynamic-snippets/example0/snippet.go
++++ /dev/null
+@@ -1,25 +0,0 @@
+-package example
+-
+-import (
+-    context "context"
+-
+-    fern "github.com/nullable-request-body/fern"
+-    client "github.com/nullable-request-body/fern/client"
+-    option "github.com/nullable-request-body/fern/option"
+-)
+-
+-func do() {
+-    client := client.NewClient(
+-        option.WithBaseURL(
+-            "https://api.fern.com",
+-        ),
+-    )
+-    request := &fern.TestMethodNameTestGroupRequest{
+-        PathParam: "path_param",
+-        Body: &fern.PlainObject{},
+-    }
+-    client.TestGroup.TestMethodName(
+-        context.TODO(),
+-        request,
+-    )
+-}
+diff --git a/dynamic-snippets/example1/snippet.go b/dynamic-snippets/example1/snippet.go
+deleted file mode 100644
+index 6a3527eeee5..00000000000
+--- a/dynamic-snippets/example1/snippet.go
++++ /dev/null
+@@ -1,43 +0,0 @@
+-package example
+-
+-import (
+-    context "context"
+-
+-    fern "github.com/nullable-request-body/fern"
+-    client "github.com/nullable-request-body/fern/client"
+-    option "github.com/nullable-request-body/fern/option"
+-)
+-
+-func do() {
+-    client := client.NewClient(
+-        option.WithBaseURL(
+-            "https://api.fern.com",
+-        ),
+-    )
+-    request := &fern.TestMethodNameTestGroupRequest{
+-        PathParam: "path_param",
+-        QueryParamObject: &fern.PlainObject{
+-            ID: fern.String(
+-                "id",
+-            ),
+-            Name: fern.String(
+-                "name",
+-            ),
+-        },
+-        QueryParamInteger: fern.Int(
+-            1,
+-        ),
+-        Body: &fern.PlainObject{
+-            ID: fern.String(
+-                "id",
+-            ),
+-            Name: fern.String(
+-                "name",
+-            ),
+-        },
+-    }
+-    client.TestGroup.TestMethodName(
+-        context.TODO(),
+-        request,
+-    )
+-}
+diff --git a/dynamic-snippets/example2/snippet.go b/dynamic-snippets/example2/snippet.go
+deleted file mode 100644
+index 6a3527eeee5..00000000000
+--- a/dynamic-snippets/example2/snippet.go
++++ /dev/null
+@@ -1,43 +0,0 @@
+-package example
+-
+-import (
+-    context "context"
+-
+-    fern "github.com/nullable-request-body/fern"
+-    client "github.com/nullable-request-body/fern/client"
+-    option "github.com/nullable-request-body/fern/option"
+-)
+-
+-func do() {
+-    client := client.NewClient(
+-        option.WithBaseURL(
+-            "https://api.fern.com",
+-        ),
+-    )
+-    request := &fern.TestMethodNameTestGroupRequest{
+-        PathParam: "path_param",
+-        QueryParamObject: &fern.PlainObject{
+-            ID: fern.String(
+-                "id",
+-            ),
+-            Name: fern.String(
+-                "name",
+-            ),
+-        },
+-        QueryParamInteger: fern.Int(
+-            1,
+-        ),
+-        Body: &fern.PlainObject{
+-            ID: fern.String(
+-                "id",
+-            ),
+-            Name: fern.String(
+-                "name",
+-            ),
+-        },
+-    }
+-    client.TestGroup.TestMethodName(
+-        context.TODO(),
+-        request,
+-    )
+-}

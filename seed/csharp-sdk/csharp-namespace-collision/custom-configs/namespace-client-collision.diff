@@ -1,0 +1,2451 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 200d96787a2..14baac4af6b 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,7 +2,12 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-csharp-sdk",
+   "generatorVersion": "local",
+-  "generatorConfig": {},
++  "generatorConfig": {
++    "namespace": "Contoso.Net",
++    "client-class-name": "Contoso",
++    "explicit-namespaces": true,
++    "experimental-fully-qualified-namespaces": true
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "manual",
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index 60aa91c0f94..a77c0c0e6af 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -26,27 +26,27 @@ jobs:
+         run: dotnet tool restore
+ 
+       - name: Restore dependencies
+-        run: dotnet restore src/SeedCsharpNamespaceCollision/SeedCsharpNamespaceCollision.csproj
++        run: dotnet restore src/Contoso.Net/Contoso.Net.csproj
+ 
+       - name: Build
+-        run: dotnet build src/SeedCsharpNamespaceCollision/SeedCsharpNamespaceCollision.csproj --no-restore -c Release
++        run: dotnet build src/Contoso.Net/Contoso.Net.csproj --no-restore -c Release
+ 
+       - name: Restore test dependencies
+-        run: dotnet restore src/SeedCsharpNamespaceCollision.Test/SeedCsharpNamespaceCollision.Test.csproj
++        run: dotnet restore src/Contoso.Net.Test/Contoso.Net.Test.csproj
+ 
+       - name: Build tests
+-        run: dotnet build src/SeedCsharpNamespaceCollision.Test/SeedCsharpNamespaceCollision.Test.csproj --no-restore -c Release
++        run: dotnet build src/Contoso.Net.Test/Contoso.Net.Test.csproj --no-restore -c Release
+ 
+       - name: Test
+-        run: dotnet test src/SeedCsharpNamespaceCollision.Test/SeedCsharpNamespaceCollision.Test.csproj --no-restore --no-build -c Release
++        run: dotnet test src/Contoso.Net.Test/Contoso.Net.Test.csproj --no-restore --no-build -c Release
+ 
+       - name: Pack
+         if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+-        run: dotnet pack src/SeedCsharpNamespaceCollision/SeedCsharpNamespaceCollision.csproj --no-build --no-restore -c Release
++        run: dotnet pack src/Contoso.Net/Contoso.Net.csproj --no-build --no-restore -c Release
+ 
+       - name: Publish to NuGet.org
+         if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+         env:
+           NUGET_API_KEY: ${{ secrets.NUGET_API_TOKEN }}
+-        run: dotnet nuget push src/SeedCsharpNamespaceCollision/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source "nuget.org"
++        run: dotnet nuget push src/Contoso.Net/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source "nuget.org"
+ 
+diff --git a/Contoso.Net.slnx b/Contoso.Net.slnx
+new file mode 100644
+index 00000000000..5ab3ac53fcc
+--- /dev/null
++++ b/Contoso.Net.slnx
+@@ -0,0 +1,4 @@
++<Solution>
++  <Project Path="src/Contoso.Net.Test/Contoso.Net.Test.csproj" />
++  <Project Path="src/Contoso.Net/Contoso.Net.csproj" />
++</Solution>
+diff --git a/README.md b/README.md
+index 99a583a27a0..eef4b898f49 100644
+--- a/README.md
++++ b/README.md
+@@ -39,11 +39,11 @@ A full reference for this library is available [here](./reference.md).
+ Instantiate and use the client with the following:
+ 
+ ```csharp
+-using SeedCsharpNamespaceCollision;
+ 
+-var client = new SeedCsharpNamespaceCollisionClient();
++
++var client = new global::Contoso.Net.Contoso();
+ await client.CreateUserAsync(
+-    new SeedCsharpNamespaceCollision.User
++    new global::Contoso.Net.User
+     {
+         Id = "id",
+         Name = "name",
+@@ -59,11 +59,11 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
+ will be thrown.
+ 
+ ```csharp
+-using SeedCsharpNamespaceCollision;
++using Contoso.Net;
+ 
+ try {
+     var response = await client.CreateUserAsync(...);
+-} catch (SeedCsharpNamespaceCollisionApiException e) {
++} catch (ContosoApiException e) {
+     System.Console.WriteLine(e.Body);
+     System.Console.WriteLine(e.StatusCode);
+ }
+@@ -112,7 +112,7 @@ var response = await client.CreateUserAsync(
+ Access raw HTTP response data (status code, headers, URL) alongside parsed response data using the `.WithRawResponse()` method.
+ 
+ ```csharp
+-using SeedCsharpNamespaceCollision;
++using Contoso.Net;
+ 
+ // Access raw response data (status code, headers, etc.) alongside the parsed response
+ var result = await client.CreateUserAsync(...).WithRawResponse();
+diff --git a/SeedCsharpNamespaceCollision.slnx b/SeedCsharpNamespaceCollision.slnx
+deleted file mode 100644
+index b625159dac0..00000000000
+--- a/SeedCsharpNamespaceCollision.slnx
++++ /dev/null
+@@ -1,4 +0,0 @@
+-<Solution>
+-  <Project Path="src/SeedCsharpNamespaceCollision.Test/SeedCsharpNamespaceCollision.Test.csproj" />
+-  <Project Path="src/SeedCsharpNamespaceCollision/SeedCsharpNamespaceCollision.csproj" />
+-</Solution>
+diff --git a/Snippets/Example0.cs b/Snippets/Example0.cs
+index 349d68b0ef8..1af394dc212 100644
+--- a/Snippets/Example0.cs
++++ b/Snippets/Example0.cs
+@@ -1,16 +1,16 @@
+-using SeedCsharpNamespaceCollision;
++using Contoso.Net;
+ 
+ public partial class Examples
+ {
+     public async System.Threading.Tasks.Task Example0() {
+-        var client = new SeedCsharpNamespaceCollisionClient(
++        var client = new Contoso.Net.Contoso(
+             clientOptions: new ClientOptions {
+                 BaseUrl = "https://api.fern.com"
+             }
+         );
+ 
+         await client.CreateUserAsync(
+-            new SeedCsharpNamespaceCollision.User {
++            new Contoso.Net.User {
+                 Id = "id",
+                 Name = "name",
+                 Email = "email",
+diff --git a/Snippets/Example1.cs b/Snippets/Example1.cs
+index 9920f42eab3..6ab3e7a3f33 100644
+--- a/Snippets/Example1.cs
++++ b/Snippets/Example1.cs
+@@ -1,16 +1,16 @@
+-using SeedCsharpNamespaceCollision;
++using Contoso.Net;
+ 
+ public partial class Examples
+ {
+     public async System.Threading.Tasks.Task Example1() {
+-        var client = new SeedCsharpNamespaceCollisionClient(
++        var client = new Contoso.Net.Contoso(
+             clientOptions: new ClientOptions {
+                 BaseUrl = "https://api.fern.com"
+             }
+         );
+ 
+         await client.CreateTaskAsync(
+-            new SeedCsharpNamespaceCollision.Task {
++            new Contoso.Net.Task {
+                 Id = "id",
+                 Name = "name",
+                 Email = "email",
+diff --git a/Snippets/Example2.cs b/Snippets/Example2.cs
+index 5a2f29b84b3..26d3ba701a1 100644
+--- a/Snippets/Example2.cs
++++ b/Snippets/Example2.cs
+@@ -1,9 +1,9 @@
+-using SeedCsharpNamespaceCollision;
++using Contoso.Net;
+ 
+ public partial class Examples
+ {
+     public async System.Threading.Tasks.Task Example2() {
+-        var client = new SeedCsharpNamespaceCollisionClient(
++        var client = new Contoso.Net.Contoso(
+             clientOptions: new ClientOptions {
+                 BaseUrl = "https://api.fern.com"
+             }
+diff --git a/Snippets/Example3.cs b/Snippets/Example3.cs
+index 2a635c7cd71..93ff79688cc 100644
+--- a/Snippets/Example3.cs
++++ b/Snippets/Example3.cs
+@@ -1,10 +1,10 @@
+-using SeedCsharpNamespaceCollision;
+-using SeedCsharpNamespaceCollision.ScimConfiguration;
++using Contoso.Net;
++using Contoso.Net.ScimConfiguration;
+ 
+ public partial class Examples
+ {
+     public async System.Threading.Tasks.Task Example3() {
+-        var client = new SeedCsharpNamespaceCollisionClient(
++        var client = new Contoso.Net.Contoso(
+             clientOptions: new ClientOptions {
+                 BaseUrl = "https://api.fern.com"
+             }
+diff --git a/Snippets/Example4.cs b/Snippets/Example4.cs
+index c06ac73f4ab..2020bc83add 100644
+--- a/Snippets/Example4.cs
++++ b/Snippets/Example4.cs
+@@ -1,9 +1,9 @@
+-using SeedCsharpNamespaceCollision;
++using Contoso.Net;
+ 
+ public partial class Examples
+ {
+     public async System.Threading.Tasks.Task Example4() {
+-        var client = new SeedCsharpNamespaceCollisionClient(
++        var client = new Contoso.Net.Contoso(
+             clientOptions: new ClientOptions {
+                 BaseUrl = "https://api.fern.com"
+             }
+diff --git a/Snippets/Example5.cs b/Snippets/Example5.cs
+index 9661684562f..09a5cdbebec 100644
+--- a/Snippets/Example5.cs
++++ b/Snippets/Example5.cs
+@@ -1,16 +1,16 @@
+-using SeedCsharpNamespaceCollision;
++using Contoso.Net;
+ 
+ public partial class Examples
+ {
+     public async System.Threading.Tasks.Task Example5() {
+-        var client = new SeedCsharpNamespaceCollisionClient(
++        var client = new Contoso.Net.Contoso(
+             clientOptions: new ClientOptions {
+                 BaseUrl = "https://api.fern.com"
+             }
+         );
+ 
+         await client.System.CreateUserAsync(
+-            new SeedCsharpNamespaceCollision.System.User {
++            new Contoso.Net.System.User {
+                 Line1 = "line1",
+                 Line2 = "line2",
+                 City = "city",
+diff --git a/Snippets/Example6.cs b/Snippets/Example6.cs
+index 53d3e8cca38..0f5ae071cd4 100644
+--- a/Snippets/Example6.cs
++++ b/Snippets/Example6.cs
+@@ -1,18 +1,18 @@
+-using SeedCsharpNamespaceCollision;
++using Contoso.Net;
+ 
+ public partial class Examples
+ {
+     public async System.Threading.Tasks.Task Example6() {
+-        var client = new SeedCsharpNamespaceCollisionClient(
++        var client = new Contoso.Net.Contoso(
+             clientOptions: new ClientOptions {
+                 BaseUrl = "https://api.fern.com"
+             }
+         );
+ 
+         await client.System.CreateTaskAsync(
+-            new SeedCsharpNamespaceCollision.System.Task {
++            new Contoso.Net.System.Task {
+                 Name = "name",
+-                User = new SeedCsharpNamespaceCollision.System.User {
++                User = new Contoso.Net.System.User {
+                     Line1 = "line1",
+                     Line2 = "line2",
+                     City = "city",
+@@ -20,7 +20,7 @@ public partial class Examples
+                     Zip = "zip",
+                     Country = "USA"
+                 },
+-                Owner = new SeedCsharpNamespaceCollision.System.User {
++                Owner = new Contoso.Net.System.User {
+                     Line1 = "line1",
+                     Line2 = "line2",
+                     City = "city",
+diff --git a/Snippets/Example7.cs b/Snippets/Example7.cs
+index 2cb276c0aca..33581275bbc 100644
+--- a/Snippets/Example7.cs
++++ b/Snippets/Example7.cs
+@@ -1,9 +1,9 @@
+-using SeedCsharpNamespaceCollision;
++using Contoso.Net;
+ 
+ public partial class Examples
+ {
+     public async System.Threading.Tasks.Task Example7() {
+-        var client = new SeedCsharpNamespaceCollisionClient(
++        var client = new Contoso.Net.Contoso(
+             clientOptions: new ClientOptions {
+                 BaseUrl = "https://api.fern.com"
+             }
+diff --git a/reference.md b/reference.md
+index 3367143bcf6..fae528dc8c1 100644
+--- a/reference.md
++++ b/reference.md
+@@ -1,5 +1,5 @@
+ # Reference
+-<details><summary><code>client.<a href="/src/SeedCsharpNamespaceCollision/SeedCsharpNamespaceCollisionClient.cs">CreateUserAsync</a>(User { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
++<details><summary><code>client.<a href="/src/Contoso.Net/Contoso.cs">CreateUserAsync</a>(User { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -13,7 +13,7 @@
+ 
+ ```csharp
+ await client.CreateUserAsync(
+-    new SeedCsharpNamespaceCollision.User
++    new global::Contoso.Net.User
+     {
+         Id = "id",
+         Name = "name",
+@@ -47,7 +47,7 @@ await client.CreateUserAsync(
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.<a href="/src/SeedCsharpNamespaceCollision/SeedCsharpNamespaceCollisionClient.cs">CreateTaskAsync</a>(Task { ... }) -> WithRawResponseTask&lt;Task&gt;</code></summary>
++<details><summary><code>client.<a href="/src/Contoso.Net/Contoso.cs">CreateTaskAsync</a>(Task { ... }) -> WithRawResponseTask&lt;Task&gt;</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -61,7 +61,7 @@ await client.CreateUserAsync(
+ 
+ ```csharp
+ await client.CreateTaskAsync(
+-    new SeedCsharpNamespaceCollision.Task
++    new global::Contoso.Net.Task
+     {
+         Id = "id",
+         Name = "name",
+@@ -96,7 +96,7 @@ await client.CreateTaskAsync(
+ </details>
+ 
+ ## ScimConfiguration
+-<details><summary><code>client.ScimConfiguration.<a href="/src/SeedCsharpNamespaceCollision/ScimConfiguration/ScimConfigurationClient.cs">GetConfigurationAsync</a>() -> WithRawResponseTask&lt;ScimConfiguration&gt;</code></summary>
++<details><summary><code>client.ScimConfiguration.<a href="/src/Contoso.Net/ScimConfiguration/ScimConfigurationClient.cs">GetConfigurationAsync</a>() -> WithRawResponseTask&lt;ScimConfiguration&gt;</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -121,7 +121,7 @@ await client.ScimConfiguration.GetConfigurationAsync();
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.ScimConfiguration.<a href="/src/SeedCsharpNamespaceCollision/ScimConfiguration/ScimConfigurationClient.cs">CreateTokenAsync</a>(ScimToken { ... }) -> WithRawResponseTask&lt;ScimToken&gt;</code></summary>
++<details><summary><code>client.ScimConfiguration.<a href="/src/Contoso.Net/ScimConfiguration/ScimConfigurationClient.cs">CreateTokenAsync</a>(ScimToken { ... }) -> WithRawResponseTask&lt;ScimToken&gt;</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -169,7 +169,7 @@ await client.ScimConfiguration.CreateTokenAsync(
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.ScimConfiguration.<a href="/src/SeedCsharpNamespaceCollision/ScimConfiguration/ScimConfigurationClient.cs">ListUsersAsync</a>() -> WithRawResponseTask&lt;IEnumerable&lt;User&gt;&gt;</code></summary>
++<details><summary><code>client.ScimConfiguration.<a href="/src/Contoso.Net/ScimConfiguration/ScimConfigurationClient.cs">ListUsersAsync</a>() -> WithRawResponseTask&lt;IEnumerable&lt;User&gt;&gt;</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -195,7 +195,7 @@ await client.ScimConfiguration.ListUsersAsync();
+ </details>
+ 
+ ## System
+-<details><summary><code>client.System.<a href="/src/SeedCsharpNamespaceCollision/System/SystemClient.cs">CreateUserAsync</a>(User { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
++<details><summary><code>client.System.<a href="/src/Contoso.Net/System/SystemClient.cs">CreateUserAsync</a>(User { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -209,7 +209,7 @@ await client.ScimConfiguration.ListUsersAsync();
+ 
+ ```csharp
+ await client.System.CreateUserAsync(
+-    new SeedCsharpNamespaceCollision.System.User
++    new global::Contoso.Net.System.User
+     {
+         Line1 = "line1",
+         Line2 = "line2",
+@@ -245,7 +245,7 @@ await client.System.CreateUserAsync(
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.System.<a href="/src/SeedCsharpNamespaceCollision/System/SystemClient.cs">CreateTaskAsync</a>(Task { ... }) -> WithRawResponseTask&lt;Task&gt;</code></summary>
++<details><summary><code>client.System.<a href="/src/Contoso.Net/System/SystemClient.cs">CreateTaskAsync</a>(Task { ... }) -> WithRawResponseTask&lt;Task&gt;</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -259,10 +259,10 @@ await client.System.CreateUserAsync(
+ 
+ ```csharp
+ await client.System.CreateTaskAsync(
+-    new SeedCsharpNamespaceCollision.System.Task
++    new global::Contoso.Net.System.Task
+     {
+         Name = "name",
+-        User = new SeedCsharpNamespaceCollision.System.User
++        User = new global::Contoso.Net.System.User
+         {
+             Line1 = "line1",
+             Line2 = "line2",
+@@ -271,7 +271,7 @@ await client.System.CreateTaskAsync(
+             Zip = "zip",
+             Country = "USA",
+         },
+-        Owner = new SeedCsharpNamespaceCollision.System.User
++        Owner = new global::Contoso.Net.System.User
+         {
+             Line1 = "line1",
+             Line2 = "line2",
+@@ -308,7 +308,7 @@ await client.System.CreateTaskAsync(
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.System.<a href="/src/SeedCsharpNamespaceCollision/System/SystemClient.cs">GetUserAsync</a>(userId) -> WithRawResponseTask&lt;User&gt;</code></summary>
++<details><summary><code>client.System.<a href="/src/Contoso.Net/System/SystemClient.cs">GetUserAsync</a>(userId) -> WithRawResponseTask&lt;User&gt;</code></summary>
+ <dl>
+ <dd>
+ 
+diff --git a/snippet.json b/snippet.json
+index f036a4d27c3..41e6dccc741 100644
+--- a/snippet.json
++++ b/snippet.json
+@@ -10,7 +10,7 @@
+             },
+             "snippet": {
+                 "type": "csharp",
+-                "client": "using SeedCsharpNamespaceCollision;\n\nvar client = new SeedCsharpNamespaceCollisionClient();\nawait client.CreateUserAsync(\n    new SeedCsharpNamespaceCollision.User\n    {\n        Id = \"id\",\n        Name = \"name\",\n        Email = \"email\",\n        Password = \"password\",\n    }\n);\n"
++                "client": "\n\nvar client = new global::Contoso.Net.Contoso();\nawait client.CreateUserAsync(\n    new global::Contoso.Net.User\n    {\n        Id = \"id\",\n        Name = \"name\",\n        Email = \"email\",\n        Password = \"password\",\n    }\n);\n"
+             }
+         },
+         {
+@@ -22,7 +22,7 @@
+             },
+             "snippet": {
+                 "type": "csharp",
+-                "client": "using SeedCsharpNamespaceCollision;\n\nvar client = new SeedCsharpNamespaceCollisionClient();\nawait client.CreateTaskAsync(\n    new SeedCsharpNamespaceCollision.Task\n    {\n        Id = \"id\",\n        Name = \"name\",\n        Email = \"email\",\n        Password = \"password\",\n    }\n);\n"
++                "client": "\n\nvar client = new global::Contoso.Net.Contoso();\nawait client.CreateTaskAsync(\n    new global::Contoso.Net.Task\n    {\n        Id = \"id\",\n        Name = \"name\",\n        Email = \"email\",\n        Password = \"password\",\n    }\n);\n"
+             }
+         },
+         {
+@@ -34,7 +34,7 @@
+             },
+             "snippet": {
+                 "type": "csharp",
+-                "client": "using SeedCsharpNamespaceCollision;\n\nvar client = new SeedCsharpNamespaceCollisionClient();\nawait client.ScimConfiguration.GetConfigurationAsync();\n"
++                "client": "\n\nvar client = new global::Contoso.Net.Contoso();\nawait client.ScimConfiguration.GetConfigurationAsync();\n"
+             }
+         },
+         {
+@@ -46,7 +46,7 @@
+             },
+             "snippet": {
+                 "type": "csharp",
+-                "client": "using SeedCsharpNamespaceCollision.ScimConfiguration;\nusing SeedCsharpNamespaceCollision;\n\nvar client = new SeedCsharpNamespaceCollisionClient();\nawait client.ScimConfiguration.CreateTokenAsync(\n    new ScimToken\n    {\n        TokenId = \"tokenId\",\n        Token = \"token\",\n        Scopes = new List<string>() { \"scopes\", \"scopes\" },\n        CreatedAt = \"createdAt\",\n    }\n);\n"
++                "client": "using global::Contoso.Net.ScimConfiguration;\n\nvar client = new global::Contoso.Net.Contoso();\nawait client.ScimConfiguration.CreateTokenAsync(\n    new ScimToken\n    {\n        TokenId = \"tokenId\",\n        Token = \"token\",\n        Scopes = new List<string>() { \"scopes\", \"scopes\" },\n        CreatedAt = \"createdAt\",\n    }\n);\n"
+             }
+         },
+         {
+@@ -58,7 +58,7 @@
+             },
+             "snippet": {
+                 "type": "csharp",
+-                "client": "using SeedCsharpNamespaceCollision;\n\nvar client = new SeedCsharpNamespaceCollisionClient();\nawait client.ScimConfiguration.ListUsersAsync();\n"
++                "client": "\n\nvar client = new global::Contoso.Net.Contoso();\nawait client.ScimConfiguration.ListUsersAsync();\n"
+             }
+         },
+         {
+@@ -70,7 +70,7 @@
+             },
+             "snippet": {
+                 "type": "csharp",
+-                "client": "using SeedCsharpNamespaceCollision;\n\nvar client = new SeedCsharpNamespaceCollisionClient();\nawait client.System.CreateUserAsync(\n    new SeedCsharpNamespaceCollision.System.User\n    {\n        Line1 = \"line1\",\n        Line2 = \"line2\",\n        City = \"city\",\n        State = \"state\",\n        Zip = \"zip\",\n        Country = \"USA\",\n    }\n);\n"
++                "client": "\n\nvar client = new global::Contoso.Net.Contoso();\nawait client.System.CreateUserAsync(\n    new global::Contoso.Net.System.User\n    {\n        Line1 = \"line1\",\n        Line2 = \"line2\",\n        City = \"city\",\n        State = \"state\",\n        Zip = \"zip\",\n        Country = \"USA\",\n    }\n);\n"
+             }
+         },
+         {
+@@ -82,7 +82,7 @@
+             },
+             "snippet": {
+                 "type": "csharp",
+-                "client": "using SeedCsharpNamespaceCollision;\n\nvar client = new SeedCsharpNamespaceCollisionClient();\nawait client.System.CreateTaskAsync(\n    new SeedCsharpNamespaceCollision.System.Task\n    {\n        Name = \"name\",\n        User = new SeedCsharpNamespaceCollision.System.User\n        {\n            Line1 = \"line1\",\n            Line2 = \"line2\",\n            City = \"city\",\n            State = \"state\",\n            Zip = \"zip\",\n            Country = \"USA\",\n        },\n        Owner = new SeedCsharpNamespaceCollision.System.User\n        {\n            Line1 = \"line1\",\n            Line2 = \"line2\",\n            City = \"city\",\n            State = \"state\",\n            Zip = \"zip\",\n            Country = \"USA\",\n        },\n    }\n);\n"
++                "client": "\n\nvar client = new global::Contoso.Net.Contoso();\nawait client.System.CreateTaskAsync(\n    new global::Contoso.Net.System.Task\n    {\n        Name = \"name\",\n        User = new global::Contoso.Net.System.User\n        {\n            Line1 = \"line1\",\n            Line2 = \"line2\",\n            City = \"city\",\n            State = \"state\",\n            Zip = \"zip\",\n            Country = \"USA\",\n        },\n        Owner = new global::Contoso.Net.System.User\n        {\n            Line1 = \"line1\",\n            Line2 = \"line2\",\n            City = \"city\",\n            State = \"state\",\n            Zip = \"zip\",\n            Country = \"USA\",\n        },\n    }\n);\n"
+             }
+         },
+         {
+@@ -94,7 +94,7 @@
+             },
+             "snippet": {
+                 "type": "csharp",
+-                "client": "using SeedCsharpNamespaceCollision;\n\nvar client = new SeedCsharpNamespaceCollisionClient();\nawait client.System.GetUserAsync(\"userId\");\n"
++                "client": "\n\nvar client = new global::Contoso.Net.Contoso();\nawait client.System.GetUserAsync(\"userId\");\n"
+             }
+         }
+     ]
+diff --git a/src/SeedCsharpNamespaceCollision/SeedCsharpNamespaceCollision.Custom.props b/src/Contoso.Net/Contoso.Net.Custom.props
+similarity index 100%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/SeedCsharpNamespaceCollision.Custom.props
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/Contoso.Net.Custom.props
+diff --git a/src/SeedCsharpNamespaceCollision/SeedCsharpNamespaceCollision.csproj b/src/Contoso.Net/Contoso.Net.csproj
+similarity index 92%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/SeedCsharpNamespaceCollision.csproj
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/Contoso.Net.csproj
+index 18bfb2f9ff2..1468dc65314 100644
+--- a/src/SeedCsharpNamespaceCollision/SeedCsharpNamespaceCollision.csproj
++++ b/src/Contoso.Net/Contoso.Net.csproj
+@@ -52,12 +52,9 @@
+ 
+   <ItemGroup>
+     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+-      <_Parameter1>SeedCsharpNamespaceCollision.Test</_Parameter1>
++      <_Parameter1>Contoso.Net.Test</_Parameter1>
+     </AssemblyAttribute>
+   </ItemGroup>
+ 
+-  <Import
+-    Project="SeedCsharpNamespaceCollision.Custom.props"
+-    Condition="Exists('SeedCsharpNamespaceCollision.Custom.props')"
+-  />
++  <Import Project="Contoso.Net.Custom.props" Condition="Exists('Contoso.Net.Custom.props')" />
+ </Project>
+diff --git a/src/SeedCsharpNamespaceCollision/SeedCsharpNamespaceCollisionClient.cs b/src/Contoso.Net/Contoso.cs
+similarity index 87%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/SeedCsharpNamespaceCollisionClient.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/Contoso.cs
+index 1687b0c16b3..db56509087c 100644
+--- a/src/SeedCsharpNamespaceCollision/SeedCsharpNamespaceCollisionClient.cs
++++ b/src/Contoso.Net/Contoso.cs
+@@ -1,22 +1,22 @@
++using global::Contoso.Net.Core;
++using global::Contoso.Net.ScimConfiguration;
++using global::Contoso.Net.System;
+ using global::System.Text.Json;
+-using SeedCsharpNamespaceCollision.Core;
+-using SeedCsharpNamespaceCollision.ScimConfiguration;
+-using SeedCsharpNamespaceCollision.System;
+ 
+-namespace SeedCsharpNamespaceCollision;
++namespace Contoso.Net;
+ 
+-public partial class SeedCsharpNamespaceCollisionClient : ISeedCsharpNamespaceCollisionClient
++public partial class Contoso : IContoso
+ {
+     private readonly RawClient _client;
+ 
+-    public SeedCsharpNamespaceCollisionClient(ClientOptions? clientOptions = null)
++    public Contoso(ClientOptions? clientOptions = null)
+     {
+         clientOptions ??= new ClientOptions();
+         var platformHeaders = new Headers(
+             new Dictionary<string, string>()
+             {
+                 { "X-Fern-Language", "C#" },
+-                { "X-Fern-SDK-Name", "SeedCsharpNamespaceCollision" },
++                { "X-Fern-SDK-Name", "Contoso.Net" },
+                 { "X-Fern-SDK-Version", Version.Current },
+                 { "User-Agent", "Ferncsharp-namespace-collision/0.0.1" },
+             }
+@@ -43,7 +43,7 @@ public partial class SeedCsharpNamespaceCollisionClient : ISeedCsharpNamespaceCo
+         CancellationToken cancellationToken = default
+     )
+     {
+-        var _headers = await new SeedCsharpNamespaceCollision.Core.HeadersBuilder.Builder()
++        var _headers = await new global::Contoso.Net.Core.HeadersBuilder.Builder()
+             .Add(_client.Options.Headers)
+             .Add(_client.Options.AdditionalHeaders)
+             .Add(options?.AdditionalHeaders)
+@@ -83,7 +83,7 @@ public partial class SeedCsharpNamespaceCollisionClient : ISeedCsharpNamespaceCo
+             }
+             catch (JsonException e)
+             {
+-                throw new SeedCsharpNamespaceCollisionApiException(
++                throw new ContosoApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+                     responseBody,
+@@ -95,7 +95,7 @@ public partial class SeedCsharpNamespaceCollisionClient : ISeedCsharpNamespaceCo
+             var responseBody = await response
+                 .Raw.Content.ReadAsStringAsync(cancellationToken)
+                 .ConfigureAwait(false);
+-            throw new SeedCsharpNamespaceCollisionApiException(
++            throw new ContosoApiException(
+                 $"Error with status code {response.StatusCode}",
+                 response.StatusCode,
+                 responseBody
+@@ -109,7 +109,7 @@ public partial class SeedCsharpNamespaceCollisionClient : ISeedCsharpNamespaceCo
+         CancellationToken cancellationToken = default
+     )
+     {
+-        var _headers = await new SeedCsharpNamespaceCollision.Core.HeadersBuilder.Builder()
++        var _headers = await new global::Contoso.Net.Core.HeadersBuilder.Builder()
+             .Add(_client.Options.Headers)
+             .Add(_client.Options.AdditionalHeaders)
+             .Add(options?.AdditionalHeaders)
+@@ -149,7 +149,7 @@ public partial class SeedCsharpNamespaceCollisionClient : ISeedCsharpNamespaceCo
+             }
+             catch (JsonException e)
+             {
+-                throw new SeedCsharpNamespaceCollisionApiException(
++                throw new ContosoApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+                     responseBody,
+@@ -161,7 +161,7 @@ public partial class SeedCsharpNamespaceCollisionClient : ISeedCsharpNamespaceCo
+             var responseBody = await response
+                 .Raw.Content.ReadAsStringAsync(cancellationToken)
+                 .ConfigureAwait(false);
+-            throw new SeedCsharpNamespaceCollisionApiException(
++            throw new ContosoApiException(
+                 $"Error with status code {response.StatusCode}",
+                 response.StatusCode,
+                 responseBody
+@@ -171,7 +171,7 @@ public partial class SeedCsharpNamespaceCollisionClient : ISeedCsharpNamespaceCo
+ 
+     /// <example><code>
+     /// await client.CreateUserAsync(
+-    ///     new SeedCsharpNamespaceCollision.User
++    ///     new global::Contoso.Net.User
+     ///     {
+     ///         Id = "id",
+     ///         Name = "name",
+@@ -193,7 +193,7 @@ public partial class SeedCsharpNamespaceCollisionClient : ISeedCsharpNamespaceCo
+ 
+     /// <example><code>
+     /// await client.CreateTaskAsync(
+-    ///     new SeedCsharpNamespaceCollision.Task
++    ///     new global::Contoso.Net.Task
+     ///     {
+     ///         Id = "id",
+     ///         Name = "name",
+diff --git a/src/SeedCsharpNamespaceCollision/Core/ApiResponse.cs b/src/Contoso.Net/Core/ApiResponse.cs
+similarity index 85%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/Core/ApiResponse.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/Core/ApiResponse.cs
+index 94d7cdf4aca..cfd12766530 100644
+--- a/src/SeedCsharpNamespaceCollision/Core/ApiResponse.cs
++++ b/src/Contoso.Net/Core/ApiResponse.cs
+@@ -1,6 +1,6 @@
+ using global::System.Net.Http;
+ 
+-namespace SeedCsharpNamespaceCollision.Core;
++namespace Contoso.Net.Core;
+ 
+ /// <summary>
+ /// The response object returned from the API.
+diff --git a/src/SeedCsharpNamespaceCollision/Core/BaseRequest.cs b/src/Contoso.Net/Core/BaseRequest.cs
+similarity index 97%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/Core/BaseRequest.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/Core/BaseRequest.cs
+index 7c5f6e12791..4e03dcb80f1 100644
+--- a/src/SeedCsharpNamespaceCollision/Core/BaseRequest.cs
++++ b/src/Contoso.Net/Core/BaseRequest.cs
+@@ -2,7 +2,7 @@ using global::System.Net.Http;
+ using global::System.Net.Http.Headers;
+ using global::System.Text;
+ 
+-namespace SeedCsharpNamespaceCollision.Core;
++namespace Contoso.Net.Core;
+ 
+ internal abstract record BaseRequest
+ {
+diff --git a/src/SeedCsharpNamespaceCollision/Core/CollectionItemSerializer.cs b/src/Contoso.Net/Core/CollectionItemSerializer.cs
+similarity index 98%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/Core/CollectionItemSerializer.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/Core/CollectionItemSerializer.cs
+index 0e4292d9ca1..dadcd14be7a 100644
+--- a/src/SeedCsharpNamespaceCollision/Core/CollectionItemSerializer.cs
++++ b/src/Contoso.Net/Core/CollectionItemSerializer.cs
+@@ -1,7 +1,7 @@
+ using global::System.Text.Json;
+ using global::System.Text.Json.Serialization;
+ 
+-namespace SeedCsharpNamespaceCollision.Core;
++namespace Contoso.Net.Core;
+ 
+ /// <summary>
+ /// Json collection converter.
+diff --git a/src/SeedCsharpNamespaceCollision/Core/Constants.cs b/src/Contoso.Net/Core/Constants.cs
+similarity index 78%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/Core/Constants.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/Core/Constants.cs
+index da23303f34b..12aae45ef35 100644
+--- a/src/SeedCsharpNamespaceCollision/Core/Constants.cs
++++ b/src/Contoso.Net/Core/Constants.cs
+@@ -1,4 +1,4 @@
+-namespace SeedCsharpNamespaceCollision.Core;
++namespace Contoso.Net.Core;
+ 
+ internal static class Constants
+ {
+diff --git a/src/SeedCsharpNamespaceCollision/Core/DateOnlyConverter.cs b/src/Contoso.Net/Core/DateOnlyConverter.cs
+similarity index 99%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/Core/DateOnlyConverter.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/Core/DateOnlyConverter.cs
+index 235f7377042..65e5c7b0b8b 100644
+--- a/src/SeedCsharpNamespaceCollision/Core/DateOnlyConverter.cs
++++ b/src/Contoso.Net/Core/DateOnlyConverter.cs
+@@ -15,7 +15,7 @@ using global::System.Text.Json.Serialization;
+ // ReSharper disable SuggestVarOrType_SimpleTypes
+ // ReSharper disable SuggestVarOrType_BuiltInTypes
+ 
+-namespace SeedCsharpNamespaceCollision.Core
++namespace Contoso.Net.Core
+ {
+     /// <summary>
+     /// Custom converter for handling the <see cref="DateOnly"/> data type with the <see href="https://docs.microsoft.com/dotnet/api/system.text.json">System.Text.Json</see> library.
+diff --git a/src/SeedCsharpNamespaceCollision/Core/DateTimeSerializer.cs b/src/Contoso.Net/Core/DateTimeSerializer.cs
+similarity index 96%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/Core/DateTimeSerializer.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/Core/DateTimeSerializer.cs
+index f7bdf286275..18eaa5a041f 100644
+--- a/src/SeedCsharpNamespaceCollision/Core/DateTimeSerializer.cs
++++ b/src/Contoso.Net/Core/DateTimeSerializer.cs
+@@ -2,7 +2,7 @@ using global::System.Globalization;
+ using global::System.Text.Json;
+ using global::System.Text.Json.Serialization;
+ 
+-namespace SeedCsharpNamespaceCollision.Core;
++namespace Contoso.Net.Core;
+ 
+ internal class DateTimeSerializer : JsonConverter<DateTime>
+ {
+diff --git a/src/SeedCsharpNamespaceCollision/Core/EmptyRequest.cs b/src/Contoso.Net/Core/EmptyRequest.cs
+similarity index 83%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/Core/EmptyRequest.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/Core/EmptyRequest.cs
+index e3459638d34..014b836ccd2 100644
+--- a/src/SeedCsharpNamespaceCollision/Core/EmptyRequest.cs
++++ b/src/Contoso.Net/Core/EmptyRequest.cs
+@@ -1,6 +1,6 @@
+ using global::System.Net.Http;
+ 
+-namespace SeedCsharpNamespaceCollision.Core;
++namespace Contoso.Net.Core;
+ 
+ /// <summary>
+ /// The request object to send without a request body.
+diff --git a/src/SeedCsharpNamespaceCollision/Core/EncodingCache.cs b/src/Contoso.Net/Core/EncodingCache.cs
+similarity index 83%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/Core/EncodingCache.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/Core/EncodingCache.cs
+index 4341e352719..07b2c6c4b79 100644
+--- a/src/SeedCsharpNamespaceCollision/Core/EncodingCache.cs
++++ b/src/Contoso.Net/Core/EncodingCache.cs
+@@ -1,6 +1,6 @@
+ using global::System.Text;
+ 
+-namespace SeedCsharpNamespaceCollision.Core;
++namespace Contoso.Net.Core;
+ 
+ internal static class EncodingCache
+ {
+diff --git a/src/SeedCsharpNamespaceCollision/Core/Extensions.cs b/src/Contoso.Net/Core/Extensions.cs
+similarity index 97%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/Core/Extensions.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/Core/Extensions.cs
+index 5d1bcbf6702..ae342c6f96f 100644
+--- a/src/SeedCsharpNamespaceCollision/Core/Extensions.cs
++++ b/src/Contoso.Net/Core/Extensions.cs
+@@ -1,7 +1,7 @@
+ using global::System.Diagnostics.CodeAnalysis;
+ using global::System.Runtime.Serialization;
+ 
+-namespace SeedCsharpNamespaceCollision.Core;
++namespace Contoso.Net.Core;
+ 
+ internal static class Extensions
+ {
+diff --git a/src/SeedCsharpNamespaceCollision/Core/FormUrlEncoder.cs b/src/Contoso.Net/Core/FormUrlEncoder.cs
+similarity index 97%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/Core/FormUrlEncoder.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/Core/FormUrlEncoder.cs
+index ce3f252d904..6a60b747ff4 100644
+--- a/src/SeedCsharpNamespaceCollision/Core/FormUrlEncoder.cs
++++ b/src/Contoso.Net/Core/FormUrlEncoder.cs
+@@ -1,6 +1,6 @@
+ using global::System.Net.Http;
+ 
+-namespace SeedCsharpNamespaceCollision.Core;
++namespace Contoso.Net.Core;
+ 
+ /// <summary>
+ /// Encodes an object into a form URL-encoded content.
+diff --git a/src/SeedCsharpNamespaceCollision/Core/HeaderValue.cs b/src/Contoso.Net/Core/HeaderValue.cs
+similarity index 97%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/Core/HeaderValue.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/Core/HeaderValue.cs
+index 66dde5817bc..9b64729da1b 100644
+--- a/src/SeedCsharpNamespaceCollision/Core/HeaderValue.cs
++++ b/src/Contoso.Net/Core/HeaderValue.cs
+@@ -1,4 +1,4 @@
+-namespace SeedCsharpNamespaceCollision.Core;
++namespace Contoso.Net.Core;
+ 
+ internal sealed class HeaderValue
+ {
+diff --git a/src/SeedCsharpNamespaceCollision/Core/Headers.cs b/src/Contoso.Net/Core/Headers.cs
+similarity index 94%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/Core/Headers.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/Core/Headers.cs
+index 773d9f84923..d69251c03fd 100644
+--- a/src/SeedCsharpNamespaceCollision/Core/Headers.cs
++++ b/src/Contoso.Net/Core/Headers.cs
+@@ -1,4 +1,4 @@
+-namespace SeedCsharpNamespaceCollision.Core;
++namespace Contoso.Net.Core;
+ 
+ /// <summary>
+ /// Represents the headers sent with the request.
+diff --git a/src/SeedCsharpNamespaceCollision/Core/HeadersBuilder.cs b/src/Contoso.Net/Core/HeadersBuilder.cs
+similarity index 99%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/Core/HeadersBuilder.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/Core/HeadersBuilder.cs
+index ba3e103588e..54f43120a86 100644
+--- a/src/SeedCsharpNamespaceCollision/Core/HeadersBuilder.cs
++++ b/src/Contoso.Net/Core/HeadersBuilder.cs
+@@ -1,4 +1,4 @@
+-namespace SeedCsharpNamespaceCollision.Core;
++namespace Contoso.Net.Core;
+ 
+ /// <summary>
+ /// Fluent builder for constructing HTTP headers with support for merging from multiple sources.
+diff --git a/src/SeedCsharpNamespaceCollision/Core/HttpContentExtensions.cs b/src/Contoso.Net/Core/HttpContentExtensions.cs
+similarity index 92%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/Core/HttpContentExtensions.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/Core/HttpContentExtensions.cs
+index bdcf4550483..3ca9e216895 100644
+--- a/src/SeedCsharpNamespaceCollision/Core/HttpContentExtensions.cs
++++ b/src/Contoso.Net/Core/HttpContentExtensions.cs
+@@ -1,5 +1,5 @@
+ #if !NET5_0_OR_GREATER
+-namespace SeedCsharpNamespaceCollision.Core;
++namespace Contoso.Net.Core;
+ 
+ /// <summary>
+ /// Polyfill extension providing a <c>ReadAsStringAsync(CancellationToken)</c> overload
+diff --git a/src/SeedCsharpNamespaceCollision/Core/HttpMethodExtensions.cs b/src/Contoso.Net/Core/HttpMethodExtensions.cs
+similarity index 75%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/Core/HttpMethodExtensions.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/Core/HttpMethodExtensions.cs
+index e1f978b0c6c..68ccde231c2 100644
+--- a/src/SeedCsharpNamespaceCollision/Core/HttpMethodExtensions.cs
++++ b/src/Contoso.Net/Core/HttpMethodExtensions.cs
+@@ -1,6 +1,6 @@
+ using global::System.Net.Http;
+ 
+-namespace SeedCsharpNamespaceCollision.Core;
++namespace Contoso.Net.Core;
+ 
+ internal static class HttpMethodExtensions
+ {
+diff --git a/src/SeedCsharpNamespaceCollision/Core/IIsRetryableContent.cs b/src/Contoso.Net/Core/IIsRetryableContent.cs
+similarity index 63%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/Core/IIsRetryableContent.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/Core/IIsRetryableContent.cs
+index 01d77b75520..1a9f9c1b8b8 100644
+--- a/src/SeedCsharpNamespaceCollision/Core/IIsRetryableContent.cs
++++ b/src/Contoso.Net/Core/IIsRetryableContent.cs
+@@ -1,4 +1,4 @@
+-namespace SeedCsharpNamespaceCollision.Core;
++namespace Contoso.Net.Core;
+ 
+ public interface IIsRetryableContent
+ {
+diff --git a/src/SeedCsharpNamespaceCollision/Core/IRequestOptions.cs b/src/Contoso.Net/Core/IRequestOptions.cs
+similarity index 97%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/Core/IRequestOptions.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/Core/IRequestOptions.cs
+index c73a3d476d7..2a50149e235 100644
+--- a/src/SeedCsharpNamespaceCollision/Core/IRequestOptions.cs
++++ b/src/Contoso.Net/Core/IRequestOptions.cs
+@@ -1,4 +1,4 @@
+-namespace SeedCsharpNamespaceCollision.Core;
++namespace Contoso.Net.Core;
+ 
+ internal interface IRequestOptions
+ {
+diff --git a/src/SeedCsharpNamespaceCollision/Core/JsonAccessAttribute.cs b/src/Contoso.Net/Core/JsonAccessAttribute.cs
+similarity index 88%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/Core/JsonAccessAttribute.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/Core/JsonAccessAttribute.cs
+index 4b577f0c7c0..30d7c1b1bda 100644
+--- a/src/SeedCsharpNamespaceCollision/Core/JsonAccessAttribute.cs
++++ b/src/Contoso.Net/Core/JsonAccessAttribute.cs
+@@ -1,4 +1,4 @@
+-namespace SeedCsharpNamespaceCollision.Core;
++namespace Contoso.Net.Core;
+ 
+ [global::System.AttributeUsage(
+     global::System.AttributeTargets.Property | global::System.AttributeTargets.Field
+diff --git a/src/SeedCsharpNamespaceCollision/Core/JsonConfiguration.cs b/src/Contoso.Net/Core/JsonConfiguration.cs
+similarity index 99%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/Core/JsonConfiguration.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/Core/JsonConfiguration.cs
+index e56b1d42d59..a8d4fcde87b 100644
+--- a/src/SeedCsharpNamespaceCollision/Core/JsonConfiguration.cs
++++ b/src/Contoso.Net/Core/JsonConfiguration.cs
+@@ -5,7 +5,7 @@ using global::System.Text.Json.Nodes;
+ using global::System.Text.Json.Serialization;
+ using global::System.Text.Json.Serialization.Metadata;
+ 
+-namespace SeedCsharpNamespaceCollision.Core;
++namespace Contoso.Net.Core;
+ 
+ internal static partial class JsonOptions
+ {
+diff --git a/src/SeedCsharpNamespaceCollision/Core/JsonRequest.cs b/src/Contoso.Net/Core/JsonRequest.cs
+similarity index 95%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/Core/JsonRequest.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/Core/JsonRequest.cs
+index 5b88bd57644..6d3eec0c3b4 100644
+--- a/src/SeedCsharpNamespaceCollision/Core/JsonRequest.cs
++++ b/src/Contoso.Net/Core/JsonRequest.cs
+@@ -1,6 +1,6 @@
+ using global::System.Net.Http;
+ 
+-namespace SeedCsharpNamespaceCollision.Core;
++namespace Contoso.Net.Core;
+ 
+ /// <summary>
+ /// The request object to be sent for JSON APIs.
+diff --git a/src/SeedCsharpNamespaceCollision/Core/MultipartFormRequest.cs b/src/Contoso.Net/Core/MultipartFormRequest.cs
+similarity index 99%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/Core/MultipartFormRequest.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/Core/MultipartFormRequest.cs
+index 0f41d078a68..c2532486f07 100644
+--- a/src/SeedCsharpNamespaceCollision/Core/MultipartFormRequest.cs
++++ b/src/Contoso.Net/Core/MultipartFormRequest.cs
+@@ -1,7 +1,7 @@
+ using global::System.Net.Http;
+ using global::System.Net.Http.Headers;
+ 
+-namespace SeedCsharpNamespaceCollision.Core;
++namespace Contoso.Net.Core;
+ 
+ /// <summary>
+ /// The request object to be sent for multipart form data.
+diff --git a/src/SeedCsharpNamespaceCollision/Core/NullableAttribute.cs b/src/Contoso.Net/Core/NullableAttribute.cs
+similarity index 94%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/Core/NullableAttribute.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/Core/NullableAttribute.cs
+index b8fc52d1412..c492c4f39c0 100644
+--- a/src/SeedCsharpNamespaceCollision/Core/NullableAttribute.cs
++++ b/src/Contoso.Net/Core/NullableAttribute.cs
+@@ -1,4 +1,4 @@
+-namespace SeedCsharpNamespaceCollision.Core;
++namespace Contoso.Net.Core;
+ 
+ /// <summary>
+ /// Marks a property as nullable in the OpenAPI specification.
+diff --git a/src/SeedCsharpNamespaceCollision/Core/OneOfSerializer.cs b/src/Contoso.Net/Core/OneOfSerializer.cs
+similarity index 99%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/Core/OneOfSerializer.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/Core/OneOfSerializer.cs
+index 27b79eb1772..96ad375a53f 100644
+--- a/src/SeedCsharpNamespaceCollision/Core/OneOfSerializer.cs
++++ b/src/Contoso.Net/Core/OneOfSerializer.cs
+@@ -3,7 +3,7 @@ using global::System.Text.Json;
+ using global::System.Text.Json.Serialization;
+ using OneOf;
+ 
+-namespace SeedCsharpNamespaceCollision.Core;
++namespace Contoso.Net.Core;
+ 
+ internal class OneOfSerializer : JsonConverter<IOneOf>
+ {
+diff --git a/src/SeedCsharpNamespaceCollision/Core/Optional.cs b/src/Contoso.Net/Core/Optional.cs
+similarity index 99%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/Core/Optional.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/Core/Optional.cs
+index 73894cfeff6..a451fdd4d35 100644
+--- a/src/SeedCsharpNamespaceCollision/Core/Optional.cs
++++ b/src/Contoso.Net/Core/Optional.cs
+@@ -1,7 +1,7 @@
+ using global::System.Text.Json;
+ using global::System.Text.Json.Serialization;
+ 
+-namespace SeedCsharpNamespaceCollision.Core;
++namespace Contoso.Net.Core;
+ 
+ /// <summary>
+ /// Non-generic interface for Optional types to enable reflection-free checks.
+diff --git a/src/SeedCsharpNamespaceCollision/Core/OptionalAttribute.cs b/src/Contoso.Net/Core/OptionalAttribute.cs
+similarity index 94%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/Core/OptionalAttribute.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/Core/OptionalAttribute.cs
+index f5ee70d8276..b92a5d34444 100644
+--- a/src/SeedCsharpNamespaceCollision/Core/OptionalAttribute.cs
++++ b/src/Contoso.Net/Core/OptionalAttribute.cs
+@@ -1,4 +1,4 @@
+-namespace SeedCsharpNamespaceCollision.Core;
++namespace Contoso.Net.Core;
+ 
+ /// <summary>
+ /// Marks a property as optional in the OpenAPI specification.
+diff --git a/src/SeedCsharpNamespaceCollision/Core/Public/AdditionalProperties.cs b/src/Contoso.Net/Core/Public/AdditionalProperties.cs
+similarity index 99%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/Core/Public/AdditionalProperties.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/Core/Public/AdditionalProperties.cs
+index 544e3aa7996..79f3e6eb260 100644
+--- a/src/SeedCsharpNamespaceCollision/Core/Public/AdditionalProperties.cs
++++ b/src/Contoso.Net/Core/Public/AdditionalProperties.cs
+@@ -1,10 +1,10 @@
++using Contoso.Net.Core;
+ using global::System.Collections;
+ using global::System.Collections.ObjectModel;
+ using global::System.Text.Json;
+ using global::System.Text.Json.Nodes;
+-using SeedCsharpNamespaceCollision.Core;
+ 
+-namespace SeedCsharpNamespaceCollision;
++namespace Contoso.Net;
+ 
+ public record ReadOnlyAdditionalProperties : ReadOnlyAdditionalProperties<JsonElement>
+ {
+diff --git a/src/SeedCsharpNamespaceCollision/Core/Public/ClientOptions.cs b/src/Contoso.Net/Core/Public/ClientOptions.cs
+similarity index 95%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/Core/Public/ClientOptions.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/Core/Public/ClientOptions.cs
+index 1e207304e4a..cc3155399c0 100644
+--- a/src/SeedCsharpNamespaceCollision/Core/Public/ClientOptions.cs
++++ b/src/Contoso.Net/Core/Public/ClientOptions.cs
+@@ -1,6 +1,6 @@
+-using SeedCsharpNamespaceCollision.Core;
++using global::Contoso.Net.Core;
+ 
+-namespace SeedCsharpNamespaceCollision;
++namespace Contoso.Net;
+ 
+ [Serializable]
+ public partial class ClientOptions
+diff --git a/src/SeedCsharpNamespaceCollision/Core/Public/SeedCsharpNamespaceCollisionApiException.cs b/src/Contoso.Net/Core/Public/ContosoApiException.cs
+similarity index 74%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/Core/Public/SeedCsharpNamespaceCollisionApiException.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/Core/Public/ContosoApiException.cs
+index 481a341b078..fbd7675ecff 100644
+--- a/src/SeedCsharpNamespaceCollision/Core/Public/SeedCsharpNamespaceCollisionApiException.cs
++++ b/src/Contoso.Net/Core/Public/ContosoApiException.cs
+@@ -1,14 +1,14 @@
+-namespace SeedCsharpNamespaceCollision;
++namespace Contoso.Net;
+ 
+ /// <summary>
+ /// This exception type will be thrown for any non-2XX API responses.
+ /// </summary>
+-public class SeedCsharpNamespaceCollisionApiException(
++public class ContosoApiException(
+     string message,
+     int statusCode,
+     object body,
+     Exception? innerException = null
+-) : SeedCsharpNamespaceCollisionException(message, innerException)
++) : ContosoException(message, innerException)
+ {
+     /// <summary>
+     /// The error code of the response that triggered the exception.
+diff --git a/src/Contoso.Net/Core/Public/ContosoException.cs b/src/Contoso.Net/Core/Public/ContosoException.cs
+new file mode 100644
+index 00000000000..628dff3c6ac
+--- /dev/null
++++ b/src/Contoso.Net/Core/Public/ContosoException.cs
+@@ -0,0 +1,7 @@
++namespace Contoso.Net;
++
++/// <summary>
++/// Base exception class for all exceptions thrown by the SDK.
++/// </summary>
++public class ContosoException(string message, Exception? innerException = null)
++    : Exception(message, innerException);
+diff --git a/src/SeedCsharpNamespaceCollision/Core/Public/FileParameter.cs b/src/Contoso.Net/Core/Public/FileParameter.cs
+similarity index 97%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/Core/Public/FileParameter.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/Core/Public/FileParameter.cs
+index 509dd1b179d..21938704588 100644
+--- a/src/SeedCsharpNamespaceCollision/Core/Public/FileParameter.cs
++++ b/src/Contoso.Net/Core/Public/FileParameter.cs
+@@ -1,4 +1,4 @@
+-namespace SeedCsharpNamespaceCollision;
++namespace Contoso.Net;
+ 
+ /// <summary>
+ /// File parameter for uploading files.
+diff --git a/src/SeedCsharpNamespaceCollision/Core/Public/RawResponse.cs b/src/Contoso.Net/Core/Public/RawResponse.cs
+similarity index 93%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/Core/Public/RawResponse.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/Core/Public/RawResponse.cs
+index bef83532b7e..4449fe1c27c 100644
+--- a/src/SeedCsharpNamespaceCollision/Core/Public/RawResponse.cs
++++ b/src/Contoso.Net/Core/Public/RawResponse.cs
+@@ -1,6 +1,6 @@
+ using global::System.Net;
+ 
+-namespace SeedCsharpNamespaceCollision;
++namespace Contoso.Net;
+ 
+ /// <summary>
+ /// Contains HTTP response metadata including status code, URL, and headers.
+diff --git a/src/SeedCsharpNamespaceCollision/Core/Public/RequestOptions.cs b/src/Contoso.Net/Core/Public/RequestOptions.cs
+similarity index 95%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/Core/Public/RequestOptions.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/Core/Public/RequestOptions.cs
+index bc119ea11eb..d039abaf055 100644
+--- a/src/SeedCsharpNamespaceCollision/Core/Public/RequestOptions.cs
++++ b/src/Contoso.Net/Core/Public/RequestOptions.cs
+@@ -1,6 +1,6 @@
+-using SeedCsharpNamespaceCollision.Core;
++using global::Contoso.Net.Core;
+ 
+-namespace SeedCsharpNamespaceCollision;
++namespace Contoso.Net;
+ 
+ [Serializable]
+ public partial class RequestOptions : IRequestOptions
+diff --git a/src/SeedCsharpNamespaceCollision/Core/Public/Version.cs b/src/Contoso.Net/Core/Public/Version.cs
+similarity index 68%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/Core/Public/Version.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/Core/Public/Version.cs
+index ba8a2c31602..1b5f525ac46 100644
+--- a/src/SeedCsharpNamespaceCollision/Core/Public/Version.cs
++++ b/src/Contoso.Net/Core/Public/Version.cs
+@@ -1,4 +1,4 @@
+-namespace SeedCsharpNamespaceCollision;
++namespace Contoso.Net;
+ 
+ [Serializable]
+ internal class Version
+diff --git a/src/SeedCsharpNamespaceCollision/Core/Public/WithRawResponse.cs b/src/Contoso.Net/Core/Public/WithRawResponse.cs
+similarity index 92%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/Core/Public/WithRawResponse.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/Core/Public/WithRawResponse.cs
+index 301d0f67e84..a49db88fa92 100644
+--- a/src/SeedCsharpNamespaceCollision/Core/Public/WithRawResponse.cs
++++ b/src/Contoso.Net/Core/Public/WithRawResponse.cs
+@@ -1,4 +1,4 @@
+-namespace SeedCsharpNamespaceCollision;
++namespace Contoso.Net;
+ 
+ /// <summary>
+ /// Wraps a parsed response value with its raw HTTP response metadata.
+diff --git a/src/SeedCsharpNamespaceCollision/Core/Public/WithRawResponseTask.cs b/src/Contoso.Net/Core/Public/WithRawResponseTask.cs
+similarity index 99%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/Core/Public/WithRawResponseTask.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/Core/Public/WithRawResponseTask.cs
+index 31691f79425..a78554a6b53 100644
+--- a/src/SeedCsharpNamespaceCollision/Core/Public/WithRawResponseTask.cs
++++ b/src/Contoso.Net/Core/Public/WithRawResponseTask.cs
+@@ -1,6 +1,6 @@
+ using global::System.Runtime.CompilerServices;
+ 
+-namespace SeedCsharpNamespaceCollision;
++namespace Contoso.Net;
+ 
+ /// <summary>
+ /// A task-like type that wraps Task&lt;WithRawResponse&lt;T&gt;&gt; and provides dual-mode awaiting:
+diff --git a/src/SeedCsharpNamespaceCollision/Core/QueryStringBuilder.cs b/src/Contoso.Net/Core/QueryStringBuilder.cs
+similarity index 99%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/Core/QueryStringBuilder.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/Core/QueryStringBuilder.cs
+index c8e0e128344..016da48cc7e 100644
+--- a/src/SeedCsharpNamespaceCollision/Core/QueryStringBuilder.cs
++++ b/src/Contoso.Net/Core/QueryStringBuilder.cs
+@@ -4,7 +4,7 @@ using global::System.Runtime.CompilerServices;
+ using global::System.Text;
+ #endif
+ 
+-namespace SeedCsharpNamespaceCollision.Core;
++namespace Contoso.Net.Core;
+ 
+ /// <summary>
+ /// High-performance query string builder with RFC 3986 compliant percent-encoding.
+diff --git a/src/SeedCsharpNamespaceCollision/Core/QueryStringConverter.cs b/src/Contoso.Net/Core/QueryStringConverter.cs
+similarity index 99%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/Core/QueryStringConverter.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/Core/QueryStringConverter.cs
+index 50cb51ac6ee..fae45f04372 100644
+--- a/src/SeedCsharpNamespaceCollision/Core/QueryStringConverter.cs
++++ b/src/Contoso.Net/Core/QueryStringConverter.cs
+@@ -1,6 +1,6 @@
+ using global::System.Text.Json;
+ 
+-namespace SeedCsharpNamespaceCollision.Core;
++namespace Contoso.Net.Core;
+ 
+ /// <summary>
+ /// Converts an object into a query string collection.
+diff --git a/src/SeedCsharpNamespaceCollision/Core/RawClient.cs b/src/Contoso.Net/Core/RawClient.cs
+similarity index 93%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/Core/RawClient.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/Core/RawClient.cs
+index 3f6b34e65d7..470bb20de6d 100644
+--- a/src/SeedCsharpNamespaceCollision/Core/RawClient.cs
++++ b/src/Contoso.Net/Core/RawClient.cs
+@@ -3,7 +3,7 @@ using global::System.Net.Http.Headers;
+ using global::System.Text;
+ using SystemTask = global::System.Threading.Tasks.Task;
+ 
+-namespace SeedCsharpNamespaceCollision.Core;
++namespace Contoso.Net.Core;
+ 
+ /// <summary>
+ /// Utility class for making raw HTTP requests to the API.
+@@ -25,8 +25,8 @@ internal partial class RawClient(ClientOptions clientOptions)
+     /// </summary>
+     internal readonly ClientOptions Options = clientOptions;
+ 
+-    internal async global::System.Threading.Tasks.Task<global::SeedCsharpNamespaceCollision.Core.ApiResponse> SendRequestAsync(
+-        global::SeedCsharpNamespaceCollision.Core.BaseRequest request,
++    internal async global::System.Threading.Tasks.Task<global::Contoso.Net.Core.ApiResponse> SendRequestAsync(
++        global::Contoso.Net.Core.BaseRequest request,
+         CancellationToken cancellationToken = default
+     )
+     {
+@@ -41,7 +41,7 @@ internal partial class RawClient(ClientOptions clientOptions)
+             .ConfigureAwait(false);
+     }
+ 
+-    internal async global::System.Threading.Tasks.Task<global::SeedCsharpNamespaceCollision.Core.ApiResponse> SendRequestAsync(
++    internal async global::System.Threading.Tasks.Task<global::Contoso.Net.Core.ApiResponse> SendRequestAsync(
+         HttpRequestMessage request,
+         IRequestOptions? options,
+         CancellationToken cancellationToken = default
+@@ -123,7 +123,7 @@ internal partial class RawClient(ClientOptions clientOptions)
+     /// Sends the request with retries, unless the request content is not retryable,
+     /// such as stream requests and multipart form data with stream content.
+     /// </summary>
+-    private async global::System.Threading.Tasks.Task<global::SeedCsharpNamespaceCollision.Core.ApiResponse> SendWithRetriesAsync(
++    private async global::System.Threading.Tasks.Task<global::Contoso.Net.Core.ApiResponse> SendWithRetriesAsync(
+         HttpRequestMessage request,
+         IRequestOptions? options,
+         CancellationToken cancellationToken
+@@ -138,7 +138,7 @@ internal partial class RawClient(ClientOptions clientOptions)
+ 
+         if (!isRetryableContent)
+         {
+-            return new global::SeedCsharpNamespaceCollision.Core.ApiResponse
++            return new global::Contoso.Net.Core.ApiResponse
+             {
+                 StatusCode = (int)response.StatusCode,
+                 Raw = response,
+@@ -164,7 +164,7 @@ internal partial class RawClient(ClientOptions clientOptions)
+                 .ConfigureAwait(false);
+         }
+ 
+-        return new global::SeedCsharpNamespaceCollision.Core.ApiResponse
++        return new global::Contoso.Net.Core.ApiResponse
+         {
+             StatusCode = (int)response.StatusCode,
+             Raw = response,
+@@ -263,7 +263,7 @@ internal partial class RawClient(ClientOptions clientOptions)
+     }
+ 
+     internal async global::System.Threading.Tasks.Task<HttpRequestMessage> CreateHttpRequestAsync(
+-        global::SeedCsharpNamespaceCollision.Core.BaseRequest request
++        global::Contoso.Net.Core.BaseRequest request
+     )
+     {
+         var url = BuildUrl(request);
+@@ -274,7 +274,7 @@ internal partial class RawClient(ClientOptions clientOptions)
+         return httpRequest;
+     }
+ 
+-    private string BuildUrl(global::SeedCsharpNamespaceCollision.Core.BaseRequest request)
++    private string BuildUrl(global::Contoso.Net.Core.BaseRequest request)
+     {
+         var baseUrl = request.Options?.BaseUrl ?? request.BaseUrl ?? Options.BaseUrl;
+ 
+diff --git a/src/SeedCsharpNamespaceCollision/Core/RawResponse.cs b/src/Contoso.Net/Core/RawResponse.cs
+similarity index 92%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/Core/RawResponse.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/Core/RawResponse.cs
+index c10a62e4bf5..a617e3d9111 100644
+--- a/src/SeedCsharpNamespaceCollision/Core/RawResponse.cs
++++ b/src/Contoso.Net/Core/RawResponse.cs
+@@ -1,6 +1,6 @@
+ using global::System.Net;
+ 
+-namespace SeedCsharpNamespaceCollision.Core;
++namespace Contoso.Net.Core;
+ 
+ /// <summary>
+ /// Contains HTTP response metadata including status code, URL, and headers.
+diff --git a/src/SeedCsharpNamespaceCollision/Core/ResponseHeaders.cs b/src/Contoso.Net/Core/ResponseHeaders.cs
+similarity index 98%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/Core/ResponseHeaders.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/Core/ResponseHeaders.cs
+index 041f58fb6b7..40445fdf1e6 100644
+--- a/src/SeedCsharpNamespaceCollision/Core/ResponseHeaders.cs
++++ b/src/Contoso.Net/Core/ResponseHeaders.cs
+@@ -1,7 +1,7 @@
+ using global::System.Collections;
+ using global::System.Net.Http.Headers;
+ 
+-namespace SeedCsharpNamespaceCollision.Core;
++namespace Contoso.Net.Core;
+ 
+ /// <summary>
+ /// Represents HTTP response headers with case-insensitive lookup.
+diff --git a/src/SeedCsharpNamespaceCollision/Core/StreamRequest.cs b/src/Contoso.Net/Core/StreamRequest.cs
+similarity index 93%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/Core/StreamRequest.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/Core/StreamRequest.cs
+index 1af8199064f..7e5910d9dc7 100644
+--- a/src/SeedCsharpNamespaceCollision/Core/StreamRequest.cs
++++ b/src/Contoso.Net/Core/StreamRequest.cs
+@@ -1,7 +1,7 @@
+ using global::System.Net.Http;
+ using global::System.Net.Http.Headers;
+ 
+-namespace SeedCsharpNamespaceCollision.Core;
++namespace Contoso.Net.Core;
+ 
+ /// <summary>
+ /// The request object to be sent for streaming uploads.
+diff --git a/src/SeedCsharpNamespaceCollision/Core/StringEnum.cs b/src/Contoso.Net/Core/StringEnum.cs
+similarity index 66%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/Core/StringEnum.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/Core/StringEnum.cs
+index eee4d40ea3a..509b6089a9b 100644
+--- a/src/SeedCsharpNamespaceCollision/Core/StringEnum.cs
++++ b/src/Contoso.Net/Core/StringEnum.cs
+@@ -1,4 +1,4 @@
+-namespace SeedCsharpNamespaceCollision.Core;
++namespace Contoso.Net.Core;
+ 
+ public interface IStringEnum : IEquatable<string>
+ {
+diff --git a/src/SeedCsharpNamespaceCollision/Core/StringEnumExtensions.cs b/src/Contoso.Net/Core/StringEnumExtensions.cs
+similarity index 74%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/Core/StringEnumExtensions.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/Core/StringEnumExtensions.cs
+index a15d84d2ae6..fd672348151 100644
+--- a/src/SeedCsharpNamespaceCollision/Core/StringEnumExtensions.cs
++++ b/src/Contoso.Net/Core/StringEnumExtensions.cs
+@@ -1,4 +1,4 @@
+-namespace SeedCsharpNamespaceCollision.Core;
++namespace Contoso.Net.Core;
+ 
+ internal static class StringEnumExtensions
+ {
+diff --git a/src/SeedCsharpNamespaceCollision/Core/ValueConvert.cs b/src/Contoso.Net/Core/ValueConvert.cs
+similarity index 98%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/Core/ValueConvert.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/Core/ValueConvert.cs
+index 89aa5f6bf38..92eda436dcd 100644
+--- a/src/SeedCsharpNamespaceCollision/Core/ValueConvert.cs
++++ b/src/Contoso.Net/Core/ValueConvert.cs
+@@ -1,6 +1,6 @@
+ using global::System.Globalization;
+ 
+-namespace SeedCsharpNamespaceCollision.Core;
++namespace Contoso.Net.Core;
+ 
+ /// <summary>
+ /// Convert values to string for path and query parameters.
+diff --git a/src/SeedCsharpNamespaceCollision/ISeedCsharpNamespaceCollisionClient.cs b/src/Contoso.Net/IContoso.cs
+similarity index 69%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/ISeedCsharpNamespaceCollisionClient.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/IContoso.cs
+index a0131368fca..f937b98faa5 100644
+--- a/src/SeedCsharpNamespaceCollision/ISeedCsharpNamespaceCollisionClient.cs
++++ b/src/Contoso.Net/IContoso.cs
+@@ -1,9 +1,9 @@
+-using SeedCsharpNamespaceCollision.ScimConfiguration;
+-using SeedCsharpNamespaceCollision.System;
++using global::Contoso.Net.ScimConfiguration;
++using global::Contoso.Net.System;
+ 
+-namespace SeedCsharpNamespaceCollision;
++namespace Contoso.Net;
+ 
+-public partial interface ISeedCsharpNamespaceCollisionClient
++public partial interface IContoso
+ {
+     public IScimConfigurationClient ScimConfiguration { get; }
+     public ISystemClient System { get; }
+diff --git a/src/SeedCsharpNamespaceCollision/ScimConfiguration/IScimConfigurationClient.cs b/src/Contoso.Net/ScimConfiguration/IScimConfigurationClient.cs
+similarity index 73%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/ScimConfiguration/IScimConfigurationClient.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/ScimConfiguration/IScimConfigurationClient.cs
+index 78c31fb2510..56ea61b210c 100644
+--- a/src/SeedCsharpNamespaceCollision/ScimConfiguration/IScimConfigurationClient.cs
++++ b/src/Contoso.Net/ScimConfiguration/IScimConfigurationClient.cs
+@@ -1,6 +1,6 @@
+-using SeedCsharpNamespaceCollision;
++using global::Contoso.Net;
+ 
+-namespace SeedCsharpNamespaceCollision.ScimConfiguration;
++namespace Contoso.Net.ScimConfiguration;
+ 
+ public partial interface IScimConfigurationClient
+ {
+@@ -15,7 +15,7 @@ public partial interface IScimConfigurationClient
+         CancellationToken cancellationToken = default
+     );
+ 
+-    WithRawResponseTask<IEnumerable<SeedCsharpNamespaceCollision.User>> ListUsersAsync(
++    WithRawResponseTask<IEnumerable<global::Contoso.Net.User>> ListUsersAsync(
+         RequestOptions? options = null,
+         CancellationToken cancellationToken = default
+     );
+diff --git a/src/SeedCsharpNamespaceCollision/ScimConfiguration/ScimConfigurationClient.cs b/src/Contoso.Net/ScimConfiguration/ScimConfigurationClient.cs
+similarity index 86%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/ScimConfiguration/ScimConfigurationClient.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/ScimConfiguration/ScimConfigurationClient.cs
+index 05eeba2d704..4bbda6844fe 100644
+--- a/src/SeedCsharpNamespaceCollision/ScimConfiguration/ScimConfigurationClient.cs
++++ b/src/Contoso.Net/ScimConfiguration/ScimConfigurationClient.cs
+@@ -1,8 +1,8 @@
++using global::Contoso.Net;
++using global::Contoso.Net.Core;
+ using global::System.Text.Json;
+-using SeedCsharpNamespaceCollision;
+-using SeedCsharpNamespaceCollision.Core;
+ 
+-namespace SeedCsharpNamespaceCollision.ScimConfiguration;
++namespace Contoso.Net.ScimConfiguration;
+ 
+ public partial class ScimConfigurationClient : IScimConfigurationClient
+ {
+@@ -20,7 +20,7 @@ public partial class ScimConfigurationClient : IScimConfigurationClient
+         CancellationToken cancellationToken = default
+     )
+     {
+-        var _headers = await new SeedCsharpNamespaceCollision.Core.HeadersBuilder.Builder()
++        var _headers = await new global::Contoso.Net.Core.HeadersBuilder.Builder()
+             .Add(_client.Options.Headers)
+             .Add(_client.Options.AdditionalHeaders)
+             .Add(options?.AdditionalHeaders)
+@@ -59,7 +59,7 @@ public partial class ScimConfigurationClient : IScimConfigurationClient
+             }
+             catch (JsonException e)
+             {
+-                throw new SeedCsharpNamespaceCollisionApiException(
++                throw new ContosoApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+                     responseBody,
+@@ -71,7 +71,7 @@ public partial class ScimConfigurationClient : IScimConfigurationClient
+             var responseBody = await response
+                 .Raw.Content.ReadAsStringAsync(cancellationToken)
+                 .ConfigureAwait(false);
+-            throw new SeedCsharpNamespaceCollisionApiException(
++            throw new ContosoApiException(
+                 $"Error with status code {response.StatusCode}",
+                 response.StatusCode,
+                 responseBody
+@@ -87,7 +87,7 @@ public partial class ScimConfigurationClient : IScimConfigurationClient
+         CancellationToken cancellationToken = default
+     )
+     {
+-        var _headers = await new SeedCsharpNamespaceCollision.Core.HeadersBuilder.Builder()
++        var _headers = await new global::Contoso.Net.Core.HeadersBuilder.Builder()
+             .Add(_client.Options.Headers)
+             .Add(_client.Options.AdditionalHeaders)
+             .Add(options?.AdditionalHeaders)
+@@ -127,7 +127,7 @@ public partial class ScimConfigurationClient : IScimConfigurationClient
+             }
+             catch (JsonException e)
+             {
+-                throw new SeedCsharpNamespaceCollisionApiException(
++                throw new ContosoApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+                     responseBody,
+@@ -139,7 +139,7 @@ public partial class ScimConfigurationClient : IScimConfigurationClient
+             var responseBody = await response
+                 .Raw.Content.ReadAsStringAsync(cancellationToken)
+                 .ConfigureAwait(false);
+-            throw new SeedCsharpNamespaceCollisionApiException(
++            throw new ContosoApiException(
+                 $"Error with status code {response.StatusCode}",
+                 response.StatusCode,
+                 responseBody
+@@ -148,13 +148,13 @@ public partial class ScimConfigurationClient : IScimConfigurationClient
+     }
+ 
+     private async global::System.Threading.Tasks.Task<
+-        WithRawResponse<IEnumerable<SeedCsharpNamespaceCollision.User>>
++        WithRawResponse<IEnumerable<global::Contoso.Net.User>>
+     > ListUsersAsyncCore(
+         RequestOptions? options = null,
+         CancellationToken cancellationToken = default
+     )
+     {
+-        var _headers = await new SeedCsharpNamespaceCollision.Core.HeadersBuilder.Builder()
++        var _headers = await new global::Contoso.Net.Core.HeadersBuilder.Builder()
+             .Add(_client.Options.Headers)
+             .Add(_client.Options.AdditionalHeaders)
+             .Add(options?.AdditionalHeaders)
+@@ -179,10 +179,10 @@ public partial class ScimConfigurationClient : IScimConfigurationClient
+                 .ConfigureAwait(false);
+             try
+             {
+-                var responseData = JsonUtils.Deserialize<
+-                    IEnumerable<SeedCsharpNamespaceCollision.User>
+-                >(responseBody)!;
+-                return new WithRawResponse<IEnumerable<SeedCsharpNamespaceCollision.User>>()
++                var responseData = JsonUtils.Deserialize<IEnumerable<global::Contoso.Net.User>>(
++                    responseBody
++                )!;
++                return new WithRawResponse<IEnumerable<global::Contoso.Net.User>>()
+                 {
+                     Data = responseData,
+                     RawResponse = new RawResponse()
+@@ -195,7 +195,7 @@ public partial class ScimConfigurationClient : IScimConfigurationClient
+             }
+             catch (JsonException e)
+             {
+-                throw new SeedCsharpNamespaceCollisionApiException(
++                throw new ContosoApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+                     responseBody,
+@@ -207,7 +207,7 @@ public partial class ScimConfigurationClient : IScimConfigurationClient
+             var responseBody = await response
+                 .Raw.Content.ReadAsStringAsync(cancellationToken)
+                 .ConfigureAwait(false);
+-            throw new SeedCsharpNamespaceCollisionApiException(
++            throw new ContosoApiException(
+                 $"Error with status code {response.StatusCode}",
+                 response.StatusCode,
+                 responseBody
+@@ -253,12 +253,12 @@ public partial class ScimConfigurationClient : IScimConfigurationClient
+     /// <example><code>
+     /// await client.ScimConfiguration.ListUsersAsync();
+     /// </code></example>
+-    public WithRawResponseTask<IEnumerable<SeedCsharpNamespaceCollision.User>> ListUsersAsync(
++    public WithRawResponseTask<IEnumerable<global::Contoso.Net.User>> ListUsersAsync(
+         RequestOptions? options = null,
+         CancellationToken cancellationToken = default
+     )
+     {
+-        return new WithRawResponseTask<IEnumerable<SeedCsharpNamespaceCollision.User>>(
++        return new WithRawResponseTask<IEnumerable<global::Contoso.Net.User>>(
+             ListUsersAsyncCore(options, cancellationToken)
+         );
+     }
+diff --git a/src/SeedCsharpNamespaceCollision/ScimConfiguration/Types/ScimConfiguration.cs b/src/Contoso.Net/ScimConfiguration/Types/ScimConfiguration.cs
+similarity index 88%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/ScimConfiguration/Types/ScimConfiguration.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/ScimConfiguration/Types/ScimConfiguration.cs
+index bed4b6aee6f..3ae069591f9 100644
+--- a/src/SeedCsharpNamespaceCollision/ScimConfiguration/Types/ScimConfiguration.cs
++++ b/src/Contoso.Net/ScimConfiguration/Types/ScimConfiguration.cs
+@@ -1,9 +1,9 @@
++using global::Contoso.Net;
++using global::Contoso.Net.Core;
+ using global::System.Text.Json;
+ using global::System.Text.Json.Serialization;
+-using SeedCsharpNamespaceCollision;
+-using SeedCsharpNamespaceCollision.Core;
+ 
+-namespace SeedCsharpNamespaceCollision.ScimConfiguration;
++namespace Contoso.Net.ScimConfiguration;
+ 
+ [Serializable]
+ public record ScimConfiguration : IJsonOnDeserialized
+diff --git a/src/SeedCsharpNamespaceCollision/ScimConfiguration/Types/ScimToken.cs b/src/Contoso.Net/ScimConfiguration/Types/ScimToken.cs
+similarity index 87%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/ScimConfiguration/Types/ScimToken.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/ScimConfiguration/Types/ScimToken.cs
+index 481b02c2efa..dce97e50b7a 100644
+--- a/src/SeedCsharpNamespaceCollision/ScimConfiguration/Types/ScimToken.cs
++++ b/src/Contoso.Net/ScimConfiguration/Types/ScimToken.cs
+@@ -1,9 +1,9 @@
++using global::Contoso.Net;
++using global::Contoso.Net.Core;
+ using global::System.Text.Json;
+ using global::System.Text.Json.Serialization;
+-using SeedCsharpNamespaceCollision;
+-using SeedCsharpNamespaceCollision.Core;
+ 
+-namespace SeedCsharpNamespaceCollision.ScimConfiguration;
++namespace Contoso.Net.ScimConfiguration;
+ 
+ [Serializable]
+ public record ScimToken : IJsonOnDeserialized
+diff --git a/src/SeedCsharpNamespaceCollision/System/ISystemClient.cs b/src/Contoso.Net/System/ISystemClient.cs
+similarity index 86%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/System/ISystemClient.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/System/ISystemClient.cs
+index 9cf3d4d50de..10e45356bc0 100644
+--- a/src/SeedCsharpNamespaceCollision/System/ISystemClient.cs
++++ b/src/Contoso.Net/System/ISystemClient.cs
+@@ -1,6 +1,6 @@
+-using SeedCsharpNamespaceCollision;
++using global::Contoso.Net;
+ 
+-namespace SeedCsharpNamespaceCollision.System;
++namespace Contoso.Net.System;
+ 
+ public partial interface ISystemClient
+ {
+diff --git a/src/SeedCsharpNamespaceCollision/System/SystemClient.cs b/src/Contoso.Net/System/SystemClient.cs
+similarity index 89%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/System/SystemClient.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/System/SystemClient.cs
+index 5c7a320a8ec..64de46fa80c 100644
+--- a/src/SeedCsharpNamespaceCollision/System/SystemClient.cs
++++ b/src/Contoso.Net/System/SystemClient.cs
+@@ -1,8 +1,8 @@
++using global::Contoso.Net;
++using global::Contoso.Net.Core;
+ using global::System.Text.Json;
+-using SeedCsharpNamespaceCollision;
+-using SeedCsharpNamespaceCollision.Core;
+ 
+-namespace SeedCsharpNamespaceCollision.System;
++namespace Contoso.Net.System;
+ 
+ public partial class SystemClient : ISystemClient
+ {
+@@ -19,7 +19,7 @@ public partial class SystemClient : ISystemClient
+         CancellationToken cancellationToken = default
+     )
+     {
+-        var _headers = await new SeedCsharpNamespaceCollision.Core.HeadersBuilder.Builder()
++        var _headers = await new global::Contoso.Net.Core.HeadersBuilder.Builder()
+             .Add(_client.Options.Headers)
+             .Add(_client.Options.AdditionalHeaders)
+             .Add(options?.AdditionalHeaders)
+@@ -59,7 +59,7 @@ public partial class SystemClient : ISystemClient
+             }
+             catch (JsonException e)
+             {
+-                throw new SeedCsharpNamespaceCollisionApiException(
++                throw new ContosoApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+                     responseBody,
+@@ -71,7 +71,7 @@ public partial class SystemClient : ISystemClient
+             var responseBody = await response
+                 .Raw.Content.ReadAsStringAsync(cancellationToken)
+                 .ConfigureAwait(false);
+-            throw new SeedCsharpNamespaceCollisionApiException(
++            throw new ContosoApiException(
+                 $"Error with status code {response.StatusCode}",
+                 response.StatusCode,
+                 responseBody
+@@ -85,7 +85,7 @@ public partial class SystemClient : ISystemClient
+         CancellationToken cancellationToken = default
+     )
+     {
+-        var _headers = await new SeedCsharpNamespaceCollision.Core.HeadersBuilder.Builder()
++        var _headers = await new global::Contoso.Net.Core.HeadersBuilder.Builder()
+             .Add(_client.Options.Headers)
+             .Add(_client.Options.AdditionalHeaders)
+             .Add(options?.AdditionalHeaders)
+@@ -125,7 +125,7 @@ public partial class SystemClient : ISystemClient
+             }
+             catch (JsonException e)
+             {
+-                throw new SeedCsharpNamespaceCollisionApiException(
++                throw new ContosoApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+                     responseBody,
+@@ -137,7 +137,7 @@ public partial class SystemClient : ISystemClient
+             var responseBody = await response
+                 .Raw.Content.ReadAsStringAsync(cancellationToken)
+                 .ConfigureAwait(false);
+-            throw new SeedCsharpNamespaceCollisionApiException(
++            throw new ContosoApiException(
+                 $"Error with status code {response.StatusCode}",
+                 response.StatusCode,
+                 responseBody
+@@ -151,7 +151,7 @@ public partial class SystemClient : ISystemClient
+         CancellationToken cancellationToken = default
+     )
+     {
+-        var _headers = await new SeedCsharpNamespaceCollision.Core.HeadersBuilder.Builder()
++        var _headers = await new global::Contoso.Net.Core.HeadersBuilder.Builder()
+             .Add(_client.Options.Headers)
+             .Add(_client.Options.AdditionalHeaders)
+             .Add(options?.AdditionalHeaders)
+@@ -190,7 +190,7 @@ public partial class SystemClient : ISystemClient
+             }
+             catch (JsonException e)
+             {
+-                throw new SeedCsharpNamespaceCollisionApiException(
++                throw new ContosoApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+                     responseBody,
+@@ -202,7 +202,7 @@ public partial class SystemClient : ISystemClient
+             var responseBody = await response
+                 .Raw.Content.ReadAsStringAsync(cancellationToken)
+                 .ConfigureAwait(false);
+-            throw new SeedCsharpNamespaceCollisionApiException(
++            throw new ContosoApiException(
+                 $"Error with status code {response.StatusCode}",
+                 response.StatusCode,
+                 responseBody
+@@ -212,7 +212,7 @@ public partial class SystemClient : ISystemClient
+ 
+     /// <example><code>
+     /// await client.System.CreateUserAsync(
+-    ///     new SeedCsharpNamespaceCollision.System.User
++    ///     new global::Contoso.Net.System.User
+     ///     {
+     ///         Line1 = "line1",
+     ///         Line2 = "line2",
+@@ -236,10 +236,10 @@ public partial class SystemClient : ISystemClient
+ 
+     /// <example><code>
+     /// await client.System.CreateTaskAsync(
+-    ///     new SeedCsharpNamespaceCollision.System.Task
++    ///     new global::Contoso.Net.System.Task
+     ///     {
+     ///         Name = "name",
+-    ///         User = new SeedCsharpNamespaceCollision.System.User
++    ///         User = new global::Contoso.Net.System.User
+     ///         {
+     ///             Line1 = "line1",
+     ///             Line2 = "line2",
+@@ -248,7 +248,7 @@ public partial class SystemClient : ISystemClient
+     ///             Zip = "zip",
+     ///             Country = "USA",
+     ///         },
+-    ///         Owner = new SeedCsharpNamespaceCollision.System.User
++    ///         Owner = new global::Contoso.Net.System.User
+     ///         {
+     ///             Line1 = "line1",
+     ///             Line2 = "line2",
+diff --git a/src/SeedCsharpNamespaceCollision/System/Types/Task.cs b/src/Contoso.Net/System/Types/Task.cs
+similarity index 87%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/System/Types/Task.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/System/Types/Task.cs
+index 0d9586d236a..3d21e3715f4 100644
+--- a/src/SeedCsharpNamespaceCollision/System/Types/Task.cs
++++ b/src/Contoso.Net/System/Types/Task.cs
+@@ -1,9 +1,9 @@
++using global::Contoso.Net;
++using global::Contoso.Net.Core;
+ using global::System.Text.Json;
+ using global::System.Text.Json.Serialization;
+-using SeedCsharpNamespaceCollision;
+-using SeedCsharpNamespaceCollision.Core;
+ 
+-namespace SeedCsharpNamespaceCollision.System;
++namespace Contoso.Net.System;
+ 
+ [Serializable]
+ public record Task : IJsonOnDeserialized
+diff --git a/src/SeedCsharpNamespaceCollision/System/Types/User.cs b/src/Contoso.Net/System/Types/User.cs
+similarity index 89%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/System/Types/User.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/System/Types/User.cs
+index 572877050c1..deac9d198ca 100644
+--- a/src/SeedCsharpNamespaceCollision/System/Types/User.cs
++++ b/src/Contoso.Net/System/Types/User.cs
+@@ -1,9 +1,9 @@
++using global::Contoso.Net;
++using global::Contoso.Net.Core;
+ using global::System.Text.Json;
+ using global::System.Text.Json.Serialization;
+-using SeedCsharpNamespaceCollision;
+-using SeedCsharpNamespaceCollision.Core;
+ 
+-namespace SeedCsharpNamespaceCollision.System;
++namespace Contoso.Net.System;
+ 
+ [Serializable]
+ public record User : IJsonOnDeserialized
+diff --git a/src/SeedCsharpNamespaceCollision/Types/Task.cs b/src/Contoso.Net/Types/Task.cs
+similarity index 92%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/Types/Task.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/Types/Task.cs
+index a388a85e5a9..e41ccf22b0a 100644
+--- a/src/SeedCsharpNamespaceCollision/Types/Task.cs
++++ b/src/Contoso.Net/Types/Task.cs
+@@ -1,8 +1,8 @@
++using global::Contoso.Net.Core;
+ using global::System.Text.Json;
+ using global::System.Text.Json.Serialization;
+-using SeedCsharpNamespaceCollision.Core;
+ 
+-namespace SeedCsharpNamespaceCollision;
++namespace Contoso.Net;
+ 
+ [Serializable]
+ public record Task : IJsonOnDeserialized
+diff --git a/src/SeedCsharpNamespaceCollision/Types/User.cs b/src/Contoso.Net/Types/User.cs
+similarity index 92%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision/Types/User.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net/Types/User.cs
+index 2982c316ddf..f37262547e5 100644
+--- a/src/SeedCsharpNamespaceCollision/Types/User.cs
++++ b/src/Contoso.Net/Types/User.cs
+@@ -1,8 +1,8 @@
++using global::Contoso.Net.Core;
+ using global::System.Text.Json;
+ using global::System.Text.Json.Serialization;
+-using SeedCsharpNamespaceCollision.Core;
+ 
+-namespace SeedCsharpNamespaceCollision;
++namespace Contoso.Net;
+ 
+ [Serializable]
+ public record User : IJsonOnDeserialized
+diff --git a/src/SeedCsharpNamespaceCollision.Test/SeedCsharpNamespaceCollision.Test.Custom.props b/src/Contoso.Net.Test/Contoso.Net.Test.Custom.props
+similarity index 100%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision.Test/SeedCsharpNamespaceCollision.Test.Custom.props
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net.Test/Contoso.Net.Test.Custom.props
+diff --git a/src/SeedCsharpNamespaceCollision.Test/SeedCsharpNamespaceCollision.Test.csproj b/src/Contoso.Net.Test/Contoso.Net.Test.csproj
+similarity index 85%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision.Test/SeedCsharpNamespaceCollision.Test.csproj
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net.Test/Contoso.Net.Test.csproj
+index ba175797338..bf32f1a76bc 100644
+--- a/src/SeedCsharpNamespaceCollision.Test/SeedCsharpNamespaceCollision.Test.csproj
++++ b/src/Contoso.Net.Test/Contoso.Net.Test.csproj
+@@ -29,11 +29,11 @@
+   </ItemGroup>
+ 
+   <ItemGroup>
+-    <ProjectReference Include="..\SeedCsharpNamespaceCollision\SeedCsharpNamespaceCollision.csproj" />
++    <ProjectReference Include="..\Contoso.Net\Contoso.Net.csproj" />
+   </ItemGroup>
+ 
+   <Import
+-    Project="SeedCsharpNamespaceCollision.Test.Custom.props"
+-    Condition="Exists('SeedCsharpNamespaceCollision.Test.Custom.props')"
++    Project="Contoso.Net.Test.Custom.props"
++    Condition="Exists('Contoso.Net.Test.Custom.props')"
+   />
+ </Project>
+diff --git a/src/SeedCsharpNamespaceCollision.Test/Core/HeadersBuilderTests.cs b/src/Contoso.Net.Test/Core/HeadersBuilderTests.cs
+similarity index 99%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision.Test/Core/HeadersBuilderTests.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net.Test/Core/HeadersBuilderTests.cs
+index 62fda9b731a..cf28fea9042 100644
+--- a/src/SeedCsharpNamespaceCollision.Test/Core/HeadersBuilderTests.cs
++++ b/src/Contoso.Net.Test/Core/HeadersBuilderTests.cs
+@@ -1,7 +1,7 @@
++using Contoso.Net.Core;
+ using NUnit.Framework;
+-using SeedCsharpNamespaceCollision.Core;
+ 
+-namespace SeedCsharpNamespaceCollision.Test.Core;
++namespace Contoso.Net.Test.Core;
+ 
+ [TestFixture]
+ public class HeadersBuilderTests
+diff --git a/src/SeedCsharpNamespaceCollision.Test/Core/Json/AdditionalPropertiesTests.cs b/src/Contoso.Net.Test/Core/Json/AdditionalPropertiesTests.cs
+similarity index 99%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision.Test/Core/Json/AdditionalPropertiesTests.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net.Test/Core/Json/AdditionalPropertiesTests.cs
+index 895b43f1dc0..77b10cf56bc 100644
+--- a/src/SeedCsharpNamespaceCollision.Test/Core/Json/AdditionalPropertiesTests.cs
++++ b/src/Contoso.Net.Test/Core/Json/AdditionalPropertiesTests.cs
+@@ -1,9 +1,9 @@
++using Contoso.Net.Core;
+ using global::System.Text.Json;
+ using global::System.Text.Json.Serialization;
+ using NUnit.Framework;
+-using SeedCsharpNamespaceCollision.Core;
+ 
+-namespace SeedCsharpNamespaceCollision.Test.Core.Json;
++namespace Contoso.Net.Test.Core.Json;
+ 
+ [TestFixture]
+ public class AdditionalPropertiesTests
+diff --git a/src/SeedCsharpNamespaceCollision.Test/Core/Json/DateOnlyJsonTests.cs b/src/Contoso.Net.Test/Core/Json/DateOnlyJsonTests.cs
+similarity index 96%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision.Test/Core/Json/DateOnlyJsonTests.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net.Test/Core/Json/DateOnlyJsonTests.cs
+index de52ee6f31a..efb9face270 100644
+--- a/src/SeedCsharpNamespaceCollision.Test/Core/Json/DateOnlyJsonTests.cs
++++ b/src/Contoso.Net.Test/Core/Json/DateOnlyJsonTests.cs
+@@ -1,7 +1,7 @@
++using Contoso.Net.Core;
+ using NUnit.Framework;
+-using SeedCsharpNamespaceCollision.Core;
+ 
+-namespace SeedCsharpNamespaceCollision.Test.Core.Json;
++namespace Contoso.Net.Test.Core.Json;
+ 
+ [TestFixture]
+ public class DateOnlyJsonTests
+diff --git a/src/SeedCsharpNamespaceCollision.Test/Core/Json/DateTimeJsonTests.cs b/src/Contoso.Net.Test/Core/Json/DateTimeJsonTests.cs
+similarity index 97%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision.Test/Core/Json/DateTimeJsonTests.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net.Test/Core/Json/DateTimeJsonTests.cs
+index d524743f976..45e29d48fbf 100644
+--- a/src/SeedCsharpNamespaceCollision.Test/Core/Json/DateTimeJsonTests.cs
++++ b/src/Contoso.Net.Test/Core/Json/DateTimeJsonTests.cs
+@@ -1,7 +1,7 @@
++using Contoso.Net.Core;
+ using NUnit.Framework;
+-using SeedCsharpNamespaceCollision.Core;
+ 
+-namespace SeedCsharpNamespaceCollision.Test.Core.Json;
++namespace Contoso.Net.Test.Core.Json;
+ 
+ [TestFixture]
+ public class DateTimeJsonTests
+diff --git a/src/SeedCsharpNamespaceCollision.Test/Core/Json/JsonAccessAttributeTests.cs b/src/Contoso.Net.Test/Core/Json/JsonAccessAttributeTests.cs
+similarity index 98%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision.Test/Core/Json/JsonAccessAttributeTests.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net.Test/Core/Json/JsonAccessAttributeTests.cs
+index bad56476e95..551840392eb 100644
+--- a/src/SeedCsharpNamespaceCollision.Test/Core/Json/JsonAccessAttributeTests.cs
++++ b/src/Contoso.Net.Test/Core/Json/JsonAccessAttributeTests.cs
+@@ -1,8 +1,8 @@
++using Contoso.Net.Core;
+ using global::System.Text.Json.Serialization;
+ using NUnit.Framework;
+-using SeedCsharpNamespaceCollision.Core;
+ 
+-namespace SeedCsharpNamespaceCollision.Test.Core.Json;
++namespace Contoso.Net.Test.Core.Json;
+ 
+ [TestFixture]
+ public class JsonAccessAttributeTests
+diff --git a/src/SeedCsharpNamespaceCollision.Test/Core/QueryStringBuilderTests.cs b/src/Contoso.Net.Test/Core/QueryStringBuilderTests.cs
+similarity index 99%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision.Test/Core/QueryStringBuilderTests.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net.Test/Core/QueryStringBuilderTests.cs
+index 2673c7a07c8..3bfc9882cb3 100644
+--- a/src/SeedCsharpNamespaceCollision.Test/Core/QueryStringBuilderTests.cs
++++ b/src/Contoso.Net.Test/Core/QueryStringBuilderTests.cs
+@@ -1,7 +1,7 @@
++using Contoso.Net.Core;
+ using NUnit.Framework;
+-using SeedCsharpNamespaceCollision.Core;
+ 
+-namespace SeedCsharpNamespaceCollision.Test.Core;
++namespace Contoso.Net.Test.Core;
+ 
+ [TestFixture]
+ public class QueryStringBuilderTests
+diff --git a/src/SeedCsharpNamespaceCollision.Test/Core/QueryStringConverterTests.cs b/src/Contoso.Net.Test/Core/QueryStringConverterTests.cs
+similarity index 98%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision.Test/Core/QueryStringConverterTests.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net.Test/Core/QueryStringConverterTests.cs
+index b8e61efdf35..703fd1b8980 100644
+--- a/src/SeedCsharpNamespaceCollision.Test/Core/QueryStringConverterTests.cs
++++ b/src/Contoso.Net.Test/Core/QueryStringConverterTests.cs
+@@ -1,7 +1,7 @@
++using Contoso.Net.Core;
+ using NUnit.Framework;
+-using SeedCsharpNamespaceCollision.Core;
+ 
+-namespace SeedCsharpNamespaceCollision.Test.Core;
++namespace Contoso.Net.Test.Core;
+ 
+ [TestFixture]
+ public class QueryStringConverterTests
+diff --git a/src/SeedCsharpNamespaceCollision.Test/Core/RawClientTests/MultipartFormTests.cs b/src/Contoso.Net.Test/Core/RawClientTests/MultipartFormTests.cs
+similarity index 99%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision.Test/Core/RawClientTests/MultipartFormTests.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net.Test/Core/RawClientTests/MultipartFormTests.cs
+index b1d17445dfb..f3ebdf75b66 100644
+--- a/src/SeedCsharpNamespaceCollision.Test/Core/RawClientTests/MultipartFormTests.cs
++++ b/src/Contoso.Net.Test/Core/RawClientTests/MultipartFormTests.cs
+@@ -1,11 +1,11 @@
++using Contoso.Net.Core;
+ using global::System.Net.Http;
+ using global::System.Text;
+ using global::System.Text.Json.Serialization;
+ using NUnit.Framework;
+-using SeedCsharpNamespaceCollision.Core;
+ using SystemTask = global::System.Threading.Tasks.Task;
+ 
+-namespace SeedCsharpNamespaceCollision.Test.Core.RawClientTests;
++namespace Contoso.Net.Test.Core.RawClientTests;
+ 
+ [TestFixture]
+ [Parallelizable(ParallelScope.Self)]
+@@ -1056,9 +1056,9 @@ public class MultipartFormTests
+             ?? throw new global::System.Exception("Boundary not found");
+     }
+ 
+-    private static SeedCsharpNamespaceCollision.Core.MultipartFormRequest CreateMultipartFormRequest()
++    private static global::Contoso.Net.Core.MultipartFormRequest CreateMultipartFormRequest()
+     {
+-        return new SeedCsharpNamespaceCollision.Core.MultipartFormRequest
++        return new global::Contoso.Net.Core.MultipartFormRequest
+         {
+             BaseUrl = "https://localhost",
+             Method = HttpMethod.Post,
+diff --git a/src/SeedCsharpNamespaceCollision.Test/Core/RawClientTests/QueryParameterTests.cs b/src/Contoso.Net.Test/Core/RawClientTests/QueryParameterTests.cs
+similarity index 96%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision.Test/Core/RawClientTests/QueryParameterTests.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net.Test/Core/RawClientTests/QueryParameterTests.cs
+index 3a8ad1ac897..e5c17fa246e 100644
+--- a/src/SeedCsharpNamespaceCollision.Test/Core/RawClientTests/QueryParameterTests.cs
++++ b/src/Contoso.Net.Test/Core/RawClientTests/QueryParameterTests.cs
+@@ -1,7 +1,7 @@
++using Contoso.Net.Core;
+ using NUnit.Framework;
+-using SeedCsharpNamespaceCollision.Core;
+ 
+-namespace SeedCsharpNamespaceCollision.Test.Core.RawClientTests;
++namespace Contoso.Net.Test.Core.RawClientTests;
+ 
+ [TestFixture]
+ [Parallelizable(ParallelScope.Self)]
+diff --git a/src/SeedCsharpNamespaceCollision.Test/Core/RawClientTests/RetriesTests.cs b/src/Contoso.Net.Test/Core/RawClientTests/RetriesTests.cs
+similarity index 97%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision.Test/Core/RawClientTests/RetriesTests.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net.Test/Core/RawClientTests/RetriesTests.cs
+index fc0063b3579..bfe196bdfb6 100644
+--- a/src/SeedCsharpNamespaceCollision.Test/Core/RawClientTests/RetriesTests.cs
++++ b/src/Contoso.Net.Test/Core/RawClientTests/RetriesTests.cs
+@@ -1,13 +1,13 @@
++using Contoso.Net.Core;
+ using global::System.Net.Http;
+ using global::System.Text.Json;
+ using NUnit.Framework;
+-using SeedCsharpNamespaceCollision.Core;
+ using WireMock.Server;
+ using SystemTask = global::System.Threading.Tasks.Task;
+ using WireMockRequest = WireMock.RequestBuilders.Request;
+ using WireMockResponse = WireMock.ResponseBuilders.Response;
+ 
+-namespace SeedCsharpNamespaceCollision.Test.Core.RawClientTests;
++namespace Contoso.Net.Test.Core.RawClientTests;
+ 
+ [TestFixture]
+ [Parallelizable(ParallelScope.Self)]
+@@ -146,7 +146,7 @@ public class RetriesTests
+             .WillSetStateTo("Server Error")
+             .RespondWith(WireMockResponse.Create().WithStatusCode(429).WithBody("Failure"));
+ 
+-        var request = new SeedCsharpNamespaceCollision.Core.MultipartFormRequest
++        var request = new global::Contoso.Net.Core.MultipartFormRequest
+         {
+             BaseUrl = _baseUrl,
+             Method = HttpMethod.Post,
+@@ -187,7 +187,7 @@ public class RetriesTests
+             .WhenStateIs("Success")
+             .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
+ 
+-        var request = new SeedCsharpNamespaceCollision.Core.MultipartFormRequest
++        var request = new global::Contoso.Net.Core.MultipartFormRequest
+         {
+             BaseUrl = _baseUrl,
+             Method = HttpMethod.Post,
+@@ -373,7 +373,7 @@ public class RetriesTests
+             .WhenStateIs("Success")
+             .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
+ 
+-        var request = new SeedCsharpNamespaceCollision.Core.MultipartFormRequest
++        var request = new global::Contoso.Net.Core.MultipartFormRequest
+         {
+             BaseUrl = _baseUrl,
+             Method = HttpMethod.Post,
+diff --git a/src/SeedCsharpNamespaceCollision.Test/Core/WithRawResponseTests.cs b/src/Contoso.Net.Test/Core/WithRawResponseTests.cs
+similarity index 98%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision.Test/Core/WithRawResponseTests.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net.Test/Core/WithRawResponseTests.cs
+index 663f53e5318..3dec5c3aa38 100644
+--- a/src/SeedCsharpNamespaceCollision.Test/Core/WithRawResponseTests.cs
++++ b/src/Contoso.Net.Test/Core/WithRawResponseTests.cs
+@@ -1,10 +1,10 @@
++using Contoso.Net;
++using Contoso.Net.Core;
+ using global::System.Net;
+ using global::System.Net.Http.Headers;
+ using NUnit.Framework;
+-using SeedCsharpNamespaceCollision;
+-using SeedCsharpNamespaceCollision.Core;
+ 
+-namespace SeedCsharpNamespaceCollision.Test.Core;
++namespace Contoso.Net.Test.Core;
+ 
+ [TestFixture]
+ public class WithRawResponseTests
+diff --git a/src/SeedCsharpNamespaceCollision.Test/TestClient.cs b/src/Contoso.Net.Test/TestClient.cs
+similarity index 58%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision.Test/TestClient.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net.Test/TestClient.cs
+index f87b2a4af55..d60dc2e2ba1 100644
+--- a/src/SeedCsharpNamespaceCollision.Test/TestClient.cs
++++ b/src/Contoso.Net.Test/TestClient.cs
+@@ -1,6 +1,6 @@
+ using NUnit.Framework;
+ 
+-namespace SeedCsharpNamespaceCollision.Test;
++namespace Contoso.Net.Test;
+ 
+ [TestFixture]
+ public class TestClient;
+diff --git a/src/SeedCsharpNamespaceCollision.Test/Unit/MockServer/BaseMockServerTest.cs b/src/Contoso.Net.Test/Unit/MockServer/BaseMockServerTest.cs
+similarity index 76%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision.Test/Unit/MockServer/BaseMockServerTest.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net.Test/Unit/MockServer/BaseMockServerTest.cs
+index 540b6335831..ce47f443915 100644
+--- a/src/SeedCsharpNamespaceCollision.Test/Unit/MockServer/BaseMockServerTest.cs
++++ b/src/Contoso.Net.Test/Unit/MockServer/BaseMockServerTest.cs
+@@ -1,16 +1,16 @@
++using global::Contoso.Net;
+ using NUnit.Framework;
+-using SeedCsharpNamespaceCollision;
+ using WireMock.Logging;
+ using WireMock.Server;
+ using WireMock.Settings;
+ 
+-namespace SeedCsharpNamespaceCollision.Test.Unit.MockServer;
++namespace Contoso.Net.Test.Unit.MockServer;
+ 
+ public class BaseMockServerTest
+ {
+     protected WireMockServer Server { get; set; } = null!;
+ 
+-    protected SeedCsharpNamespaceCollisionClient Client { get; set; } = null!;
++    protected global::Contoso.Net.Contoso Client { get; set; } = null!;
+ 
+     protected RequestOptions RequestOptions { get; set; } = new();
+ 
+@@ -23,7 +23,7 @@ public class BaseMockServerTest
+         );
+ 
+         // Initialize the Client
+-        Client = new SeedCsharpNamespaceCollisionClient(
++        Client = new global::Contoso.Net.Contoso(
+             clientOptions: new ClientOptions { BaseUrl = Server.Urls[0], MaxRetries = 0 }
+         );
+     }
+diff --git a/src/SeedCsharpNamespaceCollision.Test/Unit/MockServer/CreateTaskTest.cs b/src/Contoso.Net.Test/Unit/MockServer/CreateTaskTest.cs
+similarity index 87%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision.Test/Unit/MockServer/CreateTaskTest.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net.Test/Unit/MockServer/CreateTaskTest.cs
+index d28cf0d49ca..3f049bc5b61 100644
+--- a/src/SeedCsharpNamespaceCollision.Test/Unit/MockServer/CreateTaskTest.cs
++++ b/src/Contoso.Net.Test/Unit/MockServer/CreateTaskTest.cs
+@@ -1,13 +1,13 @@
++using global::Contoso.Net.Test.Utils;
+ using NUnit.Framework;
+-using SeedCsharpNamespaceCollision.Test.Utils;
+ 
+-namespace SeedCsharpNamespaceCollision.Test.Unit.MockServer;
++namespace Contoso.Net.Test.Unit.MockServer;
+ 
+ [TestFixture]
+ [Parallelizable(ParallelScope.Self)]
+ public class CreateTaskTest : BaseMockServerTest
+ {
+-    [NUnit.Framework.Test]
++    [global::NUnit.Framework.Test]
+     public async global::System.Threading.Tasks.Task MockServerTest()
+     {
+         const string requestJson = """
+@@ -41,7 +41,7 @@ public class CreateTaskTest : BaseMockServerTest
+             );
+ 
+         var response = await Client.CreateTaskAsync(
+-            new SeedCsharpNamespaceCollision.Task
++            new global::Contoso.Net.Task
+             {
+                 Id = "id",
+                 Name = "name",
+diff --git a/src/SeedCsharpNamespaceCollision.Test/Unit/MockServer/CreateUserTest.cs b/src/Contoso.Net.Test/Unit/MockServer/CreateUserTest.cs
+similarity index 87%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision.Test/Unit/MockServer/CreateUserTest.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net.Test/Unit/MockServer/CreateUserTest.cs
+index 3c27f3dd4fb..201b37ffe35 100644
+--- a/src/SeedCsharpNamespaceCollision.Test/Unit/MockServer/CreateUserTest.cs
++++ b/src/Contoso.Net.Test/Unit/MockServer/CreateUserTest.cs
+@@ -1,13 +1,13 @@
++using global::Contoso.Net.Test.Utils;
+ using NUnit.Framework;
+-using SeedCsharpNamespaceCollision.Test.Utils;
+ 
+-namespace SeedCsharpNamespaceCollision.Test.Unit.MockServer;
++namespace Contoso.Net.Test.Unit.MockServer;
+ 
+ [TestFixture]
+ [Parallelizable(ParallelScope.Self)]
+ public class CreateUserTest : BaseMockServerTest
+ {
+-    [NUnit.Framework.Test]
++    [global::NUnit.Framework.Test]
+     public async global::System.Threading.Tasks.Task MockServerTest()
+     {
+         const string requestJson = """
+@@ -41,7 +41,7 @@ public class CreateUserTest : BaseMockServerTest
+             );
+ 
+         var response = await Client.CreateUserAsync(
+-            new SeedCsharpNamespaceCollision.User
++            new global::Contoso.Net.User
+             {
+                 Id = "id",
+                 Name = "name",
+diff --git a/src/SeedCsharpNamespaceCollision.Test/Unit/MockServer/ScimConfiguration/CreateTokenTest.cs b/src/Contoso.Net.Test/Unit/MockServer/ScimConfiguration/CreateTokenTest.cs
+similarity index 86%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision.Test/Unit/MockServer/ScimConfiguration/CreateTokenTest.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net.Test/Unit/MockServer/ScimConfiguration/CreateTokenTest.cs
+index ef31da3d999..f3eab7ddf5c 100644
+--- a/src/SeedCsharpNamespaceCollision.Test/Unit/MockServer/ScimConfiguration/CreateTokenTest.cs
++++ b/src/Contoso.Net.Test/Unit/MockServer/ScimConfiguration/CreateTokenTest.cs
+@@ -1,15 +1,15 @@
++using global::Contoso.Net.ScimConfiguration;
++using global::Contoso.Net.Test.Unit.MockServer;
++using global::Contoso.Net.Test.Utils;
+ using NUnit.Framework;
+-using SeedCsharpNamespaceCollision.ScimConfiguration;
+-using SeedCsharpNamespaceCollision.Test.Unit.MockServer;
+-using SeedCsharpNamespaceCollision.Test.Utils;
+ 
+-namespace SeedCsharpNamespaceCollision.Test.Unit.MockServer.ScimConfiguration;
++namespace Contoso.Net.Test.Unit.MockServer.ScimConfiguration;
+ 
+ [TestFixture]
+ [Parallelizable(ParallelScope.Self)]
+ public class CreateTokenTest : BaseMockServerTest
+ {
+-    [NUnit.Framework.Test]
++    [global::NUnit.Framework.Test]
+     public async global::System.Threading.Tasks.Task MockServerTest()
+     {
+         const string requestJson = """
+diff --git a/src/SeedCsharpNamespaceCollision.Test/Unit/MockServer/ScimConfiguration/GetConfigurationTest.cs b/src/Contoso.Net.Test/Unit/MockServer/ScimConfiguration/GetConfigurationTest.cs
+similarity index 82%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision.Test/Unit/MockServer/ScimConfiguration/GetConfigurationTest.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net.Test/Unit/MockServer/ScimConfiguration/GetConfigurationTest.cs
+index e9957c216b5..e4d834bbc4a 100644
+--- a/src/SeedCsharpNamespaceCollision.Test/Unit/MockServer/ScimConfiguration/GetConfigurationTest.cs
++++ b/src/Contoso.Net.Test/Unit/MockServer/ScimConfiguration/GetConfigurationTest.cs
+@@ -1,14 +1,14 @@
++using global::Contoso.Net.Test.Unit.MockServer;
++using global::Contoso.Net.Test.Utils;
+ using NUnit.Framework;
+-using SeedCsharpNamespaceCollision.Test.Unit.MockServer;
+-using SeedCsharpNamespaceCollision.Test.Utils;
+ 
+-namespace SeedCsharpNamespaceCollision.Test.Unit.MockServer.ScimConfiguration;
++namespace Contoso.Net.Test.Unit.MockServer.ScimConfiguration;
+ 
+ [TestFixture]
+ [Parallelizable(ParallelScope.Self)]
+ public class GetConfigurationTest : BaseMockServerTest
+ {
+-    [NUnit.Framework.Test]
++    [global::NUnit.Framework.Test]
+     public async global::System.Threading.Tasks.Task MockServerTest()
+     {
+         const string mockResponse = """
+diff --git a/src/SeedCsharpNamespaceCollision.Test/Unit/MockServer/ScimConfiguration/ListUsersTest.cs b/src/Contoso.Net.Test/Unit/MockServer/ScimConfiguration/ListUsersTest.cs
+similarity index 83%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision.Test/Unit/MockServer/ScimConfiguration/ListUsersTest.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net.Test/Unit/MockServer/ScimConfiguration/ListUsersTest.cs
+index 489109576ef..5708b2c5b16 100644
+--- a/src/SeedCsharpNamespaceCollision.Test/Unit/MockServer/ScimConfiguration/ListUsersTest.cs
++++ b/src/Contoso.Net.Test/Unit/MockServer/ScimConfiguration/ListUsersTest.cs
+@@ -1,14 +1,14 @@
++using global::Contoso.Net.Test.Unit.MockServer;
++using global::Contoso.Net.Test.Utils;
+ using NUnit.Framework;
+-using SeedCsharpNamespaceCollision.Test.Unit.MockServer;
+-using SeedCsharpNamespaceCollision.Test.Utils;
+ 
+-namespace SeedCsharpNamespaceCollision.Test.Unit.MockServer.ScimConfiguration;
++namespace Contoso.Net.Test.Unit.MockServer.ScimConfiguration;
+ 
+ [TestFixture]
+ [Parallelizable(ParallelScope.Self)]
+ public class ListUsersTest : BaseMockServerTest
+ {
+-    [NUnit.Framework.Test]
++    [global::NUnit.Framework.Test]
+     public async global::System.Threading.Tasks.Task MockServerTest()
+     {
+         const string mockResponse = """
+diff --git a/src/SeedCsharpNamespaceCollision.Test/Unit/MockServer/System/CreateTaskTest.cs b/src/Contoso.Net.Test/Unit/MockServer/System/CreateTaskTest.cs
+similarity index 86%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision.Test/Unit/MockServer/System/CreateTaskTest.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net.Test/Unit/MockServer/System/CreateTaskTest.cs
+index 061594ab336..7c97d6cf14d 100644
+--- a/src/SeedCsharpNamespaceCollision.Test/Unit/MockServer/System/CreateTaskTest.cs
++++ b/src/Contoso.Net.Test/Unit/MockServer/System/CreateTaskTest.cs
+@@ -1,14 +1,14 @@
++using global::Contoso.Net.Test.Unit.MockServer;
++using global::Contoso.Net.Test.Utils;
+ using NUnit.Framework;
+-using SeedCsharpNamespaceCollision.Test.Unit.MockServer;
+-using SeedCsharpNamespaceCollision.Test.Utils;
+ 
+-namespace SeedCsharpNamespaceCollision.Test.Unit.MockServer.System;
++namespace Contoso.Net.Test.Unit.MockServer.System;
+ 
+ [TestFixture]
+ [Parallelizable(ParallelScope.Self)]
+ public class CreateTaskTest : BaseMockServerTest
+ {
+-    [NUnit.Framework.Test]
++    [global::NUnit.Framework.Test]
+     public async global::System.Threading.Tasks.Task MockServerTest()
+     {
+         const string requestJson = """
+@@ -71,10 +71,10 @@ public class CreateTaskTest : BaseMockServerTest
+             );
+ 
+         var response = await Client.System.CreateTaskAsync(
+-            new SeedCsharpNamespaceCollision.System.Task
++            new global::Contoso.Net.System.Task
+             {
+                 Name = "name",
+-                User = new SeedCsharpNamespaceCollision.System.User
++                User = new global::Contoso.Net.System.User
+                 {
+                     Line1 = "line1",
+                     Line2 = "line2",
+@@ -83,7 +83,7 @@ public class CreateTaskTest : BaseMockServerTest
+                     Zip = "zip",
+                     Country = "USA",
+                 },
+-                Owner = new SeedCsharpNamespaceCollision.System.User
++                Owner = new global::Contoso.Net.System.User
+                 {
+                     Line1 = "line1",
+                     Line2 = "line2",
+diff --git a/src/SeedCsharpNamespaceCollision.Test/Unit/MockServer/System/CreateUserTest.cs b/src/Contoso.Net.Test/Unit/MockServer/System/CreateUserTest.cs
+similarity index 85%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision.Test/Unit/MockServer/System/CreateUserTest.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net.Test/Unit/MockServer/System/CreateUserTest.cs
+index 2c4f311cd2c..cf4c2d9b90f 100644
+--- a/src/SeedCsharpNamespaceCollision.Test/Unit/MockServer/System/CreateUserTest.cs
++++ b/src/Contoso.Net.Test/Unit/MockServer/System/CreateUserTest.cs
+@@ -1,14 +1,14 @@
++using global::Contoso.Net.Test.Unit.MockServer;
++using global::Contoso.Net.Test.Utils;
+ using NUnit.Framework;
+-using SeedCsharpNamespaceCollision.Test.Unit.MockServer;
+-using SeedCsharpNamespaceCollision.Test.Utils;
+ 
+-namespace SeedCsharpNamespaceCollision.Test.Unit.MockServer.System;
++namespace Contoso.Net.Test.Unit.MockServer.System;
+ 
+ [TestFixture]
+ [Parallelizable(ParallelScope.Self)]
+ public class CreateUserTest : BaseMockServerTest
+ {
+-    [NUnit.Framework.Test]
++    [global::NUnit.Framework.Test]
+     public async global::System.Threading.Tasks.Task MockServerTest()
+     {
+         const string requestJson = """
+@@ -49,7 +49,7 @@ public class CreateUserTest : BaseMockServerTest
+             );
+ 
+         var response = await Client.System.CreateUserAsync(
+-            new SeedCsharpNamespaceCollision.System.User
++            new global::Contoso.Net.System.User
+             {
+                 Line1 = "line1",
+                 Line2 = "line2",
+diff --git a/src/SeedCsharpNamespaceCollision.Test/Unit/MockServer/System/GetUserTest.cs b/src/Contoso.Net.Test/Unit/MockServer/System/GetUserTest.cs
+similarity index 82%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision.Test/Unit/MockServer/System/GetUserTest.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net.Test/Unit/MockServer/System/GetUserTest.cs
+index 04efa6a02e8..05a5712708a 100644
+--- a/src/SeedCsharpNamespaceCollision.Test/Unit/MockServer/System/GetUserTest.cs
++++ b/src/Contoso.Net.Test/Unit/MockServer/System/GetUserTest.cs
+@@ -1,14 +1,14 @@
++using global::Contoso.Net.Test.Unit.MockServer;
++using global::Contoso.Net.Test.Utils;
+ using NUnit.Framework;
+-using SeedCsharpNamespaceCollision.Test.Unit.MockServer;
+-using SeedCsharpNamespaceCollision.Test.Utils;
+ 
+-namespace SeedCsharpNamespaceCollision.Test.Unit.MockServer.System;
++namespace Contoso.Net.Test.Unit.MockServer.System;
+ 
+ [TestFixture]
+ [Parallelizable(ParallelScope.Self)]
+ public class GetUserTest : BaseMockServerTest
+ {
+-    [NUnit.Framework.Test]
++    [global::NUnit.Framework.Test]
+     public async global::System.Threading.Tasks.Task MockServerTest()
+     {
+         const string mockResponse = """
+diff --git a/src/SeedCsharpNamespaceCollision.Test/Utils/AdditionalPropertiesComparer.cs b/src/Contoso.Net.Test/Utils/AdditionalPropertiesComparer.cs
+similarity index 98%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision.Test/Utils/AdditionalPropertiesComparer.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net.Test/Utils/AdditionalPropertiesComparer.cs
+index f319722ba3b..7e096f74d21 100644
+--- a/src/SeedCsharpNamespaceCollision.Test/Utils/AdditionalPropertiesComparer.cs
++++ b/src/Contoso.Net.Test/Utils/AdditionalPropertiesComparer.cs
+@@ -1,7 +1,7 @@
++using global::Contoso.Net;
++using global::Contoso.Net.Core;
+ using global::System.Text.Json;
+ using NUnit.Framework.Constraints;
+-using SeedCsharpNamespaceCollision;
+-using SeedCsharpNamespaceCollision.Core;
+ 
+ namespace NUnit.Framework;
+ 
+diff --git a/src/SeedCsharpNamespaceCollision.Test/Utils/JsonAssert.cs b/src/Contoso.Net.Test/Utils/JsonAssert.cs
+similarity index 91%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision.Test/Utils/JsonAssert.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net.Test/Utils/JsonAssert.cs
+index f4483656c1e..c78bd0a1791 100644
+--- a/src/SeedCsharpNamespaceCollision.Test/Utils/JsonAssert.cs
++++ b/src/Contoso.Net.Test/Utils/JsonAssert.cs
+@@ -1,8 +1,8 @@
++using global::Contoso.Net.Core;
+ using global::System.Text.Json;
+ using NUnit.Framework;
+-using SeedCsharpNamespaceCollision.Core;
+ 
+-namespace SeedCsharpNamespaceCollision.Test.Utils;
++namespace Contoso.Net.Test.Utils;
+ 
+ internal static class JsonAssert
+ {
+diff --git a/src/SeedCsharpNamespaceCollision.Test/Utils/JsonElementComparer.cs b/src/Contoso.Net.Test/Utils/JsonElementComparer.cs
+similarity index 100%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision.Test/Utils/JsonElementComparer.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net.Test/Utils/JsonElementComparer.cs
+diff --git a/src/SeedCsharpNamespaceCollision.Test/Utils/NUnitExtensions.cs b/src/Contoso.Net.Test/Utils/NUnitExtensions.cs
+similarity index 100%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision.Test/Utils/NUnitExtensions.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net.Test/Utils/NUnitExtensions.cs
+diff --git a/src/SeedCsharpNamespaceCollision.Test/Utils/OneOfComparer.cs b/src/Contoso.Net.Test/Utils/OneOfComparer.cs
+similarity index 100%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision.Test/Utils/OneOfComparer.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net.Test/Utils/OneOfComparer.cs
+diff --git a/src/SeedCsharpNamespaceCollision.Test/Utils/OptionalComparer.cs b/src/Contoso.Net.Test/Utils/OptionalComparer.cs
+similarity index 98%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision.Test/Utils/OptionalComparer.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net.Test/Utils/OptionalComparer.cs
+index 520fac05ff1..9953ff9378d 100644
+--- a/src/SeedCsharpNamespaceCollision.Test/Utils/OptionalComparer.cs
++++ b/src/Contoso.Net.Test/Utils/OptionalComparer.cs
+@@ -1,6 +1,6 @@
++using global::Contoso.Net.Core;
+ using NUnit.Framework.Constraints;
+ using OneOf;
+-using SeedCsharpNamespaceCollision.Core;
+ 
+ namespace NUnit.Framework;
+ 
+diff --git a/src/SeedCsharpNamespaceCollision.Test/Utils/ReadOnlyMemoryComparer.cs b/src/Contoso.Net.Test/Utils/ReadOnlyMemoryComparer.cs
+similarity index 100%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-collision/baseline/src/SeedCsharpNamespaceCollision.Test/Utils/ReadOnlyMemoryComparer.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-1ijoJqJa10Fe/src/Contoso.Net.Test/Utils/ReadOnlyMemoryComparer.cs
+diff --git a/src/SeedCsharpNamespaceCollision/Core/Public/SeedCsharpNamespaceCollisionException.cs b/src/SeedCsharpNamespaceCollision/Core/Public/SeedCsharpNamespaceCollisionException.cs
+deleted file mode 100644
+index 9e648c8d8d6..00000000000
+--- a/src/SeedCsharpNamespaceCollision/Core/Public/SeedCsharpNamespaceCollisionException.cs
++++ /dev/null
+@@ -1,7 +0,0 @@
+-namespace SeedCsharpNamespaceCollision;
+-
+-/// <summary>
+-/// Base exception class for all exceptions thrown by the SDK.
+-/// </summary>
+-public class SeedCsharpNamespaceCollisionException(string message, Exception? innerException = null)
+-    : Exception(message, innerException);

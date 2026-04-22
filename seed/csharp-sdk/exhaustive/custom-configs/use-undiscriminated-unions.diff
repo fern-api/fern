@@ -1,0 +1,1005 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 200d96787a2..24783c7d6e5 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,7 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-csharp-sdk",
+   "generatorVersion": "local",
+-  "generatorConfig": {},
++  "generatorConfig": {
++    "use-undiscriminated-unions": true
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "manual",
+diff --git a/Snippets/Example6.cs b/Snippets/Example6.cs
+index aa1c01880ad..473314a51c9 100644
+--- a/Snippets/Example6.cs
++++ b/Snippets/Example6.cs
+@@ -1,5 +1,5 @@
+ using SeedExhaustive;
+-using OneOf;
++using SeedExhaustive.Types;
+ 
+ public partial class Examples
+ {
+@@ -12,7 +12,7 @@ public partial class Examples
+         );
+ 
+         await client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnionAsync(
+-            new Dictionary<string, OneOf<double, bool, string, IEnumerable<string>>>(){
++            new Dictionary<string, MixedType>(){
+                 ["string"] = 1.1,
+             }
+         );
+diff --git a/reference.md b/reference.md
+index 34a09ad23bb..51b5742d7f5 100644
+--- a/reference.md
++++ b/reference.md
+@@ -262,7 +262,7 @@ await client.Endpoints.Container.GetAndReturnMapOfPrimToObjectAsync(
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.Endpoints.Container.<a href="/src/SeedExhaustive/Endpoints/Container/ContainerClient.cs">GetAndReturnMapOfPrimToUndiscriminatedUnionAsync</a>(Dictionary&lt;string, OneOf&lt;double, bool, string, IEnumerable&lt;string&gt;&gt;&gt; { ... }) -> WithRawResponseTask&lt;Dictionary&lt;string, OneOf&lt;double, bool, string, IEnumerable&lt;string&gt;&gt;&gt;&gt;</code></summary>
++<details><summary><code>client.Endpoints.Container.<a href="/src/SeedExhaustive/Endpoints/Container/ContainerClient.cs">GetAndReturnMapOfPrimToUndiscriminatedUnionAsync</a>(Dictionary&lt;string, MixedType&gt; { ... }) -> WithRawResponseTask&lt;Dictionary&lt;string, MixedType&gt;&gt;</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -276,7 +276,7 @@ await client.Endpoints.Container.GetAndReturnMapOfPrimToObjectAsync(
+ 
+ ```csharp
+ await client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnionAsync(
+-    new Dictionary<string, OneOf<double, bool, string, IEnumerable<string>>>() { { "string", 1.1 } }
++    new Dictionary<string, MixedType>() { { "string", 1.1 } }
+ );
+ ```
+ </dd>
+@@ -292,7 +292,7 @@ await client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnionAsyn
+ <dl>
+ <dd>
+ 
+-**request:** `Dictionary<string, OneOf<double, bool, string, IEnumerable<string>>>` 
++**request:** `Dictionary<string, MixedType>` 
+     
+ </dd>
+ </dl>
+diff --git a/snippet.json b/snippet.json
+index 4aa3713b304..dc322609364 100644
+--- a/snippet.json
++++ b/snippet.json
+@@ -82,7 +82,7 @@
+             },
+             "snippet": {
+                 "type": "csharp",
+-                "client": "using OneOf;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnionAsync(\n    new Dictionary<string, OneOf<double, bool, string, IEnumerable<string>>>() { { \"string\", 1.1 } }\n);\n"
++                "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnionAsync(\n    new Dictionary<string, MixedType>() { { \"string\", 1.1 } }\n);\n"
+             }
+         },
+         {
+diff --git a/src/SeedExhaustive/Core/CollectionItemSerializer.cs b/src/SeedExhaustive/Core/CollectionItemSerializer.cs
+deleted file mode 100644
+index 680ed34778a..00000000000
+--- a/src/SeedExhaustive/Core/CollectionItemSerializer.cs
++++ /dev/null
+@@ -1,91 +0,0 @@
+-using global::System.Text.Json;
+-using global::System.Text.Json.Serialization;
+-
+-namespace SeedExhaustive.Core;
+-
+-/// <summary>
+-/// Json collection converter.
+-/// </summary>
+-/// <typeparam name="TDatatype">Type of item to convert.</typeparam>
+-/// <typeparam name="TConverterType">Converter to use for individual items.</typeparam>
+-internal class CollectionItemSerializer<TDatatype, TConverterType>
+-    : JsonConverter<IEnumerable<TDatatype>>
+-    where TConverterType : JsonConverter, new()
+-{
+-    private static readonly TConverterType _converter = new TConverterType();
+-
+-    /// <summary>
+-    /// Reads a json string and deserializes it into an object.
+-    /// </summary>
+-    /// <param name="reader">Json reader.</param>
+-    /// <param name="typeToConvert">Type to convert.</param>
+-    /// <param name="options">Serializer options.</param>
+-    /// <returns>Created object.</returns>
+-    public override IEnumerable<TDatatype>? Read(
+-        ref Utf8JsonReader reader,
+-        global::System.Type typeToConvert,
+-        JsonSerializerOptions options
+-    )
+-    {
+-        if (reader.TokenType == JsonTokenType.Null)
+-        {
+-            return default;
+-        }
+-
+-        var jsonSerializerOptions = new JsonSerializerOptions(options);
+-        jsonSerializerOptions.Converters.Clear();
+-        jsonSerializerOptions.Converters.Add(_converter);
+-
+-        var returnValue = new List<TDatatype>();
+-
+-        while (reader.TokenType != JsonTokenType.EndArray)
+-        {
+-            if (reader.TokenType != JsonTokenType.StartArray)
+-            {
+-                var item = (TDatatype)(
+-                    JsonSerializer.Deserialize(ref reader, typeof(TDatatype), jsonSerializerOptions)
+-                    ?? throw new global::System.Exception(
+-                        $"Failed to deserialize collection item of type {typeof(TDatatype)}"
+-                    )
+-                );
+-                returnValue.Add(item);
+-            }
+-
+-            reader.Read();
+-        }
+-
+-        return returnValue;
+-    }
+-
+-    /// <summary>
+-    /// Writes a json string.
+-    /// </summary>
+-    /// <param name="writer">Json writer.</param>
+-    /// <param name="value">Value to write.</param>
+-    /// <param name="options">Serializer options.</param>
+-    public override void Write(
+-        Utf8JsonWriter writer,
+-        IEnumerable<TDatatype>? value,
+-        JsonSerializerOptions options
+-    )
+-    {
+-        if (value is null)
+-        {
+-            writer.WriteNullValue();
+-            return;
+-        }
+-
+-        var jsonSerializerOptions = new JsonSerializerOptions(options);
+-        jsonSerializerOptions.Converters.Clear();
+-        jsonSerializerOptions.Converters.Add(_converter);
+-
+-        writer.WriteStartArray();
+-
+-        foreach (var data in value)
+-        {
+-            JsonSerializer.Serialize(writer, data, jsonSerializerOptions);
+-        }
+-
+-        writer.WriteEndArray();
+-    }
+-}
+diff --git a/src/SeedExhaustive/Core/JsonConfiguration.cs b/src/SeedExhaustive/Core/JsonConfiguration.cs
+index 8cd731598e4..fc9a88ffb36 100644
+--- a/src/SeedExhaustive/Core/JsonConfiguration.cs
++++ b/src/SeedExhaustive/Core/JsonConfiguration.cs
+@@ -16,15 +16,11 @@ internal static partial class JsonOptions
+     {
+         var options = new JsonSerializerOptions
+         {
+-            Converters =
+-            {
+-                new DateTimeSerializer(),
++            Converters = { new DateTimeSerializer(),
+ #if USE_PORTABLE_DATE_ONLY
+                 new DateOnlyConverter(),
+ #endif
+-                new OneOfSerializer(),
+-                new OptionalJsonConverterFactory(),
+-            },
++                new OptionalJsonConverterFactory() },
+ #if DEBUG
+             WriteIndented = true,
+ #endif
+diff --git a/src/SeedExhaustive/Core/OneOfSerializer.cs b/src/SeedExhaustive/Core/OneOfSerializer.cs
+deleted file mode 100644
+index 95a14f2a69c..00000000000
+--- a/src/SeedExhaustive/Core/OneOfSerializer.cs
++++ /dev/null
+@@ -1,145 +0,0 @@
+-using global::System.Reflection;
+-using global::System.Text.Json;
+-using global::System.Text.Json.Serialization;
+-using OneOf;
+-
+-namespace SeedExhaustive.Core;
+-
+-internal class OneOfSerializer : JsonConverter<IOneOf>
+-{
+-    public override IOneOf? Read(
+-        ref Utf8JsonReader reader,
+-        global::System.Type typeToConvert,
+-        JsonSerializerOptions options
+-    )
+-    {
+-        if (reader.TokenType is JsonTokenType.Null)
+-            return default;
+-
+-        foreach (var (type, cast) in GetOneOfTypes(typeToConvert))
+-        {
+-            try
+-            {
+-                var readerCopy = reader;
+-                var result = JsonSerializer.Deserialize(ref readerCopy, type, options);
+-                reader.Skip();
+-                return (IOneOf)cast.Invoke(null, [result])!;
+-            }
+-            catch (JsonException) { }
+-        }
+-
+-        throw new JsonException(
+-            $"Cannot deserialize into one of the supported types for {typeToConvert}"
+-        );
+-    }
+-
+-    public override void Write(Utf8JsonWriter writer, IOneOf value, JsonSerializerOptions options)
+-    {
+-        JsonSerializer.Serialize(writer, value.Value, options);
+-    }
+-
+-    public override IOneOf ReadAsPropertyName(
+-        ref Utf8JsonReader reader,
+-        global::System.Type typeToConvert,
+-        JsonSerializerOptions options
+-    )
+-    {
+-        var stringValue = reader.GetString();
+-        if (stringValue == null)
+-            throw new JsonException("Cannot deserialize null property name into OneOf type");
+-
+-        // Try to deserialize the string value into one of the supported types
+-        foreach (var (type, cast) in GetOneOfTypes(typeToConvert))
+-        {
+-            try
+-            {
+-                // For primitive types, try direct conversion
+-                if (type == typeof(string))
+-                {
+-                    return (IOneOf)cast.Invoke(null, [stringValue])!;
+-                }
+-
+-                // For other types, try to deserialize from JSON string
+-                var result = JsonSerializer.Deserialize($"\"{stringValue}\"", type, options);
+-                if (result != null)
+-                {
+-                    return (IOneOf)cast.Invoke(null, [result])!;
+-                }
+-            }
+-            catch { }
+-        }
+-
+-        // If no type-specific deserialization worked, default to string if available
+-        var stringType = GetOneOfTypes(typeToConvert).FirstOrDefault(t => t.type == typeof(string));
+-        if (stringType != default)
+-        {
+-            return (IOneOf)stringType.cast.Invoke(null, [stringValue])!;
+-        }
+-
+-        throw new JsonException(
+-            $"Cannot deserialize dictionary key '{stringValue}' into one of the supported types for {typeToConvert}"
+-        );
+-    }
+-
+-    public override void WriteAsPropertyName(
+-        Utf8JsonWriter writer,
+-        IOneOf value,
+-        JsonSerializerOptions options
+-    )
+-    {
+-        // Serialize the underlying value to a string suitable for use as a dictionary key
+-        var stringValue = value.Value?.ToString() ?? "null";
+-        writer.WritePropertyName(stringValue);
+-    }
+-
+-    private static (global::System.Type type, MethodInfo cast)[] GetOneOfTypes(
+-        global::System.Type typeToConvert
+-    )
+-    {
+-        var type = typeToConvert;
+-        if (Nullable.GetUnderlyingType(type) is { } underlyingType)
+-        {
+-            type = underlyingType;
+-        }
+-
+-        var casts = type.GetRuntimeMethods()
+-            .Where(m => m.IsSpecialName && m.Name == "op_Implicit")
+-            .ToArray();
+-        while (type is not null)
+-        {
+-            if (
+-                type.IsGenericType
+-                && (type.Name.StartsWith("OneOf`") || type.Name.StartsWith("OneOfBase`"))
+-            )
+-            {
+-                var genericArguments = type.GetGenericArguments();
+-                if (genericArguments.Length == 1)
+-                {
+-                    return [(genericArguments[0], casts[0])];
+-                }
+-
+-                // if object type is present, make sure it is last
+-                var indexOfObjectType = Array.IndexOf(genericArguments, typeof(object));
+-                if (indexOfObjectType != -1 && genericArguments.Length - 1 != indexOfObjectType)
+-                {
+-                    genericArguments = genericArguments
+-                        .OrderBy(t => t == typeof(object) ? 1 : 0)
+-                        .ToArray();
+-                }
+-
+-                return genericArguments
+-                    .Select(t => (t, casts.First(c => c.GetParameters()[0].ParameterType == t)))
+-                    .ToArray();
+-            }
+-
+-            type = type.BaseType;
+-        }
+-
+-        throw new InvalidOperationException($"{type} isn't OneOf or OneOfBase");
+-    }
+-
+-    public override bool CanConvert(global::System.Type typeToConvert)
+-    {
+-        return typeof(IOneOf).IsAssignableFrom(typeToConvert);
+-    }
+-}
+diff --git a/src/SeedExhaustive/Endpoints/Container/ContainerClient.cs b/src/SeedExhaustive/Endpoints/Container/ContainerClient.cs
+index e184a577e18..ff0e8213153 100644
+--- a/src/SeedExhaustive/Endpoints/Container/ContainerClient.cs
++++ b/src/SeedExhaustive/Endpoints/Container/ContainerClient.cs
+@@ -1,5 +1,4 @@
+ using global::System.Text.Json;
+-using OneOf;
+ using SeedExhaustive;
+ using SeedExhaustive.Core;
+ using SeedExhaustive.Types;
+@@ -426,9 +425,9 @@ public partial class ContainerClient : IContainerClient
+     }
+ 
+     private async Task<
+-        WithRawResponse<Dictionary<string, OneOf<double, bool, string, IEnumerable<string>>>>
++        WithRawResponse<Dictionary<string, MixedType>>
+     > GetAndReturnMapOfPrimToUndiscriminatedUnionAsyncCore(
+-        Dictionary<string, OneOf<double, bool, string, IEnumerable<string>>> request,
++        Dictionary<string, MixedType> request,
+         RequestOptions? options = null,
+         CancellationToken cancellationToken = default
+     )
+@@ -459,12 +458,10 @@ public partial class ContainerClient : IContainerClient
+                 .ConfigureAwait(false);
+             try
+             {
+-                var responseData = JsonUtils.Deserialize<
+-                    Dictionary<string, OneOf<double, bool, string, IEnumerable<string>>>
+-                >(responseBody)!;
+-                return new WithRawResponse<
+-                    Dictionary<string, OneOf<double, bool, string, IEnumerable<string>>>
+-                >()
++                var responseData = JsonUtils.Deserialize<Dictionary<string, MixedType>>(
++                    responseBody
++                )!;
++                return new WithRawResponse<Dictionary<string, MixedType>>()
+                 {
+                     Data = responseData,
+                     RawResponse = new RawResponse()
+@@ -673,20 +670,18 @@ public partial class ContainerClient : IContainerClient
+ 
+     /// <example><code>
+     /// await client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnionAsync(
+-    ///     new Dictionary&lt;string, OneOf&lt;double, bool, string, IEnumerable&lt;string&gt;&gt;&gt;() { { "string", 1.1 } }
++    ///     new Dictionary&lt;string, MixedType&gt;() { { "string", 1.1 } }
+     /// );
+     /// </code></example>
+     public WithRawResponseTask<
+-        Dictionary<string, OneOf<double, bool, string, IEnumerable<string>>>
++        Dictionary<string, MixedType>
+     > GetAndReturnMapOfPrimToUndiscriminatedUnionAsync(
+-        Dictionary<string, OneOf<double, bool, string, IEnumerable<string>>> request,
++        Dictionary<string, MixedType> request,
+         RequestOptions? options = null,
+         CancellationToken cancellationToken = default
+     )
+     {
+-        return new WithRawResponseTask<
+-            Dictionary<string, OneOf<double, bool, string, IEnumerable<string>>>
+-        >(
++        return new WithRawResponseTask<Dictionary<string, MixedType>>(
+             GetAndReturnMapOfPrimToUndiscriminatedUnionAsyncCore(
+                 request,
+                 options,
+diff --git a/src/SeedExhaustive/Endpoints/Container/IContainerClient.cs b/src/SeedExhaustive/Endpoints/Container/IContainerClient.cs
+index d79998a5820..72ed774c29d 100644
+--- a/src/SeedExhaustive/Endpoints/Container/IContainerClient.cs
++++ b/src/SeedExhaustive/Endpoints/Container/IContainerClient.cs
+@@ -1,4 +1,3 @@
+-using OneOf;
+ using SeedExhaustive;
+ using SeedExhaustive.Types;
+ 
+@@ -45,9 +44,9 @@ public partial interface IContainerClient
+     );
+ 
+     WithRawResponseTask<
+-        Dictionary<string, OneOf<double, bool, string, IEnumerable<string>>>
++        Dictionary<string, MixedType>
+     > GetAndReturnMapOfPrimToUndiscriminatedUnionAsync(
+-        Dictionary<string, OneOf<double, bool, string, IEnumerable<string>>> request,
++        Dictionary<string, MixedType> request,
+         RequestOptions? options = null,
+         CancellationToken cancellationToken = default
+     );
+diff --git a/src/SeedExhaustive/SeedExhaustive.csproj b/src/SeedExhaustive/SeedExhaustive.csproj
+index 927149e4381..7872453b83a 100644
+--- a/src/SeedExhaustive/SeedExhaustive.csproj
++++ b/src/SeedExhaustive/SeedExhaustive.csproj
+@@ -37,13 +37,10 @@
+       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+       <PrivateAssets>all</PrivateAssets>
+     </PackageReference>
+-    <PackageReference Include="OneOf" Version="3.0.271" />
+-    <PackageReference Include="OneOf.Extended" Version="3.0.271" />
+-    <PackageReference Include="System.Net.Http" Version="[4.3.4,)" />
+-    <PackageReference Include="System.Text.RegularExpressions" Version="[4.3.1,)" />
+   </ItemGroup>
+   <ItemGroup Condition="!$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
+     <PackageReference Include="System.Text.Json" Version="9.0.9" />
++    <PackageReference Include="System.Net.Http" Version="[4.3.4,)" />
+   </ItemGroup>
+ 
+   <ItemGroup>
+diff --git a/src/SeedExhaustive/Types/Union/Types/MixedType.cs b/src/SeedExhaustive/Types/Union/Types/MixedType.cs
+new file mode 100644
+index 00000000000..f538a25f90c
+--- /dev/null
++++ b/src/SeedExhaustive/Types/Union/Types/MixedType.cs
+@@ -0,0 +1,353 @@
++// ReSharper disable NullableWarningSuppressionIsUsed
++// ReSharper disable InconsistentNaming
++
++using global::System.Text.Json;
++using global::System.Text.Json.Serialization;
++using SeedExhaustive;
++using SeedExhaustive.Core;
++
++namespace SeedExhaustive.Types;
++
++[JsonConverter(typeof(MixedType.JsonConverter))]
++[Serializable]
++public class MixedType
++{
++    private MixedType(string type, object? value)
++    {
++        Type = type;
++        Value = value;
++    }
++
++    /// <summary>
++    /// Type discriminator
++    /// </summary>
++    [JsonIgnore]
++    public string Type { get; internal set; }
++
++    /// <summary>
++    /// Union value
++    /// </summary>
++    [JsonIgnore]
++    public object? Value { get; internal set; }
++
++    /// <summary>
++    /// Factory method to create a union from a double value.
++    /// </summary>
++    public static MixedType FromDouble(double value) => new("double", value);
++
++    /// <summary>
++    /// Factory method to create a union from a bool value.
++    /// </summary>
++    public static MixedType FromBool(bool value) => new("bool", value);
++
++    /// <summary>
++    /// Factory method to create a union from a string value.
++    /// </summary>
++    public static MixedType FromString(string value) => new("string", value);
++
++    /// <summary>
++    /// Factory method to create a union from a IEnumerable<string> value.
++    /// </summary>
++    public static MixedType FromListOfString(IEnumerable<string> value) => new("list", value);
++
++    /// <summary>
++    /// Returns true if <see cref="Type"/> is "double"
++    /// </summary>
++    public bool IsDouble() => Type == "double";
++
++    /// <summary>
++    /// Returns true if <see cref="Type"/> is "bool"
++    /// </summary>
++    public bool IsBool() => Type == "bool";
++
++    /// <summary>
++    /// Returns true if <see cref="Type"/> is "string"
++    /// </summary>
++    public bool IsString() => Type == "string";
++
++    /// <summary>
++    /// Returns true if <see cref="Type"/> is "list"
++    /// </summary>
++    public bool IsListOfString() => Type == "list";
++
++    /// <summary>
++    /// Returns the value as a <see cref="double"/> if <see cref="Type"/> is 'double', otherwise throws an exception.
++    /// </summary>
++    /// <exception cref="SeedExhaustiveException">Thrown when <see cref="Type"/> is not 'double'.</exception>
++    public double AsDouble() =>
++        IsDouble()
++            ? (double)Value!
++            : throw new SeedExhaustiveException("Union type is not 'double'");
++
++    /// <summary>
++    /// Returns the value as a <see cref="bool"/> if <see cref="Type"/> is 'bool', otherwise throws an exception.
++    /// </summary>
++    /// <exception cref="SeedExhaustiveException">Thrown when <see cref="Type"/> is not 'bool'.</exception>
++    public bool AsBool() =>
++        IsBool() ? (bool)Value! : throw new SeedExhaustiveException("Union type is not 'bool'");
++
++    /// <summary>
++    /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'string', otherwise throws an exception.
++    /// </summary>
++    /// <exception cref="SeedExhaustiveException">Thrown when <see cref="Type"/> is not 'string'.</exception>
++    public string AsString() =>
++        IsString()
++            ? (string)Value!
++            : throw new SeedExhaustiveException("Union type is not 'string'");
++
++    /// <summary>
++    /// Returns the value as a <see cref="IEnumerable<string>"/> if <see cref="Type"/> is 'list', otherwise throws an exception.
++    /// </summary>
++    /// <exception cref="SeedExhaustiveException">Thrown when <see cref="Type"/> is not 'list'.</exception>
++    public IEnumerable<string> AsListOfString() =>
++        IsListOfString()
++            ? (IEnumerable<string>)Value!
++            : throw new SeedExhaustiveException("Union type is not 'list'");
++
++    /// <summary>
++    /// Attempts to cast the value to a <see cref="double"/> and returns true if successful.
++    /// </summary>
++    public bool TryGetDouble(out double? value)
++    {
++        if (Type == "double")
++        {
++            value = (double)Value!;
++            return true;
++        }
++        value = null;
++        return false;
++    }
++
++    /// <summary>
++    /// Attempts to cast the value to a <see cref="bool"/> and returns true if successful.
++    /// </summary>
++    public bool TryGetBool(out bool? value)
++    {
++        if (Type == "bool")
++        {
++            value = (bool)Value!;
++            return true;
++        }
++        value = null;
++        return false;
++    }
++
++    /// <summary>
++    /// Attempts to cast the value to a <see cref="string"/> and returns true if successful.
++    /// </summary>
++    public bool TryGetString(out string? value)
++    {
++        if (Type == "string")
++        {
++            value = (string)Value!;
++            return true;
++        }
++        value = null;
++        return false;
++    }
++
++    /// <summary>
++    /// Attempts to cast the value to a <see cref="IEnumerable<string>"/> and returns true if successful.
++    /// </summary>
++    public bool TryGetListOfString(out IEnumerable<string>? value)
++    {
++        if (Type == "list")
++        {
++            value = (IEnumerable<string>)Value!;
++            return true;
++        }
++        value = null;
++        return false;
++    }
++
++    public T Match<T>(
++        Func<double, T> onDouble,
++        Func<bool, T> onBool,
++        Func<string, T> onString,
++        Func<IEnumerable<string>, T> onListOfString
++    )
++    {
++        return Type switch
++        {
++            "double" => onDouble(AsDouble()),
++            "bool" => onBool(AsBool()),
++            "string" => onString(AsString()),
++            "list" => onListOfString(AsListOfString()),
++            _ => throw new SeedExhaustiveException($"Unknown union type: {Type}"),
++        };
++    }
++
++    public void Visit(
++        Action<double> onDouble,
++        Action<bool> onBool,
++        Action<string> onString,
++        Action<IEnumerable<string>> onListOfString
++    )
++    {
++        switch (Type)
++        {
++            case "double":
++                onDouble(AsDouble());
++                break;
++            case "bool":
++                onBool(AsBool());
++                break;
++            case "string":
++                onString(AsString());
++                break;
++            case "list":
++                onListOfString(AsListOfString());
++                break;
++            default:
++                throw new SeedExhaustiveException($"Unknown union type: {Type}");
++        }
++    }
++
++    public override int GetHashCode()
++    {
++        unchecked
++        {
++            var hashCode = Type.GetHashCode();
++            if (Value != null)
++            {
++                hashCode = (hashCode * 397) ^ Value.GetHashCode();
++            }
++            return hashCode;
++        }
++    }
++
++    public override bool Equals(object? obj)
++    {
++        if (obj is null)
++            return false;
++        if (ReferenceEquals(this, obj))
++            return true;
++        if (obj is not MixedType other)
++            return false;
++
++        // Compare type discriminators
++        if (Type != other.Type)
++            return false;
++
++        // Compare values using EqualityComparer for deep comparison
++        return System.Collections.Generic.EqualityComparer<object?>.Default.Equals(
++            Value,
++            other.Value
++        );
++    }
++
++    public override string ToString() => JsonUtils.Serialize(this);
++
++    public static implicit operator MixedType(double value) => new("double", value);
++
++    public static implicit operator MixedType(bool value) => new("bool", value);
++
++    public static implicit operator MixedType(string value) => new("string", value);
++
++    [Serializable]
++    internal sealed class JsonConverter : JsonConverter<MixedType>
++    {
++        public override MixedType? Read(
++            ref Utf8JsonReader reader,
++            global::System.Type typeToConvert,
++            JsonSerializerOptions options
++        )
++        {
++            if (reader.TokenType == JsonTokenType.Null)
++            {
++                return null;
++            }
++
++            if (reader.TokenType == JsonTokenType.Number)
++            {
++                MixedType doubleResult = new("double", reader.GetDouble());
++                return doubleResult;
++            }
++
++            if (reader.TokenType == JsonTokenType.True || reader.TokenType == JsonTokenType.False)
++            {
++                MixedType boolResult = new("bool", reader.GetBoolean());
++                return boolResult;
++            }
++
++            if (reader.TokenType == JsonTokenType.String)
++            {
++                var stringValue = reader.GetString()!;
++
++                MixedType stringResult = new("string", stringValue);
++                return stringResult;
++            }
++
++            if (reader.TokenType == JsonTokenType.StartArray)
++            {
++                var document = JsonDocument.ParseValue(ref reader);
++
++                var types = new (string Key, System.Type Type)[]
++                {
++                    ("list", typeof(IEnumerable<string>)),
++                };
++
++                foreach (var (key, type) in types)
++                {
++                    try
++                    {
++                        var value = document.Deserialize(type, options);
++                        if (value != null)
++                        {
++                            MixedType result = new(key, value);
++                            return result;
++                        }
++                    }
++                    catch (JsonException)
++                    {
++                        // Try next type;
++                    }
++                }
++            }
++
++            throw new JsonException(
++                $"Cannot deserialize JSON token {reader.TokenType} into MixedType"
++            );
++        }
++
++        public override void Write(
++            Utf8JsonWriter writer,
++            MixedType value,
++            JsonSerializerOptions options
++        )
++        {
++            if (value == null)
++            {
++                writer.WriteNullValue();
++                return;
++            }
++
++            value.Visit(
++                num => writer.WriteNumberValue(num),
++                b => writer.WriteBooleanValue(b),
++                str => writer.WriteStringValue(str),
++                obj => JsonSerializer.Serialize(writer, obj, options)
++            );
++        }
++
++        public override MixedType ReadAsPropertyName(
++            ref Utf8JsonReader reader,
++            global::System.Type typeToConvert,
++            JsonSerializerOptions options
++        )
++        {
++            var stringValue = reader.GetString()!;
++            MixedType result = new("string", stringValue);
++            return result;
++        }
++
++        public override void WriteAsPropertyName(
++            Utf8JsonWriter writer,
++            MixedType value,
++            JsonSerializerOptions options
++        )
++        {
++            writer.WritePropertyName(value.Value?.ToString() ?? "null");
++        }
++    }
++}
+diff --git a/src/SeedExhaustive.Test/Unit/MockServer/Endpoints/Container/GetAndReturnMapOfPrimToUndiscriminatedUnionTest.cs b/src/SeedExhaustive.Test/Unit/MockServer/Endpoints/Container/GetAndReturnMapOfPrimToUndiscriminatedUnionTest.cs
+index 6d6d6b3c4bf..32c02f0e80d 100644
+--- a/src/SeedExhaustive.Test/Unit/MockServer/Endpoints/Container/GetAndReturnMapOfPrimToUndiscriminatedUnionTest.cs
++++ b/src/SeedExhaustive.Test/Unit/MockServer/Endpoints/Container/GetAndReturnMapOfPrimToUndiscriminatedUnionTest.cs
+@@ -1,7 +1,7 @@
+ using NUnit.Framework;
+-using OneOf;
+ using SeedExhaustive.Test.Unit.MockServer;
+ using SeedExhaustive.Test.Utils;
++using SeedExhaustive.Types;
+ 
+ namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Container;
+ 
+@@ -41,10 +41,7 @@ public class GetAndReturnMapOfPrimToUndiscriminatedUnionTest : BaseMockServerTes
+ 
+         var response =
+             await Client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnionAsync(
+-                new Dictionary<string, OneOf<double, bool, string, IEnumerable<string>>>()
+-                {
+-                    { "string", 1.1 },
+-                }
++                new Dictionary<string, MixedType>() { { "string", 1.1 } }
+             );
+         JsonAssert.AreEqual(response, mockResponse);
+     }
+diff --git a/src/SeedExhaustive.Test/Utils/NUnitExtensions.cs b/src/SeedExhaustive.Test/Utils/NUnitExtensions.cs
+index 816f4c010e6..f451b2b04e9 100644
+--- a/src/SeedExhaustive.Test/Utils/NUnitExtensions.cs
++++ b/src/SeedExhaustive.Test/Utils/NUnitExtensions.cs
+@@ -23,7 +23,6 @@ public static class NUnitExtensions
+             .UsingReadOnlyMemoryComparer<bool>()
+             .UsingReadOnlyMemoryComparer<float>()
+             .UsingReadOnlyMemoryComparer<double>()
+-            .UsingOneOfComparer()
+             .UsingJsonElementComparer()
+             .UsingOptionalComparer()
+             .UsingObjectDictionaryComparer()
+diff --git a/src/SeedExhaustive.Test/Utils/OneOfComparer.cs b/src/SeedExhaustive.Test/Utils/OneOfComparer.cs
+deleted file mode 100644
+index 76743917436..00000000000
+--- a/src/SeedExhaustive.Test/Utils/OneOfComparer.cs
++++ /dev/null
+@@ -1,86 +0,0 @@
+-using NUnit.Framework.Constraints;
+-using OneOf;
+-
+-namespace NUnit.Framework;
+-
+-/// <summary>
+-/// Extensions for EqualConstraint to handle OneOf values.
+-/// </summary>
+-public static class EqualConstraintExtensions
+-{
+-    /// <summary>
+-    /// Modifies the EqualConstraint to handle OneOf instances by comparing their inner values.
+-    /// This works alongside other comparison modifiers like UsingPropertiesComparer.
+-    /// </summary>
+-    /// <param name="constraint">The EqualConstraint to modify.</param>
+-    /// <returns>The same constraint instance for method chaining.</returns>
+-    public static EqualConstraint UsingOneOfComparer(this EqualConstraint constraint)
+-    {
+-        // Register a comparer factory for IOneOf types
+-        constraint.Using<IOneOf>(
+-            (x, y) =>
+-            {
+-                // ReSharper disable ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
+-                if (x.Value is null && y.Value is null)
+-                {
+-                    return true;
+-                }
+-
+-                if (x.Value is null)
+-                {
+-                    return false;
+-                }
+-
+-                var propertiesComparer = new NUnitEqualityComparer();
+-                var tolerance = Tolerance.Default;
+-                propertiesComparer.CompareProperties = true;
+-                // Add OneOf comparer to handle nested OneOf values (e.g., in Lists)
+-                propertiesComparer.ExternalComparers.Add(
+-                    new OneOfEqualityAdapter(propertiesComparer)
+-                );
+-                return propertiesComparer.AreEqual(x.Value, y.Value, ref tolerance);
+-            }
+-        );
+-
+-        return constraint;
+-    }
+-
+-    /// <summary>
+-    /// EqualityAdapter for comparing IOneOf instances within NUnitEqualityComparer.
+-    /// This enables recursive comparison of nested OneOf values.
+-    /// </summary>
+-    private class OneOfEqualityAdapter : EqualityAdapter
+-    {
+-        private readonly NUnitEqualityComparer _comparer;
+-
+-        public OneOfEqualityAdapter(NUnitEqualityComparer comparer)
+-        {
+-            _comparer = comparer;
+-        }
+-
+-        public override bool CanCompare(object? x, object? y)
+-        {
+-            return x is IOneOf && y is IOneOf;
+-        }
+-
+-        public override bool AreEqual(object? x, object? y)
+-        {
+-            var oneOfX = (IOneOf?)x;
+-            var oneOfY = (IOneOf?)y;
+-
+-            // ReSharper disable ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
+-            if (oneOfX?.Value is null && oneOfY?.Value is null)
+-            {
+-                return true;
+-            }
+-
+-            if (oneOfX?.Value is null || oneOfY?.Value is null)
+-            {
+-                return false;
+-            }
+-
+-            var tolerance = Tolerance.Default;
+-            return _comparer.AreEqual(oneOfX.Value, oneOfY.Value, ref tolerance);
+-        }
+-    }
+-}
+diff --git a/src/SeedExhaustive.Test/Utils/OptionalComparer.cs b/src/SeedExhaustive.Test/Utils/OptionalComparer.cs
+index 6cd4f675357..ac3c3e6583e 100644
+--- a/src/SeedExhaustive.Test/Utils/OptionalComparer.cs
++++ b/src/SeedExhaustive.Test/Utils/OptionalComparer.cs
+@@ -1,5 +1,4 @@
+ using NUnit.Framework.Constraints;
+-using OneOf;
+ using SeedExhaustive.Core;
+ 
+ namespace NUnit.Framework;
+@@ -52,53 +51,10 @@ public static class OptionalComparerExtensions
+                 var propertiesComparer = new NUnitEqualityComparer();
+                 var tolerance = Tolerance.Default;
+                 propertiesComparer.CompareProperties = true;
+-                // Add OneOf comparer to handle nested OneOf values (e.g., in Lists within Optional<T>)
+-                propertiesComparer.ExternalComparers.Add(
+-                    new OneOfEqualityAdapter(propertiesComparer)
+-                );
+                 return propertiesComparer.AreEqual(xValue, yValue, ref tolerance);
+             }
+         );
+ 
+         return constraint;
+     }
+-
+-    /// <summary>
+-    /// EqualityAdapter for comparing IOneOf instances within NUnitEqualityComparer.
+-    /// This enables recursive comparison of nested OneOf values within Optional<T> types.
+-    /// </summary>
+-    private class OneOfEqualityAdapter : EqualityAdapter
+-    {
+-        private readonly NUnitEqualityComparer _comparer;
+-
+-        public OneOfEqualityAdapter(NUnitEqualityComparer comparer)
+-        {
+-            _comparer = comparer;
+-        }
+-
+-        public override bool CanCompare(object? x, object? y)
+-        {
+-            return x is IOneOf && y is IOneOf;
+-        }
+-
+-        public override bool AreEqual(object? x, object? y)
+-        {
+-            var oneOfX = (IOneOf?)x;
+-            var oneOfY = (IOneOf?)y;
+-
+-            // ReSharper disable ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
+-            if (oneOfX?.Value is null && oneOfY?.Value is null)
+-            {
+-                return true;
+-            }
+-
+-            if (oneOfX?.Value is null || oneOfY?.Value is null)
+-            {
+-                return false;
+-            }
+-
+-            var tolerance = Tolerance.Default;
+-            return _comparer.AreEqual(oneOfX.Value, oneOfY.Value, ref tolerance);
+-        }
+-    }
+ }

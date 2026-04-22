@@ -1,0 +1,738 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index cef89e12341..52930aa5b02 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -3,7 +3,11 @@
+   "generatorName": "fernapi/fern-go-sdk",
+   "generatorVersion": "local",
+   "generatorConfig": {
+-    "enableWireTests": false
++    "enableWireTests": true,
++    "packageName": "sse",
++    "module": {
++      "path": "github.com/fern-api/sse-go"
++    }
+   },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+diff --git a/README.md b/README.md
+index b30ae0e54e6..6737887e607 100644
+--- a/README.md
++++ b/README.md
+@@ -32,13 +32,13 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/server-sent-events/fern"
+-    client "github.com/server-sent-events/fern/client"
++    sse "github.com/fern-api/sse-go"
++    client "github.com/fern-api/sse-go/client"
+ )
+ 
+ func do() {
+     client := client.NewClient()
+-    request := &fern.StreamCompletionRequest{
++    request := &sse.StreamCompletionRequest{
+         Query: "foo",
+     }
+     client.Completions.Stream(
+diff --git a/client/client.go b/client/client.go
+index fa23f881be2..659d3ebc2ca 100644
+--- a/client/client.go
++++ b/client/client.go
+@@ -3,10 +3,10 @@
+ package client
+ 
+ import (
+-	completions "github.com/server-sent-events/fern/completions"
+-	core "github.com/server-sent-events/fern/core"
+-	internal "github.com/server-sent-events/fern/internal"
+-	option "github.com/server-sent-events/fern/option"
++	completions "github.com/fern-api/sse-go/completions"
++	core "github.com/fern-api/sse-go/core"
++	internal "github.com/fern-api/sse-go/internal"
++	option "github.com/fern-api/sse-go/option"
+ )
+ 
+ type Client struct {
+diff --git a/client/client_test.go b/client/client_test.go
+index b975940d6fe..333fa5a29f0 100644
+--- a/client/client_test.go
++++ b/client/client_test.go
+@@ -3,7 +3,7 @@
+ package client
+ 
+ import (
+-	option "github.com/server-sent-events/fern/option"
++	option "github.com/fern-api/sse-go/option"
+ 	assert "github.com/stretchr/testify/assert"
+ 	http "net/http"
+ 	testing "testing"
+diff --git a/completions/client.go b/completions/client.go
+index dae74c7005f..ce5b06cf568 100644
+--- a/completions/client.go
++++ b/completions/client.go
+@@ -6,10 +6,10 @@ import (
+ 	context "context"
+ 	http "net/http"
+ 
+-	fern "github.com/server-sent-events/fern"
+-	core "github.com/server-sent-events/fern/core"
+-	internal "github.com/server-sent-events/fern/internal"
+-	option "github.com/server-sent-events/fern/option"
++	sse "github.com/fern-api/sse-go"
++	core "github.com/fern-api/sse-go/core"
++	internal "github.com/fern-api/sse-go/internal"
++	option "github.com/fern-api/sse-go/option"
+ )
+ 
+ type Client struct {
+@@ -36,9 +36,9 @@ func NewClient(options *core.RequestOptions) *Client {
+ 
+ func (c *Client) Stream(
+ 	ctx context.Context,
+-	request *fern.StreamCompletionRequest,
++	request *sse.StreamCompletionRequest,
+ 	opts ...option.RequestOption,
+-) (*core.Stream[fern.StreamedCompletion], error) {
++) (*core.Stream[sse.StreamedCompletion], error) {
+ 	options := core.NewRequestOptions(opts...)
+ 	baseURL := internal.ResolveBaseURL(
+ 		options.BaseURL,
+@@ -51,7 +51,7 @@ func (c *Client) Stream(
+ 		options.ToHeader(),
+ 	)
+ 	headers.Add("Accept", "text/event-stream")
+-	streamer := internal.NewStreamer[fern.StreamedCompletion](c.caller)
++	streamer := internal.NewStreamer[sse.StreamedCompletion](c.caller)
+ 	return streamer.Stream(
+ 		ctx,
+ 		&internal.StreamParams{
+@@ -67,16 +67,16 @@ func (c *Client) Stream(
+ 			Terminator:      "[[DONE]]",
+ 			Format:          core.StreamFormatSSE,
+ 			Request:         request,
+-			ErrorDecoder:    internal.NewErrorDecoder(fern.ErrorCodes),
++			ErrorDecoder:    internal.NewErrorDecoder(sse.ErrorCodes),
+ 		},
+ 	)
+ }
+ 
+ func (c *Client) StreamWithoutTerminator(
+ 	ctx context.Context,
+-	request *fern.StreamCompletionRequestWithoutTerminator,
++	request *sse.StreamCompletionRequestWithoutTerminator,
+ 	opts ...option.RequestOption,
+-) (*core.Stream[fern.StreamedCompletion], error) {
++) (*core.Stream[sse.StreamedCompletion], error) {
+ 	options := core.NewRequestOptions(opts...)
+ 	baseURL := internal.ResolveBaseURL(
+ 		options.BaseURL,
+@@ -89,7 +89,7 @@ func (c *Client) StreamWithoutTerminator(
+ 		options.ToHeader(),
+ 	)
+ 	headers.Add("Accept", "text/event-stream")
+-	streamer := internal.NewStreamer[fern.StreamedCompletion](c.caller)
++	streamer := internal.NewStreamer[sse.StreamedCompletion](c.caller)
+ 	return streamer.Stream(
+ 		ctx,
+ 		&internal.StreamParams{
+@@ -105,7 +105,7 @@ func (c *Client) StreamWithoutTerminator(
+ 			Terminator:      internal.DefaultSSETerminator,
+ 			Format:          core.StreamFormatSSE,
+ 			Request:         request,
+-			ErrorDecoder:    internal.NewErrorDecoder(fern.ErrorCodes),
++			ErrorDecoder:    internal.NewErrorDecoder(sse.ErrorCodes),
+ 		},
+ 	)
+ }
+diff --git a/completions/completions_test/completions_test.go b/completions/completions_test/completions_test.go
+new file mode 100644
+index 00000000000..a46d047247a
+--- /dev/null
++++ b/completions/completions_test/completions_test.go
+@@ -0,0 +1,128 @@
++// Code generated by Fern. DO NOT EDIT.
++
++package completions_test
++
++import (
++	bytes "bytes"
++	context "context"
++	json "encoding/json"
++	http "net/http"
++	os "os"
++	testing "testing"
++
++	sse "github.com/fern-api/sse-go"
++	client "github.com/fern-api/sse-go/client"
++	option "github.com/fern-api/sse-go/option"
++	require "github.com/stretchr/testify/require"
++)
++
++func VerifyRequestCount(
++	t *testing.T,
++	testId string,
++	method string,
++	urlPath string,
++	queryParams map[string]any,
++	expected int,
++) {
++	wiremockURL := os.Getenv("WIREMOCK_URL")
++	if wiremockURL == "" {
++		wiremockURL = "http://localhost:8080"
++	}
++	WiremockAdminURL := wiremockURL + "/__admin"
++	var reqBody bytes.Buffer
++	reqBody.WriteString(`{"method":"`)
++	reqBody.WriteString(method)
++	reqBody.WriteString(`","urlPath":"`)
++	reqBody.WriteString(urlPath)
++	reqBody.WriteString(`","headers":{"X-Test-Id":{"equalTo":"`)
++	reqBody.WriteString(testId)
++	reqBody.WriteString(`"}}`)
++	if len(queryParams) > 0 {
++		reqBody.WriteString(`,"queryParameters":{`)
++		first := true
++		for key, value := range queryParams {
++			if !first {
++				reqBody.WriteString(",")
++			}
++			reqBody.WriteString(`"`)
++			reqBody.WriteString(key)
++			switch v := value.(type) {
++			case string:
++				reqBody.WriteString(`":{"equalTo":"`)
++				reqBody.WriteString(v)
++				reqBody.WriteString(`"}`)
++			case []string:
++				reqBody.WriteString(`":{"hasExactly":[`)
++				for i, item := range v {
++					if i > 0 {
++						reqBody.WriteString(",")
++					}
++					reqBody.WriteString(`{"equalTo":"`)
++					reqBody.WriteString(item)
++					reqBody.WriteString(`"}`)
++				}
++				reqBody.WriteString(`]}`)
++			}
++			first = false
++		}
++		reqBody.WriteString("}")
++	}
++	reqBody.WriteString("}")
++	resp, err := http.Post(WiremockAdminURL+"/requests/find", "application/json", &reqBody)
++	require.NoError(t, err)
++	var result struct {
++		Requests []interface{} `json:"requests"`
++	}
++	json.NewDecoder(resp.Body).Decode(&result)
++	require.Equal(t, expected, len(result.Requests))
++}
++
++func TestCompletionsStreamWithWireMock(
++	t *testing.T,
++) {
++	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
++	if WireMockBaseURL == "" {
++		WireMockBaseURL = "http://localhost:8080"
++	}
++	client := client.NewClient(
++		option.WithBaseURL(WireMockBaseURL),
++	)
++	request := &sse.StreamCompletionRequest{
++		Query: "foo",
++	}
++	_, invocationErr := client.Completions.Stream(
++		context.TODO(),
++		request,
++		option.WithHTTPHeader(
++			http.Header{"X-Test-Id": []string{"TestCompletionsStreamWithWireMock"}},
++		),
++	)
++
++	require.NoError(t, invocationErr, "Client method call should succeed")
++	VerifyRequestCount(t, "TestCompletionsStreamWithWireMock", "POST", "/stream", nil, 1)
++}
++
++func TestCompletionsStreamWithoutTerminatorWithWireMock(
++	t *testing.T,
++) {
++	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
++	if WireMockBaseURL == "" {
++		WireMockBaseURL = "http://localhost:8080"
++	}
++	client := client.NewClient(
++		option.WithBaseURL(WireMockBaseURL),
++	)
++	request := &sse.StreamCompletionRequestWithoutTerminator{
++		Query: "query",
++	}
++	_, invocationErr := client.Completions.StreamWithoutTerminator(
++		context.TODO(),
++		request,
++		option.WithHTTPHeader(
++			http.Header{"X-Test-Id": []string{"TestCompletionsStreamWithoutTerminatorWithWireMock"}},
++		),
++	)
++
++	require.NoError(t, invocationErr, "Client method call should succeed")
++	VerifyRequestCount(t, "TestCompletionsStreamWithoutTerminatorWithWireMock", "POST", "/stream-no-terminator", nil, 1)
++}
+diff --git a/completions/raw_client.go b/completions/raw_client.go
+index 51c236e1ebb..6637f70cebb 100644
+--- a/completions/raw_client.go
++++ b/completions/raw_client.go
+@@ -3,8 +3,8 @@
+ package completions
+ 
+ import (
+-	core "github.com/server-sent-events/fern/core"
+-	internal "github.com/server-sent-events/fern/internal"
++	core "github.com/fern-api/sse-go/core"
++	internal "github.com/fern-api/sse-go/internal"
+ )
+ 
+ type RawClient struct {
+diff --git a/completions.go b/completions.go
+index b04b4370211..e819ce548d7 100644
+--- a/completions.go
++++ b/completions.go
+@@ -1,11 +1,11 @@
+ // Code generated by Fern. DO NOT EDIT.
+ 
+-package serversentevents
++package sse
+ 
+ import (
+ 	json "encoding/json"
+ 	fmt "fmt"
+-	internal "github.com/server-sent-events/fern/internal"
++	internal "github.com/fern-api/sse-go/internal"
+ 	big "math/big"
+ )
+ 
+diff --git a/completions_test.go b/completions_test.go
+index 9c1b4be8075..e6d5957d4d9 100644
+--- a/completions_test.go
++++ b/completions_test.go
+@@ -1,6 +1,6 @@
+ // Code generated by Fern. DO NOT EDIT.
+ 
+-package serversentevents
++package sse
+ 
+ import (
+ 	json "encoding/json"
+diff --git a/core/request_option.go b/core/request_option.go
+index feefada1868..50abbda5792 100644
+--- a/core/request_option.go
++++ b/core/request_option.go
+@@ -49,7 +49,7 @@ func (r *RequestOptions) ToHeader() http.Header { return r.cloneHeader() }
+ func (r *RequestOptions) cloneHeader() http.Header {
+ 	headers := r.HTTPHeader.Clone()
+ 	headers.Set("X-Fern-Language", "Go")
+-	headers.Set("X-Fern-SDK-Name", "github.com/server-sent-events/fern")
++	headers.Set("X-Fern-SDK-Name", "github.com/fern-api/sse-go")
+ 	headers.Set("X-Fern-SDK-Version", "v0.0.1")
+ 	headers.Set("User-Agent", "github.com/server-sent-events/fern/0.0.1")
+ 	return headers
+diff --git a/dynamic-snippets/example0/snippet.go b/dynamic-snippets/example0/snippet.go
+index 41127bab845..758dae5d425 100644
+--- a/dynamic-snippets/example0/snippet.go
++++ b/dynamic-snippets/example0/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/server-sent-events/fern"
+-    client "github.com/server-sent-events/fern/client"
+-    option "github.com/server-sent-events/fern/option"
++    sse "github.com/fern-api/sse-go"
++    client "github.com/fern-api/sse-go/client"
++    option "github.com/fern-api/sse-go/option"
+ )
+ 
+ func do() {
+@@ -14,7 +14,7 @@ func do() {
+             "https://api.fern.com",
+         ),
+     )
+-    request := &fern.StreamCompletionRequest{
++    request := &sse.StreamCompletionRequest{
+         Query: "foo",
+     }
+     client.Completions.Stream(
+diff --git a/dynamic-snippets/example1/snippet.go b/dynamic-snippets/example1/snippet.go
+index fac58884c65..5b0c055dedb 100644
+--- a/dynamic-snippets/example1/snippet.go
++++ b/dynamic-snippets/example1/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/server-sent-events/fern"
+-    client "github.com/server-sent-events/fern/client"
+-    option "github.com/server-sent-events/fern/option"
++    sse "github.com/fern-api/sse-go"
++    client "github.com/fern-api/sse-go/client"
++    option "github.com/fern-api/sse-go/option"
+ )
+ 
+ func do() {
+@@ -14,7 +14,7 @@ func do() {
+             "https://api.fern.com",
+         ),
+     )
+-    request := &fern.StreamCompletionRequest{
++    request := &sse.StreamCompletionRequest{
+         Query: "query",
+     }
+     client.Completions.Stream(
+diff --git a/dynamic-snippets/example2/snippet.go b/dynamic-snippets/example2/snippet.go
+index f80c442a4ab..37485a2d514 100644
+--- a/dynamic-snippets/example2/snippet.go
++++ b/dynamic-snippets/example2/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/server-sent-events/fern"
+-    client "github.com/server-sent-events/fern/client"
+-    option "github.com/server-sent-events/fern/option"
++    sse "github.com/fern-api/sse-go"
++    client "github.com/fern-api/sse-go/client"
++    option "github.com/fern-api/sse-go/option"
+ )
+ 
+ func do() {
+@@ -14,7 +14,7 @@ func do() {
+             "https://api.fern.com",
+         ),
+     )
+-    request := &fern.StreamCompletionRequestWithoutTerminator{
++    request := &sse.StreamCompletionRequestWithoutTerminator{
+         Query: "query",
+     }
+     client.Completions.StreamWithoutTerminator(
+diff --git a/dynamic-snippets/example3/snippet.go b/dynamic-snippets/example3/snippet.go
+index f80c442a4ab..37485a2d514 100644
+--- a/dynamic-snippets/example3/snippet.go
++++ b/dynamic-snippets/example3/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/server-sent-events/fern"
+-    client "github.com/server-sent-events/fern/client"
+-    option "github.com/server-sent-events/fern/option"
++    sse "github.com/fern-api/sse-go"
++    client "github.com/fern-api/sse-go/client"
++    option "github.com/fern-api/sse-go/option"
+ )
+ 
+ func do() {
+@@ -14,7 +14,7 @@ func do() {
+             "https://api.fern.com",
+         ),
+     )
+-    request := &fern.StreamCompletionRequestWithoutTerminator{
++    request := &sse.StreamCompletionRequestWithoutTerminator{
+         Query: "query",
+     }
+     client.Completions.StreamWithoutTerminator(
+diff --git a/error_codes.go b/error_codes.go
+index a55a0964618..144732a0c1f 100644
+--- a/error_codes.go
++++ b/error_codes.go
+@@ -1,9 +1,9 @@
+ // Code generated by Fern. DO NOT EDIT.
+ 
+-package serversentevents
++package sse
+ 
+ import (
+-	internal "github.com/server-sent-events/fern/internal"
++	internal "github.com/fern-api/sse-go/internal"
+ )
+ 
+ var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{}
+diff --git a/file_param.go b/file_param.go
+index 25b115b8d68..16e0931f701 100644
+--- a/file_param.go
++++ b/file_param.go
+@@ -1,4 +1,4 @@
+-package serversentevents
++package sse
+ 
+ import (
+ 	"io"
+diff --git a/go.mod b/go.mod
+index 556b3c88d65..2bb27f27ba4 100644
+--- a/go.mod
++++ b/go.mod
+@@ -1,4 +1,4 @@
+-module github.com/server-sent-events/fern
++module github.com/fern-api/sse-go
+ 
+ go 1.21
+ 
+diff --git a/internal/caller.go b/internal/caller.go
+index fef1491ac55..549d62819a5 100644
+--- a/internal/caller.go
++++ b/internal/caller.go
+@@ -12,7 +12,7 @@ import (
+ 	"reflect"
+ 	"strings"
+ 
+-	"github.com/server-sent-events/fern/core"
++	"github.com/fern-api/sse-go/core"
+ )
+ 
+ const (
+diff --git a/internal/caller_test.go b/internal/caller_test.go
+index d504ab99d43..071ee06ec9c 100644
+--- a/internal/caller_test.go
++++ b/internal/caller_test.go
+@@ -14,7 +14,7 @@ import (
+ 	"strings"
+ 	"testing"
+ 
+-	"github.com/server-sent-events/fern/core"
++	"github.com/fern-api/sse-go/core"
+ 	"github.com/stretchr/testify/assert"
+ 	"github.com/stretchr/testify/require"
+ )
+diff --git a/internal/error_decoder.go b/internal/error_decoder.go
+index 5554170753c..4a31679a6b6 100644
+--- a/internal/error_decoder.go
++++ b/internal/error_decoder.go
+@@ -8,7 +8,7 @@ import (
+ 	"io"
+ 	"net/http"
+ 
+-	"github.com/server-sent-events/fern/core"
++	"github.com/fern-api/sse-go/core"
+ )
+ 
+ // ErrorCodes maps HTTP status codes to error constructors.
+diff --git a/internal/error_decoder_test.go b/internal/error_decoder_test.go
+index ec30256ab7a..eb42b9eb700 100644
+--- a/internal/error_decoder_test.go
++++ b/internal/error_decoder_test.go
+@@ -6,7 +6,7 @@ import (
+ 	"net/http"
+ 	"testing"
+ 
+-	"github.com/server-sent-events/fern/core"
++	"github.com/fern-api/sse-go/core"
+ 	"github.com/stretchr/testify/assert"
+ )
+ 
+diff --git a/internal/retrier_test.go b/internal/retrier_test.go
+index 17883d80010..48cd8703d56 100644
+--- a/internal/retrier_test.go
++++ b/internal/retrier_test.go
+@@ -10,7 +10,7 @@ import (
+ 	"testing"
+ 	"time"
+ 
+-	"github.com/server-sent-events/fern/core"
++	"github.com/fern-api/sse-go/core"
+ 	"github.com/stretchr/testify/assert"
+ 	"github.com/stretchr/testify/require"
+ )
+diff --git a/internal/streamer.go b/internal/streamer.go
+index 3061defd357..829d45a60ac 100644
+--- a/internal/streamer.go
++++ b/internal/streamer.go
+@@ -5,7 +5,7 @@ import (
+ 	"net/http"
+ 	"net/url"
+ 
+-	"github.com/server-sent-events/fern/core"
++	"github.com/fern-api/sse-go/core"
+ )
+ 
+ const (
+diff --git a/option/request_option.go b/option/request_option.go
+index 4806204cca3..3083006818d 100644
+--- a/option/request_option.go
++++ b/option/request_option.go
+@@ -3,7 +3,7 @@
+ package option
+ 
+ import (
+-	core "github.com/server-sent-events/fern/core"
++	core "github.com/fern-api/sse-go/core"
+ 	http "net/http"
+ 	url "net/url"
+ )
+diff --git a/pointer.go b/pointer.go
+index 3800d4e4dd7..85894510d93 100644
+--- a/pointer.go
++++ b/pointer.go
+@@ -1,4 +1,4 @@
+-package serversentevents
++package sse
+ 
+ import (
+ 	"time"
+diff --git a/pointer_test.go b/pointer_test.go
+index c797a841383..ccfc29c2e6b 100644
+--- a/pointer_test.go
++++ b/pointer_test.go
+@@ -1,4 +1,4 @@
+-package serversentevents
++package sse
+ 
+ import (
+ 	"testing"
+diff --git a/reference.md b/reference.md
+index 332de6c0285..099c0ae7b33 100644
+--- a/reference.md
++++ b/reference.md
+@@ -1,6 +1,6 @@
+ # Reference
+ ## Completions
+-<details><summary><code>client.Completions.Stream(request) -> fern.StreamedCompletion</code></summary>
++<details><summary><code>client.Completions.Stream(request) -> sse.StreamedCompletion</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -13,7 +13,7 @@
+ <dd>
+ 
+ ```go
+-request := &fern.StreamCompletionRequest{
++request := &sse.StreamCompletionRequest{
+         Query: "foo",
+     }
+ client.Completions.Stream(
+@@ -47,7 +47,7 @@ client.Completions.Stream(
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.Completions.StreamWithoutTerminator(request) -> fern.StreamedCompletion</code></summary>
++<details><summary><code>client.Completions.StreamWithoutTerminator(request) -> sse.StreamedCompletion</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -60,7 +60,7 @@ client.Completions.Stream(
+ <dd>
+ 
+ ```go
+-request := &fern.StreamCompletionRequestWithoutTerminator{
++request := &sse.StreamCompletionRequestWithoutTerminator{
+         Query: "query",
+     }
+ client.Completions.StreamWithoutTerminator(
+diff --git a/snippet.json b/snippet.json
+index b0d20a49634..e774edef448 100644
+--- a/snippet.json
++++ b/snippet.json
+@@ -8,7 +8,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/server-sent-events/fern\"\n\tfernclient \"github.com/server-sent-events/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Completions.StreamWithoutTerminator(\n\tcontext.TODO(),\n\t\u0026fern.StreamCompletionRequestWithoutTerminator{\n\t\tQuery: \"query\",\n\t},\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\tssego \"github.com/fern-api/sse-go\"\n\tssegoclient \"github.com/fern-api/sse-go/client\"\n)\n\nclient := ssegoclient.NewClient()\nresponse, err := client.Completions.StreamWithoutTerminator(\n\tcontext.TODO(),\n\t\u0026ssego.StreamCompletionRequestWithoutTerminator{\n\t\tQuery: \"query\",\n\t},\n)\n"
+             }
+         },
+         {
+@@ -19,7 +19,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/server-sent-events/fern\"\n\tfernclient \"github.com/server-sent-events/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Completions.Stream(\n\tcontext.TODO(),\n\t\u0026fern.StreamCompletionRequest{\n\t\tQuery: \"foo\",\n\t},\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\tssego \"github.com/fern-api/sse-go\"\n\tssegoclient \"github.com/fern-api/sse-go/client\"\n)\n\nclient := ssegoclient.NewClient()\nresponse, err := client.Completions.Stream(\n\tcontext.TODO(),\n\t\u0026ssego.StreamCompletionRequest{\n\t\tQuery: \"foo\",\n\t},\n)\n"
+             }
+         }
+     ]
+diff --git a/wiremock/docker-compose.test.yml b/wiremock/docker-compose.test.yml
+new file mode 100644
+index 00000000000..fabb06a62cc
+--- /dev/null
++++ b/wiremock/docker-compose.test.yml
+@@ -0,0 +1,14 @@
++services:
++  wiremock:
++    image: wiremock/wiremock:3.9.1
++    ports:
++      - "0:8080"
++    volumes:
++      - ./wiremock-mappings.json:/home/wiremock/mappings/wiremock-mappings.json
++    command: ["--global-response-templating", "--verbose"]
++    healthcheck:
++      test: ["CMD", "curl", "-f", "http://localhost:8080/__admin/health"]
++      interval: 2s
++      timeout: 5s
++      retries: 15
++      start_period: 5s
+diff --git a/wiremock/wiremock-mappings.json b/wiremock/wiremock-mappings.json
+new file mode 100644
+index 00000000000..452e4c33e7a
+--- /dev/null
++++ b/wiremock/wiremock-mappings.json
+@@ -0,0 +1,59 @@
++{
++  "mappings": [
++    {
++      "id": "da00c5d3-8997-4a3a-ac5a-78907c04708e",
++      "name": "stream - Stream completions",
++      "request": {
++        "urlPathTemplate": "/stream",
++        "method": "POST"
++      },
++      "response": {
++        "status": 200,
++        "body": "event: completion\ndata: {\"delta\":\"hello\",\"tokens\":1}\n\nevent: completion\ndata: {\"delta\":\" world\",\"tokens\":2}\n",
++        "headers": {
++          "Content-Type": "text/event-stream"
++        }
++      },
++      "uuid": "da00c5d3-8997-4a3a-ac5a-78907c04708e",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "392a038a-4138-4153-a873-41da36997679",
++      "name": "streamWithoutTerminator - Stream without terminator",
++      "request": {
++        "urlPathTemplate": "/stream-no-terminator",
++        "method": "POST"
++      },
++      "response": {
++        "status": 200,
++        "body": "event: completion\ndata: {\"delta\":\"delta\",\"tokens\":1}\n",
++        "headers": {
++          "Content-Type": "text/event-stream"
++        }
++      },
++      "uuid": "392a038a-4138-4153-a873-41da36997679",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    }
++  ],
++  "meta": {
++    "total": 2
++  }
++}
+\ No newline at end of file

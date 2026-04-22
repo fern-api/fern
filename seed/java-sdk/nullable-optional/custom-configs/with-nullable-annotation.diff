@@ -1,0 +1,4264 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index f1753c47972..84c54d14eac 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-java-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "use-nullable-annotation": true
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "manual",
+diff --git a/.gradle/8.14.3/checksums/checksums.lock b/.gradle/8.14.3/checksums/checksums.lock
+index c474e760a52f668ea5e026b4091314662408aecd..94db6f70446c6401c4daf02da8636540ae822d83 100644
+GIT binary patch
+literal 17
+TcmZR+{#&F|M}Na41}FdkG>rrh
+
+literal 17
+TcmZP;>1BLk@O7O80~7!NDbxdX
+
+diff --git a/.gradle/8.14.3/executionHistory/executionHistory.bin b/.gradle/8.14.3/executionHistory/executionHistory.bin
+index 3a850189181aada00ababcac4539d8bcded342fc..a45b65eba3e0b1713713fb08f0ea7f31a4ded332 100644
+GIT binary patch
+literal 64731
+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
+
+literal 63522
+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
+AkN^Mx
+
+diff --git a/.gradle/8.14.3/executionHistory/executionHistory.lock b/.gradle/8.14.3/executionHistory/executionHistory.lock
+index b7d6fe14081266a765cb3cc30431132caaa1897c..68c1f293db384cd0c45fbbec52e816da46f940e7 100644
+GIT binary patch
+literal 17
+UcmZP;UbubQVF9r#3=qHp04}cs$^ZZW
+
+literal 17
+UcmZR6aKm}trHG})3=qHp06xJ4=Kufz
+
+diff --git a/.gradle/8.14.3/fileHashes/fileHashes.bin b/.gradle/8.14.3/fileHashes/fileHashes.bin
+index a5811254c1a8e5a0de65fa44aa639e7a36dbb974..fdcd92319e1c961c09f7f3a86040fa7568db5a55 100644
+GIT binary patch
+delta 6262
+zcma)A2~<<Z8V(@d0z!g-goGslA_0^{D+O99xPVYAi-0H~iUh)rK@ml1M5+|6>kn-a
+ztyRReJhX^{ORGh!*dpRuwMx-a7ev4cVkPiq?%a4@Lwe4;=Wsvr&Hw!~bMMUePg35l
+zQ{Jv~<UKB%cRuQ?V^=q`=xfm~sNf33g{29GuBL{bgiMPcVy@53A3oP>67C^<QY)O{
+zdUA@MrS>N1{c6mRfuL_CWGDBz|J8Z_HzvUZaJTaG-R8cwnwoiQA|X@t)mgXoT^-D_
+z`nr$svR7~U{<!!{+dSqoNnS%GN_^tf{8!Y9)r5<i0{5)Ez>UXcv*q;xUkdsOpF9mB
+zc%kgJhGJE{O)cT#OQ8vIpLc#&8t5q{T*5{e&lj@!&lY#J8LuH+<|FXqhj0#0Z`u<$
+zdhc8&VK$uM3!s-T1#fFEr>2zJY7{@_GHFbAg;~}@C(b3s3$Lmo!lmq1&*H@R6}6pJ
+zxjKZ;D1roQA-nD2_2Sa>FA0~l5-P0);yMRgQCiz?5<<pRs1uyFwTlXSPxm(Avy8#m
+zMhN~kTsCDuDNN=t!%i`R2*hu);rcvyy!6BjCj%0nlBv$~<Nn*vYrb6`&*WdC=Ffla
+zHL1qWz@EvkfEpW5af8gpr}ocDy9t@#tPXD2KW^Wl^FEe@&#ZxV8v&=u^Tnr6B5x)V
+za&Z-mw-xwaA94Een<W=R2q^<~hU-;Nk9zF;<OJd4-QV)ZVx}#<aZEt?)F#+yD})QS
+zo1w{0Dt@^AimiMV=TFj@Sg02LF{8C2h+k1nczHV*3k1q1w%!}Op8dF<kZC`ugP-m`
+z9u!(0{)F%fGd154x=z*B7|g^ccD&^iU$5%g>3D<0r+TRQPSxde-R-#^gwHso=DQ{@
+zKd~+71jq!V*$J6$F8u}SN$Nq3Ak^nl(1jV?{%u5-S)i8np7c0=qVXD=@QY`@<?C}A
+zi_6C)5kA=zEQBHAzm?LGXs*vRLMGO!gWq&yS7wZoK4X$tLAFr984|Bw{&!7(10myo
+zh6<rTtTS)QUDl>(T_!S5ok8b`y-D|u7w-{1c|Y6`3P5Bp^&NTRLd=T7>c2?CqI9+3
+z9l!Er`K#73OC&?2<_)Y@O<Xp6a|9Fr0hHK#u^l&5IjnqROSq&;xMwfmm^SX3)5kix
+zmXHZO(2GcmNaF<wn|7WjWQsS49E3idL-P1><@JP%m#cf?7X2DkFSl?cyiD?zzr?xh
+zboju>gio@B2nPYj_OqosbYG3mB4k1|>~!#iP6sJR^k6TGuWzWHM<-Y~3OM2}zkU1t
+zZ!)G9cMJR+1(4?`^>v%^D&O|@@fwmQ{hYc_NiuKfsQI-)!lx#yd8z1Dw{FtvIfPG)
+zfHNq&^yQhx$3ISNXM%^|hNF-@-f;89ShG=tThs!bj-DL%5x$$(xbv7L7{>-1kr#V+
+zoy*b%%NTE6WB>^wf!J%u*_Rb_cZM<DIH<dSKgYjYT0Ctm;nV+uJd|Md;Y&vG(ad_6
+zSHnG#kbQ1lv+}`GX1*!cKr}XqGhJdj({TINlZ<#X)Qk-QcPA_M_7%&3)ubSN!Vlo*
+zB;d@ftSmcq;j86@RNRGZr%<@>#D%e9F8j_mU>m(7owUgsz+EhWbg>n?qvJ@lT+Sza
+zY8jM>LqH{-z#cR2(n*<gA>lJ3LF6ppM0qRvAIl6D6H;*yyqyJ*?HuUzd5&|z)XN_d
+zK3=7sdR%NkNLl#0qfC4bv^$6R%C45Sgcf?_F{Gb5SoXyCWYM0)G{VdC)qJA-fq!`9
+zz%jzh;$XgufRnWLu-}nrogGYYFl4)ULW9dfapo6O>ZpO@WuzgkM4d%3!lc<nX*7lK
+znV~St)pKsvoy;vub(G9&NWQHOURv|@f4Eo7dPwl%wzvFG_n+&Z;>{*}`uw+ilX8T8
+z*29;Cm)k&zYbXr5O2L1eM4VffQZl>!j2qLlom!N4H$2fpcyTr1vwW)4$Gzg~4Gczt
+zJV2s1(DMhBV(d1Cst6vm2UzG0bTxpA<|H5qL~UIcAPysn0UF()f#w_G71Qqg5s8at
+za3h01&{zvS7`xrTVJ1c!h``u&913YX40SX%Li1c6=zomH&}|MjALCeK2&Pd2`53#7
+zK{bty(9X15&cgf!2*iluS2CX~na`~>T7YQ~j%$QzK@ugJH+dj>EePG-MK@>kC&Yi8
+z?7c_g{)|Xwec0c5C2!L>v?q0T9v|r5hZ=GFUUbt?Y~A@`(Hy=*u2{eL`1za<Q7T$-
+zfEKW<?rSRSg&e89|IZ@3ZN_OSn*z(*CF2>%5hCF>f?2Q=n$9Wk4(16)jcIlaeEBqA
+zu%@**QZM%lCb*ddkC8$S9sC{a4n}kA(T8goyN`l?2%2j*Qy0ufYK}w5$=uNL$*qZR
+z_Adx2sJ#>0zn{rGL^4l7pEc*Y_V<gmew#c!au?dK{IulASB&C0QRFPtRD=sTY3cP3
+zt<V2t7xvqv>D`u_mNF9j=+R|)2;DRuXvY$dH6Crk(T6@8+7r?}8y#Bl1MOi-r|o&z
+z9bg8$P;)fN3os!RPxcpx50w}VbTel)n?l$cW~RKd%%ngkOZa`C&cp(fMXgNFTj-8i
+zQK7?o7C2ka5=}3%+hV-^&a~E~NT%m1qG(PWt`I$cFj9Eqh*8<S`x1|b*Ex*B7b{Rr
+z-`hJ}VzfN?Blr6*2j35LJP@;^?;#_x#1gc^@Dwy2$mI`ATd&;Cnw;@db#Q>fc>|+h
+zswdYBrYOvm$8%=<vaqLWO^u<qqs$Av5&EGqHDwH5<QiG~r*63EDk~HA%l0Ww8U&yN
+z6Ro(8N5Nv5twJ{q1=llr(T0{^mqbawlGxNMP#K{W*KoX&#d1y6BAITTY;-U1OKZ>N
+zf0op`qT}uV4$E@gaK(Dtl_njq#KLge7XIDjasG_rH134OvbcqA8pG=Te*3ppe8uD+
+z#O&4imaohXG7{zxAU*)~VQ4$`^g(AB-XS-^E*vi!YY4^o!U_t)(c*c*oLfv;pv-jA
+zQ|WyP2QwuI_rP5mzX9XLJV=PJK-@aWi$L1Jr^q=G4z)lVjp5Lm$b+E-3!{M{=44_l
+zf+{)6$Fhc;IVc}191bEJ82Sxt5_r%%2jyd#fpH|}?7;`);6qSEqA?BO_l7QmgRohK
+z<}la~H&DBZB?W3O#scs{I54DuR2r3#k8&Exkc$qPBS*zCDWEeCV;-2wc`$1p?#~r6
+zlX#$<XQ4YV1lyDOkV#A0p%H}+4EBIGYPN{NX+mLq6y|Qi0*pf=VJkuvD;nzQ&)>ps
+z6w8iAv4ex)6pc)0u$&BAuN$Gp+nT<X=RG&;%$3^5H8z6YRnO>`rP9?Q3dgI%6=!G6
+zQ8c-x8zp9}?~1+dj}9tm4XJd|HozDEHM;$y4`i@SysnX7`-M%NUhwUdz?BUZM4~6A
+z6)fIqXiP<KME4~KV|aoL_B4O@3hRy6`Qf!LWyz*Y{s9tf*#XfpcsVSC&NLqEib0Q0
+z_Y6!(LC-)h4xYpy)NO;%be{5!i?hHmytnA)@koQj*?Ci$MAalwK&j?Hg`Ab6UOwWv
+z{yt`P?ZKOUp7mtcs&sRSV$IXxil*4-ez!ge8!XHk?Q-srD;gyIFmN^SKz~;F3*<kZ
+zhLBV4{>u`>^CeX0yhrojbIWUE9!3m`M3?Xgbj-)|vxRf1JdniV<*g5P={)dBvoKQW
+zF~($<2W>%S%3i~@Hs<xq1HTWRpLc8aMJ5-s)MfaKv_|jx6@>+#3!N4$TF?7T`oRNa
+zT6n-Z6Y0)bXK}I7P}Dt=9FXm(^St+I^X?7hf81ddJFx=UOtE~pWV7MS?y-qaXT-+r
+zFzNdy+lZ0)VhM}oprvYyYNDoIJ$2|_>yrsB8-vUP83pZSEEdli$ux$w{(9N_{rtlX
+zl@gBs(UJ+KMU142?t^7{jIKFK>PdQPjf>HgU0j*cAI*-Q?LHD?j_p_@ZF>->+oJSA
+zz@(?Uiq_|CL8nSu@qj2KXf<joM62InNA{i#n(bTpu~6KO9FbPgUz||Qu@ViJT=uVQ
+zx#(kbZt~d=zA+hS2xlbUkxneNyteed3GGe4eizhIvEn0-$Ytk<g0+b#T=v5(<dFk|
+zXP{*v-UzwS6VHQSbb?eF&jI&1#8In2PUAW#W$<Sjm7t<A7bJ^t+)9X}aXkQyInY33
+z5xk<Y5S-(2+;WJfF&{S4SO7oJI0E&J+bQ}4=`BNxmU@SbQ@0Fu%|nZuGJrxEjxmHf
+z8jX;Nq0?pp8ZR{p`7mxnr%f77kcZ;WY^bKu6nQc2>4+N*mWjBH2Z1zNBU2<ssiJJ5
+zlIHAC4Ztx1<hK$u7Unk>ou45;)(kk&=BUjPvgJ5NOrN|L;2J==z-^ivhy0ocq9n|X
+zM@Ed}+>l>mlp?dmI1$ww9(2+%laTlGz%CibyMsqEZuda-g!Xsz|NBrzbCXfc;t8~G
+z70QP^Fo(Uc5xX5V9Xp&-Ma>|*0U*>^x!O&ZLR$%6ywm8Wq0sI`6yqL3eE$81LiukF
+zNzKMxuvpq0Qo9RNVML+Lg|!y|DuU%jYb-ku{9{}~j`o^FF+TwCUlUKIqLHWK*AYV(
+z8tvXqF+Y7;-G<;;CvO!MOGavkzrJd8tG#$q3yH$<Dz<1ltrktikr>%rQqHJ&RL=0w
+zWXS3Xq7o+1zU?V|@<kWg_V`?_)#E5^%jnYPakO;~b507G6}~Kwp_|4;wHp?djN?%a
+z(B@d$9i7U+677zz-FnrEf3;raFz=-@NhjK@S9|@V78Aw)U;osKVmU~n@eWmhA3l~+
+zS;&HU&>W7o|H#+m$U5>3IkJu%Ku1;-!_fgB8uLIwqY}z#41yaN*@HkSa2yM~FtSyU
+nO5-EgN#ozpOyggmlZD%#!@C$cVUUm|VXHVYG8>~G5xV^sO|NNc
+
+delta 6266
+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
+
+diff --git a/.gradle/8.14.3/fileHashes/fileHashes.lock b/.gradle/8.14.3/fileHashes/fileHashes.lock
+index 81dd153b6cf1d8136892d372e97ceaeed390808f..bb15d3658ca990c98044e2475fbc281f1c3b11d5 100644
+GIT binary patch
+literal 17
+UcmZP;&3dim#oO?c0Rrv<04W0mJpcdz
+
+literal 17
+UcmZSnefr;%s2M>Q7$D#-084TPod5s;
+
+diff --git a/.gradle/buildOutputCleanup/buildOutputCleanup.lock b/.gradle/buildOutputCleanup/buildOutputCleanup.lock
+index 221ffcd01c55285759918de93e18711d9f706598..b06955096fe65437d98b90e469a1b2569a7b44de 100644
+GIT binary patch
+literal 17
+UcmZSHyrhJA&mW;W1_+P@05om{GXMYp
+
+literal 17
+UcmZQxAG2it6-BcZ3=kj%05-e?UjP6A
+
+diff --git a/.gradle/buildOutputCleanup/cache.properties b/.gradle/buildOutputCleanup/cache.properties
+index 398f7716b07..548b016aa2d 100644
+--- a/.gradle/buildOutputCleanup/cache.properties
++++ b/.gradle/buildOutputCleanup/cache.properties
+@@ -1,2 +1,2 @@
+-#Wed Apr 22 20:53:26 UTC 2026
++#Wed Apr 22 20:58:46 UTC 2026
+ gradle.version=8.14.3
+diff --git a/.gradle/buildOutputCleanup/outputFiles.bin b/.gradle/buildOutputCleanup/outputFiles.bin
+index 94cf70bcc1c3b47350ac471ca161d7ac51834629..88c79809785f7727790a672e2a887360f4f3ae0a 100644
+GIT binary patch
+delta 325
+zcmdlznQ`T0#tkMCf+8Koyj@Z9dQl8u;F&l%Rzg8zw&3g9lY712Km{fLL&35<#^7&~
+zi!VUMTPK%FDAb<~KCw?a_2o9GAUjO)a|eO`zJdpFP;q~l_^WvamldLQTp;2eUt!`O
+zESK#nz3hDos@@hR{x#*P9-k+}VyL(_O#HuwZ_de^mpR3u64NJ}N-9ilm6XshWpU_l
+zGL^atwc#R6hkb5oyy*WXWvGVY$x|gQCO?%lP^nJ0%#EBnXC+j_W0(dQ&A`C;aiii7
+T@r?!=Vw)X30vRX!d58l5!k&@L
+
+delta 349
+zcmZ2EnQ`}I#tkMCnxd^AWS4}@Kly|K3_Mr<hl1%jY&_Gq|80hfYfpBSP?$VbLZbfq
+zAN5OB+@bvt36HNZ4fllPs!Pv`U4v?1hlxMd<qtPWE!zcE{}?9z?6#7_0;g(5sCrwN
+z_)F2HT}2m<WkJQK!^K0}4jHL5D#BbU36uEHD$u=9YU?kkhT_Slk_sBkGv6n1U3Fa!
+zwe=!Qv2wgnIJcFmEmX1pWM4^z$#W$Q1j07<Wc#I`yb6_QoqSZ%LZu>DRG}&}<1|z-
+e5oQXEW?*3A+^G0Ne4~MY*k(tMK*q@po|*u}NS#>#
+
+diff --git a/.gradle/file-system.probe b/.gradle/file-system.probe
+index f14cc31d20cb6fce44044281ef625a14c6ac8159..cdfdef46b80bccbc9f21b7abb49cdb331400815a 100644
+GIT binary patch
+literal 8
+PcmZQzV4S<{FK-k831R}d
+
+literal 8
+PcmZQzV4S<{N8N4!3YG(g
+
+diff --git a/src/main/java/com/seed/nullableOptional/resources/nullableoptional/AsyncNullableOptionalClient.java b/src/main/java/com/seed/nullableOptional/resources/nullableoptional/AsyncNullableOptionalClient.java
+index 356b68a750a..9c170ee8a76 100644
+--- a/src/main/java/com/seed/nullableOptional/resources/nullableoptional/AsyncNullableOptionalClient.java
++++ b/src/main/java/com/seed/nullableOptional/resources/nullableoptional/AsyncNullableOptionalClient.java
+@@ -20,7 +20,6 @@ import com.seed.nullableOptional.resources.nullableoptional.types.SearchResult;
+ import com.seed.nullableOptional.resources.nullableoptional.types.UpdateUserRequest;
+ import com.seed.nullableOptional.resources.nullableoptional.types.UserResponse;
+ import java.util.List;
+-import java.util.Optional;
+ import java.util.concurrent.CompletableFuture;
+ 
+ public class AsyncNullableOptionalClient {
+@@ -234,15 +233,14 @@ public class AsyncNullableOptionalClient {
+     /**
+      * Get notification settings which may be null
+      */
+-    public CompletableFuture<Optional<NotificationMethod>> getNotificationSettings(String userId) {
++    public CompletableFuture<NotificationMethod> getNotificationSettings(String userId) {
+         return this.rawClient.getNotificationSettings(userId).thenApply(response -> response.body());
+     }
+ 
+     /**
+      * Get notification settings which may be null
+      */
+-    public CompletableFuture<Optional<NotificationMethod>> getNotificationSettings(
+-            String userId, RequestOptions requestOptions) {
++    public CompletableFuture<NotificationMethod> getNotificationSettings(String userId, RequestOptions requestOptions) {
+         return this.rawClient.getNotificationSettings(userId, requestOptions).thenApply(response -> response.body());
+     }
+ 
+@@ -264,14 +262,14 @@ public class AsyncNullableOptionalClient {
+     /**
+      * Get search results with nullable unions
+      */
+-    public CompletableFuture<Optional<List<SearchResult>>> getSearchResults(SearchRequest request) {
++    public CompletableFuture<List<SearchResult>> getSearchResults(SearchRequest request) {
+         return this.rawClient.getSearchResults(request).thenApply(response -> response.body());
+     }
+ 
+     /**
+      * Get search results with nullable unions
+      */
+-    public CompletableFuture<Optional<List<SearchResult>>> getSearchResults(
++    public CompletableFuture<List<SearchResult>> getSearchResults(
+             SearchRequest request, RequestOptions requestOptions) {
+         return this.rawClient.getSearchResults(request, requestOptions).thenApply(response -> response.body());
+     }
+diff --git a/src/main/java/com/seed/nullableOptional/resources/nullableoptional/AsyncRawNullableOptionalClient.java b/src/main/java/com/seed/nullableOptional/resources/nullableoptional/AsyncRawNullableOptionalClient.java
+index 12ec996b96c..212566821d5 100644
+--- a/src/main/java/com/seed/nullableOptional/resources/nullableoptional/AsyncRawNullableOptionalClient.java
++++ b/src/main/java/com/seed/nullableOptional/resources/nullableoptional/AsyncRawNullableOptionalClient.java
+@@ -29,7 +29,6 @@ import com.seed.nullableOptional.resources.nullableoptional.types.UpdateUserRequ
+ import com.seed.nullableOptional.resources.nullableoptional.types.UserResponse;
+ import java.io.IOException;
+ import java.util.List;
+-import java.util.Optional;
+ import java.util.concurrent.CompletableFuture;
+ import okhttp3.Call;
+ import okhttp3.Callback;
+@@ -41,6 +40,7 @@ import okhttp3.RequestBody;
+ import okhttp3.Response;
+ import okhttp3.ResponseBody;
+ import org.jetbrains.annotations.NotNull;
++import org.jetbrains.annotations.Nullable;
+ 
+ public class AsyncRawNullableOptionalClient {
+     protected final ClientOptions clientOptions;
+@@ -378,10 +378,7 @@ public class AsyncRawNullableOptionalClient {
+                 .addPathSegments("api")
+                 .addPathSegments("users/search");
+         QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), false);
+-        if (request.getDepartment().isPresent()) {
+-            QueryStringMapper.addQueryParameter(
+-                    httpUrl, "department", request.getDepartment().get(), false);
+-        }
++        QueryStringMapper.addQueryParameter(httpUrl, "department", request.getDepartment(), false);
+         if (request.getRole().isPresent()) {
+             QueryStringMapper.addQueryParameter(
+                     httpUrl, "role", request.getRole().get(), false);
+@@ -750,10 +747,7 @@ public class AsyncRawNullableOptionalClient {
+                 .newBuilder()
+                 .addPathSegments("api")
+                 .addPathSegments("users/filter");
+-        if (request.getRole().isPresent()) {
+-            QueryStringMapper.addQueryParameter(
+-                    httpUrl, "role", request.getRole().get(), false);
+-        }
++        QueryStringMapper.addQueryParameter(httpUrl, "role", request.getRole(), false);
+         if (request.getStatus().isPresent()) {
+             QueryStringMapper.addQueryParameter(
+                     httpUrl, "status", request.getStatus().get(), false);
+@@ -812,7 +806,7 @@ public class AsyncRawNullableOptionalClient {
+     /**
+      * Get notification settings which may be null
+      */
+-    public CompletableFuture<SeedNullableOptionalHttpResponse<Optional<NotificationMethod>>> getNotificationSettings(
++    public CompletableFuture<SeedNullableOptionalHttpResponse<NotificationMethod>> getNotificationSettings(
+             String userId) {
+         return getNotificationSettings(userId, null);
+     }
+@@ -820,7 +814,8 @@ public class AsyncRawNullableOptionalClient {
+     /**
+      * Get notification settings which may be null
+      */
+-    public CompletableFuture<SeedNullableOptionalHttpResponse<Optional<NotificationMethod>>> getNotificationSettings(
++    @Nullable
++    public CompletableFuture<SeedNullableOptionalHttpResponse<NotificationMethod>> getNotificationSettings(
+             String userId, RequestOptions requestOptions) {
+         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                 .newBuilder()
+@@ -843,8 +838,7 @@ public class AsyncRawNullableOptionalClient {
+         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+             client = clientOptions.httpClientWithTimeout(requestOptions);
+         }
+-        CompletableFuture<SeedNullableOptionalHttpResponse<Optional<NotificationMethod>>> future =
+-                new CompletableFuture<>();
++        CompletableFuture<SeedNullableOptionalHttpResponse<NotificationMethod>> future = new CompletableFuture<>();
+         client.newCall(okhttpRequest).enqueue(new Callback() {
+             @Override
+             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+@@ -853,7 +847,7 @@ public class AsyncRawNullableOptionalClient {
+                     if (response.isSuccessful()) {
+                         future.complete(new SeedNullableOptionalHttpResponse<>(
+                                 ObjectMappers.JSON_MAPPER.readValue(
+-                                        responseBodyString, new TypeReference<Optional<NotificationMethod>>() {}),
++                                        responseBodyString, new TypeReference<NotificationMethod>() {}),
+                                 response));
+                         return;
+                     }
+@@ -953,7 +947,7 @@ public class AsyncRawNullableOptionalClient {
+     /**
+      * Get search results with nullable unions
+      */
+-    public CompletableFuture<SeedNullableOptionalHttpResponse<Optional<List<SearchResult>>>> getSearchResults(
++    public CompletableFuture<SeedNullableOptionalHttpResponse<List<SearchResult>>> getSearchResults(
+             SearchRequest request) {
+         return getSearchResults(request, null);
+     }
+@@ -961,7 +955,8 @@ public class AsyncRawNullableOptionalClient {
+     /**
+      * Get search results with nullable unions
+      */
+-    public CompletableFuture<SeedNullableOptionalHttpResponse<Optional<List<SearchResult>>>> getSearchResults(
++    @Nullable
++    public CompletableFuture<SeedNullableOptionalHttpResponse<List<SearchResult>>> getSearchResults(
+             SearchRequest request, RequestOptions requestOptions) {
+         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                 .newBuilder()
+@@ -990,8 +985,7 @@ public class AsyncRawNullableOptionalClient {
+         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+             client = clientOptions.httpClientWithTimeout(requestOptions);
+         }
+-        CompletableFuture<SeedNullableOptionalHttpResponse<Optional<List<SearchResult>>>> future =
+-                new CompletableFuture<>();
++        CompletableFuture<SeedNullableOptionalHttpResponse<List<SearchResult>>> future = new CompletableFuture<>();
+         client.newCall(okhttpRequest).enqueue(new Callback() {
+             @Override
+             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+@@ -1000,7 +994,7 @@ public class AsyncRawNullableOptionalClient {
+                     if (response.isSuccessful()) {
+                         future.complete(new SeedNullableOptionalHttpResponse<>(
+                                 ObjectMappers.JSON_MAPPER.readValue(
+-                                        responseBodyString, new TypeReference<Optional<List<SearchResult>>>() {}),
++                                        responseBodyString, new TypeReference<List<SearchResult>>() {}),
+                                 response));
+                         return;
+                     }
+diff --git a/src/main/java/com/seed/nullableOptional/resources/nullableoptional/NullableOptionalClient.java b/src/main/java/com/seed/nullableOptional/resources/nullableoptional/NullableOptionalClient.java
+index 9fa045dcbdb..8bbf474cbf2 100644
+--- a/src/main/java/com/seed/nullableOptional/resources/nullableoptional/NullableOptionalClient.java
++++ b/src/main/java/com/seed/nullableOptional/resources/nullableoptional/NullableOptionalClient.java
+@@ -20,7 +20,6 @@ import com.seed.nullableOptional.resources.nullableoptional.types.SearchResult;
+ import com.seed.nullableOptional.resources.nullableoptional.types.UpdateUserRequest;
+ import com.seed.nullableOptional.resources.nullableoptional.types.UserResponse;
+ import java.util.List;
+-import java.util.Optional;
+ 
+ public class NullableOptionalClient {
+     protected final ClientOptions clientOptions;
+@@ -228,14 +227,14 @@ public class NullableOptionalClient {
+     /**
+      * Get notification settings which may be null
+      */
+-    public Optional<NotificationMethod> getNotificationSettings(String userId) {
++    public NotificationMethod getNotificationSettings(String userId) {
+         return this.rawClient.getNotificationSettings(userId).body();
+     }
+ 
+     /**
+      * Get notification settings which may be null
+      */
+-    public Optional<NotificationMethod> getNotificationSettings(String userId, RequestOptions requestOptions) {
++    public NotificationMethod getNotificationSettings(String userId, RequestOptions requestOptions) {
+         return this.rawClient.getNotificationSettings(userId, requestOptions).body();
+     }
+ 
+@@ -256,14 +255,14 @@ public class NullableOptionalClient {
+     /**
+      * Get search results with nullable unions
+      */
+-    public Optional<List<SearchResult>> getSearchResults(SearchRequest request) {
++    public List<SearchResult> getSearchResults(SearchRequest request) {
+         return this.rawClient.getSearchResults(request).body();
+     }
+ 
+     /**
+      * Get search results with nullable unions
+      */
+-    public Optional<List<SearchResult>> getSearchResults(SearchRequest request, RequestOptions requestOptions) {
++    public List<SearchResult> getSearchResults(SearchRequest request, RequestOptions requestOptions) {
+         return this.rawClient.getSearchResults(request, requestOptions).body();
+     }
+ }
+diff --git a/src/main/java/com/seed/nullableOptional/resources/nullableoptional/RawNullableOptionalClient.java b/src/main/java/com/seed/nullableOptional/resources/nullableoptional/RawNullableOptionalClient.java
+index 8167a0f0a0c..ed18aa51b3e 100644
+--- a/src/main/java/com/seed/nullableOptional/resources/nullableoptional/RawNullableOptionalClient.java
++++ b/src/main/java/com/seed/nullableOptional/resources/nullableoptional/RawNullableOptionalClient.java
+@@ -29,7 +29,6 @@ import com.seed.nullableOptional.resources.nullableoptional.types.UpdateUserRequ
+ import com.seed.nullableOptional.resources.nullableoptional.types.UserResponse;
+ import java.io.IOException;
+ import java.util.List;
+-import java.util.Optional;
+ import okhttp3.Headers;
+ import okhttp3.HttpUrl;
+ import okhttp3.OkHttpClient;
+@@ -37,6 +36,7 @@ import okhttp3.Request;
+ import okhttp3.RequestBody;
+ import okhttp3.Response;
+ import okhttp3.ResponseBody;
++import org.jetbrains.annotations.Nullable;
+ 
+ public class RawNullableOptionalClient {
+     protected final ClientOptions clientOptions;
+@@ -309,10 +309,7 @@ public class RawNullableOptionalClient {
+                 .addPathSegments("api")
+                 .addPathSegments("users/search");
+         QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), false);
+-        if (request.getDepartment().isPresent()) {
+-            QueryStringMapper.addQueryParameter(
+-                    httpUrl, "department", request.getDepartment().get(), false);
+-        }
++        QueryStringMapper.addQueryParameter(httpUrl, "department", request.getDepartment(), false);
+         if (request.getRole().isPresent()) {
+             QueryStringMapper.addQueryParameter(
+                     httpUrl, "role", request.getRole().get(), false);
+@@ -599,10 +596,7 @@ public class RawNullableOptionalClient {
+                 .newBuilder()
+                 .addPathSegments("api")
+                 .addPathSegments("users/filter");
+-        if (request.getRole().isPresent()) {
+-            QueryStringMapper.addQueryParameter(
+-                    httpUrl, "role", request.getRole().get(), false);
+-        }
++        QueryStringMapper.addQueryParameter(httpUrl, "role", request.getRole(), false);
+         if (request.getStatus().isPresent()) {
+             QueryStringMapper.addQueryParameter(
+                     httpUrl, "status", request.getStatus().get(), false);
+@@ -646,14 +640,15 @@ public class RawNullableOptionalClient {
+     /**
+      * Get notification settings which may be null
+      */
+-    public SeedNullableOptionalHttpResponse<Optional<NotificationMethod>> getNotificationSettings(String userId) {
++    public SeedNullableOptionalHttpResponse<NotificationMethod> getNotificationSettings(String userId) {
+         return getNotificationSettings(userId, null);
+     }
+ 
+     /**
+      * Get notification settings which may be null
+      */
+-    public SeedNullableOptionalHttpResponse<Optional<NotificationMethod>> getNotificationSettings(
++    @Nullable
++    public SeedNullableOptionalHttpResponse<NotificationMethod> getNotificationSettings(
+             String userId, RequestOptions requestOptions) {
+         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                 .newBuilder()
+@@ -682,7 +677,7 @@ public class RawNullableOptionalClient {
+             if (response.isSuccessful()) {
+                 return new SeedNullableOptionalHttpResponse<>(
+                         ObjectMappers.JSON_MAPPER.readValue(
+-                                responseBodyString, new TypeReference<Optional<NotificationMethod>>() {}),
++                                responseBodyString, new TypeReference<NotificationMethod>() {}),
+                         response);
+             }
+             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+@@ -753,14 +748,15 @@ public class RawNullableOptionalClient {
+     /**
+      * Get search results with nullable unions
+      */
+-    public SeedNullableOptionalHttpResponse<Optional<List<SearchResult>>> getSearchResults(SearchRequest request) {
++    public SeedNullableOptionalHttpResponse<List<SearchResult>> getSearchResults(SearchRequest request) {
+         return getSearchResults(request, null);
+     }
+ 
+     /**
+      * Get search results with nullable unions
+      */
+-    public SeedNullableOptionalHttpResponse<Optional<List<SearchResult>>> getSearchResults(
++    @Nullable
++    public SeedNullableOptionalHttpResponse<List<SearchResult>> getSearchResults(
+             SearchRequest request, RequestOptions requestOptions) {
+         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                 .newBuilder()
+@@ -795,7 +791,7 @@ public class RawNullableOptionalClient {
+             if (response.isSuccessful()) {
+                 return new SeedNullableOptionalHttpResponse<>(
+                         ObjectMappers.JSON_MAPPER.readValue(
+-                                responseBodyString, new TypeReference<Optional<List<SearchResult>>>() {}),
++                                responseBodyString, new TypeReference<List<SearchResult>>() {}),
+                         response);
+             }
+             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+diff --git a/src/main/java/com/seed/nullableOptional/resources/nullableoptional/requests/FilterByRoleRequest.java b/src/main/java/com/seed/nullableOptional/resources/nullableoptional/requests/FilterByRoleRequest.java
+index d4e2f469053..a6e0ccab067 100644
+--- a/src/main/java/com/seed/nullableOptional/resources/nullableoptional/requests/FilterByRoleRequest.java
++++ b/src/main/java/com/seed/nullableOptional/resources/nullableoptional/requests/FilterByRoleRequest.java
+@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
+ import com.fasterxml.jackson.annotation.JsonSetter;
+ import com.fasterxml.jackson.annotation.Nulls;
+ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+-import com.seed.nullableOptional.core.Nullable;
+ import com.seed.nullableOptional.core.ObjectMappers;
+ import com.seed.nullableOptional.resources.nullableoptional.types.UserRole;
+ import com.seed.nullableOptional.resources.nullableoptional.types.UserStatus;
+@@ -19,11 +18,13 @@ import java.util.HashMap;
+ import java.util.Map;
+ import java.util.Objects;
+ import java.util.Optional;
++import org.jetbrains.annotations.Nullable;
+ 
+ @JsonInclude(JsonInclude.Include.NON_ABSENT)
+ @JsonDeserialize(builder = FilterByRoleRequest.Builder.class)
+ public final class FilterByRoleRequest {
+-    private final Optional<UserRole> role;
++    @Nullable
++    private final UserRole role;
+ 
+     private final Optional<UserStatus> status;
+ 
+@@ -32,7 +33,7 @@ public final class FilterByRoleRequest {
+     private final Map<String, Object> additionalProperties;
+ 
+     private FilterByRoleRequest(
+-            Optional<UserRole> role,
++            @Nullable UserRole role,
+             Optional<UserStatus> status,
+             Optional<UserRole> secondaryRole,
+             Map<String, Object> additionalProperties) {
+@@ -42,11 +43,9 @@ public final class FilterByRoleRequest {
+         this.additionalProperties = additionalProperties;
+     }
+ 
++    @Nullable
+     @JsonIgnore
+-    public Optional<UserRole> getRole() {
+-        if (role == null) {
+-            return Optional.empty();
+-        }
++    public UserRole getRole() {
+         return role;
+     }
+ 
+@@ -94,7 +93,7 @@ public final class FilterByRoleRequest {
+ 
+     @JsonIgnoreProperties(ignoreUnknown = true)
+     public static final class Builder {
+-        private Optional<UserRole> role = Optional.empty();
++        private UserRole role;
+ 
+         private Optional<UserStatus> status = Optional.empty();
+ 
+@@ -112,28 +111,13 @@ public final class FilterByRoleRequest {
+             return this;
+         }
+ 
+-        @JsonSetter(value = "role", nulls = Nulls.SKIP)
+-        public Builder role(Optional<UserRole> role) {
++        @java.lang.Override
++        @JsonSetter("role")
++        public Builder role(@Nullable UserRole role) {
+             this.role = role;
+             return this;
+         }
+ 
+-        public Builder role(UserRole role) {
+-            this.role = Optional.ofNullable(role);
+-            return this;
+-        }
+-
+-        public Builder role(Nullable<UserRole> role) {
+-            if (role.isNull()) {
+-                this.role = null;
+-            } else if (role.isEmpty()) {
+-                this.role = Optional.empty();
+-            } else {
+-                this.role = Optional.of(role.get());
+-            }
+-            return this;
+-        }
+-
+         @JsonSetter(value = "status", nulls = Nulls.SKIP)
+         public Builder status(Optional<UserStatus> status) {
+             this.status = status;
+@@ -146,7 +130,7 @@ public final class FilterByRoleRequest {
+         }
+ 
+         @JsonSetter(value = "secondaryRole", nulls = Nulls.SKIP)
+-        public Builder secondaryRole(Optional<UserRole> secondaryRole) {
++        public Builder secondaryRole(@Nullable Optional<UserRole> secondaryRole) {
+             this.secondaryRole = secondaryRole;
+             return this;
+         }
+@@ -156,7 +140,7 @@ public final class FilterByRoleRequest {
+             return this;
+         }
+ 
+-        public Builder secondaryRole(Nullable<UserRole> secondaryRole) {
++        public Builder secondaryRole(com.seed.nullableOptional.core.Nullable<UserRole> secondaryRole) {
+             if (secondaryRole.isNull()) {
+                 this.secondaryRole = null;
+             } else if (secondaryRole.isEmpty()) {
+diff --git a/src/main/java/com/seed/nullableOptional/resources/nullableoptional/requests/ListUsersRequest.java b/src/main/java/com/seed/nullableOptional/resources/nullableoptional/requests/ListUsersRequest.java
+index 918b3142f89..abc3b6edf8a 100644
+--- a/src/main/java/com/seed/nullableOptional/resources/nullableoptional/requests/ListUsersRequest.java
++++ b/src/main/java/com/seed/nullableOptional/resources/nullableoptional/requests/ListUsersRequest.java
+@@ -11,12 +11,12 @@ import com.fasterxml.jackson.annotation.JsonInclude;
+ import com.fasterxml.jackson.annotation.JsonSetter;
+ import com.fasterxml.jackson.annotation.Nulls;
+ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+-import com.seed.nullableOptional.core.Nullable;
+ import com.seed.nullableOptional.core.ObjectMappers;
+ import java.util.HashMap;
+ import java.util.Map;
+ import java.util.Objects;
+ import java.util.Optional;
++import org.jetbrains.annotations.Nullable;
+ 
+ @JsonInclude(JsonInclude.Include.NON_ABSENT)
+ @JsonDeserialize(builder = ListUsersRequest.Builder.class)
+@@ -156,7 +156,7 @@ public final class ListUsersRequest {
+         }
+ 
+         @JsonSetter(value = "sortBy", nulls = Nulls.SKIP)
+-        public Builder sortBy(Optional<String> sortBy) {
++        public Builder sortBy(@Nullable Optional<String> sortBy) {
+             this.sortBy = sortBy;
+             return this;
+         }
+@@ -166,7 +166,7 @@ public final class ListUsersRequest {
+             return this;
+         }
+ 
+-        public Builder sortBy(Nullable<String> sortBy) {
++        public Builder sortBy(com.seed.nullableOptional.core.Nullable<String> sortBy) {
+             if (sortBy.isNull()) {
+                 this.sortBy = null;
+             } else if (sortBy.isEmpty()) {
+diff --git a/src/main/java/com/seed/nullableOptional/resources/nullableoptional/requests/SearchRequest.java b/src/main/java/com/seed/nullableOptional/resources/nullableoptional/requests/SearchRequest.java
+index b769fcbaaf7..afaae527fb1 100644
+--- a/src/main/java/com/seed/nullableOptional/resources/nullableoptional/requests/SearchRequest.java
++++ b/src/main/java/com/seed/nullableOptional/resources/nullableoptional/requests/SearchRequest.java
+@@ -12,31 +12,33 @@ import com.fasterxml.jackson.annotation.JsonProperty;
+ import com.fasterxml.jackson.annotation.JsonSetter;
+ import com.fasterxml.jackson.annotation.Nulls;
+ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+-import com.seed.nullableOptional.core.Nullable;
+ import com.seed.nullableOptional.core.NullableNonemptyFilter;
+ import com.seed.nullableOptional.core.ObjectMappers;
++import java.util.ArrayList;
+ import java.util.HashMap;
+ import java.util.List;
+ import java.util.Map;
+ import java.util.Objects;
+ import java.util.Optional;
+ import org.jetbrains.annotations.NotNull;
++import org.jetbrains.annotations.Nullable;
+ 
+ @JsonInclude(JsonInclude.Include.NON_ABSENT)
+ @JsonDeserialize(builder = SearchRequest.Builder.class)
+ public final class SearchRequest {
+     private final String query;
+ 
+-    private final Optional<Map<String, Optional<String>>> filters;
++    private final Optional<Map<String, String>> filters;
+ 
+-    private final Optional<List<String>> includeTypes;
++    @Nullable
++    private final List<String> includeTypes;
+ 
+     private final Map<String, Object> additionalProperties;
+ 
+     private SearchRequest(
+             String query,
+-            Optional<Map<String, Optional<String>>> filters,
+-            Optional<List<String>> includeTypes,
++            Optional<Map<String, String>> filters,
++            @Nullable List<String> includeTypes,
+             Map<String, Object> additionalProperties) {
+         this.query = query;
+         this.filters = filters;
+@@ -50,21 +52,19 @@ public final class SearchRequest {
+     }
+ 
+     @JsonProperty("filters")
+-    public Optional<Map<String, Optional<String>>> getFilters() {
++    public Optional<Map<String, String>> getFilters() {
+         return filters;
+     }
+ 
++    @Nullable
+     @JsonIgnore
+-    public Optional<List<String>> getIncludeTypes() {
+-        if (includeTypes == null) {
+-            return Optional.empty();
+-        }
++    public List<String> getIncludeTypes() {
+         return includeTypes;
+     }
+ 
+     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+     @JsonProperty("includeTypes")
+-    private Optional<List<String>> _getIncludeTypes() {
++    private List<String> _getIncludeTypes() {
+         return includeTypes;
+     }
+ 
+@@ -110,24 +110,24 @@ public final class SearchRequest {
+ 
+         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+ 
+-        _FinalStage filters(Optional<Map<String, Optional<String>>> filters);
++        _FinalStage filters(Optional<Map<String, String>> filters);
+ 
+-        _FinalStage filters(Map<String, Optional<String>> filters);
++        _FinalStage filters(Map<String, String> filters);
+ 
+-        _FinalStage includeTypes(Optional<List<String>> includeTypes);
++        _FinalStage includeTypes(@Nullable List<String> includeTypes);
+ 
+-        _FinalStage includeTypes(List<String> includeTypes);
++        _FinalStage addIncludeTypes(String includeTypes);
+ 
+-        _FinalStage includeTypes(Nullable<List<String>> includeTypes);
++        _FinalStage addAllIncludeTypes(List<String> includeTypes);
+     }
+ 
+     @JsonIgnoreProperties(ignoreUnknown = true)
+     public static final class Builder implements QueryStage, _FinalStage {
+         private String query;
+ 
+-        private Optional<List<String>> includeTypes = Optional.empty();
++        private List<String> includeTypes = new ArrayList<>();
+ 
+-        private Optional<Map<String, Optional<String>>> filters = Optional.empty();
++        private Optional<Map<String, String>> filters = Optional.empty();
+ 
+         @JsonAnySetter
+         private Map<String, Object> additionalProperties = new HashMap<>();
+@@ -150,39 +150,38 @@ public final class SearchRequest {
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage includeTypes(Nullable<List<String>> includeTypes) {
+-            if (includeTypes.isNull()) {
+-                this.includeTypes = null;
+-            } else if (includeTypes.isEmpty()) {
+-                this.includeTypes = Optional.empty();
+-            } else {
+-                this.includeTypes = Optional.of(includeTypes.get());
++        public _FinalStage addAllIncludeTypes(List<String> includeTypes) {
++            if (includeTypes != null) {
++                this.includeTypes.addAll(includeTypes);
+             }
+             return this;
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage includeTypes(List<String> includeTypes) {
+-            this.includeTypes = Optional.ofNullable(includeTypes);
++        public _FinalStage addIncludeTypes(String includeTypes) {
++            this.includeTypes.add(includeTypes);
+             return this;
+         }
+ 
+         @java.lang.Override
+         @JsonSetter(value = "includeTypes", nulls = Nulls.SKIP)
+-        public _FinalStage includeTypes(Optional<List<String>> includeTypes) {
+-            this.includeTypes = includeTypes;
++        public _FinalStage includeTypes(@Nullable List<String> includeTypes) {
++            this.includeTypes.clear();
++            if (includeTypes != null) {
++                this.includeTypes.addAll(includeTypes);
++            }
+             return this;
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage filters(Map<String, Optional<String>> filters) {
++        public _FinalStage filters(Map<String, String> filters) {
+             this.filters = Optional.ofNullable(filters);
+             return this;
+         }
+ 
+         @java.lang.Override
+         @JsonSetter(value = "filters", nulls = Nulls.SKIP)
+-        public _FinalStage filters(Optional<Map<String, Optional<String>>> filters) {
++        public _FinalStage filters(Optional<Map<String, String>> filters) {
+             this.filters = filters;
+             return this;
+         }
+diff --git a/src/main/java/com/seed/nullableOptional/resources/nullableoptional/requests/SearchUsersRequest.java b/src/main/java/com/seed/nullableOptional/resources/nullableoptional/requests/SearchUsersRequest.java
+index 1a6f4f5c9e0..93db97a209a 100644
+--- a/src/main/java/com/seed/nullableOptional/resources/nullableoptional/requests/SearchUsersRequest.java
++++ b/src/main/java/com/seed/nullableOptional/resources/nullableoptional/requests/SearchUsersRequest.java
+@@ -11,20 +11,21 @@ import com.fasterxml.jackson.annotation.JsonInclude;
+ import com.fasterxml.jackson.annotation.JsonSetter;
+ import com.fasterxml.jackson.annotation.Nulls;
+ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+-import com.seed.nullableOptional.core.Nullable;
+ import com.seed.nullableOptional.core.ObjectMappers;
+ import java.util.HashMap;
+ import java.util.Map;
+ import java.util.Objects;
+ import java.util.Optional;
+ import org.jetbrains.annotations.NotNull;
++import org.jetbrains.annotations.Nullable;
+ 
+ @JsonInclude(JsonInclude.Include.NON_ABSENT)
+ @JsonDeserialize(builder = SearchUsersRequest.Builder.class)
+ public final class SearchUsersRequest {
+     private final String query;
+ 
+-    private final Optional<String> department;
++    @Nullable
++    private final String department;
+ 
+     private final Optional<String> role;
+ 
+@@ -34,7 +35,7 @@ public final class SearchUsersRequest {
+ 
+     private SearchUsersRequest(
+             String query,
+-            Optional<String> department,
++            @Nullable String department,
+             Optional<String> role,
+             Optional<Boolean> isActive,
+             Map<String, Object> additionalProperties) {
+@@ -50,11 +51,9 @@ public final class SearchUsersRequest {
+         return query;
+     }
+ 
++    @Nullable
+     @JsonIgnore
+-    public Optional<String> getDepartment() {
+-        if (department == null) {
+-            return Optional.empty();
+-        }
++    public String getDepartment() {
+         return department;
+     }
+ 
+@@ -116,21 +115,17 @@ public final class SearchUsersRequest {
+ 
+         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+ 
+-        _FinalStage department(Optional<String> department);
+-
+-        _FinalStage department(String department);
+-
+-        _FinalStage department(Nullable<String> department);
++        _FinalStage department(@Nullable String department);
+ 
+         _FinalStage role(Optional<String> role);
+ 
+         _FinalStage role(String role);
+ 
+-        _FinalStage isActive(Optional<Boolean> isActive);
++        _FinalStage isActive(@Nullable Optional<Boolean> isActive);
+ 
+         _FinalStage isActive(Boolean isActive);
+ 
+-        _FinalStage isActive(Nullable<Boolean> isActive);
++        _FinalStage isActive(com.seed.nullableOptional.core.Nullable<Boolean> isActive);
+     }
+ 
+     @JsonIgnoreProperties(ignoreUnknown = true)
+@@ -141,7 +136,7 @@ public final class SearchUsersRequest {
+ 
+         private Optional<String> role = Optional.empty();
+ 
+-        private Optional<String> department = Optional.empty();
++        private String department;
+ 
+         @JsonAnySetter
+         private Map<String, Object> additionalProperties = new HashMap<>();
+@@ -165,7 +160,7 @@ public final class SearchUsersRequest {
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage isActive(Nullable<Boolean> isActive) {
++        public _FinalStage isActive(com.seed.nullableOptional.core.Nullable<Boolean> isActive) {
+             if (isActive.isNull()) {
+                 this.isActive = null;
+             } else if (isActive.isEmpty()) {
+@@ -184,7 +179,7 @@ public final class SearchUsersRequest {
+ 
+         @java.lang.Override
+         @JsonSetter(value = "isActive", nulls = Nulls.SKIP)
+-        public _FinalStage isActive(Optional<Boolean> isActive) {
++        public _FinalStage isActive(@Nullable Optional<Boolean> isActive) {
+             this.isActive = isActive;
+             return this;
+         }
+@@ -203,26 +198,8 @@ public final class SearchUsersRequest {
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage department(Nullable<String> department) {
+-            if (department.isNull()) {
+-                this.department = null;
+-            } else if (department.isEmpty()) {
+-                this.department = Optional.empty();
+-            } else {
+-                this.department = Optional.of(department.get());
+-            }
+-            return this;
+-        }
+-
+-        @java.lang.Override
+-        public _FinalStage department(String department) {
+-            this.department = Optional.ofNullable(department);
+-            return this;
+-        }
+-
+-        @java.lang.Override
+-        @JsonSetter(value = "department", nulls = Nulls.SKIP)
+-        public _FinalStage department(Optional<String> department) {
++        @JsonSetter("department")
++        public _FinalStage department(@Nullable String department) {
+             this.department = department;
+             return this;
+         }
+diff --git a/src/main/java/com/seed/nullableOptional/resources/nullableoptional/requests/UpdateComplexProfileRequest.java b/src/main/java/com/seed/nullableOptional/resources/nullableoptional/requests/UpdateComplexProfileRequest.java
+index 1b4f3271ad5..0eb60f8e0f1 100644
+--- a/src/main/java/com/seed/nullableOptional/resources/nullableoptional/requests/UpdateComplexProfileRequest.java
++++ b/src/main/java/com/seed/nullableOptional/resources/nullableoptional/requests/UpdateComplexProfileRequest.java
+@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
+ import com.fasterxml.jackson.annotation.JsonSetter;
+ import com.fasterxml.jackson.annotation.Nulls;
+ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+-import com.seed.nullableOptional.core.Nullable;
+ import com.seed.nullableOptional.core.NullableNonemptyFilter;
+ import com.seed.nullableOptional.core.ObjectMappers;
+ import com.seed.nullableOptional.resources.nullableoptional.types.NotificationMethod;
+@@ -24,6 +23,7 @@ import java.util.List;
+ import java.util.Map;
+ import java.util.Objects;
+ import java.util.Optional;
++import org.jetbrains.annotations.Nullable;
+ 
+ @JsonInclude(JsonInclude.Include.NON_ABSENT)
+ @JsonDeserialize(builder = UpdateComplexProfileRequest.Builder.class)
+@@ -190,7 +190,7 @@ public final class UpdateComplexProfileRequest {
+         }
+ 
+         @JsonSetter(value = "nullableRole", nulls = Nulls.SKIP)
+-        public Builder nullableRole(Optional<UserRole> nullableRole) {
++        public Builder nullableRole(@Nullable Optional<UserRole> nullableRole) {
+             this.nullableRole = nullableRole;
+             return this;
+         }
+@@ -200,7 +200,7 @@ public final class UpdateComplexProfileRequest {
+             return this;
+         }
+ 
+-        public Builder nullableRole(Nullable<UserRole> nullableRole) {
++        public Builder nullableRole(com.seed.nullableOptional.core.Nullable<UserRole> nullableRole) {
+             if (nullableRole.isNull()) {
+                 this.nullableRole = null;
+             } else if (nullableRole.isEmpty()) {
+@@ -212,7 +212,7 @@ public final class UpdateComplexProfileRequest {
+         }
+ 
+         @JsonSetter(value = "nullableStatus", nulls = Nulls.SKIP)
+-        public Builder nullableStatus(Optional<UserStatus> nullableStatus) {
++        public Builder nullableStatus(@Nullable Optional<UserStatus> nullableStatus) {
+             this.nullableStatus = nullableStatus;
+             return this;
+         }
+@@ -222,7 +222,7 @@ public final class UpdateComplexProfileRequest {
+             return this;
+         }
+ 
+-        public Builder nullableStatus(Nullable<UserStatus> nullableStatus) {
++        public Builder nullableStatus(com.seed.nullableOptional.core.Nullable<UserStatus> nullableStatus) {
+             if (nullableStatus.isNull()) {
+                 this.nullableStatus = null;
+             } else if (nullableStatus.isEmpty()) {
+@@ -234,7 +234,7 @@ public final class UpdateComplexProfileRequest {
+         }
+ 
+         @JsonSetter(value = "nullableNotification", nulls = Nulls.SKIP)
+-        public Builder nullableNotification(Optional<NotificationMethod> nullableNotification) {
++        public Builder nullableNotification(@Nullable Optional<NotificationMethod> nullableNotification) {
+             this.nullableNotification = nullableNotification;
+             return this;
+         }
+@@ -244,7 +244,8 @@ public final class UpdateComplexProfileRequest {
+             return this;
+         }
+ 
+-        public Builder nullableNotification(Nullable<NotificationMethod> nullableNotification) {
++        public Builder nullableNotification(
++                com.seed.nullableOptional.core.Nullable<NotificationMethod> nullableNotification) {
+             if (nullableNotification.isNull()) {
+                 this.nullableNotification = null;
+             } else if (nullableNotification.isEmpty()) {
+@@ -256,7 +257,7 @@ public final class UpdateComplexProfileRequest {
+         }
+ 
+         @JsonSetter(value = "nullableSearchResult", nulls = Nulls.SKIP)
+-        public Builder nullableSearchResult(Optional<SearchResult> nullableSearchResult) {
++        public Builder nullableSearchResult(@Nullable Optional<SearchResult> nullableSearchResult) {
+             this.nullableSearchResult = nullableSearchResult;
+             return this;
+         }
+@@ -266,7 +267,8 @@ public final class UpdateComplexProfileRequest {
+             return this;
+         }
+ 
+-        public Builder nullableSearchResult(Nullable<SearchResult> nullableSearchResult) {
++        public Builder nullableSearchResult(
++                com.seed.nullableOptional.core.Nullable<SearchResult> nullableSearchResult) {
+             if (nullableSearchResult.isNull()) {
+                 this.nullableSearchResult = null;
+             } else if (nullableSearchResult.isEmpty()) {
+@@ -278,7 +280,7 @@ public final class UpdateComplexProfileRequest {
+         }
+ 
+         @JsonSetter(value = "nullableArray", nulls = Nulls.SKIP)
+-        public Builder nullableArray(Optional<List<String>> nullableArray) {
++        public Builder nullableArray(@Nullable Optional<List<String>> nullableArray) {
+             this.nullableArray = nullableArray;
+             return this;
+         }
+@@ -288,7 +290,7 @@ public final class UpdateComplexProfileRequest {
+             return this;
+         }
+ 
+-        public Builder nullableArray(Nullable<List<String>> nullableArray) {
++        public Builder nullableArray(com.seed.nullableOptional.core.Nullable<List<String>> nullableArray) {
+             if (nullableArray.isNull()) {
+                 this.nullableArray = null;
+             } else if (nullableArray.isEmpty()) {
+diff --git a/src/main/java/com/seed/nullableOptional/resources/nullableoptional/requests/UpdateTagsRequest.java b/src/main/java/com/seed/nullableOptional/resources/nullableoptional/requests/UpdateTagsRequest.java
+index 7f2369d54be..527df6ef8db 100644
+--- a/src/main/java/com/seed/nullableOptional/resources/nullableoptional/requests/UpdateTagsRequest.java
++++ b/src/main/java/com/seed/nullableOptional/resources/nullableoptional/requests/UpdateTagsRequest.java
+@@ -12,19 +12,21 @@ import com.fasterxml.jackson.annotation.JsonProperty;
+ import com.fasterxml.jackson.annotation.JsonSetter;
+ import com.fasterxml.jackson.annotation.Nulls;
+ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+-import com.seed.nullableOptional.core.Nullable;
+ import com.seed.nullableOptional.core.NullableNonemptyFilter;
+ import com.seed.nullableOptional.core.ObjectMappers;
++import java.util.ArrayList;
+ import java.util.HashMap;
+ import java.util.List;
+ import java.util.Map;
+ import java.util.Objects;
+ import java.util.Optional;
++import org.jetbrains.annotations.Nullable;
+ 
+ @JsonInclude(JsonInclude.Include.NON_ABSENT)
+ @JsonDeserialize(builder = UpdateTagsRequest.Builder.class)
+ public final class UpdateTagsRequest {
+-    private final Optional<List<String>> tags;
++    @Nullable
++    private final List<String> tags;
+ 
+     private final Optional<List<String>> categories;
+ 
+@@ -33,7 +35,7 @@ public final class UpdateTagsRequest {
+     private final Map<String, Object> additionalProperties;
+ 
+     private UpdateTagsRequest(
+-            Optional<List<String>> tags,
++            @Nullable List<String> tags,
+             Optional<List<String>> categories,
+             Optional<List<String>> labels,
+             Map<String, Object> additionalProperties) {
+@@ -43,11 +45,9 @@ public final class UpdateTagsRequest {
+         this.additionalProperties = additionalProperties;
+     }
+ 
++    @Nullable
+     @JsonIgnore
+-    public Optional<List<String>> getTags() {
+-        if (tags == null) {
+-            return Optional.empty();
+-        }
++    public List<String> getTags() {
+         return tags;
+     }
+ 
+@@ -66,7 +66,7 @@ public final class UpdateTagsRequest {
+ 
+     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+     @JsonProperty("tags")
+-    private Optional<List<String>> _getTags() {
++    private List<String> _getTags() {
+         return tags;
+     }
+ 
+@@ -107,7 +107,7 @@ public final class UpdateTagsRequest {
+ 
+     @JsonIgnoreProperties(ignoreUnknown = true)
+     public static final class Builder {
+-        private Optional<List<String>> tags = Optional.empty();
++        private List<String> tags = new ArrayList<>();
+ 
+         private Optional<List<String>> categories = Optional.empty();
+ 
+@@ -126,23 +126,22 @@ public final class UpdateTagsRequest {
+         }
+ 
+         @JsonSetter(value = "tags", nulls = Nulls.SKIP)
+-        public Builder tags(Optional<List<String>> tags) {
+-            this.tags = tags;
++        public Builder tags(@Nullable List<String> tags) {
++            this.tags.clear();
++            if (tags != null) {
++                this.tags.addAll(tags);
++            }
+             return this;
+         }
+ 
+-        public Builder tags(List<String> tags) {
+-            this.tags = Optional.ofNullable(tags);
++        public Builder addTags(String tags) {
++            this.tags.add(tags);
+             return this;
+         }
+ 
+-        public Builder tags(Nullable<List<String>> tags) {
+-            if (tags.isNull()) {
+-                this.tags = null;
+-            } else if (tags.isEmpty()) {
+-                this.tags = Optional.empty();
+-            } else {
+-                this.tags = Optional.of(tags.get());
++        public Builder addAllTags(List<String> tags) {
++            if (tags != null) {
++                this.tags.addAll(tags);
+             }
+             return this;
+         }
+@@ -159,7 +158,7 @@ public final class UpdateTagsRequest {
+         }
+ 
+         @JsonSetter(value = "labels", nulls = Nulls.SKIP)
+-        public Builder labels(Optional<List<String>> labels) {
++        public Builder labels(@Nullable Optional<List<String>> labels) {
+             this.labels = labels;
+             return this;
+         }
+@@ -169,7 +168,7 @@ public final class UpdateTagsRequest {
+             return this;
+         }
+ 
+-        public Builder labels(Nullable<List<String>> labels) {
++        public Builder labels(com.seed.nullableOptional.core.Nullable<List<String>> labels) {
+             if (labels.isNull()) {
+                 this.labels = null;
+             } else if (labels.isEmpty()) {
+diff --git a/src/main/java/com/seed/nullableOptional/resources/nullableoptional/types/Address.java b/src/main/java/com/seed/nullableOptional/resources/nullableoptional/types/Address.java
+index 499d2bcb74d..61e420bb323 100644
+--- a/src/main/java/com/seed/nullableOptional/resources/nullableoptional/types/Address.java
++++ b/src/main/java/com/seed/nullableOptional/resources/nullableoptional/types/Address.java
+@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
+ import com.fasterxml.jackson.annotation.JsonSetter;
+ import com.fasterxml.jackson.annotation.Nulls;
+ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+-import com.seed.nullableOptional.core.Nullable;
+ import com.seed.nullableOptional.core.NullableNonemptyFilter;
+ import com.seed.nullableOptional.core.ObjectMappers;
+ import java.util.HashMap;
+@@ -20,13 +19,15 @@ import java.util.Map;
+ import java.util.Objects;
+ import java.util.Optional;
+ import org.jetbrains.annotations.NotNull;
++import org.jetbrains.annotations.Nullable;
+ 
+ @JsonInclude(JsonInclude.Include.NON_ABSENT)
+ @JsonDeserialize(builder = Address.Builder.class)
+ public final class Address {
+     private final String street;
+ 
+-    private final Optional<String> city;
++    @Nullable
++    private final String city;
+ 
+     private final Optional<String> state;
+ 
+@@ -34,7 +35,7 @@ public final class Address {
+ 
+     private final Optional<String> country;
+ 
+-    private final Optional<String> buildingId;
++    private final String buildingId;
+ 
+     private final Optional<String> tenantId;
+ 
+@@ -42,11 +43,11 @@ public final class Address {
+ 
+     private Address(
+             String street,
+-            Optional<String> city,
++            @Nullable String city,
+             Optional<String> state,
+             String zipCode,
+             Optional<String> country,
+-            Optional<String> buildingId,
++            String buildingId,
+             Optional<String> tenantId,
+             Map<String, Object> additionalProperties) {
+         this.street = street;
+@@ -64,11 +65,9 @@ public final class Address {
+         return street;
+     }
+ 
++    @Nullable
+     @JsonIgnore
+-    public Optional<String> getCity() {
+-        if (city == null) {
+-            return Optional.empty();
+-        }
++    public String getCity() {
+         return city;
+     }
+ 
+@@ -91,7 +90,7 @@ public final class Address {
+     }
+ 
+     @JsonIgnore
+-    public Optional<String> getBuildingId() {
++    public String getBuildingId() {
+         return buildingId;
+     }
+ 
+@@ -102,7 +101,7 @@ public final class Address {
+ 
+     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+     @JsonProperty("city")
+-    private Optional<String> _getCity() {
++    private String _getCity() {
+         return city;
+     }
+ 
+@@ -114,7 +113,7 @@ public final class Address {
+ 
+     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+     @JsonProperty("buildingId")
+-    private Optional<String> _getBuildingId() {
++    private String _getBuildingId() {
+         return buildingId;
+     }
+ 
+@@ -171,25 +170,19 @@ public final class Address {
+ 
+         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+ 
+-        _FinalStage city(Optional<String> city);
+-
+-        _FinalStage city(String city);
+-
+-        _FinalStage city(Nullable<String> city);
++        _FinalStage city(@Nullable String city);
+ 
+         _FinalStage state(Optional<String> state);
+ 
+         _FinalStage state(String state);
+ 
+-        _FinalStage country(Optional<String> country);
++        _FinalStage country(@Nullable Optional<String> country);
+ 
+         _FinalStage country(String country);
+ 
+-        _FinalStage country(Nullable<String> country);
+-
+-        _FinalStage buildingId(Optional<String> buildingId);
++        _FinalStage country(com.seed.nullableOptional.core.Nullable<String> country);
+ 
+-        _FinalStage buildingId(String buildingId);
++        _FinalStage buildingId(@Nullable String buildingId);
+ 
+         _FinalStage tenantId(Optional<String> tenantId);
+ 
+@@ -204,13 +197,13 @@ public final class Address {
+ 
+         private Optional<String> tenantId = Optional.empty();
+ 
+-        private Optional<String> buildingId = Optional.empty();
++        private String buildingId;
+ 
+         private Optional<String> country = Optional.empty();
+ 
+         private Optional<String> state = Optional.empty();
+ 
+-        private Optional<String> city = Optional.empty();
++        private String city;
+ 
+         @JsonAnySetter
+         private Map<String, Object> additionalProperties = new HashMap<>();
+@@ -257,20 +250,14 @@ public final class Address {
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage buildingId(String buildingId) {
+-            this.buildingId = Optional.ofNullable(buildingId);
+-            return this;
+-        }
+-
+-        @java.lang.Override
+-        @JsonSetter(value = "buildingId", nulls = Nulls.SKIP)
+-        public _FinalStage buildingId(Optional<String> buildingId) {
++        @JsonSetter("buildingId")
++        public _FinalStage buildingId(@Nullable String buildingId) {
+             this.buildingId = buildingId;
+             return this;
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage country(Nullable<String> country) {
++        public _FinalStage country(com.seed.nullableOptional.core.Nullable<String> country) {
+             if (country.isNull()) {
+                 this.country = null;
+             } else if (country.isEmpty()) {
+@@ -289,7 +276,7 @@ public final class Address {
+ 
+         @java.lang.Override
+         @JsonSetter(value = "country", nulls = Nulls.SKIP)
+-        public _FinalStage country(Optional<String> country) {
++        public _FinalStage country(@Nullable Optional<String> country) {
+             this.country = country;
+             return this;
+         }
+@@ -308,26 +295,8 @@ public final class Address {
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage city(Nullable<String> city) {
+-            if (city.isNull()) {
+-                this.city = null;
+-            } else if (city.isEmpty()) {
+-                this.city = Optional.empty();
+-            } else {
+-                this.city = Optional.of(city.get());
+-            }
+-            return this;
+-        }
+-
+-        @java.lang.Override
+-        public _FinalStage city(String city) {
+-            this.city = Optional.ofNullable(city);
+-            return this;
+-        }
+-
+-        @java.lang.Override
+-        @JsonSetter(value = "city", nulls = Nulls.SKIP)
+-        public _FinalStage city(Optional<String> city) {
++        @JsonSetter("city")
++        public _FinalStage city(@Nullable String city) {
+             this.city = city;
+             return this;
+         }
+diff --git a/src/main/java/com/seed/nullableOptional/resources/nullableoptional/types/ComplexProfile.java b/src/main/java/com/seed/nullableOptional/resources/nullableoptional/types/ComplexProfile.java
+index ccbe7e797ce..e06c882e03f 100644
+--- a/src/main/java/com/seed/nullableOptional/resources/nullableoptional/types/ComplexProfile.java
++++ b/src/main/java/com/seed/nullableOptional/resources/nullableoptional/types/ComplexProfile.java
+@@ -12,54 +12,64 @@ import com.fasterxml.jackson.annotation.JsonProperty;
+ import com.fasterxml.jackson.annotation.JsonSetter;
+ import com.fasterxml.jackson.annotation.Nulls;
+ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+-import com.seed.nullableOptional.core.Nullable;
+ import com.seed.nullableOptional.core.NullableNonemptyFilter;
+ import com.seed.nullableOptional.core.ObjectMappers;
++import java.util.ArrayList;
+ import java.util.HashMap;
++import java.util.LinkedHashMap;
+ import java.util.List;
+ import java.util.Map;
+ import java.util.Objects;
+ import java.util.Optional;
+ import org.jetbrains.annotations.NotNull;
++import org.jetbrains.annotations.Nullable;
+ 
+ @JsonInclude(JsonInclude.Include.NON_ABSENT)
+ @JsonDeserialize(builder = ComplexProfile.Builder.class)
+ public final class ComplexProfile {
+     private final String id;
+ 
+-    private final Optional<UserRole> nullableRole;
++    @Nullable
++    private final UserRole nullableRole;
+ 
+     private final Optional<UserRole> optionalRole;
+ 
+     private final Optional<UserRole> optionalNullableRole;
+ 
+-    private final Optional<UserStatus> nullableStatus;
++    @Nullable
++    private final UserStatus nullableStatus;
+ 
+     private final Optional<UserStatus> optionalStatus;
+ 
+     private final Optional<UserStatus> optionalNullableStatus;
+ 
+-    private final Optional<NotificationMethod> nullableNotification;
++    @Nullable
++    private final NotificationMethod nullableNotification;
+ 
+     private final Optional<NotificationMethod> optionalNotification;
+ 
+     private final Optional<NotificationMethod> optionalNullableNotification;
+ 
+-    private final Optional<SearchResult> nullableSearchResult;
++    @Nullable
++    private final SearchResult nullableSearchResult;
+ 
+     private final Optional<SearchResult> optionalSearchResult;
+ 
+-    private final Optional<List<String>> nullableArray;
++    @Nullable
++    private final List<String> nullableArray;
+ 
+     private final Optional<List<String>> optionalArray;
+ 
+     private final Optional<List<String>> optionalNullableArray;
+ 
+-    private final Optional<List<Optional<String>>> nullableListOfNullables;
++    @Nullable
++    private final List<String> nullableListOfNullables;
+ 
+-    private final Optional<Map<String, Optional<Address>>> nullableMapOfNullables;
++    @Nullable
++    private final Map<String, Address> nullableMapOfNullables;
+ 
+-    private final Optional<List<NotificationMethod>> nullableListOfUnions;
++    @Nullable
++    private final List<NotificationMethod> nullableListOfUnions;
+ 
+     private final Optional<Map<String, UserRole>> optionalMapOfEnums;
+ 
+@@ -67,23 +77,23 @@ public final class ComplexProfile {
+ 
+     private ComplexProfile(
+             String id,
+-            Optional<UserRole> nullableRole,
++            @Nullable UserRole nullableRole,
+             Optional<UserRole> optionalRole,
+             Optional<UserRole> optionalNullableRole,
+-            Optional<UserStatus> nullableStatus,
++            @Nullable UserStatus nullableStatus,
+             Optional<UserStatus> optionalStatus,
+             Optional<UserStatus> optionalNullableStatus,
+-            Optional<NotificationMethod> nullableNotification,
++            @Nullable NotificationMethod nullableNotification,
+             Optional<NotificationMethod> optionalNotification,
+             Optional<NotificationMethod> optionalNullableNotification,
+-            Optional<SearchResult> nullableSearchResult,
++            @Nullable SearchResult nullableSearchResult,
+             Optional<SearchResult> optionalSearchResult,
+-            Optional<List<String>> nullableArray,
++            @Nullable List<String> nullableArray,
+             Optional<List<String>> optionalArray,
+             Optional<List<String>> optionalNullableArray,
+-            Optional<List<Optional<String>>> nullableListOfNullables,
+-            Optional<Map<String, Optional<Address>>> nullableMapOfNullables,
+-            Optional<List<NotificationMethod>> nullableListOfUnions,
++            @Nullable List<String> nullableListOfNullables,
++            @Nullable Map<String, Address> nullableMapOfNullables,
++            @Nullable List<NotificationMethod> nullableListOfUnions,
+             Optional<Map<String, UserRole>> optionalMapOfEnums,
+             Map<String, Object> additionalProperties) {
+         this.id = id;
+@@ -113,11 +123,9 @@ public final class ComplexProfile {
+         return id;
+     }
+ 
++    @Nullable
+     @JsonIgnore
+-    public Optional<UserRole> getNullableRole() {
+-        if (nullableRole == null) {
+-            return Optional.empty();
+-        }
++    public UserRole getNullableRole() {
+         return nullableRole;
+     }
+ 
+@@ -134,11 +142,9 @@ public final class ComplexProfile {
+         return optionalNullableRole;
+     }
+ 
++    @Nullable
+     @JsonIgnore
+-    public Optional<UserStatus> getNullableStatus() {
+-        if (nullableStatus == null) {
+-            return Optional.empty();
+-        }
++    public UserStatus getNullableStatus() {
+         return nullableStatus;
+     }
+ 
+@@ -155,11 +161,9 @@ public final class ComplexProfile {
+         return optionalNullableStatus;
+     }
+ 
++    @Nullable
+     @JsonIgnore
+-    public Optional<NotificationMethod> getNullableNotification() {
+-        if (nullableNotification == null) {
+-            return Optional.empty();
+-        }
++    public NotificationMethod getNullableNotification() {
+         return nullableNotification;
+     }
+ 
+@@ -176,11 +180,9 @@ public final class ComplexProfile {
+         return optionalNullableNotification;
+     }
+ 
++    @Nullable
+     @JsonIgnore
+-    public Optional<SearchResult> getNullableSearchResult() {
+-        if (nullableSearchResult == null) {
+-            return Optional.empty();
+-        }
++    public SearchResult getNullableSearchResult() {
+         return nullableSearchResult;
+     }
+ 
+@@ -189,11 +191,9 @@ public final class ComplexProfile {
+         return optionalSearchResult;
+     }
+ 
++    @Nullable
+     @JsonIgnore
+-    public Optional<List<String>> getNullableArray() {
+-        if (nullableArray == null) {
+-            return Optional.empty();
+-        }
++    public List<String> getNullableArray() {
+         return nullableArray;
+     }
+ 
+@@ -210,27 +210,21 @@ public final class ComplexProfile {
+         return optionalNullableArray;
+     }
+ 
++    @Nullable
+     @JsonIgnore
+-    public Optional<List<Optional<String>>> getNullableListOfNullables() {
+-        if (nullableListOfNullables == null) {
+-            return Optional.empty();
+-        }
++    public List<String> getNullableListOfNullables() {
+         return nullableListOfNullables;
+     }
+ 
++    @Nullable
+     @JsonIgnore
+-    public Optional<Map<String, Optional<Address>>> getNullableMapOfNullables() {
+-        if (nullableMapOfNullables == null) {
+-            return Optional.empty();
+-        }
++    public Map<String, Address> getNullableMapOfNullables() {
+         return nullableMapOfNullables;
+     }
+ 
++    @Nullable
+     @JsonIgnore
+-    public Optional<List<NotificationMethod>> getNullableListOfUnions() {
+-        if (nullableListOfUnions == null) {
+-            return Optional.empty();
+-        }
++    public List<NotificationMethod> getNullableListOfUnions() {
+         return nullableListOfUnions;
+     }
+ 
+@@ -241,7 +235,7 @@ public final class ComplexProfile {
+ 
+     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+     @JsonProperty("nullableRole")
+-    private Optional<UserRole> _getNullableRole() {
++    private UserRole _getNullableRole() {
+         return nullableRole;
+     }
+ 
+@@ -253,7 +247,7 @@ public final class ComplexProfile {
+ 
+     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+     @JsonProperty("nullableStatus")
+-    private Optional<UserStatus> _getNullableStatus() {
++    private UserStatus _getNullableStatus() {
+         return nullableStatus;
+     }
+ 
+@@ -265,7 +259,7 @@ public final class ComplexProfile {
+ 
+     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+     @JsonProperty("nullableNotification")
+-    private Optional<NotificationMethod> _getNullableNotification() {
++    private NotificationMethod _getNullableNotification() {
+         return nullableNotification;
+     }
+ 
+@@ -277,13 +271,13 @@ public final class ComplexProfile {
+ 
+     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+     @JsonProperty("nullableSearchResult")
+-    private Optional<SearchResult> _getNullableSearchResult() {
++    private SearchResult _getNullableSearchResult() {
+         return nullableSearchResult;
+     }
+ 
+     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+     @JsonProperty("nullableArray")
+-    private Optional<List<String>> _getNullableArray() {
++    private List<String> _getNullableArray() {
+         return nullableArray;
+     }
+ 
+@@ -295,19 +289,19 @@ public final class ComplexProfile {
+ 
+     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+     @JsonProperty("nullableListOfNullables")
+-    private Optional<List<Optional<String>>> _getNullableListOfNullables() {
++    private List<String> _getNullableListOfNullables() {
+         return nullableListOfNullables;
+     }
+ 
+     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+     @JsonProperty("nullableMapOfNullables")
+-    private Optional<Map<String, Optional<Address>>> _getNullableMapOfNullables() {
++    private Map<String, Address> _getNullableMapOfNullables() {
+         return nullableMapOfNullables;
+     }
+ 
+     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+     @JsonProperty("nullableListOfUnions")
+-    private Optional<List<NotificationMethod>> _getNullableListOfUnions() {
++    private List<NotificationMethod> _getNullableListOfUnions() {
+         return nullableListOfUnions;
+     }
+ 
+@@ -390,97 +384,82 @@ public final class ComplexProfile {
+ 
+         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+ 
+-        _FinalStage nullableRole(Optional<UserRole> nullableRole);
+-
+-        _FinalStage nullableRole(UserRole nullableRole);
+-
+-        _FinalStage nullableRole(Nullable<UserRole> nullableRole);
++        _FinalStage nullableRole(@Nullable UserRole nullableRole);
+ 
+         _FinalStage optionalRole(Optional<UserRole> optionalRole);
+ 
+         _FinalStage optionalRole(UserRole optionalRole);
+ 
+-        _FinalStage optionalNullableRole(Optional<UserRole> optionalNullableRole);
++        _FinalStage optionalNullableRole(@Nullable Optional<UserRole> optionalNullableRole);
+ 
+         _FinalStage optionalNullableRole(UserRole optionalNullableRole);
+ 
+-        _FinalStage optionalNullableRole(Nullable<UserRole> optionalNullableRole);
+-
+-        _FinalStage nullableStatus(Optional<UserStatus> nullableStatus);
++        _FinalStage optionalNullableRole(com.seed.nullableOptional.core.Nullable<UserRole> optionalNullableRole);
+ 
+-        _FinalStage nullableStatus(UserStatus nullableStatus);
+-
+-        _FinalStage nullableStatus(Nullable<UserStatus> nullableStatus);
++        _FinalStage nullableStatus(@Nullable UserStatus nullableStatus);
+ 
+         _FinalStage optionalStatus(Optional<UserStatus> optionalStatus);
+ 
+         _FinalStage optionalStatus(UserStatus optionalStatus);
+ 
+-        _FinalStage optionalNullableStatus(Optional<UserStatus> optionalNullableStatus);
++        _FinalStage optionalNullableStatus(@Nullable Optional<UserStatus> optionalNullableStatus);
+ 
+         _FinalStage optionalNullableStatus(UserStatus optionalNullableStatus);
+ 
+-        _FinalStage optionalNullableStatus(Nullable<UserStatus> optionalNullableStatus);
+-
+-        _FinalStage nullableNotification(Optional<NotificationMethod> nullableNotification);
+-
+-        _FinalStage nullableNotification(NotificationMethod nullableNotification);
++        _FinalStage optionalNullableStatus(com.seed.nullableOptional.core.Nullable<UserStatus> optionalNullableStatus);
+ 
+-        _FinalStage nullableNotification(Nullable<NotificationMethod> nullableNotification);
++        _FinalStage nullableNotification(@Nullable NotificationMethod nullableNotification);
+ 
+         _FinalStage optionalNotification(Optional<NotificationMethod> optionalNotification);
+ 
+         _FinalStage optionalNotification(NotificationMethod optionalNotification);
+ 
+-        _FinalStage optionalNullableNotification(Optional<NotificationMethod> optionalNullableNotification);
++        _FinalStage optionalNullableNotification(@Nullable Optional<NotificationMethod> optionalNullableNotification);
+ 
+         _FinalStage optionalNullableNotification(NotificationMethod optionalNullableNotification);
+ 
+-        _FinalStage optionalNullableNotification(Nullable<NotificationMethod> optionalNullableNotification);
+-
+-        _FinalStage nullableSearchResult(Optional<SearchResult> nullableSearchResult);
+-
+-        _FinalStage nullableSearchResult(SearchResult nullableSearchResult);
++        _FinalStage optionalNullableNotification(
++                com.seed.nullableOptional.core.Nullable<NotificationMethod> optionalNullableNotification);
+ 
+-        _FinalStage nullableSearchResult(Nullable<SearchResult> nullableSearchResult);
++        _FinalStage nullableSearchResult(@Nullable SearchResult nullableSearchResult);
+ 
+         _FinalStage optionalSearchResult(Optional<SearchResult> optionalSearchResult);
+ 
+         _FinalStage optionalSearchResult(SearchResult optionalSearchResult);
+ 
+-        _FinalStage nullableArray(Optional<List<String>> nullableArray);
++        _FinalStage nullableArray(@Nullable List<String> nullableArray);
+ 
+-        _FinalStage nullableArray(List<String> nullableArray);
++        _FinalStage addNullableArray(String nullableArray);
+ 
+-        _FinalStage nullableArray(Nullable<List<String>> nullableArray);
++        _FinalStage addAllNullableArray(List<String> nullableArray);
+ 
+         _FinalStage optionalArray(Optional<List<String>> optionalArray);
+ 
+         _FinalStage optionalArray(List<String> optionalArray);
+ 
+-        _FinalStage optionalNullableArray(Optional<List<String>> optionalNullableArray);
++        _FinalStage optionalNullableArray(@Nullable Optional<List<String>> optionalNullableArray);
+ 
+         _FinalStage optionalNullableArray(List<String> optionalNullableArray);
+ 
+-        _FinalStage optionalNullableArray(Nullable<List<String>> optionalNullableArray);
++        _FinalStage optionalNullableArray(com.seed.nullableOptional.core.Nullable<List<String>> optionalNullableArray);
+ 
+-        _FinalStage nullableListOfNullables(Optional<List<Optional<String>>> nullableListOfNullables);
++        _FinalStage nullableListOfNullables(@Nullable List<String> nullableListOfNullables);
+ 
+-        _FinalStage nullableListOfNullables(List<Optional<String>> nullableListOfNullables);
++        _FinalStage addNullableListOfNullables(String nullableListOfNullables);
+ 
+-        _FinalStage nullableListOfNullables(Nullable<List<Optional<String>>> nullableListOfNullables);
++        _FinalStage addAllNullableListOfNullables(List<String> nullableListOfNullables);
+ 
+-        _FinalStage nullableMapOfNullables(Optional<Map<String, Optional<Address>>> nullableMapOfNullables);
++        _FinalStage nullableMapOfNullables(@Nullable Map<String, Address> nullableMapOfNullables);
+ 
+-        _FinalStage nullableMapOfNullables(Map<String, Optional<Address>> nullableMapOfNullables);
++        _FinalStage putAllNullableMapOfNullables(Map<String, Address> nullableMapOfNullables);
+ 
+-        _FinalStage nullableMapOfNullables(Nullable<Map<String, Optional<Address>>> nullableMapOfNullables);
++        _FinalStage nullableMapOfNullables(String key, Address value);
+ 
+-        _FinalStage nullableListOfUnions(Optional<List<NotificationMethod>> nullableListOfUnions);
++        _FinalStage nullableListOfUnions(@Nullable List<NotificationMethod> nullableListOfUnions);
+ 
+-        _FinalStage nullableListOfUnions(List<NotificationMethod> nullableListOfUnions);
++        _FinalStage addNullableListOfUnions(NotificationMethod nullableListOfUnions);
+ 
+-        _FinalStage nullableListOfUnions(Nullable<List<NotificationMethod>> nullableListOfUnions);
++        _FinalStage addAllNullableListOfUnions(List<NotificationMethod> nullableListOfUnions);
+ 
+         _FinalStage optionalMapOfEnums(Optional<Map<String, UserRole>> optionalMapOfEnums);
+ 
+@@ -493,39 +472,39 @@ public final class ComplexProfile {
+ 
+         private Optional<Map<String, UserRole>> optionalMapOfEnums = Optional.empty();
+ 
+-        private Optional<List<NotificationMethod>> nullableListOfUnions = Optional.empty();
++        private List<NotificationMethod> nullableListOfUnions = new ArrayList<>();
+ 
+-        private Optional<Map<String, Optional<Address>>> nullableMapOfNullables = Optional.empty();
++        private Map<String, Address> nullableMapOfNullables = new LinkedHashMap<>();
+ 
+-        private Optional<List<Optional<String>>> nullableListOfNullables = Optional.empty();
++        private List<String> nullableListOfNullables = new ArrayList<>();
+ 
+         private Optional<List<String>> optionalNullableArray = Optional.empty();
+ 
+         private Optional<List<String>> optionalArray = Optional.empty();
+ 
+-        private Optional<List<String>> nullableArray = Optional.empty();
++        private List<String> nullableArray = new ArrayList<>();
+ 
+         private Optional<SearchResult> optionalSearchResult = Optional.empty();
+ 
+-        private Optional<SearchResult> nullableSearchResult = Optional.empty();
++        private SearchResult nullableSearchResult;
+ 
+         private Optional<NotificationMethod> optionalNullableNotification = Optional.empty();
+ 
+         private Optional<NotificationMethod> optionalNotification = Optional.empty();
+ 
+-        private Optional<NotificationMethod> nullableNotification = Optional.empty();
++        private NotificationMethod nullableNotification;
+ 
+         private Optional<UserStatus> optionalNullableStatus = Optional.empty();
+ 
+         private Optional<UserStatus> optionalStatus = Optional.empty();
+ 
+-        private Optional<UserStatus> nullableStatus = Optional.empty();
++        private UserStatus nullableStatus;
+ 
+         private Optional<UserRole> optionalNullableRole = Optional.empty();
+ 
+         private Optional<UserRole> optionalRole = Optional.empty();
+ 
+-        private Optional<UserRole> nullableRole = Optional.empty();
++        private UserRole nullableRole;
+ 
+         @JsonAnySetter
+         private Map<String, Object> additionalProperties = new HashMap<>();
+@@ -577,82 +556,80 @@ public final class ComplexProfile {
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage nullableListOfUnions(Nullable<List<NotificationMethod>> nullableListOfUnions) {
+-            if (nullableListOfUnions.isNull()) {
+-                this.nullableListOfUnions = null;
+-            } else if (nullableListOfUnions.isEmpty()) {
+-                this.nullableListOfUnions = Optional.empty();
+-            } else {
+-                this.nullableListOfUnions = Optional.of(nullableListOfUnions.get());
++        public _FinalStage addAllNullableListOfUnions(List<NotificationMethod> nullableListOfUnions) {
++            if (nullableListOfUnions != null) {
++                this.nullableListOfUnions.addAll(nullableListOfUnions);
+             }
+             return this;
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage nullableListOfUnions(List<NotificationMethod> nullableListOfUnions) {
+-            this.nullableListOfUnions = Optional.ofNullable(nullableListOfUnions);
++        public _FinalStage addNullableListOfUnions(NotificationMethod nullableListOfUnions) {
++            this.nullableListOfUnions.add(nullableListOfUnions);
+             return this;
+         }
+ 
+         @java.lang.Override
+         @JsonSetter(value = "nullableListOfUnions", nulls = Nulls.SKIP)
+-        public _FinalStage nullableListOfUnions(Optional<List<NotificationMethod>> nullableListOfUnions) {
+-            this.nullableListOfUnions = nullableListOfUnions;
++        public _FinalStage nullableListOfUnions(@Nullable List<NotificationMethod> nullableListOfUnions) {
++            this.nullableListOfUnions.clear();
++            if (nullableListOfUnions != null) {
++                this.nullableListOfUnions.addAll(nullableListOfUnions);
++            }
+             return this;
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage nullableMapOfNullables(Nullable<Map<String, Optional<Address>>> nullableMapOfNullables) {
+-            if (nullableMapOfNullables.isNull()) {
+-                this.nullableMapOfNullables = null;
+-            } else if (nullableMapOfNullables.isEmpty()) {
+-                this.nullableMapOfNullables = Optional.empty();
+-            } else {
+-                this.nullableMapOfNullables = Optional.of(nullableMapOfNullables.get());
+-            }
++        public _FinalStage nullableMapOfNullables(String key, Address value) {
++            this.nullableMapOfNullables.put(key, value);
+             return this;
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage nullableMapOfNullables(Map<String, Optional<Address>> nullableMapOfNullables) {
+-            this.nullableMapOfNullables = Optional.ofNullable(nullableMapOfNullables);
++        public _FinalStage putAllNullableMapOfNullables(Map<String, Address> nullableMapOfNullables) {
++            if (nullableMapOfNullables != null) {
++                this.nullableMapOfNullables.putAll(nullableMapOfNullables);
++            }
+             return this;
+         }
+ 
+         @java.lang.Override
+         @JsonSetter(value = "nullableMapOfNullables", nulls = Nulls.SKIP)
+-        public _FinalStage nullableMapOfNullables(Optional<Map<String, Optional<Address>>> nullableMapOfNullables) {
+-            this.nullableMapOfNullables = nullableMapOfNullables;
++        public _FinalStage nullableMapOfNullables(@Nullable Map<String, Address> nullableMapOfNullables) {
++            this.nullableMapOfNullables.clear();
++            if (nullableMapOfNullables != null) {
++                this.nullableMapOfNullables.putAll(nullableMapOfNullables);
++            }
+             return this;
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage nullableListOfNullables(Nullable<List<Optional<String>>> nullableListOfNullables) {
+-            if (nullableListOfNullables.isNull()) {
+-                this.nullableListOfNullables = null;
+-            } else if (nullableListOfNullables.isEmpty()) {
+-                this.nullableListOfNullables = Optional.empty();
+-            } else {
+-                this.nullableListOfNullables = Optional.of(nullableListOfNullables.get());
++        public _FinalStage addAllNullableListOfNullables(List<String> nullableListOfNullables) {
++            if (nullableListOfNullables != null) {
++                this.nullableListOfNullables.addAll(nullableListOfNullables);
+             }
+             return this;
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage nullableListOfNullables(List<Optional<String>> nullableListOfNullables) {
+-            this.nullableListOfNullables = Optional.ofNullable(nullableListOfNullables);
++        public _FinalStage addNullableListOfNullables(String nullableListOfNullables) {
++            this.nullableListOfNullables.add(nullableListOfNullables);
+             return this;
+         }
+ 
+         @java.lang.Override
+         @JsonSetter(value = "nullableListOfNullables", nulls = Nulls.SKIP)
+-        public _FinalStage nullableListOfNullables(Optional<List<Optional<String>>> nullableListOfNullables) {
+-            this.nullableListOfNullables = nullableListOfNullables;
++        public _FinalStage nullableListOfNullables(@Nullable List<String> nullableListOfNullables) {
++            this.nullableListOfNullables.clear();
++            if (nullableListOfNullables != null) {
++                this.nullableListOfNullables.addAll(nullableListOfNullables);
++            }
+             return this;
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage optionalNullableArray(Nullable<List<String>> optionalNullableArray) {
++        public _FinalStage optionalNullableArray(
++                com.seed.nullableOptional.core.Nullable<List<String>> optionalNullableArray) {
+             if (optionalNullableArray.isNull()) {
+                 this.optionalNullableArray = null;
+             } else if (optionalNullableArray.isEmpty()) {
+@@ -671,7 +648,7 @@ public final class ComplexProfile {
+ 
+         @java.lang.Override
+         @JsonSetter(value = "optionalNullableArray", nulls = Nulls.SKIP)
+-        public _FinalStage optionalNullableArray(Optional<List<String>> optionalNullableArray) {
++        public _FinalStage optionalNullableArray(@Nullable Optional<List<String>> optionalNullableArray) {
+             this.optionalNullableArray = optionalNullableArray;
+             return this;
+         }
+@@ -690,27 +667,26 @@ public final class ComplexProfile {
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage nullableArray(Nullable<List<String>> nullableArray) {
+-            if (nullableArray.isNull()) {
+-                this.nullableArray = null;
+-            } else if (nullableArray.isEmpty()) {
+-                this.nullableArray = Optional.empty();
+-            } else {
+-                this.nullableArray = Optional.of(nullableArray.get());
++        public _FinalStage addAllNullableArray(List<String> nullableArray) {
++            if (nullableArray != null) {
++                this.nullableArray.addAll(nullableArray);
+             }
+             return this;
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage nullableArray(List<String> nullableArray) {
+-            this.nullableArray = Optional.ofNullable(nullableArray);
++        public _FinalStage addNullableArray(String nullableArray) {
++            this.nullableArray.add(nullableArray);
+             return this;
+         }
+ 
+         @java.lang.Override
+         @JsonSetter(value = "nullableArray", nulls = Nulls.SKIP)
+-        public _FinalStage nullableArray(Optional<List<String>> nullableArray) {
+-            this.nullableArray = nullableArray;
++        public _FinalStage nullableArray(@Nullable List<String> nullableArray) {
++            this.nullableArray.clear();
++            if (nullableArray != null) {
++                this.nullableArray.addAll(nullableArray);
++            }
+             return this;
+         }
+ 
+@@ -728,32 +704,15 @@ public final class ComplexProfile {
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage nullableSearchResult(Nullable<SearchResult> nullableSearchResult) {
+-            if (nullableSearchResult.isNull()) {
+-                this.nullableSearchResult = null;
+-            } else if (nullableSearchResult.isEmpty()) {
+-                this.nullableSearchResult = Optional.empty();
+-            } else {
+-                this.nullableSearchResult = Optional.of(nullableSearchResult.get());
+-            }
+-            return this;
+-        }
+-
+-        @java.lang.Override
+-        public _FinalStage nullableSearchResult(SearchResult nullableSearchResult) {
+-            this.nullableSearchResult = Optional.ofNullable(nullableSearchResult);
+-            return this;
+-        }
+-
+-        @java.lang.Override
+-        @JsonSetter(value = "nullableSearchResult", nulls = Nulls.SKIP)
+-        public _FinalStage nullableSearchResult(Optional<SearchResult> nullableSearchResult) {
++        @JsonSetter("nullableSearchResult")
++        public _FinalStage nullableSearchResult(@Nullable SearchResult nullableSearchResult) {
+             this.nullableSearchResult = nullableSearchResult;
+             return this;
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage optionalNullableNotification(Nullable<NotificationMethod> optionalNullableNotification) {
++        public _FinalStage optionalNullableNotification(
++                com.seed.nullableOptional.core.Nullable<NotificationMethod> optionalNullableNotification) {
+             if (optionalNullableNotification.isNull()) {
+                 this.optionalNullableNotification = null;
+             } else if (optionalNullableNotification.isEmpty()) {
+@@ -772,7 +731,8 @@ public final class ComplexProfile {
+ 
+         @java.lang.Override
+         @JsonSetter(value = "optionalNullableNotification", nulls = Nulls.SKIP)
+-        public _FinalStage optionalNullableNotification(Optional<NotificationMethod> optionalNullableNotification) {
++        public _FinalStage optionalNullableNotification(
++                @Nullable Optional<NotificationMethod> optionalNullableNotification) {
+             this.optionalNullableNotification = optionalNullableNotification;
+             return this;
+         }
+@@ -791,32 +751,15 @@ public final class ComplexProfile {
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage nullableNotification(Nullable<NotificationMethod> nullableNotification) {
+-            if (nullableNotification.isNull()) {
+-                this.nullableNotification = null;
+-            } else if (nullableNotification.isEmpty()) {
+-                this.nullableNotification = Optional.empty();
+-            } else {
+-                this.nullableNotification = Optional.of(nullableNotification.get());
+-            }
+-            return this;
+-        }
+-
+-        @java.lang.Override
+-        public _FinalStage nullableNotification(NotificationMethod nullableNotification) {
+-            this.nullableNotification = Optional.ofNullable(nullableNotification);
+-            return this;
+-        }
+-
+-        @java.lang.Override
+-        @JsonSetter(value = "nullableNotification", nulls = Nulls.SKIP)
+-        public _FinalStage nullableNotification(Optional<NotificationMethod> nullableNotification) {
++        @JsonSetter("nullableNotification")
++        public _FinalStage nullableNotification(@Nullable NotificationMethod nullableNotification) {
+             this.nullableNotification = nullableNotification;
+             return this;
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage optionalNullableStatus(Nullable<UserStatus> optionalNullableStatus) {
++        public _FinalStage optionalNullableStatus(
++                com.seed.nullableOptional.core.Nullable<UserStatus> optionalNullableStatus) {
+             if (optionalNullableStatus.isNull()) {
+                 this.optionalNullableStatus = null;
+             } else if (optionalNullableStatus.isEmpty()) {
+@@ -835,7 +778,7 @@ public final class ComplexProfile {
+ 
+         @java.lang.Override
+         @JsonSetter(value = "optionalNullableStatus", nulls = Nulls.SKIP)
+-        public _FinalStage optionalNullableStatus(Optional<UserStatus> optionalNullableStatus) {
++        public _FinalStage optionalNullableStatus(@Nullable Optional<UserStatus> optionalNullableStatus) {
+             this.optionalNullableStatus = optionalNullableStatus;
+             return this;
+         }
+@@ -854,32 +797,15 @@ public final class ComplexProfile {
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage nullableStatus(Nullable<UserStatus> nullableStatus) {
+-            if (nullableStatus.isNull()) {
+-                this.nullableStatus = null;
+-            } else if (nullableStatus.isEmpty()) {
+-                this.nullableStatus = Optional.empty();
+-            } else {
+-                this.nullableStatus = Optional.of(nullableStatus.get());
+-            }
+-            return this;
+-        }
+-
+-        @java.lang.Override
+-        public _FinalStage nullableStatus(UserStatus nullableStatus) {
+-            this.nullableStatus = Optional.ofNullable(nullableStatus);
+-            return this;
+-        }
+-
+-        @java.lang.Override
+-        @JsonSetter(value = "nullableStatus", nulls = Nulls.SKIP)
+-        public _FinalStage nullableStatus(Optional<UserStatus> nullableStatus) {
++        @JsonSetter("nullableStatus")
++        public _FinalStage nullableStatus(@Nullable UserStatus nullableStatus) {
+             this.nullableStatus = nullableStatus;
+             return this;
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage optionalNullableRole(Nullable<UserRole> optionalNullableRole) {
++        public _FinalStage optionalNullableRole(
++                com.seed.nullableOptional.core.Nullable<UserRole> optionalNullableRole) {
+             if (optionalNullableRole.isNull()) {
+                 this.optionalNullableRole = null;
+             } else if (optionalNullableRole.isEmpty()) {
+@@ -898,7 +824,7 @@ public final class ComplexProfile {
+ 
+         @java.lang.Override
+         @JsonSetter(value = "optionalNullableRole", nulls = Nulls.SKIP)
+-        public _FinalStage optionalNullableRole(Optional<UserRole> optionalNullableRole) {
++        public _FinalStage optionalNullableRole(@Nullable Optional<UserRole> optionalNullableRole) {
+             this.optionalNullableRole = optionalNullableRole;
+             return this;
+         }
+@@ -917,26 +843,8 @@ public final class ComplexProfile {
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage nullableRole(Nullable<UserRole> nullableRole) {
+-            if (nullableRole.isNull()) {
+-                this.nullableRole = null;
+-            } else if (nullableRole.isEmpty()) {
+-                this.nullableRole = Optional.empty();
+-            } else {
+-                this.nullableRole = Optional.of(nullableRole.get());
+-            }
+-            return this;
+-        }
+-
+-        @java.lang.Override
+-        public _FinalStage nullableRole(UserRole nullableRole) {
+-            this.nullableRole = Optional.ofNullable(nullableRole);
+-            return this;
+-        }
+-
+-        @java.lang.Override
+-        @JsonSetter(value = "nullableRole", nulls = Nulls.SKIP)
+-        public _FinalStage nullableRole(Optional<UserRole> nullableRole) {
++        @JsonSetter("nullableRole")
++        public _FinalStage nullableRole(@Nullable UserRole nullableRole) {
+             this.nullableRole = nullableRole;
+             return this;
+         }
+diff --git a/src/main/java/com/seed/nullableOptional/resources/nullableoptional/types/CreateUserRequest.java b/src/main/java/com/seed/nullableOptional/resources/nullableoptional/types/CreateUserRequest.java
+index 7ce997e4a77..ce48cf63f7f 100644
+--- a/src/main/java/com/seed/nullableOptional/resources/nullableoptional/types/CreateUserRequest.java
++++ b/src/main/java/com/seed/nullableOptional/resources/nullableoptional/types/CreateUserRequest.java
+@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
+ import com.fasterxml.jackson.annotation.JsonSetter;
+ import com.fasterxml.jackson.annotation.Nulls;
+ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+-import com.seed.nullableOptional.core.Nullable;
+ import com.seed.nullableOptional.core.NullableNonemptyFilter;
+ import com.seed.nullableOptional.core.ObjectMappers;
+ import java.util.HashMap;
+@@ -20,13 +19,15 @@ import java.util.Map;
+ import java.util.Objects;
+ import java.util.Optional;
+ import org.jetbrains.annotations.NotNull;
++import org.jetbrains.annotations.Nullable;
+ 
+ @JsonInclude(JsonInclude.Include.NON_ABSENT)
+ @JsonDeserialize(builder = CreateUserRequest.Builder.class)
+ public final class CreateUserRequest {
+     private final String username;
+ 
+-    private final Optional<String> email;
++    @Nullable
++    private final String email;
+ 
+     private final Optional<String> phone;
+ 
+@@ -36,7 +37,7 @@ public final class CreateUserRequest {
+ 
+     private CreateUserRequest(
+             String username,
+-            Optional<String> email,
++            @Nullable String email,
+             Optional<String> phone,
+             Optional<Address> address,
+             Map<String, Object> additionalProperties) {
+@@ -52,11 +53,9 @@ public final class CreateUserRequest {
+         return username;
+     }
+ 
++    @Nullable
+     @JsonIgnore
+-    public Optional<String> getEmail() {
+-        if (email == null) {
+-            return Optional.empty();
+-        }
++    public String getEmail() {
+         return email;
+     }
+ 
+@@ -75,7 +74,7 @@ public final class CreateUserRequest {
+ 
+     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+     @JsonProperty("email")
+-    private Optional<String> _getEmail() {
++    private String _getEmail() {
+         return email;
+     }
+ 
+@@ -130,21 +129,17 @@ public final class CreateUserRequest {
+ 
+         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+ 
+-        _FinalStage email(Optional<String> email);
+-
+-        _FinalStage email(String email);
+-
+-        _FinalStage email(Nullable<String> email);
++        _FinalStage email(@Nullable String email);
+ 
+         _FinalStage phone(Optional<String> phone);
+ 
+         _FinalStage phone(String phone);
+ 
+-        _FinalStage address(Optional<Address> address);
++        _FinalStage address(@Nullable Optional<Address> address);
+ 
+         _FinalStage address(Address address);
+ 
+-        _FinalStage address(Nullable<Address> address);
++        _FinalStage address(com.seed.nullableOptional.core.Nullable<Address> address);
+     }
+ 
+     @JsonIgnoreProperties(ignoreUnknown = true)
+@@ -155,7 +150,7 @@ public final class CreateUserRequest {
+ 
+         private Optional<String> phone = Optional.empty();
+ 
+-        private Optional<String> email = Optional.empty();
++        private String email;
+ 
+         @JsonAnySetter
+         private Map<String, Object> additionalProperties = new HashMap<>();
+@@ -179,7 +174,7 @@ public final class CreateUserRequest {
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage address(Nullable<Address> address) {
++        public _FinalStage address(com.seed.nullableOptional.core.Nullable<Address> address) {
+             if (address.isNull()) {
+                 this.address = null;
+             } else if (address.isEmpty()) {
+@@ -198,7 +193,7 @@ public final class CreateUserRequest {
+ 
+         @java.lang.Override
+         @JsonSetter(value = "address", nulls = Nulls.SKIP)
+-        public _FinalStage address(Optional<Address> address) {
++        public _FinalStage address(@Nullable Optional<Address> address) {
+             this.address = address;
+             return this;
+         }
+@@ -217,26 +212,8 @@ public final class CreateUserRequest {
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage email(Nullable<String> email) {
+-            if (email.isNull()) {
+-                this.email = null;
+-            } else if (email.isEmpty()) {
+-                this.email = Optional.empty();
+-            } else {
+-                this.email = Optional.of(email.get());
+-            }
+-            return this;
+-        }
+-
+-        @java.lang.Override
+-        public _FinalStage email(String email) {
+-            this.email = Optional.ofNullable(email);
+-            return this;
+-        }
+-
+-        @java.lang.Override
+-        @JsonSetter(value = "email", nulls = Nulls.SKIP)
+-        public _FinalStage email(Optional<String> email) {
++        @JsonSetter("email")
++        public _FinalStage email(@Nullable String email) {
+             this.email = email;
+             return this;
+         }
+diff --git a/src/main/java/com/seed/nullableOptional/resources/nullableoptional/types/DeserializationTestRequest.java b/src/main/java/com/seed/nullableOptional/resources/nullableoptional/types/DeserializationTestRequest.java
+index 79accfc850e..cca20d8968b 100644
+--- a/src/main/java/com/seed/nullableOptional/resources/nullableoptional/types/DeserializationTestRequest.java
++++ b/src/main/java/com/seed/nullableOptional/resources/nullableoptional/types/DeserializationTestRequest.java
+@@ -12,40 +12,48 @@ import com.fasterxml.jackson.annotation.JsonProperty;
+ import com.fasterxml.jackson.annotation.JsonSetter;
+ import com.fasterxml.jackson.annotation.Nulls;
+ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+-import com.seed.nullableOptional.core.Nullable;
+ import com.seed.nullableOptional.core.NullableNonemptyFilter;
+ import com.seed.nullableOptional.core.ObjectMappers;
++import java.util.ArrayList;
+ import java.util.HashMap;
++import java.util.LinkedHashMap;
+ import java.util.List;
+ import java.util.Map;
+ import java.util.Objects;
+ import java.util.Optional;
+ import org.jetbrains.annotations.NotNull;
++import org.jetbrains.annotations.Nullable;
+ 
+ @JsonInclude(JsonInclude.Include.NON_ABSENT)
+ @JsonDeserialize(builder = DeserializationTestRequest.Builder.class)
+ public final class DeserializationTestRequest {
+     private final String requiredString;
+ 
+-    private final Optional<String> nullableString;
++    @Nullable
++    private final String nullableString;
+ 
+     private final Optional<String> optionalString;
+ 
+     private final Optional<String> optionalNullableString;
+ 
+-    private final Optional<UserRole> nullableEnum;
++    @Nullable
++    private final UserRole nullableEnum;
+ 
+     private final Optional<UserStatus> optionalEnum;
+ 
+-    private final Optional<NotificationMethod> nullableUnion;
++    @Nullable
++    private final NotificationMethod nullableUnion;
+ 
+     private final Optional<SearchResult> optionalUnion;
+ 
+-    private final Optional<List<String>> nullableList;
++    @Nullable
++    private final List<String> nullableList;
+ 
+-    private final Optional<Map<String, Integer>> nullableMap;
++    @Nullable
++    private final Map<String, Integer> nullableMap;
+ 
+-    private final Optional<Address> nullableObject;
++    @Nullable
++    private final Address nullableObject;
+ 
+     private final Optional<Organization> optionalObject;
+ 
+@@ -53,16 +61,16 @@ public final class DeserializationTestRequest {
+ 
+     private DeserializationTestRequest(
+             String requiredString,
+-            Optional<String> nullableString,
++            @Nullable String nullableString,
+             Optional<String> optionalString,
+             Optional<String> optionalNullableString,
+-            Optional<UserRole> nullableEnum,
++            @Nullable UserRole nullableEnum,
+             Optional<UserStatus> optionalEnum,
+-            Optional<NotificationMethod> nullableUnion,
++            @Nullable NotificationMethod nullableUnion,
+             Optional<SearchResult> optionalUnion,
+-            Optional<List<String>> nullableList,
+-            Optional<Map<String, Integer>> nullableMap,
+-            Optional<Address> nullableObject,
++            @Nullable List<String> nullableList,
++            @Nullable Map<String, Integer> nullableMap,
++            @Nullable Address nullableObject,
+             Optional<Organization> optionalObject,
+             Map<String, Object> additionalProperties) {
+         this.requiredString = requiredString;
+@@ -85,11 +93,9 @@ public final class DeserializationTestRequest {
+         return requiredString;
+     }
+ 
++    @Nullable
+     @JsonIgnore
+-    public Optional<String> getNullableString() {
+-        if (nullableString == null) {
+-            return Optional.empty();
+-        }
++    public String getNullableString() {
+         return nullableString;
+     }
+ 
+@@ -106,11 +112,9 @@ public final class DeserializationTestRequest {
+         return optionalNullableString;
+     }
+ 
++    @Nullable
+     @JsonIgnore
+-    public Optional<UserRole> getNullableEnum() {
+-        if (nullableEnum == null) {
+-            return Optional.empty();
+-        }
++    public UserRole getNullableEnum() {
+         return nullableEnum;
+     }
+ 
+@@ -119,11 +123,9 @@ public final class DeserializationTestRequest {
+         return optionalEnum;
+     }
+ 
++    @Nullable
+     @JsonIgnore
+-    public Optional<NotificationMethod> getNullableUnion() {
+-        if (nullableUnion == null) {
+-            return Optional.empty();
+-        }
++    public NotificationMethod getNullableUnion() {
+         return nullableUnion;
+     }
+ 
+@@ -132,27 +134,21 @@ public final class DeserializationTestRequest {
+         return optionalUnion;
+     }
+ 
++    @Nullable
+     @JsonIgnore
+-    public Optional<List<String>> getNullableList() {
+-        if (nullableList == null) {
+-            return Optional.empty();
+-        }
++    public List<String> getNullableList() {
+         return nullableList;
+     }
+ 
++    @Nullable
+     @JsonIgnore
+-    public Optional<Map<String, Integer>> getNullableMap() {
+-        if (nullableMap == null) {
+-            return Optional.empty();
+-        }
++    public Map<String, Integer> getNullableMap() {
+         return nullableMap;
+     }
+ 
++    @Nullable
+     @JsonIgnore
+-    public Optional<Address> getNullableObject() {
+-        if (nullableObject == null) {
+-            return Optional.empty();
+-        }
++    public Address getNullableObject() {
+         return nullableObject;
+     }
+ 
+@@ -163,7 +159,7 @@ public final class DeserializationTestRequest {
+ 
+     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+     @JsonProperty("nullableString")
+-    private Optional<String> _getNullableString() {
++    private String _getNullableString() {
+         return nullableString;
+     }
+ 
+@@ -175,31 +171,31 @@ public final class DeserializationTestRequest {
+ 
+     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+     @JsonProperty("nullableEnum")
+-    private Optional<UserRole> _getNullableEnum() {
++    private UserRole _getNullableEnum() {
+         return nullableEnum;
+     }
+ 
+     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+     @JsonProperty("nullableUnion")
+-    private Optional<NotificationMethod> _getNullableUnion() {
++    private NotificationMethod _getNullableUnion() {
+         return nullableUnion;
+     }
+ 
+     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+     @JsonProperty("nullableList")
+-    private Optional<List<String>> _getNullableList() {
++    private List<String> _getNullableList() {
+         return nullableList;
+     }
+ 
+     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+     @JsonProperty("nullableMap")
+-    private Optional<Map<String, Integer>> _getNullableMap() {
++    private Map<String, Integer> _getNullableMap() {
+         return nullableMap;
+     }
+ 
+     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+     @JsonProperty("nullableObject")
+-    private Optional<Address> _getNullableObject() {
++    private Address _getNullableObject() {
+         return nullableObject;
+     }
+ 
+@@ -268,59 +264,43 @@ public final class DeserializationTestRequest {
+ 
+         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+ 
+-        _FinalStage nullableString(Optional<String> nullableString);
+-
+-        _FinalStage nullableString(String nullableString);
+-
+-        _FinalStage nullableString(Nullable<String> nullableString);
++        _FinalStage nullableString(@Nullable String nullableString);
+ 
+         _FinalStage optionalString(Optional<String> optionalString);
+ 
+         _FinalStage optionalString(String optionalString);
+ 
+-        _FinalStage optionalNullableString(Optional<String> optionalNullableString);
++        _FinalStage optionalNullableString(@Nullable Optional<String> optionalNullableString);
+ 
+         _FinalStage optionalNullableString(String optionalNullableString);
+ 
+-        _FinalStage optionalNullableString(Nullable<String> optionalNullableString);
+-
+-        _FinalStage nullableEnum(Optional<UserRole> nullableEnum);
++        _FinalStage optionalNullableString(com.seed.nullableOptional.core.Nullable<String> optionalNullableString);
+ 
+-        _FinalStage nullableEnum(UserRole nullableEnum);
+-
+-        _FinalStage nullableEnum(Nullable<UserRole> nullableEnum);
++        _FinalStage nullableEnum(@Nullable UserRole nullableEnum);
+ 
+         _FinalStage optionalEnum(Optional<UserStatus> optionalEnum);
+ 
+         _FinalStage optionalEnum(UserStatus optionalEnum);
+ 
+-        _FinalStage nullableUnion(Optional<NotificationMethod> nullableUnion);
+-
+-        _FinalStage nullableUnion(NotificationMethod nullableUnion);
+-
+-        _FinalStage nullableUnion(Nullable<NotificationMethod> nullableUnion);
++        _FinalStage nullableUnion(@Nullable NotificationMethod nullableUnion);
+ 
+         _FinalStage optionalUnion(Optional<SearchResult> optionalUnion);
+ 
+         _FinalStage optionalUnion(SearchResult optionalUnion);
+ 
+-        _FinalStage nullableList(Optional<List<String>> nullableList);
+-
+-        _FinalStage nullableList(List<String> nullableList);
++        _FinalStage nullableList(@Nullable List<String> nullableList);
+ 
+-        _FinalStage nullableList(Nullable<List<String>> nullableList);
++        _FinalStage addNullableList(String nullableList);
+ 
+-        _FinalStage nullableMap(Optional<Map<String, Integer>> nullableMap);
++        _FinalStage addAllNullableList(List<String> nullableList);
+ 
+-        _FinalStage nullableMap(Map<String, Integer> nullableMap);
++        _FinalStage nullableMap(@Nullable Map<String, Integer> nullableMap);
+ 
+-        _FinalStage nullableMap(Nullable<Map<String, Integer>> nullableMap);
++        _FinalStage putAllNullableMap(Map<String, Integer> nullableMap);
+ 
+-        _FinalStage nullableObject(Optional<Address> nullableObject);
++        _FinalStage nullableMap(String key, Integer value);
+ 
+-        _FinalStage nullableObject(Address nullableObject);
+-
+-        _FinalStage nullableObject(Nullable<Address> nullableObject);
++        _FinalStage nullableObject(@Nullable Address nullableObject);
+ 
+         _FinalStage optionalObject(Optional<Organization> optionalObject);
+ 
+@@ -333,25 +313,25 @@ public final class DeserializationTestRequest {
+ 
+         private Optional<Organization> optionalObject = Optional.empty();
+ 
+-        private Optional<Address> nullableObject = Optional.empty();
++        private Address nullableObject;
+ 
+-        private Optional<Map<String, Integer>> nullableMap = Optional.empty();
++        private Map<String, Integer> nullableMap = new LinkedHashMap<>();
+ 
+-        private Optional<List<String>> nullableList = Optional.empty();
++        private List<String> nullableList = new ArrayList<>();
+ 
+         private Optional<SearchResult> optionalUnion = Optional.empty();
+ 
+-        private Optional<NotificationMethod> nullableUnion = Optional.empty();
++        private NotificationMethod nullableUnion;
+ 
+         private Optional<UserStatus> optionalEnum = Optional.empty();
+ 
+-        private Optional<UserRole> nullableEnum = Optional.empty();
++        private UserRole nullableEnum;
+ 
+         private Optional<String> optionalNullableString = Optional.empty();
+ 
+         private Optional<String> optionalString = Optional.empty();
+ 
+-        private Optional<String> nullableString = Optional.empty();
++        private String nullableString;
+ 
+         @JsonAnySetter
+         private Map<String, Object> additionalProperties = new HashMap<>();
+@@ -396,77 +376,57 @@ public final class DeserializationTestRequest {
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage nullableObject(Nullable<Address> nullableObject) {
+-            if (nullableObject.isNull()) {
+-                this.nullableObject = null;
+-            } else if (nullableObject.isEmpty()) {
+-                this.nullableObject = Optional.empty();
+-            } else {
+-                this.nullableObject = Optional.of(nullableObject.get());
+-            }
+-            return this;
+-        }
+-
+-        @java.lang.Override
+-        public _FinalStage nullableObject(Address nullableObject) {
+-            this.nullableObject = Optional.ofNullable(nullableObject);
+-            return this;
+-        }
+-
+-        @java.lang.Override
+-        @JsonSetter(value = "nullableObject", nulls = Nulls.SKIP)
+-        public _FinalStage nullableObject(Optional<Address> nullableObject) {
++        @JsonSetter("nullableObject")
++        public _FinalStage nullableObject(@Nullable Address nullableObject) {
+             this.nullableObject = nullableObject;
+             return this;
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage nullableMap(Nullable<Map<String, Integer>> nullableMap) {
+-            if (nullableMap.isNull()) {
+-                this.nullableMap = null;
+-            } else if (nullableMap.isEmpty()) {
+-                this.nullableMap = Optional.empty();
+-            } else {
+-                this.nullableMap = Optional.of(nullableMap.get());
+-            }
++        public _FinalStage nullableMap(String key, Integer value) {
++            this.nullableMap.put(key, value);
+             return this;
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage nullableMap(Map<String, Integer> nullableMap) {
+-            this.nullableMap = Optional.ofNullable(nullableMap);
++        public _FinalStage putAllNullableMap(Map<String, Integer> nullableMap) {
++            if (nullableMap != null) {
++                this.nullableMap.putAll(nullableMap);
++            }
+             return this;
+         }
+ 
+         @java.lang.Override
+         @JsonSetter(value = "nullableMap", nulls = Nulls.SKIP)
+-        public _FinalStage nullableMap(Optional<Map<String, Integer>> nullableMap) {
+-            this.nullableMap = nullableMap;
++        public _FinalStage nullableMap(@Nullable Map<String, Integer> nullableMap) {
++            this.nullableMap.clear();
++            if (nullableMap != null) {
++                this.nullableMap.putAll(nullableMap);
++            }
+             return this;
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage nullableList(Nullable<List<String>> nullableList) {
+-            if (nullableList.isNull()) {
+-                this.nullableList = null;
+-            } else if (nullableList.isEmpty()) {
+-                this.nullableList = Optional.empty();
+-            } else {
+-                this.nullableList = Optional.of(nullableList.get());
++        public _FinalStage addAllNullableList(List<String> nullableList) {
++            if (nullableList != null) {
++                this.nullableList.addAll(nullableList);
+             }
+             return this;
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage nullableList(List<String> nullableList) {
+-            this.nullableList = Optional.ofNullable(nullableList);
++        public _FinalStage addNullableList(String nullableList) {
++            this.nullableList.add(nullableList);
+             return this;
+         }
+ 
+         @java.lang.Override
+         @JsonSetter(value = "nullableList", nulls = Nulls.SKIP)
+-        public _FinalStage nullableList(Optional<List<String>> nullableList) {
+-            this.nullableList = nullableList;
++        public _FinalStage nullableList(@Nullable List<String> nullableList) {
++            this.nullableList.clear();
++            if (nullableList != null) {
++                this.nullableList.addAll(nullableList);
++            }
+             return this;
+         }
+ 
+@@ -484,26 +444,8 @@ public final class DeserializationTestRequest {
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage nullableUnion(Nullable<NotificationMethod> nullableUnion) {
+-            if (nullableUnion.isNull()) {
+-                this.nullableUnion = null;
+-            } else if (nullableUnion.isEmpty()) {
+-                this.nullableUnion = Optional.empty();
+-            } else {
+-                this.nullableUnion = Optional.of(nullableUnion.get());
+-            }
+-            return this;
+-        }
+-
+-        @java.lang.Override
+-        public _FinalStage nullableUnion(NotificationMethod nullableUnion) {
+-            this.nullableUnion = Optional.ofNullable(nullableUnion);
+-            return this;
+-        }
+-
+-        @java.lang.Override
+-        @JsonSetter(value = "nullableUnion", nulls = Nulls.SKIP)
+-        public _FinalStage nullableUnion(Optional<NotificationMethod> nullableUnion) {
++        @JsonSetter("nullableUnion")
++        public _FinalStage nullableUnion(@Nullable NotificationMethod nullableUnion) {
+             this.nullableUnion = nullableUnion;
+             return this;
+         }
+@@ -522,32 +464,15 @@ public final class DeserializationTestRequest {
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage nullableEnum(Nullable<UserRole> nullableEnum) {
+-            if (nullableEnum.isNull()) {
+-                this.nullableEnum = null;
+-            } else if (nullableEnum.isEmpty()) {
+-                this.nullableEnum = Optional.empty();
+-            } else {
+-                this.nullableEnum = Optional.of(nullableEnum.get());
+-            }
+-            return this;
+-        }
+-
+-        @java.lang.Override
+-        public _FinalStage nullableEnum(UserRole nullableEnum) {
+-            this.nullableEnum = Optional.ofNullable(nullableEnum);
+-            return this;
+-        }
+-
+-        @java.lang.Override
+-        @JsonSetter(value = "nullableEnum", nulls = Nulls.SKIP)
+-        public _FinalStage nullableEnum(Optional<UserRole> nullableEnum) {
++        @JsonSetter("nullableEnum")
++        public _FinalStage nullableEnum(@Nullable UserRole nullableEnum) {
+             this.nullableEnum = nullableEnum;
+             return this;
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage optionalNullableString(Nullable<String> optionalNullableString) {
++        public _FinalStage optionalNullableString(
++                com.seed.nullableOptional.core.Nullable<String> optionalNullableString) {
+             if (optionalNullableString.isNull()) {
+                 this.optionalNullableString = null;
+             } else if (optionalNullableString.isEmpty()) {
+@@ -566,7 +491,7 @@ public final class DeserializationTestRequest {
+ 
+         @java.lang.Override
+         @JsonSetter(value = "optionalNullableString", nulls = Nulls.SKIP)
+-        public _FinalStage optionalNullableString(Optional<String> optionalNullableString) {
++        public _FinalStage optionalNullableString(@Nullable Optional<String> optionalNullableString) {
+             this.optionalNullableString = optionalNullableString;
+             return this;
+         }
+@@ -585,26 +510,8 @@ public final class DeserializationTestRequest {
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage nullableString(Nullable<String> nullableString) {
+-            if (nullableString.isNull()) {
+-                this.nullableString = null;
+-            } else if (nullableString.isEmpty()) {
+-                this.nullableString = Optional.empty();
+-            } else {
+-                this.nullableString = Optional.of(nullableString.get());
+-            }
+-            return this;
+-        }
+-
+-        @java.lang.Override
+-        public _FinalStage nullableString(String nullableString) {
+-            this.nullableString = Optional.ofNullable(nullableString);
+-            return this;
+-        }
+-
+-        @java.lang.Override
+-        @JsonSetter(value = "nullableString", nulls = Nulls.SKIP)
+-        public _FinalStage nullableString(Optional<String> nullableString) {
++        @JsonSetter("nullableString")
++        public _FinalStage nullableString(@Nullable String nullableString) {
+             this.nullableString = nullableString;
+             return this;
+         }
+diff --git a/src/main/java/com/seed/nullableOptional/resources/nullableoptional/types/Document.java b/src/main/java/com/seed/nullableOptional/resources/nullableoptional/types/Document.java
+index a890c1f1ed6..4e8d6a39ed5 100644
+--- a/src/main/java/com/seed/nullableOptional/resources/nullableoptional/types/Document.java
++++ b/src/main/java/com/seed/nullableOptional/resources/nullableoptional/types/Document.java
+@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
+ import com.fasterxml.jackson.annotation.JsonSetter;
+ import com.fasterxml.jackson.annotation.Nulls;
+ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+-import com.seed.nullableOptional.core.Nullable;
+ import com.seed.nullableOptional.core.NullableNonemptyFilter;
+ import com.seed.nullableOptional.core.ObjectMappers;
+ import java.util.HashMap;
+@@ -21,6 +20,7 @@ import java.util.Map;
+ import java.util.Objects;
+ import java.util.Optional;
+ import org.jetbrains.annotations.NotNull;
++import org.jetbrains.annotations.Nullable;
+ 
+ @JsonInclude(JsonInclude.Include.NON_ABSENT)
+ @JsonDeserialize(builder = Document.Builder.class)
+@@ -31,7 +31,8 @@ public final class Document {
+ 
+     private final String content;
+ 
+-    private final Optional<String> author;
++    @Nullable
++    private final String author;
+ 
+     private final Optional<List<String>> tags;
+ 
+@@ -41,7 +42,7 @@ public final class Document {
+             String id,
+             String title,
+             String content,
+-            Optional<String> author,
++            @Nullable String author,
+             Optional<List<String>> tags,
+             Map<String, Object> additionalProperties) {
+         this.id = id;
+@@ -67,11 +68,9 @@ public final class Document {
+         return content;
+     }
+ 
++    @Nullable
+     @JsonIgnore
+-    public Optional<String> getAuthor() {
+-        if (author == null) {
+-            return Optional.empty();
+-        }
++    public String getAuthor() {
+         return author;
+     }
+ 
+@@ -82,7 +81,7 @@ public final class Document {
+ 
+     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+     @JsonProperty("author")
+-    private Optional<String> _getAuthor() {
++    private String _getAuthor() {
+         return author;
+     }
+ 
+@@ -140,11 +139,7 @@ public final class Document {
+ 
+         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+ 
+-        _FinalStage author(Optional<String> author);
+-
+-        _FinalStage author(String author);
+-
+-        _FinalStage author(Nullable<String> author);
++        _FinalStage author(@Nullable String author);
+ 
+         _FinalStage tags(Optional<List<String>> tags);
+ 
+@@ -161,7 +156,7 @@ public final class Document {
+ 
+         private Optional<List<String>> tags = Optional.empty();
+ 
+-        private Optional<String> author = Optional.empty();
++        private String author;
+ 
+         @JsonAnySetter
+         private Map<String, Object> additionalProperties = new HashMap<>();
+@@ -213,26 +208,8 @@ public final class Document {
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage author(Nullable<String> author) {
+-            if (author.isNull()) {
+-                this.author = null;
+-            } else if (author.isEmpty()) {
+-                this.author = Optional.empty();
+-            } else {
+-                this.author = Optional.of(author.get());
+-            }
+-            return this;
+-        }
+-
+-        @java.lang.Override
+-        public _FinalStage author(String author) {
+-            this.author = Optional.ofNullable(author);
+-            return this;
+-        }
+-
+-        @java.lang.Override
+-        @JsonSetter(value = "author", nulls = Nulls.SKIP)
+-        public _FinalStage author(Optional<String> author) {
++        @JsonSetter("author")
++        public _FinalStage author(@Nullable String author) {
+             this.author = author;
+             return this;
+         }
+diff --git a/src/main/java/com/seed/nullableOptional/resources/nullableoptional/types/Organization.java b/src/main/java/com/seed/nullableOptional/resources/nullableoptional/types/Organization.java
+index b69b5877c33..904020aa612 100644
+--- a/src/main/java/com/seed/nullableOptional/resources/nullableoptional/types/Organization.java
++++ b/src/main/java/com/seed/nullableOptional/resources/nullableoptional/types/Organization.java
+@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
+ import com.fasterxml.jackson.annotation.JsonSetter;
+ import com.fasterxml.jackson.annotation.Nulls;
+ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+-import com.seed.nullableOptional.core.Nullable;
+ import com.seed.nullableOptional.core.NullableNonemptyFilter;
+ import com.seed.nullableOptional.core.ObjectMappers;
+ import java.util.HashMap;
+@@ -20,6 +19,7 @@ import java.util.Map;
+ import java.util.Objects;
+ import java.util.Optional;
+ import org.jetbrains.annotations.NotNull;
++import org.jetbrains.annotations.Nullable;
+ 
+ @JsonInclude(JsonInclude.Include.NON_ABSENT)
+ @JsonDeserialize(builder = Organization.Builder.class)
+@@ -28,7 +28,8 @@ public final class Organization {
+ 
+     private final String name;
+ 
+-    private final Optional<String> domain;
++    @Nullable
++    private final String domain;
+ 
+     private final Optional<Integer> employeeCount;
+ 
+@@ -37,7 +38,7 @@ public final class Organization {
+     private Organization(
+             String id,
+             String name,
+-            Optional<String> domain,
++            @Nullable String domain,
+             Optional<Integer> employeeCount,
+             Map<String, Object> additionalProperties) {
+         this.id = id;
+@@ -57,11 +58,9 @@ public final class Organization {
+         return name;
+     }
+ 
++    @Nullable
+     @JsonIgnore
+-    public Optional<String> getDomain() {
+-        if (domain == null) {
+-            return Optional.empty();
+-        }
++    public String getDomain() {
+         return domain;
+     }
+ 
+@@ -72,7 +71,7 @@ public final class Organization {
+ 
+     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+     @JsonProperty("domain")
+-    private Optional<String> _getDomain() {
++    private String _getDomain() {
+         return domain;
+     }
+ 
+@@ -125,11 +124,7 @@ public final class Organization {
+ 
+         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+ 
+-        _FinalStage domain(Optional<String> domain);
+-
+-        _FinalStage domain(String domain);
+-
+-        _FinalStage domain(Nullable<String> domain);
++        _FinalStage domain(@Nullable String domain);
+ 
+         _FinalStage employeeCount(Optional<Integer> employeeCount);
+ 
+@@ -144,7 +139,7 @@ public final class Organization {
+ 
+         private Optional<Integer> employeeCount = Optional.empty();
+ 
+-        private Optional<String> domain = Optional.empty();
++        private String domain;
+ 
+         @JsonAnySetter
+         private Map<String, Object> additionalProperties = new HashMap<>();
+@@ -188,26 +183,8 @@ public final class Organization {
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage domain(Nullable<String> domain) {
+-            if (domain.isNull()) {
+-                this.domain = null;
+-            } else if (domain.isEmpty()) {
+-                this.domain = Optional.empty();
+-            } else {
+-                this.domain = Optional.of(domain.get());
+-            }
+-            return this;
+-        }
+-
+-        @java.lang.Override
+-        public _FinalStage domain(String domain) {
+-            this.domain = Optional.ofNullable(domain);
+-            return this;
+-        }
+-
+-        @java.lang.Override
+-        @JsonSetter(value = "domain", nulls = Nulls.SKIP)
+-        public _FinalStage domain(Optional<String> domain) {
++        @JsonSetter("domain")
++        public _FinalStage domain(@Nullable String domain) {
+             this.domain = domain;
+             return this;
+         }
+diff --git a/src/main/java/com/seed/nullableOptional/resources/nullableoptional/types/UpdateUserRequest.java b/src/main/java/com/seed/nullableOptional/resources/nullableoptional/types/UpdateUserRequest.java
+index ca1c6c08768..46a4d596048 100644
+--- a/src/main/java/com/seed/nullableOptional/resources/nullableoptional/types/UpdateUserRequest.java
++++ b/src/main/java/com/seed/nullableOptional/resources/nullableoptional/types/UpdateUserRequest.java
+@@ -12,13 +12,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
+ import com.fasterxml.jackson.annotation.JsonSetter;
+ import com.fasterxml.jackson.annotation.Nulls;
+ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+-import com.seed.nullableOptional.core.Nullable;
+ import com.seed.nullableOptional.core.NullableNonemptyFilter;
+ import com.seed.nullableOptional.core.ObjectMappers;
+ import java.util.HashMap;
+ import java.util.Map;
+ import java.util.Objects;
+ import java.util.Optional;
++import org.jetbrains.annotations.Nullable;
+ 
+ @JsonInclude(JsonInclude.Include.NON_ABSENT)
+ @JsonDeserialize(builder = UpdateUserRequest.Builder.class)
+@@ -151,7 +151,7 @@ public final class UpdateUserRequest {
+         }
+ 
+         @JsonSetter(value = "email", nulls = Nulls.SKIP)
+-        public Builder email(Optional<String> email) {
++        public Builder email(@Nullable Optional<String> email) {
+             this.email = email;
+             return this;
+         }
+@@ -161,7 +161,7 @@ public final class UpdateUserRequest {
+             return this;
+         }
+ 
+-        public Builder email(Nullable<String> email) {
++        public Builder email(com.seed.nullableOptional.core.Nullable<String> email) {
+             if (email.isNull()) {
+                 this.email = null;
+             } else if (email.isEmpty()) {
+@@ -184,7 +184,7 @@ public final class UpdateUserRequest {
+         }
+ 
+         @JsonSetter(value = "address", nulls = Nulls.SKIP)
+-        public Builder address(Optional<Address> address) {
++        public Builder address(@Nullable Optional<Address> address) {
+             this.address = address;
+             return this;
+         }
+@@ -194,7 +194,7 @@ public final class UpdateUserRequest {
+             return this;
+         }
+ 
+-        public Builder address(Nullable<Address> address) {
++        public Builder address(com.seed.nullableOptional.core.Nullable<Address> address) {
+             if (address.isNull()) {
+                 this.address = null;
+             } else if (address.isEmpty()) {
+diff --git a/src/main/java/com/seed/nullableOptional/resources/nullableoptional/types/UserProfile.java b/src/main/java/com/seed/nullableOptional/resources/nullableoptional/types/UserProfile.java
+index a2cdca0e9b0..de9dbfee606 100644
+--- a/src/main/java/com/seed/nullableOptional/resources/nullableoptional/types/UserProfile.java
++++ b/src/main/java/com/seed/nullableOptional/resources/nullableoptional/types/UserProfile.java
+@@ -12,16 +12,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
+ import com.fasterxml.jackson.annotation.JsonSetter;
+ import com.fasterxml.jackson.annotation.Nulls;
+ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+-import com.seed.nullableOptional.core.Nullable;
+ import com.seed.nullableOptional.core.NullableNonemptyFilter;
+ import com.seed.nullableOptional.core.ObjectMappers;
+ import java.time.OffsetDateTime;
++import java.util.ArrayList;
+ import java.util.HashMap;
++import java.util.LinkedHashMap;
+ import java.util.List;
+ import java.util.Map;
+ import java.util.Objects;
+ import java.util.Optional;
+ import org.jetbrains.annotations.NotNull;
++import org.jetbrains.annotations.Nullable;
+ 
+ @JsonInclude(JsonInclude.Include.NON_ABSENT)
+ @JsonDeserialize(builder = UserProfile.Builder.class)
+@@ -30,19 +32,26 @@ public final class UserProfile {
+ 
+     private final String username;
+ 
+-    private final Optional<String> nullableString;
++    @Nullable
++    private final String nullableString;
+ 
+-    private final Optional<Integer> nullableInteger;
++    @Nullable
++    private final Integer nullableInteger;
+ 
+-    private final Optional<Boolean> nullableBoolean;
++    @Nullable
++    private final Boolean nullableBoolean;
+ 
+-    private final Optional<OffsetDateTime> nullableDate;
++    @Nullable
++    private final OffsetDateTime nullableDate;
+ 
+-    private final Optional<Address> nullableObject;
++    @Nullable
++    private final Address nullableObject;
+ 
+-    private final Optional<List<String>> nullableList;
++    @Nullable
++    private final List<String> nullableList;
+ 
+-    private final Optional<Map<String, String>> nullableMap;
++    @Nullable
++    private final Map<String, String> nullableMap;
+ 
+     private final Optional<String> optionalString;
+ 
+@@ -67,13 +76,13 @@ public final class UserProfile {
+     private UserProfile(
+             String id,
+             String username,
+-            Optional<String> nullableString,
+-            Optional<Integer> nullableInteger,
+-            Optional<Boolean> nullableBoolean,
+-            Optional<OffsetDateTime> nullableDate,
+-            Optional<Address> nullableObject,
+-            Optional<List<String>> nullableList,
+-            Optional<Map<String, String>> nullableMap,
++            @Nullable String nullableString,
++            @Nullable Integer nullableInteger,
++            @Nullable Boolean nullableBoolean,
++            @Nullable OffsetDateTime nullableDate,
++            @Nullable Address nullableObject,
++            @Nullable List<String> nullableList,
++            @Nullable Map<String, String> nullableMap,
+             Optional<String> optionalString,
+             Optional<Integer> optionalInteger,
+             Optional<Boolean> optionalBoolean,
+@@ -115,59 +124,45 @@ public final class UserProfile {
+         return username;
+     }
+ 
++    @Nullable
+     @JsonIgnore
+-    public Optional<String> getNullableString() {
+-        if (nullableString == null) {
+-            return Optional.empty();
+-        }
++    public String getNullableString() {
+         return nullableString;
+     }
+ 
++    @Nullable
+     @JsonIgnore
+-    public Optional<Integer> getNullableInteger() {
+-        if (nullableInteger == null) {
+-            return Optional.empty();
+-        }
++    public Integer getNullableInteger() {
+         return nullableInteger;
+     }
+ 
++    @Nullable
+     @JsonIgnore
+-    public Optional<Boolean> getNullableBoolean() {
+-        if (nullableBoolean == null) {
+-            return Optional.empty();
+-        }
++    public Boolean getNullableBoolean() {
+         return nullableBoolean;
+     }
+ 
++    @Nullable
+     @JsonIgnore
+-    public Optional<OffsetDateTime> getNullableDate() {
+-        if (nullableDate == null) {
+-            return Optional.empty();
+-        }
++    public OffsetDateTime getNullableDate() {
+         return nullableDate;
+     }
+ 
++    @Nullable
+     @JsonIgnore
+-    public Optional<Address> getNullableObject() {
+-        if (nullableObject == null) {
+-            return Optional.empty();
+-        }
++    public Address getNullableObject() {
+         return nullableObject;
+     }
+ 
++    @Nullable
+     @JsonIgnore
+-    public Optional<List<String>> getNullableList() {
+-        if (nullableList == null) {
+-            return Optional.empty();
+-        }
++    public List<String> getNullableList() {
+         return nullableList;
+     }
+ 
++    @Nullable
+     @JsonIgnore
+-    public Optional<Map<String, String>> getNullableMap() {
+-        if (nullableMap == null) {
+-            return Optional.empty();
+-        }
++    public Map<String, String> getNullableMap() {
+         return nullableMap;
+     }
+ 
+@@ -224,43 +219,43 @@ public final class UserProfile {
+ 
+     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+     @JsonProperty("nullableString")
+-    private Optional<String> _getNullableString() {
++    private String _getNullableString() {
+         return nullableString;
+     }
+ 
+     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+     @JsonProperty("nullableInteger")
+-    private Optional<Integer> _getNullableInteger() {
++    private Integer _getNullableInteger() {
+         return nullableInteger;
+     }
+ 
+     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+     @JsonProperty("nullableBoolean")
+-    private Optional<Boolean> _getNullableBoolean() {
++    private Boolean _getNullableBoolean() {
+         return nullableBoolean;
+     }
+ 
+     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+     @JsonProperty("nullableDate")
+-    private Optional<OffsetDateTime> _getNullableDate() {
++    private OffsetDateTime _getNullableDate() {
+         return nullableDate;
+     }
+ 
+     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+     @JsonProperty("nullableObject")
+-    private Optional<Address> _getNullableObject() {
++    private Address _getNullableObject() {
+         return nullableObject;
+     }
+ 
+     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+     @JsonProperty("nullableList")
+-    private Optional<List<String>> _getNullableList() {
++    private List<String> _getNullableList() {
+         return nullableList;
+     }
+ 
+     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+     @JsonProperty("nullableMap")
+-    private Optional<Map<String, String>> _getNullableMap() {
++    private Map<String, String> _getNullableMap() {
+         return nullableMap;
+     }
+ 
+@@ -357,47 +352,27 @@ public final class UserProfile {
+ 
+         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+ 
+-        _FinalStage nullableString(Optional<String> nullableString);
+-
+-        _FinalStage nullableString(String nullableString);
+-
+-        _FinalStage nullableString(Nullable<String> nullableString);
+-
+-        _FinalStage nullableInteger(Optional<Integer> nullableInteger);
+-
+-        _FinalStage nullableInteger(Integer nullableInteger);
+-
+-        _FinalStage nullableInteger(Nullable<Integer> nullableInteger);
+-
+-        _FinalStage nullableBoolean(Optional<Boolean> nullableBoolean);
++        _FinalStage nullableString(@Nullable String nullableString);
+ 
+-        _FinalStage nullableBoolean(Boolean nullableBoolean);
++        _FinalStage nullableInteger(@Nullable Integer nullableInteger);
+ 
+-        _FinalStage nullableBoolean(Nullable<Boolean> nullableBoolean);
++        _FinalStage nullableBoolean(@Nullable Boolean nullableBoolean);
+ 
+-        _FinalStage nullableDate(Optional<OffsetDateTime> nullableDate);
++        _FinalStage nullableDate(@Nullable OffsetDateTime nullableDate);
+ 
+-        _FinalStage nullableDate(OffsetDateTime nullableDate);
++        _FinalStage nullableObject(@Nullable Address nullableObject);
+ 
+-        _FinalStage nullableDate(Nullable<OffsetDateTime> nullableDate);
++        _FinalStage nullableList(@Nullable List<String> nullableList);
+ 
+-        _FinalStage nullableObject(Optional<Address> nullableObject);
++        _FinalStage addNullableList(String nullableList);
+ 
+-        _FinalStage nullableObject(Address nullableObject);
++        _FinalStage addAllNullableList(List<String> nullableList);
+ 
+-        _FinalStage nullableObject(Nullable<Address> nullableObject);
++        _FinalStage nullableMap(@Nullable Map<String, String> nullableMap);
+ 
+-        _FinalStage nullableList(Optional<List<String>> nullableList);
++        _FinalStage putAllNullableMap(Map<String, String> nullableMap);
+ 
+-        _FinalStage nullableList(List<String> nullableList);
+-
+-        _FinalStage nullableList(Nullable<List<String>> nullableList);
+-
+-        _FinalStage nullableMap(Optional<Map<String, String>> nullableMap);
+-
+-        _FinalStage nullableMap(Map<String, String> nullableMap);
+-
+-        _FinalStage nullableMap(Nullable<Map<String, String>> nullableMap);
++        _FinalStage nullableMap(String key, String value);
+ 
+         _FinalStage optionalString(Optional<String> optionalString);
+ 
+@@ -427,17 +402,17 @@ public final class UserProfile {
+ 
+         _FinalStage optionalMap(Map<String, String> optionalMap);
+ 
+-        _FinalStage optionalNullableString(Optional<String> optionalNullableString);
++        _FinalStage optionalNullableString(@Nullable Optional<String> optionalNullableString);
+ 
+         _FinalStage optionalNullableString(String optionalNullableString);
+ 
+-        _FinalStage optionalNullableString(Nullable<String> optionalNullableString);
++        _FinalStage optionalNullableString(com.seed.nullableOptional.core.Nullable<String> optionalNullableString);
+ 
+-        _FinalStage optionalNullableObject(Optional<Address> optionalNullableObject);
++        _FinalStage optionalNullableObject(@Nullable Optional<Address> optionalNullableObject);
+ 
+         _FinalStage optionalNullableObject(Address optionalNullableObject);
+ 
+-        _FinalStage optionalNullableObject(Nullable<Address> optionalNullableObject);
++        _FinalStage optionalNullableObject(com.seed.nullableOptional.core.Nullable<Address> optionalNullableObject);
+     }
+ 
+     @JsonIgnoreProperties(ignoreUnknown = true)
+@@ -464,19 +439,19 @@ public final class UserProfile {
+ 
+         private Optional<String> optionalString = Optional.empty();
+ 
+-        private Optional<Map<String, String>> nullableMap = Optional.empty();
++        private Map<String, String> nullableMap = new LinkedHashMap<>();
+ 
+-        private Optional<List<String>> nullableList = Optional.empty();
++        private List<String> nullableList = new ArrayList<>();
+ 
+-        private Optional<Address> nullableObject = Optional.empty();
++        private Address nullableObject;
+ 
+-        private Optional<OffsetDateTime> nullableDate = Optional.empty();
++        private OffsetDateTime nullableDate;
+ 
+-        private Optional<Boolean> nullableBoolean = Optional.empty();
++        private Boolean nullableBoolean;
+ 
+-        private Optional<Integer> nullableInteger = Optional.empty();
++        private Integer nullableInteger;
+ 
+-        private Optional<String> nullableString = Optional.empty();
++        private String nullableString;
+ 
+         @JsonAnySetter
+         private Map<String, Object> additionalProperties = new HashMap<>();
+@@ -521,7 +496,8 @@ public final class UserProfile {
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage optionalNullableObject(Nullable<Address> optionalNullableObject) {
++        public _FinalStage optionalNullableObject(
++                com.seed.nullableOptional.core.Nullable<Address> optionalNullableObject) {
+             if (optionalNullableObject.isNull()) {
+                 this.optionalNullableObject = null;
+             } else if (optionalNullableObject.isEmpty()) {
+@@ -540,13 +516,14 @@ public final class UserProfile {
+ 
+         @java.lang.Override
+         @JsonSetter(value = "optionalNullableObject", nulls = Nulls.SKIP)
+-        public _FinalStage optionalNullableObject(Optional<Address> optionalNullableObject) {
++        public _FinalStage optionalNullableObject(@Nullable Optional<Address> optionalNullableObject) {
+             this.optionalNullableObject = optionalNullableObject;
+             return this;
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage optionalNullableString(Nullable<String> optionalNullableString) {
++        public _FinalStage optionalNullableString(
++                com.seed.nullableOptional.core.Nullable<String> optionalNullableString) {
+             if (optionalNullableString.isNull()) {
+                 this.optionalNullableString = null;
+             } else if (optionalNullableString.isEmpty()) {
+@@ -565,7 +542,7 @@ public final class UserProfile {
+ 
+         @java.lang.Override
+         @JsonSetter(value = "optionalNullableString", nulls = Nulls.SKIP)
+-        public _FinalStage optionalNullableString(Optional<String> optionalNullableString) {
++        public _FinalStage optionalNullableString(@Nullable Optional<String> optionalNullableString) {
+             this.optionalNullableString = optionalNullableString;
+             return this;
+         }
+@@ -662,176 +639,84 @@ public final class UserProfile {
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage nullableMap(Nullable<Map<String, String>> nullableMap) {
+-            if (nullableMap.isNull()) {
+-                this.nullableMap = null;
+-            } else if (nullableMap.isEmpty()) {
+-                this.nullableMap = Optional.empty();
+-            } else {
+-                this.nullableMap = Optional.of(nullableMap.get());
+-            }
++        public _FinalStage nullableMap(String key, String value) {
++            this.nullableMap.put(key, value);
+             return this;
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage nullableMap(Map<String, String> nullableMap) {
+-            this.nullableMap = Optional.ofNullable(nullableMap);
++        public _FinalStage putAllNullableMap(Map<String, String> nullableMap) {
++            if (nullableMap != null) {
++                this.nullableMap.putAll(nullableMap);
++            }
+             return this;
+         }
+ 
+         @java.lang.Override
+         @JsonSetter(value = "nullableMap", nulls = Nulls.SKIP)
+-        public _FinalStage nullableMap(Optional<Map<String, String>> nullableMap) {
+-            this.nullableMap = nullableMap;
++        public _FinalStage nullableMap(@Nullable Map<String, String> nullableMap) {
++            this.nullableMap.clear();
++            if (nullableMap != null) {
++                this.nullableMap.putAll(nullableMap);
++            }
+             return this;
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage nullableList(Nullable<List<String>> nullableList) {
+-            if (nullableList.isNull()) {
+-                this.nullableList = null;
+-            } else if (nullableList.isEmpty()) {
+-                this.nullableList = Optional.empty();
+-            } else {
+-                this.nullableList = Optional.of(nullableList.get());
++        public _FinalStage addAllNullableList(List<String> nullableList) {
++            if (nullableList != null) {
++                this.nullableList.addAll(nullableList);
+             }
+             return this;
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage nullableList(List<String> nullableList) {
+-            this.nullableList = Optional.ofNullable(nullableList);
++        public _FinalStage addNullableList(String nullableList) {
++            this.nullableList.add(nullableList);
+             return this;
+         }
+ 
+         @java.lang.Override
+         @JsonSetter(value = "nullableList", nulls = Nulls.SKIP)
+-        public _FinalStage nullableList(Optional<List<String>> nullableList) {
+-            this.nullableList = nullableList;
+-            return this;
+-        }
+-
+-        @java.lang.Override
+-        public _FinalStage nullableObject(Nullable<Address> nullableObject) {
+-            if (nullableObject.isNull()) {
+-                this.nullableObject = null;
+-            } else if (nullableObject.isEmpty()) {
+-                this.nullableObject = Optional.empty();
+-            } else {
+-                this.nullableObject = Optional.of(nullableObject.get());
++        public _FinalStage nullableList(@Nullable List<String> nullableList) {
++            this.nullableList.clear();
++            if (nullableList != null) {
++                this.nullableList.addAll(nullableList);
+             }
+             return this;
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage nullableObject(Address nullableObject) {
+-            this.nullableObject = Optional.ofNullable(nullableObject);
+-            return this;
+-        }
+-
+-        @java.lang.Override
+-        @JsonSetter(value = "nullableObject", nulls = Nulls.SKIP)
+-        public _FinalStage nullableObject(Optional<Address> nullableObject) {
++        @JsonSetter("nullableObject")
++        public _FinalStage nullableObject(@Nullable Address nullableObject) {
+             this.nullableObject = nullableObject;
+             return this;
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage nullableDate(Nullable<OffsetDateTime> nullableDate) {
+-            if (nullableDate.isNull()) {
+-                this.nullableDate = null;
+-            } else if (nullableDate.isEmpty()) {
+-                this.nullableDate = Optional.empty();
+-            } else {
+-                this.nullableDate = Optional.of(nullableDate.get());
+-            }
+-            return this;
+-        }
+-
+-        @java.lang.Override
+-        public _FinalStage nullableDate(OffsetDateTime nullableDate) {
+-            this.nullableDate = Optional.ofNullable(nullableDate);
+-            return this;
+-        }
+-
+-        @java.lang.Override
+-        @JsonSetter(value = "nullableDate", nulls = Nulls.SKIP)
+-        public _FinalStage nullableDate(Optional<OffsetDateTime> nullableDate) {
++        @JsonSetter("nullableDate")
++        public _FinalStage nullableDate(@Nullable OffsetDateTime nullableDate) {
+             this.nullableDate = nullableDate;
+             return this;
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage nullableBoolean(Nullable<Boolean> nullableBoolean) {
+-            if (nullableBoolean.isNull()) {
+-                this.nullableBoolean = null;
+-            } else if (nullableBoolean.isEmpty()) {
+-                this.nullableBoolean = Optional.empty();
+-            } else {
+-                this.nullableBoolean = Optional.of(nullableBoolean.get());
+-            }
+-            return this;
+-        }
+-
+-        @java.lang.Override
+-        public _FinalStage nullableBoolean(Boolean nullableBoolean) {
+-            this.nullableBoolean = Optional.ofNullable(nullableBoolean);
+-            return this;
+-        }
+-
+-        @java.lang.Override
+-        @JsonSetter(value = "nullableBoolean", nulls = Nulls.SKIP)
+-        public _FinalStage nullableBoolean(Optional<Boolean> nullableBoolean) {
++        @JsonSetter("nullableBoolean")
++        public _FinalStage nullableBoolean(@Nullable Boolean nullableBoolean) {
+             this.nullableBoolean = nullableBoolean;
+             return this;
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage nullableInteger(Nullable<Integer> nullableInteger) {
+-            if (nullableInteger.isNull()) {
+-                this.nullableInteger = null;
+-            } else if (nullableInteger.isEmpty()) {
+-                this.nullableInteger = Optional.empty();
+-            } else {
+-                this.nullableInteger = Optional.of(nullableInteger.get());
+-            }
+-            return this;
+-        }
+-
+-        @java.lang.Override
+-        public _FinalStage nullableInteger(Integer nullableInteger) {
+-            this.nullableInteger = Optional.ofNullable(nullableInteger);
+-            return this;
+-        }
+-
+-        @java.lang.Override
+-        @JsonSetter(value = "nullableInteger", nulls = Nulls.SKIP)
+-        public _FinalStage nullableInteger(Optional<Integer> nullableInteger) {
++        @JsonSetter("nullableInteger")
++        public _FinalStage nullableInteger(@Nullable Integer nullableInteger) {
+             this.nullableInteger = nullableInteger;
+             return this;
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage nullableString(Nullable<String> nullableString) {
+-            if (nullableString.isNull()) {
+-                this.nullableString = null;
+-            } else if (nullableString.isEmpty()) {
+-                this.nullableString = Optional.empty();
+-            } else {
+-                this.nullableString = Optional.of(nullableString.get());
+-            }
+-            return this;
+-        }
+-
+-        @java.lang.Override
+-        public _FinalStage nullableString(String nullableString) {
+-            this.nullableString = Optional.ofNullable(nullableString);
+-            return this;
+-        }
+-
+-        @java.lang.Override
+-        @JsonSetter(value = "nullableString", nulls = Nulls.SKIP)
+-        public _FinalStage nullableString(Optional<String> nullableString) {
++        @JsonSetter("nullableString")
++        public _FinalStage nullableString(@Nullable String nullableString) {
+             this.nullableString = nullableString;
+             return this;
+         }
+diff --git a/src/main/java/com/seed/nullableOptional/resources/nullableoptional/types/UserResponse.java b/src/main/java/com/seed/nullableOptional/resources/nullableoptional/types/UserResponse.java
+index d00db9a3bdf..0a23186aafa 100644
+--- a/src/main/java/com/seed/nullableOptional/resources/nullableoptional/types/UserResponse.java
++++ b/src/main/java/com/seed/nullableOptional/resources/nullableoptional/types/UserResponse.java
+@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
+ import com.fasterxml.jackson.annotation.JsonSetter;
+ import com.fasterxml.jackson.annotation.Nulls;
+ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+-import com.seed.nullableOptional.core.Nullable;
+ import com.seed.nullableOptional.core.NullableNonemptyFilter;
+ import com.seed.nullableOptional.core.ObjectMappers;
+ import java.time.OffsetDateTime;
+@@ -21,6 +20,7 @@ import java.util.Map;
+ import java.util.Objects;
+ import java.util.Optional;
+ import org.jetbrains.annotations.NotNull;
++import org.jetbrains.annotations.Nullable;
+ 
+ @JsonInclude(JsonInclude.Include.NON_ABSENT)
+ @JsonDeserialize(builder = UserResponse.Builder.class)
+@@ -29,13 +29,15 @@ public final class UserResponse {
+ 
+     private final String username;
+ 
+-    private final Optional<String> email;
++    @Nullable
++    private final String email;
+ 
+     private final Optional<String> phone;
+ 
+     private final OffsetDateTime createdAt;
+ 
+-    private final Optional<OffsetDateTime> updatedAt;
++    @Nullable
++    private final OffsetDateTime updatedAt;
+ 
+     private final Optional<Address> address;
+ 
+@@ -44,10 +46,10 @@ public final class UserResponse {
+     private UserResponse(
+             String id,
+             String username,
+-            Optional<String> email,
++            @Nullable String email,
+             Optional<String> phone,
+             OffsetDateTime createdAt,
+-            Optional<OffsetDateTime> updatedAt,
++            @Nullable OffsetDateTime updatedAt,
+             Optional<Address> address,
+             Map<String, Object> additionalProperties) {
+         this.id = id;
+@@ -70,11 +72,9 @@ public final class UserResponse {
+         return username;
+     }
+ 
++    @Nullable
+     @JsonIgnore
+-    public Optional<String> getEmail() {
+-        if (email == null) {
+-            return Optional.empty();
+-        }
++    public String getEmail() {
+         return email;
+     }
+ 
+@@ -88,11 +88,9 @@ public final class UserResponse {
+         return createdAt;
+     }
+ 
++    @Nullable
+     @JsonIgnore
+-    public Optional<OffsetDateTime> getUpdatedAt() {
+-        if (updatedAt == null) {
+-            return Optional.empty();
+-        }
++    public OffsetDateTime getUpdatedAt() {
+         return updatedAt;
+     }
+ 
+@@ -103,13 +101,13 @@ public final class UserResponse {
+ 
+     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+     @JsonProperty("email")
+-    private Optional<String> _getEmail() {
++    private String _getEmail() {
+         return email;
+     }
+ 
+     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+     @JsonProperty("updatedAt")
+-    private Optional<OffsetDateTime> _getUpdatedAt() {
++    private OffsetDateTime _getUpdatedAt() {
+         return updatedAt;
+     }
+ 
+@@ -170,21 +168,13 @@ public final class UserResponse {
+ 
+         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+ 
+-        _FinalStage email(Optional<String> email);
+-
+-        _FinalStage email(String email);
+-
+-        _FinalStage email(Nullable<String> email);
++        _FinalStage email(@Nullable String email);
+ 
+         _FinalStage phone(Optional<String> phone);
+ 
+         _FinalStage phone(String phone);
+ 
+-        _FinalStage updatedAt(Optional<OffsetDateTime> updatedAt);
+-
+-        _FinalStage updatedAt(OffsetDateTime updatedAt);
+-
+-        _FinalStage updatedAt(Nullable<OffsetDateTime> updatedAt);
++        _FinalStage updatedAt(@Nullable OffsetDateTime updatedAt);
+ 
+         _FinalStage address(Optional<Address> address);
+ 
+@@ -201,11 +191,11 @@ public final class UserResponse {
+ 
+         private Optional<Address> address = Optional.empty();
+ 
+-        private Optional<OffsetDateTime> updatedAt = Optional.empty();
++        private OffsetDateTime updatedAt;
+ 
+         private Optional<String> phone = Optional.empty();
+ 
+-        private Optional<String> email = Optional.empty();
++        private String email;
+ 
+         @JsonAnySetter
+         private Map<String, Object> additionalProperties = new HashMap<>();
+@@ -259,26 +249,8 @@ public final class UserResponse {
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage updatedAt(Nullable<OffsetDateTime> updatedAt) {
+-            if (updatedAt.isNull()) {
+-                this.updatedAt = null;
+-            } else if (updatedAt.isEmpty()) {
+-                this.updatedAt = Optional.empty();
+-            } else {
+-                this.updatedAt = Optional.of(updatedAt.get());
+-            }
+-            return this;
+-        }
+-
+-        @java.lang.Override
+-        public _FinalStage updatedAt(OffsetDateTime updatedAt) {
+-            this.updatedAt = Optional.ofNullable(updatedAt);
+-            return this;
+-        }
+-
+-        @java.lang.Override
+-        @JsonSetter(value = "updatedAt", nulls = Nulls.SKIP)
+-        public _FinalStage updatedAt(Optional<OffsetDateTime> updatedAt) {
++        @JsonSetter("updatedAt")
++        public _FinalStage updatedAt(@Nullable OffsetDateTime updatedAt) {
+             this.updatedAt = updatedAt;
+             return this;
+         }
+@@ -297,26 +269,8 @@ public final class UserResponse {
+         }
+ 
+         @java.lang.Override
+-        public _FinalStage email(Nullable<String> email) {
+-            if (email.isNull()) {
+-                this.email = null;
+-            } else if (email.isEmpty()) {
+-                this.email = Optional.empty();
+-            } else {
+-                this.email = Optional.of(email.get());
+-            }
+-            return this;
+-        }
+-
+-        @java.lang.Override
+-        public _FinalStage email(String email) {
+-            this.email = Optional.ofNullable(email);
+-            return this;
+-        }
+-
+-        @java.lang.Override
+-        @JsonSetter(value = "email", nulls = Nulls.SKIP)
+-        public _FinalStage email(Optional<String> email) {
++        @JsonSetter("email")
++        public _FinalStage email(@Nullable String email) {
+             this.email = email;
+             return this;
+         }

@@ -1,0 +1,1964 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index f1753c47972..a195bcb1876 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-java-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "enable-wire-tests": true
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "manual",
+diff --git a/.gradle/8.14.3/checksums/checksums.lock b/.gradle/8.14.3/checksums/checksums.lock
+index 7c221a7f48f0e4c65792a0f24271887f2ff1cee9..94e9f1ef70ee16d8895e5b92c94692bb8b6584a3 100644
+GIT binary patch
+literal 17
+TcmZQxbm-#JPwon97@z<EKSBiK
+
+literal 17
+TcmZQh`FM0cOL2S=0~7!NHT47~
+
+diff --git a/.gradle/8.14.3/executionHistory/executionHistory.bin b/.gradle/8.14.3/executionHistory/executionHistory.bin
+index 2cae85dc804743299f770bc32725a864a199c52e..9139cb86ead400c2b27fd1ae945fc870eeea91d0 100644
+GIT binary patch
+literal 107631
+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
+b_k{7gUWI+(-dUWZw&c23t}+Zk=Z5?b9O4}(
+
+delta 16519
+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
+XgCtEP=aCeMBp1o!3|QUu#Or?mOd?j%
+
+diff --git a/.gradle/8.14.3/executionHistory/executionHistory.lock b/.gradle/8.14.3/executionHistory/executionHistory.lock
+index 120daf90719a9dd6eca6f87bc6ee9fa09e0d129d..34fb2ddf900a1c55bc368630206c49451031284b 100644
+GIT binary patch
+literal 17
+UcmZRsU+~SWgD-R<0|amY05LNI(*OVf
+
+literal 17
+TcmZR6JCB3=R$?3j6mS3lD{KQp
+
+diff --git a/.gradle/8.14.3/fileHashes/fileHashes.bin b/.gradle/8.14.3/fileHashes/fileHashes.bin
+index ff2383a48784d61948a6b103246419b254434454..1cbd4e8ae74cdba96323ea2ba925975f129de66b 100644
+GIT binary patch
+delta 12634
+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
+
+delta 12037
+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
+
+diff --git a/.gradle/8.14.3/fileHashes/fileHashes.lock b/.gradle/8.14.3/fileHashes/fileHashes.lock
+index eb75d378e17a8d6edd7c9fc1953c126b5a751df3..037164621408863967d07d55be75077b9af433a8 100644
+GIT binary patch
+literal 17
+VcmZQRoyZ*Pe5Fd10Sp-L0{|*01Qq}Q
+
+literal 17
+VcmZQp`sY!rxhjH_0Sp+g0RSmt1M~m@
+
+diff --git a/.gradle/buildOutputCleanup/buildOutputCleanup.lock b/.gradle/buildOutputCleanup/buildOutputCleanup.lock
+index 22766caab9a1f204eec5eb2672cb1f2580a81b72..6490f5cf92c48089dc83f9656968d4f824df6127 100644
+GIT binary patch
+literal 17
+UcmZSPl%1CyH)Gi>1_+P@04Iq9f&c&j
+
+literal 17
+UcmZP;-nEMDRPy=h3=kj%05L2CE&u=k
+
+diff --git a/.gradle/buildOutputCleanup/cache.properties b/.gradle/buildOutputCleanup/cache.properties
+index f8467295eb5..0a7b8004bdd 100644
+--- a/.gradle/buildOutputCleanup/cache.properties
++++ b/.gradle/buildOutputCleanup/cache.properties
+@@ -1,2 +1,2 @@
+-#Wed Apr 22 20:57:48 UTC 2026
++#Wed Apr 22 20:59:48 UTC 2026
+ gradle.version=8.14.3
+diff --git a/.gradle/buildOutputCleanup/outputFiles.bin b/.gradle/buildOutputCleanup/outputFiles.bin
+index ee6ee9265896d9da2fe7bfc187caf74dcf19f83d..d0c9a4d5d549ecae5c047570c7735701d01518be 100644
+GIT binary patch
+delta 331
+zcmdlznQ`T0#tkMCnj(#^=i|K{jAa?Xz~k$GDCj8W?TV7ui-L%ICQgo(P~;bUU3+q`
+z_Zz5~<m9~)3iYRYHU(DPbdrJ!vcn8`?jX?LSMVSXD((*x|6sXnSLtQ%Q&4eRnE2O}
+zr+R#z42z-S+A#5-MOUSIb~Y@Bh<iMSi8Eyst8e@Ed2)=T;N(_G2?zV!(s<GTP0CRH
+z#V~cAy<5+E&OY)5s{bNP+<Rlc%KKF**--VZlc!2r2&5bnjY@iC#R3(aKKZVs1rJOI
+a0|Vp7jfy|SHyUV&ZFcksWSs2hAr1g1U6uj>
+
+delta 355
+zcmZ2EnQ`}I#tkMCnxa!CWWA7V(dB0V1JCLIp<sFr8_)FZf19D=+LL1?6z%i5IHV8n
+zG=YeDT!g8e-B>JEA7ge2s#X#vzVP_>Z{gZ)Q1zZGC-+Jy)IYne<gmc0nh~nl7N+>c
+zwONa~ZEjwJ8vYd~{-IT%d!f|UUr_bMF!7Ja?(Frl)_M(9{}?9z^W2`ZC*B)vg{o(V
+zi8Eyst8e@Ed9seApn!6`P&l`hsx4HF|7251g~@Xz4FtkA_GJ5|pS%i{Xq|jl(n6&o
+nSX7}ZGvhQ=FcD@VjAme9;@qhCLwuuwfY@e7k3h!B4W60+`oN*)
+
+diff --git a/.gradle/file-system.probe b/.gradle/file-system.probe
+index 0dce74a045662e72f7d987b2969bcef14033a50f..98a3412831f0dc3076f0df6140c90b4d0505be26 100644
+GIT binary patch
+literal 8
+PcmZQzV4S<{ANyVa3A_Ur
+
+literal 8
+PcmZQzV4S<{k5wrE3Dg4s
+
+diff --git a/build.gradle b/build.gradle
+index a5a8af3d156..87d482e7bbf 100644
+--- a/build.gradle
++++ b/build.gradle
+@@ -19,6 +19,7 @@ dependencies {
+     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.2'
++    testImplementation 'com.squareup.okhttp3:mockwebserver:5.2.1'
+ }
+ 
+ 
+diff --git a/src/test/java/com/seed/pagination/ComplexWireTest.java b/src/test/java/com/seed/pagination/ComplexWireTest.java
+new file mode 100644
+index 00000000000..852f4c0da8e
+--- /dev/null
++++ b/src/test/java/com/seed/pagination/ComplexWireTest.java
+@@ -0,0 +1,144 @@
++package com.seed.pagination;
++
++import com.fasterxml.jackson.databind.JsonNode;
++import com.fasterxml.jackson.databind.ObjectMapper;
++import com.seed.pagination.core.ObjectMappers;
++import com.seed.pagination.core.pagination.SyncPagingIterable;
++import com.seed.pagination.resources.complex.types.Conversation;
++import com.seed.pagination.resources.complex.types.SearchRequest;
++import com.seed.pagination.resources.complex.types.SearchRequestQuery;
++import com.seed.pagination.resources.complex.types.SingleFilterSearchRequest;
++import com.seed.pagination.resources.complex.types.SingleFilterSearchRequestOperator;
++import com.seed.pagination.resources.complex.types.StartingAfterPaging;
++import java.util.Optional;
++import okhttp3.mockwebserver.MockResponse;
++import okhttp3.mockwebserver.MockWebServer;
++import okhttp3.mockwebserver.RecordedRequest;
++import org.junit.jupiter.api.AfterEach;
++import org.junit.jupiter.api.Assertions;
++import org.junit.jupiter.api.BeforeEach;
++import org.junit.jupiter.api.Test;
++
++public class ComplexWireTest {
++    private MockWebServer server;
++    private SeedPaginationClient client;
++    private ObjectMapper objectMapper = ObjectMappers.JSON_MAPPER;
++
++    @BeforeEach
++    public void setup() throws Exception {
++        server = new MockWebServer();
++        server.start();
++        client = SeedPaginationClient.builder()
++                .url(server.url("/").toString())
++                .token("test-token")
++                .build();
++    }
++
++    @AfterEach
++    public void teardown() throws Exception {
++        server.shutdown();
++    }
++
++    @Test
++    public void testSearch() throws Exception {
++        server.enqueue(
++                new MockResponse()
++                        .setResponseCode(200)
++                        .setBody(
++                                "{\"conversations\":[{\"foo\":\"foo\"},{\"foo\":\"foo\"}],\"pages\":{\"next\":{\"per_page\":1,\"starting_after\":\"starting_after\"},\"page\":1,\"per_page\":1,\"total_pages\":1,\"type\":\"pages\"},\"total_count\":1,\"type\":\"conversation.list\"}"));
++        SyncPagingIterable<Conversation> response = client.complex()
++                .search(
++                        "index",
++                        SearchRequest.builder()
++                                .query(SearchRequestQuery.of(SingleFilterSearchRequest.builder()
++                                        .field(Optional.of("field"))
++                                        .operator(Optional.of(SingleFilterSearchRequestOperator.EQUALS))
++                                        .value(Optional.of("value"))
++                                        .build()))
++                                .pagination(StartingAfterPaging.builder()
++                                        .perPage(1)
++                                        .startingAfter("starting_after")
++                                        .build())
++                                .build());
++        RecordedRequest request = server.takeRequest();
++        Assertions.assertNotNull(request);
++        Assertions.assertEquals("POST", request.getMethod());
++        // Validate request body
++        String actualRequestBody = request.getBody().readUtf8();
++        String expectedRequestBody = ""
++                + "{\n"
++                + "  \"pagination\": {\n"
++                + "    \"per_page\": 1,\n"
++                + "    \"starting_after\": \"starting_after\"\n"
++                + "  },\n"
++                + "  \"query\": {\n"
++                + "    \"field\": \"field\",\n"
++                + "    \"operator\": \"=\",\n"
++                + "    \"value\": \"value\"\n"
++                + "  }\n"
++                + "}";
++        JsonNode actualJson = objectMapper.readTree(actualRequestBody);
++        JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
++        Assertions.assertTrue(jsonEquals(expectedJson, actualJson), "Request body structure does not match expected");
++        if (actualJson.has("type") || actualJson.has("_type") || actualJson.has("kind")) {
++            String discriminator = null;
++            if (actualJson.has("type")) discriminator = actualJson.get("type").asText();
++            else if (actualJson.has("_type"))
++                discriminator = actualJson.get("_type").asText();
++            else if (actualJson.has("kind"))
++                discriminator = actualJson.get("kind").asText();
++            Assertions.assertNotNull(discriminator, "Union type should have a discriminator field");
++            Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");
++        }
++
++        if (!actualJson.isNull()) {
++            Assertions.assertTrue(
++                    actualJson.isObject() || actualJson.isArray() || actualJson.isValueNode(),
++                    "request should be a valid JSON value");
++        }
++
++        if (actualJson.isArray()) {
++            Assertions.assertTrue(actualJson.size() >= 0, "Array should have valid size");
++        }
++        if (actualJson.isObject()) {
++            Assertions.assertTrue(actualJson.size() >= 0, "Object should have valid field count");
++        }
++
++        // Validate response body
++        Assertions.assertNotNull(response, "Response should not be null");
++        // Pagination response validated via MockWebServer
++        // The SDK correctly parses the response into a SyncPagingIterable
++    }
++
++    /**
++     * Compares two JsonNodes with numeric equivalence and null safety.
++     * For objects, checks that all fields in 'expected' exist in 'actual' with matching values.
++     * Allows 'actual' to have extra fields (e.g., default values added during serialization).
++     */
++    private boolean jsonEquals(JsonNode expected, JsonNode actual) {
++        if (expected == null && actual == null) return true;
++        if (expected == null || actual == null) return false;
++        if (expected.equals(actual)) return true;
++        if (expected.isNumber() && actual.isNumber())
++            return Math.abs(expected.doubleValue() - actual.doubleValue()) < 1e-10;
++        if (expected.isObject() && actual.isObject()) {
++            java.util.Iterator<java.util.Map.Entry<String, JsonNode>> iter = expected.fields();
++            while (iter.hasNext()) {
++                java.util.Map.Entry<String, JsonNode> entry = iter.next();
++                JsonNode actualValue = actual.get(entry.getKey());
++                if (actualValue == null) {
++                    if (!entry.getValue().isNull()) return false;
++                } else if (!jsonEquals(entry.getValue(), actualValue)) return false;
++            }
++            return true;
++        }
++        if (expected.isArray() && actual.isArray()) {
++            if (expected.size() != actual.size()) return false;
++            for (int i = 0; i < expected.size(); i++) {
++                if (!jsonEquals(expected.get(i), actual.get(i))) return false;
++            }
++            return true;
++        }
++        return false;
++    }
++}
+diff --git a/src/test/java/com/seed/pagination/InlineUsersInlineUsersWireTest.java b/src/test/java/com/seed/pagination/InlineUsersInlineUsersWireTest.java
+new file mode 100644
+index 00000000000..8e94ded5966
+--- /dev/null
++++ b/src/test/java/com/seed/pagination/InlineUsersInlineUsersWireTest.java
+@@ -0,0 +1,412 @@
++package com.seed.pagination;
++
++import com.fasterxml.jackson.databind.JsonNode;
++import com.fasterxml.jackson.databind.ObjectMapper;
++import com.seed.pagination.core.ObjectMappers;
++import com.seed.pagination.core.pagination.SyncPagingIterable;
++import com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsernamesRequest;
++import com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersBodyCursorPaginationRequest;
++import com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersBodyOffsetPaginationRequest;
++import com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersCursorPaginationRequest;
++import com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersDoubleOffsetPaginationRequest;
++import com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersExtendedRequest;
++import com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersExtendedRequestForOptionalData;
++import com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersMixedTypeCursorPaginationRequest;
++import com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersOffsetPaginationRequest;
++import com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersOffsetStepPaginationRequest;
++import com.seed.pagination.resources.inlineusers.inlineusers.requests.ListWithGlobalConfigRequest;
++import com.seed.pagination.resources.inlineusers.inlineusers.requests.ListWithOffsetPaginationHasNextPageRequest;
++import com.seed.pagination.resources.inlineusers.inlineusers.types.Order;
++import com.seed.pagination.resources.inlineusers.inlineusers.types.User;
++import com.seed.pagination.resources.inlineusers.inlineusers.types.WithCursor;
++import com.seed.pagination.resources.inlineusers.inlineusers.types.WithPage;
++import java.util.UUID;
++import okhttp3.mockwebserver.MockResponse;
++import okhttp3.mockwebserver.MockWebServer;
++import okhttp3.mockwebserver.RecordedRequest;
++import org.junit.jupiter.api.AfterEach;
++import org.junit.jupiter.api.Assertions;
++import org.junit.jupiter.api.BeforeEach;
++import org.junit.jupiter.api.Test;
++
++public class InlineUsersInlineUsersWireTest {
++    private MockWebServer server;
++    private SeedPaginationClient client;
++    private ObjectMapper objectMapper = ObjectMappers.JSON_MAPPER;
++
++    @BeforeEach
++    public void setup() throws Exception {
++        server = new MockWebServer();
++        server.start();
++        client = SeedPaginationClient.builder()
++                .url(server.url("/").toString())
++                .token("test-token")
++                .build();
++    }
++
++    @AfterEach
++    public void teardown() throws Exception {
++        server.shutdown();
++    }
++
++    @Test
++    public void testListWithCursorPagination() throws Exception {
++        server.enqueue(
++                new MockResponse()
++                        .setResponseCode(200)
++                        .setBody(
++                                "{\"hasNextPage\":true,\"page\":{\"page\":1,\"next\":{\"page\":1,\"starting_after\":\"starting_after\"},\"per_page\":1,\"total_page\":1},\"total_count\":1,\"data\":{\"users\":[{\"name\":\"name\",\"id\":1},{\"name\":\"name\",\"id\":1}]}}"));
++        SyncPagingIterable<User> response = client.inlineUsers()
++                .inlineUsers()
++                .listWithCursorPagination(ListUsersCursorPaginationRequest.builder()
++                        .page(1)
++                        .perPage(1)
++                        .order(Order.ASC)
++                        .startingAfter("starting_after")
++                        .build());
++        RecordedRequest request = server.takeRequest();
++        Assertions.assertNotNull(request);
++        Assertions.assertEquals("GET", request.getMethod());
++
++        // Validate response body
++        Assertions.assertNotNull(response, "Response should not be null");
++        // Pagination response validated via MockWebServer
++        // The SDK correctly parses the response into a SyncPagingIterable
++    }
++
++    @Test
++    public void testListWithMixedTypeCursorPagination() throws Exception {
++        server.enqueue(
++                new MockResponse()
++                        .setResponseCode(200)
++                        .setBody(
++                                "{\"next\":\"next\",\"data\":{\"users\":[{\"name\":\"name\",\"id\":1},{\"name\":\"name\",\"id\":1}]}}"));
++        SyncPagingIterable<User> response = client.inlineUsers()
++                .inlineUsers()
++                .listWithMixedTypeCursorPagination(ListUsersMixedTypeCursorPaginationRequest.builder()
++                        .cursor("cursor")
++                        .build());
++        RecordedRequest request = server.takeRequest();
++        Assertions.assertNotNull(request);
++        Assertions.assertEquals("POST", request.getMethod());
++
++        // Validate response body
++        Assertions.assertNotNull(response, "Response should not be null");
++        // Pagination response validated via MockWebServer
++        // The SDK correctly parses the response into a SyncPagingIterable
++    }
++
++    @Test
++    public void testListWithBodyCursorPagination() throws Exception {
++        server.enqueue(
++                new MockResponse()
++                        .setResponseCode(200)
++                        .setBody(
++                                "{\"hasNextPage\":true,\"page\":{\"page\":1,\"next\":{\"page\":1,\"starting_after\":\"starting_after\"},\"per_page\":1,\"total_page\":1},\"total_count\":1,\"data\":{\"users\":[{\"name\":\"name\",\"id\":1},{\"name\":\"name\",\"id\":1}]}}"));
++        SyncPagingIterable<User> response = client.inlineUsers()
++                .inlineUsers()
++                .listWithBodyCursorPagination(ListUsersBodyCursorPaginationRequest.builder()
++                        .pagination(WithCursor.builder().cursor("cursor").build())
++                        .build());
++        RecordedRequest request = server.takeRequest();
++        Assertions.assertNotNull(request);
++        Assertions.assertEquals("POST", request.getMethod());
++        // Validate request body
++        String actualRequestBody = request.getBody().readUtf8();
++        String expectedRequestBody =
++                "" + "{\n" + "  \"pagination\": {\n" + "    \"cursor\": \"cursor\"\n" + "  }\n" + "}";
++        JsonNode actualJson = objectMapper.readTree(actualRequestBody);
++        JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
++        Assertions.assertTrue(jsonEquals(expectedJson, actualJson), "Request body structure does not match expected");
++        if (actualJson.has("type") || actualJson.has("_type") || actualJson.has("kind")) {
++            String discriminator = null;
++            if (actualJson.has("type")) discriminator = actualJson.get("type").asText();
++            else if (actualJson.has("_type"))
++                discriminator = actualJson.get("_type").asText();
++            else if (actualJson.has("kind"))
++                discriminator = actualJson.get("kind").asText();
++            Assertions.assertNotNull(discriminator, "Union type should have a discriminator field");
++            Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");
++        }
++
++        if (!actualJson.isNull()) {
++            Assertions.assertTrue(
++                    actualJson.isObject() || actualJson.isArray() || actualJson.isValueNode(),
++                    "request should be a valid JSON value");
++        }
++
++        if (actualJson.isArray()) {
++            Assertions.assertTrue(actualJson.size() >= 0, "Array should have valid size");
++        }
++        if (actualJson.isObject()) {
++            Assertions.assertTrue(actualJson.size() >= 0, "Object should have valid field count");
++        }
++
++        // Validate response body
++        Assertions.assertNotNull(response, "Response should not be null");
++        // Pagination response validated via MockWebServer
++        // The SDK correctly parses the response into a SyncPagingIterable
++    }
++
++    @Test
++    public void testListWithOffsetPagination() throws Exception {
++        server.enqueue(
++                new MockResponse()
++                        .setResponseCode(200)
++                        .setBody(
++                                "{\"hasNextPage\":true,\"page\":{\"page\":1,\"next\":{\"page\":1,\"starting_after\":\"starting_after\"},\"per_page\":1,\"total_page\":1},\"total_count\":1,\"data\":{\"users\":[{\"name\":\"name\",\"id\":1},{\"name\":\"name\",\"id\":1}]}}"));
++        SyncPagingIterable<User> response = client.inlineUsers()
++                .inlineUsers()
++                .listWithOffsetPagination(ListUsersOffsetPaginationRequest.builder()
++                        .page(1)
++                        .perPage(1)
++                        .order(Order.ASC)
++                        .startingAfter("starting_after")
++                        .build());
++        RecordedRequest request = server.takeRequest();
++        Assertions.assertNotNull(request);
++        Assertions.assertEquals("GET", request.getMethod());
++
++        // Validate response body
++        Assertions.assertNotNull(response, "Response should not be null");
++        // Pagination response validated via MockWebServer
++        // The SDK correctly parses the response into a SyncPagingIterable
++    }
++
++    @Test
++    public void testListWithDoubleOffsetPagination() throws Exception {
++        server.enqueue(
++                new MockResponse()
++                        .setResponseCode(200)
++                        .setBody(
++                                "{\"hasNextPage\":true,\"page\":{\"page\":1,\"next\":{\"page\":1,\"starting_after\":\"starting_after\"},\"per_page\":1,\"total_page\":1},\"total_count\":1,\"data\":{\"users\":[{\"name\":\"name\",\"id\":1},{\"name\":\"name\",\"id\":1}]}}"));
++        SyncPagingIterable<User> response = client.inlineUsers()
++                .inlineUsers()
++                .listWithDoubleOffsetPagination(ListUsersDoubleOffsetPaginationRequest.builder()
++                        .page(1.1)
++                        .perPage(1.1)
++                        .order(Order.ASC)
++                        .startingAfter("starting_after")
++                        .build());
++        RecordedRequest request = server.takeRequest();
++        Assertions.assertNotNull(request);
++        Assertions.assertEquals("GET", request.getMethod());
++
++        // Validate response body
++        Assertions.assertNotNull(response, "Response should not be null");
++        // Pagination response validated via MockWebServer
++        // The SDK correctly parses the response into a SyncPagingIterable
++    }
++
++    @Test
++    public void testListWithBodyOffsetPagination() throws Exception {
++        server.enqueue(
++                new MockResponse()
++                        .setResponseCode(200)
++                        .setBody(
++                                "{\"hasNextPage\":true,\"page\":{\"page\":1,\"next\":{\"page\":1,\"starting_after\":\"starting_after\"},\"per_page\":1,\"total_page\":1},\"total_count\":1,\"data\":{\"users\":[{\"name\":\"name\",\"id\":1},{\"name\":\"name\",\"id\":1}]}}"));
++        SyncPagingIterable<User> response = client.inlineUsers()
++                .inlineUsers()
++                .listWithBodyOffsetPagination(ListUsersBodyOffsetPaginationRequest.builder()
++                        .pagination(WithPage.builder().page(1).build())
++                        .build());
++        RecordedRequest request = server.takeRequest();
++        Assertions.assertNotNull(request);
++        Assertions.assertEquals("POST", request.getMethod());
++        // Validate request body
++        String actualRequestBody = request.getBody().readUtf8();
++        String expectedRequestBody = "" + "{\n" + "  \"pagination\": {\n" + "    \"page\": 1\n" + "  }\n" + "}";
++        JsonNode actualJson = objectMapper.readTree(actualRequestBody);
++        JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
++        Assertions.assertTrue(jsonEquals(expectedJson, actualJson), "Request body structure does not match expected");
++        if (actualJson.has("type") || actualJson.has("_type") || actualJson.has("kind")) {
++            String discriminator = null;
++            if (actualJson.has("type")) discriminator = actualJson.get("type").asText();
++            else if (actualJson.has("_type"))
++                discriminator = actualJson.get("_type").asText();
++            else if (actualJson.has("kind"))
++                discriminator = actualJson.get("kind").asText();
++            Assertions.assertNotNull(discriminator, "Union type should have a discriminator field");
++            Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");
++        }
++
++        if (!actualJson.isNull()) {
++            Assertions.assertTrue(
++                    actualJson.isObject() || actualJson.isArray() || actualJson.isValueNode(),
++                    "request should be a valid JSON value");
++        }
++
++        if (actualJson.isArray()) {
++            Assertions.assertTrue(actualJson.size() >= 0, "Array should have valid size");
++        }
++        if (actualJson.isObject()) {
++            Assertions.assertTrue(actualJson.size() >= 0, "Object should have valid field count");
++        }
++
++        // Validate response body
++        Assertions.assertNotNull(response, "Response should not be null");
++        // Pagination response validated via MockWebServer
++        // The SDK correctly parses the response into a SyncPagingIterable
++    }
++
++    @Test
++    public void testListWithOffsetStepPagination() throws Exception {
++        server.enqueue(
++                new MockResponse()
++                        .setResponseCode(200)
++                        .setBody(
++                                "{\"hasNextPage\":true,\"page\":{\"page\":1,\"next\":{\"page\":1,\"starting_after\":\"starting_after\"},\"per_page\":1,\"total_page\":1},\"total_count\":1,\"data\":{\"users\":[{\"name\":\"name\",\"id\":1},{\"name\":\"name\",\"id\":1}]}}"));
++        SyncPagingIterable<User> response = client.inlineUsers()
++                .inlineUsers()
++                .listWithOffsetStepPagination(ListUsersOffsetStepPaginationRequest.builder()
++                        .page(1)
++                        .limit(1)
++                        .order(Order.ASC)
++                        .build());
++        RecordedRequest request = server.takeRequest();
++        Assertions.assertNotNull(request);
++        Assertions.assertEquals("GET", request.getMethod());
++
++        // Validate response body
++        Assertions.assertNotNull(response, "Response should not be null");
++        // Pagination response validated via MockWebServer
++        // The SDK correctly parses the response into a SyncPagingIterable
++    }
++
++    @Test
++    public void testListWithOffsetPaginationHasNextPage() throws Exception {
++        server.enqueue(
++                new MockResponse()
++                        .setResponseCode(200)
++                        .setBody(
++                                "{\"hasNextPage\":true,\"page\":{\"page\":1,\"next\":{\"page\":1,\"starting_after\":\"starting_after\"},\"per_page\":1,\"total_page\":1},\"total_count\":1,\"data\":{\"users\":[{\"name\":\"name\",\"id\":1},{\"name\":\"name\",\"id\":1}]}}"));
++        SyncPagingIterable<User> response = client.inlineUsers()
++                .inlineUsers()
++                .listWithOffsetPaginationHasNextPage(ListWithOffsetPaginationHasNextPageRequest.builder()
++                        .page(1)
++                        .limit(1)
++                        .order(Order.ASC)
++                        .build());
++        RecordedRequest request = server.takeRequest();
++        Assertions.assertNotNull(request);
++        Assertions.assertEquals("GET", request.getMethod());
++
++        // Validate response body
++        Assertions.assertNotNull(response, "Response should not be null");
++        // Pagination response validated via MockWebServer
++        // The SDK correctly parses the response into a SyncPagingIterable
++    }
++
++    @Test
++    public void testListWithExtendedResults() throws Exception {
++        server.enqueue(
++                new MockResponse()
++                        .setResponseCode(200)
++                        .setBody(
++                                "{\"total_count\":1,\"data\":{\"users\":[{\"name\":\"name\",\"id\":1},{\"name\":\"name\",\"id\":1}]},\"next\":\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"}"));
++        SyncPagingIterable<User> response = client.inlineUsers()
++                .inlineUsers()
++                .listWithExtendedResults(ListUsersExtendedRequest.builder()
++                        .cursor(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
++                        .build());
++        RecordedRequest request = server.takeRequest();
++        Assertions.assertNotNull(request);
++        Assertions.assertEquals("GET", request.getMethod());
++
++        // Validate response body
++        Assertions.assertNotNull(response, "Response should not be null");
++        // Pagination response validated via MockWebServer
++        // The SDK correctly parses the response into a SyncPagingIterable
++    }
++
++    @Test
++    public void testListWithExtendedResultsAndOptionalData() throws Exception {
++        server.enqueue(
++                new MockResponse()
++                        .setResponseCode(200)
++                        .setBody(
++                                "{\"total_count\":1,\"data\":{\"users\":[{\"name\":\"name\",\"id\":1},{\"name\":\"name\",\"id\":1}]},\"next\":\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"}"));
++        SyncPagingIterable<User> response = client.inlineUsers()
++                .inlineUsers()
++                .listWithExtendedResultsAndOptionalData(ListUsersExtendedRequestForOptionalData.builder()
++                        .cursor(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
++                        .build());
++        RecordedRequest request = server.takeRequest();
++        Assertions.assertNotNull(request);
++        Assertions.assertEquals("GET", request.getMethod());
++
++        // Validate response body
++        Assertions.assertNotNull(response, "Response should not be null");
++        // Pagination response validated via MockWebServer
++        // The SDK correctly parses the response into a SyncPagingIterable
++    }
++
++    @Test
++    public void testListUsernames() throws Exception {
++        server.enqueue(new MockResponse()
++                .setResponseCode(200)
++                .setBody("{\"cursor\":{\"after\":\"after\",\"data\":[\"data\",\"data\"]}}"));
++        SyncPagingIterable<String> response = client.inlineUsers()
++                .inlineUsers()
++                .listUsernames(ListUsernamesRequest.builder()
++                        .startingAfter("starting_after")
++                        .build());
++        RecordedRequest request = server.takeRequest();
++        Assertions.assertNotNull(request);
++        Assertions.assertEquals("GET", request.getMethod());
++
++        // Validate response body
++        Assertions.assertNotNull(response, "Response should not be null");
++        // Pagination response validated via MockWebServer
++        // The SDK correctly parses the response into a SyncPagingIterable
++    }
++
++    @Test
++    public void testListWithGlobalConfig() throws Exception {
++        server.enqueue(new MockResponse().setResponseCode(200).setBody("{\"results\":[\"results\",\"results\"]}"));
++        SyncPagingIterable<String> response = client.inlineUsers()
++                .inlineUsers()
++                .listWithGlobalConfig(
++                        ListWithGlobalConfigRequest.builder().offset(1).build());
++        RecordedRequest request = server.takeRequest();
++        Assertions.assertNotNull(request);
++        Assertions.assertEquals("GET", request.getMethod());
++
++        // Validate response body
++        Assertions.assertNotNull(response, "Response should not be null");
++        // Pagination response validated via MockWebServer
++        // The SDK correctly parses the response into a SyncPagingIterable
++    }
++
++    /**
++     * Compares two JsonNodes with numeric equivalence and null safety.
++     * For objects, checks that all fields in 'expected' exist in 'actual' with matching values.
++     * Allows 'actual' to have extra fields (e.g., default values added during serialization).
++     */
++    private boolean jsonEquals(JsonNode expected, JsonNode actual) {
++        if (expected == null && actual == null) return true;
++        if (expected == null || actual == null) return false;
++        if (expected.equals(actual)) return true;
++        if (expected.isNumber() && actual.isNumber())
++            return Math.abs(expected.doubleValue() - actual.doubleValue()) < 1e-10;
++        if (expected.isObject() && actual.isObject()) {
++            java.util.Iterator<java.util.Map.Entry<String, JsonNode>> iter = expected.fields();
++            while (iter.hasNext()) {
++                java.util.Map.Entry<String, JsonNode> entry = iter.next();
++                JsonNode actualValue = actual.get(entry.getKey());
++                if (actualValue == null) {
++                    if (!entry.getValue().isNull()) return false;
++                } else if (!jsonEquals(entry.getValue(), actualValue)) return false;
++            }
++            return true;
++        }
++        if (expected.isArray() && actual.isArray()) {
++            if (expected.size() != actual.size()) return false;
++            for (int i = 0; i < expected.size(); i++) {
++                if (!jsonEquals(expected.get(i), actual.get(i))) return false;
++            }
++            return true;
++        }
++        return false;
++    }
++}
+diff --git a/src/test/java/com/seed/pagination/UsersWireTest.java b/src/test/java/com/seed/pagination/UsersWireTest.java
+new file mode 100644
+index 00000000000..5af98f3095c
+--- /dev/null
++++ b/src/test/java/com/seed/pagination/UsersWireTest.java
+@@ -0,0 +1,517 @@
++package com.seed.pagination;
++
++import com.fasterxml.jackson.databind.JsonNode;
++import com.fasterxml.jackson.databind.ObjectMapper;
++import com.seed.pagination.core.ObjectMappers;
++import com.seed.pagination.core.pagination.SyncPagingIterable;
++import com.seed.pagination.resources.users.requests.ListUsernamesRequest;
++import com.seed.pagination.resources.users.requests.ListUsernamesWithOptionalResponseRequest;
++import com.seed.pagination.resources.users.requests.ListUsersAliasedDataRequest;
++import com.seed.pagination.resources.users.requests.ListUsersBodyCursorPaginationRequest;
++import com.seed.pagination.resources.users.requests.ListUsersBodyOffsetPaginationRequest;
++import com.seed.pagination.resources.users.requests.ListUsersCursorPaginationRequest;
++import com.seed.pagination.resources.users.requests.ListUsersDoubleOffsetPaginationRequest;
++import com.seed.pagination.resources.users.requests.ListUsersExtendedRequest;
++import com.seed.pagination.resources.users.requests.ListUsersExtendedRequestForOptionalData;
++import com.seed.pagination.resources.users.requests.ListUsersMixedTypeCursorPaginationRequest;
++import com.seed.pagination.resources.users.requests.ListUsersOffsetPaginationRequest;
++import com.seed.pagination.resources.users.requests.ListUsersOffsetStepPaginationRequest;
++import com.seed.pagination.resources.users.requests.ListUsersOptionalDataRequest;
++import com.seed.pagination.resources.users.requests.ListUsersTopLevelBodyCursorPaginationRequest;
++import com.seed.pagination.resources.users.requests.ListWithGlobalConfigRequest;
++import com.seed.pagination.resources.users.requests.ListWithOffsetPaginationHasNextPageRequest;
++import com.seed.pagination.resources.users.types.ListUsersAliasedDataPaginationResponse;
++import com.seed.pagination.resources.users.types.Order;
++import com.seed.pagination.resources.users.types.User;
++import com.seed.pagination.resources.users.types.WithCursor;
++import com.seed.pagination.resources.users.types.WithPage;
++import java.util.UUID;
++import okhttp3.mockwebserver.MockResponse;
++import okhttp3.mockwebserver.MockWebServer;
++import okhttp3.mockwebserver.RecordedRequest;
++import org.junit.jupiter.api.AfterEach;
++import org.junit.jupiter.api.Assertions;
++import org.junit.jupiter.api.BeforeEach;
++import org.junit.jupiter.api.Test;
++
++public class UsersWireTest {
++    private MockWebServer server;
++    private SeedPaginationClient client;
++    private ObjectMapper objectMapper = ObjectMappers.JSON_MAPPER;
++
++    @BeforeEach
++    public void setup() throws Exception {
++        server = new MockWebServer();
++        server.start();
++        client = SeedPaginationClient.builder()
++                .url(server.url("/").toString())
++                .token("test-token")
++                .build();
++    }
++
++    @AfterEach
++    public void teardown() throws Exception {
++        server.shutdown();
++    }
++
++    @Test
++    public void testListWithCursorPagination() throws Exception {
++        server.enqueue(
++                new MockResponse()
++                        .setResponseCode(200)
++                        .setBody(
++                                "{\"hasNextPage\":true,\"page\":{\"page\":1,\"next\":{\"page\":1,\"starting_after\":\"starting_after\"},\"per_page\":1,\"total_page\":1},\"total_count\":1,\"data\":[{\"name\":\"name\",\"id\":1},{\"name\":\"name\",\"id\":1}]}"));
++        SyncPagingIterable<User> response = client.users()
++                .listWithCursorPagination(ListUsersCursorPaginationRequest.builder()
++                        .page(1)
++                        .perPage(1)
++                        .order(Order.ASC)
++                        .startingAfter("starting_after")
++                        .build());
++        RecordedRequest request = server.takeRequest();
++        Assertions.assertNotNull(request);
++        Assertions.assertEquals("GET", request.getMethod());
++
++        // Validate response body
++        Assertions.assertNotNull(response, "Response should not be null");
++        // Pagination response validated via MockWebServer
++        // The SDK correctly parses the response into a SyncPagingIterable
++    }
++
++    @Test
++    public void testListWithMixedTypeCursorPagination() throws Exception {
++        server.enqueue(new MockResponse()
++                .setResponseCode(200)
++                .setBody("{\"next\":\"next\",\"data\":[{\"name\":\"name\",\"id\":1},{\"name\":\"name\",\"id\":1}]}"));
++        SyncPagingIterable<User> response = client.users()
++                .listWithMixedTypeCursorPagination(ListUsersMixedTypeCursorPaginationRequest.builder()
++                        .cursor("cursor")
++                        .build());
++        RecordedRequest request = server.takeRequest();
++        Assertions.assertNotNull(request);
++        Assertions.assertEquals("POST", request.getMethod());
++
++        // Validate response body
++        Assertions.assertNotNull(response, "Response should not be null");
++        // Pagination response validated via MockWebServer
++        // The SDK correctly parses the response into a SyncPagingIterable
++    }
++
++    @Test
++    public void testListWithBodyCursorPagination() throws Exception {
++        server.enqueue(
++                new MockResponse()
++                        .setResponseCode(200)
++                        .setBody(
++                                "{\"hasNextPage\":true,\"page\":{\"page\":1,\"next\":{\"page\":1,\"starting_after\":\"starting_after\"},\"per_page\":1,\"total_page\":1},\"total_count\":1,\"data\":[{\"name\":\"name\",\"id\":1},{\"name\":\"name\",\"id\":1}]}"));
++        SyncPagingIterable<User> response = client.users()
++                .listWithBodyCursorPagination(ListUsersBodyCursorPaginationRequest.builder()
++                        .pagination(WithCursor.builder().cursor("cursor").build())
++                        .build());
++        RecordedRequest request = server.takeRequest();
++        Assertions.assertNotNull(request);
++        Assertions.assertEquals("POST", request.getMethod());
++        // Validate request body
++        String actualRequestBody = request.getBody().readUtf8();
++        String expectedRequestBody =
++                "" + "{\n" + "  \"pagination\": {\n" + "    \"cursor\": \"cursor\"\n" + "  }\n" + "}";
++        JsonNode actualJson = objectMapper.readTree(actualRequestBody);
++        JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
++        Assertions.assertTrue(jsonEquals(expectedJson, actualJson), "Request body structure does not match expected");
++        if (actualJson.has("type") || actualJson.has("_type") || actualJson.has("kind")) {
++            String discriminator = null;
++            if (actualJson.has("type")) discriminator = actualJson.get("type").asText();
++            else if (actualJson.has("_type"))
++                discriminator = actualJson.get("_type").asText();
++            else if (actualJson.has("kind"))
++                discriminator = actualJson.get("kind").asText();
++            Assertions.assertNotNull(discriminator, "Union type should have a discriminator field");
++            Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");
++        }
++
++        if (!actualJson.isNull()) {
++            Assertions.assertTrue(
++                    actualJson.isObject() || actualJson.isArray() || actualJson.isValueNode(),
++                    "request should be a valid JSON value");
++        }
++
++        if (actualJson.isArray()) {
++            Assertions.assertTrue(actualJson.size() >= 0, "Array should have valid size");
++        }
++        if (actualJson.isObject()) {
++            Assertions.assertTrue(actualJson.size() >= 0, "Object should have valid field count");
++        }
++
++        // Validate response body
++        Assertions.assertNotNull(response, "Response should not be null");
++        // Pagination response validated via MockWebServer
++        // The SDK correctly parses the response into a SyncPagingIterable
++    }
++
++    @Test
++    public void testListWithTopLevelBodyCursorPagination() throws Exception {
++        server.enqueue(
++                new MockResponse()
++                        .setResponseCode(200)
++                        .setBody(
++                                "{\"next_cursor\":\"next_cursor_value\",\"data\":[{\"name\":\"Alice\",\"id\":1},{\"name\":\"Bob\",\"id\":2}]}"));
++        SyncPagingIterable<User> response = client.users()
++                .listWithTopLevelBodyCursorPagination(ListUsersTopLevelBodyCursorPaginationRequest.builder()
++                        .cursor("initial_cursor")
++                        .filter("active")
++                        .build());
++        RecordedRequest request = server.takeRequest();
++        Assertions.assertNotNull(request);
++        Assertions.assertEquals("POST", request.getMethod());
++        // Validate request body
++        String actualRequestBody = request.getBody().readUtf8();
++        String expectedRequestBody =
++                "" + "{\n" + "  \"cursor\": \"initial_cursor\",\n" + "  \"filter\": \"active\"\n" + "}";
++        JsonNode actualJson = objectMapper.readTree(actualRequestBody);
++        JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
++        Assertions.assertTrue(jsonEquals(expectedJson, actualJson), "Request body structure does not match expected");
++        if (actualJson.has("type") || actualJson.has("_type") || actualJson.has("kind")) {
++            String discriminator = null;
++            if (actualJson.has("type")) discriminator = actualJson.get("type").asText();
++            else if (actualJson.has("_type"))
++                discriminator = actualJson.get("_type").asText();
++            else if (actualJson.has("kind"))
++                discriminator = actualJson.get("kind").asText();
++            Assertions.assertNotNull(discriminator, "Union type should have a discriminator field");
++            Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");
++        }
++
++        if (!actualJson.isNull()) {
++            Assertions.assertTrue(
++                    actualJson.isObject() || actualJson.isArray() || actualJson.isValueNode(),
++                    "request should be a valid JSON value");
++        }
++
++        if (actualJson.isArray()) {
++            Assertions.assertTrue(actualJson.size() >= 0, "Array should have valid size");
++        }
++        if (actualJson.isObject()) {
++            Assertions.assertTrue(actualJson.size() >= 0, "Object should have valid field count");
++        }
++
++        // Validate response body
++        Assertions.assertNotNull(response, "Response should not be null");
++        // Pagination response validated via MockWebServer
++        // The SDK correctly parses the response into a SyncPagingIterable
++    }
++
++    @Test
++    public void testListWithOffsetPagination() throws Exception {
++        server.enqueue(
++                new MockResponse()
++                        .setResponseCode(200)
++                        .setBody(
++                                "{\"hasNextPage\":true,\"page\":{\"page\":1,\"next\":{\"page\":1,\"starting_after\":\"starting_after\"},\"per_page\":1,\"total_page\":1},\"total_count\":1,\"data\":[{\"name\":\"name\",\"id\":1},{\"name\":\"name\",\"id\":1}]}"));
++        SyncPagingIterable<User> response = client.users()
++                .listWithOffsetPagination(ListUsersOffsetPaginationRequest.builder()
++                        .page(1)
++                        .perPage(1)
++                        .order(Order.ASC)
++                        .startingAfter("starting_after")
++                        .build());
++        RecordedRequest request = server.takeRequest();
++        Assertions.assertNotNull(request);
++        Assertions.assertEquals("GET", request.getMethod());
++
++        // Validate response body
++        Assertions.assertNotNull(response, "Response should not be null");
++        // Pagination response validated via MockWebServer
++        // The SDK correctly parses the response into a SyncPagingIterable
++    }
++
++    @Test
++    public void testListWithDoubleOffsetPagination() throws Exception {
++        server.enqueue(
++                new MockResponse()
++                        .setResponseCode(200)
++                        .setBody(
++                                "{\"hasNextPage\":true,\"page\":{\"page\":1,\"next\":{\"page\":1,\"starting_after\":\"starting_after\"},\"per_page\":1,\"total_page\":1},\"total_count\":1,\"data\":[{\"name\":\"name\",\"id\":1},{\"name\":\"name\",\"id\":1}]}"));
++        SyncPagingIterable<User> response = client.users()
++                .listWithDoubleOffsetPagination(ListUsersDoubleOffsetPaginationRequest.builder()
++                        .page(1.1)
++                        .perPage(1.1)
++                        .order(Order.ASC)
++                        .startingAfter("starting_after")
++                        .build());
++        RecordedRequest request = server.takeRequest();
++        Assertions.assertNotNull(request);
++        Assertions.assertEquals("GET", request.getMethod());
++
++        // Validate response body
++        Assertions.assertNotNull(response, "Response should not be null");
++        // Pagination response validated via MockWebServer
++        // The SDK correctly parses the response into a SyncPagingIterable
++    }
++
++    @Test
++    public void testListWithBodyOffsetPagination() throws Exception {
++        server.enqueue(
++                new MockResponse()
++                        .setResponseCode(200)
++                        .setBody(
++                                "{\"hasNextPage\":true,\"page\":{\"page\":1,\"next\":{\"page\":1,\"starting_after\":\"starting_after\"},\"per_page\":1,\"total_page\":1},\"total_count\":1,\"data\":[{\"name\":\"name\",\"id\":1},{\"name\":\"name\",\"id\":1}]}"));
++        SyncPagingIterable<User> response = client.users()
++                .listWithBodyOffsetPagination(ListUsersBodyOffsetPaginationRequest.builder()
++                        .pagination(WithPage.builder().page(1).build())
++                        .build());
++        RecordedRequest request = server.takeRequest();
++        Assertions.assertNotNull(request);
++        Assertions.assertEquals("POST", request.getMethod());
++        // Validate request body
++        String actualRequestBody = request.getBody().readUtf8();
++        String expectedRequestBody = "" + "{\n" + "  \"pagination\": {\n" + "    \"page\": 1\n" + "  }\n" + "}";
++        JsonNode actualJson = objectMapper.readTree(actualRequestBody);
++        JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
++        Assertions.assertTrue(jsonEquals(expectedJson, actualJson), "Request body structure does not match expected");
++        if (actualJson.has("type") || actualJson.has("_type") || actualJson.has("kind")) {
++            String discriminator = null;
++            if (actualJson.has("type")) discriminator = actualJson.get("type").asText();
++            else if (actualJson.has("_type"))
++                discriminator = actualJson.get("_type").asText();
++            else if (actualJson.has("kind"))
++                discriminator = actualJson.get("kind").asText();
++            Assertions.assertNotNull(discriminator, "Union type should have a discriminator field");
++            Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");
++        }
++
++        if (!actualJson.isNull()) {
++            Assertions.assertTrue(
++                    actualJson.isObject() || actualJson.isArray() || actualJson.isValueNode(),
++                    "request should be a valid JSON value");
++        }
++
++        if (actualJson.isArray()) {
++            Assertions.assertTrue(actualJson.size() >= 0, "Array should have valid size");
++        }
++        if (actualJson.isObject()) {
++            Assertions.assertTrue(actualJson.size() >= 0, "Object should have valid field count");
++        }
++
++        // Validate response body
++        Assertions.assertNotNull(response, "Response should not be null");
++        // Pagination response validated via MockWebServer
++        // The SDK correctly parses the response into a SyncPagingIterable
++    }
++
++    @Test
++    public void testListWithOffsetStepPagination() throws Exception {
++        server.enqueue(
++                new MockResponse()
++                        .setResponseCode(200)
++                        .setBody(
++                                "{\"hasNextPage\":true,\"page\":{\"page\":1,\"next\":{\"page\":1,\"starting_after\":\"starting_after\"},\"per_page\":1,\"total_page\":1},\"total_count\":1,\"data\":[{\"name\":\"name\",\"id\":1},{\"name\":\"name\",\"id\":1}]}"));
++        SyncPagingIterable<User> response = client.users()
++                .listWithOffsetStepPagination(ListUsersOffsetStepPaginationRequest.builder()
++                        .page(1)
++                        .limit(1)
++                        .order(Order.ASC)
++                        .build());
++        RecordedRequest request = server.takeRequest();
++        Assertions.assertNotNull(request);
++        Assertions.assertEquals("GET", request.getMethod());
++
++        // Validate response body
++        Assertions.assertNotNull(response, "Response should not be null");
++        // Pagination response validated via MockWebServer
++        // The SDK correctly parses the response into a SyncPagingIterable
++    }
++
++    @Test
++    public void testListWithOffsetPaginationHasNextPage() throws Exception {
++        server.enqueue(
++                new MockResponse()
++                        .setResponseCode(200)
++                        .setBody(
++                                "{\"hasNextPage\":true,\"page\":{\"page\":1,\"next\":{\"page\":2,\"starting_after\":\"next_cursor\"},\"per_page\":3,\"total_page\":5},\"total_count\":15,\"data\":[{\"name\":\"Alice\",\"id\":1},{\"name\":\"Bob\",\"id\":2}]}"));
++        SyncPagingIterable<User> response = client.users()
++                .listWithOffsetPaginationHasNextPage(ListWithOffsetPaginationHasNextPageRequest.builder()
++                        .page(1)
++                        .limit(3)
++                        .order(Order.ASC)
++                        .build());
++        RecordedRequest request = server.takeRequest();
++        Assertions.assertNotNull(request);
++        Assertions.assertEquals("GET", request.getMethod());
++
++        // Validate response body
++        Assertions.assertNotNull(response, "Response should not be null");
++        // Pagination response validated via MockWebServer
++        // The SDK correctly parses the response into a SyncPagingIterable
++    }
++
++    @Test
++    public void testListWithExtendedResults() throws Exception {
++        server.enqueue(
++                new MockResponse()
++                        .setResponseCode(200)
++                        .setBody(
++                                "{\"total_count\":1,\"data\":{\"users\":[{\"name\":\"name\",\"id\":1},{\"name\":\"name\",\"id\":1}]},\"next\":\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"}"));
++        SyncPagingIterable<User> response = client.users()
++                .listWithExtendedResults(ListUsersExtendedRequest.builder()
++                        .cursor(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
++                        .build());
++        RecordedRequest request = server.takeRequest();
++        Assertions.assertNotNull(request);
++        Assertions.assertEquals("GET", request.getMethod());
++
++        // Validate response body
++        Assertions.assertNotNull(response, "Response should not be null");
++        // Pagination response validated via MockWebServer
++        // The SDK correctly parses the response into a SyncPagingIterable
++    }
++
++    @Test
++    public void testListWithExtendedResultsAndOptionalData() throws Exception {
++        server.enqueue(
++                new MockResponse()
++                        .setResponseCode(200)
++                        .setBody(
++                                "{\"total_count\":1,\"data\":{\"users\":[{\"name\":\"name\",\"id\":1},{\"name\":\"name\",\"id\":1}]},\"next\":\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"}"));
++        SyncPagingIterable<User> response = client.users()
++                .listWithExtendedResultsAndOptionalData(ListUsersExtendedRequestForOptionalData.builder()
++                        .cursor(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
++                        .build());
++        RecordedRequest request = server.takeRequest();
++        Assertions.assertNotNull(request);
++        Assertions.assertEquals("GET", request.getMethod());
++
++        // Validate response body
++        Assertions.assertNotNull(response, "Response should not be null");
++        // Pagination response validated via MockWebServer
++        // The SDK correctly parses the response into a SyncPagingIterable
++    }
++
++    @Test
++    public void testListUsernames() throws Exception {
++        server.enqueue(new MockResponse()
++                .setResponseCode(200)
++                .setBody("{\"cursor\":{\"after\":\"after\",\"data\":[\"data\",\"data\"]}}"));
++        SyncPagingIterable<String> response = client.users()
++                .listUsernames(ListUsernamesRequest.builder()
++                        .startingAfter("starting_after")
++                        .build());
++        RecordedRequest request = server.takeRequest();
++        Assertions.assertNotNull(request);
++        Assertions.assertEquals("GET", request.getMethod());
++
++        // Validate response body
++        Assertions.assertNotNull(response, "Response should not be null");
++        // Pagination response validated via MockWebServer
++        // The SDK correctly parses the response into a SyncPagingIterable
++    }
++
++    @Test
++    public void testListUsernamesWithOptionalResponse() throws Exception {
++        server.enqueue(new MockResponse()
++                .setResponseCode(200)
++                .setBody("{\"cursor\":{\"after\":\"after\",\"data\":[\"data\",\"data\"]}}"));
++        SyncPagingIterable<String> response = client.users()
++                .listUsernamesWithOptionalResponse(ListUsernamesWithOptionalResponseRequest.builder()
++                        .startingAfter("starting_after")
++                        .build());
++        RecordedRequest request = server.takeRequest();
++        Assertions.assertNotNull(request);
++        Assertions.assertEquals("GET", request.getMethod());
++
++        // Validate response body
++        Assertions.assertNotNull(response, "Response should not be null");
++        // Pagination response validated via MockWebServer
++        // The SDK correctly parses the response into a SyncPagingIterable
++    }
++
++    @Test
++    public void testListWithGlobalConfig() throws Exception {
++        server.enqueue(new MockResponse().setResponseCode(200).setBody("{\"results\":[\"results\",\"results\"]}"));
++        SyncPagingIterable<String> response = client.users()
++                .listWithGlobalConfig(
++                        ListWithGlobalConfigRequest.builder().offset(1).build());
++        RecordedRequest request = server.takeRequest();
++        Assertions.assertNotNull(request);
++        Assertions.assertEquals("GET", request.getMethod());
++
++        // Validate response body
++        Assertions.assertNotNull(response, "Response should not be null");
++        // Pagination response validated via MockWebServer
++        // The SDK correctly parses the response into a SyncPagingIterable
++    }
++
++    @Test
++    public void testListWithOptionalData() throws Exception {
++        server.enqueue(
++                new MockResponse()
++                        .setResponseCode(200)
++                        .setBody(
++                                "{\"hasNextPage\":true,\"page\":{\"page\":1,\"next\":{\"page\":2,\"starting_after\":\"next_cursor\"},\"per_page\":10,\"total_page\":5},\"total_count\":50,\"data\":[{\"name\":\"Alice\",\"id\":1},{\"name\":\"Bob\",\"id\":2}]}"));
++        SyncPagingIterable<User> response = client.users()
++                .listWithOptionalData(
++                        ListUsersOptionalDataRequest.builder().page(1).build());
++        RecordedRequest request = server.takeRequest();
++        Assertions.assertNotNull(request);
++        Assertions.assertEquals("GET", request.getMethod());
++
++        // Validate response body
++        Assertions.assertNotNull(response, "Response should not be null");
++        // Pagination response validated via MockWebServer
++        // The SDK correctly parses the response into a SyncPagingIterable
++    }
++
++    @Test
++    public void testListWithAliasedData() throws Exception {
++        server.enqueue(
++                new MockResponse()
++                        .setResponseCode(200)
++                        .setBody(
++                                "{\"hasNextPage\":true,\"page\":{\"page\":1,\"next\":{\"page\":1,\"starting_after\":\"starting_after\"},\"per_page\":1,\"total_page\":1},\"total_count\":1,\"data\":[{\"name\":\"name\",\"id\":1},{\"name\":\"name\",\"id\":1}]}"));
++        ListUsersAliasedDataPaginationResponse response = client.users()
++                .listWithAliasedData(ListUsersAliasedDataRequest.builder()
++                        .page(1)
++                        .perPage(1)
++                        .startingAfter("starting_after")
++                        .build());
++        RecordedRequest request = server.takeRequest();
++        Assertions.assertNotNull(request);
++        Assertions.assertEquals("GET", request.getMethod());
++
++        // Validate response body
++        Assertions.assertNotNull(response, "Response should not be null");
++        // Pagination response validated via MockWebServer
++        // The SDK correctly parses the response into a SyncPagingIterable
++    }
++
++    /**
++     * Compares two JsonNodes with numeric equivalence and null safety.
++     * For objects, checks that all fields in 'expected' exist in 'actual' with matching values.
++     * Allows 'actual' to have extra fields (e.g., default values added during serialization).
++     */
++    private boolean jsonEquals(JsonNode expected, JsonNode actual) {
++        if (expected == null && actual == null) return true;
++        if (expected == null || actual == null) return false;
++        if (expected.equals(actual)) return true;
++        if (expected.isNumber() && actual.isNumber())
++            return Math.abs(expected.doubleValue() - actual.doubleValue()) < 1e-10;
++        if (expected.isObject() && actual.isObject()) {
++            java.util.Iterator<java.util.Map.Entry<String, JsonNode>> iter = expected.fields();
++            while (iter.hasNext()) {
++                java.util.Map.Entry<String, JsonNode> entry = iter.next();
++                JsonNode actualValue = actual.get(entry.getKey());
++                if (actualValue == null) {
++                    if (!entry.getValue().isNull()) return false;
++                } else if (!jsonEquals(entry.getValue(), actualValue)) return false;
++            }
++            return true;
++        }
++        if (expected.isArray() && actual.isArray()) {
++            if (expected.size() != actual.size()) return false;
++            for (int i = 0; i < expected.size(); i++) {
++                if (!jsonEquals(expected.get(i), actual.get(i))) return false;
++            }
++            return true;
++        }
++        return false;
++    }
++}

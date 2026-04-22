@@ -1,0 +1,211 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index f1753c47972..f5383c415a3 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-java-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "respect-nullable-schemas": true
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "manual",
+diff --git a/.gradle/8.14.3/checksums/checksums.lock b/.gradle/8.14.3/checksums/checksums.lock
+index 81cc6dc764618cc3e3d1cf02e21baf7fd63af381..7f2a41c026190899c51ee7acccbf2a1d6b09b9b8 100644
+GIT binary patch
+literal 17
+TcmZQR@V@JB-_~{73{U_7MQ8<9
+
+literal 17
+TcmZRc=Gn0LQHSD61}FdkG~EO`
+
+diff --git a/.gradle/8.14.3/executionHistory/executionHistory.bin b/.gradle/8.14.3/executionHistory/executionHistory.bin
+index c70b3cc6ba091107743245a09d8409294fcbedcf..26a43555aba1b517029b57ff91983b970db7c151 100644
+GIT binary patch
+delta 6313
+zcmcJTYfuwc6vtVvwlvZKGRmW16+{b)Zk7Z{z$$T^5o|kp9cyioY7845A#9QjSrVqz
+zv9+HRkb@`!QV=axRFvAZ)6vTGVG*%Ze07|nP&=JYD++3+tq8rVAM5zVy_vcBO>%bs
+z`=7Jt-n)B#xf6Kcc3{W4Nak#3ZsaJN#HYE_^4z>=v23&#=Zm7&%4>B6qRp%eO=qOA
+zvGP?#FlnH;RG-u~xwAYgoLP4FN5AiymYKu^1Tb%F0|K}$WO(IK{}i!98$!$()0v6k
+zv52yv-Z!d#?!1~Em7v;sK^F66GP_|gCj!(?wQAp^zecAqO<-F0GQ93oquvXCFgZE2
+zx!(^vo%2++{qk9ZQ<yz4m>UJZl0#Za=x^r&beb?xOhf~OZ;A=%7U5=bHmbbnhc;1%
+znhCFqub{69UvR~vi-a1N23;pKyXK&qgxg#RXqeDPe($*ChZ`;(+DjNwI#1PpNxt;8
+z7nxmfG%p-Bma0)d2}z|%s^LeW?bDe?IL607HwoP*p@C8j+Ira!VeSR01DEBqC$vm6
+zj9X?xp<9g(lF<8Z4jm#qP7XQp=#X8Ase``ONC=eF=qL$ANOO>nFjGoGCkX{99$g`<
+zl@ibm!Y;{({ve!OW<bM)#<Fa5k8pe0BJ_apd|5Kua>WnGqeYd32G3jsgci>k)JCZB
+zW}w4_CEf(oLs;jnN!?BEaFsmj%`To7OoC)~=A~-$^V|-BPa{R*u^0ZYN}hxAtn>IE
+zhP68j-6j{$x=l{jA{6KGPLWMcW5pDYSJZk9DXArSPKUJKYBv{go{bv$lkZ?xvo4!`
+zej1mm(a#rjtFzN=YdkthlMHLJGqQ$;<@7x+y+%@c>HTE%$m3}aE#0H-Z{5C}e9zrz
+zyLRi}RbQdbp!XU=Hw`K6krkb0)@CX!VT(*|6KfW14D%uR{{4v;%6OJ+aMlPo_0AOh
+z=M$x$O*tCwSA^j21C_pmoHYjK=EOi%r2&6KMcq)f0-vR#d@x51na*Gc-?13qQ9kF@
+zGoebDN+T=PRw}A-upGi*7U*f@yE+#7U@eUbB+897D{+_NHDcVEk54PE$`QYn>q8)^
+zHU&SVP<62|zCIX+YLoFfD&D;tqM>z{5l<-Yy}2$Pa(6GrV-%EU!?Zd*{z37KG}o2l
+zaSDFpp<>Ugl&UYYeklddq^_&YArRESQ7XI+b2M}}7^y6Mv9PIeIX<I!dB~GpexzKz
+zcOm{(adl(!EXZsMgUBWW?xmtW&a2=g9|}WFODIep+5b2n0mnbips+C*n;rNk3R#JR
+z2}>+ww=BioimMN{NE9+L*pdJ<3PR!LJ_7~Mj#i1nax$_%5%~Rj3bSTpzm38cGuRRb
+z7Y}4m*cN4Fp(q4uK1rtVkRw097q?A=*V<C?J;gUN&bkoyC_YO#YdkbrqoC#BBK#W_
+z^|haFqfpab#TqC$#NqE0_uN&S2rJuzA+9|gk5IUaF>tQ^B?`Xf>I*K32FGDNjeVV{
+zM;%!~<%N1G^c@MO&=TRSvhwrQ9YK(LR7djy3u%f6L1zb5_d)RPF&(9LkBb*w^xHjl
+zfmXZ6E<A4cDBsku3pxtxxm}nE!<{+!f#NHdU5J4%KU+*m`IJ2jJSSK@pt$d`6Ei5N
+s3ZE~*e<|+uBZn6BzPaecs2_OW9P|ZY1>r+NAK?dgNw?is9+-ahKL8=k{{R30
+
+delta 6575
+zcmchbYfw{16vw$)nJS1t6oEEYrd0|S41o}h_yF5ZrPe;|+J{2*LT)tXVYoLT0jAno
+zX8Hxuc#ww(7~fV36vTY6q5-Q#%i}|B>o{7dwbR-r=~$-^N2Po5qceVKPe1Ja<=)+U
+z{%3d3?%te3A;s0-6deT#+(1`h!Yy^0Ze9tmEwP)kMBbilushB6a%Y*tkX`PKS-`ns
+z?^dkb2otVZob%I;D7q?^P3K<hJ{9m?$>Jt(VPV`mSz%$Ct*n&GrSTEQj;)I>&Y8iD
+z1@FeYzaLn!V_(;|`H3kJ{vO$wFPE!_(KYd)6qOOf<Bx8|aV@|XJP9w0O45Eh0KBLn
+z1B|=GXCp41mfsqU<aWboVIo{-O@3fie~EKRh%r@4B_Ey%z$z()co^T8W|RGlM<gxr
+zGkzyMLq-@UIcAYx88aLiq}m^VVn;HmW2|zdkOPc9c7Kv_#GxhqjPXt;?U$vmL~(V{
+zZkP^5P9^z;Rk@sL5w*Q?)wUU26MQPDpr2J8>J7j(X9hXT7+X3w;`Vrxu`JFD_l-$l
+zDpiuLeF4~9sv%X3ovcYspKPU$a1Ee7kN^sok~FcZcvmuMWz2P@5g+3w*DNx^SnEn5
+z*BSk;JQ89Ick9U?jCt;SQh7E2+uVyu72}{gllT}(Sr$3Ps4tsC&M+Fw&XYmLjPe|E
+ziP2V`LM}5ll-KAQ*$jhR8YRJM%5(~DOExb!?DOmf(QPgf+$Nprp(u%hie-cJE~j24
+z38JKajdzHqVzb&Ph_>-drdkpNgL)%h%BM>P^MfBYr^Uh-S%h>OZxsybqEO-#BuBcV
+z%q~dkB3=?KCYu0n=I1Qy=?=2tc@TYjS@h+6#L5=AJjzL9|E<=yLSJXzE^V@23EWxP
+zAJrB9-kz8(HxS%ZOJcFw%A0KCT~iltvT|G{yWV_QEAQWriN+icJ*y*W@L}u!h4Clg
+z=jv$MuRxehjadbA)~Miv?Rt6+OW^35M9AHtqXT#XO2`!_1Ls*nf5(^uk4K9$JRVOH
+z1PkI|`A!|4Kuh6N2#5JN<1hDMq)-JHU=dD;$^!11*Xdb|=#h=vcg4c;T{_x_B~ZOK
+z1{Af~^bD53y|q!$U7JaVumsB1slZW}M|-gZR@X;EcD<I4;jG>yh-{b)Kh|sLMXVk)
+z@sGp4h8*h05|~*O1MlwEpoQtq#uxCMA7jp+Yt-OHXnU~=D);2!ZKAfOsgU0^pI*S4
+z-!?-$Oln?8&tnOMny0~qW<4Fo66g?SfTv|C-Wux=qM&+jBoypLJZm-^6W}SYo_>Wj
+zO!tgWL&*C){Sr%Hczq(A+P4_*I38X<5oT_Pfy(`Q%w9}{<_&Do9axCBFRd_5fe8n*
+z@D|+)(<HcPiiFP&>hTUY<Do@(N3(TfEX+QfiSzv>|NppiI1Vl!*3myP&VG$~Asxh6
+zXd3e@XfY?koTH2BPgnw1k5=KtzTc7oH$T?UFEBj!TT)@@*kte?TR?B)OsWcoTEk($
+z8i&&ZIV^`--@y5rkd1Hu<W;O}!8GV;dkkJ`i^j?SXw0&}bC|}X!P&0G6PVJ0?EU8*
+zTD+u|gXQG@m!y`r6EUgf?R=2bLdn*6JGD4_zPB?8+6+o~yDOjG$Jp4sohq1ed<mZM
+z9(ycYJg%mr7~U`Mo{3}lWcN}U!tnT&6NRL=HwbMflF1FmZy5jX4es<MlbXIDr1~lp
+HIaU7vtUd}-
+
+diff --git a/.gradle/8.14.3/executionHistory/executionHistory.lock b/.gradle/8.14.3/executionHistory/executionHistory.lock
+index 0cd8b3cd0a1a8aa8e60a37b9a54ae2185b06b399..e533d80d73d6f51189be8c1d6e65ef358de0a43f 100644
+GIT binary patch
+literal 17
+UcmZQhI+5-$v77rh0|amY05J>${{R30
+
+literal 17
+UcmZR!G%&4ryydey0|amY04@gu^8f$<
+
+diff --git a/.gradle/8.14.3/fileHashes/fileHashes.bin b/.gradle/8.14.3/fileHashes/fileHashes.bin
+index 56e2e7542c7fc207a897c7e1dc608401d077686a..eb5676d3c6399788e403043a7a6adc006cf6151d 100644
+GIT binary patch
+delta 2451
+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
+
+delta 2483
+zcmX|?c~DbV6o-w7yArFI<RLK-Wl<5WqktPhtEjkyJpq!Jq()@ifpHyhz@k;ze~gS;
+zL{wagh!(}MR>g5psa0f@YD*pWt;$fxZIn@am-oy+-+kXX_uTvLxk;KE6wM8aqvO<}
+zVK?u6)A`M#PV6Hd`yzcdU|g1I|JoYvEnC0(+Gd}rZ#QOhKeHSbbqJ2AMdg;wd4t++
+zDVFkp{T5s`A&Aqcl(`4iXCyQ(FXn+n1)Lh)`g|>RWgc7kgv+E0a`^&#%I`0BDLlAO
+zSS0(x;+mYUIpLw)J0{4!I9cKLcZH>rd(q>oZ>lui4xTI3v7C`T6qQrfo*ICC8h<?2
+zXfRL+H0&JTT`&#%sZ6RdN6y{#@@4V(PsaV+n_6XG?$fGzdb3Q&y}1u^1f5|wvZsW+
+zyPm_PZH=6~dsqKgdgCG&?yV<fzei<Nxpd6C#l52k%7n{k@EE16Gi0WQZJ9PsDpUp6
+zL0)b#X;t3cU(|7DUV*WL7AhOw1bsHI>*A0q=b(B}Fx)-Wuz0EsO_x2d9FOSY$Agx3
+zdD$EB?$+o!^)ji_UfJKAvuayF&u6E&ca-C*XRzUZ{Tj>R<qP7uw1vyb_aB@-INf*h
+zMD7#E$o}!t!l*mH-0jAFl89+qqw<+oW#NGVmu^T!?jTRAQ~s-bZ9jDV+Z9}zTTrRh
+z8UA}|G-kG4u9nI+%4J{sE!O;CC^;dOeJlG9CY|pUG5)4h*&S!J!OBhz<BG=5d-8`=
+z#ECZTLZz$Cv~9-uhyz?EbVJ5qonQBBt$nt~Uku<<TrZdHt8M(JH7I%`_en*lCdvIW
+z=SO8ue^Ae*y;4r@KcK1W#(OJ%l)M}63=T$sZj_(r!JkX&4;DCiz+#psXeVmy>DrlZ
+zxpyqV30<V`rkJScC;4N!Gl$B#{&AazjCVcXlY474rg`a*;bp^HFSTLv;xYQ88#fG<
+z7VwoPO-(H>OkbUHo%@6)*@x%vNM1d>*9GqFVVL6`i8}9aW$cFLHr4EpN2CcMh}ADd
+zi(YM5aOH#N&ibV*r5R~*rDR)1;Pr=-Ez*RtuYRv{<-`x`q#Y%8;IUq(OsVxwxjjEu
+zsxCgnC%w_IEcvu?bJWLLUcvfYu8?}MEKhazvQ#-KK=x@t6{APHf4C;)d%-d!%Wd-e
+z>RiK;LhcevYg>jC=v_LjC!jD3$eQ8q(lM(F+h+t4{)Q`zS@^`5ioluF7s1Y$4lrh+
+zL3)1Am<s<{G%pQ_67v|-agH$=uNb#NA3^h+h-DP9i7_2T2?B0J(7j~i1#{W(oK17L
+zVjiOdS&ZqZWh}yD#w@7j(7b%iWK6?4#w=7z&vzNK(Qhuz%f?j3bcDtWD40vvEX4ul
+zcH=L`J?J%$=GJ2p<F8o8cnB4Y7jT2|5?qZmZv%oDn~}o!Cw5Xg=He=&8DAJ<F*=fX
+zdpo|T6l>6I6HpUL_8>kYXD+~BBxCzPgoy&STgce9563J5mL$<}J}gmmel`jieQ=&J
+z9j_^EHnb-S2#u!oS`Z&i-C}HJbirv#`$M#`=SB>Uq45?(GKR4pl*Q2XPol~ypoxv|
+z;VF&V%SaytjESZDIE{!{>b^q;V=iha#dh3h&m}lR_7M<Ab4%et_Ak=0conPS=$d*Q
+zqO>1ID|>zcH}bxp*!%V)eIYT&B&=XGAb{MBGx21;qc<jy^J=GKF$~>IbWI~dC>=o%
+zN!}(K&Fg}4l6TTX#`bq;qVXMP$$cku24ajvC*w$zN^E58#MgBy$htJYGpS42g`5v%
+zS8{#=?j(@f&hF&>1-K>BaSw970*dH+I(x&MNOSv={s`!xXXaFrGoh{@=@DgrcqLJ~
+zBbsp_>8*fr+GnQ<Cz(^@Iim+TLz?SJ&RIY*JtwCY>zUJ$`$1#gc*v+{_nO@)=MZ+M
+zRz=bLq2$g8VErZIDl47iL;5A)y_Lp&NDrv<C3lZ=aEyRFdLNyBq)!6QiSE6~nE#My
+zzQ8Nim&GDT4b~s0Kj{yhJB*yU)C)2$XKpyT>ohhTF7`lDXM|MeINVIM&IlyiNqqiC
+t{+*fM!M`(vqay{V9AqCAYY^xlITa<aGfn{<fo>fY(!WRN&!pza{{chO2?GEC
+
+diff --git a/.gradle/8.14.3/fileHashes/fileHashes.lock b/.gradle/8.14.3/fileHashes/fileHashes.lock
+index 090b488bebee799d4601294d6a062f9ff4e073ac..6db5c252a1805efe8f212baf57c493adda40134c 100644
+GIT binary patch
+literal 17
+UcmZQ($dZ5lN;+vV0|fK{04gH{3IG5A
+
+literal 17
+TcmZQp_mBVm$}qEz0RnmeFKq;3
+
+diff --git a/.gradle/buildOutputCleanup/buildOutputCleanup.lock b/.gradle/buildOutputCleanup/buildOutputCleanup.lock
+index 2f6b8088698ded1e5255e0bc36e92e9239d228a7..c1232ec6ef060d05c926fac46f954812a6052621 100644
+GIT binary patch
+literal 17
+UcmZQJtQPuJbou%=1_+P@05ydKrvLx|
+
+literal 17
+UcmZR+9CkrtW`<lT0|ZC`05I(X(*OVf
+
+diff --git a/.gradle/buildOutputCleanup/cache.properties b/.gradle/buildOutputCleanup/cache.properties
+index 2006895278d..22edffd0251 100644
+--- a/.gradle/buildOutputCleanup/cache.properties
++++ b/.gradle/buildOutputCleanup/cache.properties
+@@ -1,2 +1,2 @@
+-#Wed Apr 22 20:56:59 UTC 2026
++#Wed Apr 22 20:59:29 UTC 2026
+ gradle.version=8.14.3
+diff --git a/.gradle/buildOutputCleanup/outputFiles.bin b/.gradle/buildOutputCleanup/outputFiles.bin
+index 8a0f2f9e57b0016fba5d879630f7db2bd29b758d..277fa489bdd8b7231aa28e5f321ee30092bb4cef 100644
+GIT binary patch
+delta 317
+zcmdlznQ`T0#tkMCnj$Tt?~HzX&UR)11JCLIp`fFfw<}6sFA6H2IN4P~!C|)G>)Mlh
+zz286uC1Hx^2dKYMdHiQTMBL*dOnkxB&ST*l#XdpRvrq1oP>9&)w8T|ppSCJguob5G
+zxr0D|U%`VosJK5&{DbAPU8R@3PeH|PVd7s?p6c;=GAxFQYfm<nRG6GADIs8=TN*F=
+zzeyP?Q9OC7q=iPvhr1h|S*A^g2zq>lnG*6jf6IE_Z#_`)$CK|$TJXRm85kHpZdCjs
+SzR^HKY_p?BAmd~|4{-qc-Hgou
+
+delta 335
+zcmZ2EnQ`}I#tkMCf}+!N*m$OI|J%#}2A<lJV<i+cX4Sl7<aqqX7b-aYKNQS+^JbFO
+z-+*NhagU3W_ev<#uav4j%=-Av6R2WInBp~0;#8%d-dzY4UkMYxv1vza7<>N*s5m=J
+z{I1}q;O+W~Q=x``g^54At>m!4shSb0-WDeQp;e%Jq10B+Ur>qS$)=JD0?P41;oMfL
+zwopO;$-Y2A_ep#&-Fv>RfExXHa;>C=K-k8fY`^rASD`9fC*PH{P^kzORjA6$I1Lp{
+egjoio85o#2H!A)R-)JBpw%O4mka2Q@rzQY6c91#%
+
+diff --git a/.gradle/file-system.probe b/.gradle/file-system.probe
+index 7066888eee9ad34f459c97eee3642e2127825874..f8168b470f07cd8dc7042bba9626f028654bf41e 100644
+GIT binary patch
+literal 8
+PcmZQzV4S<{@AeD;3d93(
+
+literal 8
+PcmZQzV4S<{_pGA;3gH8<
+

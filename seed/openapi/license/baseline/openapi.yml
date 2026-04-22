@@ -1,0 +1,26 @@
+openapi: 3.1.0
+info:
+  title: license
+  version: 0.0.0
+paths:
+  /:
+    get:
+      operationId: get
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '204':
+          description: No content
+components:
+  schemas:
+    Type:
+      title: Type
+      type: object
+      description: A simple type with just a name.
+      properties:
+        name:
+          type: string
+      required:
+        - name
+  securitySchemes: {}

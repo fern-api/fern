@@ -1,0 +1,17 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/property-based-error",
+                "method": "GET",
+                "identifier_override": "endpoint_property-based-error.ThrowError"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedErrorProperty;\n\nvar client = new SeedErrorPropertyClient();\nawait client.PropertyBasedError.ThrowErrorAsync();\n"
+            }
+        }
+    ]
+}

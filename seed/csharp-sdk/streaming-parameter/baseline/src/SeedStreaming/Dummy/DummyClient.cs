@@ -1,0 +1,72 @@
+using global::System.Text.Json;
+using SeedStreaming.Core;
+
+namespace SeedStreaming;
+
+public partial class DummyClient : IDummyClient
+{
+    private readonly RawClient _client;
+
+    internal DummyClient(RawClient client)
+    {
+        _client = client;
+    }
+
+    /// <example><code>
+    /// client.Dummy.GenerateAsync(new GenerateRequest { Stream = false, NumEvents = 5 });
+    /// </code></example>
+    public async IAsyncEnumerable<StreamResponse> GenerateAsync(
+        GenerateRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = await new SeedStreaming.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Post,
+                    Path = "generate",
+                    Body = request,
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            string? line;
+            using var reader = new StreamReader(await response.Raw.Content.ReadAsStreamAsync());
+            while (!string.IsNullOrEmpty(line = await reader.ReadLineAsync()))
+            {
+                StreamResponse? result;
+                try
+                {
+                    result = JsonUtils.Deserialize<StreamResponse>(line);
+                }
+                catch (JsonException)
+                {
+                    throw new SeedStreamingException($"Unable to deserialize JSON response 'line'");
+                }
+            }
+            yield break;
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedStreamingApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+}

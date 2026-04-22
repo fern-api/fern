@@ -1,0 +1,200 @@
+openapi: 3.1.0
+info:
+  title: Query Parameters API
+  version: 0.0.0
+paths:
+  /user/getUsername:
+    get:
+      operationId: search
+      tags:
+        - ''
+      parameters:
+        - name: limit
+          in: query
+          required: true
+          schema:
+            type: integer
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: date
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: deadline
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+        - name: bytes
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: user
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/User'
+        - name: userList
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              anyOf:
+                - $ref: '#/components/schemas/User'
+                - type: 'null'
+        - name: optionalDeadline
+          in: query
+          required: false
+          schema:
+            type:
+              - string
+              - 'null'
+            format: date-time
+        - name: keyValue
+          in: query
+          required: false
+          schema:
+            type:
+              - object
+              - 'null'
+            additionalProperties:
+              type: string
+        - name: optionalString
+          in: query
+          required: false
+          schema:
+            type:
+              - string
+              - 'null'
+        - name: nestedUser
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - $ref: '#/components/schemas/NestedUser'
+              - type: 'null'
+        - name: optionalUser
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - $ref: '#/components/schemas/User'
+              - type: 'null'
+        - name: excludeUser
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              anyOf:
+                - $ref: '#/components/schemas/User'
+                - type: 'null'
+        - name: filter
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type:
+                - string
+                - 'null'
+        - name: tags
+          in: query
+          description: List of tags. Serialized as a comma-separated list.
+          required: false
+          schema:
+            type: array
+            items:
+              type:
+                - string
+                - 'null'
+        - name: optionalTags
+          in: query
+          description: Optional list of tags. Serialized as a comma-separated list.
+          required: false
+          schema:
+            type: array
+            items:
+              type:
+                - string
+                - 'null'
+        - name: neighbor
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - $ref: '#/components/schemas/SearchRequestNeighbor'
+              - type: 'null'
+        - name: neighborRequired
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/SearchRequestNeighborRequired'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResponse'
+components:
+  schemas:
+    SearchRequestNeighbor:
+      title: SearchRequestNeighbor
+      oneOf:
+        - $ref: '#/components/schemas/User'
+        - $ref: '#/components/schemas/NestedUser'
+        - type: string
+        - type: integer
+    SearchRequestNeighborRequired:
+      title: SearchRequestNeighborRequired
+      oneOf:
+        - $ref: '#/components/schemas/User'
+        - $ref: '#/components/schemas/NestedUser'
+        - type: string
+        - type: integer
+    SearchResponse:
+      title: SearchResponse
+      type: object
+      properties:
+        results:
+          type:
+            - array
+            - 'null'
+          items:
+            type: string
+    User:
+      title: User
+      type: object
+      properties:
+        name:
+          type:
+            - string
+            - 'null'
+        tags:
+          type:
+            - array
+            - 'null'
+          items:
+            type: string
+    NestedUser:
+      title: NestedUser
+      type: object
+      properties:
+        name:
+          type:
+            - string
+            - 'null'
+        user:
+          anyOf:
+            - $ref: '#/components/schemas/User'
+            - type: 'null'
+  securitySchemes: {}

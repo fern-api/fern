@@ -1,0 +1,1109 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index f1753c47972..a195bcb1876 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-java-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "enable-wire-tests": true
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "manual",
+diff --git a/.gradle/8.14.3/checksums/checksums.lock b/.gradle/8.14.3/checksums/checksums.lock
+index 6f31bd463b9711d4e3ab2254ee83ce952b30a328..1f0f860c84eb91b91bd36162baf799d07ceaa993 100644
+GIT binary patch
+literal 17
+TcmZR!4!FXmzv=g41}FdkE$sv7
+
+literal 17
+TcmZQ(`Fq-l<qsDt0~7!NDPRL3
+
+diff --git a/.gradle/8.14.3/executionHistory/executionHistory.bin b/.gradle/8.14.3/executionHistory/executionHistory.bin
+index 7aa37cca81a0a228c250540848c3feebfdd1ca6d..6e5c2d931fd8842570003db6eaaaceaeb552b628 100644
+GIT binary patch
+literal 78574
+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
+K&$2$_*#80S&wZKz
+
+delta 10573
+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
+F{{Vz~b-w@r
+
+diff --git a/.gradle/8.14.3/executionHistory/executionHistory.lock b/.gradle/8.14.3/executionHistory/executionHistory.lock
+index 8f7bdf9f10a5d11887a40138362272132a9587a3..94676a26475c0bb7040eb86c4778f9a0a9927f3e 100644
+GIT binary patch
+literal 17
+UcmZR+xZt#yaKN1~1_<B)05awS^8f$<
+
+literal 17
+TcmZQ}>e+6iaXv_#0RlJxD0Txa
+
+diff --git a/.gradle/8.14.3/fileHashes/fileHashes.bin b/.gradle/8.14.3/fileHashes/fileHashes.bin
+index 2ef456e200200ea7df92ab43650a818e89e95b00..6fcb1b1caf4369953ea69ce172bff4425a4a9327 100644
+GIT binary patch
+delta 8401
+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
+bETZ}7Hx<5K2))H3<>5Z|8<EF9!%hAJoUjPt
+
+delta 8167
+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
+
+diff --git a/.gradle/8.14.3/fileHashes/fileHashes.lock b/.gradle/8.14.3/fileHashes/fileHashes.lock
+index 24fac09b29c25e55a1f3448dc0c10e4a7e64903b..25d036df9024f295975e8e5246bef569a2edbdbb 100644
+GIT binary patch
+literal 17
+VcmZR6e&MjK==9p}3}C<*2mn3=1uXyo
+
+literal 17
+UcmZQhc5h+f<=6IS00TyE02mAc7ytkO
+
+diff --git a/.gradle/buildOutputCleanup/buildOutputCleanup.lock b/.gradle/buildOutputCleanup/buildOutputCleanup.lock
+index 267c92ff4f18a88dbea2c69f7a2b3fd37b9c42db..f56e93bfff13c6c0629cf34dc881e8eabc3ddd20 100644
+GIT binary patch
+literal 17
+TcmZS1i8w9W!M4?$0RkieD0>4#
+
+literal 17
+UcmZR+!1ZB$!{4tv7$86j07T#g!2kdN
+
+diff --git a/.gradle/buildOutputCleanup/cache.properties b/.gradle/buildOutputCleanup/cache.properties
+index 673da4c79aa..eb9f4a3e2ec 100644
+--- a/.gradle/buildOutputCleanup/cache.properties
++++ b/.gradle/buildOutputCleanup/cache.properties
+@@ -1,2 +1,2 @@
+-#Wed Apr 22 20:56:42 UTC 2026
++#Wed Apr 22 20:59:26 UTC 2026
+ gradle.version=8.14.3
+diff --git a/.gradle/buildOutputCleanup/outputFiles.bin b/.gradle/buildOutputCleanup/outputFiles.bin
+index 1dc8bec38429d5a5ae1f9ad560536bc271d8137d..015a6e504aba7c681ab77ff3d564787eb6097784 100644
+GIT binary patch
+delta 320
+zcmdlznQ`T0#tkMCf+8Koyj@Z9dQl8u;F&nNR6;>uw&3g9lY712Km{cy_ev<#Z@M`7
+ztC{uxbx=X}|4^{y!Jg|*&fLWiagU2I@#hW#{e1-w;-KpNVd5Vwm+dOO?0pI<ZVMCt
+zn(|bS&y!&>R9qV-&XiHCzU|xR$xkE%C#y<IXxQhL#*6-MQiiH4hN%l!TfS1Z^1cs5
+z+~e_NUr7s&SS2e)-re7AC-0Ti<d6Eg*uCS?E~tX9lfOzTsMN3p8rg4PSp_w%6=oWY
+aW?*3axKZ(k_(lT_vCWPifsB*=Jj4Os(2g<y
+
+delta 329
+zcmZ2EnQ`}I#tkMCj-nG7%ywMooAZeQ3_KqHhk|LL;oS^7SWZL4J=tO6({tE(rf>h-
+z3>DX&>?)x!xmH3#<JoN`hXqd6j8F+%n1&Cn0^JLxw*G>O7f)uDRM22Ozt87ms+0;u
+z(Bmsiv2wgnIJcFmEmX1pWLZfC0b^zvjttozE~w&*lT#%vEW$SSWc#I`yb4v>3Ns;M
+z`;%=ux4pgx6<-MxkB#wqcJOrW%*jh7HTjJU&-tHRmkd=SIr*-nf=WfOs6tg{2F$~W
+eFpV&pfq{v0qv8+ojRpc@n;ks@87DV*Y61X4j*5x^
+
+diff --git a/.gradle/file-system.probe b/.gradle/file-system.probe
+index 4efc61cac91e16effc0b484fa08893db5be5ebf4..175d1b4477c97206baa0f5091323ca87bb9d0b58 100644
+GIT binary patch
+literal 8
+PcmZQzV4S<{?{!N63e^K*
+
+literal 8
+PcmZQzV4S<{cfC6R3M~T`
+
+diff --git a/build.gradle b/build.gradle
+index e06cca9c7ab..ad368a2a971 100644
+--- a/build.gradle
++++ b/build.gradle
+@@ -19,6 +19,7 @@ dependencies {
+     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.2'
++    testImplementation 'com.squareup.okhttp3:mockwebserver:5.2.1'
+ }
+ 
+ 
+diff --git a/src/test/java/com/seed/unions/BigunionWireTest.java b/src/test/java/com/seed/unions/BigunionWireTest.java
+new file mode 100644
+index 00000000000..d9fd226a653
+--- /dev/null
++++ b/src/test/java/com/seed/unions/BigunionWireTest.java
+@@ -0,0 +1,293 @@
++package com.seed.unions;
++
++import com.fasterxml.jackson.databind.JsonNode;
++import com.fasterxml.jackson.databind.ObjectMapper;
++import com.seed.unions.core.ObjectMappers;
++import com.seed.unions.resources.bigunion.types.BigUnion;
++import com.seed.unions.resources.bigunion.types.NormalSweet;
++import java.util.Arrays;
++import java.util.Map;
++import okhttp3.mockwebserver.MockResponse;
++import okhttp3.mockwebserver.MockWebServer;
++import okhttp3.mockwebserver.RecordedRequest;
++import org.junit.jupiter.api.AfterEach;
++import org.junit.jupiter.api.Assertions;
++import org.junit.jupiter.api.BeforeEach;
++import org.junit.jupiter.api.Test;
++
++public class BigunionWireTest {
++    private MockWebServer server;
++    private SeedUnionsClient client;
++    private ObjectMapper objectMapper = ObjectMappers.JSON_MAPPER;
++
++    @BeforeEach
++    public void setup() throws Exception {
++        server = new MockWebServer();
++        server.start();
++        client = SeedUnionsClient.builder().url(server.url("/").toString()).build();
++    }
++
++    @AfterEach
++    public void teardown() throws Exception {
++        server.shutdown();
++    }
++
++    @Test
++    public void testGet() throws Exception {
++        server.enqueue(
++                new MockResponse()
++                        .setResponseCode(200)
++                        .setBody(
++                                "{\"type\":\"normalSweet\",\"value\":\"value\",\"id\":\"id\",\"created-at\":\"2024-01-15T09:30:00Z\",\"archived-at\":\"2024-01-15T09:30:00Z\"}"));
++        BigUnion response = client.bigunion().get("id");
++        RecordedRequest request = server.takeRequest();
++        Assertions.assertNotNull(request);
++        Assertions.assertEquals("GET", request.getMethod());
++
++        // Validate response body
++        Assertions.assertNotNull(response, "Response should not be null");
++        String actualResponseJson = objectMapper.writeValueAsString(response);
++        String expectedResponseBody = ""
++                + "{\n"
++                + "  \"type\": \"normalSweet\",\n"
++                + "  \"value\": \"value\",\n"
++                + "  \"id\": \"id\",\n"
++                + "  \"created-at\": \"2024-01-15T09:30:00Z\",\n"
++                + "  \"archived-at\": \"2024-01-15T09:30:00Z\"\n"
++                + "}";
++        JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
++        JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
++        Assertions.assertTrue(
++                jsonEquals(expectedResponseNode, actualResponseNode),
++                "Response body structure does not match expected");
++        if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
++            String discriminator = null;
++            if (actualResponseNode.has("type"))
++                discriminator = actualResponseNode.get("type").asText();
++            else if (actualResponseNode.has("_type"))
++                discriminator = actualResponseNode.get("_type").asText();
++            else if (actualResponseNode.has("kind"))
++                discriminator = actualResponseNode.get("kind").asText();
++            Assertions.assertNotNull(discriminator, "Union type should have a discriminator field");
++            Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");
++        }
++
++        if (!actualResponseNode.isNull()) {
++            Assertions.assertTrue(
++                    actualResponseNode.isObject() || actualResponseNode.isArray() || actualResponseNode.isValueNode(),
++                    "response should be a valid JSON value");
++        }
++
++        if (actualResponseNode.isArray()) {
++            Assertions.assertTrue(actualResponseNode.size() >= 0, "Array should have valid size");
++        }
++        if (actualResponseNode.isObject()) {
++            Assertions.assertTrue(actualResponseNode.size() >= 0, "Object should have valid field count");
++        }
++    }
++
++    @Test
++    public void testUpdate() throws Exception {
++        server.enqueue(new MockResponse().setResponseCode(200).setBody("true"));
++        Boolean response = client.bigunion()
++                .update(BigUnion.normalSweet(NormalSweet.builder()
++                        .value("value")
++                        .additionalProperty("id", "id")
++                        .additionalProperty("created-at", "2024-01-15T09:30:00Z")
++                        .additionalProperty("archived-at", "2024-01-15T09:30:00Z")
++                        .build()));
++        RecordedRequest request = server.takeRequest();
++        Assertions.assertNotNull(request);
++        Assertions.assertEquals("PATCH", request.getMethod());
++        // Validate request body
++        String actualRequestBody = request.getBody().readUtf8();
++        String expectedRequestBody = "" + "{\n" + "  \"type\": \"normalSweet\",\n" + "  \"value\": \"value\"\n" + "}";
++        JsonNode actualJson = objectMapper.readTree(actualRequestBody);
++        JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
++        Assertions.assertTrue(jsonEquals(expectedJson, actualJson), "Request body structure does not match expected");
++        if (actualJson.has("type") || actualJson.has("_type") || actualJson.has("kind")) {
++            String discriminator = null;
++            if (actualJson.has("type")) discriminator = actualJson.get("type").asText();
++            else if (actualJson.has("_type"))
++                discriminator = actualJson.get("_type").asText();
++            else if (actualJson.has("kind"))
++                discriminator = actualJson.get("kind").asText();
++            Assertions.assertNotNull(discriminator, "Union type should have a discriminator field");
++            Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");
++        }
++
++        if (!actualJson.isNull()) {
++            Assertions.assertTrue(
++                    actualJson.isObject() || actualJson.isArray() || actualJson.isValueNode(),
++                    "request should be a valid JSON value");
++        }
++
++        if (actualJson.isArray()) {
++            Assertions.assertTrue(actualJson.size() >= 0, "Array should have valid size");
++        }
++        if (actualJson.isObject()) {
++            Assertions.assertTrue(actualJson.size() >= 0, "Object should have valid field count");
++        }
++
++        // Validate response body
++        Assertions.assertNotNull(response, "Response should not be null");
++        String actualResponseJson = objectMapper.writeValueAsString(response);
++        String expectedResponseBody = "" + "true";
++        JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
++        JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
++        Assertions.assertTrue(
++                jsonEquals(expectedResponseNode, actualResponseNode),
++                "Response body structure does not match expected");
++        if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
++            String discriminator = null;
++            if (actualResponseNode.has("type"))
++                discriminator = actualResponseNode.get("type").asText();
++            else if (actualResponseNode.has("_type"))
++                discriminator = actualResponseNode.get("_type").asText();
++            else if (actualResponseNode.has("kind"))
++                discriminator = actualResponseNode.get("kind").asText();
++            Assertions.assertNotNull(discriminator, "Union type should have a discriminator field");
++            Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");
++        }
++
++        if (!actualResponseNode.isNull()) {
++            Assertions.assertTrue(
++                    actualResponseNode.isObject() || actualResponseNode.isArray() || actualResponseNode.isValueNode(),
++                    "response should be a valid JSON value");
++        }
++
++        if (actualResponseNode.isArray()) {
++            Assertions.assertTrue(actualResponseNode.size() >= 0, "Array should have valid size");
++        }
++        if (actualResponseNode.isObject()) {
++            Assertions.assertTrue(actualResponseNode.size() >= 0, "Object should have valid field count");
++        }
++    }
++
++    @Test
++    public void testUpdateMany() throws Exception {
++        server.enqueue(new MockResponse().setResponseCode(200).setBody("{\"string\":true}"));
++        Map<String, Boolean> response = client.bigunion()
++                .updateMany(Arrays.asList(
++                        BigUnion.normalSweet(NormalSweet.builder()
++                                .value("value")
++                                .additionalProperty("id", "id")
++                                .additionalProperty("created-at", "2024-01-15T09:30:00Z")
++                                .additionalProperty("archived-at", "2024-01-15T09:30:00Z")
++                                .build()),
++                        BigUnion.normalSweet(NormalSweet.builder()
++                                .value("value")
++                                .additionalProperty("id", "id")
++                                .additionalProperty("created-at", "2024-01-15T09:30:00Z")
++                                .additionalProperty("archived-at", "2024-01-15T09:30:00Z")
++                                .build())));
++        RecordedRequest request = server.takeRequest();
++        Assertions.assertNotNull(request);
++        Assertions.assertEquals("PATCH", request.getMethod());
++        // Validate request body
++        String actualRequestBody = request.getBody().readUtf8();
++        String expectedRequestBody = ""
++                + "[\n"
++                + "  {\n"
++                + "    \"type\": \"normalSweet\",\n"
++                + "    \"value\": \"value\"\n"
++                + "  },\n"
++                + "  {\n"
++                + "    \"type\": \"normalSweet\",\n"
++                + "    \"value\": \"value\"\n"
++                + "  }\n"
++                + "]";
++        JsonNode actualJson = objectMapper.readTree(actualRequestBody);
++        JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
++        Assertions.assertTrue(jsonEquals(expectedJson, actualJson), "Request body structure does not match expected");
++        if (actualJson.has("type") || actualJson.has("_type") || actualJson.has("kind")) {
++            String discriminator = null;
++            if (actualJson.has("type")) discriminator = actualJson.get("type").asText();
++            else if (actualJson.has("_type"))
++                discriminator = actualJson.get("_type").asText();
++            else if (actualJson.has("kind"))
++                discriminator = actualJson.get("kind").asText();
++            Assertions.assertNotNull(discriminator, "Union type should have a discriminator field");
++            Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");
++        }
++
++        if (!actualJson.isNull()) {
++            Assertions.assertTrue(
++                    actualJson.isObject() || actualJson.isArray() || actualJson.isValueNode(),
++                    "request should be a valid JSON value");
++        }
++
++        if (actualJson.isArray()) {
++            Assertions.assertTrue(actualJson.size() >= 0, "Array should have valid size");
++        }
++        if (actualJson.isObject()) {
++            Assertions.assertTrue(actualJson.size() >= 0, "Object should have valid field count");
++        }
++
++        // Validate response body
++        Assertions.assertNotNull(response, "Response should not be null");
++        String actualResponseJson = objectMapper.writeValueAsString(response);
++        String expectedResponseBody = "" + "{\n" + "  \"string\": true\n" + "}";
++        JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
++        JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
++        Assertions.assertTrue(
++                jsonEquals(expectedResponseNode, actualResponseNode),
++                "Response body structure does not match expected");
++        if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
++            String discriminator = null;
++            if (actualResponseNode.has("type"))
++                discriminator = actualResponseNode.get("type").asText();
++            else if (actualResponseNode.has("_type"))
++                discriminator = actualResponseNode.get("_type").asText();
++            else if (actualResponseNode.has("kind"))
++                discriminator = actualResponseNode.get("kind").asText();
++            Assertions.assertNotNull(discriminator, "Union type should have a discriminator field");
++            Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");
++        }
++
++        if (!actualResponseNode.isNull()) {
++            Assertions.assertTrue(
++                    actualResponseNode.isObject() || actualResponseNode.isArray() || actualResponseNode.isValueNode(),
++                    "response should be a valid JSON value");
++        }
++
++        if (actualResponseNode.isArray()) {
++            Assertions.assertTrue(actualResponseNode.size() >= 0, "Array should have valid size");
++        }
++        if (actualResponseNode.isObject()) {
++            Assertions.assertTrue(actualResponseNode.size() >= 0, "Object should have valid field count");
++        }
++    }
++
++    /**
++     * Compares two JsonNodes with numeric equivalence and null safety.
++     * For objects, checks that all fields in 'expected' exist in 'actual' with matching values.
++     * Allows 'actual' to have extra fields (e.g., default values added during serialization).
++     */
++    private boolean jsonEquals(JsonNode expected, JsonNode actual) {
++        if (expected == null && actual == null) return true;
++        if (expected == null || actual == null) return false;
++        if (expected.equals(actual)) return true;
++        if (expected.isNumber() && actual.isNumber())
++            return Math.abs(expected.doubleValue() - actual.doubleValue()) < 1e-10;
++        if (expected.isObject() && actual.isObject()) {
++            java.util.Iterator<java.util.Map.Entry<String, JsonNode>> iter = expected.fields();
++            while (iter.hasNext()) {
++                java.util.Map.Entry<String, JsonNode> entry = iter.next();
++                JsonNode actualValue = actual.get(entry.getKey());
++                if (actualValue == null) {
++                    if (!entry.getValue().isNull()) return false;
++                } else if (!jsonEquals(entry.getValue(), actualValue)) return false;
++            }
++            return true;
++        }
++        if (expected.isArray() && actual.isArray()) {
++            if (expected.size() != actual.size()) return false;
++            for (int i = 0; i < expected.size(); i++) {
++                if (!jsonEquals(expected.get(i), actual.get(i))) return false;
++            }
++            return true;
++        }
++        return false;
++    }
++}
+diff --git a/src/test/java/com/seed/unions/UnionWireTest.java b/src/test/java/com/seed/unions/UnionWireTest.java
+new file mode 100644
+index 00000000000..34f906a0785
+--- /dev/null
++++ b/src/test/java/com/seed/unions/UnionWireTest.java
+@@ -0,0 +1,185 @@
++package com.seed.unions;
++
++import com.fasterxml.jackson.databind.JsonNode;
++import com.fasterxml.jackson.databind.ObjectMapper;
++import com.seed.unions.core.ObjectMappers;
++import com.seed.unions.resources.union.types.Circle;
++import com.seed.unions.resources.union.types.Shape;
++import okhttp3.mockwebserver.MockResponse;
++import okhttp3.mockwebserver.MockWebServer;
++import okhttp3.mockwebserver.RecordedRequest;
++import org.junit.jupiter.api.AfterEach;
++import org.junit.jupiter.api.Assertions;
++import org.junit.jupiter.api.BeforeEach;
++import org.junit.jupiter.api.Test;
++
++public class UnionWireTest {
++    private MockWebServer server;
++    private SeedUnionsClient client;
++    private ObjectMapper objectMapper = ObjectMappers.JSON_MAPPER;
++
++    @BeforeEach
++    public void setup() throws Exception {
++        server = new MockWebServer();
++        server.start();
++        client = SeedUnionsClient.builder().url(server.url("/").toString()).build();
++    }
++
++    @AfterEach
++    public void teardown() throws Exception {
++        server.shutdown();
++    }
++
++    @Test
++    public void testGet() throws Exception {
++        server.enqueue(
++                new MockResponse().setResponseCode(200).setBody("{\"type\":\"circle\",\"radius\":1.1,\"id\":\"id\"}"));
++        Shape response = client.union().get("id");
++        RecordedRequest request = server.takeRequest();
++        Assertions.assertNotNull(request);
++        Assertions.assertEquals("GET", request.getMethod());
++
++        // Validate response body
++        Assertions.assertNotNull(response, "Response should not be null");
++        String actualResponseJson = objectMapper.writeValueAsString(response);
++        String expectedResponseBody =
++                "" + "{\n" + "  \"type\": \"circle\",\n" + "  \"radius\": 1.1,\n" + "  \"id\": \"id\"\n" + "}";
++        JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
++        JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
++        Assertions.assertTrue(
++                jsonEquals(expectedResponseNode, actualResponseNode),
++                "Response body structure does not match expected");
++        if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
++            String discriminator = null;
++            if (actualResponseNode.has("type"))
++                discriminator = actualResponseNode.get("type").asText();
++            else if (actualResponseNode.has("_type"))
++                discriminator = actualResponseNode.get("_type").asText();
++            else if (actualResponseNode.has("kind"))
++                discriminator = actualResponseNode.get("kind").asText();
++            Assertions.assertNotNull(discriminator, "Union type should have a discriminator field");
++            Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");
++        }
++
++        if (!actualResponseNode.isNull()) {
++            Assertions.assertTrue(
++                    actualResponseNode.isObject() || actualResponseNode.isArray() || actualResponseNode.isValueNode(),
++                    "response should be a valid JSON value");
++        }
++
++        if (actualResponseNode.isArray()) {
++            Assertions.assertTrue(actualResponseNode.size() >= 0, "Array should have valid size");
++        }
++        if (actualResponseNode.isObject()) {
++            Assertions.assertTrue(actualResponseNode.size() >= 0, "Object should have valid field count");
++        }
++    }
++
++    @Test
++    public void testUpdate() throws Exception {
++        server.enqueue(new MockResponse().setResponseCode(200).setBody("true"));
++        Boolean response = client.union()
++                .update(Shape.circle(Circle.builder()
++                        .radius(1.1)
++                        .additionalProperty("id", "id")
++                        .build()));
++        RecordedRequest request = server.takeRequest();
++        Assertions.assertNotNull(request);
++        Assertions.assertEquals("PATCH", request.getMethod());
++        // Validate request body
++        String actualRequestBody = request.getBody().readUtf8();
++        String expectedRequestBody = "" + "{\n" + "  \"type\": \"circle\",\n" + "  \"radius\": 1.1\n" + "}";
++        JsonNode actualJson = objectMapper.readTree(actualRequestBody);
++        JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
++        Assertions.assertTrue(jsonEquals(expectedJson, actualJson), "Request body structure does not match expected");
++        if (actualJson.has("type") || actualJson.has("_type") || actualJson.has("kind")) {
++            String discriminator = null;
++            if (actualJson.has("type")) discriminator = actualJson.get("type").asText();
++            else if (actualJson.has("_type"))
++                discriminator = actualJson.get("_type").asText();
++            else if (actualJson.has("kind"))
++                discriminator = actualJson.get("kind").asText();
++            Assertions.assertNotNull(discriminator, "Union type should have a discriminator field");
++            Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");
++        }
++
++        if (!actualJson.isNull()) {
++            Assertions.assertTrue(
++                    actualJson.isObject() || actualJson.isArray() || actualJson.isValueNode(),
++                    "request should be a valid JSON value");
++        }
++
++        if (actualJson.isArray()) {
++            Assertions.assertTrue(actualJson.size() >= 0, "Array should have valid size");
++        }
++        if (actualJson.isObject()) {
++            Assertions.assertTrue(actualJson.size() >= 0, "Object should have valid field count");
++        }
++
++        // Validate response body
++        Assertions.assertNotNull(response, "Response should not be null");
++        String actualResponseJson = objectMapper.writeValueAsString(response);
++        String expectedResponseBody = "" + "true";
++        JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
++        JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
++        Assertions.assertTrue(
++                jsonEquals(expectedResponseNode, actualResponseNode),
++                "Response body structure does not match expected");
++        if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
++            String discriminator = null;
++            if (actualResponseNode.has("type"))
++                discriminator = actualResponseNode.get("type").asText();
++            else if (actualResponseNode.has("_type"))
++                discriminator = actualResponseNode.get("_type").asText();
++            else if (actualResponseNode.has("kind"))
++                discriminator = actualResponseNode.get("kind").asText();
++            Assertions.assertNotNull(discriminator, "Union type should have a discriminator field");
++            Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");
++        }
++
++        if (!actualResponseNode.isNull()) {
++            Assertions.assertTrue(
++                    actualResponseNode.isObject() || actualResponseNode.isArray() || actualResponseNode.isValueNode(),
++                    "response should be a valid JSON value");
++        }
++
++        if (actualResponseNode.isArray()) {
++            Assertions.assertTrue(actualResponseNode.size() >= 0, "Array should have valid size");
++        }
++        if (actualResponseNode.isObject()) {
++            Assertions.assertTrue(actualResponseNode.size() >= 0, "Object should have valid field count");
++        }
++    }
++
++    /**
++     * Compares two JsonNodes with numeric equivalence and null safety.
++     * For objects, checks that all fields in 'expected' exist in 'actual' with matching values.
++     * Allows 'actual' to have extra fields (e.g., default values added during serialization).
++     */
++    private boolean jsonEquals(JsonNode expected, JsonNode actual) {
++        if (expected == null && actual == null) return true;
++        if (expected == null || actual == null) return false;
++        if (expected.equals(actual)) return true;
++        if (expected.isNumber() && actual.isNumber())
++            return Math.abs(expected.doubleValue() - actual.doubleValue()) < 1e-10;
++        if (expected.isObject() && actual.isObject()) {
++            java.util.Iterator<java.util.Map.Entry<String, JsonNode>> iter = expected.fields();
++            while (iter.hasNext()) {
++                java.util.Map.Entry<String, JsonNode> entry = iter.next();
++                JsonNode actualValue = actual.get(entry.getKey());
++                if (actualValue == null) {
++                    if (!entry.getValue().isNull()) return false;
++                } else if (!jsonEquals(entry.getValue(), actualValue)) return false;
++            }
++            return true;
++        }
++        if (expected.isArray() && actual.isArray()) {
++            if (expected.size() != actual.size()) return false;
++            for (int i = 0; i < expected.size(); i++) {
++                if (!jsonEquals(expected.get(i), actual.get(i))) return false;
++            }
++            return true;
++        }
++        return false;
++    }
++}

@@ -1,0 +1,22 @@
+using global::System.Net.Http.Headers;
+using NUnit.Framework;
+using SeedHttpHead.Test.Unit.MockServer;
+
+namespace SeedHttpHead.Test.Unit.MockServer.User;
+
+[TestFixture]
+[Parallelizable(ParallelScope.Self)]
+public class HeadTest : BaseMockServerTest
+{
+    [NUnit.Framework.Test]
+    public async Task MockServerTest()
+    {
+        Server
+            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/users").UsingHead())
+            .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
+
+        var headers = await Client.User.HeadAsync();
+        Assert.That(headers, Is.Not.Null);
+        Assert.That(headers, Is.InstanceOf<HttpResponseHeaders>());
+    }
+}

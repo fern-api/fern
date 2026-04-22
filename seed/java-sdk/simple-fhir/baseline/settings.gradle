@@ -1,0 +1,3 @@
+rootProject.name = 'simple-fhir'
+
+include 'sample-app'

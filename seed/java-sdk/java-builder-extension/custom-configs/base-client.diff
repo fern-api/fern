@@ -1,0 +1,1134 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index f1753c47972..901285623c0 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-java-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "client-class-name": "BaseClient"
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "manual",
+diff --git a/.gradle/8.14.3/checksums/checksums.lock b/.gradle/8.14.3/checksums/checksums.lock
+index 8e9ae3a97015eb236601eb7327070d390756d59e..a04e87df5efd8f3caf2c63b6df5edb5b135042b5 100644
+GIT binary patch
+literal 17
+ScmZS1&TX)Ec1_vJ00jUiwgWf-
+
+literal 17
+TcmZSH<N5zy)(!bn3{U_7KobQK
+
+diff --git a/.gradle/8.14.3/executionHistory/executionHistory.bin b/.gradle/8.14.3/executionHistory/executionHistory.bin
+index f0e3d318654b6c2553ce7b5697623f6af1f5d609..0346e0b7c153c3218e1c5259c45ef876e55f7958 100644
+GIT binary patch
+literal 49057
+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
+
+literal 49074
+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
+Ef5x2n5dZ)H
+
+diff --git a/.gradle/8.14.3/executionHistory/executionHistory.lock b/.gradle/8.14.3/executionHistory/executionHistory.lock
+index 1351a23c547e2e7a388e621cade9b6ba46c34d97..05e98ade9d5ef7d0476e6886fda5e62770d7fbf0 100644
+GIT binary patch
+literal 17
+UcmZRU=zeDEyhv?10|amY04l2kd;kCd
+
+literal 17
+TcmZSHn64DAA*rUu00A5T9dQCG
+
+diff --git a/.gradle/8.14.3/fileHashes/fileHashes.bin b/.gradle/8.14.3/fileHashes/fileHashes.bin
+index 5a8db3276b741c38886358168ce9705b707dc14f..f909f36df8bc056982ff2c2f51175a4bc2b4fd51 100644
+GIT binary patch
+delta 4444
+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
+
+delta 4495
+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
+XPr=o7$Fc*$aU(6%wH}(&ZSMI$Uk4Qj
+
+diff --git a/.gradle/8.14.3/fileHashes/fileHashes.lock b/.gradle/8.14.3/fileHashes/fileHashes.lock
+index 8c440b115afb7ae65fe75c35e7b9482c52588db5..246f449d4a8c76c85f8027efad435f95af131e06 100644
+GIT binary patch
+literal 17
+UcmZQRA+o#ieLAx_0|Yb!05IqTF8}}l
+
+literal 17
+UcmZRcKj-$Y5Y5^|1_)>d05?ShvH$=8
+
+diff --git a/.gradle/buildOutputCleanup/buildOutputCleanup.lock b/.gradle/buildOutputCleanup/buildOutputCleanup.lock
+index b3ccd7f1c1103ea477570fb054ff31f78c523b30..5fd0b75408276ce6b8ec07f66c28feef9fab4cb0 100644
+GIT binary patch
+literal 17
+UcmZSntJQtQX?CL+0|ZC{05p;W7XSbN
+
+literal 17
+UcmZSn{DVa|tIvB60|ZC`05vlNIRF3v
+
+diff --git a/.gradle/buildOutputCleanup/cache.properties b/.gradle/buildOutputCleanup/cache.properties
+index aa82f0cf733..e431d974dd8 100644
+--- a/.gradle/buildOutputCleanup/cache.properties
++++ b/.gradle/buildOutputCleanup/cache.properties
+@@ -1,2 +1,2 @@
+-#Wed Apr 22 20:49:51 UTC 2026
++#Wed Apr 22 20:58:22 UTC 2026
+ gradle.version=8.14.3
+diff --git a/.gradle/buildOutputCleanup/outputFiles.bin b/.gradle/buildOutputCleanup/outputFiles.bin
+index 9ac851e1d1a3413ecdb3995b65c0893536fc9abd..df83603496a0ed693f3ba22196d1b8e76649afb9 100644
+GIT binary patch
+delta 325
+zcmdlznQ`T0#tkMCf+8Koyj@Z9dQl8u;F&l%Rzg8ww&3g9lY712Km{cy_ev<#-+IFA
+zd)i_DTBu;_e<--4#?kcm#ZEzpxW`49_;Uw={=R|-aZvUCF!6WXccz!JZcl`YPlt(r
+zuw1sQ^s@IUsJJam{A<cnJw8tc&c#p(?a8u|3X^jsB_j0R%&gydLh=k$f*qzqztq8d
+zMrcJbMBL*mOx!B9P58X`qaRT5$1rjG+|qc_|4qtJbBZU|N?J@lD`~(3Q^3H$_;I7+
+U5Alr#8e*FrJpvgg`+0~109Egk3jhEB
+
+delta 356
+zcmZ2EnQ`}I#tkMCnxYLm!q@S(E||>#2A-1tp<sFr8_)FZf19D=+LK)+6a?ldyJ{bE
+zaheVloIbf!LZN=ey-)_RZ_x%&L3Wr4Ydi{<tkquK1QGXm3=_Y-Hm$nP<IFRt_(hob
+zv)f7z3!JJMq2}1a#6PqObT5?J`U@&v3=?O{C|2M0?ek<ENkI*^T_KUI7u5bj)vSc6
+zQH~c1=eAO{g^K%6HkDMEyj9XbAZ%k#wqN?mt5Av7$#*3!Y)Y)&MlbaX+6@u(_zE+n
+oB3M+RDl_9WRB<9q97Z!RFmY~F{2{*4KtOD>qemd)<OWYo06i6-IRF3v
+
+diff --git a/.gradle/file-system.probe b/.gradle/file-system.probe
+index 4efc112c5418295d0240d3da8daf9f1ee3c98967..e3bf9884afe49f10cc4a9a3ecb6cba181d6aa7d2 100644
+GIT binary patch
+literal 8
+PcmZQzV4S<{&w3vK3Y7y)
+
+literal 8
+PcmZQzV4S<{t5XpG3Csfi
+
+diff --git a/README.md b/README.md
+index 39a65a71a68..a1ff2e1be14 100644
+--- a/README.md
++++ b/README.md
+@@ -56,11 +56,11 @@ Instantiate and use the client with the following:
+ ```java
+ package com.example.usage;
+ 
+-import com.seed.builderExtension.SeedBuilderExtensionClient;
++import com.seed.builderExtension.BaseClient;
+ 
+ public class Example {
+     public static void main(String[] args) {
+-        SeedBuilderExtensionClient client = SeedBuilderExtensionClient
++        BaseClient client = BaseClient
+             .builder()
+             .token("<token>")
+             .build();
+@@ -75,10 +75,10 @@ public class Example {
+ This SDK allows you to configure different environments for API requests.
+ 
+ ```java
+-import com.seed.builderExtension.SeedBuilderExtensionClient;
++import com.seed.builderExtension.BaseClient;
+ import com.seed.builderExtension.core.Environment;
+ 
+-SeedBuilderExtensionClient client = SeedBuilderExtensionClient
++BaseClient client = BaseClient
+     .builder()
+     .environment(Environment.Production)
+     .build();
+@@ -89,9 +89,9 @@ SeedBuilderExtensionClient client = SeedBuilderExtensionClient
+ You can set a custom base URL when constructing the client.
+ 
+ ```java
+-import com.seed.builderExtension.SeedBuilderExtensionClient;
++import com.seed.builderExtension.BaseClient;
+ 
+-SeedBuilderExtensionClient client = SeedBuilderExtensionClient
++BaseClient client = BaseClient
+     .builder()
+     .url("https://example.com")
+     .build();
+@@ -102,11 +102,11 @@ SeedBuilderExtensionClient client = SeedBuilderExtensionClient
+ When the API returns a non-success status code (4xx or 5xx response), an API exception will be thrown.
+ 
+ ```java
+-import com.seed.builderExtension.core.SeedBuilderExtensionApiException;
++import com.seed.builderExtension.core.BaseClientApiException;
+ 
+ try{
+     client.service().hello(...);
+-} catch (SeedBuilderExtensionApiException e){
++} catch (BaseClientApiException e){
+     // Do something with the API exception...
+ }
+ ```
+@@ -119,12 +119,12 @@ This SDK is built to work with any instance of `OkHttpClient`. By default, if no
+ However, you can pass your own client like so:
+ 
+ ```java
+-import com.seed.builderExtension.SeedBuilderExtensionClient;
++import com.seed.builderExtension.BaseClient;
+ import okhttp3.OkHttpClient;
+ 
+ OkHttpClient customClient = ...;
+ 
+-SeedBuilderExtensionClient client = SeedBuilderExtensionClient
++BaseClient client = BaseClient
+     .builder()
+     .httpClient(customClient)
+     .build();
+@@ -147,9 +147,9 @@ A request is deemed retryable when any of the following HTTP status codes is ret
+ Use the `maxRetries` client option to configure this behavior.
+ 
+ ```java
+-import com.seed.builderExtension.SeedBuilderExtensionClient;
++import com.seed.builderExtension.BaseClient;
+ 
+-SeedBuilderExtensionClient client = SeedBuilderExtensionClient
++BaseClient client = BaseClient
+     .builder()
+     .maxRetries(1)
+     .build();
+@@ -159,11 +159,11 @@ SeedBuilderExtensionClient client = SeedBuilderExtensionClient
+ 
+ The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
+ ```java
+-import com.seed.builderExtension.SeedBuilderExtensionClient;
++import com.seed.builderExtension.BaseClient;
+ import com.seed.builderExtension.core.RequestOptions;
+ 
+ // Client level
+-SeedBuilderExtensionClient client = SeedBuilderExtensionClient
++BaseClient client = BaseClient
+     .builder()
+     .timeout(60)
+     .build();
+@@ -183,11 +183,11 @@ client.service().hello(
+ The SDK allows you to add custom headers to requests. You can configure headers at the client level or at the request level.
+ 
+ ```java
+-import com.seed.builderExtension.SeedBuilderExtensionClient;
++import com.seed.builderExtension.BaseClient;
+ import com.seed.builderExtension.core.RequestOptions;
+ 
+ // Client level
+-SeedBuilderExtensionClient client = SeedBuilderExtensionClient
++BaseClient client = BaseClient
+     .builder()
+     .addHeader("X-Custom-Header", "custom-value")
+     .addHeader("X-Request-Id", "abc-123")
+@@ -211,7 +211,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
+ (A normal client's `response` is identical to a raw client's `response.body()`.)
+ 
+ ```java
+-SeedBuilderExtensionHttpResponse response = client.service().withRawResponse().hello(...);
++BaseClientHttpResponse response = client.service().withRawResponse().hello(...);
+ 
+ System.out.println(response.body());
+ System.out.println(response.headers().get("X-My-Header"));
+diff --git a/build/spotless/spotlessJava/src/main/java/com/snippets/Example0.java b/build/spotless/spotlessJava/src/main/java/com/snippets/Example0.java
+index f739aa06a91..3f1b538e97f 100644
+--- a/build/spotless/spotlessJava/src/main/java/com/snippets/Example0.java
++++ b/build/spotless/spotlessJava/src/main/java/com/snippets/Example0.java
+@@ -1,10 +1,10 @@
+ package com.snippets;
+ 
+-import com.seed.builderExtension.SeedBuilderExtensionClient;
++import com.seed.builderExtension.BaseClient;
+ 
+ public class Example0 {
+     public static void main(String[] args) {
+-        SeedBuilderExtensionClient client = SeedBuilderExtensionClient.builder()
++        BaseClient client = BaseClient.builder()
+                 .token("<token>")
+                 .url("https://api.fern.com")
+                 .build();
+diff --git a/sample-app/src/main/java/sample/App.java b/sample-app/src/main/java/sample/App.java
+index 096fab6290f..479d80586b5 100644
+--- a/sample-app/src/main/java/sample/App.java
++++ b/sample-app/src/main/java/sample/App.java
+@@ -8,6 +8,6 @@ import java.lang.String;
+ 
+ public final class App {
+   public static void main(String[] args) {
+-    // import com.seed.builderExtension.AsyncSeedBuilderExtensionClient
++    // import com.seed.builderExtension.AsyncBaseClient
+   }
+ }
+diff --git a/snippet.json b/snippet.json
+index 3ac75ef822a..2b54390804d 100644
+--- a/snippet.json
++++ b/snippet.json
+@@ -9,8 +9,8 @@
+             },
+             "snippet": {
+                 "type": "java",
+-                "sync_client": "package com.example.usage;\n\nimport com.seed.builderExtension.SeedBuilderExtensionClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedBuilderExtensionClient client = SeedBuilderExtensionClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.service().hello();\n    }\n}\n",
+-                "async_client": "package com.example.usage;\n\nimport com.seed.builderExtension.SeedBuilderExtensionClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedBuilderExtensionClient client = SeedBuilderExtensionClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.service().hello();\n    }\n}\n"
++                "sync_client": "package com.example.usage;\n\nimport com.seed.builderExtension.BaseClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        BaseClient client = BaseClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.service().hello();\n    }\n}\n",
++                "async_client": "package com.example.usage;\n\nimport com.seed.builderExtension.BaseClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        BaseClient client = BaseClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.service().hello();\n    }\n}\n"
+             }
+         }
+     ],
+diff --git a/src/main/java/com/seed/builderExtension/AsyncSeedBuilderExtensionClient.java b/src/main/java/com/seed/builderExtension/AsyncBaseClient.java
+similarity index 72%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-builder-extension/baseline/src/main/java/com/seed/builderExtension/AsyncSeedBuilderExtensionClient.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-l2tOyALjjKjs/src/main/java/com/seed/builderExtension/AsyncBaseClient.java
+index be330aa6266..b8c294f9f28 100644
+--- a/src/main/java/com/seed/builderExtension/AsyncSeedBuilderExtensionClient.java
++++ b/src/main/java/com/seed/builderExtension/AsyncBaseClient.java
+@@ -8,12 +8,12 @@ import com.seed.builderExtension.core.Suppliers;
+ import com.seed.builderExtension.resources.service.AsyncServiceClient;
+ import java.util.function.Supplier;
+ 
+-public class AsyncSeedBuilderExtensionClient {
++public class AsyncBaseClient {
+     protected final ClientOptions clientOptions;
+ 
+     protected final Supplier<AsyncServiceClient> serviceClient;
+ 
+-    public AsyncSeedBuilderExtensionClient(ClientOptions clientOptions) {
++    public AsyncBaseClient(ClientOptions clientOptions) {
+         this.clientOptions = clientOptions;
+         this.serviceClient = Suppliers.memoize(() -> new AsyncServiceClient(clientOptions));
+     }
+@@ -22,7 +22,7 @@ public class AsyncSeedBuilderExtensionClient {
+         return this.serviceClient.get();
+     }
+ 
+-    public static AsyncSeedBuilderExtensionClientBuilder builder() {
+-        return new AsyncSeedBuilderExtensionClientBuilder();
++    public static AsyncBaseClientBuilder builder() {
++        return new AsyncBaseClientBuilder();
+     }
+ }
+diff --git a/src/main/java/com/seed/builderExtension/AsyncSeedBuilderExtensionClientBuilder.java b/src/main/java/com/seed/builderExtension/AsyncBaseClientBuilder.java
+similarity index 89%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-builder-extension/baseline/src/main/java/com/seed/builderExtension/AsyncSeedBuilderExtensionClientBuilder.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-l2tOyALjjKjs/src/main/java/com/seed/builderExtension/AsyncBaseClientBuilder.java
+index b4c9c2248f5..d16279d72e3 100644
+--- a/src/main/java/com/seed/builderExtension/AsyncSeedBuilderExtensionClientBuilder.java
++++ b/src/main/java/com/seed/builderExtension/AsyncBaseClientBuilder.java
+@@ -11,7 +11,7 @@ import java.util.Map;
+ import java.util.Optional;
+ import okhttp3.OkHttpClient;
+ 
+-public class AsyncSeedBuilderExtensionClientBuilder {
++public class AsyncBaseClientBuilder {
+     private Optional<Integer> timeout = Optional.empty();
+ 
+     private Optional<Integer> maxRetries = Optional.empty();
+@@ -29,17 +29,17 @@ public class AsyncSeedBuilderExtensionClientBuilder {
+     /**
+      * Sets token
+      */
+-    public AsyncSeedBuilderExtensionClientBuilder token(String token) {
++    public AsyncBaseClientBuilder token(String token) {
+         this.token = token;
+         return this;
+     }
+ 
+-    public AsyncSeedBuilderExtensionClientBuilder environment(Environment environment) {
++    public AsyncBaseClientBuilder environment(Environment environment) {
+         this.environment = environment;
+         return this;
+     }
+ 
+-    public AsyncSeedBuilderExtensionClientBuilder url(String url) {
++    public AsyncBaseClientBuilder url(String url) {
+         this.environment = Environment.custom(url);
+         return this;
+     }
+@@ -47,7 +47,7 @@ public class AsyncSeedBuilderExtensionClientBuilder {
+     /**
+      * Sets the timeout (in seconds) for the client. Defaults to 60 seconds.
+      */
+-    public AsyncSeedBuilderExtensionClientBuilder timeout(int timeout) {
++    public AsyncBaseClientBuilder timeout(int timeout) {
+         this.timeout = Optional.of(timeout);
+         return this;
+     }
+@@ -55,7 +55,7 @@ public class AsyncSeedBuilderExtensionClientBuilder {
+     /**
+      * Sets the maximum number of retries for the client. Defaults to 2 retries.
+      */
+-    public AsyncSeedBuilderExtensionClientBuilder maxRetries(int maxRetries) {
++    public AsyncBaseClientBuilder maxRetries(int maxRetries) {
+         this.maxRetries = Optional.of(maxRetries);
+         return this;
+     }
+@@ -63,7 +63,7 @@ public class AsyncSeedBuilderExtensionClientBuilder {
+     /**
+      * Sets the underlying OkHttp client
+      */
+-    public AsyncSeedBuilderExtensionClientBuilder httpClient(OkHttpClient httpClient) {
++    public AsyncBaseClientBuilder httpClient(OkHttpClient httpClient) {
+         this.httpClient = httpClient;
+         return this;
+     }
+@@ -71,7 +71,7 @@ public class AsyncSeedBuilderExtensionClientBuilder {
+     /**
+      * Configure logging for the SDK. Silent by default — no log output unless explicitly configured.
+      */
+-    public AsyncSeedBuilderExtensionClientBuilder logging(LogConfig logging) {
++    public AsyncBaseClientBuilder logging(LogConfig logging) {
+         this.logging = Optional.of(logging);
+         return this;
+     }
+@@ -84,7 +84,7 @@ public class AsyncSeedBuilderExtensionClientBuilder {
+      * @param value The header value
+      * @return This builder for method chaining
+      */
+-    public AsyncSeedBuilderExtensionClientBuilder addHeader(String name, String value) {
++    public AsyncBaseClientBuilder addHeader(String name, String value) {
+         this.customHeaders.put(name, value);
+         return this;
+     }
+@@ -219,11 +219,11 @@ public class AsyncSeedBuilderExtensionClientBuilder {
+      */
+     protected void validateConfiguration() {}
+ 
+-    public AsyncSeedBuilderExtensionClient build() {
++    public AsyncBaseClient build() {
+         if (token == null) {
+             throw new RuntimeException("Please provide token");
+         }
+         validateConfiguration();
+-        return new AsyncSeedBuilderExtensionClient(buildClientOptions());
++        return new AsyncBaseClient(buildClientOptions());
+     }
+ }
+diff --git a/src/main/java/com/seed/builderExtension/SeedBuilderExtensionClient.java b/src/main/java/com/seed/builderExtension/BaseClient.java
+similarity index 73%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-builder-extension/baseline/src/main/java/com/seed/builderExtension/SeedBuilderExtensionClient.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-l2tOyALjjKjs/src/main/java/com/seed/builderExtension/BaseClient.java
+index c46260d9cf5..6e89c027541 100644
+--- a/src/main/java/com/seed/builderExtension/SeedBuilderExtensionClient.java
++++ b/src/main/java/com/seed/builderExtension/BaseClient.java
+@@ -8,12 +8,12 @@ import com.seed.builderExtension.core.Suppliers;
+ import com.seed.builderExtension.resources.service.ServiceClient;
+ import java.util.function.Supplier;
+ 
+-public class SeedBuilderExtensionClient {
++public class BaseClient {
+     protected final ClientOptions clientOptions;
+ 
+     protected final Supplier<ServiceClient> serviceClient;
+ 
+-    public SeedBuilderExtensionClient(ClientOptions clientOptions) {
++    public BaseClient(ClientOptions clientOptions) {
+         this.clientOptions = clientOptions;
+         this.serviceClient = Suppliers.memoize(() -> new ServiceClient(clientOptions));
+     }
+@@ -22,7 +22,7 @@ public class SeedBuilderExtensionClient {
+         return this.serviceClient.get();
+     }
+ 
+-    public static SeedBuilderExtensionClientBuilder builder() {
+-        return new SeedBuilderExtensionClientBuilder();
++    public static BaseClientBuilder builder() {
++        return new BaseClientBuilder();
+     }
+ }
+diff --git a/src/main/java/com/seed/builderExtension/SeedBuilderExtensionClientBuilder.java b/src/main/java/com/seed/builderExtension/BaseClientBuilder.java
+similarity index 89%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-builder-extension/baseline/src/main/java/com/seed/builderExtension/SeedBuilderExtensionClientBuilder.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-l2tOyALjjKjs/src/main/java/com/seed/builderExtension/BaseClientBuilder.java
+index 973be6cad47..dddfd1f7599 100644
+--- a/src/main/java/com/seed/builderExtension/SeedBuilderExtensionClientBuilder.java
++++ b/src/main/java/com/seed/builderExtension/BaseClientBuilder.java
+@@ -11,7 +11,7 @@ import java.util.Map;
+ import java.util.Optional;
+ import okhttp3.OkHttpClient;
+ 
+-public class SeedBuilderExtensionClientBuilder {
++public class BaseClientBuilder {
+     private Optional<Integer> timeout = Optional.empty();
+ 
+     private Optional<Integer> maxRetries = Optional.empty();
+@@ -29,17 +29,17 @@ public class SeedBuilderExtensionClientBuilder {
+     /**
+      * Sets token
+      */
+-    public SeedBuilderExtensionClientBuilder token(String token) {
++    public BaseClientBuilder token(String token) {
+         this.token = token;
+         return this;
+     }
+ 
+-    public SeedBuilderExtensionClientBuilder environment(Environment environment) {
++    public BaseClientBuilder environment(Environment environment) {
+         this.environment = environment;
+         return this;
+     }
+ 
+-    public SeedBuilderExtensionClientBuilder url(String url) {
++    public BaseClientBuilder url(String url) {
+         this.environment = Environment.custom(url);
+         return this;
+     }
+@@ -47,7 +47,7 @@ public class SeedBuilderExtensionClientBuilder {
+     /**
+      * Sets the timeout (in seconds) for the client. Defaults to 60 seconds.
+      */
+-    public SeedBuilderExtensionClientBuilder timeout(int timeout) {
++    public BaseClientBuilder timeout(int timeout) {
+         this.timeout = Optional.of(timeout);
+         return this;
+     }
+@@ -55,7 +55,7 @@ public class SeedBuilderExtensionClientBuilder {
+     /**
+      * Sets the maximum number of retries for the client. Defaults to 2 retries.
+      */
+-    public SeedBuilderExtensionClientBuilder maxRetries(int maxRetries) {
++    public BaseClientBuilder maxRetries(int maxRetries) {
+         this.maxRetries = Optional.of(maxRetries);
+         return this;
+     }
+@@ -63,7 +63,7 @@ public class SeedBuilderExtensionClientBuilder {
+     /**
+      * Sets the underlying OkHttp client
+      */
+-    public SeedBuilderExtensionClientBuilder httpClient(OkHttpClient httpClient) {
++    public BaseClientBuilder httpClient(OkHttpClient httpClient) {
+         this.httpClient = httpClient;
+         return this;
+     }
+@@ -71,7 +71,7 @@ public class SeedBuilderExtensionClientBuilder {
+     /**
+      * Configure logging for the SDK. Silent by default — no log output unless explicitly configured.
+      */
+-    public SeedBuilderExtensionClientBuilder logging(LogConfig logging) {
++    public BaseClientBuilder logging(LogConfig logging) {
+         this.logging = Optional.of(logging);
+         return this;
+     }
+@@ -84,7 +84,7 @@ public class SeedBuilderExtensionClientBuilder {
+      * @param value The header value
+      * @return This builder for method chaining
+      */
+-    public SeedBuilderExtensionClientBuilder addHeader(String name, String value) {
++    public BaseClientBuilder addHeader(String name, String value) {
+         this.customHeaders.put(name, value);
+         return this;
+     }
+@@ -219,11 +219,11 @@ public class SeedBuilderExtensionClientBuilder {
+      */
+     protected void validateConfiguration() {}
+ 
+-    public SeedBuilderExtensionClient build() {
++    public BaseClient build() {
+         if (token == null) {
+             throw new RuntimeException("Please provide token");
+         }
+         validateConfiguration();
+-        return new SeedBuilderExtensionClient(buildClientOptions());
++        return new BaseClient(buildClientOptions());
+     }
+ }
+diff --git a/src/main/java/com/seed/builderExtension/core/SeedBuilderExtensionApiException.java b/src/main/java/com/seed/builderExtension/core/BaseClientApiException.java
+similarity index 76%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-builder-extension/baseline/src/main/java/com/seed/builderExtension/core/SeedBuilderExtensionApiException.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-l2tOyALjjKjs/src/main/java/com/seed/builderExtension/core/BaseClientApiException.java
+index 076952afed5..6b3483bab6d 100644
+--- a/src/main/java/com/seed/builderExtension/core/SeedBuilderExtensionApiException.java
++++ b/src/main/java/com/seed/builderExtension/core/BaseClientApiException.java
+@@ -12,7 +12,7 @@ import okhttp3.Response;
+ /**
+  * This exception type will be thrown for any non-2XX API responses.
+  */
+-public class SeedBuilderExtensionApiException extends SeedBuilderExtensionException {
++public class BaseClientApiException extends BaseClientException {
+     /**
+      * The error code of the response that triggered the exception.
+      */
+@@ -25,14 +25,14 @@ public class SeedBuilderExtensionApiException extends SeedBuilderExtensionExcept
+ 
+     private final Map<String, List<String>> headers;
+ 
+-    public SeedBuilderExtensionApiException(String message, int statusCode, Object body) {
++    public BaseClientApiException(String message, int statusCode, Object body) {
+         super(message);
+         this.statusCode = statusCode;
+         this.body = body;
+         this.headers = new HashMap<>();
+     }
+ 
+-    public SeedBuilderExtensionApiException(String message, int statusCode, Object body, Response rawResponse) {
++    public BaseClientApiException(String message, int statusCode, Object body, Response rawResponse) {
+         super(message);
+         this.statusCode = statusCode;
+         this.body = body;
+@@ -67,7 +67,7 @@ public class SeedBuilderExtensionApiException extends SeedBuilderExtensionExcept
+ 
+     @Override
+     public String toString() {
+-        return "SeedBuilderExtensionApiException{" + "message: " + getMessage() + ", statusCode: " + statusCode
+-                + ", body: " + ObjectMappers.stringify(body) + "}";
++        return "BaseClientApiException{" + "message: " + getMessage() + ", statusCode: " + statusCode + ", body: "
++                + ObjectMappers.stringify(body) + "}";
+     }
+ }
+diff --git a/src/main/java/com/seed/builderExtension/core/SeedBuilderExtensionException.java b/src/main/java/com/seed/builderExtension/core/BaseClientException.java
+similarity index 56%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-builder-extension/baseline/src/main/java/com/seed/builderExtension/core/SeedBuilderExtensionException.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-l2tOyALjjKjs/src/main/java/com/seed/builderExtension/core/BaseClientException.java
+index 2867293938a..576d5e3fe26 100644
+--- a/src/main/java/com/seed/builderExtension/core/SeedBuilderExtensionException.java
++++ b/src/main/java/com/seed/builderExtension/core/BaseClientException.java
+@@ -6,12 +6,12 @@ package com.seed.builderExtension.core;
+ /**
+  * This class serves as the base exception for all errors in the SDK.
+  */
+-public class SeedBuilderExtensionException extends RuntimeException {
+-    public SeedBuilderExtensionException(String message) {
++public class BaseClientException extends RuntimeException {
++    public BaseClientException(String message) {
+         super(message);
+     }
+ 
+-    public SeedBuilderExtensionException(String message, Exception e) {
++    public BaseClientException(String message, Exception e) {
+         super(message, e);
+     }
+ }
+diff --git a/src/main/java/com/seed/builderExtension/core/SeedBuilderExtensionHttpResponse.java b/src/main/java/com/seed/builderExtension/core/BaseClientHttpResponse.java
+similarity index 86%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-builder-extension/baseline/src/main/java/com/seed/builderExtension/core/SeedBuilderExtensionHttpResponse.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-l2tOyALjjKjs/src/main/java/com/seed/builderExtension/core/BaseClientHttpResponse.java
+index 4f9da8f5407..bfff6599005 100644
+--- a/src/main/java/com/seed/builderExtension/core/SeedBuilderExtensionHttpResponse.java
++++ b/src/main/java/com/seed/builderExtension/core/BaseClientHttpResponse.java
+@@ -9,13 +9,13 @@ import java.util.List;
+ import java.util.Map;
+ import okhttp3.Response;
+ 
+-public final class SeedBuilderExtensionHttpResponse<T> {
++public final class BaseClientHttpResponse<T> {
+ 
+     private final T body;
+ 
+     private final Map<String, List<String>> headers;
+ 
+-    public SeedBuilderExtensionHttpResponse(T body, Response rawResponse) {
++    public BaseClientHttpResponse(T body, Response rawResponse) {
+         this.body = body;
+ 
+         Map<String, List<String>> headers = new HashMap<>();
+diff --git a/src/main/java/com/seed/builderExtension/resources/service/AsyncRawServiceClient.java b/src/main/java/com/seed/builderExtension/resources/service/AsyncRawServiceClient.java
+index d4b6de332f0..2b6a40d1a18 100644
+--- a/src/main/java/com/seed/builderExtension/resources/service/AsyncRawServiceClient.java
++++ b/src/main/java/com/seed/builderExtension/resources/service/AsyncRawServiceClient.java
+@@ -3,12 +3,12 @@
+  */
+ package com.seed.builderExtension.resources.service;
+ 
++import com.seed.builderExtension.core.BaseClientApiException;
++import com.seed.builderExtension.core.BaseClientException;
++import com.seed.builderExtension.core.BaseClientHttpResponse;
+ import com.seed.builderExtension.core.ClientOptions;
+ import com.seed.builderExtension.core.ObjectMappers;
+ import com.seed.builderExtension.core.RequestOptions;
+-import com.seed.builderExtension.core.SeedBuilderExtensionApiException;
+-import com.seed.builderExtension.core.SeedBuilderExtensionException;
+-import com.seed.builderExtension.core.SeedBuilderExtensionHttpResponse;
+ import com.seed.builderExtension.resources.service.types.HelloResponse;
+ import java.io.IOException;
+ import java.util.concurrent.CompletableFuture;
+@@ -29,11 +29,11 @@ public class AsyncRawServiceClient {
+         this.clientOptions = clientOptions;
+     }
+ 
+-    public CompletableFuture<SeedBuilderExtensionHttpResponse<HelloResponse>> hello() {
++    public CompletableFuture<BaseClientHttpResponse<HelloResponse>> hello() {
+         return hello(null);
+     }
+ 
+-    public CompletableFuture<SeedBuilderExtensionHttpResponse<HelloResponse>> hello(RequestOptions requestOptions) {
++    public CompletableFuture<BaseClientHttpResponse<HelloResponse>> hello(RequestOptions requestOptions) {
+         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                 .newBuilder()
+                 .addPathSegments("api")
+@@ -53,32 +53,30 @@ public class AsyncRawServiceClient {
+         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+             client = clientOptions.httpClientWithTimeout(requestOptions);
+         }
+-        CompletableFuture<SeedBuilderExtensionHttpResponse<HelloResponse>> future = new CompletableFuture<>();
++        CompletableFuture<BaseClientHttpResponse<HelloResponse>> future = new CompletableFuture<>();
+         client.newCall(okhttpRequest).enqueue(new Callback() {
+             @Override
+             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                 try (ResponseBody responseBody = response.body()) {
+                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                     if (response.isSuccessful()) {
+-                        future.complete(new SeedBuilderExtensionHttpResponse<>(
++                        future.complete(new BaseClientHttpResponse<>(
+                                 ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HelloResponse.class),
+                                 response));
+                         return;
+                     }
+                     Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+-                    future.completeExceptionally(new SeedBuilderExtensionApiException(
++                    future.completeExceptionally(new BaseClientApiException(
+                             "Error with status code " + response.code(), response.code(), errorBody, response));
+                     return;
+                 } catch (IOException e) {
+-                    future.completeExceptionally(
+-                            new SeedBuilderExtensionException("Network error executing HTTP request", e));
++                    future.completeExceptionally(new BaseClientException("Network error executing HTTP request", e));
+                 }
+             }
+ 
+             @Override
+             public void onFailure(@NotNull Call call, @NotNull IOException e) {
+-                future.completeExceptionally(
+-                        new SeedBuilderExtensionException("Network error executing HTTP request", e));
++                future.completeExceptionally(new BaseClientException("Network error executing HTTP request", e));
+             }
+         });
+         return future;
+diff --git a/src/main/java/com/seed/builderExtension/resources/service/RawServiceClient.java b/src/main/java/com/seed/builderExtension/resources/service/RawServiceClient.java
+index 92375785551..c7b61c4aa78 100644
+--- a/src/main/java/com/seed/builderExtension/resources/service/RawServiceClient.java
++++ b/src/main/java/com/seed/builderExtension/resources/service/RawServiceClient.java
+@@ -3,12 +3,12 @@
+  */
+ package com.seed.builderExtension.resources.service;
+ 
++import com.seed.builderExtension.core.BaseClientApiException;
++import com.seed.builderExtension.core.BaseClientException;
++import com.seed.builderExtension.core.BaseClientHttpResponse;
+ import com.seed.builderExtension.core.ClientOptions;
+ import com.seed.builderExtension.core.ObjectMappers;
+ import com.seed.builderExtension.core.RequestOptions;
+-import com.seed.builderExtension.core.SeedBuilderExtensionApiException;
+-import com.seed.builderExtension.core.SeedBuilderExtensionException;
+-import com.seed.builderExtension.core.SeedBuilderExtensionHttpResponse;
+ import com.seed.builderExtension.resources.service.types.HelloResponse;
+ import java.io.IOException;
+ import okhttp3.Headers;
+@@ -25,11 +25,11 @@ public class RawServiceClient {
+         this.clientOptions = clientOptions;
+     }
+ 
+-    public SeedBuilderExtensionHttpResponse<HelloResponse> hello() {
++    public BaseClientHttpResponse<HelloResponse> hello() {
+         return hello(null);
+     }
+ 
+-    public SeedBuilderExtensionHttpResponse<HelloResponse> hello(RequestOptions requestOptions) {
++    public BaseClientHttpResponse<HelloResponse> hello(RequestOptions requestOptions) {
+         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                 .newBuilder()
+                 .addPathSegments("api")
+@@ -53,14 +53,14 @@ public class RawServiceClient {
+             ResponseBody responseBody = response.body();
+             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+             if (response.isSuccessful()) {
+-                return new SeedBuilderExtensionHttpResponse<>(
++                return new BaseClientHttpResponse<>(
+                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HelloResponse.class), response);
+             }
+             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+-            throw new SeedBuilderExtensionApiException(
++            throw new BaseClientApiException(
+                     "Error with status code " + response.code(), response.code(), errorBody, response);
+         } catch (IOException e) {
+-            throw new SeedBuilderExtensionException("Network error executing HTTP request", e);
++            throw new BaseClientException("Network error executing HTTP request", e);
+         }
+     }
+ }
+diff --git a/src/main/java/com/snippets/Example0.java b/src/main/java/com/snippets/Example0.java
+index f739aa06a91..3f1b538e97f 100644
+--- a/src/main/java/com/snippets/Example0.java
++++ b/src/main/java/com/snippets/Example0.java
+@@ -1,10 +1,10 @@
+ package com.snippets;
+ 
+-import com.seed.builderExtension.SeedBuilderExtensionClient;
++import com.seed.builderExtension.BaseClient;
+ 
+ public class Example0 {
+     public static void main(String[] args) {
+-        SeedBuilderExtensionClient client = SeedBuilderExtensionClient.builder()
++        BaseClient client = BaseClient.builder()
+                 .token("<token>")
+                 .url("https://api.fern.com")
+                 .build();

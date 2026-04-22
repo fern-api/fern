@@ -1,0 +1,14 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 72f1d627c73..eea25157949 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-rust-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "packageLicenseFile": ""
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "manual",

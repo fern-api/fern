@@ -1,0 +1,3 @@
+rootProject.name = 'any-auth'
+
+include 'sample-app'

@@ -1,0 +1,967 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 200d96787a2..dfb984e8318 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,7 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-csharp-sdk",
+   "generatorVersion": "local",
+-  "generatorConfig": {},
++  "generatorConfig": {
++    "root-namespace-for-core-classes": false
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "manual",
+diff --git a/Snippets/Example0.cs b/Snippets/Example0.cs
+index d995b543e7a..8dafc52ce95 100644
+--- a/Snippets/Example0.cs
++++ b/Snippets/Example0.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ 
+ public partial class Examples
+ {
+diff --git a/Snippets/Example1.cs b/Snippets/Example1.cs
+index 204449c6094..2405c0c87c4 100644
+--- a/Snippets/Example1.cs
++++ b/Snippets/Example1.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ using SeedExhaustive.Types;
+ 
+ public partial class Examples
+diff --git a/Snippets/Example10.cs b/Snippets/Example10.cs
+index e0fdb2e3d52..3f9812f9474 100644
+--- a/Snippets/Example10.cs
++++ b/Snippets/Example10.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ using SeedExhaustive.Types;
+ 
+ public partial class Examples
+diff --git a/Snippets/Example11.cs b/Snippets/Example11.cs
+index f2bf7bc29d2..021536dcdd8 100644
+--- a/Snippets/Example11.cs
++++ b/Snippets/Example11.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ 
+ public partial class Examples
+ {
+diff --git a/Snippets/Example12.cs b/Snippets/Example12.cs
+index a04087151d4..598549503c0 100644
+--- a/Snippets/Example12.cs
++++ b/Snippets/Example12.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ using SeedExhaustive.Types;
+ 
+ public partial class Examples
+diff --git a/Snippets/Example13.cs b/Snippets/Example13.cs
+index 98934994877..c09eb5fc075 100644
+--- a/Snippets/Example13.cs
++++ b/Snippets/Example13.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ using SeedExhaustive.Types;
+ 
+ public partial class Examples
+diff --git a/Snippets/Example14.cs b/Snippets/Example14.cs
+index ed165c87a70..91a0d350d22 100644
+--- a/Snippets/Example14.cs
++++ b/Snippets/Example14.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ using SeedExhaustive.Types;
+ using System.Globalization;
+ 
+diff --git a/Snippets/Example15.cs b/Snippets/Example15.cs
+index 994baa97fcc..272ceacb226 100644
+--- a/Snippets/Example15.cs
++++ b/Snippets/Example15.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ 
+ public partial class Examples
+ {
+diff --git a/Snippets/Example16.cs b/Snippets/Example16.cs
+index c64db64addc..f73b615a835 100644
+--- a/Snippets/Example16.cs
++++ b/Snippets/Example16.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ using SeedExhaustive.Types;
+ using System.Globalization;
+ 
+diff --git a/Snippets/Example17.cs b/Snippets/Example17.cs
+index 574826a67e2..76b912f9712 100644
+--- a/Snippets/Example17.cs
++++ b/Snippets/Example17.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ using SeedExhaustive.Types;
+ 
+ public partial class Examples
+diff --git a/Snippets/Example18.cs b/Snippets/Example18.cs
+index be2d98b0528..74c7ae89c38 100644
+--- a/Snippets/Example18.cs
++++ b/Snippets/Example18.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ using SeedExhaustive.Types;
+ 
+ public partial class Examples
+diff --git a/Snippets/Example19.cs b/Snippets/Example19.cs
+index ea73b7186d0..52f66eafe4b 100644
+--- a/Snippets/Example19.cs
++++ b/Snippets/Example19.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ using SeedExhaustive.Types;
+ using System.Globalization;
+ 
+diff --git a/Snippets/Example2.cs b/Snippets/Example2.cs
+index 8c6950768f4..ffdddfe15c9 100644
+--- a/Snippets/Example2.cs
++++ b/Snippets/Example2.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ 
+ public partial class Examples
+ {
+diff --git a/Snippets/Example20.cs b/Snippets/Example20.cs
+index d0a6416eb7c..86db68000da 100644
+--- a/Snippets/Example20.cs
++++ b/Snippets/Example20.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ using SeedExhaustive.Types;
+ using System.Globalization;
+ 
+diff --git a/Snippets/Example21.cs b/Snippets/Example21.cs
+index 5bed0e35b20..c5cc61ce0d3 100644
+--- a/Snippets/Example21.cs
++++ b/Snippets/Example21.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ using SeedExhaustive.Types;
+ using System.Globalization;
+ 
+diff --git a/Snippets/Example22.cs b/Snippets/Example22.cs
+index 4ab397e5c7d..fb42af60649 100644
+--- a/Snippets/Example22.cs
++++ b/Snippets/Example22.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ using SeedExhaustive.Types;
+ 
+ public partial class Examples
+diff --git a/Snippets/Example23.cs b/Snippets/Example23.cs
+index 6cd6a4a49f2..9fd86514f2c 100644
+--- a/Snippets/Example23.cs
++++ b/Snippets/Example23.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ using SeedExhaustive.Types;
+ 
+ public partial class Examples
+diff --git a/Snippets/Example24.cs b/Snippets/Example24.cs
+index 617b890a6eb..b562eec7cf5 100644
+--- a/Snippets/Example24.cs
++++ b/Snippets/Example24.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ using SeedExhaustive.Types;
+ 
+ public partial class Examples
+diff --git a/Snippets/Example25.cs b/Snippets/Example25.cs
+index 762cb03c7ff..72b3a92f7db 100644
+--- a/Snippets/Example25.cs
++++ b/Snippets/Example25.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ 
+ public partial class Examples
+ {
+diff --git a/Snippets/Example26.cs b/Snippets/Example26.cs
+index 52baf65853b..bc022d47912 100644
+--- a/Snippets/Example26.cs
++++ b/Snippets/Example26.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ using SeedExhaustive.Types;
+ 
+ public partial class Examples
+diff --git a/Snippets/Example27.cs b/Snippets/Example27.cs
+index f00198aaf8e..59f81ddefc9 100644
+--- a/Snippets/Example27.cs
++++ b/Snippets/Example27.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ using SeedExhaustive.Types;
+ 
+ public partial class Examples
+diff --git a/Snippets/Example28.cs b/Snippets/Example28.cs
+index b2ec79f1f26..931ab09a781 100644
+--- a/Snippets/Example28.cs
++++ b/Snippets/Example28.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ using SeedExhaustive.Types;
+ 
+ public partial class Examples
+diff --git a/Snippets/Example29.cs b/Snippets/Example29.cs
+index 424da927164..576de1ec96f 100644
+--- a/Snippets/Example29.cs
++++ b/Snippets/Example29.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ using SeedExhaustive.Types;
+ using System.Globalization;
+ 
+diff --git a/Snippets/Example3.cs b/Snippets/Example3.cs
+index 893af9b8df9..fa3eee0dfa6 100644
+--- a/Snippets/Example3.cs
++++ b/Snippets/Example3.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ using SeedExhaustive.Types;
+ 
+ public partial class Examples
+diff --git a/Snippets/Example30.cs b/Snippets/Example30.cs
+index 0166c3c4e5b..d56f6f58aca 100644
+--- a/Snippets/Example30.cs
++++ b/Snippets/Example30.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ using SeedExhaustive.Types;
+ using System.Globalization;
+ 
+diff --git a/Snippets/Example31.cs b/Snippets/Example31.cs
+index 47b43efd2d8..635355958db 100644
+--- a/Snippets/Example31.cs
++++ b/Snippets/Example31.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ using SeedExhaustive.Types;
+ using System.Globalization;
+ 
+diff --git a/Snippets/Example32.cs b/Snippets/Example32.cs
+index 40d5dc96e78..f63178a70dd 100644
+--- a/Snippets/Example32.cs
++++ b/Snippets/Example32.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ using SeedExhaustive.Endpoints;
+ 
+ public partial class Examples
+diff --git a/Snippets/Example33.cs b/Snippets/Example33.cs
+index 946e9af607d..98523accf5a 100644
+--- a/Snippets/Example33.cs
++++ b/Snippets/Example33.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ 
+ public partial class Examples
+ {
+diff --git a/Snippets/Example34.cs b/Snippets/Example34.cs
+index 1dd5c4fd5e8..cdeda8c5d6e 100644
+--- a/Snippets/Example34.cs
++++ b/Snippets/Example34.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ using SeedExhaustive.Endpoints;
+ 
+ public partial class Examples
+diff --git a/Snippets/Example35.cs b/Snippets/Example35.cs
+index b744b49fab1..3b3ee612a86 100644
+--- a/Snippets/Example35.cs
++++ b/Snippets/Example35.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ using SeedExhaustive.Endpoints;
+ 
+ public partial class Examples
+diff --git a/Snippets/Example36.cs b/Snippets/Example36.cs
+index 442b83bf234..ab71e628097 100644
+--- a/Snippets/Example36.cs
++++ b/Snippets/Example36.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ using SeedExhaustive.Endpoints;
+ 
+ public partial class Examples
+diff --git a/Snippets/Example37.cs b/Snippets/Example37.cs
+index 9f91ef262eb..0f651b7d56a 100644
+--- a/Snippets/Example37.cs
++++ b/Snippets/Example37.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ using SeedExhaustive.Endpoints;
+ 
+ public partial class Examples
+diff --git a/Snippets/Example38.cs b/Snippets/Example38.cs
+index bcb05fbf3bc..8e034c06a78 100644
+--- a/Snippets/Example38.cs
++++ b/Snippets/Example38.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ using SeedExhaustive.Endpoints;
+ 
+ public partial class Examples
+diff --git a/Snippets/Example39.cs b/Snippets/Example39.cs
+index ecb3458811e..056261e39b6 100644
+--- a/Snippets/Example39.cs
++++ b/Snippets/Example39.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ 
+ public partial class Examples
+ {
+diff --git a/Snippets/Example4.cs b/Snippets/Example4.cs
+index e2a428a477b..94b5811d1b3 100644
+--- a/Snippets/Example4.cs
++++ b/Snippets/Example4.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ 
+ public partial class Examples
+ {
+diff --git a/Snippets/Example40.cs b/Snippets/Example40.cs
+index ac4c1cbbdd7..ebfb11d2537 100644
+--- a/Snippets/Example40.cs
++++ b/Snippets/Example40.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ using SeedExhaustive.Endpoints;
+ 
+ public partial class Examples
+diff --git a/Snippets/Example41.cs b/Snippets/Example41.cs
+index 2c75a514c67..0d143bc4460 100644
+--- a/Snippets/Example41.cs
++++ b/Snippets/Example41.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ using System.Text;
+ 
+ public partial class Examples
+diff --git a/Snippets/Example42.cs b/Snippets/Example42.cs
+index 0d3dff25efe..211fb275425 100644
+--- a/Snippets/Example42.cs
++++ b/Snippets/Example42.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ 
+ public partial class Examples
+ {
+diff --git a/Snippets/Example43.cs b/Snippets/Example43.cs
+index 639eeb888e0..a50bf8a312b 100644
+--- a/Snippets/Example43.cs
++++ b/Snippets/Example43.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ 
+ public partial class Examples
+ {
+diff --git a/Snippets/Example44.cs b/Snippets/Example44.cs
+index 2a27a58d2f1..8fa24befefb 100644
+--- a/Snippets/Example44.cs
++++ b/Snippets/Example44.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ 
+ public partial class Examples
+ {
+diff --git a/Snippets/Example45.cs b/Snippets/Example45.cs
+index 4cef869f4cd..1b9227c5905 100644
+--- a/Snippets/Example45.cs
++++ b/Snippets/Example45.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ 
+ public partial class Examples
+ {
+diff --git a/Snippets/Example46.cs b/Snippets/Example46.cs
+index d93494c8128..23d7662b05b 100644
+--- a/Snippets/Example46.cs
++++ b/Snippets/Example46.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ 
+ public partial class Examples
+ {
+diff --git a/Snippets/Example47.cs b/Snippets/Example47.cs
+index 1a279a785c5..005b3658787 100644
+--- a/Snippets/Example47.cs
++++ b/Snippets/Example47.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ 
+ public partial class Examples
+ {
+diff --git a/Snippets/Example48.cs b/Snippets/Example48.cs
+index be45a5ada5e..885c3d15ec8 100644
+--- a/Snippets/Example48.cs
++++ b/Snippets/Example48.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ 
+ public partial class Examples
+ {
+diff --git a/Snippets/Example49.cs b/Snippets/Example49.cs
+index 9925b94e624..b3aa34af9f3 100644
+--- a/Snippets/Example49.cs
++++ b/Snippets/Example49.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ 
+ public partial class Examples
+ {
+diff --git a/Snippets/Example5.cs b/Snippets/Example5.cs
+index eb80cbb89cc..4c61512c065 100644
+--- a/Snippets/Example5.cs
++++ b/Snippets/Example5.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ using SeedExhaustive.Types;
+ 
+ public partial class Examples
+diff --git a/Snippets/Example50.cs b/Snippets/Example50.cs
+index a33c1b22ef6..71b0b082568 100644
+--- a/Snippets/Example50.cs
++++ b/Snippets/Example50.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ using System.Globalization;
+ 
+ public partial class Examples
+diff --git a/Snippets/Example51.cs b/Snippets/Example51.cs
+index 00457c89f0a..9f1c2af29e1 100644
+--- a/Snippets/Example51.cs
++++ b/Snippets/Example51.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ 
+ public partial class Examples
+ {
+diff --git a/Snippets/Example52.cs b/Snippets/Example52.cs
+index cdc3bd536d1..b09086d0b82 100644
+--- a/Snippets/Example52.cs
++++ b/Snippets/Example52.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ 
+ public partial class Examples
+ {
+diff --git a/Snippets/Example53.cs b/Snippets/Example53.cs
+index daa79299c98..f22940f80d7 100644
+--- a/Snippets/Example53.cs
++++ b/Snippets/Example53.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ 
+ public partial class Examples
+ {
+diff --git a/Snippets/Example54.cs b/Snippets/Example54.cs
+index d4c20f731b3..91f30d0cb9b 100644
+--- a/Snippets/Example54.cs
++++ b/Snippets/Example54.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ using SeedExhaustive.Endpoints;
+ 
+ public partial class Examples
+diff --git a/Snippets/Example55.cs b/Snippets/Example55.cs
+index 9d76b9ce9a1..62dadbf775a 100644
+--- a/Snippets/Example55.cs
++++ b/Snippets/Example55.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ using SeedExhaustive.Types;
+ 
+ public partial class Examples
+diff --git a/Snippets/Example56.cs b/Snippets/Example56.cs
+index 6013a3f0874..97a50237fd3 100644
+--- a/Snippets/Example56.cs
++++ b/Snippets/Example56.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ 
+ public partial class Examples
+ {
+diff --git a/Snippets/Example57.cs b/Snippets/Example57.cs
+index 3657f8b3a57..7221c0990d2 100644
+--- a/Snippets/Example57.cs
++++ b/Snippets/Example57.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ 
+ public partial class Examples
+ {
+diff --git a/Snippets/Example58.cs b/Snippets/Example58.cs
+index 3623de9c8dc..e915ba6a206 100644
+--- a/Snippets/Example58.cs
++++ b/Snippets/Example58.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ 
+ public partial class Examples
+ {
+diff --git a/Snippets/Example59.cs b/Snippets/Example59.cs
+index 834617842a8..7a3b14ee7d4 100644
+--- a/Snippets/Example59.cs
++++ b/Snippets/Example59.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ 
+ public partial class Examples
+ {
+diff --git a/Snippets/Example6.cs b/Snippets/Example6.cs
+index aa1c01880ad..4171a20c20b 100644
+--- a/Snippets/Example6.cs
++++ b/Snippets/Example6.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ using OneOf;
+ 
+ public partial class Examples
+diff --git a/Snippets/Example60.cs b/Snippets/Example60.cs
+index aca4e93fe27..d3aee392e3c 100644
+--- a/Snippets/Example60.cs
++++ b/Snippets/Example60.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ using SeedExhaustive.Types;
+ using System.Globalization;
+ 
+diff --git a/Snippets/Example61.cs b/Snippets/Example61.cs
+index f637b3aa600..c444374ef9a 100644
+--- a/Snippets/Example61.cs
++++ b/Snippets/Example61.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ using SeedExhaustive.Types;
+ using System.Globalization;
+ 
+diff --git a/Snippets/Example62.cs b/Snippets/Example62.cs
+index 902dfdb0427..c64d79a003d 100644
+--- a/Snippets/Example62.cs
++++ b/Snippets/Example62.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ 
+ public partial class Examples
+ {
+diff --git a/Snippets/Example63.cs b/Snippets/Example63.cs
+index a0abca03e34..3b96cca2e7a 100644
+--- a/Snippets/Example63.cs
++++ b/Snippets/Example63.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ 
+ public partial class Examples
+ {
+diff --git a/Snippets/Example64.cs b/Snippets/Example64.cs
+index f60e13509cc..c534976d4ea 100644
+--- a/Snippets/Example64.cs
++++ b/Snippets/Example64.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ 
+ public partial class Examples
+ {
+diff --git a/Snippets/Example65.cs b/Snippets/Example65.cs
+index 805523785d6..5571b933fb3 100644
+--- a/Snippets/Example65.cs
++++ b/Snippets/Example65.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ 
+ public partial class Examples
+ {
+diff --git a/Snippets/Example66.cs b/Snippets/Example66.cs
+index e472d778017..c5c207c5c60 100644
+--- a/Snippets/Example66.cs
++++ b/Snippets/Example66.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ 
+ public partial class Examples
+ {
+diff --git a/Snippets/Example7.cs b/Snippets/Example7.cs
+index 55da053c537..34844bf6e3e 100644
+--- a/Snippets/Example7.cs
++++ b/Snippets/Example7.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ using SeedExhaustive.Types;
+ 
+ public partial class Examples
+diff --git a/Snippets/Example8.cs b/Snippets/Example8.cs
+index 5d48b2d2f95..30658ffa511 100644
+--- a/Snippets/Example8.cs
++++ b/Snippets/Example8.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ using SeedExhaustive.Types;
+ using System.Globalization;
+ 
+diff --git a/Snippets/Example9.cs b/Snippets/Example9.cs
+index aea89a57373..02d7955fa5a 100644
+--- a/Snippets/Example9.cs
++++ b/Snippets/Example9.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ using SeedExhaustive.Types;
+ using System.Globalization;
+ 
+diff --git a/src/SeedExhaustive/Core/Public/ClientOptions.cs b/src/SeedExhaustive/Core/Public/ClientOptions.cs
+index e34ab860125..2aea4421a22 100644
+--- a/src/SeedExhaustive/Core/Public/ClientOptions.cs
++++ b/src/SeedExhaustive/Core/Public/ClientOptions.cs
+@@ -1,6 +1,4 @@
+-using SeedExhaustive.Core;
+-
+-namespace SeedExhaustive;
++namespace SeedExhaustive.Core;
+ 
+ [Serializable]
+ public partial class ClientOptions
+diff --git a/src/SeedExhaustive/Core/Public/RequestOptions.cs b/src/SeedExhaustive/Core/Public/RequestOptions.cs
+index 7de978824ec..d9e508883fa 100644
+--- a/src/SeedExhaustive/Core/Public/RequestOptions.cs
++++ b/src/SeedExhaustive/Core/Public/RequestOptions.cs
+@@ -1,6 +1,4 @@
+-using SeedExhaustive.Core;
+-
+-namespace SeedExhaustive;
++namespace SeedExhaustive.Core;
+ 
+ [Serializable]
+ public partial class RequestOptions : IRequestOptions
+diff --git a/src/SeedExhaustive/Core/Public/SeedExhaustiveApiException.cs b/src/SeedExhaustive/Core/Public/SeedExhaustiveApiException.cs
+index 5b8ef1fd9ea..9acb0e578ec 100644
+--- a/src/SeedExhaustive/Core/Public/SeedExhaustiveApiException.cs
++++ b/src/SeedExhaustive/Core/Public/SeedExhaustiveApiException.cs
+@@ -1,4 +1,4 @@
+-namespace SeedExhaustive;
++namespace SeedExhaustive.Core;
+ 
+ /// <summary>
+ /// This exception type will be thrown for any non-2XX API responses.
+diff --git a/src/SeedExhaustive/Core/Public/SeedExhaustiveException.cs b/src/SeedExhaustive/Core/Public/SeedExhaustiveException.cs
+index ea130575bd4..950b34f3103 100644
+--- a/src/SeedExhaustive/Core/Public/SeedExhaustiveException.cs
++++ b/src/SeedExhaustive/Core/Public/SeedExhaustiveException.cs
+@@ -1,4 +1,4 @@
+-namespace SeedExhaustive;
++namespace SeedExhaustive.Core;
+ 
+ /// <summary>
+ /// Base exception class for all exceptions thrown by the SDK.
+diff --git a/src/SeedExhaustive/Endpoints/Container/IContainerClient.cs b/src/SeedExhaustive/Endpoints/Container/IContainerClient.cs
+index d79998a5820..8e81204d55d 100644
+--- a/src/SeedExhaustive/Endpoints/Container/IContainerClient.cs
++++ b/src/SeedExhaustive/Endpoints/Container/IContainerClient.cs
+@@ -1,5 +1,6 @@
+ using OneOf;
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ using SeedExhaustive.Types;
+ 
+ namespace SeedExhaustive.Endpoints;
+diff --git a/src/SeedExhaustive/Endpoints/ContentType/ContentTypeClient.cs b/src/SeedExhaustive/Endpoints/ContentType/ContentTypeClient.cs
+index e0ecab6e876..76a3dec9b41 100644
+--- a/src/SeedExhaustive/Endpoints/ContentType/ContentTypeClient.cs
++++ b/src/SeedExhaustive/Endpoints/ContentType/ContentTypeClient.cs
+@@ -1,4 +1,3 @@
+-using SeedExhaustive;
+ using SeedExhaustive.Core;
+ using SeedExhaustive.Types;
+ 
+diff --git a/src/SeedExhaustive/Endpoints/ContentType/IContentTypeClient.cs b/src/SeedExhaustive/Endpoints/ContentType/IContentTypeClient.cs
+index 0156a01074e..ae9d8409c5c 100644
+--- a/src/SeedExhaustive/Endpoints/ContentType/IContentTypeClient.cs
++++ b/src/SeedExhaustive/Endpoints/ContentType/IContentTypeClient.cs
+@@ -1,4 +1,4 @@
+-using SeedExhaustive;
++using SeedExhaustive.Core;
+ using SeedExhaustive.Types;
+ 
+ namespace SeedExhaustive.Endpoints;
+diff --git a/src/SeedExhaustive/Endpoints/Enum/IEnumClient.cs b/src/SeedExhaustive/Endpoints/Enum/IEnumClient.cs
+index b0f8b766bdf..9ab4151690e 100644
+--- a/src/SeedExhaustive/Endpoints/Enum/IEnumClient.cs
++++ b/src/SeedExhaustive/Endpoints/Enum/IEnumClient.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ using SeedExhaustive.Types;
+ 
+ namespace SeedExhaustive.Endpoints;
+diff --git a/src/SeedExhaustive/Endpoints/HttpMethods/IHttpMethodsClient.cs b/src/SeedExhaustive/Endpoints/HttpMethods/IHttpMethodsClient.cs
+index f1a8e4c0c34..2ec45ef2db6 100644
+--- a/src/SeedExhaustive/Endpoints/HttpMethods/IHttpMethodsClient.cs
++++ b/src/SeedExhaustive/Endpoints/HttpMethods/IHttpMethodsClient.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ using SeedExhaustive.Types;
+ 
+ namespace SeedExhaustive.Endpoints;
+diff --git a/src/SeedExhaustive/Endpoints/Object/IObjectClient.cs b/src/SeedExhaustive/Endpoints/Object/IObjectClient.cs
+index cbdb53b3f1d..3484c8a9b15 100644
+--- a/src/SeedExhaustive/Endpoints/Object/IObjectClient.cs
++++ b/src/SeedExhaustive/Endpoints/Object/IObjectClient.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ using SeedExhaustive.Types;
+ 
+ namespace SeedExhaustive.Endpoints;
+diff --git a/src/SeedExhaustive/Endpoints/Pagination/IPaginationClient.cs b/src/SeedExhaustive/Endpoints/Pagination/IPaginationClient.cs
+index 4680ff49314..4beff9e3c01 100644
+--- a/src/SeedExhaustive/Endpoints/Pagination/IPaginationClient.cs
++++ b/src/SeedExhaustive/Endpoints/Pagination/IPaginationClient.cs
+@@ -1,4 +1,3 @@
+-using SeedExhaustive;
+ using SeedExhaustive.Core;
+ using SeedExhaustive.Types;
+ 
+diff --git a/src/SeedExhaustive/Endpoints/Params/IParamsClient.cs b/src/SeedExhaustive/Endpoints/Params/IParamsClient.cs
+index 5f11e3bfb4b..84d2988e565 100644
+--- a/src/SeedExhaustive/Endpoints/Params/IParamsClient.cs
++++ b/src/SeedExhaustive/Endpoints/Params/IParamsClient.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ using SeedExhaustive.Types;
+ 
+ namespace SeedExhaustive.Endpoints;
+diff --git a/src/SeedExhaustive/Endpoints/Primitive/IPrimitiveClient.cs b/src/SeedExhaustive/Endpoints/Primitive/IPrimitiveClient.cs
+index 40d6a34d5d1..791db1ef3aa 100644
+--- a/src/SeedExhaustive/Endpoints/Primitive/IPrimitiveClient.cs
++++ b/src/SeedExhaustive/Endpoints/Primitive/IPrimitiveClient.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ 
+ namespace SeedExhaustive.Endpoints;
+ 
+diff --git a/src/SeedExhaustive/Endpoints/Put/IPutClient.cs b/src/SeedExhaustive/Endpoints/Put/IPutClient.cs
+index 93c2c6848a3..a7fa170a541 100644
+--- a/src/SeedExhaustive/Endpoints/Put/IPutClient.cs
++++ b/src/SeedExhaustive/Endpoints/Put/IPutClient.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ 
+ namespace SeedExhaustive.Endpoints;
+ 
+diff --git a/src/SeedExhaustive/Endpoints/Union/IUnionClient.cs b/src/SeedExhaustive/Endpoints/Union/IUnionClient.cs
+index 4c7aca82981..43dee6d3c60 100644
+--- a/src/SeedExhaustive/Endpoints/Union/IUnionClient.cs
++++ b/src/SeedExhaustive/Endpoints/Union/IUnionClient.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ using SeedExhaustive.Types;
+ 
+ namespace SeedExhaustive.Endpoints;
+diff --git a/src/SeedExhaustive/Endpoints/Urls/IUrlsClient.cs b/src/SeedExhaustive/Endpoints/Urls/IUrlsClient.cs
+index 9d95b7f54e3..cb0de553e2c 100644
+--- a/src/SeedExhaustive/Endpoints/Urls/IUrlsClient.cs
++++ b/src/SeedExhaustive/Endpoints/Urls/IUrlsClient.cs
+@@ -1,4 +1,5 @@
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ 
+ namespace SeedExhaustive.Endpoints;
+ 
+diff --git a/src/SeedExhaustive/GeneralErrors/Exceptions/BadRequestBody.cs b/src/SeedExhaustive/GeneralErrors/Exceptions/BadRequestBody.cs
+index 7122a4ef3ff..1e91d7c7442 100644
+--- a/src/SeedExhaustive/GeneralErrors/Exceptions/BadRequestBody.cs
++++ b/src/SeedExhaustive/GeneralErrors/Exceptions/BadRequestBody.cs
+@@ -1,3 +1,5 @@
++using SeedExhaustive.Core;
++
+ namespace SeedExhaustive;
+ 
+ /// <summary>
+diff --git a/src/SeedExhaustive/InlinedRequests/IInlinedRequestsClient.cs b/src/SeedExhaustive/InlinedRequests/IInlinedRequestsClient.cs
+index 8622eb8d199..28b9c2724cf 100644
+--- a/src/SeedExhaustive/InlinedRequests/IInlinedRequestsClient.cs
++++ b/src/SeedExhaustive/InlinedRequests/IInlinedRequestsClient.cs
+@@ -1,3 +1,4 @@
++using SeedExhaustive.Core;
+ using SeedExhaustive.Types;
+ 
+ namespace SeedExhaustive;
+diff --git a/src/SeedExhaustive/NoAuth/INoAuthClient.cs b/src/SeedExhaustive/NoAuth/INoAuthClient.cs
+index 6d955ef423a..3b9865fdaf1 100644
+--- a/src/SeedExhaustive/NoAuth/INoAuthClient.cs
++++ b/src/SeedExhaustive/NoAuth/INoAuthClient.cs
+@@ -1,3 +1,5 @@
++using SeedExhaustive.Core;
++
+ namespace SeedExhaustive;
+ 
+ public partial interface INoAuthClient
+diff --git a/src/SeedExhaustive/NoReqBody/INoReqBodyClient.cs b/src/SeedExhaustive/NoReqBody/INoReqBodyClient.cs
+index 4fa251c7677..db8a7831765 100644
+--- a/src/SeedExhaustive/NoReqBody/INoReqBodyClient.cs
++++ b/src/SeedExhaustive/NoReqBody/INoReqBodyClient.cs
+@@ -1,3 +1,4 @@
++using SeedExhaustive.Core;
+ using SeedExhaustive.Types;
+ 
+ namespace SeedExhaustive;
+diff --git a/src/SeedExhaustive/ReqWithHeaders/IReqWithHeadersClient.cs b/src/SeedExhaustive/ReqWithHeaders/IReqWithHeadersClient.cs
+index 509c042531a..0bcdac4e2e7 100644
+--- a/src/SeedExhaustive/ReqWithHeaders/IReqWithHeadersClient.cs
++++ b/src/SeedExhaustive/ReqWithHeaders/IReqWithHeadersClient.cs
+@@ -1,3 +1,5 @@
++using SeedExhaustive.Core;
++
+ namespace SeedExhaustive;
+ 
+ public partial interface IReqWithHeadersClient
+diff --git a/src/SeedExhaustive/Types/Enum/Exceptions/ErrorWithEnumBody.cs b/src/SeedExhaustive/Types/Enum/Exceptions/ErrorWithEnumBody.cs
+index a4e74508f1e..0911d3c8f08 100644
+--- a/src/SeedExhaustive/Types/Enum/Exceptions/ErrorWithEnumBody.cs
++++ b/src/SeedExhaustive/Types/Enum/Exceptions/ErrorWithEnumBody.cs
+@@ -1,4 +1,4 @@
+-using SeedExhaustive;
++using SeedExhaustive.Core;
+ 
+ namespace SeedExhaustive.Types;
+ 
+diff --git a/src/SeedExhaustive/Types/Object/Exceptions/NestedObjectWithOptionalFieldError.cs b/src/SeedExhaustive/Types/Object/Exceptions/NestedObjectWithOptionalFieldError.cs
+index bbc4069efe9..2b63a43a846 100644
+--- a/src/SeedExhaustive/Types/Object/Exceptions/NestedObjectWithOptionalFieldError.cs
++++ b/src/SeedExhaustive/Types/Object/Exceptions/NestedObjectWithOptionalFieldError.cs
+@@ -1,4 +1,4 @@
+-using SeedExhaustive;
++using SeedExhaustive.Core;
+ 
+ namespace SeedExhaustive.Types;
+ 
+diff --git a/src/SeedExhaustive/Types/Object/Exceptions/NestedObjectWithRequiredFieldError.cs b/src/SeedExhaustive/Types/Object/Exceptions/NestedObjectWithRequiredFieldError.cs
+index 50fa932ecfd..0deeea1ef2b 100644
+--- a/src/SeedExhaustive/Types/Object/Exceptions/NestedObjectWithRequiredFieldError.cs
++++ b/src/SeedExhaustive/Types/Object/Exceptions/NestedObjectWithRequiredFieldError.cs
+@@ -1,4 +1,4 @@
+-using SeedExhaustive;
++using SeedExhaustive.Core;
+ 
+ namespace SeedExhaustive.Types;
+ 
+diff --git a/src/SeedExhaustive/Types/Object/Exceptions/ObjectWithOptionalFieldError.cs b/src/SeedExhaustive/Types/Object/Exceptions/ObjectWithOptionalFieldError.cs
+index efb79a542bd..82cae3cf959 100644
+--- a/src/SeedExhaustive/Types/Object/Exceptions/ObjectWithOptionalFieldError.cs
++++ b/src/SeedExhaustive/Types/Object/Exceptions/ObjectWithOptionalFieldError.cs
+@@ -1,4 +1,4 @@
+-using SeedExhaustive;
++using SeedExhaustive.Core;
+ 
+ namespace SeedExhaustive.Types;
+ 
+diff --git a/src/SeedExhaustive/Types/Object/Exceptions/ObjectWithRequiredFieldError.cs b/src/SeedExhaustive/Types/Object/Exceptions/ObjectWithRequiredFieldError.cs
+index 09a6a607cf4..0aaaddf8080 100644
+--- a/src/SeedExhaustive/Types/Object/Exceptions/ObjectWithRequiredFieldError.cs
++++ b/src/SeedExhaustive/Types/Object/Exceptions/ObjectWithRequiredFieldError.cs
+@@ -1,4 +1,4 @@
+-using SeedExhaustive;
++using SeedExhaustive.Core;
+ 
+ namespace SeedExhaustive.Types;
+ 
+diff --git a/src/SeedExhaustive/Types/Union/Exceptions/ErrorWithUnionBody.cs b/src/SeedExhaustive/Types/Union/Exceptions/ErrorWithUnionBody.cs
+index b1fca231e1b..0c57df047f0 100644
+--- a/src/SeedExhaustive/Types/Union/Exceptions/ErrorWithUnionBody.cs
++++ b/src/SeedExhaustive/Types/Union/Exceptions/ErrorWithUnionBody.cs
+@@ -1,4 +1,4 @@
+-using SeedExhaustive;
++using SeedExhaustive.Core;
+ 
+ namespace SeedExhaustive.Types;
+ 
+diff --git a/src/SeedExhaustive.Test/Unit/MockServer/BaseMockServerTest.cs b/src/SeedExhaustive.Test/Unit/MockServer/BaseMockServerTest.cs
+index 22ce1a9be0f..264a1f0320f 100644
+--- a/src/SeedExhaustive.Test/Unit/MockServer/BaseMockServerTest.cs
++++ b/src/SeedExhaustive.Test/Unit/MockServer/BaseMockServerTest.cs
+@@ -1,5 +1,6 @@
+ using NUnit.Framework;
+ using SeedExhaustive;
++using SeedExhaustive.Core;
+ using WireMock.Logging;
+ using WireMock.Server;
+ using WireMock.Settings;

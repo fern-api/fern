@@ -1,0 +1,845 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index f1753c47972..49b7b226568 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-java-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "custom-pager-name": "FernCustomPaginator"
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "manual",
+diff --git a/.gradle/8.14.3/checksums/checksums.lock b/.gradle/8.14.3/checksums/checksums.lock
+index b81100f71b1d55e8b4627d16f3688b5a61dc21c9..1c8757993b398b7f882b70750fa089bd436754ba 100644
+GIT binary patch
+literal 17
+TcmZP$zo3|ULhZje0~7!NE}8?i
+
+literal 17
+TcmZSfy|0+>|KNTY0~7!NGNuG1
+
+diff --git a/.gradle/8.14.3/executionHistory/executionHistory.bin b/.gradle/8.14.3/executionHistory/executionHistory.bin
+index e9cd3d44ced57692183d8196ff9341b77c6d17ab..5acfd51bb0c45c505edb26b46c972e0b96f5dced 100644
+GIT binary patch
+literal 52085
+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
+A00000
+
+delta 7310
+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
+ZJN?Pq2*^T3XC&TmK?5&4Ge-Hv{s}{-WhMXs
+
+diff --git a/.gradle/8.14.3/executionHistory/executionHistory.lock b/.gradle/8.14.3/executionHistory/executionHistory.lock
+index 9b29189893222bc61311b5e68414eb88bdabd15d..b319442f80251e010949954fa90b198151239b4d 100644
+GIT binary patch
+literal 17
+TcmZS1({DReSEypj00A5TDI)_p
+
+literal 17
+TcmZSP^|Z>H=eJLn0RlJxA?O0(
+
+diff --git a/.gradle/8.14.3/fileHashes/fileHashes.bin b/.gradle/8.14.3/fileHashes/fileHashes.bin
+index f24485ae4ec3f2b7e42eecc13a81d999c65d7c8e..dfe301edbbfd17907de5b02ad0dd0cf09c70999a 100644
+GIT binary patch
+delta 3448
+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
+
+delta 3462
+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
+CQX|g*
+
+diff --git a/.gradle/8.14.3/fileHashes/fileHashes.lock b/.gradle/8.14.3/fileHashes/fileHashes.lock
+index 48fdf769d2a602da28fd43f6afb32a8de9ca03e7..6599bb319b991790027b783eca8022461f1a796b 100644
+GIT binary patch
+literal 17
+UcmZSfdbss&NZWD|1_+o9064h>@c;k-
+
+literal 17
+UcmZS9(J{Mf*M58o0|d+l04b*gA^-pY
+
+diff --git a/.gradle/buildOutputCleanup/buildOutputCleanup.lock b/.gradle/buildOutputCleanup/buildOutputCleanup.lock
+index 67b9a61e33974a651fa9305cfb7932c9eaee96e9..ba3928bf0505fa3b8939d7288ddda7e5a39e994f 100644
+GIT binary patch
+literal 17
+UcmZRsj5V`7Ah2!%0|ZC{04T)+Z~y=R
+
+literal 17
+UcmZQxn{SeDy@2T*0|ZC`04zWQr~m)}
+
+diff --git a/.gradle/buildOutputCleanup/cache.properties b/.gradle/buildOutputCleanup/cache.properties
+index d3c13bc8be4..b7cf0146883 100644
+--- a/.gradle/buildOutputCleanup/cache.properties
++++ b/.gradle/buildOutputCleanup/cache.properties
+@@ -1,2 +1,2 @@
+-#Wed Apr 22 20:53:41 UTC 2026
++#Wed Apr 22 20:58:47 UTC 2026
+ gradle.version=8.14.3
+diff --git a/.gradle/buildOutputCleanup/outputFiles.bin b/.gradle/buildOutputCleanup/outputFiles.bin
+index 213d0c40307772c3a3dd33fbf5cc92d782eee9d4..3a009e2403c3666cc9d82bf98cf487214a561bf6 100644
+GIT binary patch
+delta 329
+zcmdlznQ`T0#tkMCf+8Koyj@Z9dQl8u;F&ntRYE~vw&3g9lY712Km{cy$4V&F@8X<t
+zX5Qh$xllp&|4?vmyJFPa(-svFagWC^@#hW#{e1-w;-KpNVd5Vwm+dOO?0pI<ZVMCt
+zn(|bS&y!&>R9qV_KF`(h_{##tYfy>lFbRe?krk|A8=phPTPMGjP?)SLDdC_yJ*m+&
+zVqGyr!s9DUgMDskyy*WXWvGT?n7IGa6Z5B9>+ON6zc|@f(qi&iNr}mSB_()ZiWnFe
+XKW<d~A->T-Lu|97M<C;5KM!#LZDy61
+
+delta 353
+zcmZ2EnQ`}I#tkMCf}+!N*m$OI|J%#}2A<lJT_qGI*Gfp#?|7SQHSzF-JrD_xi~phE
+znt$I(Gu|_4Pz@_#;?Hg?IV^ChW`v5{!o)v#zBkXRv)Tj|mxPPA3Un`&+WHGBUJMgw
+z$|zRf_U-dz7fC?@<#?fRZYxz=s2cytzLE+8UVGd9jrV-wg9v&&p1fAl!Xa#9PqttB
+z$*WM6tuWIfbPMz5Cw|%o6`u|hkKHBU)h;qWA1cm1`7Y4pye5N|gtwkMp(cNw{8dsx
+pr6O2Vp(-=uG*o3G%mf(Cz`(@0QSpcPMgsw{&5j;{jFTHYH38p8nkN7N
+
+diff --git a/.gradle/file-system.probe b/.gradle/file-system.probe
+index 8f2304fd31ffa1be5f553fe3a9ba8e48728aafe1..5e24c05f8ca7caecc321733e4b19f1d667727c05 100644
+GIT binary patch
+literal 8
+PcmZQzV4S<{uP_?`2^s=x
+
+literal 8
+PcmZQzV4S<{$0Abz3RnXq
+
+diff --git a/README.md b/README.md
+index 1f732c42c28..8d93bbd25d9 100644
+--- a/README.md
++++ b/README.md
+@@ -94,7 +94,7 @@ SeedPaginationClient client = SeedPaginationClient
+ 
+ Paginated endpoints return a pager that supports navigation in both directions.
+ ```java
+-CustomPager<Item> page = client.listItems();
++FernCustomPaginator<Item> page = client.listItems();
+ 
+ // Navigate forward through pages
+ while (page.hasNext()){
+diff --git a/reference.md b/reference.md
+index 01c85fd2ab4..06718ee6765 100644
+--- a/reference.md
++++ b/reference.md
+@@ -1,6 +1,6 @@
+ # Reference
+ ## Users
+-<details><summary><code>client.users.listWithCustomPager() -> CustomPager&amp;lt;UsersListResponse&amp;gt;</code></summary>
++<details><summary><code>client.users.listWithCustomPager() -> FernCustomPaginator&amp;lt;UsersListResponse&amp;gt;</code></summary>
+ <dl>
+ <dd>
+ 
+diff --git a/src/main/java/com/seed/pagination/core/pagination/AsyncCustomPager.java b/src/main/java/com/seed/pagination/core/pagination/AsyncFernCustomPaginator.java
+similarity index 76%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/pagination-custom/baseline/src/main/java/com/seed/pagination/core/pagination/AsyncCustomPager.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-ldQ37ToxHVbB/src/main/java/com/seed/pagination/core/pagination/AsyncFernCustomPaginator.java
+index 790527c579a..eb5b9eeeb3e 100644
+--- a/src/main/java/com/seed/pagination/core/pagination/AsyncCustomPager.java
++++ b/src/main/java/com/seed/pagination/core/pagination/AsyncFernCustomPaginator.java
+@@ -21,13 +21,13 @@ import java.util.concurrent.CompletionStage;
+  *
+  * Example implementation for HATEOAS-style async pagination:
+  * <pre>{@code
+- * public class AsyncCustomPager<T> implements BiDirectionalPage<T> {
++ * public class AsyncFernCustomPaginator<T> implements BiDirectionalPage<T> {
+  *     private final List<T> items;
+  *     private final String nextUrl;
+  *     private final String previousUrl;
+  *     private final AsyncHttpClient client;
+  *
+- *     public AsyncCustomPager(Response<T> response, AsyncHttpClient client, ...) {
++ *     public AsyncFernCustomPaginator(Response<T> response, AsyncHttpClient client, ...) {
+  *         this.items = response.getData();
+  *         this.nextUrl = response.getLinks().getNext();
+  *         this.previousUrl = response.getLinks().getPrevious();
+@@ -48,7 +48,7 @@ import java.util.concurrent.CompletionStage;
+  *         }
+  *         // Make async HTTP request to nextUrl
+  *         return client.getAsync(nextUrl)
+- *             .thenApply(response -> new AsyncCustomPager<>(response, client, ...));
++ *             .thenApply(response -> new AsyncFernCustomPaginator<>(response, client, ...));
+  *     }
+  *
+  *     // ... implement other methods
+@@ -57,7 +57,7 @@ import java.util.concurrent.CompletionStage;
+  *
+  * @param <T> The type of items in the page
+  */
+-public class AsyncCustomPager<T> implements BiDirectionalPage<T> {
++public class AsyncFernCustomPaginator<T> implements BiDirectionalPage<T> {
+ 
+     /**
+      * Create an AsyncCustomPager from an initial response.
+@@ -67,23 +67,23 @@ public class AsyncCustomPager<T> implements BiDirectionalPage<T> {
+      * @param requestOptions Request options for authentication, headers, etc.
+      * @return A CompletableFuture containing the new AsyncCustomPager instance
+      */
+-    public static <T> CompletableFuture<AsyncCustomPager<T>> createAsync(
++    public static <T> CompletableFuture<AsyncFernCustomPaginator<T>> createAsync(
+             Object initialResponse, ClientOptions clientOptions, Object requestOptions) {
+-        throw new UnsupportedOperationException("AsyncCustomPager must be implemented. "
+-                + "Please implement this class in core/AsyncCustomPager.java to define your async pagination logic. "
++        throw new UnsupportedOperationException("AsyncFernCustomPaginator must be implemented. "
++                + "Please implement this class in core/AsyncFernCustomPaginator.java to define your async pagination logic. "
+                 + "This file has been added to .fernignore and will not be overwritten. "
+                 + "See the class documentation for implementation examples.");
+     }
+ 
+     @Override
+     public boolean hasNext() {
+-        throw new UnsupportedOperationException("AsyncCustomPager.hasNext() must be implemented. "
++        throw new UnsupportedOperationException("AsyncFernCustomPaginator.hasNext() must be implemented. "
+                 + "This method should return true if a next page is available.");
+     }
+ 
+     @Override
+     public boolean hasPrevious() {
+-        throw new UnsupportedOperationException("AsyncCustomPager.hasPrevious() must be implemented. "
++        throw new UnsupportedOperationException("AsyncFernCustomPaginator.hasPrevious() must be implemented. "
+                 + "This method should return true if a previous page is available.");
+     }
+ 
+@@ -96,7 +96,7 @@ public class AsyncCustomPager<T> implements BiDirectionalPage<T> {
+     public CompletableFuture<BiDirectionalPage<T>> nextPageAsync() {
+         CompletableFuture<BiDirectionalPage<T>> future = new CompletableFuture<>();
+         future.completeExceptionally(
+-                new UnsupportedOperationException("AsyncCustomPager.nextPageAsync() must be implemented. "
++                new UnsupportedOperationException("AsyncFernCustomPaginator.nextPageAsync() must be implemented. "
+                         + "This method should asynchronously fetch and return the next page of results."));
+         return future;
+     }
+@@ -110,33 +110,33 @@ public class AsyncCustomPager<T> implements BiDirectionalPage<T> {
+     public CompletableFuture<BiDirectionalPage<T>> previousPageAsync() {
+         CompletableFuture<BiDirectionalPage<T>> future = new CompletableFuture<>();
+         future.completeExceptionally(
+-                new UnsupportedOperationException("AsyncCustomPager.previousPageAsync() must be implemented. "
++                new UnsupportedOperationException("AsyncFernCustomPaginator.previousPageAsync() must be implemented. "
+                         + "This method should asynchronously fetch and return the previous page of results."));
+         return future;
+     }
+ 
+     @Override
+     public BiDirectionalPage<T> nextPage() throws IOException {
+-        throw new UnsupportedOperationException("AsyncCustomPager.nextPage() must be implemented. "
++        throw new UnsupportedOperationException("AsyncFernCustomPaginator.nextPage() must be implemented. "
+                 + "Consider using nextPageAsync() for async operations, or implement synchronous blocking version.");
+     }
+ 
+     @Override
+     public BiDirectionalPage<T> previousPage() throws IOException {
+         throw new UnsupportedOperationException(
+-                "AsyncCustomPager.previousPage() must be implemented. "
++                "AsyncFernCustomPaginator.previousPage() must be implemented. "
+                         + "Consider using previousPageAsync() for async operations, or implement synchronous blocking version.");
+     }
+ 
+     @Override
+     public List<T> getItems() {
+-        throw new UnsupportedOperationException("AsyncCustomPager.getItems() must be implemented. "
++        throw new UnsupportedOperationException("AsyncFernCustomPaginator.getItems() must be implemented. "
+                 + "This method should return the items in the current page.");
+     }
+ 
+     @Override
+     public <R> Optional<R> getResponse() {
+-        throw new UnsupportedOperationException("AsyncCustomPager.getResponse() must be implemented. "
++        throw new UnsupportedOperationException("AsyncFernCustomPaginator.getResponse() must be implemented. "
+                 + "This method should return the full response object for accessing pagination metadata.");
+     }
+ 
+@@ -147,7 +147,7 @@ public class AsyncCustomPager<T> implements BiDirectionalPage<T> {
+      * @return CompletableFuture containing all items across all pages
+      */
+     public CompletableFuture<List<T>> getAllItemsAsync() {
+-        throw new UnsupportedOperationException("AsyncCustomPager.getAllItemsAsync() must be implemented. "
++        throw new UnsupportedOperationException("AsyncFernCustomPaginator.getAllItemsAsync() must be implemented. "
+                 + "This method should asynchronously fetch all pages and return all items.");
+     }
+ 
+@@ -159,7 +159,7 @@ public class AsyncCustomPager<T> implements BiDirectionalPage<T> {
+      */
+     public CompletableFuture<Void> forEachPageAsync(
+             java.util.function.Function<List<T>, CompletionStage<Void>> pageProcessor) {
+-        throw new UnsupportedOperationException("AsyncCustomPager.forEachPageAsync() must be implemented. "
++        throw new UnsupportedOperationException("AsyncFernCustomPaginator.forEachPageAsync() must be implemented. "
+                 + "This method should asynchronously process each page with the given function.");
+     }
+ }
+diff --git a/src/main/java/com/seed/pagination/core/pagination/CustomPager.java b/src/main/java/com/seed/pagination/core/pagination/FernCustomPaginator.java
+similarity index 67%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/pagination-custom/baseline/src/main/java/com/seed/pagination/core/pagination/CustomPager.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-ldQ37ToxHVbB/src/main/java/com/seed/pagination/core/pagination/FernCustomPaginator.java
+index 3f5ec4035cd..cc814ac2d49 100644
+--- a/src/main/java/com/seed/pagination/core/pagination/CustomPager.java
++++ b/src/main/java/com/seed/pagination/core/pagination/FernCustomPaginator.java
+@@ -20,14 +20,14 @@ import java.util.Optional;
+  *
+  * Example implementation for HATEOAS-style pagination:
+  * <pre>{@code
+- * public class CustomPager<T> implements BiDirectionalPage<T>, Iterable<T> {
++ * public class FernCustomPaginator<T> implements BiDirectionalPage<T>, Iterable<T> {
+  *     private final List<T> items;
+  *     private final String nextUrl;
+  *     private final String previousUrl;
+  *     private final OkHttpClient client;
+  *     private final TypeReference<ResponseType<T>> responseType;
+  *
+- *     public CustomPager(Response<T> response, OkHttpClient client, ...) {
++ *     public FernCustomPaginator(Response<T> response, OkHttpClient client, ...) {
+  *         this.items = response.getData();
+  *         this.nextUrl = response.getLinks().getNext();
+  *         this.previousUrl = response.getLinks().getPrevious();
+@@ -40,13 +40,13 @@ import java.util.Optional;
+  *     }
+  *
+  *     @Override
+- *     public CustomPager<T> nextPage() throws IOException {
++ *     public FernCustomPaginator<T> nextPage() throws IOException {
+  *         if (!hasNext()) {
+  *             throw new NoSuchElementException("No next page available");
+  *         }
+  *         // Make HTTP request to nextUrl
+  *         // Parse response
+- *         // Return new CustomPager instance
++ *         // Return new FernCustomPaginator instance
+  *     }
+  *
+  *     // ... implement other methods
+@@ -55,7 +55,7 @@ import java.util.Optional;
+  *
+  * @param <T> The type of items in the page
+  */
+-public class CustomPager<T> implements BiDirectionalPage<T>, Iterable<T> {
++public class FernCustomPaginator<T> implements BiDirectionalPage<T>, Iterable<T> {
+ 
+     /**
+      * Create a CustomPager from an initial response.
+@@ -63,56 +63,56 @@ public class CustomPager<T> implements BiDirectionalPage<T>, Iterable<T> {
+      * @param initialResponse The first page response from the API
+      * @param clientOptions The client options containing HTTP client and other configuration
+      * @param requestOptions Request options for authentication, headers, etc.
+-     * @return A new CustomPager instance
++     * @return A new FernCustomPaginator instance
+      * @throws IOException if the request fails
+      */
+-    public static <T> CustomPager<T> create(Object initialResponse, ClientOptions clientOptions, Object requestOptions)
+-            throws IOException {
+-        throw new UnsupportedOperationException("CustomPager must be implemented. "
+-                + "Please implement this class in core/CustomPager.java to define your pagination logic. "
++    public static <T> FernCustomPaginator<T> create(
++            Object initialResponse, ClientOptions clientOptions, Object requestOptions) throws IOException {
++        throw new UnsupportedOperationException("FernCustomPaginator must be implemented. "
++                + "Please implement this class in core/FernCustomPaginator.java to define your pagination logic. "
+                 + "This file has been added to .fernignore and will not be overwritten. "
+                 + "See the class documentation for implementation examples.");
+     }
+ 
+     @Override
+     public boolean hasNext() {
+-        throw new UnsupportedOperationException("CustomPager.hasNext() must be implemented. "
++        throw new UnsupportedOperationException("FernCustomPaginator.hasNext() must be implemented. "
+                 + "This method should return true if a next page is available.");
+     }
+ 
+     @Override
+     public boolean hasPrevious() {
+-        throw new UnsupportedOperationException("CustomPager.hasPrevious() must be implemented. "
++        throw new UnsupportedOperationException("FernCustomPaginator.hasPrevious() must be implemented. "
+                 + "This method should return true if a previous page is available.");
+     }
+ 
+     @Override
+     public BiDirectionalPage<T> nextPage() throws IOException {
+-        throw new UnsupportedOperationException("CustomPager.nextPage() must be implemented. "
++        throw new UnsupportedOperationException("FernCustomPaginator.nextPage() must be implemented. "
+                 + "This method should fetch and return the next page of results.");
+     }
+ 
+     @Override
+     public BiDirectionalPage<T> previousPage() throws IOException {
+-        throw new UnsupportedOperationException("CustomPager.previousPage() must be implemented. "
++        throw new UnsupportedOperationException("FernCustomPaginator.previousPage() must be implemented. "
+                 + "This method should fetch and return the previous page of results.");
+     }
+ 
+     @Override
+     public List<T> getItems() {
+-        throw new UnsupportedOperationException("CustomPager.getItems() must be implemented. "
++        throw new UnsupportedOperationException("FernCustomPaginator.getItems() must be implemented. "
+                 + "This method should return the items in the current page.");
+     }
+ 
+     @Override
+     public <R> Optional<R> getResponse() {
+-        throw new UnsupportedOperationException("CustomPager.getResponse() must be implemented. "
++        throw new UnsupportedOperationException("FernCustomPaginator.getResponse() must be implemented. "
+                 + "This method should return the full response object for accessing pagination metadata.");
+     }
+ 
+     @Override
+     public Iterator<T> iterator() {
+-        throw new UnsupportedOperationException("CustomPager.iterator() must be implemented. "
++        throw new UnsupportedOperationException("FernCustomPaginator.iterator() must be implemented. "
+                 + "This method should return an iterator that traverses all items across all pages.");
+     }
+ }
+diff --git a/src/main/java/com/seed/pagination/resources/users/AsyncRawUsersClient.java b/src/main/java/com/seed/pagination/resources/users/AsyncRawUsersClient.java
+index 51b9287b0c6..bd401d76b70 100644
+--- a/src/main/java/com/seed/pagination/resources/users/AsyncRawUsersClient.java
++++ b/src/main/java/com/seed/pagination/resources/users/AsyncRawUsersClient.java
+@@ -10,7 +10,7 @@ import com.seed.pagination.core.RequestOptions;
+ import com.seed.pagination.core.SeedPaginationApiException;
+ import com.seed.pagination.core.SeedPaginationException;
+ import com.seed.pagination.core.SeedPaginationHttpResponse;
+-import com.seed.pagination.core.pagination.AsyncCustomPager;
++import com.seed.pagination.core.pagination.AsyncFernCustomPaginator;
+ import com.seed.pagination.resources.users.requests.ListWithCustomPagerRequest;
+ import com.seed.pagination.types.UsersListResponse;
+ import java.io.IOException;
+@@ -32,22 +32,22 @@ public class AsyncRawUsersClient {
+         this.clientOptions = clientOptions;
+     }
+ 
+-    public CompletableFuture<SeedPaginationHttpResponse<CompletableFuture<AsyncCustomPager<String>>>>
++    public CompletableFuture<SeedPaginationHttpResponse<CompletableFuture<AsyncFernCustomPaginator<String>>>>
+             listWithCustomPager() {
+         return listWithCustomPager(ListWithCustomPagerRequest.builder().build());
+     }
+ 
+-    public CompletableFuture<SeedPaginationHttpResponse<CompletableFuture<AsyncCustomPager<String>>>>
++    public CompletableFuture<SeedPaginationHttpResponse<CompletableFuture<AsyncFernCustomPaginator<String>>>>
+             listWithCustomPager(RequestOptions requestOptions) {
+         return listWithCustomPager(ListWithCustomPagerRequest.builder().build(), requestOptions);
+     }
+ 
+-    public CompletableFuture<SeedPaginationHttpResponse<CompletableFuture<AsyncCustomPager<String>>>>
++    public CompletableFuture<SeedPaginationHttpResponse<CompletableFuture<AsyncFernCustomPaginator<String>>>>
+             listWithCustomPager(ListWithCustomPagerRequest request) {
+         return listWithCustomPager(request, null);
+     }
+ 
+-    public CompletableFuture<SeedPaginationHttpResponse<CompletableFuture<AsyncCustomPager<String>>>>
++    public CompletableFuture<SeedPaginationHttpResponse<CompletableFuture<AsyncFernCustomPaginator<String>>>>
+             listWithCustomPager(ListWithCustomPagerRequest request, RequestOptions requestOptions) {
+         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                 .newBuilder()
+@@ -75,7 +75,7 @@ public class AsyncRawUsersClient {
+         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+             client = clientOptions.httpClientWithTimeout(requestOptions);
+         }
+-        CompletableFuture<SeedPaginationHttpResponse<CompletableFuture<AsyncCustomPager<String>>>> future =
++        CompletableFuture<SeedPaginationHttpResponse<CompletableFuture<AsyncFernCustomPaginator<String>>>> future =
+                 new CompletableFuture<>();
+         client.newCall(okhttpRequest).enqueue(new Callback() {
+             @Override
+@@ -86,7 +86,8 @@ public class AsyncRawUsersClient {
+                         UsersListResponse parsedResponse =
+                                 ObjectMappers.JSON_MAPPER.readValue(responseBodyString, UsersListResponse.class);
+                         future.complete(new SeedPaginationHttpResponse<>(
+-                                AsyncCustomPager.createAsync(parsedResponse, clientOptions, requestOptions), response));
++                                AsyncFernCustomPaginator.createAsync(parsedResponse, clientOptions, requestOptions),
++                                response));
+                         return;
+                     }
+                     Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+diff --git a/src/main/java/com/seed/pagination/resources/users/AsyncUsersClient.java b/src/main/java/com/seed/pagination/resources/users/AsyncUsersClient.java
+index 7531cf2374d..87e8ade4c27 100644
+--- a/src/main/java/com/seed/pagination/resources/users/AsyncUsersClient.java
++++ b/src/main/java/com/seed/pagination/resources/users/AsyncUsersClient.java
+@@ -5,7 +5,7 @@ package com.seed.pagination.resources.users;
+ 
+ import com.seed.pagination.core.ClientOptions;
+ import com.seed.pagination.core.RequestOptions;
+-import com.seed.pagination.core.pagination.AsyncCustomPager;
++import com.seed.pagination.core.pagination.AsyncFernCustomPaginator;
+ import com.seed.pagination.resources.users.requests.ListWithCustomPagerRequest;
+ import java.util.concurrent.CompletableFuture;
+ 
+@@ -26,21 +26,21 @@ public class AsyncUsersClient {
+         return this.rawClient;
+     }
+ 
+-    public CompletableFuture<CompletableFuture<AsyncCustomPager<String>>> listWithCustomPager() {
++    public CompletableFuture<CompletableFuture<AsyncFernCustomPaginator<String>>> listWithCustomPager() {
+         return this.rawClient.listWithCustomPager().thenApply(response -> response.body());
+     }
+ 
+-    public CompletableFuture<CompletableFuture<AsyncCustomPager<String>>> listWithCustomPager(
++    public CompletableFuture<CompletableFuture<AsyncFernCustomPaginator<String>>> listWithCustomPager(
+             RequestOptions requestOptions) {
+         return this.rawClient.listWithCustomPager(requestOptions).thenApply(response -> response.body());
+     }
+ 
+-    public CompletableFuture<CompletableFuture<AsyncCustomPager<String>>> listWithCustomPager(
++    public CompletableFuture<CompletableFuture<AsyncFernCustomPaginator<String>>> listWithCustomPager(
+             ListWithCustomPagerRequest request) {
+         return this.rawClient.listWithCustomPager(request).thenApply(response -> response.body());
+     }
+ 
+-    public CompletableFuture<CompletableFuture<AsyncCustomPager<String>>> listWithCustomPager(
++    public CompletableFuture<CompletableFuture<AsyncFernCustomPaginator<String>>> listWithCustomPager(
+             ListWithCustomPagerRequest request, RequestOptions requestOptions) {
+         return this.rawClient.listWithCustomPager(request, requestOptions).thenApply(response -> response.body());
+     }
+diff --git a/src/main/java/com/seed/pagination/resources/users/RawUsersClient.java b/src/main/java/com/seed/pagination/resources/users/RawUsersClient.java
+index 08819b3a5d4..c5ddf8f1f97 100644
+--- a/src/main/java/com/seed/pagination/resources/users/RawUsersClient.java
++++ b/src/main/java/com/seed/pagination/resources/users/RawUsersClient.java
+@@ -10,7 +10,7 @@ import com.seed.pagination.core.RequestOptions;
+ import com.seed.pagination.core.SeedPaginationApiException;
+ import com.seed.pagination.core.SeedPaginationException;
+ import com.seed.pagination.core.SeedPaginationHttpResponse;
+-import com.seed.pagination.core.pagination.CustomPager;
++import com.seed.pagination.core.pagination.FernCustomPaginator;
+ import com.seed.pagination.resources.users.requests.ListWithCustomPagerRequest;
+ import com.seed.pagination.types.UsersListResponse;
+ import java.io.IOException;
+@@ -28,19 +28,20 @@ public class RawUsersClient {
+         this.clientOptions = clientOptions;
+     }
+ 
+-    public SeedPaginationHttpResponse<CustomPager<String>> listWithCustomPager() {
++    public SeedPaginationHttpResponse<FernCustomPaginator<String>> listWithCustomPager() {
+         return listWithCustomPager(ListWithCustomPagerRequest.builder().build());
+     }
+ 
+-    public SeedPaginationHttpResponse<CustomPager<String>> listWithCustomPager(RequestOptions requestOptions) {
++    public SeedPaginationHttpResponse<FernCustomPaginator<String>> listWithCustomPager(RequestOptions requestOptions) {
+         return listWithCustomPager(ListWithCustomPagerRequest.builder().build(), requestOptions);
+     }
+ 
+-    public SeedPaginationHttpResponse<CustomPager<String>> listWithCustomPager(ListWithCustomPagerRequest request) {
++    public SeedPaginationHttpResponse<FernCustomPaginator<String>> listWithCustomPager(
++            ListWithCustomPagerRequest request) {
+         return listWithCustomPager(request, null);
+     }
+ 
+-    public SeedPaginationHttpResponse<CustomPager<String>> listWithCustomPager(
++    public SeedPaginationHttpResponse<FernCustomPaginator<String>> listWithCustomPager(
+             ListWithCustomPagerRequest request, RequestOptions requestOptions) {
+         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                 .newBuilder()
+@@ -75,7 +76,7 @@ public class RawUsersClient {
+                 UsersListResponse parsedResponse =
+                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, UsersListResponse.class);
+                 return new SeedPaginationHttpResponse<>(
+-                        CustomPager.create(parsedResponse, clientOptions, requestOptions), response);
++                        FernCustomPaginator.create(parsedResponse, clientOptions, requestOptions), response);
+             }
+             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+             throw new SeedPaginationApiException(
+diff --git a/src/main/java/com/seed/pagination/resources/users/UsersClient.java b/src/main/java/com/seed/pagination/resources/users/UsersClient.java
+index 8311253335d..5e1194cac85 100644
+--- a/src/main/java/com/seed/pagination/resources/users/UsersClient.java
++++ b/src/main/java/com/seed/pagination/resources/users/UsersClient.java
+@@ -5,7 +5,7 @@ package com.seed.pagination.resources.users;
+ 
+ import com.seed.pagination.core.ClientOptions;
+ import com.seed.pagination.core.RequestOptions;
+-import com.seed.pagination.core.pagination.CustomPager;
++import com.seed.pagination.core.pagination.FernCustomPaginator;
+ import com.seed.pagination.resources.users.requests.ListWithCustomPagerRequest;
+ 
+ public class UsersClient {
+@@ -25,19 +25,20 @@ public class UsersClient {
+         return this.rawClient;
+     }
+ 
+-    public CustomPager<String> listWithCustomPager() {
++    public FernCustomPaginator<String> listWithCustomPager() {
+         return this.rawClient.listWithCustomPager().body();
+     }
+ 
+-    public CustomPager<String> listWithCustomPager(RequestOptions requestOptions) {
++    public FernCustomPaginator<String> listWithCustomPager(RequestOptions requestOptions) {
+         return this.rawClient.listWithCustomPager(requestOptions).body();
+     }
+ 
+-    public CustomPager<String> listWithCustomPager(ListWithCustomPagerRequest request) {
++    public FernCustomPaginator<String> listWithCustomPager(ListWithCustomPagerRequest request) {
+         return this.rawClient.listWithCustomPager(request).body();
+     }
+ 
+-    public CustomPager<String> listWithCustomPager(ListWithCustomPagerRequest request, RequestOptions requestOptions) {
++    public FernCustomPaginator<String> listWithCustomPager(
++            ListWithCustomPagerRequest request, RequestOptions requestOptions) {
+         return this.rawClient.listWithCustomPager(request, requestOptions).body();
+     }
+ }

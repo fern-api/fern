@@ -1,0 +1,4715 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 55d05d44739..af773a85e16 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -3,7 +3,10 @@
+   "generatorName": "fernapi/fern-ruby-sdk-v2",
+   "generatorVersion": "local",
+   "generatorConfig": {
+-    "rubocopSeverity": "error"
++    "rubocopSeverity": "error",
++    "enableWireTests": true,
++    "clientModuleName": "MyClient",
++    "maxRetries": 5
+   },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index 72178ea4c8f..9a224d6dfd0 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -41,7 +41,7 @@ jobs:
+         run: bundle install
+ 
+       - name: Run Tests
+-        run: bundle exec rake test
++        run: RUN_WIRE_TESTS=true bundle exec rake test
+ 
+   publish:
+     name: Publish to RubyGems.org
+diff --git a/README.md b/README.md
+index 1cf5e82922b..a9c4d5e09df 100644
+--- a/README.md
++++ b/README.md
+@@ -28,7 +28,7 @@ Instantiate and use the client with the following:
+ ```ruby
+ require "seed"
+ 
+-client = Seed::Client.new(token: "<token>")
++client = Seed::MyClient.new(token: "<token>")
+ 
+ client.endpoints.container.get_and_return_list_of_primitives(request: %w[string string])
+ ```
+@@ -41,7 +41,7 @@ This SDK allows you to configure different custom URLs for API requests. You can
+ ```ruby
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+     base_url: "https://example.com"
+ )
+ ```
+@@ -53,7 +53,7 @@ Failed API calls will raise errors that can be rescued from granularly.
+ ```ruby
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+     base_url: "https://example.com"
+ )
+ 
+@@ -90,9 +90,9 @@ Use the `max_retries` option to configure this behavior.
+ ```ruby
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+     base_url: "https://example.com",
+-    max_retries: 3  # Configure max retries (default is 2)
++    max_retries: 3  # Configure max retries (default is 5)
+ )
+ ```
+ 
+diff --git a/dynamic-snippets/example0/snippet.rb b/dynamic-snippets/example0/snippet.rb
+index c2df099266a..dd5c97f006c 100644
+--- a/dynamic-snippets/example0/snippet.rb
++++ b/dynamic-snippets/example0/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example1/snippet.rb b/dynamic-snippets/example1/snippet.rb
+index cd3faa6caa4..2f89e438cde 100644
+--- a/dynamic-snippets/example1/snippet.rb
++++ b/dynamic-snippets/example1/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example10/snippet.rb b/dynamic-snippets/example10/snippet.rb
+index 4897f44140b..fda70bf81d3 100644
+--- a/dynamic-snippets/example10/snippet.rb
++++ b/dynamic-snippets/example10/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example11/snippet.rb b/dynamic-snippets/example11/snippet.rb
+index c506730e93b..c96c177fa3e 100644
+--- a/dynamic-snippets/example11/snippet.rb
++++ b/dynamic-snippets/example11/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example12/snippet.rb b/dynamic-snippets/example12/snippet.rb
+index 7d0a7bb0030..52d2ed9b552 100644
+--- a/dynamic-snippets/example12/snippet.rb
++++ b/dynamic-snippets/example12/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example13/snippet.rb b/dynamic-snippets/example13/snippet.rb
+index 15edb7cc1cb..290ce8a913c 100644
+--- a/dynamic-snippets/example13/snippet.rb
++++ b/dynamic-snippets/example13/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example14/snippet.rb b/dynamic-snippets/example14/snippet.rb
+index f4bd991d61b..e2a315dc3b9 100644
+--- a/dynamic-snippets/example14/snippet.rb
++++ b/dynamic-snippets/example14/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example15/snippet.rb b/dynamic-snippets/example15/snippet.rb
+index 5986873b271..ef3a8fc73ce 100644
+--- a/dynamic-snippets/example15/snippet.rb
++++ b/dynamic-snippets/example15/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example16/snippet.rb b/dynamic-snippets/example16/snippet.rb
+index 278827a6c01..aa0e7f4667f 100644
+--- a/dynamic-snippets/example16/snippet.rb
++++ b/dynamic-snippets/example16/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example17/snippet.rb b/dynamic-snippets/example17/snippet.rb
+index 525cc36f04f..877b4b7bb33 100644
+--- a/dynamic-snippets/example17/snippet.rb
++++ b/dynamic-snippets/example17/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example18/snippet.rb b/dynamic-snippets/example18/snippet.rb
+index 75611655f1c..344970ec4a7 100644
+--- a/dynamic-snippets/example18/snippet.rb
++++ b/dynamic-snippets/example18/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example19/snippet.rb b/dynamic-snippets/example19/snippet.rb
+index a467dcd1bb0..726c5662c51 100644
+--- a/dynamic-snippets/example19/snippet.rb
++++ b/dynamic-snippets/example19/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example2/snippet.rb b/dynamic-snippets/example2/snippet.rb
+index c6f85ccdd80..7e12960b2e7 100644
+--- a/dynamic-snippets/example2/snippet.rb
++++ b/dynamic-snippets/example2/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example20/snippet.rb b/dynamic-snippets/example20/snippet.rb
+index b036921ddbc..ca7abba474e 100644
+--- a/dynamic-snippets/example20/snippet.rb
++++ b/dynamic-snippets/example20/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example21/snippet.rb b/dynamic-snippets/example21/snippet.rb
+index 82483993575..1d03582a2d5 100644
+--- a/dynamic-snippets/example21/snippet.rb
++++ b/dynamic-snippets/example21/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example22/snippet.rb b/dynamic-snippets/example22/snippet.rb
+index 508552a47fe..dcddc3d1000 100644
+--- a/dynamic-snippets/example22/snippet.rb
++++ b/dynamic-snippets/example22/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example23/snippet.rb b/dynamic-snippets/example23/snippet.rb
+index 508552a47fe..dcddc3d1000 100644
+--- a/dynamic-snippets/example23/snippet.rb
++++ b/dynamic-snippets/example23/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example24/snippet.rb b/dynamic-snippets/example24/snippet.rb
+index ff065a32129..01bfab4b8cb 100644
+--- a/dynamic-snippets/example24/snippet.rb
++++ b/dynamic-snippets/example24/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example25/snippet.rb b/dynamic-snippets/example25/snippet.rb
+index 39385931d0d..e6bcb788776 100644
+--- a/dynamic-snippets/example25/snippet.rb
++++ b/dynamic-snippets/example25/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example26/snippet.rb b/dynamic-snippets/example26/snippet.rb
+index a12f57b5567..b4542d1ea1b 100644
+--- a/dynamic-snippets/example26/snippet.rb
++++ b/dynamic-snippets/example26/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example27/snippet.rb b/dynamic-snippets/example27/snippet.rb
+index e19f3cdebf6..1a1fa5c2547 100644
+--- a/dynamic-snippets/example27/snippet.rb
++++ b/dynamic-snippets/example27/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example28/snippet.rb b/dynamic-snippets/example28/snippet.rb
+index c2aa1cb3af8..f890047c2d1 100644
+--- a/dynamic-snippets/example28/snippet.rb
++++ b/dynamic-snippets/example28/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example29/snippet.rb b/dynamic-snippets/example29/snippet.rb
+index 470952e53c4..1d81f1ab7da 100644
+--- a/dynamic-snippets/example29/snippet.rb
++++ b/dynamic-snippets/example29/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example3/snippet.rb b/dynamic-snippets/example3/snippet.rb
+index 532da942754..448deea57ec 100644
+--- a/dynamic-snippets/example3/snippet.rb
++++ b/dynamic-snippets/example3/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example30/snippet.rb b/dynamic-snippets/example30/snippet.rb
+index 4ec43ec78b4..b08444c6ecb 100644
+--- a/dynamic-snippets/example30/snippet.rb
++++ b/dynamic-snippets/example30/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example31/snippet.rb b/dynamic-snippets/example31/snippet.rb
+index aac835a3dd7..75af3c4ab23 100644
+--- a/dynamic-snippets/example31/snippet.rb
++++ b/dynamic-snippets/example31/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example32/snippet.rb b/dynamic-snippets/example32/snippet.rb
+index d6d4b010f15..096e57afa79 100644
+--- a/dynamic-snippets/example32/snippet.rb
++++ b/dynamic-snippets/example32/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example33/snippet.rb b/dynamic-snippets/example33/snippet.rb
+index 900460697ef..560c9743903 100644
+--- a/dynamic-snippets/example33/snippet.rb
++++ b/dynamic-snippets/example33/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example34/snippet.rb b/dynamic-snippets/example34/snippet.rb
+index 057be425fc9..dd491b066d5 100644
+--- a/dynamic-snippets/example34/snippet.rb
++++ b/dynamic-snippets/example34/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example35/snippet.rb b/dynamic-snippets/example35/snippet.rb
+index f968a198675..8abe8bcb05d 100644
+--- a/dynamic-snippets/example35/snippet.rb
++++ b/dynamic-snippets/example35/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example36/snippet.rb b/dynamic-snippets/example36/snippet.rb
+index 763e30b1e4b..2815e89477e 100644
+--- a/dynamic-snippets/example36/snippet.rb
++++ b/dynamic-snippets/example36/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example37/snippet.rb b/dynamic-snippets/example37/snippet.rb
+index cb9c1836fde..f8b28ae5dc3 100644
+--- a/dynamic-snippets/example37/snippet.rb
++++ b/dynamic-snippets/example37/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example38/snippet.rb b/dynamic-snippets/example38/snippet.rb
+index 359c8112093..153bef53de9 100644
+--- a/dynamic-snippets/example38/snippet.rb
++++ b/dynamic-snippets/example38/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example39/snippet.rb b/dynamic-snippets/example39/snippet.rb
+index 1587cca72ae..cf2e0853eea 100644
+--- a/dynamic-snippets/example39/snippet.rb
++++ b/dynamic-snippets/example39/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example4/snippet.rb b/dynamic-snippets/example4/snippet.rb
+index 7f8cafc93a9..2102f06a926 100644
+--- a/dynamic-snippets/example4/snippet.rb
++++ b/dynamic-snippets/example4/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example40/snippet.rb b/dynamic-snippets/example40/snippet.rb
+index c761dbdd232..71a8e5a8de1 100644
+--- a/dynamic-snippets/example40/snippet.rb
++++ b/dynamic-snippets/example40/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example41/snippet.rb b/dynamic-snippets/example41/snippet.rb
+index 5a73d41b7ce..7ad7bd86d19 100644
+--- a/dynamic-snippets/example41/snippet.rb
++++ b/dynamic-snippets/example41/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example42/snippet.rb b/dynamic-snippets/example42/snippet.rb
+index eb1facf2f58..7513d69bb0a 100644
+--- a/dynamic-snippets/example42/snippet.rb
++++ b/dynamic-snippets/example42/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example43/snippet.rb b/dynamic-snippets/example43/snippet.rb
+index 8f6ddbc69eb..2cb1499f52f 100644
+--- a/dynamic-snippets/example43/snippet.rb
++++ b/dynamic-snippets/example43/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example44/snippet.rb b/dynamic-snippets/example44/snippet.rb
+index 8f6ddbc69eb..2cb1499f52f 100644
+--- a/dynamic-snippets/example44/snippet.rb
++++ b/dynamic-snippets/example44/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example45/snippet.rb b/dynamic-snippets/example45/snippet.rb
+index 2ec51229d90..89257abafb8 100644
+--- a/dynamic-snippets/example45/snippet.rb
++++ b/dynamic-snippets/example45/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example46/snippet.rb b/dynamic-snippets/example46/snippet.rb
+index 265fce9eb79..d88920fd87a 100644
+--- a/dynamic-snippets/example46/snippet.rb
++++ b/dynamic-snippets/example46/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example47/snippet.rb b/dynamic-snippets/example47/snippet.rb
+index c38203f20d7..af09c38bbc9 100644
+--- a/dynamic-snippets/example47/snippet.rb
++++ b/dynamic-snippets/example47/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example48/snippet.rb b/dynamic-snippets/example48/snippet.rb
+index 856659569f6..bb5b42f5012 100644
+--- a/dynamic-snippets/example48/snippet.rb
++++ b/dynamic-snippets/example48/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example49/snippet.rb b/dynamic-snippets/example49/snippet.rb
+index da713d43e81..81dbb508652 100644
+--- a/dynamic-snippets/example49/snippet.rb
++++ b/dynamic-snippets/example49/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example5/snippet.rb b/dynamic-snippets/example5/snippet.rb
+index 6a6c828c142..9b69353ad53 100644
+--- a/dynamic-snippets/example5/snippet.rb
++++ b/dynamic-snippets/example5/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example50/snippet.rb b/dynamic-snippets/example50/snippet.rb
+index 86e0db833fe..96004177489 100644
+--- a/dynamic-snippets/example50/snippet.rb
++++ b/dynamic-snippets/example50/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example51/snippet.rb b/dynamic-snippets/example51/snippet.rb
+index 709458e3cc6..0cbe0bfdec0 100644
+--- a/dynamic-snippets/example51/snippet.rb
++++ b/dynamic-snippets/example51/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example52/snippet.rb b/dynamic-snippets/example52/snippet.rb
+index 14deaac68b7..fa30420418e 100644
+--- a/dynamic-snippets/example52/snippet.rb
++++ b/dynamic-snippets/example52/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example53/snippet.rb b/dynamic-snippets/example53/snippet.rb
+index d65eb44ccd6..9b0b4c36511 100644
+--- a/dynamic-snippets/example53/snippet.rb
++++ b/dynamic-snippets/example53/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example54/snippet.rb b/dynamic-snippets/example54/snippet.rb
+index 5b8ca901819..e05bddfd547 100644
+--- a/dynamic-snippets/example54/snippet.rb
++++ b/dynamic-snippets/example54/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example55/snippet.rb b/dynamic-snippets/example55/snippet.rb
+index 81b0af7e89e..520dcc78d71 100644
+--- a/dynamic-snippets/example55/snippet.rb
++++ b/dynamic-snippets/example55/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example56/snippet.rb b/dynamic-snippets/example56/snippet.rb
+index f503fb939eb..fad51fd6b07 100644
+--- a/dynamic-snippets/example56/snippet.rb
++++ b/dynamic-snippets/example56/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example57/snippet.rb b/dynamic-snippets/example57/snippet.rb
+index e67e06edef5..3668cdf9e4c 100644
+--- a/dynamic-snippets/example57/snippet.rb
++++ b/dynamic-snippets/example57/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example58/snippet.rb b/dynamic-snippets/example58/snippet.rb
+index 8b1cabc2e3e..ba7b7b17f5b 100644
+--- a/dynamic-snippets/example58/snippet.rb
++++ b/dynamic-snippets/example58/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example59/snippet.rb b/dynamic-snippets/example59/snippet.rb
+index 594bb88d250..1cf0389f0b0 100644
+--- a/dynamic-snippets/example59/snippet.rb
++++ b/dynamic-snippets/example59/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example6/snippet.rb b/dynamic-snippets/example6/snippet.rb
+index 41f8078c9c3..fb9fcca7b0b 100644
+--- a/dynamic-snippets/example6/snippet.rb
++++ b/dynamic-snippets/example6/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example60/snippet.rb b/dynamic-snippets/example60/snippet.rb
+index 38f2178ef14..d4681b78121 100644
+--- a/dynamic-snippets/example60/snippet.rb
++++ b/dynamic-snippets/example60/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example61/snippet.rb b/dynamic-snippets/example61/snippet.rb
+index 38f2178ef14..d4681b78121 100644
+--- a/dynamic-snippets/example61/snippet.rb
++++ b/dynamic-snippets/example61/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example62/snippet.rb b/dynamic-snippets/example62/snippet.rb
+index e50c078933c..1b4fd590d00 100644
+--- a/dynamic-snippets/example62/snippet.rb
++++ b/dynamic-snippets/example62/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example63/snippet.rb b/dynamic-snippets/example63/snippet.rb
+index e50c078933c..1b4fd590d00 100644
+--- a/dynamic-snippets/example63/snippet.rb
++++ b/dynamic-snippets/example63/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example64/snippet.rb b/dynamic-snippets/example64/snippet.rb
+index 8ec8021b4fc..84805d095dd 100644
+--- a/dynamic-snippets/example64/snippet.rb
++++ b/dynamic-snippets/example64/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example65/snippet.rb b/dynamic-snippets/example65/snippet.rb
+index 2c690381fa4..41b55b77b45 100644
+--- a/dynamic-snippets/example65/snippet.rb
++++ b/dynamic-snippets/example65/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example66/snippet.rb b/dynamic-snippets/example66/snippet.rb
+index 65133ec4ba8..0366bf524c6 100644
+--- a/dynamic-snippets/example66/snippet.rb
++++ b/dynamic-snippets/example66/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example7/snippet.rb b/dynamic-snippets/example7/snippet.rb
+index 0a9c48d4ea5..64a3cdf3c2c 100644
+--- a/dynamic-snippets/example7/snippet.rb
++++ b/dynamic-snippets/example7/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example8/snippet.rb b/dynamic-snippets/example8/snippet.rb
+index 6cb19c04674..17422e6e225 100644
+--- a/dynamic-snippets/example8/snippet.rb
++++ b/dynamic-snippets/example8/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/dynamic-snippets/example9/snippet.rb b/dynamic-snippets/example9/snippet.rb
+index b2884308652..d26bed5154a 100644
+--- a/dynamic-snippets/example9/snippet.rb
++++ b/dynamic-snippets/example9/snippet.rb
+@@ -1,6 +1,6 @@
+ require "seed"
+ 
+-client = Seed::Client.new(
++client = Seed::MyClient.new(
+   token: "<token>",
+   base_url: "https://api.fern.com"
+ )
+diff --git a/lib/seed/client.rb b/lib/seed/client.rb
+index 00bac14287a..091b26965da 100644
+--- a/lib/seed/client.rb
++++ b/lib/seed/client.rb
+@@ -1,7 +1,7 @@
+ # frozen_string_literal: true
+ 
+ module Seed
+-  class Client
++  class MyClient
+     # @param base_url [String, nil]
+     # @param token [String]
+     #
+diff --git a/lib/seed/internal/http/raw_client.rb b/lib/seed/internal/http/raw_client.rb
+index 482ab951771..ea6a44e6e2d 100644
+--- a/lib/seed/internal/http/raw_client.rb
++++ b/lib/seed/internal/http/raw_client.rb
+@@ -18,10 +18,10 @@ module Seed
+         attr_reader :base_url
+ 
+         # @param base_url [String] The base url for the request.
+-        # @param max_retries [Integer] The number of times to retry a failed request, defaults to 2.
++        # @param max_retries [Integer] The number of times to retry a failed request, defaults to 5.
+         # @param timeout [Float] The timeout for the request, defaults to 60.0 seconds.
+         # @param headers [Hash] The headers for the request.
+-        def initialize(base_url:, max_retries: 2, timeout: 60.0, headers: {})
++        def initialize(base_url:, max_retries: 5, timeout: 60.0, headers: {})
+           @base_url = base_url
+           @max_retries = max_retries
+           @timeout = timeout
+diff --git a/test/wire/endpoints_container_test.rb b/test/wire/endpoints_container_test.rb
+new file mode 100644
+index 00000000000..3dc9cfd123e
+--- /dev/null
++++ b/test/wire/endpoints_container_test.rb
+@@ -0,0 +1,198 @@
++# frozen_string_literal: true
++
++require_relative "wiremock_test_case"
++
++class EndpointsContainerWireTest < WireMockTestCase
++  def setup
++    super
++
++    @client = Seed::MyClient.new(
++      token: "<token>",
++      base_url: WIREMOCK_BASE_URL
++    )
++  end
++
++  def test_endpoints_container_get_and_return_list_of_primitives_with_wiremock
++    test_id = "endpoints.container.get_and_return_list_of_primitives.0"
++
++    @client.endpoints.container.get_and_return_list_of_primitives(
++      request: %w[string string],
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "endpoints.container.get_and_return_list_of_primitives.0"
++        }
++      }
++    )
++
++    verify_request_count(
++      test_id: test_id,
++      method: "POST",
++      url_path: "/container/list-of-primitives",
++      query_params: nil,
++      expected: 1
++    )
++  end
++
++  def test_endpoints_container_get_and_return_list_of_objects_with_wiremock
++    test_id = "endpoints.container.get_and_return_list_of_objects.0"
++
++    @client.endpoints.container.get_and_return_list_of_objects(
++      request: [{
++        string: "string"
++      }, {
++        string: "string"
++      }],
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "endpoints.container.get_and_return_list_of_objects.0"
++        }
++      }
++    )
++
++    verify_request_count(
++      test_id: test_id,
++      method: "POST",
++      url_path: "/container/list-of-objects",
++      query_params: nil,
++      expected: 1
++    )
++  end
++
++  def test_endpoints_container_get_and_return_set_of_primitives_with_wiremock
++    test_id = "endpoints.container.get_and_return_set_of_primitives.0"
++
++    @client.endpoints.container.get_and_return_set_of_primitives(
++      request: Set.new(["string"]),
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "endpoints.container.get_and_return_set_of_primitives.0"
++        }
++      }
++    )
++
++    verify_request_count(
++      test_id: test_id,
++      method: "POST",
++      url_path: "/container/set-of-primitives",
++      query_params: nil,
++      expected: 1
++    )
++  end
++
++  def test_endpoints_container_get_and_return_set_of_objects_with_wiremock
++    test_id = "endpoints.container.get_and_return_set_of_objects.0"
++
++    @client.endpoints.container.get_and_return_set_of_objects(
++      request: Set.new([{
++                         string: "string"
++                       }]),
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "endpoints.container.get_and_return_set_of_objects.0"
++        }
++      }
++    )
++
++    verify_request_count(
++      test_id: test_id,
++      method: "POST",
++      url_path: "/container/set-of-objects",
++      query_params: nil,
++      expected: 1
++    )
++  end
++
++  def test_endpoints_container_get_and_return_map_prim_to_prim_with_wiremock
++    test_id = "endpoints.container.get_and_return_map_prim_to_prim.0"
++
++    @client.endpoints.container.get_and_return_map_prim_to_prim(
++      request: {
++        string: "string"
++      },
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "endpoints.container.get_and_return_map_prim_to_prim.0"
++        }
++      }
++    )
++
++    verify_request_count(
++      test_id: test_id,
++      method: "POST",
++      url_path: "/container/map-prim-to-prim",
++      query_params: nil,
++      expected: 1
++    )
++  end
++
++  def test_endpoints_container_get_and_return_map_of_prim_to_object_with_wiremock
++    test_id = "endpoints.container.get_and_return_map_of_prim_to_object.0"
++
++    @client.endpoints.container.get_and_return_map_of_prim_to_object(
++      request: {
++        string: {
++          string: "string"
++        }
++      },
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "endpoints.container.get_and_return_map_of_prim_to_object.0"
++        }
++      }
++    )
++
++    verify_request_count(
++      test_id: test_id,
++      method: "POST",
++      url_path: "/container/map-prim-to-object",
++      query_params: nil,
++      expected: 1
++    )
++  end
++
++  def test_endpoints_container_get_and_return_map_of_prim_to_undiscriminated_union_with_wiremock
++    test_id = "endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union.0"
++
++    @client.endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union(
++      request: {
++        string: 1.1
++      },
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union.0"
++        }
++      }
++    )
++
++    verify_request_count(
++      test_id: test_id,
++      method: "POST",
++      url_path: "/container/map-prim-to-union",
++      query_params: nil,
++      expected: 1
++    )
++  end
++
++  def test_endpoints_container_get_and_return_optional_with_wiremock
++    test_id = "endpoints.container.get_and_return_optional.0"
++
++    @client.endpoints.container.get_and_return_optional(
++      request: {
++        string: "string"
++      },
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "endpoints.container.get_and_return_optional.0"
++        }
++      }
++    )
++
++    verify_request_count(
++      test_id: test_id,
++      method: "POST",
++      url_path: "/container/opt-objects",
++      query_params: nil,
++      expected: 1
++    )
++  end
++end
+diff --git a/test/wire/endpoints_content_type_test.rb b/test/wire/endpoints_content_type_test.rb
+new file mode 100644
+index 00000000000..deaf3d64bf7
+--- /dev/null
++++ b/test/wire/endpoints_content_type_test.rb
+@@ -0,0 +1,84 @@
++# frozen_string_literal: true
++
++require_relative "wiremock_test_case"
++
++class EndpointsContentTypeWireTest < WireMockTestCase
++  def setup
++    super
++
++    @client = Seed::MyClient.new(
++      token: "<token>",
++      base_url: WIREMOCK_BASE_URL
++    )
++  end
++
++  def test_endpoints_content_type_post_json_patch_content_type_with_wiremock
++    test_id = "endpoints.content_type.post_json_patch_content_type.0"
++
++    @client.endpoints.content_type.post_json_patch_content_type(
++      string: "string",
++      integer: 1,
++      long: 1_000_000,
++      double: 1.1,
++      bool: true,
++      datetime: "2024-01-15T09:30:00Z",
++      date: "2023-01-15",
++      uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
++      base64: "SGVsbG8gd29ybGQh",
++      list: %w[list list],
++      set: Set.new(["set"]),
++      map: {
++        1 => "map"
++      },
++      bigint: "1000000",
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "endpoints.content_type.post_json_patch_content_type.0"
++        }
++      }
++    )
++
++    verify_request_count(
++      test_id: test_id,
++      method: "POST",
++      url_path: "/foo/bar",
++      query_params: nil,
++      expected: 1
++    )
++  end
++
++  def test_endpoints_content_type_post_json_patch_content_with_charset_type_with_wiremock
++    test_id = "endpoints.content_type.post_json_patch_content_with_charset_type.0"
++
++    @client.endpoints.content_type.post_json_patch_content_with_charset_type(
++      string: "string",
++      integer: 1,
++      long: 1_000_000,
++      double: 1.1,
++      bool: true,
++      datetime: "2024-01-15T09:30:00Z",
++      date: "2023-01-15",
++      uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
++      base64: "SGVsbG8gd29ybGQh",
++      list: %w[list list],
++      set: Set.new(["set"]),
++      map: {
++        1 => "map"
++      },
++      bigint: "1000000",
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "endpoints.content_type.post_json_patch_content_with_charset_type.0"
++        }
++      }
++    )
++
++    verify_request_count(
++      test_id: test_id,
++      method: "POST",
++      url_path: "/foo/baz",
++      query_params: nil,
++      expected: 1
++    )
++  end
++end
+diff --git a/test/wire/endpoints_enum_test.rb b/test/wire/endpoints_enum_test.rb
+new file mode 100644
+index 00000000000..b9b544ac1aa
+--- /dev/null
++++ b/test/wire/endpoints_enum_test.rb
+@@ -0,0 +1,35 @@
++# frozen_string_literal: true
++
++require_relative "wiremock_test_case"
++
++class EndpointsEnumWireTest < WireMockTestCase
++  def setup
++    super
++
++    @client = Seed::MyClient.new(
++      token: "<token>",
++      base_url: WIREMOCK_BASE_URL
++    )
++  end
++
++  def test_endpoints_enum_get_and_return_enum_with_wiremock
++    test_id = "endpoints.enum.get_and_return_enum.0"
++
++    @client.endpoints.enum.get_and_return_enum(
++      request: "SUNNY",
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "endpoints.enum.get_and_return_enum.0"
++        }
++      }
++    )
++
++    verify_request_count(
++      test_id: test_id,
++      method: "POST",
++      url_path: "/enum",
++      query_params: nil,
++      expected: 1
++    )
++  end
++end
+diff --git a/test/wire/endpoints_http_methods_test.rb b/test/wire/endpoints_http_methods_test.rb
+new file mode 100644
+index 00000000000..7157fa8e9a4
+--- /dev/null
++++ b/test/wire/endpoints_http_methods_test.rb
+@@ -0,0 +1,135 @@
++# frozen_string_literal: true
++
++require_relative "wiremock_test_case"
++
++class EndpointsHttpMethodsWireTest < WireMockTestCase
++  def setup
++    super
++
++    @client = Seed::MyClient.new(
++      token: "<token>",
++      base_url: WIREMOCK_BASE_URL
++    )
++  end
++
++  def test_endpoints_http_methods_test_get_with_wiremock
++    test_id = "endpoints.http_methods.test_get.0"
++
++    @client.endpoints.http_methods.test_get(
++      id: "id",
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "endpoints.http_methods.test_get.0"
++        }
++      }
++    )
++
++    verify_request_count(
++      test_id: test_id,
++      method: "GET",
++      url_path: "/http-methods/id",
++      query_params: nil,
++      expected: 1
++    )
++  end
++
++  def test_endpoints_http_methods_test_post_with_wiremock
++    test_id = "endpoints.http_methods.test_post.0"
++
++    @client.endpoints.http_methods.test_post(
++      string: "string",
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "endpoints.http_methods.test_post.0"
++        }
++      }
++    )
++
++    verify_request_count(
++      test_id: test_id,
++      method: "POST",
++      url_path: "/http-methods",
++      query_params: nil,
++      expected: 1
++    )
++  end
++
++  def test_endpoints_http_methods_test_put_with_wiremock
++    test_id = "endpoints.http_methods.test_put.0"
++
++    @client.endpoints.http_methods.test_put(
++      id: "id",
++      string: "string",
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "endpoints.http_methods.test_put.0"
++        }
++      }
++    )
++
++    verify_request_count(
++      test_id: test_id,
++      method: "PUT",
++      url_path: "/http-methods/id",
++      query_params: nil,
++      expected: 1
++    )
++  end
++
++  def test_endpoints_http_methods_test_patch_with_wiremock
++    test_id = "endpoints.http_methods.test_patch.0"
++
++    @client.endpoints.http_methods.test_patch(
++      id: "id",
++      string: "string",
++      integer: 1,
++      long: 1_000_000,
++      double: 1.1,
++      bool: true,
++      datetime: "2024-01-15T09:30:00Z",
++      date: "2023-01-15",
++      uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
++      base64: "SGVsbG8gd29ybGQh",
++      list: %w[list list],
++      set: Set.new(["set"]),
++      map: {
++        1 => "map"
++      },
++      bigint: "1000000",
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "endpoints.http_methods.test_patch.0"
++        }
++      }
++    )
++
++    verify_request_count(
++      test_id: test_id,
++      method: "PATCH",
++      url_path: "/http-methods/id",
++      query_params: nil,
++      expected: 1
++    )
++  end
++
++  def test_endpoints_http_methods_test_delete_with_wiremock
++    test_id = "endpoints.http_methods.test_delete.0"
++
++    @client.endpoints.http_methods.test_delete(
++      id: "id",
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "endpoints.http_methods.test_delete.0"
++        }
++      }
++    )
++
++    verify_request_count(
++      test_id: test_id,
++      method: "DELETE",
++      url_path: "/http-methods/id",
++      query_params: nil,
++      expected: 1
++    )
++  end
++end
+diff --git a/test/wire/endpoints_object_test.rb b/test/wire/endpoints_object_test.rb
+new file mode 100644
+index 00000000000..14180665114
+--- /dev/null
++++ b/test/wire/endpoints_object_test.rb
+@@ -0,0 +1,359 @@
++# frozen_string_literal: true
++
++require_relative "wiremock_test_case"
++
++class EndpointsObjectWireTest < WireMockTestCase
++  def setup
++    super
++
++    @client = Seed::MyClient.new(
++      token: "<token>",
++      base_url: WIREMOCK_BASE_URL
++    )
++  end
++
++  def test_endpoints_object_get_and_return_with_optional_field_with_wiremock
++    test_id = "endpoints.object.get_and_return_with_optional_field.0"
++
++    @client.endpoints.object.get_and_return_with_optional_field(
++      string: "string",
++      integer: 1,
++      long: 1_000_000,
++      double: 1.1,
++      bool: true,
++      datetime: "2024-01-15T09:30:00Z",
++      date: "2023-01-15",
++      uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
++      base64: "SGVsbG8gd29ybGQh",
++      list: %w[list list],
++      set: Set.new(["set"]),
++      map: {
++        1 => "map"
++      },
++      bigint: "1000000",
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "endpoints.object.get_and_return_with_optional_field.0"
++        }
++      }
++    )
++
++    verify_request_count(
++      test_id: test_id,
++      method: "POST",
++      url_path: "/object/get-and-return-with-optional-field",
++      query_params: nil,
++      expected: 1
++    )
++  end
++
++  def test_endpoints_object_get_and_return_with_required_field_with_wiremock
++    test_id = "endpoints.object.get_and_return_with_required_field.0"
++
++    @client.endpoints.object.get_and_return_with_required_field(
++      string: "string",
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "endpoints.object.get_and_return_with_required_field.0"
++        }
++      }
++    )
++
++    verify_request_count(
++      test_id: test_id,
++      method: "POST",
++      url_path: "/object/get-and-return-with-required-field",
++      query_params: nil,
++      expected: 1
++    )
++  end
++
++  def test_endpoints_object_get_and_return_with_map_of_map_with_wiremock
++    test_id = "endpoints.object.get_and_return_with_map_of_map.0"
++
++    @client.endpoints.object.get_and_return_with_map_of_map(
++      map: {
++        map: {
++          map: "map"
++        }
++      },
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "endpoints.object.get_and_return_with_map_of_map.0"
++        }
++      }
++    )
++
++    verify_request_count(
++      test_id: test_id,
++      method: "POST",
++      url_path: "/object/get-and-return-with-map-of-map",
++      query_params: nil,
++      expected: 1
++    )
++  end
++
++  def test_endpoints_object_get_and_return_nested_with_optional_field_with_wiremock
++    test_id = "endpoints.object.get_and_return_nested_with_optional_field.0"
++
++    @client.endpoints.object.get_and_return_nested_with_optional_field(
++      string: "string",
++      nested_object: {
++        string: "string",
++        integer: 1,
++        long: 1_000_000,
++        double: 1.1,
++        bool: true,
++        datetime: "2024-01-15T09:30:00Z",
++        date: "2023-01-15",
++        uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
++        base64: "SGVsbG8gd29ybGQh",
++        list: %w[list list],
++        set: Set.new(["set"]),
++        map: {
++          1 => "map"
++        },
++        bigint: "1000000"
++      },
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "endpoints.object.get_and_return_nested_with_optional_field.0"
++        }
++      }
++    )
++
++    verify_request_count(
++      test_id: test_id,
++      method: "POST",
++      url_path: "/object/get-and-return-nested-with-optional-field",
++      query_params: nil,
++      expected: 1
++    )
++  end
++
++  def test_endpoints_object_get_and_return_nested_with_required_field_with_wiremock
++    test_id = "endpoints.object.get_and_return_nested_with_required_field.0"
++
++    @client.endpoints.object.get_and_return_nested_with_required_field(
++      string: "string",
++      string: "string",
++      nested_object: {
++        string: "string",
++        integer: 1,
++        long: 1_000_000,
++        double: 1.1,
++        bool: true,
++        datetime: "2024-01-15T09:30:00Z",
++        date: "2023-01-15",
++        uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
++        base64: "SGVsbG8gd29ybGQh",
++        list: %w[list list],
++        set: Set.new(["set"]),
++        map: {
++          1 => "map"
++        },
++        bigint: "1000000"
++      },
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "endpoints.object.get_and_return_nested_with_required_field.0"
++        }
++      }
++    )
++
++    verify_request_count(
++      test_id: test_id,
++      method: "POST",
++      url_path: "/object/get-and-return-nested-with-required-field/string",
++      query_params: nil,
++      expected: 1
++    )
++  end
++
++  def test_endpoints_object_get_and_return_nested_with_required_field_as_list_with_wiremock
++    test_id = "endpoints.object.get_and_return_nested_with_required_field_as_list.0"
++
++    @client.endpoints.object.get_and_return_nested_with_required_field_as_list(
++      request: [{
++        string: "string",
++        nested_object: {
++          string: "string",
++          integer: 1,
++          long: 1_000_000,
++          double: 1.1,
++          bool: true,
++          datetime: "2024-01-15T09:30:00Z",
++          date: "2023-01-15",
++          uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
++          base64: "SGVsbG8gd29ybGQh",
++          list: %w[list list],
++          set: Set.new(["set"]),
++          map: {
++            1 => "map"
++          },
++          bigint: "1000000"
++        }
++      }, {
++        string: "string",
++        nested_object: {
++          string: "string",
++          integer: 1,
++          long: 1_000_000,
++          double: 1.1,
++          bool: true,
++          datetime: "2024-01-15T09:30:00Z",
++          date: "2023-01-15",
++          uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
++          base64: "SGVsbG8gd29ybGQh",
++          list: %w[list list],
++          set: Set.new(["set"]),
++          map: {
++            1 => "map"
++          },
++          bigint: "1000000"
++        }
++      }],
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "endpoints.object.get_and_return_nested_with_required_field_as_list.0"
++        }
++      }
++    )
++
++    verify_request_count(
++      test_id: test_id,
++      method: "POST",
++      url_path: "/object/get-and-return-nested-with-required-field-list",
++      query_params: nil,
++      expected: 1
++    )
++  end
++
++  def test_endpoints_object_get_and_return_with_unknown_field_with_wiremock
++    test_id = "endpoints.object.get_and_return_with_unknown_field.0"
++
++    @client.endpoints.object.get_and_return_with_unknown_field(request_options: {
++                                                                 additional_headers: {
++                                                                   "X-Test-Id" => "endpoints.object.get_and_return_with_unknown_field.0"
++                                                                 }
++                                                               })
++
++    verify_request_count(
++      test_id: test_id,
++      method: "POST",
++      url_path: "/object/get-and-return-with-unknown-field",
++      query_params: nil,
++      expected: 1
++    )
++  end
++
++  def test_endpoints_object_get_and_return_with_documented_unknown_type_with_wiremock
++    test_id = "endpoints.object.get_and_return_with_documented_unknown_type.0"
++
++    @client.endpoints.object.get_and_return_with_documented_unknown_type(request_options: {
++                                                                           additional_headers: {
++                                                                             "X-Test-Id" => "endpoints.object.get_and_return_with_documented_unknown_type.0"
++                                                                           }
++                                                                         })
++
++    verify_request_count(
++      test_id: test_id,
++      method: "POST",
++      url_path: "/object/get-and-return-with-documented-unknown-type",
++      query_params: nil,
++      expected: 1
++    )
++  end
++
++  def test_endpoints_object_get_and_return_map_of_documented_unknown_type_with_wiremock
++    test_id = "endpoints.object.get_and_return_map_of_documented_unknown_type.0"
++
++    @client.endpoints.object.get_and_return_map_of_documented_unknown_type(
++      request: {},
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "endpoints.object.get_and_return_map_of_documented_unknown_type.0"
++        }
++      }
++    )
++
++    verify_request_count(
++      test_id: test_id,
++      method: "POST",
++      url_path: "/object/get-and-return-map-of-documented-unknown-type",
++      query_params: nil,
++      expected: 1
++    )
++  end
++
++  def test_endpoints_object_get_and_return_with_mixed_required_and_optional_fields_with_wiremock
++    test_id = "endpoints.object.get_and_return_with_mixed_required_and_optional_fields.0"
++
++    @client.endpoints.object.get_and_return_with_mixed_required_and_optional_fields(
++      required_string: "hello",
++      required_integer: 0,
++      optional_string: "world",
++      required_long: 0,
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "endpoints.object.get_and_return_with_mixed_required_and_optional_fields.0"
++        }
++      }
++    )
++
++    verify_request_count(
++      test_id: test_id,
++      method: "POST",
++      url_path: "/object/get-and-return-with-mixed-required-and-optional-fields",
++      query_params: nil,
++      expected: 1
++    )
++  end
++
++  def test_endpoints_object_get_and_return_with_required_nested_object_with_wiremock
++    test_id = "endpoints.object.get_and_return_with_required_nested_object.0"
++
++    @client.endpoints.object.get_and_return_with_required_nested_object(
++      required_string: "hello",
++      required_object: {
++        string: "nested",
++        nested_object: {}
++      },
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "endpoints.object.get_and_return_with_required_nested_object.0"
++        }
++      }
++    )
++
++    verify_request_count(
++      test_id: test_id,
++      method: "POST",
++      url_path: "/object/get-and-return-with-required-nested-object",
++      query_params: nil,
++      expected: 1
++    )
++  end
++
++  def test_endpoints_object_get_and_return_with_datetime_like_string_with_wiremock
++    test_id = "endpoints.object.get_and_return_with_datetime_like_string.0"
++
++    @client.endpoints.object.get_and_return_with_datetime_like_string(
++      datetime_like_string: "2023-08-31T14:15:22Z",
++      actual_datetime: "2023-08-31T14:15:22Z",
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "endpoints.object.get_and_return_with_datetime_like_string.0"
++        }
++      }
++    )
++
++    verify_request_count(
++      test_id: test_id,
++      method: "POST",
++      url_path: "/object/get-and-return-with-datetime-like-string",
++      query_params: nil,
++      expected: 1
++    )
++  end
++end
+diff --git a/test/wire/endpoints_pagination_test.rb b/test/wire/endpoints_pagination_test.rb
+new file mode 100644
+index 00000000000..3e84b045dc3
+--- /dev/null
++++ b/test/wire/endpoints_pagination_test.rb
+@@ -0,0 +1,38 @@
++# frozen_string_literal: true
++
++require_relative "wiremock_test_case"
++
++class EndpointsPaginationWireTest < WireMockTestCase
++  def setup
++    super
++
++    @client = Seed::MyClient.new(
++      token: "<token>",
++      base_url: WIREMOCK_BASE_URL
++    )
++  end
++
++  def test_endpoints_pagination_list_items_with_wiremock
++    test_id = "endpoints.pagination.list_items.0"
++
++    result = @client.endpoints.pagination.list_items(
++      cursor: "cursor",
++      limit: 1,
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "endpoints.pagination.list_items.0"
++        }
++      }
++    )
++
++    result.pages.next_page
++
++    verify_request_count(
++      test_id: test_id,
++      method: "GET",
++      url_path: "/pagination",
++      query_params: nil,
++      expected: 1
++    )
++  end
++end
+diff --git a/test/wire/endpoints_params_test.rb b/test/wire/endpoints_params_test.rb
+new file mode 100644
+index 00000000000..2ca3ed91909
+--- /dev/null
++++ b/test/wire/endpoints_params_test.rb
+@@ -0,0 +1,251 @@
++# frozen_string_literal: true
++
++require_relative "wiremock_test_case"
++
++class EndpointsParamsWireTest < WireMockTestCase
++  def setup
++    super
++
++    @client = Seed::MyClient.new(
++      token: "<token>",
++      base_url: WIREMOCK_BASE_URL
++    )
++  end
++
++  def test_endpoints_params_get_with_path_with_wiremock
++    test_id = "endpoints.params.get_with_path.0"
++
++    @client.endpoints.params.get_with_path(
++      param: "param",
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "endpoints.params.get_with_path.0"
++        }
++      }
++    )
++
++    verify_request_count(
++      test_id: test_id,
++      method: "GET",
++      url_path: "/params/path/param",
++      query_params: nil,
++      expected: 1
++    )
++  end
++
++  def test_endpoints_params_get_with_inline_path_with_wiremock
++    test_id = "endpoints.params.get_with_inline_path.0"
++
++    @client.endpoints.params.get_with_path(
++      param: "param",
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "endpoints.params.get_with_inline_path.0"
++        }
++      }
++    )
++
++    verify_request_count(
++      test_id: test_id,
++      method: "GET",
++      url_path: "/params/path/param",
++      query_params: nil,
++      expected: 1
++    )
++  end
++
++  def test_endpoints_params_get_with_query_with_wiremock
++    test_id = "endpoints.params.get_with_query.0"
++
++    @client.endpoints.params.get_with_query(
++      query: "query",
++      number: 1,
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "endpoints.params.get_with_query.0"
++        }
++      }
++    )
++
++    verify_request_count(
++      test_id: test_id,
++      method: "GET",
++      url_path: "/params",
++      query_params: { "query" => "query", "number" => "1" },
++      expected: 1
++    )
++  end
++
++  def test_endpoints_params_get_with_allow_multiple_query_with_wiremock
++    test_id = "endpoints.params.get_with_allow_multiple_query.0"
++
++    @client.endpoints.params.get_with_query(
++      query: "query",
++      number: 1,
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "endpoints.params.get_with_allow_multiple_query.0"
++        }
++      }
++    )
++
++    verify_request_count(
++      test_id: test_id,
++      method: "GET",
++      url_path: "/params",
++      query_params: { "query" => "query", "number" => "1" },
++      expected: 1
++    )
++  end
++
++  def test_endpoints_params_get_with_path_and_query_with_wiremock
++    test_id = "endpoints.params.get_with_path_and_query.0"
++
++    @client.endpoints.params.get_with_path_and_query(
++      param: "param",
++      query: "query",
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "endpoints.params.get_with_path_and_query.0"
++        }
++      }
++    )
++
++    verify_request_count(
++      test_id: test_id,
++      method: "GET",
++      url_path: "/params/path-query/param",
++      query_params: { "query" => "query" },
++      expected: 1
++    )
++  end
++
++  def test_endpoints_params_get_with_inline_path_and_query_with_wiremock
++    test_id = "endpoints.params.get_with_inline_path_and_query.0"
++
++    @client.endpoints.params.get_with_path_and_query(
++      param: "param",
++      query: "query",
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "endpoints.params.get_with_inline_path_and_query.0"
++        }
++      }
++    )
++
++    verify_request_count(
++      test_id: test_id,
++      method: "GET",
++      url_path: "/params/path-query/param",
++      query_params: { "query" => "query" },
++      expected: 1
++    )
++  end
++
++  def test_endpoints_params_modify_with_path_with_wiremock
++    test_id = "endpoints.params.modify_with_path.0"
++
++    @client.endpoints.params.modify_with_path(
++      param: "param",
++      request: "string",
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "endpoints.params.modify_with_path.0"
++        }
++      }
++    )
++
++    verify_request_count(
++      test_id: test_id,
++      method: "PUT",
++      url_path: "/params/path/param",
++      query_params: nil,
++      expected: 1
++    )
++  end
++
++  def test_endpoints_params_modify_with_inline_path_with_wiremock
++    test_id = "endpoints.params.modify_with_inline_path.0"
++
++    @client.endpoints.params.modify_with_path(
++      param: "param",
++      request: "string",
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "endpoints.params.modify_with_inline_path.0"
++        }
++      }
++    )
++
++    verify_request_count(
++      test_id: test_id,
++      method: "PUT",
++      url_path: "/params/path/param",
++      query_params: nil,
++      expected: 1
++    )
++  end
++
++  def test_endpoints_params_upload_with_path_with_wiremock
++    test_id = "endpoints.params.upload_with_path.0"
++
++    @client.endpoints.params.upload_with_path(
++      param: "upload-path",
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "endpoints.params.upload_with_path.0"
++        }
++      }
++    )
++
++    verify_request_count(
++      test_id: test_id,
++      method: "POST",
++      url_path: "/params/path/{param}",
++      query_params: nil,
++      expected: 1
++    )
++  end
++
++  def test_endpoints_params_get_with_boolean_path_with_wiremock
++    test_id = "endpoints.params.get_with_boolean_path.0"
++
++    @client.endpoints.params.get_with_boolean_path(
++      param: true,
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "endpoints.params.get_with_boolean_path.0"
++        }
++      }
++    )
++
++    verify_request_count(
++      test_id: test_id,
++      method: "GET",
++      url_path: "/params/path-bool/true",
++      query_params: nil,
++      expected: 1
++    )
++  end
++
++  def test_endpoints_params_get_with_path_and_errors_with_wiremock
++    test_id = "endpoints.params.get_with_path_and_errors.0"
++
++    @client.endpoints.params.get_with_path(
++      param: "param",
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "endpoints.params.get_with_path_and_errors.0"
++        }
++      }
++    )
++
++    verify_request_count(
++      test_id: test_id,
++      method: "GET",
++      url_path: "/params/path/param",
++      query_params: nil,
++      expected: 1
++    )
++  end
++end
+diff --git a/test/wire/endpoints_primitive_test.rb b/test/wire/endpoints_primitive_test.rb
+new file mode 100644
+index 00000000000..abd5276e331
+--- /dev/null
++++ b/test/wire/endpoints_primitive_test.rb
+@@ -0,0 +1,203 @@
++# frozen_string_literal: true
++
++require_relative "wiremock_test_case"
++
++class EndpointsPrimitiveWireTest < WireMockTestCase
++  def setup
++    super
++
++    @client = Seed::MyClient.new(
++      token: "<token>",
++      base_url: WIREMOCK_BASE_URL
++    )
++  end
++
++  def test_endpoints_primitive_get_and_return_string_with_wiremock
++    test_id = "endpoints.primitive.get_and_return_string.0"
++
++    @client.endpoints.primitive.get_and_return_string(
++      request: "string",
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "endpoints.primitive.get_and_return_string.0"
++        }
++      }
++    )
++
++    verify_request_count(
++      test_id: test_id,
++      method: "POST",
++      url_path: "/primitive/string",
++      query_params: nil,
++      expected: 1
++    )
++  end
++
++  def test_endpoints_primitive_get_and_return_int_with_wiremock
++    test_id = "endpoints.primitive.get_and_return_int.0"
++
++    @client.endpoints.primitive.get_and_return_int(
++      request: 1,
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "endpoints.primitive.get_and_return_int.0"
++        }
++      }
++    )
++
++    verify_request_count(
++      test_id: test_id,
++      method: "POST",
++      url_path: "/primitive/integer",
++      query_params: nil,
++      expected: 1
++    )
++  end
++
++  def test_endpoints_primitive_get_and_return_long_with_wiremock
++    test_id = "endpoints.primitive.get_and_return_long.0"
++
++    @client.endpoints.primitive.get_and_return_long(
++      request: 1_000_000,
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "endpoints.primitive.get_and_return_long.0"
++        }
++      }
++    )
++
++    verify_request_count(
++      test_id: test_id,
++      method: "POST",
++      url_path: "/primitive/long",
++      query_params: nil,
++      expected: 1
++    )
++  end
++
++  def test_endpoints_primitive_get_and_return_double_with_wiremock
++    test_id = "endpoints.primitive.get_and_return_double.0"
++
++    @client.endpoints.primitive.get_and_return_double(
++      request: 1.1,
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "endpoints.primitive.get_and_return_double.0"
++        }
++      }
++    )
++
++    verify_request_count(
++      test_id: test_id,
++      method: "POST",
++      url_path: "/primitive/double",
++      query_params: nil,
++      expected: 1
++    )
++  end
++
++  def test_endpoints_primitive_get_and_return_bool_with_wiremock
++    test_id = "endpoints.primitive.get_and_return_bool.0"
++
++    @client.endpoints.primitive.get_and_return_bool(
++      request: true,
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "endpoints.primitive.get_and_return_bool.0"
++        }
++      }
++    )
++
++    verify_request_count(
++      test_id: test_id,
++      method: "POST",
++      url_path: "/primitive/boolean",
++      query_params: nil,
++      expected: 1
++    )
++  end
++
++  def test_endpoints_primitive_get_and_return_datetime_with_wiremock
++    test_id = "endpoints.primitive.get_and_return_datetime.0"
++
++    @client.endpoints.primitive.get_and_return_datetime(
++      request: "2024-01-15T09:30:00Z",
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "endpoints.primitive.get_and_return_datetime.0"
++        }
++      }
++    )
++
++    verify_request_count(
++      test_id: test_id,
++      method: "POST",
++      url_path: "/primitive/datetime",
++      query_params: nil,
++      expected: 1
++    )
++  end
++
++  def test_endpoints_primitive_get_and_return_date_with_wiremock
++    test_id = "endpoints.primitive.get_and_return_date.0"
++
++    @client.endpoints.primitive.get_and_return_date(
++      request: "2023-01-15",
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "endpoints.primitive.get_and_return_date.0"
++        }
++      }
++    )
++
++    verify_request_count(
++      test_id: test_id,
++      method: "POST",
++      url_path: "/primitive/date",
++      query_params: nil,
++      expected: 1
++    )
++  end
++
++  def test_endpoints_primitive_get_and_return_uuid_with_wiremock
++    test_id = "endpoints.primitive.get_and_return_uuid.0"
++
++    @client.endpoints.primitive.get_and_return_uuid(
++      request: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "endpoints.primitive.get_and_return_uuid.0"
++        }
++      }
++    )
++
++    verify_request_count(
++      test_id: test_id,
++      method: "POST",
++      url_path: "/primitive/uuid",
++      query_params: nil,
++      expected: 1
++    )
++  end
++
++  def test_endpoints_primitive_get_and_return_base64_with_wiremock
++    test_id = "endpoints.primitive.get_and_return_base64.0"
++
++    @client.endpoints.primitive.get_and_return_base64(
++      request: "SGVsbG8gd29ybGQh",
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "endpoints.primitive.get_and_return_base64.0"
++        }
++      }
++    )
++
++    verify_request_count(
++      test_id: test_id,
++      method: "POST",
++      url_path: "/primitive/base64",
++      query_params: nil,
++      expected: 1
++    )
++  end
++end
+diff --git a/test/wire/endpoints_put_test.rb b/test/wire/endpoints_put_test.rb
+new file mode 100644
+index 00000000000..c06d3b46479
+--- /dev/null
++++ b/test/wire/endpoints_put_test.rb
+@@ -0,0 +1,35 @@
++# frozen_string_literal: true
++
++require_relative "wiremock_test_case"
++
++class EndpointsPutWireTest < WireMockTestCase
++  def setup
++    super
++
++    @client = Seed::MyClient.new(
++      token: "<token>",
++      base_url: WIREMOCK_BASE_URL
++    )
++  end
++
++  def test_endpoints_put_add_with_wiremock
++    test_id = "endpoints.put.add.0"
++
++    @client.endpoints.put.add(
++      id: "id",
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "endpoints.put.add.0"
++        }
++      }
++    )
++
++    verify_request_count(
++      test_id: test_id,
++      method: "PUT",
++      url_path: "/id",
++      query_params: nil,
++      expected: 1
++    )
++  end
++end
+diff --git a/test/wire/endpoints_union_test.rb b/test/wire/endpoints_union_test.rb
+new file mode 100644
+index 00000000000..bdec32c98ea
+--- /dev/null
++++ b/test/wire/endpoints_union_test.rb
+@@ -0,0 +1,32 @@
++# frozen_string_literal: true
++
++require_relative "wiremock_test_case"
++
++class EndpointsUnionWireTest < WireMockTestCase
++  def setup
++    super
++
++    @client = Seed::MyClient.new(
++      token: "<token>",
++      base_url: WIREMOCK_BASE_URL
++    )
++  end
++
++  def test_endpoints_union_get_and_return_union_with_wiremock
++    test_id = "endpoints.union.get_and_return_union.0"
++
++    @client.endpoints.union.get_and_return_union(request_options: {
++                                                   additional_headers: {
++                                                     "X-Test-Id" => "endpoints.union.get_and_return_union.0"
++                                                   }
++                                                 })
++
++    verify_request_count(
++      test_id: test_id,
++      method: "POST",
++      url_path: "/union",
++      query_params: nil,
++      expected: 1
++    )
++  end
++end
+diff --git a/test/wire/endpoints_urls_test.rb b/test/wire/endpoints_urls_test.rb
+new file mode 100644
+index 00000000000..773e18893e2
+--- /dev/null
++++ b/test/wire/endpoints_urls_test.rb
+@@ -0,0 +1,86 @@
++# frozen_string_literal: true
++
++require_relative "wiremock_test_case"
++
++class EndpointsUrlsWireTest < WireMockTestCase
++  def setup
++    super
++
++    @client = Seed::MyClient.new(
++      token: "<token>",
++      base_url: WIREMOCK_BASE_URL
++    )
++  end
++
++  def test_endpoints_urls_with_mixed_case_with_wiremock
++    test_id = "endpoints.urls.with_mixed_case.0"
++
++    @client.endpoints.urls.with_mixed_case(request_options: {
++                                             additional_headers: {
++                                               "X-Test-Id" => "endpoints.urls.with_mixed_case.0"
++                                             }
++                                           })
++
++    verify_request_count(
++      test_id: test_id,
++      method: "GET",
++      url_path: "/urls/MixedCase",
++      query_params: nil,
++      expected: 1
++    )
++  end
++
++  def test_endpoints_urls_no_ending_slash_with_wiremock
++    test_id = "endpoints.urls.no_ending_slash.0"
++
++    @client.endpoints.urls.no_ending_slash(request_options: {
++                                             additional_headers: {
++                                               "X-Test-Id" => "endpoints.urls.no_ending_slash.0"
++                                             }
++                                           })
++
++    verify_request_count(
++      test_id: test_id,
++      method: "GET",
++      url_path: "/urls/no-ending-slash",
++      query_params: nil,
++      expected: 1
++    )
++  end
++
++  def test_endpoints_urls_with_ending_slash_with_wiremock
++    test_id = "endpoints.urls.with_ending_slash.0"
++
++    @client.endpoints.urls.with_ending_slash(request_options: {
++                                               additional_headers: {
++                                                 "X-Test-Id" => "endpoints.urls.with_ending_slash.0"
++                                               }
++                                             })
++
++    verify_request_count(
++      test_id: test_id,
++      method: "GET",
++      url_path: "/urls/with-ending-slash/",
++      query_params: nil,
++      expected: 1
++    )
++  end
++
++  def test_endpoints_urls_with_underscores_with_wiremock
++    test_id = "endpoints.urls.with_underscores.0"
++
++    @client.endpoints.urls.with_underscores(request_options: {
++                                              additional_headers: {
++                                                "X-Test-Id" => "endpoints.urls.with_underscores.0"
++                                              }
++                                            })
++
++    verify_request_count(
++      test_id: test_id,
++      method: "GET",
++      url_path: "/urls/with_underscores",
++      query_params: nil,
++      expected: 1
++    )
++  end
++end
+diff --git a/test/wire/inlined_requests_test.rb b/test/wire/inlined_requests_test.rb
+new file mode 100644
+index 00000000000..c848d532d8a
+--- /dev/null
++++ b/test/wire/inlined_requests_test.rb
+@@ -0,0 +1,53 @@
++# frozen_string_literal: true
++
++require_relative "wiremock_test_case"
++
++class InlinedRequestsWireTest < WireMockTestCase
++  def setup
++    super
++
++    @client = Seed::MyClient.new(
++      token: "<token>",
++      base_url: WIREMOCK_BASE_URL
++    )
++  end
++
++  def test_inlined_requests_post_with_object_bodyand_response_with_wiremock
++    test_id = "inlined_requests.post_with_object_bodyand_response.0"
++
++    @client.inlined_requests.post_with_object_bodyand_response(
++      string: "string",
++      integer: 1,
++      nested_object: {
++        string: "string",
++        integer: 1,
++        long: 1_000_000,
++        double: 1.1,
++        bool: true,
++        datetime: "2024-01-15T09:30:00Z",
++        date: "2023-01-15",
++        uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
++        base64: "SGVsbG8gd29ybGQh",
++        list: %w[list list],
++        set: Set.new(["set"]),
++        map: {
++          1 => "map"
++        },
++        bigint: "1000000"
++      },
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "inlined_requests.post_with_object_bodyand_response.0"
++        }
++      }
++    )
++
++    verify_request_count(
++      test_id: test_id,
++      method: "POST",
++      url_path: "/req-bodies/object",
++      query_params: nil,
++      expected: 1
++    )
++  end
++end
+diff --git a/test/wire/no_auth_test.rb b/test/wire/no_auth_test.rb
+new file mode 100644
+index 00000000000..98ec35a3206
+--- /dev/null
++++ b/test/wire/no_auth_test.rb
+@@ -0,0 +1,32 @@
++# frozen_string_literal: true
++
++require_relative "wiremock_test_case"
++
++class NoAuthWireTest < WireMockTestCase
++  def setup
++    super
++
++    @client = Seed::MyClient.new(
++      token: "<token>",
++      base_url: WIREMOCK_BASE_URL
++    )
++  end
++
++  def test_no_auth_post_with_no_auth_with_wiremock
++    test_id = "no_auth.post_with_no_auth.0"
++
++    @client.no_auth.post_with_no_auth(request_options: {
++                                        additional_headers: {
++                                          "X-Test-Id" => "no_auth.post_with_no_auth.0"
++                                        }
++                                      })
++
++    verify_request_count(
++      test_id: test_id,
++      method: "POST",
++      url_path: "/no-auth",
++      query_params: nil,
++      expected: 1
++    )
++  end
++end
+diff --git a/test/wire/no_req_body_test.rb b/test/wire/no_req_body_test.rb
+new file mode 100644
+index 00000000000..daa8a975792
+--- /dev/null
++++ b/test/wire/no_req_body_test.rb
+@@ -0,0 +1,50 @@
++# frozen_string_literal: true
++
++require_relative "wiremock_test_case"
++
++class NoReqBodyWireTest < WireMockTestCase
++  def setup
++    super
++
++    @client = Seed::MyClient.new(
++      token: "<token>",
++      base_url: WIREMOCK_BASE_URL
++    )
++  end
++
++  def test_no_req_body_get_with_no_request_body_with_wiremock
++    test_id = "no_req_body.get_with_no_request_body.0"
++
++    @client.no_req_body.get_with_no_request_body(request_options: {
++                                                   additional_headers: {
++                                                     "X-Test-Id" => "no_req_body.get_with_no_request_body.0"
++                                                   }
++                                                 })
++
++    verify_request_count(
++      test_id: test_id,
++      method: "GET",
++      url_path: "/no-req-body",
++      query_params: nil,
++      expected: 1
++    )
++  end
++
++  def test_no_req_body_post_with_no_request_body_with_wiremock
++    test_id = "no_req_body.post_with_no_request_body.0"
++
++    @client.no_req_body.post_with_no_request_body(request_options: {
++                                                    additional_headers: {
++                                                      "X-Test-Id" => "no_req_body.post_with_no_request_body.0"
++                                                    }
++                                                  })
++
++    verify_request_count(
++      test_id: test_id,
++      method: "POST",
++      url_path: "/no-req-body",
++      query_params: nil,
++      expected: 1
++    )
++  end
++end
+diff --git a/test/wire/req_with_headers_test.rb b/test/wire/req_with_headers_test.rb
+new file mode 100644
+index 00000000000..7f54d451171
+--- /dev/null
++++ b/test/wire/req_with_headers_test.rb
+@@ -0,0 +1,37 @@
++# frozen_string_literal: true
++
++require_relative "wiremock_test_case"
++
++class ReqWithHeadersWireTest < WireMockTestCase
++  def setup
++    super
++
++    @client = Seed::MyClient.new(
++      token: "<token>",
++      base_url: WIREMOCK_BASE_URL
++    )
++  end
++
++  def test_req_with_headers_get_with_custom_header_with_wiremock
++    test_id = "req_with_headers.get_with_custom_header.0"
++
++    @client.req_with_headers.get_with_custom_header(
++      x_test_service_header: "X-TEST-SERVICE-HEADER",
++      x_test_endpoint_header: "X-TEST-ENDPOINT-HEADER",
++      body: "string",
++      request_options: {
++        additional_headers: {
++          "X-Test-Id" => "req_with_headers.get_with_custom_header.0"
++        }
++      }
++    )
++
++    verify_request_count(
++      test_id: test_id,
++      method: "POST",
++      url_path: "/test-headers/custom-header",
++      query_params: nil,
++      expected: 1
++    )
++  end
++end
+diff --git a/test/wire/wire_helper.rb b/test/wire/wire_helper.rb
+new file mode 100644
+index 00000000000..ce0ea46b040
+--- /dev/null
++++ b/test/wire/wire_helper.rb
+@@ -0,0 +1,31 @@
++# frozen_string_literal: true
++
++require "test_helper"
++
++# WireMock container lifecycle management for wire tests.
++# It automatically starts the WireMock container before tests and stops it after.
++# If WIREMOCK_URL is already set (external orchestration), container management is skipped.
++
++WIREMOCK_COMPOSE_FILE = File.expand_path("../../wiremock/docker-compose.test.yml", __dir__)
++
++# Start WireMock container when this file is required
++if ENV["RUN_WIRE_TESTS"] == "true" && File.exist?(WIREMOCK_COMPOSE_FILE) && !ENV["WIREMOCK_URL"]
++  puts "Starting WireMock container..."
++  warn "Failed to start WireMock container" unless system("docker compose -f #{WIREMOCK_COMPOSE_FILE} up -d --wait")
++
++  # Discover the dynamically assigned port and set WIREMOCK_URL
++  port_output = `docker compose -f #{WIREMOCK_COMPOSE_FILE} port wiremock 8080 2>&1`.strip
++  if port_output =~ /:(\d+)$/
++    ENV["WIREMOCK_URL"] = "http://localhost:#{Regexp.last_match(1)}"
++    puts "WireMock container is ready at #{ENV.fetch("WIREMOCK_URL", nil)}"
++  else
++    ENV["WIREMOCK_URL"] = "http://localhost:8080"
++    puts "WireMock container is ready (default port 8080)"
++  end
++
++  # Stop WireMock container after all tests complete
++  Minitest.after_run do
++    puts "Stopping WireMock container..."
++    system("docker compose -f #{WIREMOCK_COMPOSE_FILE} down")
++  end
++end
+diff --git a/test/wire/wiremock_test_case.rb b/test/wire/wiremock_test_case.rb
+new file mode 100644
+index 00000000000..10986b9b122
+--- /dev/null
++++ b/test/wire/wiremock_test_case.rb
+@@ -0,0 +1,83 @@
++# frozen_string_literal: true
++
++require "test_helper"
++require_relative "wire_helper"
++require "net/http"
++require "json"
++require "uri"
++require "seed"
++
++# Base test case for WireMock-based wire tests.
++#
++# This class provides helper methods for verifying requests made to WireMock
++# and manages the test lifecycle for integration tests.
++class WireMockTestCase < Minitest::Test
++  WIREMOCK_BASE_URL = ENV["WIREMOCK_URL"] || "http://localhost:8080"
++  WIREMOCK_ADMIN_URL = "#{WIREMOCK_BASE_URL}/__admin".freeze
++
++  def setup
++    super
++    return if ENV["RUN_WIRE_TESTS"] == "true"
++
++    skip "Wire tests are disabled by default. Set RUN_WIRE_TESTS=true to enable them."
++  end
++
++  # Verifies the number of requests made to WireMock filtered by test ID for concurrency safety.
++  #
++  # @param test_id [String] The test ID used to filter requests
++  # @param method [String] The HTTP method (GET, POST, etc.)
++  # @param url_path [String] The URL path to match
++  # @param query_params [Hash, nil] Query parameters to match
++  # @param expected [Integer] Expected number of requests
++  def verify_request_count(test_id:, method:, url_path:, expected:, query_params: nil)
++    admin_url = ENV["WIREMOCK_URL"] ? "#{ENV["WIREMOCK_URL"]}/__admin" : WIREMOCK_ADMIN_URL
++    uri = URI("#{admin_url}/requests/find")
++    http = Net::HTTP.new(uri.host, uri.port)
++    post_request = Net::HTTP::Post.new(uri.path, { "Content-Type" => "application/json" })
++
++    request_body = { "method" => method, "urlPath" => url_path }
++    request_body["headers"] = { "X-Test-Id" => { "equalTo" => test_id } }
++    if query_params
++      request_body["queryParameters"] = query_params.transform_values do |v|
++        if v.is_a?(Array)
++          { "hasExactly" => v.map { |item| { "equalTo" => item } } }
++        else
++          { "equalTo" => v }
++        end
++      end
++    end
++
++    post_request.body = request_body.to_json
++    response = http.request(post_request)
++    result = JSON.parse(response.body)
++    requests = result["requests"] || []
++
++    assert_equal expected, requests.length, "Expected #{expected} requests, found #{requests.length}"
++  end
++
++  # Verifies that the Authorization header on captured requests matches the expected value.
++  #
++  # @param test_id [String] The test ID used to filter requests
++  # @param method [String] The HTTP method (GET, POST, etc.)
++  # @param url_path [String] The URL path to match
++  # @param expected_value [String] The expected Authorization header value
++  def verify_authorization_header(test_id:, method:, url_path:, expected_value:)
++    admin_url = ENV["WIREMOCK_URL"] ? "#{ENV["WIREMOCK_URL"]}/__admin" : WIREMOCK_ADMIN_URL
++    uri = URI("#{admin_url}/requests/find")
++    http = Net::HTTP.new(uri.host, uri.port)
++    post_request = Net::HTTP::Post.new(uri.path, { "Content-Type" => "application/json" })
++
++    request_body = { "method" => method, "urlPath" => url_path }
++    request_body["headers"] = { "X-Test-Id" => { "equalTo" => test_id } }
++
++    post_request.body = request_body.to_json
++    response = http.request(post_request)
++    result = JSON.parse(response.body)
++    requests = result["requests"] || []
++
++    refute_empty requests, "No requests found for test_id #{test_id}"
++    actual_header = requests.first.dig("request", "headers", "Authorization")
++
++    assert_equal expected_value, actual_header, "Expected Authorization header '#{expected_value}', got '#{actual_header}'"
++  end
++end
+diff --git a/wiremock/docker-compose.test.yml b/wiremock/docker-compose.test.yml
+new file mode 100644
+index 00000000000..58747d54a46
+--- /dev/null
++++ b/wiremock/docker-compose.test.yml
+@@ -0,0 +1,14 @@
++services:
++  wiremock:
++    image: wiremock/wiremock:3.9.1
++    ports:
++      - "0:8080"  # Use dynamic port to avoid conflicts with concurrent tests
++    volumes:
++      - ./wiremock-mappings.json:/home/wiremock/mappings/wiremock-mappings.json
++    command: ["--global-response-templating", "--verbose"]
++    healthcheck:
++      test: ["CMD", "curl", "-f", "http://localhost:8080/__admin/health"]
++      interval: 2s
++      timeout: 5s
++      retries: 15
++      start_period: 5s
+diff --git a/wiremock/wiremock-mappings.json b/wiremock/wiremock-mappings.json
+new file mode 100644
+index 00000000000..96fdfb6702d
+--- /dev/null
++++ b/wiremock/wiremock-mappings.json
+@@ -0,0 +1,1938 @@
++{
++  "mappings": [
++    {
++      "id": "864d58e6-0c08-4f38-b7e1-2638f8d7fd6d",
++      "name": "getAndReturnListOfPrimitives - default",
++      "request": {
++        "urlPathTemplate": "/container/list-of-primitives",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "[\n  \"string\",\n  \"string\"\n]",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "864d58e6-0c08-4f38-b7e1-2638f8d7fd6d",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "ac1d4c4f-a8a7-4c27-ae64-7fc977cfa122",
++      "name": "getAndReturnListOfObjects - default",
++      "request": {
++        "urlPathTemplate": "/container/list-of-objects",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "[\n  {\n    \"string\": \"string\"\n  },\n  {\n    \"string\": \"string\"\n  }\n]",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "ac1d4c4f-a8a7-4c27-ae64-7fc977cfa122",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "591d5c48-a536-452b-8a2e-ad7c23c38298",
++      "name": "getAndReturnSetOfPrimitives - default",
++      "request": {
++        "urlPathTemplate": "/container/set-of-primitives",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "[\n  \"string\"\n]",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "591d5c48-a536-452b-8a2e-ad7c23c38298",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "e1d5f52b-7a51-464f-ac8f-83c0345a3a35",
++      "name": "getAndReturnSetOfObjects - default",
++      "request": {
++        "urlPathTemplate": "/container/set-of-objects",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "[\n  {\n    \"string\": \"string\"\n  }\n]",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "e1d5f52b-7a51-464f-ac8f-83c0345a3a35",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "4b1d33b3-ca7d-462a-a2e3-23d531ae2922",
++      "name": "getAndReturnMapPrimToPrim - default",
++      "request": {
++        "urlPathTemplate": "/container/map-prim-to-prim",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"string\": \"string\"\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "4b1d33b3-ca7d-462a-a2e3-23d531ae2922",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "b01ac2b9-3470-48aa-badc-57d331bb5a49",
++      "name": "getAndReturnMapOfPrimToObject - default",
++      "request": {
++        "urlPathTemplate": "/container/map-prim-to-object",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"string\": {\n    \"string\": \"string\"\n  }\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "b01ac2b9-3470-48aa-badc-57d331bb5a49",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "eaf9315d-55c4-4434-8004-a70c25af5656",
++      "name": "getAndReturnMapOfPrimToUndiscriminatedUnion - default",
++      "request": {
++        "urlPathTemplate": "/container/map-prim-to-union",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"string\": 1.1\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "eaf9315d-55c4-4434-8004-a70c25af5656",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "e5271904-de0a-425f-940d-d6f6bde34755",
++      "name": "getAndReturnOptional - default",
++      "request": {
++        "urlPathTemplate": "/container/opt-objects",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"string\": \"string\"\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "e5271904-de0a-425f-940d-d6f6bde34755",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "d19e1fbe-79cc-465c-962e-e1866ca2361b",
++      "name": "postJsonPatchContentType - default",
++      "request": {
++        "urlPathTemplate": "/foo/bar",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "d19e1fbe-79cc-465c-962e-e1866ca2361b",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "4a107cf5-6284-48f8-9ddb-99d944ba989b",
++      "name": "postJsonPatchContentWithCharsetType - default",
++      "request": {
++        "urlPathTemplate": "/foo/baz",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "4a107cf5-6284-48f8-9ddb-99d944ba989b",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "60fd3c8a-3983-41b9-8178-f42997388900",
++      "name": "getAndReturnEnum - default",
++      "request": {
++        "urlPathTemplate": "/enum",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"SUNNY\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "60fd3c8a-3983-41b9-8178-f42997388900",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "3d95c052-db6e-4eff-95f2-895666a5af54",
++      "name": "testGet - default",
++      "request": {
++        "urlPathTemplate": "/http-methods/{id}",
++        "method": "GET",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        },
++        "pathParameters": {
++          "id": {
++            "equalTo": "id"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"string\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "3d95c052-db6e-4eff-95f2-895666a5af54",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "2552873f-9f1d-4557-a6c7-6c6b7a55b566",
++      "name": "testPost - default",
++      "request": {
++        "urlPathTemplate": "/http-methods",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"string\": \"string\",\n  \"integer\": 1,\n  \"long\": 1000000,\n  \"double\": 1.1,\n  \"bool\": true,\n  \"datetime\": \"2024-01-15T09:30:00Z\",\n  \"date\": \"2023-01-15\",\n  \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n  \"base64\": \"SGVsbG8gd29ybGQh\",\n  \"list\": [\n    \"list\",\n    \"list\"\n  ],\n  \"set\": [\n    \"set\"\n  ],\n  \"map\": {\n    \"1\": \"map\"\n  },\n  \"bigint\": \"1000000\"\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "2552873f-9f1d-4557-a6c7-6c6b7a55b566",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "db42fbdf-5426-41b7-b7ea-28ed39a38e82",
++      "name": "testPut - default",
++      "request": {
++        "urlPathTemplate": "/http-methods/{id}",
++        "method": "PUT",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        },
++        "pathParameters": {
++          "id": {
++            "equalTo": "id"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"string\": \"string\",\n  \"integer\": 1,\n  \"long\": 1000000,\n  \"double\": 1.1,\n  \"bool\": true,\n  \"datetime\": \"2024-01-15T09:30:00Z\",\n  \"date\": \"2023-01-15\",\n  \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n  \"base64\": \"SGVsbG8gd29ybGQh\",\n  \"list\": [\n    \"list\",\n    \"list\"\n  ],\n  \"set\": [\n    \"set\"\n  ],\n  \"map\": {\n    \"1\": \"map\"\n  },\n  \"bigint\": \"1000000\"\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "db42fbdf-5426-41b7-b7ea-28ed39a38e82",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "c9def317-32a0-4bc0-b9b6-5efae8ca44a6",
++      "name": "testPatch - default",
++      "request": {
++        "urlPathTemplate": "/http-methods/{id}",
++        "method": "PATCH",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        },
++        "pathParameters": {
++          "id": {
++            "equalTo": "id"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"string\": \"string\",\n  \"integer\": 1,\n  \"long\": 1000000,\n  \"double\": 1.1,\n  \"bool\": true,\n  \"datetime\": \"2024-01-15T09:30:00Z\",\n  \"date\": \"2023-01-15\",\n  \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n  \"base64\": \"SGVsbG8gd29ybGQh\",\n  \"list\": [\n    \"list\",\n    \"list\"\n  ],\n  \"set\": [\n    \"set\"\n  ],\n  \"map\": {\n    \"1\": \"map\"\n  },\n  \"bigint\": \"1000000\"\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "c9def317-32a0-4bc0-b9b6-5efae8ca44a6",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "05333635-c9ce-4c1a-bb6d-95e8a0fb80dc",
++      "name": "testDelete - default",
++      "request": {
++        "urlPathTemplate": "/http-methods/{id}",
++        "method": "DELETE",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        },
++        "pathParameters": {
++          "id": {
++            "equalTo": "id"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "true",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "05333635-c9ce-4c1a-bb6d-95e8a0fb80dc",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "41cdef0e-040f-4d08-8426-87b19e60f7d7",
++      "name": "getAndReturnWithOptionalField - default",
++      "request": {
++        "urlPathTemplate": "/object/get-and-return-with-optional-field",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"string\": \"string\",\n  \"integer\": 1,\n  \"long\": 1000000,\n  \"double\": 1.1,\n  \"bool\": true,\n  \"datetime\": \"2024-01-15T09:30:00Z\",\n  \"date\": \"2023-01-15\",\n  \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n  \"base64\": \"SGVsbG8gd29ybGQh\",\n  \"list\": [\n    \"list\",\n    \"list\"\n  ],\n  \"set\": [\n    \"set\"\n  ],\n  \"map\": {\n    \"1\": \"map\"\n  },\n  \"bigint\": \"1000000\"\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "41cdef0e-040f-4d08-8426-87b19e60f7d7",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "f74df550-df8c-4503-b202-0b9b3165c1a7",
++      "name": "getAndReturnWithRequiredField - default",
++      "request": {
++        "urlPathTemplate": "/object/get-and-return-with-required-field",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"string\": \"string\"\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "f74df550-df8c-4503-b202-0b9b3165c1a7",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "0c904dbb-ce54-48a2-8364-13a4989be7f2",
++      "name": "getAndReturnWithMapOfMap - default",
++      "request": {
++        "urlPathTemplate": "/object/get-and-return-with-map-of-map",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"map\": {\n    \"map\": {\n      \"map\": \"map\"\n    }\n  }\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "0c904dbb-ce54-48a2-8364-13a4989be7f2",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "67e969fc-ff81-4a67-9858-66a29ffc9b72",
++      "name": "getAndReturnNestedWithOptionalField - default",
++      "request": {
++        "urlPathTemplate": "/object/get-and-return-nested-with-optional-field",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"string\": \"string\",\n  \"NestedObject\": {\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n      \"list\",\n      \"list\"\n    ],\n    \"set\": [\n      \"set\"\n    ],\n    \"map\": {\n      \"1\": \"map\"\n    },\n    \"bigint\": \"1000000\"\n  }\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "67e969fc-ff81-4a67-9858-66a29ffc9b72",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "169827d0-4247-4236-8cef-34b94d2659de",
++      "name": "getAndReturnNestedWithRequiredField - default",
++      "request": {
++        "urlPathTemplate": "/object/get-and-return-nested-with-required-field/{string}",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        },
++        "pathParameters": {
++          "string": {
++            "equalTo": "string"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"string\": \"string\",\n  \"NestedObject\": {\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n      \"list\",\n      \"list\"\n    ],\n    \"set\": [\n      \"set\"\n    ],\n    \"map\": {\n      \"1\": \"map\"\n    },\n    \"bigint\": \"1000000\"\n  }\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "169827d0-4247-4236-8cef-34b94d2659de",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "6d9ed308-5724-4bbc-a4f7-28dc264d188f",
++      "name": "getAndReturnNestedWithRequiredFieldAsList - default",
++      "request": {
++        "urlPathTemplate": "/object/get-and-return-nested-with-required-field-list",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"string\": \"string\",\n  \"NestedObject\": {\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n      \"list\",\n      \"list\"\n    ],\n    \"set\": [\n      \"set\"\n    ],\n    \"map\": {\n      \"1\": \"map\"\n    },\n    \"bigint\": \"1000000\"\n  }\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "6d9ed308-5724-4bbc-a4f7-28dc264d188f",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "17b25d66-354e-4190-b305-39b7b33f7da8",
++      "name": "getAndReturnWithUnknownField - BackslashExample",
++      "request": {
++        "urlPathTemplate": "/object/get-and-return-with-unknown-field",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"unknown\": {\n    \"$ref\": \"https://example.com/schema\"\n  }\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "17b25d66-354e-4190-b305-39b7b33f7da8",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "4bc6dad1-b68d-4f0f-bda5-bf9d3730a4c4",
++      "name": "getAndReturnWithDocumentedUnknownType - default",
++      "request": {
++        "urlPathTemplate": "/object/get-and-return-with-documented-unknown-type",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"documentedUnknownType\": {\n    \"key\": \"value\"\n  }\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "4bc6dad1-b68d-4f0f-bda5-bf9d3730a4c4",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "0161c3cd-1ed7-4fa7-8cd2-1ea1d2a8ba1b",
++      "name": "getAndReturnMapOfDocumentedUnknownType - default",
++      "request": {
++        "urlPathTemplate": "/object/get-and-return-map-of-documented-unknown-type",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"string\": {\n    \"key\": \"value\"\n  }\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "0161c3cd-1ed7-4fa7-8cd2-1ea1d2a8ba1b",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "d1d11f31-5ad4-4275-8b59-064ee4a550fb",
++      "name": "getAndReturnWithMixedRequiredAndOptionalFields - PartialRequiredFields",
++      "request": {
++        "urlPathTemplate": "/object/get-and-return-with-mixed-required-and-optional-fields",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"requiredString\": \"hello\",\n  \"requiredInteger\": 0,\n  \"optionalString\": \"world\",\n  \"requiredLong\": 0\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "d1d11f31-5ad4-4275-8b59-064ee4a550fb",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "7b973449-cd5b-4771-80f7-d39dbd6c1429",
++      "name": "getAndReturnWithRequiredNestedObject - NestedObjectMissing",
++      "request": {
++        "urlPathTemplate": "/object/get-and-return-with-required-nested-object",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"requiredString\": \"hello\",\n  \"requiredObject\": {\n    \"string\": \"nested\",\n    \"NestedObject\": {}\n  }\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "7b973449-cd5b-4771-80f7-d39dbd6c1429",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "15cf06f4-31a9-4147-a8d4-88d5ad543d35",
++      "name": "getAndReturnWithDatetimeLikeString - DatetimeLikeStringExample",
++      "request": {
++        "urlPathTemplate": "/object/get-and-return-with-datetime-like-string",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"datetimeLikeString\": \"2023-08-31T14:15:22Z\",\n  \"actualDatetime\": \"2023-08-31T14:15:22Z\"\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "15cf06f4-31a9-4147-a8d4-88d5ad543d35",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "f15b2079-2482-4ed2-951d-d2b5c4de9afd",
++      "name": "listItems - default",
++      "request": {
++        "urlPathTemplate": "/pagination",
++        "method": "GET",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        },
++        "queryParameters": {
++          "cursor": {
++            "equalTo": "cursor"
++          },
++          "limit": {
++            "equalTo": "1"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"items\": [\n    {\n      \"string\": \"string\"\n    },\n    {\n      \"string\": \"string\"\n    }\n  ],\n  \"next\": \"next\"\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "f15b2079-2482-4ed2-951d-d2b5c4de9afd",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      },
++      "postServeActions": []
++    },
++    {
++      "id": "97806fdb-f31f-4f90-84b8-f9cc1713d53d",
++      "name": "getWithPath - default",
++      "request": {
++        "urlPathTemplate": "/params/path/{param}",
++        "method": "GET",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        },
++        "pathParameters": {
++          "param": {
++            "equalTo": "param"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"string\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "97806fdb-f31f-4f90-84b8-f9cc1713d53d",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "711fc64f-4af9-4084-8c29-1e7a9e58be70",
++      "name": "getWithInlinePath - default",
++      "request": {
++        "urlPathTemplate": "/params/path/{param}",
++        "method": "GET",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        },
++        "pathParameters": {
++          "param": {
++            "equalTo": "param"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"string\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "711fc64f-4af9-4084-8c29-1e7a9e58be70",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "8e5739b3-d75f-47d7-b6b8-a663d91a66b5",
++      "name": "getWithQuery - default",
++      "request": {
++        "urlPathTemplate": "/params",
++        "method": "GET",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        },
++        "queryParameters": {
++          "query": {
++            "equalTo": "query"
++          },
++          "number": {
++            "equalTo": "1"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "8e5739b3-d75f-47d7-b6b8-a663d91a66b5",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      },
++      "postServeActions": []
++    },
++    {
++      "id": "4125d349-732b-4ff7-948d-1eeb977ed13b",
++      "name": "getWithAllowMultipleQuery - default",
++      "request": {
++        "urlPathTemplate": "/params",
++        "method": "GET",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        },
++        "queryParameters": {
++          "query": {
++            "equalTo": "query"
++          },
++          "number": {
++            "equalTo": "1"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "4125d349-732b-4ff7-948d-1eeb977ed13b",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      },
++      "postServeActions": []
++    },
++    {
++      "id": "1933d96a-a1b9-4cf1-85ba-c1e8eff5bd56",
++      "name": "getWithPathAndQuery - default",
++      "request": {
++        "urlPathTemplate": "/params/path-query/{param}",
++        "method": "GET",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        },
++        "pathParameters": {
++          "param": {
++            "equalTo": "param"
++          }
++        },
++        "queryParameters": {
++          "query": {
++            "equalTo": "query"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "1933d96a-a1b9-4cf1-85ba-c1e8eff5bd56",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "c4f5012a-fb3f-45ac-b695-beedc3353ad8",
++      "name": "getWithInlinePathAndQuery - default",
++      "request": {
++        "urlPathTemplate": "/params/path-query/{param}",
++        "method": "GET",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        },
++        "pathParameters": {
++          "param": {
++            "equalTo": "param"
++          }
++        },
++        "queryParameters": {
++          "query": {
++            "equalTo": "query"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "c4f5012a-fb3f-45ac-b695-beedc3353ad8",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "046bf7d6-751b-48e9-bfc6-ff74a17e88e1",
++      "name": "modifyWithPath - default",
++      "request": {
++        "urlPathTemplate": "/params/path/{param}",
++        "method": "PUT",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        },
++        "pathParameters": {
++          "param": {
++            "equalTo": "param"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"string\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "046bf7d6-751b-48e9-bfc6-ff74a17e88e1",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "6bfc7195-b99c-4449-bf47-7c4f74f6f33b",
++      "name": "modifyWithInlinePath - default",
++      "request": {
++        "urlPathTemplate": "/params/path/{param}",
++        "method": "PUT",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        },
++        "pathParameters": {
++          "param": {
++            "equalTo": "param"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"string\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "6bfc7195-b99c-4449-bf47-7c4f74f6f33b",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "25a5031e-ad21-4379-8965-4732818bb823",
++      "name": "getWithBooleanPath - default",
++      "request": {
++        "urlPathTemplate": "/params/path-bool/{param}",
++        "method": "GET",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        },
++        "pathParameters": {
++          "param": {
++            "equalTo": "true"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"string\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "25a5031e-ad21-4379-8965-4732818bb823",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "6898aaa2-3e4b-403e-a91f-473b4eb84b93",
++      "name": "getWithPathAndErrors - default",
++      "request": {
++        "urlPathTemplate": "/params/path/{param}",
++        "method": "GET",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        },
++        "pathParameters": {
++          "param": {
++            "equalTo": "param"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"string\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "6898aaa2-3e4b-403e-a91f-473b4eb84b93",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "0506ae7c-87b7-4cd2-9e50-31d60f81893f",
++      "name": "getAndReturnString - default",
++      "request": {
++        "urlPathTemplate": "/primitive/string",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"string\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "0506ae7c-87b7-4cd2-9e50-31d60f81893f",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "67f875d1-e19e-440d-8f0c-7e1d24ef2619",
++      "name": "getAndReturnInt - default",
++      "request": {
++        "urlPathTemplate": "/primitive/integer",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "1",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "67f875d1-e19e-440d-8f0c-7e1d24ef2619",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "5fadbebd-86c0-41f9-8be5-864e39eb5924",
++      "name": "getAndReturnLong - default",
++      "request": {
++        "urlPathTemplate": "/primitive/long",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "1000000",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "5fadbebd-86c0-41f9-8be5-864e39eb5924",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "e03872b6-86b1-490b-9195-86e5d3a014f2",
++      "name": "getAndReturnDouble - default",
++      "request": {
++        "urlPathTemplate": "/primitive/double",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "1.1",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "e03872b6-86b1-490b-9195-86e5d3a014f2",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "442e632f-890a-4105-9448-f7015127e3b4",
++      "name": "getAndReturnBool - default",
++      "request": {
++        "urlPathTemplate": "/primitive/boolean",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "true",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "442e632f-890a-4105-9448-f7015127e3b4",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "ad76fa81-1e63-43fd-9a99-1d5e4339d98c",
++      "name": "getAndReturnDatetime - default",
++      "request": {
++        "urlPathTemplate": "/primitive/datetime",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"2024-01-15T09:30:00Z\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "ad76fa81-1e63-43fd-9a99-1d5e4339d98c",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "afb524b1-54ab-4674-8446-fdd574c368cc",
++      "name": "getAndReturnDate - default",
++      "request": {
++        "urlPathTemplate": "/primitive/date",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"2023-01-15\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "afb524b1-54ab-4674-8446-fdd574c368cc",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "969c0f3a-218a-45b7-b17f-64b1a9307d43",
++      "name": "getAndReturnUUID - default",
++      "request": {
++        "urlPathTemplate": "/primitive/uuid",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "969c0f3a-218a-45b7-b17f-64b1a9307d43",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "04baa20d-d318-40e6-9784-c40158c16acd",
++      "name": "getAndReturnBase64 - default",
++      "request": {
++        "urlPathTemplate": "/primitive/base64",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"SGVsbG8gd29ybGQh\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "04baa20d-d318-40e6-9784-c40158c16acd",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "fddd5aaf-ab0d-4ef6-949c-5d329f6d7eb2",
++      "name": "Put - default",
++      "request": {
++        "urlPathTemplate": "/{id}",
++        "method": "PUT",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        },
++        "pathParameters": {
++          "id": {
++            "equalTo": "id"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"errors\": [\n    {\n      \"category\": \"API_ERROR\",\n      \"code\": \"INTERNAL_SERVER_ERROR\",\n      \"detail\": \"detail\",\n      \"field\": \"field\"\n    },\n    {\n      \"category\": \"API_ERROR\",\n      \"code\": \"INTERNAL_SERVER_ERROR\",\n      \"detail\": \"detail\",\n      \"field\": \"field\"\n    }\n  ]\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "fddd5aaf-ab0d-4ef6-949c-5d329f6d7eb2",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "d29330f9-49ff-49c4-9081-7c83dbad315b",
++      "name": "getAndReturnUnion - default",
++      "request": {
++        "urlPathTemplate": "/union",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"animal\": \"dog\",\n  \"name\": \"name\",\n  \"likesToWoof\": true\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "d29330f9-49ff-49c4-9081-7c83dbad315b",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "343f71f3-36ce-4684-b762-d60a086b43a4",
++      "name": "withMixedCase - default",
++      "request": {
++        "urlPathTemplate": "/urls/MixedCase",
++        "method": "GET",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"string\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "343f71f3-36ce-4684-b762-d60a086b43a4",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      },
++      "postServeActions": []
++    },
++    {
++      "id": "48f36314-b2b7-4910-9e1d-5b05f3346a60",
++      "name": "noEndingSlash - default",
++      "request": {
++        "urlPathTemplate": "/urls/no-ending-slash",
++        "method": "GET",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"string\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "48f36314-b2b7-4910-9e1d-5b05f3346a60",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      },
++      "postServeActions": []
++    },
++    {
++      "id": "f7b95029-2f25-4f70-8b4c-0855712747d8",
++      "name": "withEndingSlash - default",
++      "request": {
++        "urlPathTemplate": "/urls/with-ending-slash/",
++        "method": "GET",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"string\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "f7b95029-2f25-4f70-8b4c-0855712747d8",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      },
++      "postServeActions": []
++    },
++    {
++      "id": "2f9671a5-e6da-43a8-be27-d0be0191dcbf",
++      "name": "withUnderscores - default",
++      "request": {
++        "urlPathTemplate": "/urls/with_underscores",
++        "method": "GET",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"string\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "2f9671a5-e6da-43a8-be27-d0be0191dcbf",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      },
++      "postServeActions": []
++    },
++    {
++      "id": "4a6d0aaa-05f2-47bb-9f40-6e3743b9d2bf",
++      "name": "postWithObjectBodyandResponse - default",
++      "request": {
++        "urlPathTemplate": "/req-bodies/object",
++        "method": "POST"
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"string\": \"string\",\n  \"integer\": 1,\n  \"long\": 1000000,\n  \"double\": 1.1,\n  \"bool\": true,\n  \"datetime\": \"2024-01-15T09:30:00Z\",\n  \"date\": \"2023-01-15\",\n  \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n  \"base64\": \"SGVsbG8gd29ybGQh\",\n  \"list\": [\n    \"list\",\n    \"list\"\n  ],\n  \"set\": [\n    \"set\"\n  ],\n  \"map\": {\n    \"1\": \"map\"\n  },\n  \"bigint\": \"1000000\"\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "4a6d0aaa-05f2-47bb-9f40-6e3743b9d2bf",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "c6e7cc6c-b76f-4860-a9ad-52dc8f55b6e6",
++      "name": "postWithNoAuth - default",
++      "request": {
++        "urlPathTemplate": "/no-auth",
++        "method": "POST"
++      },
++      "response": {
++        "status": 200,
++        "body": "true",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "c6e7cc6c-b76f-4860-a9ad-52dc8f55b6e6",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "8098eeea-bc6b-4068-9601-566c2092f83f",
++      "name": "getWithNoRequestBody - default",
++      "request": {
++        "urlPathTemplate": "/no-req-body",
++        "method": "GET",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"string\": \"string\",\n  \"integer\": 1,\n  \"long\": 1000000,\n  \"double\": 1.1,\n  \"bool\": true,\n  \"datetime\": \"2024-01-15T09:30:00Z\",\n  \"date\": \"2023-01-15\",\n  \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n  \"base64\": \"SGVsbG8gd29ybGQh\",\n  \"list\": [\n    \"list\",\n    \"list\"\n  ],\n  \"set\": [\n    \"set\"\n  ],\n  \"map\": {\n    \"1\": \"map\"\n  },\n  \"bigint\": \"1000000\"\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "8098eeea-bc6b-4068-9601-566c2092f83f",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      },
++      "postServeActions": []
++    },
++    {
++      "id": "7dd9f944-1b35-42e9-a5ed-e48214ac8e91",
++      "name": "postWithNoRequestBody - default",
++      "request": {
++        "urlPathTemplate": "/no-req-body",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"string\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "7dd9f944-1b35-42e9-a5ed-e48214ac8e91",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "d7b54168-aef4-4d68-a9c5-446e97dee2fc",
++      "name": "getWithCustomHeader - default",
++      "request": {
++        "urlPathTemplate": "/test-headers/custom-header",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "matches": "Bearer .+"
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "\"\"",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "d7b54168-aef4-4d68-a9c5-446e97dee2fc",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    }
++  ],
++  "meta": {
++    "total": 59
++  }
++}
+\ No newline at end of file

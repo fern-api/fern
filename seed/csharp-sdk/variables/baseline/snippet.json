@@ -1,0 +1,17 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/{endpointParam}",
+                "method": "POST",
+                "identifier_override": "endpoint_service.post"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedVariables;\n\nvar client = new SeedVariablesClient();\nawait client.Service.PostAsync(\"endpointParam\");\n"
+            }
+        }
+    ]
+}

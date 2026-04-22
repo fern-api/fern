@@ -1,0 +1,25 @@
+openapi: 3.1.0
+info:
+  title: variables
+  version: 0.0.0
+paths:
+  /{endpointParam}:
+    post:
+      operationId: service_post
+      tags:
+        - Service
+      parameters:
+        - name: endpointParam
+          in: path
+          required: true
+          schema:
+            type: string
+          examples:
+            Example1:
+              value: endpointParam
+      responses:
+        '204':
+          description: No content
+components:
+  schemas: {}
+  securitySchemes: {}

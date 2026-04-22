@@ -1,0 +1,48 @@
+openapi: 3.1.0
+info:
+  title: x-fern-default test
+  version: 0.0.0
+paths:
+  /test/{region}/resource:
+    get:
+      operationId: test_get
+      tags:
+        - ''
+      parameters:
+        - name: region
+          in: path
+          required: true
+          schema:
+            type: string
+          examples:
+            Example1:
+              value: region
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type:
+              - string
+              - 'null'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestGetResponse'
+              examples:
+                Example1:
+                  value:
+                    message: message
+components:
+  schemas:
+    TestGetResponse:
+      title: TestGetResponse
+      type: object
+      properties:
+        message:
+          type:
+            - string
+            - 'null'
+  securitySchemes: {}

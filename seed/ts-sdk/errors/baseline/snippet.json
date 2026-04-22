@@ -1,0 +1,60 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/foo1",
+                "method": "POST",
+                "identifier_override": "endpoint_simple.fooWithoutEndpointError"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedErrorsClient } from \"@fern/errors\";\n\nconst client = new SeedErrorsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.simple.fooWithoutEndpointError({\n    bar: \"bar\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/foo2",
+                "method": "POST",
+                "identifier_override": "endpoint_simple.foo"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedErrorsClient } from \"@fern/errors\";\n\nconst client = new SeedErrorsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.simple.foo({\n    bar: \"bar\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/foo3",
+                "method": "POST",
+                "identifier_override": "endpoint_simple.fooWithExamples"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedErrorsClient } from \"@fern/errors\";\n\nconst client = new SeedErrorsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.simple.fooWithExamples({\n    bar: \"hello\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/foo3",
+                "method": "POST",
+                "identifier_override": "endpoint_simple.fooWithExamples"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedErrorsClient } from \"@fern/errors\";\n\nconst client = new SeedErrorsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.simple.fooWithExamples({\n    bar: \"hello\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/foo3",
+                "method": "POST",
+                "identifier_override": "endpoint_simple.fooWithExamples"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedErrorsClient } from \"@fern/errors\";\n\nconst client = new SeedErrorsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.simple.fooWithExamples({\n    bar: \"hello\"\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}

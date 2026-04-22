@@ -1,0 +1,174 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 55d05d44739..5f6bbf29cb6 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -3,7 +3,8 @@
+   "generatorName": "fernapi/fern-ruby-sdk-v2",
+   "generatorVersion": "local",
+   "generatorConfig": {
+-    "rubocopSeverity": "error"
++    "rubocopSeverity": "error",
++    "customPagerName": "FooPager"
+   },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+diff --git a/README.md b/README.md
+index e4564024c33..84bbdd52d38 100644
+--- a/README.md
++++ b/README.md
+@@ -62,7 +62,7 @@ response = client.users.list_with_custom_pager(
+     ...
+ )
+ 
+-pager = Seed::Internal::CustomPager.new(
++pager = Seed::Internal::FooPager.new(
+     response,
+     has_next_proc: ->(page) { page.has_more },
+     get_next_proc: ->(page) { client.users.list_with_custom_pager(cursor: page.next_cursor) }
+diff --git a/lib/seed/internal/iterators/custom_pager.rb b/lib/seed/internal/iterators/custom_pager.rb
+new file mode 100644
+index 00000000000..881d091925f
+--- /dev/null
++++ b/lib/seed/internal/iterators/custom_pager.rb
+@@ -0,0 +1,116 @@
++# frozen_string_literal: true
++
++module Seed
++  module Internal
++    # FooPager wraps a paginated response and provides navigation methods.
++    # This is used for custom pagination endpoints where the pagination pattern
++    # doesn't fit the standard cursor or offset patterns.
++    #
++    # The pager provides methods to check for and navigate to next/previous pages,
++    # but the actual page fetching logic must be implemented by the user through
++    # the provided fetcher block.
++    class FooPager
++      include Enumerable
++
++      # @return [Object] The current page response
++      attr_reader :current
++
++      # The raw HTTP response from the most recent page response.
++      # @return [Net::HTTPResponse, nil]
++      attr_reader :http_response
++
++      # Creates a new custom pager with the given initial response.
++      #
++      # @param initial [Object] The initial page response
++      # @param item_field [Symbol, nil] The field name containing items for iteration
++      # @param raw_client [Object, nil] The HTTP client for fetching additional pages
++      # @param initial_http_response [Net::HTTPResponse, nil] The raw HTTP response for the initial page
++      # @param has_next_proc [Proc, nil] A proc that returns true if there's a next page
++      # @param has_prev_proc [Proc, nil] A proc that returns true if there's a previous page
++      # @param get_next_proc [Proc, nil] A proc that fetches the next page
++      # @param get_prev_proc [Proc, nil] A proc that fetches the previous page
++      # @return [Seed::Internal::FooPager]
++      def initialize(initial, item_field: nil, raw_client: nil, initial_http_response: nil, has_next_proc: nil,
++                     has_prev_proc: nil, get_next_proc: nil, get_prev_proc: nil)
++        @current = initial
++        @item_field = item_field
++        @raw_client = raw_client
++        @has_next_proc = has_next_proc
++        @has_prev_proc = has_prev_proc
++        @get_next_proc = get_next_proc
++        @get_prev_proc = get_prev_proc
++        @http_response = initial_http_response
++      end
++
++      # Returns true if there is a next page available.
++      #
++      # @return [Boolean]
++      def next_page?
++        return false if @has_next_proc.nil?
++
++        @has_next_proc.call(@current)
++      end
++
++      # Returns true if there is a previous page available.
++      #
++      # @return [Boolean]
++      def prev_page?
++        return false if @has_prev_proc.nil?
++
++        @has_prev_proc.call(@current)
++      end
++
++      # Fetches the next page of results.
++      #
++      # @return [Object, nil] The next page response, or nil if not available
++      def next_page
++        return nil unless next_page?
++        return nil if @get_next_proc.nil?
++
++        @current = @get_next_proc.call(@current)
++        @current
++      end
++
++      # Fetches the previous page of results.
++      #
++      # @return [Object, nil] The previous page response, or nil if not available
++      def prev_page
++        return nil unless prev_page?
++        return nil if @get_prev_proc.nil?
++
++        @current = @get_prev_proc.call(@current)
++        @current
++      end
++
++      # Iterates over each page of results.
++      #
++      # @param block [Proc] The block to yield each page to
++      # @return [NilClass]
++      def each_page(&block)
++        page = @current
++        loop do
++          block.call(page)
++          break unless next_page?
++
++          page = next_page
++          break if page.nil?
++        end
++      end
++
++      # Iterates over each item in all pages.
++      # Requires item_field to be set.
++      #
++      # @param block [Proc] The block to yield each item to
++      # @return [NilClass]
++      def each(&block)
++        return enum_for(:each) unless block_given?
++        return each_page(&block) if @item_field.nil?
++
++        each_page do |page|
++          items = page.respond_to?(@item_field) ? page.send(@item_field) : []
++          items.each { |item| block.call(item) }
++        end
++      end
++    end
++  end
++end
+diff --git a/lib/seed/users/client.rb b/lib/seed/users/client.rb
+index 939bb2d7646..10241636f1b 100644
+--- a/lib/seed/users/client.rb
++++ b/lib/seed/users/client.rb
+@@ -49,7 +49,7 @@ module Seed
+           raise error_class.new(response.body, code: code)
+         end
+ 
+-        Seed::Internal::CustomPager.new(
++        Seed::Internal::FooPager.new(
+           parsed_response,
+           item_field: :data,
+           raw_client: @client,
+diff --git a/lib/seed.rb b/lib/seed.rb
+index 2b2e698d78b..d6b9b33354e 100644
+--- a/lib/seed.rb
++++ b/lib/seed.rb
+@@ -35,6 +35,7 @@ require_relative "seed/internal/iterators/cursor_item_iterator"
+ require_relative "seed/internal/iterators/offset_item_iterator"
+ require_relative "seed/internal/iterators/cursor_page_iterator"
+ require_relative "seed/internal/iterators/offset_page_iterator"
++require_relative "seed/internal/iterators/custom_pager"
+ require_relative "seed/types/link"
+ require_relative "seed/types/users_list_response"
+ require_relative "seed/client"

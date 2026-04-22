@@ -1,0 +1,3 @@
+rootProject.name = 'java-output-directory'
+
+include 'sample-app'

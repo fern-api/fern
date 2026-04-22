@@ -1,0 +1,16 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/text",
+                "method": "POST",
+                "identifier_override": "endpoint_service.getText"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedPlainTextClient } from \"@fern/plain-text\";\n\nconst client = new SeedPlainTextClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.getText();\n"
+            }
+        }
+    ],
+    "types": {}
+}

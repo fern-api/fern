@@ -1,0 +1,70 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "2f941392",
+            "id": {
+                "method": "PATCH",
+                "path": "/",
+                "identifier_override": "endpoint_service.patch"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.contentTypes.SeedContentTypesClient;\nimport com.seed.contentTypes.resources.service.requests.PatchProxyRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedContentTypesClient client = SeedContentTypesClient\n            .builder()\n            .build();\n\n        client.service().patch(\n            PatchProxyRequest\n                .builder()\n                .application(\"application\")\n                .requireAuth(true)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.contentTypes.SeedContentTypesClient;\nimport com.seed.contentTypes.resources.service.requests.PatchProxyRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedContentTypesClient client = SeedContentTypesClient\n            .builder()\n            .build();\n\n        client.service().patch(\n            PatchProxyRequest\n                .builder()\n                .application(\"application\")\n                .requireAuth(true)\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "1b4c8cf0",
+            "id": {
+                "method": "PATCH",
+                "path": "/complex/{id}",
+                "identifier_override": "endpoint_service.patchComplex"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.contentTypes.SeedContentTypesClient;\nimport com.seed.contentTypes.resources.service.requests.PatchComplexRequest;\nimport java.util.Arrays;\nimport java.util.HashMap;\nimport java.util.Optional;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedContentTypesClient client = SeedContentTypesClient\n            .builder()\n            .build();\n\n        client.service().patchComplex(\n            \"id\",\n            PatchComplexRequest\n                .builder()\n                .name(\"name\")\n                .age(1)\n                .active(true)\n                .metadata(\n                    new HashMap<String, Object>() {{\n                        put(\"metadata\", new \n                        HashMap<String, Object>() {{put(\"key\", \"value\");\n                        }});\n                    }}\n                )\n                .tags(\n                    Optional.of(\n                        Arrays.asList(\"tags\", \"tags\")\n                    )\n                )\n                .email(\"email\")\n                .nickname(\"nickname\")\n                .bio(\"bio\")\n                .profileImageUrl(\"profileImageUrl\")\n                .settings(\n                    new HashMap<String, Object>() {{\n                        put(\"settings\", new \n                        HashMap<String, Object>() {{put(\"key\", \"value\");\n                        }});\n                    }}\n                )\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.contentTypes.SeedContentTypesClient;\nimport com.seed.contentTypes.resources.service.requests.PatchComplexRequest;\nimport java.util.Arrays;\nimport java.util.HashMap;\nimport java.util.Optional;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedContentTypesClient client = SeedContentTypesClient\n            .builder()\n            .build();\n\n        client.service().patchComplex(\n            \"id\",\n            PatchComplexRequest\n                .builder()\n                .name(\"name\")\n                .age(1)\n                .active(true)\n                .metadata(\n                    new HashMap<String, Object>() {{\n                        put(\"metadata\", new \n                        HashMap<String, Object>() {{put(\"key\", \"value\");\n                        }});\n                    }}\n                )\n                .tags(\n                    Optional.of(\n                        Arrays.asList(\"tags\", \"tags\")\n                    )\n                )\n                .email(\"email\")\n                .nickname(\"nickname\")\n                .bio(\"bio\")\n                .profileImageUrl(\"profileImageUrl\")\n                .settings(\n                    new HashMap<String, Object>() {{\n                        put(\"settings\", new \n                        HashMap<String, Object>() {{put(\"key\", \"value\");\n                        }});\n                    }}\n                )\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "b1ee2326",
+            "id": {
+                "method": "PATCH",
+                "path": "/named-mixed/{id}",
+                "identifier_override": "endpoint_service.namedPatchWithMixed"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.contentTypes.SeedContentTypesClient;\nimport com.seed.contentTypes.resources.service.requests.NamedMixedPatchRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedContentTypesClient client = SeedContentTypesClient\n            .builder()\n            .build();\n\n        client.service().namedPatchWithMixed(\n            \"id\",\n            NamedMixedPatchRequest\n                .builder()\n                .instructions(\"instructions\")\n                .active(true)\n                .appId(\"appId\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.contentTypes.SeedContentTypesClient;\nimport com.seed.contentTypes.resources.service.requests.NamedMixedPatchRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedContentTypesClient client = SeedContentTypesClient\n            .builder()\n            .build();\n\n        client.service().namedPatchWithMixed(\n            \"id\",\n            NamedMixedPatchRequest\n                .builder()\n                .instructions(\"instructions\")\n                .active(true)\n                .appId(\"appId\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "1ca5e1e6",
+            "id": {
+                "method": "PATCH",
+                "path": "/optional-merge-patch-test",
+                "identifier_override": "endpoint_service.optionalMergePatchTest"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.contentTypes.SeedContentTypesClient;\nimport com.seed.contentTypes.resources.service.requests.OptionalMergePatchRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedContentTypesClient client = SeedContentTypesClient\n            .builder()\n            .build();\n\n        client.service().optionalMergePatchTest(\n            OptionalMergePatchRequest\n                .builder()\n                .requiredField(\"requiredField\")\n                .nullableString(\"nullableString\")\n                .optionalString(\"optionalString\")\n                .optionalInteger(1)\n                .optionalBoolean(true)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.contentTypes.SeedContentTypesClient;\nimport com.seed.contentTypes.resources.service.requests.OptionalMergePatchRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedContentTypesClient client = SeedContentTypesClient\n            .builder()\n            .build();\n\n        client.service().optionalMergePatchTest(\n            OptionalMergePatchRequest\n                .builder()\n                .requiredField(\"requiredField\")\n                .nullableString(\"nullableString\")\n                .optionalString(\"optionalString\")\n                .optionalInteger(1)\n                .optionalBoolean(true)\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "9a5c3aaf",
+            "id": {
+                "method": "PATCH",
+                "path": "/regular/{id}",
+                "identifier_override": "endpoint_service.regularPatch"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.contentTypes.SeedContentTypesClient;\nimport com.seed.contentTypes.resources.service.requests.RegularPatchRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedContentTypesClient client = SeedContentTypesClient\n            .builder()\n            .build();\n\n        client.service().regularPatch(\n            \"id\",\n            RegularPatchRequest\n                .builder()\n                .field1(\"field1\")\n                .field2(1)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.contentTypes.SeedContentTypesClient;\nimport com.seed.contentTypes.resources.service.requests.RegularPatchRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedContentTypesClient client = SeedContentTypesClient\n            .builder()\n            .build();\n\n        client.service().regularPatch(\n            \"id\",\n            RegularPatchRequest\n                .builder()\n                .field1(\"field1\")\n                .field2(1)\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

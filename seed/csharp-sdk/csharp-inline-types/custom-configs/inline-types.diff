@@ -1,0 +1,1455 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 200d96787a2..d4d4a554306 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,7 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-csharp-sdk",
+   "generatorVersion": "local",
+-  "generatorConfig": {},
++  "generatorConfig": {
++    "enable-inline-types": true
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "manual",
+diff --git a/Snippets/Example0.cs b/Snippets/Example0.cs
+deleted file mode 100644
+index c2b14164b20..00000000000
+--- a/Snippets/Example0.cs
++++ /dev/null
+@@ -1,22 +0,0 @@
+-using SeedObject;
+-
+-public partial class Examples
+-{
+-    public async Task Example0() {
+-        var client = new SeedObjectClient(
+-            clientOptions: new ClientOptions {
+-                BaseUrl = "https://api.fern.com"
+-            }
+-        );
+-
+-        await client.GetRootAsync(
+-            new PostRootRequest {
+-                Bar = new RequestTypeInlineType1 {
+-                    Foo = "foo"
+-                },
+-                Foo = "foo"
+-            }
+-        );
+-    }
+-
+-}
+diff --git a/Snippets/Example1.cs b/Snippets/Example1.cs
+deleted file mode 100644
+index 1ee4da31e92..00000000000
+--- a/Snippets/Example1.cs
++++ /dev/null
+@@ -1,33 +0,0 @@
+-using SeedObject;
+-
+-public partial class Examples
+-{
+-    public async Task Example1() {
+-        var client = new SeedObjectClient(
+-            clientOptions: new ClientOptions {
+-                BaseUrl = "https://api.fern.com"
+-            }
+-        );
+-
+-        await client.GetDiscriminatedUnionAsync(
+-            new GetDiscriminatedUnionRequest {
+-                Bar = new DiscriminatedUnion1(
+-                    new DiscriminatedUnion1InlineType1 {
+-                        Foo = "foo",
+-                        Bar = new DiscriminatedUnion1InlineType1InlineType1 {
+-                            Foo = "foo",
+-                            Ref = new ReferenceType {
+-                                Foo = "foo"
+-                            }
+-                        },
+-                        Ref = new ReferenceType {
+-                            Foo = "foo"
+-                        }
+-                    }
+-                ),
+-                Foo = "foo"
+-            }
+-        );
+-    }
+-
+-}
+diff --git a/Snippets/Example2.cs b/Snippets/Example2.cs
+deleted file mode 100644
+index 4498137529b..00000000000
+--- a/Snippets/Example2.cs
++++ /dev/null
+@@ -1,31 +0,0 @@
+-using SeedObject;
+-
+-public partial class Examples
+-{
+-    public async Task Example2() {
+-        var client = new SeedObjectClient(
+-            clientOptions: new ClientOptions {
+-                BaseUrl = "https://api.fern.com"
+-            }
+-        );
+-
+-        await client.GetUndiscriminatedUnionAsync(
+-            new GetUndiscriminatedUnionRequest {
+-                Bar = new UndiscriminatedUnion1InlineType1 {
+-                    Foo = "foo",
+-                    Bar = new UndiscriminatedUnion1InlineType1InlineType1 {
+-                        Foo = "foo",
+-                        Ref = new ReferenceType {
+-                            Foo = "foo"
+-                        }
+-                    },
+-                    Ref = new ReferenceType {
+-                        Foo = "foo"
+-                    }
+-                },
+-                Foo = "foo"
+-            }
+-        );
+-    }
+-
+-}
+diff --git a/Snippets/Snippets.csproj b/Snippets/Snippets.csproj
+deleted file mode 100644
+index 8d1c06d6082..00000000000
+--- a/Snippets/Snippets.csproj
++++ /dev/null
+@@ -1,11 +0,0 @@
+-<Project Sdk="Microsoft.NET.Sdk">
+-  <PropertyGroup>
+-    <TargetFramework>net10.0</TargetFramework>
+-    <RootNamespace>Snippets</RootNamespace>
+-    <ImplicitUsings>enable</ImplicitUsings>
+-    <Nullable>enable</Nullable>
+-  </PropertyGroup>
+-  <ItemGroup>
+-    <ProjectReference Include="..\**\*.csproj" Exclude="..\**\*.Test.csproj;..\Snippets\*.csproj" />
+-  </ItemGroup>
+-</Project>
+\ No newline at end of file
+diff --git a/src/SeedObject/Types/InlineEnum1.cs b/src/SeedObject/Types/InlineEnum1.cs
+deleted file mode 100644
+index b209e8740f8..00000000000
+--- a/src/SeedObject/Types/InlineEnum1.cs
++++ /dev/null
+@@ -1,123 +0,0 @@
+-using global::System.Text.Json;
+-using global::System.Text.Json.Serialization;
+-using SeedObject.Core;
+-
+-namespace SeedObject;
+-
+-[JsonConverter(typeof(InlineEnum1.InlineEnum1Serializer))]
+-[Serializable]
+-public readonly record struct InlineEnum1 : IStringEnum
+-{
+-    public static readonly InlineEnum1 Sunny = new(Values.Sunny);
+-
+-    public static readonly InlineEnum1 Cloudy = new(Values.Cloudy);
+-
+-    public static readonly InlineEnum1 Raining = new(Values.Raining);
+-
+-    public static readonly InlineEnum1 Snowing = new(Values.Snowing);
+-
+-    public InlineEnum1(string value)
+-    {
+-        Value = value;
+-    }
+-
+-    /// <summary>
+-    /// The string value of the enum.
+-    /// </summary>
+-    public string Value { get; }
+-
+-    /// <summary>
+-    /// Create a string enum with the given value.
+-    /// </summary>
+-    public static InlineEnum1 FromCustom(string value)
+-    {
+-        return new InlineEnum1(value);
+-    }
+-
+-    public bool Equals(string? other)
+-    {
+-        return Value.Equals(other);
+-    }
+-
+-    /// <summary>
+-    /// Returns the string value of the enum.
+-    /// </summary>
+-    public override string ToString()
+-    {
+-        return Value;
+-    }
+-
+-    public static bool operator ==(InlineEnum1 value1, string value2) =>
+-        value1.Value.Equals(value2);
+-
+-    public static bool operator !=(InlineEnum1 value1, string value2) =>
+-        !value1.Value.Equals(value2);
+-
+-    public static explicit operator string(InlineEnum1 value) => value.Value;
+-
+-    public static explicit operator InlineEnum1(string value) => new(value);
+-
+-    internal class InlineEnum1Serializer : JsonConverter<InlineEnum1>
+-    {
+-        public override InlineEnum1 Read(
+-            ref Utf8JsonReader reader,
+-            Type typeToConvert,
+-            JsonSerializerOptions options
+-        )
+-        {
+-            var stringValue =
+-                reader.GetString()
+-                ?? throw new global::System.Exception(
+-                    "The JSON value could not be read as a string."
+-                );
+-            return new InlineEnum1(stringValue);
+-        }
+-
+-        public override void Write(
+-            Utf8JsonWriter writer,
+-            InlineEnum1 value,
+-            JsonSerializerOptions options
+-        )
+-        {
+-            writer.WriteStringValue(value.Value);
+-        }
+-
+-        public override InlineEnum1 ReadAsPropertyName(
+-            ref Utf8JsonReader reader,
+-            Type typeToConvert,
+-            JsonSerializerOptions options
+-        )
+-        {
+-            var stringValue =
+-                reader.GetString()
+-                ?? throw new global::System.Exception(
+-                    "The JSON property name could not be read as a string."
+-                );
+-            return new InlineEnum1(stringValue);
+-        }
+-
+-        public override void WriteAsPropertyName(
+-            Utf8JsonWriter writer,
+-            InlineEnum1 value,
+-            JsonSerializerOptions options
+-        )
+-        {
+-            writer.WritePropertyName(value.Value);
+-        }
+-    }
+-
+-    /// <summary>
+-    /// Constant strings for enum values
+-    /// </summary>
+-    [Serializable]
+-    public static class Values
+-    {
+-        public const string Sunny = "SUNNY";
+-
+-        public const string Cloudy = "CLOUDY";
+-
+-        public const string Raining = "RAINING";
+-
+-        public const string Snowing = "SNOWING";
+-    }
+-}
+diff --git a/src/SeedObject/Types/ObjectTypeWithMapAliasTypeBoth.cs b/src/SeedObject/Types/ObjectTypeWithMapAliasTypeBoth.cs
+index f4f12555723..361c502a206 100644
+--- a/src/SeedObject/Types/ObjectTypeWithMapAliasTypeBoth.cs
++++ b/src/SeedObject/Types/ObjectTypeWithMapAliasTypeBoth.cs
+@@ -12,8 +12,8 @@ public record ObjectTypeWithMapAliasTypeBoth : IJsonOnDeserialized
+         new Dictionary<string, JsonElement>();
+ 
+     [JsonPropertyName("prop")]
+-    public Dictionary<AliasPropertyType, OtherAliasPropertyType> Prop { get; set; } =
+-        new Dictionary<AliasPropertyType, OtherAliasPropertyType>();
++    public Dictionary<AliasPropertyType, Types.OtherAliasPropertyType> Prop { get; set; } =
++        new Dictionary<AliasPropertyType, Types.OtherAliasPropertyType>();
+ 
+     [JsonIgnore]
+     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+@@ -26,4 +26,30 @@ public record ObjectTypeWithMapAliasTypeBoth : IJsonOnDeserialized
+     {
+         return JsonUtils.Serialize(this);
+     }
++
++    public static class Types
++    {
++        [Serializable]
++        public record OtherAliasPropertyType : IJsonOnDeserialized
++        {
++            [JsonExtensionData]
++            private readonly IDictionary<string, JsonElement> _extensionData =
++                new Dictionary<string, JsonElement>();
++
++            [JsonPropertyName("prop")]
++            public required string Prop { get; set; }
++
++            [JsonIgnore]
++            public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
++
++            void IJsonOnDeserialized.OnDeserialized() =>
++                AdditionalProperties.CopyFromExtensionData(_extensionData);
++
++            /// <inheritdoc />
++            public override string ToString()
++            {
++                return JsonUtils.Serialize(this);
++            }
++        }
++    }
+ }
+diff --git a/src/SeedObject/Types/OtherAliasPropertyType.cs b/src/SeedObject/Types/OtherAliasPropertyType.cs
+deleted file mode 100644
+index 9a8a011e11e..00000000000
+--- a/src/SeedObject/Types/OtherAliasPropertyType.cs
++++ /dev/null
+@@ -1,28 +0,0 @@
+-using global::System.Text.Json;
+-using global::System.Text.Json.Serialization;
+-using SeedObject.Core;
+-
+-namespace SeedObject;
+-
+-[Serializable]
+-public record OtherAliasPropertyType : IJsonOnDeserialized
+-{
+-    [JsonExtensionData]
+-    private readonly IDictionary<string, JsonElement> _extensionData =
+-        new Dictionary<string, JsonElement>();
+-
+-    [JsonPropertyName("prop")]
+-    public required string Prop { get; set; }
+-
+-    [JsonIgnore]
+-    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+-
+-    void IJsonOnDeserialized.OnDeserialized() =>
+-        AdditionalProperties.CopyFromExtensionData(_extensionData);
+-
+-    /// <inheritdoc />
+-    public override string ToString()
+-    {
+-        return JsonUtils.Serialize(this);
+-    }
+-}
+diff --git a/src/SeedObject/Types/RootType1.cs b/src/SeedObject/Types/RootType1.cs
+index 5e908c2b439..5cb0515e8c9 100644
+--- a/src/SeedObject/Types/RootType1.cs
++++ b/src/SeedObject/Types/RootType1.cs
+@@ -24,27 +24,28 @@ public record RootType1 : IJsonOnDeserialized
+     /// lorem ipsum
+     /// </summary>
+     [JsonPropertyName("bar")]
+-    public required RootType1InlineType1 Bar { get; set; }
++    public required Types.RootType1InlineType1 Bar { get; set; }
+ 
+     /// <summary>
+     /// lorem ipsum
+     /// </summary>
+     [JsonPropertyName("fooMap")]
+-    public Dictionary<string, RootType1FooMapValue> FooMap { get; set; } =
+-        new Dictionary<string, RootType1FooMapValue>();
++    public Dictionary<string, Types.RootType1FooMapValue> FooMap { get; set; } =
++        new Dictionary<string, Types.RootType1FooMapValue>();
+ 
+     /// <summary>
+     /// lorem ipsum
+     /// </summary>
+     [JsonPropertyName("fooList")]
+-    public IEnumerable<RootType1FooListItem> FooList { get; set; } =
+-        new List<RootType1FooListItem>();
++    public IEnumerable<Types.RootType1FooListItem> FooList { get; set; } =
++        new List<Types.RootType1FooListItem>();
+ 
+     /// <summary>
+     /// lorem ipsum
+     /// </summary>
+     [JsonPropertyName("fooSet")]
+-    public HashSet<RootType1FooSetItem> FooSet { get; set; } = new HashSet<RootType1FooSetItem>();
++    public HashSet<Types.RootType1FooSetItem> FooSet { get; set; } =
++        new HashSet<Types.RootType1FooSetItem>();
+ 
+     /// <summary>
+     /// lorem ipsum
+@@ -63,4 +64,331 @@ public record RootType1 : IJsonOnDeserialized
+     {
+         return JsonUtils.Serialize(this);
+     }
++
++    public static class Types
++    {
++        /// <summary>
++        /// lorem ipsum
++        /// </summary>
++        [Serializable]
++        public record RootType1InlineType1 : IJsonOnDeserialized
++        {
++            [JsonExtensionData]
++            private readonly IDictionary<string, JsonElement> _extensionData =
++                new Dictionary<string, JsonElement>();
++
++            /// <summary>
++            /// lorem ipsum
++            /// </summary>
++            [JsonPropertyName("foo")]
++            public required string Foo { get; set; }
++
++            /// <summary>
++            /// lorem ipsum
++            /// </summary>
++            [JsonPropertyName("bar")]
++            public required Types.RootType1InlineType1NestedInlineType1 Bar { get; set; }
++
++            /// <summary>
++            /// lorem ipsum
++            /// </summary>
++            [JsonPropertyName("ref")]
++            public required ReferenceType Ref { get; set; }
++
++            [JsonIgnore]
++            public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
++
++            void IJsonOnDeserialized.OnDeserialized() =>
++                AdditionalProperties.CopyFromExtensionData(_extensionData);
++
++            /// <inheritdoc />
++            public override string ToString()
++            {
++                return JsonUtils.Serialize(this);
++            }
++
++            public static class Types
++            {
++                /// <summary>
++                /// lorem ipsum
++                /// </summary>
++                [Serializable]
++                public record RootType1InlineType1NestedInlineType1 : IJsonOnDeserialized
++                {
++                    [JsonExtensionData]
++                    private readonly IDictionary<string, JsonElement> _extensionData =
++                        new Dictionary<string, JsonElement>();
++
++                    /// <summary>
++                    /// lorem ipsum
++                    /// </summary>
++                    [JsonPropertyName("foo")]
++                    public required string Foo { get; set; }
++
++                    /// <summary>
++                    /// lorem ipsum
++                    /// </summary>
++                    [JsonPropertyName("bar")]
++                    public required string Bar { get; set; }
++
++                    /// <summary>
++                    /// lorem ipsum
++                    /// </summary>
++                    [JsonPropertyName("myEnum")]
++                    public required Types.InlineEnum1 MyEnum { get; set; }
++
++                    /// <summary>
++                    /// lorem ipsum
++                    /// </summary>
++                    [JsonPropertyName("ref")]
++                    public required ReferenceType Ref { get; set; }
++
++                    [JsonIgnore]
++                    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } =
++                        new();
++
++                    void IJsonOnDeserialized.OnDeserialized() =>
++                        AdditionalProperties.CopyFromExtensionData(_extensionData);
++
++                    /// <inheritdoc />
++                    public override string ToString()
++                    {
++                        return JsonUtils.Serialize(this);
++                    }
++
++                    public static class Types
++                    {
++                        [JsonConverter(typeof(Types.InlineEnum1.InlineEnum1Serializer))]
++                        [Serializable]
++                        public readonly record struct InlineEnum1 : IStringEnum
++                        {
++                            public static readonly Types.InlineEnum1 Sunny = new(Values.Sunny);
++
++                            public static readonly Types.InlineEnum1 Cloudy = new(Values.Cloudy);
++
++                            public static readonly Types.InlineEnum1 Raining = new(Values.Raining);
++
++                            public static readonly Types.InlineEnum1 Snowing = new(Values.Snowing);
++
++                            public InlineEnum1(string value)
++                            {
++                                Value = value;
++                            }
++
++                            /// <summary>
++                            /// The string value of the enum.
++                            /// </summary>
++                            public string Value { get; }
++
++                            /// <summary>
++                            /// Create a string enum with the given value.
++                            /// </summary>
++                            public static Types.InlineEnum1 FromCustom(string value)
++                            {
++                                return new Types.InlineEnum1(value);
++                            }
++
++                            public bool Equals(string? other)
++                            {
++                                return Value.Equals(other);
++                            }
++
++                            /// <summary>
++                            /// Returns the string value of the enum.
++                            /// </summary>
++                            public override string ToString()
++                            {
++                                return Value;
++                            }
++
++                            public static bool operator ==(
++                                Types.InlineEnum1 value1,
++                                string value2
++                            ) => value1.Value.Equals(value2);
++
++                            public static bool operator !=(
++                                Types.InlineEnum1 value1,
++                                string value2
++                            ) => !value1.Value.Equals(value2);
++
++                            public static explicit operator string(Types.InlineEnum1 value) =>
++                                value.Value;
++
++                            public static explicit operator Types.InlineEnum1(string value) =>
++                                new(value);
++
++                            internal class InlineEnum1Serializer : JsonConverter<InlineEnum1>
++                            {
++                                public override Types.InlineEnum1 Read(
++                                    ref Utf8JsonReader reader,
++                                    Type typeToConvert,
++                                    JsonSerializerOptions options
++                                )
++                                {
++                                    var stringValue =
++                                        reader.GetString()
++                                        ?? throw new global::System.Exception(
++                                            "The JSON value could not be read as a string."
++                                        );
++                                    return new InlineEnum1(stringValue);
++                                }
++
++                                public override void Write(
++                                    Utf8JsonWriter writer,
++                                    Types.InlineEnum1 value,
++                                    JsonSerializerOptions options
++                                )
++                                {
++                                    writer.WriteStringValue(value.Value);
++                                }
++
++                                public override Types.InlineEnum1 ReadAsPropertyName(
++                                    ref Utf8JsonReader reader,
++                                    Type typeToConvert,
++                                    JsonSerializerOptions options
++                                )
++                                {
++                                    var stringValue =
++                                        reader.GetString()
++                                        ?? throw new global::System.Exception(
++                                            "The JSON property name could not be read as a string."
++                                        );
++                                    return new InlineEnum1(stringValue);
++                                }
++
++                                public override void WriteAsPropertyName(
++                                    Utf8JsonWriter writer,
++                                    Types.InlineEnum1 value,
++                                    JsonSerializerOptions options
++                                )
++                                {
++                                    writer.WritePropertyName(value.Value);
++                                }
++                            }
++
++                            /// <summary>
++                            /// Constant strings for enum values
++                            /// </summary>
++                            [Serializable]
++                            public static class Values
++                            {
++                                public const string Sunny = "SUNNY";
++
++                                public const string Cloudy = "CLOUDY";
++
++                                public const string Raining = "RAINING";
++
++                                public const string Snowing = "SNOWING";
++                            }
++                        }
++                    }
++                }
++            }
++        }
++
++        /// <summary>
++        /// lorem ipsum
++        /// </summary>
++        [Serializable]
++        public record RootType1FooMapValue : IJsonOnDeserialized
++        {
++            [JsonExtensionData]
++            private readonly IDictionary<string, JsonElement> _extensionData =
++                new Dictionary<string, JsonElement>();
++
++            /// <summary>
++            /// lorem ipsum
++            /// </summary>
++            [JsonPropertyName("foo")]
++            public required string Foo { get; set; }
++
++            /// <summary>
++            /// lorem ipsum
++            /// </summary>
++            [JsonPropertyName("ref")]
++            public required ReferenceType Ref { get; set; }
++
++            [JsonIgnore]
++            public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
++
++            void IJsonOnDeserialized.OnDeserialized() =>
++                AdditionalProperties.CopyFromExtensionData(_extensionData);
++
++            /// <inheritdoc />
++            public override string ToString()
++            {
++                return JsonUtils.Serialize(this);
++            }
++        }
++
++        /// <summary>
++        /// lorem ipsum
++        /// </summary>
++        [Serializable]
++        public record RootType1FooListItem : IJsonOnDeserialized
++        {
++            [JsonExtensionData]
++            private readonly IDictionary<string, JsonElement> _extensionData =
++                new Dictionary<string, JsonElement>();
++
++            /// <summary>
++            /// lorem ipsum
++            /// </summary>
++            [JsonPropertyName("foo")]
++            public required string Foo { get; set; }
++
++            /// <summary>
++            /// lorem ipsum
++            /// </summary>
++            [JsonPropertyName("ref")]
++            public required ReferenceType Ref { get; set; }
++
++            [JsonIgnore]
++            public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
++
++            void IJsonOnDeserialized.OnDeserialized() =>
++                AdditionalProperties.CopyFromExtensionData(_extensionData);
++
++            /// <inheritdoc />
++            public override string ToString()
++            {
++                return JsonUtils.Serialize(this);
++            }
++        }
++
++        /// <summary>
++        /// lorem ipsum
++        /// </summary>
++        [Serializable]
++        public record RootType1FooSetItem : IJsonOnDeserialized
++        {
++            [JsonExtensionData]
++            private readonly IDictionary<string, JsonElement> _extensionData =
++                new Dictionary<string, JsonElement>();
++
++            /// <summary>
++            /// lorem ipsum
++            /// </summary>
++            [JsonPropertyName("foo")]
++            public required string Foo { get; set; }
++
++            /// <summary>
++            /// lorem ipsum
++            /// </summary>
++            [JsonPropertyName("ref")]
++            public required ReferenceType Ref { get; set; }
++
++            [JsonIgnore]
++            public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
++
++            void IJsonOnDeserialized.OnDeserialized() =>
++                AdditionalProperties.CopyFromExtensionData(_extensionData);
++
++            /// <inheritdoc />
++            public override string ToString()
++            {
++                return JsonUtils.Serialize(this);
++            }
++        }
++    }
+ }
+diff --git a/src/SeedObject/Types/RootType1FooListItem.cs b/src/SeedObject/Types/RootType1FooListItem.cs
+deleted file mode 100644
+index 701a3d0c821..00000000000
+--- a/src/SeedObject/Types/RootType1FooListItem.cs
++++ /dev/null
+@@ -1,40 +0,0 @@
+-using global::System.Text.Json;
+-using global::System.Text.Json.Serialization;
+-using SeedObject.Core;
+-
+-namespace SeedObject;
+-
+-/// <summary>
+-/// lorem ipsum
+-/// </summary>
+-[Serializable]
+-public record RootType1FooListItem : IJsonOnDeserialized
+-{
+-    [JsonExtensionData]
+-    private readonly IDictionary<string, JsonElement> _extensionData =
+-        new Dictionary<string, JsonElement>();
+-
+-    /// <summary>
+-    /// lorem ipsum
+-    /// </summary>
+-    [JsonPropertyName("foo")]
+-    public required string Foo { get; set; }
+-
+-    /// <summary>
+-    /// lorem ipsum
+-    /// </summary>
+-    [JsonPropertyName("ref")]
+-    public required ReferenceType Ref { get; set; }
+-
+-    [JsonIgnore]
+-    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+-
+-    void IJsonOnDeserialized.OnDeserialized() =>
+-        AdditionalProperties.CopyFromExtensionData(_extensionData);
+-
+-    /// <inheritdoc />
+-    public override string ToString()
+-    {
+-        return JsonUtils.Serialize(this);
+-    }
+-}
+diff --git a/src/SeedObject/Types/RootType1FooMapValue.cs b/src/SeedObject/Types/RootType1FooMapValue.cs
+deleted file mode 100644
+index 3c2c3a6398b..00000000000
+--- a/src/SeedObject/Types/RootType1FooMapValue.cs
++++ /dev/null
+@@ -1,40 +0,0 @@
+-using global::System.Text.Json;
+-using global::System.Text.Json.Serialization;
+-using SeedObject.Core;
+-
+-namespace SeedObject;
+-
+-/// <summary>
+-/// lorem ipsum
+-/// </summary>
+-[Serializable]
+-public record RootType1FooMapValue : IJsonOnDeserialized
+-{
+-    [JsonExtensionData]
+-    private readonly IDictionary<string, JsonElement> _extensionData =
+-        new Dictionary<string, JsonElement>();
+-
+-    /// <summary>
+-    /// lorem ipsum
+-    /// </summary>
+-    [JsonPropertyName("foo")]
+-    public required string Foo { get; set; }
+-
+-    /// <summary>
+-    /// lorem ipsum
+-    /// </summary>
+-    [JsonPropertyName("ref")]
+-    public required ReferenceType Ref { get; set; }
+-
+-    [JsonIgnore]
+-    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+-
+-    void IJsonOnDeserialized.OnDeserialized() =>
+-        AdditionalProperties.CopyFromExtensionData(_extensionData);
+-
+-    /// <inheritdoc />
+-    public override string ToString()
+-    {
+-        return JsonUtils.Serialize(this);
+-    }
+-}
+diff --git a/src/SeedObject/Types/RootType1FooSetItem.cs b/src/SeedObject/Types/RootType1FooSetItem.cs
+deleted file mode 100644
+index 635fccc9cb0..00000000000
+--- a/src/SeedObject/Types/RootType1FooSetItem.cs
++++ /dev/null
+@@ -1,40 +0,0 @@
+-using global::System.Text.Json;
+-using global::System.Text.Json.Serialization;
+-using SeedObject.Core;
+-
+-namespace SeedObject;
+-
+-/// <summary>
+-/// lorem ipsum
+-/// </summary>
+-[Serializable]
+-public record RootType1FooSetItem : IJsonOnDeserialized
+-{
+-    [JsonExtensionData]
+-    private readonly IDictionary<string, JsonElement> _extensionData =
+-        new Dictionary<string, JsonElement>();
+-
+-    /// <summary>
+-    /// lorem ipsum
+-    /// </summary>
+-    [JsonPropertyName("foo")]
+-    public required string Foo { get; set; }
+-
+-    /// <summary>
+-    /// lorem ipsum
+-    /// </summary>
+-    [JsonPropertyName("ref")]
+-    public required ReferenceType Ref { get; set; }
+-
+-    [JsonIgnore]
+-    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+-
+-    void IJsonOnDeserialized.OnDeserialized() =>
+-        AdditionalProperties.CopyFromExtensionData(_extensionData);
+-
+-    /// <inheritdoc />
+-    public override string ToString()
+-    {
+-        return JsonUtils.Serialize(this);
+-    }
+-}
+diff --git a/src/SeedObject/Types/RootType1InlineType1.cs b/src/SeedObject/Types/RootType1InlineType1.cs
+deleted file mode 100644
+index c241ce9d4e8..00000000000
+--- a/src/SeedObject/Types/RootType1InlineType1.cs
++++ /dev/null
+@@ -1,46 +0,0 @@
+-using global::System.Text.Json;
+-using global::System.Text.Json.Serialization;
+-using SeedObject.Core;
+-
+-namespace SeedObject;
+-
+-/// <summary>
+-/// lorem ipsum
+-/// </summary>
+-[Serializable]
+-public record RootType1InlineType1 : IJsonOnDeserialized
+-{
+-    [JsonExtensionData]
+-    private readonly IDictionary<string, JsonElement> _extensionData =
+-        new Dictionary<string, JsonElement>();
+-
+-    /// <summary>
+-    /// lorem ipsum
+-    /// </summary>
+-    [JsonPropertyName("foo")]
+-    public required string Foo { get; set; }
+-
+-    /// <summary>
+-    /// lorem ipsum
+-    /// </summary>
+-    [JsonPropertyName("bar")]
+-    public required RootType1InlineType1NestedInlineType1 Bar { get; set; }
+-
+-    /// <summary>
+-    /// lorem ipsum
+-    /// </summary>
+-    [JsonPropertyName("ref")]
+-    public required ReferenceType Ref { get; set; }
+-
+-    [JsonIgnore]
+-    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+-
+-    void IJsonOnDeserialized.OnDeserialized() =>
+-        AdditionalProperties.CopyFromExtensionData(_extensionData);
+-
+-    /// <inheritdoc />
+-    public override string ToString()
+-    {
+-        return JsonUtils.Serialize(this);
+-    }
+-}
+diff --git a/src/SeedObject/Types/RootType1InlineType1NestedInlineType1.cs b/src/SeedObject/Types/RootType1InlineType1NestedInlineType1.cs
+deleted file mode 100644
+index 70cb701c513..00000000000
+--- a/src/SeedObject/Types/RootType1InlineType1NestedInlineType1.cs
++++ /dev/null
+@@ -1,52 +0,0 @@
+-using global::System.Text.Json;
+-using global::System.Text.Json.Serialization;
+-using SeedObject.Core;
+-
+-namespace SeedObject;
+-
+-/// <summary>
+-/// lorem ipsum
+-/// </summary>
+-[Serializable]
+-public record RootType1InlineType1NestedInlineType1 : IJsonOnDeserialized
+-{
+-    [JsonExtensionData]
+-    private readonly IDictionary<string, JsonElement> _extensionData =
+-        new Dictionary<string, JsonElement>();
+-
+-    /// <summary>
+-    /// lorem ipsum
+-    /// </summary>
+-    [JsonPropertyName("foo")]
+-    public required string Foo { get; set; }
+-
+-    /// <summary>
+-    /// lorem ipsum
+-    /// </summary>
+-    [JsonPropertyName("bar")]
+-    public required string Bar { get; set; }
+-
+-    /// <summary>
+-    /// lorem ipsum
+-    /// </summary>
+-    [JsonPropertyName("myEnum")]
+-    public required InlineEnum1 MyEnum { get; set; }
+-
+-    /// <summary>
+-    /// lorem ipsum
+-    /// </summary>
+-    [JsonPropertyName("ref")]
+-    public required ReferenceType Ref { get; set; }
+-
+-    [JsonIgnore]
+-    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+-
+-    void IJsonOnDeserialized.OnDeserialized() =>
+-        AdditionalProperties.CopyFromExtensionData(_extensionData);
+-
+-    /// <inheritdoc />
+-    public override string ToString()
+-    {
+-        return JsonUtils.Serialize(this);
+-    }
+-}
+diff --git a/src/SeedObject/Types/TypesPropertyCollisionChild.cs b/src/SeedObject/Types/TypesPropertyCollisionChild.cs
+deleted file mode 100644
+index 5e91274f42f..00000000000
+--- a/src/SeedObject/Types/TypesPropertyCollisionChild.cs
++++ /dev/null
+@@ -1,28 +0,0 @@
+-using global::System.Text.Json;
+-using global::System.Text.Json.Serialization;
+-using SeedObject.Core;
+-
+-namespace SeedObject;
+-
+-[Serializable]
+-public record TypesPropertyCollisionChild : IJsonOnDeserialized
+-{
+-    [JsonExtensionData]
+-    private readonly IDictionary<string, JsonElement> _extensionData =
+-        new Dictionary<string, JsonElement>();
+-
+-    [JsonPropertyName("foo")]
+-    public required string Foo { get; set; }
+-
+-    [JsonIgnore]
+-    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+-
+-    void IJsonOnDeserialized.OnDeserialized() =>
+-        AdditionalProperties.CopyFromExtensionData(_extensionData);
+-
+-    /// <inheritdoc />
+-    public override string ToString()
+-    {
+-        return JsonUtils.Serialize(this);
+-    }
+-}
+diff --git a/src/SeedObject/Types/TypesPropertyCollisionExtendsChild.cs b/src/SeedObject/Types/TypesPropertyCollisionExtendsChild.cs
+deleted file mode 100644
+index 3d737b0bac2..00000000000
+--- a/src/SeedObject/Types/TypesPropertyCollisionExtendsChild.cs
++++ /dev/null
+@@ -1,28 +0,0 @@
+-using global::System.Text.Json;
+-using global::System.Text.Json.Serialization;
+-using SeedObject.Core;
+-
+-namespace SeedObject;
+-
+-[Serializable]
+-public record TypesPropertyCollisionExtendsChild : IJsonOnDeserialized
+-{
+-    [JsonExtensionData]
+-    private readonly IDictionary<string, JsonElement> _extensionData =
+-        new Dictionary<string, JsonElement>();
+-
+-    [JsonPropertyName("foo")]
+-    public required string Foo { get; set; }
+-
+-    [JsonIgnore]
+-    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+-
+-    void IJsonOnDeserialized.OnDeserialized() =>
+-        AdditionalProperties.CopyFromExtensionData(_extensionData);
+-
+-    /// <inheritdoc />
+-    public override string ToString()
+-    {
+-        return JsonUtils.Serialize(this);
+-    }
+-}
+diff --git a/src/SeedObject/Types/TypesPropertyCollisionExtendsParent.cs b/src/SeedObject/Types/TypesPropertyCollisionExtendsParent.cs
+index 9e9166ac5db..58abae6f103 100644
+--- a/src/SeedObject/Types/TypesPropertyCollisionExtendsParent.cs
++++ b/src/SeedObject/Types/TypesPropertyCollisionExtendsParent.cs
+@@ -15,7 +15,7 @@ public record TypesPropertyCollisionExtendsParent : IJsonOnDeserialized
+     /// This inline child should be nested inside InnerTypes since "Types" is inherited
+     /// </summary>
+     [JsonPropertyName("child")]
+-    public required TypesPropertyCollisionExtendsChild Child { get; set; }
++    public required InnerTypes.TypesPropertyCollisionExtendsChild Child { get; set; }
+ 
+     /// <summary>
+     /// This inherited property collides with the default nested class name "Types"
+@@ -34,4 +34,30 @@ public record TypesPropertyCollisionExtendsParent : IJsonOnDeserialized
+     {
+         return JsonUtils.Serialize(this);
+     }
++
++    public static class InnerTypes
++    {
++        [Serializable]
++        public record TypesPropertyCollisionExtendsChild : IJsonOnDeserialized
++        {
++            [JsonExtensionData]
++            private readonly IDictionary<string, JsonElement> _extensionData =
++                new Dictionary<string, JsonElement>();
++
++            [JsonPropertyName("foo")]
++            public required string Foo { get; set; }
++
++            [JsonIgnore]
++            public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
++
++            void IJsonOnDeserialized.OnDeserialized() =>
++                AdditionalProperties.CopyFromExtensionData(_extensionData);
++
++            /// <inheritdoc />
++            public override string ToString()
++            {
++                return JsonUtils.Serialize(this);
++            }
++        }
++    }
+ }
+diff --git a/src/SeedObject/Types/TypesPropertyCollisionParent.cs b/src/SeedObject/Types/TypesPropertyCollisionParent.cs
+index 28faec3fe5e..591629fcf44 100644
+--- a/src/SeedObject/Types/TypesPropertyCollisionParent.cs
++++ b/src/SeedObject/Types/TypesPropertyCollisionParent.cs
+@@ -21,7 +21,7 @@ public record TypesPropertyCollisionParent : IJsonOnDeserialized
+     /// This inline child should be nested inside InnerTypes instead of Types
+     /// </summary>
+     [JsonPropertyName("child")]
+-    public required TypesPropertyCollisionChild Child { get; set; }
++    public required InnerTypes.TypesPropertyCollisionChild Child { get; set; }
+ 
+     [JsonIgnore]
+     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+@@ -34,4 +34,30 @@ public record TypesPropertyCollisionParent : IJsonOnDeserialized
+     {
+         return JsonUtils.Serialize(this);
+     }
++
++    public static class InnerTypes
++    {
++        [Serializable]
++        public record TypesPropertyCollisionChild : IJsonOnDeserialized
++        {
++            [JsonExtensionData]
++            private readonly IDictionary<string, JsonElement> _extensionData =
++                new Dictionary<string, JsonElement>();
++
++            [JsonPropertyName("foo")]
++            public required string Foo { get; set; }
++
++            [JsonIgnore]
++            public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
++
++            void IJsonOnDeserialized.OnDeserialized() =>
++                AdditionalProperties.CopyFromExtensionData(_extensionData);
++
++            /// <inheritdoc />
++            public override string ToString()
++            {
++                return JsonUtils.Serialize(this);
++            }
++        }
++    }
+ }
+diff --git a/src/SeedObject/Types/UnionWithTypesVariant.cs b/src/SeedObject/Types/UnionWithTypesVariant.cs
+index 2aafc7ba846..e81d97c8aa6 100644
+--- a/src/SeedObject/Types/UnionWithTypesVariant.cs
++++ b/src/SeedObject/Types/UnionWithTypesVariant.cs
+@@ -61,28 +61,35 @@ public record UnionWithTypesVariant
+     public bool IsOtherVariant => Type == "otherVariant";
+ 
+     /// <summary>
+-    /// Returns the value as a <see cref="SeedObject.UnionWithTypesVariantInlineType1"/> if <see cref="Type"/> is 'types', otherwise throws an exception.
++    /// Returns the value as a <see cref="SeedObject.UnionWithTypesVariant.InnerTypes.UnionWithTypesVariantInlineType1"/> if <see cref="Type"/> is 'types', otherwise throws an exception.
+     /// </summary>
+     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'types'.</exception>
+-    public SeedObject.UnionWithTypesVariantInlineType1 AsTypes() =>
++    public SeedObject.UnionWithTypesVariant.InnerTypes.UnionWithTypesVariantInlineType1 AsTypes() =>
+         IsTypes
+-            ? (SeedObject.UnionWithTypesVariantInlineType1)Value!
++            ? (SeedObject.UnionWithTypesVariant.InnerTypes.UnionWithTypesVariantInlineType1)Value!
+             : throw new global::System.Exception("UnionWithTypesVariant.Type is not 'types'");
+ 
+     /// <summary>
+-    /// Returns the value as a <see cref="SeedObject.UnionWithTypesVariantOtherInlineType1"/> if <see cref="Type"/> is 'otherVariant', otherwise throws an exception.
++    /// Returns the value as a <see cref="SeedObject.UnionWithTypesVariant.InnerTypes.UnionWithTypesVariantOtherInlineType1"/> if <see cref="Type"/> is 'otherVariant', otherwise throws an exception.
+     /// </summary>
+     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'otherVariant'.</exception>
+-    public SeedObject.UnionWithTypesVariantOtherInlineType1 AsOtherVariant() =>
++    public SeedObject.UnionWithTypesVariant.InnerTypes.UnionWithTypesVariantOtherInlineType1 AsOtherVariant() =>
+         IsOtherVariant
+-            ? (SeedObject.UnionWithTypesVariantOtherInlineType1)Value!
++            ? (SeedObject.UnionWithTypesVariant.InnerTypes.UnionWithTypesVariantOtherInlineType1)
++                Value!
+             : throw new global::System.Exception(
+                 "UnionWithTypesVariant.Type is not 'otherVariant'"
+             );
+ 
+     public T Match<T>(
+-        Func<SeedObject.UnionWithTypesVariantInlineType1, T> onTypes,
+-        Func<SeedObject.UnionWithTypesVariantOtherInlineType1, T> onOtherVariant,
++        Func<
++            SeedObject.UnionWithTypesVariant.InnerTypes.UnionWithTypesVariantInlineType1,
++            T
++        > onTypes,
++        Func<
++            SeedObject.UnionWithTypesVariant.InnerTypes.UnionWithTypesVariantOtherInlineType1,
++            T
++        > onOtherVariant,
+         Func<string, object?, T> onUnknown_
+     )
+     {
+@@ -95,8 +102,8 @@ public record UnionWithTypesVariant
+     }
+ 
+     public void Visit(
+-        Action<SeedObject.UnionWithTypesVariantInlineType1> onTypes,
+-        Action<SeedObject.UnionWithTypesVariantOtherInlineType1> onOtherVariant,
++        Action<SeedObject.UnionWithTypesVariant.InnerTypes.UnionWithTypesVariantInlineType1> onTypes,
++        Action<SeedObject.UnionWithTypesVariant.InnerTypes.UnionWithTypesVariantOtherInlineType1> onOtherVariant,
+         Action<string, object?> onUnknown_
+     )
+     {
+@@ -115,13 +122,16 @@ public record UnionWithTypesVariant
+     }
+ 
+     /// <summary>
+-    /// Attempts to cast the value to a <see cref="SeedObject.UnionWithTypesVariantInlineType1"/> and returns true if successful.
++    /// Attempts to cast the value to a <see cref="SeedObject.UnionWithTypesVariant.InnerTypes.UnionWithTypesVariantInlineType1"/> and returns true if successful.
+     /// </summary>
+-    public bool TryAsTypes(out SeedObject.UnionWithTypesVariantInlineType1? value)
++    public bool TryAsTypes(
++        out SeedObject.UnionWithTypesVariant.InnerTypes.UnionWithTypesVariantInlineType1? value
++    )
+     {
+         if (Type == "types")
+         {
+-            value = (SeedObject.UnionWithTypesVariantInlineType1)Value!;
++            value = (SeedObject.UnionWithTypesVariant.InnerTypes.UnionWithTypesVariantInlineType1)
++                Value!;
+             return true;
+         }
+         value = null;
+@@ -129,13 +139,17 @@ public record UnionWithTypesVariant
+     }
+ 
+     /// <summary>
+-    /// Attempts to cast the value to a <see cref="SeedObject.UnionWithTypesVariantOtherInlineType1"/> and returns true if successful.
++    /// Attempts to cast the value to a <see cref="SeedObject.UnionWithTypesVariant.InnerTypes.UnionWithTypesVariantOtherInlineType1"/> and returns true if successful.
+     /// </summary>
+-    public bool TryAsOtherVariant(out SeedObject.UnionWithTypesVariantOtherInlineType1? value)
++    public bool TryAsOtherVariant(
++        out SeedObject.UnionWithTypesVariant.InnerTypes.UnionWithTypesVariantOtherInlineType1? value
++    )
+     {
+         if (Type == "otherVariant")
+         {
+-            value = (SeedObject.UnionWithTypesVariantOtherInlineType1)Value!;
++            value =
++                (SeedObject.UnionWithTypesVariant.InnerTypes.UnionWithTypesVariantOtherInlineType1)
++                    Value!;
+             return true;
+         }
+         value = null;
+@@ -193,18 +207,18 @@ public record UnionWithTypesVariant
+             var value = discriminator switch
+             {
+                 "types" =>
+-                    jsonWithoutDiscriminator.Deserialize<SeedObject.UnionWithTypesVariantInlineType1?>(
++                    jsonWithoutDiscriminator.Deserialize<SeedObject.UnionWithTypesVariant.InnerTypes.UnionWithTypesVariantInlineType1?>(
+                         options
+                     )
+                         ?? throw new JsonException(
+-                            "Failed to deserialize SeedObject.UnionWithTypesVariantInlineType1"
++                            "Failed to deserialize SeedObject.UnionWithTypesVariant.InnerTypes.UnionWithTypesVariantInlineType1"
+                         ),
+                 "otherVariant" =>
+-                    jsonWithoutDiscriminator.Deserialize<SeedObject.UnionWithTypesVariantOtherInlineType1?>(
++                    jsonWithoutDiscriminator.Deserialize<SeedObject.UnionWithTypesVariant.InnerTypes.UnionWithTypesVariantOtherInlineType1?>(
+                         options
+                     )
+                         ?? throw new JsonException(
+-                            "Failed to deserialize SeedObject.UnionWithTypesVariantOtherInlineType1"
++                            "Failed to deserialize SeedObject.UnionWithTypesVariant.InnerTypes.UnionWithTypesVariantOtherInlineType1"
+                         ),
+                 _ => json.Deserialize<object?>(options),
+             };
+@@ -256,17 +270,19 @@ public record UnionWithTypesVariant
+     [Serializable]
+     public struct Types
+     {
+-        public Types(SeedObject.UnionWithTypesVariantInlineType1 value)
++        public Types(
++            SeedObject.UnionWithTypesVariant.InnerTypes.UnionWithTypesVariantInlineType1 value
++        )
+         {
+             Value = value;
+         }
+ 
+-        internal SeedObject.UnionWithTypesVariantInlineType1 Value { get; set; }
++        internal SeedObject.UnionWithTypesVariant.InnerTypes.UnionWithTypesVariantInlineType1 Value { get; set; }
+ 
+         public override string ToString() => Value.ToString() ?? "null";
+ 
+         public static implicit operator UnionWithTypesVariant.Types(
+-            SeedObject.UnionWithTypesVariantInlineType1 value
++            SeedObject.UnionWithTypesVariant.InnerTypes.UnionWithTypesVariantInlineType1 value
+         ) => new(value);
+     }
+ 
+@@ -276,17 +292,92 @@ public record UnionWithTypesVariant
+     [Serializable]
+     public struct OtherVariant
+     {
+-        public OtherVariant(SeedObject.UnionWithTypesVariantOtherInlineType1 value)
++        public OtherVariant(
++            SeedObject.UnionWithTypesVariant.InnerTypes.UnionWithTypesVariantOtherInlineType1 value
++        )
+         {
+             Value = value;
+         }
+ 
+-        internal SeedObject.UnionWithTypesVariantOtherInlineType1 Value { get; set; }
++        internal SeedObject.UnionWithTypesVariant.InnerTypes.UnionWithTypesVariantOtherInlineType1 Value { get; set; }
+ 
+         public override string ToString() => Value.ToString() ?? "null";
+ 
+         public static implicit operator UnionWithTypesVariant.OtherVariant(
+-            SeedObject.UnionWithTypesVariantOtherInlineType1 value
++            SeedObject.UnionWithTypesVariant.InnerTypes.UnionWithTypesVariantOtherInlineType1 value
+         ) => new(value);
+     }
++
++    public static class InnerTypes
++    {
++        /// <summary>
++        /// lorem ipsum
++        /// </summary>
++        [Serializable]
++        public record UnionWithTypesVariantInlineType1 : IJsonOnDeserialized
++        {
++            [JsonExtensionData]
++            private readonly IDictionary<string, JsonElement> _extensionData =
++                new Dictionary<string, JsonElement>();
++
++            /// <summary>
++            /// lorem ipsum
++            /// </summary>
++            [JsonPropertyName("foo")]
++            public required string Foo { get; set; }
++
++            /// <summary>
++            /// lorem ipsum
++            /// </summary>
++            [JsonPropertyName("ref")]
++            public required ReferenceType Ref { get; set; }
++
++            [JsonIgnore]
++            public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
++
++            void IJsonOnDeserialized.OnDeserialized() =>
++                AdditionalProperties.CopyFromExtensionData(_extensionData);
++
++            /// <inheritdoc />
++            public override string ToString()
++            {
++                return JsonUtils.Serialize(this);
++            }
++        }
++
++        /// <summary>
++        /// lorem ipsum
++        /// </summary>
++        [Serializable]
++        public record UnionWithTypesVariantOtherInlineType1 : IJsonOnDeserialized
++        {
++            [JsonExtensionData]
++            private readonly IDictionary<string, JsonElement> _extensionData =
++                new Dictionary<string, JsonElement>();
++
++            /// <summary>
++            /// lorem ipsum
++            /// </summary>
++            [JsonPropertyName("bar")]
++            public required string Bar { get; set; }
++
++            /// <summary>
++            /// lorem ipsum
++            /// </summary>
++            [JsonPropertyName("ref")]
++            public required ReferenceType Ref { get; set; }
++
++            [JsonIgnore]
++            public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
++
++            void IJsonOnDeserialized.OnDeserialized() =>
++                AdditionalProperties.CopyFromExtensionData(_extensionData);
++
++            /// <inheritdoc />
++            public override string ToString()
++            {
++                return JsonUtils.Serialize(this);
++            }
++        }
++    }
+ }
+diff --git a/src/SeedObject/Types/UnionWithTypesVariantInlineType1.cs b/src/SeedObject/Types/UnionWithTypesVariantInlineType1.cs
+deleted file mode 100644
+index 9f9f65f3340..00000000000
+--- a/src/SeedObject/Types/UnionWithTypesVariantInlineType1.cs
++++ /dev/null
+@@ -1,40 +0,0 @@
+-using global::System.Text.Json;
+-using global::System.Text.Json.Serialization;
+-using SeedObject.Core;
+-
+-namespace SeedObject;
+-
+-/// <summary>
+-/// lorem ipsum
+-/// </summary>
+-[Serializable]
+-public record UnionWithTypesVariantInlineType1 : IJsonOnDeserialized
+-{
+-    [JsonExtensionData]
+-    private readonly IDictionary<string, JsonElement> _extensionData =
+-        new Dictionary<string, JsonElement>();
+-
+-    /// <summary>
+-    /// lorem ipsum
+-    /// </summary>
+-    [JsonPropertyName("foo")]
+-    public required string Foo { get; set; }
+-
+-    /// <summary>
+-    /// lorem ipsum
+-    /// </summary>
+-    [JsonPropertyName("ref")]
+-    public required ReferenceType Ref { get; set; }
+-
+-    [JsonIgnore]
+-    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+-
+-    void IJsonOnDeserialized.OnDeserialized() =>
+-        AdditionalProperties.CopyFromExtensionData(_extensionData);
+-
+-    /// <inheritdoc />
+-    public override string ToString()
+-    {
+-        return JsonUtils.Serialize(this);
+-    }
+-}
+diff --git a/src/SeedObject/Types/UnionWithTypesVariantOtherInlineType1.cs b/src/SeedObject/Types/UnionWithTypesVariantOtherInlineType1.cs
+deleted file mode 100644
+index 7b5556032ea..00000000000
+--- a/src/SeedObject/Types/UnionWithTypesVariantOtherInlineType1.cs
++++ /dev/null
+@@ -1,40 +0,0 @@
+-using global::System.Text.Json;
+-using global::System.Text.Json.Serialization;
+-using SeedObject.Core;
+-
+-namespace SeedObject;
+-
+-/// <summary>
+-/// lorem ipsum
+-/// </summary>
+-[Serializable]
+-public record UnionWithTypesVariantOtherInlineType1 : IJsonOnDeserialized
+-{
+-    [JsonExtensionData]
+-    private readonly IDictionary<string, JsonElement> _extensionData =
+-        new Dictionary<string, JsonElement>();
+-
+-    /// <summary>
+-    /// lorem ipsum
+-    /// </summary>
+-    [JsonPropertyName("bar")]
+-    public required string Bar { get; set; }
+-
+-    /// <summary>
+-    /// lorem ipsum
+-    /// </summary>
+-    [JsonPropertyName("ref")]
+-    public required ReferenceType Ref { get; set; }
+-
+-    [JsonIgnore]
+-    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+-
+-    void IJsonOnDeserialized.OnDeserialized() =>
+-        AdditionalProperties.CopyFromExtensionData(_extensionData);
+-
+-    /// <inheritdoc />
+-    public override string ToString()
+-    {
+-        return JsonUtils.Serialize(this);
+-    }
+-}

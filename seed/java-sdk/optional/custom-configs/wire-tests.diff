@@ -1,0 +1,560 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index f1753c47972..a195bcb1876 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-java-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "enable-wire-tests": true
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "manual",
+diff --git a/.gradle/8.14.3/checksums/checksums.lock b/.gradle/8.14.3/checksums/checksums.lock
+index 70321f381f39ccf7d2079fd4e4533800284c4075..5fb04f47df22fdd5a641cb389ff7141663ae553b 100644
+GIT binary patch
+literal 17
+TcmZR68-GhWR`WM20~7!NG71CB
+
+literal 17
+TcmZSfvA=qu_rsJ&3{U_7J&^?`
+
+diff --git a/.gradle/8.14.3/executionHistory/executionHistory.bin b/.gradle/8.14.3/executionHistory/executionHistory.bin
+index 649eb777200bdda06ccfdfbfbe7ef27d1f267627..38b9f47736d625419413b7566f647a1b07631b35 100644
+GIT binary patch
+delta 6979
+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
+X*4Hqh-UM|ME+Fh746ct?cj^8c=0g6O
+
+delta 5421
+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
+PMFcAd1~kT-y0`rWEKpZE
+
+diff --git a/.gradle/8.14.3/executionHistory/executionHistory.lock b/.gradle/8.14.3/executionHistory/executionHistory.lock
+index 4ce569e746f924dfd8ef6dce3efa15dd967a5ffe..8deb8215fb804103abcf83a5abca5210771c0a7f 100644
+GIT binary patch
+literal 17
+UcmZQx{Z}ey`{l_(3=qHp064q^X#fBK
+
+literal 17
+TcmZP;77hNoB{;l{0RlJxCqDyF
+
+diff --git a/.gradle/8.14.3/fileHashes/fileHashes.bin b/.gradle/8.14.3/fileHashes/fileHashes.bin
+index 558dec1bbb3e9955b44296b39d4e675b792d9fe8..3dd5e034100c6db9ffd8bfabc3ae5a5cb3c52c0c 100644
+GIT binary patch
+delta 3446
+zcmZ{lX;4&G7RPPd)}X8^)AU268x<Eyns&wDI!XkQrP&(jjRw&uZpfsd$q+&a5JWV1
+zf`p;~8KR5}F^C#twA3L;6bMG83?gO_8KM^DXcTCCEpwN5`8NIKfA8=7&$;*Ab8mId
+z4N+OM=({B@^AF_A?5&U$wqF=Weo=Eqg<np=v)r_=fA6C_t^)jBl%@d|&0U_OdV3>r
+z6OBeBGF~9REb}gb@sw*tjPGx;uGp+^auWP1#tYZqlUgDUs3?#86Rx<(vx@FKAHQ?v
+z))ET!vCIrUNmcnBnHMQHIWT@iJX(48mnVso8+#cq4GqYj^wFM5%44RD@k@6@T1!gH
+zDUYpT{OjqwX~jc#m@b>@pzU-wYo-CU=-$9mnfG{25M;`vq8_M|$=6neUQb%&^tqlo
+z5|^?fNB<(Jvp@ZA0_6!dW4vVhraQ+Tbqb4iz#ExjuBp1S_|m_+C^I}|-kQVrw%xjD
+zEv8%}gDB2-UTx9i-}W~z&!#YL5;OmE+#81s&9k+XtM5VuCzYLN(US&!L1p(V1&!*8
+z;XJ1ljY1zM2RB!rn4cc3T6*5=l?x4POIccTK<k3zf$y9tkIrHI=8|O#uP1&OKzV#O
+z<1L5k%^u|$L6pb%Lx-yz>}I&EZMQqQ@+-}?$utnVh9$HQfsL(5;z7A?A>$oQ4redj
+zPS2v;SP#K7<XI0tfr<A$dTvr^N@eCp4zFuASVxXguC8XhC$iD&^y26{Lh(k%d*7R{
+zN_oCAl=Apfj6XTu?)5ronNUA|BjbI|S8e||_fqjbO^EJif&SDO&lYprGs+{Hp?iiL
+zoZVbN@8;t;^g~+Y&lkex&|t!^aNbRkmA2;ok=v8gDKi~og+@O297%l{8AExvgmJ5C
+zq_=*1>xjVH7=M?pZ#v~wF8K8?7$1FUE&sCNaRc>7X&4`WJNergc0OHl8i>@hfLL<6
+zv2f?`D$1kPpr0vseDC0Y!!(6&g;#3Gg^roNj*|~tR1eH&_EV?fdyu#*Rhg`geOa<W
+zd*EIMjYgC(?$D-F_l`6yqg;Cvg57-`r5nCcuXX$RDTVQ7sB@QQZD%Rm@$kgU$%}+&
+zq!;6Ewl(Xwe75Nz%`&ZHT;b%k-SgI{8|88BjC(w6Xt0+a+e^86596LE_zfnfy!FEB
+z&XmJ?Ik$G6q$Q!`Y_V{B+QlqozP|OR(r2fOXi7pA;|pq{gA2n4QYnw=f?aaCqf*~u
+z&8|>|P?#u&3b|sgXI-YH)<s8ITrw-*(_o5ky<jWsB{l`x<Wkvn7F|5o)-}U-Wh>2!
+z`Vp*hsmKD(3WdX$p{dEOCJl`w?1F^~IV33@0#C5q_doUTin8Q*Q%AJ>7;h~8YV~)`
+zwUq0OjQi=*SC$=GnnHQp3Mf)YMXR7gu~C)AJb(S-Nz?JebqA=&bbpK=+;28ca8*(s
+z)(LJN(!fJw(aw#M2cbKfXw(qFxW6(jMbkYvmGT6?F}}a_$*a#KrIZ`9AlO6h801}-
+zyb1DbDAZqpOb=h^^KgNMvsQEA%UN#R!`Fwiei;!Sq|p^}XNAq%vU>L;<EOqyXs&t+
+zGjDmdA>m!+5l6~n?ZAJw(p12rd&RPnt=T=oeb>)re4kC8>f>{2;SW*!c8o_mE9T_<
+z*-op4mouJb`(d^0^}s306Su*Y*;3IN7?>^JY5v>fNelKBucje`f~90k%x-gv_#}sN
+zZ4%>|R|C#f9^cnUxiOgWtUPVYttk&ODc2V=&UD;3J5{}6SX%G%$7EO+FiXr2ehk|J
+zlw$s=1<Ht4L6)9_z5r*$a=}Vi9Vi2_Cm&2is{jI(Q_!5QGw}vgo2J3P1E-UmA>zq{
+z`I~S~9%uzEBANwPiPphOqO~w92>bpHQ9-z7nozSH)WOr>A3?b03HX6{@?l{d2a?Tr
+zZ`I(o8Rs2^P@=VvP1FnxMDwAKXcb6<={^F9R>H@^ypHHm_?>7qIE7$eKCIDjpbx=o
+zJco}6>w;RM&Cp5o7EB4n-bPqOv;+1KZHH>C&!)p&G9Lm-7@kXDIo78&u$|0(p<K|m
+zFit+S=wQV}`;d1{Re^~qBM;F-6;)i|2PV;j@cRNf!sd#33&1E&vYZ8#8f!h65;%Fc
+zd1glZw-ef~Ipua;_PB<wHcqyj6q5U)&WMvUpadrkT1j_%)adJm?ZJZCP&s&oV=VxM
+zj)O8ij`>18x&<e~@puMY4@aFDUQBCp_F&SYnnSChP|LxZ2;>=j1uxLpPlv`s=}-`X
+z>$$;?Sclia0MT#2JreUKP!s(PuArQXNW4ZUtTS@Zj>khwNS9m4KC(d;g=<tm5K#^4
+zG6zLQ?7ISI2$Mrk6x!dA1Kpp5haw%`UkUg}qujyAkcM?=0i3`(ycN0)94HOA#%r+C
+z;Fu@sI*$DZQZ)Emg-1HI1)SpX`2~YtJO?i{D8~{FlVXt9Vt`%oSXV+7*5T*yEAo6F
+zgFJ&bpq+SjgD6(%zz+(4B;t!`kKW|vSw+(!DHi4NW+)|^1~-YO!&{=E=p1l742*&n
+z6IG*g<)Awbt;2`I8^R*c84La5HK<=4*x|mQaiJF1h(Tvf^###b)NAyed>lP9n^O=R
+zjlPqQgIvP3l#4?_6ppzT-4PBJN8y?}aMj~ldh$}v;JbvzS%ewTy}>af^y+ba<5*96
+zLZ*R_0lj8E9-TP{<PP#CFdMMngzf|fO}Hm~0_qQD38dHLe(;Iteqgo*QUyH|#lcm4
+z5BMawPuLEy!F}L&pk853rv2e}(*E$fP=7Gr4Pq136ts^}6Rxor_lam3iKU?aanK)z
+zV;kth<3B(T@BckG{sa1<e*LgQjSnmUy-uarDtZn;v=5pRlnz!=KlP1|Me6-O{@hAs
+
+delta 3160
+zcmYM0dsI_b8pVl-sK5k@7;+(U6F`Crk!lOpL~!}yDUT4|Av|o=T1AI46<n6K)M@Ku
+zQQeL%OOX-9jyj?YVzmt8Q0uEm(V{pG#dpU?7qyHcQJZnjx#u35fA+n<Z=WwY-#$0V
+zjx&m?(~85>eZ4-ZnsB>Ty`k%<lk`e&ht<~*_sI+SwJx$M;`!;~cvem0_{I7T$Babl
+zDKD9K^1_BWmsC&98zbay)#&#X_0`*jV}U7Sk1$wJ&duACV?S~&E7{3-<{_+AYnAyM
+zhmJPxGclH{z(IAmka3qU`D|p);Z%(yj+F~%qff0;ujSRxkM!Sa@Ys1>exn5#REzpu
+zYewEqYI*z}gLz@xysHPVFIx1dmGSJ|un5}d9~S*Sap2x<**nO+ySH3g{OvKvX2vsG
+zhWYXOeosY3KjYRm)Cy6ae{mXAR%AYiVKB7>4nd_zMVOyKQ3I===y^iS>zf$-pLS-*
+zzmGD%D4g<BRtE6CXA(xQ-#zzl(ae!MZJ2)({l(Ee+Hd8R>o`AGtL}XqeaN42TN39T
+z)lKEPnu-L*GjDQ!{`&sBH;jF&W&dr);pQ)Rp0{uNv^>AUm6Zw(K;tj!zkBlJMBP2F
+zr3~hO$@_G9>^E-B{O4H4vwE?Xm~VEz(mpqANjihp5N^H|)BZfx=IUTPX9heps)#CH
+zy_<9F&CX)ecvj7h9_FQ46FbT~A24n%hDjrO-uvpz;QYXUA7rqw6c&xBe{eeVTHfuS
+z&NG;|nRj@2^YewvN1EkOvoB-0CQAS0*WNc~m!E!{nXTE}Y+vU7$GtUMe~~*Y(W22R
+zKb-iibRa#8vD95~XjFwu`HB|<j+#%KZ#A=O`XkO2aR<#}{ip`Ui!O3L;=-~<e~+oX
+zjGLcw?(Fi{lN;W$%O~H`kFp73mdl0F<2{p<2DwQcH;?u>8*^cQa3te7wVaRfQIzzm
+zW_--Jt#X*JEU{fYT%l(?_c<CSL}743h(ZlbfJza8q=2YO?@`CQ97b)A+|-pX9v}aF
+zVD*$pXU6kRa;_fx=E#d1j}$SU=EAv9?H{e2^-~n%g$=`eZ(8x+m%V(Saq}6@{a$>q
+zs<ho}hMaNEGG6eXuA8oIoO(@ebcJ)>56#WLQ#Gt)Jk^9?QAC-jRJ?<AqUaf3^mF9n
+zJ(WSMoclUjM6I&9u;Bbr_c@GZd%z*8)K=bbT8O(}MU+uKI+jd?X;q3pVV+itceN_d
+zR}Uz=S`CZVv&A`G*rZjd=kdj_y*IDd^0X?PRV}UP*Qz4ic-6Em>CklV<QP`9`Efo=
+z^nGXy5g#*Nv>YzF1qyGh)v45zxo6IlWS1|u1p6{i_A2!0M9(CjCzEoWXYnsNA9w^t
+z>67n%oZFUt@D6hp^zjZU@78}Ezw(Y8sr4aDfucSw=2~Lgnm@~9EgHkk=5_UrjVtEJ
+zKLz<_SOVt@solJslN(v{w)4zx_8z(0(Gr+aS@bM=Pu=yBS{a_>=0&qsT(i9wwT<zV
+ztHb=ibBq4BbDJmQS^GF&vSxh!)u!#=FrKd+=9`xc75=P~zmBXMIA504=Jr_G17naF
+z5zOJLmUV&goeTG|Cbp(wezq*)4_oS=GM;C{rXZCf5^X^$bprRibHlyNMZb3i^Ayd*
+z<si|W7oD8k?>A}fs-~$^-7q^g(An<igT=81=b<Zc*g^Hu0dz<@8V;(L6)?n6J|BgW
+z9snd=fK!rsVMx+2gvL{!4!M#}!zQZT@8bkj(q};8-3Uyeycm`QgWJ&e^2A4VAvMVx
+z^$Fuhj~{WIdM+)%<{SYoi9Y1I8Ja}OnvpE&RlHC2`x|JM?ql(zqz9l%qCOSkB;AiS
+zk_tE|X)~@%dIVkzsV^2yRsq(9<UM*ED5I>W6<<)jT#l=f{sV5w^nNZ(RC_{EBHg!R
+z7u73op<7ZXxTMhgL_|`(^fi`J{Z~9{B>e!LDFW1~KF;>=tB6Q7xY-SRSx^cEyb8Q=
+zqi7sq*^Iq3hp-Uhb;8U70UcJdPK?FmG=sA}#2r?uL0_R-QYG4{>OaFHss0h#as@=2
+z$r}AuWSU7Wa3vlRHZza*8I4wnokc%YT@V7&>H1wrr8=nuRaAqsptK3-N+)ZAA3>WZ
+zV3UpZY=qiE*WHmaGUO8$+KRQ5O$x&ys`^gcq#7Io?+mh6eJtD8sMSc$4{@_=<$n$?
+zzhWSd>@%noek6;N8KhUhFX+vn{j1@TNi_5&%qE{BJCoEVZpJFgbU9LXZIn%J!DY%O
+zwZb)vXxI|ek(pTvNG+@s%gOa|>3SP37SOr{UDP*a3l!Nz0~%l`5|ETl{dMRlBy7Tm
+za1;tijwNjVMVzBPQxcv_nt-qzc5kC<d_v|x_Go;@_Bf&zei>v>Mh6C^`U^5&0fTgJ
+zrjcY%0%p*en#PcM3-F*hnUo|m+S7~VMAe(jo9Z}{m4M|mH<J&^SwNk1J)UGI&&#AD
+z^Ag}p&xpyF%#p5Bld~aUyM;1;R7%XB%#7AF<T)4Mko*Dg$)_xU<R`!;eMS-G64R1d
+z3z(NiduY)oF&#M*)E`1Jp&Ck_Md@6)*-ew>^V|(Znm1z1<4Ao9u1LNxjG?nPg_HA4
+z^<|O^)oCOvs?%9ErdL=trdLTe0v^(QO_5kkGciSBhorBuj7&z75#_T;engE|*mGr+
+m|CjvsT#?#!3{g+qF@zRVJxnqbP*&`tw8zQ679;4h7yf^?rcp!y
+
+diff --git a/.gradle/8.14.3/fileHashes/fileHashes.lock b/.gradle/8.14.3/fileHashes/fileHashes.lock
+index 5bd57bb12a19d60652de212de772ac8ecca64890..dc7185a5c2c2ee534d17f89604dee433a12cb04e 100644
+GIT binary patch
+literal 17
+UcmZSHy`i#9y(%W30Rkof05SmtS^xk5
+
+literal 17
+UcmZSHCjWPZ%4_D23=q%@064$}4gdfE
+
+diff --git a/.gradle/buildOutputCleanup/buildOutputCleanup.lock b/.gradle/buildOutputCleanup/buildOutputCleanup.lock
+index e01785becc6ae7a2b6ddcf4a3fb72fbf5c5b6712..567629603c913c6729c9bf8a4048244d173758e4 100644
+GIT binary patch
+literal 17
+TcmZP;6cW2BIz>Q_0Rkie7)k;b
+
+literal 17
+UcmZP;d3HCm&&XpX0|ZC`05TE;4*&oF
+
+diff --git a/.gradle/buildOutputCleanup/cache.properties b/.gradle/buildOutputCleanup/cache.properties
+index ff133ce7ce5..a8894146ebc 100644
+--- a/.gradle/buildOutputCleanup/cache.properties
++++ b/.gradle/buildOutputCleanup/cache.properties
+@@ -1,2 +1,2 @@
+-#Wed Apr 22 20:53:21 UTC 2026
++#Wed Apr 22 20:58:43 UTC 2026
+ gradle.version=8.14.3
+diff --git a/.gradle/buildOutputCleanup/outputFiles.bin b/.gradle/buildOutputCleanup/outputFiles.bin
+index 3ff722d2f7d2d27796da65efd59e3d5ff95d2558..9325fefe22384e819cba8bcd51791398c964c164 100644
+GIT binary patch
+delta 331
+zcmdlznQ`T0#tkMC^&%a`yj@Z9dQl8u;F<Uz3VM&;(Uzaob_OcW4i|qD?<!QZ!x19x
+z@fapP>3`z6vVAv&q3T;<;?s9s_B%6m`fRBBi!kw-3wLPwADtX5A*3-|@OACUz20x2
+zS|wph<~+R~nzlLQ7gX!l$*~d&4$mC~`uhqV#6cDN!xVq8T(+z9viB*dxGhZlYsynS
+zK2L_lP;u?atda_oZ6zfH>~l-wMgKP`LnVqQr%GA~WXNwWn(Z@P3Mx2#@=-|(9+*)K
+Z42&N)D*h1PXrLjs+0i4Aak8I>H~`SUmrDQu
+
+delta 342
+zcmZ2EnQ`}I#tkMCf}+!N*m$OI|J%#}2A<lJmr5v1{wg6+f5LyoAFqX*)SwdV|DoUp
+z(}adsi!Yypicg1$KfA5uu)wLB5h`vA6Mr7HBkOFktr$ey<04G_UG<UV?zp!vq3Tz{
+z#6PqObT5?J%J~Z_Q9RjKQb9mDUMQT~O4SxB=s!6XDCoIYMek5Sa2`}pa`IG33yt82
+zg#nJPH+dj}9$#VRhHdQ0_Der`6{@&(@?A*_o019LAzM}?&Ved^3{zYYEUHkInQ<Db
+fI1wfeqZt^OI5#T(5Z`DZAhy}jBam@&gQq3{eD;?h
+
+diff --git a/.gradle/file-system.probe b/.gradle/file-system.probe
+index 8475bfcf666354f2fa5ea9b69475b4ce01401ee2..0e9caece705c361a13bda2695e409e5e3f54cbd2 100644
+GIT binary patch
+literal 8
+PcmZQzV4S<{FQXIy2?_#j
+
+literal 8
+PcmZQzV4S<{huaeX3Qq%f
+
+diff --git a/build.gradle b/build.gradle
+index 606cbf2df5e..0462035668b 100644
+--- a/build.gradle
++++ b/build.gradle
+@@ -19,6 +19,7 @@ dependencies {
+     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.2'
++    testImplementation 'com.squareup.okhttp3:mockwebserver:5.2.1'
+ }
+ 
+ 
+diff --git a/src/test/java/com/seed/objectsWithImports/OptionalWireTest.java b/src/test/java/com/seed/objectsWithImports/OptionalWireTest.java
+new file mode 100644
+index 00000000000..eb4fe7a88aa
+--- /dev/null
++++ b/src/test/java/com/seed/objectsWithImports/OptionalWireTest.java
+@@ -0,0 +1,299 @@
++package com.seed.objectsWithImports;
++
++import com.fasterxml.jackson.databind.JsonNode;
++import com.fasterxml.jackson.databind.ObjectMapper;
++import com.seed.objectsWithImports.core.ObjectMappers;
++import com.seed.objectsWithImports.resources.optional.types.DeployParams;
++import com.seed.objectsWithImports.resources.optional.types.DeployResponse;
++import com.seed.objectsWithImports.resources.optional.types.SendOptionalBodyRequest;
++import java.util.HashMap;
++import java.util.Optional;
++import okhttp3.mockwebserver.MockResponse;
++import okhttp3.mockwebserver.MockWebServer;
++import okhttp3.mockwebserver.RecordedRequest;
++import org.junit.jupiter.api.AfterEach;
++import org.junit.jupiter.api.Assertions;
++import org.junit.jupiter.api.BeforeEach;
++import org.junit.jupiter.api.Test;
++
++public class OptionalWireTest {
++    private MockWebServer server;
++    private SeedObjectsWithImportsClient client;
++    private ObjectMapper objectMapper = ObjectMappers.JSON_MAPPER;
++
++    @BeforeEach
++    public void setup() throws Exception {
++        server = new MockWebServer();
++        server.start();
++        client = SeedObjectsWithImportsClient.builder()
++                .url(server.url("/").toString())
++                .build();
++    }
++
++    @AfterEach
++    public void teardown() throws Exception {
++        server.shutdown();
++    }
++
++    @Test
++    public void testSendOptionalBody() throws Exception {
++        server.enqueue(new MockResponse().setResponseCode(200).setBody("\"string\""));
++        String response = client.optional().sendOptionalBody(Optional.of(new HashMap<String, Object>() {
++            {
++                put("string", new HashMap<String, Object>() {
++                    {
++                        put("key", "value");
++                    }
++                });
++            }
++        }));
++        RecordedRequest request = server.takeRequest();
++        Assertions.assertNotNull(request);
++        Assertions.assertEquals("POST", request.getMethod());
++        // Validate request body
++        String actualRequestBody = request.getBody().readUtf8();
++        String expectedRequestBody = "" + "{\n" + "  \"string\": {\n" + "    \"key\": \"value\"\n" + "  }\n" + "}";
++        JsonNode actualJson = objectMapper.readTree(actualRequestBody);
++        JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
++        Assertions.assertTrue(jsonEquals(expectedJson, actualJson), "Request body structure does not match expected");
++        if (actualJson.has("type") || actualJson.has("_type") || actualJson.has("kind")) {
++            String discriminator = null;
++            if (actualJson.has("type")) discriminator = actualJson.get("type").asText();
++            else if (actualJson.has("_type"))
++                discriminator = actualJson.get("_type").asText();
++            else if (actualJson.has("kind"))
++                discriminator = actualJson.get("kind").asText();
++            Assertions.assertNotNull(discriminator, "Union type should have a discriminator field");
++            Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");
++        }
++
++        if (!actualJson.isNull()) {
++            Assertions.assertTrue(
++                    actualJson.isObject() || actualJson.isArray() || actualJson.isValueNode(),
++                    "request should be a valid JSON value");
++        }
++
++        if (actualJson.isArray()) {
++            Assertions.assertTrue(actualJson.size() >= 0, "Array should have valid size");
++        }
++        if (actualJson.isObject()) {
++            Assertions.assertTrue(actualJson.size() >= 0, "Object should have valid field count");
++        }
++
++        // Validate response body
++        Assertions.assertNotNull(response, "Response should not be null");
++        String actualResponseJson = objectMapper.writeValueAsString(response);
++        String expectedResponseBody = "" + "\"string\"";
++        JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
++        JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
++        Assertions.assertTrue(
++                jsonEquals(expectedResponseNode, actualResponseNode),
++                "Response body structure does not match expected");
++        if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
++            String discriminator = null;
++            if (actualResponseNode.has("type"))
++                discriminator = actualResponseNode.get("type").asText();
++            else if (actualResponseNode.has("_type"))
++                discriminator = actualResponseNode.get("_type").asText();
++            else if (actualResponseNode.has("kind"))
++                discriminator = actualResponseNode.get("kind").asText();
++            Assertions.assertNotNull(discriminator, "Union type should have a discriminator field");
++            Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");
++        }
++
++        if (!actualResponseNode.isNull()) {
++            Assertions.assertTrue(
++                    actualResponseNode.isObject() || actualResponseNode.isArray() || actualResponseNode.isValueNode(),
++                    "response should be a valid JSON value");
++        }
++
++        if (actualResponseNode.isArray()) {
++            Assertions.assertTrue(actualResponseNode.size() >= 0, "Array should have valid size");
++        }
++        if (actualResponseNode.isObject()) {
++            Assertions.assertTrue(actualResponseNode.size() >= 0, "Object should have valid field count");
++        }
++    }
++
++    @Test
++    public void testSendOptionalTypedBody() throws Exception {
++        server.enqueue(new MockResponse().setResponseCode(200).setBody("\"string\""));
++        String response = client.optional()
++                .sendOptionalTypedBody(Optional.of(
++                        SendOptionalBodyRequest.builder().message("message").build()));
++        RecordedRequest request = server.takeRequest();
++        Assertions.assertNotNull(request);
++        Assertions.assertEquals("POST", request.getMethod());
++        // Validate request body
++        String actualRequestBody = request.getBody().readUtf8();
++        String expectedRequestBody = "" + "{\n" + "  \"message\": \"message\"\n" + "}";
++        JsonNode actualJson = objectMapper.readTree(actualRequestBody);
++        JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
++        Assertions.assertTrue(jsonEquals(expectedJson, actualJson), "Request body structure does not match expected");
++        if (actualJson.has("type") || actualJson.has("_type") || actualJson.has("kind")) {
++            String discriminator = null;
++            if (actualJson.has("type")) discriminator = actualJson.get("type").asText();
++            else if (actualJson.has("_type"))
++                discriminator = actualJson.get("_type").asText();
++            else if (actualJson.has("kind"))
++                discriminator = actualJson.get("kind").asText();
++            Assertions.assertNotNull(discriminator, "Union type should have a discriminator field");
++            Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");
++        }
++
++        if (!actualJson.isNull()) {
++            Assertions.assertTrue(
++                    actualJson.isObject() || actualJson.isArray() || actualJson.isValueNode(),
++                    "request should be a valid JSON value");
++        }
++
++        if (actualJson.isArray()) {
++            Assertions.assertTrue(actualJson.size() >= 0, "Array should have valid size");
++        }
++        if (actualJson.isObject()) {
++            Assertions.assertTrue(actualJson.size() >= 0, "Object should have valid field count");
++        }
++
++        // Validate response body
++        Assertions.assertNotNull(response, "Response should not be null");
++        String actualResponseJson = objectMapper.writeValueAsString(response);
++        String expectedResponseBody = "" + "\"string\"";
++        JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
++        JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
++        Assertions.assertTrue(
++                jsonEquals(expectedResponseNode, actualResponseNode),
++                "Response body structure does not match expected");
++        if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
++            String discriminator = null;
++            if (actualResponseNode.has("type"))
++                discriminator = actualResponseNode.get("type").asText();
++            else if (actualResponseNode.has("_type"))
++                discriminator = actualResponseNode.get("_type").asText();
++            else if (actualResponseNode.has("kind"))
++                discriminator = actualResponseNode.get("kind").asText();
++            Assertions.assertNotNull(discriminator, "Union type should have a discriminator field");
++            Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");
++        }
++
++        if (!actualResponseNode.isNull()) {
++            Assertions.assertTrue(
++                    actualResponseNode.isObject() || actualResponseNode.isArray() || actualResponseNode.isValueNode(),
++                    "response should be a valid JSON value");
++        }
++
++        if (actualResponseNode.isArray()) {
++            Assertions.assertTrue(actualResponseNode.size() >= 0, "Array should have valid size");
++        }
++        if (actualResponseNode.isObject()) {
++            Assertions.assertTrue(actualResponseNode.size() >= 0, "Object should have valid field count");
++        }
++    }
++
++    @Test
++    public void testSendOptionalNullableWithAllOptionalProperties() throws Exception {
++        server.enqueue(new MockResponse().setResponseCode(200).setBody("{\"success\":true}"));
++        DeployResponse response = client.optional()
++                .sendOptionalNullableWithAllOptionalProperties(
++                        "actionId",
++                        "id",
++                        DeployParams.builder().updateDraft(true).build());
++        RecordedRequest request = server.takeRequest();
++        Assertions.assertNotNull(request);
++        Assertions.assertEquals("POST", request.getMethod());
++        // Validate request body
++        String actualRequestBody = request.getBody().readUtf8();
++        String expectedRequestBody = "" + "{\n" + "  \"updateDraft\": true\n" + "}";
++        JsonNode actualJson = objectMapper.readTree(actualRequestBody);
++        JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
++        Assertions.assertTrue(jsonEquals(expectedJson, actualJson), "Request body structure does not match expected");
++        if (actualJson.has("type") || actualJson.has("_type") || actualJson.has("kind")) {
++            String discriminator = null;
++            if (actualJson.has("type")) discriminator = actualJson.get("type").asText();
++            else if (actualJson.has("_type"))
++                discriminator = actualJson.get("_type").asText();
++            else if (actualJson.has("kind"))
++                discriminator = actualJson.get("kind").asText();
++            Assertions.assertNotNull(discriminator, "Union type should have a discriminator field");
++            Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");
++        }
++
++        if (!actualJson.isNull()) {
++            Assertions.assertTrue(
++                    actualJson.isObject() || actualJson.isArray() || actualJson.isValueNode(),
++                    "request should be a valid JSON value");
++        }
++
++        if (actualJson.isArray()) {
++            Assertions.assertTrue(actualJson.size() >= 0, "Array should have valid size");
++        }
++        if (actualJson.isObject()) {
++            Assertions.assertTrue(actualJson.size() >= 0, "Object should have valid field count");
++        }
++
++        // Validate response body
++        Assertions.assertNotNull(response, "Response should not be null");
++        String actualResponseJson = objectMapper.writeValueAsString(response);
++        String expectedResponseBody = "" + "{\n" + "  \"success\": true\n" + "}";
++        JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
++        JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
++        Assertions.assertTrue(
++                jsonEquals(expectedResponseNode, actualResponseNode),
++                "Response body structure does not match expected");
++        if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
++            String discriminator = null;
++            if (actualResponseNode.has("type"))
++                discriminator = actualResponseNode.get("type").asText();
++            else if (actualResponseNode.has("_type"))
++                discriminator = actualResponseNode.get("_type").asText();
++            else if (actualResponseNode.has("kind"))
++                discriminator = actualResponseNode.get("kind").asText();
++            Assertions.assertNotNull(discriminator, "Union type should have a discriminator field");
++            Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");
++        }
++
++        if (!actualResponseNode.isNull()) {
++            Assertions.assertTrue(
++                    actualResponseNode.isObject() || actualResponseNode.isArray() || actualResponseNode.isValueNode(),
++                    "response should be a valid JSON value");
++        }
++
++        if (actualResponseNode.isArray()) {
++            Assertions.assertTrue(actualResponseNode.size() >= 0, "Array should have valid size");
++        }
++        if (actualResponseNode.isObject()) {
++            Assertions.assertTrue(actualResponseNode.size() >= 0, "Object should have valid field count");
++        }
++    }
++
++    /**
++     * Compares two JsonNodes with numeric equivalence and null safety.
++     * For objects, checks that all fields in 'expected' exist in 'actual' with matching values.
++     * Allows 'actual' to have extra fields (e.g., default values added during serialization).
++     */
++    private boolean jsonEquals(JsonNode expected, JsonNode actual) {
++        if (expected == null && actual == null) return true;
++        if (expected == null || actual == null) return false;
++        if (expected.equals(actual)) return true;
++        if (expected.isNumber() && actual.isNumber())
++            return Math.abs(expected.doubleValue() - actual.doubleValue()) < 1e-10;
++        if (expected.isObject() && actual.isObject()) {
++            java.util.Iterator<java.util.Map.Entry<String, JsonNode>> iter = expected.fields();
++            while (iter.hasNext()) {
++                java.util.Map.Entry<String, JsonNode> entry = iter.next();
++                JsonNode actualValue = actual.get(entry.getKey());
++                if (actualValue == null) {
++                    if (!entry.getValue().isNull()) return false;
++                } else if (!jsonEquals(entry.getValue(), actualValue)) return false;
++            }
++            return true;
++        }
++        if (expected.isArray() && actual.isArray()) {
++            if (expected.size() != actual.size()) return false;
++            for (int i = 0; i < expected.size(); i++) {
++                if (!jsonEquals(expected.get(i), actual.get(i))) return false;
++            }
++            return true;
++        }
++        return false;
++    }
++}

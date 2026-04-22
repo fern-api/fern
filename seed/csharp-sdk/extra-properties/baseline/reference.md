@@ -1,0 +1,54 @@
+# Reference
+## User
+<details><summary><code>client.User.<a href="/src/SeedExtraProperties/User/UserClient.cs">CreateUserAsync</a>(CreateUserRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.User.CreateUserAsync(
+    new CreateUserRequest
+    {
+        Name = "Alice",
+        Type = "CreateUserRequest",
+        Version = "v1",
+        AdditionalProperties = new AdditionalProperties
+        {
+            ["age"] = 30,
+            ["location"] = "Wonderland",
+        },
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `CreateUserRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+

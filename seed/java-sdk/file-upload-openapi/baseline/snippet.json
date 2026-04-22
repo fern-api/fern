@@ -1,0 +1,18 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "4bd6aeb6",
+            "id": {
+                "method": "POST",
+                "path": "/upload-file",
+                "identifier_override": "endpoint_fileUploadExample.uploadFile"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.fileuploadexample.requests.UploadFileRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.fileUploadExample().uploadFile(\n            UploadFileRequest\n                .builder()\n                .name(\"name\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.fileuploadexample.requests.UploadFileRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.fileUploadExample().uploadFile(\n            UploadFileRequest\n                .builder()\n                .name(\"name\")\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

@@ -1,0 +1,3 @@
+rootProject.name = 'single-url-environment-default'
+
+include 'sample-app'

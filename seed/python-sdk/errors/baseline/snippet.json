@@ -1,0 +1,73 @@
+{
+    "types": {
+        "type_simple:FooRequest": "from seed.simple import FooRequest\n\nFooRequest(\n    bar=\"hello\",\n)\n",
+        "type_simple:FooResponse": "from seed.simple import FooResponse\n\nFooResponse(\n    bar=\"hello\",\n)\n"
+    },
+    "endpoints": [
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/foo1",
+                "method": "POST",
+                "identifier_override": "endpoint_simple.fooWithoutEndpointError"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedErrors\n\nclient = SeedErrors(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.simple.foo_without_endpoint_error(\n    bar=\"bar\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedErrors\n\nclient = AsyncSeedErrors(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.simple.foo_without_endpoint_error(\n        bar=\"bar\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/foo2",
+                "method": "POST",
+                "identifier_override": "endpoint_simple.foo"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedErrors\n\nclient = SeedErrors(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.simple.foo(\n    bar=\"bar\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedErrors\n\nclient = AsyncSeedErrors(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.simple.foo(\n        bar=\"bar\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/foo3",
+                "method": "POST",
+                "identifier_override": "endpoint_simple.fooWithExamples"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedErrors\n\nclient = SeedErrors(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.simple.foo_with_examples(\n    bar=\"hello\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedErrors\n\nclient = AsyncSeedErrors(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.simple.foo_with_examples(\n        bar=\"hello\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/foo3",
+                "method": "POST",
+                "identifier_override": "endpoint_simple.fooWithExamples"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedErrors\n\nclient = SeedErrors(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.simple.foo_with_examples(\n    bar=\"hello\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedErrors\n\nclient = AsyncSeedErrors(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.simple.foo_with_examples(\n        bar=\"hello\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/foo3",
+                "method": "POST",
+                "identifier_override": "endpoint_simple.fooWithExamples"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedErrors\n\nclient = SeedErrors(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.simple.foo_with_examples(\n    bar=\"hello\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedErrors\n\nclient = AsyncSeedErrors(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.simple.foo_with_examples(\n        bar=\"hello\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        }
+    ]
+}

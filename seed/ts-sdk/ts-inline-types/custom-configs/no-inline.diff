@@ -1,0 +1,889 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 8d01069edb2..1cbbab0d449 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+     "cliVersion": "DUMMY",
+     "generatorName": "fernapi/fern-typescript-sdk",
+     "generatorVersion": "local",
++    "generatorConfig": {
++        "enableInlineTypes": false
++    },
+     "originGitCommit": "DUMMY",
+     "originGitCommitIsDirty": null,
+     "invokedBy": "manual",
+diff --git a/src/api/client/requests/GetDiscriminatedUnionRequest.ts b/src/api/client/requests/GetDiscriminatedUnionRequest.ts
+index 65201bf09ce..5b3eb50007b 100644
+--- a/src/api/client/requests/GetDiscriminatedUnionRequest.ts
++++ b/src/api/client/requests/GetDiscriminatedUnionRequest.ts
+@@ -22,58 +22,6 @@ import type * as SeedObject from "../../index.js";
+  *     }
+  */
+ export interface GetDiscriminatedUnionRequest {
+-    bar: GetDiscriminatedUnionRequest.Bar;
++    bar: SeedObject.DiscriminatedUnion1;
+     foo: string;
+ }
+-
+-export namespace GetDiscriminatedUnionRequest {
+-    /**
+-     * lorem ipsum
+-     */
+-    export type Bar =
+-        /**
+-         * lorem ipsum */
+-        | Bar.Type1
+-        /**
+-         * lorem ipsum */
+-        | Bar.Type2
+-        /**
+-         * lorem ipsum */
+-        | Bar.Ref;
+-
+-    export namespace Bar {
+-        export interface Type1 {
+-            type: "type1";
+-            /** lorem ipsum */
+-            foo: string;
+-            /** lorem ipsum */
+-            bar: DiscriminatedUnion1InlineType1.Bar;
+-            /** lorem ipsum */
+-            ref: SeedObject.ReferenceType;
+-        }
+-
+-        export namespace DiscriminatedUnion1InlineType1 {
+-            /**
+-             * lorem ipsum
+-             */
+-            export interface Bar {
+-                /** lorem ipsum */
+-                foo: string;
+-                /** lorem ipsum */
+-                ref: SeedObject.ReferenceType;
+-            }
+-        }
+-
+-        export interface Type2 {
+-            type: "type2";
+-            /** lorem ipsum */
+-            baz: string;
+-            /** lorem ipsum */
+-            ref: SeedObject.ReferenceType;
+-        }
+-
+-        export interface Ref extends SeedObject.ReferenceType {
+-            type: "ref";
+-        }
+-    }
+-}
+diff --git a/src/api/client/requests/GetUndiscriminatedUnionRequest.ts b/src/api/client/requests/GetUndiscriminatedUnionRequest.ts
+index ad5e0000f3c..3fb4dfe0d88 100644
+--- a/src/api/client/requests/GetUndiscriminatedUnionRequest.ts
++++ b/src/api/client/requests/GetUndiscriminatedUnionRequest.ts
+@@ -21,76 +21,6 @@ import type * as SeedObject from "../../index.js";
+  *     }
+  */
+ export interface GetUndiscriminatedUnionRequest {
+-    bar: GetUndiscriminatedUnionRequest.Bar;
++    bar: SeedObject.UndiscriminatedUnion1;
+     foo: string;
+ }
+-
+-export namespace GetUndiscriminatedUnionRequest {
+-    /**
+-     * lorem ipsum
+-     */
+-    export type Bar =
+-        /**
+-         * lorem ipsum */
+-        | {
+-              foo: string;
+-              bar: {
+-                  foo: string;
+-                  ref: SeedObject.ReferenceType;
+-              };
+-              ref: SeedObject.ReferenceType;
+-          }
+-        /**
+-         * lorem ipsum */
+-        | {
+-              baz: string;
+-              ref: SeedObject.ReferenceType;
+-          }
+-        /**
+-         * lorem ipsum */
+-        | (
+-              | {
+-                    foo: string;
+-                    bar: {
+-                        foo: string;
+-                        ref: SeedObject.ReferenceType;
+-                    };
+-                    ref: SeedObject.ReferenceType;
+-                }
+-              | {
+-                    baz: string;
+-                    ref: SeedObject.ReferenceType;
+-                }
+-              | SeedObject.ReferenceType
+-          )
+-        /**
+-         * lorem ipsum */
+-        | ("SUNNY" | "CLOUDY" | "RAINING" | "SNOWING")
+-        /**
+-         * lorem ipsum */
+-        | SeedObject.UserId
+-        /**
+-         * lorem ipsum */
+-        | {
+-              foo: string;
+-              ref: SeedObject.ReferenceType;
+-          }[]
+-        /**
+-         * lorem ipsum */
+-        | {
+-              foo: string;
+-              ref: SeedObject.ReferenceType;
+-          }[]
+-        /**
+-         * lorem ipsum */
+-        | Record<
+-              string,
+-              {
+-                  foo: string;
+-                  ref: SeedObject.ReferenceType;
+-              }
+-          >
+-        /**
+-         * lorem ipsum */
+-        | SeedObject.ReferenceType;
+-}
+diff --git a/src/api/client/requests/PostRootRequest.ts b/src/api/client/requests/PostRootRequest.ts
+index b46674dafca..6165e9933a2 100644
+--- a/src/api/client/requests/PostRootRequest.ts
++++ b/src/api/client/requests/PostRootRequest.ts
+@@ -1,5 +1,7 @@
+ // This file was auto-generated by Fern from our API Definition.
+ 
++import type * as SeedObject from "../../index.js";
++
+ /**
+  * @example
+  *     {
+@@ -10,16 +12,6 @@
+  *     }
+  */
+ export interface PostRootRequest {
+-    bar: PostRootRequest.Bar;
++    bar: SeedObject.RequestTypeInlineType1;
+     foo: string;
+ }
+-
+-export namespace PostRootRequest {
+-    /**
+-     * lorem ipsum
+-     */
+-    export interface Bar {
+-        /** lorem ipsum */
+-        foo: string;
+-    }
+-}
+diff --git a/src/api/types/AliasInlineValue.ts b/src/api/types/AliasInlineValue.ts
+new file mode 100644
+index 00000000000..c695070d070
+--- /dev/null
++++ b/src/api/types/AliasInlineValue.ts
+@@ -0,0 +1,6 @@
++// This file was auto-generated by Fern from our API Definition.
++
++export interface AliasInlineValue {
++    foo: string;
++    bar: string;
++}
+diff --git a/src/api/types/AliasListInline.ts b/src/api/types/AliasListInline.ts
+index 3d2cc01e502..abc236ef57d 100644
+--- a/src/api/types/AliasListInline.ts
++++ b/src/api/types/AliasListInline.ts
+@@ -1,10 +1,5 @@
+ // This file was auto-generated by Fern from our API Definition.
+ 
+-export type AliasListInline = AliasListInline.Item[];
++import type * as SeedObject from "../index.js";
+ 
+-export namespace AliasListInline {
+-    export interface Item {
+-        foo: string;
+-        bar: string;
+-    }
+-}
++export type AliasListInline = SeedObject.AliasInlineValue[];
+diff --git a/src/api/types/AliasMapInline.ts b/src/api/types/AliasMapInline.ts
+index 277b8cb9218..a13aefda7f2 100644
+--- a/src/api/types/AliasMapInline.ts
++++ b/src/api/types/AliasMapInline.ts
+@@ -1,10 +1,5 @@
+ // This file was auto-generated by Fern from our API Definition.
+ 
+-export type AliasMapInline = Record<string, AliasMapInline.Value>;
++import type * as SeedObject from "../index.js";
+ 
+-export namespace AliasMapInline {
+-    export interface Value {
+-        foo: string;
+-        bar: string;
+-    }
+-}
++export type AliasMapInline = Record<string, SeedObject.AliasInlineValue>;
+diff --git a/src/api/types/AliasSetInline.ts b/src/api/types/AliasSetInline.ts
+index 57b7d060d1a..60b83005958 100644
+--- a/src/api/types/AliasSetInline.ts
++++ b/src/api/types/AliasSetInline.ts
+@@ -1,10 +1,5 @@
+ // This file was auto-generated by Fern from our API Definition.
+ 
+-export type AliasSetInline = AliasSetInline.Item[];
++import type * as SeedObject from "../index.js";
+ 
+-export namespace AliasSetInline {
+-    export interface Item {
+-        foo: string;
+-        bar: string;
+-    }
+-}
++export type AliasSetInline = SeedObject.AliasInlineValue[];
+diff --git a/src/api/types/DiscriminatedUnion1.ts b/src/api/types/DiscriminatedUnion1.ts
+new file mode 100644
+index 00000000000..5bf11c95fac
+--- /dev/null
++++ b/src/api/types/DiscriminatedUnion1.ts
+@@ -0,0 +1,31 @@
++// This file was auto-generated by Fern from our API Definition.
++
++import type * as SeedObject from "../index.js";
++
++/**
++ * lorem ipsum
++ */
++export type DiscriminatedUnion1 =
++    /**
++     * lorem ipsum */
++    | SeedObject.DiscriminatedUnion1.Type1
++    /**
++     * lorem ipsum */
++    | SeedObject.DiscriminatedUnion1.Type2
++    /**
++     * lorem ipsum */
++    | SeedObject.DiscriminatedUnion1.Ref;
++
++export namespace DiscriminatedUnion1 {
++    export interface Type1 extends SeedObject.DiscriminatedUnion1InlineType1 {
++        type: "type1";
++    }
++
++    export interface Type2 extends SeedObject.DiscriminatedUnion1InlineType2 {
++        type: "type2";
++    }
++
++    export interface Ref extends SeedObject.ReferenceType {
++        type: "ref";
++    }
++}
+diff --git a/src/api/types/DiscriminatedUnion1InlineType1.ts b/src/api/types/DiscriminatedUnion1InlineType1.ts
+new file mode 100644
+index 00000000000..15b52ab77bc
+--- /dev/null
++++ b/src/api/types/DiscriminatedUnion1InlineType1.ts
+@@ -0,0 +1,15 @@
++// This file was auto-generated by Fern from our API Definition.
++
++import type * as SeedObject from "../index.js";
++
++/**
++ * lorem ipsum
++ */
++export interface DiscriminatedUnion1InlineType1 {
++    /** lorem ipsum */
++    foo: string;
++    /** lorem ipsum */
++    bar: SeedObject.DiscriminatedUnion1InlineType1InlineType1;
++    /** lorem ipsum */
++    ref: SeedObject.ReferenceType;
++}
+diff --git a/src/api/types/DiscriminatedUnion1InlineType1InlineType1.ts b/src/api/types/DiscriminatedUnion1InlineType1InlineType1.ts
+new file mode 100644
+index 00000000000..9da89520e89
+--- /dev/null
++++ b/src/api/types/DiscriminatedUnion1InlineType1InlineType1.ts
+@@ -0,0 +1,13 @@
++// This file was auto-generated by Fern from our API Definition.
++
++import type * as SeedObject from "../index.js";
++
++/**
++ * lorem ipsum
++ */
++export interface DiscriminatedUnion1InlineType1InlineType1 {
++    /** lorem ipsum */
++    foo: string;
++    /** lorem ipsum */
++    ref: SeedObject.ReferenceType;
++}
+diff --git a/src/api/types/DiscriminatedUnion1InlineType2.ts b/src/api/types/DiscriminatedUnion1InlineType2.ts
+new file mode 100644
+index 00000000000..f346fb10ffe
+--- /dev/null
++++ b/src/api/types/DiscriminatedUnion1InlineType2.ts
+@@ -0,0 +1,13 @@
++// This file was auto-generated by Fern from our API Definition.
++
++import type * as SeedObject from "../index.js";
++
++/**
++ * lorem ipsum
++ */
++export interface DiscriminatedUnion1InlineType2 {
++    /** lorem ipsum */
++    baz: string;
++    /** lorem ipsum */
++    ref: SeedObject.ReferenceType;
++}
+diff --git a/src/api/types/InlineEnum1.ts b/src/api/types/InlineEnum1.ts
+new file mode 100644
+index 00000000000..2a2f5909eaf
+--- /dev/null
++++ b/src/api/types/InlineEnum1.ts
+@@ -0,0 +1,10 @@
++// This file was auto-generated by Fern from our API Definition.
++
++/** lorem ipsum */
++export const InlineEnum1 = {
++    Sunny: "SUNNY",
++    Cloudy: "CLOUDY",
++    Raining: "RAINING",
++    Snowing: "SNOWING",
++} as const;
++export type InlineEnum1 = (typeof InlineEnum1)[keyof typeof InlineEnum1];
+diff --git a/src/api/types/RequestTypeInlineType1.ts b/src/api/types/RequestTypeInlineType1.ts
+new file mode 100644
+index 00000000000..e0c1e300311
+--- /dev/null
++++ b/src/api/types/RequestTypeInlineType1.ts
+@@ -0,0 +1,9 @@
++// This file was auto-generated by Fern from our API Definition.
++
++/**
++ * lorem ipsum
++ */
++export interface RequestTypeInlineType1 {
++    /** lorem ipsum */
++    foo: string;
++}
+diff --git a/src/api/types/RootType1.ts b/src/api/types/RootType1.ts
+index 4d93d093b54..d173e0e06b6 100644
+--- a/src/api/types/RootType1.ts
++++ b/src/api/types/RootType1.ts
+@@ -9,94 +9,13 @@ export interface RootType1 {
+     /** lorem ipsum */
+     foo: string;
+     /** lorem ipsum */
+-    bar: RootType1.Bar;
++    bar: SeedObject.RootType1InlineType1;
+     /** lorem ipsum */
+-    fooMap: Record<string, RootType1.FooMap.Value>;
++    fooMap: Record<string, SeedObject.RootType1FooMapValue>;
+     /** lorem ipsum */
+-    fooList: RootType1.FooList.Item[];
++    fooList: SeedObject.RootType1FooListItem[];
+     /** lorem ipsum */
+-    fooSet: RootType1.FooSet.Item[];
++    fooSet: SeedObject.RootType1FooSetItem[];
+     /** lorem ipsum */
+     ref: SeedObject.ReferenceType;
+ }
+-
+-export namespace RootType1 {
+-    /**
+-     * lorem ipsum
+-     */
+-    export interface Bar {
+-        /** lorem ipsum */
+-        foo: string;
+-        /** lorem ipsum */
+-        bar: Bar.Bar;
+-        /** lorem ipsum */
+-        ref: SeedObject.ReferenceType;
+-    }
+-
+-    export namespace Bar {
+-        /**
+-         * lorem ipsum
+-         */
+-        export interface Bar {
+-            /** lorem ipsum */
+-            foo: string;
+-            /** lorem ipsum */
+-            bar: string;
+-            /** lorem ipsum */
+-            myEnum: Bar.MyEnum;
+-            /** lorem ipsum */
+-            ref: SeedObject.ReferenceType;
+-        }
+-
+-        export namespace Bar {
+-            /** lorem ipsum */
+-            export const MyEnum = {
+-                Sunny: "SUNNY",
+-                Cloudy: "CLOUDY",
+-                Raining: "RAINING",
+-                Snowing: "SNOWING",
+-            } as const;
+-            export type MyEnum = (typeof MyEnum)[keyof typeof MyEnum];
+-        }
+-    }
+-
+-    export namespace FooMap {
+-        /**
+-         * lorem ipsum
+-         */
+-        export interface Value {
+-            /** lorem ipsum */
+-            foo: string;
+-            /** lorem ipsum */
+-            ref: SeedObject.ReferenceType;
+-        }
+-    }
+-
+-    export type FooList = FooList.Item[];
+-
+-    export namespace FooList {
+-        /**
+-         * lorem ipsum
+-         */
+-        export interface Item {
+-            /** lorem ipsum */
+-            foo: string;
+-            /** lorem ipsum */
+-            ref: SeedObject.ReferenceType;
+-        }
+-    }
+-
+-    export type FooSet = FooSet.Item[];
+-
+-    export namespace FooSet {
+-        /**
+-         * lorem ipsum
+-         */
+-        export interface Item {
+-            /** lorem ipsum */
+-            foo: string;
+-            /** lorem ipsum */
+-            ref: SeedObject.ReferenceType;
+-        }
+-    }
+-}
+diff --git a/src/api/types/RootType1FooListItem.ts b/src/api/types/RootType1FooListItem.ts
+new file mode 100644
+index 00000000000..3e9935f3a97
+--- /dev/null
++++ b/src/api/types/RootType1FooListItem.ts
+@@ -0,0 +1,13 @@
++// This file was auto-generated by Fern from our API Definition.
++
++import type * as SeedObject from "../index.js";
++
++/**
++ * lorem ipsum
++ */
++export interface RootType1FooListItem {
++    /** lorem ipsum */
++    foo: string;
++    /** lorem ipsum */
++    ref: SeedObject.ReferenceType;
++}
+diff --git a/src/api/types/RootType1FooMapValue.ts b/src/api/types/RootType1FooMapValue.ts
+new file mode 100644
+index 00000000000..2810bf7b1cd
+--- /dev/null
++++ b/src/api/types/RootType1FooMapValue.ts
+@@ -0,0 +1,13 @@
++// This file was auto-generated by Fern from our API Definition.
++
++import type * as SeedObject from "../index.js";
++
++/**
++ * lorem ipsum
++ */
++export interface RootType1FooMapValue {
++    /** lorem ipsum */
++    foo: string;
++    /** lorem ipsum */
++    ref: SeedObject.ReferenceType;
++}
+diff --git a/src/api/types/RootType1FooSetItem.ts b/src/api/types/RootType1FooSetItem.ts
+new file mode 100644
+index 00000000000..cfcef69d146
+--- /dev/null
++++ b/src/api/types/RootType1FooSetItem.ts
+@@ -0,0 +1,13 @@
++// This file was auto-generated by Fern from our API Definition.
++
++import type * as SeedObject from "../index.js";
++
++/**
++ * lorem ipsum
++ */
++export interface RootType1FooSetItem {
++    /** lorem ipsum */
++    foo: string;
++    /** lorem ipsum */
++    ref: SeedObject.ReferenceType;
++}
+diff --git a/src/api/types/RootType1InlineType1.ts b/src/api/types/RootType1InlineType1.ts
+new file mode 100644
+index 00000000000..dfbaa9da205
+--- /dev/null
++++ b/src/api/types/RootType1InlineType1.ts
+@@ -0,0 +1,15 @@
++// This file was auto-generated by Fern from our API Definition.
++
++import type * as SeedObject from "../index.js";
++
++/**
++ * lorem ipsum
++ */
++export interface RootType1InlineType1 {
++    /** lorem ipsum */
++    foo: string;
++    /** lorem ipsum */
++    bar: SeedObject.RootType1InlineType1NestedInlineType1;
++    /** lorem ipsum */
++    ref: SeedObject.ReferenceType;
++}
+diff --git a/src/api/types/RootType1InlineType1NestedInlineType1.ts b/src/api/types/RootType1InlineType1NestedInlineType1.ts
+new file mode 100644
+index 00000000000..2560a91bc01
+--- /dev/null
++++ b/src/api/types/RootType1InlineType1NestedInlineType1.ts
+@@ -0,0 +1,17 @@
++// This file was auto-generated by Fern from our API Definition.
++
++import type * as SeedObject from "../index.js";
++
++/**
++ * lorem ipsum
++ */
++export interface RootType1InlineType1NestedInlineType1 {
++    /** lorem ipsum */
++    foo: string;
++    /** lorem ipsum */
++    bar: string;
++    /** lorem ipsum */
++    myEnum: SeedObject.InlineEnum1;
++    /** lorem ipsum */
++    ref: SeedObject.ReferenceType;
++}
+diff --git a/src/api/types/UndiscriminatedUnion1.ts b/src/api/types/UndiscriminatedUnion1.ts
+new file mode 100644
+index 00000000000..c182d3b7d10
+--- /dev/null
++++ b/src/api/types/UndiscriminatedUnion1.ts
+@@ -0,0 +1,35 @@
++// This file was auto-generated by Fern from our API Definition.
++
++import type * as SeedObject from "../index.js";
++
++/**
++ * lorem ipsum
++ */
++export type UndiscriminatedUnion1 =
++    /**
++     * lorem ipsum */
++    | SeedObject.UndiscriminatedUnion1InlineType1
++    /**
++     * lorem ipsum */
++    | SeedObject.UndiscriminatedUnion1InlineType2
++    /**
++     * lorem ipsum */
++    | SeedObject.UndiscriminatedUnion1DiscriminatedUnion1
++    /**
++     * lorem ipsum */
++    | SeedObject.UndiscriminatedUnion1InlineEnum1
++    /**
++     * lorem ipsum */
++    | SeedObject.UserId
++    /**
++     * lorem ipsum */
++    | SeedObject.UndiscriminatedUnion1InlineListItem1[]
++    /**
++     * lorem ipsum */
++    | SeedObject.UndiscriminatedUnion1InlineSetItem1[]
++    /**
++     * lorem ipsum */
++    | Record<string, SeedObject.UndiscriminatedUnion1InlineMapItem1>
++    /**
++     * lorem ipsum */
++    | SeedObject.ReferenceType;
+diff --git a/src/api/types/UndiscriminatedUnion1DiscriminatedUnion1.ts b/src/api/types/UndiscriminatedUnion1DiscriminatedUnion1.ts
+new file mode 100644
+index 00000000000..5338fea329f
+--- /dev/null
++++ b/src/api/types/UndiscriminatedUnion1DiscriminatedUnion1.ts
+@@ -0,0 +1,31 @@
++// This file was auto-generated by Fern from our API Definition.
++
++import type * as SeedObject from "../index.js";
++
++/**
++ * lorem ipsum
++ */
++export type UndiscriminatedUnion1DiscriminatedUnion1 =
++    /**
++     * lorem ipsum */
++    | SeedObject.UndiscriminatedUnion1DiscriminatedUnion1.Type1
++    /**
++     * lorem ipsum */
++    | SeedObject.UndiscriminatedUnion1DiscriminatedUnion1.Type2
++    /**
++     * lorem ipsum */
++    | SeedObject.UndiscriminatedUnion1DiscriminatedUnion1.Ref;
++
++export namespace UndiscriminatedUnion1DiscriminatedUnion1 {
++    export interface Type1 extends SeedObject.UndiscriminatedUnion1DiscriminatedUnion1InlineType1 {
++        type: "type1";
++    }
++
++    export interface Type2 extends SeedObject.UndiscriminatedUnion1DiscriminatedUnion1InlineType2 {
++        type: "type2";
++    }
++
++    export interface Ref extends SeedObject.ReferenceType {
++        type: "ref";
++    }
++}
+diff --git a/src/api/types/UndiscriminatedUnion1DiscriminatedUnion1InlineType1.ts b/src/api/types/UndiscriminatedUnion1DiscriminatedUnion1InlineType1.ts
+new file mode 100644
+index 00000000000..cccfa204dc4
+--- /dev/null
++++ b/src/api/types/UndiscriminatedUnion1DiscriminatedUnion1InlineType1.ts
+@@ -0,0 +1,15 @@
++// This file was auto-generated by Fern from our API Definition.
++
++import type * as SeedObject from "../index.js";
++
++/**
++ * lorem ipsum
++ */
++export interface UndiscriminatedUnion1DiscriminatedUnion1InlineType1 {
++    /** lorem ipsum */
++    foo: string;
++    /** lorem ipsum */
++    bar: SeedObject.UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1;
++    /** lorem ipsum */
++    ref: SeedObject.ReferenceType;
++}
+diff --git a/src/api/types/UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1.ts b/src/api/types/UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1.ts
+new file mode 100644
+index 00000000000..6e01c370abe
+--- /dev/null
++++ b/src/api/types/UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1.ts
+@@ -0,0 +1,13 @@
++// This file was auto-generated by Fern from our API Definition.
++
++import type * as SeedObject from "../index.js";
++
++/**
++ * lorem ipsum
++ */
++export interface UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1 {
++    /** lorem ipsum */
++    foo: string;
++    /** lorem ipsum */
++    ref: SeedObject.ReferenceType;
++}
+diff --git a/src/api/types/UndiscriminatedUnion1DiscriminatedUnion1InlineType2.ts b/src/api/types/UndiscriminatedUnion1DiscriminatedUnion1InlineType2.ts
+new file mode 100644
+index 00000000000..7e308046759
+--- /dev/null
++++ b/src/api/types/UndiscriminatedUnion1DiscriminatedUnion1InlineType2.ts
+@@ -0,0 +1,13 @@
++// This file was auto-generated by Fern from our API Definition.
++
++import type * as SeedObject from "../index.js";
++
++/**
++ * lorem ipsum
++ */
++export interface UndiscriminatedUnion1DiscriminatedUnion1InlineType2 {
++    /** lorem ipsum */
++    baz: string;
++    /** lorem ipsum */
++    ref: SeedObject.ReferenceType;
++}
+diff --git a/src/api/types/UndiscriminatedUnion1InlineEnum1.ts b/src/api/types/UndiscriminatedUnion1InlineEnum1.ts
+new file mode 100644
+index 00000000000..82545a453f2
+--- /dev/null
++++ b/src/api/types/UndiscriminatedUnion1InlineEnum1.ts
+@@ -0,0 +1,11 @@
++// This file was auto-generated by Fern from our API Definition.
++
++/** lorem ipsum */
++export const UndiscriminatedUnion1InlineEnum1 = {
++    Sunny: "SUNNY",
++    Cloudy: "CLOUDY",
++    Raining: "RAINING",
++    Snowing: "SNOWING",
++} as const;
++export type UndiscriminatedUnion1InlineEnum1 =
++    (typeof UndiscriminatedUnion1InlineEnum1)[keyof typeof UndiscriminatedUnion1InlineEnum1];
+diff --git a/src/api/types/UndiscriminatedUnion1InlineListItem1.ts b/src/api/types/UndiscriminatedUnion1InlineListItem1.ts
+new file mode 100644
+index 00000000000..d5b96770da9
+--- /dev/null
++++ b/src/api/types/UndiscriminatedUnion1InlineListItem1.ts
+@@ -0,0 +1,13 @@
++// This file was auto-generated by Fern from our API Definition.
++
++import type * as SeedObject from "../index.js";
++
++/**
++ * lorem ipsum
++ */
++export interface UndiscriminatedUnion1InlineListItem1 {
++    /** lorem ipsum */
++    foo: string;
++    /** lorem ipsum */
++    ref: SeedObject.ReferenceType;
++}
+diff --git a/src/api/types/UndiscriminatedUnion1InlineMapItem1.ts b/src/api/types/UndiscriminatedUnion1InlineMapItem1.ts
+new file mode 100644
+index 00000000000..0acabd281ea
+--- /dev/null
++++ b/src/api/types/UndiscriminatedUnion1InlineMapItem1.ts
+@@ -0,0 +1,13 @@
++// This file was auto-generated by Fern from our API Definition.
++
++import type * as SeedObject from "../index.js";
++
++/**
++ * lorem ipsum
++ */
++export interface UndiscriminatedUnion1InlineMapItem1 {
++    /** lorem ipsum */
++    foo: string;
++    /** lorem ipsum */
++    ref: SeedObject.ReferenceType;
++}
+diff --git a/src/api/types/UndiscriminatedUnion1InlineSetItem1.ts b/src/api/types/UndiscriminatedUnion1InlineSetItem1.ts
+new file mode 100644
+index 00000000000..a96047ebc5b
+--- /dev/null
++++ b/src/api/types/UndiscriminatedUnion1InlineSetItem1.ts
+@@ -0,0 +1,13 @@
++// This file was auto-generated by Fern from our API Definition.
++
++import type * as SeedObject from "../index.js";
++
++/**
++ * lorem ipsum
++ */
++export interface UndiscriminatedUnion1InlineSetItem1 {
++    /** lorem ipsum */
++    foo: string;
++    /** lorem ipsum */
++    ref: SeedObject.ReferenceType;
++}
+diff --git a/src/api/types/UndiscriminatedUnion1InlineType1.ts b/src/api/types/UndiscriminatedUnion1InlineType1.ts
+new file mode 100644
+index 00000000000..25d56acda10
+--- /dev/null
++++ b/src/api/types/UndiscriminatedUnion1InlineType1.ts
+@@ -0,0 +1,15 @@
++// This file was auto-generated by Fern from our API Definition.
++
++import type * as SeedObject from "../index.js";
++
++/**
++ * lorem ipsum
++ */
++export interface UndiscriminatedUnion1InlineType1 {
++    /** lorem ipsum */
++    foo: string;
++    /** lorem ipsum */
++    bar: SeedObject.UndiscriminatedUnion1InlineType1InlineType1;
++    /** lorem ipsum */
++    ref: SeedObject.ReferenceType;
++}
+diff --git a/src/api/types/UndiscriminatedUnion1InlineType1InlineType1.ts b/src/api/types/UndiscriminatedUnion1InlineType1InlineType1.ts
+new file mode 100644
+index 00000000000..dc374921482
+--- /dev/null
++++ b/src/api/types/UndiscriminatedUnion1InlineType1InlineType1.ts
+@@ -0,0 +1,13 @@
++// This file was auto-generated by Fern from our API Definition.
++
++import type * as SeedObject from "../index.js";
++
++/**
++ * lorem ipsum
++ */
++export interface UndiscriminatedUnion1InlineType1InlineType1 {
++    /** lorem ipsum */
++    foo: string;
++    /** lorem ipsum */
++    ref: SeedObject.ReferenceType;
++}
+diff --git a/src/api/types/UndiscriminatedUnion1InlineType2.ts b/src/api/types/UndiscriminatedUnion1InlineType2.ts
+new file mode 100644
+index 00000000000..d2d3ba4cd67
+--- /dev/null
++++ b/src/api/types/UndiscriminatedUnion1InlineType2.ts
+@@ -0,0 +1,13 @@
++// This file was auto-generated by Fern from our API Definition.
++
++import type * as SeedObject from "../index.js";
++
++/**
++ * lorem ipsum
++ */
++export interface UndiscriminatedUnion1InlineType2 {
++    /** lorem ipsum */
++    baz: string;
++    /** lorem ipsum */
++    ref: SeedObject.ReferenceType;
++}
+diff --git a/src/api/types/index.ts b/src/api/types/index.ts
+index eef7466275f..856b5ca6f5a 100644
+--- a/src/api/types/index.ts
++++ b/src/api/types/index.ts
+@@ -1,6 +1,30 @@
++export * from "./AliasInlineValue.js";
+ export * from "./AliasListInline.js";
+ export * from "./AliasMapInline.js";
+ export * from "./AliasSetInline.js";
++export * from "./DiscriminatedUnion1.js";
++export * from "./DiscriminatedUnion1InlineType1.js";
++export * from "./DiscriminatedUnion1InlineType1InlineType1.js";
++export * from "./DiscriminatedUnion1InlineType2.js";
++export * from "./InlineEnum1.js";
+ export * from "./ReferenceType.js";
++export * from "./RequestTypeInlineType1.js";
+ export * from "./RootType1.js";
++export * from "./RootType1FooListItem.js";
++export * from "./RootType1FooMapValue.js";
++export * from "./RootType1FooSetItem.js";
++export * from "./RootType1InlineType1.js";
++export * from "./RootType1InlineType1NestedInlineType1.js";
++export * from "./UndiscriminatedUnion1.js";
++export * from "./UndiscriminatedUnion1DiscriminatedUnion1.js";
++export * from "./UndiscriminatedUnion1DiscriminatedUnion1InlineType1.js";
++export * from "./UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1.js";
++export * from "./UndiscriminatedUnion1DiscriminatedUnion1InlineType2.js";
++export * from "./UndiscriminatedUnion1InlineEnum1.js";
++export * from "./UndiscriminatedUnion1InlineListItem1.js";
++export * from "./UndiscriminatedUnion1InlineMapItem1.js";
++export * from "./UndiscriminatedUnion1InlineSetItem1.js";
++export * from "./UndiscriminatedUnion1InlineType1.js";
++export * from "./UndiscriminatedUnion1InlineType1InlineType1.js";
++export * from "./UndiscriminatedUnion1InlineType2.js";
+ export * from "./UserId.js";

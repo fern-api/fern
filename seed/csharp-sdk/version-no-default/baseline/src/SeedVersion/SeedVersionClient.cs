@@ -1,0 +1,33 @@
+using SeedVersion.Core;
+
+namespace SeedVersion;
+
+public partial class SeedVersionClient : ISeedVersionClient
+{
+    private readonly RawClient _client;
+
+    public SeedVersionClient(ClientOptions? clientOptions = null)
+    {
+        clientOptions ??= new ClientOptions();
+        var platformHeaders = new Headers(
+            new Dictionary<string, string>()
+            {
+                { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedVersion" },
+                { "X-Fern-SDK-Version", Version.Current },
+                { "User-Agent", "Fernversion-no-default/0.0.1" },
+            }
+        );
+        foreach (var header in platformHeaders)
+        {
+            if (!clientOptions.Headers.ContainsKey(header.Key))
+            {
+                clientOptions.Headers[header.Key] = header.Value;
+            }
+        }
+        _client = new RawClient(clientOptions);
+        User = new UserClient(_client);
+    }
+
+    public IUserClient User { get; }
+}

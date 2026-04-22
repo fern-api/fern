@@ -1,0 +1,17 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/upload-file",
+                "method": "POST",
+                "identifier_override": "endpoint_fileUploadExample.uploadFile"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.FileUploadExample.UploadFileAsync(new UploadFileRequest { Name = \"name\" });\n"
+            }
+        }
+    ]
+}

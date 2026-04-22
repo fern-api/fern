@@ -1,0 +1,1072 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index cef89e12341..c67a3985a31 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -3,7 +3,11 @@
+   "generatorName": "fernapi/fern-go-sdk",
+   "generatorVersion": "local",
+   "generatorConfig": {
+-    "enableWireTests": false
++    "enableWireTests": true,
++    "packageName": "sse",
++    "module": {
++      "path": "github.com/fern-api/sse-examples-go"
++    }
+   },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+diff --git a/README.md b/README.md
+index 3921d5605fa..852b970fdcf 100644
+--- a/README.md
++++ b/README.md
+@@ -32,13 +32,13 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/server-sent-event-examples/fern"
+-    client "github.com/server-sent-event-examples/fern/client"
++    sse "github.com/fern-api/sse-examples-go"
++    client "github.com/fern-api/sse-examples-go/client"
+ )
+ 
+ func do() {
+     client := client.NewClient()
+-    request := &fern.StreamCompletionRequest{
++    request := &sse.StreamCompletionRequest{
+         Query: "foo",
+     }
+     client.Completions.Stream(
+diff --git a/client/client.go b/client/client.go
+index c4cb9d25f2d..089696a9ab2 100644
+--- a/client/client.go
++++ b/client/client.go
+@@ -3,10 +3,10 @@
+ package client
+ 
+ import (
+-	completions "github.com/server-sent-event-examples/fern/completions"
+-	core "github.com/server-sent-event-examples/fern/core"
+-	internal "github.com/server-sent-event-examples/fern/internal"
+-	option "github.com/server-sent-event-examples/fern/option"
++	completions "github.com/fern-api/sse-examples-go/completions"
++	core "github.com/fern-api/sse-examples-go/core"
++	internal "github.com/fern-api/sse-examples-go/internal"
++	option "github.com/fern-api/sse-examples-go/option"
+ )
+ 
+ type Client struct {
+diff --git a/client/client_test.go b/client/client_test.go
+index 90a0c5fe907..50c87722779 100644
+--- a/client/client_test.go
++++ b/client/client_test.go
+@@ -3,7 +3,7 @@
+ package client
+ 
+ import (
+-	option "github.com/server-sent-event-examples/fern/option"
++	option "github.com/fern-api/sse-examples-go/option"
+ 	assert "github.com/stretchr/testify/assert"
+ 	http "net/http"
+ 	testing "testing"
+diff --git a/completions/client.go b/completions/client.go
+index eb751ac82a5..2b0ad48294b 100644
+--- a/completions/client.go
++++ b/completions/client.go
+@@ -6,10 +6,10 @@ import (
+ 	context "context"
+ 	http "net/http"
+ 
+-	fern "github.com/server-sent-event-examples/fern"
+-	core "github.com/server-sent-event-examples/fern/core"
+-	internal "github.com/server-sent-event-examples/fern/internal"
+-	option "github.com/server-sent-event-examples/fern/option"
++	sse "github.com/fern-api/sse-examples-go"
++	core "github.com/fern-api/sse-examples-go/core"
++	internal "github.com/fern-api/sse-examples-go/internal"
++	option "github.com/fern-api/sse-examples-go/option"
+ )
+ 
+ type Client struct {
+@@ -36,9 +36,9 @@ func NewClient(options *core.RequestOptions) *Client {
+ 
+ func (c *Client) Stream(
+ 	ctx context.Context,
+-	request *fern.StreamCompletionRequest,
++	request *sse.StreamCompletionRequest,
+ 	opts ...option.RequestOption,
+-) (*core.Stream[fern.StreamedCompletion], error) {
++) (*core.Stream[sse.StreamedCompletion], error) {
+ 	options := core.NewRequestOptions(opts...)
+ 	baseURL := internal.ResolveBaseURL(
+ 		options.BaseURL,
+@@ -51,7 +51,7 @@ func (c *Client) Stream(
+ 		options.ToHeader(),
+ 	)
+ 	headers.Add("Accept", "text/event-stream")
+-	streamer := internal.NewStreamer[fern.StreamedCompletion](c.caller)
++	streamer := internal.NewStreamer[sse.StreamedCompletion](c.caller)
+ 	return streamer.Stream(
+ 		ctx,
+ 		&internal.StreamParams{
+@@ -67,16 +67,16 @@ func (c *Client) Stream(
+ 			Terminator:      "[[DONE]]",
+ 			Format:          core.StreamFormatSSE,
+ 			Request:         request,
+-			ErrorDecoder:    internal.NewErrorDecoder(fern.ErrorCodes),
++			ErrorDecoder:    internal.NewErrorDecoder(sse.ErrorCodes),
+ 		},
+ 	)
+ }
+ 
+ func (c *Client) StreamEvents(
+ 	ctx context.Context,
+-	request *fern.StreamEventsRequest,
++	request *sse.StreamEventsRequest,
+ 	opts ...option.RequestOption,
+-) (*core.Stream[fern.StreamEvent], error) {
++) (*core.Stream[sse.StreamEvent], error) {
+ 	options := core.NewRequestOptions(opts...)
+ 	baseURL := internal.ResolveBaseURL(
+ 		options.BaseURL,
+@@ -89,7 +89,7 @@ func (c *Client) StreamEvents(
+ 		options.ToHeader(),
+ 	)
+ 	headers.Add("Accept", "text/event-stream")
+-	streamer := internal.NewStreamer[fern.StreamEvent](c.caller)
++	streamer := internal.NewStreamer[sse.StreamEvent](c.caller)
+ 	return streamer.Stream(
+ 		ctx,
+ 		&internal.StreamParams{
+@@ -105,16 +105,16 @@ func (c *Client) StreamEvents(
+ 			Terminator:      "[DONE]",
+ 			Format:          core.StreamFormatSSE,
+ 			Request:         request,
+-			ErrorDecoder:    internal.NewErrorDecoder(fern.ErrorCodes),
++			ErrorDecoder:    internal.NewErrorDecoder(sse.ErrorCodes),
+ 		},
+ 	)
+ }
+ 
+ func (c *Client) StreamEventsContextProtocol(
+ 	ctx context.Context,
+-	request *fern.StreamEventsContextProtocolRequest,
++	request *sse.StreamEventsContextProtocolRequest,
+ 	opts ...option.RequestOption,
+-) (*core.Stream[fern.StreamEventContextProtocol], error) {
++) (*core.Stream[sse.StreamEventContextProtocol], error) {
+ 	options := core.NewRequestOptions(opts...)
+ 	baseURL := internal.ResolveBaseURL(
+ 		options.BaseURL,
+@@ -127,7 +127,7 @@ func (c *Client) StreamEventsContextProtocol(
+ 		options.ToHeader(),
+ 	)
+ 	headers.Add("Accept", "text/event-stream")
+-	streamer := internal.NewStreamer[fern.StreamEventContextProtocol](c.caller)
++	streamer := internal.NewStreamer[sse.StreamEventContextProtocol](c.caller)
+ 	return streamer.Stream(
+ 		ctx,
+ 		&internal.StreamParams{
+@@ -144,7 +144,7 @@ func (c *Client) StreamEventsContextProtocol(
+ 			Format:             core.StreamFormatSSE,
+ 			EventDiscriminator: "event",
+ 			Request:            request,
+-			ErrorDecoder:       internal.NewErrorDecoder(fern.ErrorCodes),
++			ErrorDecoder:       internal.NewErrorDecoder(sse.ErrorCodes),
+ 		},
+ 	)
+ }
+diff --git a/completions/completions_test/completions_test.go b/completions/completions_test/completions_test.go
+new file mode 100644
+index 00000000000..10376bd1ca1
+--- /dev/null
++++ b/completions/completions_test/completions_test.go
+@@ -0,0 +1,153 @@
++// Code generated by Fern. DO NOT EDIT.
++
++package completions_test
++
++import (
++	bytes "bytes"
++	context "context"
++	json "encoding/json"
++	http "net/http"
++	os "os"
++	testing "testing"
++
++	sse "github.com/fern-api/sse-examples-go"
++	client "github.com/fern-api/sse-examples-go/client"
++	option "github.com/fern-api/sse-examples-go/option"
++	require "github.com/stretchr/testify/require"
++)
++
++func VerifyRequestCount(
++	t *testing.T,
++	testId string,
++	method string,
++	urlPath string,
++	queryParams map[string]any,
++	expected int,
++) {
++	wiremockURL := os.Getenv("WIREMOCK_URL")
++	if wiremockURL == "" {
++		wiremockURL = "http://localhost:8080"
++	}
++	WiremockAdminURL := wiremockURL + "/__admin"
++	var reqBody bytes.Buffer
++	reqBody.WriteString(`{"method":"`)
++	reqBody.WriteString(method)
++	reqBody.WriteString(`","urlPath":"`)
++	reqBody.WriteString(urlPath)
++	reqBody.WriteString(`","headers":{"X-Test-Id":{"equalTo":"`)
++	reqBody.WriteString(testId)
++	reqBody.WriteString(`"}}`)
++	if len(queryParams) > 0 {
++		reqBody.WriteString(`,"queryParameters":{`)
++		first := true
++		for key, value := range queryParams {
++			if !first {
++				reqBody.WriteString(",")
++			}
++			reqBody.WriteString(`"`)
++			reqBody.WriteString(key)
++			switch v := value.(type) {
++			case string:
++				reqBody.WriteString(`":{"equalTo":"`)
++				reqBody.WriteString(v)
++				reqBody.WriteString(`"}`)
++			case []string:
++				reqBody.WriteString(`":{"hasExactly":[`)
++				for i, item := range v {
++					if i > 0 {
++						reqBody.WriteString(",")
++					}
++					reqBody.WriteString(`{"equalTo":"`)
++					reqBody.WriteString(item)
++					reqBody.WriteString(`"}`)
++				}
++				reqBody.WriteString(`]}`)
++			}
++			first = false
++		}
++		reqBody.WriteString("}")
++	}
++	reqBody.WriteString("}")
++	resp, err := http.Post(WiremockAdminURL+"/requests/find", "application/json", &reqBody)
++	require.NoError(t, err)
++	var result struct {
++		Requests []interface{} `json:"requests"`
++	}
++	json.NewDecoder(resp.Body).Decode(&result)
++	require.Equal(t, expected, len(result.Requests))
++}
++
++func TestCompletionsStreamWithWireMock(
++	t *testing.T,
++) {
++	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
++	if WireMockBaseURL == "" {
++		WireMockBaseURL = "http://localhost:8080"
++	}
++	client := client.NewClient(
++		option.WithBaseURL(WireMockBaseURL),
++	)
++	request := &sse.StreamCompletionRequest{
++		Query: "foo",
++	}
++	_, invocationErr := client.Completions.Stream(
++		context.TODO(),
++		request,
++		option.WithHTTPHeader(
++			http.Header{"X-Test-Id": []string{"TestCompletionsStreamWithWireMock"}},
++		),
++	)
++
++	require.NoError(t, invocationErr, "Client method call should succeed")
++	VerifyRequestCount(t, "TestCompletionsStreamWithWireMock", "POST", "/stream", nil, 1)
++}
++
++func TestCompletionsStreamEventsWithWireMock(
++	t *testing.T,
++) {
++	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
++	if WireMockBaseURL == "" {
++		WireMockBaseURL = "http://localhost:8080"
++	}
++	client := client.NewClient(
++		option.WithBaseURL(WireMockBaseURL),
++	)
++	request := &sse.StreamEventsRequest{
++		Query: "query",
++	}
++	_, invocationErr := client.Completions.StreamEvents(
++		context.TODO(),
++		request,
++		option.WithHTTPHeader(
++			http.Header{"X-Test-Id": []string{"TestCompletionsStreamEventsWithWireMock"}},
++		),
++	)
++
++	require.NoError(t, invocationErr, "Client method call should succeed")
++	VerifyRequestCount(t, "TestCompletionsStreamEventsWithWireMock", "POST", "/stream-events", nil, 1)
++}
++
++func TestCompletionsStreamEventsContextProtocolWithWireMock(
++	t *testing.T,
++) {
++	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
++	if WireMockBaseURL == "" {
++		WireMockBaseURL = "http://localhost:8080"
++	}
++	client := client.NewClient(
++		option.WithBaseURL(WireMockBaseURL),
++	)
++	request := &sse.StreamEventsContextProtocolRequest{
++		Query: "query",
++	}
++	_, invocationErr := client.Completions.StreamEventsContextProtocol(
++		context.TODO(),
++		request,
++		option.WithHTTPHeader(
++			http.Header{"X-Test-Id": []string{"TestCompletionsStreamEventsContextProtocolWithWireMock"}},
++		),
++	)
++
++	require.NoError(t, invocationErr, "Client method call should succeed")
++	VerifyRequestCount(t, "TestCompletionsStreamEventsContextProtocolWithWireMock", "POST", "/stream-events-context-protocol", nil, 1)
++}
+diff --git a/completions/raw_client.go b/completions/raw_client.go
+index dee559b25aa..195699bb35c 100644
+--- a/completions/raw_client.go
++++ b/completions/raw_client.go
+@@ -3,8 +3,8 @@
+ package completions
+ 
+ import (
+-	core "github.com/server-sent-event-examples/fern/core"
+-	internal "github.com/server-sent-event-examples/fern/internal"
++	core "github.com/fern-api/sse-examples-go/core"
++	internal "github.com/fern-api/sse-examples-go/internal"
+ )
+ 
+ type RawClient struct {
+diff --git a/completions.go b/completions.go
+index 7708dca1811..2f48f4c25fd 100644
+--- a/completions.go
++++ b/completions.go
+@@ -1,11 +1,11 @@
+ // Code generated by Fern. DO NOT EDIT.
+ 
+-package serversentevents
++package sse
+ 
+ import (
+ 	json "encoding/json"
+ 	fmt "fmt"
+-	internal "github.com/server-sent-event-examples/fern/internal"
++	internal "github.com/fern-api/sse-examples-go/internal"
+ 	big "math/big"
+ )
+ 
+diff --git a/completions_test.go b/completions_test.go
+index bd87924750d..42474a308c9 100644
+--- a/completions_test.go
++++ b/completions_test.go
+@@ -1,6 +1,6 @@
+ // Code generated by Fern. DO NOT EDIT.
+ 
+-package serversentevents
++package sse
+ 
+ import (
+ 	json "encoding/json"
+diff --git a/core/request_option.go b/core/request_option.go
+index 7b8c70f6649..d6c09bb6757 100644
+--- a/core/request_option.go
++++ b/core/request_option.go
+@@ -49,7 +49,7 @@ func (r *RequestOptions) ToHeader() http.Header { return r.cloneHeader() }
+ func (r *RequestOptions) cloneHeader() http.Header {
+ 	headers := r.HTTPHeader.Clone()
+ 	headers.Set("X-Fern-Language", "Go")
+-	headers.Set("X-Fern-SDK-Name", "github.com/server-sent-event-examples/fern")
++	headers.Set("X-Fern-SDK-Name", "github.com/fern-api/sse-examples-go")
+ 	headers.Set("X-Fern-SDK-Version", "v0.0.1")
+ 	headers.Set("User-Agent", "github.com/server-sent-event-examples/fern/0.0.1")
+ 	return headers
+diff --git a/dynamic-snippets/example0/snippet.go b/dynamic-snippets/example0/snippet.go
+index 89b53840e5d..942f2bb23f6 100644
+--- a/dynamic-snippets/example0/snippet.go
++++ b/dynamic-snippets/example0/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/server-sent-event-examples/fern"
+-    client "github.com/server-sent-event-examples/fern/client"
+-    option "github.com/server-sent-event-examples/fern/option"
++    sse "github.com/fern-api/sse-examples-go"
++    client "github.com/fern-api/sse-examples-go/client"
++    option "github.com/fern-api/sse-examples-go/option"
+ )
+ 
+ func do() {
+@@ -14,7 +14,7 @@ func do() {
+             "https://api.fern.com",
+         ),
+     )
+-    request := &fern.StreamCompletionRequest{
++    request := &sse.StreamCompletionRequest{
+         Query: "foo",
+     }
+     client.Completions.Stream(
+diff --git a/dynamic-snippets/example1/snippet.go b/dynamic-snippets/example1/snippet.go
+index 7c56fc5c1b2..646b1400f1c 100644
+--- a/dynamic-snippets/example1/snippet.go
++++ b/dynamic-snippets/example1/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/server-sent-event-examples/fern"
+-    client "github.com/server-sent-event-examples/fern/client"
+-    option "github.com/server-sent-event-examples/fern/option"
++    sse "github.com/fern-api/sse-examples-go"
++    client "github.com/fern-api/sse-examples-go/client"
++    option "github.com/fern-api/sse-examples-go/option"
+ )
+ 
+ func do() {
+@@ -14,7 +14,7 @@ func do() {
+             "https://api.fern.com",
+         ),
+     )
+-    request := &fern.StreamCompletionRequest{
++    request := &sse.StreamCompletionRequest{
+         Query: "",
+     }
+     client.Completions.Stream(
+diff --git a/dynamic-snippets/example10/snippet.go b/dynamic-snippets/example10/snippet.go
+index d88e8354d4c..555ece25374 100644
+--- a/dynamic-snippets/example10/snippet.go
++++ b/dynamic-snippets/example10/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/server-sent-event-examples/fern"
+-    client "github.com/server-sent-event-examples/fern/client"
+-    option "github.com/server-sent-event-examples/fern/option"
++    sse "github.com/fern-api/sse-examples-go"
++    client "github.com/fern-api/sse-examples-go/client"
++    option "github.com/fern-api/sse-examples-go/option"
+ )
+ 
+ func do() {
+@@ -14,7 +14,7 @@ func do() {
+             "https://api.fern.com",
+         ),
+     )
+-    request := &fern.StreamEventsContextProtocolRequest{
++    request := &sse.StreamEventsContextProtocolRequest{
+         Query: "query",
+     }
+     client.Completions.StreamEventsContextProtocol(
+diff --git a/dynamic-snippets/example11/snippet.go b/dynamic-snippets/example11/snippet.go
+index d88e8354d4c..555ece25374 100644
+--- a/dynamic-snippets/example11/snippet.go
++++ b/dynamic-snippets/example11/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/server-sent-event-examples/fern"
+-    client "github.com/server-sent-event-examples/fern/client"
+-    option "github.com/server-sent-event-examples/fern/option"
++    sse "github.com/fern-api/sse-examples-go"
++    client "github.com/fern-api/sse-examples-go/client"
++    option "github.com/fern-api/sse-examples-go/option"
+ )
+ 
+ func do() {
+@@ -14,7 +14,7 @@ func do() {
+             "https://api.fern.com",
+         ),
+     )
+-    request := &fern.StreamEventsContextProtocolRequest{
++    request := &sse.StreamEventsContextProtocolRequest{
+         Query: "query",
+     }
+     client.Completions.StreamEventsContextProtocol(
+diff --git a/dynamic-snippets/example2/snippet.go b/dynamic-snippets/example2/snippet.go
+index 1e0d44cb0c0..ed3da636995 100644
+--- a/dynamic-snippets/example2/snippet.go
++++ b/dynamic-snippets/example2/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/server-sent-event-examples/fern"
+-    client "github.com/server-sent-event-examples/fern/client"
+-    option "github.com/server-sent-event-examples/fern/option"
++    sse "github.com/fern-api/sse-examples-go"
++    client "github.com/fern-api/sse-examples-go/client"
++    option "github.com/fern-api/sse-examples-go/option"
+ )
+ 
+ func do() {
+@@ -14,7 +14,7 @@ func do() {
+             "https://api.fern.com",
+         ),
+     )
+-    request := &fern.StreamCompletionRequest{
++    request := &sse.StreamCompletionRequest{
+         Query: "query",
+     }
+     client.Completions.Stream(
+diff --git a/dynamic-snippets/example3/snippet.go b/dynamic-snippets/example3/snippet.go
+index 1e0d44cb0c0..ed3da636995 100644
+--- a/dynamic-snippets/example3/snippet.go
++++ b/dynamic-snippets/example3/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/server-sent-event-examples/fern"
+-    client "github.com/server-sent-event-examples/fern/client"
+-    option "github.com/server-sent-event-examples/fern/option"
++    sse "github.com/fern-api/sse-examples-go"
++    client "github.com/fern-api/sse-examples-go/client"
++    option "github.com/fern-api/sse-examples-go/option"
+ )
+ 
+ func do() {
+@@ -14,7 +14,7 @@ func do() {
+             "https://api.fern.com",
+         ),
+     )
+-    request := &fern.StreamCompletionRequest{
++    request := &sse.StreamCompletionRequest{
+         Query: "query",
+     }
+     client.Completions.Stream(
+diff --git a/dynamic-snippets/example4/snippet.go b/dynamic-snippets/example4/snippet.go
+index 59216451b67..c0c68ae754c 100644
+--- a/dynamic-snippets/example4/snippet.go
++++ b/dynamic-snippets/example4/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/server-sent-event-examples/fern"
+-    client "github.com/server-sent-event-examples/fern/client"
+-    option "github.com/server-sent-event-examples/fern/option"
++    sse "github.com/fern-api/sse-examples-go"
++    client "github.com/fern-api/sse-examples-go/client"
++    option "github.com/fern-api/sse-examples-go/option"
+ )
+ 
+ func do() {
+@@ -14,7 +14,7 @@ func do() {
+             "https://api.fern.com",
+         ),
+     )
+-    request := &fern.StreamEventsRequest{
++    request := &sse.StreamEventsRequest{
+         Query: "query",
+     }
+     client.Completions.StreamEvents(
+diff --git a/dynamic-snippets/example5/snippet.go b/dynamic-snippets/example5/snippet.go
+index 8d845e3d1cb..3f34e7c3156 100644
+--- a/dynamic-snippets/example5/snippet.go
++++ b/dynamic-snippets/example5/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/server-sent-event-examples/fern"
+-    client "github.com/server-sent-event-examples/fern/client"
+-    option "github.com/server-sent-event-examples/fern/option"
++    sse "github.com/fern-api/sse-examples-go"
++    client "github.com/fern-api/sse-examples-go/client"
++    option "github.com/fern-api/sse-examples-go/option"
+ )
+ 
+ func do() {
+@@ -14,7 +14,7 @@ func do() {
+             "https://api.fern.com",
+         ),
+     )
+-    request := &fern.StreamEventsRequest{
++    request := &sse.StreamEventsRequest{
+         Query: "",
+     }
+     client.Completions.StreamEvents(
+diff --git a/dynamic-snippets/example6/snippet.go b/dynamic-snippets/example6/snippet.go
+index 59216451b67..c0c68ae754c 100644
+--- a/dynamic-snippets/example6/snippet.go
++++ b/dynamic-snippets/example6/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/server-sent-event-examples/fern"
+-    client "github.com/server-sent-event-examples/fern/client"
+-    option "github.com/server-sent-event-examples/fern/option"
++    sse "github.com/fern-api/sse-examples-go"
++    client "github.com/fern-api/sse-examples-go/client"
++    option "github.com/fern-api/sse-examples-go/option"
+ )
+ 
+ func do() {
+@@ -14,7 +14,7 @@ func do() {
+             "https://api.fern.com",
+         ),
+     )
+-    request := &fern.StreamEventsRequest{
++    request := &sse.StreamEventsRequest{
+         Query: "query",
+     }
+     client.Completions.StreamEvents(
+diff --git a/dynamic-snippets/example7/snippet.go b/dynamic-snippets/example7/snippet.go
+index 59216451b67..c0c68ae754c 100644
+--- a/dynamic-snippets/example7/snippet.go
++++ b/dynamic-snippets/example7/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/server-sent-event-examples/fern"
+-    client "github.com/server-sent-event-examples/fern/client"
+-    option "github.com/server-sent-event-examples/fern/option"
++    sse "github.com/fern-api/sse-examples-go"
++    client "github.com/fern-api/sse-examples-go/client"
++    option "github.com/fern-api/sse-examples-go/option"
+ )
+ 
+ func do() {
+@@ -14,7 +14,7 @@ func do() {
+             "https://api.fern.com",
+         ),
+     )
+-    request := &fern.StreamEventsRequest{
++    request := &sse.StreamEventsRequest{
+         Query: "query",
+     }
+     client.Completions.StreamEvents(
+diff --git a/dynamic-snippets/example8/snippet.go b/dynamic-snippets/example8/snippet.go
+index d88e8354d4c..555ece25374 100644
+--- a/dynamic-snippets/example8/snippet.go
++++ b/dynamic-snippets/example8/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/server-sent-event-examples/fern"
+-    client "github.com/server-sent-event-examples/fern/client"
+-    option "github.com/server-sent-event-examples/fern/option"
++    sse "github.com/fern-api/sse-examples-go"
++    client "github.com/fern-api/sse-examples-go/client"
++    option "github.com/fern-api/sse-examples-go/option"
+ )
+ 
+ func do() {
+@@ -14,7 +14,7 @@ func do() {
+             "https://api.fern.com",
+         ),
+     )
+-    request := &fern.StreamEventsContextProtocolRequest{
++    request := &sse.StreamEventsContextProtocolRequest{
+         Query: "query",
+     }
+     client.Completions.StreamEventsContextProtocol(
+diff --git a/dynamic-snippets/example9/snippet.go b/dynamic-snippets/example9/snippet.go
+index f5a8ba16e05..bdcefda7df0 100644
+--- a/dynamic-snippets/example9/snippet.go
++++ b/dynamic-snippets/example9/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/server-sent-event-examples/fern"
+-    client "github.com/server-sent-event-examples/fern/client"
+-    option "github.com/server-sent-event-examples/fern/option"
++    sse "github.com/fern-api/sse-examples-go"
++    client "github.com/fern-api/sse-examples-go/client"
++    option "github.com/fern-api/sse-examples-go/option"
+ )
+ 
+ func do() {
+@@ -14,7 +14,7 @@ func do() {
+             "https://api.fern.com",
+         ),
+     )
+-    request := &fern.StreamEventsContextProtocolRequest{
++    request := &sse.StreamEventsContextProtocolRequest{
+         Query: "",
+     }
+     client.Completions.StreamEventsContextProtocol(
+diff --git a/error_codes.go b/error_codes.go
+index 38e26babf0c..17d5d3eb1fe 100644
+--- a/error_codes.go
++++ b/error_codes.go
+@@ -1,10 +1,10 @@
+ // Code generated by Fern. DO NOT EDIT.
+ 
+-package serversentevents
++package sse
+ 
+ import (
+-	core "github.com/server-sent-event-examples/fern/core"
+-	internal "github.com/server-sent-event-examples/fern/internal"
++	core "github.com/fern-api/sse-examples-go/core"
++	internal "github.com/fern-api/sse-examples-go/internal"
+ )
+ 
+ var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{
+diff --git a/errors.go b/errors.go
+index ea1a5d8e939..6ee05a01b38 100644
+--- a/errors.go
++++ b/errors.go
+@@ -1,10 +1,10 @@
+ // Code generated by Fern. DO NOT EDIT.
+ 
+-package serversentevents
++package sse
+ 
+ import (
+ 	json "encoding/json"
+-	core "github.com/server-sent-event-examples/fern/core"
++	core "github.com/fern-api/sse-examples-go/core"
+ )
+ 
+ type BadRequestError struct {
+diff --git a/file_param.go b/file_param.go
+index 25b115b8d68..16e0931f701 100644
+--- a/file_param.go
++++ b/file_param.go
+@@ -1,4 +1,4 @@
+-package serversentevents
++package sse
+ 
+ import (
+ 	"io"
+diff --git a/go.mod b/go.mod
+index b10583c5d15..1c70b2123ec 100644
+--- a/go.mod
++++ b/go.mod
+@@ -1,4 +1,4 @@
+-module github.com/server-sent-event-examples/fern
++module github.com/fern-api/sse-examples-go
+ 
+ go 1.21
+ 
+diff --git a/internal/caller.go b/internal/caller.go
+index 20fa9f6a446..2822b6ae362 100644
+--- a/internal/caller.go
++++ b/internal/caller.go
+@@ -12,7 +12,7 @@ import (
+ 	"reflect"
+ 	"strings"
+ 
+-	"github.com/server-sent-event-examples/fern/core"
++	"github.com/fern-api/sse-examples-go/core"
+ )
+ 
+ const (
+diff --git a/internal/caller_test.go b/internal/caller_test.go
+index f5a855e24ac..354f9538221 100644
+--- a/internal/caller_test.go
++++ b/internal/caller_test.go
+@@ -14,7 +14,7 @@ import (
+ 	"strings"
+ 	"testing"
+ 
+-	"github.com/server-sent-event-examples/fern/core"
++	"github.com/fern-api/sse-examples-go/core"
+ 	"github.com/stretchr/testify/assert"
+ 	"github.com/stretchr/testify/require"
+ )
+diff --git a/internal/error_decoder.go b/internal/error_decoder.go
+index 190a127922a..8495b421259 100644
+--- a/internal/error_decoder.go
++++ b/internal/error_decoder.go
+@@ -8,7 +8,7 @@ import (
+ 	"io"
+ 	"net/http"
+ 
+-	"github.com/server-sent-event-examples/fern/core"
++	"github.com/fern-api/sse-examples-go/core"
+ )
+ 
+ // ErrorCodes maps HTTP status codes to error constructors.
+diff --git a/internal/error_decoder_test.go b/internal/error_decoder_test.go
+index d9b8dc02119..332ab90b24e 100644
+--- a/internal/error_decoder_test.go
++++ b/internal/error_decoder_test.go
+@@ -6,7 +6,7 @@ import (
+ 	"net/http"
+ 	"testing"
+ 
+-	"github.com/server-sent-event-examples/fern/core"
++	"github.com/fern-api/sse-examples-go/core"
+ 	"github.com/stretchr/testify/assert"
+ )
+ 
+diff --git a/internal/retrier_test.go b/internal/retrier_test.go
+index 9cffe2c6113..b5cc68e9012 100644
+--- a/internal/retrier_test.go
++++ b/internal/retrier_test.go
+@@ -10,7 +10,7 @@ import (
+ 	"testing"
+ 	"time"
+ 
+-	"github.com/server-sent-event-examples/fern/core"
++	"github.com/fern-api/sse-examples-go/core"
+ 	"github.com/stretchr/testify/assert"
+ 	"github.com/stretchr/testify/require"
+ )
+diff --git a/internal/streamer.go b/internal/streamer.go
+index a6945a22801..de1712cab96 100644
+--- a/internal/streamer.go
++++ b/internal/streamer.go
+@@ -5,7 +5,7 @@ import (
+ 	"net/http"
+ 	"net/url"
+ 
+-	"github.com/server-sent-event-examples/fern/core"
++	"github.com/fern-api/sse-examples-go/core"
+ )
+ 
+ const (
+diff --git a/option/request_option.go b/option/request_option.go
+index e2c560a6b5d..b59bfdcc02c 100644
+--- a/option/request_option.go
++++ b/option/request_option.go
+@@ -3,7 +3,7 @@
+ package option
+ 
+ import (
+-	core "github.com/server-sent-event-examples/fern/core"
++	core "github.com/fern-api/sse-examples-go/core"
+ 	http "net/http"
+ 	url "net/url"
+ )
+diff --git a/pointer.go b/pointer.go
+index 3800d4e4dd7..85894510d93 100644
+--- a/pointer.go
++++ b/pointer.go
+@@ -1,4 +1,4 @@
+-package serversentevents
++package sse
+ 
+ import (
+ 	"time"
+diff --git a/pointer_test.go b/pointer_test.go
+index c797a841383..ccfc29c2e6b 100644
+--- a/pointer_test.go
++++ b/pointer_test.go
+@@ -1,4 +1,4 @@
+-package serversentevents
++package sse
+ 
+ import (
+ 	"testing"
+diff --git a/reference.md b/reference.md
+index 1e843ec569e..33a5b8758f6 100644
+--- a/reference.md
++++ b/reference.md
+@@ -1,6 +1,6 @@
+ # Reference
+ ## Completions
+-<details><summary><code>client.Completions.Stream(request) -> fern.StreamedCompletion</code></summary>
++<details><summary><code>client.Completions.Stream(request) -> sse.StreamedCompletion</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -13,7 +13,7 @@
+ <dd>
+ 
+ ```go
+-request := &fern.StreamCompletionRequest{
++request := &sse.StreamCompletionRequest{
+         Query: "foo",
+     }
+ client.Completions.Stream(
+@@ -47,7 +47,7 @@ client.Completions.Stream(
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.Completions.StreamEvents(request) -> fern.StreamEvent</code></summary>
++<details><summary><code>client.Completions.StreamEvents(request) -> sse.StreamEvent</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -60,7 +60,7 @@ client.Completions.Stream(
+ <dd>
+ 
+ ```go
+-request := &fern.StreamEventsRequest{
++request := &sse.StreamEventsRequest{
+         Query: "query",
+     }
+ client.Completions.StreamEvents(
+@@ -94,7 +94,7 @@ client.Completions.StreamEvents(
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.Completions.StreamEventsContextProtocol(request) -> fern.StreamEventContextProtocol</code></summary>
++<details><summary><code>client.Completions.StreamEventsContextProtocol(request) -> sse.StreamEventContextProtocol</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -107,7 +107,7 @@ client.Completions.StreamEvents(
+ <dd>
+ 
+ ```go
+-request := &fern.StreamEventsContextProtocolRequest{
++request := &sse.StreamEventsContextProtocolRequest{
+         Query: "query",
+     }
+ client.Completions.StreamEventsContextProtocol(
+diff --git a/snippet.json b/snippet.json
+index 709df74aaa7..21b25f0ba2d 100644
+--- a/snippet.json
++++ b/snippet.json
+@@ -8,7 +8,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/server-sent-event-examples/fern\"\n\tfernclient \"github.com/server-sent-event-examples/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Completions.StreamEventsContextProtocol(\n\tcontext.TODO(),\n\t\u0026fern.StreamEventsContextProtocolRequest{\n\t\tQuery: \"query\",\n\t},\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\tsseexamplesgo \"github.com/fern-api/sse-examples-go\"\n\tsseexamplesgoclient \"github.com/fern-api/sse-examples-go/client\"\n)\n\nclient := sseexamplesgoclient.NewClient()\nresponse, err := client.Completions.StreamEventsContextProtocol(\n\tcontext.TODO(),\n\t\u0026sseexamplesgo.StreamEventsContextProtocolRequest{\n\t\tQuery: \"query\",\n\t},\n)\n"
+             }
+         },
+         {
+@@ -19,7 +19,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/server-sent-event-examples/fern\"\n\tfernclient \"github.com/server-sent-event-examples/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Completions.StreamEvents(\n\tcontext.TODO(),\n\t\u0026fern.StreamEventsRequest{\n\t\tQuery: \"query\",\n\t},\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\tsseexamplesgo \"github.com/fern-api/sse-examples-go\"\n\tsseexamplesgoclient \"github.com/fern-api/sse-examples-go/client\"\n)\n\nclient := sseexamplesgoclient.NewClient()\nresponse, err := client.Completions.StreamEvents(\n\tcontext.TODO(),\n\t\u0026sseexamplesgo.StreamEventsRequest{\n\t\tQuery: \"query\",\n\t},\n)\n"
+             }
+         },
+         {
+@@ -30,7 +30,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/server-sent-event-examples/fern\"\n\tfernclient \"github.com/server-sent-event-examples/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Completions.Stream(\n\tcontext.TODO(),\n\t\u0026fern.StreamCompletionRequest{\n\t\tQuery: \"foo\",\n\t},\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\tsseexamplesgo \"github.com/fern-api/sse-examples-go\"\n\tsseexamplesgoclient \"github.com/fern-api/sse-examples-go/client\"\n)\n\nclient := sseexamplesgoclient.NewClient()\nresponse, err := client.Completions.Stream(\n\tcontext.TODO(),\n\t\u0026sseexamplesgo.StreamCompletionRequest{\n\t\tQuery: \"foo\",\n\t},\n)\n"
+             }
+         }
+     ]
+diff --git a/wiremock/docker-compose.test.yml b/wiremock/docker-compose.test.yml
+new file mode 100644
+index 00000000000..fabb06a62cc
+--- /dev/null
++++ b/wiremock/docker-compose.test.yml
+@@ -0,0 +1,14 @@
++services:
++  wiremock:
++    image: wiremock/wiremock:3.9.1
++    ports:
++      - "0:8080"
++    volumes:
++      - ./wiremock-mappings.json:/home/wiremock/mappings/wiremock-mappings.json
++    command: ["--global-response-templating", "--verbose"]
++    healthcheck:
++      test: ["CMD", "curl", "-f", "http://localhost:8080/__admin/health"]
++      interval: 2s
++      timeout: 5s
++      retries: 15
++      start_period: 5s
+diff --git a/wiremock/wiremock-mappings.json b/wiremock/wiremock-mappings.json
+new file mode 100644
+index 00000000000..ba96c5a10df
+--- /dev/null
++++ b/wiremock/wiremock-mappings.json
+@@ -0,0 +1,85 @@
++{
++  "mappings": [
++    {
++      "id": "da00c5d3-8997-4a3a-ac5a-78907c04708e",
++      "name": "stream - Stream completions",
++      "request": {
++        "urlPathTemplate": "/stream",
++        "method": "POST"
++      },
++      "response": {
++        "status": 200,
++        "body": "event: completion\ndata: {\"delta\":\"foo\",\"tokens\":1}\n\nevent: completion\ndata: {\"delta\":\"bar\",\"tokens\":2}\n",
++        "headers": {
++          "Content-Type": "text/event-stream"
++        }
++      },
++      "uuid": "da00c5d3-8997-4a3a-ac5a-78907c04708e",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "9a6b501e-3920-47d3-a852-e05e4eba58a6",
++      "name": "streamEvents - Stream events",
++      "request": {
++        "urlPathTemplate": "/stream-events",
++        "method": "POST"
++      },
++      "response": {
++        "status": 200,
++        "body": "event: completion\ndata: {\"event\":\"completion\",\"content\":\"hello\"}\n\nevent: error\ndata: {\"event\":\"error\",\"error\":\"something went wrong\"}\n",
++        "headers": {
++          "Content-Type": "text/event-stream"
++        }
++      },
++      "uuid": "9a6b501e-3920-47d3-a852-e05e4eba58a6",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "0913bb86-4b39-4c8a-9875-111a5210a147",
++      "name": "streamEventsContextProtocol - Stream events context protocol",
++      "request": {
++        "urlPathTemplate": "/stream-events-context-protocol",
++        "method": "POST"
++      },
++      "response": {
++        "status": 200,
++        "body": "event: completion\ndata: {\"event\":\"completion\",\"content\":\"hello\"}\n\nevent: error\ndata: {\"event\":\"error\",\"error\":\"something went wrong\"}\n",
++        "headers": {
++          "Content-Type": "text/event-stream"
++        }
++      },
++      "uuid": "0913bb86-4b39-4c8a-9875-111a5210a147",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    }
++  ],
++  "meta": {
++    "total": 3
++  }
++}
+\ No newline at end of file

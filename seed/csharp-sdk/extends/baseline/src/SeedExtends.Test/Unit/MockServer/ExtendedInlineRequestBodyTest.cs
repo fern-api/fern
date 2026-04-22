@@ -1,0 +1,42 @@
+using NUnit.Framework;
+using SeedExtends;
+
+namespace SeedExtends.Test.Unit.MockServer;
+
+[TestFixture]
+[Parallelizable(ParallelScope.Self)]
+public class ExtendedInlineRequestBodyTest : BaseMockServerTest
+{
+    [NUnit.Framework.Test]
+    public void MockServerTest()
+    {
+        const string requestJson = """
+            {
+              "unique": "unique",
+              "name": "name",
+              "docs": "docs"
+            }
+            """;
+
+        Server
+            .Given(
+                WireMock
+                    .RequestBuilders.Request.Create()
+                    .WithPath("/extends/extended-inline-request-body")
+                    .UsingPost()
+                    .WithBodyAsJson(requestJson)
+            )
+            .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
+
+        Assert.DoesNotThrowAsync(async () =>
+            await Client.ExtendedInlineRequestBodyAsync(
+                new Inlined
+                {
+                    Unique = "unique",
+                    Name = "name",
+                    Docs = "docs",
+                }
+            )
+        );
+    }
+}

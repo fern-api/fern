@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/SeedMultiUrlEnvironment.Test/SeedMultiUrlEnvironment.Test.csproj" />
+  <Project Path="src/SeedMultiUrlEnvironment/SeedMultiUrlEnvironment.csproj" />
+</Solution>

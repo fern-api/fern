@@ -1,0 +1,2018 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index f1753c47972..cf572eb2911 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,10 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-java-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "enable-inline-types": false,
++    "wrapped-aliases": true
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "manual",
+diff --git a/.gradle/8.14.3/checksums/checksums.lock b/.gradle/8.14.3/checksums/checksums.lock
+index b9b8785ac8d173cc9310a41cf418220a6a781793..6f076b04c2d048c1995e5a6fcb2258be369eacb4 100644
+GIT binary patch
+literal 17
+ScmZQ(@@%h@h%i{n00jUa2m+Y^
+
+literal 17
+ScmZR+CSEb8$x}{?0SW*qS_2pW
+
+diff --git a/.gradle/8.14.3/executionHistory/executionHistory.bin b/.gradle/8.14.3/executionHistory/executionHistory.bin
+index abe20d20eacb31a3f79cc60dce94df8f45f26056..9de6731f5fbc7889d88070db942120b5f99850a7 100644
+GIT binary patch
+literal 70885
+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
+
+literal 66180
+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
+
+diff --git a/.gradle/8.14.3/executionHistory/executionHistory.lock b/.gradle/8.14.3/executionHistory/executionHistory.lock
+index c339c56a1e346a06ad1d99d8bf6868cca8fae9ff..0f4befd901bfa11dbd0d304580bac0788f9450d1 100644
+GIT binary patch
+literal 17
+TcmZQ}&+!Rli<x?v0RlJxB+dgS
+
+literal 17
+UcmZSns+Dc5x?%Qm1_<B)057})-~a#s
+
+diff --git a/.gradle/8.14.3/fileHashes/fileHashes.bin b/.gradle/8.14.3/fileHashes/fileHashes.bin
+index 945a3d646c4a35f7b9200736b97e260010bb3612..60770f9b067c23ea29bd34f3c8482404c88bfd38 100644
+GIT binary patch
+literal 33147
+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
+AAOHXW
+
+literal 31797
+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
+Cgx<FR
+
+diff --git a/.gradle/8.14.3/fileHashes/fileHashes.lock b/.gradle/8.14.3/fileHashes/fileHashes.lock
+index f191bfd0d259df0b39b2f69bd4997755cdd7e998..ccf0f745474cdbb5aac7ce11551e0206c69f1cbc 100644
+GIT binary patch
+literal 17
+UcmZQxE?*kw-!Hm}0Sp*50Vv4>YybcN
+
+literal 17
+VcmZQBTJ}8m>6LdC3}C>>2LMF11)cx^
+
+diff --git a/.gradle/buildOutputCleanup/buildOutputCleanup.lock b/.gradle/buildOutputCleanup/buildOutputCleanup.lock
+index ce3c2b881b89b7e776aef085fb2b930028e281f6..baf67162ef5c0426772ecfd9bf71f3541091bf07 100644
+GIT binary patch
+literal 17
+UcmZR6s^cK{PyE(Q1_+P@05K5+6aWAK
+
+literal 17
+UcmZSHEq}40E12O50|ZC`05M7f`Tzg`
+
+diff --git a/.gradle/buildOutputCleanup/cache.properties b/.gradle/buildOutputCleanup/cache.properties
+index 5b99c8142c3..b6e8ae72a90 100644
+--- a/.gradle/buildOutputCleanup/cache.properties
++++ b/.gradle/buildOutputCleanup/cache.properties
+@@ -1,2 +1,2 @@
+-#Wed Apr 22 20:50:04 UTC 2026
++#Wed Apr 22 20:58:31 UTC 2026
+ gradle.version=8.14.3
+diff --git a/.gradle/buildOutputCleanup/outputFiles.bin b/.gradle/buildOutputCleanup/outputFiles.bin
+index 2242485d92af0486d8ec02171abe7384367416aa..335940adb7bc10609471feb2725e0af8cc43c045 100644
+GIT binary patch
+delta 310
+zcmdlznQ`T0#tkMCnj#&=yj@Z9dQl8u;F<Uz3c7>rH*aTTu7rqtJf7?-p&&3@@OACU
+zz20x2iX|tPN+?8J-E;8Ah0H~DP{CH13C|q_`uhqV#6iXVVd5Vwm+dOO?0pI<ZVMCt
+zn(|bS&y!&>R9t&9tE7T}7W+~4*>h6<Km<L$PEM6na4`GZ;jgbXO$Vxy9cF@kZfU&e
+z|0ZRqcri@eW8S}oJ0jzYpoUzWTq|iI5c$e_!kTx<UQor;C*PH{;DPC2U|{^XQSpcP
+RMgtA8&5j;{jFbI5!~tOVf|URO
+
+delta 356
+zcmZ2EnQ`}I#tkMCf}+!N*m$OI|J%#}2A<lJV<i*>=0tLM8s1iuf(o)v?v+ree|B5R
+zVS!UMBUI4#KNP%=+jm#md|e+z+~Xol{6nii_d=<yzo6=iVdDRf85#W7OO$|$Plt&!
+zR{uS9NaCz8)SRy{ai)x7^=;oiPZp6Bbl|zd>%D`~VG305N|+jn#7Muze2e!%#U)|l
+z%JD+s+*Yc#P;vjsrjiPi=SmuAg!ELW*C@{|hg$X+rXg%&PqttB$*WKet&{IcTBuY6
+niz-xQW}Jo!Cc+fMXa)u*&W(yc#5WoUh;4TC2xOex;He1!+25Rx
+
+diff --git a/.gradle/file-system.probe b/.gradle/file-system.probe
+index fd4479d6342a37a42fe8d3a8e41cd9e7289cc4fa..397fd4e88f0c34ee11542b7bc47a576cc0e129c9 100644
+GIT binary patch
+literal 8
+PcmZQzV4S<{&z&y-3zq~T
+
+literal 8
+PcmZQzV4S<{>r)m03Zw%w
+
+diff --git a/src/main/java/com/seed/object/core/NullableNonemptyFilter.java b/src/main/java/com/seed/object/core/NullableNonemptyFilter.java
+index 68e78f96a23..53442a2de1e 100644
+--- a/src/main/java/com/seed/object/core/NullableNonemptyFilter.java
++++ b/src/main/java/com/seed/object/core/NullableNonemptyFilter.java
+@@ -9,8 +9,9 @@ public final class NullableNonemptyFilter {
+     @Override
+     public boolean equals(Object o) {
+         boolean isOptionalEmpty = isOptionalEmpty(o);
++        boolean isAliasOfOptionalEmpty = o instanceof WrappedAlias && isAliasOfOptionalEmpty((WrappedAlias) o);
+ 
+-        return isOptionalEmpty;
++        return isOptionalEmpty || isAliasOfOptionalEmpty;
+     }
+ 
+     private boolean isOptionalEmpty(Object o) {
+@@ -19,4 +20,11 @@ public final class NullableNonemptyFilter {
+         }
+         return false;
+     }
++
++    private boolean isAliasOfOptionalEmpty(WrappedAlias o) {
++        if (o.get() instanceof WrappedAlias) {
++            return isAliasOfOptionalEmpty((WrappedAlias) o.get());
++        }
++        return isOptionalEmpty(o.get());
++    }
+ }
+diff --git a/src/main/java/com/seed/object/core/WrappedAlias.java b/src/main/java/com/seed/object/core/WrappedAlias.java
+new file mode 100644
+index 00000000000..8e9f789d936
+--- /dev/null
++++ b/src/main/java/com/seed/object/core/WrappedAlias.java
+@@ -0,0 +1,8 @@
++/**
++ * This file was auto-generated by Fern from our API Definition.
++ */
++package com.seed.object.core;
++
++public interface WrappedAlias {
++    Object get();
++}
+diff --git a/src/main/java/com/seed/object/types/AliasListInline.java b/src/main/java/com/seed/object/types/AliasListInline.java
+new file mode 100644
+index 00000000000..c146d08be93
+--- /dev/null
++++ b/src/main/java/com/seed/object/types/AliasListInline.java
+@@ -0,0 +1,43 @@
++/**
++ * This file was auto-generated by Fern from our API Definition.
++ */
++package com.seed.object.types;
++
++import com.fasterxml.jackson.annotation.JsonCreator;
++import com.fasterxml.jackson.annotation.JsonValue;
++import com.seed.object.core.WrappedAlias;
++import java.util.List;
++
++public final class AliasListInline implements WrappedAlias {
++    private final List<AliasInlineValue> value;
++
++    private AliasListInline(List<AliasInlineValue> value) {
++        this.value = value;
++    }
++
++    @JsonValue
++    public List<AliasInlineValue> get() {
++        return this.value;
++    }
++
++    @java.lang.Override
++    public boolean equals(Object other) {
++        return this == other
++                || (other instanceof AliasListInline && this.value.equals(((AliasListInline) other).value));
++    }
++
++    @java.lang.Override
++    public int hashCode() {
++        return value.hashCode();
++    }
++
++    @java.lang.Override
++    public String toString() {
++        return value.toString();
++    }
++
++    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
++    public static AliasListInline of(List<AliasInlineValue> value) {
++        return new AliasListInline(value);
++    }
++}
+diff --git a/src/main/java/com/seed/object/types/AliasMapInline.java b/src/main/java/com/seed/object/types/AliasMapInline.java
+new file mode 100644
+index 00000000000..cddaaf7ba43
+--- /dev/null
++++ b/src/main/java/com/seed/object/types/AliasMapInline.java
+@@ -0,0 +1,42 @@
++/**
++ * This file was auto-generated by Fern from our API Definition.
++ */
++package com.seed.object.types;
++
++import com.fasterxml.jackson.annotation.JsonCreator;
++import com.fasterxml.jackson.annotation.JsonValue;
++import com.seed.object.core.WrappedAlias;
++import java.util.Map;
++
++public final class AliasMapInline implements WrappedAlias {
++    private final Map<String, AliasInlineValue> value;
++
++    private AliasMapInline(Map<String, AliasInlineValue> value) {
++        this.value = value;
++    }
++
++    @JsonValue
++    public Map<String, AliasInlineValue> get() {
++        return this.value;
++    }
++
++    @java.lang.Override
++    public boolean equals(Object other) {
++        return this == other || (other instanceof AliasMapInline && this.value.equals(((AliasMapInline) other).value));
++    }
++
++    @java.lang.Override
++    public int hashCode() {
++        return value.hashCode();
++    }
++
++    @java.lang.Override
++    public String toString() {
++        return value.toString();
++    }
++
++    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
++    public static AliasMapInline of(Map<String, AliasInlineValue> value) {
++        return new AliasMapInline(value);
++    }
++}
+diff --git a/src/main/java/com/seed/object/types/AliasProperty.java b/src/main/java/com/seed/object/types/AliasProperty.java
+new file mode 100644
+index 00000000000..089ff2c55cc
+--- /dev/null
++++ b/src/main/java/com/seed/object/types/AliasProperty.java
+@@ -0,0 +1,41 @@
++/**
++ * This file was auto-generated by Fern from our API Definition.
++ */
++package com.seed.object.types;
++
++import com.fasterxml.jackson.annotation.JsonCreator;
++import com.fasterxml.jackson.annotation.JsonValue;
++import com.seed.object.core.WrappedAlias;
++
++public final class AliasProperty implements WrappedAlias {
++    private final AliasPropertyType value;
++
++    private AliasProperty(AliasPropertyType value) {
++        this.value = value;
++    }
++
++    @JsonValue
++    public AliasPropertyType get() {
++        return this.value;
++    }
++
++    @java.lang.Override
++    public boolean equals(Object other) {
++        return this == other || (other instanceof AliasProperty && this.value.equals(((AliasProperty) other).value));
++    }
++
++    @java.lang.Override
++    public int hashCode() {
++        return value.hashCode();
++    }
++
++    @java.lang.Override
++    public String toString() {
++        return value.toString();
++    }
++
++    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
++    public static AliasProperty of(AliasPropertyType value) {
++        return new AliasProperty(value);
++    }
++}
+diff --git a/src/main/java/com/seed/object/types/AliasSetInline.java b/src/main/java/com/seed/object/types/AliasSetInline.java
+new file mode 100644
+index 00000000000..76815eaf41a
+--- /dev/null
++++ b/src/main/java/com/seed/object/types/AliasSetInline.java
+@@ -0,0 +1,42 @@
++/**
++ * This file was auto-generated by Fern from our API Definition.
++ */
++package com.seed.object.types;
++
++import com.fasterxml.jackson.annotation.JsonCreator;
++import com.fasterxml.jackson.annotation.JsonValue;
++import com.seed.object.core.WrappedAlias;
++import java.util.Set;
++
++public final class AliasSetInline implements WrappedAlias {
++    private final Set<AliasInlineValue> value;
++
++    private AliasSetInline(Set<AliasInlineValue> value) {
++        this.value = value;
++    }
++
++    @JsonValue
++    public Set<AliasInlineValue> get() {
++        return this.value;
++    }
++
++    @java.lang.Override
++    public boolean equals(Object other) {
++        return this == other || (other instanceof AliasSetInline && this.value.equals(((AliasSetInline) other).value));
++    }
++
++    @java.lang.Override
++    public int hashCode() {
++        return value.hashCode();
++    }
++
++    @java.lang.Override
++    public String toString() {
++        return value.toString();
++    }
++
++    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
++    public static AliasSetInline of(Set<AliasInlineValue> value) {
++        return new AliasSetInline(value);
++    }
++}
+diff --git a/src/main/java/com/seed/object/types/AliasVariant.java b/src/main/java/com/seed/object/types/AliasVariant.java
+new file mode 100644
+index 00000000000..0ce02ba6fae
+--- /dev/null
++++ b/src/main/java/com/seed/object/types/AliasVariant.java
+@@ -0,0 +1,41 @@
++/**
++ * This file was auto-generated by Fern from our API Definition.
++ */
++package com.seed.object.types;
++
++import com.fasterxml.jackson.annotation.JsonCreator;
++import com.fasterxml.jackson.annotation.JsonValue;
++import com.seed.object.core.WrappedAlias;
++
++public final class AliasVariant implements WrappedAlias {
++    private final AliasVariantType value;
++
++    private AliasVariant(AliasVariantType value) {
++        this.value = value;
++    }
++
++    @JsonValue
++    public AliasVariantType get() {
++        return this.value;
++    }
++
++    @java.lang.Override
++    public boolean equals(Object other) {
++        return this == other || (other instanceof AliasVariant && this.value.equals(((AliasVariant) other).value));
++    }
++
++    @java.lang.Override
++    public int hashCode() {
++        return value.hashCode();
++    }
++
++    @java.lang.Override
++    public String toString() {
++        return value.toString();
++    }
++
++    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
++    public static AliasVariant of(AliasVariantType value) {
++        return new AliasVariant(value);
++    }
++}
+diff --git a/src/main/java/com/seed/object/types/ObjectTypeWithAliasType.java b/src/main/java/com/seed/object/types/ObjectTypeWithAliasType.java
+index cd510fea866..b2ff22ea84a 100644
+--- a/src/main/java/com/seed/object/types/ObjectTypeWithAliasType.java
++++ b/src/main/java/com/seed/object/types/ObjectTypeWithAliasType.java
+@@ -19,17 +19,17 @@ import org.jetbrains.annotations.NotNull;
+ @JsonInclude(JsonInclude.Include.NON_ABSENT)
+ @JsonDeserialize(builder = ObjectTypeWithAliasType.Builder.class)
+ public final class ObjectTypeWithAliasType {
+-    private final AliasPropertyType prop;
++    private final AliasProperty prop;
+ 
+     private final Map<String, Object> additionalProperties;
+ 
+-    private ObjectTypeWithAliasType(AliasPropertyType prop, Map<String, Object> additionalProperties) {
++    private ObjectTypeWithAliasType(AliasProperty prop, Map<String, Object> additionalProperties) {
+         this.prop = prop;
+         this.additionalProperties = additionalProperties;
+     }
+ 
+     @JsonProperty("prop")
+-    public AliasPropertyType getProp() {
++    public AliasProperty getProp() {
+         return prop;
+     }
+ 
+@@ -63,7 +63,7 @@ public final class ObjectTypeWithAliasType {
+     }
+ 
+     public interface PropStage {
+-        _FinalStage prop(@NotNull AliasPropertyType prop);
++        _FinalStage prop(@NotNull AliasProperty prop);
+ 
+         Builder from(ObjectTypeWithAliasType other);
+     }
+@@ -78,7 +78,7 @@ public final class ObjectTypeWithAliasType {
+ 
+     @JsonIgnoreProperties(ignoreUnknown = true)
+     public static final class Builder implements PropStage, _FinalStage {
+-        private AliasPropertyType prop;
++        private AliasProperty prop;
+ 
+         @JsonAnySetter
+         private Map<String, Object> additionalProperties = new HashMap<>();
+@@ -93,7 +93,7 @@ public final class ObjectTypeWithAliasType {
+ 
+         @java.lang.Override
+         @JsonSetter("prop")
+-        public _FinalStage prop(@NotNull AliasPropertyType prop) {
++        public _FinalStage prop(@NotNull AliasProperty prop) {
+             this.prop = Objects.requireNonNull(prop, "prop must not be null");
+             return this;
+         }
+diff --git a/src/main/java/com/seed/object/types/ObjectTypeWithListAliasType.java b/src/main/java/com/seed/object/types/ObjectTypeWithListAliasType.java
+index 24cb4122760..f39a8bf3f74 100644
+--- a/src/main/java/com/seed/object/types/ObjectTypeWithListAliasType.java
++++ b/src/main/java/com/seed/object/types/ObjectTypeWithListAliasType.java
+@@ -21,17 +21,17 @@ import java.util.Objects;
+ @JsonInclude(JsonInclude.Include.NON_ABSENT)
+ @JsonDeserialize(builder = ObjectTypeWithListAliasType.Builder.class)
+ public final class ObjectTypeWithListAliasType {
+-    private final List<AliasPropertyType> prop;
++    private final List<AliasProperty> prop;
+ 
+     private final Map<String, Object> additionalProperties;
+ 
+-    private ObjectTypeWithListAliasType(List<AliasPropertyType> prop, Map<String, Object> additionalProperties) {
++    private ObjectTypeWithListAliasType(List<AliasProperty> prop, Map<String, Object> additionalProperties) {
+         this.prop = prop;
+         this.additionalProperties = additionalProperties;
+     }
+ 
+     @JsonProperty("prop")
+-    public List<AliasPropertyType> getProp() {
++    public List<AliasProperty> getProp() {
+         return prop;
+     }
+ 
+@@ -66,7 +66,7 @@ public final class ObjectTypeWithListAliasType {
+ 
+     @JsonIgnoreProperties(ignoreUnknown = true)
+     public static final class Builder {
+-        private List<AliasPropertyType> prop = new ArrayList<>();
++        private List<AliasProperty> prop = new ArrayList<>();
+ 
+         @JsonAnySetter
+         private Map<String, Object> additionalProperties = new HashMap<>();
+@@ -79,7 +79,7 @@ public final class ObjectTypeWithListAliasType {
+         }
+ 
+         @JsonSetter(value = "prop", nulls = Nulls.SKIP)
+-        public Builder prop(List<AliasPropertyType> prop) {
++        public Builder prop(List<AliasProperty> prop) {
+             this.prop.clear();
+             if (prop != null) {
+                 this.prop.addAll(prop);
+@@ -87,12 +87,12 @@ public final class ObjectTypeWithListAliasType {
+             return this;
+         }
+ 
+-        public Builder addProp(AliasPropertyType prop) {
++        public Builder addProp(AliasProperty prop) {
+             this.prop.add(prop);
+             return this;
+         }
+ 
+-        public Builder addAllProp(List<AliasPropertyType> prop) {
++        public Builder addAllProp(List<AliasProperty> prop) {
+             if (prop != null) {
+                 this.prop.addAll(prop);
+             }
+diff --git a/src/main/java/com/seed/object/types/ObjectTypeWithMapAliasTypeBoth.java b/src/main/java/com/seed/object/types/ObjectTypeWithMapAliasTypeBoth.java
+index 92bcfec21f3..24f41b6f69c 100644
+--- a/src/main/java/com/seed/object/types/ObjectTypeWithMapAliasTypeBoth.java
++++ b/src/main/java/com/seed/object/types/ObjectTypeWithMapAliasTypeBoth.java
+@@ -20,18 +20,18 @@ import java.util.Objects;
+ @JsonInclude(JsonInclude.Include.NON_ABSENT)
+ @JsonDeserialize(builder = ObjectTypeWithMapAliasTypeBoth.Builder.class)
+ public final class ObjectTypeWithMapAliasTypeBoth {
+-    private final Map<AliasPropertyType, OtherAliasPropertyType> prop;
++    private final Map<AliasProperty, OtherAliasProperty> prop;
+ 
+     private final Map<String, Object> additionalProperties;
+ 
+     private ObjectTypeWithMapAliasTypeBoth(
+-            Map<AliasPropertyType, OtherAliasPropertyType> prop, Map<String, Object> additionalProperties) {
++            Map<AliasProperty, OtherAliasProperty> prop, Map<String, Object> additionalProperties) {
+         this.prop = prop;
+         this.additionalProperties = additionalProperties;
+     }
+ 
+     @JsonProperty("prop")
+-    public Map<AliasPropertyType, OtherAliasPropertyType> getProp() {
++    public Map<AliasProperty, OtherAliasProperty> getProp() {
+         return prop;
+     }
+ 
+@@ -66,7 +66,7 @@ public final class ObjectTypeWithMapAliasTypeBoth {
+ 
+     @JsonIgnoreProperties(ignoreUnknown = true)
+     public static final class Builder {
+-        private Map<AliasPropertyType, OtherAliasPropertyType> prop = new LinkedHashMap<>();
++        private Map<AliasProperty, OtherAliasProperty> prop = new LinkedHashMap<>();
+ 
+         @JsonAnySetter
+         private Map<String, Object> additionalProperties = new HashMap<>();
+@@ -79,7 +79,7 @@ public final class ObjectTypeWithMapAliasTypeBoth {
+         }
+ 
+         @JsonSetter(value = "prop", nulls = Nulls.SKIP)
+-        public Builder prop(Map<AliasPropertyType, OtherAliasPropertyType> prop) {
++        public Builder prop(Map<AliasProperty, OtherAliasProperty> prop) {
+             this.prop.clear();
+             if (prop != null) {
+                 this.prop.putAll(prop);
+@@ -87,14 +87,14 @@ public final class ObjectTypeWithMapAliasTypeBoth {
+             return this;
+         }
+ 
+-        public Builder putAllProp(Map<AliasPropertyType, OtherAliasPropertyType> prop) {
++        public Builder putAllProp(Map<AliasProperty, OtherAliasProperty> prop) {
+             if (prop != null) {
+                 this.prop.putAll(prop);
+             }
+             return this;
+         }
+ 
+-        public Builder prop(AliasPropertyType key, OtherAliasPropertyType value) {
++        public Builder prop(AliasProperty key, OtherAliasProperty value) {
+             this.prop.put(key, value);
+             return this;
+         }
+diff --git a/src/main/java/com/seed/object/types/ObjectTypeWithMapAliasTypeKey.java b/src/main/java/com/seed/object/types/ObjectTypeWithMapAliasTypeKey.java
+index a6d00fb2996..c23390ec827 100644
+--- a/src/main/java/com/seed/object/types/ObjectTypeWithMapAliasTypeKey.java
++++ b/src/main/java/com/seed/object/types/ObjectTypeWithMapAliasTypeKey.java
+@@ -20,18 +20,17 @@ import java.util.Objects;
+ @JsonInclude(JsonInclude.Include.NON_ABSENT)
+ @JsonDeserialize(builder = ObjectTypeWithMapAliasTypeKey.Builder.class)
+ public final class ObjectTypeWithMapAliasTypeKey {
+-    private final Map<AliasPropertyType, String> prop;
++    private final Map<AliasProperty, String> prop;
+ 
+     private final Map<String, Object> additionalProperties;
+ 
+-    private ObjectTypeWithMapAliasTypeKey(
+-            Map<AliasPropertyType, String> prop, Map<String, Object> additionalProperties) {
++    private ObjectTypeWithMapAliasTypeKey(Map<AliasProperty, String> prop, Map<String, Object> additionalProperties) {
+         this.prop = prop;
+         this.additionalProperties = additionalProperties;
+     }
+ 
+     @JsonProperty("prop")
+-    public Map<AliasPropertyType, String> getProp() {
++    public Map<AliasProperty, String> getProp() {
+         return prop;
+     }
+ 
+@@ -66,7 +65,7 @@ public final class ObjectTypeWithMapAliasTypeKey {
+ 
+     @JsonIgnoreProperties(ignoreUnknown = true)
+     public static final class Builder {
+-        private Map<AliasPropertyType, String> prop = new LinkedHashMap<>();
++        private Map<AliasProperty, String> prop = new LinkedHashMap<>();
+ 
+         @JsonAnySetter
+         private Map<String, Object> additionalProperties = new HashMap<>();
+@@ -79,7 +78,7 @@ public final class ObjectTypeWithMapAliasTypeKey {
+         }
+ 
+         @JsonSetter(value = "prop", nulls = Nulls.SKIP)
+-        public Builder prop(Map<AliasPropertyType, String> prop) {
++        public Builder prop(Map<AliasProperty, String> prop) {
+             this.prop.clear();
+             if (prop != null) {
+                 this.prop.putAll(prop);
+@@ -87,14 +86,14 @@ public final class ObjectTypeWithMapAliasTypeKey {
+             return this;
+         }
+ 
+-        public Builder putAllProp(Map<AliasPropertyType, String> prop) {
++        public Builder putAllProp(Map<AliasProperty, String> prop) {
+             if (prop != null) {
+                 this.prop.putAll(prop);
+             }
+             return this;
+         }
+ 
+-        public Builder prop(AliasPropertyType key, String value) {
++        public Builder prop(AliasProperty key, String value) {
+             this.prop.put(key, value);
+             return this;
+         }
+diff --git a/src/main/java/com/seed/object/types/ObjectTypeWithMapAliasTypeValue.java b/src/main/java/com/seed/object/types/ObjectTypeWithMapAliasTypeValue.java
+index 2a55aa0daf8..1117a1f95ab 100644
+--- a/src/main/java/com/seed/object/types/ObjectTypeWithMapAliasTypeValue.java
++++ b/src/main/java/com/seed/object/types/ObjectTypeWithMapAliasTypeValue.java
+@@ -20,18 +20,17 @@ import java.util.Objects;
+ @JsonInclude(JsonInclude.Include.NON_ABSENT)
+ @JsonDeserialize(builder = ObjectTypeWithMapAliasTypeValue.Builder.class)
+ public final class ObjectTypeWithMapAliasTypeValue {
+-    private final Map<String, AliasPropertyType> prop;
++    private final Map<String, AliasProperty> prop;
+ 
+     private final Map<String, Object> additionalProperties;
+ 
+-    private ObjectTypeWithMapAliasTypeValue(
+-            Map<String, AliasPropertyType> prop, Map<String, Object> additionalProperties) {
++    private ObjectTypeWithMapAliasTypeValue(Map<String, AliasProperty> prop, Map<String, Object> additionalProperties) {
+         this.prop = prop;
+         this.additionalProperties = additionalProperties;
+     }
+ 
+     @JsonProperty("prop")
+-    public Map<String, AliasPropertyType> getProp() {
++    public Map<String, AliasProperty> getProp() {
+         return prop;
+     }
+ 
+@@ -66,7 +65,7 @@ public final class ObjectTypeWithMapAliasTypeValue {
+ 
+     @JsonIgnoreProperties(ignoreUnknown = true)
+     public static final class Builder {
+-        private Map<String, AliasPropertyType> prop = new LinkedHashMap<>();
++        private Map<String, AliasProperty> prop = new LinkedHashMap<>();
+ 
+         @JsonAnySetter
+         private Map<String, Object> additionalProperties = new HashMap<>();
+@@ -79,7 +78,7 @@ public final class ObjectTypeWithMapAliasTypeValue {
+         }
+ 
+         @JsonSetter(value = "prop", nulls = Nulls.SKIP)
+-        public Builder prop(Map<String, AliasPropertyType> prop) {
++        public Builder prop(Map<String, AliasProperty> prop) {
+             this.prop.clear();
+             if (prop != null) {
+                 this.prop.putAll(prop);
+@@ -87,14 +86,14 @@ public final class ObjectTypeWithMapAliasTypeValue {
+             return this;
+         }
+ 
+-        public Builder putAllProp(Map<String, AliasPropertyType> prop) {
++        public Builder putAllProp(Map<String, AliasProperty> prop) {
+             if (prop != null) {
+                 this.prop.putAll(prop);
+             }
+             return this;
+         }
+ 
+-        public Builder prop(String key, AliasPropertyType value) {
++        public Builder prop(String key, AliasProperty value) {
+             this.prop.put(key, value);
+             return this;
+         }
+diff --git a/src/main/java/com/seed/object/types/ObjectTypeWithSetAliasType.java b/src/main/java/com/seed/object/types/ObjectTypeWithSetAliasType.java
+index 2a492326d6a..ea269c039a1 100644
+--- a/src/main/java/com/seed/object/types/ObjectTypeWithSetAliasType.java
++++ b/src/main/java/com/seed/object/types/ObjectTypeWithSetAliasType.java
+@@ -21,17 +21,17 @@ import java.util.Set;
+ @JsonInclude(JsonInclude.Include.NON_ABSENT)
+ @JsonDeserialize(builder = ObjectTypeWithSetAliasType.Builder.class)
+ public final class ObjectTypeWithSetAliasType {
+-    private final Set<AliasPropertyType> prop;
++    private final Set<AliasProperty> prop;
+ 
+     private final Map<String, Object> additionalProperties;
+ 
+-    private ObjectTypeWithSetAliasType(Set<AliasPropertyType> prop, Map<String, Object> additionalProperties) {
++    private ObjectTypeWithSetAliasType(Set<AliasProperty> prop, Map<String, Object> additionalProperties) {
+         this.prop = prop;
+         this.additionalProperties = additionalProperties;
+     }
+ 
+     @JsonProperty("prop")
+-    public Set<AliasPropertyType> getProp() {
++    public Set<AliasProperty> getProp() {
+         return prop;
+     }
+ 
+@@ -66,7 +66,7 @@ public final class ObjectTypeWithSetAliasType {
+ 
+     @JsonIgnoreProperties(ignoreUnknown = true)
+     public static final class Builder {
+-        private Set<AliasPropertyType> prop = new LinkedHashSet<>();
++        private Set<AliasProperty> prop = new LinkedHashSet<>();
+ 
+         @JsonAnySetter
+         private Map<String, Object> additionalProperties = new HashMap<>();
+@@ -79,7 +79,7 @@ public final class ObjectTypeWithSetAliasType {
+         }
+ 
+         @JsonSetter(value = "prop", nulls = Nulls.SKIP)
+-        public Builder prop(Set<AliasPropertyType> prop) {
++        public Builder prop(Set<AliasProperty> prop) {
+             this.prop.clear();
+             if (prop != null) {
+                 this.prop.addAll(prop);
+@@ -87,12 +87,12 @@ public final class ObjectTypeWithSetAliasType {
+             return this;
+         }
+ 
+-        public Builder addProp(AliasPropertyType prop) {
++        public Builder addProp(AliasProperty prop) {
+             this.prop.add(prop);
+             return this;
+         }
+ 
+-        public Builder addAllProp(Set<AliasPropertyType> prop) {
++        public Builder addAllProp(Set<AliasProperty> prop) {
+             if (prop != null) {
+                 this.prop.addAll(prop);
+             }
+diff --git a/src/main/java/com/seed/object/types/OtherAliasProperty.java b/src/main/java/com/seed/object/types/OtherAliasProperty.java
+new file mode 100644
+index 00000000000..883552a67e4
+--- /dev/null
++++ b/src/main/java/com/seed/object/types/OtherAliasProperty.java
+@@ -0,0 +1,42 @@
++/**
++ * This file was auto-generated by Fern from our API Definition.
++ */
++package com.seed.object.types;
++
++import com.fasterxml.jackson.annotation.JsonCreator;
++import com.fasterxml.jackson.annotation.JsonValue;
++import com.seed.object.core.WrappedAlias;
++
++public final class OtherAliasProperty implements WrappedAlias {
++    private final OtherAliasPropertyType value;
++
++    private OtherAliasProperty(OtherAliasPropertyType value) {
++        this.value = value;
++    }
++
++    @JsonValue
++    public OtherAliasPropertyType get() {
++        return this.value;
++    }
++
++    @java.lang.Override
++    public boolean equals(Object other) {
++        return this == other
++                || (other instanceof OtherAliasProperty && this.value.equals(((OtherAliasProperty) other).value));
++    }
++
++    @java.lang.Override
++    public int hashCode() {
++        return value.hashCode();
++    }
++
++    @java.lang.Override
++    public String toString() {
++        return value.toString();
++    }
++
++    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
++    public static OtherAliasProperty of(OtherAliasPropertyType value) {
++        return new OtherAliasProperty(value);
++    }
++}
+diff --git a/src/main/java/com/seed/object/types/OtherAliasVariant.java b/src/main/java/com/seed/object/types/OtherAliasVariant.java
+new file mode 100644
+index 00000000000..1758a904770
+--- /dev/null
++++ b/src/main/java/com/seed/object/types/OtherAliasVariant.java
+@@ -0,0 +1,42 @@
++/**
++ * This file was auto-generated by Fern from our API Definition.
++ */
++package com.seed.object.types;
++
++import com.fasterxml.jackson.annotation.JsonCreator;
++import com.fasterxml.jackson.annotation.JsonValue;
++import com.seed.object.core.WrappedAlias;
++
++public final class OtherAliasVariant implements WrappedAlias {
++    private final OtherAliasVariantType value;
++
++    private OtherAliasVariant(OtherAliasVariantType value) {
++        this.value = value;
++    }
++
++    @JsonValue
++    public OtherAliasVariantType get() {
++        return this.value;
++    }
++
++    @java.lang.Override
++    public boolean equals(Object other) {
++        return this == other
++                || (other instanceof OtherAliasVariant && this.value.equals(((OtherAliasVariant) other).value));
++    }
++
++    @java.lang.Override
++    public int hashCode() {
++        return value.hashCode();
++    }
++
++    @java.lang.Override
++    public String toString() {
++        return value.toString();
++    }
++
++    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
++    public static OtherAliasVariant of(OtherAliasVariantType value) {
++        return new OtherAliasVariant(value);
++    }
++}
+diff --git a/src/main/java/com/seed/object/types/UndiscriminatedUnion1.java b/src/main/java/com/seed/object/types/UndiscriminatedUnion1.java
+index 79e3515805a..828a6bd3ee6 100644
+--- a/src/main/java/com/seed/object/types/UndiscriminatedUnion1.java
++++ b/src/main/java/com/seed/object/types/UndiscriminatedUnion1.java
+@@ -44,7 +44,7 @@ public final class UndiscriminatedUnion1 {
+         } else if (this.type == 3) {
+             return visitor.visit((UndiscriminatedUnion1InlineEnum1) this.value);
+         } else if (this.type == 4) {
+-            return visitor.visit((String) this.value);
++            return visitor.visit((UserId) this.value);
+         } else if (this.type == 5) {
+             return visitor.visit((List<UndiscriminatedUnion1InlineListItem1>) this.value);
+         } else if (this.type == 6) {
+@@ -93,7 +93,7 @@ public final class UndiscriminatedUnion1 {
+         return new UndiscriminatedUnion1(value, 3);
+     }
+ 
+-    public static UndiscriminatedUnion1 of(String value) {
++    public static UndiscriminatedUnion1 of(UserId value) {
+         return new UndiscriminatedUnion1(value, 4);
+     }
+ 
+@@ -122,7 +122,7 @@ public final class UndiscriminatedUnion1 {
+ 
+         T visit(UndiscriminatedUnion1InlineEnum1 value);
+ 
+-        T visit(String value);
++        T visit(UserId value);
+ 
+         T visit(List<UndiscriminatedUnion1InlineListItem1> value);
+ 
+@@ -159,7 +159,7 @@ public final class UndiscriminatedUnion1 {
+             } catch (RuntimeException e) {
+             }
+             try {
+-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, String.class));
++                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UserId.class));
+             } catch (RuntimeException e) {
+             }
+             try {
+diff --git a/src/main/java/com/seed/object/types/UndiscriminatedUnionTypeWithAliasListVariant.java b/src/main/java/com/seed/object/types/UndiscriminatedUnionTypeWithAliasListVariant.java
+index e1a743c06ed..5b63e3f6d3b 100644
+--- a/src/main/java/com/seed/object/types/UndiscriminatedUnionTypeWithAliasListVariant.java
++++ b/src/main/java/com/seed/object/types/UndiscriminatedUnionTypeWithAliasListVariant.java
+@@ -34,7 +34,7 @@ public final class UndiscriminatedUnionTypeWithAliasListVariant {
+     @SuppressWarnings("unchecked")
+     public <T> T visit(Visitor<T> visitor) {
+         if (this.type == 0) {
+-            return visitor.visit((List<AliasVariantType>) this.value);
++            return visitor.visit((List<AliasVariant>) this.value);
+         }
+         throw new IllegalStateException("Failed to visit value. This should never happen.");
+     }
+@@ -60,12 +60,12 @@ public final class UndiscriminatedUnionTypeWithAliasListVariant {
+         return this.value.toString();
+     }
+ 
+-    public static UndiscriminatedUnionTypeWithAliasListVariant of(List<AliasVariantType> value) {
++    public static UndiscriminatedUnionTypeWithAliasListVariant of(List<AliasVariant> value) {
+         return new UndiscriminatedUnionTypeWithAliasListVariant(value, 0);
+     }
+ 
+     public interface Visitor<T> {
+-        T visit(List<AliasVariantType> value);
++        T visit(List<AliasVariant> value);
+     }
+ 
+     static final class Deserializer extends StdDeserializer<UndiscriminatedUnionTypeWithAliasListVariant> {
+@@ -78,8 +78,7 @@ public final class UndiscriminatedUnionTypeWithAliasListVariant {
+                 throws IOException {
+             Object value = p.readValueAs(Object.class);
+             try {
+-                return of(
+-                        ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<List<AliasVariantType>>() {}));
++                return of(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<List<AliasVariant>>() {}));
+             } catch (RuntimeException e) {
+             }
+             throw new JsonParseException(p, "Failed to deserialize");
+diff --git a/src/main/java/com/seed/object/types/UndiscriminatedUnionTypeWithAliasMapVariant.java b/src/main/java/com/seed/object/types/UndiscriminatedUnionTypeWithAliasMapVariant.java
+index 8320eff1e57..06ae6d36883 100644
+--- a/src/main/java/com/seed/object/types/UndiscriminatedUnionTypeWithAliasMapVariant.java
++++ b/src/main/java/com/seed/object/types/UndiscriminatedUnionTypeWithAliasMapVariant.java
+@@ -34,7 +34,7 @@ public final class UndiscriminatedUnionTypeWithAliasMapVariant {
+     @SuppressWarnings("unchecked")
+     public <T> T visit(Visitor<T> visitor) {
+         if (this.type == 0) {
+-            return visitor.visit((Map<AliasVariantType, OtherAliasVariantType>) this.value);
++            return visitor.visit((Map<AliasVariant, OtherAliasVariant>) this.value);
+         }
+         throw new IllegalStateException("Failed to visit value. This should never happen.");
+     }
+@@ -60,12 +60,12 @@ public final class UndiscriminatedUnionTypeWithAliasMapVariant {
+         return this.value.toString();
+     }
+ 
+-    public static UndiscriminatedUnionTypeWithAliasMapVariant of(Map<AliasVariantType, OtherAliasVariantType> value) {
++    public static UndiscriminatedUnionTypeWithAliasMapVariant of(Map<AliasVariant, OtherAliasVariant> value) {
+         return new UndiscriminatedUnionTypeWithAliasMapVariant(value, 0);
+     }
+ 
+     public interface Visitor<T> {
+-        T visit(Map<AliasVariantType, OtherAliasVariantType> value);
++        T visit(Map<AliasVariant, OtherAliasVariant> value);
+     }
+ 
+     static final class Deserializer extends StdDeserializer<UndiscriminatedUnionTypeWithAliasMapVariant> {
+@@ -79,7 +79,7 @@ public final class UndiscriminatedUnionTypeWithAliasMapVariant {
+             Object value = p.readValueAs(Object.class);
+             try {
+                 return of(ObjectMappers.JSON_MAPPER.convertValue(
+-                        value, new TypeReference<Map<AliasVariantType, OtherAliasVariantType>>() {}));
++                        value, new TypeReference<Map<AliasVariant, OtherAliasVariant>>() {}));
+             } catch (RuntimeException e) {
+             }
+             throw new JsonParseException(p, "Failed to deserialize");
+diff --git a/src/main/java/com/seed/object/types/UndiscriminatedUnionTypeWithAliasSetVariant.java b/src/main/java/com/seed/object/types/UndiscriminatedUnionTypeWithAliasSetVariant.java
+index 647b6e6e124..3b5e2172439 100644
+--- a/src/main/java/com/seed/object/types/UndiscriminatedUnionTypeWithAliasSetVariant.java
++++ b/src/main/java/com/seed/object/types/UndiscriminatedUnionTypeWithAliasSetVariant.java
+@@ -34,7 +34,7 @@ public final class UndiscriminatedUnionTypeWithAliasSetVariant {
+     @SuppressWarnings("unchecked")
+     public <T> T visit(Visitor<T> visitor) {
+         if (this.type == 0) {
+-            return visitor.visit((Set<AliasVariantType>) this.value);
++            return visitor.visit((Set<AliasVariant>) this.value);
+         }
+         throw new IllegalStateException("Failed to visit value. This should never happen.");
+     }
+@@ -60,12 +60,12 @@ public final class UndiscriminatedUnionTypeWithAliasSetVariant {
+         return this.value.toString();
+     }
+ 
+-    public static UndiscriminatedUnionTypeWithAliasSetVariant of(Set<AliasVariantType> value) {
++    public static UndiscriminatedUnionTypeWithAliasSetVariant of(Set<AliasVariant> value) {
+         return new UndiscriminatedUnionTypeWithAliasSetVariant(value, 0);
+     }
+ 
+     public interface Visitor<T> {
+-        T visit(Set<AliasVariantType> value);
++        T visit(Set<AliasVariant> value);
+     }
+ 
+     static final class Deserializer extends StdDeserializer<UndiscriminatedUnionTypeWithAliasSetVariant> {
+@@ -78,7 +78,7 @@ public final class UndiscriminatedUnionTypeWithAliasSetVariant {
+                 throws IOException {
+             Object value = p.readValueAs(Object.class);
+             try {
+-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<Set<AliasVariantType>>() {}));
++                return of(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<Set<AliasVariant>>() {}));
+             } catch (RuntimeException e) {
+             }
+             throw new JsonParseException(p, "Failed to deserialize");
+diff --git a/src/main/java/com/seed/object/types/UndiscriminatedUnionTypeWithAliasVariant.java b/src/main/java/com/seed/object/types/UndiscriminatedUnionTypeWithAliasVariant.java
+index 9abdef145df..8adcc5eb6cf 100644
+--- a/src/main/java/com/seed/object/types/UndiscriminatedUnionTypeWithAliasVariant.java
++++ b/src/main/java/com/seed/object/types/UndiscriminatedUnionTypeWithAliasVariant.java
+@@ -32,7 +32,7 @@ public final class UndiscriminatedUnionTypeWithAliasVariant {
+     @SuppressWarnings("unchecked")
+     public <T> T visit(Visitor<T> visitor) {
+         if (this.type == 0) {
+-            return visitor.visit((AliasVariantType) this.value);
++            return visitor.visit((AliasVariant) this.value);
+         } else if (this.type == 1) {
+             return visitor.visit((NonAliasVariant) this.value);
+         }
+@@ -60,7 +60,7 @@ public final class UndiscriminatedUnionTypeWithAliasVariant {
+         return this.value.toString();
+     }
+ 
+-    public static UndiscriminatedUnionTypeWithAliasVariant of(AliasVariantType value) {
++    public static UndiscriminatedUnionTypeWithAliasVariant of(AliasVariant value) {
+         return new UndiscriminatedUnionTypeWithAliasVariant(value, 0);
+     }
+ 
+@@ -69,7 +69,7 @@ public final class UndiscriminatedUnionTypeWithAliasVariant {
+     }
+ 
+     public interface Visitor<T> {
+-        T visit(AliasVariantType value);
++        T visit(AliasVariant value);
+ 
+         T visit(NonAliasVariant value);
+     }
+@@ -84,7 +84,7 @@ public final class UndiscriminatedUnionTypeWithAliasVariant {
+                 throws IOException {
+             Object value = p.readValueAs(Object.class);
+             try {
+-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, AliasVariantType.class));
++                return of(ObjectMappers.JSON_MAPPER.convertValue(value, AliasVariant.class));
+             } catch (RuntimeException e) {
+             }
+             try {
+diff --git a/src/main/java/com/seed/object/types/UnionTypeWithAliasListVariant.java b/src/main/java/com/seed/object/types/UnionTypeWithAliasListVariant.java
+index 6f6466c876a..1c1f67db622 100644
+--- a/src/main/java/com/seed/object/types/UnionTypeWithAliasListVariant.java
++++ b/src/main/java/com/seed/object/types/UnionTypeWithAliasListVariant.java
+@@ -26,7 +26,7 @@ public final class UnionTypeWithAliasListVariant {
+         return value.visit(visitor);
+     }
+ 
+-    public static UnionTypeWithAliasListVariant aliasVariant(List<AliasVariantType> value) {
++    public static UnionTypeWithAliasListVariant aliasVariant(List<AliasVariant> value) {
+         return new UnionTypeWithAliasListVariant(new AliasVariantValue(value));
+     }
+ 
+@@ -38,7 +38,7 @@ public final class UnionTypeWithAliasListVariant {
+         return value instanceof _UnknownValue;
+     }
+ 
+-    public Optional<List<AliasVariantType>> getAliasVariant() {
++    public Optional<List<AliasVariant>> getAliasVariant() {
+         if (isAliasVariant()) {
+             return Optional.of(((AliasVariantValue) value).value);
+         }
+@@ -75,7 +75,7 @@ public final class UnionTypeWithAliasListVariant {
+     }
+ 
+     public interface Visitor<T> {
+-        T visitAliasVariant(List<AliasVariantType> aliasVariant);
++        T visitAliasVariant(List<AliasVariant> aliasVariant);
+ 
+         T _visitUnknown(Object unknownType);
+     }
+@@ -91,10 +91,10 @@ public final class UnionTypeWithAliasListVariant {
+     @JsonIgnoreProperties("type")
+     private static final class AliasVariantValue implements Value {
+         @JsonProperty("value")
+-        private List<AliasVariantType> value;
++        private List<AliasVariant> value;
+ 
+         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+-        private AliasVariantValue(@JsonProperty("value") List<AliasVariantType> value) {
++        private AliasVariantValue(@JsonProperty("value") List<AliasVariant> value) {
+             this.value = value;
+         }
+ 
+diff --git a/src/main/java/com/seed/object/types/UnionTypeWithAliasMapVariant.java b/src/main/java/com/seed/object/types/UnionTypeWithAliasMapVariant.java
+index 0bcb7be98a2..af4bba71c09 100644
+--- a/src/main/java/com/seed/object/types/UnionTypeWithAliasMapVariant.java
++++ b/src/main/java/com/seed/object/types/UnionTypeWithAliasMapVariant.java
+@@ -26,7 +26,7 @@ public final class UnionTypeWithAliasMapVariant {
+         return value.visit(visitor);
+     }
+ 
+-    public static UnionTypeWithAliasMapVariant aliasVariant(Map<AliasVariantType, OtherAliasVariantType> value) {
++    public static UnionTypeWithAliasMapVariant aliasVariant(Map<AliasVariant, OtherAliasVariant> value) {
+         return new UnionTypeWithAliasMapVariant(new AliasVariantValue(value));
+     }
+ 
+@@ -38,7 +38,7 @@ public final class UnionTypeWithAliasMapVariant {
+         return value instanceof _UnknownValue;
+     }
+ 
+-    public Optional<Map<AliasVariantType, OtherAliasVariantType>> getAliasVariant() {
++    public Optional<Map<AliasVariant, OtherAliasVariant>> getAliasVariant() {
+         if (isAliasVariant()) {
+             return Optional.of(((AliasVariantValue) value).value);
+         }
+@@ -75,7 +75,7 @@ public final class UnionTypeWithAliasMapVariant {
+     }
+ 
+     public interface Visitor<T> {
+-        T visitAliasVariant(Map<AliasVariantType, OtherAliasVariantType> aliasVariant);
++        T visitAliasVariant(Map<AliasVariant, OtherAliasVariant> aliasVariant);
+ 
+         T _visitUnknown(Object unknownType);
+     }
+@@ -91,10 +91,10 @@ public final class UnionTypeWithAliasMapVariant {
+     @JsonIgnoreProperties("type")
+     private static final class AliasVariantValue implements Value {
+         @JsonProperty("value")
+-        private Map<AliasVariantType, OtherAliasVariantType> value;
++        private Map<AliasVariant, OtherAliasVariant> value;
+ 
+         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+-        private AliasVariantValue(@JsonProperty("value") Map<AliasVariantType, OtherAliasVariantType> value) {
++        private AliasVariantValue(@JsonProperty("value") Map<AliasVariant, OtherAliasVariant> value) {
+             this.value = value;
+         }
+ 
+diff --git a/src/main/java/com/seed/object/types/UnionTypeWithAliasSetVariant.java b/src/main/java/com/seed/object/types/UnionTypeWithAliasSetVariant.java
+index ee19dc6d88f..f9ce518fd4e 100644
+--- a/src/main/java/com/seed/object/types/UnionTypeWithAliasSetVariant.java
++++ b/src/main/java/com/seed/object/types/UnionTypeWithAliasSetVariant.java
+@@ -26,7 +26,7 @@ public final class UnionTypeWithAliasSetVariant {
+         return value.visit(visitor);
+     }
+ 
+-    public static UnionTypeWithAliasSetVariant aliasVariant(Set<AliasVariantType> value) {
++    public static UnionTypeWithAliasSetVariant aliasVariant(Set<AliasVariant> value) {
+         return new UnionTypeWithAliasSetVariant(new AliasVariantValue(value));
+     }
+ 
+@@ -38,7 +38,7 @@ public final class UnionTypeWithAliasSetVariant {
+         return value instanceof _UnknownValue;
+     }
+ 
+-    public Optional<Set<AliasVariantType>> getAliasVariant() {
++    public Optional<Set<AliasVariant>> getAliasVariant() {
+         if (isAliasVariant()) {
+             return Optional.of(((AliasVariantValue) value).value);
+         }
+@@ -75,7 +75,7 @@ public final class UnionTypeWithAliasSetVariant {
+     }
+ 
+     public interface Visitor<T> {
+-        T visitAliasVariant(Set<AliasVariantType> aliasVariant);
++        T visitAliasVariant(Set<AliasVariant> aliasVariant);
+ 
+         T _visitUnknown(Object unknownType);
+     }
+@@ -91,10 +91,10 @@ public final class UnionTypeWithAliasSetVariant {
+     @JsonIgnoreProperties("type")
+     private static final class AliasVariantValue implements Value {
+         @JsonProperty("value")
+-        private Set<AliasVariantType> value;
++        private Set<AliasVariant> value;
+ 
+         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+-        private AliasVariantValue(@JsonProperty("value") Set<AliasVariantType> value) {
++        private AliasVariantValue(@JsonProperty("value") Set<AliasVariant> value) {
+             this.value = value;
+         }
+ 
+diff --git a/src/main/java/com/seed/object/types/UserId.java b/src/main/java/com/seed/object/types/UserId.java
+new file mode 100644
+index 00000000000..e0e360b7fa0
+--- /dev/null
++++ b/src/main/java/com/seed/object/types/UserId.java
+@@ -0,0 +1,45 @@
++/**
++ * This file was auto-generated by Fern from our API Definition.
++ */
++package com.seed.object.types;
++
++import com.fasterxml.jackson.annotation.JsonCreator;
++import com.fasterxml.jackson.annotation.JsonValue;
++import com.seed.object.core.WrappedAlias;
++
++public final class UserId implements WrappedAlias {
++    private final String value;
++
++    private UserId(String value) {
++        this.value = value;
++    }
++
++    @JsonValue
++    public String get() {
++        return this.value;
++    }
++
++    @java.lang.Override
++    public boolean equals(Object other) {
++        return this == other || (other instanceof UserId && this.value.equals(((UserId) other).value));
++    }
++
++    @java.lang.Override
++    public int hashCode() {
++        return value.hashCode();
++    }
++
++    @java.lang.Override
++    public String toString() {
++        return value;
++    }
++
++    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
++    public static UserId of(String value) {
++        return new UserId(value);
++    }
++
++    public static UserId valueOf(String value) {
++        return of(value);
++    }
++}

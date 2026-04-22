@@ -1,0 +1,63 @@
+using SeedTrace;
+using SeedTrace.Core;
+using SeedTrace.V2.V3;
+
+namespace SeedTrace.V2;
+
+public partial class V2Client : IV2Client
+{
+    private readonly RawClient _client;
+
+    internal V2Client(RawClient client)
+    {
+        _client = client;
+        Problem = new ProblemClient(_client);
+        V3 = new V3Client(_client);
+    }
+
+    public IProblemClient Problem { get; }
+
+    public IV3Client V3 { get; }
+
+    /// <example><code>
+    /// await client.V2.TestAsync();
+    /// </code></example>
+    public async Task TestAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Get,
+                    Path = "",
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return;
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedTraceApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+}

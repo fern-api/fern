@@ -1,0 +1,3 @@
+rootProject.name = 'extends'
+
+include 'sample-app'

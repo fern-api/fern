@@ -1,0 +1,17 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/dummy",
+                "method": "GET",
+                "identifier_override": "endpoint_dummy.getDummy"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedSingleUrlEnvironmentNoDefault;\n\nvar client = new SeedSingleUrlEnvironmentNoDefaultClient(\"TOKEN\");\nawait client.Dummy.GetDummyAsync();\n"
+            }
+        }
+    ]
+}

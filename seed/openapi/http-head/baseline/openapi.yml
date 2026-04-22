@@ -1,0 +1,49 @@
+openapi: 3.1.0
+info:
+  title: http-head
+  version: 0.0.0
+paths:
+  /users:
+    head:
+      operationId: user_head
+      tags:
+        - User
+      parameters: []
+      responses:
+        '204':
+          description: No content
+    get:
+      operationId: user_list
+      tags:
+        - User
+      parameters:
+        - name: limit
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+components:
+  schemas:
+    User:
+      title: User
+      type: object
+      properties:
+        name:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+      required:
+        - name
+        - tags
+  securitySchemes: {}

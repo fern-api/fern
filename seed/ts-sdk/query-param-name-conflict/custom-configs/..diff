@@ -1,0 +1,52 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 8d01069edb2..51c001816f1 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,11 @@
+     "cliVersion": "DUMMY",
+     "generatorName": "fernapi/fern-typescript-sdk",
+     "generatorVersion": "local",
++    "generatorConfig": {
++        "noSerdeLayer": true,
++        "enableInlineTypes": true,
++        "resolveQueryParameterNameConflicts": true
++    },
+     "originGitCommit": "DUMMY",
+     "originGitCommitIsDirty": null,
+     "invokedBy": "manual",
+diff --git a/src/Client.ts b/src/Client.ts
+index 138ec08c670..c7b6a707465 100644
+--- a/src/Client.ts
++++ b/src/Client.ts
+@@ -39,13 +39,7 @@ export class SeedApiClient {
+         request: SeedApi.BulkUpdateTasksRequest = {},
+         requestOptions?: SeedApiClient.RequestOptions,
+     ): Promise<core.WithRawResponse<SeedApi.BulkUpdateTasksResponse>> {
+-        const {
+-            assigned_to: filterAssignedTo,
+-            is_complete: filterIsComplete,
+-            date: filterDate,
+-            _fields: fields,
+-            ..._body
+-        } = request;
++        const { filterAssignedTo, filterIsComplete, filterDate, _fields: fields, ..._body } = request;
+         const _queryParams: Record<string, unknown> = {
+             assigned_to: filterAssignedTo,
+             is_complete: filterIsComplete,
+diff --git a/src/api/client/requests/BulkUpdateTasksRequest.ts b/src/api/client/requests/BulkUpdateTasksRequest.ts
+index 2f41653f945..a77403b294a 100644
+--- a/src/api/client/requests/BulkUpdateTasksRequest.ts
++++ b/src/api/client/requests/BulkUpdateTasksRequest.ts
+@@ -5,9 +5,9 @@
+  *     {}
+  */
+ export interface BulkUpdateTasksRequest {
+-    assigned_to?: string | null;
+-    is_complete?: string | null;
+-    date?: string | null;
++    filterAssignedTo?: string | null;
++    filterIsComplete?: string | null;
++    filterDate?: string | null;
+     /** Comma-separated list of fields to include in the response. */
+     _fields?: string;
+     assigned_to?: string;

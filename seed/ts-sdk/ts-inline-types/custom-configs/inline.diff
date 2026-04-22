@@ -1,0 +1,14 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 8d01069edb2..414e4b2cc15 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+     "cliVersion": "DUMMY",
+     "generatorName": "fernapi/fern-typescript-sdk",
+     "generatorVersion": "local",
++    "generatorConfig": {
++        "enableInlineTypes": true
++    },
+     "originGitCommit": "DUMMY",
+     "originGitCommitIsDirty": null,
+     "invokedBy": "manual",

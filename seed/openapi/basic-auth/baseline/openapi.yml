@@ -1,0 +1,79 @@
+openapi: 3.1.0
+info:
+  title: basic-auth
+  version: 0.0.0
+paths:
+  /basic-auth:
+    get:
+      description: GET request with basic auth scheme
+      operationId: basicAuth_getWithBasicAuth
+      tags:
+        - BasicAuth
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: boolean
+              examples:
+                Example1:
+                  value: true
+        '401':
+          description: UnauthorizedRequest
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedRequestErrorBody'
+      security:
+        - Basic: []
+    post:
+      description: POST request with basic auth scheme
+      operationId: basicAuth_postWithBasicAuth
+      tags:
+        - BasicAuth
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: boolean
+              examples:
+                Example1:
+                  value: true
+        '400':
+          description: BadRequest
+        '401':
+          description: UnauthorizedRequest
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedRequestErrorBody'
+      security:
+        - Basic: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {}
+            examples:
+              Example1:
+                value:
+                  key: value
+components:
+  schemas:
+    UnauthorizedRequestErrorBody:
+      title: UnauthorizedRequestErrorBody
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
+  securitySchemes:
+    Basic:
+      type: http
+      scheme: basic

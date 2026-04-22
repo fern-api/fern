@@ -1,0 +1,681 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 884da712b73..7c288fdabe1 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-python-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "enable_wire_tests": true
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "manual",
+diff --git a/poetry.lock b/poetry.lock
+index 2a97347e644..1597c9ee2cd 100644
+--- a/poetry.lock
++++ b/poetry.lock
+@@ -242,6 +242,144 @@ files = [
+     {file = "certifi-2026.4.22.tar.gz", hash = "sha256:8d455352a37b71bf76a79caa83a3d6c25afee4a385d632127b6afb3963f1c580"},
+ ]
+ 
++[[package]]
++name = "charset-normalizer"
++version = "3.4.7"
++description = "The Real First Universal Charset Detector. Open, modern and actively maintained alternative to Chardet."
++optional = false
++python-versions = ">=3.7"
++files = [
++    {file = "charset_normalizer-3.4.7-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:cdd68a1fb318e290a2077696b7eb7a21a49163c455979c639bf5a5dcdc46617d"},
++    {file = "charset_normalizer-3.4.7-cp310-cp310-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:e17b8d5d6a8c47c85e68ca8379def1303fd360c3e22093a807cd34a71cd082b8"},
++    {file = "charset_normalizer-3.4.7-cp310-cp310-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl", hash = "sha256:511ef87c8aec0783e08ac18565a16d435372bc1ac25a91e6ac7f5ef2b0bff790"},
++    {file = "charset_normalizer-3.4.7-cp310-cp310-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl", hash = "sha256:007d05ec7321d12a40227aae9e2bc6dca73f3cb21058999a1df9e193555a9dcc"},
++    {file = "charset_normalizer-3.4.7-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:cf29836da5119f3c8a8a70667b0ef5fdca3bb12f80fd06487cfa575b3909b393"},
++    {file = "charset_normalizer-3.4.7-cp310-cp310-manylinux_2_31_armv7l.whl", hash = "sha256:12d8baf840cc7889b37c7c770f478adea7adce3dcb3944d02ec87508e2dcf153"},
++    {file = "charset_normalizer-3.4.7-cp310-cp310-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl", hash = "sha256:d560742f3c0d62afaccf9f41fe485ed69bd7661a241f86a3ef0f0fb8b1a397af"},
++    {file = "charset_normalizer-3.4.7-cp310-cp310-musllinux_1_2_aarch64.whl", hash = "sha256:b14b2d9dac08e28bb8046a1a0434b1750eb221c8f5b87a68f4fa11a6f97b5e34"},
++    {file = "charset_normalizer-3.4.7-cp310-cp310-musllinux_1_2_armv7l.whl", hash = "sha256:bc17a677b21b3502a21f66a8cc64f5bfad4df8a0b8434d661666f8ce90ac3af1"},
++    {file = "charset_normalizer-3.4.7-cp310-cp310-musllinux_1_2_ppc64le.whl", hash = "sha256:750e02e074872a3fad7f233b47734166440af3cdea0add3e95163110816d6752"},
++    {file = "charset_normalizer-3.4.7-cp310-cp310-musllinux_1_2_riscv64.whl", hash = "sha256:4e5163c14bffd570ef2affbfdd77bba66383890797df43dc8b4cc7d6f500bf53"},
++    {file = "charset_normalizer-3.4.7-cp310-cp310-musllinux_1_2_s390x.whl", hash = "sha256:6ed74185b2db44f41ef35fd1617c5888e59792da9bbc9190d6c7300617182616"},
++    {file = "charset_normalizer-3.4.7-cp310-cp310-musllinux_1_2_x86_64.whl", hash = "sha256:94e1885b270625a9a828c9793b4d52a64445299baa1fea5a173bf1d3dd9a1a5a"},
++    {file = "charset_normalizer-3.4.7-cp310-cp310-win32.whl", hash = "sha256:6785f414ae0f3c733c437e0f3929197934f526d19dfaa75e18fdb4f94c6fb374"},
++    {file = "charset_normalizer-3.4.7-cp310-cp310-win_amd64.whl", hash = "sha256:6696b7688f54f5af4462118f0bfa7c1621eeb87154f77fa04b9295ce7a8f2943"},
++    {file = "charset_normalizer-3.4.7-cp310-cp310-win_arm64.whl", hash = "sha256:66671f93accb62ed07da56613636f3641f1a12c13046ce91ffc923721f23c008"},
++    {file = "charset_normalizer-3.4.7-cp311-cp311-macosx_10_9_universal2.whl", hash = "sha256:7641bb8895e77f921102f72833904dcd9901df5d6d72a2ab8f31d04b7e51e4e7"},
++    {file = "charset_normalizer-3.4.7-cp311-cp311-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:202389074300232baeb53ae2569a60901f7efadd4245cf3a3bf0617d60b439d7"},
++    {file = "charset_normalizer-3.4.7-cp311-cp311-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl", hash = "sha256:30b8d1d8c52a48c2c5690e152c169b673487a2a58de1ec7393196753063fcd5e"},
++    {file = "charset_normalizer-3.4.7-cp311-cp311-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl", hash = "sha256:532bc9bf33a68613fd7d65e4b1c71a6a38d7d42604ecf239c77392e9b4e8998c"},
++    {file = "charset_normalizer-3.4.7-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:2fe249cb4651fd12605b7288b24751d8bfd46d35f12a20b1ba33dea122e690df"},
++    {file = "charset_normalizer-3.4.7-cp311-cp311-manylinux_2_31_armv7l.whl", hash = "sha256:65bcd23054beab4d166035cabbc868a09c1a49d1efe458fe8e4361215df40265"},
++    {file = "charset_normalizer-3.4.7-cp311-cp311-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl", hash = "sha256:08e721811161356f97b4059a9ba7bafb23ea5ee2255402c42881c214e173c6b4"},
++    {file = "charset_normalizer-3.4.7-cp311-cp311-musllinux_1_2_aarch64.whl", hash = "sha256:e060d01aec0a910bdccb8be71faf34e7799ce36950f8294c8bf612cba65a2c9e"},
++    {file = "charset_normalizer-3.4.7-cp311-cp311-musllinux_1_2_armv7l.whl", hash = "sha256:38c0109396c4cfc574d502df99742a45c72c08eff0a36158b6f04000043dbf38"},
++    {file = "charset_normalizer-3.4.7-cp311-cp311-musllinux_1_2_ppc64le.whl", hash = "sha256:1c2a768fdd44ee4a9339a9b0b130049139b8ce3c01d2ce09f67f5a68048d477c"},
++    {file = "charset_normalizer-3.4.7-cp311-cp311-musllinux_1_2_riscv64.whl", hash = "sha256:1a87ca9d5df6fe460483d9a5bbf2b18f620cbed41b432e2bddb686228282d10b"},
++    {file = "charset_normalizer-3.4.7-cp311-cp311-musllinux_1_2_s390x.whl", hash = "sha256:d635aab80466bc95771bb78d5370e74d36d1fe31467b6b29b8b57b2a3cd7d22c"},
++    {file = "charset_normalizer-3.4.7-cp311-cp311-musllinux_1_2_x86_64.whl", hash = "sha256:ae196f021b5e7c78e918242d217db021ed2a6ace2bc6ae94c0fc596221c7f58d"},
++    {file = "charset_normalizer-3.4.7-cp311-cp311-win32.whl", hash = "sha256:adb2597b428735679446b46c8badf467b4ca5f5056aae4d51a19f9570301b1ad"},
++    {file = "charset_normalizer-3.4.7-cp311-cp311-win_amd64.whl", hash = "sha256:8e385e4267ab76874ae30db04c627faaaf0b509e1ccc11a95b3fc3e83f855c00"},
++    {file = "charset_normalizer-3.4.7-cp311-cp311-win_arm64.whl", hash = "sha256:d4a48e5b3c2a489fae013b7589308a40146ee081f6f509e047e0e096084ceca1"},
++    {file = "charset_normalizer-3.4.7-cp312-cp312-macosx_10_13_universal2.whl", hash = "sha256:eca9705049ad3c7345d574e3510665cb2cf844c2f2dcfe675332677f081cbd46"},
++    {file = "charset_normalizer-3.4.7-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:6178f72c5508bfc5fd446a5905e698c6212932f25bcdd4b47a757a50605a90e2"},
++    {file = "charset_normalizer-3.4.7-cp312-cp312-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl", hash = "sha256:e1421b502d83040e6d7fb2fb18dff63957f720da3d77b2fbd3187ceb63755d7b"},
++    {file = "charset_normalizer-3.4.7-cp312-cp312-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl", hash = "sha256:edac0f1ab77644605be2cbba52e6b7f630731fc42b34cb0f634be1a6eface56a"},
++    {file = "charset_normalizer-3.4.7-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:5649fd1c7bade02f320a462fdefd0b4bd3ce036065836d4f42e0de958038e116"},
++    {file = "charset_normalizer-3.4.7-cp312-cp312-manylinux_2_31_armv7l.whl", hash = "sha256:203104ed3e428044fd943bc4bf45fa73c0730391f9621e37fe39ecf477b128cb"},
++    {file = "charset_normalizer-3.4.7-cp312-cp312-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl", hash = "sha256:298930cec56029e05497a76988377cbd7457ba864beeea92ad7e844fe74cd1f1"},
++    {file = "charset_normalizer-3.4.7-cp312-cp312-musllinux_1_2_aarch64.whl", hash = "sha256:708838739abf24b2ceb208d0e22403dd018faeef86ddac04319a62ae884c4f15"},
++    {file = "charset_normalizer-3.4.7-cp312-cp312-musllinux_1_2_armv7l.whl", hash = "sha256:0f7eb884681e3938906ed0434f20c63046eacd0111c4ba96f27b76084cd679f5"},
++    {file = "charset_normalizer-3.4.7-cp312-cp312-musllinux_1_2_ppc64le.whl", hash = "sha256:4dc1e73c36828f982bfe79fadf5919923f8a6f4df2860804db9a98c48824ce8d"},
++    {file = "charset_normalizer-3.4.7-cp312-cp312-musllinux_1_2_riscv64.whl", hash = "sha256:aed52fea0513bac0ccde438c188c8a471c4e0f457c2dd20cdbf6ea7a450046c7"},
++    {file = "charset_normalizer-3.4.7-cp312-cp312-musllinux_1_2_s390x.whl", hash = "sha256:fea24543955a6a729c45a73fe90e08c743f0b3334bbf3201e6c4bc1b0c7fa464"},
++    {file = "charset_normalizer-3.4.7-cp312-cp312-musllinux_1_2_x86_64.whl", hash = "sha256:bb6d88045545b26da47aa879dd4a89a71d1dce0f0e549b1abcb31dfe4a8eac49"},
++    {file = "charset_normalizer-3.4.7-cp312-cp312-win32.whl", hash = "sha256:2257141f39fe65a3fdf38aeccae4b953e5f3b3324f4ff0daf9f15b8518666a2c"},
++    {file = "charset_normalizer-3.4.7-cp312-cp312-win_amd64.whl", hash = "sha256:5ed6ab538499c8644b8a3e18debabcd7ce684f3fa91cf867521a7a0279cab2d6"},
++    {file = "charset_normalizer-3.4.7-cp312-cp312-win_arm64.whl", hash = "sha256:56be790f86bfb2c98fb742ce566dfb4816e5a83384616ab59c49e0604d49c51d"},
++    {file = "charset_normalizer-3.4.7-cp313-cp313-macosx_10_13_universal2.whl", hash = "sha256:f496c9c3cc02230093d8330875c4c3cdfc3b73612a5fd921c65d39cbcef08063"},
++    {file = "charset_normalizer-3.4.7-cp313-cp313-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:0ea948db76d31190bf08bd371623927ee1339d5f2a0b4b1b4a4439a65298703c"},
++    {file = "charset_normalizer-3.4.7-cp313-cp313-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl", hash = "sha256:a277ab8928b9f299723bc1a2dabb1265911b1a76341f90a510368ca44ad9ab66"},
++    {file = "charset_normalizer-3.4.7-cp313-cp313-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl", hash = "sha256:3bec022aec2c514d9cf199522a802bd007cd588ab17ab2525f20f9c34d067c18"},
++    {file = "charset_normalizer-3.4.7-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:e044c39e41b92c845bc815e5ae4230804e8e7bc29e399b0437d64222d92809dd"},
++    {file = "charset_normalizer-3.4.7-cp313-cp313-manylinux_2_31_armv7l.whl", hash = "sha256:f495a1652cf3fbab2eb0639776dad966c2fb874d79d87ca07f9d5f059b8bd215"},
++    {file = "charset_normalizer-3.4.7-cp313-cp313-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl", hash = "sha256:e712b419df8ba5e42b226c510472b37bd57b38e897d3eca5e8cfd410a29fa859"},
++    {file = "charset_normalizer-3.4.7-cp313-cp313-musllinux_1_2_aarch64.whl", hash = "sha256:7804338df6fcc08105c7745f1502ba68d900f45fd770d5bdd5288ddccb8a42d8"},
++    {file = "charset_normalizer-3.4.7-cp313-cp313-musllinux_1_2_armv7l.whl", hash = "sha256:481551899c856c704d58119b5025793fa6730adda3571971af568f66d2424bb5"},
++    {file = "charset_normalizer-3.4.7-cp313-cp313-musllinux_1_2_ppc64le.whl", hash = "sha256:f59099f9b66f0d7145115e6f80dd8b1d847176df89b234a5a6b3f00437aa0832"},
++    {file = "charset_normalizer-3.4.7-cp313-cp313-musllinux_1_2_riscv64.whl", hash = "sha256:f59ad4c0e8f6bba240a9bb85504faa1ab438237199d4cce5f622761507b8f6a6"},
++    {file = "charset_normalizer-3.4.7-cp313-cp313-musllinux_1_2_s390x.whl", hash = "sha256:3dedcc22d73ec993f42055eff4fcfed9318d1eeb9a6606c55892a26964964e48"},
++    {file = "charset_normalizer-3.4.7-cp313-cp313-musllinux_1_2_x86_64.whl", hash = "sha256:64f02c6841d7d83f832cd97ccf8eb8a906d06eb95d5276069175c696b024b60a"},
++    {file = "charset_normalizer-3.4.7-cp313-cp313-win32.whl", hash = "sha256:4042d5c8f957e15221d423ba781e85d553722fc4113f523f2feb7b188cc34c5e"},
++    {file = "charset_normalizer-3.4.7-cp313-cp313-win_amd64.whl", hash = "sha256:3946fa46a0cf3e4c8cb1cc52f56bb536310d34f25f01ca9b6c16afa767dab110"},
++    {file = "charset_normalizer-3.4.7-cp313-cp313-win_arm64.whl", hash = "sha256:80d04837f55fc81da168b98de4f4b797ef007fc8a79ab71c6ec9bc4dd662b15b"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314-macosx_10_15_universal2.whl", hash = "sha256:c36c333c39be2dbca264d7803333c896ab8fa7d4d6f0ab7edb7dfd7aea6e98c0"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:1c2aed2e5e41f24ea8ef1590b8e848a79b56f3a5564a65ceec43c9d692dc7d8a"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl", hash = "sha256:54523e136b8948060c0fa0bc7b1b50c32c186f2fceee897a495406bb6e311d2b"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl", hash = "sha256:715479b9a2802ecac752a3b0efa2b0b60285cf962ee38414211abdfccc233b41"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:bd6c2a1c7573c64738d716488d2cdd3c00e340e4835707d8fdb8dc1a66ef164e"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314-manylinux_2_31_armv7l.whl", hash = "sha256:c45e9440fb78f8ddabcf714b68f936737a121355bf59f3907f4e17721b9d1aae"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl", hash = "sha256:3534e7dcbdcf757da6b85a0bbf5b6868786d5982dd959b065e65481644817a18"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314-musllinux_1_2_aarch64.whl", hash = "sha256:e8ac484bf18ce6975760921bb6148041faa8fef0547200386ea0b52b5d27bf7b"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314-musllinux_1_2_armv7l.whl", hash = "sha256:a5fe03b42827c13cdccd08e6c0247b6a6d4b5e3cdc53fd1749f5896adcdc2356"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314-musllinux_1_2_ppc64le.whl", hash = "sha256:2d6eb928e13016cea4f1f21d1e10c1cebd5a421bc57ddf5b1142ae3f86824fab"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314-musllinux_1_2_riscv64.whl", hash = "sha256:e74327fb75de8986940def6e8dee4f127cc9752bee7355bb323cc5b2659b6d46"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314-musllinux_1_2_s390x.whl", hash = "sha256:d6038d37043bced98a66e68d3aa2b6a35505dc01328cd65217cefe82f25def44"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314-musllinux_1_2_x86_64.whl", hash = "sha256:7579e913a5339fb8fa133f6bbcfd8e6749696206cf05acdbdca71a1b436d8e72"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314-win32.whl", hash = "sha256:5b77459df20e08151cd6f8b9ef8ef1f961ef73d85c21a555c7eed5b79410ec10"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314-win_amd64.whl", hash = "sha256:92a0a01ead5e668468e952e4238cccd7c537364eb7d851ab144ab6627dbbe12f"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314-win_arm64.whl", hash = "sha256:67f6279d125ca0046a7fd386d01b311c6363844deac3e5b069b514ba3e63c246"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314t-macosx_10_15_universal2.whl", hash = "sha256:effc3f449787117233702311a1b7d8f59cba9ced946ba727bdc329ec69028e24"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314t-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:fbccdc05410c9ee21bbf16a35f4c1d16123dcdeb8a1d38f33654fa21d0234f79"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314t-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl", hash = "sha256:733784b6d6def852c814bce5f318d25da2ee65dd4839a0718641c696e09a2960"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314t-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl", hash = "sha256:a89c23ef8d2c6b27fd200a42aa4ac72786e7c60d40efdc76e6011260b6e949c4"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314t-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:6c114670c45346afedc0d947faf3c7f701051d2518b943679c8ff88befe14f8e"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314t-manylinux_2_31_armv7l.whl", hash = "sha256:a180c5e59792af262bf263b21a3c49353f25945d8d9f70628e73de370d55e1e1"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314t-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl", hash = "sha256:3c9a494bc5ec77d43cea229c4f6db1e4d8fe7e1bbffa8b6f0f0032430ff8ab44"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314t-musllinux_1_2_aarch64.whl", hash = "sha256:8d828b6667a32a728a1ad1d93957cdf37489c57b97ae6c4de2860fa749b8fc1e"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314t-musllinux_1_2_armv7l.whl", hash = "sha256:cf1493cd8607bec4d8a7b9b004e699fcf8f9103a9284cc94962cb73d20f9d4a3"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314t-musllinux_1_2_ppc64le.whl", hash = "sha256:0c96c3b819b5c3e9e165495db84d41914d6894d55181d2d108cc1a69bfc9cce0"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314t-musllinux_1_2_riscv64.whl", hash = "sha256:752a45dc4a6934060b3b0dab47e04edc3326575f82be64bc4fc293914566503e"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314t-musllinux_1_2_s390x.whl", hash = "sha256:8778f0c7a52e56f75d12dae53ae320fae900a8b9b4164b981b9c5ce059cd1fcb"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314t-musllinux_1_2_x86_64.whl", hash = "sha256:ce3412fbe1e31eb81ea42f4169ed94861c56e643189e1e75f0041f3fe7020abe"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314t-win32.whl", hash = "sha256:c03a41a8784091e67a39648f70c5f97b5b6a37f216896d44d2cdcb82615339a0"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314t-win_amd64.whl", hash = "sha256:03853ed82eeebbce3c2abfdbc98c96dc205f32a79627688ac9a27370ea61a49c"},
++    {file = "charset_normalizer-3.4.7-cp314-cp314t-win_arm64.whl", hash = "sha256:c35abb8bfff0185efac5878da64c45dafd2b37fb0383add1be155a763c1f083d"},
++    {file = "charset_normalizer-3.4.7-cp38-cp38-macosx_10_9_universal2.whl", hash = "sha256:e5f4d355f0a2b1a31bc3edec6795b46324349c9cb25eed068049e4f472fb4259"},
++    {file = "charset_normalizer-3.4.7-cp38-cp38-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:16d971e29578a5e97d7117866d15889a4a07befe0e87e703ed63cd90cb348c01"},
++    {file = "charset_normalizer-3.4.7-cp38-cp38-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl", hash = "sha256:dca4bbc466a95ba9c0234ef56d7dd9509f63da22274589ebd4ed7f1f4d4c54e3"},
++    {file = "charset_normalizer-3.4.7-cp38-cp38-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl", hash = "sha256:e80c8378d8f3d83cd3164da1ad2df9e37a666cdde7b1cb2298ed0b558064be30"},
++    {file = "charset_normalizer-3.4.7-cp38-cp38-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:36836d6ff945a00b88ba1e4572d721e60b5b8c98c155d465f56ad19d68f23734"},
++    {file = "charset_normalizer-3.4.7-cp38-cp38-manylinux_2_31_armv7l.whl", hash = "sha256:bd9b23791fe793e4968dba0c447e12f78e425c59fc0e3b97f6450f4781f3ee60"},
++    {file = "charset_normalizer-3.4.7-cp38-cp38-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl", hash = "sha256:aef65cd602a6d0e0ff6f9930fcb1c8fec60dd2cfcb6facaf4bdb0e5873042db0"},
++    {file = "charset_normalizer-3.4.7-cp38-cp38-musllinux_1_2_aarch64.whl", hash = "sha256:82b271f5137d07749f7bf32f70b17ab6eaabedd297e75dce75081a24f76eb545"},
++    {file = "charset_normalizer-3.4.7-cp38-cp38-musllinux_1_2_armv7l.whl", hash = "sha256:1efde3cae86c8c273f1eb3b287be7d8499420cf2fe7585c41d370d3e790054a5"},
++    {file = "charset_normalizer-3.4.7-cp38-cp38-musllinux_1_2_ppc64le.whl", hash = "sha256:c593052c465475e64bbfe5dbd81680f64a67fdc752c56d7a0ae205dc8aeefe0f"},
++    {file = "charset_normalizer-3.4.7-cp38-cp38-musllinux_1_2_riscv64.whl", hash = "sha256:af21eb4409a119e365397b2adbaca4c9ccab56543a65d5dbd9f920d6ac29f686"},
++    {file = "charset_normalizer-3.4.7-cp38-cp38-musllinux_1_2_s390x.whl", hash = "sha256:84c018e49c3bf790f9c2771c45e9313a08c2c2a6342b162cd650258b57817706"},
++    {file = "charset_normalizer-3.4.7-cp38-cp38-musllinux_1_2_x86_64.whl", hash = "sha256:dd915403e231e6b1809fe9b6d9fc55cf8fb5e02765ac625d9cd623342a7905d7"},
++    {file = "charset_normalizer-3.4.7-cp38-cp38-win32.whl", hash = "sha256:320ade88cfb846b8cd6b4ddf5ee9e80ee0c1f52401f2456b84ae1ae6a1a5f207"},
++    {file = "charset_normalizer-3.4.7-cp38-cp38-win_amd64.whl", hash = "sha256:1dc8b0ea451d6e69735094606991f32867807881400f808a106ee1d963c46a83"},
++    {file = "charset_normalizer-3.4.7-cp39-cp39-macosx_10_9_universal2.whl", hash = "sha256:177a0ba5f0211d488e295aaf82707237e331c24788d8d76c96c5a41594723217"},
++    {file = "charset_normalizer-3.4.7-cp39-cp39-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:6e0d51f618228538a3e8f46bd246f87a6cd030565e015803691603f55e12afb5"},
++    {file = "charset_normalizer-3.4.7-cp39-cp39-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl", hash = "sha256:14265bfe1f09498b9d8ec91e9ec9fa52775edf90fcbde092b25f4a33d444fea9"},
++    {file = "charset_normalizer-3.4.7-cp39-cp39-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl", hash = "sha256:87fad7d9ba98c86bcb41b2dc8dbb326619be2562af1f8ff50776a39e55721c5a"},
++    {file = "charset_normalizer-3.4.7-cp39-cp39-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:f22dec1690b584cea26fade98b2435c132c1b5f68e39f5a0b7627cd7ae31f1dc"},
++    {file = "charset_normalizer-3.4.7-cp39-cp39-manylinux_2_31_armv7l.whl", hash = "sha256:d61f00a0869d77422d9b2aba989e2d24afa6ffd552af442e0e58de4f35ea6d00"},
++    {file = "charset_normalizer-3.4.7-cp39-cp39-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl", hash = "sha256:6370e8686f662e6a3941ee48ed4742317cafbe5707e36406e9df792cdb535776"},
++    {file = "charset_normalizer-3.4.7-cp39-cp39-musllinux_1_2_aarch64.whl", hash = "sha256:a6c5863edfbe888d9eff9c8b8087354e27618d9da76425c119293f11712a6319"},
++    {file = "charset_normalizer-3.4.7-cp39-cp39-musllinux_1_2_armv7l.whl", hash = "sha256:ed065083d0898c9d5b4bbec7b026fd755ff7454e6e8b73a67f8c744b13986e24"},
++    {file = "charset_normalizer-3.4.7-cp39-cp39-musllinux_1_2_ppc64le.whl", hash = "sha256:2cd4a60d0e2fb04537162c62bbbb4182f53541fe0ede35cdf270a1c1e723cc42"},
++    {file = "charset_normalizer-3.4.7-cp39-cp39-musllinux_1_2_riscv64.whl", hash = "sha256:813c0e0132266c08eb87469a642cb30aaff57c5f426255419572aaeceeaa7bf4"},
++    {file = "charset_normalizer-3.4.7-cp39-cp39-musllinux_1_2_s390x.whl", hash = "sha256:07d9e39b01743c3717745f4c530a6349eadbfa043c7577eef86c502c15df2c67"},
++    {file = "charset_normalizer-3.4.7-cp39-cp39-musllinux_1_2_x86_64.whl", hash = "sha256:c0f081d69a6e58272819b70288d3221a6ee64b98df852631c80f293514d3b274"},
++    {file = "charset_normalizer-3.4.7-cp39-cp39-win32.whl", hash = "sha256:8751d2787c9131302398b11e6c8068053dcb55d5a8964e114b6e196cf16cb366"},
++    {file = "charset_normalizer-3.4.7-cp39-cp39-win_amd64.whl", hash = "sha256:12a6fff75f6bc66711b73a2f0addfc4c8c15a20e805146a02d147a318962c444"},
++    {file = "charset_normalizer-3.4.7-cp39-cp39-win_arm64.whl", hash = "sha256:bb8cc7534f51d9a017b93e3e85b260924f909601c3df002bcdb58ddb4dc41a5c"},
++    {file = "charset_normalizer-3.4.7-py3-none-any.whl", hash = "sha256:3dce51d0f5e7951f8bb4900c257dad282f49190fdbebecd4ba99bcc41fef404d"},
++    {file = "charset_normalizer-3.4.7.tar.gz", hash = "sha256:ae89db9e5f98a11a4bf50407d4363e7b09b31e55bc117b4f7d80aab97ba009e5"},
++]
++
+ [[package]]
+ name = "colorama"
+ version = "0.4.6"
+@@ -1143,6 +1281,27 @@ files = [
+ [package.dependencies]
+ six = ">=1.5"
+ 
++[[package]]
++name = "requests"
++version = "2.33.1"
++description = "Python HTTP for Humans."
++optional = false
++python-versions = ">=3.10"
++files = [
++    {file = "requests-2.33.1-py3-none-any.whl", hash = "sha256:4e6d1ef462f3626a1f0a0a9c42dd93c63bad33f9f1c1937509b8c5c8718ab56a"},
++    {file = "requests-2.33.1.tar.gz", hash = "sha256:18817f8c57c6263968bc123d237e3b8b08ac046f5456bd1e307ee8f4250d3517"},
++]
++
++[package.dependencies]
++certifi = ">=2023.5.7"
++charset_normalizer = ">=2,<4"
++idna = ">=2.5,<4"
++urllib3 = ">=1.26,<3"
++
++[package.extras]
++socks = ["PySocks (>=1.5.6,!=1.5.7)"]
++use-chardet-on-py3 = ["chardet (>=3.0.2,<8)"]
++
+ [[package]]
+ name = "ruff"
+ version = "0.11.5"
+@@ -1248,6 +1407,20 @@ files = [
+     {file = "types_python_dateutil-2.9.0.20260408.tar.gz", hash = "sha256:8b056ec01568674235f64ecbcef928972a5fac412f5aab09c516dfa2acfbb582"},
+ ]
+ 
++[[package]]
++name = "types-requests"
++version = "2.33.0.20260408"
++description = "Typing stubs for requests"
++optional = false
++python-versions = ">=3.10"
++files = [
++    {file = "types_requests-2.33.0.20260408-py3-none-any.whl", hash = "sha256:81f31d5ea4acb39f03be7bc8bed569ba6d5a9c5d97e89f45ac43d819b68ca50f"},
++    {file = "types_requests-2.33.0.20260408.tar.gz", hash = "sha256:95b9a86376807a216b2fb412b47617b202091c3ea7c078f47cc358d5528ccb7b"},
++]
++
++[package.dependencies]
++urllib3 = ">=2"
++
+ [[package]]
+ name = "typing-extensions"
+ version = "4.15.0"
+@@ -1438,4 +1611,4 @@ aiohttp = ["aiohttp", "httpx-aiohttp"]
+ [metadata]
+ lock-version = "2.0"
+ python-versions = "^3.10"
+-content-hash = "02ee31852ff3143d28cf513ee3fa1b514fe2ba936dcffc8ab6cc98f7c9570c01"
++content-hash = "e2541afd91bc09d4197eeb20ce689552c2fba7835992ac58b76873446bec8411"
+diff --git a/pyproject.toml b/pyproject.toml
+index 0130e5f1e11..50e73c9aa2b 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -57,6 +57,8 @@ pytest-xdist = "^3.6.1"
+ python-dateutil = "^2.9.0"
+ types-python-dateutil = "^2.9.0.20240316"
+ urllib3 = ">=1.26.19,<2.0.0 || >=2.2.2,<3.0.0"
++requests = "^2.33.0"
++types-requests = "^2.33.0"
+ ruff = "==0.11.5"
+ 
+ [tool.pytest.ini_options]
+diff --git a/tests/conftest.py b/tests/conftest.py
+index 25710dbe627..9e586af3b2d 100644
+--- a/tests/conftest.py
++++ b/tests/conftest.py
+@@ -1,5 +1,101 @@
++"""
++Pytest plugin that manages the WireMock container lifecycle for wire tests.
++
++This plugin is loaded globally for the test suite and is responsible for
++starting and stopping the WireMock container exactly once per test run,
++including when running with pytest-xdist over the entire project.
++
++It lives under tests/ (as tests/conftest.py) and is discovered automatically
++by pytest's normal test collection rules.
++"""
++
++import os
++import subprocess
++
+ import pytest
+ 
++_STARTED: bool = False
++_EXTERNAL: bool = False  # True when using an external WireMock instance (skip container lifecycle)
++_WIREMOCK_URL: str = "http://localhost:8080"  # Default, will be updated after container starts
++_PROJECT_NAME: str = "seed-api"
++
++# This file lives at tests/conftest.py, so the project root is one level up.
++_PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
++_COMPOSE_FILE = os.path.join(_PROJECT_ROOT, "wiremock", "docker-compose.test.yml")
++
++
++def _get_wiremock_port() -> str:
++    """Gets the dynamically assigned port for the WireMock container."""
++    try:
++        result = subprocess.run(
++            ["docker", "compose", "-f", _COMPOSE_FILE, "-p", _PROJECT_NAME, "port", "wiremock", "8080"],
++            check=True,
++            capture_output=True,
++            text=True,
++        )
++        # Output is like "0.0.0.0:32768" or "[::]:32768"
++        port = result.stdout.strip().split(":")[-1]
++        return port
++    except subprocess.CalledProcessError:
++        return "8080"  # Fallback to default
++
++
++def _start_wiremock() -> None:
++    """Starts the WireMock container using docker-compose."""
++    global _STARTED, _EXTERNAL, _WIREMOCK_URL
++    if _STARTED:
++        return
++
++    # If WIREMOCK_URL is already set (e.g., by CI/CD pipeline), skip container management
++    existing_url = os.environ.get("WIREMOCK_URL")
++    if existing_url:
++        _WIREMOCK_URL = existing_url
++        _EXTERNAL = True
++        _STARTED = True
++        print(f"\nUsing external WireMock at {_WIREMOCK_URL} (container management skipped)")
++        return
++
++    print(f"\nStarting WireMock container (project: {_PROJECT_NAME})...")
++    try:
++        subprocess.run(
++            ["docker", "compose", "-f", _COMPOSE_FILE, "-p", _PROJECT_NAME, "up", "-d", "--wait"],
++            check=True,
++            capture_output=True,
++            text=True,
++        )
++        _WIREMOCK_PORT = _get_wiremock_port()
++        _WIREMOCK_URL = f"http://localhost:{_WIREMOCK_PORT}"
++        os.environ["WIREMOCK_URL"] = _WIREMOCK_URL
++        print(f"WireMock container is ready at {_WIREMOCK_URL}")
++        _STARTED = True
++    except subprocess.CalledProcessError as e:
++        print(f"Failed to start WireMock: {e.stderr}")
++        raise
++
++
++def _stop_wiremock() -> None:
++    """Stops and removes the WireMock container."""
++    if _EXTERNAL:
++        # Container is managed externally; nothing to tear down.
++        return
++
++    print("\nStopping WireMock container...")
++    subprocess.run(
++        ["docker", "compose", "-f", _COMPOSE_FILE, "-p", _PROJECT_NAME, "down", "-v"],
++        check=False,
++        capture_output=True,
++    )
++
++
++def _is_xdist_worker(config: pytest.Config) -> bool:
++    """
++    Determines if the current process is an xdist worker.
++
++    In pytest-xdist, worker processes have a 'workerinput' attribute
++    on the config object, while the controller process does not.
++    """
++    return hasattr(config, "workerinput")
++
+ 
+ def _has_httpx_aiohttp() -> bool:
+     """Check if httpx_aiohttp is importable."""
+@@ -19,3 +115,33 @@ def pytest_collection_modifyitems(config: pytest.Config, items: list) -> None:
+     for item in items:
+         if "aiohttp" in item.keywords:
+             item.add_marker(skip_aiohttp)
++
++
++def pytest_configure(config: pytest.Config) -> None:
++    """
++    Pytest hook that runs during test session setup.
++
++    Starts WireMock container only from the controller process (xdist)
++    or the single process (non-xdist). This ensures only one container
++    is started regardless of the number of worker processes.
++    """
++    if _is_xdist_worker(config):
++        # Workers never manage the container lifecycle.
++        return
++
++    _start_wiremock()
++
++
++def pytest_unconfigure(config: pytest.Config) -> None:
++    """
++    Pytest hook that runs during test session teardown.
++
++    Stops WireMock container only from the controller process (xdist)
++    or the single process (non-xdist). This ensures the container is
++    cleaned up after all workers have finished.
++    """
++    if _is_xdist_worker(config):
++        # Workers never manage the container lifecycle.
++        return
++
++    _stop_wiremock()
+diff --git a/tests/wire/__init__.py b/tests/wire/__init__.py
+new file mode 100644
+index 00000000000..e69de29bb2d
+diff --git a/tests/wire/conftest.py b/tests/wire/conftest.py
+new file mode 100644
+index 00000000000..c6f2eab541c
+--- /dev/null
++++ b/tests/wire/conftest.py
+@@ -0,0 +1,83 @@
++"""
++Pytest configuration for wire tests.
++
++This module provides helpers for creating a configured client that talks to
++WireMock and for verifying requests in WireMock.
++
++The WireMock container lifecycle itself is managed by a top-level pytest
++plugin (tests/conftest.py) so that the container is started exactly once
++per test run, even when using pytest-xdist.
++"""
++
++import inspect
++import os
++from typing import Any, Dict, Optional
++
++import httpx
++
++from seed.client import SeedApi
++
++# Check once at import time whether the client constructor accepts a headers kwarg.
++try:
++    _CLIENT_SUPPORTS_HEADERS: bool = "headers" in inspect.signature(SeedApi).parameters
++except (TypeError, ValueError):
++    _CLIENT_SUPPORTS_HEADERS = False
++
++
++def _get_wiremock_base_url() -> str:
++    """Returns the WireMock base URL from the WIREMOCK_URL environment variable."""
++    return os.environ.get("WIREMOCK_URL", "http://localhost:8080")
++
++
++def get_client(test_id: str) -> SeedApi:
++    """
++    Creates a configured client instance for wire tests.
++
++    Args:
++        test_id: Unique identifier for the test, used for request tracking.
++
++    Returns:
++        A configured client instance with all required auth parameters.
++    """
++    test_headers = {"X-Test-Id": test_id}
++    base_url = _get_wiremock_base_url()
++
++    if _CLIENT_SUPPORTS_HEADERS:
++        return SeedApi(
++            base_url=base_url,
++            headers=test_headers,
++        )
++
++    return SeedApi(
++        base_url=base_url,
++        httpx_client=httpx.Client(headers=test_headers),
++    )
++
++
++def verify_request_count(
++    test_id: str,
++    method: str,
++    url_path: str,
++    query_params: Optional[Dict[str, Any]],
++    expected: int,
++) -> None:
++    """Verifies the number of requests made to WireMock filtered by test ID for concurrency safety."""
++    wiremock_admin_url = f"{_get_wiremock_base_url()}/__admin"
++    request_body: Dict[str, Any] = {
++        "method": method,
++        "urlPath": url_path,
++        "headers": {"X-Test-Id": {"equalTo": test_id}},
++    }
++    if query_params:
++        query_parameters = {}
++        for k, v in query_params.items():
++            if isinstance(v, list):
++                query_parameters[k] = {"hasExactly": [{"equalTo": item} for item in v]}
++            else:
++                query_parameters[k] = {"equalTo": v}
++        request_body["queryParameters"] = query_parameters
++    response = httpx.post(f"{wiremock_admin_url}/requests/find", json=request_body)
++    assert response.status_code == 200, "Failed to query WireMock requests"
++    result = response.json()
++    requests_found = len(result.get("requests", []))
++    assert requests_found == expected, f"Expected {expected} requests, found {requests_found}"
+diff --git a/tests/wire/test_.py b/tests/wire/test_.py
+new file mode 100644
+index 00000000000..2f638bc05b1
+--- /dev/null
++++ b/tests/wire/test_.py
+@@ -0,0 +1,44 @@
++from .conftest import get_client, verify_request_count
++
++
++def test__search_rule_types() -> None:
++    """Test searchRuleTypes endpoint with WireMock"""
++    test_id = "search_rule_types.0"
++    client = get_client(test_id)
++    client.search_rule_types()
++    verify_request_count(test_id, "GET", "/rule-types", None, 1)
++
++
++def test__create_rule() -> None:
++    """Test createRule endpoint with WireMock"""
++    test_id = "create_rule.0"
++    client = get_client(test_id)
++    client.create_rule(
++        name="name",
++        execution_context="prod",
++    )
++    verify_request_count(test_id, "POST", "/rules", None, 1)
++
++
++def test__list_users() -> None:
++    """Test listUsers endpoint with WireMock"""
++    test_id = "list_users.0"
++    client = get_client(test_id)
++    client.list_users()
++    verify_request_count(test_id, "GET", "/users", None, 1)
++
++
++def test__get_entity() -> None:
++    """Test getEntity endpoint with WireMock"""
++    test_id = "get_entity.0"
++    client = get_client(test_id)
++    client.get_entity()
++    verify_request_count(test_id, "GET", "/entities", None, 1)
++
++
++def test__get_organization() -> None:
++    """Test getOrganization endpoint with WireMock"""
++    test_id = "get_organization.0"
++    client = get_client(test_id)
++    client.get_organization()
++    verify_request_count(test_id, "GET", "/organizations", None, 1)
+diff --git a/wiremock/docker-compose.test.yml b/wiremock/docker-compose.test.yml
+new file mode 100644
+index 00000000000..58747d54a46
+--- /dev/null
++++ b/wiremock/docker-compose.test.yml
+@@ -0,0 +1,14 @@
++services:
++  wiremock:
++    image: wiremock/wiremock:3.9.1
++    ports:
++      - "0:8080"  # Use dynamic port to avoid conflicts with concurrent tests
++    volumes:
++      - ./wiremock-mappings.json:/home/wiremock/mappings/wiremock-mappings.json
++    command: ["--global-response-templating", "--verbose"]
++    healthcheck:
++      test: ["CMD", "curl", "-f", "http://localhost:8080/__admin/health"]
++      interval: 2s
++      timeout: 5s
++      retries: 15
++      start_period: 5s
+diff --git a/wiremock/wiremock-mappings.json b/wiremock/wiremock-mappings.json
+new file mode 100644
+index 00000000000..801bfb5883a
+--- /dev/null
++++ b/wiremock/wiremock-mappings.json
+@@ -0,0 +1,141 @@
++{
++  "mappings": [
++    {
++      "id": "19b28390-baa1-4ec9-87a3-cd8485b994a5",
++      "name": "Search rule types with paginated results - default",
++      "request": {
++        "urlPathTemplate": "/rule-types",
++        "method": "GET"
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"paging\": {\n    \"next\": \"next\",\n    \"previous\": \"previous\"\n  },\n  \"results\": [\n    {\n      \"id\": \"id\",\n      \"name\": \"name\",\n      \"description\": \"description\"\n    }\n  ]\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "19b28390-baa1-4ec9-87a3-cd8485b994a5",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      },
++      "postServeActions": []
++    },
++    {
++      "id": "1a934299-52ab-4d86-aa31-9f873790df88",
++      "name": "Create a rule with constrained execution context - default",
++      "request": {
++        "urlPathTemplate": "/rules",
++        "method": "POST"
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"createdBy\": \"createdBy\",\n  \"createdDateTime\": \"2024-01-15T09:30:00Z\",\n  \"modifiedBy\": \"modifiedBy\",\n  \"modifiedDateTime\": \"2024-01-15T09:30:00Z\",\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"status\": \"active\",\n  \"executionContext\": \"prod\"\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "1a934299-52ab-4d86-aa31-9f873790df88",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    },
++    {
++      "id": "c4083f9d-e8ad-4944-abe5-163125679505",
++      "name": "List users with paginated results - default",
++      "request": {
++        "urlPathTemplate": "/users",
++        "method": "GET"
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"paging\": {\n    \"next\": \"next\",\n    \"previous\": \"previous\"\n  },\n  \"results\": [\n    {\n      \"id\": \"id\",\n      \"email\": \"email\"\n    }\n  ]\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "c4083f9d-e8ad-4944-abe5-163125679505",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      },
++      "postServeActions": []
++    },
++    {
++      "id": "7461b7cd-2c2b-4dfe-bde6-5152d19378a2",
++      "name": "Get an entity that combines multiple parents - default",
++      "request": {
++        "urlPathTemplate": "/entities",
++        "method": "GET"
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"summary\": \"summary\",\n  \"status\": \"active\"\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "7461b7cd-2c2b-4dfe-bde6-5152d19378a2",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      },
++      "postServeActions": []
++    },
++    {
++      "id": "1c7f93bf-abf3-4466-99e9-5e2b1de4aac3",
++      "name": "Get an organization with merged object-typed properties - default",
++      "request": {
++        "urlPathTemplate": "/organizations",
++        "method": "GET"
++      },
++      "response": {
++        "status": 200,
++        "body": "{\n  \"id\": \"id\",\n  \"metadata\": {\n    \"region\": \"region\",\n    \"domain\": \"domain\"\n  },\n  \"name\": \"name\"\n}",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "1c7f93bf-abf3-4466-99e9-5e2b1de4aac3",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      },
++      "postServeActions": []
++    }
++  ],
++  "meta": {
++    "total": 5
++  }
++}
+\ No newline at end of file

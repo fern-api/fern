@@ -1,0 +1,17 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_retries.getUsers"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedNoRetries;\n\nvar client = new SeedNoRetriesClient();\nawait client.Retries.GetUsersAsync();\n"
+            }
+        }
+    ]
+}

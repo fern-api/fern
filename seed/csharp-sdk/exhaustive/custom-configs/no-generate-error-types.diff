@@ -1,0 +1,242 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 200d96787a2..366d060a2dc 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,7 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-csharp-sdk",
+   "generatorVersion": "local",
+-  "generatorConfig": {},
++  "generatorConfig": {
++    "generate-error-types": false
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "manual",
+diff --git a/src/SeedExhaustive/Endpoints/Params/ParamsClient.cs b/src/SeedExhaustive/Endpoints/Params/ParamsClient.cs
+index d1be38c929f..8ee8512ed85 100644
+--- a/src/SeedExhaustive/Endpoints/Params/ParamsClient.cs
++++ b/src/SeedExhaustive/Endpoints/Params/ParamsClient.cs
+@@ -487,20 +487,6 @@ public partial class ParamsClient : IParamsClient
+             var responseBody = await response
+                 .Raw.Content.ReadAsStringAsync(cancellationToken)
+                 .ConfigureAwait(false);
+-            try
+-            {
+-                switch (response.StatusCode)
+-                {
+-                    case 400:
+-                        throw new BadRequestBody(
+-                            JsonUtils.Deserialize<BadObjectRequestInfo>(responseBody)
+-                        );
+-                }
+-            }
+-            catch (JsonException)
+-            {
+-                // unable to map error response, throwing generic error
+-            }
+             throw new SeedExhaustiveApiException(
+                 $"Error with status code {response.StatusCode}",
+                 response.StatusCode,
+diff --git a/src/SeedExhaustive/GeneralErrors/Exceptions/BadRequestBody.cs b/src/SeedExhaustive/GeneralErrors/Exceptions/BadRequestBody.cs
+deleted file mode 100644
+index 7122a4ef3ff..00000000000
+--- a/src/SeedExhaustive/GeneralErrors/Exceptions/BadRequestBody.cs
++++ /dev/null
+@@ -1,14 +0,0 @@
+-namespace SeedExhaustive;
+-
+-/// <summary>
+-/// This exception type will be thrown for any non-2XX API responses.
+-/// </summary>
+-[Serializable]
+-public class BadRequestBody(BadObjectRequestInfo body)
+-    : SeedExhaustiveApiException("BadRequestBody", 400, body)
+-{
+-    /// <summary>
+-    /// The body of the response that triggered the exception.
+-    /// </summary>
+-    public new BadObjectRequestInfo Body => body;
+-}
+diff --git a/src/SeedExhaustive/InlinedRequests/InlinedRequestsClient.cs b/src/SeedExhaustive/InlinedRequests/InlinedRequestsClient.cs
+index 2ca49d24baf..eab4387a245 100644
+--- a/src/SeedExhaustive/InlinedRequests/InlinedRequestsClient.cs
++++ b/src/SeedExhaustive/InlinedRequests/InlinedRequestsClient.cs
+@@ -73,20 +73,6 @@ public partial class InlinedRequestsClient : IInlinedRequestsClient
+             var responseBody = await response
+                 .Raw.Content.ReadAsStringAsync(cancellationToken)
+                 .ConfigureAwait(false);
+-            try
+-            {
+-                switch (response.StatusCode)
+-                {
+-                    case 400:
+-                        throw new BadRequestBody(
+-                            JsonUtils.Deserialize<BadObjectRequestInfo>(responseBody)
+-                        );
+-                }
+-            }
+-            catch (JsonException)
+-            {
+-                // unable to map error response, throwing generic error
+-            }
+             throw new SeedExhaustiveApiException(
+                 $"Error with status code {response.StatusCode}",
+                 response.StatusCode,
+diff --git a/src/SeedExhaustive/NoAuth/NoAuthClient.cs b/src/SeedExhaustive/NoAuth/NoAuthClient.cs
+index 05380906360..bf1ebe4c5c9 100644
+--- a/src/SeedExhaustive/NoAuth/NoAuthClient.cs
++++ b/src/SeedExhaustive/NoAuth/NoAuthClient.cs
+@@ -70,20 +70,6 @@ public partial class NoAuthClient : INoAuthClient
+             var responseBody = await response
+                 .Raw.Content.ReadAsStringAsync(cancellationToken)
+                 .ConfigureAwait(false);
+-            try
+-            {
+-                switch (response.StatusCode)
+-                {
+-                    case 400:
+-                        throw new BadRequestBody(
+-                            JsonUtils.Deserialize<BadObjectRequestInfo>(responseBody)
+-                        );
+-                }
+-            }
+-            catch (JsonException)
+-            {
+-                // unable to map error response, throwing generic error
+-            }
+             throw new SeedExhaustiveApiException(
+                 $"Error with status code {response.StatusCode}",
+                 response.StatusCode,
+diff --git a/src/SeedExhaustive/Types/Enum/Exceptions/ErrorWithEnumBody.cs b/src/SeedExhaustive/Types/Enum/Exceptions/ErrorWithEnumBody.cs
+deleted file mode 100644
+index a4e74508f1e..00000000000
+--- a/src/SeedExhaustive/Types/Enum/Exceptions/ErrorWithEnumBody.cs
++++ /dev/null
+@@ -1,16 +0,0 @@
+-using SeedExhaustive;
+-
+-namespace SeedExhaustive.Types;
+-
+-/// <summary>
+-/// This exception type will be thrown for any non-2XX API responses.
+-/// </summary>
+-[Serializable]
+-public class ErrorWithEnumBody(WeatherReport body)
+-    : SeedExhaustiveApiException("ErrorWithEnumBody", 400, body)
+-{
+-    /// <summary>
+-    /// The body of the response that triggered the exception.
+-    /// </summary>
+-    public new WeatherReport Body => body;
+-}
+diff --git a/src/SeedExhaustive/Types/Object/Exceptions/NestedObjectWithOptionalFieldError.cs b/src/SeedExhaustive/Types/Object/Exceptions/NestedObjectWithOptionalFieldError.cs
+deleted file mode 100644
+index bbc4069efe9..00000000000
+--- a/src/SeedExhaustive/Types/Object/Exceptions/NestedObjectWithOptionalFieldError.cs
++++ /dev/null
+@@ -1,16 +0,0 @@
+-using SeedExhaustive;
+-
+-namespace SeedExhaustive.Types;
+-
+-/// <summary>
+-/// This exception type will be thrown for any non-2XX API responses.
+-/// </summary>
+-[Serializable]
+-public class NestedObjectWithOptionalFieldError(NestedObjectWithOptionalField body)
+-    : SeedExhaustiveApiException("NestedObjectWithOptionalFieldError", 400, body)
+-{
+-    /// <summary>
+-    /// The body of the response that triggered the exception.
+-    /// </summary>
+-    public new NestedObjectWithOptionalField Body => body;
+-}
+diff --git a/src/SeedExhaustive/Types/Object/Exceptions/NestedObjectWithRequiredFieldError.cs b/src/SeedExhaustive/Types/Object/Exceptions/NestedObjectWithRequiredFieldError.cs
+deleted file mode 100644
+index 50fa932ecfd..00000000000
+--- a/src/SeedExhaustive/Types/Object/Exceptions/NestedObjectWithRequiredFieldError.cs
++++ /dev/null
+@@ -1,16 +0,0 @@
+-using SeedExhaustive;
+-
+-namespace SeedExhaustive.Types;
+-
+-/// <summary>
+-/// This exception type will be thrown for any non-2XX API responses.
+-/// </summary>
+-[Serializable]
+-public class NestedObjectWithRequiredFieldError(NestedObjectWithRequiredField body)
+-    : SeedExhaustiveApiException("NestedObjectWithRequiredFieldError", 400, body)
+-{
+-    /// <summary>
+-    /// The body of the response that triggered the exception.
+-    /// </summary>
+-    public new NestedObjectWithRequiredField Body => body;
+-}
+diff --git a/src/SeedExhaustive/Types/Object/Exceptions/ObjectWithOptionalFieldError.cs b/src/SeedExhaustive/Types/Object/Exceptions/ObjectWithOptionalFieldError.cs
+deleted file mode 100644
+index efb79a542bd..00000000000
+--- a/src/SeedExhaustive/Types/Object/Exceptions/ObjectWithOptionalFieldError.cs
++++ /dev/null
+@@ -1,16 +0,0 @@
+-using SeedExhaustive;
+-
+-namespace SeedExhaustive.Types;
+-
+-/// <summary>
+-/// This exception type will be thrown for any non-2XX API responses.
+-/// </summary>
+-[Serializable]
+-public class ObjectWithOptionalFieldError(ObjectWithOptionalField body)
+-    : SeedExhaustiveApiException("ObjectWithOptionalFieldError", 400, body)
+-{
+-    /// <summary>
+-    /// The body of the response that triggered the exception.
+-    /// </summary>
+-    public new ObjectWithOptionalField Body => body;
+-}
+diff --git a/src/SeedExhaustive/Types/Object/Exceptions/ObjectWithRequiredFieldError.cs b/src/SeedExhaustive/Types/Object/Exceptions/ObjectWithRequiredFieldError.cs
+deleted file mode 100644
+index 09a6a607cf4..00000000000
+--- a/src/SeedExhaustive/Types/Object/Exceptions/ObjectWithRequiredFieldError.cs
++++ /dev/null
+@@ -1,16 +0,0 @@
+-using SeedExhaustive;
+-
+-namespace SeedExhaustive.Types;
+-
+-/// <summary>
+-/// This exception type will be thrown for any non-2XX API responses.
+-/// </summary>
+-[Serializable]
+-public class ObjectWithRequiredFieldError(ObjectWithRequiredField body)
+-    : SeedExhaustiveApiException("ObjectWithRequiredFieldError", 400, body)
+-{
+-    /// <summary>
+-    /// The body of the response that triggered the exception.
+-    /// </summary>
+-    public new ObjectWithRequiredField Body => body;
+-}
+diff --git a/src/SeedExhaustive/Types/Union/Exceptions/ErrorWithUnionBody.cs b/src/SeedExhaustive/Types/Union/Exceptions/ErrorWithUnionBody.cs
+deleted file mode 100644
+index b1fca231e1b..00000000000
+--- a/src/SeedExhaustive/Types/Union/Exceptions/ErrorWithUnionBody.cs
++++ /dev/null
+@@ -1,16 +0,0 @@
+-using SeedExhaustive;
+-
+-namespace SeedExhaustive.Types;
+-
+-/// <summary>
+-/// This exception type will be thrown for any non-2XX API responses.
+-/// </summary>
+-[Serializable]
+-public class ErrorWithUnionBody(Animal body)
+-    : SeedExhaustiveApiException("ErrorWithUnionBody", 400, body)
+-{
+-    /// <summary>
+-    /// The body of the response that triggered the exception.
+-    /// </summary>
+-    public new Animal Body => body;
+-}

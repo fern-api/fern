@@ -1,0 +1,1070 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 72f1d627c73..f6ec656ea5d 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-rust-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "enableWebsockets": true
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "manual",
+diff --git a/Cargo.toml b/Cargo.toml
+index 5c41ba07788..f9e406f1ca5 100644
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -13,12 +13,18 @@ doctest = false
+ [dependencies]
+ bytes = "1.0"
+ futures = "0.3"
++rand = { version = "0.9", optional = true }
+ reqwest = { version = "0.12", features = ["json", "stream"], default-features = false }
+ serde = { version = "1.0", features = ["derive"] }
+ serde_json = "1.0"
+ thiserror = "1.0"
+ tokio = { version = "1.0", features = ["full"] }
++tokio-tungstenite = { version = "0.24", features = ["native-tls"], optional = true }
++urlencoding = { version = "2.1", optional = true }
+ 
+ [dev-dependencies]
+ tokio-test = "0.4"
+ 
++[features]
++default = ["websocket"]
++websocket = ["tokio-tungstenite", "urlencoding", "rand"]
+diff --git a/README.md b/README.md
+new file mode 100644
+index 00000000000..9ef33c219f0
+--- /dev/null
++++ b/README.md
+@@ -0,0 +1,73 @@
++# Seed Rust Library
++
++[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FRust)
++[![crates.io shield](https://img.shields.io/crates/v/seed_websocket_bearer_auth)](https://crates.io/crates/seed_websocket_bearer_auth)
++
++The Seed Rust library provides convenient access to the Seed APIs from Rust.
++
++## Table of Contents
++
++- [Installation](#installation)
++- [Reference](#reference)
++- [Websockets](#websockets)
++- [Contributing](#contributing)
++
++## Installation
++
++Add this to your `Cargo.toml`:
++
++```toml
++[dependencies]
++seed_websocket_bearer_auth = "0.0.1"
++```
++
++Or install via cargo:
++
++```sh
++cargo add seed_websocket_bearer_auth
++```
++
++## Reference
++
++A full reference for this library is available [here](./reference.md).
++
++## Websockets
++
++The SDK supports WebSocket connections for real-time communication. Use the generated channel clients to connect, send, and receive messages.
++
++```rust
++use seed_websocket_bearer_auth::prelude::*;
++
++let client = WebsocketBearerAuthClient::new(ClientConfig {
++    token: Some("your-api-key".to_string()),
++    ..Default::default()
++})
++.expect("Failed to create client");
++
++// Connect to the WebSocket
++let mut realtime_no_auth = client.realtime_no_auth.connect(
++    "session_id",
++    None,
++).await.expect("Failed to connect");
++
++// Iterate over messages as they arrive
++while let Some(Ok(message)) = realtime_no_auth.recv().await {
++    println!("{:?}", message);
++}
++
++// Send a message
++realtime_no_auth.send_send(&NoAuthSendEvent { /* fields */ }).await.expect("Failed to send");
++
++// Close the connection when done
++realtime_no_auth.close().await.expect("Failed to close");
++```
++
++## Contributing
++
++While we value open-source contributions to this SDK, this library is generated programmatically.
++Additions made directly to this library would have to be moved over to our generation code,
++otherwise they would be overwritten upon the next generated release. Feel free to open a PR as
++a proof of concept, but know that we will not be able to merge it as-is. We suggest opening
++an issue first to discuss with us!
++
++On the other hand, contributions to the README are always very welcome!
+diff --git a/src/api/mod.rs b/src/api/mod.rs
+index 95afd9881db..c743c5bcf20 100644
+--- a/src/api/mod.rs
++++ b/src/api/mod.rs
+@@ -7,9 +7,11 @@
+ //!
+ //! - [`resources`] - Service clients and endpoints
+ //! - [`types`] - Request, response, and model types
++//! - [`websocket`] - WebSocket channel clients
+ 
+ pub mod resources;
+ pub mod types;
++pub mod websocket;
+ 
+ pub use resources::WebsocketBearerAuthClient;
+ pub use types::*;
+diff --git a/src/api/resources/mod.rs b/src/api/resources/mod.rs
+index a8846c1bfd2..ed87792bf91 100644
+--- a/src/api/resources/mod.rs
++++ b/src/api/resources/mod.rs
+@@ -2,16 +2,35 @@
+ //!
+ //! This module provides the client implementations for all available services.
+ 
++use crate::api::websocket::{RealtimeConnector, RealtimeNoAuthConnector};
+ use crate::{ApiError, ClientConfig};
+ 
+ pub struct WebsocketBearerAuthClient {
+     pub config: ClientConfig,
++    pub realtime_no_auth: RealtimeNoAuthConnector,
++    pub realtime: RealtimeConnector,
+ }
+ 
+ impl WebsocketBearerAuthClient {
+     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
+         Ok(Self {
+             config: config.clone(),
++            realtime_no_auth: RealtimeNoAuthConnector::new(
++                config.base_url.clone(),
++                config
++                    .api_key
++                    .as_ref()
++                    .map(|k| k.to_string())
++                    .or_else(|| config.token.as_ref().map(|t| format!("Bearer {}", t))),
++            ),
++            realtime: RealtimeConnector::new(
++                config.base_url.clone(),
++                config
++                    .api_key
++                    .as_ref()
++                    .map(|k| k.to_string())
++                    .or_else(|| config.token.as_ref().map(|t| format!("Bearer {}", t))),
++            ),
+         })
+     }
+ }
+diff --git a/src/api/websocket/mod.rs b/src/api/websocket/mod.rs
+new file mode 100644
+index 00000000000..98db889a5f3
+--- /dev/null
++++ b/src/api/websocket/mod.rs
+@@ -0,0 +1,12 @@
++//! WebSocket channel clients
++
++pub mod realtime;
++pub mod realtime_no_auth;
++pub use realtime::RealtimeClient;
++pub use realtime::RealtimeConnectOptions;
++pub use realtime::RealtimeConnector;
++pub use realtime::RealtimeServerMessage;
++pub use realtime_no_auth::RealtimeNoAuthClient;
++pub use realtime_no_auth::RealtimeNoAuthConnectOptions;
++pub use realtime_no_auth::RealtimeNoAuthConnector;
++pub use realtime_no_auth::RealtimeNoAuthServerMessage;
+diff --git a/src/api/websocket/realtime.rs b/src/api/websocket/realtime.rs
+new file mode 100644
+index 00000000000..e3138d2ac38
+--- /dev/null
++++ b/src/api/websocket/realtime.rs
+@@ -0,0 +1,202 @@
++use crate::prelude::*;
++use crate::{ApiError, QueryBuilder, WebSocketClient, WebSocketMessage, WebSocketOptions};
++use serde::{Deserialize, Serialize};
++use tokio::sync::mpsc;
++
++#[derive(Debug, Clone, Default, Serialize, Deserialize)]
++pub struct RealtimeConnectOptions {
++    pub model: Option<String>,
++    pub temperature: Option<i64>,
++}
++#[derive(Debug, Clone, PartialEq, Serialize)]
++#[serde(untagged)]
++pub enum RealtimeServerMessage {
++    ReceiveEvent(ReceiveEvent),
++    ReceiveSnakeCase(ReceiveSnakeCase),
++    ReceiveEvent2(ReceiveEvent2),
++    ReceiveEvent3(ReceiveEvent3),
++    /// Unknown or new server message type not yet supported by this SDK version.
++    Unknown(serde_json::Value),
++}
++
++impl<'de> Deserialize<'de> for RealtimeServerMessage {
++    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
++    where
++        D: serde::Deserializer<'de>,
++    {
++        let value = serde_json::Value::deserialize(deserializer)?;
++
++        let original_keys: std::collections::BTreeSet<String> = value
++            .as_object()
++            .map(|o| o.keys().cloned().collect())
++            .unwrap_or_default();
++
++        if original_keys.is_empty() {
++            return Ok(Self::Unknown(value));
++        }
++
++        let mut best_variant: Option<Self> = None;
++        let mut best_score: usize = 0;
++
++        if let Ok(v) = serde_json::from_value::<ReceiveEvent>(value.clone()) {
++            if let Ok(re) = serde_json::to_value(&v) {
++                let score = re
++                    .as_object()
++                    .map(|o| {
++                        o.keys()
++                            .filter(|k| original_keys.contains(k.as_str()))
++                            .count()
++                    })
++                    .unwrap_or(0);
++                if score > best_score {
++                    best_score = score;
++                    best_variant = Some(Self::ReceiveEvent(v));
++                }
++            }
++        }
++
++        if let Ok(v) = serde_json::from_value::<ReceiveSnakeCase>(value.clone()) {
++            if let Ok(re) = serde_json::to_value(&v) {
++                let score = re
++                    .as_object()
++                    .map(|o| {
++                        o.keys()
++                            .filter(|k| original_keys.contains(k.as_str()))
++                            .count()
++                    })
++                    .unwrap_or(0);
++                if score > best_score {
++                    best_score = score;
++                    best_variant = Some(Self::ReceiveSnakeCase(v));
++                }
++            }
++        }
++
++        if let Ok(v) = serde_json::from_value::<ReceiveEvent2>(value.clone()) {
++            if let Ok(re) = serde_json::to_value(&v) {
++                let score = re
++                    .as_object()
++                    .map(|o| {
++                        o.keys()
++                            .filter(|k| original_keys.contains(k.as_str()))
++                            .count()
++                    })
++                    .unwrap_or(0);
++                if score > best_score {
++                    best_score = score;
++                    best_variant = Some(Self::ReceiveEvent2(v));
++                }
++            }
++        }
++
++        if let Ok(v) = serde_json::from_value::<ReceiveEvent3>(value.clone()) {
++            if let Ok(re) = serde_json::to_value(&v) {
++                let score = re
++                    .as_object()
++                    .map(|o| {
++                        o.keys()
++                            .filter(|k| original_keys.contains(k.as_str()))
++                            .count()
++                    })
++                    .unwrap_or(0);
++                if score > best_score {
++                    best_score = score;
++                    best_variant = Some(Self::ReceiveEvent3(v));
++                }
++            }
++        }
++
++        let _ = best_score;
++        Ok(best_variant.unwrap_or(Self::Unknown(value)))
++    }
++}
++pub struct RealtimeClient {
++    ws: WebSocketClient,
++    incoming_rx: mpsc::UnboundedReceiver<Result<WebSocketMessage, ApiError>>,
++}
++impl RealtimeClient {
++    pub async fn connect(
++        url: &str,
++        session_id: &str,
++        authorization: Option<&str>,
++        options: &RealtimeConnectOptions,
++    ) -> Result<Self, ApiError> {
++        let full_url = format!("{}/realtime/{session_id}", url);
++        let mut ws_options = WebSocketOptions::default();
++        if let Some(auth) = authorization {
++            ws_options
++                .headers
++                .insert("Authorization".to_string(), auth.to_string());
++        }
++        ws_options.query_params = QueryBuilder::new()
++            .string("model", options.model.clone())
++            .int("temperature", options.temperature.clone())
++            .build()
++            .unwrap_or_default();
++        let (ws, incoming_rx) = WebSocketClient::connect(&full_url, ws_options).await?;
++        Ok(Self { ws, incoming_rx })
++    }
++
++    pub async fn send_send(&self, message: &SendEvent) -> Result<(), ApiError> {
++        self.ws.send_json(message).await
++    }
++
++    pub async fn send_send_snake_case(&self, message: &SendSnakeCase) -> Result<(), ApiError> {
++        self.ws.send_json(message).await
++    }
++
++    pub async fn send_send_2(&self, message: &SendEvent2) -> Result<(), ApiError> {
++        self.ws.send_json(message).await
++    }
++
++    pub async fn recv(&mut self) -> Option<Result<RealtimeServerMessage, ApiError>> {
++        match self.incoming_rx.recv().await {
++            Some(Ok(WebSocketMessage::Text(raw))) => Some(
++                serde_json::from_str::<RealtimeServerMessage>(&raw)
++                    .map_err(ApiError::Serialization),
++            ),
++            Some(Ok(WebSocketMessage::Binary(data))) => {
++                Some(Err(ApiError::WebSocketError(format!(
++                    "Received unexpected binary frame ({} bytes) on a JSON-only channel",
++                    data.len()
++                ))))
++            }
++            Some(Ok(WebSocketMessage::Close(_))) => None,
++            Some(Err(e)) => Some(Err(e)),
++            None => None,
++        }
++    }
++
++    pub async fn close(&self) -> Result<(), ApiError> {
++        self.ws.close().await
++    }
++}
++/// Connector for the Realtime WebSocket channel.
++/// Provides access to the WebSocket channel through the root client.
++pub struct RealtimeConnector {
++    base_url: String,
++    auth_header: Option<String>,
++}
++
++impl RealtimeConnector {
++    pub fn new(base_url: String, auth_header: Option<String>) -> Self {
++        Self {
++            base_url,
++            auth_header,
++        }
++    }
++
++    pub async fn connect(
++        &self,
++        session_id: &str,
++        options: &RealtimeConnectOptions,
++    ) -> Result<RealtimeClient, ApiError> {
++        RealtimeClient::connect(
++            &self.base_url,
++            session_id,
++            self.auth_header.as_deref(),
++            options,
++        )
++        .await
++    }
++}
+diff --git a/src/api/websocket/realtime_no_auth.rs b/src/api/websocket/realtime_no_auth.rs
+new file mode 100644
+index 00000000000..6e4188dfe14
+--- /dev/null
++++ b/src/api/websocket/realtime_no_auth.rs
+@@ -0,0 +1,138 @@
++use crate::prelude::*;
++use crate::{ApiError, QueryBuilder, WebSocketClient, WebSocketMessage, WebSocketOptions};
++use serde::{Deserialize, Serialize};
++use tokio::sync::mpsc;
++
++#[derive(Debug, Clone, Default, Serialize, Deserialize)]
++pub struct RealtimeNoAuthConnectOptions {
++    pub model: Option<String>,
++}
++#[derive(Debug, Clone, PartialEq, Serialize)]
++#[serde(untagged)]
++pub enum RealtimeNoAuthServerMessage {
++    NoAuthReceiveEvent(NoAuthReceiveEvent),
++    /// Unknown or new server message type not yet supported by this SDK version.
++    Unknown(serde_json::Value),
++}
++
++impl<'de> Deserialize<'de> for RealtimeNoAuthServerMessage {
++    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
++    where
++        D: serde::Deserializer<'de>,
++    {
++        let value = serde_json::Value::deserialize(deserializer)?;
++
++        let original_keys: std::collections::BTreeSet<String> = value
++            .as_object()
++            .map(|o| o.keys().cloned().collect())
++            .unwrap_or_default();
++
++        if original_keys.is_empty() {
++            return Ok(Self::Unknown(value));
++        }
++
++        let mut best_variant: Option<Self> = None;
++        let mut best_score: usize = 0;
++
++        if let Ok(v) = serde_json::from_value::<NoAuthReceiveEvent>(value.clone()) {
++            if let Ok(re) = serde_json::to_value(&v) {
++                let score = re
++                    .as_object()
++                    .map(|o| {
++                        o.keys()
++                            .filter(|k| original_keys.contains(k.as_str()))
++                            .count()
++                    })
++                    .unwrap_or(0);
++                if score > best_score {
++                    best_score = score;
++                    best_variant = Some(Self::NoAuthReceiveEvent(v));
++                }
++            }
++        }
++
++        let _ = best_score;
++        Ok(best_variant.unwrap_or(Self::Unknown(value)))
++    }
++}
++pub struct RealtimeNoAuthClient {
++    ws: WebSocketClient,
++    incoming_rx: mpsc::UnboundedReceiver<Result<WebSocketMessage, ApiError>>,
++}
++impl RealtimeNoAuthClient {
++    pub async fn connect(
++        url: &str,
++        session_id: &str,
++        authorization: Option<&str>,
++        options: &RealtimeNoAuthConnectOptions,
++    ) -> Result<Self, ApiError> {
++        let full_url = format!("{}/realtime-no-auth/{session_id}", url);
++        let mut ws_options = WebSocketOptions::default();
++        if let Some(auth) = authorization {
++            ws_options
++                .headers
++                .insert("Authorization".to_string(), auth.to_string());
++        }
++        ws_options.query_params = QueryBuilder::new()
++            .string("model", options.model.clone())
++            .build()
++            .unwrap_or_default();
++        let (ws, incoming_rx) = WebSocketClient::connect(&full_url, ws_options).await?;
++        Ok(Self { ws, incoming_rx })
++    }
++
++    pub async fn send_send(&self, message: &NoAuthSendEvent) -> Result<(), ApiError> {
++        self.ws.send_json(message).await
++    }
++
++    pub async fn recv(&mut self) -> Option<Result<RealtimeNoAuthServerMessage, ApiError>> {
++        match self.incoming_rx.recv().await {
++            Some(Ok(WebSocketMessage::Text(raw))) => Some(
++                serde_json::from_str::<RealtimeNoAuthServerMessage>(&raw)
++                    .map_err(ApiError::Serialization),
++            ),
++            Some(Ok(WebSocketMessage::Binary(data))) => {
++                Some(Err(ApiError::WebSocketError(format!(
++                    "Received unexpected binary frame ({} bytes) on a JSON-only channel",
++                    data.len()
++                ))))
++            }
++            Some(Ok(WebSocketMessage::Close(_))) => None,
++            Some(Err(e)) => Some(Err(e)),
++            None => None,
++        }
++    }
++
++    pub async fn close(&self) -> Result<(), ApiError> {
++        self.ws.close().await
++    }
++}
++/// Connector for the RealtimeNoAuth WebSocket channel.
++/// Provides access to the WebSocket channel through the root client.
++pub struct RealtimeNoAuthConnector {
++    base_url: String,
++    auth_header: Option<String>,
++}
++
++impl RealtimeNoAuthConnector {
++    pub fn new(base_url: String, auth_header: Option<String>) -> Self {
++        Self {
++            base_url,
++            auth_header,
++        }
++    }
++
++    pub async fn connect(
++        &self,
++        session_id: &str,
++        options: &RealtimeNoAuthConnectOptions,
++    ) -> Result<RealtimeNoAuthClient, ApiError> {
++        RealtimeNoAuthClient::connect(
++            &self.base_url,
++            session_id,
++            self.auth_header.as_deref(),
++            options,
++        )
++        .await
++    }
++}
+diff --git a/src/core/mod.rs b/src/core/mod.rs
+index 95f2bf66852..31633e38f7a 100644
+--- a/src/core/mod.rs
++++ b/src/core/mod.rs
+@@ -6,6 +6,8 @@ pub mod pagination;
+ mod query_parameter_builder;
+ mod request_options;
+ mod utils;
++#[cfg(feature = "websocket")]
++mod websocket;
+ 
+ pub use http_client::{ByteStream, HttpClient, OAuthConfig, RawResponse};
+ pub use oauth_token_provider::OAuthTokenProvider;
+@@ -13,3 +15,7 @@ pub use pagination::{AsyncPaginator, PaginationResult, SyncPaginator};
+ pub use query_parameter_builder::{parse_structured_query, QueryBuilder, QueryBuilderError};
+ pub use request_options::RequestOptions;
+ pub use utils::join_url;
++#[cfg(feature = "websocket")]
++pub use websocket::{
++    DisconnectInfo, WebSocketClient, WebSocketMessage, WebSocketOptions, WebSocketState,
++};
+diff --git a/src/core/websocket.rs b/src/core/websocket.rs
+new file mode 100644
+index 00000000000..e5842c5eebf
+--- /dev/null
++++ b/src/core/websocket.rs
+@@ -0,0 +1,488 @@
++use crate::ApiError;
++use futures::{
++    stream::{SplitSink, SplitStream},
++    SinkExt, StreamExt,
++};
++use rand::Rng;
++use serde::Serialize;
++use std::{
++    collections::{HashMap, VecDeque},
++    sync::Arc,
++    time::Duration,
++};
++use tokio::sync::{mpsc, Mutex, Notify};
++use tokio_tungstenite::{
++    connect_async,
++    tungstenite::{
++        client::IntoClientRequest,
++        http::{HeaderName, HeaderValue, Uri},
++        protocol::Message,
++    },
++    MaybeTlsStream, WebSocketStream,
++};
++
++type WsStream = WebSocketStream<MaybeTlsStream<tokio::net::TcpStream>>;
++type WsSink = SplitSink<WsStream, Message>;
++type WsSource = SplitStream<WsStream>;
++
++/// Information about why a WebSocket connection was closed.
++#[derive(Debug, Clone)]
++pub struct DisconnectInfo {
++    /// The WebSocket close code (e.g., 1000 for normal closure).
++    pub code: Option<u16>,
++    /// The close reason string from the server.
++    pub reason: Option<String>,
++}
++
++#[derive(Debug, Clone)]
++pub enum WebSocketMessage {
++    Text(String),
++    Binary(Vec<u8>),
++    /// The connection was closed. Contains the close code and reason if provided.
++    Close(DisconnectInfo),
++}
++
++#[derive(Debug, Clone, Copy, PartialEq, Eq)]
++pub enum WebSocketState {
++    Connecting,
++    Open,
++    Closing,
++    Closed,
++}
++
++#[derive(Debug, Clone)]
++pub struct WebSocketOptions {
++    pub headers: HashMap<String, String>,
++    pub query_params: Vec<(String, String)>,
++    pub reconnect: bool,
++    pub max_reconnect_attempts: u32,
++    pub min_reconnect_delay: Duration,
++    pub max_reconnect_delay: Duration,
++    pub reconnect_delay_growth_factor: f64,
++    pub connection_timeout: Duration,
++    pub max_queued_messages: usize,
++}
++
++impl Default for WebSocketOptions {
++    fn default() -> Self {
++        Self {
++            headers: HashMap::new(),
++            query_params: Vec::new(),
++            reconnect: true,
++            max_reconnect_attempts: 5,
++            min_reconnect_delay: Duration::from_secs(1),
++            max_reconnect_delay: Duration::from_secs(10),
++            reconnect_delay_growth_factor: 1.3,
++            connection_timeout: Duration::from_secs(10),
++            max_queued_messages: 1000,
++        }
++    }
++}
++
++/// Shared reconnection state passed between `read_loop` and `try_reconnect`,
++/// grouping the Arc-wrapped fields that both functions need.
++struct ReconnectContext {
++    sink: Arc<Mutex<Option<WsSink>>>,
++    state: Arc<Mutex<WebSocketState>>,
++    close_notify: Arc<Notify>,
++    incoming_tx: mpsc::UnboundedSender<Result<WebSocketMessage, ApiError>>,
++    url: String,
++    options: WebSocketOptions,
++    text_queue: Arc<Mutex<VecDeque<String>>>,
++    binary_queue: Arc<Mutex<VecDeque<Vec<u8>>>>,
++}
++
++pub struct WebSocketClient {
++    url: String,
++    options: WebSocketOptions,
++    sink: Arc<Mutex<Option<WsSink>>>,
++    state: Arc<Mutex<WebSocketState>>,
++    close_notify: Arc<Notify>,
++    text_queue: Arc<Mutex<VecDeque<String>>>,
++    binary_queue: Arc<Mutex<VecDeque<Vec<u8>>>>,
++}
++
++impl WebSocketClient {
++    pub async fn connect(
++        url: &str,
++        options: WebSocketOptions,
++    ) -> Result<
++        (
++            Self,
++            mpsc::UnboundedReceiver<Result<WebSocketMessage, ApiError>>,
++        ),
++        ApiError,
++    > {
++        let (incoming_tx, incoming_rx) = mpsc::unbounded_channel();
++
++        let full_url = Self::build_ws_url(url, &options.query_params);
++        let sink = Arc::new(Mutex::new(None));
++
++        let read = Self::open_connection(&full_url, &options, &sink).await?;
++
++        let client = Self {
++            url: url.to_string(),
++            options: options.clone(),
++            sink: sink.clone(),
++            state: Arc::new(Mutex::new(WebSocketState::Open)),
++            close_notify: Arc::new(Notify::new()),
++            text_queue: Arc::new(Mutex::new(VecDeque::new())),
++            binary_queue: Arc::new(Mutex::new(VecDeque::new())),
++        };
++
++        let ctx = ReconnectContext {
++            sink,
++            state: client.state.clone(),
++            close_notify: client.close_notify.clone(),
++            incoming_tx,
++            url: client.url.clone(),
++            options: client.options.clone(),
++            text_queue: client.text_queue.clone(),
++            binary_queue: client.binary_queue.clone(),
++        };
++
++        tokio::spawn(async move {
++            Self::read_loop(read, ctx).await;
++        });
++
++        Ok((client, incoming_rx))
++    }
++
++    /// Shared connection logic used by both initial connect and reconnect.
++    async fn open_connection(
++        full_url: &str,
++        options: &WebSocketOptions,
++        sink: &Arc<Mutex<Option<WsSink>>>,
++    ) -> Result<WsSource, ApiError> {
++        let uri: Uri = full_url.parse().map_err(
++            |e: tokio_tungstenite::tungstenite::http::uri::InvalidUri| {
++                ApiError::WebSocketError(format!("Invalid URL: {}", e))
++            },
++        )?;
++
++        let mut request = uri
++            .into_client_request()
++            .map_err(|e| ApiError::WebSocketError(format!("Failed to build request: {}", e)))?;
++
++        let headers = request.headers_mut();
++        for (key, value) in &options.headers {
++            let header_name: HeaderName = key.parse().map_err(|_| ApiError::InvalidHeader)?;
++            let header_value: HeaderValue = value.parse().map_err(|_| ApiError::InvalidHeader)?;
++            headers.insert(header_name, header_value);
++        }
++
++        let (ws_stream, _response) =
++            tokio::time::timeout(options.connection_timeout, connect_async(request))
++                .await
++                .map_err(|_| ApiError::WebSocketError("Connection timed out".to_string()))?
++                .map_err(|e| ApiError::WebSocketError(format!("Connection failed: {}", e)))?;
++
++        let (write, read) = ws_stream.split();
++
++        {
++            let mut sink_guard = sink.lock().await;
++            *sink_guard = Some(write);
++        }
++
++        Ok(read)
++    }
++
++    /// Convert HTTP(S) URLs to WS(S) URLs for WebSocket connections.
++    /// tokio-tungstenite requires ws:// or wss:// scheme.
++    fn to_ws_url(url: &str) -> String {
++        if url.starts_with("https://") {
++            format!("wss://{}", &url[8..])
++        } else if url.starts_with("http://") {
++            format!("ws://{}", &url[7..])
++        } else {
++            url.to_string()
++        }
++    }
++
++    fn build_ws_url(url: &str, query_params: &[(String, String)]) -> String {
++        let base = Self::to_ws_url(url);
++        if query_params.is_empty() {
++            return base;
++        }
++        let query: String = query_params
++            .iter()
++            .map(|(k, v)| format!("{}={}", urlencoding::encode(k), urlencoding::encode(v)))
++            .collect::<Vec<_>>()
++            .join("&");
++        format!("{}?{}", base, query)
++    }
++
++    fn maybe_reset_reconnect_attempts(
++        last_connected_at: &Option<tokio::time::Instant>,
++        reconnect_attempts: &mut u32,
++    ) {
++        if let Some(connected_at) = last_connected_at {
++            if connected_at.elapsed() >= Duration::from_secs(5) {
++                *reconnect_attempts = 0;
++            }
++        }
++    }
++
++    fn get_reconnect_delay(options: &WebSocketOptions, attempt: u32) -> Duration {
++        let base = if attempt <= 1 {
++            options.min_reconnect_delay.as_millis() as f64
++        } else {
++            let delay = options.min_reconnect_delay.as_millis() as f64
++                * options
++                    .reconnect_delay_growth_factor
++                    .powi((attempt - 1) as i32);
++            delay.min(options.max_reconnect_delay.as_millis() as f64)
++        };
++        let jitter = rand::rng().random_range(0.0..=0.25);
++        let jittered = base * (1.0 + jitter);
++        Duration::from_millis(jittered as u64)
++    }
++
++    pub async fn send_json<T: Serialize>(&self, message: &T) -> Result<(), ApiError> {
++        let json = serde_json::to_string(message).map_err(ApiError::Serialization)?;
++        self.send_raw(json).await
++    }
++
++    /// Send a text message. If the connection is temporarily down and reconnect
++    /// is enabled, the message is queued and will be flushed after reconnection.
++    ///
++    /// Holds the sink lock for the entire operation so that queued messages
++    /// (flushed under the same lock after reconnect) are always sent before
++    /// any new direct sends, preserving ordering.
++    pub async fn send_raw(&self, message: String) -> Result<(), ApiError> {
++        let mut sink_guard = self.sink.lock().await;
++        match sink_guard.as_mut() {
++            Some(sink) => sink
++                .send(Message::Text(message))
++                .await
++                .map_err(|e| ApiError::WebSocketError(format!("Send failed: {}", e))),
++            None => {
++                let mut queue = self.text_queue.lock().await;
++                if queue.len() >= self.options.max_queued_messages {
++                    return Err(ApiError::WebSocketError(
++                        "Message queue is full".to_string(),
++                    ));
++                }
++                queue.push_back(message);
++                Ok(())
++            }
++        }
++    }
++
++    /// Send a binary message. If the connection is temporarily down and reconnect
++    /// is enabled, the data is queued and will be flushed after reconnection.
++    ///
++    /// Holds the sink lock for the entire operation so that queued messages
++    /// (flushed under the same lock after reconnect) are always sent before
++    /// any new direct sends, preserving ordering.
++    pub async fn send_binary(&self, data: &[u8]) -> Result<(), ApiError> {
++        let mut sink_guard = self.sink.lock().await;
++        match sink_guard.as_mut() {
++            Some(sink) => sink
++                .send(Message::Binary(data.to_vec()))
++                .await
++                .map_err(|e| ApiError::WebSocketError(format!("Send failed: {}", e))),
++            None => {
++                let mut queue = self.binary_queue.lock().await;
++                if queue.len() >= self.options.max_queued_messages {
++                    return Err(ApiError::WebSocketError(
++                        "Message queue is full".to_string(),
++                    ));
++                }
++                queue.push_back(data.to_vec());
++                Ok(())
++            }
++        }
++    }
++
++    /// Initiate a graceful WebSocket close.
++    ///
++    /// Sends a Close frame and waits up to 5 seconds for the server's
++    /// Close response (delivered via `close_notify` from the read loop).
++    /// If the server doesn't respond in time, the connection is closed anyway.
++    pub async fn close(&self) -> Result<(), ApiError> {
++        {
++            let mut state = self.state.lock().await;
++            if *state == WebSocketState::Closed || *state == WebSocketState::Closing {
++                return Ok(());
++            }
++            *state = WebSocketState::Closing;
++        }
++
++        {
++            let mut sink_guard = self.sink.lock().await;
++            if let Some(sink) = sink_guard.as_mut() {
++                let _ = sink.send(Message::Close(None)).await;
++            }
++        }
++
++        // Wait for the server's Close response (the read loop will notify us),
++        // but don't block forever if the server never responds.
++        let close_timeout = Duration::from_secs(5);
++        let _ = tokio::time::timeout(close_timeout, self.close_notify.notified()).await;
++
++        {
++            let mut state = self.state.lock().await;
++            *state = WebSocketState::Closed;
++        }
++
++        self.close_notify.notify_waiters();
++        Ok(())
++    }
++
++    pub async fn state(&self) -> WebSocketState {
++        *self.state.lock().await
++    }
++
++    /// Flush queued messages after a successful reconnect.
++    ///
++    /// On send failure, the failed message is pushed back to the front of the
++    /// queue so it can be retried on the next reconnect. Remaining queued
++    /// messages are preserved.
++    async fn flush_queues(ctx: &ReconnectContext) {
++        let mut sink_guard = ctx.sink.lock().await;
++        let s = match sink_guard.as_mut() {
++            Some(s) => s,
++            None => return,
++        };
++        {
++            let mut queue = ctx.text_queue.lock().await;
++            while let Some(message) = queue.pop_front() {
++                if s.send(Message::Text(message.clone())).await.is_err() {
++                    queue.push_front(message);
++                    return;
++                }
++            }
++        }
++        {
++            let mut queue = ctx.binary_queue.lock().await;
++            while let Some(message) = queue.pop_front() {
++                if s.send(Message::Binary(message.clone())).await.is_err() {
++                    queue.push_front(message);
++                    return;
++                }
++            }
++        }
++    }
++
++    /// Attempt to reconnect after a disconnection, retrying with exponential
++    /// backoff up to `max_reconnect_attempts` times. Returns Ok(()) with the
++    /// new read stream on success, or Err if all attempts are exhausted.
++    async fn try_reconnect(
++        read: &mut WsSource,
++        reconnect_attempts: &mut u32,
++        last_connected_at: &mut Option<tokio::time::Instant>,
++        ctx: &ReconnectContext,
++    ) -> Result<(), ApiError> {
++        if !ctx.options.reconnect {
++            let mut s = ctx.state.lock().await;
++            *s = WebSocketState::Closed;
++            return Err(ApiError::WebSocketError("Reconnect disabled".to_string()));
++        }
++
++        let mut last_error = None;
++        let full_url = Self::build_ws_url(&ctx.url, &ctx.options.query_params);
++
++        loop {
++            if *reconnect_attempts >= ctx.options.max_reconnect_attempts {
++                let mut s = ctx.state.lock().await;
++                *s = WebSocketState::Closed;
++                return Err(last_error.unwrap_or_else(|| {
++                    ApiError::WebSocketError("Max reconnect attempts reached".to_string())
++                }));
++            }
++
++            *reconnect_attempts += 1;
++            {
++                let mut s = ctx.state.lock().await;
++                *s = WebSocketState::Connecting;
++            }
++
++            let delay = Self::get_reconnect_delay(&ctx.options, *reconnect_attempts);
++            tokio::time::sleep(delay).await;
++
++            match Self::open_connection(&full_url, &ctx.options, &ctx.sink).await {
++                Ok(new_read) => {
++                    *read = new_read;
++                    *last_connected_at = Some(tokio::time::Instant::now());
++                    let mut s = ctx.state.lock().await;
++                    *s = WebSocketState::Open;
++                    drop(s);
++                    Self::flush_queues(ctx).await;
++                    return Ok(());
++                }
++                Err(e) => {
++                    last_error = Some(e);
++                    continue;
++                }
++            }
++        }
++    }
++
++    async fn read_loop(mut read: WsSource, ctx: ReconnectContext) {
++        let mut reconnect_attempts: u32 = 0;
++        let mut last_connected_at: Option<tokio::time::Instant> = None;
++
++        loop {
++            tokio::select! {
++                _ = ctx.close_notify.notified() => {
++                    break;
++                }
++                msg = read.next() => {
++                    match msg {
++                        Some(Ok(Message::Text(text))) => {
++                            Self::maybe_reset_reconnect_attempts(&last_connected_at, &mut reconnect_attempts);
++                            if ctx.incoming_tx.send(Ok(WebSocketMessage::Text(text))).is_err() {
++                                break;
++                            }
++                        }
++                        Some(Ok(Message::Binary(data))) => {
++                            Self::maybe_reset_reconnect_attempts(&last_connected_at, &mut reconnect_attempts);
++                            if ctx.incoming_tx.send(Ok(WebSocketMessage::Binary(data))).is_err() {
++                                break;
++                            }
++                        }
++                        Some(Ok(Message::Close(frame))) => {
++                            let info = DisconnectInfo {
++                                code: frame.as_ref().map(|f| f.code.into()),
++                                reason: frame.as_ref().map(|f| f.reason.to_string()).filter(|r| !r.is_empty()),
++                            };
++                            let _ = ctx.incoming_tx.send(Ok(WebSocketMessage::Close(info)));
++                            let mut s = ctx.state.lock().await;
++                            *s = WebSocketState::Closed;
++                            ctx.close_notify.notify_waiters();
++                            break;
++                        }
++                        Some(Ok(Message::Ping(_))) | Some(Ok(Message::Pong(_))) | Some(Ok(Message::Frame(_))) => {
++                            // Protocol frames handled automatically by tungstenite
++                        }
++                        Some(Err(e)) => {
++                            let error_msg = format!("Read error: {}", e);
++                            match Self::try_reconnect(
++                                &mut read, &mut reconnect_attempts, &mut last_connected_at, &ctx,
++                            ).await {
++                                Ok(()) => continue,
++                                Err(_) => {
++                                    let _ = ctx.incoming_tx.send(Err(ApiError::WebSocketError(error_msg)));
++                                    break;
++                                }
++                            }
++                        }
++                        None => {
++                            // Stream ended unexpectedly
++                            match Self::try_reconnect(
++                                &mut read, &mut reconnect_attempts, &mut last_connected_at, &ctx,
++                            ).await {
++                                Ok(()) => continue,
++                                Err(reconnect_err) => {
++                                    let _ = ctx.incoming_tx.send(Err(reconnect_err));
++                                    break;
++                                }
++                            }
++                        }
++                    }
++                }
++            }
++        }
++    }
++}
+diff --git a/src/error.rs b/src/error.rs
+index 655d945d71f..f35727b1957 100644
+--- a/src/error.rs
++++ b/src/error.rs
+@@ -20,6 +20,8 @@ pub enum ApiError {
+     StreamTimeout,
+     #[error("SSE parse error: {0}")]
+     SseParseError(String),
++    #[error("WebSocket error: {0}")]
++    WebSocketError(String),
+ }
+ 
+ impl ApiError {

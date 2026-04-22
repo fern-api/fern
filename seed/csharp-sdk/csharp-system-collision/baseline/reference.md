@@ -1,0 +1,159 @@
+# Reference
+<details><summary><code>client.<a href="/src/SeedCsharpSystemCollision/SeedCsharpSystemCollisionClient.cs">CreateUserAsync</a>(User { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.CreateUserAsync(
+    new User
+    {
+        Line1 = "line1",
+        Line2 = "line2",
+        City = "city",
+        State = "state",
+        Zip = "zip",
+        Country = "USA",
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `User` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="/src/SeedCsharpSystemCollision/SeedCsharpSystemCollisionClient.cs">CreateTaskAsync</a>(Task { ... }) -> WithRawResponseTask&lt;Task&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.CreateTaskAsync(
+    new SeedCsharpSystemCollision.Task
+    {
+        Name = "name",
+        User = new User
+        {
+            Line1 = "line1",
+            Line2 = "line2",
+            City = "city",
+            State = "state",
+            Zip = "zip",
+            Country = "USA",
+        },
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Task` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="/src/SeedCsharpSystemCollision/SeedCsharpSystemCollisionClient.cs">EmptyResponseAsync</a>(Task { ... })</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.EmptyResponseAsync(
+    new SeedCsharpSystemCollision.Task
+    {
+        Name = "name",
+        User = new User
+        {
+            Line1 = "line1",
+            Line2 = "line2",
+            City = "city",
+            State = "state",
+            Zip = "zip",
+            Country = "USA",
+        },
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Task` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+

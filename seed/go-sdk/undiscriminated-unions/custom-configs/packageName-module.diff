@@ -1,0 +1,970 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index cef89e12341..00eedeb1259 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -3,7 +3,11 @@
+   "generatorName": "fernapi/fern-go-sdk",
+   "generatorVersion": "local",
+   "generatorConfig": {
+-    "enableWireTests": false
++    "enableWireTests": false,
++    "packageName": "undiscriminated",
++    "module": {
++      "path": "github.com/fern-api/undiscriminated-go"
++    }
+   },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+diff --git a/README.md b/README.md
+index 3a956815d64..a4bf6c45475 100644
+--- a/README.md
++++ b/README.md
+@@ -32,13 +32,13 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/undiscriminated-unions/fern"
+-    client "github.com/undiscriminated-unions/fern/client"
++    undiscriminated "github.com/fern-api/undiscriminated-go"
++    client "github.com/fern-api/undiscriminated-go/client"
+ )
+ 
+ func do() {
+     client := client.NewClient()
+-    request := &fern.MyUnion{
++    request := &undiscriminated.MyUnion{
+         String: "string",
+     }
+     client.Union.Get(
+diff --git a/client/client.go b/client/client.go
+index 4bcfad2ebfd..c98f8b0ef8c 100644
+--- a/client/client.go
++++ b/client/client.go
+@@ -3,10 +3,10 @@
+ package client
+ 
+ import (
+-	core "github.com/undiscriminated-unions/fern/core"
+-	internal "github.com/undiscriminated-unions/fern/internal"
+-	option "github.com/undiscriminated-unions/fern/option"
+-	union "github.com/undiscriminated-unions/fern/union"
++	core "github.com/fern-api/undiscriminated-go/core"
++	internal "github.com/fern-api/undiscriminated-go/internal"
++	option "github.com/fern-api/undiscriminated-go/option"
++	union "github.com/fern-api/undiscriminated-go/union"
+ )
+ 
+ type Client struct {
+diff --git a/client/client_test.go b/client/client_test.go
+index a385d545782..8df311ff6c3 100644
+--- a/client/client_test.go
++++ b/client/client_test.go
+@@ -3,8 +3,8 @@
+ package client
+ 
+ import (
++	option "github.com/fern-api/undiscriminated-go/option"
+ 	assert "github.com/stretchr/testify/assert"
+-	option "github.com/undiscriminated-unions/fern/option"
+ 	http "net/http"
+ 	testing "testing"
+ 	time "time"
+diff --git a/core/request_option.go b/core/request_option.go
+index e91c55432d1..7b1ce5007ad 100644
+--- a/core/request_option.go
++++ b/core/request_option.go
+@@ -49,7 +49,7 @@ func (r *RequestOptions) ToHeader() http.Header { return r.cloneHeader() }
+ func (r *RequestOptions) cloneHeader() http.Header {
+ 	headers := r.HTTPHeader.Clone()
+ 	headers.Set("X-Fern-Language", "Go")
+-	headers.Set("X-Fern-SDK-Name", "github.com/undiscriminated-unions/fern")
++	headers.Set("X-Fern-SDK-Name", "github.com/fern-api/undiscriminated-go")
+ 	headers.Set("X-Fern-SDK-Version", "v0.0.1")
+ 	headers.Set("User-Agent", "github.com/undiscriminated-unions/fern/0.0.1")
+ 	return headers
+diff --git a/dynamic-snippets/example0/snippet.go b/dynamic-snippets/example0/snippet.go
+index 2737780859b..971ed97c85f 100644
+--- a/dynamic-snippets/example0/snippet.go
++++ b/dynamic-snippets/example0/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/undiscriminated-unions/fern"
+-    client "github.com/undiscriminated-unions/fern/client"
+-    option "github.com/undiscriminated-unions/fern/option"
++    undiscriminated "github.com/fern-api/undiscriminated-go"
++    client "github.com/fern-api/undiscriminated-go/client"
++    option "github.com/fern-api/undiscriminated-go/option"
+ )
+ 
+ func do() {
+@@ -14,7 +14,7 @@ func do() {
+             "https://api.fern.com",
+         ),
+     )
+-    request := &fern.MyUnion{
++    request := &undiscriminated.MyUnion{
+         String: "string",
+     }
+     client.Union.Get(
+diff --git a/dynamic-snippets/example1/snippet.go b/dynamic-snippets/example1/snippet.go
+index d1429814354..8c39a9fdcd9 100644
+--- a/dynamic-snippets/example1/snippet.go
++++ b/dynamic-snippets/example1/snippet.go
+@@ -3,8 +3,8 @@ package example
+ import (
+     context "context"
+ 
+-    client "github.com/undiscriminated-unions/fern/client"
+-    option "github.com/undiscriminated-unions/fern/option"
++    client "github.com/fern-api/undiscriminated-go/client"
++    option "github.com/fern-api/undiscriminated-go/option"
+ )
+ 
+ func do() {
+diff --git a/dynamic-snippets/example10/snippet.go b/dynamic-snippets/example10/snippet.go
+index 0cd0d0ffab3..91c1f932185 100644
+--- a/dynamic-snippets/example10/snippet.go
++++ b/dynamic-snippets/example10/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/undiscriminated-unions/fern"
+-    client "github.com/undiscriminated-unions/fern/client"
+-    option "github.com/undiscriminated-unions/fern/option"
++    undiscriminated "github.com/fern-api/undiscriminated-go"
++    client "github.com/fern-api/undiscriminated-go/client"
++    option "github.com/fern-api/undiscriminated-go/option"
+ )
+ 
+ func do() {
+@@ -14,9 +14,9 @@ func do() {
+             "https://api.fern.com",
+         ),
+     )
+-    request := &fern.PaymentRequest{
+-        PaymentMethod: &fern.PaymentMethodUnion{
+-            TokenizeCard: &fern.TokenizeCard{
++    request := &undiscriminated.PaymentRequest{
++        PaymentMethod: &undiscriminated.PaymentMethodUnion{
++            TokenizeCard: &undiscriminated.TokenizeCard{
+                 Method: "method",
+                 CardNumber: "cardNumber",
+             },
+diff --git a/dynamic-snippets/example2/snippet.go b/dynamic-snippets/example2/snippet.go
+index d1429814354..8c39a9fdcd9 100644
+--- a/dynamic-snippets/example2/snippet.go
++++ b/dynamic-snippets/example2/snippet.go
+@@ -3,8 +3,8 @@ package example
+ import (
+     context "context"
+ 
+-    client "github.com/undiscriminated-unions/fern/client"
+-    option "github.com/undiscriminated-unions/fern/option"
++    client "github.com/fern-api/undiscriminated-go/client"
++    option "github.com/fern-api/undiscriminated-go/option"
+ )
+ 
+ func do() {
+diff --git a/dynamic-snippets/example3/snippet.go b/dynamic-snippets/example3/snippet.go
+index 6cf30485175..c7debede980 100644
+--- a/dynamic-snippets/example3/snippet.go
++++ b/dynamic-snippets/example3/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/undiscriminated-unions/fern"
+-    client "github.com/undiscriminated-unions/fern/client"
+-    option "github.com/undiscriminated-unions/fern/option"
++    undiscriminated "github.com/fern-api/undiscriminated-go"
++    client "github.com/fern-api/undiscriminated-go/client"
++    option "github.com/fern-api/undiscriminated-go/option"
+ )
+ 
+ func do() {
+@@ -14,7 +14,7 @@ func do() {
+             "https://api.fern.com",
+         ),
+     )
+-    request := &fern.MetadataUnion{
++    request := &undiscriminated.MetadataUnion{
+         OptionalMetadata: map[string]any{
+             "string": map[string]any{
+                 "key": "value",
+diff --git a/dynamic-snippets/example4/snippet.go b/dynamic-snippets/example4/snippet.go
+index 6cf30485175..c7debede980 100644
+--- a/dynamic-snippets/example4/snippet.go
++++ b/dynamic-snippets/example4/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/undiscriminated-unions/fern"
+-    client "github.com/undiscriminated-unions/fern/client"
+-    option "github.com/undiscriminated-unions/fern/option"
++    undiscriminated "github.com/fern-api/undiscriminated-go"
++    client "github.com/fern-api/undiscriminated-go/client"
++    option "github.com/fern-api/undiscriminated-go/option"
+ )
+ 
+ func do() {
+@@ -14,7 +14,7 @@ func do() {
+             "https://api.fern.com",
+         ),
+     )
+-    request := &fern.MetadataUnion{
++    request := &undiscriminated.MetadataUnion{
+         OptionalMetadata: map[string]any{
+             "string": map[string]any{
+                 "key": "value",
+diff --git a/dynamic-snippets/example5/snippet.go b/dynamic-snippets/example5/snippet.go
+index 45654da6dd7..1de69ec1153 100644
+--- a/dynamic-snippets/example5/snippet.go
++++ b/dynamic-snippets/example5/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/undiscriminated-unions/fern"
+-    client "github.com/undiscriminated-unions/fern/client"
+-    option "github.com/undiscriminated-unions/fern/option"
++    undiscriminated "github.com/fern-api/undiscriminated-go"
++    client "github.com/fern-api/undiscriminated-go/client"
++    option "github.com/fern-api/undiscriminated-go/option"
+ )
+ 
+ func do() {
+@@ -14,8 +14,8 @@ func do() {
+             "https://api.fern.com",
+         ),
+     )
+-    request := &fern.Request{
+-        Union: &fern.MetadataUnion{
++    request := &undiscriminated.Request{
++        Union: &undiscriminated.MetadataUnion{
+             OptionalMetadata: map[string]any{
+                 "string": map[string]any{
+                     "key": "value",
+diff --git a/dynamic-snippets/example6/snippet.go b/dynamic-snippets/example6/snippet.go
+index ed37c806bed..71c1b2e2710 100644
+--- a/dynamic-snippets/example6/snippet.go
++++ b/dynamic-snippets/example6/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/undiscriminated-unions/fern"
+-    client "github.com/undiscriminated-unions/fern/client"
+-    option "github.com/undiscriminated-unions/fern/option"
++    undiscriminated "github.com/fern-api/undiscriminated-go"
++    client "github.com/fern-api/undiscriminated-go/client"
++    option "github.com/fern-api/undiscriminated-go/option"
+ )
+ 
+ func do() {
+@@ -14,8 +14,8 @@ func do() {
+             "https://api.fern.com",
+         ),
+     )
+-    request := &fern.Request{
+-        Union: &fern.MetadataUnion{
++    request := &undiscriminated.Request{
++        Union: &undiscriminated.MetadataUnion{
+             OptionalMetadata: map[string]any{
+                 "union": map[string]any{
+                     "key": "value",
+diff --git a/dynamic-snippets/example7/snippet.go b/dynamic-snippets/example7/snippet.go
+index 0ec383f8c60..1a665d0b59a 100644
+--- a/dynamic-snippets/example7/snippet.go
++++ b/dynamic-snippets/example7/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/undiscriminated-unions/fern"
+-    client "github.com/undiscriminated-unions/fern/client"
+-    option "github.com/undiscriminated-unions/fern/option"
++    undiscriminated "github.com/fern-api/undiscriminated-go"
++    client "github.com/fern-api/undiscriminated-go/client"
++    option "github.com/fern-api/undiscriminated-go/option"
+ )
+ 
+ func do() {
+@@ -14,7 +14,7 @@ func do() {
+             "https://api.fern.com",
+         ),
+     )
+-    request := &fern.UnionWithDuplicateTypes{
++    request := &undiscriminated.UnionWithDuplicateTypes{
+         String: "string",
+     }
+     client.Union.DuplicateTypesUnion(
+diff --git a/dynamic-snippets/example8/snippet.go b/dynamic-snippets/example8/snippet.go
+index 0446da82e5d..b62b76a661c 100644
+--- a/dynamic-snippets/example8/snippet.go
++++ b/dynamic-snippets/example8/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/undiscriminated-unions/fern"
+-    client "github.com/undiscriminated-unions/fern/client"
+-    option "github.com/undiscriminated-unions/fern/option"
++    undiscriminated "github.com/fern-api/undiscriminated-go"
++    client "github.com/fern-api/undiscriminated-go/client"
++    option "github.com/fern-api/undiscriminated-go/option"
+ )
+ 
+ func do() {
+@@ -14,7 +14,7 @@ func do() {
+             "https://api.fern.com",
+         ),
+     )
+-    request := &fern.NestedUnionRoot{
++    request := &undiscriminated.NestedUnionRoot{
+         String: "string",
+     }
+     client.Union.NestedUnions(
+diff --git a/dynamic-snippets/example9/snippet.go b/dynamic-snippets/example9/snippet.go
+index a1ef97acb1c..663df9988ed 100644
+--- a/dynamic-snippets/example9/snippet.go
++++ b/dynamic-snippets/example9/snippet.go
+@@ -3,9 +3,9 @@ package example
+ import (
+     context "context"
+ 
+-    fern "github.com/undiscriminated-unions/fern"
+-    client "github.com/undiscriminated-unions/fern/client"
+-    option "github.com/undiscriminated-unions/fern/option"
++    undiscriminated "github.com/fern-api/undiscriminated-go"
++    client "github.com/fern-api/undiscriminated-go/client"
++    option "github.com/fern-api/undiscriminated-go/option"
+ )
+ 
+ func do() {
+@@ -14,9 +14,9 @@ func do() {
+             "https://api.fern.com",
+         ),
+     )
+-    request := &fern.PaymentRequest{
+-        PaymentMethod: &fern.PaymentMethodUnion{
+-            TokenizeCard: &fern.TokenizeCard{
++    request := &undiscriminated.PaymentRequest{
++        PaymentMethod: &undiscriminated.PaymentMethodUnion{
++            TokenizeCard: &undiscriminated.TokenizeCard{
+                 Method: "card",
+                 CardNumber: "1234567890123456",
+             },
+diff --git a/error_codes.go b/error_codes.go
+index 6df0bb6b7a8..a12d643b24c 100644
+--- a/error_codes.go
++++ b/error_codes.go
+@@ -1,9 +1,9 @@
+ // Code generated by Fern. DO NOT EDIT.
+ 
+-package undiscriminatedunions
++package undiscriminated
+ 
+ import (
+-	internal "github.com/undiscriminated-unions/fern/internal"
++	internal "github.com/fern-api/undiscriminated-go/internal"
+ )
+ 
+ var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{}
+diff --git a/file_param.go b/file_param.go
+index 913417e74c9..7cae06f9bae 100644
+--- a/file_param.go
++++ b/file_param.go
+@@ -1,4 +1,4 @@
+-package undiscriminatedunions
++package undiscriminated
+ 
+ import (
+ 	"io"
+diff --git a/go.mod b/go.mod
+index c8ad660b5d1..661ae487f72 100644
+--- a/go.mod
++++ b/go.mod
+@@ -1,4 +1,4 @@
+-module github.com/undiscriminated-unions/fern
++module github.com/fern-api/undiscriminated-go
+ 
+ go 1.21
+ 
+diff --git a/internal/caller.go b/internal/caller.go
+index 2c744875cbd..676a6993484 100644
+--- a/internal/caller.go
++++ b/internal/caller.go
+@@ -12,7 +12,7 @@ import (
+ 	"reflect"
+ 	"strings"
+ 
+-	"github.com/undiscriminated-unions/fern/core"
++	"github.com/fern-api/undiscriminated-go/core"
+ )
+ 
+ const (
+diff --git a/internal/caller_test.go b/internal/caller_test.go
+index 820f551167c..c3fb0a41234 100644
+--- a/internal/caller_test.go
++++ b/internal/caller_test.go
+@@ -14,9 +14,9 @@ import (
+ 	"strings"
+ 	"testing"
+ 
++	"github.com/fern-api/undiscriminated-go/core"
+ 	"github.com/stretchr/testify/assert"
+ 	"github.com/stretchr/testify/require"
+-	"github.com/undiscriminated-unions/fern/core"
+ )
+ 
+ // InternalTestCase represents a single test case.
+diff --git a/internal/error_decoder.go b/internal/error_decoder.go
+index 553bf3cd14e..fa9649d14f5 100644
+--- a/internal/error_decoder.go
++++ b/internal/error_decoder.go
+@@ -8,7 +8,7 @@ import (
+ 	"io"
+ 	"net/http"
+ 
+-	"github.com/undiscriminated-unions/fern/core"
++	"github.com/fern-api/undiscriminated-go/core"
+ )
+ 
+ // ErrorCodes maps HTTP status codes to error constructors.
+diff --git a/internal/error_decoder_test.go b/internal/error_decoder_test.go
+index 8612002c573..86ee74dc7cb 100644
+--- a/internal/error_decoder_test.go
++++ b/internal/error_decoder_test.go
+@@ -6,8 +6,8 @@ import (
+ 	"net/http"
+ 	"testing"
+ 
++	"github.com/fern-api/undiscriminated-go/core"
+ 	"github.com/stretchr/testify/assert"
+-	"github.com/undiscriminated-unions/fern/core"
+ )
+ 
+ func TestErrorDecoder(t *testing.T) {
+diff --git a/internal/retrier_test.go b/internal/retrier_test.go
+index 24a8f034755..3a74cb855b2 100644
+--- a/internal/retrier_test.go
++++ b/internal/retrier_test.go
+@@ -10,9 +10,9 @@ import (
+ 	"testing"
+ 	"time"
+ 
++	"github.com/fern-api/undiscriminated-go/core"
+ 	"github.com/stretchr/testify/assert"
+ 	"github.com/stretchr/testify/require"
+-	"github.com/undiscriminated-unions/fern/core"
+ )
+ 
+ type RetryTestCase struct {
+diff --git a/option/request_option.go b/option/request_option.go
+index ffbff9d4b26..3f527534f11 100644
+--- a/option/request_option.go
++++ b/option/request_option.go
+@@ -3,7 +3,7 @@
+ package option
+ 
+ import (
+-	core "github.com/undiscriminated-unions/fern/core"
++	core "github.com/fern-api/undiscriminated-go/core"
+ 	http "net/http"
+ 	url "net/url"
+ )
+diff --git a/pointer.go b/pointer.go
+index 019119ebf5d..d074ffec08b 100644
+--- a/pointer.go
++++ b/pointer.go
+@@ -1,4 +1,4 @@
+-package undiscriminatedunions
++package undiscriminated
+ 
+ import (
+ 	"time"
+diff --git a/pointer_test.go b/pointer_test.go
+index 0bfad44c657..79fb42ed242 100644
+--- a/pointer_test.go
++++ b/pointer_test.go
+@@ -1,4 +1,4 @@
+-package undiscriminatedunions
++package undiscriminated
+ 
+ import (
+ 	"testing"
+diff --git a/reference.md b/reference.md
+index 23564de271d..8da8c88cf73 100644
+--- a/reference.md
++++ b/reference.md
+@@ -1,6 +1,6 @@
+ # Reference
+ ## Union
+-<details><summary><code>client.Union.Get(request) -> *fern.MyUnion</code></summary>
++<details><summary><code>client.Union.Get(request) -> *undiscriminated.MyUnion</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -13,7 +13,7 @@
+ <dd>
+ 
+ ```go
+-request := &fern.MyUnion{
++request := &undiscriminated.MyUnion{
+         String: "string",
+     }
+ client.Union.Get(
+@@ -35,7 +35,7 @@ client.Union.Get(
+ <dl>
+ <dd>
+ 
+-**request:** `*fern.MyUnion` 
++**request:** `*undiscriminated.MyUnion` 
+     
+ </dd>
+ </dl>
+@@ -47,7 +47,7 @@ client.Union.Get(
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.Union.GetMetadata() -> fern.Metadata</code></summary>
++<details><summary><code>client.Union.GetMetadata() -> undiscriminated.Metadata</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -88,7 +88,7 @@ client.Union.GetMetadata(
+ <dd>
+ 
+ ```go
+-request := &fern.MetadataUnion{
++request := &undiscriminated.MetadataUnion{
+         OptionalMetadata: map[string]any{
+             "string": map[string]any{
+                 "key": "value",
+@@ -114,7 +114,7 @@ client.Union.UpdateMetadata(
+ <dl>
+ <dd>
+ 
+-**request:** `*fern.MetadataUnion` 
++**request:** `*undiscriminated.MetadataUnion` 
+     
+ </dd>
+ </dl>
+@@ -139,8 +139,8 @@ client.Union.UpdateMetadata(
+ <dd>
+ 
+ ```go
+-request := &fern.Request{
+-        Union: &fern.MetadataUnion{
++request := &undiscriminated.Request{
++        Union: &undiscriminated.MetadataUnion{
+             OptionalMetadata: map[string]any{
+                 "string": map[string]any{
+                     "key": "value",
+@@ -167,7 +167,7 @@ client.Union.Call(
+ <dl>
+ <dd>
+ 
+-**request:** `*fern.Request` 
++**request:** `*undiscriminated.Request` 
+     
+ </dd>
+ </dl>
+@@ -179,7 +179,7 @@ client.Union.Call(
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.Union.DuplicateTypesUnion(request) -> *fern.UnionWithDuplicateTypes</code></summary>
++<details><summary><code>client.Union.DuplicateTypesUnion(request) -> *undiscriminated.UnionWithDuplicateTypes</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -192,7 +192,7 @@ client.Union.Call(
+ <dd>
+ 
+ ```go
+-request := &fern.UnionWithDuplicateTypes{
++request := &undiscriminated.UnionWithDuplicateTypes{
+         String: "string",
+     }
+ client.Union.DuplicateTypesUnion(
+@@ -214,7 +214,7 @@ client.Union.DuplicateTypesUnion(
+ <dl>
+ <dd>
+ 
+-**request:** `*fern.UnionWithDuplicateTypes` 
++**request:** `*undiscriminated.UnionWithDuplicateTypes` 
+     
+ </dd>
+ </dl>
+@@ -239,7 +239,7 @@ client.Union.DuplicateTypesUnion(
+ <dd>
+ 
+ ```go
+-request := &fern.NestedUnionRoot{
++request := &undiscriminated.NestedUnionRoot{
+         String: "string",
+     }
+ client.Union.NestedUnions(
+@@ -261,7 +261,7 @@ client.Union.NestedUnions(
+ <dl>
+ <dd>
+ 
+-**request:** `*fern.NestedUnionRoot` 
++**request:** `*undiscriminated.NestedUnionRoot` 
+     
+ </dd>
+ </dl>
+@@ -286,9 +286,9 @@ client.Union.NestedUnions(
+ <dd>
+ 
+ ```go
+-request := &fern.PaymentRequest{
+-        PaymentMethod: &fern.PaymentMethodUnion{
+-            TokenizeCard: &fern.TokenizeCard{
++request := &undiscriminated.PaymentRequest{
++        PaymentMethod: &undiscriminated.PaymentMethodUnion{
++            TokenizeCard: &undiscriminated.TokenizeCard{
+                 Method: "card",
+                 CardNumber: "1234567890123456",
+             },
+@@ -313,7 +313,7 @@ client.Union.TestCamelCaseProperties(
+ <dl>
+ <dd>
+ 
+-**paymentMethod:** `*fern.PaymentMethodUnion` 
++**paymentMethod:** `*undiscriminated.PaymentMethodUnion` 
+     
+ </dd>
+ </dl>
+diff --git a/snippet.json b/snippet.json
+index 15a82bb3b0c..8bd7eba0df2 100644
+--- a/snippet.json
++++ b/snippet.json
+@@ -8,7 +8,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/undiscriminated-unions/fern\"\n\tfernclient \"github.com/undiscriminated-unions/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Union.Get(\n\tcontext.TODO(),\n\t\u0026fern.MyUnion{\n\t\tString: \"string\",\n\t},\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\tundiscriminatedgo \"github.com/fern-api/undiscriminated-go\"\n\tundiscriminatedgoclient \"github.com/fern-api/undiscriminated-go/client\"\n)\n\nclient := undiscriminatedgoclient.NewClient()\nresponse, err := client.Union.Get(\n\tcontext.TODO(),\n\t\u0026undiscriminatedgo.MyUnion{\n\t\tString: \"string\",\n\t},\n)\n"
+             }
+         },
+         {
+@@ -19,7 +19,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/undiscriminated-unions/fern\"\n\tfernclient \"github.com/undiscriminated-unions/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Union.Call(\n\tcontext.TODO(),\n\t\u0026fern.Request{\n\t\tUnion: \u0026fern.MetadataUnion{\n\t\t\tOptionalMetadata: map[string]any{\n\t\t\t\t\"string\": map[string]interface{}{\n\t\t\t\t\t\"key\": \"value\",\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t},\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\tundiscriminatedgo \"github.com/fern-api/undiscriminated-go\"\n\tundiscriminatedgoclient \"github.com/fern-api/undiscriminated-go/client\"\n)\n\nclient := undiscriminatedgoclient.NewClient()\nresponse, err := client.Union.Call(\n\tcontext.TODO(),\n\t\u0026undiscriminatedgo.Request{\n\t\tUnion: \u0026undiscriminatedgo.MetadataUnion{\n\t\t\tOptionalMetadata: map[string]any{\n\t\t\t\t\"string\": map[string]interface{}{\n\t\t\t\t\t\"key\": \"value\",\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t},\n)\n"
+             }
+         },
+         {
+@@ -30,7 +30,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/undiscriminated-unions/fern\"\n\tfernclient \"github.com/undiscriminated-unions/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Union.TestCamelCaseProperties(\n\tcontext.TODO(),\n\t\u0026fern.PaymentRequest{\n\t\tPaymentMethod: \u0026fern.PaymentMethodUnion{\n\t\t\tTokenizeCard: \u0026fern.TokenizeCard{\n\t\t\t\tMethod:     \"card\",\n\t\t\t\tCardNumber: \"1234567890123456\",\n\t\t\t},\n\t\t},\n\t},\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\tundiscriminatedgo \"github.com/fern-api/undiscriminated-go\"\n\tundiscriminatedgoclient \"github.com/fern-api/undiscriminated-go/client\"\n)\n\nclient := undiscriminatedgoclient.NewClient()\nresponse, err := client.Union.TestCamelCaseProperties(\n\tcontext.TODO(),\n\t\u0026undiscriminatedgo.PaymentRequest{\n\t\tPaymentMethod: \u0026undiscriminatedgo.PaymentMethodUnion{\n\t\t\tTokenizeCard: \u0026undiscriminatedgo.TokenizeCard{\n\t\t\t\tMethod:     \"card\",\n\t\t\t\tCardNumber: \"1234567890123456\",\n\t\t\t},\n\t\t},\n\t},\n)\n"
+             }
+         },
+         {
+@@ -41,7 +41,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/undiscriminated-unions/fern\"\n\tfernclient \"github.com/undiscriminated-unions/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Union.DuplicateTypesUnion(\n\tcontext.TODO(),\n\t\u0026fern.UnionWithDuplicateTypes{\n\t\tString: \"string\",\n\t},\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\tundiscriminatedgo \"github.com/fern-api/undiscriminated-go\"\n\tundiscriminatedgoclient \"github.com/fern-api/undiscriminated-go/client\"\n)\n\nclient := undiscriminatedgoclient.NewClient()\nresponse, err := client.Union.DuplicateTypesUnion(\n\tcontext.TODO(),\n\t\u0026undiscriminatedgo.UnionWithDuplicateTypes{\n\t\tString: \"string\",\n\t},\n)\n"
+             }
+         },
+         {
+@@ -52,7 +52,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/undiscriminated-unions/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Union.GetMetadata(\n\tcontext.TODO(),\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\tundiscriminatedgoclient \"github.com/fern-api/undiscriminated-go/client\"\n)\n\nclient := undiscriminatedgoclient.NewClient()\nresponse, err := client.Union.GetMetadata(\n\tcontext.TODO(),\n)\n"
+             }
+         },
+         {
+@@ -63,7 +63,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/undiscriminated-unions/fern\"\n\tfernclient \"github.com/undiscriminated-unions/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Union.UpdateMetadata(\n\tcontext.TODO(),\n\t\u0026fern.MetadataUnion{\n\t\tOptionalMetadata: map[string]any{\n\t\t\t\"string\": map[string]interface{}{\n\t\t\t\t\"key\": \"value\",\n\t\t\t},\n\t\t},\n\t},\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\tundiscriminatedgo \"github.com/fern-api/undiscriminated-go\"\n\tundiscriminatedgoclient \"github.com/fern-api/undiscriminated-go/client\"\n)\n\nclient := undiscriminatedgoclient.NewClient()\nresponse, err := client.Union.UpdateMetadata(\n\tcontext.TODO(),\n\t\u0026undiscriminatedgo.MetadataUnion{\n\t\tOptionalMetadata: map[string]any{\n\t\t\t\"string\": map[string]interface{}{\n\t\t\t\t\"key\": \"value\",\n\t\t\t},\n\t\t},\n\t},\n)\n"
+             }
+         },
+         {
+@@ -74,7 +74,7 @@
+             },
+             "snippet": {
+                 "type": "go",
+-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/undiscriminated-unions/fern\"\n\tfernclient \"github.com/undiscriminated-unions/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Union.NestedUnions(\n\tcontext.TODO(),\n\t\u0026fern.NestedUnionRoot{\n\t\tString: \"string\",\n\t},\n)\n"
++                "client": "import (\n\tcontext \"context\"\n\tundiscriminatedgo \"github.com/fern-api/undiscriminated-go\"\n\tundiscriminatedgoclient \"github.com/fern-api/undiscriminated-go/client\"\n)\n\nclient := undiscriminatedgoclient.NewClient()\nresponse, err := client.Union.NestedUnions(\n\tcontext.TODO(),\n\t\u0026undiscriminatedgo.NestedUnionRoot{\n\t\tString: \"string\",\n\t},\n)\n"
+             }
+         }
+     ]
+diff --git a/union/client.go b/union/client.go
+index 26ba1021045..2bf71d71c0d 100644
+--- a/union/client.go
++++ b/union/client.go
+@@ -5,10 +5,10 @@ package union
+ import (
+ 	context "context"
+ 
+-	fern "github.com/undiscriminated-unions/fern"
+-	core "github.com/undiscriminated-unions/fern/core"
+-	internal "github.com/undiscriminated-unions/fern/internal"
+-	option "github.com/undiscriminated-unions/fern/option"
++	undiscriminated "github.com/fern-api/undiscriminated-go"
++	core "github.com/fern-api/undiscriminated-go/core"
++	internal "github.com/fern-api/undiscriminated-go/internal"
++	option "github.com/fern-api/undiscriminated-go/option"
+ )
+ 
+ type Client struct {
+@@ -35,9 +35,9 @@ func NewClient(options *core.RequestOptions) *Client {
+ 
+ func (c *Client) Get(
+ 	ctx context.Context,
+-	request *fern.MyUnion,
++	request *undiscriminated.MyUnion,
+ 	opts ...option.RequestOption,
+-) (*fern.MyUnion, error) {
++) (*undiscriminated.MyUnion, error) {
+ 	response, err := c.WithRawResponse.Get(
+ 		ctx,
+ 		request,
+@@ -52,7 +52,7 @@ func (c *Client) Get(
+ func (c *Client) GetMetadata(
+ 	ctx context.Context,
+ 	opts ...option.RequestOption,
+-) (fern.Metadata, error) {
++) (undiscriminated.Metadata, error) {
+ 	response, err := c.WithRawResponse.GetMetadata(
+ 		ctx,
+ 		opts...,
+@@ -65,7 +65,7 @@ func (c *Client) GetMetadata(
+ 
+ func (c *Client) UpdateMetadata(
+ 	ctx context.Context,
+-	request *fern.MetadataUnion,
++	request *undiscriminated.MetadataUnion,
+ 	opts ...option.RequestOption,
+ ) (bool, error) {
+ 	response, err := c.WithRawResponse.UpdateMetadata(
+@@ -81,7 +81,7 @@ func (c *Client) UpdateMetadata(
+ 
+ func (c *Client) Call(
+ 	ctx context.Context,
+-	request *fern.Request,
++	request *undiscriminated.Request,
+ 	opts ...option.RequestOption,
+ ) (bool, error) {
+ 	response, err := c.WithRawResponse.Call(
+@@ -97,9 +97,9 @@ func (c *Client) Call(
+ 
+ func (c *Client) DuplicateTypesUnion(
+ 	ctx context.Context,
+-	request *fern.UnionWithDuplicateTypes,
++	request *undiscriminated.UnionWithDuplicateTypes,
+ 	opts ...option.RequestOption,
+-) (*fern.UnionWithDuplicateTypes, error) {
++) (*undiscriminated.UnionWithDuplicateTypes, error) {
+ 	response, err := c.WithRawResponse.DuplicateTypesUnion(
+ 		ctx,
+ 		request,
+@@ -113,7 +113,7 @@ func (c *Client) DuplicateTypesUnion(
+ 
+ func (c *Client) NestedUnions(
+ 	ctx context.Context,
+-	request *fern.NestedUnionRoot,
++	request *undiscriminated.NestedUnionRoot,
+ 	opts ...option.RequestOption,
+ ) (string, error) {
+ 	response, err := c.WithRawResponse.NestedUnions(
+@@ -129,7 +129,7 @@ func (c *Client) NestedUnions(
+ 
+ func (c *Client) TestCamelCaseProperties(
+ 	ctx context.Context,
+-	request *fern.PaymentRequest,
++	request *undiscriminated.PaymentRequest,
+ 	opts ...option.RequestOption,
+ ) (string, error) {
+ 	response, err := c.WithRawResponse.TestCamelCaseProperties(
+diff --git a/union/raw_client.go b/union/raw_client.go
+index f6b0e9fd34d..0af43a3b36e 100644
+--- a/union/raw_client.go
++++ b/union/raw_client.go
+@@ -6,10 +6,10 @@ import (
+ 	context "context"
+ 	http "net/http"
+ 
+-	fern "github.com/undiscriminated-unions/fern"
+-	core "github.com/undiscriminated-unions/fern/core"
+-	internal "github.com/undiscriminated-unions/fern/internal"
+-	option "github.com/undiscriminated-unions/fern/option"
++	undiscriminated "github.com/fern-api/undiscriminated-go"
++	core "github.com/fern-api/undiscriminated-go/core"
++	internal "github.com/fern-api/undiscriminated-go/internal"
++	option "github.com/fern-api/undiscriminated-go/option"
+ )
+ 
+ type RawClient struct {
+@@ -33,9 +33,9 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
+ 
+ func (r *RawClient) Get(
+ 	ctx context.Context,
+-	request *fern.MyUnion,
++	request *undiscriminated.MyUnion,
+ 	opts ...option.RequestOption,
+-) (*core.Response[*fern.MyUnion], error) {
++) (*core.Response[*undiscriminated.MyUnion], error) {
+ 	options := core.NewRequestOptions(opts...)
+ 	baseURL := internal.ResolveBaseURL(
+ 		options.BaseURL,
+@@ -47,7 +47,7 @@ func (r *RawClient) Get(
+ 		r.options.ToHeader(),
+ 		options.ToHeader(),
+ 	)
+-	var response *fern.MyUnion
++	var response *undiscriminated.MyUnion
+ 	raw, err := r.caller.Call(
+ 		ctx,
+ 		&internal.CallParams{
+@@ -65,7 +65,7 @@ func (r *RawClient) Get(
+ 	if err != nil {
+ 		return nil, err
+ 	}
+-	return &core.Response[*fern.MyUnion]{
++	return &core.Response[*undiscriminated.MyUnion]{
+ 		StatusCode: raw.StatusCode,
+ 		Header:     raw.Header,
+ 		Body:       response,
+@@ -75,7 +75,7 @@ func (r *RawClient) Get(
+ func (r *RawClient) GetMetadata(
+ 	ctx context.Context,
+ 	opts ...option.RequestOption,
+-) (*core.Response[fern.Metadata], error) {
++) (*core.Response[undiscriminated.Metadata], error) {
+ 	options := core.NewRequestOptions(opts...)
+ 	baseURL := internal.ResolveBaseURL(
+ 		options.BaseURL,
+@@ -87,7 +87,7 @@ func (r *RawClient) GetMetadata(
+ 		r.options.ToHeader(),
+ 		options.ToHeader(),
+ 	)
+-	var response fern.Metadata
++	var response undiscriminated.Metadata
+ 	raw, err := r.caller.Call(
+ 		ctx,
+ 		&internal.CallParams{
+@@ -104,7 +104,7 @@ func (r *RawClient) GetMetadata(
+ 	if err != nil {
+ 		return nil, err
+ 	}
+-	return &core.Response[fern.Metadata]{
++	return &core.Response[undiscriminated.Metadata]{
+ 		StatusCode: raw.StatusCode,
+ 		Header:     raw.Header,
+ 		Body:       response,
+@@ -113,7 +113,7 @@ func (r *RawClient) GetMetadata(
+ 
+ func (r *RawClient) UpdateMetadata(
+ 	ctx context.Context,
+-	request *fern.MetadataUnion,
++	request *undiscriminated.MetadataUnion,
+ 	opts ...option.RequestOption,
+ ) (*core.Response[bool], error) {
+ 	options := core.NewRequestOptions(opts...)
+@@ -154,7 +154,7 @@ func (r *RawClient) UpdateMetadata(
+ 
+ func (r *RawClient) Call(
+ 	ctx context.Context,
+-	request *fern.Request,
++	request *undiscriminated.Request,
+ 	opts ...option.RequestOption,
+ ) (*core.Response[bool], error) {
+ 	options := core.NewRequestOptions(opts...)
+@@ -195,9 +195,9 @@ func (r *RawClient) Call(
+ 
+ func (r *RawClient) DuplicateTypesUnion(
+ 	ctx context.Context,
+-	request *fern.UnionWithDuplicateTypes,
++	request *undiscriminated.UnionWithDuplicateTypes,
+ 	opts ...option.RequestOption,
+-) (*core.Response[*fern.UnionWithDuplicateTypes], error) {
++) (*core.Response[*undiscriminated.UnionWithDuplicateTypes], error) {
+ 	options := core.NewRequestOptions(opts...)
+ 	baseURL := internal.ResolveBaseURL(
+ 		options.BaseURL,
+@@ -209,7 +209,7 @@ func (r *RawClient) DuplicateTypesUnion(
+ 		r.options.ToHeader(),
+ 		options.ToHeader(),
+ 	)
+-	var response *fern.UnionWithDuplicateTypes
++	var response *undiscriminated.UnionWithDuplicateTypes
+ 	raw, err := r.caller.Call(
+ 		ctx,
+ 		&internal.CallParams{
+@@ -227,7 +227,7 @@ func (r *RawClient) DuplicateTypesUnion(
+ 	if err != nil {
+ 		return nil, err
+ 	}
+-	return &core.Response[*fern.UnionWithDuplicateTypes]{
++	return &core.Response[*undiscriminated.UnionWithDuplicateTypes]{
+ 		StatusCode: raw.StatusCode,
+ 		Header:     raw.Header,
+ 		Body:       response,
+@@ -236,7 +236,7 @@ func (r *RawClient) DuplicateTypesUnion(
+ 
+ func (r *RawClient) NestedUnions(
+ 	ctx context.Context,
+-	request *fern.NestedUnionRoot,
++	request *undiscriminated.NestedUnionRoot,
+ 	opts ...option.RequestOption,
+ ) (*core.Response[string], error) {
+ 	options := core.NewRequestOptions(opts...)
+@@ -277,7 +277,7 @@ func (r *RawClient) NestedUnions(
+ 
+ func (r *RawClient) TestCamelCaseProperties(
+ 	ctx context.Context,
+-	request *fern.PaymentRequest,
++	request *undiscriminated.PaymentRequest,
+ 	opts ...option.RequestOption,
+ ) (*core.Response[string], error) {
+ 	options := core.NewRequestOptions(opts...)
+diff --git a/union.go b/union.go
+index a7c07549f8f..f734670afc2 100644
+--- a/union.go
++++ b/union.go
+@@ -1,11 +1,11 @@
+ // Code generated by Fern. DO NOT EDIT.
+ 
+-package undiscriminatedunions
++package undiscriminated
+ 
+ import (
+ 	json "encoding/json"
+ 	fmt "fmt"
+-	internal "github.com/undiscriminated-unions/fern/internal"
++	internal "github.com/fern-api/undiscriminated-go/internal"
+ 	big "math/big"
+ )
+ 
+diff --git a/union_test.go b/union_test.go
+index 847112f848e..d6d0b555f4f 100644
+--- a/union_test.go
++++ b/union_test.go
+@@ -1,6 +1,6 @@
+ // Code generated by Fern. DO NOT EDIT.
+ 
+-package undiscriminatedunions
++package undiscriminated
+ 
+ import (
+ 	json "encoding/json"

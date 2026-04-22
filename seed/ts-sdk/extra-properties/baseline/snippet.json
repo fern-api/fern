@@ -1,0 +1,16 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/user",
+                "method": "POST",
+                "identifier_override": "endpoint_user.createUser"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedExtraPropertiesClient } from \"@fern/extra-properties\";\n\nconst client = new SeedExtraPropertiesClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.createUser({\n    name: \"Alice\",\n    age: 30,\n    location: \"Wonderland\"\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}

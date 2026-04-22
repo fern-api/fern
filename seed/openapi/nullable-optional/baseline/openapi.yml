@@ -1,0 +1,992 @@
+openapi: 3.1.0
+info:
+  title: nullable-optional
+  version: 0.0.0
+paths:
+  /api/users/{userId}:
+    get:
+      description: Get a user by ID
+      operationId: nullableOptional_getUser
+      tags:
+        - NullableOptional
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+    patch:
+      description: Update a user (partial update)
+      operationId: nullableOptional_updateUser
+      tags:
+        - NullableOptional
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserRequest'
+  /api/users:
+    post:
+      description: Create a new user
+      operationId: nullableOptional_createUser
+      tags:
+        - NullableOptional
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+    get:
+      description: List all users
+      operationId: nullableOptional_listUsers
+      tags:
+        - NullableOptional
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type:
+              - integer
+              - 'null'
+        - name: offset
+          in: query
+          required: false
+          schema:
+            type:
+              - integer
+              - 'null'
+        - name: includeDeleted
+          in: query
+          required: false
+          schema:
+            type:
+              - boolean
+              - 'null'
+        - name: sortBy
+          in: query
+          required: false
+          schema:
+            type:
+              - string
+              - 'null'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserResponse'
+  /api/users/search:
+    get:
+      description: Search users
+      operationId: nullableOptional_searchUsers
+      tags:
+        - NullableOptional
+      parameters:
+        - name: query
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: department
+          in: query
+          required: true
+          schema:
+            type:
+              - string
+              - 'null'
+        - name: role
+          in: query
+          required: false
+          schema:
+            type:
+              - string
+              - 'null'
+        - name: isActive
+          in: query
+          required: false
+          schema:
+            type:
+              - boolean
+              - 'null'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserResponse'
+  /api/profiles/complex:
+    post:
+      description: Create a complex profile to test nullable enums and unions
+      operationId: nullableOptional_createComplexProfile
+      tags:
+        - NullableOptional
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComplexProfile'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ComplexProfile'
+  /api/profiles/complex/{profileId}:
+    get:
+      description: Get a complex profile by ID
+      operationId: nullableOptional_getComplexProfile
+      tags:
+        - NullableOptional
+      parameters:
+        - name: profileId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComplexProfile'
+    patch:
+      description: Update complex profile to test nullable field updates
+      operationId: nullableOptional_updateComplexProfile
+      tags:
+        - NullableOptional
+      parameters:
+        - name: profileId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComplexProfile'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nullableRole:
+                  anyOf:
+                    - $ref: '#/components/schemas/UserRole'
+                    - type: 'null'
+                nullableStatus:
+                  anyOf:
+                    - $ref: '#/components/schemas/UserStatus'
+                    - type: 'null'
+                nullableNotification:
+                  anyOf:
+                    - $ref: '#/components/schemas/NotificationMethod'
+                    - type: 'null'
+                nullableSearchResult:
+                  anyOf:
+                    - $ref: '#/components/schemas/SearchResult'
+                    - type: 'null'
+                nullableArray:
+                  type:
+                    - array
+                    - 'null'
+                  items:
+                    type: string
+  /api/test/deserialization:
+    post:
+      description: Test endpoint for validating null deserialization
+      operationId: nullableOptional_testDeserialization
+      tags:
+        - NullableOptional
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeserializationTestResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeserializationTestRequest'
+  /api/users/filter:
+    get:
+      description: Filter users by role with nullable enum
+      operationId: nullableOptional_filterByRole
+      tags:
+        - NullableOptional
+      parameters:
+        - name: role
+          in: query
+          required: true
+          schema:
+            anyOf:
+              - $ref: '#/components/schemas/UserRole'
+              - type: 'null'
+        - name: status
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - $ref: '#/components/schemas/UserStatus'
+              - type: 'null'
+        - name: secondaryRole
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - $ref: '#/components/schemas/UserRole'
+              - type: 'null'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserResponse'
+  /api/users/{userId}/notifications:
+    get:
+      description: Get notification settings which may be null
+      operationId: nullableOptional_getNotificationSettings
+      tags:
+        - NullableOptional
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Nullable notification method or empty for no preference
+          content:
+            application/json:
+              schema:
+                anyOf:
+                  - $ref: '#/components/schemas/NotificationMethod'
+                  - type: 'null'
+  /api/users/{userId}/tags:
+    put:
+      description: Update tags to test array handling
+      operationId: nullableOptional_updateTags
+      tags:
+        - NullableOptional
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Updated tags
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tags:
+                  type:
+                    - array
+                    - 'null'
+                  items:
+                    type: string
+                categories:
+                  type:
+                    - array
+                    - 'null'
+                  items:
+                    type: string
+                labels:
+                  type:
+                    - array
+                    - 'null'
+                  items:
+                    type: string
+              required:
+                - tags
+  /api/search:
+    post:
+      description: Get search results with nullable unions
+      operationId: nullableOptional_getSearchResults
+      tags:
+        - NullableOptional
+      parameters: []
+      responses:
+        '200':
+          description: List of search results, can be null if no results
+          content:
+            application/json:
+              schema:
+                type:
+                  - array
+                  - 'null'
+                items:
+                  $ref: '#/components/schemas/SearchResult'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                filters:
+                  type:
+                    - object
+                    - 'null'
+                  additionalProperties:
+                    type:
+                      - string
+                      - 'null'
+                includeTypes:
+                  type:
+                    - array
+                    - 'null'
+                  items:
+                    type: string
+              required:
+                - query
+                - includeTypes
+components:
+  schemas:
+    NullableUserId:
+      title: NullableUserId
+      type:
+        - string
+        - 'null'
+      description: An alias for a nullable user ID
+    OptionalUserId:
+      title: OptionalUserId
+      type:
+        - string
+        - 'null'
+      description: An alias for an optional user ID
+    UserProfile:
+      title: UserProfile
+      type: object
+      description: Test object with nullable and optional fields
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        nullableString:
+          type:
+            - string
+            - 'null'
+        nullableInteger:
+          type:
+            - integer
+            - 'null'
+        nullableBoolean:
+          type:
+            - boolean
+            - 'null'
+        nullableDate:
+          type:
+            - string
+            - 'null'
+          format: date-time
+        nullableObject:
+          anyOf:
+            - $ref: '#/components/schemas/Address'
+            - type: 'null'
+        nullableList:
+          type:
+            - array
+            - 'null'
+          items:
+            type: string
+        nullableMap:
+          type:
+            - object
+            - 'null'
+          additionalProperties:
+            type: string
+        optionalString:
+          type:
+            - string
+            - 'null'
+        optionalInteger:
+          type:
+            - integer
+            - 'null'
+        optionalBoolean:
+          type:
+            - boolean
+            - 'null'
+        optionalDate:
+          type:
+            - string
+            - 'null'
+          format: date-time
+        optionalObject:
+          anyOf:
+            - $ref: '#/components/schemas/Address'
+            - type: 'null'
+        optionalList:
+          type:
+            - array
+            - 'null'
+          items:
+            type: string
+        optionalMap:
+          type:
+            - object
+            - 'null'
+          additionalProperties:
+            type: string
+        optionalNullableString:
+          type:
+            - string
+            - 'null'
+        optionalNullableObject:
+          anyOf:
+            - $ref: '#/components/schemas/Address'
+            - type: 'null'
+      required:
+        - id
+        - username
+        - nullableString
+        - nullableInteger
+        - nullableBoolean
+        - nullableDate
+        - nullableObject
+        - nullableList
+        - nullableMap
+    Address:
+      title: Address
+      type: object
+      description: Nested object for testing
+      properties:
+        street:
+          type: string
+        city:
+          type:
+            - string
+            - 'null'
+        state:
+          type:
+            - string
+            - 'null'
+        zipCode:
+          type: string
+        country:
+          type:
+            - string
+            - 'null'
+        buildingId:
+          $ref: '#/components/schemas/NullableUserId'
+        tenantId:
+          $ref: '#/components/schemas/OptionalUserId'
+      required:
+        - street
+        - city
+        - zipCode
+        - buildingId
+        - tenantId
+    CreateUserRequest:
+      title: CreateUserRequest
+      type: object
+      properties:
+        username:
+          type: string
+        email:
+          type:
+            - string
+            - 'null'
+        phone:
+          type:
+            - string
+            - 'null'
+        address:
+          anyOf:
+            - $ref: '#/components/schemas/Address'
+            - type: 'null'
+      required:
+        - username
+        - email
+    UpdateUserRequest:
+      title: UpdateUserRequest
+      type: object
+      description: For testing PATCH operations
+      properties:
+        username:
+          type:
+            - string
+            - 'null'
+        email:
+          type:
+            - string
+            - 'null'
+        phone:
+          type:
+            - string
+            - 'null'
+        address:
+          anyOf:
+            - $ref: '#/components/schemas/Address'
+            - type: 'null'
+    UserRole:
+      title: UserRole
+      type: string
+      enum:
+        - ADMIN
+        - USER
+        - GUEST
+        - MODERATOR
+      description: Test enum for nullable enum fields
+    UserStatus:
+      title: UserStatus
+      type: string
+      enum:
+        - active
+        - inactive
+        - suspended
+        - deleted
+      description: Test enum with values for optional enum fields
+    NotificationMethod:
+      title: NotificationMethod
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: email
+            - $ref: '#/components/schemas/EmailNotification'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: sms
+            - $ref: '#/components/schemas/SmsNotification'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: push
+            - $ref: '#/components/schemas/PushNotification'
+          required:
+            - type
+      description: Discriminated union for testing nullable unions
+    EmailNotification:
+      title: EmailNotification
+      type: object
+      properties:
+        emailAddress:
+          type: string
+        subject:
+          type: string
+        htmlContent:
+          type:
+            - string
+            - 'null'
+      required:
+        - emailAddress
+        - subject
+    SmsNotification:
+      title: SmsNotification
+      type: object
+      properties:
+        phoneNumber:
+          type: string
+        message:
+          type: string
+        shortCode:
+          type:
+            - string
+            - 'null'
+      required:
+        - phoneNumber
+        - message
+    PushNotification:
+      title: PushNotification
+      type: object
+      properties:
+        deviceToken:
+          type: string
+        title:
+          type: string
+        body:
+          type: string
+        badge:
+          type:
+            - integer
+            - 'null'
+      required:
+        - deviceToken
+        - title
+        - body
+    SearchResult:
+      title: SearchResult
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: user
+            - $ref: '#/components/schemas/UserResponse'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: organization
+            - $ref: '#/components/schemas/Organization'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: document
+            - $ref: '#/components/schemas/Document'
+          required:
+            - type
+      description: Undiscriminated union for testing
+    Organization:
+      title: Organization
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        domain:
+          type:
+            - string
+            - 'null'
+        employeeCount:
+          type:
+            - integer
+            - 'null'
+      required:
+        - id
+        - name
+        - domain
+    Document:
+      title: Document
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        content:
+          type: string
+        author:
+          type:
+            - string
+            - 'null'
+        tags:
+          type:
+            - array
+            - 'null'
+          items:
+            type: string
+      required:
+        - id
+        - title
+        - content
+        - author
+    ComplexProfile:
+      title: ComplexProfile
+      type: object
+      description: Test object with nullable enums, unions, and arrays
+      properties:
+        id:
+          type: string
+        nullableRole:
+          anyOf:
+            - $ref: '#/components/schemas/UserRole'
+            - type: 'null'
+        optionalRole:
+          anyOf:
+            - $ref: '#/components/schemas/UserRole'
+            - type: 'null'
+        optionalNullableRole:
+          anyOf:
+            - $ref: '#/components/schemas/UserRole'
+            - type: 'null'
+        nullableStatus:
+          anyOf:
+            - $ref: '#/components/schemas/UserStatus'
+            - type: 'null'
+        optionalStatus:
+          anyOf:
+            - $ref: '#/components/schemas/UserStatus'
+            - type: 'null'
+        optionalNullableStatus:
+          anyOf:
+            - $ref: '#/components/schemas/UserStatus'
+            - type: 'null'
+        nullableNotification:
+          anyOf:
+            - $ref: '#/components/schemas/NotificationMethod'
+            - type: 'null'
+        optionalNotification:
+          anyOf:
+            - $ref: '#/components/schemas/NotificationMethod'
+            - type: 'null'
+        optionalNullableNotification:
+          anyOf:
+            - $ref: '#/components/schemas/NotificationMethod'
+            - type: 'null'
+        nullableSearchResult:
+          anyOf:
+            - $ref: '#/components/schemas/SearchResult'
+            - type: 'null'
+        optionalSearchResult:
+          anyOf:
+            - $ref: '#/components/schemas/SearchResult'
+            - type: 'null'
+        nullableArray:
+          type:
+            - array
+            - 'null'
+          items:
+            type: string
+        optionalArray:
+          type:
+            - array
+            - 'null'
+          items:
+            type: string
+        optionalNullableArray:
+          type:
+            - array
+            - 'null'
+          items:
+            type: string
+        nullableListOfNullables:
+          type:
+            - array
+            - 'null'
+          items:
+            type:
+              - string
+              - 'null'
+        nullableMapOfNullables:
+          type:
+            - object
+            - 'null'
+          additionalProperties:
+            anyOf:
+              - $ref: '#/components/schemas/Address'
+              - type: 'null'
+        nullableListOfUnions:
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/NotificationMethod'
+        optionalMapOfEnums:
+          type:
+            - object
+            - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/UserRole'
+      required:
+        - id
+        - nullableRole
+        - nullableStatus
+        - nullableNotification
+        - nullableSearchResult
+        - nullableArray
+        - nullableListOfNullables
+        - nullableMapOfNullables
+        - nullableListOfUnions
+    DeserializationTestRequest:
+      title: DeserializationTestRequest
+      type: object
+      description: Request body for testing deserialization of null values
+      properties:
+        requiredString:
+          type: string
+        nullableString:
+          type:
+            - string
+            - 'null'
+        optionalString:
+          type:
+            - string
+            - 'null'
+        optionalNullableString:
+          type:
+            - string
+            - 'null'
+        nullableEnum:
+          anyOf:
+            - $ref: '#/components/schemas/UserRole'
+            - type: 'null'
+        optionalEnum:
+          anyOf:
+            - $ref: '#/components/schemas/UserStatus'
+            - type: 'null'
+        nullableUnion:
+          anyOf:
+            - $ref: '#/components/schemas/NotificationMethod'
+            - type: 'null'
+        optionalUnion:
+          anyOf:
+            - $ref: '#/components/schemas/SearchResult'
+            - type: 'null'
+        nullableList:
+          type:
+            - array
+            - 'null'
+          items:
+            type: string
+        nullableMap:
+          type:
+            - object
+            - 'null'
+          additionalProperties:
+            type: integer
+        nullableObject:
+          anyOf:
+            - $ref: '#/components/schemas/Address'
+            - type: 'null'
+        optionalObject:
+          anyOf:
+            - $ref: '#/components/schemas/Organization'
+            - type: 'null'
+      required:
+        - requiredString
+        - nullableString
+        - nullableEnum
+        - nullableUnion
+        - nullableList
+        - nullableMap
+        - nullableObject
+    DeserializationTestResponse:
+      title: DeserializationTestResponse
+      type: object
+      description: Response for deserialization test
+      properties:
+        echo:
+          $ref: '#/components/schemas/DeserializationTestRequest'
+        processedAt:
+          type: string
+          format: date-time
+        nullCount:
+          type: integer
+        presentFieldsCount:
+          type: integer
+      required:
+        - echo
+        - processedAt
+        - nullCount
+        - presentFieldsCount
+    UserResponse:
+      title: UserResponse
+      type: object
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        email:
+          type:
+            - string
+            - 'null'
+        phone:
+          type:
+            - string
+            - 'null'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type:
+            - string
+            - 'null'
+          format: date-time
+        address:
+          anyOf:
+            - $ref: '#/components/schemas/Address'
+            - type: 'null'
+      required:
+        - id
+        - username
+        - email
+        - createdAt
+        - updatedAt
+  securitySchemes: {}

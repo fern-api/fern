@@ -1,0 +1,1603 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 200d96787a2..12c43a448cd 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,7 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-csharp-sdk",
+   "generatorVersion": "local",
+-  "generatorConfig": {},
++  "generatorConfig": {
++    "enable-forward-compatible-enums": false
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "manual",
+diff --git a/README.md b/README.md
+index 6dc5c58408d..798acdbea8f 100644
+--- a/README.md
++++ b/README.md
+@@ -18,7 +18,6 @@ The Seed C# library provides convenient access to the Seed APIs from C#.
+   - [Raw Response](#raw-response)
+   - [Additional Headers](#additional-headers)
+   - [Additional Query Parameters](#additional-query-parameters)
+-  - [Forward Compatible Enums](#forward-compatible-enums)
+ - [Contributing](#contributing)
+ 
+ ## Requirements
+@@ -168,35 +167,6 @@ var response = await client.Headers.SendAsync(
+ );
+ ```
+ 
+-### Forward Compatible Enums
+-
+-This SDK uses forward-compatible enums that can handle unknown values gracefully.
+-
+-```csharp
+-using SeedEnum;
+-
+-// Using a built-in value
+-var operand = Operand.GreaterThan;
+-
+-// Using a custom value
+-var customOperand = Operand.FromCustom("custom-value");
+-
+-// Using in a switch statement
+-switch (operand.Value)
+-{
+-    case Operand.Values.GreaterThan:
+-        Console.WriteLine("GreaterThan");
+-        break;
+-    default:
+-        Console.WriteLine($"Unknown value: {operand.Value}");
+-        break;
+-}
+-
+-// Explicit casting
+-string operandString = (string)Operand.GreaterThan;
+-Operand operandFromString = (Operand)">";
+-```
+-
+ ## Contributing
+ 
+ While we value open-source contributions to this SDK, this library is generated programmatically.
+diff --git a/src/SeedEnum/Core/StringEnum.cs b/src/SeedEnum/Core/StringEnum.cs
+deleted file mode 100644
+index f1c2410e4b2..00000000000
+--- a/src/SeedEnum/Core/StringEnum.cs
++++ /dev/null
+@@ -1,6 +0,0 @@
+-namespace SeedEnum.Core;
+-
+-public interface IStringEnum : IEquatable<string>
+-{
+-    public string Value { get; }
+-}
+diff --git a/src/SeedEnum/Core/StringEnumExtensions.cs b/src/SeedEnum/Core/StringEnumExtensions.cs
+deleted file mode 100644
+index 43e47803256..00000000000
+--- a/src/SeedEnum/Core/StringEnumExtensions.cs
++++ /dev/null
+@@ -1,6 +0,0 @@
+-namespace SeedEnum.Core;
+-
+-internal static class StringEnumExtensions
+-{
+-    public static string Stringify(this IStringEnum stringEnum) => stringEnum.Value;
+-}
+diff --git a/src/SeedEnum/Types/Color.cs b/src/SeedEnum/Types/Color.cs
+index 7327a494a52..af3523a413a 100644
+--- a/src/SeedEnum/Types/Color.cs
++++ b/src/SeedEnum/Types/Color.cs
+@@ -1,113 +1,75 @@
+-using global::System.Text.Json;
++using global::System.Runtime.Serialization;
+ using global::System.Text.Json.Serialization;
+-using SeedEnum.Core;
+ 
+ namespace SeedEnum;
+ 
+-[JsonConverter(typeof(Color.ColorSerializer))]
+-[Serializable]
+-public readonly record struct Color : IStringEnum
++[JsonConverter(typeof(ColorSerializer))]
++public enum Color
+ {
+-    public static readonly Color Red = new(Values.Red);
++    [EnumMember(Value = "red")]
++    Red,
+ 
+-    public static readonly Color Blue = new(Values.Blue);
++    [EnumMember(Value = "blue")]
++    Blue,
++}
+ 
+-    public Color(string value)
++internal class ColorSerializer : global::System.Text.Json.Serialization.JsonConverter<Color>
++{
++    private static readonly global::System.Collections.Generic.Dictionary<
++        string,
++        Color
++    > _stringToEnum = new() { { "red", Color.Red }, { "blue", Color.Blue } };
++
++    private static readonly global::System.Collections.Generic.Dictionary<
++        Color,
++        string
++    > _enumToString = new() { { Color.Red, "red" }, { Color.Blue, "blue" } };
++
++    public override Color Read(
++        ref global::System.Text.Json.Utf8JsonReader reader,
++        global::System.Type typeToConvert,
++        global::System.Text.Json.JsonSerializerOptions options
++    )
+     {
+-        Value = value;
++        var stringValue =
++            reader.GetString()
++            ?? throw new global::System.Exception("The JSON value could not be read as a string.");
++        return _stringToEnum.TryGetValue(stringValue, out var enumValue) ? enumValue : default;
+     }
+ 
+-    /// <summary>
+-    /// The string value of the enum.
+-    /// </summary>
+-    public string Value { get; }
+-
+-    /// <summary>
+-    /// Create a string enum with the given value.
+-    /// </summary>
+-    public static Color FromCustom(string value)
++    public override void Write(
++        global::System.Text.Json.Utf8JsonWriter writer,
++        Color value,
++        global::System.Text.Json.JsonSerializerOptions options
++    )
+     {
+-        return new Color(value);
++        writer.WriteStringValue(
++            _enumToString.TryGetValue(value, out var stringValue) ? stringValue : null
++        );
+     }
+ 
+-    public bool Equals(string? other)
++    public override Color ReadAsPropertyName(
++        ref global::System.Text.Json.Utf8JsonReader reader,
++        global::System.Type typeToConvert,
++        global::System.Text.Json.JsonSerializerOptions options
++    )
+     {
+-        return Value.Equals(other);
++        var stringValue =
++            reader.GetString()
++            ?? throw new global::System.Exception(
++                "The JSON property name could not be read as a string."
++            );
++        return _stringToEnum.TryGetValue(stringValue, out var enumValue) ? enumValue : default;
+     }
+ 
+-    /// <summary>
+-    /// Returns the string value of the enum.
+-    /// </summary>
+-    public override string ToString()
++    public override void WriteAsPropertyName(
++        global::System.Text.Json.Utf8JsonWriter writer,
++        Color value,
++        global::System.Text.Json.JsonSerializerOptions options
++    )
+     {
+-        return Value;
+-    }
+-
+-    public static bool operator ==(Color value1, string value2) => value1.Value.Equals(value2);
+-
+-    public static bool operator !=(Color value1, string value2) => !value1.Value.Equals(value2);
+-
+-    public static explicit operator string(Color value) => value.Value;
+-
+-    public static explicit operator Color(string value) => new(value);
+-
+-    internal class ColorSerializer : JsonConverter<Color>
+-    {
+-        public override Color Read(
+-            ref Utf8JsonReader reader,
+-            Type typeToConvert,
+-            JsonSerializerOptions options
+-        )
+-        {
+-            var stringValue =
+-                reader.GetString()
+-                ?? throw new global::System.Exception(
+-                    "The JSON value could not be read as a string."
+-                );
+-            return new Color(stringValue);
+-        }
+-
+-        public override void Write(
+-            Utf8JsonWriter writer,
+-            Color value,
+-            JsonSerializerOptions options
+-        )
+-        {
+-            writer.WriteStringValue(value.Value);
+-        }
+-
+-        public override Color ReadAsPropertyName(
+-            ref Utf8JsonReader reader,
+-            Type typeToConvert,
+-            JsonSerializerOptions options
+-        )
+-        {
+-            var stringValue =
+-                reader.GetString()
+-                ?? throw new global::System.Exception(
+-                    "The JSON property name could not be read as a string."
+-                );
+-            return new Color(stringValue);
+-        }
+-
+-        public override void WriteAsPropertyName(
+-            Utf8JsonWriter writer,
+-            Color value,
+-            JsonSerializerOptions options
+-        )
+-        {
+-            writer.WritePropertyName(value.Value);
+-        }
+-    }
+-
+-    /// <summary>
+-    /// Constant strings for enum values
+-    /// </summary>
+-    [Serializable]
+-    public static class Values
+-    {
+-        public const string Red = "red";
+-
+-        public const string Blue = "blue";
++        writer.WritePropertyName(
++            _enumToString.TryGetValue(value, out var stringValue) ? stringValue : value.ToString()
++        );
+     }
+ }
+diff --git a/src/SeedEnum/Types/EnumWithCustom.cs b/src/SeedEnum/Types/EnumWithCustom.cs
+index d7323f38c13..b6768938610 100644
+--- a/src/SeedEnum/Types/EnumWithCustom.cs
++++ b/src/SeedEnum/Types/EnumWithCustom.cs
+@@ -1,115 +1,84 @@
+-using global::System.Text.Json;
++using global::System.Runtime.Serialization;
+ using global::System.Text.Json.Serialization;
+-using SeedEnum.Core;
+ 
+ namespace SeedEnum;
+ 
+-[JsonConverter(typeof(EnumWithCustom.EnumWithCustomSerializer))]
+-[Serializable]
+-public readonly record struct EnumWithCustom : IStringEnum
++[JsonConverter(typeof(EnumWithCustomSerializer))]
++public enum EnumWithCustom
+ {
+-    public static readonly EnumWithCustom Safe = new(Values.Safe);
++    [EnumMember(Value = "safe")]
++    Safe,
+ 
+-    public static readonly EnumWithCustom Custom = new(Values.Custom);
++    [EnumMember(Value = "Custom")]
++    Custom,
++}
+ 
+-    public EnumWithCustom(string value)
++internal class EnumWithCustomSerializer
++    : global::System.Text.Json.Serialization.JsonConverter<EnumWithCustom>
++{
++    private static readonly global::System.Collections.Generic.Dictionary<
++        string,
++        EnumWithCustom
++    > _stringToEnum = new()
+     {
+-        Value = value;
+-    }
+-
+-    /// <summary>
+-    /// The string value of the enum.
+-    /// </summary>
+-    public string Value { get; }
+-
+-    /// <summary>
+-    /// Create a string enum with the given value.
+-    /// </summary>
+-    public static EnumWithCustom FromCustom(string value)
++        { "safe", EnumWithCustom.Safe },
++        { "Custom", EnumWithCustom.Custom },
++    };
++
++    private static readonly global::System.Collections.Generic.Dictionary<
++        EnumWithCustom,
++        string
++    > _enumToString = new()
+     {
+-        return new EnumWithCustom(value);
+-    }
+-
+-    public bool Equals(string? other)
++        { EnumWithCustom.Safe, "safe" },
++        { EnumWithCustom.Custom, "Custom" },
++    };
++
++    public override EnumWithCustom Read(
++        ref global::System.Text.Json.Utf8JsonReader reader,
++        global::System.Type typeToConvert,
++        global::System.Text.Json.JsonSerializerOptions options
++    )
+     {
+-        return Value.Equals(other);
++        var stringValue =
++            reader.GetString()
++            ?? throw new global::System.Exception("The JSON value could not be read as a string.");
++        return _stringToEnum.TryGetValue(stringValue, out var enumValue) ? enumValue : default;
+     }
+ 
+-    /// <summary>
+-    /// Returns the string value of the enum.
+-    /// </summary>
+-    public override string ToString()
++    public override void Write(
++        global::System.Text.Json.Utf8JsonWriter writer,
++        EnumWithCustom value,
++        global::System.Text.Json.JsonSerializerOptions options
++    )
+     {
+-        return Value;
++        writer.WriteStringValue(
++            _enumToString.TryGetValue(value, out var stringValue) ? stringValue : null
++        );
+     }
+ 
+-    public static bool operator ==(EnumWithCustom value1, string value2) =>
+-        value1.Value.Equals(value2);
+-
+-    public static bool operator !=(EnumWithCustom value1, string value2) =>
+-        !value1.Value.Equals(value2);
+-
+-    public static explicit operator string(EnumWithCustom value) => value.Value;
+-
+-    public static explicit operator EnumWithCustom(string value) => new(value);
+-
+-    internal class EnumWithCustomSerializer : JsonConverter<EnumWithCustom>
++    public override EnumWithCustom ReadAsPropertyName(
++        ref global::System.Text.Json.Utf8JsonReader reader,
++        global::System.Type typeToConvert,
++        global::System.Text.Json.JsonSerializerOptions options
++    )
+     {
+-        public override EnumWithCustom Read(
+-            ref Utf8JsonReader reader,
+-            Type typeToConvert,
+-            JsonSerializerOptions options
+-        )
+-        {
+-            var stringValue =
+-                reader.GetString()
+-                ?? throw new global::System.Exception(
+-                    "The JSON value could not be read as a string."
+-                );
+-            return new EnumWithCustom(stringValue);
+-        }
+-
+-        public override void Write(
+-            Utf8JsonWriter writer,
+-            EnumWithCustom value,
+-            JsonSerializerOptions options
+-        )
+-        {
+-            writer.WriteStringValue(value.Value);
+-        }
+-
+-        public override EnumWithCustom ReadAsPropertyName(
+-            ref Utf8JsonReader reader,
+-            Type typeToConvert,
+-            JsonSerializerOptions options
+-        )
+-        {
+-            var stringValue =
+-                reader.GetString()
+-                ?? throw new global::System.Exception(
+-                    "The JSON property name could not be read as a string."
+-                );
+-            return new EnumWithCustom(stringValue);
+-        }
+-
+-        public override void WriteAsPropertyName(
+-            Utf8JsonWriter writer,
+-            EnumWithCustom value,
+-            JsonSerializerOptions options
+-        )
+-        {
+-            writer.WritePropertyName(value.Value);
+-        }
++        var stringValue =
++            reader.GetString()
++            ?? throw new global::System.Exception(
++                "The JSON property name could not be read as a string."
++            );
++        return _stringToEnum.TryGetValue(stringValue, out var enumValue) ? enumValue : default;
+     }
+ 
+-    /// <summary>
+-    /// Constant strings for enum values
+-    /// </summary>
+-    [Serializable]
+-    public static class Values
++    public override void WriteAsPropertyName(
++        global::System.Text.Json.Utf8JsonWriter writer,
++        EnumWithCustom value,
++        global::System.Text.Json.JsonSerializerOptions options
++    )
+     {
+-        public const string Safe = "safe";
+-
+-        public const string Custom = "Custom";
++        writer.WritePropertyName(
++            _enumToString.TryGetValue(value, out var stringValue) ? stringValue : value.ToString()
++        );
+     }
+ }
+diff --git a/src/SeedEnum/Types/EnumWithSpecialCharacters.cs b/src/SeedEnum/Types/EnumWithSpecialCharacters.cs
+index 7629cde4f0f..e4a2955a0b6 100644
+--- a/src/SeedEnum/Types/EnumWithSpecialCharacters.cs
++++ b/src/SeedEnum/Types/EnumWithSpecialCharacters.cs
+@@ -1,115 +1,84 @@
+-using global::System.Text.Json;
++using global::System.Runtime.Serialization;
+ using global::System.Text.Json.Serialization;
+-using SeedEnum.Core;
+ 
+ namespace SeedEnum;
+ 
+-[JsonConverter(typeof(EnumWithSpecialCharacters.EnumWithSpecialCharactersSerializer))]
+-[Serializable]
+-public readonly record struct EnumWithSpecialCharacters : IStringEnum
++[JsonConverter(typeof(EnumWithSpecialCharactersSerializer))]
++public enum EnumWithSpecialCharacters
+ {
+-    public static readonly EnumWithSpecialCharacters Bla = new(Values.Bla);
++    [EnumMember(Value = "\\$bla")]
++    Bla,
+ 
+-    public static readonly EnumWithSpecialCharacters Yo = new(Values.Yo);
++    [EnumMember(Value = "\\$yo")]
++    Yo,
++}
+ 
+-    public EnumWithSpecialCharacters(string value)
++internal class EnumWithSpecialCharactersSerializer
++    : global::System.Text.Json.Serialization.JsonConverter<EnumWithSpecialCharacters>
++{
++    private static readonly global::System.Collections.Generic.Dictionary<
++        string,
++        EnumWithSpecialCharacters
++    > _stringToEnum = new()
+     {
+-        Value = value;
+-    }
+-
+-    /// <summary>
+-    /// The string value of the enum.
+-    /// </summary>
+-    public string Value { get; }
+-
+-    /// <summary>
+-    /// Create a string enum with the given value.
+-    /// </summary>
+-    public static EnumWithSpecialCharacters FromCustom(string value)
++        { "\\$bla", EnumWithSpecialCharacters.Bla },
++        { "\\$yo", EnumWithSpecialCharacters.Yo },
++    };
++
++    private static readonly global::System.Collections.Generic.Dictionary<
++        EnumWithSpecialCharacters,
++        string
++    > _enumToString = new()
+     {
+-        return new EnumWithSpecialCharacters(value);
+-    }
+-
+-    public bool Equals(string? other)
++        { EnumWithSpecialCharacters.Bla, "\\$bla" },
++        { EnumWithSpecialCharacters.Yo, "\\$yo" },
++    };
++
++    public override EnumWithSpecialCharacters Read(
++        ref global::System.Text.Json.Utf8JsonReader reader,
++        global::System.Type typeToConvert,
++        global::System.Text.Json.JsonSerializerOptions options
++    )
+     {
+-        return Value.Equals(other);
++        var stringValue =
++            reader.GetString()
++            ?? throw new global::System.Exception("The JSON value could not be read as a string.");
++        return _stringToEnum.TryGetValue(stringValue, out var enumValue) ? enumValue : default;
+     }
+ 
+-    /// <summary>
+-    /// Returns the string value of the enum.
+-    /// </summary>
+-    public override string ToString()
++    public override void Write(
++        global::System.Text.Json.Utf8JsonWriter writer,
++        EnumWithSpecialCharacters value,
++        global::System.Text.Json.JsonSerializerOptions options
++    )
+     {
+-        return Value;
++        writer.WriteStringValue(
++            _enumToString.TryGetValue(value, out var stringValue) ? stringValue : null
++        );
+     }
+ 
+-    public static bool operator ==(EnumWithSpecialCharacters value1, string value2) =>
+-        value1.Value.Equals(value2);
+-
+-    public static bool operator !=(EnumWithSpecialCharacters value1, string value2) =>
+-        !value1.Value.Equals(value2);
+-
+-    public static explicit operator string(EnumWithSpecialCharacters value) => value.Value;
+-
+-    public static explicit operator EnumWithSpecialCharacters(string value) => new(value);
+-
+-    internal class EnumWithSpecialCharactersSerializer : JsonConverter<EnumWithSpecialCharacters>
++    public override EnumWithSpecialCharacters ReadAsPropertyName(
++        ref global::System.Text.Json.Utf8JsonReader reader,
++        global::System.Type typeToConvert,
++        global::System.Text.Json.JsonSerializerOptions options
++    )
+     {
+-        public override EnumWithSpecialCharacters Read(
+-            ref Utf8JsonReader reader,
+-            Type typeToConvert,
+-            JsonSerializerOptions options
+-        )
+-        {
+-            var stringValue =
+-                reader.GetString()
+-                ?? throw new global::System.Exception(
+-                    "The JSON value could not be read as a string."
+-                );
+-            return new EnumWithSpecialCharacters(stringValue);
+-        }
+-
+-        public override void Write(
+-            Utf8JsonWriter writer,
+-            EnumWithSpecialCharacters value,
+-            JsonSerializerOptions options
+-        )
+-        {
+-            writer.WriteStringValue(value.Value);
+-        }
+-
+-        public override EnumWithSpecialCharacters ReadAsPropertyName(
+-            ref Utf8JsonReader reader,
+-            Type typeToConvert,
+-            JsonSerializerOptions options
+-        )
+-        {
+-            var stringValue =
+-                reader.GetString()
+-                ?? throw new global::System.Exception(
+-                    "The JSON property name could not be read as a string."
+-                );
+-            return new EnumWithSpecialCharacters(stringValue);
+-        }
+-
+-        public override void WriteAsPropertyName(
+-            Utf8JsonWriter writer,
+-            EnumWithSpecialCharacters value,
+-            JsonSerializerOptions options
+-        )
+-        {
+-            writer.WritePropertyName(value.Value);
+-        }
++        var stringValue =
++            reader.GetString()
++            ?? throw new global::System.Exception(
++                "The JSON property name could not be read as a string."
++            );
++        return _stringToEnum.TryGetValue(stringValue, out var enumValue) ? enumValue : default;
+     }
+ 
+-    /// <summary>
+-    /// Constant strings for enum values
+-    /// </summary>
+-    [Serializable]
+-    public static class Values
++    public override void WriteAsPropertyName(
++        global::System.Text.Json.Utf8JsonWriter writer,
++        EnumWithSpecialCharacters value,
++        global::System.Text.Json.JsonSerializerOptions options
++    )
+     {
+-        public const string Bla = "\\$bla";
+-
+-        public const string Yo = "\\$yo";
++        writer.WritePropertyName(
++            _enumToString.TryGetValue(value, out var stringValue) ? stringValue : value.ToString()
++        );
+     }
+ }
+diff --git a/src/SeedEnum/Types/ForwardCompatibleEnum.cs b/src/SeedEnum/Types/ForwardCompatibleEnum.cs
+index 1425aa1898f..b593b77756e 100644
+--- a/src/SeedEnum/Types/ForwardCompatibleEnum.cs
++++ b/src/SeedEnum/Types/ForwardCompatibleEnum.cs
+@@ -1,115 +1,84 @@
+-using global::System.Text.Json;
++using global::System.Runtime.Serialization;
+ using global::System.Text.Json.Serialization;
+-using SeedEnum.Core;
+ 
+ namespace SeedEnum;
+ 
+-[JsonConverter(typeof(ForwardCompatibleEnum.ForwardCompatibleEnumSerializer))]
+-[Serializable]
+-public readonly record struct ForwardCompatibleEnum : IStringEnum
++[JsonConverter(typeof(ForwardCompatibleEnumSerializer))]
++public enum ForwardCompatibleEnum
+ {
+-    public static readonly ForwardCompatibleEnum Active = new(Values.Active);
++    [EnumMember(Value = "active")]
++    Active,
+ 
+-    public static readonly ForwardCompatibleEnum Inactive = new(Values.Inactive);
++    [EnumMember(Value = "inactive")]
++    Inactive,
++}
+ 
+-    public ForwardCompatibleEnum(string value)
++internal class ForwardCompatibleEnumSerializer
++    : global::System.Text.Json.Serialization.JsonConverter<ForwardCompatibleEnum>
++{
++    private static readonly global::System.Collections.Generic.Dictionary<
++        string,
++        ForwardCompatibleEnum
++    > _stringToEnum = new()
+     {
+-        Value = value;
+-    }
+-
+-    /// <summary>
+-    /// The string value of the enum.
+-    /// </summary>
+-    public string Value { get; }
+-
+-    /// <summary>
+-    /// Create a string enum with the given value.
+-    /// </summary>
+-    public static ForwardCompatibleEnum FromCustom(string value)
++        { "active", ForwardCompatibleEnum.Active },
++        { "inactive", ForwardCompatibleEnum.Inactive },
++    };
++
++    private static readonly global::System.Collections.Generic.Dictionary<
++        ForwardCompatibleEnum,
++        string
++    > _enumToString = new()
+     {
+-        return new ForwardCompatibleEnum(value);
+-    }
+-
+-    public bool Equals(string? other)
++        { ForwardCompatibleEnum.Active, "active" },
++        { ForwardCompatibleEnum.Inactive, "inactive" },
++    };
++
++    public override ForwardCompatibleEnum Read(
++        ref global::System.Text.Json.Utf8JsonReader reader,
++        global::System.Type typeToConvert,
++        global::System.Text.Json.JsonSerializerOptions options
++    )
+     {
+-        return Value.Equals(other);
++        var stringValue =
++            reader.GetString()
++            ?? throw new global::System.Exception("The JSON value could not be read as a string.");
++        return _stringToEnum.TryGetValue(stringValue, out var enumValue) ? enumValue : default;
+     }
+ 
+-    /// <summary>
+-    /// Returns the string value of the enum.
+-    /// </summary>
+-    public override string ToString()
++    public override void Write(
++        global::System.Text.Json.Utf8JsonWriter writer,
++        ForwardCompatibleEnum value,
++        global::System.Text.Json.JsonSerializerOptions options
++    )
+     {
+-        return Value;
++        writer.WriteStringValue(
++            _enumToString.TryGetValue(value, out var stringValue) ? stringValue : null
++        );
+     }
+ 
+-    public static bool operator ==(ForwardCompatibleEnum value1, string value2) =>
+-        value1.Value.Equals(value2);
+-
+-    public static bool operator !=(ForwardCompatibleEnum value1, string value2) =>
+-        !value1.Value.Equals(value2);
+-
+-    public static explicit operator string(ForwardCompatibleEnum value) => value.Value;
+-
+-    public static explicit operator ForwardCompatibleEnum(string value) => new(value);
+-
+-    internal class ForwardCompatibleEnumSerializer : JsonConverter<ForwardCompatibleEnum>
++    public override ForwardCompatibleEnum ReadAsPropertyName(
++        ref global::System.Text.Json.Utf8JsonReader reader,
++        global::System.Type typeToConvert,
++        global::System.Text.Json.JsonSerializerOptions options
++    )
+     {
+-        public override ForwardCompatibleEnum Read(
+-            ref Utf8JsonReader reader,
+-            Type typeToConvert,
+-            JsonSerializerOptions options
+-        )
+-        {
+-            var stringValue =
+-                reader.GetString()
+-                ?? throw new global::System.Exception(
+-                    "The JSON value could not be read as a string."
+-                );
+-            return new ForwardCompatibleEnum(stringValue);
+-        }
+-
+-        public override void Write(
+-            Utf8JsonWriter writer,
+-            ForwardCompatibleEnum value,
+-            JsonSerializerOptions options
+-        )
+-        {
+-            writer.WriteStringValue(value.Value);
+-        }
+-
+-        public override ForwardCompatibleEnum ReadAsPropertyName(
+-            ref Utf8JsonReader reader,
+-            Type typeToConvert,
+-            JsonSerializerOptions options
+-        )
+-        {
+-            var stringValue =
+-                reader.GetString()
+-                ?? throw new global::System.Exception(
+-                    "The JSON property name could not be read as a string."
+-                );
+-            return new ForwardCompatibleEnum(stringValue);
+-        }
+-
+-        public override void WriteAsPropertyName(
+-            Utf8JsonWriter writer,
+-            ForwardCompatibleEnum value,
+-            JsonSerializerOptions options
+-        )
+-        {
+-            writer.WritePropertyName(value.Value);
+-        }
++        var stringValue =
++            reader.GetString()
++            ?? throw new global::System.Exception(
++                "The JSON property name could not be read as a string."
++            );
++        return _stringToEnum.TryGetValue(stringValue, out var enumValue) ? enumValue : default;
+     }
+ 
+-    /// <summary>
+-    /// Constant strings for enum values
+-    /// </summary>
+-    [Serializable]
+-    public static class Values
++    public override void WriteAsPropertyName(
++        global::System.Text.Json.Utf8JsonWriter writer,
++        ForwardCompatibleEnum value,
++        global::System.Text.Json.JsonSerializerOptions options
++    )
+     {
+-        public const string Active = "active";
+-
+-        public const string Inactive = "inactive";
++        writer.WritePropertyName(
++            _enumToString.TryGetValue(value, out var stringValue) ? stringValue : value.ToString()
++        );
+     }
+ }
+diff --git a/src/SeedEnum/Types/Operand.cs b/src/SeedEnum/Types/Operand.cs
+index cac39e23892..d10a26794f9 100644
+--- a/src/SeedEnum/Types/Operand.cs
++++ b/src/SeedEnum/Types/Operand.cs
+@@ -1,125 +1,88 @@
+-using global::System.Text.Json;
++using global::System.Runtime.Serialization;
+ using global::System.Text.Json.Serialization;
+-using SeedEnum.Core;
+ 
+ namespace SeedEnum;
+ 
+-[JsonConverter(typeof(Operand.OperandSerializer))]
+-[Serializable]
+-public readonly record struct Operand : IStringEnum
++[JsonConverter(typeof(OperandSerializer))]
++public enum Operand
+ {
+-    public static readonly Operand GreaterThan = new(Values.GreaterThan);
++    [EnumMember(Value = ">")]
++    GreaterThan,
+ 
+-    public static readonly Operand EqualTo = new(Values.EqualTo);
++    [EnumMember(Value = "=")]
++    EqualTo,
+ 
+-    /// <summary>
+-    /// The name and value should be similar
+-    /// are similar for less than.
+-    /// </summary>
+-    public static readonly Operand LessThan = new(Values.LessThan);
++    [EnumMember(Value = "less_than")]
++    LessThan,
++}
+ 
+-    public Operand(string value)
++internal class OperandSerializer : global::System.Text.Json.Serialization.JsonConverter<Operand>
++{
++    private static readonly global::System.Collections.Generic.Dictionary<
++        string,
++        Operand
++    > _stringToEnum = new()
+     {
+-        Value = value;
+-    }
+-
+-    /// <summary>
+-    /// The string value of the enum.
+-    /// </summary>
+-    public string Value { get; }
+-
+-    /// <summary>
+-    /// Create a string enum with the given value.
+-    /// </summary>
+-    public static Operand FromCustom(string value)
++        { ">", Operand.GreaterThan },
++        { "=", Operand.EqualTo },
++        { "less_than", Operand.LessThan },
++    };
++
++    private static readonly global::System.Collections.Generic.Dictionary<
++        Operand,
++        string
++    > _enumToString = new()
+     {
+-        return new Operand(value);
+-    }
+-
+-    public bool Equals(string? other)
++        { Operand.GreaterThan, ">" },
++        { Operand.EqualTo, "=" },
++        { Operand.LessThan, "less_than" },
++    };
++
++    public override Operand Read(
++        ref global::System.Text.Json.Utf8JsonReader reader,
++        global::System.Type typeToConvert,
++        global::System.Text.Json.JsonSerializerOptions options
++    )
+     {
+-        return Value.Equals(other);
++        var stringValue =
++            reader.GetString()
++            ?? throw new global::System.Exception("The JSON value could not be read as a string.");
++        return _stringToEnum.TryGetValue(stringValue, out var enumValue) ? enumValue : default;
+     }
+ 
+-    /// <summary>
+-    /// Returns the string value of the enum.
+-    /// </summary>
+-    public override string ToString()
++    public override void Write(
++        global::System.Text.Json.Utf8JsonWriter writer,
++        Operand value,
++        global::System.Text.Json.JsonSerializerOptions options
++    )
+     {
+-        return Value;
++        writer.WriteStringValue(
++            _enumToString.TryGetValue(value, out var stringValue) ? stringValue : null
++        );
+     }
+ 
+-    public static bool operator ==(Operand value1, string value2) => value1.Value.Equals(value2);
+-
+-    public static bool operator !=(Operand value1, string value2) => !value1.Value.Equals(value2);
+-
+-    public static explicit operator string(Operand value) => value.Value;
+-
+-    public static explicit operator Operand(string value) => new(value);
+-
+-    internal class OperandSerializer : JsonConverter<Operand>
++    public override Operand ReadAsPropertyName(
++        ref global::System.Text.Json.Utf8JsonReader reader,
++        global::System.Type typeToConvert,
++        global::System.Text.Json.JsonSerializerOptions options
++    )
+     {
+-        public override Operand Read(
+-            ref Utf8JsonReader reader,
+-            Type typeToConvert,
+-            JsonSerializerOptions options
+-        )
+-        {
+-            var stringValue =
+-                reader.GetString()
+-                ?? throw new global::System.Exception(
+-                    "The JSON value could not be read as a string."
+-                );
+-            return new Operand(stringValue);
+-        }
+-
+-        public override void Write(
+-            Utf8JsonWriter writer,
+-            Operand value,
+-            JsonSerializerOptions options
+-        )
+-        {
+-            writer.WriteStringValue(value.Value);
+-        }
+-
+-        public override Operand ReadAsPropertyName(
+-            ref Utf8JsonReader reader,
+-            Type typeToConvert,
+-            JsonSerializerOptions options
+-        )
+-        {
+-            var stringValue =
+-                reader.GetString()
+-                ?? throw new global::System.Exception(
+-                    "The JSON property name could not be read as a string."
+-                );
+-            return new Operand(stringValue);
+-        }
+-
+-        public override void WriteAsPropertyName(
+-            Utf8JsonWriter writer,
+-            Operand value,
+-            JsonSerializerOptions options
+-        )
+-        {
+-            writer.WritePropertyName(value.Value);
+-        }
++        var stringValue =
++            reader.GetString()
++            ?? throw new global::System.Exception(
++                "The JSON property name could not be read as a string."
++            );
++        return _stringToEnum.TryGetValue(stringValue, out var enumValue) ? enumValue : default;
+     }
+ 
+-    /// <summary>
+-    /// Constant strings for enum values
+-    /// </summary>
+-    [Serializable]
+-    public static class Values
++    public override void WriteAsPropertyName(
++        global::System.Text.Json.Utf8JsonWriter writer,
++        Operand value,
++        global::System.Text.Json.JsonSerializerOptions options
++    )
+     {
+-        public const string GreaterThan = ">";
+-
+-        public const string EqualTo = "=";
+-
+-        /// <summary>
+-        /// The name and value should be similar
+-        /// are similar for less than.
+-        /// </summary>
+-        public const string LessThan = "less_than";
++        writer.WritePropertyName(
++            _enumToString.TryGetValue(value, out var stringValue) ? stringValue : value.ToString()
++        );
+     }
+ }
+diff --git a/src/SeedEnum/Types/SpecialEnum.cs b/src/SeedEnum/Types/SpecialEnum.cs
+index 85bdf568f26..5403ccde42c 100644
+--- a/src/SeedEnum/Types/SpecialEnum.cs
++++ b/src/SeedEnum/Types/SpecialEnum.cs
+@@ -1,235 +1,234 @@
+-using global::System.Text.Json;
++using global::System.Runtime.Serialization;
+ using global::System.Text.Json.Serialization;
+-using SeedEnum.Core;
+ 
+ namespace SeedEnum;
+ 
+-[JsonConverter(typeof(SpecialEnum.SpecialEnumSerializer))]
+-[Serializable]
+-public readonly record struct SpecialEnum : IStringEnum
++[JsonConverter(typeof(SpecialEnumSerializer))]
++public enum SpecialEnum
+ {
+-    public static readonly SpecialEnum A = new(Values.A);
++    [EnumMember(Value = "")]
++    A,
+ 
+-    public static readonly SpecialEnum B = new(Values.B);
++    [EnumMember(Value = "Hello \\\"World\\\"")]
++    B,
+ 
+-    public static readonly SpecialEnum C = new(Values.C);
++    [EnumMember(Value = "Hello 'World'")]
++    C,
+ 
+-    public static readonly SpecialEnum D = new(Values.D);
++    [EnumMember(Value = "Hello\\\\World")]
++    D,
+ 
+-    public static readonly SpecialEnum E = new(Values.E);
++    [EnumMember(Value = "Hello\\nWorld")]
++    E,
+ 
+-    public static readonly SpecialEnum F = new(Values.F);
++    [EnumMember(Value = "Hello\\rWorld")]
++    F,
+ 
+-    public static readonly SpecialEnum H = new(Values.H);
++    [EnumMember(Value = "Hello\\tWorld")]
++    H,
+ 
+-    public static readonly SpecialEnum I = new(Values.I);
++    [EnumMember(Value = "Hello\\fWorld")]
++    I,
+ 
+-    public static readonly SpecialEnum J = new(Values.J);
++    [EnumMember(Value = "Hello\\u0008World")]
++    J,
+ 
+-    public static readonly SpecialEnum K = new(Values.K);
++    [EnumMember(Value = "Hello\\vWorld")]
++    K,
+ 
+-    public static readonly SpecialEnum L = new(Values.L);
++    [EnumMember(Value = "Hello\\x00World")]
++    L,
+ 
+-    public static readonly SpecialEnum M = new(Values.M);
++    [EnumMember(Value = "Hello\\u0007World")]
++    M,
+ 
+-    public static readonly SpecialEnum N = new(Values.N);
++    [EnumMember(Value = "Hello\\u0001World")]
++    N,
+ 
+-    public static readonly SpecialEnum O = new(Values.O);
++    [EnumMember(Value = "Hello\\u0002World")]
++    O,
+ 
+-    public static readonly SpecialEnum P = new(Values.P);
++    [EnumMember(Value = "Hello\\u001FWorld")]
++    P,
+ 
+-    public static readonly SpecialEnum Q = new(Values.Q);
++    [EnumMember(Value = "Hello\\u007FWorld")]
++    Q,
+ 
+-    public static readonly SpecialEnum R = new(Values.R);
++    [EnumMember(Value = "Hello\\u009FWorld")]
++    R,
+ 
+-    public static readonly SpecialEnum S = new(Values.S);
++    [EnumMember(Value = "Line 1\\n\"Quote\"\\tTab\\\\Backslash\\r\\nLine 2\\0Null")]
++    S,
+ 
+-    public static readonly SpecialEnum T = new(Values.T);
++    [EnumMember(Value = "\\n\\r\\t\\x00\\u0008\\f\\v\\u0007")]
++    T,
+ 
+-    public static readonly SpecialEnum U = new(Values.U);
++    [EnumMember(Value = "Hello 世界")]
++    U,
+ 
+-    public static readonly SpecialEnum V = new(Values.V);
++    [EnumMember(Value = "café")]
++    V,
+ 
+-    public static readonly SpecialEnum W = new(Values.W);
++    [EnumMember(Value = "🚀")]
++    W,
+ 
+-    public static readonly SpecialEnum X = new(Values.X);
++    [EnumMember(Value = "\\\\n")]
++    X,
+ 
+-    public static readonly SpecialEnum Y = new(Values.Y);
++    [EnumMember(Value = "\\\\")]
++    Y,
+ 
+-    public static readonly SpecialEnum Z = new(Values.Z);
++    [EnumMember(Value = "{\"name\": \"John\", \"age\": 30, \"city\": \"New York\"}")]
++    Z,
+ 
+-    public static readonly SpecialEnum Aa = new(Values.Aa);
++    [EnumMember(Value = "SELECT * FROM users WHERE name = 'John O\\\\'Reilly'")]
++    Aa,
+ 
+-    public static readonly SpecialEnum Bb = new(Values.Bb);
++    [EnumMember(Value = "C:\\\\Users\\\\John\\\\Documents\\\\file.txt")]
++    Bb,
+ 
+-    public static readonly SpecialEnum Cc = new(Values.Cc);
++    [EnumMember(Value = "/usr/local/bin/app")]
++    Cc,
+ 
+-    public static readonly SpecialEnum Dd = new(Values.Dd);
++    [EnumMember(Value = "\\\\d{3}-\\\\d{2}-\\\\d{4}")]
++    Dd,
+ 
+-    public static readonly SpecialEnum Ee = new(Values.Ee);
++    [EnumMember(Value = "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\\\.[a-zA-Z]{2,}")]
++    Ee,
+ 
+-    public static readonly SpecialEnum Ff = new(Values.Ff);
++    [EnumMember(Value = "transcript[transcriptType=\"final\"]")]
++    Ff,
+ 
+-    public static readonly SpecialEnum Gg = new(Values.Gg);
++    [EnumMember(Value = "transcript[transcriptType='final']")]
++    Gg,
++}
+ 
+-    public SpecialEnum(string value)
++internal class SpecialEnumSerializer
++    : global::System.Text.Json.Serialization.JsonConverter<SpecialEnum>
++{
++    private static readonly global::System.Collections.Generic.Dictionary<
++        string,
++        SpecialEnum
++    > _stringToEnum = new()
+     {
+-        Value = value;
+-    }
+-
+-    /// <summary>
+-    /// The string value of the enum.
+-    /// </summary>
+-    public string Value { get; }
+-
+-    /// <summary>
+-    /// Create a string enum with the given value.
+-    /// </summary>
+-    public static SpecialEnum FromCustom(string value)
++        { "", SpecialEnum.A },
++        { "Hello \\\"World\\\"", SpecialEnum.B },
++        { "Hello 'World'", SpecialEnum.C },
++        { "Hello\\\\World", SpecialEnum.D },
++        { "Hello\\nWorld", SpecialEnum.E },
++        { "Hello\\rWorld", SpecialEnum.F },
++        { "Hello\\tWorld", SpecialEnum.H },
++        { "Hello\\fWorld", SpecialEnum.I },
++        { "Hello\\u0008World", SpecialEnum.J },
++        { "Hello\\vWorld", SpecialEnum.K },
++        { "Hello\\x00World", SpecialEnum.L },
++        { "Hello\\u0007World", SpecialEnum.M },
++        { "Hello\\u0001World", SpecialEnum.N },
++        { "Hello\\u0002World", SpecialEnum.O },
++        { "Hello\\u001FWorld", SpecialEnum.P },
++        { "Hello\\u007FWorld", SpecialEnum.Q },
++        { "Hello\\u009FWorld", SpecialEnum.R },
++        { "Line 1\\n\"Quote\"\\tTab\\\\Backslash\\r\\nLine 2\\0Null", SpecialEnum.S },
++        { "\\n\\r\\t\\x00\\u0008\\f\\v\\u0007", SpecialEnum.T },
++        { "Hello 世界", SpecialEnum.U },
++        { "café", SpecialEnum.V },
++        { "🚀", SpecialEnum.W },
++        { "\\\\n", SpecialEnum.X },
++        { "\\\\", SpecialEnum.Y },
++        { "{\"name\": \"John\", \"age\": 30, \"city\": \"New York\"}", SpecialEnum.Z },
++        { "SELECT * FROM users WHERE name = 'John O\\\\'Reilly'", SpecialEnum.Aa },
++        { "C:\\\\Users\\\\John\\\\Documents\\\\file.txt", SpecialEnum.Bb },
++        { "/usr/local/bin/app", SpecialEnum.Cc },
++        { "\\\\d{3}-\\\\d{2}-\\\\d{4}", SpecialEnum.Dd },
++        { "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\\\.[a-zA-Z]{2,}", SpecialEnum.Ee },
++        { "transcript[transcriptType=\"final\"]", SpecialEnum.Ff },
++        { "transcript[transcriptType='final']", SpecialEnum.Gg },
++    };
++
++    private static readonly global::System.Collections.Generic.Dictionary<
++        SpecialEnum,
++        string
++    > _enumToString = new()
+     {
+-        return new SpecialEnum(value);
+-    }
+-
+-    public bool Equals(string? other)
++        { SpecialEnum.A, "" },
++        { SpecialEnum.B, "Hello \\\"World\\\"" },
++        { SpecialEnum.C, "Hello 'World'" },
++        { SpecialEnum.D, "Hello\\\\World" },
++        { SpecialEnum.E, "Hello\\nWorld" },
++        { SpecialEnum.F, "Hello\\rWorld" },
++        { SpecialEnum.H, "Hello\\tWorld" },
++        { SpecialEnum.I, "Hello\\fWorld" },
++        { SpecialEnum.J, "Hello\\u0008World" },
++        { SpecialEnum.K, "Hello\\vWorld" },
++        { SpecialEnum.L, "Hello\\x00World" },
++        { SpecialEnum.M, "Hello\\u0007World" },
++        { SpecialEnum.N, "Hello\\u0001World" },
++        { SpecialEnum.O, "Hello\\u0002World" },
++        { SpecialEnum.P, "Hello\\u001FWorld" },
++        { SpecialEnum.Q, "Hello\\u007FWorld" },
++        { SpecialEnum.R, "Hello\\u009FWorld" },
++        { SpecialEnum.S, "Line 1\\n\"Quote\"\\tTab\\\\Backslash\\r\\nLine 2\\0Null" },
++        { SpecialEnum.T, "\\n\\r\\t\\x00\\u0008\\f\\v\\u0007" },
++        { SpecialEnum.U, "Hello 世界" },
++        { SpecialEnum.V, "café" },
++        { SpecialEnum.W, "🚀" },
++        { SpecialEnum.X, "\\\\n" },
++        { SpecialEnum.Y, "\\\\" },
++        { SpecialEnum.Z, "{\"name\": \"John\", \"age\": 30, \"city\": \"New York\"}" },
++        { SpecialEnum.Aa, "SELECT * FROM users WHERE name = 'John O\\\\'Reilly'" },
++        { SpecialEnum.Bb, "C:\\\\Users\\\\John\\\\Documents\\\\file.txt" },
++        { SpecialEnum.Cc, "/usr/local/bin/app" },
++        { SpecialEnum.Dd, "\\\\d{3}-\\\\d{2}-\\\\d{4}" },
++        { SpecialEnum.Ee, "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\\\.[a-zA-Z]{2,}" },
++        { SpecialEnum.Ff, "transcript[transcriptType=\"final\"]" },
++        { SpecialEnum.Gg, "transcript[transcriptType='final']" },
++    };
++
++    public override SpecialEnum Read(
++        ref global::System.Text.Json.Utf8JsonReader reader,
++        global::System.Type typeToConvert,
++        global::System.Text.Json.JsonSerializerOptions options
++    )
+     {
+-        return Value.Equals(other);
++        var stringValue =
++            reader.GetString()
++            ?? throw new global::System.Exception("The JSON value could not be read as a string.");
++        return _stringToEnum.TryGetValue(stringValue, out var enumValue) ? enumValue : default;
+     }
+ 
+-    /// <summary>
+-    /// Returns the string value of the enum.
+-    /// </summary>
+-    public override string ToString()
++    public override void Write(
++        global::System.Text.Json.Utf8JsonWriter writer,
++        SpecialEnum value,
++        global::System.Text.Json.JsonSerializerOptions options
++    )
+     {
+-        return Value;
++        writer.WriteStringValue(
++            _enumToString.TryGetValue(value, out var stringValue) ? stringValue : null
++        );
+     }
+ 
+-    public static bool operator ==(SpecialEnum value1, string value2) =>
+-        value1.Value.Equals(value2);
+-
+-    public static bool operator !=(SpecialEnum value1, string value2) =>
+-        !value1.Value.Equals(value2);
+-
+-    public static explicit operator string(SpecialEnum value) => value.Value;
+-
+-    public static explicit operator SpecialEnum(string value) => new(value);
+-
+-    internal class SpecialEnumSerializer : JsonConverter<SpecialEnum>
++    public override SpecialEnum ReadAsPropertyName(
++        ref global::System.Text.Json.Utf8JsonReader reader,
++        global::System.Type typeToConvert,
++        global::System.Text.Json.JsonSerializerOptions options
++    )
+     {
+-        public override SpecialEnum Read(
+-            ref Utf8JsonReader reader,
+-            Type typeToConvert,
+-            JsonSerializerOptions options
+-        )
+-        {
+-            var stringValue =
+-                reader.GetString()
+-                ?? throw new global::System.Exception(
+-                    "The JSON value could not be read as a string."
+-                );
+-            return new SpecialEnum(stringValue);
+-        }
+-
+-        public override void Write(
+-            Utf8JsonWriter writer,
+-            SpecialEnum value,
+-            JsonSerializerOptions options
+-        )
+-        {
+-            writer.WriteStringValue(value.Value);
+-        }
+-
+-        public override SpecialEnum ReadAsPropertyName(
+-            ref Utf8JsonReader reader,
+-            Type typeToConvert,
+-            JsonSerializerOptions options
+-        )
+-        {
+-            var stringValue =
+-                reader.GetString()
+-                ?? throw new global::System.Exception(
+-                    "The JSON property name could not be read as a string."
+-                );
+-            return new SpecialEnum(stringValue);
+-        }
+-
+-        public override void WriteAsPropertyName(
+-            Utf8JsonWriter writer,
+-            SpecialEnum value,
+-            JsonSerializerOptions options
+-        )
+-        {
+-            writer.WritePropertyName(value.Value);
+-        }
++        var stringValue =
++            reader.GetString()
++            ?? throw new global::System.Exception(
++                "The JSON property name could not be read as a string."
++            );
++        return _stringToEnum.TryGetValue(stringValue, out var enumValue) ? enumValue : default;
+     }
+ 
+-    /// <summary>
+-    /// Constant strings for enum values
+-    /// </summary>
+-    [Serializable]
+-    public static class Values
++    public override void WriteAsPropertyName(
++        global::System.Text.Json.Utf8JsonWriter writer,
++        SpecialEnum value,
++        global::System.Text.Json.JsonSerializerOptions options
++    )
+     {
+-        public const string A = "";
+-
+-        public const string B = "Hello \\\"World\\\"";
+-
+-        public const string C = "Hello 'World'";
+-
+-        public const string D = "Hello\\\\World";
+-
+-        public const string E = "Hello\\nWorld";
+-
+-        public const string F = "Hello\\rWorld";
+-
+-        public const string H = "Hello\\tWorld";
+-
+-        public const string I = "Hello\\fWorld";
+-
+-        public const string J = "Hello\\u0008World";
+-
+-        public const string K = "Hello\\vWorld";
+-
+-        public const string L = "Hello\\x00World";
+-
+-        public const string M = "Hello\\u0007World";
+-
+-        public const string N = "Hello\\u0001World";
+-
+-        public const string O = "Hello\\u0002World";
+-
+-        public const string P = "Hello\\u001FWorld";
+-
+-        public const string Q = "Hello\\u007FWorld";
+-
+-        public const string R = "Hello\\u009FWorld";
+-
+-        public const string S = "Line 1\\n\"Quote\"\\tTab\\\\Backslash\\r\\nLine 2\\0Null";
+-
+-        public const string T = "\\n\\r\\t\\x00\\u0008\\f\\v\\u0007";
+-
+-        public const string U = "Hello 世界";
+-
+-        public const string V = "café";
+-
+-        public const string W = "🚀";
+-
+-        public const string X = "\\\\n";
+-
+-        public const string Y = "\\\\";
+-
+-        public const string Z = "{\"name\": \"John\", \"age\": 30, \"city\": \"New York\"}";
+-
+-        public const string Aa = "SELECT * FROM users WHERE name = 'John O\\\\'Reilly'";
+-
+-        public const string Bb = "C:\\\\Users\\\\John\\\\Documents\\\\file.txt";
+-
+-        public const string Cc = "/usr/local/bin/app";
+-
+-        public const string Dd = "\\\\d{3}-\\\\d{2}-\\\\d{4}";
+-
+-        public const string Ee = "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\\\.[a-zA-Z]{2,}";
+-
+-        public const string Ff = "transcript[transcriptType=\"final\"]";
+-
+-        public const string Gg = "transcript[transcriptType='final']";
++        writer.WritePropertyName(
++            _enumToString.TryGetValue(value, out var stringValue) ? stringValue : value.ToString()
++        );
+     }
+ }
+diff --git a/src/SeedEnum/Unknown/Types/Status.cs b/src/SeedEnum/Unknown/Types/Status.cs
+index c8aa31631b5..3cfb45237d5 100644
+--- a/src/SeedEnum/Unknown/Types/Status.cs
++++ b/src/SeedEnum/Unknown/Types/Status.cs
+@@ -1,113 +1,75 @@
+-using global::System.Text.Json;
++using global::System.Runtime.Serialization;
+ using global::System.Text.Json.Serialization;
+-using SeedEnum.Core;
+ 
+ namespace SeedEnum;
+ 
+-[JsonConverter(typeof(Status.StatusSerializer))]
+-[Serializable]
+-public readonly record struct Status : IStringEnum
++[JsonConverter(typeof(StatusSerializer))]
++public enum Status
+ {
+-    public static readonly Status Known = new(Values.Known);
++    [EnumMember(Value = "Known")]
++    Known,
+ 
+-    public static readonly Status Unknown = new(Values.Unknown);
++    [EnumMember(Value = "Unknown")]
++    Unknown,
++}
+ 
+-    public Status(string value)
++internal class StatusSerializer : global::System.Text.Json.Serialization.JsonConverter<Status>
++{
++    private static readonly global::System.Collections.Generic.Dictionary<
++        string,
++        Status
++    > _stringToEnum = new() { { "Known", Status.Known }, { "Unknown", Status.Unknown } };
++
++    private static readonly global::System.Collections.Generic.Dictionary<
++        Status,
++        string
++    > _enumToString = new() { { Status.Known, "Known" }, { Status.Unknown, "Unknown" } };
++
++    public override Status Read(
++        ref global::System.Text.Json.Utf8JsonReader reader,
++        global::System.Type typeToConvert,
++        global::System.Text.Json.JsonSerializerOptions options
++    )
+     {
+-        Value = value;
++        var stringValue =
++            reader.GetString()
++            ?? throw new global::System.Exception("The JSON value could not be read as a string.");
++        return _stringToEnum.TryGetValue(stringValue, out var enumValue) ? enumValue : default;
+     }
+ 
+-    /// <summary>
+-    /// The string value of the enum.
+-    /// </summary>
+-    public string Value { get; }
+-
+-    /// <summary>
+-    /// Create a string enum with the given value.
+-    /// </summary>
+-    public static Status FromCustom(string value)
++    public override void Write(
++        global::System.Text.Json.Utf8JsonWriter writer,
++        Status value,
++        global::System.Text.Json.JsonSerializerOptions options
++    )
+     {
+-        return new Status(value);
++        writer.WriteStringValue(
++            _enumToString.TryGetValue(value, out var stringValue) ? stringValue : null
++        );
+     }
+ 
+-    public bool Equals(string? other)
++    public override Status ReadAsPropertyName(
++        ref global::System.Text.Json.Utf8JsonReader reader,
++        global::System.Type typeToConvert,
++        global::System.Text.Json.JsonSerializerOptions options
++    )
+     {
+-        return Value.Equals(other);
++        var stringValue =
++            reader.GetString()
++            ?? throw new global::System.Exception(
++                "The JSON property name could not be read as a string."
++            );
++        return _stringToEnum.TryGetValue(stringValue, out var enumValue) ? enumValue : default;
+     }
+ 
+-    /// <summary>
+-    /// Returns the string value of the enum.
+-    /// </summary>
+-    public override string ToString()
++    public override void WriteAsPropertyName(
++        global::System.Text.Json.Utf8JsonWriter writer,
++        Status value,
++        global::System.Text.Json.JsonSerializerOptions options
++    )
+     {
+-        return Value;
+-    }
+-
+-    public static bool operator ==(Status value1, string value2) => value1.Value.Equals(value2);
+-
+-    public static bool operator !=(Status value1, string value2) => !value1.Value.Equals(value2);
+-
+-    public static explicit operator string(Status value) => value.Value;
+-
+-    public static explicit operator Status(string value) => new(value);
+-
+-    internal class StatusSerializer : JsonConverter<Status>
+-    {
+-        public override Status Read(
+-            ref Utf8JsonReader reader,
+-            Type typeToConvert,
+-            JsonSerializerOptions options
+-        )
+-        {
+-            var stringValue =
+-                reader.GetString()
+-                ?? throw new global::System.Exception(
+-                    "The JSON value could not be read as a string."
+-                );
+-            return new Status(stringValue);
+-        }
+-
+-        public override void Write(
+-            Utf8JsonWriter writer,
+-            Status value,
+-            JsonSerializerOptions options
+-        )
+-        {
+-            writer.WriteStringValue(value.Value);
+-        }
+-
+-        public override Status ReadAsPropertyName(
+-            ref Utf8JsonReader reader,
+-            Type typeToConvert,
+-            JsonSerializerOptions options
+-        )
+-        {
+-            var stringValue =
+-                reader.GetString()
+-                ?? throw new global::System.Exception(
+-                    "The JSON property name could not be read as a string."
+-                );
+-            return new Status(stringValue);
+-        }
+-
+-        public override void WriteAsPropertyName(
+-            Utf8JsonWriter writer,
+-            Status value,
+-            JsonSerializerOptions options
+-        )
+-        {
+-            writer.WritePropertyName(value.Value);
+-        }
+-    }
+-
+-    /// <summary>
+-    /// Constant strings for enum values
+-    /// </summary>
+-    [Serializable]
+-    public static class Values
+-    {
+-        public const string Known = "Known";
+-
+-        public const string Unknown = "Unknown";
++        writer.WritePropertyName(
++            _enumToString.TryGetValue(value, out var stringValue) ? stringValue : value.ToString()
++        );
+     }
+ }

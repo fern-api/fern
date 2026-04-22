@@ -1,0 +1,275 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 200d96787a2..a3b0ffd39fc 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,7 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-csharp-sdk",
+   "generatorVersion": "local",
+-  "generatorConfig": {},
++  "generatorConfig": {
++    "client-class-name": "System"
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "manual",
+diff --git a/README.md b/README.md
+index 0b4b06e6b69..109a753abcb 100644
+--- a/README.md
++++ b/README.md
+@@ -41,7 +41,7 @@ Instantiate and use the client with the following:
+ ```csharp
+ using SeedCsharpSystemCollision;
+ 
+-var client = new SeedCsharpSystemCollisionClient();
++var client = new SeedCsharpSystemCollision.System();
+ await client.CreateUserAsync(
+     new User
+     {
+@@ -65,7 +65,7 @@ using SeedCsharpSystemCollision;
+ 
+ try {
+     var response = await client.CreateUserAsync(...);
+-} catch (SeedCsharpSystemCollisionApiException e) {
++} catch (SystemApiException e) {
+     System.Console.WriteLine(e.Body);
+     System.Console.WriteLine(e.StatusCode);
+ }
+diff --git a/Snippets/Example0.cs b/Snippets/Example0.cs
+index 297da2281a1..f187d19ad55 100644
+--- a/Snippets/Example0.cs
++++ b/Snippets/Example0.cs
+@@ -3,7 +3,7 @@ using SeedCsharpSystemCollision;
+ public partial class Examples
+ {
+     public async System.Threading.Tasks.Task Example0() {
+-        var client = new SeedCsharpSystemCollisionClient(
++        var client = new SeedCsharpSystemCollision.System(
+             clientOptions: new ClientOptions {
+                 BaseUrl = "https://api.fern.com"
+             }
+diff --git a/Snippets/Example1.cs b/Snippets/Example1.cs
+index 690b5e1776e..07664f59803 100644
+--- a/Snippets/Example1.cs
++++ b/Snippets/Example1.cs
+@@ -3,7 +3,7 @@ using SeedCsharpSystemCollision;
+ public partial class Examples
+ {
+     public async System.Threading.Tasks.Task Example1() {
+-        var client = new SeedCsharpSystemCollisionClient(
++        var client = new SeedCsharpSystemCollision.System(
+             clientOptions: new ClientOptions {
+                 BaseUrl = "https://api.fern.com"
+             }
+diff --git a/Snippets/Example2.cs b/Snippets/Example2.cs
+index 08d32e4b74d..b991c90262b 100644
+--- a/Snippets/Example2.cs
++++ b/Snippets/Example2.cs
+@@ -3,7 +3,7 @@ using SeedCsharpSystemCollision;
+ public partial class Examples
+ {
+     public async System.Threading.Tasks.Task Example2() {
+-        var client = new SeedCsharpSystemCollisionClient(
++        var client = new SeedCsharpSystemCollision.System(
+             clientOptions: new ClientOptions {
+                 BaseUrl = "https://api.fern.com"
+             }
+diff --git a/reference.md b/reference.md
+index 5a7718cee23..0c95877eaad 100644
+--- a/reference.md
++++ b/reference.md
+@@ -1,5 +1,5 @@
+ # Reference
+-<details><summary><code>client.<a href="/src/SeedCsharpSystemCollision/SeedCsharpSystemCollisionClient.cs">CreateUserAsync</a>(User { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
++<details><summary><code>client.<a href="/src/SeedCsharpSystemCollision/System.cs">CreateUserAsync</a>(User { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -49,7 +49,7 @@ await client.CreateUserAsync(
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.<a href="/src/SeedCsharpSystemCollision/SeedCsharpSystemCollisionClient.cs">CreateTaskAsync</a>(Task { ... }) -> WithRawResponseTask&lt;Task&gt;</code></summary>
++<details><summary><code>client.<a href="/src/SeedCsharpSystemCollision/System.cs">CreateTaskAsync</a>(Task { ... }) -> WithRawResponseTask&lt;Task&gt;</code></summary>
+ <dl>
+ <dd>
+ 
+@@ -103,7 +103,7 @@ await client.CreateTaskAsync(
+ </dl>
+ </details>
+ 
+-<details><summary><code>client.<a href="/src/SeedCsharpSystemCollision/SeedCsharpSystemCollisionClient.cs">EmptyResponseAsync</a>(Task { ... })</code></summary>
++<details><summary><code>client.<a href="/src/SeedCsharpSystemCollision/System.cs">EmptyResponseAsync</a>(Task { ... })</code></summary>
+ <dl>
+ <dd>
+ 
+diff --git a/snippet.json b/snippet.json
+index 878d95271a8..8212b826c72 100644
+--- a/snippet.json
++++ b/snippet.json
+@@ -10,7 +10,7 @@
+             },
+             "snippet": {
+                 "type": "csharp",
+-                "client": "using SeedCsharpSystemCollision;\n\nvar client = new SeedCsharpSystemCollisionClient();\nawait client.CreateUserAsync(\n    new User\n    {\n        Line1 = \"line1\",\n        Line2 = \"line2\",\n        City = \"city\",\n        State = \"state\",\n        Zip = \"zip\",\n        Country = \"USA\",\n    }\n);\n"
++                "client": "using SeedCsharpSystemCollision;\n\nvar client = new SeedCsharpSystemCollision.System();\nawait client.CreateUserAsync(\n    new User\n    {\n        Line1 = \"line1\",\n        Line2 = \"line2\",\n        City = \"city\",\n        State = \"state\",\n        Zip = \"zip\",\n        Country = \"USA\",\n    }\n);\n"
+             }
+         },
+         {
+@@ -22,7 +22,7 @@
+             },
+             "snippet": {
+                 "type": "csharp",
+-                "client": "using SeedCsharpSystemCollision;\n\nvar client = new SeedCsharpSystemCollisionClient();\nawait client.CreateTaskAsync(\n    new SeedCsharpSystemCollision.Task\n    {\n        Name = \"name\",\n        User = new User\n        {\n            Line1 = \"line1\",\n            Line2 = \"line2\",\n            City = \"city\",\n            State = \"state\",\n            Zip = \"zip\",\n            Country = \"USA\",\n        },\n    }\n);\n"
++                "client": "using SeedCsharpSystemCollision;\n\nvar client = new SeedCsharpSystemCollision.System();\nawait client.CreateTaskAsync(\n    new SeedCsharpSystemCollision.Task\n    {\n        Name = \"name\",\n        User = new User\n        {\n            Line1 = \"line1\",\n            Line2 = \"line2\",\n            City = \"city\",\n            State = \"state\",\n            Zip = \"zip\",\n            Country = \"USA\",\n        },\n    }\n);\n"
+             }
+         },
+         {
+@@ -34,7 +34,7 @@
+             },
+             "snippet": {
+                 "type": "csharp",
+-                "client": "using SeedCsharpSystemCollision;\n\nvar client = new SeedCsharpSystemCollisionClient();\nawait client.EmptyResponseAsync(\n    new SeedCsharpSystemCollision.Task\n    {\n        Name = \"name\",\n        User = new User\n        {\n            Line1 = \"line1\",\n            Line2 = \"line2\",\n            City = \"city\",\n            State = \"state\",\n            Zip = \"zip\",\n            Country = \"USA\",\n        },\n    }\n);\n"
++                "client": "using SeedCsharpSystemCollision;\n\nvar client = new SeedCsharpSystemCollision.System();\nawait client.EmptyResponseAsync(\n    new SeedCsharpSystemCollision.Task\n    {\n        Name = \"name\",\n        User = new User\n        {\n            Line1 = \"line1\",\n            Line2 = \"line2\",\n            City = \"city\",\n            State = \"state\",\n            Zip = \"zip\",\n            Country = \"USA\",\n        },\n    }\n);\n"
+             }
+         }
+     ]
+diff --git a/src/SeedCsharpSystemCollision/Core/Public/SeedCsharpSystemCollisionApiException.cs b/src/SeedCsharpSystemCollision/Core/Public/SystemApiException.cs
+similarity index 81%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-system-collision/baseline/src/SeedCsharpSystemCollision/Core/Public/SeedCsharpSystemCollisionApiException.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-WZS1R1TQfu7b/src/SeedCsharpSystemCollision/Core/Public/SystemApiException.cs
+index ca0f886a29f..6843e74a968 100644
+--- a/src/SeedCsharpSystemCollision/Core/Public/SeedCsharpSystemCollisionApiException.cs
++++ b/src/SeedCsharpSystemCollision/Core/Public/SystemApiException.cs
+@@ -3,12 +3,12 @@ namespace SeedCsharpSystemCollision;
+ /// <summary>
+ /// This exception type will be thrown for any non-2XX API responses.
+ /// </summary>
+-public class SeedCsharpSystemCollisionApiException(
++public class SystemApiException(
+     string message,
+     int statusCode,
+     object body,
+     Exception? innerException = null
+-) : SeedCsharpSystemCollisionException(message, innerException)
++) : SystemException(message, innerException)
+ {
+     /// <summary>
+     /// The error code of the response that triggered the exception.
+diff --git a/src/SeedCsharpSystemCollision/Core/Public/SeedCsharpSystemCollisionException.cs b/src/SeedCsharpSystemCollision/Core/Public/SystemException.cs
+similarity index 63%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-system-collision/baseline/src/SeedCsharpSystemCollision/Core/Public/SeedCsharpSystemCollisionException.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-WZS1R1TQfu7b/src/SeedCsharpSystemCollision/Core/Public/SystemException.cs
+index 43895819f0f..0620f6840e8 100644
+--- a/src/SeedCsharpSystemCollision/Core/Public/SeedCsharpSystemCollisionException.cs
++++ b/src/SeedCsharpSystemCollision/Core/Public/SystemException.cs
+@@ -3,5 +3,5 @@ namespace SeedCsharpSystemCollision;
+ /// <summary>
+ /// Base exception class for all exceptions thrown by the SDK.
+ /// </summary>
+-public class SeedCsharpSystemCollisionException(string message, Exception? innerException = null)
++public class SystemException(string message, Exception? innerException = null)
+     : Exception(message, innerException);
+diff --git a/src/SeedCsharpSystemCollision/ISeedCsharpSystemCollisionClient.cs b/src/SeedCsharpSystemCollision/ISystem.cs
+similarity index 90%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-system-collision/baseline/src/SeedCsharpSystemCollision/ISeedCsharpSystemCollisionClient.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-WZS1R1TQfu7b/src/SeedCsharpSystemCollision/ISystem.cs
+index 6b432a7a671..a5e383c4cd4 100644
+--- a/src/SeedCsharpSystemCollision/ISeedCsharpSystemCollisionClient.cs
++++ b/src/SeedCsharpSystemCollision/ISystem.cs
+@@ -1,6 +1,6 @@
+ namespace SeedCsharpSystemCollision;
+ 
+-public partial interface ISeedCsharpSystemCollisionClient
++public partial interface ISystem
+ {
+     WithRawResponseTask<User> CreateUserAsync(
+         User request,
+diff --git a/src/SeedCsharpSystemCollision/SeedCsharpSystemCollisionClient.cs b/src/SeedCsharpSystemCollision/System.cs
+similarity index 94%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-system-collision/baseline/src/SeedCsharpSystemCollision/SeedCsharpSystemCollisionClient.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-WZS1R1TQfu7b/src/SeedCsharpSystemCollision/System.cs
+index 1e3a4badd02..517bb40aac8 100644
+--- a/src/SeedCsharpSystemCollision/SeedCsharpSystemCollisionClient.cs
++++ b/src/SeedCsharpSystemCollision/System.cs
+@@ -3,11 +3,11 @@ using SeedCsharpSystemCollision.Core;
+ 
+ namespace SeedCsharpSystemCollision;
+ 
+-public partial class SeedCsharpSystemCollisionClient : ISeedCsharpSystemCollisionClient
++public partial class System : ISystem
+ {
+     private readonly RawClient _client;
+ 
+-    public SeedCsharpSystemCollisionClient(ClientOptions? clientOptions = null)
++    public System(ClientOptions? clientOptions = null)
+     {
+         clientOptions ??= new ClientOptions();
+         var platformHeaders = new Headers(
+@@ -75,7 +75,7 @@ public partial class SeedCsharpSystemCollisionClient : ISeedCsharpSystemCollisio
+             }
+             catch (JsonException e)
+             {
+-                throw new SeedCsharpSystemCollisionApiException(
++                throw new SystemApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+                     responseBody,
+@@ -87,7 +87,7 @@ public partial class SeedCsharpSystemCollisionClient : ISeedCsharpSystemCollisio
+             var responseBody = await response
+                 .Raw.Content.ReadAsStringAsync(cancellationToken)
+                 .ConfigureAwait(false);
+-            throw new SeedCsharpSystemCollisionApiException(
++            throw new SystemApiException(
+                 $"Error with status code {response.StatusCode}",
+                 response.StatusCode,
+                 responseBody
+@@ -141,7 +141,7 @@ public partial class SeedCsharpSystemCollisionClient : ISeedCsharpSystemCollisio
+             }
+             catch (JsonException e)
+             {
+-                throw new SeedCsharpSystemCollisionApiException(
++                throw new SystemApiException(
+                     "Failed to deserialize response",
+                     response.StatusCode,
+                     responseBody,
+@@ -153,7 +153,7 @@ public partial class SeedCsharpSystemCollisionClient : ISeedCsharpSystemCollisio
+             var responseBody = await response
+                 .Raw.Content.ReadAsStringAsync(cancellationToken)
+                 .ConfigureAwait(false);
+-            throw new SeedCsharpSystemCollisionApiException(
++            throw new SystemApiException(
+                 $"Error with status code {response.StatusCode}",
+                 response.StatusCode,
+                 responseBody
+@@ -263,7 +263,7 @@ public partial class SeedCsharpSystemCollisionClient : ISeedCsharpSystemCollisio
+             var responseBody = await response
+                 .Raw.Content.ReadAsStringAsync(cancellationToken)
+                 .ConfigureAwait(false);
+-            throw new SeedCsharpSystemCollisionApiException(
++            throw new SystemApiException(
+                 $"Error with status code {response.StatusCode}",
+                 response.StatusCode,
+                 responseBody
+diff --git a/src/SeedCsharpSystemCollision.Test/Unit/MockServer/BaseMockServerTest.cs b/src/SeedCsharpSystemCollision.Test/Unit/MockServer/BaseMockServerTest.cs
+index 1685cacb99b..31422cf52cd 100644
+--- a/src/SeedCsharpSystemCollision.Test/Unit/MockServer/BaseMockServerTest.cs
++++ b/src/SeedCsharpSystemCollision.Test/Unit/MockServer/BaseMockServerTest.cs
+@@ -10,7 +10,7 @@ public class BaseMockServerTest
+ {
+     protected WireMockServer Server { get; set; } = null!;
+ 
+-    protected SeedCsharpSystemCollisionClient Client { get; set; } = null!;
++    protected SeedCsharpSystemCollision.System Client { get; set; } = null!;
+ 
+     protected RequestOptions RequestOptions { get; set; } = new();
+ 
+@@ -23,7 +23,7 @@ public class BaseMockServerTest
+         );
+ 
+         // Initialize the Client
+-        Client = new SeedCsharpSystemCollisionClient(
++        Client = new SeedCsharpSystemCollision.System(
+             clientOptions: new ClientOptions { BaseUrl = Server.Urls[0], MaxRetries = 0 }
+         );
+     }

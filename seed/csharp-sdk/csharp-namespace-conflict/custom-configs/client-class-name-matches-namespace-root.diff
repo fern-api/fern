@@ -1,0 +1,1542 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 200d96787a2..ccf9a306aa8 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,7 +2,11 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-csharp-sdk",
+   "generatorVersion": "local",
+-  "generatorConfig": {},
++  "generatorConfig": {
++    "namespace": "Seed.CsharpNamespaceConflict",
++    "client-class-name": "Seed",
++    "experimental-fully-qualified-namespaces": true
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "manual",
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index 5e74575f3dd..6d7c4a5cd40 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -26,27 +26,27 @@ jobs:
+         run: dotnet tool restore
+ 
+       - name: Restore dependencies
+-        run: dotnet restore src/SeedCsharpNamespaceConflict/SeedCsharpNamespaceConflict.csproj
++        run: dotnet restore src/Seed.CsharpNamespaceConflict/Seed.CsharpNamespaceConflict.csproj
+ 
+       - name: Build
+-        run: dotnet build src/SeedCsharpNamespaceConflict/SeedCsharpNamespaceConflict.csproj --no-restore -c Release
++        run: dotnet build src/Seed.CsharpNamespaceConflict/Seed.CsharpNamespaceConflict.csproj --no-restore -c Release
+ 
+       - name: Restore test dependencies
+-        run: dotnet restore src/SeedCsharpNamespaceConflict.Test/SeedCsharpNamespaceConflict.Test.csproj
++        run: dotnet restore src/Seed.CsharpNamespaceConflict.Test/Seed.CsharpNamespaceConflict.Test.csproj
+ 
+       - name: Build tests
+-        run: dotnet build src/SeedCsharpNamespaceConflict.Test/SeedCsharpNamespaceConflict.Test.csproj --no-restore -c Release
++        run: dotnet build src/Seed.CsharpNamespaceConflict.Test/Seed.CsharpNamespaceConflict.Test.csproj --no-restore -c Release
+ 
+       - name: Test
+-        run: dotnet test src/SeedCsharpNamespaceConflict.Test/SeedCsharpNamespaceConflict.Test.csproj --no-restore --no-build -c Release
++        run: dotnet test src/Seed.CsharpNamespaceConflict.Test/Seed.CsharpNamespaceConflict.Test.csproj --no-restore --no-build -c Release
+ 
+       - name: Pack
+         if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+-        run: dotnet pack src/SeedCsharpNamespaceConflict/SeedCsharpNamespaceConflict.csproj --no-build --no-restore -c Release
++        run: dotnet pack src/Seed.CsharpNamespaceConflict/Seed.CsharpNamespaceConflict.csproj --no-build --no-restore -c Release
+ 
+       - name: Publish to NuGet.org
+         if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+         env:
+           NUGET_API_KEY: ${{ secrets.NUGET_API_TOKEN }}
+-        run: dotnet nuget push src/SeedCsharpNamespaceConflict/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source "nuget.org"
++        run: dotnet nuget push src/Seed.CsharpNamespaceConflict/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source "nuget.org"
+ 
+diff --git a/README.md b/README.md
+index 0a8a0d5dc58..cf0b25cc4da 100644
+--- a/README.md
++++ b/README.md
+@@ -39,9 +39,9 @@ A full reference for this library is available [here](./reference.md).
+ Instantiate and use the client with the following:
+ 
+ ```csharp
+-using SeedCsharpNamespaceConflict;
+ 
+-var client = new SeedCsharpNamespaceConflictClient();
++
++var client = new global::Seed.CsharpNamespaceConflict.Seed();
+ await client.Tasktest.HelloAsync();
+ ```
+ 
+@@ -51,11 +51,11 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
+ will be thrown.
+ 
+ ```csharp
+-using SeedCsharpNamespaceConflict;
++using Seed.CsharpNamespaceConflict;
+ 
+ try {
+     var response = await client.Tasktest.HelloAsync(...);
+-} catch (SeedCsharpNamespaceConflictApiException e) {
++} catch (SeedApiException e) {
+     System.Console.WriteLine(e.Body);
+     System.Console.WriteLine(e.StatusCode);
+ }
+@@ -104,7 +104,7 @@ var response = await client.Tasktest.HelloAsync(
+ Access raw HTTP response data (status code, headers, URL) alongside parsed response data using the `.WithRawResponse()` method.
+ 
+ ```csharp
+-using SeedCsharpNamespaceConflict;
++using Seed.CsharpNamespaceConflict;
+ 
+ // Access raw response data (status code, headers, etc.) alongside the parsed response
+ var result = await client.Tasktest.HelloAsync(...).WithRawResponse();
+diff --git a/Seed.CsharpNamespaceConflict.slnx b/Seed.CsharpNamespaceConflict.slnx
+new file mode 100644
+index 00000000000..de80588d1a9
+--- /dev/null
++++ b/Seed.CsharpNamespaceConflict.slnx
+@@ -0,0 +1,4 @@
++<Solution>
++  <Project Path="src/Seed.CsharpNamespaceConflict.Test/Seed.CsharpNamespaceConflict.Test.csproj" />
++  <Project Path="src/Seed.CsharpNamespaceConflict/Seed.CsharpNamespaceConflict.csproj" />
++</Solution>
+diff --git a/SeedCsharpNamespaceConflict.slnx b/SeedCsharpNamespaceConflict.slnx
+deleted file mode 100644
+index 91e6781725f..00000000000
+--- a/SeedCsharpNamespaceConflict.slnx
++++ /dev/null
+@@ -1,4 +0,0 @@
+-<Solution>
+-  <Project Path="src/SeedCsharpNamespaceConflict.Test/SeedCsharpNamespaceConflict.Test.csproj" />
+-  <Project Path="src/SeedCsharpNamespaceConflict/SeedCsharpNamespaceConflict.csproj" />
+-</Solution>
+diff --git a/Snippets/Example0.cs b/Snippets/Example0.cs
+index d631f3a061a..a787a27dca9 100644
+--- a/Snippets/Example0.cs
++++ b/Snippets/Example0.cs
+@@ -1,9 +1,9 @@
+-using SeedCsharpNamespaceConflict;
++using Seed.CsharpNamespaceConflict;
+ 
+ public partial class Examples
+ {
+     public async System.Threading.Tasks.Task Example0() {
+-        var client = new SeedCsharpNamespaceConflictClient(
++        var client = new Seed.CsharpNamespaceConflict.Seed(
+             clientOptions: new ClientOptions {
+                 BaseUrl = "https://api.fern.com"
+             }
+diff --git a/reference.md b/reference.md
+index 3de72b7f189..4c6c8826f8b 100644
+--- a/reference.md
++++ b/reference.md
+@@ -1,6 +1,6 @@
+ # Reference
+ ## Tasktest
+-<details><summary><code>client.Tasktest.<a href="/src/SeedCsharpNamespaceConflict/Tasktest/TasktestClient.cs">HelloAsync</a>()</code></summary>
++<details><summary><code>client.Tasktest.<a href="/src/Seed.CsharpNamespaceConflict/Tasktest/TasktestClient.cs">HelloAsync</a>()</code></summary>
+ <dl>
+ <dd>
+ 
+diff --git a/snippet.json b/snippet.json
+index db5c260018c..c6b924ec68d 100644
+--- a/snippet.json
++++ b/snippet.json
+@@ -10,7 +10,7 @@
+             },
+             "snippet": {
+                 "type": "csharp",
+-                "client": "using SeedCsharpNamespaceConflict;\n\nvar client = new SeedCsharpNamespaceConflictClient();\nawait client.Tasktest.HelloAsync();\n"
++                "client": "\n\nvar client = new global::Seed.CsharpNamespaceConflict.Seed();\nawait client.Tasktest.HelloAsync();\n"
+             }
+         }
+     ]
+diff --git a/src/SeedCsharpNamespaceConflict/A/Aa/Types/A.cs b/src/Seed.CsharpNamespaceConflict/A/Aa/Types/A.cs
+similarity index 81%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/A/Aa/Types/A.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/A/Aa/Types/A.cs
+index 44d58e2538e..315a3ea0f50 100644
+--- a/src/SeedCsharpNamespaceConflict/A/Aa/Types/A.cs
++++ b/src/Seed.CsharpNamespaceConflict/A/Aa/Types/A.cs
+@@ -1,9 +1,9 @@
++using global::Seed.CsharpNamespaceConflict;
++using global::Seed.CsharpNamespaceConflict.Core;
+ using global::System.Text.Json;
+ using global::System.Text.Json.Serialization;
+-using SeedCsharpNamespaceConflict;
+-using SeedCsharpNamespaceConflict.Core;
+ 
+-namespace SeedCsharpNamespaceConflict.A.Aa;
++namespace Seed.CsharpNamespaceConflict.A.Aa;
+ 
+ [Serializable]
+ public record A : IJsonOnDeserialized
+diff --git a/src/SeedCsharpNamespaceConflict/A/Aa/Types/B.cs b/src/Seed.CsharpNamespaceConflict/A/Aa/Types/B.cs
+similarity index 81%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/A/Aa/Types/B.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/A/Aa/Types/B.cs
+index 53526db75e9..224ef773788 100644
+--- a/src/SeedCsharpNamespaceConflict/A/Aa/Types/B.cs
++++ b/src/Seed.CsharpNamespaceConflict/A/Aa/Types/B.cs
+@@ -1,9 +1,9 @@
++using global::Seed.CsharpNamespaceConflict;
++using global::Seed.CsharpNamespaceConflict.Core;
+ using global::System.Text.Json;
+ using global::System.Text.Json.Serialization;
+-using SeedCsharpNamespaceConflict;
+-using SeedCsharpNamespaceConflict.Core;
+ 
+-namespace SeedCsharpNamespaceConflict.A.Aa;
++namespace Seed.CsharpNamespaceConflict.A.Aa;
+ 
+ [Serializable]
+ public record B : IJsonOnDeserialized
+diff --git a/src/SeedCsharpNamespaceConflict/A/Aa/Types/SubTestType.cs b/src/Seed.CsharpNamespaceConflict/A/Aa/Types/SubTestType.cs
+similarity index 84%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/A/Aa/Types/SubTestType.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/A/Aa/Types/SubTestType.cs
+index 7b862e6a2f5..238f7b1ca6d 100644
+--- a/src/SeedCsharpNamespaceConflict/A/Aa/Types/SubTestType.cs
++++ b/src/Seed.CsharpNamespaceConflict/A/Aa/Types/SubTestType.cs
+@@ -1,9 +1,9 @@
++using global::Seed.CsharpNamespaceConflict;
++using global::Seed.CsharpNamespaceConflict.Core;
+ using global::System.Text.Json;
+ using global::System.Text.Json.Serialization;
+-using SeedCsharpNamespaceConflict;
+-using SeedCsharpNamespaceConflict.Core;
+ 
+-namespace SeedCsharpNamespaceConflict.A.Aa;
++namespace Seed.CsharpNamespaceConflict.A.Aa;
+ 
+ [Serializable]
+ public record SubTestType : IJsonOnDeserialized
+diff --git a/src/SeedCsharpNamespaceConflict/B/Types/TestType.cs b/src/Seed.CsharpNamespaceConflict/B/Types/TestType.cs
+similarity index 69%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/B/Types/TestType.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/B/Types/TestType.cs
+index 0e2140ab7df..775141c1c3f 100644
+--- a/src/SeedCsharpNamespaceConflict/B/Types/TestType.cs
++++ b/src/Seed.CsharpNamespaceConflict/B/Types/TestType.cs
+@@ -1,9 +1,9 @@
++using global::Seed.CsharpNamespaceConflict;
++using global::Seed.CsharpNamespaceConflict.Core;
+ using global::System.Text.Json;
+ using global::System.Text.Json.Serialization;
+-using SeedCsharpNamespaceConflict;
+-using SeedCsharpNamespaceConflict.Core;
+ 
+-namespace SeedCsharpNamespaceConflict.B;
++namespace Seed.CsharpNamespaceConflict.B;
+ 
+ [Serializable]
+ public record TestType : IJsonOnDeserialized
+@@ -13,10 +13,10 @@ public record TestType : IJsonOnDeserialized
+         new Dictionary<string, JsonElement>();
+ 
+     [JsonPropertyName("a")]
+-    public required SeedCsharpNamespaceConflict.A.Aa.A A { get; set; }
++    public required global::Seed.CsharpNamespaceConflict.A.Aa.A A { get; set; }
+ 
+     [JsonPropertyName("b")]
+-    public required SeedCsharpNamespaceConflict.A.Aa.B B { get; set; }
++    public required global::Seed.CsharpNamespaceConflict.A.Aa.B B { get; set; }
+ 
+     [JsonIgnore]
+     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+diff --git a/src/SeedCsharpNamespaceConflict/Core/ApiResponse.cs b/src/Seed.CsharpNamespaceConflict/Core/ApiResponse.cs
+similarity index 85%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/Core/ApiResponse.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/Core/ApiResponse.cs
+index 21c35aa1b77..3cfc5000bb7 100644
+--- a/src/SeedCsharpNamespaceConflict/Core/ApiResponse.cs
++++ b/src/Seed.CsharpNamespaceConflict/Core/ApiResponse.cs
+@@ -1,6 +1,6 @@
+ using global::System.Net.Http;
+ 
+-namespace SeedCsharpNamespaceConflict.Core;
++namespace Seed.CsharpNamespaceConflict.Core;
+ 
+ /// <summary>
+ /// The response object returned from the API.
+diff --git a/src/SeedCsharpNamespaceConflict/Core/BaseRequest.cs b/src/Seed.CsharpNamespaceConflict/Core/BaseRequest.cs
+similarity index 97%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/Core/BaseRequest.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/Core/BaseRequest.cs
+index b9635c0d4e0..0e9303357a5 100644
+--- a/src/SeedCsharpNamespaceConflict/Core/BaseRequest.cs
++++ b/src/Seed.CsharpNamespaceConflict/Core/BaseRequest.cs
+@@ -2,7 +2,7 @@ using global::System.Net.Http;
+ using global::System.Net.Http.Headers;
+ using global::System.Text;
+ 
+-namespace SeedCsharpNamespaceConflict.Core;
++namespace Seed.CsharpNamespaceConflict.Core;
+ 
+ internal abstract record BaseRequest
+ {
+diff --git a/src/SeedCsharpNamespaceConflict/Core/CollectionItemSerializer.cs b/src/Seed.CsharpNamespaceConflict/Core/CollectionItemSerializer.cs
+similarity index 98%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/Core/CollectionItemSerializer.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/Core/CollectionItemSerializer.cs
+index ed306afb4a7..6b2178c78a2 100644
+--- a/src/SeedCsharpNamespaceConflict/Core/CollectionItemSerializer.cs
++++ b/src/Seed.CsharpNamespaceConflict/Core/CollectionItemSerializer.cs
+@@ -1,7 +1,7 @@
+ using global::System.Text.Json;
+ using global::System.Text.Json.Serialization;
+ 
+-namespace SeedCsharpNamespaceConflict.Core;
++namespace Seed.CsharpNamespaceConflict.Core;
+ 
+ /// <summary>
+ /// Json collection converter.
+diff --git a/src/SeedCsharpNamespaceConflict/Core/Constants.cs b/src/Seed.CsharpNamespaceConflict/Core/Constants.cs
+similarity index 78%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/Core/Constants.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/Core/Constants.cs
+index 1529aa7ac4f..f6cf562c23f 100644
+--- a/src/SeedCsharpNamespaceConflict/Core/Constants.cs
++++ b/src/Seed.CsharpNamespaceConflict/Core/Constants.cs
+@@ -1,4 +1,4 @@
+-namespace SeedCsharpNamespaceConflict.Core;
++namespace Seed.CsharpNamespaceConflict.Core;
+ 
+ internal static class Constants
+ {
+diff --git a/src/SeedCsharpNamespaceConflict/Core/DateOnlyConverter.cs b/src/Seed.CsharpNamespaceConflict/Core/DateOnlyConverter.cs
+similarity index 99%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/Core/DateOnlyConverter.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/Core/DateOnlyConverter.cs
+index 2b80caff961..86e637e465b 100644
+--- a/src/SeedCsharpNamespaceConflict/Core/DateOnlyConverter.cs
++++ b/src/Seed.CsharpNamespaceConflict/Core/DateOnlyConverter.cs
+@@ -15,7 +15,7 @@ using global::System.Text.Json.Serialization;
+ // ReSharper disable SuggestVarOrType_SimpleTypes
+ // ReSharper disable SuggestVarOrType_BuiltInTypes
+ 
+-namespace SeedCsharpNamespaceConflict.Core
++namespace Seed.CsharpNamespaceConflict.Core
+ {
+     /// <summary>
+     /// Custom converter for handling the <see cref="DateOnly"/> data type with the <see href="https://docs.microsoft.com/dotnet/api/system.text.json">System.Text.Json</see> library.
+diff --git a/src/SeedCsharpNamespaceConflict/Core/DateTimeSerializer.cs b/src/Seed.CsharpNamespaceConflict/Core/DateTimeSerializer.cs
+similarity index 96%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/Core/DateTimeSerializer.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/Core/DateTimeSerializer.cs
+index 0558edf84b8..85f9e84f821 100644
+--- a/src/SeedCsharpNamespaceConflict/Core/DateTimeSerializer.cs
++++ b/src/Seed.CsharpNamespaceConflict/Core/DateTimeSerializer.cs
+@@ -2,7 +2,7 @@ using global::System.Globalization;
+ using global::System.Text.Json;
+ using global::System.Text.Json.Serialization;
+ 
+-namespace SeedCsharpNamespaceConflict.Core;
++namespace Seed.CsharpNamespaceConflict.Core;
+ 
+ internal class DateTimeSerializer : JsonConverter<DateTime>
+ {
+diff --git a/src/SeedCsharpNamespaceConflict/Core/EmptyRequest.cs b/src/Seed.CsharpNamespaceConflict/Core/EmptyRequest.cs
+similarity index 83%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/Core/EmptyRequest.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/Core/EmptyRequest.cs
+index 80cf16dcf4d..e1a74011ab7 100644
+--- a/src/SeedCsharpNamespaceConflict/Core/EmptyRequest.cs
++++ b/src/Seed.CsharpNamespaceConflict/Core/EmptyRequest.cs
+@@ -1,6 +1,6 @@
+ using global::System.Net.Http;
+ 
+-namespace SeedCsharpNamespaceConflict.Core;
++namespace Seed.CsharpNamespaceConflict.Core;
+ 
+ /// <summary>
+ /// The request object to send without a request body.
+diff --git a/src/SeedCsharpNamespaceConflict/Core/EncodingCache.cs b/src/Seed.CsharpNamespaceConflict/Core/EncodingCache.cs
+similarity index 83%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/Core/EncodingCache.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/Core/EncodingCache.cs
+index 42210f67a84..a9b47d4b2cb 100644
+--- a/src/SeedCsharpNamespaceConflict/Core/EncodingCache.cs
++++ b/src/Seed.CsharpNamespaceConflict/Core/EncodingCache.cs
+@@ -1,6 +1,6 @@
+ using global::System.Text;
+ 
+-namespace SeedCsharpNamespaceConflict.Core;
++namespace Seed.CsharpNamespaceConflict.Core;
+ 
+ internal static class EncodingCache
+ {
+diff --git a/src/SeedCsharpNamespaceConflict/Core/Extensions.cs b/src/Seed.CsharpNamespaceConflict/Core/Extensions.cs
+similarity index 97%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/Core/Extensions.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/Core/Extensions.cs
+index f4fb401158c..18a9f20a38f 100644
+--- a/src/SeedCsharpNamespaceConflict/Core/Extensions.cs
++++ b/src/Seed.CsharpNamespaceConflict/Core/Extensions.cs
+@@ -1,7 +1,7 @@
+ using global::System.Diagnostics.CodeAnalysis;
+ using global::System.Runtime.Serialization;
+ 
+-namespace SeedCsharpNamespaceConflict.Core;
++namespace Seed.CsharpNamespaceConflict.Core;
+ 
+ internal static class Extensions
+ {
+diff --git a/src/SeedCsharpNamespaceConflict/Core/FormUrlEncoder.cs b/src/Seed.CsharpNamespaceConflict/Core/FormUrlEncoder.cs
+similarity index 97%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/Core/FormUrlEncoder.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/Core/FormUrlEncoder.cs
+index 46d13ef4ea0..8b0e5120528 100644
+--- a/src/SeedCsharpNamespaceConflict/Core/FormUrlEncoder.cs
++++ b/src/Seed.CsharpNamespaceConflict/Core/FormUrlEncoder.cs
+@@ -1,6 +1,6 @@
+ using global::System.Net.Http;
+ 
+-namespace SeedCsharpNamespaceConflict.Core;
++namespace Seed.CsharpNamespaceConflict.Core;
+ 
+ /// <summary>
+ /// Encodes an object into a form URL-encoded content.
+diff --git a/src/SeedCsharpNamespaceConflict/Core/HeaderValue.cs b/src/Seed.CsharpNamespaceConflict/Core/HeaderValue.cs
+similarity index 97%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/Core/HeaderValue.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/Core/HeaderValue.cs
+index fc9338f2344..45d0dad0e76 100644
+--- a/src/SeedCsharpNamespaceConflict/Core/HeaderValue.cs
++++ b/src/Seed.CsharpNamespaceConflict/Core/HeaderValue.cs
+@@ -1,4 +1,4 @@
+-namespace SeedCsharpNamespaceConflict.Core;
++namespace Seed.CsharpNamespaceConflict.Core;
+ 
+ internal sealed class HeaderValue
+ {
+diff --git a/src/SeedCsharpNamespaceConflict/Core/Headers.cs b/src/Seed.CsharpNamespaceConflict/Core/Headers.cs
+similarity index 94%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/Core/Headers.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/Core/Headers.cs
+index 6cf231ef6c7..633c91e1f7e 100644
+--- a/src/SeedCsharpNamespaceConflict/Core/Headers.cs
++++ b/src/Seed.CsharpNamespaceConflict/Core/Headers.cs
+@@ -1,4 +1,4 @@
+-namespace SeedCsharpNamespaceConflict.Core;
++namespace Seed.CsharpNamespaceConflict.Core;
+ 
+ /// <summary>
+ /// Represents the headers sent with the request.
+diff --git a/src/SeedCsharpNamespaceConflict/Core/HeadersBuilder.cs b/src/Seed.CsharpNamespaceConflict/Core/HeadersBuilder.cs
+similarity index 99%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/Core/HeadersBuilder.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/Core/HeadersBuilder.cs
+index 45eba76c4fa..542757c953b 100644
+--- a/src/SeedCsharpNamespaceConflict/Core/HeadersBuilder.cs
++++ b/src/Seed.CsharpNamespaceConflict/Core/HeadersBuilder.cs
+@@ -1,4 +1,4 @@
+-namespace SeedCsharpNamespaceConflict.Core;
++namespace Seed.CsharpNamespaceConflict.Core;
+ 
+ /// <summary>
+ /// Fluent builder for constructing HTTP headers with support for merging from multiple sources.
+diff --git a/src/SeedCsharpNamespaceConflict/Core/HttpContentExtensions.cs b/src/Seed.CsharpNamespaceConflict/Core/HttpContentExtensions.cs
+similarity index 92%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/Core/HttpContentExtensions.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/Core/HttpContentExtensions.cs
+index 82271d3cef5..e5068e04e3b 100644
+--- a/src/SeedCsharpNamespaceConflict/Core/HttpContentExtensions.cs
++++ b/src/Seed.CsharpNamespaceConflict/Core/HttpContentExtensions.cs
+@@ -1,5 +1,5 @@
+ #if !NET5_0_OR_GREATER
+-namespace SeedCsharpNamespaceConflict.Core;
++namespace Seed.CsharpNamespaceConflict.Core;
+ 
+ /// <summary>
+ /// Polyfill extension providing a <c>ReadAsStringAsync(CancellationToken)</c> overload
+diff --git a/src/SeedCsharpNamespaceConflict/Core/HttpMethodExtensions.cs b/src/Seed.CsharpNamespaceConflict/Core/HttpMethodExtensions.cs
+similarity index 75%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/Core/HttpMethodExtensions.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/Core/HttpMethodExtensions.cs
+index ae3f3e5bc1c..2a199e0cf03 100644
+--- a/src/SeedCsharpNamespaceConflict/Core/HttpMethodExtensions.cs
++++ b/src/Seed.CsharpNamespaceConflict/Core/HttpMethodExtensions.cs
+@@ -1,6 +1,6 @@
+ using global::System.Net.Http;
+ 
+-namespace SeedCsharpNamespaceConflict.Core;
++namespace Seed.CsharpNamespaceConflict.Core;
+ 
+ internal static class HttpMethodExtensions
+ {
+diff --git a/src/SeedCsharpNamespaceConflict/Core/IIsRetryableContent.cs b/src/Seed.CsharpNamespaceConflict/Core/IIsRetryableContent.cs
+similarity index 63%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/Core/IIsRetryableContent.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/Core/IIsRetryableContent.cs
+index 25f69dce31e..3282430d83b 100644
+--- a/src/SeedCsharpNamespaceConflict/Core/IIsRetryableContent.cs
++++ b/src/Seed.CsharpNamespaceConflict/Core/IIsRetryableContent.cs
+@@ -1,4 +1,4 @@
+-namespace SeedCsharpNamespaceConflict.Core;
++namespace Seed.CsharpNamespaceConflict.Core;
+ 
+ public interface IIsRetryableContent
+ {
+diff --git a/src/SeedCsharpNamespaceConflict/Core/IRequestOptions.cs b/src/Seed.CsharpNamespaceConflict/Core/IRequestOptions.cs
+similarity index 97%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/Core/IRequestOptions.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/Core/IRequestOptions.cs
+index 196a25a72a4..21ef1b7d61f 100644
+--- a/src/SeedCsharpNamespaceConflict/Core/IRequestOptions.cs
++++ b/src/Seed.CsharpNamespaceConflict/Core/IRequestOptions.cs
+@@ -1,4 +1,4 @@
+-namespace SeedCsharpNamespaceConflict.Core;
++namespace Seed.CsharpNamespaceConflict.Core;
+ 
+ internal interface IRequestOptions
+ {
+diff --git a/src/SeedCsharpNamespaceConflict/Core/JsonAccessAttribute.cs b/src/Seed.CsharpNamespaceConflict/Core/JsonAccessAttribute.cs
+similarity index 88%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/Core/JsonAccessAttribute.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/Core/JsonAccessAttribute.cs
+index bf8f553cbb0..f65d65314c1 100644
+--- a/src/SeedCsharpNamespaceConflict/Core/JsonAccessAttribute.cs
++++ b/src/Seed.CsharpNamespaceConflict/Core/JsonAccessAttribute.cs
+@@ -1,4 +1,4 @@
+-namespace SeedCsharpNamespaceConflict.Core;
++namespace Seed.CsharpNamespaceConflict.Core;
+ 
+ [global::System.AttributeUsage(
+     global::System.AttributeTargets.Property | global::System.AttributeTargets.Field
+diff --git a/src/SeedCsharpNamespaceConflict/Core/JsonConfiguration.cs b/src/Seed.CsharpNamespaceConflict/Core/JsonConfiguration.cs
+similarity index 99%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/Core/JsonConfiguration.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/Core/JsonConfiguration.cs
+index 1cf0be80d3a..60679be2d78 100644
+--- a/src/SeedCsharpNamespaceConflict/Core/JsonConfiguration.cs
++++ b/src/Seed.CsharpNamespaceConflict/Core/JsonConfiguration.cs
+@@ -5,7 +5,7 @@ using global::System.Text.Json.Nodes;
+ using global::System.Text.Json.Serialization;
+ using global::System.Text.Json.Serialization.Metadata;
+ 
+-namespace SeedCsharpNamespaceConflict.Core;
++namespace Seed.CsharpNamespaceConflict.Core;
+ 
+ internal static partial class JsonOptions
+ {
+diff --git a/src/SeedCsharpNamespaceConflict/Core/JsonRequest.cs b/src/Seed.CsharpNamespaceConflict/Core/JsonRequest.cs
+similarity index 95%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/Core/JsonRequest.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/Core/JsonRequest.cs
+index a59e3f9355c..58c35665ad6 100644
+--- a/src/SeedCsharpNamespaceConflict/Core/JsonRequest.cs
++++ b/src/Seed.CsharpNamespaceConflict/Core/JsonRequest.cs
+@@ -1,6 +1,6 @@
+ using global::System.Net.Http;
+ 
+-namespace SeedCsharpNamespaceConflict.Core;
++namespace Seed.CsharpNamespaceConflict.Core;
+ 
+ /// <summary>
+ /// The request object to be sent for JSON APIs.
+diff --git a/src/SeedCsharpNamespaceConflict/Core/MultipartFormRequest.cs b/src/Seed.CsharpNamespaceConflict/Core/MultipartFormRequest.cs
+similarity index 99%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/Core/MultipartFormRequest.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/Core/MultipartFormRequest.cs
+index 2e20fc1ad18..b775e2998f6 100644
+--- a/src/SeedCsharpNamespaceConflict/Core/MultipartFormRequest.cs
++++ b/src/Seed.CsharpNamespaceConflict/Core/MultipartFormRequest.cs
+@@ -1,7 +1,7 @@
+ using global::System.Net.Http;
+ using global::System.Net.Http.Headers;
+ 
+-namespace SeedCsharpNamespaceConflict.Core;
++namespace Seed.CsharpNamespaceConflict.Core;
+ 
+ /// <summary>
+ /// The request object to be sent for multipart form data.
+diff --git a/src/SeedCsharpNamespaceConflict/Core/NullableAttribute.cs b/src/Seed.CsharpNamespaceConflict/Core/NullableAttribute.cs
+similarity index 94%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/Core/NullableAttribute.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/Core/NullableAttribute.cs
+index abdad1f407b..1b8c9ca6f0b 100644
+--- a/src/SeedCsharpNamespaceConflict/Core/NullableAttribute.cs
++++ b/src/Seed.CsharpNamespaceConflict/Core/NullableAttribute.cs
+@@ -1,4 +1,4 @@
+-namespace SeedCsharpNamespaceConflict.Core;
++namespace Seed.CsharpNamespaceConflict.Core;
+ 
+ /// <summary>
+ /// Marks a property as nullable in the OpenAPI specification.
+diff --git a/src/SeedCsharpNamespaceConflict/Core/OneOfSerializer.cs b/src/Seed.CsharpNamespaceConflict/Core/OneOfSerializer.cs
+similarity index 99%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/Core/OneOfSerializer.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/Core/OneOfSerializer.cs
+index af3fe82996e..f8bc6533766 100644
+--- a/src/SeedCsharpNamespaceConflict/Core/OneOfSerializer.cs
++++ b/src/Seed.CsharpNamespaceConflict/Core/OneOfSerializer.cs
+@@ -3,7 +3,7 @@ using global::System.Text.Json;
+ using global::System.Text.Json.Serialization;
+ using OneOf;
+ 
+-namespace SeedCsharpNamespaceConflict.Core;
++namespace Seed.CsharpNamespaceConflict.Core;
+ 
+ internal class OneOfSerializer : JsonConverter<IOneOf>
+ {
+diff --git a/src/SeedCsharpNamespaceConflict/Core/Optional.cs b/src/Seed.CsharpNamespaceConflict/Core/Optional.cs
+similarity index 99%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/Core/Optional.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/Core/Optional.cs
+index 3599004d7e3..26dbc0987d3 100644
+--- a/src/SeedCsharpNamespaceConflict/Core/Optional.cs
++++ b/src/Seed.CsharpNamespaceConflict/Core/Optional.cs
+@@ -1,7 +1,7 @@
+ using global::System.Text.Json;
+ using global::System.Text.Json.Serialization;
+ 
+-namespace SeedCsharpNamespaceConflict.Core;
++namespace Seed.CsharpNamespaceConflict.Core;
+ 
+ /// <summary>
+ /// Non-generic interface for Optional types to enable reflection-free checks.
+diff --git a/src/SeedCsharpNamespaceConflict/Core/OptionalAttribute.cs b/src/Seed.CsharpNamespaceConflict/Core/OptionalAttribute.cs
+similarity index 94%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/Core/OptionalAttribute.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/Core/OptionalAttribute.cs
+index f73d768e733..a1ba2467d06 100644
+--- a/src/SeedCsharpNamespaceConflict/Core/OptionalAttribute.cs
++++ b/src/Seed.CsharpNamespaceConflict/Core/OptionalAttribute.cs
+@@ -1,4 +1,4 @@
+-namespace SeedCsharpNamespaceConflict.Core;
++namespace Seed.CsharpNamespaceConflict.Core;
+ 
+ /// <summary>
+ /// Marks a property as optional in the OpenAPI specification.
+diff --git a/src/SeedCsharpNamespaceConflict/Core/Public/AdditionalProperties.cs b/src/Seed.CsharpNamespaceConflict/Core/Public/AdditionalProperties.cs
+similarity index 99%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/Core/Public/AdditionalProperties.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/Core/Public/AdditionalProperties.cs
+index 8775e0f7a71..64bf7fc4e0e 100644
+--- a/src/SeedCsharpNamespaceConflict/Core/Public/AdditionalProperties.cs
++++ b/src/Seed.CsharpNamespaceConflict/Core/Public/AdditionalProperties.cs
+@@ -2,9 +2,9 @@ using global::System.Collections;
+ using global::System.Collections.ObjectModel;
+ using global::System.Text.Json;
+ using global::System.Text.Json.Nodes;
+-using SeedCsharpNamespaceConflict.Core;
++using Seed.CsharpNamespaceConflict.Core;
+ 
+-namespace SeedCsharpNamespaceConflict;
++namespace Seed.CsharpNamespaceConflict;
+ 
+ public record ReadOnlyAdditionalProperties : ReadOnlyAdditionalProperties<JsonElement>
+ {
+diff --git a/src/SeedCsharpNamespaceConflict/Core/Public/ClientOptions.cs b/src/Seed.CsharpNamespaceConflict/Core/Public/ClientOptions.cs
+similarity index 95%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/Core/Public/ClientOptions.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/Core/Public/ClientOptions.cs
+index 726efba4871..ef01fb5b34e 100644
+--- a/src/SeedCsharpNamespaceConflict/Core/Public/ClientOptions.cs
++++ b/src/Seed.CsharpNamespaceConflict/Core/Public/ClientOptions.cs
+@@ -1,6 +1,6 @@
+-using SeedCsharpNamespaceConflict.Core;
++using global::Seed.CsharpNamespaceConflict.Core;
+ 
+-namespace SeedCsharpNamespaceConflict;
++namespace Seed.CsharpNamespaceConflict;
+ 
+ [Serializable]
+ public partial class ClientOptions
+diff --git a/src/SeedCsharpNamespaceConflict/Core/Public/FileParameter.cs b/src/Seed.CsharpNamespaceConflict/Core/Public/FileParameter.cs
+similarity index 97%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/Core/Public/FileParameter.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/Core/Public/FileParameter.cs
+index 7c0f68a0801..75a525c4904 100644
+--- a/src/SeedCsharpNamespaceConflict/Core/Public/FileParameter.cs
++++ b/src/Seed.CsharpNamespaceConflict/Core/Public/FileParameter.cs
+@@ -1,4 +1,4 @@
+-namespace SeedCsharpNamespaceConflict;
++namespace Seed.CsharpNamespaceConflict;
+ 
+ /// <summary>
+ /// File parameter for uploading files.
+diff --git a/src/SeedCsharpNamespaceConflict/Core/Public/RawResponse.cs b/src/Seed.CsharpNamespaceConflict/Core/Public/RawResponse.cs
+similarity index 93%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/Core/Public/RawResponse.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/Core/Public/RawResponse.cs
+index 29dceb02a16..06f9cd2cfb0 100644
+--- a/src/SeedCsharpNamespaceConflict/Core/Public/RawResponse.cs
++++ b/src/Seed.CsharpNamespaceConflict/Core/Public/RawResponse.cs
+@@ -1,6 +1,6 @@
+ using global::System.Net;
+ 
+-namespace SeedCsharpNamespaceConflict;
++namespace Seed.CsharpNamespaceConflict;
+ 
+ /// <summary>
+ /// Contains HTTP response metadata including status code, URL, and headers.
+diff --git a/src/SeedCsharpNamespaceConflict/Core/Public/RequestOptions.cs b/src/Seed.CsharpNamespaceConflict/Core/Public/RequestOptions.cs
+similarity index 94%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/Core/Public/RequestOptions.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/Core/Public/RequestOptions.cs
+index cf927954957..d8e2cdb0d89 100644
+--- a/src/SeedCsharpNamespaceConflict/Core/Public/RequestOptions.cs
++++ b/src/Seed.CsharpNamespaceConflict/Core/Public/RequestOptions.cs
+@@ -1,6 +1,6 @@
+-using SeedCsharpNamespaceConflict.Core;
++using global::Seed.CsharpNamespaceConflict.Core;
+ 
+-namespace SeedCsharpNamespaceConflict;
++namespace Seed.CsharpNamespaceConflict;
+ 
+ [Serializable]
+ public partial class RequestOptions : IRequestOptions
+diff --git a/src/SeedCsharpNamespaceConflict/Core/Public/SeedCsharpNamespaceConflictApiException.cs b/src/Seed.CsharpNamespaceConflict/Core/Public/SeedApiException.cs
+similarity index 75%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/Core/Public/SeedCsharpNamespaceConflictApiException.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/Core/Public/SeedApiException.cs
+index 081ad75284d..2815c4a303e 100644
+--- a/src/SeedCsharpNamespaceConflict/Core/Public/SeedCsharpNamespaceConflictApiException.cs
++++ b/src/Seed.CsharpNamespaceConflict/Core/Public/SeedApiException.cs
+@@ -1,14 +1,14 @@
+-namespace SeedCsharpNamespaceConflict;
++namespace Seed.CsharpNamespaceConflict;
+ 
+ /// <summary>
+ /// This exception type will be thrown for any non-2XX API responses.
+ /// </summary>
+-public class SeedCsharpNamespaceConflictApiException(
++public class SeedApiException(
+     string message,
+     int statusCode,
+     object body,
+     Exception? innerException = null
+-) : SeedCsharpNamespaceConflictException(message, innerException)
++) : SeedException(message, innerException)
+ {
+     /// <summary>
+     /// The error code of the response that triggered the exception.
+diff --git a/src/Seed.CsharpNamespaceConflict/Core/Public/SeedException.cs b/src/Seed.CsharpNamespaceConflict/Core/Public/SeedException.cs
+new file mode 100644
+index 00000000000..2b4b9f42f94
+--- /dev/null
++++ b/src/Seed.CsharpNamespaceConflict/Core/Public/SeedException.cs
+@@ -0,0 +1,7 @@
++namespace Seed.CsharpNamespaceConflict;
++
++/// <summary>
++/// Base exception class for all exceptions thrown by the SDK.
++/// </summary>
++public class SeedException(string message, Exception? innerException = null)
++    : Exception(message, innerException);
+diff --git a/src/SeedCsharpNamespaceConflict/Core/Public/Version.cs b/src/Seed.CsharpNamespaceConflict/Core/Public/Version.cs
+similarity index 68%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/Core/Public/Version.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/Core/Public/Version.cs
+index 90181780f0a..411783512bb 100644
+--- a/src/SeedCsharpNamespaceConflict/Core/Public/Version.cs
++++ b/src/Seed.CsharpNamespaceConflict/Core/Public/Version.cs
+@@ -1,4 +1,4 @@
+-namespace SeedCsharpNamespaceConflict;
++namespace Seed.CsharpNamespaceConflict;
+ 
+ [Serializable]
+ internal class Version
+diff --git a/src/SeedCsharpNamespaceConflict/Core/Public/WithRawResponse.cs b/src/Seed.CsharpNamespaceConflict/Core/Public/WithRawResponse.cs
+similarity index 92%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/Core/Public/WithRawResponse.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/Core/Public/WithRawResponse.cs
+index aa858fac8b1..b8ee5dd8fda 100644
+--- a/src/SeedCsharpNamespaceConflict/Core/Public/WithRawResponse.cs
++++ b/src/Seed.CsharpNamespaceConflict/Core/Public/WithRawResponse.cs
+@@ -1,4 +1,4 @@
+-namespace SeedCsharpNamespaceConflict;
++namespace Seed.CsharpNamespaceConflict;
+ 
+ /// <summary>
+ /// Wraps a parsed response value with its raw HTTP response metadata.
+diff --git a/src/SeedCsharpNamespaceConflict/Core/Public/WithRawResponseTask.cs b/src/Seed.CsharpNamespaceConflict/Core/Public/WithRawResponseTask.cs
+similarity index 99%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/Core/Public/WithRawResponseTask.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/Core/Public/WithRawResponseTask.cs
+index decf3a6c7fa..a170282b1f1 100644
+--- a/src/SeedCsharpNamespaceConflict/Core/Public/WithRawResponseTask.cs
++++ b/src/Seed.CsharpNamespaceConflict/Core/Public/WithRawResponseTask.cs
+@@ -1,6 +1,6 @@
+ using global::System.Runtime.CompilerServices;
+ 
+-namespace SeedCsharpNamespaceConflict;
++namespace Seed.CsharpNamespaceConflict;
+ 
+ /// <summary>
+ /// A task-like type that wraps Task&lt;WithRawResponse&lt;T&gt;&gt; and provides dual-mode awaiting:
+diff --git a/src/SeedCsharpNamespaceConflict/Core/QueryStringBuilder.cs b/src/Seed.CsharpNamespaceConflict/Core/QueryStringBuilder.cs
+similarity index 99%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/Core/QueryStringBuilder.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/Core/QueryStringBuilder.cs
+index d7213f1e967..cafdbac43e4 100644
+--- a/src/SeedCsharpNamespaceConflict/Core/QueryStringBuilder.cs
++++ b/src/Seed.CsharpNamespaceConflict/Core/QueryStringBuilder.cs
+@@ -4,7 +4,7 @@ using global::System.Runtime.CompilerServices;
+ using global::System.Text;
+ #endif
+ 
+-namespace SeedCsharpNamespaceConflict.Core;
++namespace Seed.CsharpNamespaceConflict.Core;
+ 
+ /// <summary>
+ /// High-performance query string builder with RFC 3986 compliant percent-encoding.
+diff --git a/src/SeedCsharpNamespaceConflict/Core/QueryStringConverter.cs b/src/Seed.CsharpNamespaceConflict/Core/QueryStringConverter.cs
+similarity index 99%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/Core/QueryStringConverter.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/Core/QueryStringConverter.cs
+index 47b25db9f1f..88bb974ff60 100644
+--- a/src/SeedCsharpNamespaceConflict/Core/QueryStringConverter.cs
++++ b/src/Seed.CsharpNamespaceConflict/Core/QueryStringConverter.cs
+@@ -1,6 +1,6 @@
+ using global::System.Text.Json;
+ 
+-namespace SeedCsharpNamespaceConflict.Core;
++namespace Seed.CsharpNamespaceConflict.Core;
+ 
+ /// <summary>
+ /// Converts an object into a query string collection.
+diff --git a/src/SeedCsharpNamespaceConflict/Core/RawClient.cs b/src/Seed.CsharpNamespaceConflict/Core/RawClient.cs
+similarity index 94%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/Core/RawClient.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/Core/RawClient.cs
+index 0f459df7012..c70e6842497 100644
+--- a/src/SeedCsharpNamespaceConflict/Core/RawClient.cs
++++ b/src/Seed.CsharpNamespaceConflict/Core/RawClient.cs
+@@ -3,7 +3,7 @@ using global::System.Net.Http.Headers;
+ using global::System.Text;
+ using SystemTask = global::System.Threading.Tasks.Task;
+ 
+-namespace SeedCsharpNamespaceConflict.Core;
++namespace Seed.CsharpNamespaceConflict.Core;
+ 
+ /// <summary>
+ /// Utility class for making raw HTTP requests to the API.
+@@ -25,8 +25,8 @@ internal partial class RawClient(ClientOptions clientOptions)
+     /// </summary>
+     internal readonly ClientOptions Options = clientOptions;
+ 
+-    internal async global::System.Threading.Tasks.Task<global::SeedCsharpNamespaceConflict.Core.ApiResponse> SendRequestAsync(
+-        global::SeedCsharpNamespaceConflict.Core.BaseRequest request,
++    internal async global::System.Threading.Tasks.Task<global::Seed.CsharpNamespaceConflict.Core.ApiResponse> SendRequestAsync(
++        global::Seed.CsharpNamespaceConflict.Core.BaseRequest request,
+         CancellationToken cancellationToken = default
+     )
+     {
+@@ -41,7 +41,7 @@ internal partial class RawClient(ClientOptions clientOptions)
+             .ConfigureAwait(false);
+     }
+ 
+-    internal async global::System.Threading.Tasks.Task<global::SeedCsharpNamespaceConflict.Core.ApiResponse> SendRequestAsync(
++    internal async global::System.Threading.Tasks.Task<global::Seed.CsharpNamespaceConflict.Core.ApiResponse> SendRequestAsync(
+         HttpRequestMessage request,
+         IRequestOptions? options,
+         CancellationToken cancellationToken = default
+@@ -123,7 +123,7 @@ internal partial class RawClient(ClientOptions clientOptions)
+     /// Sends the request with retries, unless the request content is not retryable,
+     /// such as stream requests and multipart form data with stream content.
+     /// </summary>
+-    private async global::System.Threading.Tasks.Task<global::SeedCsharpNamespaceConflict.Core.ApiResponse> SendWithRetriesAsync(
++    private async global::System.Threading.Tasks.Task<global::Seed.CsharpNamespaceConflict.Core.ApiResponse> SendWithRetriesAsync(
+         HttpRequestMessage request,
+         IRequestOptions? options,
+         CancellationToken cancellationToken
+@@ -138,7 +138,7 @@ internal partial class RawClient(ClientOptions clientOptions)
+ 
+         if (!isRetryableContent)
+         {
+-            return new global::SeedCsharpNamespaceConflict.Core.ApiResponse
++            return new global::Seed.CsharpNamespaceConflict.Core.ApiResponse
+             {
+                 StatusCode = (int)response.StatusCode,
+                 Raw = response,
+@@ -164,7 +164,7 @@ internal partial class RawClient(ClientOptions clientOptions)
+                 .ConfigureAwait(false);
+         }
+ 
+-        return new global::SeedCsharpNamespaceConflict.Core.ApiResponse
++        return new global::Seed.CsharpNamespaceConflict.Core.ApiResponse
+         {
+             StatusCode = (int)response.StatusCode,
+             Raw = response,
+@@ -263,7 +263,7 @@ internal partial class RawClient(ClientOptions clientOptions)
+     }
+ 
+     internal async global::System.Threading.Tasks.Task<HttpRequestMessage> CreateHttpRequestAsync(
+-        global::SeedCsharpNamespaceConflict.Core.BaseRequest request
++        global::Seed.CsharpNamespaceConflict.Core.BaseRequest request
+     )
+     {
+         var url = BuildUrl(request);
+@@ -274,7 +274,7 @@ internal partial class RawClient(ClientOptions clientOptions)
+         return httpRequest;
+     }
+ 
+-    private string BuildUrl(global::SeedCsharpNamespaceConflict.Core.BaseRequest request)
++    private string BuildUrl(global::Seed.CsharpNamespaceConflict.Core.BaseRequest request)
+     {
+         var baseUrl = request.Options?.BaseUrl ?? request.BaseUrl ?? Options.BaseUrl;
+ 
+diff --git a/src/SeedCsharpNamespaceConflict/Core/RawResponse.cs b/src/Seed.CsharpNamespaceConflict/Core/RawResponse.cs
+similarity index 92%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/Core/RawResponse.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/Core/RawResponse.cs
+index 71475d5a4a5..97304ddc115 100644
+--- a/src/SeedCsharpNamespaceConflict/Core/RawResponse.cs
++++ b/src/Seed.CsharpNamespaceConflict/Core/RawResponse.cs
+@@ -1,6 +1,6 @@
+ using global::System.Net;
+ 
+-namespace SeedCsharpNamespaceConflict.Core;
++namespace Seed.CsharpNamespaceConflict.Core;
+ 
+ /// <summary>
+ /// Contains HTTP response metadata including status code, URL, and headers.
+diff --git a/src/SeedCsharpNamespaceConflict/Core/ResponseHeaders.cs b/src/Seed.CsharpNamespaceConflict/Core/ResponseHeaders.cs
+similarity index 98%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/Core/ResponseHeaders.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/Core/ResponseHeaders.cs
+index 9142ff67ddc..e6a28db48e9 100644
+--- a/src/SeedCsharpNamespaceConflict/Core/ResponseHeaders.cs
++++ b/src/Seed.CsharpNamespaceConflict/Core/ResponseHeaders.cs
+@@ -1,7 +1,7 @@
+ using global::System.Collections;
+ using global::System.Net.Http.Headers;
+ 
+-namespace SeedCsharpNamespaceConflict.Core;
++namespace Seed.CsharpNamespaceConflict.Core;
+ 
+ /// <summary>
+ /// Represents HTTP response headers with case-insensitive lookup.
+diff --git a/src/SeedCsharpNamespaceConflict/Core/StreamRequest.cs b/src/Seed.CsharpNamespaceConflict/Core/StreamRequest.cs
+similarity index 93%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/Core/StreamRequest.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/Core/StreamRequest.cs
+index 0c3d2a1ae11..214418bf787 100644
+--- a/src/SeedCsharpNamespaceConflict/Core/StreamRequest.cs
++++ b/src/Seed.CsharpNamespaceConflict/Core/StreamRequest.cs
+@@ -1,7 +1,7 @@
+ using global::System.Net.Http;
+ using global::System.Net.Http.Headers;
+ 
+-namespace SeedCsharpNamespaceConflict.Core;
++namespace Seed.CsharpNamespaceConflict.Core;
+ 
+ /// <summary>
+ /// The request object to be sent for streaming uploads.
+diff --git a/src/SeedCsharpNamespaceConflict/Core/StringEnum.cs b/src/Seed.CsharpNamespaceConflict/Core/StringEnum.cs
+similarity index 66%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/Core/StringEnum.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/Core/StringEnum.cs
+index 93660010d08..f45da7c83a5 100644
+--- a/src/SeedCsharpNamespaceConflict/Core/StringEnum.cs
++++ b/src/Seed.CsharpNamespaceConflict/Core/StringEnum.cs
+@@ -1,4 +1,4 @@
+-namespace SeedCsharpNamespaceConflict.Core;
++namespace Seed.CsharpNamespaceConflict.Core;
+ 
+ public interface IStringEnum : IEquatable<string>
+ {
+diff --git a/src/SeedCsharpNamespaceConflict/Core/StringEnumExtensions.cs b/src/Seed.CsharpNamespaceConflict/Core/StringEnumExtensions.cs
+similarity index 74%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/Core/StringEnumExtensions.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/Core/StringEnumExtensions.cs
+index 0f42fbb8a2f..0abbbfbcf46 100644
+--- a/src/SeedCsharpNamespaceConflict/Core/StringEnumExtensions.cs
++++ b/src/Seed.CsharpNamespaceConflict/Core/StringEnumExtensions.cs
+@@ -1,4 +1,4 @@
+-namespace SeedCsharpNamespaceConflict.Core;
++namespace Seed.CsharpNamespaceConflict.Core;
+ 
+ internal static class StringEnumExtensions
+ {
+diff --git a/src/SeedCsharpNamespaceConflict/Core/ValueConvert.cs b/src/Seed.CsharpNamespaceConflict/Core/ValueConvert.cs
+similarity index 98%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/Core/ValueConvert.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/Core/ValueConvert.cs
+index 4e18b80a288..ad0a0f0e876 100644
+--- a/src/SeedCsharpNamespaceConflict/Core/ValueConvert.cs
++++ b/src/Seed.CsharpNamespaceConflict/Core/ValueConvert.cs
+@@ -1,6 +1,6 @@
+ using global::System.Globalization;
+ 
+-namespace SeedCsharpNamespaceConflict.Core;
++namespace Seed.CsharpNamespaceConflict.Core;
+ 
+ /// <summary>
+ /// Convert values to string for path and query parameters.
+diff --git a/src/Seed.CsharpNamespaceConflict/ISeed.cs b/src/Seed.CsharpNamespaceConflict/ISeed.cs
+new file mode 100644
+index 00000000000..cd8578255f0
+--- /dev/null
++++ b/src/Seed.CsharpNamespaceConflict/ISeed.cs
+@@ -0,0 +1,6 @@
++namespace Seed.CsharpNamespaceConflict;
++
++public partial interface ISeed
++{
++    public ITasktestClient Tasktest { get; }
++}
+diff --git a/src/SeedCsharpNamespaceConflict/SeedCsharpNamespaceConflict.Custom.props b/src/Seed.CsharpNamespaceConflict/Seed.CsharpNamespaceConflict.Custom.props
+similarity index 100%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/SeedCsharpNamespaceConflict.Custom.props
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/Seed.CsharpNamespaceConflict.Custom.props
+diff --git a/src/SeedCsharpNamespaceConflict/SeedCsharpNamespaceConflict.csproj b/src/Seed.CsharpNamespaceConflict/Seed.CsharpNamespaceConflict.csproj
+similarity index 93%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/SeedCsharpNamespaceConflict.csproj
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/Seed.CsharpNamespaceConflict.csproj
+index 43eaab6b456..4f80a72ca68 100644
+--- a/src/SeedCsharpNamespaceConflict/SeedCsharpNamespaceConflict.csproj
++++ b/src/Seed.CsharpNamespaceConflict/Seed.CsharpNamespaceConflict.csproj
+@@ -52,12 +52,12 @@
+ 
+   <ItemGroup>
+     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+-      <_Parameter1>SeedCsharpNamespaceConflict.Test</_Parameter1>
++      <_Parameter1>Seed.CsharpNamespaceConflict.Test</_Parameter1>
+     </AssemblyAttribute>
+   </ItemGroup>
+ 
+   <Import
+-    Project="SeedCsharpNamespaceConflict.Custom.props"
+-    Condition="Exists('SeedCsharpNamespaceConflict.Custom.props')"
++    Project="Seed.CsharpNamespaceConflict.Custom.props"
++    Condition="Exists('Seed.CsharpNamespaceConflict.Custom.props')"
+   />
+ </Project>
+diff --git a/src/SeedCsharpNamespaceConflict/SeedCsharpNamespaceConflictClient.cs b/src/Seed.CsharpNamespaceConflict/Seed.cs
+similarity index 70%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/SeedCsharpNamespaceConflictClient.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/Seed.cs
+index 5538ff377f1..7012fd217ad 100644
+--- a/src/SeedCsharpNamespaceConflict/SeedCsharpNamespaceConflictClient.cs
++++ b/src/Seed.CsharpNamespaceConflict/Seed.cs
+@@ -1,19 +1,19 @@
+-using SeedCsharpNamespaceConflict.Core;
++using global::Seed.CsharpNamespaceConflict.Core;
+ 
+-namespace SeedCsharpNamespaceConflict;
++namespace Seed.CsharpNamespaceConflict;
+ 
+-public partial class SeedCsharpNamespaceConflictClient : ISeedCsharpNamespaceConflictClient
++public partial class Seed : ISeed
+ {
+     private readonly RawClient _client;
+ 
+-    public SeedCsharpNamespaceConflictClient(ClientOptions? clientOptions = null)
++    public Seed(ClientOptions? clientOptions = null)
+     {
+         clientOptions ??= new ClientOptions();
+         var platformHeaders = new Headers(
+             new Dictionary<string, string>()
+             {
+                 { "X-Fern-Language", "C#" },
+-                { "X-Fern-SDK-Name", "SeedCsharpNamespaceConflict" },
++                { "X-Fern-SDK-Name", "Seed.CsharpNamespaceConflict" },
+                 { "X-Fern-SDK-Version", Version.Current },
+                 { "User-Agent", "Ferncsharp-namespace-conflict/0.0.1" },
+             }
+diff --git a/src/SeedCsharpNamespaceConflict/Tasktest/ITasktestClient.cs b/src/Seed.CsharpNamespaceConflict/Tasktest/ITasktestClient.cs
+similarity index 83%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/Tasktest/ITasktestClient.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/Tasktest/ITasktestClient.cs
+index b92aeb1d91a..71db1a72f0a 100644
+--- a/src/SeedCsharpNamespaceConflict/Tasktest/ITasktestClient.cs
++++ b/src/Seed.CsharpNamespaceConflict/Tasktest/ITasktestClient.cs
+@@ -1,4 +1,4 @@
+-namespace SeedCsharpNamespaceConflict;
++namespace Seed.CsharpNamespaceConflict;
+ 
+ public partial interface ITasktestClient
+ {
+diff --git a/src/SeedCsharpNamespaceConflict/Tasktest/TasktestClient.cs b/src/Seed.CsharpNamespaceConflict/Tasktest/TasktestClient.cs
+similarity index 86%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/Tasktest/TasktestClient.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/Tasktest/TasktestClient.cs
+index c925240e596..2d32e559743 100644
+--- a/src/SeedCsharpNamespaceConflict/Tasktest/TasktestClient.cs
++++ b/src/Seed.CsharpNamespaceConflict/Tasktest/TasktestClient.cs
+@@ -1,6 +1,6 @@
+-using SeedCsharpNamespaceConflict.Core;
++using global::Seed.CsharpNamespaceConflict.Core;
+ 
+-namespace SeedCsharpNamespaceConflict;
++namespace Seed.CsharpNamespaceConflict;
+ 
+ public partial class TasktestClient : ITasktestClient
+ {
+@@ -19,7 +19,7 @@ public partial class TasktestClient : ITasktestClient
+         CancellationToken cancellationToken = default
+     )
+     {
+-        var _headers = await new SeedCsharpNamespaceConflict.Core.HeadersBuilder.Builder()
++        var _headers = await new global::Seed.CsharpNamespaceConflict.Core.HeadersBuilder.Builder()
+             .Add(_client.Options.Headers)
+             .Add(_client.Options.AdditionalHeaders)
+             .Add(options?.AdditionalHeaders)
+@@ -45,7 +45,7 @@ public partial class TasktestClient : ITasktestClient
+             var responseBody = await response
+                 .Raw.Content.ReadAsStringAsync(cancellationToken)
+                 .ConfigureAwait(false);
+-            throw new SeedCsharpNamespaceConflictApiException(
++            throw new SeedApiException(
+                 $"Error with status code {response.StatusCode}",
+                 response.StatusCode,
+                 responseBody
+diff --git a/src/SeedCsharpNamespaceConflict/Tasktest/Types/Task.cs b/src/Seed.CsharpNamespaceConflict/Tasktest/Types/Task.cs
+similarity index 88%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict/Tasktest/Types/Task.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict/Tasktest/Types/Task.cs
+index d4a6e90e31c..7d1eeb3bbf8 100644
+--- a/src/SeedCsharpNamespaceConflict/Tasktest/Types/Task.cs
++++ b/src/Seed.CsharpNamespaceConflict/Tasktest/Types/Task.cs
+@@ -1,8 +1,8 @@
++using global::Seed.CsharpNamespaceConflict.Core;
+ using global::System.Text.Json;
+ using global::System.Text.Json.Serialization;
+-using SeedCsharpNamespaceConflict.Core;
+ 
+-namespace SeedCsharpNamespaceConflict;
++namespace Seed.CsharpNamespaceConflict;
+ 
+ [Serializable]
+ public record Task : IJsonOnDeserialized
+diff --git a/src/SeedCsharpNamespaceConflict.Test/Core/HeadersBuilderTests.cs b/src/Seed.CsharpNamespaceConflict.Test/Core/HeadersBuilderTests.cs
+similarity index 99%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict.Test/Core/HeadersBuilderTests.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict.Test/Core/HeadersBuilderTests.cs
+index 92114ef283b..2df31eb3433 100644
+--- a/src/SeedCsharpNamespaceConflict.Test/Core/HeadersBuilderTests.cs
++++ b/src/Seed.CsharpNamespaceConflict.Test/Core/HeadersBuilderTests.cs
+@@ -1,7 +1,7 @@
+ using NUnit.Framework;
+-using SeedCsharpNamespaceConflict.Core;
++using Seed.CsharpNamespaceConflict.Core;
+ 
+-namespace SeedCsharpNamespaceConflict.Test.Core;
++namespace Seed.CsharpNamespaceConflict.Test.Core;
+ 
+ [TestFixture]
+ public class HeadersBuilderTests
+diff --git a/src/SeedCsharpNamespaceConflict.Test/Core/Json/AdditionalPropertiesTests.cs b/src/Seed.CsharpNamespaceConflict.Test/Core/Json/AdditionalPropertiesTests.cs
+similarity index 99%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict.Test/Core/Json/AdditionalPropertiesTests.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict.Test/Core/Json/AdditionalPropertiesTests.cs
+index 2d0253dc012..c272fa73549 100644
+--- a/src/SeedCsharpNamespaceConflict.Test/Core/Json/AdditionalPropertiesTests.cs
++++ b/src/Seed.CsharpNamespaceConflict.Test/Core/Json/AdditionalPropertiesTests.cs
+@@ -1,9 +1,9 @@
+ using global::System.Text.Json;
+ using global::System.Text.Json.Serialization;
+ using NUnit.Framework;
+-using SeedCsharpNamespaceConflict.Core;
++using Seed.CsharpNamespaceConflict.Core;
+ 
+-namespace SeedCsharpNamespaceConflict.Test.Core.Json;
++namespace Seed.CsharpNamespaceConflict.Test.Core.Json;
+ 
+ [TestFixture]
+ public class AdditionalPropertiesTests
+diff --git a/src/SeedCsharpNamespaceConflict.Test/Core/Json/DateOnlyJsonTests.cs b/src/Seed.CsharpNamespaceConflict.Test/Core/Json/DateOnlyJsonTests.cs
+similarity index 96%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict.Test/Core/Json/DateOnlyJsonTests.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict.Test/Core/Json/DateOnlyJsonTests.cs
+index dc84a7d8df9..6e60135ef07 100644
+--- a/src/SeedCsharpNamespaceConflict.Test/Core/Json/DateOnlyJsonTests.cs
++++ b/src/Seed.CsharpNamespaceConflict.Test/Core/Json/DateOnlyJsonTests.cs
+@@ -1,7 +1,7 @@
+ using NUnit.Framework;
+-using SeedCsharpNamespaceConflict.Core;
++using Seed.CsharpNamespaceConflict.Core;
+ 
+-namespace SeedCsharpNamespaceConflict.Test.Core.Json;
++namespace Seed.CsharpNamespaceConflict.Test.Core.Json;
+ 
+ [TestFixture]
+ public class DateOnlyJsonTests
+diff --git a/src/SeedCsharpNamespaceConflict.Test/Core/Json/DateTimeJsonTests.cs b/src/Seed.CsharpNamespaceConflict.Test/Core/Json/DateTimeJsonTests.cs
+similarity index 97%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict.Test/Core/Json/DateTimeJsonTests.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict.Test/Core/Json/DateTimeJsonTests.cs
+index dd0d23dd9d8..db2ccebf296 100644
+--- a/src/SeedCsharpNamespaceConflict.Test/Core/Json/DateTimeJsonTests.cs
++++ b/src/Seed.CsharpNamespaceConflict.Test/Core/Json/DateTimeJsonTests.cs
+@@ -1,7 +1,7 @@
+ using NUnit.Framework;
+-using SeedCsharpNamespaceConflict.Core;
++using Seed.CsharpNamespaceConflict.Core;
+ 
+-namespace SeedCsharpNamespaceConflict.Test.Core.Json;
++namespace Seed.CsharpNamespaceConflict.Test.Core.Json;
+ 
+ [TestFixture]
+ public class DateTimeJsonTests
+diff --git a/src/SeedCsharpNamespaceConflict.Test/Core/Json/JsonAccessAttributeTests.cs b/src/Seed.CsharpNamespaceConflict.Test/Core/Json/JsonAccessAttributeTests.cs
+similarity index 98%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict.Test/Core/Json/JsonAccessAttributeTests.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict.Test/Core/Json/JsonAccessAttributeTests.cs
+index b9f6f9589cc..fbd13760676 100644
+--- a/src/SeedCsharpNamespaceConflict.Test/Core/Json/JsonAccessAttributeTests.cs
++++ b/src/Seed.CsharpNamespaceConflict.Test/Core/Json/JsonAccessAttributeTests.cs
+@@ -1,8 +1,8 @@
+ using global::System.Text.Json.Serialization;
+ using NUnit.Framework;
+-using SeedCsharpNamespaceConflict.Core;
++using Seed.CsharpNamespaceConflict.Core;
+ 
+-namespace SeedCsharpNamespaceConflict.Test.Core.Json;
++namespace Seed.CsharpNamespaceConflict.Test.Core.Json;
+ 
+ [TestFixture]
+ public class JsonAccessAttributeTests
+diff --git a/src/SeedCsharpNamespaceConflict.Test/Core/QueryStringBuilderTests.cs b/src/Seed.CsharpNamespaceConflict.Test/Core/QueryStringBuilderTests.cs
+similarity index 99%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict.Test/Core/QueryStringBuilderTests.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict.Test/Core/QueryStringBuilderTests.cs
+index edcfa79bd59..a3b4c637773 100644
+--- a/src/SeedCsharpNamespaceConflict.Test/Core/QueryStringBuilderTests.cs
++++ b/src/Seed.CsharpNamespaceConflict.Test/Core/QueryStringBuilderTests.cs
+@@ -1,7 +1,7 @@
+ using NUnit.Framework;
+-using SeedCsharpNamespaceConflict.Core;
++using Seed.CsharpNamespaceConflict.Core;
+ 
+-namespace SeedCsharpNamespaceConflict.Test.Core;
++namespace Seed.CsharpNamespaceConflict.Test.Core;
+ 
+ [TestFixture]
+ public class QueryStringBuilderTests
+diff --git a/src/SeedCsharpNamespaceConflict.Test/Core/QueryStringConverterTests.cs b/src/Seed.CsharpNamespaceConflict.Test/Core/QueryStringConverterTests.cs
+similarity index 98%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict.Test/Core/QueryStringConverterTests.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict.Test/Core/QueryStringConverterTests.cs
+index 3ba833f2b80..51fc2785d93 100644
+--- a/src/SeedCsharpNamespaceConflict.Test/Core/QueryStringConverterTests.cs
++++ b/src/Seed.CsharpNamespaceConflict.Test/Core/QueryStringConverterTests.cs
+@@ -1,7 +1,7 @@
+ using NUnit.Framework;
+-using SeedCsharpNamespaceConflict.Core;
++using Seed.CsharpNamespaceConflict.Core;
+ 
+-namespace SeedCsharpNamespaceConflict.Test.Core;
++namespace Seed.CsharpNamespaceConflict.Test.Core;
+ 
+ [TestFixture]
+ public class QueryStringConverterTests
+diff --git a/src/SeedCsharpNamespaceConflict.Test/Core/RawClientTests/MultipartFormTests.cs b/src/Seed.CsharpNamespaceConflict.Test/Core/RawClientTests/MultipartFormTests.cs
+similarity index 99%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict.Test/Core/RawClientTests/MultipartFormTests.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict.Test/Core/RawClientTests/MultipartFormTests.cs
+index 4466e0ea084..fc4dafa1a28 100644
+--- a/src/SeedCsharpNamespaceConflict.Test/Core/RawClientTests/MultipartFormTests.cs
++++ b/src/Seed.CsharpNamespaceConflict.Test/Core/RawClientTests/MultipartFormTests.cs
+@@ -2,10 +2,10 @@ using global::System.Net.Http;
+ using global::System.Text;
+ using global::System.Text.Json.Serialization;
+ using NUnit.Framework;
+-using SeedCsharpNamespaceConflict.Core;
++using Seed.CsharpNamespaceConflict.Core;
+ using SystemTask = global::System.Threading.Tasks.Task;
+ 
+-namespace SeedCsharpNamespaceConflict.Test.Core.RawClientTests;
++namespace Seed.CsharpNamespaceConflict.Test.Core.RawClientTests;
+ 
+ [TestFixture]
+ [Parallelizable(ParallelScope.Self)]
+@@ -1056,9 +1056,9 @@ public class MultipartFormTests
+             ?? throw new global::System.Exception("Boundary not found");
+     }
+ 
+-    private static SeedCsharpNamespaceConflict.Core.MultipartFormRequest CreateMultipartFormRequest()
++    private static global::Seed.CsharpNamespaceConflict.Core.MultipartFormRequest CreateMultipartFormRequest()
+     {
+-        return new SeedCsharpNamespaceConflict.Core.MultipartFormRequest
++        return new global::Seed.CsharpNamespaceConflict.Core.MultipartFormRequest
+         {
+             BaseUrl = "https://localhost",
+             Method = HttpMethod.Post,
+diff --git a/src/SeedCsharpNamespaceConflict.Test/Core/RawClientTests/QueryParameterTests.cs b/src/Seed.CsharpNamespaceConflict.Test/Core/RawClientTests/QueryParameterTests.cs
+similarity index 96%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict.Test/Core/RawClientTests/QueryParameterTests.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict.Test/Core/RawClientTests/QueryParameterTests.cs
+index ac46832de07..d8b96b91699 100644
+--- a/src/SeedCsharpNamespaceConflict.Test/Core/RawClientTests/QueryParameterTests.cs
++++ b/src/Seed.CsharpNamespaceConflict.Test/Core/RawClientTests/QueryParameterTests.cs
+@@ -1,7 +1,7 @@
+ using NUnit.Framework;
+-using SeedCsharpNamespaceConflict.Core;
++using Seed.CsharpNamespaceConflict.Core;
+ 
+-namespace SeedCsharpNamespaceConflict.Test.Core.RawClientTests;
++namespace Seed.CsharpNamespaceConflict.Test.Core.RawClientTests;
+ 
+ [TestFixture]
+ [Parallelizable(ParallelScope.Self)]
+diff --git a/src/SeedCsharpNamespaceConflict.Test/Core/RawClientTests/RetriesTests.cs b/src/Seed.CsharpNamespaceConflict.Test/Core/RawClientTests/RetriesTests.cs
+similarity index 97%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict.Test/Core/RawClientTests/RetriesTests.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict.Test/Core/RawClientTests/RetriesTests.cs
+index ddcbf9d3f6e..2a53aaff5f3 100644
+--- a/src/SeedCsharpNamespaceConflict.Test/Core/RawClientTests/RetriesTests.cs
++++ b/src/Seed.CsharpNamespaceConflict.Test/Core/RawClientTests/RetriesTests.cs
+@@ -1,13 +1,13 @@
+ using global::System.Net.Http;
+ using global::System.Text.Json;
+ using NUnit.Framework;
+-using SeedCsharpNamespaceConflict.Core;
++using Seed.CsharpNamespaceConflict.Core;
+ using WireMock.Server;
+ using SystemTask = global::System.Threading.Tasks.Task;
+ using WireMockRequest = WireMock.RequestBuilders.Request;
+ using WireMockResponse = WireMock.ResponseBuilders.Response;
+ 
+-namespace SeedCsharpNamespaceConflict.Test.Core.RawClientTests;
++namespace Seed.CsharpNamespaceConflict.Test.Core.RawClientTests;
+ 
+ [TestFixture]
+ [Parallelizable(ParallelScope.Self)]
+@@ -146,7 +146,7 @@ public class RetriesTests
+             .WillSetStateTo("Server Error")
+             .RespondWith(WireMockResponse.Create().WithStatusCode(429).WithBody("Failure"));
+ 
+-        var request = new SeedCsharpNamespaceConflict.Core.MultipartFormRequest
++        var request = new global::Seed.CsharpNamespaceConflict.Core.MultipartFormRequest
+         {
+             BaseUrl = _baseUrl,
+             Method = HttpMethod.Post,
+@@ -187,7 +187,7 @@ public class RetriesTests
+             .WhenStateIs("Success")
+             .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
+ 
+-        var request = new SeedCsharpNamespaceConflict.Core.MultipartFormRequest
++        var request = new global::Seed.CsharpNamespaceConflict.Core.MultipartFormRequest
+         {
+             BaseUrl = _baseUrl,
+             Method = HttpMethod.Post,
+@@ -373,7 +373,7 @@ public class RetriesTests
+             .WhenStateIs("Success")
+             .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
+ 
+-        var request = new SeedCsharpNamespaceConflict.Core.MultipartFormRequest
++        var request = new global::Seed.CsharpNamespaceConflict.Core.MultipartFormRequest
+         {
+             BaseUrl = _baseUrl,
+             Method = HttpMethod.Post,
+diff --git a/src/SeedCsharpNamespaceConflict.Test/Core/WithRawResponseTests.cs b/src/Seed.CsharpNamespaceConflict.Test/Core/WithRawResponseTests.cs
+similarity index 98%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict.Test/Core/WithRawResponseTests.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict.Test/Core/WithRawResponseTests.cs
+index 49a1640686e..151dcad198e 100644
+--- a/src/SeedCsharpNamespaceConflict.Test/Core/WithRawResponseTests.cs
++++ b/src/Seed.CsharpNamespaceConflict.Test/Core/WithRawResponseTests.cs
+@@ -1,10 +1,10 @@
+ using global::System.Net;
+ using global::System.Net.Http.Headers;
+ using NUnit.Framework;
+-using SeedCsharpNamespaceConflict;
+-using SeedCsharpNamespaceConflict.Core;
++using Seed.CsharpNamespaceConflict;
++using Seed.CsharpNamespaceConflict.Core;
+ 
+-namespace SeedCsharpNamespaceConflict.Test.Core;
++namespace Seed.CsharpNamespaceConflict.Test.Core;
+ 
+ [TestFixture]
+ public class WithRawResponseTests
+diff --git a/src/SeedCsharpNamespaceConflict.Test/SeedCsharpNamespaceConflict.Test.Custom.props b/src/Seed.CsharpNamespaceConflict.Test/Seed.CsharpNamespaceConflict.Test.Custom.props
+similarity index 100%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict.Test/SeedCsharpNamespaceConflict.Test.Custom.props
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict.Test/Seed.CsharpNamespaceConflict.Test.Custom.props
+diff --git a/src/SeedCsharpNamespaceConflict.Test/SeedCsharpNamespaceConflict.Test.csproj b/src/Seed.CsharpNamespaceConflict.Test/Seed.CsharpNamespaceConflict.Test.csproj
+similarity index 85%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict.Test/SeedCsharpNamespaceConflict.Test.csproj
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict.Test/Seed.CsharpNamespaceConflict.Test.csproj
+index 6a40b3029d3..49cf04926e6 100644
+--- a/src/SeedCsharpNamespaceConflict.Test/SeedCsharpNamespaceConflict.Test.csproj
++++ b/src/Seed.CsharpNamespaceConflict.Test/Seed.CsharpNamespaceConflict.Test.csproj
+@@ -29,11 +29,11 @@
+   </ItemGroup>
+ 
+   <ItemGroup>
+-    <ProjectReference Include="..\SeedCsharpNamespaceConflict\SeedCsharpNamespaceConflict.csproj" />
++    <ProjectReference Include="..\Seed.CsharpNamespaceConflict\Seed.CsharpNamespaceConflict.csproj" />
+   </ItemGroup>
+ 
+   <Import
+-    Project="SeedCsharpNamespaceConflict.Test.Custom.props"
+-    Condition="Exists('SeedCsharpNamespaceConflict.Test.Custom.props')"
++    Project="Seed.CsharpNamespaceConflict.Test.Custom.props"
++    Condition="Exists('Seed.CsharpNamespaceConflict.Test.Custom.props')"
+   />
+ </Project>
+diff --git a/src/SeedCsharpNamespaceConflict.Test/TestClient.cs b/src/Seed.CsharpNamespaceConflict.Test/TestClient.cs
+similarity index 58%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict.Test/TestClient.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict.Test/TestClient.cs
+index 50fc00871a1..6be692d893c 100644
+--- a/src/SeedCsharpNamespaceConflict.Test/TestClient.cs
++++ b/src/Seed.CsharpNamespaceConflict.Test/TestClient.cs
+@@ -1,6 +1,6 @@
+ using NUnit.Framework;
+ 
+-namespace SeedCsharpNamespaceConflict.Test;
++namespace Seed.CsharpNamespaceConflict.Test;
+ 
+ [TestFixture]
+ public class TestClient;
+diff --git a/src/SeedCsharpNamespaceConflict.Test/Unit/MockServer/BaseMockServerTest.cs b/src/Seed.CsharpNamespaceConflict.Test/Unit/MockServer/BaseMockServerTest.cs
+similarity index 74%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict.Test/Unit/MockServer/BaseMockServerTest.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict.Test/Unit/MockServer/BaseMockServerTest.cs
+index 48f12a42bd3..64a5917f273 100644
+--- a/src/SeedCsharpNamespaceConflict.Test/Unit/MockServer/BaseMockServerTest.cs
++++ b/src/Seed.CsharpNamespaceConflict.Test/Unit/MockServer/BaseMockServerTest.cs
+@@ -1,16 +1,16 @@
++using global::Seed.CsharpNamespaceConflict;
+ using NUnit.Framework;
+-using SeedCsharpNamespaceConflict;
+ using WireMock.Logging;
+ using WireMock.Server;
+ using WireMock.Settings;
+ 
+-namespace SeedCsharpNamespaceConflict.Test.Unit.MockServer;
++namespace Seed.CsharpNamespaceConflict.Test.Unit.MockServer;
+ 
+ public class BaseMockServerTest
+ {
+     protected WireMockServer Server { get; set; } = null!;
+ 
+-    protected SeedCsharpNamespaceConflictClient Client { get; set; } = null!;
++    protected global::Seed.CsharpNamespaceConflict.Seed Client { get; set; } = null!;
+ 
+     protected RequestOptions RequestOptions { get; set; } = new();
+ 
+@@ -23,7 +23,7 @@ public class BaseMockServerTest
+         );
+ 
+         // Initialize the Client
+-        Client = new SeedCsharpNamespaceConflictClient(
++        Client = new global::Seed.CsharpNamespaceConflict.Seed(
+             clientOptions: new ClientOptions { BaseUrl = Server.Urls[0], MaxRetries = 0 }
+         );
+     }
+diff --git a/src/SeedCsharpNamespaceConflict.Test/Unit/MockServer/Tasktest/HelloTest.cs b/src/Seed.CsharpNamespaceConflict.Test/Unit/MockServer/Tasktest/HelloTest.cs
+similarity index 72%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict.Test/Unit/MockServer/Tasktest/HelloTest.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict.Test/Unit/MockServer/Tasktest/HelloTest.cs
+index 8987b08f8f0..a173e19f4c8 100644
+--- a/src/SeedCsharpNamespaceConflict.Test/Unit/MockServer/Tasktest/HelloTest.cs
++++ b/src/Seed.CsharpNamespaceConflict.Test/Unit/MockServer/Tasktest/HelloTest.cs
+@@ -1,13 +1,13 @@
++using global::Seed.CsharpNamespaceConflict.Test.Unit.MockServer;
+ using NUnit.Framework;
+-using SeedCsharpNamespaceConflict.Test.Unit.MockServer;
+ 
+-namespace SeedCsharpNamespaceConflict.Test.Unit.MockServer.Tasktest;
++namespace Seed.CsharpNamespaceConflict.Test.Unit.MockServer.Tasktest;
+ 
+ [TestFixture]
+ [Parallelizable(ParallelScope.Self)]
+ public class HelloTest : BaseMockServerTest
+ {
+-    [NUnit.Framework.Test]
++    [global::NUnit.Framework.Test]
+     public void MockServerTest()
+     {
+         Server
+diff --git a/src/SeedCsharpNamespaceConflict.Test/Utils/AdditionalPropertiesComparer.cs b/src/Seed.CsharpNamespaceConflict.Test/Utils/AdditionalPropertiesComparer.cs
+similarity index 98%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict.Test/Utils/AdditionalPropertiesComparer.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict.Test/Utils/AdditionalPropertiesComparer.cs
+index 8d01db8e146..cd63b71769c 100644
+--- a/src/SeedCsharpNamespaceConflict.Test/Utils/AdditionalPropertiesComparer.cs
++++ b/src/Seed.CsharpNamespaceConflict.Test/Utils/AdditionalPropertiesComparer.cs
+@@ -1,7 +1,7 @@
++using global::Seed.CsharpNamespaceConflict;
++using global::Seed.CsharpNamespaceConflict.Core;
+ using global::System.Text.Json;
+ using NUnit.Framework.Constraints;
+-using SeedCsharpNamespaceConflict;
+-using SeedCsharpNamespaceConflict.Core;
+ 
+ namespace NUnit.Framework;
+ 
+diff --git a/src/SeedCsharpNamespaceConflict.Test/Utils/JsonAssert.cs b/src/Seed.CsharpNamespaceConflict.Test/Utils/JsonAssert.cs
+similarity index 91%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict.Test/Utils/JsonAssert.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict.Test/Utils/JsonAssert.cs
+index 69f537f228e..a712b58c6b0 100644
+--- a/src/SeedCsharpNamespaceConflict.Test/Utils/JsonAssert.cs
++++ b/src/Seed.CsharpNamespaceConflict.Test/Utils/JsonAssert.cs
+@@ -1,8 +1,8 @@
++using global::Seed.CsharpNamespaceConflict.Core;
+ using global::System.Text.Json;
+ using NUnit.Framework;
+-using SeedCsharpNamespaceConflict.Core;
+ 
+-namespace SeedCsharpNamespaceConflict.Test.Utils;
++namespace Seed.CsharpNamespaceConflict.Test.Utils;
+ 
+ internal static class JsonAssert
+ {
+diff --git a/src/SeedCsharpNamespaceConflict.Test/Utils/JsonElementComparer.cs b/src/Seed.CsharpNamespaceConflict.Test/Utils/JsonElementComparer.cs
+similarity index 100%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict.Test/Utils/JsonElementComparer.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict.Test/Utils/JsonElementComparer.cs
+diff --git a/src/SeedCsharpNamespaceConflict.Test/Utils/NUnitExtensions.cs b/src/Seed.CsharpNamespaceConflict.Test/Utils/NUnitExtensions.cs
+similarity index 100%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict.Test/Utils/NUnitExtensions.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict.Test/Utils/NUnitExtensions.cs
+diff --git a/src/SeedCsharpNamespaceConflict.Test/Utils/OneOfComparer.cs b/src/Seed.CsharpNamespaceConflict.Test/Utils/OneOfComparer.cs
+similarity index 100%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict.Test/Utils/OneOfComparer.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict.Test/Utils/OneOfComparer.cs
+diff --git a/src/SeedCsharpNamespaceConflict.Test/Utils/OptionalComparer.cs b/src/Seed.CsharpNamespaceConflict.Test/Utils/OptionalComparer.cs
+similarity index 98%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict.Test/Utils/OptionalComparer.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict.Test/Utils/OptionalComparer.cs
+index 94dd200a7dc..6c78567c64a 100644
+--- a/src/SeedCsharpNamespaceConflict.Test/Utils/OptionalComparer.cs
++++ b/src/Seed.CsharpNamespaceConflict.Test/Utils/OptionalComparer.cs
+@@ -1,6 +1,6 @@
++using global::Seed.CsharpNamespaceConflict.Core;
+ using NUnit.Framework.Constraints;
+ using OneOf;
+-using SeedCsharpNamespaceConflict.Core;
+ 
+ namespace NUnit.Framework;
+ 
+diff --git a/src/SeedCsharpNamespaceConflict.Test/Utils/ReadOnlyMemoryComparer.cs b/src/Seed.CsharpNamespaceConflict.Test/Utils/ReadOnlyMemoryComparer.cs
+similarity index 100%
+rename from /Users/Patrick/fern/fern2/seed/csharp-sdk/csharp-namespace-conflict/baseline/src/SeedCsharpNamespaceConflict.Test/Utils/ReadOnlyMemoryComparer.cs
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71765-GRlu8DfldyE3/src/Seed.CsharpNamespaceConflict.Test/Utils/ReadOnlyMemoryComparer.cs
+diff --git a/src/SeedCsharpNamespaceConflict/Core/Public/SeedCsharpNamespaceConflictException.cs b/src/SeedCsharpNamespaceConflict/Core/Public/SeedCsharpNamespaceConflictException.cs
+deleted file mode 100644
+index 89dbc55c2ad..00000000000
+--- a/src/SeedCsharpNamespaceConflict/Core/Public/SeedCsharpNamespaceConflictException.cs
++++ /dev/null
+@@ -1,7 +0,0 @@
+-namespace SeedCsharpNamespaceConflict;
+-
+-/// <summary>
+-/// Base exception class for all exceptions thrown by the SDK.
+-/// </summary>
+-public class SeedCsharpNamespaceConflictException(string message, Exception? innerException = null)
+-    : Exception(message, innerException);
+diff --git a/src/SeedCsharpNamespaceConflict/ISeedCsharpNamespaceConflictClient.cs b/src/SeedCsharpNamespaceConflict/ISeedCsharpNamespaceConflictClient.cs
+deleted file mode 100644
+index 0f18ab0a73c..00000000000
+--- a/src/SeedCsharpNamespaceConflict/ISeedCsharpNamespaceConflictClient.cs
++++ /dev/null
+@@ -1,6 +0,0 @@
+-namespace SeedCsharpNamespaceConflict;
+-
+-public partial interface ISeedCsharpNamespaceConflictClient
+-{
+-    public ITasktestClient Tasktest { get; }
+-}

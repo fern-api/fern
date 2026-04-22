@@ -1,0 +1,709 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index f1753c47972..30f0c0be0a4 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-java-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "package-layout": "flat"
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "manual",
+diff --git a/.gradle/8.14.3/checksums/checksums.lock b/.gradle/8.14.3/checksums/checksums.lock
+index 71966d6940e7c2cf83bf9b1a26ecade3c06ac38e..90362e61a4860f07923ea87987baee67eeef4b83 100644
+GIT binary patch
+literal 17
+ScmZS1GH35hT>qns0SW*t4+F;l
+
+literal 17
+TcmZR+ZKDuz;p2sL1}FdkH;M#{
+
+diff --git a/.gradle/8.14.3/executionHistory/executionHistory.bin b/.gradle/8.14.3/executionHistory/executionHistory.bin
+index f77b82e1c1ca65d5481c632b5b1ae34a0c4e13aa..fe795788db07f4ef138b10d488ca1bc0c2447e94 100644
+GIT binary patch
+literal 46906
+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
+
+delta 7286
+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
+
+diff --git a/.gradle/8.14.3/executionHistory/executionHistory.lock b/.gradle/8.14.3/executionHistory/executionHistory.lock
+index 1b13ac095bec7690c16e1be71de6491363a9d4ff..0fac7a8703b90c61c0cccc5c25486a89c4c9c2b4 100644
+GIT binary patch
+literal 17
+UcmZSnyIRO9^L3Rd0|amY05X*W;{X5v
+
+literal 17
+ScmZQJ&oA)4yEK;p3OE2M;R9R%
+
+diff --git a/.gradle/8.14.3/fileHashes/fileHashes.bin b/.gradle/8.14.3/fileHashes/fileHashes.bin
+index 63a134b45c9db493b010feca4c987e862c8c8dc3..a4cb8c04718b4bc8ba7e29e024ef4653eb3c6f01 100644
+GIT binary patch
+literal 25347
+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
+JgA87M^&d$Jtf&A0
+
+literal 25347
+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
+R>0B<+UT#hqhyJ^be*@Dot@Z!_
+
+diff --git a/.gradle/8.14.3/fileHashes/fileHashes.lock b/.gradle/8.14.3/fileHashes/fileHashes.lock
+index fbadaa3b5b8842323893bf515c662287c2f7cc79..281e7c2b0f8f29d383b3b93e68d6e240159524a3 100644
+GIT binary patch
+literal 17
+UcmZQp$?|^oz320H1_<Z{06f$My#N3J
+
+literal 17
+UcmZR+IdRGX!J9MRF+e~s06{MWzyJUM
+
+diff --git a/.gradle/buildOutputCleanup/buildOutputCleanup.lock b/.gradle/buildOutputCleanup/buildOutputCleanup.lock
+index 6e0ae962e6716bfdd8c9a2ae1c93e403065c7214..b3e68c88dc47b54f73644c7aa70e533512a26b45 100644
+GIT binary patch
+literal 17
+UcmZRUUnO|-Q5?4b0|ZC{04CA{7XSbN
+
+literal 17
+UcmZQ>v*McAe)?em0|ZC`04}rx`~Uy|
+
+diff --git a/.gradle/buildOutputCleanup/cache.properties b/.gradle/buildOutputCleanup/cache.properties
+index 0e6d3ab0d4e..19f886ec535 100644
+--- a/.gradle/buildOutputCleanup/cache.properties
++++ b/.gradle/buildOutputCleanup/cache.properties
+@@ -1,2 +1,2 @@
+-#Wed Apr 22 20:48:42 UTC 2026
++#Wed Apr 22 20:58:14 UTC 2026
+ gradle.version=8.14.3
+diff --git a/.gradle/buildOutputCleanup/outputFiles.bin b/.gradle/buildOutputCleanup/outputFiles.bin
+index df5413267194989d87138de503072e8732bf1d65..91e105c82d3e72f7ebc77af41ec94b4927b5d6c6 100644
+GIT binary patch
+delta 329
+zcmdlznQ`T0#tkMCf+8Koyj@Z9dQl8u;F&nNR6@aFw&3g9lY712Km{fLL&1WW;!hVY
+z&%OZ>_xK7IU&F&Tea4dgQ1OeCdnFX=*QiCZai}wYg&NWdQ+!CxO<{(%wJcQeW0?4J
+z2Z8>+f(LO>_5LvN50=Yzm0tEf1r@i2iGNLbs>kQauox<?4HIX|C|2M0?ek<2NkIY0
+z9ToE*br>l?)l8q9Dybk~pIaI)`oBpTDp)*us-(r_r;-u^d5LyyGo-dZg-Wnb{wk@!
+d12dL^f$`%;#UJ7u4K&0yJ9-2%PWJN<2LQ65jk*8;
+
+delta 345
+zcmZ2EnQ`}I#tkMCj-nk!Qx@Ob)8fVe1|E<9L&3B{ZsUxC+;0$ZPf3{g^c*&x>D&J{
+zL&dcxyGkfbUMnFHu}j#~sdwg|dr%2>n1+jn;n@>*&dG<0Plt&=yRGD~z^R%MDsBrC
+z|IjMXy-;fFFQ|C&WK&562j<EZe7_c$Uxf&Ie1$1iju#5&wo<i)D)xtot4^2`wX>nW
+z04lz6a;l_)fUa9%hMm=fB&Z=5Cr_2M5D44YlkJy&5^Az%>*S-73X}gzN~lx>iz-xQ
+jW}Jo^kq9#yMl&!lac)%nA->T-Ky0(4M<C<m22V`@axj&S
+
+diff --git a/.gradle/file-system.probe b/.gradle/file-system.probe
+index 329f07383b5aa9469f9b14cd3742c6bbef54051f..1e3db5f41f714994ff0f6476faec055410fa7c28 100644
+GIT binary patch
+literal 8
+PcmZQzV4S<{&&2Hj3d94M
+
+literal 8
+PcmZQzV4S<{OY=Vf3fBY5
+
+diff --git a/README.md b/README.md
+index 11d141bf506..757ec2bcede 100644
+--- a/README.md
++++ b/README.md
+@@ -56,7 +56,7 @@ Instantiate and use the client with the following:
+ package com.example.usage;
+ 
+ import com.seed.api.SeedApiClient;
+-import com.seed.api.resources.imdb.types.CreateMovieRequest;
++import com.seed.api.types.CreateMovieRequest;
+ 
+ public class Example {
+     public static void main(String[] args) {
+diff --git a/build/spotless/spotlessJava/src/main/java/com/snippets/Example0.java b/build/spotless/spotlessJava/src/main/java/com/snippets/Example0.java
+index 9615b4c0288..916caa69cae 100644
+--- a/build/spotless/spotlessJava/src/main/java/com/snippets/Example0.java
++++ b/build/spotless/spotlessJava/src/main/java/com/snippets/Example0.java
+@@ -1,7 +1,7 @@
+ package com.snippets;
+ 
+ import com.seed.api.SeedApiClient;
+-import com.seed.api.resources.imdb.types.CreateMovieRequest;
++import com.seed.api.types.CreateMovieRequest;
+ 
+ public class Example0 {
+     public static void main(String[] args) {
+diff --git a/snippet.json b/snippet.json
+index 81741c62714..3141a20e003 100644
+--- a/snippet.json
++++ b/snippet.json
+@@ -9,8 +9,8 @@
+             },
+             "snippet": {
+                 "type": "java",
+-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.imdb.types.CreateMovieRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.imdb().createMovie(\n            CreateMovieRequest\n                .builder()\n                .title(\"title\")\n                .rating(1.1)\n                .build()\n        );\n    }\n}\n",
+-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.imdb.types.CreateMovieRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.imdb().createMovie(\n            CreateMovieRequest\n                .builder()\n                .title(\"title\")\n                .rating(1.1)\n                .build()\n        );\n    }\n}\n"
++                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.CreateMovieRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.imdb().createMovie(\n            CreateMovieRequest\n                .builder()\n                .title(\"title\")\n                .rating(1.1)\n                .build()\n        );\n    }\n}\n",
++                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.CreateMovieRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.imdb().createMovie(\n            CreateMovieRequest\n                .builder()\n                .title(\"title\")\n                .rating(1.1)\n                .build()\n        );\n    }\n}\n"
+             }
+         },
+         {
+diff --git a/src/main/java/com/seed/api/resources/imdb/AsyncImdbClient.java b/src/main/java/com/seed/api/AsyncImdbClient.java
+similarity index 91%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/imdb/baseline/src/main/java/com/seed/api/resources/imdb/AsyncImdbClient.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-dVVdnXoC4gIY/src/main/java/com/seed/api/AsyncImdbClient.java
+index b712156967d..614f910e71b 100644
+--- a/src/main/java/com/seed/api/resources/imdb/AsyncImdbClient.java
++++ b/src/main/java/com/seed/api/AsyncImdbClient.java
+@@ -1,12 +1,12 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api.resources.imdb;
++package com.seed.api;
+ 
+ import com.seed.api.core.ClientOptions;
+ import com.seed.api.core.RequestOptions;
+-import com.seed.api.resources.imdb.types.CreateMovieRequest;
+-import com.seed.api.resources.imdb.types.Movie;
++import com.seed.api.types.CreateMovieRequest;
++import com.seed.api.types.Movie;
+ import java.util.concurrent.CompletableFuture;
+ 
+ public class AsyncImdbClient {
+diff --git a/src/main/java/com/seed/api/resources/imdb/AsyncRawImdbClient.java b/src/main/java/com/seed/api/AsyncRawImdbClient.java
+similarity index 97%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/imdb/baseline/src/main/java/com/seed/api/resources/imdb/AsyncRawImdbClient.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-dVVdnXoC4gIY/src/main/java/com/seed/api/AsyncRawImdbClient.java
+index d560178b905..1e9bae1dcab 100644
+--- a/src/main/java/com/seed/api/resources/imdb/AsyncRawImdbClient.java
++++ b/src/main/java/com/seed/api/AsyncRawImdbClient.java
+@@ -1,7 +1,7 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api.resources.imdb;
++package com.seed.api;
+ 
+ import com.fasterxml.jackson.core.JsonProcessingException;
+ import com.seed.api.core.ClientOptions;
+@@ -11,9 +11,9 @@ import com.seed.api.core.RequestOptions;
+ import com.seed.api.core.SeedApiApiException;
+ import com.seed.api.core.SeedApiException;
+ import com.seed.api.core.SeedApiHttpResponse;
+-import com.seed.api.resources.imdb.errors.MovieDoesNotExistError;
+-import com.seed.api.resources.imdb.types.CreateMovieRequest;
+-import com.seed.api.resources.imdb.types.Movie;
++import com.seed.api.errors.MovieDoesNotExistError;
++import com.seed.api.types.CreateMovieRequest;
++import com.seed.api.types.Movie;
+ import java.io.IOException;
+ import java.util.concurrent.CompletableFuture;
+ import okhttp3.Call;
+diff --git a/src/main/java/com/seed/api/AsyncSeedApiClient.java b/src/main/java/com/seed/api/AsyncSeedApiClient.java
+index 0a72aa63d8a..057e6b37f0a 100644
+--- a/src/main/java/com/seed/api/AsyncSeedApiClient.java
++++ b/src/main/java/com/seed/api/AsyncSeedApiClient.java
+@@ -5,7 +5,6 @@ package com.seed.api;
+ 
+ import com.seed.api.core.ClientOptions;
+ import com.seed.api.core.Suppliers;
+-import com.seed.api.resources.imdb.AsyncImdbClient;
+ import java.util.function.Supplier;
+ 
+ public class AsyncSeedApiClient {
+diff --git a/src/main/java/com/seed/api/resources/imdb/ImdbClient.java b/src/main/java/com/seed/api/ImdbClient.java
+similarity index 90%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/imdb/baseline/src/main/java/com/seed/api/resources/imdb/ImdbClient.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-dVVdnXoC4gIY/src/main/java/com/seed/api/ImdbClient.java
+index eae908a6e7d..bb4460b0ed4 100644
+--- a/src/main/java/com/seed/api/resources/imdb/ImdbClient.java
++++ b/src/main/java/com/seed/api/ImdbClient.java
+@@ -1,12 +1,12 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api.resources.imdb;
++package com.seed.api;
+ 
+ import com.seed.api.core.ClientOptions;
+ import com.seed.api.core.RequestOptions;
+-import com.seed.api.resources.imdb.types.CreateMovieRequest;
+-import com.seed.api.resources.imdb.types.Movie;
++import com.seed.api.types.CreateMovieRequest;
++import com.seed.api.types.Movie;
+ 
+ public class ImdbClient {
+     protected final ClientOptions clientOptions;
+diff --git a/src/main/java/com/seed/api/resources/imdb/RawImdbClient.java b/src/main/java/com/seed/api/RawImdbClient.java
+similarity index 96%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/imdb/baseline/src/main/java/com/seed/api/resources/imdb/RawImdbClient.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-dVVdnXoC4gIY/src/main/java/com/seed/api/RawImdbClient.java
+index e3ef2662925..d493cfa8b78 100644
+--- a/src/main/java/com/seed/api/resources/imdb/RawImdbClient.java
++++ b/src/main/java/com/seed/api/RawImdbClient.java
+@@ -1,7 +1,7 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api.resources.imdb;
++package com.seed.api;
+ 
+ import com.fasterxml.jackson.core.JsonProcessingException;
+ import com.seed.api.core.ClientOptions;
+@@ -11,9 +11,9 @@ import com.seed.api.core.RequestOptions;
+ import com.seed.api.core.SeedApiApiException;
+ import com.seed.api.core.SeedApiException;
+ import com.seed.api.core.SeedApiHttpResponse;
+-import com.seed.api.resources.imdb.errors.MovieDoesNotExistError;
+-import com.seed.api.resources.imdb.types.CreateMovieRequest;
+-import com.seed.api.resources.imdb.types.Movie;
++import com.seed.api.errors.MovieDoesNotExistError;
++import com.seed.api.types.CreateMovieRequest;
++import com.seed.api.types.Movie;
+ import java.io.IOException;
+ import okhttp3.Headers;
+ import okhttp3.HttpUrl;
+diff --git a/src/main/java/com/seed/api/SeedApiClient.java b/src/main/java/com/seed/api/SeedApiClient.java
+index 2be7ffd319a..83e187f99a3 100644
+--- a/src/main/java/com/seed/api/SeedApiClient.java
++++ b/src/main/java/com/seed/api/SeedApiClient.java
+@@ -5,7 +5,6 @@ package com.seed.api;
+ 
+ import com.seed.api.core.ClientOptions;
+ import com.seed.api.core.Suppliers;
+-import com.seed.api.resources.imdb.ImdbClient;
+ import java.util.function.Supplier;
+ 
+ public class SeedApiClient {
+diff --git a/src/main/java/com/seed/api/resources/imdb/errors/MovieDoesNotExistError.java b/src/main/java/com/seed/api/errors/MovieDoesNotExistError.java
+similarity index 94%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/imdb/baseline/src/main/java/com/seed/api/resources/imdb/errors/MovieDoesNotExistError.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-dVVdnXoC4gIY/src/main/java/com/seed/api/errors/MovieDoesNotExistError.java
+index c1b24e74170..d7f82a34c2d 100644
+--- a/src/main/java/com/seed/api/resources/imdb/errors/MovieDoesNotExistError.java
++++ b/src/main/java/com/seed/api/errors/MovieDoesNotExistError.java
+@@ -1,7 +1,7 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api.resources.imdb.errors;
++package com.seed.api.errors;
+ 
+ import com.seed.api.core.SeedApiApiException;
+ import okhttp3.Response;
+diff --git a/src/main/java/com/seed/api/resources/imdb/types/CreateMovieRequest.java b/src/main/java/com/seed/api/types/CreateMovieRequest.java
+similarity index 98%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/imdb/baseline/src/main/java/com/seed/api/resources/imdb/types/CreateMovieRequest.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-dVVdnXoC4gIY/src/main/java/com/seed/api/types/CreateMovieRequest.java
+index b03e31c40ff..318a74129f4 100644
+--- a/src/main/java/com/seed/api/resources/imdb/types/CreateMovieRequest.java
++++ b/src/main/java/com/seed/api/types/CreateMovieRequest.java
+@@ -1,7 +1,7 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api.resources.imdb.types;
++package com.seed.api.types;
+ 
+ import com.fasterxml.jackson.annotation.JsonAnyGetter;
+ import com.fasterxml.jackson.annotation.JsonAnySetter;
+diff --git a/src/main/java/com/seed/api/resources/imdb/types/Movie.java b/src/main/java/com/seed/api/types/Movie.java
+similarity index 99%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/imdb/baseline/src/main/java/com/seed/api/resources/imdb/types/Movie.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-dVVdnXoC4gIY/src/main/java/com/seed/api/types/Movie.java
+index b7e053cd399..8a767343b11 100644
+--- a/src/main/java/com/seed/api/resources/imdb/types/Movie.java
++++ b/src/main/java/com/seed/api/types/Movie.java
+@@ -1,7 +1,7 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api.resources.imdb.types;
++package com.seed.api.types;
+ 
+ import com.fasterxml.jackson.annotation.JsonAnyGetter;
+ import com.fasterxml.jackson.annotation.JsonAnySetter;
+diff --git a/src/main/java/com/snippets/Example0.java b/src/main/java/com/snippets/Example0.java
+index 9615b4c0288..916caa69cae 100644
+--- a/src/main/java/com/snippets/Example0.java
++++ b/src/main/java/com/snippets/Example0.java
+@@ -1,7 +1,7 @@
+ package com.snippets;
+ 
+ import com.seed.api.SeedApiClient;
+-import com.seed.api.resources.imdb.types.CreateMovieRequest;
++import com.seed.api.types.CreateMovieRequest;
+ 
+ public class Example0 {
+     public static void main(String[] args) {

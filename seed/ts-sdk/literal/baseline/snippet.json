@@ -1,0 +1,60 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/headers",
+                "method": "POST",
+                "identifier_override": "endpoint_headers.send"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedLiteralClient } from \"@fern/literal\";\n\nconst client = new SeedLiteralClient({ environment: \"YOUR_BASE_URL\" });\nawait client.headers.send({\n    query: \"What is the weather today\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/inlined",
+                "method": "POST",
+                "identifier_override": "endpoint_inlined.send"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedLiteralClient } from \"@fern/literal\";\n\nconst client = new SeedLiteralClient({ environment: \"YOUR_BASE_URL\" });\nawait client.inlined.send({\n    temperature: 10.1,\n    context: \"You're super wise\",\n    maybeContext: \"You're super wise\",\n    objectWithLiteral: {\n        nestedLiteral: {\n            myLiteral: \"How super cool\"\n        }\n    },\n    query: \"What is the weather today\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/path/{id}",
+                "method": "POST",
+                "identifier_override": "endpoint_path.send"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedLiteralClient } from \"@fern/literal\";\n\nconst client = new SeedLiteralClient({ environment: \"YOUR_BASE_URL\" });\nawait client.path.send(\"123\");\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/query",
+                "method": "POST",
+                "identifier_override": "endpoint_query.send"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedLiteralClient } from \"@fern/literal\";\n\nconst client = new SeedLiteralClient({ environment: \"YOUR_BASE_URL\" });\nawait client.query.send({\n    prompt: \"You are a helpful assistant\",\n    optional_prompt: \"You are a helpful assistant\",\n    alias_prompt: \"You are a helpful assistant\",\n    alias_optional_prompt: \"You are a helpful assistant\",\n    stream: false,\n    optional_stream: false,\n    alias_stream: false,\n    alias_optional_stream: false,\n    query: \"What is the weather today\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/reference",
+                "method": "POST",
+                "identifier_override": "endpoint_reference.send"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedLiteralClient } from \"@fern/literal\";\n\nconst client = new SeedLiteralClient({ environment: \"YOUR_BASE_URL\" });\nawait client.reference.send({\n    prompt: \"You are a helpful assistant\",\n    stream: false,\n    context: \"You're super wise\",\n    query: \"What is the weather today\",\n    containerObject: {\n        nestedObjects: [{\n                literal1: \"literal1\",\n                literal2: \"literal2\",\n                strProp: \"strProp\"\n            }]\n    }\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}

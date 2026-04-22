@@ -1,0 +1,16 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_retries.getUsers"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedNoRetriesClient } from \"@fern/no-retries\";\n\nconst client = new SeedNoRetriesClient({ environment: \"YOUR_BASE_URL\" });\nawait client.retries.getUsers();\n"
+            }
+        }
+    ],
+    "types": {}
+}

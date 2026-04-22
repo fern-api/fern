@@ -1,0 +1,3 @@
+rootProject.name = 'plain-text'
+
+include 'sample-app'

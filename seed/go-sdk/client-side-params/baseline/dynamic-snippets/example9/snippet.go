@@ -1,0 +1,30 @@
+package example
+
+import (
+    context "context"
+
+    fern "github.com/client-side-params/fern"
+    client "github.com/client-side-params/fern/client"
+    option "github.com/client-side-params/fern/option"
+)
+
+func do() {
+    client := client.NewClient(
+        option.WithBaseURL(
+            "https://api.fern.com",
+        ),
+        option.WithToken(
+            "<token>",
+        ),
+    )
+    request := &fern.GetConnectionRequest{
+        Fields: fern.String(
+            "fields",
+        ),
+    }
+    client.Service.GetConnection(
+        context.TODO(),
+        "connectionId",
+        request,
+    )
+}

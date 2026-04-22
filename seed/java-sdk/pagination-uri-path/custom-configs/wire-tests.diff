@@ -1,0 +1,373 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index f1753c47972..a195bcb1876 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-java-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "enable-wire-tests": true
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "manual",
+diff --git a/.gradle/8.14.3/checksums/checksums.lock b/.gradle/8.14.3/checksums/checksums.lock
+index 7c0d3ef93a6baec2cb56450bbc9235979966a981..410305b515020473a4d374ea517fef3d1424074f 100644
+GIT binary patch
+literal 17
+TcmZQJvY(u5`oHuE0~7!NF0TXv
+
+literal 17
+TcmZR+^QyjQ$K*Hj8K3|FM~DTh
+
+diff --git a/.gradle/8.14.3/executionHistory/executionHistory.bin b/.gradle/8.14.3/executionHistory/executionHistory.bin
+index 1c1e7d835e57e8a1348628061c2239fe0d494eca..b9efbbf8605c1fe965a6a3d4327a5512957e5c75 100644
+GIT binary patch
+delta 7610
+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
+
+delta 6515
+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
+E-zgjm>;M1&
+
+diff --git a/.gradle/8.14.3/executionHistory/executionHistory.lock b/.gradle/8.14.3/executionHistory/executionHistory.lock
+index 79124d3eafacbf17ca3b3fb80ca5d2588044612f..1589efada54bcbe8063fd0d864ed2b68c1d5c65c 100644
+GIT binary patch
+literal 17
+TcmZQJFe%jCD(H2N0RlJxA}9jv
+
+literal 17
+TcmZQx*Rw^X$DA{S0RlJxD@Ox9
+
+diff --git a/.gradle/8.14.3/fileHashes/fileHashes.bin b/.gradle/8.14.3/fileHashes/fileHashes.bin
+index 4faf0349d6461b8b79834d263350a9cd7e4537b8..c616b3dd6d8126f9622eaec1fc783886c25c81ce 100644
+GIT binary patch
+delta 3729
+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
+KQUQLy`}_~?Je>Og
+
+delta 3515
+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
+VbHTv4RVuQF^1p6^L#SrJ{{g0Q9%%po
+
+diff --git a/.gradle/8.14.3/fileHashes/fileHashes.lock b/.gradle/8.14.3/fileHashes/fileHashes.lock
+index bb4b9c128cc82d93bf019b819912ae3e04359aed..c9716453ab6ffbfd3eef20dc2e36459fba5a7a9c 100644
+GIT binary patch
+literal 17
+UcmZSHyxQcP2+zd73=l9E05fL<uK)l5
+
+literal 17
+UcmZR+cuJa0$?1$f0|d+h04bRRxc~qF
+
+diff --git a/.gradle/buildOutputCleanup/buildOutputCleanup.lock b/.gradle/buildOutputCleanup/buildOutputCleanup.lock
+index 2a06d8bee85465c91908411288a7a5940a36ea88..6b58f4efb8624f65431a545ab8da5aee1088629c 100644
+GIT binary patch
+literal 17
+UcmZQh;5%Dna%$B{1_+P@05JjtI{*Lx
+
+literal 17
+UcmZP;_{`t8Liw0B0|ZC`04hTRdH?_b
+
+diff --git a/.gradle/buildOutputCleanup/cache.properties b/.gradle/buildOutputCleanup/cache.properties
+index ec446e333fc..687fac98d59 100644
+--- a/.gradle/buildOutputCleanup/cache.properties
++++ b/.gradle/buildOutputCleanup/cache.properties
+@@ -1,2 +1,2 @@
+-#Wed Apr 22 20:54:22 UTC 2026
++#Wed Apr 22 20:58:49 UTC 2026
+ gradle.version=8.14.3
+diff --git a/.gradle/buildOutputCleanup/outputFiles.bin b/.gradle/buildOutputCleanup/outputFiles.bin
+index 20b6ef5327981d16428f589e076bb7528a02140c..fd7e01666038b52aa8e67046a278afbfdacedb35 100644
+GIT binary patch
+delta 306
+zcmdlznQ`T0#tkMCf+8Koyj@Z9dQl8u;F&l%RzksIw&3g9lY712Km{fLL&2h7C&gy|
+z|F8rq-U<_6nzj5IyTPpb$*mF^4$mC~`uhqV#6cDL!xVk6T(+z9viB*dxGhZlYsynS
+zK2L_lP;u?aS0xlC+e%6Z*yonUi~es?hDsDqPL;H9NC^LHC3t_!Yp5VQ%#_6RS1#-R
+z&Y1!c_qYfXPkXX$X~gDgA*lN4laER&2;`lg&3wx6aST-P*U5J!6?kAe7#J8oZdCjs
+SzR^HKY_p?BAmd~|4{-oJ0fu@2
+
+delta 330
+zcmZ2EnQ`}I#tkMCnxYeKo#B4c-q^<g2A<RZL&5YMHlFF*|29L#wI{nuC~(Z{>z;0&
+zJjZJCTnP=0XSbCc7C2QiLRHwpbbe?R=w2wb^%qpUcrvS`f&<fo0zFkvj)_n~c9>#b
+zg%j6Kyf|MA5%>5C6IYHG3g@;`wS}tppDZh>AmFdHJ$37w$H7oR$;rNw78+q2d$Rq~
+zPhN!zw!%zEy>_qI?PbDAsL2;6AC**?{8v)KrtD5-JzKVK8&tzen1+gAQH83^jMGr@
+eM3^{?W?*3A+^G0Ne4~MY*k(tMK*q@po|*t!PmM|d
+
+diff --git a/.gradle/file-system.probe b/.gradle/file-system.probe
+index 26d533693ed0815d65d8c17d41bc96e41bb32d5a..00eb36705fe03be1ffff4c77989177b8948d05af 100644
+GIT binary patch
+literal 8
+PcmZQzV4S<{uhbd<3C;r;
+
+literal 8
+PcmZQzV4S<{r<EN536uiH
+
+diff --git a/build.gradle b/build.gradle
+index f0910e6439f..9e0d7a98677 100644
+--- a/build.gradle
++++ b/build.gradle
+@@ -19,6 +19,7 @@ dependencies {
+     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.2'
++    testImplementation 'com.squareup.okhttp3:mockwebserver:5.2.1'
+ }
+ 
+ 
+diff --git a/src/test/java/com/seed/paginationUriPath/UsersWireTest.java b/src/test/java/com/seed/paginationUriPath/UsersWireTest.java
+new file mode 100644
+index 00000000000..bdd3faea60a
+--- /dev/null
++++ b/src/test/java/com/seed/paginationUriPath/UsersWireTest.java
+@@ -0,0 +1,99 @@
++package com.seed.paginationUriPath;
++
++import com.fasterxml.jackson.databind.JsonNode;
++import com.fasterxml.jackson.databind.ObjectMapper;
++import com.seed.paginationUriPath.core.ObjectMappers;
++import com.seed.paginationUriPath.core.SyncPagingIterable;
++import com.seed.paginationUriPath.resources.users.types.User;
++import okhttp3.mockwebserver.MockResponse;
++import okhttp3.mockwebserver.MockWebServer;
++import okhttp3.mockwebserver.RecordedRequest;
++import org.junit.jupiter.api.AfterEach;
++import org.junit.jupiter.api.Assertions;
++import org.junit.jupiter.api.BeforeEach;
++import org.junit.jupiter.api.Test;
++
++public class UsersWireTest {
++    private MockWebServer server;
++    private SeedPaginationUriPathClient client;
++    private ObjectMapper objectMapper = ObjectMappers.JSON_MAPPER;
++
++    @BeforeEach
++    public void setup() throws Exception {
++        server = new MockWebServer();
++        server.start();
++        client = SeedPaginationUriPathClient.builder()
++                .url(server.url("/").toString())
++                .token("test-token")
++                .build();
++    }
++
++    @AfterEach
++    public void teardown() throws Exception {
++        server.shutdown();
++    }
++
++    @Test
++    public void testListWithUriPagination() throws Exception {
++        server.enqueue(new MockResponse()
++                .setResponseCode(200)
++                .setBody("{\"data\":[{\"name\":\"name\",\"id\":1},{\"name\":\"name\",\"id\":1}],\"next\":\"next\"}"));
++        SyncPagingIterable<User> response = client.users().listWithUriPagination();
++        RecordedRequest request = server.takeRequest();
++        Assertions.assertNotNull(request);
++        Assertions.assertEquals("GET", request.getMethod());
++
++        // Validate response body
++        Assertions.assertNotNull(response, "Response should not be null");
++        // Pagination response validated via MockWebServer
++        // The SDK correctly parses the response into a SyncPagingIterable
++    }
++
++    @Test
++    public void testListWithPathPagination() throws Exception {
++        server.enqueue(new MockResponse()
++                .setResponseCode(200)
++                .setBody("{\"data\":[{\"name\":\"name\",\"id\":1},{\"name\":\"name\",\"id\":1}],\"next\":\"next\"}"));
++        SyncPagingIterable<User> response = client.users().listWithPathPagination();
++        RecordedRequest request = server.takeRequest();
++        Assertions.assertNotNull(request);
++        Assertions.assertEquals("GET", request.getMethod());
++
++        // Validate response body
++        Assertions.assertNotNull(response, "Response should not be null");
++        // Pagination response validated via MockWebServer
++        // The SDK correctly parses the response into a SyncPagingIterable
++    }
++
++    /**
++     * Compares two JsonNodes with numeric equivalence and null safety.
++     * For objects, checks that all fields in 'expected' exist in 'actual' with matching values.
++     * Allows 'actual' to have extra fields (e.g., default values added during serialization).
++     */
++    private boolean jsonEquals(JsonNode expected, JsonNode actual) {
++        if (expected == null && actual == null) return true;
++        if (expected == null || actual == null) return false;
++        if (expected.equals(actual)) return true;
++        if (expected.isNumber() && actual.isNumber())
++            return Math.abs(expected.doubleValue() - actual.doubleValue()) < 1e-10;
++        if (expected.isObject() && actual.isObject()) {
++            java.util.Iterator<java.util.Map.Entry<String, JsonNode>> iter = expected.fields();
++            while (iter.hasNext()) {
++                java.util.Map.Entry<String, JsonNode> entry = iter.next();
++                JsonNode actualValue = actual.get(entry.getKey());
++                if (actualValue == null) {
++                    if (!entry.getValue().isNull()) return false;
++                } else if (!jsonEquals(entry.getValue(), actualValue)) return false;
++            }
++            return true;
++        }
++        if (expected.isArray() && actual.isArray()) {
++            if (expected.size() != actual.size()) return false;
++            for (int i = 0; i < expected.size(); i++) {
++                if (!jsonEquals(expected.get(i), actual.get(i))) return false;
++            }
++            return true;
++        }
++        return false;
++    }
++}

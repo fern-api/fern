@@ -1,0 +1,3 @@
+rootProject.name = 'java-nullable-named-request-types'
+
+include 'sample-app'

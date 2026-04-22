@@ -1,0 +1,269 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index f1753c47972..9bbbce1113a 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-java-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "disable-required-property-builder-checks": true
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "manual",
+diff --git a/.gradle/8.14.3/checksums/checksums.lock b/.gradle/8.14.3/checksums/checksums.lock
+index 71966d6940e7c2cf83bf9b1a26ecade3c06ac38e..b51560daaec3d7f7f17d61a0c5003ba4a178eb8f 100644
+GIT binary patch
+literal 17
+TcmZQ(<>T6T=XlLu1}FdkD~SW{
+
+literal 17
+TcmZR+ZKDuz;p2sL1}FdkH;M#{
+
+diff --git a/.gradle/8.14.3/executionHistory/executionHistory.bin b/.gradle/8.14.3/executionHistory/executionHistory.bin
+index f77b82e1c1ca65d5481c632b5b1ae34a0c4e13aa..7251c51a600d408a45ca9ca317bd5910f209e76b 100644
+GIT binary patch
+delta 7053
+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
+
+delta 5422
+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
+Un;)uRtd+6VjJ@8L?<k4>1ByRLzW@LL
+
+diff --git a/.gradle/8.14.3/executionHistory/executionHistory.lock b/.gradle/8.14.3/executionHistory/executionHistory.lock
+index 1b13ac095bec7690c16e1be71de6491363a9d4ff..46eabf006833082b5c29861681a7775e69da8e3f 100644
+GIT binary patch
+literal 17
+UcmZQh`C)(Q=L$_-1_<B)069YhZ~y=R
+
+literal 17
+ScmZQJ&oA)4yEK;p3OE2M;R9R%
+
+diff --git a/.gradle/8.14.3/fileHashes/fileHashes.bin b/.gradle/8.14.3/fileHashes/fileHashes.bin
+index 63a134b45c9db493b010feca4c987e862c8c8dc3..b101ee33ff20716dcab045027ba402e45aaf7e1a 100644
+GIT binary patch
+delta 2681
+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
+
+delta 2711
+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
+
+diff --git a/.gradle/8.14.3/fileHashes/fileHashes.lock b/.gradle/8.14.3/fileHashes/fileHashes.lock
+index fbadaa3b5b8842323893bf515c662287c2f7cc79..092e14ee415c7afc35cd0d5ed194a34c18dc3245 100644
+GIT binary patch
+literal 17
+TcmZQxlAG?|R`*MU0RnmfF+&7u
+
+literal 17
+UcmZR+IdRGX!J9MRF+e~s06{MWzyJUM
+
+diff --git a/.gradle/buildOutputCleanup/buildOutputCleanup.lock b/.gradle/buildOutputCleanup/buildOutputCleanup.lock
+index 6e0ae962e6716bfdd8c9a2ae1c93e403065c7214..8d1616f0cf57a44de0ca984e55b4aad596613bfd 100644
+GIT binary patch
+literal 17
+TcmZRsE#;~7-OuXF00EK!B#i>{
+
+literal 17
+UcmZQ>v*McAe)?em0|ZC`04}rx`~Uy|
+
+diff --git a/.gradle/buildOutputCleanup/cache.properties b/.gradle/buildOutputCleanup/cache.properties
+index 0e6d3ab0d4e..aab211b510f 100644
+--- a/.gradle/buildOutputCleanup/cache.properties
++++ b/.gradle/buildOutputCleanup/cache.properties
+@@ -1,2 +1,2 @@
+-#Wed Apr 22 20:48:42 UTC 2026
++#Wed Apr 22 20:58:13 UTC 2026
+ gradle.version=8.14.3
+diff --git a/.gradle/buildOutputCleanup/outputFiles.bin b/.gradle/buildOutputCleanup/outputFiles.bin
+index df5413267194989d87138de503072e8732bf1d65..f49fe7b4dcb7a25714ca17cf587c2e57c97dd023 100644
+GIT binary patch
+delta 322
+zcmdlznQ`T0#tkMCf+8Koyj@Z9dQl8u;F&nNR6;>uw&3g9lY712Km{cy_ev<#uVFkj
+zE#3F{Mu?!t*Z)v(J21=sf99k!P{r&p@#hW#{e1-w;-KRGF!2wT%XXDs_C5s_w}pv+
+z+Ir^gV{2;xsQHg!;$Ksq>hXCpa4v>w(4NdHsW3TLQbNPj{$MiG7LNl^9T#Cb>~l-w
+zMgKP`Lp2mno+@cE`KhFYK)y<#-rpw6P^d)f<gbznDpjV{z9*UPMnVOr!%TtE3=E7P
+WH!A)R-)NvAw%O4mka4n~hd2O>Q;Y2Y
+
+delta 345
+zcmZ2EnQ`}I#tkMCj-nk!Qx@Ob)8fVe1|E<9L&3B{ZsUxC+;0$ZPf3{g^c*&x>D&J{
+zL&dcxyGkfbu9c98*d^@g)I0OfJ*WgbOv6RP@azdY=j21hr^Cdb-Bxl~;8e{B6}N?n
+ze`poxUMRKo7gW4>vaF<n19RmHzF!N>uR;VpzQPnM#|wpXTdCSY75l@)RVU1e+S$-w
+z02N<3*;G<NK-aA>!_I0#64a23lWQd{1j07<Wc#I`gqrNxI(e<6!sMrt5-JtJq6$@+
+j8K<E}B*Kh_(F_bsoEsH?h;K9y5ZmnN5y&{X!BZ0e3Q&~J
+
+diff --git a/.gradle/file-system.probe b/.gradle/file-system.probe
+index 329f07383b5aa9469f9b14cd3742c6bbef54051f..b9c5b62cc94a13c28d0ad04004b2d96861f12d9c 100644
+GIT binary patch
+literal 8
+PcmZQzV4S<{Pv12F3f%*>
+
+literal 8
+PcmZQzV4S<{OY=Vf3fBY5
+
+diff --git a/src/main/java/com/seed/api/resources/imdb/types/CreateMovieRequest.java b/src/main/java/com/seed/api/resources/imdb/types/CreateMovieRequest.java
+index b03e31c40ff..104369c5f39 100644
+--- a/src/main/java/com/seed/api/resources/imdb/types/CreateMovieRequest.java
++++ b/src/main/java/com/seed/api/resources/imdb/types/CreateMovieRequest.java
+@@ -109,7 +109,7 @@ public final class CreateMovieRequest {
+         @java.lang.Override
+         @JsonSetter("title")
+         public RatingStage title(@NotNull String title) {
+-            this.title = Objects.requireNonNull(title, "title must not be null");
++            this.title = title;
+             return this;
+         }
+ 
+diff --git a/src/main/java/com/seed/api/resources/imdb/types/Movie.java b/src/main/java/com/seed/api/resources/imdb/types/Movie.java
+index b7e053cd399..b3e430db89d 100644
+--- a/src/main/java/com/seed/api/resources/imdb/types/Movie.java
++++ b/src/main/java/com/seed/api/resources/imdb/types/Movie.java
+@@ -130,14 +130,14 @@ public final class Movie {
+         @java.lang.Override
+         @JsonSetter("id")
+         public TitleStage id(@NotNull String id) {
+-            this.id = Objects.requireNonNull(id, "id must not be null");
++            this.id = id;
+             return this;
+         }
+ 
+         @java.lang.Override
+         @JsonSetter("title")
+         public RatingStage title(@NotNull String title) {
+-            this.title = Objects.requireNonNull(title, "title must not be null");
++            this.title = title;
+             return this;
+         }
+ 

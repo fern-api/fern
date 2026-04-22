@@ -1,0 +1,37 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/foo1",
+                "method": "POST",
+                "identifier_override": "endpoint_simple.fooWithoutEndpointError"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/errors/fern\"\n\tfernclient \"github.com/errors/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Simple.FooWithoutEndpointError(\n\tcontext.TODO(),\n\t\u0026fern.FooRequest{\n\t\tBar: \"bar\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/foo2",
+                "method": "POST",
+                "identifier_override": "endpoint_simple.foo"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/errors/fern\"\n\tfernclient \"github.com/errors/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Simple.Foo(\n\tcontext.TODO(),\n\t\u0026fern.FooRequest{\n\t\tBar: \"bar\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/foo3",
+                "method": "POST",
+                "identifier_override": "endpoint_simple.fooWithExamples"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/errors/fern\"\n\tfernclient \"github.com/errors/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Simple.FooWithExamples(\n\tcontext.TODO(),\n\t\u0026fern.FooRequest{\n\t\tBar: \"hello\",\n\t},\n)\n"
+            }
+        }
+    ]
+}

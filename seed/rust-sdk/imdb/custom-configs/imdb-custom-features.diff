@@ -1,0 +1,38 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 72f1d627c73..bc6575960d0 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,21 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-rust-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "clientName": "ImdbClient",
++    "features": {
++      "experimental": [
++        "reqwest/blocking",
++        "tokio/process"
++      ],
++      "advanced": [
++        "sse"
++      ]
++    },
++    "defaultFeatures": [
++      "experimental"
++    ]
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "manual",
+diff --git a/Cargo.toml b/Cargo.toml
+index 4da0e9264d6..6d229b6a622 100644
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -22,3 +22,7 @@ tokio = { version = "1.0", features = ["full"] }
+ [dev-dependencies]
+ tokio-test = "0.4"
+ 
++[features]
++default = ["experimental"]
++advanced = ["sse"]
++experimental = ["reqwest/blocking", "tokio/process"]

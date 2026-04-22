@@ -1,0 +1,26 @@
+openapi: 3.1.0
+info:
+  title: file-download
+  version: 0.0.0
+paths:
+  /snippet:
+    post:
+      operationId: service_simple
+      tags:
+        - Service
+      parameters: []
+      responses:
+        '204':
+          description: No content
+  /:
+    post:
+      operationId: service_downloadFile
+      tags:
+        - Service
+      parameters: []
+      responses:
+        '204':
+          description: No content
+components:
+  schemas: {}
+  securitySchemes: {}

@@ -1,0 +1,3 @@
+rootProject.name = 'folders'
+
+include 'sample-app'

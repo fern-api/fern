@@ -1,0 +1,1545 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index f1753c47972..72027bd44e0 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,10 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-java-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "use-default-request-parameter-values": true,
++    "collapse-optional-nullable": true
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "manual",
+diff --git a/.gradle/8.14.3/checksums/checksums.lock b/.gradle/8.14.3/checksums/checksums.lock
+index a55f9f4a106b9c5eef6b674bf7b5f790b1616a02..bd71a549c9dda7918865ff711bbed6719110adae 100644
+GIT binary patch
+literal 17
+TcmZSnAL#kJ_bA621}FdkJ0Ap|
+
+literal 17
+ScmZQp$taqo%*+3S0SW*jD+1F1
+
+diff --git a/.gradle/8.14.3/executionHistory/executionHistory.bin b/.gradle/8.14.3/executionHistory/executionHistory.bin
+index 047e481df0a2fa41ae9c70072adbfc4a1277d88e..6d461bed02570e90d389d1852a4babbc33eec070 100644
+GIT binary patch
+delta 7089
+zcmcIoX;f3!7S8qJ5>YUThzQmZ1!M>zj8zb=R*M2&1eK|n5DZg72mzT)f`EWet#nsJ
+ziN!bpDhnlwQ;|ZS`VgnC2M>`dLLET`qsz*}>N^+TT3zMw`p2BR*2$ObbIy16-8pyP
+zv%dps^65Tur#<oSlMZI)76m0A{(D6R*RFdZe|w)XbZzz2Mwsh3_Rek@8xvCHqSQE{
+zIA#OiSuAxG$$1&BJQwEY#75S;%)mG>xR;RPVPC<}W-d1)LaKUnXF7O<0l{DpAv^}d
+z`z2~m=~ns|WXqJN-k0Aj$y)uxfla(S42jy1Iozbx6mDgXaw!9rV48MU=xl<yJV3O&
+zU2*o9Ygct(t?qIG>{ko4^TGw=*<Quxf8;N}SW~@rYV&1T`(xrNG>AEn7-I=fVrqy^
+zU`c#!1EliUL<v8^KP4f7FGz@XjN_;BNoM(=Z*P3HNM5#j)pYO9))U0v>A7Yjj=oP5
+zfp?slb}*J@#12XvKh|eXRv1$v@sIVEv=bd@>O5#q=0dvsA=|cIxOi3Wjhbdgvr4@v
+zF@U%<)Lkz(gs)O2YEP#e8^!D&6VY}gZQd@cOKQp2F?%Dm(zE~rmgzt9HKwe^mA40j
+zm41ymou$A}w}76k7K@8B=NM+MZs8bAIpq=7KA}z1ONalxGjR&K!g(-G!6vJEbudG*
+zn!JE8Rlz0CJk!BZg`H8$GkWOn<A}Xbw0;V_MMFDLm$A~3>__OWv?V*9>mW{PLq0;d
+zOF4(^L0G4BAzvYUt+XZw5KdEBk=ZYFuvFzl?m(EPnoI6Rs8QLFYJ}HRbB)ftpqKj5
+zl2FtC!4wA5X?xMnmVGJy1LWA>o?ARgYZ@9b2u|77o~=XQe={bEM~pdx*`)0I=Ft8Q
+zGaH8sJHy9Lw0=1>q1_H5v*(fdeLC2dZBOn+cp=-BJdE&Fwi9^~;oQxRM%{h1E2S=k
+z2KvP_K(U!^^mfRUZAhF3DseU_BrLdr%;o*`$TB8TgUnp8%wdx!`*q-y<3~0lROQSi
+z?;)(ru_xalyq#l39(t*R4>>lU9e+trJvy3XFm3Xq_npYdYx&z6ckkIgTb3iXpVeFx
+zf;DxAN}i2j-FX+VXhHEhS+{m*PC4wzo#|L?{(eAlHFH~sOZLk6urc<nLw!GOCJ^C5
+zZdM%6bTUV26rqZ_Yr2N0roH}FVGQH*nB;Bb!Sp<T@&Q6=-fZ)H!Kz**FS!28-Cgg#
+zxbA9MrK3H2lnBT2W+@woe!Mb4tVUKPMc;K6yk5XEdr;HT?So9#*L$a*w<aVN8E*!v
+z3vT{`OfLrugDUHd<o%Bns(M{dDl+xnP4aUeyWaR@Ytf#}wc<)-3N%_<n0zb#U-z9i
+zh@0xSHzU(lyZ1-TTspX;qZ8HJ9qczT^5oIUuyTut?9}O?cFTP7F~ZkdY{+K_r{{~J
+z*dFV@FMeZs$}e_>Q}oxRw-8Ae^P<%kw$FJi&xX|vSz9aU9OL~4<rty_wViY;jgON%
+zr$t4HWO30F;f9n1kw7Msx<tEYi2o;H89?Up8`J>7k;-CI`SNH^DqqIgkeDEhmL+qX
+z-8spw=^4qq3{O`#iBOibF*05n6~|2%IMJ6Vi4(+;i=__kTsJ2Vhm}iH0-Xc_e!ihm
+zp<rA%KV;kHS18OMv*14D;gWLH%INl29@<!^UENVpWG%N6dT5<b^r=TNhnt47pwg{d
+z-(GW)Wl<b4KUTt_vmhrbQA`lI==1SN3oZDh_;7`jp+0mRb!C*kBhMAO!-Oz9>OBT#
+z4^V}9Fo&mG`jtZsVp(qIzC%<ass9jpfHd3@`oGVmu3_+d0Z1~Os7?&bUNB9=hK~Kg
+znAmSevY}NIOg+Nld)<K)sv8TlAAb_uIk=9xi-r9Ip9!sp0;ylHupbjlfTqI~)sBU|
+z>PRT{1Pk-t@^q>L1G690R`^r5F);hU-pXL=0T$-Yqo%OuXef0D3wz<Q5KOyIBANiX
+z$0;m+d!d7_AxNu&Fzvv^n9tb557B>AIhaypK`a|ms)O+)vj10)4L|LFtj9KtSR4F`
+zVF!BA^&KRi2%+v{VUIi+OFhNH99ENw<%#!#u$u9pOc)0$Z78120OC_(>N%FE&{f~|
+z(@|7|-p^K=ByR|pxWc*G6bwhukL<I+IL8EZXXM!Yp9NFT6=2ATnxv($@O%)4r%00&
+z2=gxlVR&!SF~2V}0*4>`Fud<+c9XgYYC!M%T$3En9<DF^Ax2TR^u8ch=mGWe1r&}1
+zOf%C8*(COGS>(?G8ubRtZACUX!pw#Q>UT`+wx|{}fxyNj>bl-nDB38Yx-hVMfp3}_
+zbGWty(zK-*j%r04y}nInf$gOLs&^zc;uFOPQ|P{AhCv463Qa+9c{1DG&1#Y&uv>0s
+z9p-70dSfP03K5qrD7`B<AWk=@MwDwlDL`FUCWGn<4z;H1iU5NI(RIZgZvDfRdaU<t
+zPc!>u&VZVx2&xSWyZUN4Cgv}**s!~Kh4P-hAD}<$hRlu_^NG|QzOj6a^XbukUlk5p
+zZ?PWa)v9ZYsb~7W4Y1q9gS6`w%Epq{?;6@a-@GC;^kDw<lB?%(X(9JlLnJ@D?4RHL
+za7FI2v$1Wai?%&Ei%exAw>lHMlK5GBLVCdb5iO)2ag6T1X;2lM_B3}=%`*Qn$n?7B
+zVdw4u&$6jYDw`_4J3b$ogmT-!X}+Ot2a^u>O_~s!j7)A@9Ty&8)e7%Emt=-FSY|M2
+Jd3(w6{{ReANfH16
+
+delta 7198
+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
+
+diff --git a/.gradle/8.14.3/executionHistory/executionHistory.lock b/.gradle/8.14.3/executionHistory/executionHistory.lock
+index 879bdfd5a8472db9ad7ef6a925e537f8bb6bf369..59f676d8c4c622317125b470a89b4f2197b931af 100644
+GIT binary patch
+literal 17
+TcmZQ}5w(%2u@5-G00A5T9Vh~j
+
+literal 17
+TcmZQRy0pw+L^DB^0RlJxD1HL{
+
+diff --git a/.gradle/8.14.3/fileHashes/fileHashes.bin b/.gradle/8.14.3/fileHashes/fileHashes.bin
+index 6a03c25546ca8fc45ad383bd5887b6790693dbb4..fd85c3ee5cd9d28c2153a8d3ad76a7ffc2b3b8dd 100644
+GIT binary patch
+delta 4035
+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
+
+delta 3906
+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
+Iuh7i@17H`LCIA2c
+
+diff --git a/.gradle/8.14.3/fileHashes/fileHashes.lock b/.gradle/8.14.3/fileHashes/fileHashes.lock
+index 4f5783894e510c8d4b905435b022db9aff50e218..fdb896b4d71d7f6b28fda45357e84a2c97860b7b 100644
+GIT binary patch
+literal 17
+UcmZR6HTkz`sP?@^1_)>a06TmI761SM
+
+literal 17
+UcmZQxa^t|YbM2;b3=q%^06(GyK>z>%
+
+diff --git a/.gradle/buildOutputCleanup/buildOutputCleanup.lock b/.gradle/buildOutputCleanup/buildOutputCleanup.lock
+index 3581cee6a5ee9e01bb95a869506065001ea42696..be175f43f60df1b6c3fd3dcdacd99fdd90737ded 100644
+GIT binary patch
+literal 17
+UcmZRU3f_En?)_XT1_+P@05K{A4FCWD
+
+literal 17
+UcmZSX)qgwP%XecY0|ZC`05S3e4*&oF
+
+diff --git a/.gradle/buildOutputCleanup/cache.properties b/.gradle/buildOutputCleanup/cache.properties
+index 28e527cafb6..a6b568ef4b0 100644
+--- a/.gradle/buildOutputCleanup/cache.properties
++++ b/.gradle/buildOutputCleanup/cache.properties
+@@ -1,2 +1,2 @@
+-#Wed Apr 22 20:50:23 UTC 2026
++#Wed Apr 22 20:58:27 UTC 2026
+ gradle.version=8.14.3
+diff --git a/.gradle/buildOutputCleanup/outputFiles.bin b/.gradle/buildOutputCleanup/outputFiles.bin
+index 50ca1ea442342b164e1b360cdb980d58cae6ccb0..53545adf6d7f3d3efb1a2126924edcb6543691f8 100644
+GIT binary patch
+delta 314
+zcmdlznQ`T0#tkMCf+8Koyj@Z9dQl8u;F&ntRYE~yw&3g9lY712Km{fLL&5C7M)`kT
+z>YhNwTPMd#C^$TK5a{nKcn}8_^oJ?_V7Y8p>1FRzP;pzB_}7%DdVHP?i=pD$lVv3p
+z9JrRppV+-;Jyg)+F-$S{@k9Bu&cADbDE7Dr6IYO(IbEvra0=9r>63jW6*P33_l7xq
+zXefay{t8oUpIaI)`oBpTs<?P^t)zuOw6NIJx|6MzP(k*|M<o>||CN;Bf$3skVEnjI
+U@rU?E0}Zjwjvj%Gll?rz0p-1fWdHyG
+
+delta 339
+zcmZ2EnQ`}I#tkMCf}+!N*m$OI|J%#}2A<lJT_qGIPnD3UUsu0n$vRekFQ^3je<;}I
+zuw3_n>>&k+xW{9d__<G;)r(}l{)UQwg^AzQNYVd)DH1B~DG3vQI``Jp-w}1DQ1hq5
+z#Gl<(a#-M0t;h(Ku!Tu{Xcg#QD7Ez$RJ?fdTL}dL<#?fRZYxz=sG$F3Ur7Z48#(8b
+zw=XRH0To<1d8(v^K-k8fY`^rASD}KflkWmm<~m<IAaQTrGl-za#mQeK6;vvMMHQ+t
+jGfqQQCc+#5qZt^OI5#T(5Z`DZAhy}jBam@&gQq3{Htmw8
+
+diff --git a/.gradle/file-system.probe b/.gradle/file-system.probe
+index 855cab7e11e059befe58aa207142d18c258b4665..ae53ec7758b667066c039a156011f87b77702a58 100644
+GIT binary patch
+literal 8
+PcmZQzV4S<{&p`nI3Vj12
+
+literal 8
+PcmZQzV4S<{>mhpp3Yh~-
+
+diff --git a/README.md b/README.md
+index 39078921fcf..e0c173c5619 100644
+--- a/README.md
++++ b/README.md
+@@ -56,6 +56,7 @@ Instantiate and use the client with the following:
+ package com.example.usage;
+ 
+ import com.seed.javaOptionalNullableQueryParams.SeedJavaOptionalNullableQueryParamsClient;
++import com.seed.javaOptionalNullableQueryParams.core.OptionalNullable;
+ import com.seed.javaOptionalNullableQueryParams.requests.SearchRequest;
+ import com.seed.javaOptionalNullableQueryParams.types.SortOrder;
+ 
+@@ -68,18 +69,54 @@ public class Example {
+         client.search(
+             SearchRequest
+                 .builder()
+-                .query("")
+-                .limit(1)
+-                .includeArchived(true)
+-                .sortOrder(SortOrder.ASC)
+-                .optionalWithoutDefault("optionalWithoutDefault")
+-                .regularOptional("default-value")
+-                .regularOptionalNoDefault("regularOptionalNoDefault")
++                .query(
++                    OptionalNullable.of("")
++                )
++                .limit(
++                    OptionalNullable.of(1)
++                )
++                .includeArchived(
++                    OptionalNullable.of(true)
++                )
++                .sortOrder(
++                    OptionalNullable.of(SortOrder.ASC)
++                )
++                .optionalWithoutDefault(
++                    OptionalNullable.of("optionalWithoutDefault")
++                )
++                .regularOptional(
++                    OptionalNullable.of("default-value")
++                )
++                .regularOptionalNoDefault(
++                    OptionalNullable.of("regularOptionalNoDefault")
++                )
+                 .build()
+         );
+     }
+ }
+ ```
++## OptionalNullable for PATCH Requests
++
++For PATCH requests, the SDK uses `OptionalNullable<T>` to handle three-state nullable semantics:
++
++- **ABSENT**: Field not provided (omitted from JSON)
++- **NULL**: Field explicitly set to null (included as `null` in JSON)
++- **PRESENT**: Field has a non-null value
++
++```java
++import com.seed.javaOptionalNullableQueryParams.core.OptionalNullable;
++
++UpdateRequest request = UpdateRequest.builder()
++    .fieldName(OptionalNullable.absent())    // Skip field
++    .anotherField(OptionalNullable.ofNull()) // Clear field
++    .yetAnotherField(OptionalNullable.of("value")) // Set value
++    .build();
++```
++
++### Important Notes
++
++- **Required fields**: For required fields, you cannot use `absent()`. Required fields must always be present with either a non-null value or explicitly set to null using `ofNull()`.
++- **Type safety**: `OptionalNullable<T>` is not fully type-safe since all three states use the same type, but it provides a cleaner API than nested `Optional<Optional<T>>` for handling three-state nullable semantics.
+ 
+ ## Base Url
+ 
+diff --git a/build/spotless/spotlessJava/src/main/java/com/snippets/Example0.java b/build/spotless/spotlessJava/src/main/java/com/snippets/Example0.java
+index df1ca2c5c74..c81605c034f 100644
+--- a/build/spotless/spotlessJava/src/main/java/com/snippets/Example0.java
++++ b/build/spotless/spotlessJava/src/main/java/com/snippets/Example0.java
+@@ -1,6 +1,7 @@
+ package com.snippets;
+ 
+ import com.seed.javaOptionalNullableQueryParams.SeedJavaOptionalNullableQueryParamsClient;
++import com.seed.javaOptionalNullableQueryParams.core.OptionalNullable;
+ import com.seed.javaOptionalNullableQueryParams.requests.SearchRequest;
+ import com.seed.javaOptionalNullableQueryParams.types.SortOrder;
+ 
+@@ -11,13 +12,13 @@ public class Example0 {
+                 .build();
+ 
+         client.search(SearchRequest.builder()
+-                .query("")
+-                .limit(1)
+-                .includeArchived(true)
+-                .sortOrder(SortOrder.ASC)
+-                .optionalWithoutDefault("optionalWithoutDefault")
+-                .regularOptional("default-value")
+-                .regularOptionalNoDefault("regularOptionalNoDefault")
++                .query(OptionalNullable.of(""))
++                .limit(OptionalNullable.of(1))
++                .includeArchived(OptionalNullable.of(true))
++                .sortOrder(OptionalNullable.of(SortOrder.ASC))
++                .optionalWithoutDefault(OptionalNullable.of("optionalWithoutDefault"))
++                .regularOptional(OptionalNullable.of("default-value"))
++                .regularOptionalNoDefault(OptionalNullable.of("regularOptionalNoDefault"))
+                 .build());
+     }
+ }
+diff --git a/reference.md b/reference.md
+index 9e7e1965513..a667845b329 100644
+--- a/reference.md
++++ b/reference.md
+@@ -29,13 +29,27 @@ Search endpoint with optional nullable query params with defaults
+ client.search(
+     SearchRequest
+         .builder()
+-        .query("")
+-        .limit(1)
+-        .includeArchived(true)
+-        .sortOrder(SortOrder.ASC)
+-        .optionalWithoutDefault("optionalWithoutDefault")
+-        .regularOptional("default-value")
+-        .regularOptionalNoDefault("regularOptionalNoDefault")
++        .query(
++            OptionalNullable.of("")
++        )
++        .limit(
++            OptionalNullable.of(1)
++        )
++        .includeArchived(
++            OptionalNullable.of(true)
++        )
++        .sortOrder(
++            OptionalNullable.of(SortOrder.ASC)
++        )
++        .optionalWithoutDefault(
++            OptionalNullable.of("optionalWithoutDefault")
++        )
++        .regularOptional(
++            OptionalNullable.of("default-value")
++        )
++        .regularOptionalNoDefault(
++            OptionalNullable.of("regularOptionalNoDefault")
++        )
+         .build()
+ );
+ ```
+diff --git a/snippet.json b/snippet.json
+index 9e43b94ddae..b4fb2635fa0 100644
+--- a/snippet.json
++++ b/snippet.json
+@@ -9,8 +9,8 @@
+             },
+             "snippet": {
+                 "type": "java",
+-                "sync_client": "package com.example.usage;\n\nimport com.seed.javaOptionalNullableQueryParams.SeedJavaOptionalNullableQueryParamsClient;\nimport com.seed.javaOptionalNullableQueryParams.requests.SearchRequest;\nimport com.seed.javaOptionalNullableQueryParams.types.SortOrder;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaOptionalNullableQueryParamsClient client = SeedJavaOptionalNullableQueryParamsClient\n            .builder()\n            .build();\n\n        client.search(\n            SearchRequest\n                .builder()\n                .query(\"\")\n                .limit(1)\n                .includeArchived(true)\n                .sortOrder(SortOrder.ASC)\n                .optionalWithoutDefault(\"optionalWithoutDefault\")\n                .regularOptional(\"default-value\")\n                .regularOptionalNoDefault(\"regularOptionalNoDefault\")\n                .build()\n        );\n    }\n}\n",
+-                "async_client": "package com.example.usage;\n\nimport com.seed.javaOptionalNullableQueryParams.SeedJavaOptionalNullableQueryParamsClient;\nimport com.seed.javaOptionalNullableQueryParams.requests.SearchRequest;\nimport com.seed.javaOptionalNullableQueryParams.types.SortOrder;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaOptionalNullableQueryParamsClient client = SeedJavaOptionalNullableQueryParamsClient\n            .builder()\n            .build();\n\n        client.search(\n            SearchRequest\n                .builder()\n                .query(\"\")\n                .limit(1)\n                .includeArchived(true)\n                .sortOrder(SortOrder.ASC)\n                .optionalWithoutDefault(\"optionalWithoutDefault\")\n                .regularOptional(\"default-value\")\n                .regularOptionalNoDefault(\"regularOptionalNoDefault\")\n                .build()\n        );\n    }\n}\n"
++                "sync_client": "package com.example.usage;\n\nimport com.seed.javaOptionalNullableQueryParams.SeedJavaOptionalNullableQueryParamsClient;\nimport com.seed.javaOptionalNullableQueryParams.core.OptionalNullable;\nimport com.seed.javaOptionalNullableQueryParams.requests.SearchRequest;\nimport com.seed.javaOptionalNullableQueryParams.types.SortOrder;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaOptionalNullableQueryParamsClient client = SeedJavaOptionalNullableQueryParamsClient\n            .builder()\n            .build();\n\n        client.search(\n            SearchRequest\n                .builder()\n                .query(\n                    OptionalNullable.of(\"\")\n                )\n                .limit(\n                    OptionalNullable.of(1)\n                )\n                .includeArchived(\n                    OptionalNullable.of(true)\n                )\n                .sortOrder(\n                    OptionalNullable.of(SortOrder.ASC)\n                )\n                .optionalWithoutDefault(\n                    OptionalNullable.of(\"optionalWithoutDefault\")\n                )\n                .regularOptional(\n                    OptionalNullable.of(\"default-value\")\n                )\n                .regularOptionalNoDefault(\n                    OptionalNullable.of(\"regularOptionalNoDefault\")\n                )\n                .build()\n        );\n    }\n}\n",
++                "async_client": "package com.example.usage;\n\nimport com.seed.javaOptionalNullableQueryParams.SeedJavaOptionalNullableQueryParamsClient;\nimport com.seed.javaOptionalNullableQueryParams.core.OptionalNullable;\nimport com.seed.javaOptionalNullableQueryParams.requests.SearchRequest;\nimport com.seed.javaOptionalNullableQueryParams.types.SortOrder;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaOptionalNullableQueryParamsClient client = SeedJavaOptionalNullableQueryParamsClient\n            .builder()\n            .build();\n\n        client.search(\n            SearchRequest\n                .builder()\n                .query(\n                    OptionalNullable.of(\"\")\n                )\n                .limit(\n                    OptionalNullable.of(1)\n                )\n                .includeArchived(\n                    OptionalNullable.of(true)\n                )\n                .sortOrder(\n                    OptionalNullable.of(SortOrder.ASC)\n                )\n                .optionalWithoutDefault(\n                    OptionalNullable.of(\"optionalWithoutDefault\")\n                )\n                .regularOptional(\n                    OptionalNullable.of(\"default-value\")\n                )\n                .regularOptionalNoDefault(\n                    OptionalNullable.of(\"regularOptionalNoDefault\")\n                )\n                .build()\n        );\n    }\n}\n"
+             }
+         }
+     ],
+diff --git a/src/main/java/com/seed/javaOptionalNullableQueryParams/AsyncRawSeedJavaOptionalNullableQueryParamsClient.java b/src/main/java/com/seed/javaOptionalNullableQueryParams/AsyncRawSeedJavaOptionalNullableQueryParamsClient.java
+index 8eef38ebd94..e5a14f8d1c3 100644
+--- a/src/main/java/com/seed/javaOptionalNullableQueryParams/AsyncRawSeedJavaOptionalNullableQueryParamsClient.java
++++ b/src/main/java/com/seed/javaOptionalNullableQueryParams/AsyncRawSeedJavaOptionalNullableQueryParamsClient.java
+@@ -64,30 +64,27 @@ public class AsyncRawSeedJavaOptionalNullableQueryParamsClient {
+                 .addPathSegments("api")
+                 .addPathSegments("search");
+         QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery().orElse(""), false);
+-        if (request.getLimit().isPresent()) {
+-            QueryStringMapper.addQueryParameter(
+-                    httpUrl, "limit", request.getLimit().get(), false);
+-        }
++        QueryStringMapper.addQueryParameter(httpUrl, "limit", request.getLimit().orElse(10), false);
+         QueryStringMapper.addQueryParameter(
+                 httpUrl, "includeArchived", request.getIncludeArchived().orElse(false), false);
+-        if (request.getSortOrder().isPresent()) {
++        if (!request.getSortOrder().isAbsent()) {
+             QueryStringMapper.addQueryParameter(
+-                    httpUrl, "sortOrder", request.getSortOrder().get(), false);
++                    httpUrl, "sortOrder", request.getSortOrder().orElse(null), false);
+         }
+-        if (request.getOptionalWithoutDefault().isPresent()) {
++        if (!request.getOptionalWithoutDefault().isAbsent()) {
+             QueryStringMapper.addQueryParameter(
+                     httpUrl,
+                     "optionalWithoutDefault",
+-                    request.getOptionalWithoutDefault().get(),
++                    request.getOptionalWithoutDefault().orElse(null),
+                     false);
+         }
+         QueryStringMapper.addQueryParameter(
+                 httpUrl, "regularOptional", request.getRegularOptional().orElse("default-value"), false);
+-        if (request.getRegularOptionalNoDefault().isPresent()) {
++        if (!request.getRegularOptionalNoDefault().isAbsent()) {
+             QueryStringMapper.addQueryParameter(
+                     httpUrl,
+                     "regularOptionalNoDefault",
+-                    request.getRegularOptionalNoDefault().get(),
++                    request.getRegularOptionalNoDefault().orElse(null),
+                     false);
+         }
+         if (requestOptions != null) {
+diff --git a/src/main/java/com/seed/javaOptionalNullableQueryParams/RawSeedJavaOptionalNullableQueryParamsClient.java b/src/main/java/com/seed/javaOptionalNullableQueryParams/RawSeedJavaOptionalNullableQueryParamsClient.java
+index 2a0e733d813..ef5b4f23f2d 100644
+--- a/src/main/java/com/seed/javaOptionalNullableQueryParams/RawSeedJavaOptionalNullableQueryParamsClient.java
++++ b/src/main/java/com/seed/javaOptionalNullableQueryParams/RawSeedJavaOptionalNullableQueryParamsClient.java
+@@ -58,30 +58,27 @@ public class RawSeedJavaOptionalNullableQueryParamsClient {
+                 .addPathSegments("api")
+                 .addPathSegments("search");
+         QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery().orElse(""), false);
+-        if (request.getLimit().isPresent()) {
+-            QueryStringMapper.addQueryParameter(
+-                    httpUrl, "limit", request.getLimit().get(), false);
+-        }
++        QueryStringMapper.addQueryParameter(httpUrl, "limit", request.getLimit().orElse(10), false);
+         QueryStringMapper.addQueryParameter(
+                 httpUrl, "includeArchived", request.getIncludeArchived().orElse(false), false);
+-        if (request.getSortOrder().isPresent()) {
++        if (!request.getSortOrder().isAbsent()) {
+             QueryStringMapper.addQueryParameter(
+-                    httpUrl, "sortOrder", request.getSortOrder().get(), false);
++                    httpUrl, "sortOrder", request.getSortOrder().orElse(null), false);
+         }
+-        if (request.getOptionalWithoutDefault().isPresent()) {
++        if (!request.getOptionalWithoutDefault().isAbsent()) {
+             QueryStringMapper.addQueryParameter(
+                     httpUrl,
+                     "optionalWithoutDefault",
+-                    request.getOptionalWithoutDefault().get(),
++                    request.getOptionalWithoutDefault().orElse(null),
+                     false);
+         }
+         QueryStringMapper.addQueryParameter(
+                 httpUrl, "regularOptional", request.getRegularOptional().orElse("default-value"), false);
+-        if (request.getRegularOptionalNoDefault().isPresent()) {
++        if (!request.getRegularOptionalNoDefault().isAbsent()) {
+             QueryStringMapper.addQueryParameter(
+                     httpUrl,
+                     "regularOptionalNoDefault",
+-                    request.getRegularOptionalNoDefault().get(),
++                    request.getRegularOptionalNoDefault().orElse(null),
+                     false);
+         }
+         if (requestOptions != null) {
+diff --git a/src/main/java/com/seed/javaOptionalNullableQueryParams/core/NullableNonemptyFilter.java b/src/main/java/com/seed/javaOptionalNullableQueryParams/core/NullableNonemptyFilter.java
+index fc3304b3a6d..261a7f9da12 100644
+--- a/src/main/java/com/seed/javaOptionalNullableQueryParams/core/NullableNonemptyFilter.java
++++ b/src/main/java/com/seed/javaOptionalNullableQueryParams/core/NullableNonemptyFilter.java
+@@ -17,6 +17,9 @@ public final class NullableNonemptyFilter {
+         if (o instanceof Optional) {
+             return !((Optional<?>) o).isPresent();
+         }
++        if (o instanceof OptionalNullable) {
++            return ((OptionalNullable<?>) o).isAbsent();
++        }
+         return false;
+     }
+ }
+diff --git a/src/main/java/com/seed/javaOptionalNullableQueryParams/core/OptionalNullable.java b/src/main/java/com/seed/javaOptionalNullableQueryParams/core/OptionalNullable.java
+new file mode 100644
+index 00000000000..fac30c81999
+--- /dev/null
++++ b/src/main/java/com/seed/javaOptionalNullableQueryParams/core/OptionalNullable.java
+@@ -0,0 +1,187 @@
++/**
++ * This file was auto-generated by Fern from our API Definition.
++ */
++package com.seed.javaOptionalNullableQueryParams.core;
++
++import com.fasterxml.jackson.annotation.JsonCreator;
++import com.fasterxml.jackson.annotation.JsonValue;
++import java.util.Objects;
++import java.util.Optional;
++import java.util.function.Function;
++
++/**
++ * An optional wrapper type that supports null values, distinguishing between:
++ * - ABSENT: field not present (e.g., not included in request)
++ * - NULL: field explicitly set to null
++ * - PRESENT: field has a non-null value
++ *
++ * This is useful for partial updates, JSON Merge Patch (RFC 7396), and any API
++ * that needs to differentiate between "not specified" and "set to null".
++ *
++ * Use this for optional<nullable<T>> types where null is a valid value.
++ * For regular optional<T> types (where null is not valid), use Optional<T> instead.
++ */
++public final class OptionalNullable<T> {
++
++    private enum State {
++        ABSENT,
++        NULL,
++        PRESENT
++    }
++
++    private final State state;
++    private final T value;
++
++    private OptionalNullable(State state, T value) {
++        this.state = state;
++        this.value = value;
++    }
++
++    /**
++     * Creates an absent OptionalNullable (field not present).
++     */
++    public static <T> OptionalNullable<T> absent() {
++        return new OptionalNullable<>(State.ABSENT, null);
++    }
++
++    /**
++     * Creates a null OptionalNullable (field explicitly set to null).
++     */
++    public static <T> OptionalNullable<T> ofNull() {
++        return new OptionalNullable<>(State.NULL, null);
++    }
++
++    /**
++     * Creates an OptionalNullable with a value.
++     */
++    public static <T> OptionalNullable<T> of(T value) {
++        Objects.requireNonNull(value, "Use ofNull() for null values");
++        return new OptionalNullable<>(State.PRESENT, value);
++    }
++
++    /**
++     * Creates an OptionalNullable from a nullable value.
++     */
++    @JsonCreator
++    public static <T> OptionalNullable<T> ofNullable(T value) {
++        return value == null ? ofNull() : of(value);
++    }
++
++    /**
++     * Returns true if the field was absent from the request.
++     */
++    public boolean isAbsent() {
++        return state == State.ABSENT;
++    }
++
++    /**
++     * Returns true if the field was explicitly set to null.
++     */
++    public boolean isNull() {
++        return state == State.NULL;
++    }
++
++    /**
++     * Returns true if the field has a value.
++     */
++    public boolean isPresent() {
++        return state == State.PRESENT;
++    }
++
++    /**
++     * Returns true if the field was present in the request (either null or with a value).
++     */
++    public boolean wasSpecified() {
++        return state != State.ABSENT;
++    }
++
++    /**
++     * Gets the value if present, throws if absent or null.
++     */
++    public T get() {
++        if (state != State.PRESENT) {
++            throw new IllegalStateException("Cannot get value from " + state + " OptionalNullable");
++        }
++        return value;
++    }
++
++    /**
++     * Gets the value if present or explicitly null, throws if absent.
++     * This is useful for update operations where null is a valid value to set.
++     */
++    public T getValueOrNull() {
++        if (state == State.ABSENT) {
++            throw new IllegalStateException("No value set");
++        }
++        return value; // Returns the actual value if PRESENT, or null if NULL
++    }
++
++    /**
++     * Gets the value if present, returns null if explicitly set to null, or returns the provided default if absent.
++     */
++    public T orElse(T defaultValue) {
++        if (state == State.PRESENT) return value;
++        if (state == State.NULL) return null;
++        return defaultValue;
++    }
++
++    /**
++     * Converts to an Optional, returning empty for both absent and null states.
++     */
++    public Optional<T> toOptional() {
++        return state == State.PRESENT ? Optional.of(value) : Optional.empty();
++    }
++
++    /**
++     * Maps the value if present, preserving absent and null states.
++     */
++    public <U> OptionalNullable<U> map(Function<? super T, ? extends U> mapper) {
++        if (state == State.PRESENT) {
++            return OptionalNullable.of(mapper.apply(value));
++        } else if (state == State.NULL) {
++            return OptionalNullable.ofNull();
++        } else {
++            return OptionalNullable.absent();
++        }
++    }
++
++    /**
++     * For JSON serialization - serialize the actual value or null.
++     * Absent values should be handled by @JsonInclude(JsonInclude.Include.CUSTOM)
++     */
++    @JsonValue
++    public Object getJsonValue() {
++        if (state == State.ABSENT) {
++            // Should not be serialized - handled by custom inclusion
++            throw new IllegalStateException("Absent values should not be serialized");
++        }
++        return state == State.NULL ? null : value;
++    }
++
++    @Override
++    public boolean equals(Object o) {
++        if (this == o) return true;
++        if (o == null || getClass() != o.getClass()) return false;
++        OptionalNullable<?> that = (OptionalNullable<?>) o;
++        return state == that.state && Objects.equals(value, that.value);
++    }
++
++    @Override
++    public int hashCode() {
++        return Objects.hash(state, value);
++    }
++
++    @Override
++    public String toString() {
++        switch (state) {
++            case ABSENT:
++                return "OptionalNullable.absent()";
++            case NULL:
++                return "OptionalNullable.ofNull()";
++            case PRESENT:
++                return "OptionalNullable.of(" + value + ")";
++            default:
++                throw new IllegalStateException("Unknown state: " + state);
++        }
++    }
++}
+diff --git a/src/main/java/com/seed/javaOptionalNullableQueryParams/requests/SearchRequest.java b/src/main/java/com/seed/javaOptionalNullableQueryParams/requests/SearchRequest.java
+index c7ddd031192..b32740e7b12 100644
+--- a/src/main/java/com/seed/javaOptionalNullableQueryParams/requests/SearchRequest.java
++++ b/src/main/java/com/seed/javaOptionalNullableQueryParams/requests/SearchRequest.java
+@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.Nulls;
+ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+ import com.seed.javaOptionalNullableQueryParams.core.Nullable;
+ import com.seed.javaOptionalNullableQueryParams.core.ObjectMappers;
++import com.seed.javaOptionalNullableQueryParams.core.OptionalNullable;
+ import com.seed.javaOptionalNullableQueryParams.types.SortOrder;
+ import java.util.HashMap;
+ import java.util.Map;
+@@ -22,30 +23,30 @@ import java.util.Optional;
+ @JsonInclude(JsonInclude.Include.NON_ABSENT)
+ @JsonDeserialize(builder = SearchRequest.Builder.class)
+ public final class SearchRequest {
+-    private final Optional<String> query;
++    private final OptionalNullable<String> query;
+ 
+-    private final Optional<Integer> limit;
++    private final OptionalNullable<Integer> limit;
+ 
+-    private final Optional<Boolean> includeArchived;
++    private final OptionalNullable<Boolean> includeArchived;
+ 
+-    private final Optional<SortOrder> sortOrder;
++    private final OptionalNullable<SortOrder> sortOrder;
+ 
+-    private final Optional<String> optionalWithoutDefault;
++    private final OptionalNullable<String> optionalWithoutDefault;
+ 
+-    private final Optional<String> regularOptional;
++    private final OptionalNullable<String> regularOptional;
+ 
+-    private final Optional<String> regularOptionalNoDefault;
++    private final OptionalNullable<String> regularOptionalNoDefault;
+ 
+     private final Map<String, Object> additionalProperties;
+ 
+     private SearchRequest(
+-            Optional<String> query,
+-            Optional<Integer> limit,
+-            Optional<Boolean> includeArchived,
+-            Optional<SortOrder> sortOrder,
+-            Optional<String> optionalWithoutDefault,
+-            Optional<String> regularOptional,
+-            Optional<String> regularOptionalNoDefault,
++            OptionalNullable<String> query,
++            OptionalNullable<Integer> limit,
++            OptionalNullable<Boolean> includeArchived,
++            OptionalNullable<SortOrder> sortOrder,
++            OptionalNullable<String> optionalWithoutDefault,
++            OptionalNullable<String> regularOptional,
++            OptionalNullable<String> regularOptionalNoDefault,
+             Map<String, Object> additionalProperties) {
+         this.query = query;
+         this.limit = limit;
+@@ -61,9 +62,9 @@ public final class SearchRequest {
+      * @return Search query - defaults to empty string when absent
+      */
+     @JsonIgnore
+-    public Optional<String> getQuery() {
++    public OptionalNullable<String> getQuery() {
+         if (query == null) {
+-            return Optional.empty();
++            return OptionalNullable.absent();
+         }
+         return query;
+     }
+@@ -72,9 +73,9 @@ public final class SearchRequest {
+      * @return Max results - defaults to 10 when absent
+      */
+     @JsonIgnore
+-    public Optional<Integer> getLimit() {
++    public OptionalNullable<Integer> getLimit() {
+         if (limit == null) {
+-            return Optional.empty();
++            return OptionalNullable.absent();
+         }
+         return limit;
+     }
+@@ -83,9 +84,9 @@ public final class SearchRequest {
+      * @return Include archived items - defaults to false when absent
+      */
+     @JsonIgnore
+-    public Optional<Boolean> getIncludeArchived() {
++    public OptionalNullable<Boolean> getIncludeArchived() {
+         if (includeArchived == null) {
+-            return Optional.empty();
++            return OptionalNullable.absent();
+         }
+         return includeArchived;
+     }
+@@ -94,9 +95,9 @@ public final class SearchRequest {
+      * @return Sort order - defaults to ASC when absent
+      */
+     @JsonIgnore
+-    public Optional<SortOrder> getSortOrder() {
++    public OptionalNullable<SortOrder> getSortOrder() {
+         if (sortOrder == null) {
+-            return Optional.empty();
++            return OptionalNullable.absent();
+         }
+         return sortOrder;
+     }
+@@ -105,9 +106,9 @@ public final class SearchRequest {
+      * @return Optional nullable without default - should check wasSpecified
+      */
+     @JsonIgnore
+-    public Optional<String> getOptionalWithoutDefault() {
++    public OptionalNullable<String> getOptionalWithoutDefault() {
+         if (optionalWithoutDefault == null) {
+-            return Optional.empty();
++            return OptionalNullable.absent();
+         }
+         return optionalWithoutDefault;
+     }
+@@ -116,9 +117,9 @@ public final class SearchRequest {
+      * @return Another optional nullable with default for comparison
+      */
+     @JsonIgnore
+-    public Optional<String> getRegularOptional() {
++    public OptionalNullable<String> getRegularOptional() {
+         if (regularOptional == null) {
+-            return Optional.empty();
++            return OptionalNullable.absent();
+         }
+         return regularOptional;
+     }
+@@ -127,9 +128,9 @@ public final class SearchRequest {
+      * @return Another optional nullable without default for comparison
+      */
+     @JsonIgnore
+-    public Optional<String> getRegularOptionalNoDefault() {
++    public OptionalNullable<String> getRegularOptionalNoDefault() {
+         if (regularOptionalNoDefault == null) {
+-            return Optional.empty();
++            return OptionalNullable.absent();
+         }
+         return regularOptionalNoDefault;
+     }
+@@ -178,19 +179,19 @@ public final class SearchRequest {
+ 
+     @JsonIgnoreProperties(ignoreUnknown = true)
+     public static final class Builder {
+-        private Optional<String> query = Optional.empty();
++        private OptionalNullable<String> query = OptionalNullable.absent();
+ 
+-        private Optional<Integer> limit = Optional.empty();
++        private OptionalNullable<Integer> limit = OptionalNullable.absent();
+ 
+-        private Optional<Boolean> includeArchived = Optional.empty();
++        private OptionalNullable<Boolean> includeArchived = OptionalNullable.absent();
+ 
+-        private Optional<SortOrder> sortOrder = Optional.empty();
++        private OptionalNullable<SortOrder> sortOrder = OptionalNullable.absent();
+ 
+-        private Optional<String> optionalWithoutDefault = Optional.empty();
++        private OptionalNullable<String> optionalWithoutDefault = OptionalNullable.absent();
+ 
+-        private Optional<String> regularOptional = Optional.empty();
++        private OptionalNullable<String> regularOptional = OptionalNullable.absent();
+ 
+-        private Optional<String> regularOptionalNoDefault = Optional.empty();
++        private OptionalNullable<String> regularOptionalNoDefault = OptionalNullable.absent();
+ 
+         @JsonAnySetter
+         private Map<String, Object> additionalProperties = new HashMap<>();
+@@ -212,23 +213,32 @@ public final class SearchRequest {
+          * <p>Search query - defaults to empty string when absent</p>
+          */
+         @JsonSetter(value = "query", nulls = Nulls.SKIP)
+-        public Builder query(Optional<String> query) {
++        public Builder query(OptionalNullable<String> query) {
+             this.query = query;
+             return this;
+         }
+ 
+         public Builder query(String query) {
+-            this.query = Optional.ofNullable(query);
++            this.query = OptionalNullable.of(query);
++            return this;
++        }
++
++        public Builder query(Optional<String> query) {
++            if (query.isPresent()) {
++                this.query = OptionalNullable.of(query.get());
++            } else {
++                this.query = OptionalNullable.absent();
++            }
+             return this;
+         }
+ 
+         public Builder query(Nullable<String> query) {
+             if (query.isNull()) {
+-                this.query = null;
++                this.query = OptionalNullable.ofNull();
+             } else if (query.isEmpty()) {
+-                this.query = Optional.empty();
++                this.query = OptionalNullable.absent();
+             } else {
+-                this.query = Optional.of(query.get());
++                this.query = OptionalNullable.of(query.get());
+             }
+             return this;
+         }
+@@ -237,23 +247,32 @@ public final class SearchRequest {
+          * <p>Max results - defaults to 10 when absent</p>
+          */
+         @JsonSetter(value = "limit", nulls = Nulls.SKIP)
+-        public Builder limit(Optional<Integer> limit) {
++        public Builder limit(OptionalNullable<Integer> limit) {
+             this.limit = limit;
+             return this;
+         }
+ 
+         public Builder limit(Integer limit) {
+-            this.limit = Optional.ofNullable(limit);
++            this.limit = OptionalNullable.of(limit);
++            return this;
++        }
++
++        public Builder limit(Optional<Integer> limit) {
++            if (limit.isPresent()) {
++                this.limit = OptionalNullable.of(limit.get());
++            } else {
++                this.limit = OptionalNullable.absent();
++            }
+             return this;
+         }
+ 
+         public Builder limit(Nullable<Integer> limit) {
+             if (limit.isNull()) {
+-                this.limit = null;
++                this.limit = OptionalNullable.ofNull();
+             } else if (limit.isEmpty()) {
+-                this.limit = Optional.empty();
++                this.limit = OptionalNullable.absent();
+             } else {
+-                this.limit = Optional.of(limit.get());
++                this.limit = OptionalNullable.of(limit.get());
+             }
+             return this;
+         }
+@@ -262,23 +281,32 @@ public final class SearchRequest {
+          * <p>Include archived items - defaults to false when absent</p>
+          */
+         @JsonSetter(value = "includeArchived", nulls = Nulls.SKIP)
+-        public Builder includeArchived(Optional<Boolean> includeArchived) {
++        public Builder includeArchived(OptionalNullable<Boolean> includeArchived) {
+             this.includeArchived = includeArchived;
+             return this;
+         }
+ 
+         public Builder includeArchived(Boolean includeArchived) {
+-            this.includeArchived = Optional.ofNullable(includeArchived);
++            this.includeArchived = OptionalNullable.of(includeArchived);
++            return this;
++        }
++
++        public Builder includeArchived(Optional<Boolean> includeArchived) {
++            if (includeArchived.isPresent()) {
++                this.includeArchived = OptionalNullable.of(includeArchived.get());
++            } else {
++                this.includeArchived = OptionalNullable.absent();
++            }
+             return this;
+         }
+ 
+         public Builder includeArchived(Nullable<Boolean> includeArchived) {
+             if (includeArchived.isNull()) {
+-                this.includeArchived = null;
++                this.includeArchived = OptionalNullable.ofNull();
+             } else if (includeArchived.isEmpty()) {
+-                this.includeArchived = Optional.empty();
++                this.includeArchived = OptionalNullable.absent();
+             } else {
+-                this.includeArchived = Optional.of(includeArchived.get());
++                this.includeArchived = OptionalNullable.of(includeArchived.get());
+             }
+             return this;
+         }
+@@ -287,23 +315,32 @@ public final class SearchRequest {
+          * <p>Sort order - defaults to ASC when absent</p>
+          */
+         @JsonSetter(value = "sortOrder", nulls = Nulls.SKIP)
+-        public Builder sortOrder(Optional<SortOrder> sortOrder) {
++        public Builder sortOrder(OptionalNullable<SortOrder> sortOrder) {
+             this.sortOrder = sortOrder;
+             return this;
+         }
+ 
+         public Builder sortOrder(SortOrder sortOrder) {
+-            this.sortOrder = Optional.ofNullable(sortOrder);
++            this.sortOrder = OptionalNullable.of(sortOrder);
++            return this;
++        }
++
++        public Builder sortOrder(Optional<SortOrder> sortOrder) {
++            if (sortOrder.isPresent()) {
++                this.sortOrder = OptionalNullable.of(sortOrder.get());
++            } else {
++                this.sortOrder = OptionalNullable.absent();
++            }
+             return this;
+         }
+ 
+         public Builder sortOrder(Nullable<SortOrder> sortOrder) {
+             if (sortOrder.isNull()) {
+-                this.sortOrder = null;
++                this.sortOrder = OptionalNullable.ofNull();
+             } else if (sortOrder.isEmpty()) {
+-                this.sortOrder = Optional.empty();
++                this.sortOrder = OptionalNullable.absent();
+             } else {
+-                this.sortOrder = Optional.of(sortOrder.get());
++                this.sortOrder = OptionalNullable.of(sortOrder.get());
+             }
+             return this;
+         }
+@@ -312,23 +349,32 @@ public final class SearchRequest {
+          * <p>Optional nullable without default - should check wasSpecified</p>
+          */
+         @JsonSetter(value = "optionalWithoutDefault", nulls = Nulls.SKIP)
+-        public Builder optionalWithoutDefault(Optional<String> optionalWithoutDefault) {
++        public Builder optionalWithoutDefault(OptionalNullable<String> optionalWithoutDefault) {
+             this.optionalWithoutDefault = optionalWithoutDefault;
+             return this;
+         }
+ 
+         public Builder optionalWithoutDefault(String optionalWithoutDefault) {
+-            this.optionalWithoutDefault = Optional.ofNullable(optionalWithoutDefault);
++            this.optionalWithoutDefault = OptionalNullable.of(optionalWithoutDefault);
++            return this;
++        }
++
++        public Builder optionalWithoutDefault(Optional<String> optionalWithoutDefault) {
++            if (optionalWithoutDefault.isPresent()) {
++                this.optionalWithoutDefault = OptionalNullable.of(optionalWithoutDefault.get());
++            } else {
++                this.optionalWithoutDefault = OptionalNullable.absent();
++            }
+             return this;
+         }
+ 
+         public Builder optionalWithoutDefault(Nullable<String> optionalWithoutDefault) {
+             if (optionalWithoutDefault.isNull()) {
+-                this.optionalWithoutDefault = null;
++                this.optionalWithoutDefault = OptionalNullable.ofNull();
+             } else if (optionalWithoutDefault.isEmpty()) {
+-                this.optionalWithoutDefault = Optional.empty();
++                this.optionalWithoutDefault = OptionalNullable.absent();
+             } else {
+-                this.optionalWithoutDefault = Optional.of(optionalWithoutDefault.get());
++                this.optionalWithoutDefault = OptionalNullable.of(optionalWithoutDefault.get());
+             }
+             return this;
+         }
+@@ -337,23 +383,32 @@ public final class SearchRequest {
+          * <p>Another optional nullable with default for comparison</p>
+          */
+         @JsonSetter(value = "regularOptional", nulls = Nulls.SKIP)
+-        public Builder regularOptional(Optional<String> regularOptional) {
++        public Builder regularOptional(OptionalNullable<String> regularOptional) {
+             this.regularOptional = regularOptional;
+             return this;
+         }
+ 
+         public Builder regularOptional(String regularOptional) {
+-            this.regularOptional = Optional.ofNullable(regularOptional);
++            this.regularOptional = OptionalNullable.of(regularOptional);
++            return this;
++        }
++
++        public Builder regularOptional(Optional<String> regularOptional) {
++            if (regularOptional.isPresent()) {
++                this.regularOptional = OptionalNullable.of(regularOptional.get());
++            } else {
++                this.regularOptional = OptionalNullable.absent();
++            }
+             return this;
+         }
+ 
+         public Builder regularOptional(Nullable<String> regularOptional) {
+             if (regularOptional.isNull()) {
+-                this.regularOptional = null;
++                this.regularOptional = OptionalNullable.ofNull();
+             } else if (regularOptional.isEmpty()) {
+-                this.regularOptional = Optional.empty();
++                this.regularOptional = OptionalNullable.absent();
+             } else {
+-                this.regularOptional = Optional.of(regularOptional.get());
++                this.regularOptional = OptionalNullable.of(regularOptional.get());
+             }
+             return this;
+         }
+@@ -362,23 +417,32 @@ public final class SearchRequest {
+          * <p>Another optional nullable without default for comparison</p>
+          */
+         @JsonSetter(value = "regularOptionalNoDefault", nulls = Nulls.SKIP)
+-        public Builder regularOptionalNoDefault(Optional<String> regularOptionalNoDefault) {
++        public Builder regularOptionalNoDefault(OptionalNullable<String> regularOptionalNoDefault) {
+             this.regularOptionalNoDefault = regularOptionalNoDefault;
+             return this;
+         }
+ 
+         public Builder regularOptionalNoDefault(String regularOptionalNoDefault) {
+-            this.regularOptionalNoDefault = Optional.ofNullable(regularOptionalNoDefault);
++            this.regularOptionalNoDefault = OptionalNullable.of(regularOptionalNoDefault);
++            return this;
++        }
++
++        public Builder regularOptionalNoDefault(Optional<String> regularOptionalNoDefault) {
++            if (regularOptionalNoDefault.isPresent()) {
++                this.regularOptionalNoDefault = OptionalNullable.of(regularOptionalNoDefault.get());
++            } else {
++                this.regularOptionalNoDefault = OptionalNullable.absent();
++            }
+             return this;
+         }
+ 
+         public Builder regularOptionalNoDefault(Nullable<String> regularOptionalNoDefault) {
+             if (regularOptionalNoDefault.isNull()) {
+-                this.regularOptionalNoDefault = null;
++                this.regularOptionalNoDefault = OptionalNullable.ofNull();
+             } else if (regularOptionalNoDefault.isEmpty()) {
+-                this.regularOptionalNoDefault = Optional.empty();
++                this.regularOptionalNoDefault = OptionalNullable.absent();
+             } else {
+-                this.regularOptionalNoDefault = Optional.of(regularOptionalNoDefault.get());
++                this.regularOptionalNoDefault = OptionalNullable.of(regularOptionalNoDefault.get());
+             }
+             return this;
+         }
+diff --git a/src/main/java/com/seed/javaOptionalNullableQueryParams/types/SearchResponse.java b/src/main/java/com/seed/javaOptionalNullableQueryParams/types/SearchResponse.java
+index ac584795a62..24285c6c20d 100644
+--- a/src/main/java/com/seed/javaOptionalNullableQueryParams/types/SearchResponse.java
++++ b/src/main/java/com/seed/javaOptionalNullableQueryParams/types/SearchResponse.java
+@@ -5,7 +5,6 @@ package com.seed.javaOptionalNullableQueryParams.types;
+ 
+ import com.fasterxml.jackson.annotation.JsonAnyGetter;
+ import com.fasterxml.jackson.annotation.JsonAnySetter;
+-import com.fasterxml.jackson.annotation.JsonIgnore;
+ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+ import com.fasterxml.jackson.annotation.JsonInclude;
+ import com.fasterxml.jackson.annotation.JsonProperty;
+@@ -15,6 +14,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+ import com.seed.javaOptionalNullableQueryParams.core.Nullable;
+ import com.seed.javaOptionalNullableQueryParams.core.NullableNonemptyFilter;
+ import com.seed.javaOptionalNullableQueryParams.core.ObjectMappers;
++import com.seed.javaOptionalNullableQueryParams.core.OptionalNullable;
+ import java.util.ArrayList;
+ import java.util.HashMap;
+ import java.util.List;
+@@ -29,23 +29,23 @@ public final class SearchResponse {
+ 
+     private final int totalCount;
+ 
+-    private final Optional<String> query;
++    private final OptionalNullable<String> query;
+ 
+-    private final Optional<Integer> limit;
++    private final OptionalNullable<Integer> limit;
+ 
+-    private final Optional<Boolean> includeArchived;
++    private final OptionalNullable<Boolean> includeArchived;
+ 
+-    private final Optional<SortOrder> sortOrder;
++    private final OptionalNullable<SortOrder> sortOrder;
+ 
+     private final Map<String, Object> additionalProperties;
+ 
+     private SearchResponse(
+             List<String> results,
+             int totalCount,
+-            Optional<String> query,
+-            Optional<Integer> limit,
+-            Optional<Boolean> includeArchived,
+-            Optional<SortOrder> sortOrder,
++            OptionalNullable<String> query,
++            OptionalNullable<Integer> limit,
++            OptionalNullable<Boolean> includeArchived,
++            OptionalNullable<SortOrder> sortOrder,
+             Map<String, Object> additionalProperties) {
+         this.results = results;
+         this.totalCount = totalCount;
+@@ -66,59 +66,63 @@ public final class SearchResponse {
+         return totalCount;
+     }
+ 
+-    @JsonIgnore
+-    public Optional<String> getQuery() {
++    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
++    @JsonProperty("query")
++    public OptionalNullable<String> getQuery() {
+         if (query == null) {
+-            return Optional.empty();
++            return OptionalNullable.absent();
+         }
+         return query;
+     }
+ 
+-    @JsonIgnore
+-    public Optional<Integer> getLimit() {
++    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
++    @JsonProperty("limit")
++    public OptionalNullable<Integer> getLimit() {
+         if (limit == null) {
+-            return Optional.empty();
++            return OptionalNullable.absent();
+         }
+         return limit;
+     }
+ 
+-    @JsonIgnore
+-    public Optional<Boolean> getIncludeArchived() {
++    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
++    @JsonProperty("includeArchived")
++    public OptionalNullable<Boolean> getIncludeArchived() {
+         if (includeArchived == null) {
+-            return Optional.empty();
++            return OptionalNullable.absent();
+         }
+         return includeArchived;
+     }
+ 
+-    @JsonIgnore
+-    public Optional<SortOrder> getSortOrder() {
++    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
++    @JsonProperty("sortOrder")
++    public OptionalNullable<SortOrder> getSortOrder() {
+         if (sortOrder == null) {
+-            return Optional.empty();
++            return OptionalNullable.absent();
+         }
+         return sortOrder;
+     }
+ 
+     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+     @JsonProperty("query")
+-    private Optional<String> _getQuery() {
++    private OptionalNullable<String> _getQuery() {
+         return query;
+     }
+ 
+     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+     @JsonProperty("limit")
+-    private Optional<Integer> _getLimit() {
++    private OptionalNullable<Integer> _getLimit() {
+         return limit;
+     }
+ 
+     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+     @JsonProperty("includeArchived")
+-    private Optional<Boolean> _getIncludeArchived() {
++    private OptionalNullable<Boolean> _getIncludeArchived() {
+         return includeArchived;
+     }
+ 
+     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+     @JsonProperty("sortOrder")
+-    private Optional<SortOrder> _getSortOrder() {
++    private OptionalNullable<SortOrder> _getSortOrder() {
+         return sortOrder;
+     }
+ 
+@@ -176,28 +180,36 @@ public final class SearchResponse {
+ 
+         _FinalStage addAllResults(List<String> results);
+ 
+-        _FinalStage query(Optional<String> query);
++        _FinalStage query(OptionalNullable<String> query);
+ 
+         _FinalStage query(String query);
+ 
++        _FinalStage query(Optional<String> query);
++
+         _FinalStage query(Nullable<String> query);
+ 
+-        _FinalStage limit(Optional<Integer> limit);
++        _FinalStage limit(OptionalNullable<Integer> limit);
+ 
+         _FinalStage limit(Integer limit);
+ 
++        _FinalStage limit(Optional<Integer> limit);
++
+         _FinalStage limit(Nullable<Integer> limit);
+ 
+-        _FinalStage includeArchived(Optional<Boolean> includeArchived);
++        _FinalStage includeArchived(OptionalNullable<Boolean> includeArchived);
+ 
+         _FinalStage includeArchived(Boolean includeArchived);
+ 
++        _FinalStage includeArchived(Optional<Boolean> includeArchived);
++
+         _FinalStage includeArchived(Nullable<Boolean> includeArchived);
+ 
+-        _FinalStage sortOrder(Optional<SortOrder> sortOrder);
++        _FinalStage sortOrder(OptionalNullable<SortOrder> sortOrder);
+ 
+         _FinalStage sortOrder(SortOrder sortOrder);
+ 
++        _FinalStage sortOrder(Optional<SortOrder> sortOrder);
++
+         _FinalStage sortOrder(Nullable<SortOrder> sortOrder);
+     }
+ 
+@@ -205,13 +217,13 @@ public final class SearchResponse {
+     public static final class Builder implements TotalCountStage, _FinalStage {
+         private int totalCount;
+ 
+-        private Optional<SortOrder> sortOrder = Optional.empty();
++        private OptionalNullable<SortOrder> sortOrder = OptionalNullable.absent();
+ 
+-        private Optional<Boolean> includeArchived = Optional.empty();
++        private OptionalNullable<Boolean> includeArchived = OptionalNullable.absent();
+ 
+-        private Optional<Integer> limit = Optional.empty();
++        private OptionalNullable<Integer> limit = OptionalNullable.absent();
+ 
+-        private Optional<String> query = Optional.empty();
++        private OptionalNullable<String> query = OptionalNullable.absent();
+ 
+         private List<String> results = new ArrayList<>();
+ 
+@@ -241,24 +253,34 @@ public final class SearchResponse {
+         @java.lang.Override
+         public _FinalStage sortOrder(Nullable<SortOrder> sortOrder) {
+             if (sortOrder.isNull()) {
+-                this.sortOrder = null;
++                this.sortOrder = OptionalNullable.ofNull();
+             } else if (sortOrder.isEmpty()) {
+-                this.sortOrder = Optional.empty();
++                this.sortOrder = OptionalNullable.absent();
++            } else {
++                this.sortOrder = OptionalNullable.of(sortOrder.get());
++            }
++            return this;
++        }
++
++        @java.lang.Override
++        public _FinalStage sortOrder(Optional<SortOrder> sortOrder) {
++            if (sortOrder.isPresent()) {
++                this.sortOrder = OptionalNullable.of(sortOrder.get());
+             } else {
+-                this.sortOrder = Optional.of(sortOrder.get());
++                this.sortOrder = OptionalNullable.absent();
+             }
+             return this;
+         }
+ 
+         @java.lang.Override
+         public _FinalStage sortOrder(SortOrder sortOrder) {
+-            this.sortOrder = Optional.ofNullable(sortOrder);
++            this.sortOrder = OptionalNullable.of(sortOrder);
+             return this;
+         }
+ 
+         @java.lang.Override
+         @JsonSetter(value = "sortOrder", nulls = Nulls.SKIP)
+-        public _FinalStage sortOrder(Optional<SortOrder> sortOrder) {
++        public _FinalStage sortOrder(OptionalNullable<SortOrder> sortOrder) {
+             this.sortOrder = sortOrder;
+             return this;
+         }
+@@ -266,24 +288,34 @@ public final class SearchResponse {
+         @java.lang.Override
+         public _FinalStage includeArchived(Nullable<Boolean> includeArchived) {
+             if (includeArchived.isNull()) {
+-                this.includeArchived = null;
++                this.includeArchived = OptionalNullable.ofNull();
+             } else if (includeArchived.isEmpty()) {
+-                this.includeArchived = Optional.empty();
++                this.includeArchived = OptionalNullable.absent();
+             } else {
+-                this.includeArchived = Optional.of(includeArchived.get());
++                this.includeArchived = OptionalNullable.of(includeArchived.get());
++            }
++            return this;
++        }
++
++        @java.lang.Override
++        public _FinalStage includeArchived(Optional<Boolean> includeArchived) {
++            if (includeArchived.isPresent()) {
++                this.includeArchived = OptionalNullable.of(includeArchived.get());
++            } else {
++                this.includeArchived = OptionalNullable.absent();
+             }
+             return this;
+         }
+ 
+         @java.lang.Override
+         public _FinalStage includeArchived(Boolean includeArchived) {
+-            this.includeArchived = Optional.ofNullable(includeArchived);
++            this.includeArchived = OptionalNullable.of(includeArchived);
+             return this;
+         }
+ 
+         @java.lang.Override
+         @JsonSetter(value = "includeArchived", nulls = Nulls.SKIP)
+-        public _FinalStage includeArchived(Optional<Boolean> includeArchived) {
++        public _FinalStage includeArchived(OptionalNullable<Boolean> includeArchived) {
+             this.includeArchived = includeArchived;
+             return this;
+         }
+@@ -291,24 +323,34 @@ public final class SearchResponse {
+         @java.lang.Override
+         public _FinalStage limit(Nullable<Integer> limit) {
+             if (limit.isNull()) {
+-                this.limit = null;
++                this.limit = OptionalNullable.ofNull();
+             } else if (limit.isEmpty()) {
+-                this.limit = Optional.empty();
++                this.limit = OptionalNullable.absent();
++            } else {
++                this.limit = OptionalNullable.of(limit.get());
++            }
++            return this;
++        }
++
++        @java.lang.Override
++        public _FinalStage limit(Optional<Integer> limit) {
++            if (limit.isPresent()) {
++                this.limit = OptionalNullable.of(limit.get());
+             } else {
+-                this.limit = Optional.of(limit.get());
++                this.limit = OptionalNullable.absent();
+             }
+             return this;
+         }
+ 
+         @java.lang.Override
+         public _FinalStage limit(Integer limit) {
+-            this.limit = Optional.ofNullable(limit);
++            this.limit = OptionalNullable.of(limit);
+             return this;
+         }
+ 
+         @java.lang.Override
+         @JsonSetter(value = "limit", nulls = Nulls.SKIP)
+-        public _FinalStage limit(Optional<Integer> limit) {
++        public _FinalStage limit(OptionalNullable<Integer> limit) {
+             this.limit = limit;
+             return this;
+         }
+@@ -316,24 +358,34 @@ public final class SearchResponse {
+         @java.lang.Override
+         public _FinalStage query(Nullable<String> query) {
+             if (query.isNull()) {
+-                this.query = null;
++                this.query = OptionalNullable.ofNull();
+             } else if (query.isEmpty()) {
+-                this.query = Optional.empty();
++                this.query = OptionalNullable.absent();
+             } else {
+-                this.query = Optional.of(query.get());
++                this.query = OptionalNullable.of(query.get());
++            }
++            return this;
++        }
++
++        @java.lang.Override
++        public _FinalStage query(Optional<String> query) {
++            if (query.isPresent()) {
++                this.query = OptionalNullable.of(query.get());
++            } else {
++                this.query = OptionalNullable.absent();
+             }
+             return this;
+         }
+ 
+         @java.lang.Override
+         public _FinalStage query(String query) {
+-            this.query = Optional.ofNullable(query);
++            this.query = OptionalNullable.of(query);
+             return this;
+         }
+ 
+         @java.lang.Override
+         @JsonSetter(value = "query", nulls = Nulls.SKIP)
+-        public _FinalStage query(Optional<String> query) {
++        public _FinalStage query(OptionalNullable<String> query) {
+             this.query = query;
+             return this;
+         }
+diff --git a/src/main/java/com/snippets/Example0.java b/src/main/java/com/snippets/Example0.java
+index df1ca2c5c74..c81605c034f 100644
+--- a/src/main/java/com/snippets/Example0.java
++++ b/src/main/java/com/snippets/Example0.java
+@@ -1,6 +1,7 @@
+ package com.snippets;
+ 
+ import com.seed.javaOptionalNullableQueryParams.SeedJavaOptionalNullableQueryParamsClient;
++import com.seed.javaOptionalNullableQueryParams.core.OptionalNullable;
+ import com.seed.javaOptionalNullableQueryParams.requests.SearchRequest;
+ import com.seed.javaOptionalNullableQueryParams.types.SortOrder;
+ 
+@@ -11,13 +12,13 @@ public class Example0 {
+                 .build();
+ 
+         client.search(SearchRequest.builder()
+-                .query("")
+-                .limit(1)
+-                .includeArchived(true)
+-                .sortOrder(SortOrder.ASC)
+-                .optionalWithoutDefault("optionalWithoutDefault")
+-                .regularOptional("default-value")
+-                .regularOptionalNoDefault("regularOptionalNoDefault")
++                .query(OptionalNullable.of(""))
++                .limit(OptionalNullable.of(1))
++                .includeArchived(OptionalNullable.of(true))
++                .sortOrder(OptionalNullable.of(SortOrder.ASC))
++                .optionalWithoutDefault(OptionalNullable.of("optionalWithoutDefault"))
++                .regularOptional(OptionalNullable.of("default-value"))
++                .regularOptionalNoDefault(OptionalNullable.of("regularOptionalNoDefault"))
+                 .build());
+     }
+ }

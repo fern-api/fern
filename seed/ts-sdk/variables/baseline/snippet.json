@@ -1,0 +1,16 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/{endpointParam}",
+                "method": "POST",
+                "identifier_override": "endpoint_service.post"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedVariablesClient } from \"@fern/variables\";\n\nconst client = new SeedVariablesClient({ environment: \"YOUR_BASE_URL\", rootVariable: \"YOUR_ROOT_VARIABLE\" });\nawait client.service.post();\n"
+            }
+        }
+    ],
+    "types": {}
+}

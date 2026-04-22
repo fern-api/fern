@@ -1,0 +1,148 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/api/users/{userId}",
+                "method": "GET",
+                "identifier_override": "endpoint_nullable-optional.getUser"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedNullableOptionalClient } from \"@fern/nullable-optional\";\n\nconst client = new SeedNullableOptionalClient({ environment: \"YOUR_BASE_URL\" });\nawait client.nullableOptional.getUser(\"userId\");\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/users",
+                "method": "POST",
+                "identifier_override": "endpoint_nullable-optional.createUser"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedNullableOptionalClient } from \"@fern/nullable-optional\";\n\nconst client = new SeedNullableOptionalClient({ environment: \"YOUR_BASE_URL\" });\nawait client.nullableOptional.createUser({\n    username: \"username\",\n    email: \"email\",\n    phone: \"phone\",\n    address: {\n        street: \"street\",\n        city: \"city\",\n        state: \"state\",\n        zipCode: \"zipCode\",\n        country: \"country\",\n        buildingId: \"buildingId\",\n        tenantId: \"tenantId\"\n    }\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/users/{userId}",
+                "method": "PATCH",
+                "identifier_override": "endpoint_nullable-optional.updateUser"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedNullableOptionalClient } from \"@fern/nullable-optional\";\n\nconst client = new SeedNullableOptionalClient({ environment: \"YOUR_BASE_URL\" });\nawait client.nullableOptional.updateUser(\"userId\", {\n    username: \"username\",\n    email: \"email\",\n    phone: \"phone\",\n    address: {\n        street: \"street\",\n        city: \"city\",\n        state: \"state\",\n        zipCode: \"zipCode\",\n        country: \"country\",\n        buildingId: \"buildingId\",\n        tenantId: \"tenantId\"\n    }\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/users",
+                "method": "GET",
+                "identifier_override": "endpoint_nullable-optional.listUsers"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedNullableOptionalClient } from \"@fern/nullable-optional\";\n\nconst client = new SeedNullableOptionalClient({ environment: \"YOUR_BASE_URL\" });\nawait client.nullableOptional.listUsers({\n    limit: 1,\n    offset: 1,\n    includeDeleted: true,\n    sortBy: \"sortBy\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/users/search",
+                "method": "GET",
+                "identifier_override": "endpoint_nullable-optional.searchUsers"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedNullableOptionalClient } from \"@fern/nullable-optional\";\n\nconst client = new SeedNullableOptionalClient({ environment: \"YOUR_BASE_URL\" });\nawait client.nullableOptional.searchUsers({\n    query: \"query\",\n    department: \"department\",\n    role: \"role\",\n    isActive: true\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/profiles/complex",
+                "method": "POST",
+                "identifier_override": "endpoint_nullable-optional.createComplexProfile"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedNullableOptionalClient } from \"@fern/nullable-optional\";\n\nconst client = new SeedNullableOptionalClient({ environment: \"YOUR_BASE_URL\" });\nawait client.nullableOptional.createComplexProfile({\n    id: \"id\",\n    nullableRole: \"ADMIN\",\n    optionalRole: \"ADMIN\",\n    optionalNullableRole: \"ADMIN\",\n    nullableStatus: \"active\",\n    optionalStatus: \"active\",\n    optionalNullableStatus: \"active\",\n    nullableNotification: {\n        type: \"email\",\n        emailAddress: \"emailAddress\",\n        subject: \"subject\",\n        htmlContent: \"htmlContent\"\n    },\n    optionalNotification: {\n        type: \"email\",\n        emailAddress: \"emailAddress\",\n        subject: \"subject\",\n        htmlContent: \"htmlContent\"\n    },\n    optionalNullableNotification: {\n        type: \"email\",\n        emailAddress: \"emailAddress\",\n        subject: \"subject\",\n        htmlContent: \"htmlContent\"\n    },\n    nullableSearchResult: {\n        type: \"user\",\n        id: \"id\",\n        username: \"username\",\n        email: \"email\",\n        phone: \"phone\",\n        createdAt: \"2024-01-15T09:30:00Z\",\n        updatedAt: \"2024-01-15T09:30:00Z\",\n        address: {\n            street: \"street\",\n            city: \"city\",\n            state: \"state\",\n            zipCode: \"zipCode\",\n            country: \"country\",\n            buildingId: \"buildingId\",\n            tenantId: \"tenantId\"\n        }\n    },\n    optionalSearchResult: {\n        type: \"user\",\n        id: \"id\",\n        username: \"username\",\n        email: \"email\",\n        phone: \"phone\",\n        createdAt: \"2024-01-15T09:30:00Z\",\n        updatedAt: \"2024-01-15T09:30:00Z\",\n        address: {\n            street: \"street\",\n            city: \"city\",\n            state: \"state\",\n            zipCode: \"zipCode\",\n            country: \"country\",\n            buildingId: \"buildingId\",\n            tenantId: \"tenantId\"\n        }\n    },\n    nullableArray: [\"nullableArray\", \"nullableArray\"],\n    optionalArray: [\"optionalArray\", \"optionalArray\"],\n    optionalNullableArray: [\"optionalNullableArray\", \"optionalNullableArray\"],\n    nullableListOfNullables: [\"nullableListOfNullables\", \"nullableListOfNullables\"],\n    nullableMapOfNullables: {\n        \"nullableMapOfNullables\": {\n            street: \"street\",\n            city: \"city\",\n            state: \"state\",\n            zipCode: \"zipCode\",\n            country: \"country\",\n            buildingId: \"buildingId\",\n            tenantId: \"tenantId\"\n        }\n    },\n    nullableListOfUnions: [{\n            type: \"email\",\n            emailAddress: \"emailAddress\",\n            subject: \"subject\",\n            htmlContent: \"htmlContent\"\n        }, {\n            type: \"email\",\n            emailAddress: \"emailAddress\",\n            subject: \"subject\",\n            htmlContent: \"htmlContent\"\n        }],\n    optionalMapOfEnums: {\n        \"optionalMapOfEnums\": \"ADMIN\"\n    }\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/profiles/complex/{profileId}",
+                "method": "GET",
+                "identifier_override": "endpoint_nullable-optional.getComplexProfile"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedNullableOptionalClient } from \"@fern/nullable-optional\";\n\nconst client = new SeedNullableOptionalClient({ environment: \"YOUR_BASE_URL\" });\nawait client.nullableOptional.getComplexProfile(\"profileId\");\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/profiles/complex/{profileId}",
+                "method": "PATCH",
+                "identifier_override": "endpoint_nullable-optional.updateComplexProfile"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedNullableOptionalClient } from \"@fern/nullable-optional\";\n\nconst client = new SeedNullableOptionalClient({ environment: \"YOUR_BASE_URL\" });\nawait client.nullableOptional.updateComplexProfile(\"profileId\", {\n    nullableRole: \"ADMIN\",\n    nullableStatus: \"active\",\n    nullableNotification: {\n        type: \"email\",\n        emailAddress: \"emailAddress\",\n        subject: \"subject\",\n        htmlContent: \"htmlContent\"\n    },\n    nullableSearchResult: {\n        type: \"user\",\n        id: \"id\",\n        username: \"username\",\n        email: \"email\",\n        phone: \"phone\",\n        createdAt: \"2024-01-15T09:30:00Z\",\n        updatedAt: \"2024-01-15T09:30:00Z\",\n        address: {\n            street: \"street\",\n            city: \"city\",\n            state: \"state\",\n            zipCode: \"zipCode\",\n            country: \"country\",\n            buildingId: \"buildingId\",\n            tenantId: \"tenantId\"\n        }\n    },\n    nullableArray: [\"nullableArray\", \"nullableArray\"]\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/test/deserialization",
+                "method": "POST",
+                "identifier_override": "endpoint_nullable-optional.testDeserialization"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedNullableOptionalClient } from \"@fern/nullable-optional\";\n\nconst client = new SeedNullableOptionalClient({ environment: \"YOUR_BASE_URL\" });\nawait client.nullableOptional.testDeserialization({\n    requiredString: \"requiredString\",\n    nullableString: \"nullableString\",\n    optionalString: \"optionalString\",\n    optionalNullableString: \"optionalNullableString\",\n    nullableEnum: \"ADMIN\",\n    optionalEnum: \"active\",\n    nullableUnion: {\n        type: \"email\",\n        emailAddress: \"emailAddress\",\n        subject: \"subject\",\n        htmlContent: \"htmlContent\"\n    },\n    optionalUnion: {\n        type: \"user\",\n        id: \"id\",\n        username: \"username\",\n        email: \"email\",\n        phone: \"phone\",\n        createdAt: \"2024-01-15T09:30:00Z\",\n        updatedAt: \"2024-01-15T09:30:00Z\",\n        address: {\n            street: \"street\",\n            city: \"city\",\n            state: \"state\",\n            zipCode: \"zipCode\",\n            country: \"country\",\n            buildingId: \"buildingId\",\n            tenantId: \"tenantId\"\n        }\n    },\n    nullableList: [\"nullableList\", \"nullableList\"],\n    nullableMap: {\n        \"nullableMap\": 1\n    },\n    nullableObject: {\n        street: \"street\",\n        city: \"city\",\n        state: \"state\",\n        zipCode: \"zipCode\",\n        country: \"country\",\n        buildingId: \"buildingId\",\n        tenantId: \"tenantId\"\n    },\n    optionalObject: {\n        id: \"id\",\n        name: \"name\",\n        domain: \"domain\",\n        employeeCount: 1\n    }\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/users/filter",
+                "method": "GET",
+                "identifier_override": "endpoint_nullable-optional.filterByRole"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedNullableOptionalClient } from \"@fern/nullable-optional\";\n\nconst client = new SeedNullableOptionalClient({ environment: \"YOUR_BASE_URL\" });\nawait client.nullableOptional.filterByRole({\n    role: \"ADMIN\",\n    status: \"active\",\n    secondaryRole: \"ADMIN\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/users/{userId}/notifications",
+                "method": "GET",
+                "identifier_override": "endpoint_nullable-optional.getNotificationSettings"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedNullableOptionalClient } from \"@fern/nullable-optional\";\n\nconst client = new SeedNullableOptionalClient({ environment: \"YOUR_BASE_URL\" });\nawait client.nullableOptional.getNotificationSettings(\"userId\");\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/users/{userId}/tags",
+                "method": "PUT",
+                "identifier_override": "endpoint_nullable-optional.updateTags"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedNullableOptionalClient } from \"@fern/nullable-optional\";\n\nconst client = new SeedNullableOptionalClient({ environment: \"YOUR_BASE_URL\" });\nawait client.nullableOptional.updateTags(\"userId\", {\n    tags: [\"tags\", \"tags\"],\n    categories: [\"categories\", \"categories\"],\n    labels: [\"labels\", \"labels\"]\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/api/search",
+                "method": "POST",
+                "identifier_override": "endpoint_nullable-optional.getSearchResults"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedNullableOptionalClient } from \"@fern/nullable-optional\";\n\nconst client = new SeedNullableOptionalClient({ environment: \"YOUR_BASE_URL\" });\nawait client.nullableOptional.getSearchResults({\n    query: \"query\",\n    filters: {\n        \"filters\": \"filters\"\n    },\n    includeTypes: [\"includeTypes\", \"includeTypes\"]\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}

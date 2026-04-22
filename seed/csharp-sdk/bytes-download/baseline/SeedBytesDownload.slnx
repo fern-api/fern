@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/SeedBytesDownload.Test/SeedBytesDownload.Test.csproj" />
+  <Project Path="src/SeedBytesDownload/SeedBytesDownload.csproj" />
+</Solution>

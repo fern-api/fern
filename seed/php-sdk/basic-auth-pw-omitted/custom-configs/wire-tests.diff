@@ -1,0 +1,366 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index b69701d79dd..ee59041e02d 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-php-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "enable-wire-tests": true
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "manual",
+diff --git a/phpunit.xml b/phpunit.xml
+index 54630a51163..718cb50ee17 100644
+--- a/phpunit.xml
++++ b/phpunit.xml
+@@ -1,7 +1,7 @@
+-<phpunit bootstrap="vendor/autoload.php">
++<phpunit bootstrap="tests/Wire/bootstrap.php">
+     <testsuites>
+         <testsuite name="Test Suite">
+             <directory suffix="Test.php">tests</directory>
+         </testsuite>
+     </testsuites>
+-</phpunit>
+\ No newline at end of file
++</phpunit>
+diff --git a/src/Core/.php-cs-fixer.cache b/src/Core/.php-cs-fixer.cache
+index a67cde5496e..bcee3bb5d80 100644
+--- a/src/Core/.php-cs-fixer.cache
++++ b/src/Core/.php-cs-fixer.cache
+@@ -1 +1 @@
+-{"php":"8.3.12","version":"3.94.2","indent":"    ","lineEnding":"\n","rules":{"binary_operator_spaces":{"default":"at_least_single_space"},"blank_line_after_opening_tag":true,"blank_line_between_import_groups":true,"blank_lines_before_namespace":true,"braces_position":{"allow_single_line_anonymous_functions":false,"allow_single_line_empty_anonymous_classes":true},"class_definition":{"inline_constructor_arguments":false,"space_before_parenthesis":true},"compact_nullable_type_declaration":true,"declare_equal_normalize":true,"lowercase_cast":true,"lowercase_static_reference":true,"modifier_keywords":true,"new_with_parentheses":{"anonymous_class":true},"no_blank_lines_after_class_opening":true,"no_extra_blank_lines":{"tokens":["use"]},"no_leading_import_slash":true,"no_whitespace_in_blank_line":true,"ordered_class_elements":{"order":["use_trait"]},"ordered_imports":{"imports_order":["class","function","const"],"sort_algorithm":"none"},"return_type_declaration":true,"short_scalar_cast":true,"single_import_per_statement":{"group_to_single_imports":false},"single_space_around_construct":{"constructs_followed_by_a_single_space":["abstract","as","case","catch","class","const_import","do","else","elseif","final","finally","for","foreach","function","function_import","if","insteadof","interface","namespace","new","private","protected","public","static","switch","trait","try","use","use_lambda","while"],"constructs_preceded_by_a_single_space":["as","else","elseif","use_lambda"]},"single_trait_insert_per_statement":true,"ternary_operator_spaces":true,"unary_operator_spaces":{"only_dec_inc":true},"blank_line_after_namespace":true,"constant_case":true,"control_structure_braces":true,"control_structure_continuation_position":true,"elseif":true,"function_declaration":{"closure_fn_spacing":"one"},"indentation_type":true,"line_ending":true,"lowercase_keywords":true,"method_argument_space":{"after_heredoc":false,"attribute_placement":"ignore","on_multiline":"ensure_fully_multiline"},"no_break_comment":true,"no_closing_tag":true,"no_multiple_statements_per_line":true,"no_space_around_double_colon":true,"no_spaces_after_function_name":true,"no_trailing_whitespace":true,"no_trailing_whitespace_in_comment":true,"single_blank_line_at_eof":true,"single_class_element_per_statement":{"elements":["property"]},"single_line_after_imports":true,"spaces_inside_parentheses":true,"statement_indentation":true,"switch_case_semicolon_to_colon":true,"switch_case_space":true,"encoding":true,"full_opening_tag":true},"ruleCustomisationPolicyVersion":"null-policy","hashes":{"Types\/Union.php":"26e03090bce7a21b86db71900361a19c","Types\/Constant.php":"9412ff078732deb8ce27575526ff99fd","Types\/ArrayType.php":"22c2cb301803cf8b3929c6e390bb2e1a","Types\/Date.php":"afc335ea4ba6d6625e7564b97c2b979a","Json\/JsonDeserializer.php":"83846e1a2d9b9feaf7c5e5af9cf36bca","Json\/Utils.php":"76ddf5907155d40d61ff6827879f92e2","Json\/JsonEncoder.php":"55de3593fb5fa1d0ffc2f39324cf89ed","Json\/JsonSerializableType.php":"f3cdc335030d56d441652ce45ab8ad1f","Json\/JsonApiRequest.php":"b77cdb3aee5c0b39e39dad2a80f827e7","Json\/JsonSerializer.php":"8fd58f12e920068703c4dbd3614e1fb1","Multipart\/MultipartApiRequest.php":"ed04563e1aafe9c00d2bb6a654229e6f","Json\/JsonProperty.php":"89da0901bc38e805eb9187c509c1967b","Json\/JsonDecoder.php":"a32316e5672f5dd910e7a0ed6854eee0","Client\/BaseApiRequest.php":"55f034ae0ba603dee0a05f0c8a2adb91","Client\/HttpClientBuilder.php":"f5fb55cb9bb6d2f55c95fdb724b2cc79","Client\/HttpMethod.php":"4d5109e5adc2275948a7d2e82a2ed8c4","Client\/MockHttpClient.php":"4512e970a0c7ccf0eba94c9bea9f24e1","Client\/RawClient.php":"e9d871978e45bcb5ce34f1063699cf95","Client\/RetryDecoratingClient.php":"58c97c33fbbe12e90f6e15655ed42145","Multipart\/MultipartFormData.php":"9b48f0ea8dd4a20bfa8c3e037ab2c230","Multipart\/MultipartFormDataPart.php":"6830d6e2c16636b224992b3a5dd6912e"}}
+\ No newline at end of file
++{"php":"8.3.12","version":"3.94.2","indent":"    ","lineEnding":"\n","rules":{"binary_operator_spaces":{"default":"at_least_single_space"},"blank_line_after_opening_tag":true,"blank_line_between_import_groups":true,"blank_lines_before_namespace":true,"braces_position":{"allow_single_line_anonymous_functions":false,"allow_single_line_empty_anonymous_classes":true},"class_definition":{"inline_constructor_arguments":false,"space_before_parenthesis":true},"compact_nullable_type_declaration":true,"declare_equal_normalize":true,"lowercase_cast":true,"lowercase_static_reference":true,"modifier_keywords":true,"new_with_parentheses":{"anonymous_class":true},"no_blank_lines_after_class_opening":true,"no_extra_blank_lines":{"tokens":["use"]},"no_leading_import_slash":true,"no_whitespace_in_blank_line":true,"ordered_class_elements":{"order":["use_trait"]},"ordered_imports":{"imports_order":["class","function","const"],"sort_algorithm":"none"},"return_type_declaration":true,"short_scalar_cast":true,"single_import_per_statement":{"group_to_single_imports":false},"single_space_around_construct":{"constructs_followed_by_a_single_space":["abstract","as","case","catch","class","const_import","do","else","elseif","final","finally","for","foreach","function","function_import","if","insteadof","interface","namespace","new","private","protected","public","static","switch","trait","try","use","use_lambda","while"],"constructs_preceded_by_a_single_space":["as","else","elseif","use_lambda"]},"single_trait_insert_per_statement":true,"ternary_operator_spaces":true,"unary_operator_spaces":{"only_dec_inc":true},"blank_line_after_namespace":true,"constant_case":true,"control_structure_braces":true,"control_structure_continuation_position":true,"elseif":true,"function_declaration":{"closure_fn_spacing":"one"},"indentation_type":true,"line_ending":true,"lowercase_keywords":true,"method_argument_space":{"after_heredoc":false,"attribute_placement":"ignore","on_multiline":"ensure_fully_multiline"},"no_break_comment":true,"no_closing_tag":true,"no_multiple_statements_per_line":true,"no_space_around_double_colon":true,"no_spaces_after_function_name":true,"no_trailing_whitespace":true,"no_trailing_whitespace_in_comment":true,"single_blank_line_at_eof":true,"single_class_element_per_statement":{"elements":["property"]},"single_line_after_imports":true,"spaces_inside_parentheses":true,"statement_indentation":true,"switch_case_semicolon_to_colon":true,"switch_case_space":true,"encoding":true,"full_opening_tag":true},"ruleCustomisationPolicyVersion":"null-policy","hashes":{"Multipart\/MultipartApiRequest.php":"ed04563e1aafe9c00d2bb6a654229e6f","Types\/Union.php":"26e03090bce7a21b86db71900361a19c","Types\/Constant.php":"9412ff078732deb8ce27575526ff99fd","Types\/ArrayType.php":"22c2cb301803cf8b3929c6e390bb2e1a","Types\/Date.php":"afc335ea4ba6d6625e7564b97c2b979a","Json\/JsonDeserializer.php":"83846e1a2d9b9feaf7c5e5af9cf36bca","Json\/Utils.php":"76ddf5907155d40d61ff6827879f92e2","Json\/JsonEncoder.php":"55de3593fb5fa1d0ffc2f39324cf89ed","Json\/JsonSerializableType.php":"f3cdc335030d56d441652ce45ab8ad1f","Json\/JsonApiRequest.php":"b77cdb3aee5c0b39e39dad2a80f827e7","Json\/JsonSerializer.php":"8fd58f12e920068703c4dbd3614e1fb1","Json\/JsonProperty.php":"89da0901bc38e805eb9187c509c1967b","Json\/JsonDecoder.php":"a32316e5672f5dd910e7a0ed6854eee0","Client\/BaseApiRequest.php":"55f034ae0ba603dee0a05f0c8a2adb91","Client\/HttpClientBuilder.php":"f5fb55cb9bb6d2f55c95fdb724b2cc79","Client\/HttpMethod.php":"4d5109e5adc2275948a7d2e82a2ed8c4","Client\/MockHttpClient.php":"4512e970a0c7ccf0eba94c9bea9f24e1","Client\/RawClient.php":"e9d871978e45bcb5ce34f1063699cf95","Client\/RetryDecoratingClient.php":"58c97c33fbbe12e90f6e15655ed42145","Multipart\/MultipartFormData.php":"9b48f0ea8dd4a20bfa8c3e037ab2c230","Multipart\/MultipartFormDataPart.php":"6830d6e2c16636b224992b3a5dd6912e"}}
+\ No newline at end of file
+diff --git a/tests/Wire/BasicAuthWireTest.php b/tests/Wire/BasicAuthWireTest.php
+new file mode 100644
+index 00000000000..0125f21dcc8
+--- /dev/null
++++ b/tests/Wire/BasicAuthWireTest.php
+@@ -0,0 +1,70 @@
++<?php
++
++namespace Seed\Tests;
++
++use Seed\Tests\Wire\WireMockTestCase;
++use Seed\SeedClient;
++
++class BasicAuthWireTest extends WireMockTestCase
++{
++    /**
++     * @var SeedClient $client
++     */
++    private SeedClient $client;
++
++    /**
++     */
++    public function testGetWithBasicAuth(): void {
++        $testId = 'basic_auth.get_with_basic_auth.0';
++        $this->client->basicAuth->getWithBasicAuth(
++            [
++                'headers' => [
++                    'X-Test-Id' => 'basic_auth.get_with_basic_auth.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "GET",
++            "/basic-auth",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    public function testPostWithBasicAuth(): void {
++        $testId = 'basic_auth.post_with_basic_auth.0';
++        $this->client->basicAuth->postWithBasicAuth(
++            [
++                'key' => "value",
++            ],
++            [
++                'headers' => [
++                    'X-Test-Id' => 'basic_auth.post_with_basic_auth.0',
++                ],
++            ],
++        );
++        $this->verifyRequestCount(
++            $testId,
++            "POST",
++            "/basic-auth",
++            null,
++            1
++        );
++    }
++
++    /**
++     */
++    protected function setUp(): void {
++        parent::setUp();
++        $wiremockUrl = getenv('WIREMOCK_URL') ?: 'http://localhost:8080';
++        $this->client = new SeedClient(
++            username: 'test-username',
++        options: [
++            'baseUrl' => $wiremockUrl,
++        ],
++        );
++    }
++}
+diff --git a/tests/Wire/WireMockTestCase.php b/tests/Wire/WireMockTestCase.php
+new file mode 100644
+index 00000000000..995ba76229b
+--- /dev/null
++++ b/tests/Wire/WireMockTestCase.php
+@@ -0,0 +1,88 @@
++<?php
++
++namespace Seed\Tests\Wire;
++
++use Http\Discovery\Psr17FactoryDiscovery;
++use Http\Discovery\Psr18ClientDiscovery;
++use PHPUnit\Framework\TestCase;
++use Seed\Core\Json\JsonEncoder;
++
++/**
++ * Base test case for WireMock-based wire tests.
++ *
++ * The WireMock container lifecycle is managed by the bootstrap file (tests/Wire/bootstrap.php)
++ * which starts the container once before all tests and stops it after all tests complete.
++ */
++abstract class WireMockTestCase extends TestCase
++{
++    /**
++     * Verifies the number of requests made to WireMock filtered by test ID for concurrency safety.
++     *
++     * @param string $testId The test ID used to filter requests
++     * @param string $method The HTTP method (GET, POST, etc.)
++     * @param string $urlPath The URL path to match
++     * @param array<string, string|array<string>>|null $queryParams Query parameters to match
++     * @param int $expected Expected number of requests
++     */
++    protected function verifyRequestCount(
++        string $testId,
++        string $method,
++        string $urlPath,
++        ?array $queryParams,
++        int $expected
++    ): void {
++        $client = Psr18ClientDiscovery::find();
++        $requestFactory = Psr17FactoryDiscovery::findRequestFactory();
++        $streamFactory = Psr17FactoryDiscovery::findStreamFactory();
++
++        $body = [
++            'method' => $method,
++            'urlPath' => $urlPath,
++            'headers' => [
++                'X-Test-Id' => ['equalTo' => $testId],
++            ],
++        ];
++        if ($queryParams !== null && $queryParams !== []) {
++            $body['queryParameters'] = [];
++            foreach ($queryParams as $k => $v) {
++                if (is_array($v)) {
++                    $matchers = [];
++                    foreach ($v as $item) {
++                        $matchers[] = ['equalTo' => (string) $item];
++                    }
++                    $body['queryParameters'][$k] = ['hasExactly' => $matchers];
++                } else {
++                    $body['queryParameters'][$k] = ['equalTo' => (string) $v];
++                }
++            }
++        }
++
++        $wiremockUrl = getenv('WIREMOCK_URL') ?: 'http://localhost:8080';
++        $request = $requestFactory->createRequest('POST', $wiremockUrl . '/__admin/requests/find')
++            ->withHeader('Content-Type', 'application/json')
++            ->withBody($streamFactory->createStream(JsonEncoder::encode($body)));
++        $response = $client->sendRequest($request);
++
++        $this->assertSame(200, $response->getStatusCode(), 'Failed to query WireMock requests');
++
++        $json = json_decode((string) $response->getBody(), true);
++        
++        // Ensure we have an array; otherwise, fail the test.
++        if (!is_array($json)) {
++            $this->fail('Expected WireMock to return a JSON object.');
++        }
++
++        /** @var array<string, mixed> $json */
++        $requests = [];
++        if (isset($json['requests']) && is_array($json['requests'])) {
++            $requests = $json['requests'];
++        }
++
++        /** @var array<int, mixed> $requests */
++        $this->assertCount(
++            $expected,
++            $requests,
++            sprintf('Expected %d requests, found %d', $expected, count($requests))
++        );
++    }
++}
+diff --git a/tests/Wire/bootstrap.php b/tests/Wire/bootstrap.php
+new file mode 100644
+index 00000000000..20026664131
+--- /dev/null
++++ b/tests/Wire/bootstrap.php
+@@ -0,0 +1,55 @@
++<?php
++
++/**
++ * Bootstrap file for wire tests.
++ *
++ * This file is loaded once before any tests run and manages the WireMock
++ * container lifecycle - starting it once at the beginning and stopping it
++ * after all tests complete.
++ */
++
++require_once __DIR__ . '/../../vendor/autoload.php';
++
++$projectRoot = \dirname(__DIR__, 2);
++$dockerComposeFile = $projectRoot . '/wiremock/docker-compose.test.yml';
++
++// If WIREMOCK_URL is already set (external orchestration), skip container management
++if (getenv('WIREMOCK_URL') !== false) {
++    return;
++}
++
++echo "\nStarting WireMock container...\n";
++$cmd = sprintf(
++    'docker compose -f %s up -d --wait 2>&1',
++    escapeshellarg($dockerComposeFile)
++);
++exec($cmd, $output, $exitCode);
++if ($exitCode !== 0) {
++    throw new \RuntimeException("Failed to start WireMock: " . implode("\n", $output));
++}
++
++// Discover the dynamically assigned port
++$portCmd = sprintf(
++    'docker compose -f %s port wiremock 8080 2>&1',
++    escapeshellarg($dockerComposeFile)
++);
++exec($portCmd, $portOutput, $portExitCode);
++if ($portExitCode === 0 && !empty($portOutput[0])) {
++    $parts = explode(':', $portOutput[0]);
++    $port = end($parts);
++    putenv("WIREMOCK_URL=http://localhost:{$port}");
++    echo "WireMock container is ready on port {$port}\n";
++} else {
++    putenv('WIREMOCK_URL=http://localhost:8080');
++    echo "WireMock container is ready (default port 8080)\n";
++}
++
++// Register shutdown function to stop the container after all tests complete
++register_shutdown_function(function () use ($dockerComposeFile) {
++    echo "\nStopping WireMock container...\n";
++    $cmd = sprintf(
++        'docker compose -f %s down -v 2>&1',
++        escapeshellarg($dockerComposeFile)
++    );
++    exec($cmd);
++});
+diff --git a/wiremock/docker-compose.test.yml b/wiremock/docker-compose.test.yml
+new file mode 100644
+index 00000000000..58747d54a46
+--- /dev/null
++++ b/wiremock/docker-compose.test.yml
+@@ -0,0 +1,14 @@
++services:
++  wiremock:
++    image: wiremock/wiremock:3.9.1
++    ports:
++      - "0:8080"  # Use dynamic port to avoid conflicts with concurrent tests
++    volumes:
++      - ./wiremock-mappings.json:/home/wiremock/mappings/wiremock-mappings.json
++    command: ["--global-response-templating", "--verbose"]
++    healthcheck:
++      test: ["CMD", "curl", "-f", "http://localhost:8080/__admin/health"]
++      interval: 2s
++      timeout: 5s
++      retries: 15
++      start_period: 5s
+diff --git a/wiremock/wiremock-mappings.json b/wiremock/wiremock-mappings.json
+new file mode 100644
+index 00000000000..8a3e7dd565a
+--- /dev/null
++++ b/wiremock/wiremock-mappings.json
+@@ -0,0 +1,70 @@
++{
++  "mappings": [
++    {
++      "id": "ce59c023-78fc-4d8d-8e8c-95f5e1a6204a",
++      "name": "getWithBasicAuth - default",
++      "request": {
++        "urlPathTemplate": "/basic-auth",
++        "method": "GET",
++        "headers": {
++          "Authorization": {
++            "equalTo": "Basic dGVzdC11c2VybmFtZTo="
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "true",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "ce59c023-78fc-4d8d-8e8c-95f5e1a6204a",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      },
++      "postServeActions": []
++    },
++    {
++      "id": "9cf6385c-29ea-4710-8792-fd2e00adc7c7",
++      "name": "postWithBasicAuth - default",
++      "request": {
++        "urlPathTemplate": "/basic-auth",
++        "method": "POST",
++        "headers": {
++          "Authorization": {
++            "equalTo": "Basic dGVzdC11c2VybmFtZTo="
++          }
++        }
++      },
++      "response": {
++        "status": 200,
++        "body": "true",
++        "headers": {
++          "Content-Type": "application/json"
++        }
++      },
++      "uuid": "9cf6385c-29ea-4710-8792-fd2e00adc7c7",
++      "persistent": true,
++      "priority": 3,
++      "metadata": {
++        "mocklab": {
++          "created": {
++            "at": "2020-01-01T00:00:00.000Z",
++            "via": "SYSTEM"
++          }
++        }
++      }
++    }
++  ],
++  "meta": {
++    "total": 2
++  }
++}
+\ No newline at end of file

@@ -1,0 +1,17 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/hello",
+                "method": "GET",
+                "identifier_override": "endpoint_tasktest.hello"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedCsharpNamespaceConflict;\n\nvar client = new SeedCsharpNamespaceConflictClient();\nawait client.Tasktest.HelloAsync();\n"
+            }
+        }
+    ]
+}

@@ -1,0 +1,1584 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index f1753c47972..b41877811fa 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-java-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "package-prefix": "com.customprefix"
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "manual",
+diff --git a/.gradle/8.14.3/checksums/checksums.lock b/.gradle/8.14.3/checksums/checksums.lock
+index 9372c0ac239f2f6348e6f2fb345d34c4b386d424..668fcba804911ae5247a7718478f6a4a023e5315 100644
+GIT binary patch
+literal 17
+TcmZQpxa)gyK5w8k0~7!ND@p@b
+
+literal 17
+TcmZSXdc<+$j`?jL1}FdkIBf)W
+
+diff --git a/.gradle/8.14.3/executionHistory/executionHistory.bin b/.gradle/8.14.3/executionHistory/executionHistory.bin
+index a904d8acb2a001f97eb1cfc260c6967eeb2fb006..802e380ea6311ae9007ef7c0332d2f843bf716fa 100644
+GIT binary patch
+literal 48430
+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
+
+literal 47709
+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
+
+diff --git a/.gradle/8.14.3/executionHistory/executionHistory.lock b/.gradle/8.14.3/executionHistory/executionHistory.lock
+index bd98111ae0b62485eced0a0a02a11b359eb39a90..4871078efb60a6e31744ac2f09a5c0bed2f21674 100644
+GIT binary patch
+literal 17
+UcmZQ(nye`N<*@cf1_<B)04Ih6XaE2J
+
+literal 17
+TcmZR6%Pa0L$1A7600A5T8D|02
+
+diff --git a/.gradle/8.14.3/fileHashes/fileHashes.bin b/.gradle/8.14.3/fileHashes/fileHashes.bin
+index 48ef2da7669125bab3a51c5ee215ee8eaf7cbd55..5c9be468b8fb9a05614da0eea2cddb9a0fc85925 100644
+GIT binary patch
+literal 25347
+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
+abyV(wdex4c<&DYvA7&#3sQxH}G5!xZ%*@{a
+
+literal 25347
+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
+AumAu6
+
+diff --git a/.gradle/8.14.3/fileHashes/fileHashes.lock b/.gradle/8.14.3/fileHashes/fileHashes.lock
+index 7c7970ab06a673d0f045c7bb326096d7a2cab03e..9339fb772be41ae8e55fc3a0996af5845efc0209 100644
+GIT binary patch
+literal 17
+TcmZP;>0vQ-$eC2a00F%K9-0Fj
+
+literal 17
+UcmZQJxyU=6<*DZt1_<Z{04)XtKmY&$
+
+diff --git a/.gradle/buildOutputCleanup/buildOutputCleanup.lock b/.gradle/buildOutputCleanup/buildOutputCleanup.lock
+index 7b9cabbd7a346a55726d26ccff02a3d7220d6a0b..5a894d2b72ca0e44163e2d54930c1f9a7da2db21 100644
+GIT binary patch
+literal 17
+UcmZSHWy}^nWm2Uw0|ZC{04C%EDF6Tf
+
+literal 17
+UcmZS1YJSz28usot0|ZC`06dWe8UO$Q
+
+diff --git a/.gradle/buildOutputCleanup/cache.properties b/.gradle/buildOutputCleanup/cache.properties
+index 9daeebcd825..a44543055df 100644
+--- a/.gradle/buildOutputCleanup/cache.properties
++++ b/.gradle/buildOutputCleanup/cache.properties
+@@ -1,2 +1,2 @@
+-#Wed Apr 22 20:50:05 UTC 2026
++#Wed Apr 22 20:58:23 UTC 2026
+ gradle.version=8.14.3
+diff --git a/.gradle/buildOutputCleanup/outputFiles.bin b/.gradle/buildOutputCleanup/outputFiles.bin
+index 7e8703daa04f2ff8d66befc446a74ec2fedf5c66..e909e8e827955cadebb3fe4f7c59f931d1664ec2 100644
+GIT binary patch
+delta 318
+zcmdlznQ`T0#tkMCf+8Koyj@Z9dQl8u;F&l%Rzg8ww&3g9lY712Km{cymr5wqZ&~TC
+zYP_qX6e8&H^*<Es5p@aHKDXlwR53eD{JDcbe_z3aIH<TkO#Fl8vR$Q@y-z{KZDHbH
+zQ=aPac`_`9ifhBfe}+HSIMqLw^Dsoh<KkplNrlO|k`fM9F302oI?Q%Jb+p2C*cfEg
+z6<txRf@*jS6SvPTjTimjqzqMGJh@iVLLfLG*{{R&4b1t|C*PH{;DPC2U|{^XQSpcP
+RMgtA8&5j;{jFbI5!~p;}iK+kq
+
+delta 349
+zcmZ2EnQ`}I#tkMCnxbugYs|8*SF$sJfv4nuD43qZ#xs5U-)5+|_GDKHg~_!N67^^L
+z=kDwI$6EuD@OTW<@a(pd!vd#jMyLi`nD~cQf$oJ;TYo{ti{au2wUQp)oy!U}=ORq}
+zb4gU5r(U`RRQxMUoZ)TLl8S4JoW)RsR!)|cRM23__{JBOr}`2qI31>1IbJB7+e+0I
+zD(*koR8nE`TuB3sum*P9E=BY2PziRJhOmu2*?#FKuR_IJC*PH{P^kzORjA6$I1Lp{
+egeiv63=B-18x?<uZ!{1P+wABO$T+#dQxgDZx0_r5
+
+diff --git a/.gradle/file-system.probe b/.gradle/file-system.probe
+index 4278178f4fdff903a69d28fbbf66fbd0c8518073..126ad0342660efb6e03ad50a258dc96da704c31b 100644
+GIT binary patch
+literal 8
+PcmZQzV4S<{&z2hi3o8TN
+
+literal 8
+PcmZQzV4S<{Yh4up3QPk+
+
+diff --git a/README.md b/README.md
+index a6fd7895fd4..993493fe236 100644
+--- a/README.md
++++ b/README.md
+@@ -55,8 +55,8 @@ Instantiate and use the client with the following:
+ ```java
+ package com.example.usage;
+ 
+-import com.seed.api.SeedApiClient;
+-import com.seed.api.resources.imdb.types.CreateMovieRequest;
++import com.customprefix.SeedApiClient;
++import com.customprefix.resources.imdb.types.CreateMovieRequest;
+ 
+ public class Example {
+     public static void main(String[] args) {
+@@ -81,7 +81,7 @@ public class Example {
+ You can set a custom base URL when constructing the client.
+ 
+ ```java
+-import com.seed.api.SeedApiClient;
++import com.customprefix.SeedApiClient;
+ 
+ SeedApiClient client = SeedApiClient
+     .builder()
+@@ -94,7 +94,7 @@ SeedApiClient client = SeedApiClient
+ When the API returns a non-success status code (4xx or 5xx response), an API exception will be thrown.
+ 
+ ```java
+-import com.seed.api.core.SeedApiApiException;
++import com.customprefix.core.SeedApiApiException;
+ 
+ try{
+     client.imdb().createMovie(...);
+@@ -111,7 +111,7 @@ This SDK is built to work with any instance of `OkHttpClient`. By default, if no
+ However, you can pass your own client like so:
+ 
+ ```java
+-import com.seed.api.SeedApiClient;
++import com.customprefix.SeedApiClient;
+ import okhttp3.OkHttpClient;
+ 
+ OkHttpClient customClient = ...;
+@@ -139,7 +139,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
+ Use the `maxRetries` client option to configure this behavior.
+ 
+ ```java
+-import com.seed.api.SeedApiClient;
++import com.customprefix.SeedApiClient;
+ 
+ SeedApiClient client = SeedApiClient
+     .builder()
+@@ -151,8 +151,8 @@ SeedApiClient client = SeedApiClient
+ 
+ The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
+ ```java
+-import com.seed.api.SeedApiClient;
+-import com.seed.api.core.RequestOptions;
++import com.customprefix.SeedApiClient;
++import com.customprefix.core.RequestOptions;
+ 
+ // Client level
+ SeedApiClient client = SeedApiClient
+@@ -175,8 +175,8 @@ client.imdb().createMovie(
+ The SDK allows you to add custom headers to requests. You can configure headers at the client level or at the request level.
+ 
+ ```java
+-import com.seed.api.SeedApiClient;
+-import com.seed.api.core.RequestOptions;
++import com.customprefix.SeedApiClient;
++import com.customprefix.core.RequestOptions;
+ 
+ // Client level
+ SeedApiClient client = SeedApiClient
+diff --git a/build/spotless/spotlessJava/src/main/java/com/snippets/Example0.java b/build/spotless/spotlessJava/src/main/java/com/snippets/Example0.java
+index 9615b4c0288..4a72959e945 100644
+--- a/build/spotless/spotlessJava/src/main/java/com/snippets/Example0.java
++++ b/build/spotless/spotlessJava/src/main/java/com/snippets/Example0.java
+@@ -1,7 +1,7 @@
+ package com.snippets;
+ 
+-import com.seed.api.SeedApiClient;
+-import com.seed.api.resources.imdb.types.CreateMovieRequest;
++import com.customprefix.SeedApiClient;
++import com.customprefix.resources.imdb.types.CreateMovieRequest;
+ 
+ public class Example0 {
+     public static void main(String[] args) {
+diff --git a/build/spotless/spotlessJava/src/main/java/com/snippets/Example1.java b/build/spotless/spotlessJava/src/main/java/com/snippets/Example1.java
+index 8dabe337c6d..b43ec1fcaa4 100644
+--- a/build/spotless/spotlessJava/src/main/java/com/snippets/Example1.java
++++ b/build/spotless/spotlessJava/src/main/java/com/snippets/Example1.java
+@@ -1,6 +1,6 @@
+ package com.snippets;
+ 
+-import com.seed.api.SeedApiClient;
++import com.customprefix.SeedApiClient;
+ 
+ public class Example1 {
+     public static void main(String[] args) {
+diff --git a/build/spotless/spotlessJava/src/main/java/com/snippets/Example2.java b/build/spotless/spotlessJava/src/main/java/com/snippets/Example2.java
+index 9308127d260..0da00c861b2 100644
+--- a/build/spotless/spotlessJava/src/main/java/com/snippets/Example2.java
++++ b/build/spotless/spotlessJava/src/main/java/com/snippets/Example2.java
+@@ -1,6 +1,6 @@
+ package com.snippets;
+ 
+-import com.seed.api.SeedApiClient;
++import com.customprefix.SeedApiClient;
+ 
+ public class Example2 {
+     public static void main(String[] args) {
+diff --git a/sample-app/src/main/java/sample/App.java b/sample-app/src/main/java/sample/App.java
+index 8d293789008..f6605a72635 100644
+--- a/sample-app/src/main/java/sample/App.java
++++ b/sample-app/src/main/java/sample/App.java
+@@ -8,6 +8,6 @@ import java.lang.String;
+ 
+ public final class App {
+   public static void main(String[] args) {
+-    // import com.seed.api.AsyncSeedApiClient
++    // import com.customprefix.AsyncSeedApiClient
+   }
+ }
+diff --git a/snippet.json b/snippet.json
+index 81741c62714..174da8d269a 100644
+--- a/snippet.json
++++ b/snippet.json
+@@ -9,8 +9,8 @@
+             },
+             "snippet": {
+                 "type": "java",
+-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.imdb.types.CreateMovieRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.imdb().createMovie(\n            CreateMovieRequest\n                .builder()\n                .title(\"title\")\n                .rating(1.1)\n                .build()\n        );\n    }\n}\n",
+-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.imdb.types.CreateMovieRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.imdb().createMovie(\n            CreateMovieRequest\n                .builder()\n                .title(\"title\")\n                .rating(1.1)\n                .build()\n        );\n    }\n}\n"
++                "sync_client": "package com.example.usage;\n\nimport com.customprefix.SeedApiClient;\nimport com.customprefix.resources.imdb.types.CreateMovieRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.imdb().createMovie(\n            CreateMovieRequest\n                .builder()\n                .title(\"title\")\n                .rating(1.1)\n                .build()\n        );\n    }\n}\n",
++                "async_client": "package com.example.usage;\n\nimport com.customprefix.SeedApiClient;\nimport com.customprefix.resources.imdb.types.CreateMovieRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.imdb().createMovie(\n            CreateMovieRequest\n                .builder()\n                .title(\"title\")\n                .rating(1.1)\n                .build()\n        );\n    }\n}\n"
+             }
+         },
+         {
+@@ -22,8 +22,8 @@
+             },
+             "snippet": {
+                 "type": "java",
+-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.imdb().getMovie(\"movieId\");\n    }\n}\n",
+-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.imdb().getMovie(\"movieId\");\n    }\n}\n"
++                "sync_client": "package com.example.usage;\n\nimport com.customprefix.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.imdb().getMovie(\"movieId\");\n    }\n}\n",
++                "async_client": "package com.example.usage;\n\nimport com.customprefix.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.imdb().getMovie(\"movieId\");\n    }\n}\n"
+             }
+         },
+         {
+@@ -35,8 +35,8 @@
+             },
+             "snippet": {
+                 "type": "java",
+-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.imdb().getMovie(\"movieId\");\n    }\n}\n",
+-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.imdb().getMovie(\"movieId\");\n    }\n}\n"
++                "sync_client": "package com.example.usage;\n\nimport com.customprefix.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.imdb().getMovie(\"movieId\");\n    }\n}\n",
++                "async_client": "package com.example.usage;\n\nimport com.customprefix.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.imdb().getMovie(\"movieId\");\n    }\n}\n"
+             }
+         }
+     ],
+diff --git a/src/main/java/com/seed/api/AsyncSeedApiClient.java b/src/main/java/com/customprefix/AsyncSeedApiClient.java
+similarity index 79%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-custom-package-prefix/baseline/src/main/java/com/seed/api/AsyncSeedApiClient.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-EUbfH4K6tSjQ/src/main/java/com/customprefix/AsyncSeedApiClient.java
+index 0a72aa63d8a..8aee0206331 100644
+--- a/src/main/java/com/seed/api/AsyncSeedApiClient.java
++++ b/src/main/java/com/customprefix/AsyncSeedApiClient.java
+@@ -1,11 +1,11 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api;
++package com.customprefix;
+ 
+-import com.seed.api.core.ClientOptions;
+-import com.seed.api.core.Suppliers;
+-import com.seed.api.resources.imdb.AsyncImdbClient;
++import com.customprefix.core.ClientOptions;
++import com.customprefix.core.Suppliers;
++import com.customprefix.resources.imdb.AsyncImdbClient;
+ import java.util.function.Supplier;
+ 
+ public class AsyncSeedApiClient {
+diff --git a/src/main/java/com/seed/api/AsyncSeedApiClientBuilder.java b/src/main/java/com/customprefix/AsyncSeedApiClientBuilder.java
+similarity index 97%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-custom-package-prefix/baseline/src/main/java/com/seed/api/AsyncSeedApiClientBuilder.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-EUbfH4K6tSjQ/src/main/java/com/customprefix/AsyncSeedApiClientBuilder.java
+index b624ca93efc..dd96ba9c205 100644
+--- a/src/main/java/com/seed/api/AsyncSeedApiClientBuilder.java
++++ b/src/main/java/com/customprefix/AsyncSeedApiClientBuilder.java
+@@ -1,11 +1,11 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api;
++package com.customprefix;
+ 
+-import com.seed.api.core.ClientOptions;
+-import com.seed.api.core.Environment;
+-import com.seed.api.core.LogConfig;
++import com.customprefix.core.ClientOptions;
++import com.customprefix.core.Environment;
++import com.customprefix.core.LogConfig;
+ import java.util.HashMap;
+ import java.util.Map;
+ import java.util.Optional;
+diff --git a/src/main/java/com/seed/api/SeedApiClient.java b/src/main/java/com/customprefix/SeedApiClient.java
+similarity index 79%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-custom-package-prefix/baseline/src/main/java/com/seed/api/SeedApiClient.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-EUbfH4K6tSjQ/src/main/java/com/customprefix/SeedApiClient.java
+index 2be7ffd319a..9a3441f72e7 100644
+--- a/src/main/java/com/seed/api/SeedApiClient.java
++++ b/src/main/java/com/customprefix/SeedApiClient.java
+@@ -1,11 +1,11 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api;
++package com.customprefix;
+ 
+-import com.seed.api.core.ClientOptions;
+-import com.seed.api.core.Suppliers;
+-import com.seed.api.resources.imdb.ImdbClient;
++import com.customprefix.core.ClientOptions;
++import com.customprefix.core.Suppliers;
++import com.customprefix.resources.imdb.ImdbClient;
+ import java.util.function.Supplier;
+ 
+ public class SeedApiClient {
+diff --git a/src/main/java/com/seed/api/SeedApiClientBuilder.java b/src/main/java/com/customprefix/SeedApiClientBuilder.java
+similarity index 97%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-custom-package-prefix/baseline/src/main/java/com/seed/api/SeedApiClientBuilder.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-EUbfH4K6tSjQ/src/main/java/com/customprefix/SeedApiClientBuilder.java
+index a25ba4605bc..9e1dbcb5315 100644
+--- a/src/main/java/com/seed/api/SeedApiClientBuilder.java
++++ b/src/main/java/com/customprefix/SeedApiClientBuilder.java
+@@ -1,11 +1,11 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api;
++package com.customprefix;
+ 
+-import com.seed.api.core.ClientOptions;
+-import com.seed.api.core.Environment;
+-import com.seed.api.core.LogConfig;
++import com.customprefix.core.ClientOptions;
++import com.customprefix.core.Environment;
++import com.customprefix.core.LogConfig;
+ import java.util.HashMap;
+ import java.util.Map;
+ import java.util.Optional;
+diff --git a/src/main/java/com/seed/api/core/ClientOptions.java b/src/main/java/com/customprefix/core/ClientOptions.java
+similarity index 99%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-custom-package-prefix/baseline/src/main/java/com/seed/api/core/ClientOptions.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-EUbfH4K6tSjQ/src/main/java/com/customprefix/core/ClientOptions.java
+index 59edd70955c..83b1c256c4e 100644
+--- a/src/main/java/com/seed/api/core/ClientOptions.java
++++ b/src/main/java/com/customprefix/core/ClientOptions.java
+@@ -1,7 +1,7 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api.core;
++package com.customprefix.core;
+ 
+ import java.util.HashMap;
+ import java.util.Map;
+diff --git a/src/main/java/com/seed/api/core/ConsoleLogger.java b/src/main/java/com/customprefix/core/ConsoleLogger.java
+similarity index 97%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-custom-package-prefix/baseline/src/main/java/com/seed/api/core/ConsoleLogger.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-EUbfH4K6tSjQ/src/main/java/com/customprefix/core/ConsoleLogger.java
+index 0deabc0b79f..e2ba10baa31 100644
+--- a/src/main/java/com/seed/api/core/ConsoleLogger.java
++++ b/src/main/java/com/customprefix/core/ConsoleLogger.java
+@@ -1,7 +1,7 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api.core;
++package com.customprefix.core;
+ 
+ import java.util.logging.Level;
+ 
+diff --git a/src/main/java/com/seed/api/core/DateTimeDeserializer.java b/src/main/java/com/customprefix/core/DateTimeDeserializer.java
+similarity index 98%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-custom-package-prefix/baseline/src/main/java/com/seed/api/core/DateTimeDeserializer.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-EUbfH4K6tSjQ/src/main/java/com/customprefix/core/DateTimeDeserializer.java
+index eac7d50c71a..7ec50181466 100644
+--- a/src/main/java/com/seed/api/core/DateTimeDeserializer.java
++++ b/src/main/java/com/customprefix/core/DateTimeDeserializer.java
+@@ -1,7 +1,7 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api.core;
++package com.customprefix.core;
+ 
+ import com.fasterxml.jackson.core.JsonParser;
+ import com.fasterxml.jackson.core.JsonToken;
+diff --git a/src/main/java/com/seed/api/core/DoubleSerializer.java b/src/main/java/com/customprefix/core/DoubleSerializer.java
+similarity index 97%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-custom-package-prefix/baseline/src/main/java/com/seed/api/core/DoubleSerializer.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-EUbfH4K6tSjQ/src/main/java/com/customprefix/core/DoubleSerializer.java
+index 2390bfbe569..ea64b17b2be 100644
+--- a/src/main/java/com/seed/api/core/DoubleSerializer.java
++++ b/src/main/java/com/customprefix/core/DoubleSerializer.java
+@@ -1,7 +1,7 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api.core;
++package com.customprefix.core;
+ 
+ import com.fasterxml.jackson.core.JsonGenerator;
+ import com.fasterxml.jackson.databind.JsonSerializer;
+diff --git a/src/main/java/com/seed/api/core/Environment.java b/src/main/java/com/customprefix/core/Environment.java
+similarity index 92%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-custom-package-prefix/baseline/src/main/java/com/seed/api/core/Environment.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-EUbfH4K6tSjQ/src/main/java/com/customprefix/core/Environment.java
+index 8a286722bb2..8a7a2a0c750 100644
+--- a/src/main/java/com/seed/api/core/Environment.java
++++ b/src/main/java/com/customprefix/core/Environment.java
+@@ -1,7 +1,7 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api.core;
++package com.customprefix.core;
+ 
+ public final class Environment {
+     private final String url;
+diff --git a/src/main/java/com/seed/api/core/FileStream.java b/src/main/java/com/customprefix/core/FileStream.java
+similarity index 98%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-custom-package-prefix/baseline/src/main/java/com/seed/api/core/FileStream.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-EUbfH4K6tSjQ/src/main/java/com/customprefix/core/FileStream.java
+index a71e7946986..c334ce346f7 100644
+--- a/src/main/java/com/seed/api/core/FileStream.java
++++ b/src/main/java/com/customprefix/core/FileStream.java
+@@ -1,7 +1,7 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api.core;
++package com.customprefix.core;
+ 
+ import java.io.InputStream;
+ import java.util.Objects;
+diff --git a/src/main/java/com/seed/api/core/ILogger.java b/src/main/java/com/customprefix/core/ILogger.java
+similarity index 96%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-custom-package-prefix/baseline/src/main/java/com/seed/api/core/ILogger.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-EUbfH4K6tSjQ/src/main/java/com/customprefix/core/ILogger.java
+index 866d4814dd5..ac8538d9094 100644
+--- a/src/main/java/com/seed/api/core/ILogger.java
++++ b/src/main/java/com/customprefix/core/ILogger.java
+@@ -1,7 +1,7 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api.core;
++package com.customprefix.core;
+ 
+ /**
+  * Interface for custom logger implementations.
+diff --git a/src/main/java/com/seed/api/core/InputStreamRequestBody.java b/src/main/java/com/customprefix/core/InputStreamRequestBody.java
+similarity index 98%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-custom-package-prefix/baseline/src/main/java/com/seed/api/core/InputStreamRequestBody.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-EUbfH4K6tSjQ/src/main/java/com/customprefix/core/InputStreamRequestBody.java
+index a1e136889aa..3368abda87a 100644
+--- a/src/main/java/com/seed/api/core/InputStreamRequestBody.java
++++ b/src/main/java/com/customprefix/core/InputStreamRequestBody.java
+@@ -1,7 +1,7 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api.core;
++package com.customprefix.core;
+ 
+ import java.io.IOException;
+ import java.io.InputStream;
+diff --git a/src/main/java/com/seed/api/core/LogConfig.java b/src/main/java/com/customprefix/core/LogConfig.java
+similarity index 98%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-custom-package-prefix/baseline/src/main/java/com/seed/api/core/LogConfig.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-EUbfH4K6tSjQ/src/main/java/com/customprefix/core/LogConfig.java
+index dd31bc7a654..d659dab0c7d 100644
+--- a/src/main/java/com/seed/api/core/LogConfig.java
++++ b/src/main/java/com/customprefix/core/LogConfig.java
+@@ -1,7 +1,7 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api.core;
++package com.customprefix.core;
+ 
+ /**
+  * Configuration for SDK logging.
+diff --git a/src/main/java/com/seed/api/core/LogLevel.java b/src/main/java/com/customprefix/core/LogLevel.java
+similarity index 96%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-custom-package-prefix/baseline/src/main/java/com/seed/api/core/LogLevel.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-EUbfH4K6tSjQ/src/main/java/com/customprefix/core/LogLevel.java
+index 2ef88f853ea..f9236d92e12 100644
+--- a/src/main/java/com/seed/api/core/LogLevel.java
++++ b/src/main/java/com/customprefix/core/LogLevel.java
+@@ -1,7 +1,7 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api.core;
++package com.customprefix.core;
+ 
+ /**
+  * Log levels for SDK logging configuration.
+diff --git a/src/main/java/com/seed/api/core/Logger.java b/src/main/java/com/customprefix/core/Logger.java
+similarity index 98%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-custom-package-prefix/baseline/src/main/java/com/seed/api/core/Logger.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-EUbfH4K6tSjQ/src/main/java/com/customprefix/core/Logger.java
+index 353f696fcf3..e92b01e9395 100644
+--- a/src/main/java/com/seed/api/core/Logger.java
++++ b/src/main/java/com/customprefix/core/Logger.java
+@@ -1,7 +1,7 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api.core;
++package com.customprefix.core;
+ 
+ /**
+  * SDK logger that filters messages based on level and silent mode.
+diff --git a/src/main/java/com/seed/api/core/LoggingInterceptor.java b/src/main/java/com/customprefix/core/LoggingInterceptor.java
+similarity index 99%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-custom-package-prefix/baseline/src/main/java/com/seed/api/core/LoggingInterceptor.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-EUbfH4K6tSjQ/src/main/java/com/customprefix/core/LoggingInterceptor.java
+index 39a8eadeb90..71b06bee481 100644
+--- a/src/main/java/com/seed/api/core/LoggingInterceptor.java
++++ b/src/main/java/com/customprefix/core/LoggingInterceptor.java
+@@ -1,7 +1,7 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api.core;
++package com.customprefix.core;
+ 
+ import java.io.IOException;
+ import java.util.Arrays;
+diff --git a/src/main/java/com/seed/api/core/MediaTypes.java b/src/main/java/com/customprefix/core/MediaTypes.java
+similarity index 89%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-custom-package-prefix/baseline/src/main/java/com/seed/api/core/MediaTypes.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-EUbfH4K6tSjQ/src/main/java/com/customprefix/core/MediaTypes.java
+index 4a8d1cf301d..fcf1b8a8bfa 100644
+--- a/src/main/java/com/seed/api/core/MediaTypes.java
++++ b/src/main/java/com/customprefix/core/MediaTypes.java
+@@ -1,7 +1,7 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api.core;
++package com.customprefix.core;
+ 
+ import okhttp3.MediaType;
+ 
+diff --git a/src/main/java/com/seed/api/core/Nullable.java b/src/main/java/com/customprefix/core/Nullable.java
+similarity index 99%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-custom-package-prefix/baseline/src/main/java/com/seed/api/core/Nullable.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-EUbfH4K6tSjQ/src/main/java/com/customprefix/core/Nullable.java
+index ca50b2d8d50..9c9687cc9c7 100644
+--- a/src/main/java/com/seed/api/core/Nullable.java
++++ b/src/main/java/com/customprefix/core/Nullable.java
+@@ -1,7 +1,7 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api.core;
++package com.customprefix.core;
+ 
+ import java.util.Optional;
+ import java.util.function.Function;
+diff --git a/src/main/java/com/seed/api/core/NullableNonemptyFilter.java b/src/main/java/com/customprefix/core/NullableNonemptyFilter.java
+similarity index 93%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-custom-package-prefix/baseline/src/main/java/com/seed/api/core/NullableNonemptyFilter.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-EUbfH4K6tSjQ/src/main/java/com/customprefix/core/NullableNonemptyFilter.java
+index dea5d181d48..4b4cb380e69 100644
+--- a/src/main/java/com/seed/api/core/NullableNonemptyFilter.java
++++ b/src/main/java/com/customprefix/core/NullableNonemptyFilter.java
+@@ -1,7 +1,7 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api.core;
++package com.customprefix.core;
+ 
+ import java.util.Optional;
+ 
+diff --git a/src/main/java/com/seed/api/core/ObjectMappers.java b/src/main/java/com/customprefix/core/ObjectMappers.java
+similarity index 98%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-custom-package-prefix/baseline/src/main/java/com/seed/api/core/ObjectMappers.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-EUbfH4K6tSjQ/src/main/java/com/customprefix/core/ObjectMappers.java
+index 2e443b07d91..78ce5d914fc 100644
+--- a/src/main/java/com/seed/api/core/ObjectMappers.java
++++ b/src/main/java/com/customprefix/core/ObjectMappers.java
+@@ -1,7 +1,7 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api.core;
++package com.customprefix.core;
+ 
+ import com.fasterxml.jackson.annotation.JsonInclude;
+ import com.fasterxml.jackson.core.JsonProcessingException;
+diff --git a/src/main/java/com/seed/api/core/QueryStringMapper.java b/src/main/java/com/customprefix/core/QueryStringMapper.java
+similarity index 99%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-custom-package-prefix/baseline/src/main/java/com/seed/api/core/QueryStringMapper.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-EUbfH4K6tSjQ/src/main/java/com/customprefix/core/QueryStringMapper.java
+index 3e364e6f3d5..9eca3e6a525 100644
+--- a/src/main/java/com/seed/api/core/QueryStringMapper.java
++++ b/src/main/java/com/customprefix/core/QueryStringMapper.java
+@@ -1,7 +1,7 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api.core;
++package com.customprefix.core;
+ 
+ import com.fasterxml.jackson.databind.JsonNode;
+ import com.fasterxml.jackson.databind.ObjectMapper;
+diff --git a/src/main/java/com/seed/api/core/RequestOptions.java b/src/main/java/com/customprefix/core/RequestOptions.java
+similarity index 99%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-custom-package-prefix/baseline/src/main/java/com/seed/api/core/RequestOptions.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-EUbfH4K6tSjQ/src/main/java/com/customprefix/core/RequestOptions.java
+index a2e3c3c550c..45b29113388 100644
+--- a/src/main/java/com/seed/api/core/RequestOptions.java
++++ b/src/main/java/com/customprefix/core/RequestOptions.java
+@@ -1,7 +1,7 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api.core;
++package com.customprefix.core;
+ 
+ import java.util.HashMap;
+ import java.util.Map;
+diff --git a/src/main/java/com/seed/api/core/ResponseBodyInputStream.java b/src/main/java/com/customprefix/core/ResponseBodyInputStream.java
+similarity index 98%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-custom-package-prefix/baseline/src/main/java/com/seed/api/core/ResponseBodyInputStream.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-EUbfH4K6tSjQ/src/main/java/com/customprefix/core/ResponseBodyInputStream.java
+index db05d538255..7ec3762ce4b 100644
+--- a/src/main/java/com/seed/api/core/ResponseBodyInputStream.java
++++ b/src/main/java/com/customprefix/core/ResponseBodyInputStream.java
+@@ -1,7 +1,7 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api.core;
++package com.customprefix.core;
+ 
+ import java.io.FilterInputStream;
+ import java.io.IOException;
+diff --git a/src/main/java/com/seed/api/core/ResponseBodyReader.java b/src/main/java/com/customprefix/core/ResponseBodyReader.java
+similarity index 98%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-custom-package-prefix/baseline/src/main/java/com/seed/api/core/ResponseBodyReader.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-EUbfH4K6tSjQ/src/main/java/com/customprefix/core/ResponseBodyReader.java
+index 97fcf7a0efb..8d943224aa6 100644
+--- a/src/main/java/com/seed/api/core/ResponseBodyReader.java
++++ b/src/main/java/com/customprefix/core/ResponseBodyReader.java
+@@ -1,7 +1,7 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api.core;
++package com.customprefix.core;
+ 
+ import java.io.FilterReader;
+ import java.io.IOException;
+diff --git a/src/main/java/com/seed/api/core/RetryInterceptor.java b/src/main/java/com/customprefix/core/RetryInterceptor.java
+similarity index 99%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-custom-package-prefix/baseline/src/main/java/com/seed/api/core/RetryInterceptor.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-EUbfH4K6tSjQ/src/main/java/com/customprefix/core/RetryInterceptor.java
+index 0d331c15247..7b14ca589a0 100644
+--- a/src/main/java/com/seed/api/core/RetryInterceptor.java
++++ b/src/main/java/com/customprefix/core/RetryInterceptor.java
+@@ -1,7 +1,7 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api.core;
++package com.customprefix.core;
+ 
+ import java.io.IOException;
+ import java.time.Duration;
+diff --git a/src/main/java/com/seed/api/core/Rfc2822DateTimeDeserializer.java b/src/main/java/com/customprefix/core/Rfc2822DateTimeDeserializer.java
+similarity index 96%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-custom-package-prefix/baseline/src/main/java/com/seed/api/core/Rfc2822DateTimeDeserializer.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-EUbfH4K6tSjQ/src/main/java/com/customprefix/core/Rfc2822DateTimeDeserializer.java
+index 268edd8c55b..a0bde8393a1 100644
+--- a/src/main/java/com/seed/api/core/Rfc2822DateTimeDeserializer.java
++++ b/src/main/java/com/customprefix/core/Rfc2822DateTimeDeserializer.java
+@@ -1,7 +1,7 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api.core;
++package com.customprefix.core;
+ 
+ import com.fasterxml.jackson.core.JsonParser;
+ import com.fasterxml.jackson.databind.DeserializationContext;
+diff --git a/src/main/java/com/seed/api/core/SeedApiApiException.java b/src/main/java/com/customprefix/core/SeedApiApiException.java
+similarity index 98%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-custom-package-prefix/baseline/src/main/java/com/seed/api/core/SeedApiApiException.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-EUbfH4K6tSjQ/src/main/java/com/customprefix/core/SeedApiApiException.java
+index ab4985c15f9..8b5dfae4cba 100644
+--- a/src/main/java/com/seed/api/core/SeedApiApiException.java
++++ b/src/main/java/com/customprefix/core/SeedApiApiException.java
+@@ -1,7 +1,7 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api.core;
++package com.customprefix.core;
+ 
+ import java.util.ArrayList;
+ import java.util.HashMap;
+diff --git a/src/main/java/com/seed/api/core/SeedApiException.java b/src/main/java/com/customprefix/core/SeedApiException.java
+similarity index 92%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-custom-package-prefix/baseline/src/main/java/com/seed/api/core/SeedApiException.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-EUbfH4K6tSjQ/src/main/java/com/customprefix/core/SeedApiException.java
+index cf823606667..4f9f1c4e3f1 100644
+--- a/src/main/java/com/seed/api/core/SeedApiException.java
++++ b/src/main/java/com/customprefix/core/SeedApiException.java
+@@ -1,7 +1,7 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api.core;
++package com.customprefix.core;
+ 
+ /**
+  * This class serves as the base exception for all errors in the SDK.
+diff --git a/src/main/java/com/seed/api/core/SeedApiHttpResponse.java b/src/main/java/com/customprefix/core/SeedApiHttpResponse.java
+similarity index 96%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-custom-package-prefix/baseline/src/main/java/com/seed/api/core/SeedApiHttpResponse.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-EUbfH4K6tSjQ/src/main/java/com/customprefix/core/SeedApiHttpResponse.java
+index 814561a79e0..c90b7a081e2 100644
+--- a/src/main/java/com/seed/api/core/SeedApiHttpResponse.java
++++ b/src/main/java/com/customprefix/core/SeedApiHttpResponse.java
+@@ -1,7 +1,7 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api.core;
++package com.customprefix.core;
+ 
+ import java.util.ArrayList;
+ import java.util.HashMap;
+diff --git a/src/main/java/com/seed/api/core/SseEvent.java b/src/main/java/com/customprefix/core/SseEvent.java
+similarity index 98%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-custom-package-prefix/baseline/src/main/java/com/seed/api/core/SseEvent.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-EUbfH4K6tSjQ/src/main/java/com/customprefix/core/SseEvent.java
+index 9775f211086..a3e43aa6afd 100644
+--- a/src/main/java/com/seed/api/core/SseEvent.java
++++ b/src/main/java/com/customprefix/core/SseEvent.java
+@@ -1,7 +1,7 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api.core;
++package com.customprefix.core;
+ 
+ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+ import com.fasterxml.jackson.annotation.JsonInclude;
+diff --git a/src/main/java/com/seed/api/core/SseEventParser.java b/src/main/java/com/customprefix/core/SseEventParser.java
+similarity index 99%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-custom-package-prefix/baseline/src/main/java/com/seed/api/core/SseEventParser.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-EUbfH4K6tSjQ/src/main/java/com/customprefix/core/SseEventParser.java
+index b8a888d0dda..8af55ed58d0 100644
+--- a/src/main/java/com/seed/api/core/SseEventParser.java
++++ b/src/main/java/com/customprefix/core/SseEventParser.java
+@@ -1,7 +1,7 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api.core;
++package com.customprefix.core;
+ 
+ import com.fasterxml.jackson.annotation.JsonSubTypes;
+ import com.fasterxml.jackson.annotation.JsonTypeInfo;
+diff --git a/src/main/java/com/seed/api/core/Stream.java b/src/main/java/com/customprefix/core/Stream.java
+similarity index 99%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-custom-package-prefix/baseline/src/main/java/com/seed/api/core/Stream.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-EUbfH4K6tSjQ/src/main/java/com/customprefix/core/Stream.java
+index b4350ef9a69..bca3e9acf48 100644
+--- a/src/main/java/com/seed/api/core/Stream.java
++++ b/src/main/java/com/customprefix/core/Stream.java
+@@ -1,7 +1,7 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api.core;
++package com.customprefix.core;
+ 
+ import java.io.Closeable;
+ import java.io.IOException;
+diff --git a/src/main/java/com/seed/api/core/Suppliers.java b/src/main/java/com/customprefix/core/Suppliers.java
+similarity index 95%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-custom-package-prefix/baseline/src/main/java/com/seed/api/core/Suppliers.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-EUbfH4K6tSjQ/src/main/java/com/customprefix/core/Suppliers.java
+index a3c24e96857..aedc1c31f7c 100644
+--- a/src/main/java/com/seed/api/core/Suppliers.java
++++ b/src/main/java/com/customprefix/core/Suppliers.java
+@@ -1,7 +1,7 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api.core;
++package com.customprefix.core;
+ 
+ import java.util.Objects;
+ import java.util.concurrent.atomic.AtomicReference;
+diff --git a/src/main/java/com/seed/api/resources/imdb/AsyncImdbClient.java b/src/main/java/com/customprefix/resources/imdb/AsyncImdbClient.java
+similarity index 85%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-custom-package-prefix/baseline/src/main/java/com/seed/api/resources/imdb/AsyncImdbClient.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-EUbfH4K6tSjQ/src/main/java/com/customprefix/resources/imdb/AsyncImdbClient.java
+index d949061a052..1ccb9d8bbfc 100644
+--- a/src/main/java/com/seed/api/resources/imdb/AsyncImdbClient.java
++++ b/src/main/java/com/customprefix/resources/imdb/AsyncImdbClient.java
+@@ -1,12 +1,12 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api.resources.imdb;
++package com.customprefix.resources.imdb;
+ 
+-import com.seed.api.core.ClientOptions;
+-import com.seed.api.core.RequestOptions;
+-import com.seed.api.resources.imdb.types.CreateMovieRequest;
+-import com.seed.api.resources.imdb.types.Movie;
++import com.customprefix.core.ClientOptions;
++import com.customprefix.core.RequestOptions;
++import com.customprefix.resources.imdb.types.CreateMovieRequest;
++import com.customprefix.resources.imdb.types.Movie;
+ import java.util.concurrent.CompletableFuture;
+ 
+ public class AsyncImdbClient {
+diff --git a/src/main/java/com/seed/api/resources/imdb/AsyncRawImdbClient.java b/src/main/java/com/customprefix/resources/imdb/AsyncRawImdbClient.java
+similarity index 92%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-custom-package-prefix/baseline/src/main/java/com/seed/api/resources/imdb/AsyncRawImdbClient.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-EUbfH4K6tSjQ/src/main/java/com/customprefix/resources/imdb/AsyncRawImdbClient.java
+index e66eae59169..f1da9f991b3 100644
+--- a/src/main/java/com/seed/api/resources/imdb/AsyncRawImdbClient.java
++++ b/src/main/java/com/customprefix/resources/imdb/AsyncRawImdbClient.java
+@@ -1,19 +1,19 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api.resources.imdb;
++package com.customprefix.resources.imdb;
+ 
++import com.customprefix.core.ClientOptions;
++import com.customprefix.core.MediaTypes;
++import com.customprefix.core.ObjectMappers;
++import com.customprefix.core.RequestOptions;
++import com.customprefix.core.SeedApiApiException;
++import com.customprefix.core.SeedApiException;
++import com.customprefix.core.SeedApiHttpResponse;
++import com.customprefix.resources.imdb.errors.MovieDoesNotExistError;
++import com.customprefix.resources.imdb.types.CreateMovieRequest;
++import com.customprefix.resources.imdb.types.Movie;
+ import com.fasterxml.jackson.core.JsonProcessingException;
+-import com.seed.api.core.ClientOptions;
+-import com.seed.api.core.MediaTypes;
+-import com.seed.api.core.ObjectMappers;
+-import com.seed.api.core.RequestOptions;
+-import com.seed.api.core.SeedApiApiException;
+-import com.seed.api.core.SeedApiException;
+-import com.seed.api.core.SeedApiHttpResponse;
+-import com.seed.api.resources.imdb.errors.MovieDoesNotExistError;
+-import com.seed.api.resources.imdb.types.CreateMovieRequest;
+-import com.seed.api.resources.imdb.types.Movie;
+ import java.io.IOException;
+ import java.util.concurrent.CompletableFuture;
+ import okhttp3.Call;
+diff --git a/src/main/java/com/seed/api/resources/imdb/ImdbClient.java b/src/main/java/com/customprefix/resources/imdb/ImdbClient.java
+similarity index 82%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-custom-package-prefix/baseline/src/main/java/com/seed/api/resources/imdb/ImdbClient.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-EUbfH4K6tSjQ/src/main/java/com/customprefix/resources/imdb/ImdbClient.java
+index 0432248c715..b004ff7066d 100644
+--- a/src/main/java/com/seed/api/resources/imdb/ImdbClient.java
++++ b/src/main/java/com/customprefix/resources/imdb/ImdbClient.java
+@@ -1,12 +1,12 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api.resources.imdb;
++package com.customprefix.resources.imdb;
+ 
+-import com.seed.api.core.ClientOptions;
+-import com.seed.api.core.RequestOptions;
+-import com.seed.api.resources.imdb.types.CreateMovieRequest;
+-import com.seed.api.resources.imdb.types.Movie;
++import com.customprefix.core.ClientOptions;
++import com.customprefix.core.RequestOptions;
++import com.customprefix.resources.imdb.types.CreateMovieRequest;
++import com.customprefix.resources.imdb.types.Movie;
+ 
+ public class ImdbClient {
+     protected final ClientOptions clientOptions;
+diff --git a/src/main/java/com/seed/api/resources/imdb/RawImdbClient.java b/src/main/java/com/customprefix/resources/imdb/RawImdbClient.java
+similarity index 90%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-custom-package-prefix/baseline/src/main/java/com/seed/api/resources/imdb/RawImdbClient.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-EUbfH4K6tSjQ/src/main/java/com/customprefix/resources/imdb/RawImdbClient.java
+index 919c1268328..6a664ff2ca5 100644
+--- a/src/main/java/com/seed/api/resources/imdb/RawImdbClient.java
++++ b/src/main/java/com/customprefix/resources/imdb/RawImdbClient.java
+@@ -1,19 +1,19 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api.resources.imdb;
++package com.customprefix.resources.imdb;
+ 
++import com.customprefix.core.ClientOptions;
++import com.customprefix.core.MediaTypes;
++import com.customprefix.core.ObjectMappers;
++import com.customprefix.core.RequestOptions;
++import com.customprefix.core.SeedApiApiException;
++import com.customprefix.core.SeedApiException;
++import com.customprefix.core.SeedApiHttpResponse;
++import com.customprefix.resources.imdb.errors.MovieDoesNotExistError;
++import com.customprefix.resources.imdb.types.CreateMovieRequest;
++import com.customprefix.resources.imdb.types.Movie;
+ import com.fasterxml.jackson.core.JsonProcessingException;
+-import com.seed.api.core.ClientOptions;
+-import com.seed.api.core.MediaTypes;
+-import com.seed.api.core.ObjectMappers;
+-import com.seed.api.core.RequestOptions;
+-import com.seed.api.core.SeedApiApiException;
+-import com.seed.api.core.SeedApiException;
+-import com.seed.api.core.SeedApiHttpResponse;
+-import com.seed.api.resources.imdb.errors.MovieDoesNotExistError;
+-import com.seed.api.resources.imdb.types.CreateMovieRequest;
+-import com.seed.api.resources.imdb.types.Movie;
+ import java.io.IOException;
+ import okhttp3.Headers;
+ import okhttp3.HttpUrl;
+diff --git a/src/main/java/com/seed/api/resources/imdb/errors/MovieDoesNotExistError.java b/src/main/java/com/customprefix/resources/imdb/errors/MovieDoesNotExistError.java
+similarity index 87%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-custom-package-prefix/baseline/src/main/java/com/seed/api/resources/imdb/errors/MovieDoesNotExistError.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-EUbfH4K6tSjQ/src/main/java/com/customprefix/resources/imdb/errors/MovieDoesNotExistError.java
+index c1b24e74170..4c665161f1e 100644
+--- a/src/main/java/com/seed/api/resources/imdb/errors/MovieDoesNotExistError.java
++++ b/src/main/java/com/customprefix/resources/imdb/errors/MovieDoesNotExistError.java
+@@ -1,9 +1,9 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api.resources.imdb.errors;
++package com.customprefix.resources.imdb.errors;
+ 
+-import com.seed.api.core.SeedApiApiException;
++import com.customprefix.core.SeedApiApiException;
+ import okhttp3.Response;
+ 
+ public final class MovieDoesNotExistError extends SeedApiApiException {
+diff --git a/src/main/java/com/seed/api/resources/imdb/types/CreateMovieRequest.java b/src/main/java/com/customprefix/resources/imdb/types/CreateMovieRequest.java
+similarity index 97%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-custom-package-prefix/baseline/src/main/java/com/seed/api/resources/imdb/types/CreateMovieRequest.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-EUbfH4K6tSjQ/src/main/java/com/customprefix/resources/imdb/types/CreateMovieRequest.java
+index b03e31c40ff..0ee7b4f360f 100644
+--- a/src/main/java/com/seed/api/resources/imdb/types/CreateMovieRequest.java
++++ b/src/main/java/com/customprefix/resources/imdb/types/CreateMovieRequest.java
+@@ -1,8 +1,9 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api.resources.imdb.types;
++package com.customprefix.resources.imdb.types;
+ 
++import com.customprefix.core.ObjectMappers;
+ import com.fasterxml.jackson.annotation.JsonAnyGetter;
+ import com.fasterxml.jackson.annotation.JsonAnySetter;
+ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+@@ -10,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
+ import com.fasterxml.jackson.annotation.JsonProperty;
+ import com.fasterxml.jackson.annotation.JsonSetter;
+ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+-import com.seed.api.core.ObjectMappers;
+ import java.util.HashMap;
+ import java.util.Map;
+ import java.util.Objects;
+diff --git a/src/main/java/com/seed/api/resources/imdb/types/Movie.java b/src/main/java/com/customprefix/resources/imdb/types/Movie.java
+similarity index 98%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-custom-package-prefix/baseline/src/main/java/com/seed/api/resources/imdb/types/Movie.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-EUbfH4K6tSjQ/src/main/java/com/customprefix/resources/imdb/types/Movie.java
+index b7e053cd399..ea3ccefc356 100644
+--- a/src/main/java/com/seed/api/resources/imdb/types/Movie.java
++++ b/src/main/java/com/customprefix/resources/imdb/types/Movie.java
+@@ -1,8 +1,9 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api.resources.imdb.types;
++package com.customprefix.resources.imdb.types;
+ 
++import com.customprefix.core.ObjectMappers;
+ import com.fasterxml.jackson.annotation.JsonAnyGetter;
+ import com.fasterxml.jackson.annotation.JsonAnySetter;
+ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+@@ -10,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
+ import com.fasterxml.jackson.annotation.JsonProperty;
+ import com.fasterxml.jackson.annotation.JsonSetter;
+ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+-import com.seed.api.core.ObjectMappers;
+ import java.util.HashMap;
+ import java.util.Map;
+ import java.util.Objects;
+diff --git a/src/main/java/com/snippets/Example0.java b/src/main/java/com/snippets/Example0.java
+index 9615b4c0288..4a72959e945 100644
+--- a/src/main/java/com/snippets/Example0.java
++++ b/src/main/java/com/snippets/Example0.java
+@@ -1,7 +1,7 @@
+ package com.snippets;
+ 
+-import com.seed.api.SeedApiClient;
+-import com.seed.api.resources.imdb.types.CreateMovieRequest;
++import com.customprefix.SeedApiClient;
++import com.customprefix.resources.imdb.types.CreateMovieRequest;
+ 
+ public class Example0 {
+     public static void main(String[] args) {
+diff --git a/src/main/java/com/snippets/Example1.java b/src/main/java/com/snippets/Example1.java
+index 8dabe337c6d..b43ec1fcaa4 100644
+--- a/src/main/java/com/snippets/Example1.java
++++ b/src/main/java/com/snippets/Example1.java
+@@ -1,6 +1,6 @@
+ package com.snippets;
+ 
+-import com.seed.api.SeedApiClient;
++import com.customprefix.SeedApiClient;
+ 
+ public class Example1 {
+     public static void main(String[] args) {
+diff --git a/src/main/java/com/snippets/Example2.java b/src/main/java/com/snippets/Example2.java
+index 9308127d260..0da00c861b2 100644
+--- a/src/main/java/com/snippets/Example2.java
++++ b/src/main/java/com/snippets/Example2.java
+@@ -1,6 +1,6 @@
+ package com.snippets;
+ 
+-import com.seed.api.SeedApiClient;
++import com.customprefix.SeedApiClient;
+ 
+ public class Example2 {
+     public static void main(String[] args) {
+diff --git a/src/test/java/com/seed/api/StreamTest.java b/src/test/java/com/customprefix/StreamTest.java
+similarity index 97%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-custom-package-prefix/baseline/src/test/java/com/seed/api/StreamTest.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-EUbfH4K6tSjQ/src/test/java/com/customprefix/StreamTest.java
+index 9bf64b7a1cf..5ee839c9f18 100644
+--- a/src/test/java/com/seed/api/StreamTest.java
++++ b/src/test/java/com/customprefix/StreamTest.java
+@@ -1,12 +1,12 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api;
++package com.customprefix;
+ 
+ import static org.junit.jupiter.api.Assertions.*;
+ 
+-import com.seed.api.core.ObjectMappers;
+-import com.seed.api.core.Stream;
++import com.customprefix.core.ObjectMappers;
++import com.customprefix.core.Stream;
+ import java.io.IOException;
+ import java.io.StringReader;
+ import java.util.ArrayList;
+diff --git a/src/test/java/com/seed/api/TestClient.java b/src/test/java/com/customprefix/TestClient.java
+similarity index 89%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-custom-package-prefix/baseline/src/test/java/com/seed/api/TestClient.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-EUbfH4K6tSjQ/src/test/java/com/customprefix/TestClient.java
+index 1686cfd803c..f78f2a82cd6 100644
+--- a/src/test/java/com/seed/api/TestClient.java
++++ b/src/test/java/com/customprefix/TestClient.java
+@@ -1,7 +1,7 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api;
++package com.customprefix;
+ 
+ public final class TestClient {
+     public void test() {
+diff --git a/src/test/java/com/seed/api/core/QueryStringMapperTest.java b/src/test/java/com/customprefix/core/QueryStringMapperTest.java
+similarity index 99%
+rename from /Users/Patrick/fern/fern2/seed/java-sdk/java-custom-package-prefix/baseline/src/test/java/com/seed/api/core/QueryStringMapperTest.java
+rename to /private/var/folders/27/s5yzs3z956ndrqw_kpcj1yb00000gq/T/tmp-71608-EUbfH4K6tSjQ/src/test/java/com/customprefix/core/QueryStringMapperTest.java
+index ead1a49af7a..18078ef3912 100644
+--- a/src/test/java/com/seed/api/core/QueryStringMapperTest.java
++++ b/src/test/java/com/customprefix/core/QueryStringMapperTest.java
+@@ -1,7 +1,7 @@
+ /**
+  * This file was auto-generated by Fern from our API Definition.
+  */
+-package com.seed.api.core;
++package com.customprefix.core;
+ 
+ import java.time.Instant;
+ import java.time.OffsetDateTime;

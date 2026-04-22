@@ -1,0 +1,3 @@
+rootProject.name = 'no-environment'
+
+include 'sample-app'

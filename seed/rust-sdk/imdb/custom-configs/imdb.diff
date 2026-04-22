@@ -1,0 +1,28 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index 72f1d627c73..6db0082a742 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,10 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-rust-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "clientName": "ImdbClient",
++    "maxRetries": 5
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "manual",
+diff --git a/src/config.rs b/src/config.rs
+index fb215ac8e2c..014f33fa50a 100644
+--- a/src/config.rs
++++ b/src/config.rs
+@@ -26,7 +26,7 @@ impl Default for ClientConfig {
+             client_id: None,
+             client_secret: None,
+             timeout: Duration::from_secs(60),
+-            max_retries: 3,
++            max_retries: 5,
+             custom_headers: HashMap::from([
+                 ("X-Fern-Language".to_string(), "Rust".to_string()),
+                 ("X-Fern-SDK-Name".to_string(), "seed_api".to_string()),

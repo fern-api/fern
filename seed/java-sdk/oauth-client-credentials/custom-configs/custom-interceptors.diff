@@ -1,0 +1,707 @@
+diff --git a/.fern/metadata.json b/.fern/metadata.json
+index f1753c47972..1d06a6612a7 100644
+--- a/.fern/metadata.json
++++ b/.fern/metadata.json
+@@ -2,6 +2,9 @@
+   "cliVersion": "DUMMY",
+   "generatorName": "fernapi/fern-java-sdk",
+   "generatorVersion": "local",
++  "generatorConfig": {
++    "custom-interceptors": true
++  },
+   "originGitCommit": "DUMMY",
+   "originGitCommitIsDirty": null,
+   "invokedBy": "manual",
+diff --git a/.gradle/8.14.3/checksums/checksums.lock b/.gradle/8.14.3/checksums/checksums.lock
+index 6009579411ebc52aade87ab649357ca0214318c6..4300bd433e9a41eabbe8533ff0164619292a548c 100644
+GIT binary patch
+literal 17
+ScmZQp=nU__A1u+&00jUlOap8H
+
+literal 17
+TcmZQ(oxRA<FrnZN0~7!NDkB4t
+
+diff --git a/.gradle/8.14.3/executionHistory/executionHistory.bin b/.gradle/8.14.3/executionHistory/executionHistory.bin
+index 7ba87c4f2ca8585a95d9c15e0dca2dc406760bf0..d8e9d8f36ed2474becd4bd6c87001429309e40de 100644
+GIT binary patch
+literal 63876
+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
+Av;Y7A
+
+delta 9139
+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
+
+diff --git a/.gradle/8.14.3/executionHistory/executionHistory.lock b/.gradle/8.14.3/executionHistory/executionHistory.lock
+index be96ba2c7b1444dd5ee463b673aa708fe729dfb3..16f49a9e309e6e99197b4ae9ae5b6b8d6cd1219b 100644
+GIT binary patch
+literal 17
+UcmZR6!4WoXzfrO>0|amY04vD@UjP6A
+
+literal 17
+TcmZR67spthtkgN10RlJxE3N~1
+
+diff --git a/.gradle/8.14.3/fileHashes/fileHashes.bin b/.gradle/8.14.3/fileHashes/fileHashes.bin
+index aebfd6f151a6f5ae1bfb0ebe99d86ca5dcdb391e..5631d16d151d017dd0bf09ed1108f13947852cff 100644
+GIT binary patch
+delta 3884
+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
+
+delta 3811
+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
+YR5&i6IT@I~z)R8DEdQjksGwc_AIZrVZU6uP
+
+diff --git a/.gradle/8.14.3/fileHashes/fileHashes.lock b/.gradle/8.14.3/fileHashes/fileHashes.lock
+index 97ea6652aa9c02bf69fbb19422d12fef035e322c..1fd01583a1a00a0385de302ed66b738ceb3cae2a 100644
+GIT binary patch
+literal 17
+UcmZSf7I1dHBh+$}0Rm0{041CQ_y7O^
+
+literal 17
+UcmZQB%U7Pt&T?`V0|cA^046L0*8l(j
+
+diff --git a/.gradle/buildOutputCleanup/buildOutputCleanup.lock b/.gradle/buildOutputCleanup/buildOutputCleanup.lock
+index 6e8302c87f78efd9ea4e5bf969c9e9657dd42eff..9928b6684615a55d6c688b1afa2a81bce263334a 100644
+GIT binary patch
+literal 17
+UcmZR6cH`i#S+X0=7$86r06?q+^Z)<=
+
+literal 17
+UcmZQR5##?R=WQK70|ZC`05?JeV*mgE
+
+diff --git a/.gradle/buildOutputCleanup/cache.properties b/.gradle/buildOutputCleanup/cache.properties
+index a3515eb1ac7..65a378e344b 100644
+--- a/.gradle/buildOutputCleanup/cache.properties
++++ b/.gradle/buildOutputCleanup/cache.properties
+@@ -1,2 +1,2 @@
+-#Wed Apr 22 20:57:27 UTC 2026
++#Wed Apr 22 20:59:41 UTC 2026
+ gradle.version=8.14.3
+diff --git a/.gradle/buildOutputCleanup/outputFiles.bin b/.gradle/buildOutputCleanup/outputFiles.bin
+index b2b7cf5d3cb3a264893f3f1d73c0b374f8c3577c..09a24efd664e515ed1b64b97d53e07935f3c378b 100644
+GIT binary patch
+delta 314
+zcmdlznQ`T0#tkMCf+8Koyj@Z9dQl8u;F&nNR6;>xmhRG9R!6#Ipn~lGp<uS)>)Mlh
+zz288^B_}VHP;hweAkg1e@E{H<=nqr;!E)KI(#zhbpyIYL@vkXQ_4qs)7DL6gC$mZ_
+zXt1=$njYPgF&Qd29i~_=x=&t6<ic@?xW~oGrjiN{7EjJhS+zCR6)N}`rr6?poSW55
+z<CjqJuP|}@+|qc_|4qtJ!;2@^N?J@lD=8t6?Y~b%>oem)s6^}JyOIh#FkK7`j2|~D
+U{t(}2pdq%|(Ib#?vY&@I05Dd96951J
+
+delta 338
+zcmZ2EnQ`}I#tkMCj-rj(f*IzF`~NY3f#>x9P%zPHYF_8|ZyHc>NtpQb95$Zm+y6F0
+z#kD89N+<}-nd3O~(BiIcsNl-Uy%GuzyK8$~UHP`gKn2-hCOo^X<gmc0nh`2)3lsm)
+zD$u=9YU?kkc=6=7K$Df@g~GY5RBfSx{*z556*TOk1aALcSE36M^mq(2!EvMRoZ|Rv
+zFQDRICr_2M5D44YlkJy&@+#DX*2zaD6(;|cl(4A?7FDRq%s35|NQ9YE6?SUAM1IU8
+hs3{j=;xL+lfr)dY;t%nS1_EN69X$dWCpUO%0ssxvj-&tp
+
+diff --git a/.gradle/file-system.probe b/.gradle/file-system.probe
+index 59f2789aac1cd6ee572adde2583a4a493955d571..6ac273637b4606b4be58a25b3eb9ae9fdd2d8e9a 100644
+GIT binary patch
+literal 8
+PcmZQzV4S<{@9Rte3oQet
+
+literal 8
+PcmZQzV4S<{_nis=3m5~W
+
+diff --git a/src/main/java/com/seed/oauthClientCredentials/AsyncSeedOauthClientCredentialsClientBuilder.java b/src/main/java/com/seed/oauthClientCredentials/AsyncSeedOauthClientCredentialsClientBuilder.java
+index dc04382d53f..f05527c51d3 100644
+--- a/src/main/java/com/seed/oauthClientCredentials/AsyncSeedOauthClientCredentialsClientBuilder.java
++++ b/src/main/java/com/seed/oauthClientCredentials/AsyncSeedOauthClientCredentialsClientBuilder.java
+@@ -8,9 +8,12 @@ import com.seed.oauthClientCredentials.core.Environment;
+ import com.seed.oauthClientCredentials.core.LogConfig;
+ import com.seed.oauthClientCredentials.core.OAuthTokenSupplier;
+ import com.seed.oauthClientCredentials.resources.auth.AuthClient;
++import java.util.ArrayList;
+ import java.util.HashMap;
++import java.util.List;
+ import java.util.Map;
+ import java.util.Optional;
++import okhttp3.Interceptor;
+ import okhttp3.OkHttpClient;
+ 
+ public class AsyncSeedOauthClientCredentialsClientBuilder {
+@@ -24,6 +27,8 @@ public class AsyncSeedOauthClientCredentialsClientBuilder {
+ 
+     private OkHttpClient httpClient;
+ 
++    private final List<Interceptor> interceptors = new ArrayList<>();
++
+     private Optional<LogConfig> logging = Optional.empty();
+ 
+     /**
+@@ -89,6 +94,16 @@ public class AsyncSeedOauthClientCredentialsClientBuilder {
+         return this;
+     }
+ 
++    /**
++     * Add a custom OkHttp interceptor to the client.
++     * Interceptors are applied to the OkHttpClient when the client is built.
++     * This can be used for custom request signing, logging, or other request/response modifications.
++     */
++    public AsyncSeedOauthClientCredentialsClientBuilder addInterceptor(Interceptor interceptor) {
++        this.interceptors.add(interceptor);
++        return this;
++    }
++
+     /**
+      * Configure logging for the SDK. Silent by default — no log output unless explicitly configured.
+      */
+@@ -115,6 +130,7 @@ public class AsyncSeedOauthClientCredentialsClientBuilder {
+         setEnvironment(builder);
+         setAuthentication(builder);
+         setHttpClient(builder);
++        setInterceptors(builder);
+         setTimeouts(builder);
+         setRetries(builder);
+         setLogging(builder);
+@@ -188,6 +204,18 @@ public class AsyncSeedOauthClientCredentialsClientBuilder {
+         }
+     }
+ 
++    /**
++     * Sets the custom OkHttp interceptors.
++     * Override this method to add or modify custom interceptors.
++     *
++     * @param builder The ClientOptions.Builder to configure
++     */
++    protected void setInterceptors(ClientOptions.Builder builder) {
++        for (Interceptor interceptor : this.interceptors) {
++            builder.addInterceptor(interceptor);
++        }
++    }
++
+     /**
+      * Sets the logging configuration for the SDK.
+      * Override this method to customize logging behavior.
+@@ -296,6 +324,8 @@ public class AsyncSeedOauthClientCredentialsClientBuilder {
+ 
+         private final Map<String, String> headers = new HashMap<>();
+ 
++        private final List<Interceptor> interceptors = new ArrayList<>();
++
+         public _Builder url(String url) {
+             this.environment = Environment.custom(url);
+             return this;
+@@ -336,6 +366,16 @@ public class AsyncSeedOauthClientCredentialsClientBuilder {
+             return this;
+         }
+ 
++        /**
++         * Add a custom OkHttp interceptor to the client.
++         * Interceptors added here are forwarded to the auth builder when
++         * {@link #token(String)} or {@link #credentials(String, String)} is called.
++         */
++        public _Builder addInterceptor(Interceptor interceptor) {
++            this.interceptors.add(interceptor);
++            return this;
++        }
++
+         /**
+          * Configure the client to use a pre-generated access token for authentication.
+          * Use this when you already have a valid access token and want to bypass
+@@ -361,6 +401,9 @@ public class AsyncSeedOauthClientCredentialsClientBuilder {
+             for (Map.Entry<String, String> header : this.headers.entrySet()) {
+                 auth.addHeader(header.getKey(), header.getValue());
+             }
++            for (Interceptor interceptor : this.interceptors) {
++                auth.addInterceptor(interceptor);
++            }
+             return auth;
+         }
+ 
+@@ -389,6 +432,9 @@ public class AsyncSeedOauthClientCredentialsClientBuilder {
+             for (Map.Entry<String, String> header : this.headers.entrySet()) {
+                 auth.addHeader(header.getKey(), header.getValue());
+             }
++            for (Interceptor interceptor : this.interceptors) {
++                auth.addInterceptor(interceptor);
++            }
+             return auth;
+         }
+     }
+diff --git a/src/main/java/com/seed/oauthClientCredentials/SeedOauthClientCredentialsClientBuilder.java b/src/main/java/com/seed/oauthClientCredentials/SeedOauthClientCredentialsClientBuilder.java
+index 6c210e7d49e..36a288ca8bd 100644
+--- a/src/main/java/com/seed/oauthClientCredentials/SeedOauthClientCredentialsClientBuilder.java
++++ b/src/main/java/com/seed/oauthClientCredentials/SeedOauthClientCredentialsClientBuilder.java
+@@ -8,9 +8,12 @@ import com.seed.oauthClientCredentials.core.Environment;
+ import com.seed.oauthClientCredentials.core.LogConfig;
+ import com.seed.oauthClientCredentials.core.OAuthTokenSupplier;
+ import com.seed.oauthClientCredentials.resources.auth.AuthClient;
++import java.util.ArrayList;
+ import java.util.HashMap;
++import java.util.List;
+ import java.util.Map;
+ import java.util.Optional;
++import okhttp3.Interceptor;
+ import okhttp3.OkHttpClient;
+ 
+ public class SeedOauthClientCredentialsClientBuilder {
+@@ -24,6 +27,8 @@ public class SeedOauthClientCredentialsClientBuilder {
+ 
+     private OkHttpClient httpClient;
+ 
++    private final List<Interceptor> interceptors = new ArrayList<>();
++
+     private Optional<LogConfig> logging = Optional.empty();
+ 
+     /**
+@@ -89,6 +94,16 @@ public class SeedOauthClientCredentialsClientBuilder {
+         return this;
+     }
+ 
++    /**
++     * Add a custom OkHttp interceptor to the client.
++     * Interceptors are applied to the OkHttpClient when the client is built.
++     * This can be used for custom request signing, logging, or other request/response modifications.
++     */
++    public SeedOauthClientCredentialsClientBuilder addInterceptor(Interceptor interceptor) {
++        this.interceptors.add(interceptor);
++        return this;
++    }
++
+     /**
+      * Configure logging for the SDK. Silent by default — no log output unless explicitly configured.
+      */
+@@ -115,6 +130,7 @@ public class SeedOauthClientCredentialsClientBuilder {
+         setEnvironment(builder);
+         setAuthentication(builder);
+         setHttpClient(builder);
++        setInterceptors(builder);
+         setTimeouts(builder);
+         setRetries(builder);
+         setLogging(builder);
+@@ -188,6 +204,18 @@ public class SeedOauthClientCredentialsClientBuilder {
+         }
+     }
+ 
++    /**
++     * Sets the custom OkHttp interceptors.
++     * Override this method to add or modify custom interceptors.
++     *
++     * @param builder The ClientOptions.Builder to configure
++     */
++    protected void setInterceptors(ClientOptions.Builder builder) {
++        for (Interceptor interceptor : this.interceptors) {
++            builder.addInterceptor(interceptor);
++        }
++    }
++
+     /**
+      * Sets the logging configuration for the SDK.
+      * Override this method to customize logging behavior.
+@@ -296,6 +324,8 @@ public class SeedOauthClientCredentialsClientBuilder {
+ 
+         private final Map<String, String> headers = new HashMap<>();
+ 
++        private final List<Interceptor> interceptors = new ArrayList<>();
++
+         public _Builder url(String url) {
+             this.environment = Environment.custom(url);
+             return this;
+@@ -336,6 +366,16 @@ public class SeedOauthClientCredentialsClientBuilder {
+             return this;
+         }
+ 
++        /**
++         * Add a custom OkHttp interceptor to the client.
++         * Interceptors added here are forwarded to the auth builder when
++         * {@link #token(String)} or {@link #credentials(String, String)} is called.
++         */
++        public _Builder addInterceptor(Interceptor interceptor) {
++            this.interceptors.add(interceptor);
++            return this;
++        }
++
+         /**
+          * Configure the client to use a pre-generated access token for authentication.
+          * Use this when you already have a valid access token and want to bypass
+@@ -361,6 +401,9 @@ public class SeedOauthClientCredentialsClientBuilder {
+             for (Map.Entry<String, String> header : this.headers.entrySet()) {
+                 auth.addHeader(header.getKey(), header.getValue());
+             }
++            for (Interceptor interceptor : this.interceptors) {
++                auth.addInterceptor(interceptor);
++            }
+             return auth;
+         }
+ 
+@@ -389,6 +432,9 @@ public class SeedOauthClientCredentialsClientBuilder {
+             for (Map.Entry<String, String> header : this.headers.entrySet()) {
+                 auth.addHeader(header.getKey(), header.getValue());
+             }
++            for (Interceptor interceptor : this.interceptors) {
++                auth.addInterceptor(interceptor);
++            }
+             return auth;
+         }
+     }
+diff --git a/src/main/java/com/seed/oauthClientCredentials/core/ClientOptions.java b/src/main/java/com/seed/oauthClientCredentials/core/ClientOptions.java
+index 89cb672907a..9fc510fbd9a 100644
+--- a/src/main/java/com/seed/oauthClientCredentials/core/ClientOptions.java
++++ b/src/main/java/com/seed/oauthClientCredentials/core/ClientOptions.java
+@@ -3,11 +3,14 @@
+  */
+ package com.seed.oauthClientCredentials.core;
+ 
++import java.util.ArrayList;
+ import java.util.HashMap;
++import java.util.List;
+ import java.util.Map;
+ import java.util.Optional;
+ import java.util.concurrent.TimeUnit;
+ import java.util.function.Supplier;
++import okhttp3.Interceptor;
+ import okhttp3.OkHttpClient;
+ 
+ public final class ClientOptions {
+@@ -116,6 +119,8 @@ public final class ClientOptions {
+ 
+         private Optional<LogConfig> logging = Optional.empty();
+ 
++        private final List<Interceptor> interceptors = new ArrayList<>();
++
+         public Builder environment(Environment environment) {
+             this.environment = environment;
+             return this;
+@@ -160,6 +165,16 @@ public final class ClientOptions {
+             return this;
+         }
+ 
++        /**
++         * Add a custom OkHttp interceptor to the client.
++         * Interceptors are applied to the OkHttpClient when the client is built.
++         * This can be used for custom request signing, logging, or other request/response modifications.
++         */
++        public Builder addInterceptor(Interceptor interceptor) {
++            this.interceptors.add(interceptor);
++            return this;
++        }
++
+         /**
+          * Configure logging for the SDK. Silent by default — no log output unless explicitly configured.
+          */
+@@ -190,6 +205,10 @@ public final class ClientOptions {
+             Logger logger = Logger.from(this.logging);
+             httpClientBuilder.addInterceptor(new LoggingInterceptor(logger));
+ 
++            for (Interceptor interceptor : this.interceptors) {
++                httpClientBuilder.addInterceptor(interceptor);
++            }
++
+             this.httpClient = httpClientBuilder.build();
+             this.timeout = Optional.of(httpClient.callTimeoutMillis() / 1000);
+ 

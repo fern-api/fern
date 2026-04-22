@@ -1,0 +1,151 @@
+openapi: 3.1.0
+info:
+  title: api
+  version: 0.0.0
+paths: {}
+components:
+  schemas:
+    ImportingA:
+      title: ImportingA
+      type: object
+      properties:
+        a:
+          anyOf:
+            - $ref: '#/components/schemas/A'
+            - type: 'null'
+    RootType:
+      title: RootType
+      type: object
+      properties:
+        s:
+          type: string
+      required:
+        - s
+    A:
+      title: A
+      type: object
+      properties: {}
+      allOf:
+        - $ref: '#/components/schemas/RootType'
+    TorU:
+      title: TorU
+      oneOf:
+        - $ref: '#/components/schemas/T'
+        - $ref: '#/components/schemas/U'
+    T:
+      title: T
+      type: object
+      properties:
+        child:
+          $ref: '#/components/schemas/TorU'
+      required:
+        - child
+    U:
+      title: U
+      type: object
+      properties:
+        child:
+          $ref: '#/components/schemas/T'
+      required:
+        - child
+    FieldValue:
+      title: FieldValue
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              const: primitive_value
+            value:
+              $ref: '#/components/schemas/PrimitiveValue'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  const: object_value
+            - $ref: '#/components/schemas/ObjectValue'
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              const: container_value
+            value:
+              $ref: '#/components/schemas/ContainerValue'
+          required:
+            - type
+    ContainerValue:
+      title: ContainerValue
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              const: list
+            value:
+              type: array
+              items:
+                $ref: '#/components/schemas/FieldValue'
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              const: optional
+            value:
+              anyOf:
+                - $ref: '#/components/schemas/FieldValue'
+                - type: 'null'
+          required:
+            - type
+    PrimitiveValue:
+      title: PrimitiveValue
+      type: string
+      enum:
+        - STRING
+        - NUMBER
+    ObjectValue:
+      title: ObjectValue
+      type: object
+      properties: {}
+    JsonLike:
+      title: JsonLike
+      oneOf:
+        - type: array
+          items:
+            $ref: '#/components/schemas/JsonLike'
+        - type: object
+          additionalProperties:
+            $ref: '#/components/schemas/JsonLike'
+        - type: string
+        - type: integer
+        - type: boolean
+    JsonLikeWithNullAndUndefined:
+      title: JsonLikeWithNullAndUndefined
+      oneOf:
+        - type: array
+          items:
+            anyOf:
+              - $ref: '#/components/schemas/JsonLikeWithNullAndUndefined'
+              - type: 'null'
+        - type: object
+          additionalProperties:
+            anyOf:
+              - $ref: '#/components/schemas/JsonLikeWithNullAndUndefined'
+              - type: 'null'
+        - type:
+            - string
+            - 'null'
+        - type:
+            - integer
+            - 'null'
+        - type:
+            - boolean
+            - 'null'
+  securitySchemes: {}
