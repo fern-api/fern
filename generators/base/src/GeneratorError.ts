@@ -31,8 +31,13 @@ export class GeneratorError extends Error {
 
     constructor({ message, code }: { message: string; code: GeneratorError.Code }) {
         super(message);
-        this.name = "GeneratorError";
-        Object.setPrototypeOf(this, GeneratorError.prototype);
+
+        Object.setPrototypeOf(this, new.target.prototype);
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, this.constructor);
+        }
+        this.name = this.constructor.name;
+
         this.code = code;
     }
 

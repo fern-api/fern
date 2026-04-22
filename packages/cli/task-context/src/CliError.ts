@@ -4,8 +4,13 @@ export class CliError extends Error {
 
     constructor({ message, code, docsLink }: { code: CliError.Code; message?: string; docsLink?: string }) {
         super(message);
-        this.name = "CliError";
-        Object.setPrototypeOf(this, CliError.prototype);
+
+        Object.setPrototypeOf(this, new.target.prototype);
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, this.constructor);
+        }
+        this.name = this.constructor.name;
+
         this.code = code;
         this.docsLink = docsLink;
     }
