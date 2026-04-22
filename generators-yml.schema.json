@@ -800,6 +800,13 @@
         "v2"
       ]
     },
+    "generators.MultiServerStrategy": {
+      "type": "string",
+      "enum": [
+        "environment-per-server",
+        "urls-per-environment"
+      ]
+    },
     "generators.RemoveDiscriminantsFromSchemas": {
       "type": "string",
       "enum": [
@@ -812,13 +819,6 @@
       "enum": [
         "url-order",
         "spec-order"
-      ]
-    },
-    "generators.MultiServerStrategy": {
-      "type": "string",
-      "enum": [
-        "environment-per-server",
-        "urls-per-environment"
       ]
     },
     "generators.APIDefinitionSettingsSchema": {
