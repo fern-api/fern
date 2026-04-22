@@ -6,25 +6,23 @@ import path from "path";
 /**
  * Loads environment variables from a .env file into process.env.
  *
- * Behavior:
- * - If `envFilePath` is provided (via --env flag): load that file, warn if it doesn't exist.
- * - Otherwise: silently try to load `.env` from the current working directory.
- * - Existing env vars (set in the shell) are never overwritten (override: false).
+ * Only loads when the user explicitly passes --env <path>. There is no
+ * auto-discovery from the current working directory — silently loading an
+ * untrusted CWD .env could allow workspace-poisoning attacks where a
+ * malicious repo injects variables like FERN_FDR_ORIGIN to redirect API
+ * traffic and exfiltrate auth tokens.
+ *
+ * Existing env vars (set in the shell) are never overwritten (override: false).
  */
 export function loadDotenvFile(envFilePath: string | undefined): void {
-    if (envFilePath != null) {
-        const resolved = path.resolve(process.cwd(), envFilePath);
-        if (!fs.existsSync(resolved)) {
-            process.stderr.write(`${chalk.yellow("warn")} .env file not found: ${resolved}\n`);
-            return;
-        }
-        dotenvConfig({ path: resolved, override: false });
+    if (envFilePath == null) {
         return;
     }
 
-    // Auto-discover .env in cwd — silent if not present.
-    const defaultEnvFile = path.join(process.cwd(), ".env");
-    if (fs.existsSync(defaultEnvFile)) {
-        dotenvConfig({ path: defaultEnvFile, override: false });
+    const resolved = path.resolve(process.cwd(), envFilePath);
+    if (!fs.existsSync(resolved)) {
+        process.stderr.write(`${chalk.yellow("warn")} .env file not found: ${resolved}\n`);
+        return;
     }
+    dotenvConfig({ path: resolved, override: false });
 }

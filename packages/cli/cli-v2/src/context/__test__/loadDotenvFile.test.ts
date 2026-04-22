@@ -32,28 +32,15 @@ describe("loadDotenvFile", () => {
         fs.rmSync(tmpDir, { recursive: true, force: true });
     });
 
-    describe("auto-discovery (no --env flag)", () => {
-        it("loads .env from cwd when it exists", () => {
+    describe("no --env flag", () => {
+        it("does nothing when envFilePath is undefined", () => {
             fs.writeFileSync(path.join(tmpDir, ".env"), "MY_SECRET=hello\n");
 
             loadDotenvFile(undefined);
 
-            expect(process.env.MY_SECRET).toBe("hello");
-        });
-
-        it("is silent when no .env file exists in cwd", () => {
-            loadDotenvFile(undefined);
-
+            // Auto-discovery is intentionally disabled — .env in cwd must NOT be loaded
+            expect(process.env.MY_SECRET).toBeUndefined();
             expect(stderrSpy).not.toHaveBeenCalled();
-        });
-
-        it("does not overwrite an existing env var", () => {
-            process.env.EXISTING_VAR = "original";
-            fs.writeFileSync(path.join(tmpDir, ".env"), "EXISTING_VAR=overwritten\n");
-
-            loadDotenvFile(undefined);
-
-            expect(process.env.EXISTING_VAR).toBe("original");
         });
     });
 
