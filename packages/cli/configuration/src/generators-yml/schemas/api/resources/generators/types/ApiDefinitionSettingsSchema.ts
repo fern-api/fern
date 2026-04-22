@@ -48,6 +48,16 @@ export interface ApiDefinitionSettingsSchema {
      */
     "group-environments-by-host"?: boolean;
     /**
+     * If true, when top-level OpenAPI servers each declare an `x-fern-server-name` and endpoint-level
+     * `servers:` overrides reference those names, collapse all top-level servers into a single
+     * environment with each server exposed as a named URL. This is useful for APIs that expose
+     * multiple base hosts that together form a single logical environment (e.g. `api.box.com`,
+     * `upload.box.com`, and `dl.boxcloud.com`).
+     * If false, emit one environment per top-level server.
+     * Defaults to false.
+     */
+    "group-servers-as-environment-urls"?: boolean;
+    /**
      * If `always`, remove discriminant properties from schemas when generating types, unless the schema is also used outside of a discriminated union.
      * If `never`, keep discriminant properties in schemas when generating types.
      * Defaults to `always`.

@@ -2,5 +2,3 @@
 api:
   specs:
     - openapi: ../openapi.yml
-      settings:
-        group-servers-as-environment-urls: true

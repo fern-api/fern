@@ -58,6 +58,7 @@ export class OpenAPIWorkspace extends BaseOpenAPIWorkspaceSync {
             inlineAllOfSchemas: spec.settings?.inlineAllOfSchemas,
             resolveAliases: spec.settings?.resolveAliases,
             groupEnvironmentsByHost: spec.settings?.groupEnvironmentsByHost,
+            groupServersAsEnvironmentUrls: spec.settings?.groupServersAsEnvironmentUrls,
             inferDefaultEnvironment: spec.settings?.inferDefaultEnvironment,
             removeDiscriminantsFromSchemas: spec.settings?.removeDiscriminantsFromSchemas,
             defaultIntegerFormat: spec.settings?.defaultIntegerFormat,

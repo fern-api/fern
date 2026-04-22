@@ -730,7 +730,11 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                 endpointServerNamesSet.size > 0 &&
                 [...endpointServerNamesSet].every((name) => topLevelServerNamesSet.has(name));
 
-            if (apiToUrls.size > 0 && endpointServersReferenceTopLevel) {
+            if (
+                context.options.groupServersAsEnvironmentUrls &&
+                apiToUrls.size > 0 &&
+                endpointServersReferenceTopLevel
+            ) {
                 // Top-level servers define different base URLs for a single API.
                 // Create one multi-URL environment with all servers as named URLs.
                 const entries = Object.entries(topLevelServersWithName);
@@ -770,7 +774,27 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                     }
 
                     if (hasWebsocketServersWithName) {
-                        Object.assign(urls, extractUrlsFromEnvironmentSchema(websocketServersWithName));
+                        // Merge WebSocket servers, but do not let a WebSocket URL with
+                        // the same x-fern-server-name silently overwrite an HTTP URL we
+                        // already placed on this environment. When names collide, fall
+                        // back to a protocol-suffixed key (e.g. `Agent_wss`) so both
+                        // URLs remain addressable.
+                        const wsUrls = extractUrlsFromEnvironmentSchema(websocketServersWithName);
+                        for (const [wsName, wsUrl] of Object.entries(wsUrls)) {
+                            if (wsUrl == null) {
+                                continue;
+                            }
+                            if (urls[wsName] != null && urls[wsName] !== wsUrl) {
+                                const wsProtocol = getProtocol(wsUrl);
+                                const dedupedName =
+                                    wsProtocol != null ? `${wsName}_${wsProtocol}` : wsName;
+                                urls[dedupedName] = wsUrl;
+                                context.setUrlId(wsUrl, dedupedName);
+                            } else {
+                                urls[wsName] = wsUrl;
+                                context.setUrlId(wsUrl, wsName);
+                            }
+                        }
                     }
 
                     context.builder.addEnvironment({

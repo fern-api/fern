@@ -129,6 +129,7 @@ export class LegacyApiSpecAdapter {
             optionalAdditionalProperties: settings.optionalAdditionalProperties,
             shouldUseIdiomaticRequestNames: settings.idiomaticRequestNames,
             groupEnvironmentsByHost: settings.groupEnvironmentsByHost,
+            groupServersAsEnvironmentUrls: settings.groupServersAsEnvironmentUrls,
             removeDiscriminantsFromSchemas: this.adaptRemoveDiscriminantsFromSchemas(
                 settings.removeDiscriminantsFromSchemas
             ),
@@ -174,6 +175,7 @@ export class LegacyApiSpecAdapter {
             optionalAdditionalProperties: settings.optionalAdditionalProperties,
             shouldUseIdiomaticRequestNames: settings.idiomaticRequestNames,
             groupEnvironmentsByHost: settings.groupEnvironmentsByHost,
+            groupServersAsEnvironmentUrls: settings.groupServersAsEnvironmentUrls,
             removeDiscriminantsFromSchemas: this.adaptRemoveDiscriminantsFromSchemas(
                 settings.removeDiscriminantsFromSchemas
             ),

@@ -1,0 +1,140 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "getAgentThinkModels": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "response": {
+                    "body": "string",
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/agent/think",
+              "response": {
+                "docs": "Agent think models",
+                "status-code": 200,
+                "type": "string",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+              "url": "Base",
+            },
+            "getStatus": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "response": {
+                    "body": "string",
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/status",
+              "response": {
+                "docs": "Status",
+                "status-code": 200,
+                "type": "string",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    getStatus:
+      path: /status
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      response:
+        docs: Status
+        type: string
+        status-code: 200
+      examples:
+        - response:
+            body: string
+    getAgentThinkModels:
+      path: /agent/think
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      response:
+        docs: Agent think models
+        type: string
+        status-code: 200
+      url: Base
+      examples:
+        - response:
+            body: string
+  source:
+    openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "default-environment": "Production",
+      "default-url": "Base",
+      "display-name": "Test API",
+      "environments": {
+        "Agent": {
+          "urls": {
+            "Agent": "https://agent.example.com",
+            "Base": "https://agent.example.com",
+          },
+        },
+        "Production": {
+          "urls": {
+            "Agent": "https://agent.example.com",
+            "Base": "https://api.example.com",
+          },
+        },
+      },
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": "Base",
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Test API
+environments:
+  Production:
+    urls:
+      Base: https://api.example.com
+      Agent: https://agent.example.com
+  Agent:
+    urls:
+      Base: https://agent.example.com
+      Agent: https://agent.example.com
+default-environment: Production
+default-url: Base
+",
+  },
+}

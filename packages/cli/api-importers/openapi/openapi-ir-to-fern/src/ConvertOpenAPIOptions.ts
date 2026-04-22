@@ -92,6 +92,19 @@ export interface ConvertOpenAPIOptions {
     groupEnvironmentsByHost: boolean;
 
     /**
+     * If true, when top-level OpenAPI servers each declare an `x-fern-server-name` and endpoint-level
+     * `servers:` overrides reference those names, collapse all top-level servers into a single
+     * environment (named after the first top-level server) with each server exposed as a named URL.
+     * This is useful for APIs that expose multiple base hosts belonging to the same logical
+     * environment (e.g. `api.box.com` + `upload.box.com` + `dl.boxcloud.com`).
+     *
+     * Defaults to false, which emits one environment per top-level server (preserving
+     * pre-4.71.4 behavior, where named servers like `Production` and `Agent` remain distinct
+     * environment constants in generated SDKs).
+     */
+    groupServersAsEnvironmentUrls: boolean;
+
+    /**
      * If `always`, remove discriminant properties from schemas in the IR, unless the schema is also used outside of a discriminated union.
      * If `never`, discriminant properties are preserved in the schemas.
      *
@@ -119,6 +132,7 @@ export const DEFAULT_CONVERT_OPENAPI_OPTIONS: ConvertOpenAPIOptions = {
     wrapReferencesToNullableInOptional: false,
     coerceOptionalSchemasToNullable: false,
     groupEnvironmentsByHost: false,
+    groupServersAsEnvironmentUrls: false,
     removeDiscriminantsFromSchemas: generatorsYml.RemoveDiscriminantsFromSchemas.Always,
     inferDefaultEnvironment: true
 };

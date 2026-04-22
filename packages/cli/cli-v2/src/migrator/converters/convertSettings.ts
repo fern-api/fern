@@ -16,6 +16,7 @@ const SETTINGS_KEY_MAP: Record<string, string> = {
     "optional-additional-properties": "optionalAdditionalProperties",
     "idiomatic-request-names": "idiomaticRequestNames",
     "group-environments-by-host": "groupEnvironmentsByHost",
+    "group-servers-as-environment-urls": "groupServersAsEnvironmentUrls",
     "remove-discriminants-from-schemas": "removeDiscriminantsFromSchemas",
     "path-parameter-order": "pathParameterOrder",
     "coerce-consts-to": "coerceConstsTo",

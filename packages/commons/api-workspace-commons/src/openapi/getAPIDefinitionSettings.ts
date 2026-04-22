@@ -55,6 +55,7 @@ const FIELD_MAPPINGS: Partial<MappableFields> = {
     resolveAliases: "resolveAliases",
     groupMultiApiEnvironments: "groupMultiApiEnvironments",
     groupEnvironmentsByHost: "groupEnvironmentsByHost",
+    groupServersAsEnvironmentUrls: "groupServersAsEnvironmentUrls",
     inferDefaultEnvironment: "inferDefaultEnvironment",
     wrapReferencesToNullableInOptional: "wrapReferencesToNullableInOptional",
     coerceOptionalSchemasToNullable: "coerceOptionalSchemasToNullable",
